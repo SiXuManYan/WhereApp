@@ -143,13 +143,13 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_takeout_food" />
+                            android:src="@drawable/ic_government" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="13.5dp"
-                            android:text="餐厅外卖"
+                            android:text="政府机构"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
 
@@ -166,13 +166,36 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_supermarket_takeout" />
+                            android:src="@drawable/ic_enterprise" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="13.5dp"
-                            android:text="超市外送"
+                            android:text="企业黄页"
+                            android:textColor="@color/black_333333"
+                            android:textSize="13sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_convenience" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="13.5dp"
+                            android:text="便民服务"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
 
@@ -198,8 +221,6 @@
                             android:text="酒店住宿"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
-
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -219,27 +240,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="13.5dp"
                             android:text="旅游景点"
-                            android:textColor="@color/black_333333"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_subscribe" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="13.5dp"
-                            android:text="预订服务"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
 
@@ -266,13 +266,13 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_government" />
+                            android:src="@drawable/ic_traffic" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="13.5dp"
-                            android:text="政府机构"
+                            android:text="交通服务"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
 
@@ -289,13 +289,13 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_education" />
+                            android:src="@drawable/ic_cosmetology" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="13.5dp"
-                            android:text="教育机构"
+                            android:text="丽人美容"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
 
@@ -312,13 +312,13 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_medicalcare" />
+                            android:src="@drawable/ic_restaurant" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="13.5dp"
-                            android:text="健康医疗"
+                            android:text="餐饮美食"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
 
@@ -335,13 +335,13 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_finance" />
+                            android:src="@drawable/ic_shop" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="13.5dp"
-                            android:text="金融服务"
+                            android:text="线上商店"
                             android:textColor="@color/black_333333"
                             android:textSize="13sp" />
                     </LinearLayout>

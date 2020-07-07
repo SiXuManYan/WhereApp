@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_search_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f1f1f1"
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="12dp"
+        android:textColor="#5A5E63"
+        android:textSize="14dp"
+        tools:text="共找到&#x0020;&#x0020;0&#x0020;&#x0020;条关于&#x0020;&#x0020;哈哈哈哈哈哈哈哈哈哈哈&#x0020;&#x0020;的结果" />
+
+</FrameLayout>

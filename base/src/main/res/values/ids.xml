@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="load_ing" type="id" />
+    <item name="load_fail" type="id" />
+    <item name="menu_search" type="id" />
+</resources>

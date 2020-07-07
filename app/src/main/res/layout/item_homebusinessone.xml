@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_business"
+    android:layout_marginRight="5.5dp">
+
+    <RelativeLayout
+        android:layout_width="132dp"
+        android:layout_height="92.5dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:riv_corner_radius_top_left="4dp"
+            app:riv_corner_radius_top_right="4dp"
+            android:src="@drawable/ic_test"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.9分"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:background="@drawable/bg_score"
+            android:padding="4.5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Batanes North..."
+        android:textColor="@color/black_333333"
+        android:textSize="14sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="9.5dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="距离各大景点近,自助自助自助自助..."
+        android:textColor="@color/grey_999999"
+        android:textSize="11sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="6.5dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/tv_lableone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商务出行"
+            android:textColor="@color/blue_4C9EF2"
+            android:textSize="10sp"
+            android:background="@drawable/bg_labelblue"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_labletwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="供应早餐"
+            android:textColor="#06ba1b"
+            android:textSize="10sp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:background="@drawable/bg_labelgreen"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="7.5dp"
+        android:layout_marginBottom="9.5dp">
+
+        <TextView
+            android:id="@+id/tv_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥"
+            android:textColor="@color/orange_F77719"
+            android:textSize="8sp"
+            android:layout_alignBottom="@+id/tv_price"
+            />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="245"
+            android:textColor="@color/orange_F77719"
+            android:textSize="13sp"
+            android:layout_toRightOf="@+id/tv_symbol"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/晚"
+            android:textColor="#fff77719"
+            android:textSize="11sp"
+            android:layout_toRightOf="@+id/tv_price"
+            android:layout_alignBottom="@+id/tv_price"
+            />
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff999999"
+            android:textSize="11sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/tv_price"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

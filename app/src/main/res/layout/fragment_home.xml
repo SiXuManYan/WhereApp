@@ -30,6 +30,7 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/iv_homechoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -38,11 +39,15 @@
             android:src="@drawable/ic_homechoosecity" />
 
         <LinearLayout
-            android:layout_width="245dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/bg_homesearch"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/iv_homechoose"
+            android:layout_marginLeft="6.5dp"
+            android:layout_toLeftOf="@+id/rl_message"
+            android:layout_marginRight="26dp">
 
 
             <ImageView
@@ -65,6 +70,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_message"
             android:layout_width="24dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"

@@ -14,7 +14,7 @@ public class ApiResult<T> {
     public T mData;
 
     public boolean isOk() {
-        return mResult == 1;
+        return mResult == 200;
     }
 
 }

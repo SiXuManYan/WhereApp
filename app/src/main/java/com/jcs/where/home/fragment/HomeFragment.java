@@ -6,6 +6,7 @@ import android.graphics.Outline;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,10 @@ import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
 import com.jcs.where.R;
+import com.jcs.where.api.Api;
+import com.jcs.where.api.ApiUtils;
 import com.jcs.where.bean.BusinessBean;
+import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -36,6 +40,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.tton.android.base.api.ApiTransformer;
 import co.tton.android.base.app.fragment.BaseFragment;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
@@ -43,6 +48,8 @@ import co.tton.android.base.view.ToastUtils;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import pl.droidsonroids.gif.GifImageView;
+import rx.Observer;
+import rx.Subscription;
 
 public class HomeFragment extends BaseFragment {
     private View view;
@@ -75,6 +82,25 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initView() {
+//        Subscription subscription = Api.get().getHomeBannerList()
+//                .compose(new ApiTransformer<List<HomeBannerBean>>())
+//                .subscribe(new Observer<List<HomeBannerBean>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<HomeBannerBean> homeBannerBeans) {
+//
+//                    }
+//                });
+//        addSubscription(subscription);
         List<String> bannerUrls = new ArrayList<>();
         bannerUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536187&di=4d4f79fee6c1203e41f73bfbce99f596&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2F2013qcpd%2Fzsgz%2F201403%2FW020140327358771316323.jpg");
         bannerUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536188&di=858d2f57077426cf18c7d5ba1776d90e&imgtype=0&src=http%3A%2F%2Ftoutiao.image.mucang.cn%2Ftoutiao-image%2F2017%2F04%2F27%2F03%2F5132a5b8cb524cb2a474154ba34fc8f7.jpeg");
@@ -90,7 +116,7 @@ public class HomeFragment extends BaseFragment {
 //                                .load(url)
 //                                .into(image);
                         RequestOptions options = new RequestOptions()
-                                .fitCenter()
+                                .centerCrop()
                                 .error(R.drawable.ic_home_press) //加载失败图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
@@ -102,7 +128,7 @@ public class HomeFragment extends BaseFragment {
                     public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
 //                        Glide.with(context).asGif().load(url).into(gifImageView);
                         RequestOptions options = new RequestOptions()
-                                .fitCenter()
+                                .centerCrop()
                                 .error(R.drawable.ic_home_press) //加载失败图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存

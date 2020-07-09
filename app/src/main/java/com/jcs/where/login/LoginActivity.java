@@ -121,6 +121,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
         accountErrorTv = V.f(this,R.id.tv_accounterror);
         phoneErrorTv = V.f(this,R.id.tv_phoneerror);
+        V.f(this,R.id.tv_forgetpas).setOnClickListener(this);
     }
 
     @Override
@@ -148,6 +149,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 accountLl.setVisibility(View.GONE);
                 break;
             case R.id.tv_getcode:
+                if(!isMobileNO(phoneEt.getText().toString())){
+                    ToastUtils.showLong(LoginActivity.this,"请输入正确手机号");
+                    return;
+                }
                 myCountDownTimer.start();
                 break;
             case R.id.tv_accountlogin:
@@ -171,6 +176,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     phoneErrorTv.setVisibility(View.INVISIBLE);
                 }
                 ToastUtils.showLong(LoginActivity.this,"手机号:"+phoneEt.getText().toString()+"验证码 :"+codeEt.getText().toString());
+                break;
+            case R.id.tv_forgetpas:
+                ForgetPasswordActivity.goTo(LoginActivity.this);
                 break;
             default:
         }

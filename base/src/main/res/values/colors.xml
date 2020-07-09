@@ -18,4 +18,14 @@
     <color name="transplant">#00000000</color>
     <color name="lan">#4ebcfc</color>
 
+    <color name="dialog_background">#ebebeb</color>
+
+    <color name="dialog_title">#353339</color>
+
+    <color name="dialog_content">#696668</color>
+
+    <color name="dialog_bg_btn_pressed">#e1e1e1</color>
+
+    <color name="dialog_button">#0075ff</color>
+
 </resources>

@@ -3,4 +3,5 @@
     <string name="home">首页</string>
     <string name="order">订单</string>
     <string name="mine">我的</string>
+    <string name="rule_password">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`¬!"£$%^*()~=#{}[];':,./?/*-_+&#060;&#062;&#064;&#038;</string>
 </resources>

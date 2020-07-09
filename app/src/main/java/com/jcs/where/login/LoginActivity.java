@@ -77,6 +77,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         getCodeTv.setOnClickListener(this);
         accountLoginTv = V.f(this, R.id.tv_accountlogin);
         accountLoginTv.setOnClickListener(this);
+        accountLoginTv.setClickable(false);
         //1.创建工具类对象 把要改变颜色的btn先传过去
         WorksSizeCheckUtil.textChangeListener textChangeListener = new WorksSizeCheckUtil.textChangeListener(accountLoginTv);
 
@@ -100,6 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         codeEt = V.f(this,R.id.et_code);
         phoneLoginTv = V.f(this, R.id.tv_phonelogin);
         phoneLoginTv.setOnClickListener(this);
+        phoneLoginTv.setClickable(false);
         //1.创建工具类对象 把要改变颜色的btn先传过去
         PhoneCheckUtil.textChangeListener textChangeListener1 = new PhoneCheckUtil.textChangeListener(phoneLoginTv);
 
@@ -122,6 +124,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         accountErrorTv = V.f(this,R.id.tv_accounterror);
         phoneErrorTv = V.f(this,R.id.tv_phoneerror);
         V.f(this,R.id.tv_forgetpas).setOnClickListener(this);
+        V.f(this,R.id.tv_register).setOnClickListener(this);
     }
 
     @Override
@@ -179,6 +182,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_forgetpas:
                 ForgetPasswordActivity.goTo(LoginActivity.this);
+                break;
+            case R.id.tv_register:
+                RegisterActivity.goTo(LoginActivity.this);
                 break;
             default:
         }

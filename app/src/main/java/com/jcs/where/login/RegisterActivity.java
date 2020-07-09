@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.dialog.ResetSuccessDialog;
 import com.jcs.where.utils.IEditTextChangeListener;
 import com.jcs.where.utils.WorksSizeCheckUtil;
 
@@ -21,15 +20,13 @@ import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
 
-public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
-
-    private EditText phoneEt, codeEt, pasEt, surePasEt;
-    private TextView getCodeTv, errorTv, resetTv;
+public class RegisterActivity extends BaseActivity implements View.OnClickListener{
+    private EditText phoneEt,codeEt,accountEt,passEt,surePassEt,invitationEt;
+    private TextView getCodeTv,registerTv,errorTv;
     private MyCountDownTimer myCountDownTimer;
-    private Dialog resetSuccessDialog;
 
     public static void goTo(Context context) {
-        Intent intent = new Intent(context, ForgetPasswordActivity.class);
+        Intent intent = new Intent(context, RegisterActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (!(context instanceof Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -45,59 +42,42 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         initView();
     }
 
-    private void initView() {
-        phoneEt = V.f(this, R.id.et_phone);
-        codeEt = V.f(this, R.id.et_code);
-        pasEt = V.f(this, R.id.et_password);
-        surePasEt = V.f(this, R.id.et_surepassword);
-        getCodeTv = V.f(this, R.id.tv_getcode);
+    private void  initView(){
+        phoneEt = V.f(this,R.id.et_phone);
+        codeEt = V.f(this,R.id.et_code);
+        accountEt = V.f(this,R.id.et_account);
+        passEt = V.f(this,R.id.et_password);
+        surePassEt = V.f(this,R.id.et_surepassword);
+        invitationEt = V.f(this,R.id.et_invitation);
+        getCodeTv = V.f(this,R.id.tv_getcode);
+        registerTv = V.f(this,R.id.tv_register);
         getCodeTv.setOnClickListener(this);
-        errorTv = V.f(this, R.id.tv_error);
-        resetTv = V.f(this, R.id.tv_reset);
-        resetTv.setOnClickListener(this);
-        resetTv.setClickable(false);
-        WorksSizeCheckUtil.textChangeListener textChangeListener = new WorksSizeCheckUtil.textChangeListener(resetTv);
+        registerTv.setOnClickListener(this);
+        registerTv.setClickable(false);
+        WorksSizeCheckUtil.textChangeListener textChangeListener = new WorksSizeCheckUtil.textChangeListener(registerTv);
 
         //2.把所有要监听的edittext都添加进去
-        textChangeListener.addAllEditText(phoneEt, codeEt, pasEt, surePasEt);
+        textChangeListener.addAllEditText(phoneEt,codeEt,accountEt,passEt,surePassEt);
 
         //3.接口回调 在这里拿到boolean变量 根据isHasContent的值决定 btn 应该设置什么颜色
         WorksSizeCheckUtil.setChangeListener(new IEditTextChangeListener() {
             @Override
             public void textChange(boolean isHasContent) {
                 if (isHasContent) {
-                    resetTv.setClickable(true);
-                    resetTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtn));
+                    registerTv.setClickable(true);
+                    registerTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtn));
                 } else {
-                    resetTv.setClickable(false);
-                    resetTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtnunclick));
+                    registerTv.setClickable(false);
+                    registerTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtnunclick));
                 }
             }
         });
-        resetSuccessDialog = new ResetSuccessDialog(ForgetPasswordActivity.this, R.style.dialog, new ResetSuccessDialog.OnCloseListener() {
-            @Override
-            public void onClose(Dialog dialog) {
-                dialog.dismiss();
-                finish();
-            }
-
-            @Override
-            public void onConfirm(Dialog dialog) {
-                dialog.dismiss();
-            }
-        });
+        errorTv = V.f(this,R.id.tv_error);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_forgetpassword;
-    }
-
-    protected void setStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
-        }
+        return R.layout.activity_register;
     }
 
     @Override
@@ -105,16 +85,16 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.tv_getcode:
                 if (TextUtils.isEmpty(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(ForgetPasswordActivity.this, "请输入手机号");
+                    ToastUtils.showLong(RegisterActivity.this, "请输入手机号");
                     return;
                 }
                 if (!isMobileNO(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(ForgetPasswordActivity.this, "请输入正确手机号");
+                    ToastUtils.showLong(RegisterActivity.this, "请输入正确手机号");
                     return;
                 }
                 myCountDownTimer.start();
                 break;
-            case R.id.tv_reset:
+            case R.id.tv_register:
                 if (!isMobileNO(phoneEt.getText().toString())) {
                     errorTv.setVisibility(View.VISIBLE);
                     errorTv.setText("请输入正确手机号");
@@ -122,14 +102,20 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 } else {
                     errorTv.setVisibility(View.INVISIBLE);
                 }
-                if (!pasEt.getText().toString().equals(surePasEt.getText().toString())) {
+                if(!codeEt.getText().toString().equals("1234")){
+                    errorTv.setVisibility(View.VISIBLE);
+                    errorTv.setText("验证码错误");
+                    return;
+                }else{
+                    errorTv.setVisibility(View.INVISIBLE);
+                }
+                if (!passEt.getText().toString().equals(surePassEt.getText().toString())) {
                     errorTv.setVisibility(View.VISIBLE);
                     errorTv.setText("两次输入密码不一致");
                     return;
                 } else {
                     errorTv.setVisibility(View.INVISIBLE);
                 }
-                resetSuccessDialog.show();
                 break;
             default:
         }
@@ -174,5 +160,12 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             return false;
         else
             return mobiles.matches(telRegex);
+    }
+
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
+        }
     }
 }

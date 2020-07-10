@@ -6,7 +6,6 @@ import android.graphics.Outline;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +25,7 @@ import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
 import com.jcs.where.R;
-import com.jcs.where.api.Api;
-import com.jcs.where.api.ApiUtils;
 import com.jcs.where.bean.BusinessBean;
-import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -40,7 +36,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.api.ApiTransformer;
 import co.tton.android.base.app.fragment.BaseFragment;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
@@ -48,8 +43,6 @@ import co.tton.android.base.view.ToastUtils;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import pl.droidsonroids.gif.GifImageView;
-import rx.Observer;
-import rx.Subscription;
 
 public class HomeFragment extends BaseFragment {
     private View view;
@@ -425,7 +418,7 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    private class NearbyVericalAdapter extends BaseQuickAdapter<BusinessBean>{
+    private class NearbyVericalAdapter extends BaseQuickAdapter<BusinessBean> {
 
         public NearbyVericalAdapter(Context context) {
             super(context);

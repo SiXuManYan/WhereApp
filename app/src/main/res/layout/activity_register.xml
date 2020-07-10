@@ -69,7 +69,8 @@
                 android:hint="请输入注册时使用的手机号"
                 android:textColor="@color/black_333333"
                 android:textColorHint="@color/grey_BFBFBF"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:numeric="integer"/>
 
         </LinearLayout>
 
@@ -103,7 +104,8 @@
                 android:inputType="textWebPassword"
                 android:textColor="@color/black_333333"
                 android:textColorHint="@color/grey_BFBFBF"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:numeric="integer"/>
 
             <View
                 android:id="@+id/line"
@@ -181,7 +183,7 @@
                 android:layout_marginRight="14.5dp"
                 android:background="@null"
                 android:digits="@string/rule_password"
-                android:hint="请输入密码(6-20位)"
+                android:hint="请输入密码(6-16位)"
                 android:inputType="textWebPassword"
                 android:maxLines="1"
                 android:singleLine="true"

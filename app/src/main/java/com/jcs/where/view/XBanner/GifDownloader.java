@@ -282,8 +282,6 @@ public class GifDownloader {
                 int index=Integer.parseInt(name.substring(name.length()-1));
                 int progress=(int)(finalCurrCount*100/finalFileLen);
                 mProgressListener.showProgress(index,progress);
-                Log.e(LOG_TAG,"the thread id is "+index+" and the progress is "+(int)(finalCurrCount*100/finalFileLen));
-
 
                 handler.post(new Runnable() {
                     @Override

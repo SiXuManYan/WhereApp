@@ -715,8 +715,7 @@ public class XBanner extends RelativeLayout{
                 public void onPageSelected(int position) {
                     onIndicatorChange(position);
                     mSelectedIndex=getindexforProgress(position);
-                    Log.e("item selected ",position+"");
-                }
+                   }
 
                 @Override
                 public void onPageScrollStateChanged(int state) {

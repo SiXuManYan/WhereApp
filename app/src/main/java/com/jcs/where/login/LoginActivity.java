@@ -8,9 +8,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,11 +16,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.gson.Gson;
 import com.jcs.where.R;
+import com.jcs.where.api.HttpUtils;
+import com.jcs.where.bean.ErrorBean;
+import com.jcs.where.bean.LoginBean;
+import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.IEditTextChangeListener;
 import com.jcs.where.utils.PhoneCheckUtil;
 import com.jcs.where.utils.PhoneTextChangeListener;
 import com.jcs.where.utils.WorksSizeCheckUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
@@ -32,11 +38,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private Toolbar toolbar;
     private TextView accountTv, phoneTv;
-    private EditText accountEt, passwordEt,phoneEt,codeEt;
+    private EditText accountEt, passwordEt, phoneEt, codeEt;
     private LinearLayout accountLl, phoneLl;
-    private TextView getCodeTv, accountLoginTv,phoneLoginTv;
+    private TextView getCodeTv, accountLoginTv, phoneLoginTv;
     private MyCountDownTimer myCountDownTimer;
-    private TextView accountErrorTv,phoneErrorTv;
+    private TextView accountErrorTv, phoneErrorTv;
+    private LoginBean loginBean;
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -82,23 +89,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         WorksSizeCheckUtil.textChangeListener textChangeListener = new WorksSizeCheckUtil.textChangeListener(accountLoginTv);
 
         //2.把所有要监听的edittext都添加进去
-        textChangeListener.addAllEditText(accountEt,passwordEt);
+        textChangeListener.addAllEditText(accountEt, passwordEt);
 
         //3.接口回调 在这里拿到boolean变量 根据isHasContent的值决定 btn 应该设置什么颜色
         WorksSizeCheckUtil.setChangeListener(new IEditTextChangeListener() {
             @Override
             public void textChange(boolean isHasContent) {
-                if(isHasContent){
+                if (isHasContent) {
                     accountLoginTv.setClickable(true);
                     accountLoginTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtn));
-                }else{
+                } else {
                     accountLoginTv.setClickable(false);
                     accountLoginTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtnunclick));
                 }
             }
         });
-        phoneEt = V.f(this,R.id.et_phone);
-        codeEt = V.f(this,R.id.et_code);
+        phoneEt = V.f(this, R.id.et_phone);
+        codeEt = V.f(this, R.id.et_code);
         phoneLoginTv = V.f(this, R.id.tv_phonelogin);
         phoneLoginTv.setOnClickListener(this);
         phoneLoginTv.setClickable(false);
@@ -106,25 +113,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         PhoneCheckUtil.textChangeListener textChangeListener1 = new PhoneCheckUtil.textChangeListener(phoneLoginTv);
 
         //2.把所有要监听的edittext都添加进去
-        textChangeListener1.addAllEditText(phoneEt,codeEt);
+        textChangeListener1.addAllEditText(phoneEt, codeEt);
 
         //3.接口回调 在这里拿到boolean变量 根据isHasContent的值决定 btn 应该设置什么颜色
         PhoneCheckUtil.setChangeListener(new PhoneTextChangeListener() {
             @Override
             public void textChange(boolean isHasContent) {
-                if(isHasContent){
+                if (isHasContent) {
                     phoneLoginTv.setClickable(true);
                     phoneLoginTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtn));
-                }else{
+                } else {
                     phoneLoginTv.setClickable(false);
                     phoneLoginTv.setBackground(getResources().getDrawable(R.drawable.bg_loginbtnunclick));
                 }
             }
         });
-        accountErrorTv = V.f(this,R.id.tv_accounterror);
-        phoneErrorTv = V.f(this,R.id.tv_phoneerror);
-        V.f(this,R.id.tv_forgetpas).setOnClickListener(this);
-        V.f(this,R.id.tv_register).setOnClickListener(this);
+        accountErrorTv = V.f(this, R.id.tv_accounterror);
+        phoneErrorTv = V.f(this, R.id.tv_phoneerror);
+        V.f(this, R.id.tv_forgetpas).setOnClickListener(this);
+        V.f(this, R.id.tv_register).setOnClickListener(this);
     }
 
     @Override
@@ -152,33 +159,60 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 accountLl.setVisibility(View.GONE);
                 break;
             case R.id.tv_getcode:
-                if(!isMobileNO(phoneEt.getText().toString())){
-                    ToastUtils.showLong(LoginActivity.this,"请输入正确手机号");
+                if (!isMobileNO(phoneEt.getText().toString())) {
+                    ToastUtils.showLong(LoginActivity.this, "请输入正确手机号");
                     return;
                 }
                 myCountDownTimer.start();
                 break;
             case R.id.tv_accountlogin:
-                if(!passwordEt.getText().toString().equals("1234")){
-                    accountErrorTv.setVisibility(View.VISIBLE);
+                if (passwordEt.getText().toString().length() < 6) {
+                    ToastUtils.showLong(LoginActivity.this, "密码长度不符");
                     return;
-                }else{
-                    accountErrorTv.setVisibility(View.INVISIBLE);
                 }
-                ToastUtils.showLong(LoginActivity.this,"账号:"+accountEt.getText().toString()+"密码:"+passwordEt.getText().toString());
+                if (passwordEt.getText().toString().length() > 16) {
+                    ToastUtils.showLong(LoginActivity.this, "密码长度不符");
+                    return;
+                }
+                showLoading();
+                Map<String, String> params = new HashMap<>();
+                params.put("type", "3");
+                params.put("name", accountEt.getText().toString());
+                params.put("password", passwordEt.getText().toString());
+                HttpUtils.doHttpReqeust("PATCH", "userapi/v1/login", params, "", "", new HttpUtils.StringCallback() {
+                    @Override
+                    public void onSuccess(int code, String result) {
+                        stopLoading();
+                        if (code == 200) {
+                            LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
+                            TokenManager.get().login(LoginActivity.this, loginBean);
+                            ToastUtils.showLong(LoginActivity.this, "登录成功");
+                            finish();
+                        } else {
+                            ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                            ToastUtils.showLong(LoginActivity.this, errorBean.message);
+                        }
+                    }
+
+                    @Override
+                    public void onFaileure(int code, Exception e) {
+                        stopLoading();
+                        ToastUtils.showLong(LoginActivity.this, e.getMessage());
+                    }
+                });
                 break;
             case R.id.tv_phonelogin:
-               if(!isMobileNO(phoneEt.getText().toString())){
-                    ToastUtils.showLong(LoginActivity.this,"请输入正确手机号");
+                if (!isMobileNO(phoneEt.getText().toString())) {
+                    ToastUtils.showLong(LoginActivity.this, "请输入正确手机号");
                     return;
                 }
-                if(!codeEt.getText().toString().equals("1234")){
+                if (!codeEt.getText().toString().equals("1234")) {
                     phoneErrorTv.setVisibility(View.VISIBLE);
                     return;
-                }else{
+                } else {
                     phoneErrorTv.setVisibility(View.INVISIBLE);
                 }
-                ToastUtils.showLong(LoginActivity.this,"手机号:"+phoneEt.getText().toString()+"验证码 :"+codeEt.getText().toString());
+                ToastUtils.showLong(LoginActivity.this, "手机号:" + phoneEt.getText().toString() + "验证码 :" + codeEt.getText().toString());
                 break;
             case R.id.tv_forgetpas:
                 ForgetPasswordActivity.goTo(LoginActivity.this);

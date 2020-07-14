@@ -26,6 +26,7 @@ import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
 import com.jcs.where.R;
 import com.jcs.where.bean.BusinessBean;
+import com.jcs.where.hotel.HotelActivity;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -201,6 +202,12 @@ public class HomeFragment extends BaseFragment {
         };
         homeRv.setLayoutManager(linearLayoutManager);
         homeRv.setAdapter(adapter);
+        V.f(view,R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HotelActivity.goTo(getContext());
+            }
+        });
     }
 
     private class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -7,11 +7,15 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jcs.where.Const;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,10 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-/**
- * Created by xiaoyehai on 2018/5/21 0021.
- */
 
 public class HttpUtils {
 
@@ -57,14 +57,16 @@ public class HttpUtils {
                     connection = (HttpURLConnection) u.openConnection();
                     // 设置输入可用
                     connection.setDoInput(true);
-                    // 设置输出可用
-                    connection.setDoOutput(true);
+                    if (method.equals("POST")) {
+                        // 设置输出可用
+                        connection.setDoOutput(true);
+                    }
                     // 设置请求方式
                     connection.setRequestMethod(method);
                     //设置请求头
                     connection.setRequestProperty("Accept", "application/json");
                     connection.setRequestProperty("Locale", local);
-                    connection.setRequestProperty("Authorization", "Bearer "+tooken);
+                    connection.setRequestProperty("Authorization", "Bearer" + " " + tooken);
                     // 设置连接超时
                     connection.setConnectTimeout(5000);
                     // 设置读取超时
@@ -106,6 +108,11 @@ public class HttpUtils {
                         if (callback != null) {
                             postFailed(callback, responseCode, new Exception("网络错误，请重新尝试"));
                         }
+//                        InputStream inputStream = connection.getErrorStream();
+//                        String result = inputStream2String(inputStream);
+//                        if (result != null && callback != null) {
+//                            postSuccessString(callback, responseCode, result);
+//                        }
                     }
 
                 } catch (final Exception e) {

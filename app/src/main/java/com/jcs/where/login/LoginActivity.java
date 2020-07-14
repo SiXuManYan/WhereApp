@@ -190,7 +190,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             finish();
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                            ToastUtils.showLong(LoginActivity.this, errorBean.message);
+                           accountErrorTv.setVisibility(View.VISIBLE);
+                           accountErrorTv.setText(errorBean.message);
                         }
                     }
 

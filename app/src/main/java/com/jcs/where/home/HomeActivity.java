@@ -1,18 +1,19 @@
 package com.jcs.where.home;
 
-import android.app.Activity;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,15 +21,20 @@ import androidx.fragment.app.FragmentTransaction;
 import com.jcs.where.R;
 
 import java.util.ArrayList;
+
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener{
-    private ImageView icon1,icon2,icon3;
-    private TextView text1,text2,text3;
-    private LinearLayout tab1,tab2,tab3;
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
+    private ImageView icon1, icon2, icon3;
+    private TextView text1, text2, text3;
+    private LinearLayout tab1, tab2, tab3;
     FragmentManager fm;
     private ArrayList<Fragment> frlist = new ArrayList<Fragment>();
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static int REQUEST_PERMISSION_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +50,29 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         if (actionBar != null) {
             actionBar.hide();
         }
+
         fullScreen(this);
         fm = getSupportFragmentManager();
-
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+            }
+        }
         initView();
     }
 
     private void initView() {
-        icon1 = V.f(this,R.id.icon1);
-        icon2 = V.f(this,R.id.icon2);
-        icon3 = V.f(this,R.id.icon3);
-        text1 = V.f(this,R.id.text1);
-        text2 = V.f(this,R.id.text2);
-        text3 = V.f(this,R.id.text3);
-        tab1 = V.f(this,R.id.tab1);
+        icon1 = V.f(this, R.id.icon1);
+        icon2 = V.f(this, R.id.icon2);
+        icon3 = V.f(this, R.id.icon3);
+        text1 = V.f(this, R.id.text1);
+        text2 = V.f(this, R.id.text2);
+        text3 = V.f(this, R.id.text3);
+        tab1 = V.f(this, R.id.tab1);
         tab1.setOnClickListener(this);
-        tab2 = V.f(this,R.id.tab2);
+        tab2 = V.f(this, R.id.tab2);
         tab2.setOnClickListener(this);
-        tab3 = V.f(this,R.id.tab3);
+        tab3 = V.f(this, R.id.tab3);
         tab3.setOnClickListener(this);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -132,4 +143,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         return R.layout.activity_home;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                Log.i("MainActivity", "申请的权限为：" + permissions[i] + ",申请结果：" + grantResults[i]);
+            }
+        }
+    }
 }

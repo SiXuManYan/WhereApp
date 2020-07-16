@@ -39,4 +39,5 @@ dependencies {
     //底部上拉控件
     implementation project(':library')
     implementation project(':easyPhotos')
+    implementation project(':datepickerlibrary')
 }

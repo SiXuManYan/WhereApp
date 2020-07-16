@@ -1,2 +1,2 @@
-include ':app', ':base', ':library', ':easyPhotos'
+include ':app', ':base', ':library', ':easyPhotos', ':datepickerlibrary'
 rootProject.name='Where'

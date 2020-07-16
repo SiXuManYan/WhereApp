@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.atuan.datepickerlibrary.CalendarUtil;
-import com.atuan.datepickerlibrary.DatePopupWindow;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
@@ -20,9 +18,8 @@ import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.manager.UserManager;
+import com.jcs.where.popupwindow.ChoosePricePop;
 import com.jcs.where.presenter.UploadFilePresenter;
-
-import java.util.Calendar;
 
 import co.tton.android.base.app.fragment.BaseFragment;
 import co.tton.android.base.utils.V;
@@ -125,20 +122,29 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void createCustomDatePicker(View view) {
-        new DatePopupWindow
-                .Builder((Activity) getContext(), Calendar.getInstance().getTime(), view)
-                .setInitSelect(startGroup, startChild, endGroup, endChild)
-                .setInitDay(false)
-                .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
+//        new DatePopupWindow
+//                .Builder((Activity) getContext(), Calendar.getInstance().getTime(), view)
+//                .setInitSelect(startGroup, startChild, endGroup, endChild)
+//                .setInitDay(false)
+//                .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
+//                    @Override
+//                    public void getDate(String startDate, String endDate, String startWeek, String endWeek, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
+//                        startGroup = startGroupPosition;
+//                        startChild = startChildPosition;
+//                        endGroup = endGroupPosition;
+//                        endChild = endChildPosition;
+//                        String mStartTime = CalendarUtil.FormatDateYMD(startDate);
+//                        String mEndTime = CalendarUtil.FormatDateYMD(endDate);
+//                        ToastUtils.showLong(getContext(), "您选择了：" + mStartTime + startWeek + "到" + mEndTime + endWeek);
+//                    }
+//                }).builder();
+//
+        new ChoosePricePop.Builder((Activity) getContext(), view)
+                .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
                     @Override
-                    public void getDate(String startDate, String endDate, String startWeek, String endWeek, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
-                        startGroup = startGroupPosition;
-                        startChild = startChildPosition;
-                        endGroup = endGroupPosition;
-                        endChild = endChildPosition;
-                        String mStartTime = CalendarUtil.FormatDateYMD(startDate);
-                        String mEndTime = CalendarUtil.FormatDateYMD(endDate);
-                        ToastUtils.showLong(getContext(), "您选择了：" + mStartTime + startWeek + "到" + mEndTime + endWeek);
+                    public void getDate(String price, String star) {
+
+                        ToastUtils.showLong(getContext(), "您选择了：" + price + "到" + star);
                     }
                 }).builder();
     }

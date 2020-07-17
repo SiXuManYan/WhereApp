@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -540,10 +539,6 @@ public class DatePopupWindow extends PopupWindow {
                         if (endGroupPosition > startGroupPosition) {
 
                         }
-                        Log.d("ssss", "startGroupPosition" + startGroupPosition);
-                        Log.d("ssss", "startChildPosition" + startChildPosition);
-                        Log.d("ssss", "endGroupPosition" + endGroupPosition);
-                        Log.d("ssss", "endChildPosition" + endChildPosition);
                         getoffsetDate(mList.get(startGroupPosition).getList().get(startChildPosition).getDate(),
                                 mList.get(endGroupPosition).getList().get(endChildPosition).getDate(), true);
 

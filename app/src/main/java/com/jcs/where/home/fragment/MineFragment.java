@@ -1,6 +1,6 @@
 package com.jcs.where.home.fragment;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,19 +16,21 @@ import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
+import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.manager.UserManager;
-import com.jcs.where.popupwindow.ChoosePricePop;
 import com.jcs.where.presenter.UploadFilePresenter;
 
 import co.tton.android.base.app.fragment.BaseFragment;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
 
+import static android.app.Activity.RESULT_OK;
+
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
 
-    private static final int REQ_SELECT_HEADER = 100;
+    private static final int REQ_SELECT_CITY = 100;
     private View view;
     private ImageView settingIv;
     private TextView nameTv, accountTv;
@@ -59,7 +61,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         HttpUtils.doHttpReqeust("GET", "userapi/v1/user/info", null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
-                Log.d("Ssss", result);
                 stopLoading();
                 if (code == 200) {
                     UserBean userBean = new Gson().fromJson(result, UserBean.class);
@@ -85,7 +86,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.iv_setting:
                 // LoginActivity.goTo(getContext());=
-
+                //选择照片
 //                EasyPhotos.createAlbum(this, true, GlideEngine.getInstance())
 //                        .setFileProviderAuthority("com.huantansheng.easyphotos.demo.fileprovider")
 //                        .setCount(9)
@@ -115,13 +116,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                                        }));
 //                            }
 //                        });
-                createCustomDatePicker(view);
+                //条件选择
+                //createCustomDatePicker(view);
+                //  CityPickerActivity.goTo((Activity) getContext(), REQ_SELECT_CITY);
+                Intent intent = new Intent(getContext(), CityPickerActivity.class);
+                startActivityForResult(intent, REQ_SELECT_CITY);
                 break;
             default:
         }
     }
 
     private void createCustomDatePicker(View view) {
+        //时间选择
 //        new DatePopupWindow
 //                .Builder((Activity) getContext(), Calendar.getInstance().getTime(), view)
 //                .setInitSelect(startGroup, startChild, endGroup, endChild)
@@ -138,15 +144,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                        ToastUtils.showLong(getContext(), "您选择了：" + mStartTime + startWeek + "到" + mEndTime + endWeek);
 //                    }
 //                }).builder();
+//价格选择
+//        new ChoosePricePop.Builder((Activity) getContext(), view)
+//                .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
+//                    @Override
+//                    public void getDate(String price, String star) {
 //
-        new ChoosePricePop.Builder((Activity) getContext(), view)
-                .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
-                    @Override
-                    public void getDate(String price, String star) {
-
-                        ToastUtils.showLong(getContext(), "您选择了：" + price + "到" + star);
-                    }
-                }).builder();
+//                        ToastUtils.showLong(getContext(), "您选择了：" + price + "到" + star);
+//                    }
+//                }).builder();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
+            ToastUtils.showLong(getContext(), "您选择了：" + data.getStringExtra(CityPickerActivity.EXTRA_CITY));
+        }
+    }
 }

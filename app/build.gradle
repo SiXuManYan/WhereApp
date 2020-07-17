@@ -40,4 +40,6 @@ dependencies {
     implementation project(':library')
     implementation project(':easyPhotos')
     implementation project(':datepickerlibrary')
+    //拼音
+    implementation 'com.belerweb:pinyin4j:2.5.0'
 }

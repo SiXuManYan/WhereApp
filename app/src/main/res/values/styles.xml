@@ -13,5 +13,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TabStyle" parent="TextAppearance.Design.Tab">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">14sp</item>
+    </style>
+
 
 </resources>

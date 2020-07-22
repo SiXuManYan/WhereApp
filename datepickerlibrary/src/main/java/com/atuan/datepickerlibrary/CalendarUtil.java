@@ -87,7 +87,7 @@ public class CalendarUtil {
         String year = date.split("-")[0];
         String month = date.split("-")[1];
         String day = date.split("-")[2];
-        return year + "年" + month + "月" + day + "日";
+        return month + "月" + day + "日";
     }
 
     /**

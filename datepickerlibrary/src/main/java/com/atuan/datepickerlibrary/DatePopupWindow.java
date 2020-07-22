@@ -126,7 +126,8 @@ public class DatePopupWindow extends PopupWindow {
                             .getDate();
                     String startWeek = "周" + CalendarUtil.getWeekByFormat(startDate);
                     String endWeek = "周" + CalendarUtil.getWeekByFormat(endDate);
-                    mOnClickListener.getDate(startDate, endDate, startWeek, endWeek, startGroupPosition, startChildPosition, endGroupPosition, endChildPosition);
+                    int daysOffset = Integer.parseInt(CalendarUtil.getTwoDay(endDate, startDate));
+                    mOnClickListener.getDate(startDate, endDate, startWeek, endWeek, daysOffset, startGroupPosition, startChildPosition, endGroupPosition, endChildPosition);
                 }
                 DatePopupWindow.this.dismiss();
             }
@@ -396,7 +397,7 @@ public class DatePopupWindow extends PopupWindow {
      * 返回选中时间区间的状态标记，监听中接收后在builder中setInitSelect()方法中直接传出入（可用于记录上次选中的状态，用户再点击进入的时候恢复上一次的区间选中状态）
      */
     public interface DateOnClickListener {
-        void getDate(String startDate, String endDate, String startWeek, String endWeek, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition);
+        void getDate(String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition);
     }
 
     public static class Builder {

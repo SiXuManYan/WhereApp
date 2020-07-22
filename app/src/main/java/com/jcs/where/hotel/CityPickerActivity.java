@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
-
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.adapter.CityListAdapter;
@@ -35,6 +32,7 @@ public class CityPickerActivity extends BaseActivity {
 
 
     public static final String EXTRA_CITY = "city";
+    public static final String EXTRA_CITYID = "cityId";
 
     private ListView mListView;
     private SideLetterBar mLetterBar;
@@ -139,10 +137,11 @@ public class CityPickerActivity extends BaseActivity {
         getCityData();
         mCityAdapter.setOnCityClickListener(new CityListAdapter.OnCityClickListener() {
             @Override
-            public void onCityClick(String name) {//选择城市
+            public void onCityClick(String name, String id) {//选择城市
                 // Toast.makeText(CityPickerActivity.this, name, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_CITY, name);
+                intent.putExtra(EXTRA_CITYID, id);
                 setResult(RESULT_OK, intent);
                 finish();
             }

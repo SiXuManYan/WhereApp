@@ -17,6 +17,7 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
 import com.jcs.where.hotel.CityPickerActivity;
+import com.jcs.where.login.LoginActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.manager.UserManager;
 import com.jcs.where.presenter.UploadFilePresenter;
@@ -85,7 +86,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
-                // LoginActivity.goTo(getContext());=
+                 LoginActivity.goTo(getContext());
                 //选择照片
 //                EasyPhotos.createAlbum(this, true, GlideEngine.getInstance())
 //                        .setFileProviderAuthority("com.huantansheng.easyphotos.demo.fileprovider")
@@ -119,8 +120,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 //条件选择
                 //createCustomDatePicker(view);
                 //  CityPickerActivity.goTo((Activity) getContext(), REQ_SELECT_CITY);
-                Intent intent = new Intent(getContext(), CityPickerActivity.class);
-                startActivityForResult(intent, REQ_SELECT_CITY);
+//                Intent intent = new Intent(getContext(), CityPickerActivity.class);
+//                startActivityForResult(intent, REQ_SELECT_CITY);
                 break;
             default:
         }

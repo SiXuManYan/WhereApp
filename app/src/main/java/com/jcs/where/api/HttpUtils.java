@@ -68,9 +68,9 @@ public class HttpUtils {
                     connection.setRequestProperty("Locale", local);
                     connection.setRequestProperty("Authorization", "Bearer" + " " + tooken);
                     // 设置连接超时
-                    connection.setConnectTimeout(5000);
+                    connection.setConnectTimeout(40000);
                     // 设置读取超时
-                    connection.setReadTimeout(5000);
+                    connection.setReadTimeout(40000);
                     // 设置缓存不可用
                     connection.setUseCaches(false);
                     // 开始连接

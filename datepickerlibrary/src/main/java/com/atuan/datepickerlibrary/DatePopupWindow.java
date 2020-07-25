@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +121,7 @@ public class DatePopupWindow extends PopupWindow {
                             .getList()
                             .get(startChildPosition)
                             .getDate();
+                    Log.d("ssss", mList.get(startGroupPosition).getDate());
                     String endDate = mList.get(endGroupPosition)
                             .getList()
                             .get(endChildPosition)
@@ -127,7 +129,7 @@ public class DatePopupWindow extends PopupWindow {
                     String startWeek = "周" + CalendarUtil.getWeekByFormat(startDate);
                     String endWeek = "周" + CalendarUtil.getWeekByFormat(endDate);
                     int daysOffset = Integer.parseInt(CalendarUtil.getTwoDay(endDate, startDate));
-                    mOnClickListener.getDate(startDate, endDate, startWeek, endWeek, daysOffset, startGroupPosition, startChildPosition, endGroupPosition, endChildPosition);
+                    mOnClickListener.getDate(mList.get(startGroupPosition).getDate().substring(0, 4), mList.get(endGroupPosition).getDate().substring(0, 4), startDate, endDate, startWeek, endWeek, daysOffset, startGroupPosition, startChildPosition, endGroupPosition, endChildPosition);
                 }
                 DatePopupWindow.this.dismiss();
             }
@@ -206,7 +208,7 @@ public class DatePopupWindow extends PopupWindow {
         info.setList(dayList);
         mList.add(info);
         //获取下7个月的数据
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 12; i++) {
             //当前月份循环加1
             c.add(Calendar.MONTH, 01);
             DateInfo nextInfo = new DateInfo();
@@ -397,7 +399,7 @@ public class DatePopupWindow extends PopupWindow {
      * 返回选中时间区间的状态标记，监听中接收后在builder中setInitSelect()方法中直接传出入（可用于记录上次选中的状态，用户再点击进入的时候恢复上一次的区间选中状态）
      */
     public interface DateOnClickListener {
-        void getDate(String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition);
+        void getDate(String startYear, String endYeat, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition);
     }
 
     public static class Builder {

@@ -18,6 +18,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelListBean;
+import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -42,10 +43,19 @@ public class HotelListFragment extends BaseFragment {
     private List<HotelListBean.DataBean> list;
 
 
-    public static HotelListFragment newInstance(String hotelTypeIds, String cityId) {
+    public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear) {
         Bundle args = new Bundle();
         args.putString("hotelTypeIds", hotelTypeIds);
         args.putString("cityId", cityId);
+        args.putString("price", price);
+        args.putString("star", star);
+        args.putString("startDate", startDate);
+        args.putString("endDate", endDate);
+        args.putString("startWeek", startWeek);
+        args.putString("endWeek", endWeek);
+        args.putString("allDay", allDay);
+        args.putString("startYear", startYear);
+        args.putString("endYear", endYear);
         HotelListFragment fragment = new HotelListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -88,7 +98,19 @@ public class HotelListFragment extends BaseFragment {
 
     private void getdata() {
         showLoading();
-        String url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]";
+        String url = null;
+        if (getArguments().getString("price") == null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star");
+        }
+        if (getArguments().getString("star") == null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&price_range=" + getArguments().getString("price");
+        }
+        if (getArguments().getString("price") == null && getArguments().getString("star") == null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]";
+        }
+        if (getArguments().getString("price") != null && getArguments().getString("star") != null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&price_range=" + getArguments().getString("price");
+        }
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -166,7 +188,7 @@ public class HotelListFragment extends BaseFragment {
         }
 
         @Override
-        protected void initViews(QuickHolder holder, HotelListBean.DataBean data, int position) {
+        protected void initViews(QuickHolder holder, final HotelListBean.DataBean data, int position) {
             RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Picasso.with(getContext()).load(data.getImages().get(0)).into(photoIv);
@@ -193,11 +215,17 @@ public class HotelListFragment extends BaseFragment {
             TextView distanceTv = holder.findViewById(R.id.tv_distance);
             distanceTv.setText("<" + data.getDistance() + "Km");
             TextView scoreTv = holder.findViewById(R.id.tv_score);
-            scoreTv.setText(data.getGrade() + "分");
+            scoreTv.setText(data.getGrade() + "");
             TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
             commentNumTv.setText(data.getComment_counts() + "条评论");
             TextView priceTv = holder.findViewById(R.id.tv_price);
             priceTv.setText("₱" + data.getPrice() + "起");
+            holder.findViewById(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    HotelDetailActivity.goTo(getContext(), data.getId(), getArguments().getString("startDate"), getArguments().getString("endDate"), getArguments().getString("startWeek"), getArguments().getString("endWeek"), getArguments().getString("allDay"), getArguments().getString("startYear"), getArguments().getString("endYear"));
+                }
+            });
         }
     }
 

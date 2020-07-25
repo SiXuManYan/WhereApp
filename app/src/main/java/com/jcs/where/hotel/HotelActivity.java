@@ -55,6 +55,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
     private int startChild = -1;
     private int endChild = -1;
     private String cityId = "0";
+    private String usePrice = null;
+    private String useStar = null;
+    private String useStartYear, useEndYear;
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, HotelActivity.class);
@@ -104,6 +107,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                 LinearLayoutManager.VERTICAL, false);
         showRv.setLayoutManager(linearLayoutManager);
         V.f(this, R.id.tv_search).setOnClickListener(this);
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy");
+        useStartYear = simpleDateFormat2.format(date);
+        useEndYear = getOldWeek(1).substring(0, 4);
         initData();
     }
 
@@ -165,7 +171,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                         .setInitDay(false)
                         .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
                             @Override
-                            public void getDate(String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
+                            public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
                                 startGroup = startGroupPosition;
                                 startChild = startChildPosition;
                                 endGroup = endGroupPosition;
@@ -177,6 +183,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                                 endDateTv.setText(mEndTime);
                                 endWeekTv.setText(endWeek);
                                 allDayTv.setText("共" + allDay + "晚");
+                                useStartYear = startYear;
+                                useEndYear = endYear;
                             }
                         }).builder();
                 break;
@@ -200,13 +208,77 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                         .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
                             @Override
                             public void getDate(String price, String star) {
-                                priceAndStarTv.setText(price + "，" + star);
+                                if (price == null) {
+                                    priceAndStarTv.setText(star);
+                                    if (star.equals("二星及以下")) {
+                                        useStar = "[1,2]";
+                                    } else if (star.equals("三星")) {
+                                        useStar = "[3]";
+                                    } else if (star.equals("四星")) {
+                                        useStar = "[4]";
+                                    } else if (star.equals("五星")) {
+                                        useStar = "[5]";
+                                    }
+                                    usePrice = null;
+                                } else if (star == null) {
+                                    priceAndStarTv.setText(price);
+                                    if (price.equals("₱ 100以下")) {
+                                        usePrice = "[0,100]";
+                                    } else if (price.equals("₱ 100-200")) {
+                                        usePrice = "[100,200]";
+                                    } else if (price.equals("₱ 200-300")) {
+                                        usePrice = "[200,300]";
+                                    } else if (price.equals("₱ 300-400")) {
+                                        usePrice = "[300,400]";
+                                    } else if (price.equals("₱ 400-500")) {
+                                        usePrice = "[400,500]";
+                                    } else if (price.equals("₱ 500-700")) {
+                                        usePrice = "[500,700]";
+                                    } else if (price.equals("₱ 700-900")) {
+                                        usePrice = "[700,900]";
+                                    } else if (price.equals("₱ 900以上")) {
+                                        usePrice = "[900,100000]";
+                                    }
+                                    useStar = null;
+                                } else {
+                                    priceAndStarTv.setText(price + "，" + star);
+                                    if (price.equals("₱ 100以下")) {
+                                        usePrice = "[0,100]";
+                                    } else if (price.equals("₱ 100-200")) {
+                                        usePrice = "[100,200]";
+                                    } else if (price.equals("₱ 200-300")) {
+                                        usePrice = "[200,300]";
+                                    } else if (price.equals("₱ 300-400")) {
+                                        usePrice = "[300,400]";
+                                    } else if (price.equals("₱ 400-500")) {
+                                        usePrice = "[400,500]";
+                                    } else if (price.equals("₱ 500-700")) {
+                                        usePrice = "[500,700]";
+                                    } else if (price.equals("₱ 700-900")) {
+                                        usePrice = "[700,900]";
+                                    } else if (price.equals("₱ 900以上")) {
+                                        usePrice = "[900,100000]";
+                                    }
+
+                                    if (star.equals("二星及以下")) {
+                                        useStar = "[1,2]";
+                                    } else if (star.equals("三星")) {
+                                        useStar = "[3]";
+                                    } else if (star.equals("四星")) {
+                                        useStar = "[4]";
+                                    } else if (star.equals("五星")) {
+                                        useStar = "[5]";
+                                    }
+                                }
+
                                 priceAndStarTv.setTextColor(getResources().getColor(R.color.black_333333));
+
+
                             }
                         }).builder();
                 break;
             case R.id.tv_search:
-                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), locationTv.getText().toString(),cityId);
+                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear);
                 break;
         }
     }

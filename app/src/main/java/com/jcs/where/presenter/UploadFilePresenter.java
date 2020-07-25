@@ -2,7 +2,6 @@ package com.jcs.where.presenter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.jcs.where.Const;
 import com.jcs.where.api.Api;
@@ -64,8 +63,8 @@ public class UploadFilePresenter {
 
                                         @Override
                                         public void onNext(ImageBean imageBean) {
-                                            mUploadRecordMap.put(path, imageBean.imageList.get(0));
-                                            subscriber.onNext(imageBean.imageList.get(0));
+                                            mUploadRecordMap.put(path, imageBean.image);
+                                            subscriber.onNext(imageBean.image);
                                             subscriber.onCompleted();
                                         }
                                     });

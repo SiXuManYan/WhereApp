@@ -71,7 +71,19 @@ public class CalendarUtil {
         }
         String month = date.split("-")[1];
         String day = date.split("-")[2];
-        return month + "月" + day + "日";
+        if (month.length() < 2) {
+            if (day.length() < 2) {
+                return "0" + month + "月0" + day + "日";
+            } else {
+                return "0" + month + "月" + day + "日";
+            }
+        } else {
+            if (day.length() < 2) {
+                return month + "月0" + day + "日";
+            } else {
+                return month + "月" + day + "日";
+            }
+        }
     }
 
     /**
@@ -87,7 +99,20 @@ public class CalendarUtil {
         String year = date.split("-")[0];
         String month = date.split("-")[1];
         String day = date.split("-")[2];
-        return month + "月" + day + "日";
+
+        if (month.length() < 2) {
+            if (day.length() < 2) {
+                return "0" + month + "月0" + day + "日";
+            } else {
+                return "0" + month + "月" + day + "日";
+            }
+        } else {
+            if (day.length() < 2) {
+                return month + "月0" + day + "日";
+            } else {
+                return month + "月" + day + "日";
+            }
+        }
     }
 
     /**

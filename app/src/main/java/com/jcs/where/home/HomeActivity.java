@@ -33,7 +33,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private ArrayList<Fragment> frlist = new ArrayList<Fragment>();
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CALL_PHONE};
     private static int REQUEST_PERMISSION_CODE = 1;
 
     @Override

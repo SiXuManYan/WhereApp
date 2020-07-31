@@ -63,8 +63,8 @@ public class UploadFilePresenter {
 
                                         @Override
                                         public void onNext(ImageBean imageBean) {
-                                            mUploadRecordMap.put(path, imageBean.image);
-                                            subscriber.onNext(imageBean.image);
+                                            mUploadRecordMap.put(path, imageBean.link);
+                                            subscriber.onNext(imageBean.link);
                                             subscriber.onCompleted();
                                         }
                                     });

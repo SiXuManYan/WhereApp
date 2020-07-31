@@ -55,7 +55,23 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".hotel.HotelDetailActivity"
+        <activity
+            android:name=".hotel.HotelDetailActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelSubscribeActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelPayActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelOrderDetailActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 

@@ -24,7 +24,7 @@ public class RoomListBean {
     private int breakfast_type;
     private String room_area;
     private int room_num;
-    private Object remain_room_num;
+    private int remain_room_num;
     private int price;
     private int is_cancel;
     private List<String> images;
@@ -78,11 +78,11 @@ public class RoomListBean {
         this.room_num = room_num;
     }
 
-    public Object getRemain_room_num() {
+    public int getRemain_room_num() {
         return remain_room_num;
     }
 
-    public void setRemain_room_num(Object remain_room_num) {
+    public void setRemain_room_num(int remain_room_num) {
         this.remain_room_num = remain_room_num;
     }
 

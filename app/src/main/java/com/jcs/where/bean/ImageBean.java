@@ -1,7 +1,5 @@
 package com.jcs.where.bean;
 
-import java.util.List;
-
 public class ImageBean {
-    public String image;
+    public String link;
 }

@@ -99,7 +99,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
         reduceIv.setOnClickListener(this);
         addIv = V.f(this, R.id.iv_roomadd);
         addIv.setOnClickListener(this);
-        roomNumTv = V.f(this, R.id.tv_roomnum);
         priceAndStarTv = V.f(this, R.id.tv_priceandstar);
         priceAndStarTv.setOnClickListener(this);
         showRv = V.f(this, R.id.rv_show);
@@ -278,7 +277,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                         }).builder();
                 break;
             case R.id.tv_search:
-                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear);
+                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString());
                 break;
         }
     }

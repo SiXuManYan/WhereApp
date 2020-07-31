@@ -28,7 +28,7 @@ public class HotelDetailBean {
     private double lat;
     private double lng;
     private String tel;
-    private int grade;
+    private double grade;
     private int comment_counts;
     private PolicyBean policy;
     private int collect_status;
@@ -92,11 +92,11 @@ public class HotelDetailBean {
         this.tel = tel;
     }
 
-    public int getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(double grade) {
         this.grade = grade;
     }
 
@@ -158,6 +158,11 @@ public class HotelDetailBean {
         private String children;
         private String check_in_time;
         private String check_out_time;
+        private String pet;
+        private String hint;
+        private String payment;
+        private String breadfast;
+        private String service_desc;
 
         public String getChildren() {
             return children;
@@ -181,6 +186,46 @@ public class HotelDetailBean {
 
         public void setCheck_out_time(String check_out_time) {
             this.check_out_time = check_out_time;
+        }
+
+        public String getPet() {
+            return pet;
+        }
+
+        public void setPet(String pet) {
+            this.pet = pet;
+        }
+
+        public String getHint() {
+            return hint;
+        }
+
+        public void setHint(String hint) {
+            this.hint = hint;
+        }
+
+        public String getBreadfast() {
+            return breadfast;
+        }
+
+        public void setBreadfast(String breadfast) {
+            this.breadfast = breadfast;
+        }
+
+        public String getService_desc() {
+            return service_desc;
+        }
+
+        public void setService_desc(String service_desc) {
+            this.service_desc = service_desc;
+        }
+
+        public String getPayment() {
+            return payment;
+        }
+
+        public void setPayment(String payment) {
+            this.payment = payment;
         }
     }
 

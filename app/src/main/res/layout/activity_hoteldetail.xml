@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_F5F5F5">
+    android:background="@color/grey_F5F5F5"
+    android:id="@+id/rl_hoteldetail">
 
-    <ScrollView
+    <com.jcs.where.view.ObservableScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -325,7 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginLeft="20dp"
                         android:text="23 Jul"
                         android:textColor="@color/blue_4C9EF2"
                         android:textSize="14sp" />
@@ -379,8 +381,7 @@
                     android:id="@+id/rv_room"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white" />
+                    android:layout_marginTop="10dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -407,19 +408,14 @@
                         android:layout_marginRight="15dp"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_hoteldetail_time" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/tv_policystarttime"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -428,6 +424,7 @@
                                 android:textSize="12sp" />
 
                             <TextView
+                                android:id="@+id/tv_policyendtime"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -440,26 +437,66 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_policychildren"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
-                        android:drawableLeft="@drawable/ic_hoteldetail_children"
-                        android:drawablePadding="10dp"
                         android:text="儿童及加床"
                         android:textColor="@color/black_333333"
                         android:textSize="13sp" />
 
+
                     <TextView
+                        android:id="@+id/tv_policypet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="5.5dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="酒店允许携带儿童入住。 "
-                        android:textColor="@color/grey_666666"
-                        android:textSize="11sp" />
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="宠物"
+                        android:textColor="@color/black_333333"
+                        android:textSize="13sp" />
 
+                    <TextView
+                        android:id="@+id/tv_policyhint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="预订提示"
+                        android:textColor="@color/black_333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_policypayment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="支付方式"
+                        android:textColor="@color/black_333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_policybreadfast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="早餐"
+                        android:textColor="@color/black_333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_policyservice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="服务说明"
+                        android:textColor="@color/black_333333"
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -484,14 +521,16 @@
                         android:id="@+id/rv_facilities"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
                         android:layout_marginTop="15dp"
-                        android:layout_marginLeft="40dp"/>
+                        android:background="@color/white" />
 
 
                 </LinearLayout>
 
 
                 <LinearLayout
+                    android:id="@+id/ll_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -514,6 +553,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_commentstar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -533,11 +573,65 @@
                     </LinearLayout>
 
 
-                    <androidx.recyclerview.widget.RecyclerView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp" />
+                        android:orientation="vertical">
 
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/iv_commentavatar"
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/ic_test" />
+
+                            <TextView
+                                android:id="@+id/tv_commentname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/iv_commentavatar"
+                                android:layout_alignBottom="@+id/iv_commentavatar"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/iv_commentavatar"
+                                android:gravity="center"
+                                android:text="是名字呀"
+                                android:textColor="@color/black_333333"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tv_commentdetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="7dp"
+                            android:text="酒店的位置很好找，周边购物吃饭都非常方便。"
+                            android:textColor="@color/grey_666666"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_seemore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="12.5dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/bg_allcomment"
+                            android:paddingLeft="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="7dp"
+                            android:paddingBottom="5dp"
+                            android:text="全部评价"
+                            android:textColor="@color/blue_4C9EF2"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -556,13 +650,18 @@
 
 
         </RelativeLayout>
-    </ScrollView>
+    </com.jcs.where.view.ObservableScrollView>
 
+    <View
+        android:id="@+id/useView"
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/useView"
         android:background="@color/transparency"
         android:minHeight="?attr/actionBarSize"
         android:navigationIcon="@drawable/ic_back_transparent"

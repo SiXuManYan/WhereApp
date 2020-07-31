@@ -43,7 +43,7 @@ public class HotelListFragment extends BaseFragment {
     private List<HotelListBean.DataBean> list;
 
 
-    public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear) {
+    public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear,String roomNumber) {
         Bundle args = new Bundle();
         args.putString("hotelTypeIds", hotelTypeIds);
         args.putString("cityId", cityId);
@@ -56,6 +56,7 @@ public class HotelListFragment extends BaseFragment {
         args.putString("allDay", allDay);
         args.putString("startYear", startYear);
         args.putString("endYear", endYear);
+        args.putString("roomNumber", roomNumber);
         HotelListFragment fragment = new HotelListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -223,7 +224,7 @@ public class HotelListFragment extends BaseFragment {
             holder.findViewById(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HotelDetailActivity.goTo(getContext(), data.getId(), getArguments().getString("startDate"), getArguments().getString("endDate"), getArguments().getString("startWeek"), getArguments().getString("endWeek"), getArguments().getString("allDay"), getArguments().getString("startYear"), getArguments().getString("endYear"));
+                    HotelDetailActivity.goTo(getContext(), data.getId(), getArguments().getString("startDate"), getArguments().getString("endDate"), getArguments().getString("startWeek"), getArguments().getString("endWeek"), getArguments().getString("allDay"), getArguments().getString("startYear"), getArguments().getString("endYear"),getArguments().getString("roomNumber"));
                 }
             });
         }

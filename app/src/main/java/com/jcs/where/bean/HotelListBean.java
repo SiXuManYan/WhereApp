@@ -4,10 +4,11 @@ import java.util.List;
 
 public class HotelListBean {
 
+
     /**
-     * data : [{"id":4,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"THE GRAND PENINSULA SUITES","grade":4,"comment_counts":0,"tags":[],"address":"Duhat St, City of Balanga, Bataan","lat":14.6865551,"lng":120.5459053,"price":897,"distance":0,"remain_room_num":0},{"id":3,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"D' Samat Hotel","grade":3,"comment_counts":0,"tags":[],"address":"32 Camacho St, City of Balanga, Bataan","lat":14.6792776,"lng":120.5423622,"price":2077,"distance":0,"remain_room_num":0},{"id":1,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":3,"tags":[{"name":"测试1","pivot":{"hotel_id":1,"hotel_tag_id":1}},{"name":"测试2","pivot":{"hotel_id":1,"hotel_tag_id":2}}],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0},{"id":7,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":0,"tags":[],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0},{"id":8,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":0,"tags":[],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0},{"id":9,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":0,"tags":[],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0},{"id":10,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":0,"tags":[],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0},{"id":11,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":0,"tags":[],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0},{"id":12,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":0,"tags":[],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0},{"id":13,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"],"name":"Crown Royale Hotel","grade":1,"comment_counts":0,"tags":[],"address":"Capitol Dr, City of Balanga, 2100 Bataan","lat":14.676989,"lng":120.535781,"price":1220,"distance":0,"remain_room_num":0}]
-     * links : {"first":"https://api.jcstest.com/hotelapi/v1/hotels?page=1","last":"https://api.jcstest.com/hotelapi/v1/hotels?page=2","prev":null,"next":"https://api.jcstest.com/hotelapi/v1/hotels?page=2"}
-     * meta : {"current_page":1,"from":1,"last_page":2,"path":"https://api.jcstest.com/hotelapi/v1/hotels","per_page":10,"to":10,"total":17}
+     * data : [{"id":40,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/1246280_16061017110043391702.jpg"],"name":"Roob, Nienow and O'Reilly Hotel","grade":3.9,"comment_counts":17,"tags":[{"name":"商务出行","pivot":{"hotel_id":40,"hotel_tag_id":1}},{"name":"火车站周边","pivot":{"hotel_id":40,"hotel_tag_id":7}},{"name":"休闲度假","pivot":{"hotel_id":40,"hotel_tag_id":2}}],"address":"172 Moen Ramp\nSouth Dayne, WY 88212-6609","lat":14.6135404,"lng":120.3235242,"price":652,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":19,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/1246280_16061017110043391702.jpg"],"name":"Labadie-Daniel Hotel","grade":3.7,"comment_counts":17,"tags":[{"name":"商务出行","pivot":{"hotel_id":19,"hotel_tag_id":1}},{"name":"海滨风光","pivot":{"hotel_id":19,"hotel_tag_id":6}}],"address":"369 Kiehn Isle\nWest Albinmouth, TX 25500","lat":14.5555306,"lng":120.36784,"price":732,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":4,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/1246280_16061017110043391702.jpg"],"name":"Hammes Ltd Hotel","grade":3.6,"comment_counts":17,"tags":[{"name":"儿童乐园","pivot":{"hotel_id":4,"hotel_tag_id":3}},{"name":"地铁周边","pivot":{"hotel_id":4,"hotel_tag_id":4}}],"address":"918 Jermaine Manor Apt. 089\nNew Martine, ME 54113-0989","lat":14.6107452,"lng":120.5379946,"price":583,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":79,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/16256-118839-f64451367_3xl.webp"],"name":"Hudson, Morar and Mraz Hotel","grade":3.6,"comment_counts":17,"tags":[{"name":"休闲度假","pivot":{"hotel_id":79,"hotel_tag_id":2}},{"name":"机场周边","pivot":{"hotel_id":79,"hotel_tag_id":5}},{"name":"儿童乐园","pivot":{"hotel_id":79,"hotel_tag_id":3}}],"address":"986 Huels Islands\nDickensfort, TN 99284","lat":14.6934139,"lng":120.4567078,"price":93,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":32,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/3e4ba663f8a6c48698079b42b3a1926c.jpg"],"name":"Yundt, D'Amore and Williamson Hotel","grade":3.5,"comment_counts":17,"tags":[{"name":"儿童乐园","pivot":{"hotel_id":32,"hotel_tag_id":3}},{"name":"休闲度假","pivot":{"hotel_id":32,"hotel_tag_id":2}}],"address":"84890 Peggie Place Suite 335\nLake Aidenmouth, ME 22579-3314","lat":14.7971529,"lng":120.4952361,"price":533,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":81,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/531665e3a379a2b576.jpg"],"name":"Vandervort-Altenwerth Hotel","grade":3.5,"comment_counts":17,"tags":[{"name":"机场周边","pivot":{"hotel_id":81,"hotel_tag_id":5}},{"name":"商务出行","pivot":{"hotel_id":81,"hotel_tag_id":1}}],"address":"243 Towne Bridge Apt. 887\nWest Olaf, WY 12883-5676","lat":14.5255816,"lng":120.5434874,"price":922,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":33,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/1246280_16061017110043391702.jpg"],"name":"Ledner-Jaskolski Hotel","grade":3.4,"comment_counts":17,"tags":[{"name":"儿童乐园","pivot":{"hotel_id":33,"hotel_tag_id":3}},{"name":"海滨风光","pivot":{"hotel_id":33,"hotel_tag_id":6}}],"address":"100 Koby Lakes Apt. 762\nLake Junior, SC 96155-5512","lat":14.5290211,"lng":120.3777488,"price":537,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":85,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/16256-118839-f64451367_3xl.webp"],"name":"Bauch, Gaylord and Okuneva Hotel","grade":3.4,"comment_counts":17,"tags":[{"name":"商务出行","pivot":{"hotel_id":85,"hotel_tag_id":1}},{"name":"火车站周边","pivot":{"hotel_id":85,"hotel_tag_id":7}}],"address":"144 Stokes Mountain Apt. 024\nMalcolmbury, PA 88083-5628","lat":14.7761945,"lng":120.5681218,"price":969,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":93,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/1246280_16061017110043391702.jpg"],"name":"Klein Ltd Hotel","grade":3.4,"comment_counts":17,"tags":[{"name":"火车站周边","pivot":{"hotel_id":93,"hotel_tag_id":7}},{"name":"儿童乐园","pivot":{"hotel_id":93,"hotel_tag_id":3}}],"address":"2563 Ankunding Spurs\nNorth Karine, AR 39526-2104","lat":14.5098376,"lng":120.3542191,"price":1023,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"},{"id":11,"images":["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/1246280_16061017110043391702.jpg"],"name":"Corwin-Bradtke Hotel","grade":3.3,"comment_counts":17,"tags":[{"name":"火车站周边","pivot":{"hotel_id":11,"hotel_tag_id":7}},{"name":"儿童乐园","pivot":{"hotel_id":11,"hotel_tag_id":3}}],"address":"57236 Glover Station Apt. 877\nMarvinbury, MI 79044-9927","lat":14.8471217,"lng":120.4417259,"price":1751,"distance":0,"remain_room_num":0,"facebook_link":"https://www.facebook.com"}]
+     * links : {"first":"https://api.jcstest.com/hotelapi/v1/hotels?page=1","last":"https://api.jcstest.com/hotelapi/v1/hotels?page=5","prev":null,"next":"https://api.jcstest.com/hotelapi/v1/hotels?page=2"}
+     * meta : {"current_page":1,"from":1,"last_page":5,"path":"https://api.jcstest.com/hotelapi/v1/hotels","per_page":10,"to":10,"total":42}
      */
 
     private LinksBean links;
@@ -41,7 +42,7 @@ public class HotelListBean {
     public static class LinksBean {
         /**
          * first : https://api.jcstest.com/hotelapi/v1/hotels?page=1
-         * last : https://api.jcstest.com/hotelapi/v1/hotels?page=2
+         * last : https://api.jcstest.com/hotelapi/v1/hotels?page=5
          * prev : null
          * next : https://api.jcstest.com/hotelapi/v1/hotels?page=2
          */
@@ -88,11 +89,11 @@ public class HotelListBean {
         /**
          * current_page : 1
          * from : 1
-         * last_page : 2
+         * last_page : 5
          * path : https://api.jcstest.com/hotelapi/v1/hotels
          * per_page : 10
          * to : 10
-         * total : 17
+         * total : 42
          */
 
         private int current_page;
@@ -161,25 +162,26 @@ public class HotelListBean {
     }
 
     public static class DataBean {
-
         /**
-         * id : 1
-         * images : ["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"]
-         * name : Crown Royale Hotel
-         * grade : 1
-         * comment_counts : 3
-         * tags : [{"name":"测试1","pivot":{"hotel_id":1,"hotel_tag_id":1}},{"name":"测试2","pivot":{"hotel_id":1,"hotel_tag_id":2}}]
-         * address : Capitol Dr, City of Balanga, 2100 Bataan
-         * lat : 14.676989
-         * lng : 120.535781
-         * price : 1220
+         * id : 40
+         * images : ["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/1246280_16061017110043391702.jpg"]
+         * name : Roob, Nienow and O'Reilly Hotel
+         * grade : 3.9
+         * comment_counts : 17
+         * tags : [{"name":"商务出行","pivot":{"hotel_id":40,"hotel_tag_id":1}},{"name":"火车站周边","pivot":{"hotel_id":40,"hotel_tag_id":7}},{"name":"休闲度假","pivot":{"hotel_id":40,"hotel_tag_id":2}}]
+         * address : 172 Moen Ramp
+         South Dayne, WY 88212-6609
+         * lat : 14.6135404
+         * lng : 120.3235242
+         * price : 652
          * distance : 0
          * remain_room_num : 0
+         * facebook_link : https://www.facebook.com
          */
 
         private int id;
         private String name;
-        private int grade;
+        private double grade;
         private int comment_counts;
         private String address;
         private double lat;
@@ -187,6 +189,7 @@ public class HotelListBean {
         private int price;
         private int distance;
         private int remain_room_num;
+        private String facebook_link;
         private List<String> images;
         private List<TagsBean> tags;
 
@@ -206,11 +209,11 @@ public class HotelListBean {
             this.name = name;
         }
 
-        public int getGrade() {
+        public double getGrade() {
             return grade;
         }
 
-        public void setGrade(int grade) {
+        public void setGrade(double grade) {
             this.grade = grade;
         }
 
@@ -270,6 +273,14 @@ public class HotelListBean {
             this.remain_room_num = remain_room_num;
         }
 
+        public String getFacebook_link() {
+            return facebook_link;
+        }
+
+        public void setFacebook_link(String facebook_link) {
+            this.facebook_link = facebook_link;
+        }
+
         public List<String> getImages() {
             return images;
         }
@@ -288,8 +299,8 @@ public class HotelListBean {
 
         public static class TagsBean {
             /**
-             * name : 测试1
-             * pivot : {"hotel_id":1,"hotel_tag_id":1}
+             * name : 商务出行
+             * pivot : {"hotel_id":40,"hotel_tag_id":1}
              */
 
             private String name;
@@ -313,7 +324,7 @@ public class HotelListBean {
 
             public static class PivotBean {
                 /**
-                 * hotel_id : 1
+                 * hotel_id : 40
                  * hotel_tag_id : 1
                  */
 

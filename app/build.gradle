@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -42,4 +46,7 @@ dependencies {
     implementation project(':datepickerlibrary')
     //拼音
     implementation 'com.belerweb:pinyin4j:2.5.0'
+    //圆形头像
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
 }

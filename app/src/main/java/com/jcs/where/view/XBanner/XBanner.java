@@ -45,7 +45,7 @@ public class XBanner extends RelativeLayout{
     public  int delayTime=3000;
     public  int titleTextSize=16;
     public int sizeNumIndicator=12;
-    public  int indicatorMargin=0;
+    public  int indicatorMargin=5;
     public int titleHeight=100;
     public int titleMarginStart=20;
     public int widthIndicatorCube=40;

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
     android:background="@color/white"
+    android:id="@+id/rl_room"
     >
 
     <com.makeramen.roundedimageview.RoundedImageView

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,7 +120,6 @@ public class DatePopupWindow extends PopupWindow {
                             .getList()
                             .get(startChildPosition)
                             .getDate();
-                    Log.d("ssss", mList.get(startGroupPosition).getDate());
                     String endDate = mList.get(endGroupPosition)
                             .getList()
                             .get(endChildPosition)
@@ -623,7 +621,7 @@ public class DatePopupWindow extends PopupWindow {
                 helper.getView(R.id.tv_dateDel).setVisibility(View.GONE);
                 ((TextView) helper.getView(R.id.tv_status)).setTextColor(activity.getResources().getColor(R.color.white));
                 ((TextView) helper.getView(R.id.tv_date)).setTextColor(activity.getResources().getColor(R.color.white));
-                (helper.getView(R.id.ll_bg)).setBackgroundColor(activity.getResources().getColor(R.color.title_bg));
+                (helper.getView(R.id.ll_bg)).setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.bg_datestart));
             } else if (status == 2) {
                 //结束
                 helper.getView(R.id.tv_date).setVisibility(View.VISIBLE);
@@ -632,13 +630,13 @@ public class DatePopupWindow extends PopupWindow {
                 helper.getView(R.id.tv_dateDel).setVisibility(View.GONE);
                 ((TextView) helper.getView(R.id.tv_status)).setTextColor(activity.getResources().getColor(R.color.white));
                 ((TextView) helper.getView(R.id.tv_date)).setTextColor(activity.getResources().getColor(R.color.white));
-                (helper.getView(R.id.ll_bg)).setBackgroundColor(activity.getResources().getColor(R.color.title_bg));
+                (helper.getView(R.id.ll_bg)).setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.bg_dateend));
             }
             //设置当前日期前的样式，没选中，并状态为0情况下
             if (!isSelect && status == 0) {
                 if (!isEnable) {
                     //无效
-                    TextView textView = helper.getView(R.id.tv_dateDel);
+                    TextView textView = helper.getView(R.id.tv_date);
                     if (TextUtils.isEmpty(name)) {
                         textView.setVisibility(View.GONE);
                     } else {
@@ -646,7 +644,7 @@ public class DatePopupWindow extends PopupWindow {
                         textView.setVisibility(View.VISIBLE);
                     }
                     textView.setTextColor(activity.getResources().getColor(R.color.text_enable));
-                    helper.getView(R.id.tv_date).setVisibility(View.GONE);
+                    helper.getView(R.id.tv_dateDel).setVisibility(View.GONE);
                     helper.getView(R.id.tv_status).setVisibility(View.GONE);
                 } else {
                     helper.getView(R.id.tv_date).setVisibility(View.VISIBLE);

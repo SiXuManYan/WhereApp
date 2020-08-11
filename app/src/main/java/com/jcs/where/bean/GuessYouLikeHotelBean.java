@@ -29,6 +29,7 @@ public class GuessYouLikeHotelBean {
     private float price;
     private float distance;
     private int remain_room_num;
+    private String facebook_link;
     private List<String> images;
     private List<TagsBean> tags;
 
@@ -110,6 +111,14 @@ public class GuessYouLikeHotelBean {
 
     public void setRemain_room_num(int remain_room_num) {
         this.remain_room_num = remain_room_num;
+    }
+
+    public String getFacebook_link() {
+        return facebook_link;
+    }
+
+    public void setFacebook_link(String facebook_link) {
+        this.facebook_link = facebook_link;
     }
 
     public List<String> getImages() {

@@ -20,6 +20,7 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
 import com.jcs.where.hotel.CityPickerActivity;
+import com.jcs.where.hotel.WriteCommentActivity;
 import com.jcs.where.login.LoginActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.manager.UserManager;
@@ -62,6 +63,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         nameTv = V.f(view, R.id.tv_name);
         accountTv = V.f(view, R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
+        V.f(view, R.id.ll_changelangue).setOnClickListener(this);
+        V.f(view, R.id.ll_settlement).setOnClickListener(this);
         initData();
     }
 
@@ -94,7 +97,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
-            //    LoginActivity.goTo(getContext());
+                //
                 //选择照片
                 EasyPhotos.createAlbum(this, true, GlideEngine.getInstance())
                         .setFileProviderAuthority("com.huantansheng.easyphotos.demo.fileprovider")
@@ -116,7 +119,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                                             @Override
                                             public void onError(Throwable e) {
                                                 e.printStackTrace();
-                                                ToastUtils.showLong(getContext(),e.getMessage());
+                                                ToastUtils.showLong(getContext(), e.getMessage());
                                             }
 
                                             @Override
@@ -131,6 +134,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 //  CityPickerActivity.goTo((Activity) getContext(), REQ_SELECT_CITY);
 //                Intent intent = new Intent(getContext(), CityPickerActivity.class);
 //                startActivityForResult(intent, REQ_SELECT_CITY);
+                break;
+            case R.id.ll_settlement:
+                LoginActivity.goTo(getContext());
+                break;
+            case R.id.ll_changelangue:
+                WriteCommentActivity.goTo(getContext(), 1, "ssss");
                 break;
             default:
         }

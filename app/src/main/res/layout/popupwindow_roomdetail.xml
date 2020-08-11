@@ -314,6 +314,11 @@
                         android:textSize="12sp" />
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/grey_F5F5F5"/>
+
             </LinearLayout>
         </ScrollView>
 
@@ -323,6 +328,8 @@
             android:layout_height="55dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white">
+
+
 
             <TextView
                 android:id="@+id/tv_price"

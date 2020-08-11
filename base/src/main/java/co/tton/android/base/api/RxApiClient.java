@@ -55,7 +55,9 @@ public class RxApiClient {
         builder.addInterceptor(logger);
 //        }
         builder.retryOnConnectionFailure(true);
-        builder.connectTimeout(15, TimeUnit.SECONDS); // 默认10s
+        builder.connectTimeout(30, TimeUnit.SECONDS); // 默认10s
+        builder.readTimeout(60,TimeUnit.SECONDS);
+        builder.writeTimeout(60,TimeUnit.SECONDS);
         builder.addNetworkInterceptor(new StethoInterceptor());
 
         return new Retrofit.Builder()

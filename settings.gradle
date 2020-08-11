@@ -1,2 +1,3 @@
+include ':popwindow'
 include ':app', ':base', ':library', ':easyPhotos', ':datepickerlibrary'
 rootProject.name='Where'

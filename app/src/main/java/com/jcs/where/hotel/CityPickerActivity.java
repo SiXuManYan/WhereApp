@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -100,13 +101,16 @@ public class CityPickerActivity extends BaseActivity {
         HttpUtils.doHttpReqeust("GET", "commonapi/v1/areas", null, "", TokenManager.get().getToken(CityPickerActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
+                Log.d("ssss", result);
                 stopLoading();
                 if (code == 200) {
                     AreaBean bean = new Gson().fromJson(result, AreaBean.class);
                     HashSet<City> citys = new HashSet<>();
-                    for (AreaBean.ListBean areasBean : bean.lists) {
-                        String name = areasBean.name.replace("　", "");
-                        citys.add(new City(areasBean.area_id, name, PinyinUtils.getPinYin(name), false));
+                    for (int i = 0; i < bean.lists.size(); i++) {
+                        for (int j = 0; j < bean.lists.get(i).areas.size(); j++) {
+                            String name = bean.lists.get(i).areas.get(j).name.replace("　", "");
+                            citys.add(new City(bean.lists.get(i).areas.get(j).id, name, PinyinUtils.getPinYin(name), false));
+                        }
                     }
                     //set转换list
                     ArrayList<City> cities = new ArrayList<>(citys);

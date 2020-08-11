@@ -184,6 +184,7 @@ public class HotelCommentBean {
         private int user_id;
         private String content;
         private List<String> images;
+        public boolean is_select = false;
 
         public int getId() {
             return id;

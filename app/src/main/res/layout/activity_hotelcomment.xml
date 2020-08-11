@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/useView"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:navigationIcon="@drawable/ic_back_black"
+        app:navigationIcon="@drawable/ic_back_black"
+        app:theme="@style/AppTheme.ActionBar">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="住客评价"
+            android:textColor="@color/black_333333"
+            android:textSize="16sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.jcs.where.hotel.tablayout.TabLayout
+        android:id="@+id/main_tab"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        app:tabBackground="@color/white"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/blue_4C9EF2"
+        app:tabIndicatorHeight="3dp"
+        app:tabLineOffset="10dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/black_333333"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="@color/grey_999999"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:overScrollMode="never" />
+
+
+</LinearLayout>

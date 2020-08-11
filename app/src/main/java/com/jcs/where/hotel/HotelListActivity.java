@@ -17,6 +17,7 @@ import com.atuan.datepickerlibrary.CalendarUtil;
 import com.atuan.datepickerlibrary.DatePopupWindow;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hmy.popwindow.PopWindow;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
@@ -36,6 +37,7 @@ import co.tton.android.base.view.ToastUtils;
 
 public class HotelListActivity extends BaseActivity {
 
+    private static final int REQ_SEARCH = 666;
     private static final String EXT_STARTDATE = "startDate";
     private static final String EXT_ENDDATE = "endDate";
     private static final String EXT_STARTWEEK = "startWeek";
@@ -52,6 +54,9 @@ public class HotelListActivity extends BaseActivity {
     private ViewPager mViewPager;
     private TextView startDayTv, endDayTv, cityTv;
     private LinearLayout chooseDateLl;
+    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
+    private List<Fragment> fragments;
+    private LinearLayout hotelListLl;
 
     public static void goTo(Context context, String startDate, String endDate, String startWeek, String endWeek, String allDay, String city, String cityId, String price, String star, String startYear, String endYear, String roomNumber) {
         Intent intent = new Intent(context, HotelListActivity.class);
@@ -66,7 +71,7 @@ public class HotelListActivity extends BaseActivity {
         intent.putExtra(EXT_PRICE, price);
         intent.putExtra(EXT_STAR, star);
         intent.putExtra(EXT_STARTYEAR, startYear);
-        intent.putExtra(EXT_ENDYEAR,endYear);
+        intent.putExtra(EXT_ENDYEAR, endYear);
         intent.putExtra(EXT_ROOMNUMBER, roomNumber);
 
         if (!(context instanceof Activity)) {
@@ -80,6 +85,14 @@ public class HotelListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBar();
+        mStartYear = getIntent().getStringExtra(EXT_STARTYEAR);
+        mStartDate = getIntent().getStringExtra(EXT_STARTDATE);
+        mStartWeek = getIntent().getStringExtra(EXT_STARTWEEK);
+        mEndYear = getIntent().getStringExtra(EXT_ENDYEAR);
+        mEndData = getIntent().getStringExtra(EXT_ENDDATE);
+        mEndWeek = getIntent().getStringExtra(EXT_ENDWEEK);
+        mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
+        mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
         initView();
         initData();
     }
@@ -88,32 +101,145 @@ public class HotelListActivity extends BaseActivity {
         mTab = V.f(this, R.id.tab);
         mViewPager = V.f(this, R.id.viewPager);
         startDayTv = V.f(this, R.id.tv_startday);
+        hotelListLl = V.f(this, R.id.ll_hotellist);
         startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
         endDayTv = V.f(this, R.id.tv_endday);
         endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
         cityTv = V.f(this, R.id.tv_city);
-        cityTv.setText(getIntent().getStringExtra(EXT_CITY));
+        // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
         chooseDateLl = V.f(this, R.id.ll_choosedate);
         chooseDateLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePopupWindow
-                        .Builder((Activity) HotelListActivity.this, Calendar.getInstance().getTime(), view)
-                        .setInitSelect(-1, -1, -1, -1)
-                        .setInitDay(false)
-                        .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
-                            @Override
-                            public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
-                                String mStartTime = CalendarUtil.FormatDateYMD(startDate);
-                                String mEndTime = CalendarUtil.FormatDateYMD(endDate);
-                                startDayTv.setText(mStartTime.replace("月", "-").replace("日", ""));
-                                endDayTv.setText(mEndTime.replace("月", "-").replace("日", ""));
-                                //  ToastUtils.showLong(HotelListActivity.this, "您选择了：" + mStartTime + startWeek + "到" + mEndTime + endWeek);
+//                new DatePopupWindow
+//                        .Builder((Activity) HotelListActivity.this, Calendar.getInstance().getTime(), view)
+//                        .setInitSelect(-1, -1, -1, -1)
+//                        .setInitDay(false)
+//                        .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
+//                            @Override
+//                            public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
+//                                String mStartTime = CalendarUtil.FormatDateYMD(startDate);
+//                                String mEndTime = CalendarUtil.FormatDateYMD(endDate);
+//                                startDayTv.setText(mStartTime.replace("月", "-").replace("日", ""));
+//                                endDayTv.setText(mEndTime.replace("月", "-").replace("日", ""));
+//                                mStartYear = startYear;
+//                                mEndYear = endYear;
+//                                mStartDate = mStartTime;
+//                                mEndData = mEndTime;
+//                                mStartWeek = startWeek;
+//                                mEndWeek = endWeek;
+//                                mAllDay = "共" + allDay + "晚";
+//                                //  ToastUtils.showLong(HotelListActivity.this, "您选择了：" + mStartTime + startWeek + "到" + mEndTime + endWeek);
+//                            }
+//                        }).builder();
+
+                View customView = View.inflate(HotelListActivity.this, R.layout.pop_maptitle, null);
+                new PopWindow.Builder(HotelListActivity.this)
+                        .setStyle(PopWindow.PopWindowStyle.PopDown)
+                        .setView(customView)
+                        .show(view);
+                TextView startDateTv = V.f(customView, R.id.tv_startdate);
+                startDateTv.setText(mStartDate);
+                TextView endDateTv = V.f(customView, R.id.tv_enddate);
+                endDateTv.setText(mEndData);
+                TextView allDayTv = V.f(customView, R.id.tv_allday);
+                allDayTv.setText(mAllDay);
+                TextView roomNumTv = V.f(customView, R.id.tv_roomnum);
+                roomNumTv.setText(mRoomNum);
+                V.f(customView, R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int roomNum = Integer.valueOf(roomNumTv.getText().toString());
+                        if (roomNum == 1) {
+                            ToastUtils.showLong(HotelListActivity.this, "不能再减了");
+                            return;
+                        } else {
+                            roomNum--;
+                            roomNumTv.setText(roomNum + "");
+                            for (int i = 0; i < fragments.size(); i++) {
+                                ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
                             }
-                        }).builder();
+                            mRoomNum = roomNumTv.getText().toString();
+                        }
+                    }
+                });
+                V.f(customView, R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int roomNum1 = Integer.valueOf(roomNumTv.getText().toString());
+                        roomNum1++;
+                        roomNumTv.setText(roomNum1 + "");
+                        for (int i = 0; i < fragments.size(); i++) {
+                            ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
+                        }
+                        mRoomNum = roomNumTv.getText().toString();
+                    }
+                });
+                V.f(customView, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new DatePopupWindow
+                                .Builder(HotelListActivity.this, Calendar.getInstance().getTime(), hotelListLl)
+                                .setInitSelect(-1, -1, -1, -1)
+                                .setInitDay(false)
+                                .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
+                                    @Override
+                                    public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
+                                        String mStartTime = CalendarUtil.FormatDateYMD(startDate);
+                                        String mEndTime = CalendarUtil.FormatDateYMD(endDate);
+                                        startDayTv.setText(mStartTime.replace("月", "-").replace("日", ""));
+                                        endDayTv.setText(mEndTime.replace("月", "-").replace("日", ""));
+                                        startDateTv.setText(mStartTime);
+                                        endDateTv.setText(mEndTime);
+                                        allDayTv.setText("共" + allDay + "晚");
+                                        mStartYear = startYear;
+                                        mEndYear = endYear;
+                                        mStartDate = mStartTime;
+                                        mEndData = mEndTime;
+                                        mStartWeek = startWeek;
+                                        mEndWeek = endWeek;
+                                        mAllDay = "共" + allDay + "晚";
+                                        for (int i = 0; i < fragments.size(); i++) {
+                                            ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
+                                        }
+                                    }
+                                }).builder();
+                    }
+                });
             }
         });
-        ToastUtils.showLong(HotelListActivity.this, getIntent().getStringExtra(EXT_PRICE) + getIntent().getStringExtra(EXT_STAR));
+        V.f(this, R.id.iv_map).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HotelMapActivity.goTo(HotelListActivity.this,
+                        mStartDate,
+                        mEndData,
+                        mStartWeek,
+                        mEndWeek,
+                        mAllDay,
+                        getIntent().getStringExtra(EXT_CITY),
+                        getIntent().getStringExtra(EXT_CITYID),
+                        getIntent().getStringExtra(EXT_PRICE),
+                        getIntent().getStringExtra(EXT_STAR),
+                        mStartYear,
+                        mEndYear,
+                        mRoomNum
+                );
+            }
+        });
+        V.f(this, R.id.rl_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
+            }
+        });
+        V.f(this, R.id.iv_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cityTv.setText("请输入酒店名称");
+                ((HotelListFragment) fragments.get(0)).setSearchText("");
+            }
+        });
     }
 
     private void initData() {
@@ -127,6 +253,10 @@ public class HotelListActivity extends BaseActivity {
                     Type type = new TypeToken<List<HotelTypeBean>>() {
                     }.getType();
                     List<HotelTypeBean> list = gson.fromJson(result, type);
+                    HotelTypeBean bean = new HotelTypeBean();
+                    bean.setId(0);
+                    bean.setName("全部");
+                    list.add(0, bean);
                     initTab(list);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
@@ -150,9 +280,20 @@ public class HotelListActivity extends BaseActivity {
         }
 
         mTab.setSelectedTabIndicatorHeight(0);
-        final List<Fragment> fragments = new ArrayList<>();
+        fragments = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            fragments.add(HotelListFragment.newInstance(String.valueOf(list.get(i).getId()), getIntent().getStringExtra(EXT_CITYID), getIntent().getStringExtra(EXT_PRICE), getIntent().getStringExtra(EXT_STAR), getIntent().getStringExtra(EXT_STARTDATE), getIntent().getStringExtra(EXT_ENDDATE), getIntent().getStringExtra(EXT_STARTWEEK), getIntent().getStringExtra(EXT_ENDWEEK), getIntent().getStringExtra(EXT_ALLDAY), getIntent().getStringExtra(EXT_STARTYEAR), getIntent().getStringExtra(EXT_ENDYEAR), getIntent().getStringExtra(EXT_ROOMNUMBER)));
+            fragments.add(HotelListFragment.newInstance(String.valueOf(list.get(i).getId()),
+                    getIntent().getStringExtra(EXT_CITYID),
+                    getIntent().getStringExtra(EXT_PRICE),
+                    getIntent().getStringExtra(EXT_STAR),
+                    getIntent().getStringExtra(EXT_STARTDATE),
+                    getIntent().getStringExtra(EXT_ENDDATE),
+                    getIntent().getStringExtra(EXT_STARTWEEK),
+                    getIntent().getStringExtra(EXT_ENDWEEK),
+                    getIntent().getStringExtra(EXT_ALLDAY),
+                    getIntent().getStringExtra(EXT_STARTYEAR),
+                    getIntent().getStringExtra(EXT_ENDYEAR),
+                    getIntent().getStringExtra(EXT_ROOMNUMBER)));
         }
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -187,6 +328,15 @@ public class HotelListActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_SEARCH && data != null) {
+            cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
+            ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
         }
     }
 }

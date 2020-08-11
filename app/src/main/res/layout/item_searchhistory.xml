@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_searchhistory"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:id="@+id/tv_searchhistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="汉字农场"
+        android:textColor="@color/grey_666666"
+        android:textSize="13sp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="4dp"
+        android:background="@drawable/bg_searchhistory"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="15dp"/>
+
+</RelativeLayout>

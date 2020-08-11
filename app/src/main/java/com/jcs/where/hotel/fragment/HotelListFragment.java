@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,9 +42,11 @@ public class HotelListFragment extends BaseFragment {
     private int page = 1;
     private HotelListAdpater hotelListAdpater;
     private List<HotelListBean.DataBean> list;
+    private String useInputText = "";
+    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
 
 
-    public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear,String roomNumber) {
+    public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNumber) {
         Bundle args = new Bundle();
         args.putString("hotelTypeIds", hotelTypeIds);
         args.putString("cityId", cityId);
@@ -65,6 +68,14 @@ public class HotelListFragment extends BaseFragment {
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_test, container, false);
+        mStartYear = getArguments().getString("startYear");
+        mStartDate = getArguments().getString("startDate");
+        mStartWeek = getArguments().getString("startWeek");
+        mEndYear = getArguments().getString("endYear");
+        mEndData = getArguments().getString("endDate");
+        mEndWeek = getArguments().getString("endWeek");
+        mAllDay = getArguments().getString("allDay");
+        mRoomNum = getArguments().getString("roomNumber");
         initView();
         return view;
     }
@@ -101,16 +112,16 @@ public class HotelListFragment extends BaseFragment {
         showLoading();
         String url = null;
         if (getArguments().getString("price") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star");
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&search_input=" + useInputText;
         }
         if (getArguments().getString("star") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&price_range=" + getArguments().getString("price");
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
         }
         if (getArguments().getString("price") == null && getArguments().getString("star") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]";
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&search_input=" + useInputText;
         }
         if (getArguments().getString("price") != null && getArguments().getString("star") != null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&price_range=" + getArguments().getString("price");
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
         }
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
             @Override
@@ -144,7 +155,19 @@ public class HotelListFragment extends BaseFragment {
 
     private void getmoredata() {
         showLoading();
-        String url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]";
+        String url = null;
+        if (getArguments().getString("price") == null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&search_input=" + useInputText;
+        }
+        if (getArguments().getString("star") == null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
+        }
+        if (getArguments().getString("price") == null && getArguments().getString("star") == null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&search_input=" + useInputText;
+        }
+        if (getArguments().getString("price") != null && getArguments().getString("star") != null) {
+            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
+        }
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -198,6 +221,12 @@ public class HotelListFragment extends BaseFragment {
             }
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
+            ImageView facebookIv = holder.findViewById(R.id.iv_facebook);
+            if (data.getFacebook_link() != null) {
+                facebookIv.setVisibility(View.VISIBLE);
+            } else {
+                facebookIv.setVisibility(View.INVISIBLE);
+            }
             TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
             TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);
             LinearLayout tagLl = holder.findViewById(R.id.ll_tag);
@@ -224,10 +253,37 @@ public class HotelListFragment extends BaseFragment {
             holder.findViewById(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HotelDetailActivity.goTo(getContext(), data.getId(), getArguments().getString("startDate"), getArguments().getString("endDate"), getArguments().getString("startWeek"), getArguments().getString("endWeek"), getArguments().getString("allDay"), getArguments().getString("startYear"), getArguments().getString("endYear"),getArguments().getString("roomNumber"));
+                    HotelDetailActivity.goTo(getContext(), data.getId(), mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, mRoomNum);
                 }
             });
         }
     }
+
+    public void setSearchText(String inputText) {
+        if (hotelListRv != null) {
+            hotelListRv.removeAllViews();
+        }
+        if (hotelListAdpater != null) {
+            hotelListAdpater.clearData();
+        }
+        if (list != null) {
+            list.clear();
+        }
+        page = 1;
+        useInputText = inputText;
+        getdata();
+    }
+
+    public void changeData(String startData, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNum) {
+        mStartDate = startData;
+        mEndData = endDate;
+        mStartWeek = startWeek;
+        mEndWeek = endWeek;
+        mAllDay = allDay;
+        mStartYear = startYear;
+        mEndYear = endYear;
+        mRoomNum = roomNum;
+    }
+
 
 }

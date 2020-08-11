@@ -2,19 +2,27 @@ package com.jcs.where.popupwindow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Outline;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
 import com.jcs.where.bean.RoomDetailBean;
+import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 
@@ -65,21 +73,32 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
                 .setImageLoader(new AbstractUrlLoader() {
                     @Override
                     public void loadImages(Context context, String url, ImageView image) {
-                        Glide.with(context)
-                                .load(url)
-                                .into(image);
+//                        Glide.with(context)
+//                                .load(url)
+//                                .into(image);
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .priority(Priority.HIGH) //优先级
+                                .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
+                                .transform(new GlideRoundTransform(8)); //圆角
+                        Glide.with(context).load(url).apply(options).into(image);
                     }
 
                     @Override
                     public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-                        Glide.with(context).asGif().load(url).into(gifImageView);
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()//加载失败图片
+                                .priority(Priority.HIGH) //优先级
+                                .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
+                                .transform(new GlideRoundTransform(10)); //圆角
+                        Glide.with(context).load(url).apply(options).into(gifImageView);
                     }
                 })
                 .setTitleHeight(50)
                 .isAutoPlay(true)
                 .setDelay(5000)
                 .setUpIndicators(R.drawable.ic_roomselected, R.drawable.ic_roomunselected)
-                .setUpIndicatorSize(20, 6)
+                .setUpIndicatorSize(10, 10)
                 .setIndicatorGravity(XBanner.INDICATOR_CENTER)
                 .setBannerPageListener(new XBanner.BannerPageListener() {
                     @Override
@@ -98,6 +117,16 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
                     }
                 })
                 .start();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            banner.setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, Outline outline) {
+                    float radius = Resources.getSystem().getDisplayMetrics().density * 10;
+                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+                }
+            });
+            banner.setClipToOutline(true);
+        }
         roomNameTv = (TextView) rootView.findViewById(R.id.tv_roomname);
         roomNameTv.setText(useRoomDetailBean.getName());
         bedTv = (TextView) rootView.findViewById(R.id.tv_bed);

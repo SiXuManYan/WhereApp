@@ -1,6 +1,7 @@
 package com.jcs.where.home.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Outline;
 import android.os.Build;
@@ -26,6 +27,7 @@ import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
 import com.jcs.where.R;
 import com.jcs.where.bean.BusinessBean;
+import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.hotel.HotelActivity;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
@@ -45,12 +47,17 @@ import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import pl.droidsonroids.gif.GifImageView;
 
+import static android.app.Activity.RESULT_OK;
+
 public class HomeFragment extends BaseFragment {
+
+    private static final int REQ_SELECT_CITY = 100;
     private View view;
     private XBanner banner3;
     private MyPtrClassicFrameLayout ptrFrame;
     private SimpleMarqueeView marqueeView;
     private RecyclerView homeRv;
+    private TextView cityNameTv;
 
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +78,14 @@ public class HomeFragment extends BaseFragment {
         });
         marqueeView = V.f(view, R.id.simpleMarqueeView);
         homeRv = V.f(view, R.id.rv_home);
+        cityNameTv = V.f(view, R.id.tv_cityname);
+        cityNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CityPickerActivity.class);
+                startActivityForResult(intent, REQ_SELECT_CITY);
+            }
+        });
         initView();
         return view;
     }
@@ -202,7 +217,7 @@ public class HomeFragment extends BaseFragment {
         };
         homeRv.setLayoutManager(linearLayoutManager);
         homeRv.setAdapter(adapter);
-        V.f(view,R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
+        V.f(view, R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HotelActivity.goTo(getContext());
@@ -447,5 +462,13 @@ public class HomeFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         banner3.releaseBanner();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
+            cityNameTv.setText(data.getStringExtra(CityPickerActivity.EXTRA_CITY));
+        }
     }
 }

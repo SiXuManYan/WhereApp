@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="15dp"
     android:background="@drawable/bg_hotelreservation"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/ll_hotel">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_photo"

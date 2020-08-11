@@ -1,28 +1,37 @@
 package com.jcs.where.hotel;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atuan.datepickerlibrary.CalendarUtil;
 import com.atuan.datepickerlibrary.DatePopupWindow;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GuessYouLikeHotelBean;
+import com.jcs.where.bean.LoactionBean;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.popupwindow.ChoosePricePop;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -58,6 +67,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
     private String usePrice = null;
     private String useStar = null;
     private String useStartYear, useEndYear;
+    private final int READ_CODE = 10;
+    private final int READ_LOCATIONCODE = 11;
+    private FusedLocationProviderClient fusedLocationClient;
+
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, HotelActivity.class);
@@ -72,6 +85,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBar();
+        // GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         initView();
         guessYouLikeAdapter = new GuessYouLikeAdapter(HotelActivity.this);
     }
@@ -109,7 +124,28 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy");
         useStartYear = simpleDateFormat2.format(date);
         useEndYear = getOldWeek(1).substring(0, 4);
+        V.f(this, R.id.tv_chooselocation).setOnClickListener(this);
         initData();
+        checkPermission();
+        initLoaction();
+    }
+
+    private void initLoaction() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            initArea(location.getLatitude() + "", location.getLongitude() + "");
+                        }
+                    }
+                });
     }
 
     private void initData() {
@@ -207,7 +243,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                         .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
                             @Override
                             public void getDate(String price, String star) {
-                                if (price == null) {
+                                if (price == null && star == null) {
+
+                                } else if (price == null) {
                                     priceAndStarTv.setText(star);
                                     if (star.equals("二星及以下")) {
                                         useStar = "[1,2]";
@@ -258,7 +296,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                                     } else if (price.equals("₱ 900以上")) {
                                         usePrice = "[900,100000]";
                                     }
-
                                     if (star.equals("二星及以下")) {
                                         useStar = "[1,2]";
                                     } else if (star.equals("三星")) {
@@ -279,6 +316,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
             case R.id.tv_search:
                 HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString());
                 break;
+            case R.id.tv_chooselocation:
+                initLoaction();
+                break;
+            default:
         }
     }
 
@@ -290,6 +331,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
             cityId = data.getStringExtra(CityPickerActivity.EXTRA_CITYID);
         }
     }
+
 
     public static String getOldDate(int distanceDay) {
         SimpleDateFormat dft = new SimpleDateFormat("MM月dd日");
@@ -321,6 +363,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
         return dft.format(endDate);
     }
 
+
     private class GuessYouLikeAdapter extends BaseQuickAdapter<GuessYouLikeHotelBean> {
 
         public GuessYouLikeAdapter(Context context) {
@@ -329,11 +372,38 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
 
         @Override
         protected int getLayoutId(int viewType) {
-            return R.layout.item_guessyoulikehotel;
+            return R.layout.item_hotellist;
         }
 
         @Override
         protected void initViews(QuickHolder holder, GuessYouLikeHotelBean data, int position) {
+//            RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
+//            if (!TextUtils.isEmpty(data.getImages().get(0))) {
+//                Picasso.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
+//            } else {
+//                photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+//            }
+//            TextView nameTv = holder.findViewById(R.id.tv_name);
+//            nameTv.setText(data.getName());
+//            TextView scoreTv = holder.findViewById(R.id.tv_score);
+//            scoreTv.setText(data.getGrade() + "分");
+//            TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
+//            commentNumTv.setText(data.getComment_counts() + "条评论");
+//            TextView distanceTv = holder.findViewById(R.id.tv_distance);
+//            distanceTv.setText("<" + data.getDistance() + "Km");
+//            TextView addressTv = holder.findViewById(R.id.tv_address);
+//            addressTv.setText(data.getAddress());
+//            TextView priceTv = holder.findViewById(R.id.tv_price);
+//            priceTv.setText("₱" + data.getPrice() + "起");
+//            TextView olePriceTv = holder.findViewById(R.id.tv_oldprice);
+//            olePriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//            holder.findViewById(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    HotelDetailActivity.goTo(mContext, data.getId(), startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, roomNumTv.getText().toString());
+//                }
+//            });
+
             RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Picasso.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
@@ -342,19 +412,81 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
             }
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
-            TextView scoreTv = holder.findViewById(R.id.tv_score);
-            scoreTv.setText(data.getGrade() + "分");
-            TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
-            commentNumTv.setText(data.getComment_counts() + "条评论");
-            TextView distanceTv = holder.findViewById(R.id.tv_distance);
-            distanceTv.setText("<" + data.getDistance() + "Km");
+            ImageView facebookIv = holder.findViewById(R.id.iv_facebook);
+            if (data.getFacebook_link() != null) {
+                facebookIv.setVisibility(View.VISIBLE);
+            } else {
+                facebookIv.setVisibility(View.INVISIBLE);
+            }
+            TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
+            TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);
+            LinearLayout tagLl = holder.findViewById(R.id.ll_tag);
+            if (data.getTags().size() == 0) {
+                tagLl.setVisibility(View.GONE);
+            } else if (data.getTags().size() == 1) {
+                tagLl.setVisibility(View.VISIBLE);
+                tagOneTv.setText(data.getTags().get(0).getName());
+            } else {
+                tagLl.setVisibility(View.VISIBLE);
+                tagOneTv.setText(data.getTags().get(0).getName());
+                tagTwoTv.setText(data.getTags().get(1).getName());
+            }
             TextView addressTv = holder.findViewById(R.id.tv_address);
             addressTv.setText(data.getAddress());
+            TextView distanceTv = holder.findViewById(R.id.tv_distance);
+            distanceTv.setText("<" + data.getDistance() + "Km");
+            TextView scoreTv = holder.findViewById(R.id.tv_score);
+            scoreTv.setText(data.getGrade() + "");
+            TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
+            commentNumTv.setText(data.getComment_counts() + "条评论");
             TextView priceTv = holder.findViewById(R.id.tv_price);
             priceTv.setText("₱" + data.getPrice() + "起");
-            TextView olePriceTv = holder.findViewById(R.id.tv_oldprice);
-            olePriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.findViewById(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    HotelDetailActivity.goTo(mContext, data.getId(), startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, roomNumTv.getText().toString());
+                }
+            });
         }
+    }
+
+
+    private void checkPermission() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (PermissionChecker.checkSelfPermission(HotelActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PermissionChecker.PERMISSION_GRANTED) {
+                    // 不相等 请求授权
+                    ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+                }
+            } else {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initArea(String lat, String lng) {
+        HttpUtils.doHttpReqeust("GET", "commonapi/v1/areas/current?lat=" + lat + "&lng=" + lng, null, "", TokenManager.get().getToken(HotelActivity.this), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    LoactionBean loactionBean = new Gson().fromJson(result, LoactionBean.class);
+                    locationTv.setText(loactionBean.getName());
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(HotelActivity.this, errorBean.message);
+                }
+            }
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(HotelActivity.this, e.getMessage());
+            }
+        });
+
     }
 
 

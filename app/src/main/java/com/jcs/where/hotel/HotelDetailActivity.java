@@ -3,6 +3,8 @@ package com.jcs.where.hotel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -21,6 +23,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atuan.datepickerlibrary.CalendarUtil;
+import com.atuan.datepickerlibrary.DatePopupWindow;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
@@ -31,13 +36,18 @@ import com.jcs.where.bean.HotelDetailBean;
 import com.jcs.where.bean.RoomDetailBean;
 import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
+import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.popupwindow.RoomDetailPopup;
 import com.jcs.where.view.ObservableScrollView;
+import com.jcs.where.view.XBanner.AbstractUrlLoader;
+import com.jcs.where.view.XBanner.XBanner;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +57,7 @@ import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
+import pl.droidsonroids.gif.GifImageView;
 
 public class HotelDetailActivity extends BaseActivity {
 
@@ -61,7 +72,7 @@ public class HotelDetailActivity extends BaseActivity {
     private static final String EXT_ROOMNUMBER = "roomNumber";
 
     private Toolbar toolbar;
-    private ImageView photoIv;
+    private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
     private RelativeLayout faceBookRl;
     private TextView faceBookTv;
@@ -73,7 +84,6 @@ public class HotelDetailActivity extends BaseActivity {
     private RoomAdapter roomAdapter;
     private FacilitiesAdapter facilitiesAdapter;
     private TextView policyStartTimeTv, policyEndTimeTv, policyChildrenTv, policyPetTv, policyHintTv, policyPaymentTv, policyBreadfastTv, policyServiceTv;
-    private TextView commentStarTv;
     private ObservableScrollView scrollView;
     private View useView;
     private LinearLayout commentLl;
@@ -82,8 +92,10 @@ public class HotelDetailActivity extends BaseActivity {
     private ImageView likeIv, shareIv;
     private int like = 2;
     private int toolbarStatus = 0;
-    private RelativeLayout hotelDetailRl;
+    private RelativeLayout hotelDetailRl, navigationRl;
     private String hotelName, hotelBreakfast;
+    private ImageView star1Iv, star2Iv, star3Iv, star4Iv, star5Iv;
+    private TextView timeTv;
 
     public static void goTo(Context context, int id, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -122,13 +134,19 @@ public class HotelDetailActivity extends BaseActivity {
         useView = V.f(this, R.id.useView);
         likeIv = V.f(this, R.id.iv_like);
         shareIv = V.f(this, R.id.iv_share);
-        photoIv = V.f(this, R.id.iv_photo);
         nameTv = V.f(this, R.id.tv_name);
+        banner = V.f(this, R.id.banner3);
         startTimeTv = V.f(this, R.id.tv_startTime);
         starTv = V.f(this, R.id.tv_star);
         commnetNumberTv = V.f(this, R.id.tv_commentnumber);
         faceBookRl = V.f(this, R.id.rl_facebook);
         faceBookTv = V.f(this, R.id.tv_facebookadress);
+        faceBookRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebViewActivity.goTo(HotelDetailActivity.this, faceBookTv.getText().toString().trim());
+            }
+        });
         faceLine = V.f(this, R.id.faceline);
         checkInTv = V.f(this, R.id.tv_checkin);
         checkOutTv = V.f(this, R.id.tv_checkout);
@@ -182,14 +200,13 @@ public class HotelDetailActivity extends BaseActivity {
         policyPaymentTv = V.f(this, R.id.tv_policypayment);
         policyBreadfastTv = V.f(this, R.id.tv_policybreadfast);
         policyServiceTv = V.f(this, R.id.tv_policyservice);
-        commentStarTv = V.f(this, R.id.tv_commentstar);
         scrollView = V.f(this, R.id.scrollView);
         useView.setBackgroundColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(getResources().getColor(R.color.white));
         scrollView.setScrollViewListener(new ObservableScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-                float headHeight = photoIv.getMeasuredHeight() - toolbar.getMeasuredHeight();
+                float headHeight = banner.getMeasuredHeight() - toolbar.getMeasuredHeight();
                 int alpha = (int) (((float) y / headHeight) * 255);
                 if (alpha >= 255) {
                     alpha = 255;
@@ -224,9 +241,21 @@ public class HotelDetailActivity extends BaseActivity {
         toolbar.getBackground().setAlpha(0);//透明
         commentLl = V.f(this, R.id.ll_comment);
         commentAvaterIv = V.f(this, R.id.iv_commentavatar);
-        commentNameTv = V.f(this, R.id.tv_commentname);
+        commentNameTv = V.f(this, R.id.username);
         commentDetailTv = V.f(this, R.id.tv_commentdetail);
         seeMoreTv = V.f(this, R.id.tv_seemore);
+        seeMoreTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
+            }
+        });
+        V.f(this, R.id.tv_commentnumber).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
+            }
+        });
         likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -238,6 +267,35 @@ public class HotelDetailActivity extends BaseActivity {
             }
         });
         hotelDetailRl = V.f(this, R.id.rl_hoteldetail);
+        navigationRl = V.f(this, R.id.rl_navigation);
+        V.f(this, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePopupWindow
+                        .Builder(HotelDetailActivity.this, Calendar.getInstance().getTime(), view)
+                        .setInitSelect(-1, -1, -1, -1)
+                        .setInitDay(false)
+                        .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
+                            @Override
+                            public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
+
+                                String mStartTime = CalendarUtil.FormatDateYMD(startDate);
+                                String mEndTime = CalendarUtil.FormatDateYMD(endDate);
+                                startDateTv.setText(mStartTime);
+                                startWeekTv.setText(startWeek);
+                                endDateTv.setText(mEndTime);
+                                endWeekTv.setText(endWeek);
+                                allDayTv.setText("共" + allDay + "晚");
+                            }
+                        }).builder();
+            }
+        });
+        star1Iv = V.f(this, R.id.iv_star1);
+        star2Iv = V.f(this, R.id.iv_star2);
+        star3Iv = V.f(this, R.id.iv_star3);
+        star4Iv = V.f(this, R.id.iv_star4);
+        star5Iv = V.f(this, R.id.iv_star5);
+        timeTv = V.f(this, R.id.tv_time);
         initData();
     }
 
@@ -249,15 +307,59 @@ public class HotelDetailActivity extends BaseActivity {
                 stopLoading();
                 if (code == 200) {
                     HotelDetailBean hotelDetailBean = new Gson().fromJson(result, HotelDetailBean.class);
-                    if (!TextUtils.isEmpty(hotelDetailBean.getImages().get(0))) {
-                        Picasso.with(HotelDetailActivity.this).load(hotelDetailBean.getImages().get(0)).into(photoIv);
+                    if (hotelDetailBean.getImages() != null) {
+                        banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
+                                .setImageUrls(hotelDetailBean.getImages())
+                                .setImageLoader(new AbstractUrlLoader() {
+                                    @Override
+                                    public void loadImages(Context context, String url, ImageView image) {
+                                        Glide.with(context)
+                                                .load(url)
+                                                .into(image);
+                                    }
+
+                                    @Override
+                                    public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
+                                        Glide.with(context).asGif().load(url).into(gifImageView);
+                                    }
+                                })
+                                .setTitleHeight(50)
+                                .isAutoPlay(true)
+                                .setDelay(5000)
+                                .setUpIndicators(R.drawable.ic_roomselected, R.drawable.ic_roomunselected)
+                                .setUpIndicatorSize(20, 6)
+                                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+                                .setBannerPageListener(new XBanner.BannerPageListener() {
+                                    @Override
+                                    public void onBannerClick(int item) {
+
+                                    }
+
+                                    @Override
+                                    public void onBannerDragging(int item) {
+
+                                    }
+
+                                    @Override
+                                    public void onBannerIdle(int item) {
+
+                                    }
+                                })
+                                .start();
                     } else {
-                        photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+
                     }
                     nameTv.setText(hotelDetailBean.getName());
+
+                    shareIv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            WriteCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0), hotelDetailBean.getName());
+                        }
+                    });
                     hotelName = hotelDetailBean.getName();
                     hotelBreakfast = hotelDetailBean.getPolicy().getBreadfast();
-                    startTimeTv.setText(hotelDetailBean.getStart_business_time());
+                    startTimeTv.setText(hotelDetailBean.getStart_business_time() + "开业");
                     starTv.setText(hotelDetailBean.getGrade() + "");
                     commnetNumberTv.setText(hotelDetailBean.getComment_counts() + "条评论");
                     if (TextUtils.isEmpty(hotelDetailBean.getFacebook_link())) {
@@ -282,13 +384,18 @@ public class HotelDetailActivity extends BaseActivity {
                     policyPaymentTv.setText("支付方式：" + hotelDetailBean.getPolicy().getPayment());
                     policyBreadfastTv.setText("早餐：" + hotelDetailBean.getPolicy().getBreadfast());
                     policyServiceTv.setText("服务说明：" + hotelDetailBean.getPolicy().getService_desc());
-                    commentStarTv.setText(hotelDetailBean.getGrade() + "");
                     if (hotelDetailBean.getCollect_status() == 1) {
                         likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentlike));
                     } else {
                         likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
                     }
                     like = hotelDetailBean.getCollect_status();
+                    navigationRl.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startNaviGoogle("38.888025", "121.594476");
+                        }
+                    });
                     initRoomList();
                     initCommentList();
                 } else {
@@ -353,9 +460,41 @@ public class HotelDetailActivity extends BaseActivity {
                         if (!TextUtils.isEmpty(hotelCommentBean.getData().get(0).getAvatar())) {
                             Picasso.with(HotelDetailActivity.this).load(hotelCommentBean.getData().get(0).getAvatar()).into(commentAvaterIv);
                         } else {
-                            photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                            commentAvaterIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
                         }
                         commentNameTv.setText(hotelCommentBean.getData().get(0).getUsername());
+                        timeTv.setText(hotelCommentBean.getData().get(0).getCreated_at());
+                        if (hotelCommentBean.getData().get(0).getStar() == 1) {
+                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                        } else if (hotelCommentBean.getData().get(0).getStar() == 2) {
+                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                        } else if (hotelCommentBean.getData().get(0).getStar() == 3) {
+                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                        } else if (hotelCommentBean.getData().get(0).getStar() == 4) {
+                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                        } else if (hotelCommentBean.getData().get(0).getStar() == 5) {
+                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                        }
                         commentDetailTv.setText(hotelCommentBean.getData().get(0).getContent());
                     }
 
@@ -449,9 +588,16 @@ public class HotelDetailActivity extends BaseActivity {
             holder.findViewById(R.id.tv_subscribe).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    subRoom(data.getId());
+                }
+            });
+            holder.findViewById(R.id.rl_room).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     initRoomDetail(data.getId());
                 }
             });
+
         }
     }
 
@@ -591,7 +737,6 @@ public class HotelDetailActivity extends BaseActivity {
                                     subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
                                     subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
                                     HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
-
                                 }
                             }).builder();
                 } else {
@@ -600,6 +745,7 @@ public class HotelDetailActivity extends BaseActivity {
                 }
             }
 
+
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
@@ -607,6 +753,83 @@ public class HotelDetailActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void subRoom(final int roomId) {
+        showLoading();
+        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
+        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    RoomDetailBean roomDetailBean = new Gson().fromJson(result, RoomDetailBean.class);
+                    // ToastUtils.showLong(HotelDetailActivity.this, id + "");
+                    SubscribeBean subscribeBean = new SubscribeBean();
+                    subscribeBean.hotelName = hotelName;
+                    subscribeBean.roomId = roomDetailBean.getId();
+                    subscribeBean.roomName = roomDetailBean.getName();
+                    subscribeBean.bed = roomDetailBean.getHotel_room_type();
+                    subscribeBean.breakfast = hotelBreakfast;
+                    subscribeBean.window = roomDetailBean.getWindow_type();
+                    subscribeBean.wifi = roomDetailBean.getWifi_type();
+                    subscribeBean.people = roomDetailBean.getPeople();
+                    subscribeBean.cancel = roomDetailBean.getIs_cancel();
+                    subscribeBean.startDate = startDateTv.getText().toString();
+                    subscribeBean.startWeek = startWeekTv.getText().toString();
+                    subscribeBean.endDate = endDateTv.getText().toString();
+                    subscribeBean.endWeek = endWeekTv.getText().toString();
+                    subscribeBean.night = allDayTv.getText().toString();
+                    subscribeBean.roomNumber = getIntent().getStringExtra(EXT_ROOMNUMBER);
+                    subscribeBean.roomPrice = roomDetailBean.getPrice();
+                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
+                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
+                    HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
+
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                }
+            }
+
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+            }
+        });
+
+    }
+
+
+    public void startNaviGoogle(String lat, String lng) {
+        if (isAvilible(this, "com.google.android.apps.maps")) {
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        } else {
+            ToastUtils.showLong(this, "您尚未安装谷歌地图或地图版本过低");
+        }
+    }
+
+    public static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
     }
 
 }

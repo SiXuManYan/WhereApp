@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:id="@+id/ll_hotellist">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -25,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="14dp"
                 android:layout_toLeftOf="@+id/iv_map"
                 android:background="@drawable/bg_hotelsearch"
                 android:orientation="horizontal">
@@ -94,6 +95,7 @@
                     android:background="@color/white" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -101,25 +103,23 @@
                         android:id="@+id/iv_search"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_hotelsearch"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_hotelsearch" />
 
                     <TextView
                         android:id="@+id/tv_city"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/iv_search"
                         android:layout_toLeftOf="@id/iv_clear"
-                        android:text="巴丹"
-                        android:textColor="@color/grey_666666"
-                        android:textSize="13sp"
+                        android:layout_toRightOf="@+id/iv_search"
                         android:gravity="center_vertical"
-                        />
-
-
-
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="请输入酒店名称"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="13sp" />
 
 
                     <ImageView
@@ -127,9 +127,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_clearsearch"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"/>
+                        android:layout_marginRight="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_clearsearch" />
 
 
                 </RelativeLayout>
@@ -148,15 +149,15 @@
                 android:src="@drawable/ic_hotelmap" />
 
 
-
         </RelativeLayout>
 
 
     </androidx.appcompat.widget.Toolbar>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/grey_F5F5F5"/>
+        android:background="@color/grey_F5F5F5" />
 
     <com.jcs.where.hotel.tablayout.ColorClipTabLayout
         android:id="@+id/tab"
@@ -172,5 +173,5 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never" />
 </LinearLayout>

@@ -16,6 +16,7 @@ import com.jcs.where.utils.StatusBarUtils;
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.utils.ValueUtils;
+import co.tton.android.base.view.ToastUtils;
 
 public class HotelPayActivity extends BaseActivity implements View.OnClickListener {
 
@@ -108,7 +109,9 @@ public class HotelPayActivity extends BaseActivity implements View.OnClickListen
                 payTv.setText("首都银行支付  " + hotelPayBean.price);
                 break;
             case R.id.tv_pay:
-                HotelOrderDetailActivity.goTo(HotelPayActivity.this,hotelPayBean.orderId);
+                ToastUtils.showLong(HotelPayActivity.this, "支付成功");
+                finish();
+                HotelOrderDetailActivity.goTo(HotelPayActivity.this, hotelPayBean.orderId);
                 break;
         }
     }

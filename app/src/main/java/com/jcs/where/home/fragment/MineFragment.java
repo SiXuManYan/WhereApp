@@ -2,7 +2,6 @@ package com.jcs.where.home.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.huantansheng.easyphotos.EasyPhotos;
-import com.huantansheng.easyphotos.callback.SelectCallback;
-import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
 import com.jcs.where.hotel.CityPickerActivity;
-import com.jcs.where.hotel.WriteCommentActivity;
 import com.jcs.where.login.LoginActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.manager.UserManager;
 import com.jcs.where.presenter.UploadFilePresenter;
-import com.jcs.where.utils.GlideEngine;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import co.tton.android.base.app.fragment.BaseFragment;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
-import rx.Subscriber;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -97,49 +87,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
-                //
-                //选择照片
-                EasyPhotos.createAlbum(this, true, GlideEngine.getInstance())
-                        .setFileProviderAuthority("com.huantansheng.easyphotos.demo.fileprovider")
-                        .setCount(9)
-                        .start(new SelectCallback() {
-                            @Override
-                            public void onResult(ArrayList<Photo> photos, boolean isOriginal) {
-                                List<String> selectedPaths = new ArrayList<>();
-                                for (int i = 0; i < photos.size(); i++) {
-                                    selectedPaths.add(photos.get(i).path);
-                                }
-                                addSubscription(mUploadPresenter.uploadFiles(selectedPaths)
-                                        .subscribe(new Subscriber<List<String>>() {
-                                            @Override
-                                            public void onCompleted() {
 
-                                            }
-
-                                            @Override
-                                            public void onError(Throwable e) {
-                                                e.printStackTrace();
-                                                ToastUtils.showLong(getContext(), e.getMessage());
-                                            }
-
-                                            @Override
-                                            public void onNext(List<String> strings) {
-                                                Log.d("ssss", strings + "");
-                                            }
-                                        }));
-                            }
-                        });
-                //条件选择
-                //createCustomDatePicker(view);
-                //  CityPickerActivity.goTo((Activity) getContext(), REQ_SELECT_CITY);
-//                Intent intent = new Intent(getContext(), CityPickerActivity.class);
-//                startActivityForResult(intent, REQ_SELECT_CITY);
                 break;
             case R.id.ll_settlement:
                 LoginActivity.goTo(getContext());
                 break;
             case R.id.ll_changelangue:
-                WriteCommentActivity.goTo(getContext(), 1, "ssss");
                 break;
             default:
         }

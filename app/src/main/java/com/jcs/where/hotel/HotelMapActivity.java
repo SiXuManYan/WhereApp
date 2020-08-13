@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -92,6 +93,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private RelativeLayout hotelMapRl;
     private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
     private int lastPostition = 0;
+    private int lastScrollPosition = 0;
+    private ImageView clearIv;
 
     private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
 
@@ -156,6 +159,17 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             @Override
             public void onPageSelected(int position) {
                 mMarkerRainbow.get(position).showInfoWindow();
+                TextView priceTv = views.get(position).findViewById(R.id.tv_price);
+                views.get(position).setBackground(getResources().getDrawable(R.drawable.ic_markselected));
+                priceTv.setTextColor(getResources().getColor(R.color.white));
+                ((ViewGroup) views.get(position).getParent()).removeView(views.get(position));
+                mMarkerRainbow.get(position).setIcon(fromView(HotelMapActivity.this, views.get(position)));
+                TextView price1Tv = views.get(lastScrollPosition).findViewById(R.id.tv_price);
+                views.get(lastScrollPosition).setBackground(getResources().getDrawable(R.drawable.ic_mark));
+                price1Tv.setTextColor(getResources().getColor(R.color.blue_4C9EF2));
+                ((ViewGroup) views.get(lastScrollPosition).getParent()).removeView(views.get(lastScrollPosition));
+                mMarkerRainbow.get(lastScrollPosition).setIcon(fromView(HotelMapActivity.this, views.get(lastScrollPosition)));
+                lastScrollPosition = position;
             }
 
             @Override
@@ -168,7 +182,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         endDayTv = V.f(this, R.id.tv_endday);
         endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
         cityTv = V.f(this, R.id.tv_city);
-        cityTv.setText(getIntent().getStringExtra(EXT_CITY));
         V.f(this, R.id.iv_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -270,11 +283,15 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
             }
         });
-        V.f(this, R.id.iv_clear).setOnClickListener(new View.OnClickListener() {
+        clearIv = V.f(this, R.id.iv_clear);
+        clearIv.setVisibility(View.GONE);
+        clearIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cityTv.setText("请输入酒店名称");
                 useInputText = "";
+                cityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
+                clearIv.setVisibility(View.GONE);
                 initData();
             }
         });
@@ -319,6 +336,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                     List<HotelMapListBean> list = gson.fromJson(result, type);
                     // Center camera on Adelaide marker
 
+                    lastPostition = 0;
+                    lastScrollPosition = 0;
                     if (list != null) {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ADELAIDE, 10f));
                         for (int i = 0; i < list.size(); i++) {
@@ -341,8 +360,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                         priceTv.setTextColor(getResources().getColor(R.color.white));
                         ((ViewGroup) views.get(0).getParent()).removeView(views.get(0));
                         mMarkerRainbow.get(0).setIcon(fromView(HotelMapActivity.this, views.get(0)));
-
-                        mMarkerRainbow.get(0).showInfoWindow();
 
                         for (int i = 0; i < list.size(); i++) {
                             mCardAdapter.addCardItem(list.get(i));
@@ -414,23 +431,27 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             }
         });
 
-        for (int i = 0; i < mMarkerRainbow.size(); i++) {
-            if (marker.getId().equals(mMarkerRainbow.get(i).getId())) {
-                viewPager.setCurrentItem(i);
-                TextView priceTv = views.get(i).findViewById(R.id.tv_price);
-                views.get(i).setBackground(getResources().getDrawable(R.drawable.ic_markselected));
-                priceTv.setTextColor(getResources().getColor(R.color.white));
-                ((ViewGroup) views.get(i).getParent()).removeView(views.get(i));
-                marker.setIcon(fromView(HotelMapActivity.this, views.get(i)));
+        if (marker.getId().equals(mMarkerRainbow.get(lastPostition).getId())) {
 
-                views.get(lastPostition).setBackground(getResources().getDrawable(R.drawable.ic_mark));
-                priceTv.setTextColor(getResources().getColor(R.color.blue_4C9EF2));
-                ((ViewGroup) views.get(lastPostition).getParent()).removeView(views.get(lastPostition));
-                mMarkerRainbow.get(lastPostition).setIcon(fromView(HotelMapActivity.this, views.get(lastPostition)));
-                lastPostition = i;
+        } else {
+            for (int i = 0; i < mMarkerRainbow.size(); i++) {
+                if (marker.getId().equals(mMarkerRainbow.get(i).getId())) {
+                    viewPager.setCurrentItem(i);
+                    TextView priceTv = views.get(i).findViewById(R.id.tv_price);
+                    views.get(i).setBackground(getResources().getDrawable(R.drawable.ic_markselected));
+                    priceTv.setTextColor(getResources().getColor(R.color.white));
+                    ((ViewGroup) views.get(i).getParent()).removeView(views.get(i));
+                    marker.setIcon(fromView(HotelMapActivity.this, views.get(i)));
+                    TextView price1Tv = views.get(lastPostition).findViewById(R.id.tv_price);
+                    views.get(lastPostition).setBackground(getResources().getDrawable(R.drawable.ic_mark));
+                    price1Tv.setTextColor(getResources().getColor(R.color.blue_4C9EF2));
+                    ((ViewGroup) views.get(lastPostition).getParent()).removeView(views.get(lastPostition));
+                    mMarkerRainbow.get(lastPostition).setIcon(fromView(HotelMapActivity.this, views.get(lastPostition)));
+                    lastPostition = i;
+                }
             }
-        }
 
+        }
         float zIndex = marker.getZIndex() + 1.0f;
         marker.setZIndex(zIndex);
         return false;
@@ -462,6 +483,9 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_SEARCH && data != null) {
+            clearIv.setVisibility(View.VISIBLE);
+
+            cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
             cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
             useInputText = data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH);
             initData();

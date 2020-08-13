@@ -26,7 +26,7 @@ public class GuessYouLikeHotelBean {
     private String address;
     private float lat;
     private float lng;
-    private float price;
+    private int price;
     private float distance;
     private int remain_room_num;
     private String facebook_link;
@@ -89,11 +89,11 @@ public class GuessYouLikeHotelBean {
         this.lng = lng;
     }
 
-    public float getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

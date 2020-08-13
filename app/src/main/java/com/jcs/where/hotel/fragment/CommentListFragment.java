@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,12 +122,13 @@ public class CommentListFragment extends BaseFragment {
 
     private void getdata() {
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getArguments().getString("id") + "/comments" + "?type=" + getArguments().getString("type") + "?page=" + page, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
+        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getArguments().getString("id") + "/comments" + "?type=" + getArguments().getString("type") + "&page=" + page, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
                     CommentListBean commentListBean = new Gson().fromJson(result, CommentListBean.class);
+                    Log.d("ssss", commentListBean.getData().size() + "");
                     useCommentListBean = commentListBean;
                     list = commentListBean.getData();
                     if (list.size() < 10) {

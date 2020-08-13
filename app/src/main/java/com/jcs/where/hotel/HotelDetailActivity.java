@@ -11,7 +11,12 @@ import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,7 +88,7 @@ public class HotelDetailActivity extends BaseActivity {
     private RecyclerView roomRv, facilitiesRv;
     private RoomAdapter roomAdapter;
     private FacilitiesAdapter facilitiesAdapter;
-    private TextView policyStartTimeTv, policyEndTimeTv, policyChildrenTv, policyPetTv, policyHintTv, policyPaymentTv, policyBreadfastTv, policyServiceTv;
+    private TextView policyStartTimeTv, policyEndTimeTv, policyChildrenTv;
     private ObservableScrollView scrollView;
     private View useView;
     private LinearLayout commentLl;
@@ -195,11 +200,6 @@ public class HotelDetailActivity extends BaseActivity {
         policyStartTimeTv = V.f(this, R.id.tv_policystarttime);
         policyEndTimeTv = V.f(this, R.id.tv_policyendtime);
         policyChildrenTv = V.f(this, R.id.tv_policychildren);
-        policyPetTv = V.f(this, R.id.tv_policypet);
-        policyHintTv = V.f(this, R.id.tv_policyhint);
-        policyPaymentTv = V.f(this, R.id.tv_policypayment);
-        policyBreadfastTv = V.f(this, R.id.tv_policybreadfast);
-        policyServiceTv = V.f(this, R.id.tv_policyservice);
         scrollView = V.f(this, R.id.scrollView);
         useView.setBackgroundColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(getResources().getColor(R.color.white));
@@ -220,17 +220,17 @@ public class HotelDetailActivity extends BaseActivity {
                     } else {
                         likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteunlike));
                     }
-                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteshare));
+                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_black));
                     toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_black));
                     toolbarStatus = 1;
                 } else {
                     if (like == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentlike));
+                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
                     } else {
                         likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
                     }
-                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentshare));
-                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_transparent));
+                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_white));
+                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_white));
                     toolbarStatus = 0;
                 }
                 useView.getBackground().setAlpha(alpha);
@@ -379,13 +379,8 @@ public class HotelDetailActivity extends BaseActivity {
                     policyStartTimeTv.setText("入住时间：" + hotelDetailBean.getPolicy().getCheck_in_time());
                     policyEndTimeTv.setText("退房时间：" + hotelDetailBean.getPolicy().getCheck_out_time());
                     policyChildrenTv.setText("儿童及加床：" + hotelDetailBean.getPolicy().getChildren());
-                    policyPetTv.setText("宠物：" + hotelDetailBean.getPolicy().getPet());
-                    policyHintTv.setText("预订提示：" + hotelDetailBean.getPolicy().getHint());
-                    policyPaymentTv.setText("支付方式：" + hotelDetailBean.getPolicy().getPayment());
-                    policyBreadfastTv.setText("早餐：" + hotelDetailBean.getPolicy().getBreadfast());
-                    policyServiceTv.setText("服务说明：" + hotelDetailBean.getPolicy().getService_desc());
                     if (hotelDetailBean.getCollect_status() == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentlike));
+                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
                     } else {
                         likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
                     }
@@ -549,7 +544,21 @@ public class HotelDetailActivity extends BaseActivity {
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
             TextView typeTv = holder.findViewById(R.id.tv_hotelType);
-            typeTv.setText(data.getHotel_room_type());
+            String breakfast = null;
+            if (data.getBreakfast_type() == 1) {
+                breakfast = "有早餐";
+            } else {
+                breakfast = "无早餐";
+            }
+            typeTv.setText(data.getHotel_room_type() + "  " + breakfast + "  ");
+
+            SpannableString m2 = new SpannableString("m2");
+            m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
+            m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(data.getRoom_area());
+            spannableStringBuilder.append(m2);
+            TextView roomAreaTv = holder.findViewById(R.id.tv_roomarea);
+            roomAreaTv.setText(spannableStringBuilder);
             TextView priceTv = holder.findViewById(R.id.tv_price);
             priceTv.setText("₱" + data.getPrice() + "起");
             RecyclerView tagRv = holder.findViewById(R.id.rv_tag);
@@ -588,13 +597,13 @@ public class HotelDetailActivity extends BaseActivity {
             holder.findViewById(R.id.tv_subscribe).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    subRoom(data.getId());
+                    subRoom(data.getId(), data.getBreakfast_type());
                 }
             });
             holder.findViewById(R.id.rl_room).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    initRoomDetail(data.getId());
+                    initRoomDetail(data.getId(), data.getBreakfast_type());
                 }
             });
 
@@ -656,7 +665,7 @@ public class HotelDetailActivity extends BaseActivity {
                         ToastUtils.showLong(HotelDetailActivity.this, "收藏成功");
                         like = 1;
                         if (toolbarStatus == 0) {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentlike));
+                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
                         } else {
                             likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
                         }
@@ -703,7 +712,7 @@ public class HotelDetailActivity extends BaseActivity {
     }
 
 
-    private void initRoomDetail(final int roomId) {
+    private void initRoomDetail(final int roomId, final int breakfast) {
         showLoading();
         String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
@@ -722,7 +731,11 @@ public class HotelDetailActivity extends BaseActivity {
                                     subscribeBean.roomId = id;
                                     subscribeBean.roomName = name;
                                     subscribeBean.bed = bed;
-                                    subscribeBean.breakfast = hotelBreakfast;
+                                    if (breakfast == 1) {
+                                        subscribeBean.breakfast = "有早餐";
+                                    } else {
+                                        subscribeBean.breakfast = "无早餐";
+                                    }
                                     subscribeBean.window = window;
                                     subscribeBean.wifi = wifi;
                                     subscribeBean.people = people;
@@ -755,7 +768,7 @@ public class HotelDetailActivity extends BaseActivity {
 
     }
 
-    private void subRoom(final int roomId) {
+    private void subRoom(final int roomId, final int breakfast) {
         showLoading();
         String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
@@ -770,7 +783,11 @@ public class HotelDetailActivity extends BaseActivity {
                     subscribeBean.roomId = roomDetailBean.getId();
                     subscribeBean.roomName = roomDetailBean.getName();
                     subscribeBean.bed = roomDetailBean.getHotel_room_type();
-                    subscribeBean.breakfast = hotelBreakfast;
+                    if (breakfast == 1) {
+                        subscribeBean.breakfast = "有早餐";
+                    } else {
+                        subscribeBean.breakfast = "无早餐";
+                    }
                     subscribeBean.window = roomDetailBean.getWindow_type();
                     subscribeBean.wifi = roomDetailBean.getWifi_type();
                     subscribeBean.people = roomDetailBean.getPeople();

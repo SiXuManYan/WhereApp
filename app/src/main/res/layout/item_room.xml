@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_room"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
-    android:background="@color/white"
-    android:id="@+id/rl_room"
-    >
+    android:background="@color/white">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_photo"
@@ -32,20 +31,35 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_minenext"
-            android:drawablePadding="7.5dp"
             android:text="商务房"
             android:textColor="@color/black_333333"
             android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/tv_hotelType"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4.5dp"
-            android:text="大床"
-            android:textColor="@color/grey_999999"
-            android:textSize="11sp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="4.5dp">
+
+            <TextView
+                android:id="@+id/tv_hotelType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="大床"
+                android:textColor="@color/grey_999999"
+                android:textSize="11sp" />
+
+
+            <TextView
+                android:id="@+id/tv_roomarea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="大床"
+                android:textColor="@color/grey_999999"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/ll_tag"

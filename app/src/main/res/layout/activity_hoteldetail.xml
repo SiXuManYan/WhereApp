@@ -44,7 +44,8 @@
                         android:singleLine="true"
                         android:text="Crown Royale Hotel"
                         android:textColor="@color/black_333333"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_startTime"
@@ -108,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginRight="15dp">
 
                         <ImageView
@@ -128,13 +129,6 @@
                             android:textColor="@color/blue_4C9EF2"
                             android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_next_blue" />
-
                     </RelativeLayout>
 
 
@@ -143,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginLeft="11dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginRight="11dp"
                         android:background="@color/grey_F5F5F5" />
 
@@ -244,6 +238,7 @@
                                 android:layout_marginBottom="7dp"
                                 android:layout_weight="1"
                                 android:drawableLeft="@drawable/ic_hoteldetail_navigation"
+                                android:drawablePadding="10dp"
                                 android:gravity="center"
                                 android:text="导航"
                                 android:textColor="@color/grey_666666"
@@ -267,6 +262,7 @@
                                 android:layout_marginTop="7dp"
                                 android:layout_marginBottom="7dp"
                                 android:drawableLeft="@drawable/ic_hoteldetail_phone"
+                                android:drawablePadding="10dp"
                                 android:gravity="center"
                                 android:text="电话"
                                 android:textColor="@color/grey_666666"
@@ -294,14 +290,15 @@
                         android:layout_marginLeft="15dp"
                         android:text="23 Jul"
                         android:textColor="@color/blue_4C9EF2"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_startweek"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10.5dp"
+                        android:layout_marginLeft="6dp"
                         android:text="Sun"
                         android:textColor="@color/blue_4C9EF2"
                         android:textSize="11sp" />
@@ -323,14 +320,15 @@
                         android:layout_marginLeft="20dp"
                         android:text="23 Jul"
                         android:textColor="@color/blue_4C9EF2"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_endweek"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10.5dp"
+                        android:layout_marginLeft="6dp"
                         android:text="Sun"
                         android:textColor="@color/blue_4C9EF2"
                         android:textSize="11sp" />
@@ -435,61 +433,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="儿童及加床"
                         android:textColor="@color/black_333333"
                         android:textSize="13sp" />
 
-
-                    <TextView
-                        android:id="@+id/tv_policypet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:text="宠物"
-                        android:textColor="@color/black_333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tv_policyhint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:text="预订提示"
-                        android:textColor="@color/black_333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tv_policypayment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:text="支付方式"
-                        android:textColor="@color/black_333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tv_policybreadfast"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:text="早餐"
-                        android:textColor="@color/black_333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tv_policyservice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="服务说明"
-                        android:textColor="@color/black_333333"
-                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -598,19 +546,19 @@
                                             android:id="@+id/tv_time"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginRight="15dp"
                                             android:text="2020-8-8"
                                             android:textColor="@color/grey_999999"
-                                            android:textSize="12sp"
-                                            android:layout_alignParentRight="true"
-                                            android:layout_marginRight="15dp"/>
+                                            android:textSize="12sp" />
 
                                     </RelativeLayout>
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:layout_marginTop="5dp">
+                                        android:layout_marginTop="5dp"
+                                        android:orientation="horizontal">
 
                                         <ImageView
                                             android:id="@+id/iv_star1"
@@ -707,6 +655,12 @@
         </RelativeLayout>
     </com.jcs.where.view.ObservableScrollView>
 
+    <com.jcs.where.view.RealtimeBlurView
+        android:id="@+id/RealtimeBlurView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"/>
+
     <View
         android:id="@+id/useView"
         android:layout_width="match_parent"
@@ -719,8 +673,8 @@
         android:layout_below="@+id/useView"
         android:background="@color/transparency"
         android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_transparent"
-        app:navigationIcon="@drawable/ic_back_transparent"
+        android:navigationIcon="@drawable/ic_back_white"
+        app:navigationIcon="@drawable/ic_back_white"
         app:theme="@style/AppTheme.ActionBar">
 
         <RelativeLayout
@@ -735,7 +689,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_toLeftOf="@+id/iv_share"
                 android:padding="10dp"
-                android:src="@drawable/ic_hoteltransparentlike" />
+                android:src="@drawable/ic_hoteltransparentunlike" />
 
             <ImageView
                 android:id="@+id/iv_share"
@@ -744,7 +698,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:padding="10dp"
-                android:src="@drawable/ic_hoteltransparentshare" />
+                android:src="@drawable/ic_share_white" />
 
 
         </RelativeLayout>

@@ -101,7 +101,6 @@ public class CityPickerActivity extends BaseActivity {
         HttpUtils.doHttpReqeust("GET", "commonapi/v1/areas", null, "", TokenManager.get().getToken(CityPickerActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
-                Log.d("ssss", result);
                 stopLoading();
                 if (code == 200) {
                     AreaBean bean = new Gson().fromJson(result, AreaBean.class);

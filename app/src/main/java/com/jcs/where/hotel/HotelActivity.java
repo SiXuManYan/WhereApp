@@ -70,6 +70,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
     private final int READ_CODE = 10;
     private final int READ_LOCATIONCODE = 11;
     private FusedLocationProviderClient fusedLocationClient;
+    private ImageView clearIv;
+    private String transmitPrice, transmitStar;
 
 
     public static void goTo(Context context) {
@@ -117,14 +119,36 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
         priceAndStarTv = V.f(this, R.id.tv_priceandstar);
         priceAndStarTv.setOnClickListener(this);
         showRv = V.f(this, R.id.rv_show);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelActivity.this,
+//                LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelActivity.this,
-                LinearLayoutManager.VERTICAL, false);
+                LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         showRv.setLayoutManager(linearLayoutManager);
+        showRv.setNestedScrollingEnabled(false);
         V.f(this, R.id.tv_search).setOnClickListener(this);
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy");
         useStartYear = simpleDateFormat2.format(date);
         useEndYear = getOldWeek(1).substring(0, 4);
         V.f(this, R.id.tv_chooselocation).setOnClickListener(this);
+        clearIv = V.f(this, R.id.iv_clear);
+        clearIv.setVisibility(View.GONE);
+        clearIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priceAndStarTv.setText("价格/星级");
+                priceAndStarTv.setTextColor(getResources().getColor(R.color.grey_999999));
+                usePrice = null;
+                useStar = null;
+                transmitPrice = null;
+                transmitStar = null;
+                clearIv.setVisibility(View.GONE);
+            }
+        });
         initData();
         checkPermission();
         initLoaction();
@@ -239,12 +263,16 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                 roomNumTv.setText(roomNum1 + "");
                 break;
             case R.id.tv_priceandstar:
-                new ChoosePricePop.Builder(HotelActivity.this, view)
+                new ChoosePricePop.Builder(HotelActivity.this, view, transmitPrice, transmitStar)
                         .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
                             @Override
                             public void getDate(String price, String star) {
                                 if (price == null && star == null) {
-
+                                    clearIv.setVisibility(View.GONE);
+                                    priceAndStarTv.setText("价格/星级");
+                                    priceAndStarTv.setTextColor(getResources().getColor(R.color.grey_999999));
+                                    transmitPrice = null;
+                                    transmitStar = null;
                                 } else if (price == null) {
                                     priceAndStarTv.setText(star);
                                     if (star.equals("二星及以下")) {
@@ -256,10 +284,14 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                                     } else if (star.equals("五星")) {
                                         useStar = "[5]";
                                     }
+                                    transmitStar = star;
+                                    transmitPrice = null;
                                     usePrice = null;
+                                    clearIv.setVisibility(View.VISIBLE);
                                 } else if (star == null) {
                                     priceAndStarTv.setText(price);
                                     if (price.equals("₱ 100以下")) {
+
                                         usePrice = "[0,100]";
                                     } else if (price.equals("₱ 100-200")) {
                                         usePrice = "[100,200]";
@@ -276,7 +308,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                                     } else if (price.equals("₱ 900以上")) {
                                         usePrice = "[900,100000]";
                                     }
+                                    transmitStar = null;
+                                    transmitPrice = price;
                                     useStar = null;
+                                    clearIv.setVisibility(View.VISIBLE);
                                 } else {
                                     priceAndStarTv.setText(price + "，" + star);
                                     if (price.equals("₱ 100以下")) {
@@ -305,6 +340,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                                     } else if (star.equals("五星")) {
                                         useStar = "[5]";
                                     }
+                                    transmitStar = star;
+                                    transmitPrice = price;
+                                    clearIv.setVisibility(View.VISIBLE);
                                 }
 
                                 priceAndStarTv.setTextColor(getResources().getColor(R.color.black_333333));

@@ -28,7 +28,7 @@ public class HotelMapListBean {
     private String address;
     private double lat;
     private double lng;
-    private double price;
+    private int price;
     private double distance;
     private int remain_room_num;
     private String facebook_link;
@@ -91,11 +91,11 @@ public class HotelMapListBean {
         this.lng = lng;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

@@ -106,7 +106,7 @@ public class CityListAdapter extends BaseAdapter {
                 view = inflater.inflate(R.layout.cp_view_locate_city, parent, false);
                 ViewGroup container = (ViewGroup) view.findViewById(R.id.layout_locate);
                 TextView state = (TextView) view.findViewById(R.id.tv_located_city);
-                state.setText("正在定位…");
+                state.setText("定位失败");
                 break;
             case 1:     //所有
                 if (view == null) {

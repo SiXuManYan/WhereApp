@@ -39,6 +39,8 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
         this.setBackgroundDrawable(new BitmapDrawable());
         this.setOnDismissListener(new ShareDismissListener());
         backgroundAlpha(activity, 0.5f);
+        price = builder.price;
+        star = builder.star;
         initView();
         create(builder.parentView);
     }
@@ -79,6 +81,226 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
         starTv4.setOnClickListener(this);
         resetTv.setOnClickListener(this);
         finishTv.setOnClickListener(this);
+        ((View) rootView.findViewById(R.id.close)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+        priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        starTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+        starTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        starTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+        starTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        starTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+        starTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        starTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+        starTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+        if (price != null) {
+            if (price.equals(priceTv1.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                price = priceTv1.getText().toString();
+            } else if (price.equals(priceTv2.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                price = priceTv2.getText().toString();
+            } else if (price.equals(priceTv3.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                price = priceTv3.getText().toString();
+            } else if (price.equals(priceTv4.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                price = priceTv4.getText().toString();
+            } else if (price.equals(priceTv5.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                price = priceTv5.getText().toString();
+            } else if (price.equals(priceTv6.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                price = priceTv6.getText().toString();
+            } else if (price.equals(priceTv7.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                price = priceTv7.getText().toString();
+            } else if (price.equals(priceTv8.getText().toString())) {
+                priceTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv5.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv5.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv6.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv6.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv7.setBackgroundResource(R.drawable.bg_priceunselect);
+                priceTv7.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                priceTv8.setBackgroundResource(R.drawable.bg_priceselected);
+                priceTv8.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                price = priceTv8.getText().toString();
+            }
+        }
+        if (star != null) {
+            if (star.equals(starTv1.getText().toString())) {
+                starTv1.setBackgroundResource(R.drawable.bg_priceselected);
+                starTv1.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                starTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                star = starTv1.getText().toString();
+            }else if (star.equals(starTv2.getText().toString())) {
+                starTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv2.setBackgroundResource(R.drawable.bg_priceselected);
+                starTv2.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                starTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                star = starTv2.getText().toString();
+            }else if (star.equals(starTv3.getText().toString())) {
+                starTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv3.setBackgroundResource(R.drawable.bg_priceselected);
+                starTv3.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                starTv4.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                star = starTv3.getText().toString();
+            }else if (star.equals(starTv4.getText().toString())) {
+                starTv1.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv2.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv2.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv3.setBackgroundResource(R.drawable.bg_priceunselect);
+                starTv3.setTextColor(activity.getResources().getColor(R.color.grey_666666));
+                starTv4.setBackgroundResource(R.drawable.bg_priceselected);
+                starTv4.setTextColor(activity.getResources().getColor(R.color.blue_4C9EF2));
+                star = starTv4.getText().toString();
+            }
+        }
 
     }
 
@@ -340,10 +562,13 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
         private Activity context;
         private View parentView;
         private PriceOnClickListener mOnClickListener = null;
+        private String price, star;
 
-        public Builder(Activity context, View parentView) {
+        public Builder(Activity context, View parentView, String price, String star) {
             this.context = context;
             this.parentView = parentView;
+            this.price = price;
+            this.star = star;
         }
 
         public ChoosePricePop builder() {

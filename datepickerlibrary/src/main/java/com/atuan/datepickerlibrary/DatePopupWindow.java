@@ -331,9 +331,9 @@ public class DatePopupWindow extends PopupWindow {
             //更改结束日期和完成按钮状态
             llEnd.setVisibility(View.VISIBLE);
             tvHintText.setVisibility(View.GONE);
-            tvOk.setText("完成");
+            tvOk.setText("确定");
             tvOk.setEnabled(true);
-            tvOk.setBackgroundResource(R.drawable.img_btn_bg_y);
+            tvOk.setBackgroundResource(R.drawable.bg_sure);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();

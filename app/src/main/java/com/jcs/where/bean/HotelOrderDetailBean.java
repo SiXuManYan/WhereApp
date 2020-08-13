@@ -32,7 +32,7 @@ public class HotelOrderDetailBean {
      */
 
     private int id;
-    private double price;
+    private int price;
     private String hotel_name;
     private String hotel_addr;
     private String hotel_tel;
@@ -62,11 +62,11 @@ public class HotelOrderDetailBean {
         this.id = id;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

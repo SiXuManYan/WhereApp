@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class HotelListActivity extends BaseActivity {
     private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
     private List<Fragment> fragments;
     private LinearLayout hotelListLl;
+    private ImageView clearIv;
 
     public static void goTo(Context context, String startDate, String endDate, String startWeek, String endWeek, String allDay, String city, String cityId, String price, String star, String startYear, String endYear, String roomNumber) {
         Intent intent = new Intent(context, HotelListActivity.class);
@@ -233,11 +235,15 @@ public class HotelListActivity extends BaseActivity {
                 HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
             }
         });
-        V.f(this, R.id.iv_clear).setOnClickListener(new View.OnClickListener() {
+        clearIv = V.f(this,R.id.iv_clear);
+        clearIv.setVisibility(View.GONE);
+        clearIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cityTv.setText("请输入酒店名称");
                 ((HotelListFragment) fragments.get(0)).setSearchText("");
+                clearIv.setVisibility(View.GONE);
+                cityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
             }
         });
     }
@@ -335,7 +341,9 @@ public class HotelListActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_SEARCH && data != null) {
+            clearIv.setVisibility(View.VISIBLE);
             cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
+            cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
             ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
         }
     }

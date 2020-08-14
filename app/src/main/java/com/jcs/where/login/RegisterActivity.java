@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -177,7 +178,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 params1.put("invite_code", invitationEt.getText().toString());
                 params1.put("phone", phoneEt.getText().toString());
                 params1.put("email", "");
-                HttpUtils.doHttpReqeust("POST", "userapi/v1/register",  params1,"","",new HttpUtils.StringCallback() {
+                Log.d("ssss", params1 + "");
+                HttpUtils.doHttpReqeust("POST", "userapi/v1/register", params1, "", "", new HttpUtils.StringCallback() {
                     @Override
                     public void onSuccess(int code, String result) {
                         stopLoading();

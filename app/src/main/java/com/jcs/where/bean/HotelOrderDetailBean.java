@@ -10,7 +10,7 @@ public class HotelOrderDetailBean {
      * price : 200
      * hotel_name : Purdy-Wehner Hotel
      * hotel_addr : 7297 Justina Heights
-     Port Gracielachester, NY 94939
+     * Port Gracielachester, NY 94939
      * hotel_tel : (537) 831-0369
      * hotel_lat : 14.492753
      * hotel_lng : 120.5058181
@@ -51,7 +51,7 @@ public class HotelOrderDetailBean {
     private int window_type;
     private int people_num;
     private int days;
-    private List<String> username;
+    private String username;
     private List<String> images;
 
     public int getId() {
@@ -214,11 +214,11 @@ public class HotelOrderDetailBean {
         this.days = days;
     }
 
-    public List<String> getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(List<String> username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

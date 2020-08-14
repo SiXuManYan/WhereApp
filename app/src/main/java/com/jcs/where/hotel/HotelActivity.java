@@ -450,11 +450,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
             }
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
-            ImageView facebookIv = holder.findViewById(R.id.iv_facebook);
             if (data.getFacebook_link() != null) {
-                facebookIv.setVisibility(View.VISIBLE);
+                nameTv.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_facebook), null);
             } else {
-                facebookIv.setVisibility(View.INVISIBLE);
+                nameTv.setCompoundDrawables(null, null, null, null);
             }
             TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
             TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);

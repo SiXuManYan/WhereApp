@@ -1,5 +1,6 @@
 package com.jcs.where.home.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -7,11 +8,13 @@ import android.graphics.Outline;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -58,10 +61,16 @@ public class HomeFragment extends BaseFragment {
     private SimpleMarqueeView marqueeView;
     private RecyclerView homeRv;
     private TextView cityNameTv;
+    private LinearLayout bannerLl;
 
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        bannerLl = V.f(view, R.id.ll_banner);
+        ViewGroup.LayoutParams lp;
+        lp = bannerLl.getLayoutParams();
+        lp.height = getScreenWidth() * 100 / 345;
+        bannerLl.setLayoutParams(lp);
         banner3 = V.f(view, R.id.banner3);
         ptrFrame = V.f(view, R.id.ptr_frame);
         ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
@@ -471,4 +480,17 @@ public class HomeFragment extends BaseFragment {
             cityNameTv.setText(data.getStringExtra(CityPickerActivity.EXTRA_CITY));
         }
     }
+
+    public void getBanner() {
+
+    }
+
+    public int getScreenWidth() {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //宽度 dm.widthPixels
+        //高度 dm.heightPixels
+        return dm.widthPixels;
+    }
+
 }

@@ -156,7 +156,8 @@
                 android:layout_alignTop="@+id/iv_photo"
                 android:layout_alignBottom="@+id/iv_photo"
                 android:layout_toRightOf="@+id/iv_photo"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_toLeftOf="@+id/tv_navigation">
 
 
                 <TextView
@@ -167,7 +168,7 @@
                     android:layout_marginRight="18dp"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Batanes North..."
+                    android:text="酒店地址酒店地址酒店地址酒店地址 North..."
                     android:textColor="@color/black_333333"
                     android:textSize="16sp" />
 
@@ -190,7 +191,9 @@
                     android:layout_marginLeft="10dp"
                     android:drawableLeft="@drawable/ic_hotelorderlocation"
                     android:drawablePadding="4dp"
-                    android:text="酒店地址酒店地址"
+                    android:text="酒店地址酒店地址酒店地址酒店地址酒店地址酒店地址酒店地址酒店地址"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 

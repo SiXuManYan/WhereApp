@@ -126,6 +126,10 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".mine.PersonalDataActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

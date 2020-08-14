@@ -2,6 +2,7 @@ package com.jcs.where.hotel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -165,7 +167,24 @@ public class HotelDetailActivity extends BaseActivity {
         V.f(this, R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callPhone();
+                AlertDialog alertDialog2 = new AlertDialog.Builder(HotelDetailActivity.this)
+                        .setTitle("提示")
+                        .setMessage("是否拨打商家电话" + "tel:" + phone)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                callPhone();
+                            }
+                        })
+
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .create();
+                alertDialog2.show();
             }
         });
         startDateTv = V.f(this, R.id.tv_startday);
@@ -560,7 +579,7 @@ public class HotelDetailActivity extends BaseActivity {
             TextView roomAreaTv = holder.findViewById(R.id.tv_roomarea);
             roomAreaTv.setText(spannableStringBuilder);
             TextView priceTv = holder.findViewById(R.id.tv_price);
-            priceTv.setText("₱" + data.getPrice() + "起");
+            priceTv.setText("₱" + data.getPrice());
             RecyclerView tagRv = holder.findViewById(R.id.rv_tag);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                     LinearLayoutManager.HORIZONTAL, false) {

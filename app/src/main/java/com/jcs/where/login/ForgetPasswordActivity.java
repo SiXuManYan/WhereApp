@@ -12,10 +12,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.jcs.where.R;
+import com.jcs.where.api.HttpUtils;
+import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.dialog.ResetSuccessDialog;
 import com.jcs.where.utils.IEditTextChangeListener;
 import com.jcs.where.utils.WorksSizeCheckUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
@@ -113,6 +119,28 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                     return;
                 }
                 myCountDownTimer.start();
+                showLoading();
+                Map<String, String> params = new HashMap<>();
+                params.put("phone", phoneEt.getText().toString());
+                params.put("type", "3");
+                HttpUtils.doHttpReqeust("POST", "userapi/v1/mobile/auth/code", params, "", "", new HttpUtils.StringCallback() {
+                    @Override
+                    public void onSuccess(int code, String result) {
+                        stopLoading();
+                        if (code == 200) {
+                            ToastUtils.showLong(ForgetPasswordActivity.this, "发送成功，请注意查收");
+                        } else {
+                            ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                            ToastUtils.showLong(ForgetPasswordActivity.this, errorBean.message);
+                        }
+                    }
+
+                    @Override
+                    public void onFaileure(int code, Exception e) {
+                        stopLoading();
+                        ToastUtils.showLong(ForgetPasswordActivity.this, e.getMessage());
+                    }
+                });
                 break;
             case R.id.tv_reset:
                 if (!isMobileNO(phoneEt.getText().toString())) {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -90,6 +91,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
         HttpUtils.doHttpReqeust("GET", "hotelapi/v1/orders/" + getIntent().getStringExtra(EXT_ID), null, "", TokenManager.get().getToken(HotelOrderDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
+                Log.d("ssss",result);
                 stopLoading();
                 if (code == 200) {
                     HotelOrderDetailBean hotelOrderDetailBean = new Gson().fromJson(result, HotelOrderDetailBean.class);
@@ -126,7 +128,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
                         wifiTv.setText("无wifi");
                     }
                     peopleTv.setText(hotelOrderDetailBean.getPeople_num() + "人入住");
-                    contactsTv.setText(hotelOrderDetailBean.getUsername().get(0));
+                    contactsTv.setText(hotelOrderDetailBean.getUsername());
                     phoneTv.setText(hotelOrderDetailBean.getPhone());
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);

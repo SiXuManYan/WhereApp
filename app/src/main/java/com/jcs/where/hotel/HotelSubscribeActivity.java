@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -180,11 +181,12 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
         Map<String, String> params = new HashMap<>();
         params.put("hotel_room_id", subscribeBean.roomId + "");
         params.put("price", priceTv.getText().toString().replace("₱", ""));
-        params.put("username", "[" + nameEt.getText().toString() + "]");
+        params.put("username", nameEt.getText().toString());
         params.put("phone", phoneEt.getText().toString());
         params.put("start_date", subscribeBean.startYear + "-" + subscribeBean.startDate.replace("月", "-").replace("日", ""));
         params.put("end_date", subscribeBean.endYear + "-" + subscribeBean.endDate.replace("月", "-").replace("日", ""));
         params.put("room_num", roomNumTv.getText().toString());
+        Log.d("ssss",params+"");
         HttpUtils.doHttpReqeust("POST", "hotelapi/v1/orders", params, "", TokenManager.get().getToken(HotelSubscribeActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {

@@ -17,11 +17,19 @@ import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
+import com.jcs.where.login.event.LoginEvent;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.manager.UserManager;
+import com.jcs.where.mine.PersonalDataActivity;
 import com.jcs.where.presenter.UploadFilePresenter;
+import com.makeramen.roundedimageview.RoundedImageView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import co.tton.android.base.app.fragment.BaseFragment;
+import co.tton.android.base.manager.ImageLoader;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
 
@@ -35,13 +43,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ImageView settingIv;
     private TextView nameTv, accountTv;
     private UploadFilePresenter mUploadPresenter;
-    private int startGroup = -1;
-    private int endGroup = -1;
-    private int startChild = -1;
-    private int endChild = -1;
+    private RoundedImageView headerIv;
 
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         view = inflater.inflate(R.layout.fragment_mine, container, false);
         initView();
         return view;
@@ -53,8 +59,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         nameTv = V.f(view, R.id.tv_name);
         accountTv = V.f(view, R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
+        headerIv = V.f(view, R.id.iv_header);
         V.f(view, R.id.ll_changelangue).setOnClickListener(this);
         V.f(view, R.id.ll_settlement).setOnClickListener(this);
+        V.f(view, R.id.rl_minemessage).setOnClickListener(this);
         initData();
     }
 
@@ -67,8 +75,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 if (code == 200) {
                     UserBean userBean = new Gson().fromJson(result, UserBean.class);
                     UserManager.get().login(getContext(), userBean);
-                    nameTv.setText(userBean.name);
-                    accountTv.setText(userBean.id);
+                    accountTv.setVisibility(View.VISIBLE);
+                    nameTv.setText(userBean.nickname);
+                    accountTv.setText(userBean.phone);
+                    ImageLoader.get().loadAvatar(headerIv, userBean.avatar);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
                     ToastUtils.showLong(getContext(), errorBean.message);
@@ -87,44 +97,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
-
                 break;
             case R.id.ll_settlement:
-                LoginActivity.goTo(getContext());
                 break;
             case R.id.ll_changelangue:
                 break;
+            case R.id.rl_minemessage:
+                if (!nameTv.equals("登录/注册")) {
+                    PersonalDataActivity.goTo(getContext());
+                } else {
+                    LoginActivity.goTo(getContext());
+                }
+                break;
             default:
         }
-    }
-
-    private void createCustomDatePicker(View view) {
-        //时间选择
-//        new DatePopupWindow
-//                .Builder((Activity) getContext(), Calendar.getInstance().getTime(), view)
-//                .setInitSelect(startGroup, startChild, endGroup, endChild)
-//                .setInitDay(false)
-//                .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
-//                    @Override
-//                    public void getDate(String startDate, String endDate, String startWeek, String endWeek, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
-//                        startGroup = startGroupPosition;
-//                        startChild = startChildPosition;
-//                        endGroup = endGroupPosition;
-//                        endChild = endChildPosition;
-//                        String mStartTime = CalendarUtil.FormatDateYMD(startDate);
-//                        String mEndTime = CalendarUtil.FormatDateYMD(endDate);
-//                        ToastUtils.showLong(getContext(), "您选择了：" + mStartTime + startWeek + "到" + mEndTime + endWeek);
-//                    }
-//                }).builder();
-//价格选择
-//        new ChoosePricePop.Builder((Activity) getContext(), view)
-//                .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
-//                    @Override
-//                    public void getDate(String price, String star) {
-//
-//                        ToastUtils.showLong(getContext(), "您选择了：" + price + "到" + star);
-//                    }
-//                }).builder();
     }
 
     @Override
@@ -133,5 +119,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
             ToastUtils.showLong(getContext(), "您选择了：" + data.getStringExtra(CityPickerActivity.EXTRA_CITY));
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LoginEvent event) {
+        if (event == LoginEvent.LOGIN) {
+            initData();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

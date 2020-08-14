@@ -37,6 +37,7 @@
                     android:src="@drawable/ic_minesetting" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_minemessage"
                     android:layout_width="match_parent"
                     android:layout_height="70.5dp"
                     android:layout_marginLeft="15dp"
@@ -51,7 +52,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_test"
+                        android:src="@drawable/ic_noheader"
                         app:riv_corner_radius="4dp" />
 
                     <LinearLayout
@@ -69,7 +70,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="我是名字吖"
+                            android:text="登录/注册"
                             android:textColor="@color/black_333333"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -82,7 +83,8 @@
                             android:gravity="center"
                             android:text="账号:12345"
                             android:textColor="@color/grey_666666"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
 

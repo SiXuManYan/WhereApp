@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_F5F5F5"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/useView"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:navigationIcon="@drawable/ic_back_black"
+        app:navigationIcon="@drawable/ic_back_black"
+        app:theme="@style/AppTheme.ActionBar">
+
+        <TextView
+            android:id="@+id/tv_hotelname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:text="个人资料"
+            android:textColor="@color/black_333333"
+            android:textSize="17sp" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_header"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toLeftOf="@+id/ic_next"
+                android:src="@drawable/ic_noheader" />
+
+            <ImageView
+                android:id="@+id/ic_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_nexttime" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="头像"
+                android:textColor="@color/black_333333"
+                android:textSize="13sp" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="1dp"
+            android:background="@color/grey_EAEAEA" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/ic_namenext"
+                android:layout_toRightOf="@+id/tv_headertitle"
+                android:background="@null"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:gravity="right"
+                android:imeOptions="actionDone"
+                android:text="昵称还是空空的"
+                android:textColor="@color/black_333333"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/ic_namenext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_nexttime" />
+
+            <TextView
+                android:id="@+id/tv_headertitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="15dp"
+                android:text="昵称"
+                android:textColor="@color/black_333333"
+                android:textSize="13sp" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_creattime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:text="创建时间"
+        android:textColor="@color/grey_999999"
+        android:textSize="13sp" />
+
+
+</LinearLayout>

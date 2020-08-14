@@ -21,11 +21,14 @@ import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.LoginBean;
+import com.jcs.where.login.event.LoginEvent;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.IEditTextChangeListener;
 import com.jcs.where.utils.PhoneCheckUtil;
 import com.jcs.where.utils.PhoneTextChangeListener;
 import com.jcs.where.utils.WorksSizeCheckUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -164,6 +167,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     return;
                 }
                 myCountDownTimer.start();
+                showLoading();
+                Map<String, String> params = new HashMap<>();
+                params.put("phone", phoneEt.getText().toString());
+                params.put("type", "1");
+                HttpUtils.doHttpReqeust("POST", "userapi/v1/mobile/auth/code", params, "", "", new HttpUtils.StringCallback() {
+                    @Override
+                    public void onSuccess(int code, String result) {
+                        stopLoading();
+                        if (code == 200) {
+                            ToastUtils.showLong(LoginActivity.this, "发送成功，请注意查收");
+                        } else {
+                            ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                            ToastUtils.showLong(LoginActivity.this, errorBean.message);
+                        }
+                    }
+
+                    @Override
+                    public void onFaileure(int code, Exception e) {
+                        stopLoading();
+                        ToastUtils.showLong(LoginActivity.this, e.getMessage());
+                    }
+                });
                 break;
             case R.id.tv_accountlogin:
                 if (passwordEt.getText().toString().length() < 6) {
@@ -175,23 +200,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     return;
                 }
                 showLoading();
-                Map<String, String> params = new HashMap<>();
-                params.put("type", "3");
-                params.put("name", accountEt.getText().toString());
-                params.put("password", passwordEt.getText().toString());
-                HttpUtils.doHttpReqeust("PATCH", "userapi/v1/login", params, "", "", new HttpUtils.StringCallback() {
+                Map<String, String> params1 = new HashMap<>();
+                params1.put("type", "3");
+                params1.put("name", accountEt.getText().toString());
+                params1.put("password", passwordEt.getText().toString());
+                HttpUtils.doHttpReqeust("PATCH", "userapi/v1/login", params1, "", "", new HttpUtils.StringCallback() {
                     @Override
                     public void onSuccess(int code, String result) {
                         stopLoading();
                         if (code == 200) {
+                            EventBus.getDefault().post(LoginEvent.LOGIN);
                             LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
                             TokenManager.get().login(LoginActivity.this, loginBean);
                             ToastUtils.showLong(LoginActivity.this, "登录成功");
                             finish();
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                           accountErrorTv.setVisibility(View.VISIBLE);
-                           accountErrorTv.setText(errorBean.message);
+                            accountErrorTv.setVisibility(View.VISIBLE);
+                            accountErrorTv.setText(errorBean.message);
                         }
                     }
 
@@ -213,7 +239,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 } else {
                     phoneErrorTv.setVisibility(View.INVISIBLE);
                 }
-                ToastUtils.showLong(LoginActivity.this, "手机号:" + phoneEt.getText().toString() + "验证码 :" + codeEt.getText().toString());
+                showLoading();
+                Map<String, String> params2 = new HashMap<>();
+                params2.put("type", "1");
+                params2.put("phone", phoneEt.getText().toString());
+                params2.put("verification_code", codeEt.getText().toString());
+                HttpUtils.doHttpReqeust("PATCH", "userapi/v1/login", params2, "", "", new HttpUtils.StringCallback() {
+                    @Override
+                    public void onSuccess(int code, String result) {
+                        stopLoading();
+                        if (code == 200) {
+                            EventBus.getDefault().post(LoginEvent.LOGIN);
+                            LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
+                            TokenManager.get().login(LoginActivity.this, loginBean);
+                            ToastUtils.showLong(LoginActivity.this, "登录成功");
+                            finish();
+                        } else {
+                            ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                            accountErrorTv.setVisibility(View.VISIBLE);
+                            accountErrorTv.setText(errorBean.message);
+                        }
+                    }
+
+                    @Override
+                    public void onFaileure(int code, Exception e) {
+                        stopLoading();
+                        ToastUtils.showLong(LoginActivity.this, e.getMessage());
+                    }
+                });
                 break;
             case R.id.tv_forgetpas:
                 ForgetPasswordActivity.goTo(LoginActivity.this);
@@ -266,6 +319,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         else
             return mobiles.matches(telRegex);
     }
-
 
 }

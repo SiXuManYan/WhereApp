@@ -118,15 +118,23 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".hotel.HotelSearchActivity"
+        <activity
+            android:name=".hotel.HotelSearchActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".currency.WebViewActivity"
+        <activity
+            android:name=".currency.WebViewActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".mine.PersonalDataActivity"
+        <activity
+            android:name=".mine.PersonalDataActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".travel.TravelMapActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 

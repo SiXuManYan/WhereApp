@@ -157,7 +157,33 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 } else {
                     errorTv.setVisibility(View.INVISIBLE);
                 }
-                resetSuccessDialog.show();
+                showLoading();
+                Map<String, String> params1 = new HashMap<>();
+                params1.put("type", "1");
+                params1.put("phone", phoneEt.getText().toString());
+                params1.put("verification_code", codeEt.getText().toString());
+                params1.put("password", pasEt.getText().toString());
+                params1.put("password_confirmation", surePasEt.getText().toString());
+                HttpUtils.doHttpReqeust("PUT", "userapi/v1/forget", params1, "", "", new HttpUtils.StringCallback() {
+                    @Override
+                    public void onSuccess(int code, String result) {
+                        stopLoading();
+                        if (code == 200) {
+                            resetSuccessDialog.show();
+                        } else {
+                            ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                            ToastUtils.showLong(ForgetPasswordActivity.this, errorBean.message);
+                        }
+                    }
+
+                    @Override
+                    public void onFaileure(int code, Exception e) {
+                        stopLoading();
+                        ToastUtils.showLong(ForgetPasswordActivity.this, e.getMessage());
+                    }
+                });
+
+
                 break;
             default:
         }

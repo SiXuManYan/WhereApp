@@ -28,10 +28,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.BusinessBean;
+import com.jcs.where.bean.ErrorBean;
+import com.jcs.where.bean.HomeBannerBean;
+import com.jcs.where.bean.HomeNewsBean;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.hotel.HotelActivity;
+import com.jcs.where.manager.TokenManager;
+import com.jcs.where.travel.TravelMapActivity;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -39,6 +47,7 @@ import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +71,7 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView homeRv;
     private TextView cityNameTv;
     private LinearLayout bannerLl;
+    private int refreshBanner = 0;
 
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,7 +92,8 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-
+                getBannerData();
+                getNewsData();
             }
         });
         marqueeView = V.f(view, R.id.simpleMarqueeView);
@@ -95,36 +106,79 @@ public class HomeFragment extends BaseFragment {
                 startActivityForResult(intent, REQ_SELECT_CITY);
             }
         });
+        getBannerData();
+        getNewsData();
         initView();
         return view;
     }
 
-    private void initView() {
-//        Subscription subscription = Api.get().getHomeBannerList()
-//                .compose(new ApiTransformer<List<HomeBannerBean>>())
-//                .subscribe(new Observer<List<HomeBannerBean>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<HomeBannerBean> homeBannerBeans) {
-//
-//                    }
-//                });
-//        addSubscription(subscription);
+    private void getBannerData() {
+        showLoading();
+        HttpUtils.doHttpReqeust("GET", "commonapi/v1/banners", null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    ptrFrame.refreshComplete();
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<List<HomeBannerBean>>() {
+                    }.getType();
+                    List<HomeBannerBean> list = gson.fromJson(result, type);
+                    refreshBanner = refreshBanner + 1;
+                    initBanner(list);
+                } else {
+                    ptrFrame.refreshComplete();
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(getContext(), errorBean.message);
+                }
+            }
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(getContext(), e.getMessage());
+            }
+        });
+
+    }
+
+    private void getNewsData() {
+        showLoading();
+        HttpUtils.doHttpReqeust("GET", "newsapi/v1/news/notices?notice_num=10", null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    ptrFrame.refreshComplete();
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<List<HomeNewsBean>>() {
+                    }.getType();
+                    List<HomeNewsBean> list = gson.fromJson(result, type);
+                    initNews(list);
+                } else {
+                    ptrFrame.refreshComplete();
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(getContext(), errorBean.message);
+                }
+            }
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(getContext(), e.getMessage());
+            }
+        });
+
+    }
+
+    private void initBanner(List<HomeBannerBean> list) {
+        if (refreshBanner > 1) {
+            banner3.releaseBanner();
+        }
         List<String> bannerUrls = new ArrayList<>();
-        bannerUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536187&di=4d4f79fee6c1203e41f73bfbce99f596&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2F2013qcpd%2Fzsgz%2F201403%2FW020140327358771316323.jpg");
-        bannerUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536188&di=858d2f57077426cf18c7d5ba1776d90e&imgtype=0&src=http%3A%2F%2Ftoutiao.image.mucang.cn%2Ftoutiao-image%2F2017%2F04%2F27%2F03%2F5132a5b8cb524cb2a474154ba34fc8f7.jpeg");
-        bannerUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536184&di=1d39dd5866d440260e5405d2326fd4ae&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2F2013qcpd%2Fzsgz%2F201403%2FW020140327358762180187.jpg");
-        bannerUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536184&di=72f0fdc0787753689c353dfd2dba3fac&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn15%2F649%2Fw900h549%2F20180611%2F226a-hcufqif9808134.jpg");
-        bannerUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536183&di=c59bc0cce789bca06fc490838b384495&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180519%2F91307c39741e4a96938cd397bd93ab4f.jpeg");
+        for (int i = 0; i < list.size(); i++) {
+            bannerUrls.add(list.get(i).src);
+        }
         banner3.setBannerTypes(XBanner.CIRCLE_INDICATOR)
                 .setImageUrls(bannerUrls)
                 .setImageLoader(new AbstractUrlLoader() {
@@ -135,7 +189,7 @@ public class HomeFragment extends BaseFragment {
 //                                .into(image);
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
-                                .error(R.drawable.ic_home_press) //加载失败图片
+                                .error(R.drawable.ic_test) //加载失败图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
                                 .transform(new GlideRoundTransform(10)); //圆角
@@ -147,7 +201,7 @@ public class HomeFragment extends BaseFragment {
 //                        Glide.with(context).asGif().load(url).into(gifImageView);
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
-                                .error(R.drawable.ic_home_press) //加载失败图片
+                                .error(R.drawable.ic_test) //加载失败图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
                                 .transform(new GlideRoundTransform(10)); //圆角
@@ -187,18 +241,13 @@ public class HomeFragment extends BaseFragment {
             banner3.setClipToOutline(true);
         }
 
-        final List<String> messageList = new ArrayList<>();
-        messageList.add("中印谈判有突破 但印度还在做火上浇油的事");
-        messageList.add("加拿大对香港禁运军事物资 一看金额尴尬了");
-        messageList.add("世卫承认中方从未报告疫情暴发?外交部回应");
-        messageList.add("一不小心 《纽约时报》把美政府反华阴谋给说漏了");
-        messageList.add("党中央决定成立的小组又设一专项组 组长亮相");
-        messageList.add("美海军叫板：美国航母不会被中国弹道导弹吓倒");
-        messageList.add("江苏两逃犯暴力袭警致两名警员牺牲 现已被抓获");
-        messageList.add("1071万高考生今迎人生大考 33城直击高考现场");
-        messageList.add("山东民办教师自称被人顶替教师岗位26年 官方回应");
-        messageList.add("惨剧！欧洲一家动物园饲养员被老虎咬死 吓坏游客");
+    }
 
+    private void initNews(List<HomeNewsBean> list) {
+        final List<String> messageList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            messageList.add(list.get(i).title);
+        }
         SimpleMF<String> marqueeFactory = new SimpleMF(getContext());
         marqueeFactory.setData(messageList);
         marqueeView.setMarqueeFactory(marqueeFactory);
@@ -211,6 +260,11 @@ public class HomeFragment extends BaseFragment {
                 ToastUtils.showLong(getContext(), messageList.get(mPosition));
             }
         });
+    }
+
+    private void initView() {
+
+
         List<Integer> typeList = new ArrayList<>();
         typeList.add(1);
         typeList.add(2);
@@ -230,6 +284,12 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 HotelActivity.goTo(getContext());
+            }
+        });
+        V.f(view,R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TravelMapActivity.goTo(getContext());
             }
         });
     }

@@ -80,6 +80,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }
         });
         errorTv = V.f(this, R.id.tv_error);
+        V.f(this,R.id.tv_havecount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

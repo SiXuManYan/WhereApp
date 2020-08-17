@@ -103,7 +103,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_changelangue:
                 break;
             case R.id.rl_minemessage:
-                if (!nameTv.equals("登录/注册")) {
+                if (!nameTv.getText().toString().equals("登录/注册")) {
                     PersonalDataActivity.goTo(getContext());
                 } else {
                     LoginActivity.goTo(getContext());

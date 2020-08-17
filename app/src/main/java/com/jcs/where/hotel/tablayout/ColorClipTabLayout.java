@@ -55,10 +55,10 @@ public class ColorClipTabLayout extends TabLayout {
             // Text colors/sizes come from the text appearance first
             final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ColorClipTabLayout);
             //Tab字体大小
-            tabTextSize = ta.getDimensionPixelSize(R.styleable.ColorClipTabLayout_text_size, 72);
+            tabTextSize = ta.getDimensionPixelSize(R.styleable.ColorClipTabLayout_text_size, 28);
             //Tab文字颜色
-            tabTextColor = ta.getColor(R.styleable.ColorClipTabLayout_text_unselected_color, Color.parseColor("#000000"));
-            tabSelectedTextColor = ta.getColor(R.styleable.ColorClipTabLayout_text_selected_color, Color.parseColor("#cc0000"));
+            tabTextColor = ta.getColor(R.styleable.ColorClipTabLayout_text_unselected_color, Color.parseColor("#333333"));
+            tabSelectedTextColor = ta.getColor(R.styleable.ColorClipTabLayout_text_selected_color, Color.parseColor("#4B9DF1"));
             ta.recycle();
         }
     }

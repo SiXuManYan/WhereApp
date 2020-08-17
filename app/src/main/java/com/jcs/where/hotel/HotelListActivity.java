@@ -342,6 +342,7 @@ public class HotelListActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_SEARCH && data != null) {
             clearIv.setVisibility(View.VISIBLE);
+            mViewPager.setCurrentItem(0);
             cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
             cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
             ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));

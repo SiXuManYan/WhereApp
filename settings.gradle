@@ -1,3 +1,4 @@
+include ':FlycoTabLayout_Lib'
 include ':popwindow'
 include ':app', ':base', ':library', ':easyPhotos', ':datepickerlibrary'
 rootProject.name='Where'

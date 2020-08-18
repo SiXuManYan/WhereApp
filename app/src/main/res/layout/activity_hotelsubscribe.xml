@@ -414,14 +414,26 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="在线支付"
+            android:textColor="@color/black_333333"
+            android:textSize="12sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            />
+
+        <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="299"
             android:textColor="@color/orange_FF5B1B"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/tv_pay"/>
 
         <TextView
             android:id="@+id/tv_submit"

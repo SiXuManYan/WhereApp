@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="15dp"
@@ -46,18 +47,18 @@
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:text="2020-8-8"
                     android:textColor="@color/grey_999999"
-                    android:textSize="12sp"
-                    android:layout_alignParentRight="true"/>
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_star1"
@@ -149,79 +150,89 @@
             android:rowCount="1"
             android:visibility="gone">
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_0"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="1dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="1dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="1dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
 
-            <ImageView
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="1dp"
-                android:background="#333333"
-                android:scaleType="centerCrop" />
+
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="2dp" />
 
 
         </GridLayout>

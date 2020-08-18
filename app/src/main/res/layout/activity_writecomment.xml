@@ -27,15 +27,17 @@
 
             <TextView
                 android:id="@+id/tv_hotelname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginRight="80dp"
                 android:maxLines="1"
                 android:paddingRight="15dp"
                 android:singleLine="true"
                 android:text="Crown Royale Hotel"
                 android:textColor="@color/black_333333"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
         </androidx.appcompat.widget.Toolbar>
@@ -47,7 +49,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:background="@color/blue_4C9EF2"
+            android:background="@drawable/bg_commentsubmit"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"
             android:paddingRight="10dp"
@@ -80,7 +82,8 @@
                 android:layout_marginRight="10dp"
                 android:text="评分"
                 android:textColor="#ff333333"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/iv_star1"
@@ -166,14 +169,16 @@
             android:layout_marginTop="20dp"
             android:text="出行类型"
             android:textColor="@color/black_333333"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_type"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:visibility="gone" />
 
 
     </LinearLayout>

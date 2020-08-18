@@ -53,7 +53,7 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
     private static final String EXT_ID = "id";
     private static final String EXT_NAME = "name";
     private PhotoAdapter mAdapter;
-    private CommentAdapter commentAdapter;
+    //private CommentAdapter R;
     private RecyclerView typeRv;
     private int oldPosition = -1;
     private ImageView starIv1, starIv2, starIv3, starIv4, starIv5;
@@ -95,15 +95,15 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
         mAdapter = new PhotoAdapter(WriteCommentActivity.this);
         mAdapter.addData("0");
         recyclerView.setAdapter(mAdapter);
-        typeRv = V.f(this, R.id.rv_type);
-        typeRv.setLayoutManager(new GridLayoutManager(WriteCommentActivity.this, 4) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        });
-        typeRv.addItemDecoration(new GridItemDecoration(WriteCommentActivity.this, 10, 20));
-        commentAdapter = new CommentAdapter(WriteCommentActivity.this);
+//        typeRv = V.f(this, R.id.rv_type);
+//        typeRv.setLayoutManager(new GridLayoutManager(WriteCommentActivity.this, 4) {
+//            @Override
+//            public boolean canScrollVertically() {
+//                return false;
+//            }
+//        });
+//        typeRv.addItemDecoration(new GridItemDecoration(WriteCommentActivity.this, 10, 20));
+    //    commentAdapter = new CommentAdapter(WriteCommentActivity.this);
         starIv1 = V.f(this, R.id.iv_star1);
         starIv1.setOnClickListener(this);
         starIv2 = V.f(this, R.id.iv_star2);
@@ -132,35 +132,35 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
                 dialog.dismiss();
             }
         });
-        initType();
+       // initType();
     }
 
-    private void initType() {
-        showLoading();
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/comment/types", null, "", TokenManager.get().getToken(WriteCommentActivity.this), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<CommentTypeBean>>() {
-                    }.getType();
-                    List<CommentTypeBean> list = gson.fromJson(result, type);
-                    commentAdapter.setData(list);
-                    typeRv.setAdapter(commentAdapter);
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(WriteCommentActivity.this, errorBean.message);
-                }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ToastUtils.showLong(WriteCommentActivity.this, e.getMessage());
-            }
-        });
-    }
+//    private void initType() {
+//        showLoading();
+//        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/comment/types", null, "", TokenManager.get().getToken(WriteCommentActivity.this), new HttpUtils.StringCallback() {
+//            @Override
+//            public void onSuccess(int code, String result) {
+//                stopLoading();
+//                if (code == 200) {
+//                    Gson gson = new Gson();
+//                    Type type = new TypeToken<List<CommentTypeBean>>() {
+//                    }.getType();
+//                    List<CommentTypeBean> list = gson.fromJson(result, type);
+//                    commentAdapter.setData(list);
+//                    typeRv.setAdapter(commentAdapter);
+//                } else {
+//                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+//                    ToastUtils.showLong(WriteCommentActivity.this, errorBean.message);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaileure(int code, Exception e) {
+//                stopLoading();
+//                ToastUtils.showLong(WriteCommentActivity.this, e.getMessage());
+//            }
+//        });
+//    }
 
     @Override
     protected int getLayoutId() {
@@ -288,9 +288,8 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
         params.put("star", star + "");
         params.put("content", contentEt.getText().toString().trim());
         params.put("images", g.toJson(pathList));
-        params.put("comment_travel_type_id", typeId + "");
+      //  params.put("comment_travel_type_id", typeId + "");
         params.put("hotel_id", getIntent().getIntExtra(EXT_ID, 0) + "");
-        Log.d("ssss", params + "");
         HttpUtils.doHttpReqeust("POST", "hotelapi/v1/hotel/comment", params, "", TokenManager.get().getToken(WriteCommentActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -357,7 +356,7 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
 
             if (position == getItemCount() - 1 && "0".equals(getItem(getItemCount() - 1))) {
                 deleteIv.setVisibility(View.GONE);
-                pictureIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                pictureIv.setScaleType(ImageView.ScaleType.FIT_XY);
                 pictureIv.setImageResource(R.drawable.ic_addphoto);
                 pictureIv.setBackgroundColor(Color.TRANSPARENT);
             } else {

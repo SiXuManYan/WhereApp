@@ -29,6 +29,7 @@ import com.jcs.where.mango.Mango;
 import com.jcs.where.mango.MultiplexImage;
 import com.jcs.where.utils.ImageLoaders;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -254,9 +255,9 @@ public class CommentListFragment extends BaseFragment {
             }
             GridLayout gridview = (GridLayout) holder.findViewById(R.id.gridview);
             ImageView showimage = (ImageView) holder.findViewById(R.id.showimage);
-            ImageView imgview[] = new ImageView[9];
+            RoundedImageView imgview[] = new RoundedImageView[9];
             for (int i = 0; i < 9; i++) {
-                imgview[i] = (ImageView) holder.findViewById(ImagaId[i]);
+                imgview[i] = (RoundedImageView) holder.findViewById(ImagaId[i]);
             }
             if (data.getImages().size() == 0) {
                 showimage.setVisibility(View.GONE);

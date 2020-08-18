@@ -2,9 +2,12 @@ package com.jcs.where.travel.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +20,8 @@ import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TravelListBean;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -162,7 +167,36 @@ public class TravelListFragment extends BaseFragment {
 
         @Override
         protected void initViews(QuickHolder holder, TravelListBean.DataBean data, int position) {
+            RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
+            if (!TextUtils.isEmpty(data.getImage())) {
+                Picasso.with(getContext()).load(data.getImage()).into(photoIv);
+            } else {
+                photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+            }
+            TextView nameTv = holder.findViewById(R.id.tv_name);
+            nameTv.setText(data.getName());
 
+            TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
+            TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);
+            LinearLayout tagLl = holder.findViewById(R.id.ll_tag);
+            if (data.getTags().size() == 0) {
+                tagLl.setVisibility(View.GONE);
+            } else if (data.getTags().size() == 1) {
+                tagLl.setVisibility(View.VISIBLE);
+                tagOneTv.setText(data.getTags().get(0));
+            } else {
+                tagLl.setVisibility(View.VISIBLE);
+                tagOneTv.setText(data.getTags().get(0));
+                tagTwoTv.setText(data.getTags().get(1));
+            }
+            TextView addressTv = holder.findViewById(R.id.tv_address);
+            addressTv.setText(data.getAddress());
+            TextView distanceTv = holder.findViewById(R.id.tv_distance);
+            distanceTv.setText("<" + data.getKm() + "Km");
+            TextView scoreTv = holder.findViewById(R.id.tv_score);
+            scoreTv.setText(data.getGrade() + "");
+            TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
+            commentNumTv.setText(data.getComments_count() + "条评论");
         }
     }
 }

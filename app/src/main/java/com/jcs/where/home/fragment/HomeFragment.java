@@ -517,7 +517,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         protected int getLayoutId(int viewType) {
-            return R.layout.item_homebusinesstwo;
+            return R.layout.item_hotellist;
         }
 
         @Override

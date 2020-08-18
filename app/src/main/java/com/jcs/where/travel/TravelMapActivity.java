@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -46,7 +46,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelTypeBean;
-import com.jcs.where.bean.TravelListBean;
+import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.travel.fragment.TravelListFragment;
@@ -68,8 +68,8 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private ShadowTransformer mCardShadowTransformer;
     private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
     private final List<View> views = new ArrayList<View>();
-    private String lat = "14.6778362";
-    private String lng = "120.5306459";
+    private String lat = "14.5916712";
+    private String lng = "120.4811866";
     private TextView cityTv;
     private RelativeLayout hotelMapRl;
     private int lastPostition = 0;
@@ -78,6 +78,8 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private SlidingUpPanelLayout mLayout;
     private ViewPager mViewPager;
     private List<Fragment> fragments;
+    private ImageView listStatusIv;
+    private boolean listStatus = false;
 
 
     private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
@@ -109,6 +111,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         initView();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
         viewPager = V.f(this, R.id.viewpager);
         hotelMapRl = V.f(this, R.id.rl_hotelmap);
@@ -177,16 +180,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
             }
         });
         mLayout = V.f(this, R.id.sliding_layout);
-        mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-            }
 
-            @Override
-            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.i("ssss", "onPanelStateChanged " + newState);
-            }
-        });
         mLayout.setFadeOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,6 +189,34 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         });
         mTab = V.f(this, R.id.tab);
         mViewPager = V.f(this, R.id.viewPager);
+        listStatusIv = V.f(this, R.id.iv_liststatus);
+        mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if (newState.equals(SlidingUpPanelLayout.PanelState.EXPANDED)) {
+                    listStatusIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_listclose));
+                } else if (newState.equals(SlidingUpPanelLayout.PanelState.COLLAPSED)) {
+                    listStatusIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_listopen));
+                }
+            }
+        });
+        mLayout.setTouchEnabled(false);
+        V.f(this,R.id.rl_showlist).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listStatus == false) {
+                    mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                    listStatus = true;
+                } else {
+                    mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                    listStatus = false;
+                }
+            }
+        });
         initData();
     }
 
@@ -220,7 +242,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 stopLoading();
                 if (code == 200) {
 
-                    TravelListBean travelListBean = new Gson().fromJson(result, TravelListBean.class);
+                    TravelMapListBean travelListBean = new Gson().fromJson(result, TravelMapListBean.class);
                     lastPostition = 0;
                     lastScrollPosition = 0;
                     if (travelListBean.getData() != null) {
@@ -312,7 +334,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
 
         fragments = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            fragments.add(TravelListFragment.newInstance(String.valueOf(list.get(i).getId())));
+            fragments.add(TravelListFragment.newInstance(String.valueOf(list.get(i).getId()), lat, lng));
         }
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

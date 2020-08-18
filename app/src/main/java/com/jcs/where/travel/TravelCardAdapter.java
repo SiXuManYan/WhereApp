@@ -2,7 +2,6 @@ package com.jcs.where.travel;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,10 @@ import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.jcs.where.R;
-import com.jcs.where.bean.TravelListBean;
+import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.CardAdapter;
-import com.jcs.where.hotel.event.HotelEvent;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +25,7 @@ import co.tton.android.base.view.ToastUtils;
 public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
 
     private List<CardView> mViews;
-    private List<TravelListBean.DataBean> mData;
+    private List<TravelMapListBean.DataBean> mData;
     private Context useContext;
     private float mBaseElevation;
 
@@ -39,7 +35,7 @@ public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
         useContext = context;
     }
 
-    public void addCardItem(TravelListBean.DataBean item) {
+    public void addCardItem(TravelMapListBean.DataBean item) {
         mViews.add(null);
         mData.add(item);
     }
@@ -91,7 +87,7 @@ public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
         mViews.set(position, null);
     }
 
-    private void bind(TravelListBean.DataBean bean, View view) {
+    private void bind(TravelMapListBean.DataBean bean, View view) {
         TextView nameTv = (TextView) view.findViewById(R.id.tv_name);
         nameTv.setText(bean.getName());
         RoundedImageView photoIv = (RoundedImageView) view.findViewById(R.id.iv_photo);

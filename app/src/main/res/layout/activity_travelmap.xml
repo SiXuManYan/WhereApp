@@ -10,8 +10,7 @@
     app:ignore="NamespaceTypo"
     sothree:umanoDragView="@+id/dragView"
     sothree:umanoOverlay="true"
-    sothree:umanoPanelHeight="68dp"
-    sothree:umanoParallaxOffset="100dp"
+    sothree:umanoPanelHeight="70dp"
     sothree:umanoScrollableView="@+id/viewPager"
     sothree:umanoShadowHeight="4dp">
 
@@ -139,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="50dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:padding="30dp" />
@@ -152,20 +151,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
-        android:background="#ffffff"
+        android:background="@drawable/bg_travellist"
         android:clickable="true"
         android:focusable="false"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:id="@+id/rl_showlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_liststatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_listopen" />
+
+        </RelativeLayout>
+
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/tab"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="30dp"
             tl:tl_indicator_color="@color/blue_4B9DF1"
             tl:tl_indicator_corner_radius="1dp"
             tl:tl_indicator_height="2dp"
             tl:tl_indicator_width="25dp"
-            tl:tl_textBold="SELECT"
+            tl:tl_textBold="BOTH"
             tl:tl_textSelectColor="@color/blue_4B9DF1"
             tl:tl_textUnselectColor="@color/black_333333" />
 

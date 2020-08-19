@@ -33,7 +33,6 @@ public class TokenManager {
 
     private void saveToken(Context context, LoginBean login) {
         mLogin = login;
-
         Gson gson = new Gson();
         String json = gson.toJson(login);
         PreferencesUtils.setData(context, PreferencesUtils.KEY_TOKEN, json);

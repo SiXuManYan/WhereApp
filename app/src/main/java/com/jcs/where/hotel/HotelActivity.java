@@ -5,16 +5,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,9 +27,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.atuan.datepickerlibrary.CalendarUtil;
 import com.atuan.datepickerlibrary.DatePopupWindow;
-import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
@@ -51,7 +57,7 @@ import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
 
-public class HotelActivity extends BaseActivity implements View.OnClickListener {
+public class HotelActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final int REQ_SELECT_CITY = 100;
     private TextView locationTv, startDateTv, startWeekTv, endDateTv, endWeekTv, allDayTv, roomNumTv, priceAndStarTv;
@@ -69,9 +75,12 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
     private String useStartYear, useEndYear;
     private final int READ_CODE = 10;
     private final int READ_LOCATIONCODE = 11;
-    private FusedLocationProviderClient fusedLocationClient;
     private ImageView clearIv;
     private String transmitPrice, transmitStar;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private LatLng lastLatLng, perthLatLng;
+    private boolean mAddressRequested;
 
 
     public static void goTo(Context context) {
@@ -88,7 +97,13 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setStatusBar();
         // GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
         initView();
         guessYouLikeAdapter = new GuessYouLikeAdapter(HotelActivity.this);
     }
@@ -151,26 +166,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
         });
         initData();
         checkPermission();
-        initLoaction();
+        //  initLoaction();
+        checkIsGooglePlayConn();
+
     }
 
-    private void initLoaction() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
-            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            initArea(location.getLatitude() + "", location.getLongitude() + "");
-                        }
-                    }
-                });
-    }
 
     private void initData() {
         showLoading();
@@ -355,7 +355,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
                 HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString());
                 break;
             case R.id.tv_chooselocation:
-                initLoaction();
+                //   initLoaction();
+                checkIsGooglePlayConn();
                 break;
             default:
         }
@@ -399,6 +400,46 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
             e.printStackTrace();
         }
         return dft.format(endDate);
+    }
+
+    private void checkIsGooglePlayConn() {
+        Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
+        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
+        }
+        mAddressRequested = true;
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            if (!Geocoder.isPresent()) {
+                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (mAddressRequested) {
+                initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
 
@@ -524,6 +565,16 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
+    }
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
 

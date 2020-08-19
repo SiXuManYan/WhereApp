@@ -1,14 +1,27 @@
 package com.jcs.where.hotel;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.adapter.CityListAdapter;
@@ -16,6 +29,8 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.AreaBean;
 import com.jcs.where.bean.City;
 import com.jcs.where.bean.ErrorBean;
+import com.jcs.where.bean.LoactionBean;
+import com.jcs.where.bean.LocateState;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.PinyinUtils;
 import com.jcs.where.widget.SideLetterBar;
@@ -29,7 +44,7 @@ import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.dialog.CustomProgressDialog;
 import co.tton.android.base.view.ToastUtils;
 
-public class CityPickerActivity extends BaseActivity {
+public class CityPickerActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     public static final String EXTRA_CITY = "city";
@@ -39,6 +54,12 @@ public class CityPickerActivity extends BaseActivity {
     private SideLetterBar mLetterBar;
     private CityListAdapter mCityAdapter;
     public static CustomProgressDialog dialog;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private LatLng lastLatLng, perthLatLng;
+    private boolean mAddressRequested;
+    private final int READ_CODE = 10;
+    private final int READ_LOCATIONCODE = 11;
 
     public static void goTo(Activity activity, int requestCode) {
         Intent intent = new Intent(activity, CityPickerActivity.class);
@@ -59,9 +80,17 @@ public class CityPickerActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
         setStatusBar();
         initView();
         initData();
+        checkIsGooglePlayConn();
     }
 
 
@@ -151,8 +180,8 @@ public class CityPickerActivity extends BaseActivity {
 
             @Override
             public void onLocateClick() {//点击定位按钮
-//                mCityAdapter.updateLocateState(LocateState.LOCATING, null);
-//                getLocation();//重新定位
+                mCityAdapter.updateLocateState(LocateState.LOCATING, null, null);
+                checkIsGooglePlayConn();//重新定位
             }
         });
     }
@@ -183,6 +212,80 @@ public class CityPickerActivity extends BaseActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
         }
+    }
+
+    private void checkIsGooglePlayConn() {
+        Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
+        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
+        }
+        mAddressRequested = true;
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(CityPickerActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+            ActivityCompat.requestPermissions(CityPickerActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            if (!Geocoder.isPresent()) {
+                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (mAddressRequested) {
+                initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+    private void initArea(String lat, String lng) {
+        HttpUtils.doHttpReqeust("GET", "commonapi/v1/areas/current?lat=" + lat + "&lng=" + lng, null, "", TokenManager.get().getToken(CityPickerActivity.this), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    LoactionBean loactionBean = new Gson().fromJson(result, LoactionBean.class);
+                    mCityAdapter.updateLocateState(LocateState.SUCCESS, loactionBean.getName(), loactionBean.getId() + "");
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(CityPickerActivity.this, errorBean.message);
+                    mCityAdapter.updateLocateState(LocateState.FAILED, null, null);
+                }
+            }
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(CityPickerActivity.this, e.getMessage());
+            }
+        });
+
+    }
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
 }

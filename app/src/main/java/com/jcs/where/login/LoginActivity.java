@@ -21,7 +21,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.LoginBean;
-import com.jcs.where.login.event.LoginEvent;
+import com.jcs.where.home.event.TokenEvent;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.IEditTextChangeListener;
 import com.jcs.where.utils.PhoneCheckUtil;
@@ -209,8 +209,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onSuccess(int code, String result) {
                         stopLoading();
                         if (code == 200) {
-                            EventBus.getDefault().post(LoginEvent.LOGIN);
                             LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
+                            EventBus.getDefault().post(new TokenEvent(loginBean.token));
                             TokenManager.get().login(LoginActivity.this, loginBean);
                             ToastUtils.showLong(LoginActivity.this, "登录成功");
                             finish();
@@ -249,8 +249,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onSuccess(int code, String result) {
                         stopLoading();
                         if (code == 200) {
-                            EventBus.getDefault().post(LoginEvent.LOGIN);
                             LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
+                            EventBus.getDefault().post(new TokenEvent(loginBean.token));
                             TokenManager.get().login(LoginActivity.this, loginBean);
                             ToastUtils.showLong(LoginActivity.this, "登录成功");
                             finish();

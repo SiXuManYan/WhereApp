@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.jcs.where.R;
 import com.jcs.where.bean.City;
+import com.jcs.where.bean.LocateState;
 import com.jcs.where.utils.PinyinUtils;
 
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class CityListAdapter extends BaseAdapter {
     private String[] sections;
     private OnCityClickListener onCityClickListener;
     private String locatedCity;
+    private String locatedCityId;
     private List<City> mHotData = new ArrayList<>();
+    private int locateState = LocateState.LOCATING;
 
     public void setData(List<City> mCities) {
         this.mCities = mCities;
@@ -106,7 +109,36 @@ public class CityListAdapter extends BaseAdapter {
                 view = inflater.inflate(R.layout.cp_view_locate_city, parent, false);
                 ViewGroup container = (ViewGroup) view.findViewById(R.id.layout_locate);
                 TextView state = (TextView) view.findViewById(R.id.tv_located_city);
-                state.setText("定位失败");
+                switch (locateState) {
+                    case LocateState.LOCATING:
+                        state.setText("正在定位…");
+                        break;
+                    case LocateState.FAILED:
+                        state.setText("定位失败");
+                        break;
+                    case LocateState.SUCCESS:
+                        state.setText(locatedCity);
+                        break;
+                    case LocateState.INIT:
+                        state.setText("定位");
+                        break;
+                }
+                container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (locateState == LocateState.FAILED) {
+                            //重新定位
+                            if (onCityClickListener != null) {
+                                onCityClickListener.onLocateClick();
+                            }
+                        } else if (locateState == LocateState.SUCCESS) {
+                            //返回定位城市
+                            if (onCityClickListener != null) {
+                                onCityClickListener.onCityClick(locatedCity, locatedCityId);
+                            }
+                        }
+                    }
+                });
                 break;
             case 1:     //所有
                 if (view == null) {
@@ -157,5 +189,12 @@ public class CityListAdapter extends BaseAdapter {
         void onCityClick(String name, String id);
 
         void onLocateClick();
+    }
+
+    public void updateLocateState(int state, String city, String cityId) {
+        this.locateState = state;
+        this.locatedCity = city;
+        this.locatedCityId = cityId;
+        notifyDataSetChanged();
     }
 }

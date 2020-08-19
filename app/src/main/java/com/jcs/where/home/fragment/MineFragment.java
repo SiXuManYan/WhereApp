@@ -2,6 +2,7 @@ package com.jcs.where.home.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
+import com.jcs.where.home.event.TokenEvent;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
 import com.jcs.where.login.event.LoginEvent;
@@ -63,34 +65,36 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         V.f(view, R.id.ll_changelangue).setOnClickListener(this);
         V.f(view, R.id.ll_settlement).setOnClickListener(this);
         V.f(view, R.id.rl_minemessage).setOnClickListener(this);
-        initData();
+        initData(TokenManager.get().getToken(getContext()));
     }
 
-    private void initData() {
-        showLoading();
-        HttpUtils.doHttpReqeust("GET", "userapi/v1/user/info", null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    UserBean userBean = new Gson().fromJson(result, UserBean.class);
-                    UserManager.get().login(getContext(), userBean);
-                    accountTv.setVisibility(View.VISIBLE);
-                    nameTv.setText(userBean.nickname);
-                    accountTv.setText(userBean.phone);
-                    ImageLoader.get().loadAvatar(headerIv, userBean.avatar);
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(getContext(), errorBean.message);
+    private void initData(String token) {
+        if (token != null) {
+            showLoading();
+            HttpUtils.doHttpReqeust("GET", "userapi/v1/user/info", null, "", token, new HttpUtils.StringCallback() {
+                @Override
+                public void onSuccess(int code, String result) {
+                    stopLoading();
+                    if (code == 200) {
+                        UserBean userBean = new Gson().fromJson(result, UserBean.class);
+                        UserManager.get().login(getContext(), userBean);
+                        accountTv.setVisibility(View.VISIBLE);
+                        nameTv.setText(userBean.nickname);
+                        accountTv.setText(userBean.phone);
+                        ImageLoader.get().loadAvatar(headerIv, userBean.avatar);
+                    } else {
+                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                        ToastUtils.showLong(getContext(), errorBean.message);
+                    }
                 }
-            }
 
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ToastUtils.showLong(getContext(), e.getMessage());
-            }
-        });
+                @Override
+                public void onFaileure(int code, Exception e) {
+                    stopLoading();
+                    ToastUtils.showLong(getContext(), e.getMessage());
+                }
+            });
+        }
     }
 
     @Override
@@ -122,9 +126,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Evect(TokenEvent tokenEvent) throws InterruptedException {
+        initData(tokenEvent.getToken());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LoginEvent event) {
         if (event == LoginEvent.LOGIN) {
-            initData();
+            Log.d("ssss", "收到EVENT");
+            initData(TokenManager.get().getToken(getContext()));
         }
     }
 

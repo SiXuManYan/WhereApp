@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,7 +31,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -39,6 +43,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,7 +56,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
@@ -75,7 +80,7 @@ import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
 
-public class TravelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class TravelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     private ViewPager viewPager;
@@ -98,6 +103,9 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private RecyclerView recommendSearchRv;
     private String useText;
     private RecommendAdapter recommendAdapter;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private boolean mAddressRequested;
 
 
     private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
@@ -120,7 +128,14 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        // fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -194,24 +209,8 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         V.f(this, R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ActivityCompat.checkSelfPermission(TravelMapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(TravelMapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(TravelMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
-                    ActivityCompat.requestPermissions(TravelMapActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
-                    return;
-                }
-                fusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(TravelMapActivity.this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                // Got last known location. In some rare situations this can be null.
-                                if (location != null) {
-                                    mMap.addMarker(new MarkerOptions()
-                                            .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10f));
-                                }
-                            }
-                        });
+                checkIsGooglePlayConn();
+
             }
         });
         clearIv.setVisibility(View.GONE);
@@ -295,11 +294,9 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         if (views != null) {
             views.clear();
         }
-        Log.d("ssss", url);
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(TravelMapActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
-                Log.d("ssss", result);
                 stopLoading();
                 if (code == 200) {
                     TravelMapListBean travelListBean = new Gson().fromJson(result, TravelMapListBean.class);
@@ -580,6 +577,54 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
 
     }
 
+
+    private void checkIsGooglePlayConn() {
+        Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
+        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+            initArea(mLastLocation);
+        }
+        mAddressRequested = true;
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(TravelMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+            ActivityCompat.requestPermissions(TravelMapActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+           if (!Geocoder.isPresent()) {
+                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (mAddressRequested) {
+                initArea(mLastLocation);
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
     private class RecommendAdapter extends BaseQuickAdapter<TravelListBean.DataBean> {
 
         public RecommendAdapter(Context context) {
@@ -617,6 +662,13 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
             ss.setSpan(new TextAppearanceSpan(this, R.style.style_grey_999999), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//new ForegroundColorSpan(color)
         }
         return ss;
+    }
+
+    private void initArea(Location location) {
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10f));
     }
 
 

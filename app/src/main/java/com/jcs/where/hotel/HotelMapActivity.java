@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +22,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.atuan.datepickerlibrary.CalendarUtil;
 import com.atuan.datepickerlibrary.DatePopupWindow;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,7 +44,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hmy.popwindow.PopWindow;
@@ -63,7 +69,7 @@ import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
 
-public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     private static final int REQ_SEARCH = 777;
@@ -102,6 +108,9 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private final int READ_LOCATIONCODE = 11;
     private FusedLocationProviderClient fusedLocationClient;
     private String useInputText = "";
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private boolean mAddressRequested;
 
     public static void goTo(Context context, String startDate, String endDate, String startWeek, String endWeek, String allDay, String city, String cityId, String price, String star, String startYear, String endYear, String roomNumber) {
         Intent intent = new Intent(context, HotelMapActivity.class);
@@ -129,7 +138,13 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -203,6 +218,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 TextView allDayTv = V.f(customView, R.id.tv_allday);
                 allDayTv.setText(getIntent().getStringExtra(EXT_ALLDAY));
                 TextView roomNumTv = V.f(customView, R.id.tv_roomnum);
+                roomNumTv.setText(mRoomNum);
                 V.f(customView, R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -257,24 +273,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         V.f(this, R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ActivityCompat.checkSelfPermission(HotelMapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(HotelMapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(HotelMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
-                    ActivityCompat.requestPermissions(HotelMapActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
-                    return;
-                }
-                fusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(HotelMapActivity.this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                // Got last known location. In some rare situations this can be null.
-                                if (location != null) {
-                                    mMap.addMarker(new MarkerOptions()
-                                            .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10f));
-                                }
-                            }
-                        });
+                checkIsGooglePlayConn();
             }
         });
         V.f(this, R.id.rl_search).setOnClickListener(new View.OnClickListener() {
@@ -537,4 +536,58 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         }
     }
 
+    private void checkIsGooglePlayConn() {
+        Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
+        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+            initArea(mLastLocation);
+        }
+        mAddressRequested = true;
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HotelMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+            ActivityCompat.requestPermissions(HotelMapActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            if (!Geocoder.isPresent()) {
+                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (mAddressRequested) {
+                initArea(mLastLocation);
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private void initArea(Location location) {
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10f));
+    }
+
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
 }

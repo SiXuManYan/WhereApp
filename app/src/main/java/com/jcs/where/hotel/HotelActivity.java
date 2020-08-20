@@ -405,6 +405,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private void checkIsGooglePlayConn() {
         Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
         if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+            Log.d("ssss", mLastLocation.getLatitude() + "" + mLastLocation.getLongitude() + "");
             initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
         }
         mAddressRequested = true;
@@ -492,7 +493,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
             if (data.getFacebook_link() == null) {
-               nameTv.setCompoundDrawables(null, null, null, null);
+                nameTv.setCompoundDrawables(null, null, null, null);
             }
             TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
             TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);

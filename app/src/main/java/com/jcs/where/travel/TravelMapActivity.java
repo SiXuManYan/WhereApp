@@ -11,20 +11,31 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.style.TextAppearanceSpan;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
@@ -46,6 +57,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelTypeBean;
+import com.jcs.where.bean.TravelListBean;
 import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.manager.TokenManager;
@@ -55,9 +67,12 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
+import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
 
 public class TravelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -70,7 +85,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private final List<View> views = new ArrayList<View>();
     private String lat = "14.5916712";
     private String lng = "120.4811866";
-    private TextView cityTv;
+    private EditText searchEt;
     private RelativeLayout hotelMapRl;
     private int lastPostition = 0;
     private int lastScrollPosition = 0;
@@ -80,6 +95,9 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private List<Fragment> fragments;
     private ImageView listStatusIv;
     private boolean listStatus = false;
+    private RecyclerView recommendSearchRv;
+    private String useText;
+    private RecommendAdapter recommendAdapter;
 
 
     private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
@@ -87,7 +105,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private final int READ_CODE = 10;
     private final int READ_LOCATIONCODE = 11;
     private FusedLocationProviderClient fusedLocationClient;
-    private String useInputText = "";
+    private String useInputText = null;
     private SlidingTabLayout mTab;
 
     public static void goTo(Context context) {
@@ -107,11 +125,9 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setStatusBar();
-
         initView();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
         viewPager = V.f(this, R.id.viewpager);
         hotelMapRl = V.f(this, R.id.rl_hotelmap);
@@ -143,7 +159,38 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
 
             }
         });
-        cityTv = V.f(this, R.id.tv_city);
+        searchEt = V.f(this, R.id.et_search);
+        clearIv = V.f(this, R.id.iv_clear);
+        searchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideKeyboard(searchEt);
+                    useInputText = searchEt.getText().toString();
+                    initData();
+                    searchEt.clearFocus();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+        searchEt.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                recommendSearch(s.toString(), s.toString().length());
+            }
+        });
         V.f(this, R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,14 +214,14 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                         });
             }
         });
-        clearIv = V.f(this, R.id.iv_clear);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cityTv.setText("请输入酒店名称");
-                useInputText = "";
-                cityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
+                searchEt.setText("");
+                searchEt.setHint("输入景点名称");
+                useInputText = null;
+                searchEt.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
                 clearIv.setVisibility(View.GONE);
                 initData();
             }
@@ -205,7 +252,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
             }
         });
         mLayout.setTouchEnabled(false);
-        V.f(this,R.id.rl_showlist).setOnClickListener(new View.OnClickListener() {
+        V.f(this, R.id.rl_showlist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listStatus == false) {
@@ -217,12 +264,22 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 }
             }
         });
+        recommendSearchRv = V.f(this, R.id.rv_searchrecommend);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TravelMapActivity.this,
+                LinearLayoutManager.VERTICAL, false);
+        recommendSearchRv.setLayoutManager(linearLayoutManager);
+        recommendAdapter = new RecommendAdapter(TravelMapActivity.this);
         initData();
     }
 
     private void initData() {
         showLoading();
-        String url = "travelapi/v1/searchList?lat=" + lat + "&lng=" + lng + "&name=" + useInputText;
+        String url;
+        if (useInputText != null) {
+            url = "travelapi/v1/searchList?name=" + useInputText;
+        } else {
+            url = "travelapi/v1/searchList?lat=" + lat + "&lng=" + lng + "&name=" + useInputText;
+        }
         if (mMap != null) {
             mMap.clear();
         }
@@ -235,13 +292,16 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         if (viewPager != null) {
             viewPager.removeAllViews();
         }
-
+        if (views != null) {
+            views.clear();
+        }
+        Log.d("ssss", url);
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(TravelMapActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
+                Log.d("ssss", result);
                 stopLoading();
                 if (code == 200) {
-
                     TravelMapListBean travelListBean = new Gson().fromJson(result, TravelMapListBean.class);
                     lastPostition = 0;
                     lastScrollPosition = 0;
@@ -481,4 +541,83 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
             super.onBackPressed();
         }
     }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager manager = (InputMethodManager) view.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void recommendSearch(String text, int length) {
+        if (length == 0) {
+            clearIv.setVisibility(View.GONE);
+            recommendSearchRv.setVisibility(View.GONE);
+        } else {
+            clearIv.setVisibility(View.VISIBLE);
+            recommendSearchRv.setVisibility(View.VISIBLE);
+            useText = text;
+            HttpUtils.doHttpReqeust("GET", "travelapi/v1/searchList?name=" + text, null, "", TokenManager.get().getToken(TravelMapActivity.this), new HttpUtils.StringCallback() {
+                @Override
+                public void onSuccess(int code, String result) {
+                    stopLoading();
+                    if (code == 200) {
+                        TravelListBean travelListBean = new Gson().fromJson(result, TravelListBean.class);
+                        recommendAdapter.setData(travelListBean.getData());
+                        recommendSearchRv.setAdapter(recommendAdapter);
+                    } else {
+                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                        ToastUtils.showLong(TravelMapActivity.this, errorBean.message);
+                    }
+                }
+
+                @Override
+                public void onFaileure(int code, Exception e) {
+                    stopLoading();
+                    ToastUtils.showLong(TravelMapActivity.this, e.getMessage());
+                }
+            });
+        }
+
+    }
+
+    private class RecommendAdapter extends BaseQuickAdapter<TravelListBean.DataBean> {
+
+        public RecommendAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected int getLayoutId(int viewType) {
+            return R.layout.item_recommendsearch;
+        }
+
+        @Override
+        protected void initViews(QuickHolder holder, TravelListBean.DataBean data, int position) {
+            TextView nameTv = holder.findViewById(R.id.tv_name);
+            nameTv.setText(matcherSearchText(data.getName(), useText));
+            holder.findViewById(R.id.ll_search).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hideKeyboard(view);
+                    searchEt.setText(data.getName());
+                    useInputText = data.getName();
+                    initData();
+                }
+            });
+        }
+    }
+
+    public SpannableString matcherSearchText(String text, String keyword) {
+        SpannableString ss = new SpannableString(text);
+        Pattern pattern = Pattern.compile(keyword);
+        Matcher matcher = pattern.matcher(ss);
+        while (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            ss.setSpan(new TextAppearanceSpan(this, R.style.style_grey_999999), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//new ForegroundColorSpan(color)
+        }
+        return ss;
+    }
+
+
 }

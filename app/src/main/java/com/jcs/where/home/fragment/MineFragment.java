@@ -133,7 +133,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LoginEvent event) {
         if (event == LoginEvent.LOGIN) {
-            Log.d("ssss", "收到EVENT");
             initData(TokenManager.get().getToken(getContext()));
         }
     }

@@ -136,8 +136,8 @@
         <activity
             android:name=".travel.TravelMapActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
     </application>
 

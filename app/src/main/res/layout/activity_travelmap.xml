@@ -11,6 +11,7 @@
     sothree:umanoDragView="@+id/dragView"
     sothree:umanoOverlay="true"
     sothree:umanoPanelHeight="70dp"
+    sothree:umanoParallaxOffset="100dp"
     sothree:umanoScrollableView="@+id/viewPager"
     sothree:umanoShadowHeight="4dp">
 
@@ -63,18 +64,21 @@
                             android:layout_marginRight="10dp"
                             android:src="@drawable/ic_hotelsearch" />
 
-                        <TextView
-                            android:id="@+id/tv_city"
+                        <EditText
+                            android:id="@+id/et_search"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_toLeftOf="@id/iv_clear"
-                            android:layout_toRightOf="@+id/iv_search"
-                            android:gravity="center_vertical"
+                            android:layout_marginLeft="15dp"
+                            android:background="@null"
+                            android:gravity="center_vertical|left"
+                            android:hint="输入景点名称"
+                            android:imeOptions="actionSearch"
                             android:maxLines="1"
                             android:singleLine="true"
-                            android:text="输入景点名称"
-                            android:textColor="@color/grey_b7b7b7"
-                            android:textSize="13sp" />
+                            android:textColor="@color/black_333333"
+                            android:textColorHint="@color/grey_999999"
+                            android:textSize="13sp"
+                            android:layout_toRightOf="@id/iv_search"/>
 
 
                         <ImageView
@@ -142,6 +146,14 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:padding="30dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_searchrecommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_below="@+id/toolbar"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

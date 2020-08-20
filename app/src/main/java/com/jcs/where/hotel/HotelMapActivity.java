@@ -324,7 +324,9 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         if (viewPager != null) {
             viewPager.removeAllViews();
         }
-
+        if (views != null) {
+            views.clear();
+        }
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelMapActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {

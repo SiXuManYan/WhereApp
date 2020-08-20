@@ -3,6 +3,7 @@ package com.hmy.popwindow.window;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -59,6 +60,7 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
         this.setContentView(mPopWindowLayout);
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        this.setBackgroundDrawable(new BitmapDrawable());
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setAnimationStyle(R.style.PopDownWindow);

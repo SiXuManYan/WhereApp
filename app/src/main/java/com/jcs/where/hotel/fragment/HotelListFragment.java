@@ -220,10 +220,8 @@ public class HotelListFragment extends BaseFragment {
             }
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
-            if (data.getFacebook_link() != null) {
-                nameTv.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_facebook), null);
-            } else {
-                nameTv.setCompoundDrawables(null, null, null, null);
+            if (data.getFacebook_link() == null) {
+               nameTv.setCompoundDrawables(null, null, null, null);
             }
             TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
             TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);

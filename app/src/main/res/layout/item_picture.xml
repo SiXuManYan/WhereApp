@@ -7,7 +7,7 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_picture"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="70dp"
         android:layout_marginTop="3dp"
          android:layout_marginLeft="3dp"
         android:scaleType="fitXY"
@@ -15,8 +15,8 @@
 
     <ImageView
         android:id="@+id/iv_picture_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:src="@drawable/ic_picture_delete" />
 
 </RelativeLayout>

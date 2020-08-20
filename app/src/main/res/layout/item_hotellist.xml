@@ -30,36 +30,19 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingRight="18dp">
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_facebook"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="Batanes NorthNorthNorth..."
-                    android:textColor="@color/black_333333"
-                    android:textSize="16sp"
-                    android:drawablePadding="15dp"
-                    />
-
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/iv_facebook"-->
-                <!--                    android:layout_width="13dp"-->
-                <!--                    android:layout_height="13dp"-->
-                <!--                    android:src="@drawable/ic_hotelfacebook"-->
-                <!--                    android:layout_gravity="center_vertical"-->
-                <!--                    android:layout_marginLeft="15dp"-->
-                <!--                    />-->
-
-
-            </LinearLayout>
+                android:layout_marginRight="18dp"
+                android:drawableRight="@drawable/ic_facebook"
+                android:drawablePadding="15dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="Batanes NorthNorthNorthNorthNorthNorthNorthNorthNorthNorthNorthNorth..."
+                android:textColor="@color/black_333333"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/ll_tag"

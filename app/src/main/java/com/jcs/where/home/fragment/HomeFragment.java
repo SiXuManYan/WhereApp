@@ -286,7 +286,7 @@ public class HomeFragment extends BaseFragment {
                 HotelActivity.goTo(getContext());
             }
         });
-        V.f(view,R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
+        V.f(view, R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TravelMapActivity.goTo(getContext());
@@ -522,7 +522,8 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         protected void initViews(QuickHolder holder, BusinessBean data, int position) {
-
+            TextView distanceTv = holder.findViewById(R.id.tv_distance);
+            distanceTv.setText("<1.5Km");
         }
     }
 

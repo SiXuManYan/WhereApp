@@ -29,7 +29,7 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.AreaBean;
 import com.jcs.where.bean.City;
 import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.bean.LoactionBean;
+import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.LocateState;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.PinyinUtils;
@@ -255,17 +255,27 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
 
 
     private void initArea(String lat, String lng) {
-        HttpUtils.doHttpReqeust("GET", "commonapi/v1/areas/current?lat=" + lat + "&lng=" + lng, null, "", TokenManager.get().getToken(CityPickerActivity.this), new HttpUtils.StringCallback() {
+        showLoading();
+        HttpUtils.doGoogleMapReqeust("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk", null, new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
-                    LoactionBean loactionBean = new Gson().fromJson(result, LoactionBean.class);
-                    mCityAdapter.updateLocateState(LocateState.SUCCESS, loactionBean.getName(), loactionBean.getId() + "");
+                    GoogleMapBean googleMapBean = new Gson().fromJson(result, GoogleMapBean.class);
+                    if (googleMapBean.getResults().get(0) != null) {
+                        if (googleMapBean.getResults().get(0).getAddress_components().get(2) != null) {
+                            String usecity = googleMapBean.getResults().get(0).getAddress_components().get(2).getLong_name();
+                            if (usecity != null) {
+                                if (usecity.contains("City of ")) {
+                                    usecity = usecity.substring(8);
+                                }
+                                mCityAdapter.updateLocateState(LocateState.SUCCESS, usecity, "0" + "");
+                            }
+                        }
+                    }
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
                     ToastUtils.showLong(CityPickerActivity.this, errorBean.message);
-                    mCityAdapter.updateLocateState(LocateState.FAILED, null, null);
                 }
             }
 

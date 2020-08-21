@@ -14,8 +14,12 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.jcs.where.R;
 import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.CardAdapter;
+import com.jcs.where.hotel.event.HotelEvent;
+import com.jcs.where.travel.event.TravelEvent;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +112,7 @@ public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
         cardLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showLong(useContext,bean.getId()+"");
+                EventBus.getDefault().post(new TravelEvent(bean.getId()));
             }
         });
     }

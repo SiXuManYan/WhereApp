@@ -137,8 +137,103 @@ public class HttpUtils {
         return null;
     }
 
+    public static String doGoogleMapReqeust(final String method, final String url,
+                                            final Map<String, String> params, final StringCallback callback) {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection = null;
+                OutputStream outputStream = null;
+                try {
+                    URL u = new URL(url);
+                    connection = (HttpURLConnection) u.openConnection();
+                    // 设置输入可用
+                    connection.setDoInput(true);
+                    if (method.equals("POST")) {
+                        // 设置输出可用
+                        connection.setDoOutput(true);
+                    }
+                    if (method.equals("DEL")) {
+                        // 设置输出可用
+                        connection.setDoOutput(true);
+                    }
+                    // 设置请求方式
+                    connection.setRequestMethod(method);
+                    // 设置连接超时
+                    connection.setConnectTimeout(40000);
+                    // 设置读取超时
+                    connection.setReadTimeout(40000);
+                    // 设置缓存不可用
+                    connection.setUseCaches(false);
+                    // 开始连接
+                    connection.connect();
+
+                    // 只有当POST请求时才会执行此代码段
+                    if (params != null) {
+                        // 获取输出流,connection.getOutputStream已经包含了connect方法的调用
+                        outputStream = connection.getOutputStream();
+                        StringBuilder sb = new StringBuilder();
+                        Set<Map.Entry<String, String>> sets = params.entrySet();
+                        // 将Hashmap转换为string
+                        for (Map.Entry<String, String> entry : sets) {
+                            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+                        }
+                        String param = sb.substring(0, sb.length() - 1);
+                        // 使用输出流将string类型的参数写到服务器
+                        outputStream.write(param.getBytes());
+                        outputStream.flush();
+                    }
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == 200) {
+                        InputStream inputStream = connection.getInputStream();
+                        String result = inputStream2String(inputStream);
+                        if (result != null && callback != null) {
+                            postSuccessString(callback, responseCode, result);
+                        }
+                    } else if (responseCode == 400) {
+                        InputStream inputStream = connection.getErrorStream();
+                        String result = inputStream2String(inputStream);
+                        if (result != null && callback != null) {
+                            postSuccessString(callback, responseCode, result);
+                        }
+                    } else {
+                        if (callback != null) {
+                            postFailed(callback, responseCode, new Exception("网络错误，请重新尝试"));
+                        }
+//                        InputStream inputStream = connection.getErrorStream();
+//                        String result = inputStream2String(inputStream);
+//                        if (result != null && callback != null) {
+//                            postSuccessString(callback, responseCode, result);
+//                        }
+                    }
+
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    if (callback != null) {
+                        postFailed(callback, 0, e);
+                    }
+
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                    if (outputStream != null) {
+                        try {
+                            outputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        return null;
+    }
+
+
     public static String doHttpintReqeust(final String method, final String url,
-                                       final Map<String, Integer> params, final String local, final String tooken, final StringCallback callback) {
+                                          final Map<String, Integer> params, final String local, final String tooken, final StringCallback callback) {
 
         executor.execute(new Runnable() {
             @Override
@@ -234,7 +329,6 @@ public class HttpUtils {
         });
         return null;
     }
-
 
 
     /**

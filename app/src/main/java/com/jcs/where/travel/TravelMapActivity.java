@@ -66,8 +66,13 @@ import com.jcs.where.bean.TravelListBean;
 import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.travel.event.TravelEvent;
 import com.jcs.where.travel.fragment.TravelListFragment;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -129,6 +134,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        EventBus.getDefault().register(this);
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -595,7 +601,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-           if (!Geocoder.isPresent()) {
+            if (!Geocoder.isPresent()) {
                 Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -671,5 +677,18 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10f));
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Evect(TravelEvent travelEvent) {
+        TravelDetailActivity.goTo(TravelMapActivity.this,
+                travelEvent.getId());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 
 }

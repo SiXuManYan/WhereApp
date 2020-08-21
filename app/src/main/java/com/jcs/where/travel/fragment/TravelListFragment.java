@@ -19,6 +19,7 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TravelListBean;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.travel.TravelDetailActivity;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -197,6 +198,12 @@ public class TravelListFragment extends BaseFragment {
             scoreTv.setText(data.getGrade() + "");
             TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
             commentNumTv.setText(data.getComments_count() + "条评论");
+            holder.findViewById(R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TravelDetailActivity.goTo(getContext(), data.getId());
+                }
+            });
         }
     }
 }

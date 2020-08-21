@@ -10,7 +10,6 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,8 +35,8 @@ import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
+import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.GuessYouLikeHotelBean;
-import com.jcs.where.bean.LoactionBean;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.popupwindow.ChoosePricePop;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -96,7 +95,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBar();
-        // GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -403,9 +401,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void checkIsGooglePlayConn() {
-        Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
         if (mGoogleApiClient.isConnected() && mLastLocation != null) {
-            Log.d("ssss", mLastLocation.getLatitude() + "" + mLastLocation.getLongitude() + "");
             initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
         }
         mAddressRequested = true;
@@ -414,7 +410,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
             ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
@@ -544,13 +539,25 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void initArea(String lat, String lng) {
-        HttpUtils.doHttpReqeust("GET", "commonapi/v1/areas/current?lat=" + lat + "&lng=" + lng, null, "", TokenManager.get().getToken(HotelActivity.this), new HttpUtils.StringCallback() {
+        showLoading();
+        HttpUtils.doGoogleMapReqeust("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk", null, new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
-                    LoactionBean loactionBean = new Gson().fromJson(result, LoactionBean.class);
-                    locationTv.setText(loactionBean.getName());
+                    GoogleMapBean googleMapBean = new Gson().fromJson(result, GoogleMapBean.class);
+                    if (googleMapBean.getResults().get(0) != null) {
+                        if (googleMapBean.getResults().get(0).getAddress_components().get(2) != null) {
+                            String usecity = googleMapBean.getResults().get(0).getAddress_components().get(2).getLong_name();
+                            if (usecity != null) {
+                                if (usecity.contains("City of ")) {
+                                    usecity = usecity.substring(8);
+                                }
+                                locationTv.setText(usecity);
+                                cityId = "0";
+                            }
+                        }
+                    }
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
                     ToastUtils.showLong(HotelActivity.this, errorBean.message);

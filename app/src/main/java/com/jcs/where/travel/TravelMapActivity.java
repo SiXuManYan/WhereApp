@@ -142,6 +142,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                     .addApi(LocationServices.API)
                     .build();
         }
+        mGoogleApiClient.connect();
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -621,16 +622,6 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
 
     }
 
-    protected void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    protected void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
-    }
-
     private class RecommendAdapter extends BaseQuickAdapter<TravelListBean.DataBean> {
 
         public RecommendAdapter(Context context) {
@@ -685,6 +676,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
 
     @Override
     protected void onDestroy() {
+        mGoogleApiClient.disconnect();
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);

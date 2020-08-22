@@ -145,6 +145,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                     .addApi(LocationServices.API)
                     .build();
         }
+
+        mGoogleApiClient.connect();
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -474,6 +476,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void onDestroy() {
+        mGoogleApiClient.disconnect();
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
@@ -581,13 +584,4 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     }
 
 
-    protected void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    protected void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
-    }
 }

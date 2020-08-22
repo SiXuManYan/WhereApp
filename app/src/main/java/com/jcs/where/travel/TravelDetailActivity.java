@@ -10,24 +10,39 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
+import com.jcs.where.bean.TravelCommentListBean;
 import com.jcs.where.bean.TravelDetailBean;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.mango.ImageSelectListener;
+import com.jcs.where.mango.Mango;
+import com.jcs.where.mango.MultiplexImage;
+import com.jcs.where.utils.ImageLoaders;
 import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +51,9 @@ import java.util.Map;
 
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
+import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 import pl.droidsonroids.gif.GifImageView;
 
 public class TravelDetailActivity extends BaseActivity {
@@ -53,6 +70,15 @@ public class TravelDetailActivity extends BaseActivity {
     private RelativeLayout navigationRl;
     private String phone;
     private TextView introduceTv, noticeTv;
+    // 屏幕宽度
+    public float Width;
+    // 屏幕高度
+    public float Height;
+    private List<TravelCommentListBean.DataBean> list;
+    private RecyclerView commentRv;
+    private CommentAdapter commentAdapter;
+    private LinearLayout commentLl;
+    private TextView seeMoreTv;
 
     public static void goTo(Context context, int id) {
         Intent intent = new Intent(context, TravelDetailActivity.class);
@@ -74,6 +100,9 @@ public class TravelDetailActivity extends BaseActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        Width = dm.widthPixels;
+        Height = dm.heightPixels;
         initView();
     }
 
@@ -92,6 +121,12 @@ public class TravelDetailActivity extends BaseActivity {
             }
         });
         shareIv = V.f(this, R.id.iv_share);
+        shareIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TravelWriteCommentActivity.goTo(TravelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
+            }
+        });
         banner = V.f(this, R.id.banner3);
         useView.setBackgroundColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(getResources().getColor(R.color.white));
@@ -163,6 +198,24 @@ public class TravelDetailActivity extends BaseActivity {
         });
         introduceTv = V.f(this, R.id.tv_introduce);
         noticeTv = V.f(this, R.id.tv_notice);
+        commentRv = V.f(this, R.id.rv_comment);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TravelDetailActivity.this,
+                LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        commentRv.setLayoutManager(linearLayoutManager);
+        commentAdapter = new CommentAdapter(TravelDetailActivity.this);
+        commentLl = V.f(this, R.id.ll_comment);
+        seeMoreTv = V.f(this, R.id.tv_seemore);
+        seeMoreTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TravelCommentActivity.goTo(TravelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
+            }
+        });
         initData();
     }
 
@@ -236,6 +289,7 @@ public class TravelDetailActivity extends BaseActivity {
                             startNaviGoogle("38.888025", "121.594476");
                         }
                     });
+                    initComment();
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
                     ToastUtils.showLong(TravelDetailActivity.this, errorBean.message);
@@ -249,6 +303,47 @@ public class TravelDetailActivity extends BaseActivity {
             }
         });
     }
+
+    private void initComment() {
+        showLoading();
+        HttpUtils.doHttpReqeust("GET", "travelapi/v1/comment/" + getIntent().getIntExtra(EXT_ID, 0), null, "", TokenManager.get().getToken(TravelDetailActivity.this), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    TravelCommentListBean travelCommentListBean = new Gson().fromJson(result, TravelCommentListBean.class);
+                    list = new ArrayList<>();
+                    if (travelCommentListBean.getData().size() == 0) {
+                        commentLl.setVisibility(View.GONE);
+                    } else if (travelCommentListBean.getData().size() == 1) {
+                        commentLl.setVisibility(View.VISIBLE);
+                        list.add(travelCommentListBean.getData().get(0));
+                        commentAdapter.setData(list);
+                        commentRv.setAdapter(commentAdapter);
+                        seeMoreTv.setVisibility(View.GONE);
+                    } else if (travelCommentListBean.getData().size() > 1) {
+                        commentLl.setVisibility(View.VISIBLE);
+                        list.add(travelCommentListBean.getData().get(0));
+                        list.add(travelCommentListBean.getData().get(1));
+                        commentAdapter.setData(list);
+                        commentRv.setAdapter(commentAdapter);
+                        seeMoreTv.setVisibility(View.VISIBLE);
+                    }
+
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(TravelDetailActivity.this, errorBean.message);
+                }
+            }
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(TravelDetailActivity.this, e.getMessage());
+            }
+        });
+    }
+
 
     @Override
     protected int getLayoutId() {
@@ -346,6 +441,199 @@ public class TravelDetailActivity extends BaseActivity {
         }
         //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
         return packageNames.contains(packageName);
+    }
+
+
+    private class CommentAdapter extends BaseQuickAdapter<TravelCommentListBean.DataBean> {
+
+        private int ImagaId[] = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
+
+        public CommentAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected int getLayoutId(int viewType) {
+            return R.layout.item_commentlist;
+        }
+
+        @Override
+        protected void initViews(QuickHolder holder, TravelCommentListBean.DataBean data, int position) {
+            CircleImageView avaterIv = holder.findViewById(R.id.listuserimg);
+            if (!TextUtils.isEmpty(data.getAvatar())) {
+                Picasso.with(TravelDetailActivity.this).load(data.getAvatar()).into(avaterIv);
+            } else {
+                avaterIv.setImageDrawable(TravelDetailActivity.this.getResources().getDrawable(R.drawable.ic_noheader));
+            }
+            TextView nameTv = holder.findViewById(R.id.username);
+            nameTv.setText(data.getUsername());
+            TextView usercontent = holder.findViewById(R.id.usercontent);
+            usercontent.setText(data.getContent());
+            TextView timeTv = holder.findViewById(R.id.tv_time);
+            timeTv.setText(data.getCreated_at());
+            TextView fullText = holder.findViewById(R.id.fullText);
+            ImageView star1Iv = holder.findViewById(R.id.iv_star1);
+            ImageView star2Iv = holder.findViewById(R.id.iv_star2);
+            ImageView star3Iv = holder.findViewById(R.id.iv_star3);
+            ImageView star4Iv = holder.findViewById(R.id.iv_star4);
+            ImageView star5Iv = holder.findViewById(R.id.iv_star5);
+            if (data.getStar_level() == 1) {
+                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 2) {
+                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 3) {
+                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 4) {
+                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 5) {
+                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+            }
+            GridLayout gridview = (GridLayout) holder.findViewById(R.id.gridview);
+            ImageView showimage = (ImageView) holder.findViewById(R.id.showimage);
+            RoundedImageView imgview[] = new RoundedImageView[9];
+            for (int i = 0; i < 9; i++) {
+                imgview[i] = (RoundedImageView) holder.findViewById(ImagaId[i]);
+            }
+            if (data.getImages().size() == 0) {
+                showimage.setVisibility(View.GONE);
+                gridview.setVisibility(View.GONE);
+            } else if (data.getImages().size() > 0) {
+                showimage.setVisibility(View.GONE);
+                gridview.setVisibility(View.VISIBLE);
+                int a = data.getImages().size() / 4;
+                int b = data.getImages().size() % 4;
+                if (b > 0) {
+                    a++;
+                }
+                float width = (Width - dip2px(60) - dip2px(2)) / 4;
+                gridview.getLayoutParams().height = (int) (a * width);
+
+                for (int i = 0; i < 9; i++) {
+                    imgview[i].setVisibility(View.GONE);
+                }
+
+                List<MultiplexImage> images = new ArrayList<>();
+                images.clear();
+                for (int i = 0; i < data.getImages().size(); i++) {
+                    imgview[i].setVisibility(View.VISIBLE);
+                    imgview[i].getLayoutParams().width = (int) width;
+                    imgview[i].getLayoutParams().height = (int) width;
+                    ImageLoaders.setsendimg(data.getImages().get(i), imgview[i]);
+                    images.add(new MultiplexImage(data.getImages().get(i), MultiplexImage.ImageType.NORMAL));
+                    int finalI = i;
+                    imgview[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Mango.setImages(images);
+                            Mango.setPosition(finalI);
+                            Mango.setImageSelectListener(new ImageSelectListener() {
+                                @Override
+                                public void select(int index) {
+
+                                }
+                            });
+                            try {
+                                Mango.open(TravelDetailActivity.this);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+            setContentLayout(usercontent, fullText);
+            if (data.is_select) {
+                fullText.setText("收起");
+                usercontent.setMaxLines(50);
+            } else {
+                fullText.setText("全文");
+                usercontent.setMaxLines(3);
+            }
+
+            fullText.setOnClickListener(new CommentAdapter.fullTextOnclick(usercontent, fullText, position));
+
+        }
+
+        private void setContentLayout(final TextView usercontent,
+                                      final TextView fullText) {
+            ViewTreeObserver vto = usercontent.getViewTreeObserver();
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                private boolean isInit;
+
+                @Override
+                public boolean onPreDraw() {
+                    if (isInit) {
+                        return true;
+                    }
+                    Layout layout = usercontent.getLayout();
+                    if (layout != null) {
+                        int maxline = layout.getLineCount();
+                        if (maxline > 3) {
+                            fullText.setVisibility(View.VISIBLE);
+                        } else {
+                            fullText.setVisibility(View.GONE);
+                        }
+                        isInit = true;
+                    }
+                    return true;
+                }
+            });
+        }
+
+        class fullTextOnclick implements View.OnClickListener {
+
+            private TextView usercontent;
+            private TextView fullText;
+            private int index;
+
+            fullTextOnclick(TextView usercontent, TextView fullText, int index) {
+                this.fullText = fullText;
+                this.usercontent = usercontent;
+                this.index = index;
+            }
+
+            @Override
+            public void onClick(View v) {
+                TravelCommentListBean.DataBean info = list.get(index);
+                if (info.is_select) {
+                    usercontent.setMaxLines(3);
+                    fullText.setText("全文");
+                    usercontent.invalidate();
+                } else {
+                    usercontent.setMaxLines(50);
+                    fullText.setText("收起");
+                    usercontent.invalidate();
+                }
+                info.is_select = !info.is_select;
+                list.set(index, info);
+            }
+        }
+    }
+
+    public int dip2px(float dpValue) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
 

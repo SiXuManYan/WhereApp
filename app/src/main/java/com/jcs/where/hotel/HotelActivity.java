@@ -102,6 +102,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                     .addApi(LocationServices.API)
                     .build();
         }
+        mGoogleApiClient.connect();
         initView();
         guessYouLikeAdapter = new GuessYouLikeAdapter(HotelActivity.this);
     }
@@ -452,33 +453,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
         @Override
         protected void initViews(QuickHolder holder, GuessYouLikeHotelBean data, int position) {
-//            RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
-//            if (!TextUtils.isEmpty(data.getImages().get(0))) {
-//                Picasso.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
-//            } else {
-//                photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
-//            }
-//            TextView nameTv = holder.findViewById(R.id.tv_name);
-//            nameTv.setText(data.getName());
-//            TextView scoreTv = holder.findViewById(R.id.tv_score);
-//            scoreTv.setText(data.getGrade() + "分");
-//            TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
-//            commentNumTv.setText(data.getComment_counts() + "条评论");
-//            TextView distanceTv = holder.findViewById(R.id.tv_distance);
-//            distanceTv.setText("<" + data.getDistance() + "Km");
-//            TextView addressTv = holder.findViewById(R.id.tv_address);
-//            addressTv.setText(data.getAddress());
-//            TextView priceTv = holder.findViewById(R.id.tv_price);
-//            priceTv.setText("₱" + data.getPrice() + "起");
-//            TextView olePriceTv = holder.findViewById(R.id.tv_oldprice);
-//            olePriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-//            holder.findViewById(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    HotelDetailActivity.goTo(mContext, data.getId(), startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, roomNumTv.getText().toString());
-//                }
-//            });
-
             RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Picasso.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
@@ -573,15 +547,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    protected void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
 
-    protected void onStop() {
+    @Override
+    protected void onDestroy() {
         mGoogleApiClient.disconnect();
-        super.onStop();
+        super.onDestroy();
     }
-
-
 }

@@ -87,6 +87,7 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                     .addApi(LocationServices.API)
                     .build();
         }
+        mGoogleApiClient.connect();
         setStatusBar();
         initView();
         initData();
@@ -288,14 +289,10 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
-    protected void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
 
-    protected void onStop() {
+    @Override
+    protected void onDestroy() {
         mGoogleApiClient.disconnect();
-        super.onStop();
+        super.onDestroy();
     }
-
 }

@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.callback.SelectCallback;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
@@ -28,13 +27,11 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.CommentTypeBean;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.dialog.CommentSuccessDialog;
-import com.jcs.where.dialog.ResetSuccessDialog;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.jcs.where.utils.GlideEngine;
 import com.jcs.where.view.GridItemDecoration;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,7 +100,7 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
 //            }
 //        });
 //        typeRv.addItemDecoration(new GridItemDecoration(WriteCommentActivity.this, 10, 20));
-    //    commentAdapter = new CommentAdapter(WriteCommentActivity.this);
+        //    commentAdapter = new CommentAdapter(WriteCommentActivity.this);
         starIv1 = V.f(this, R.id.iv_star1);
         starIv1.setOnClickListener(this);
         starIv2 = V.f(this, R.id.iv_star2);
@@ -132,7 +129,7 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
                 dialog.dismiss();
             }
         });
-       // initType();
+        // initType();
     }
 
 //    private void initType() {
@@ -288,8 +285,9 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
         params.put("star", star + "");
         params.put("content", contentEt.getText().toString().trim());
         params.put("images", g.toJson(pathList));
-      //  params.put("comment_travel_type_id", typeId + "");
+        //  params.put("comment_travel_type_id", typeId + "");
         params.put("hotel_id", getIntent().getIntExtra(EXT_ID, 0) + "");
+       // params.put("order_id", "1");
         HttpUtils.doHttpReqeust("POST", "hotelapi/v1/hotel/comment", params, "", TokenManager.get().getToken(WriteCommentActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {

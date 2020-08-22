@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,15 +138,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-
-        mGoogleApiClient.connect();
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -297,6 +287,22 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 initData();
             }
         });
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ToastUtils.showLong(HotelMapActivity.this, "无权限");
+            V.f(this, R.id.rl_mylocation).setVisibility(View.GONE);
+        } else {
+            ToastUtils.showLong(HotelMapActivity.this, "有权限");
+            V.f(this, R.id.rl_mylocation).setVisibility(View.VISIBLE);
+            if (mGoogleApiClient == null) {
+                mGoogleApiClient = new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
+            }
+            mGoogleApiClient.connect();
+        }
+
     }
 
     private void initData() {
@@ -329,7 +335,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         if (views != null) {
             views.clear();
         }
-        Log.d("ssss", url);
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelMapActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -484,7 +489,9 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void onDestroy() {
-        mGoogleApiClient.disconnect();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
@@ -548,7 +555,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     }
 
     private void checkIsGooglePlayConn() {
-        Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
         if (mGoogleApiClient.isConnected() && mLastLocation != null) {
             initArea(mLastLocation);
         }

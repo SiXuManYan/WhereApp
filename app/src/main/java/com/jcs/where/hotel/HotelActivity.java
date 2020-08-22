@@ -402,15 +402,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void checkIsGooglePlayConn() {
-        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
-            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
-        }
-        mAddressRequested = true;
-    }
-
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
+//        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+//            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
+//        }
+//        mAddressRequested = true;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
             ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
@@ -423,10 +418,29 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
                 return;
             }
-            if (mAddressRequested) {
-                initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
-            }
+            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
         }
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+//            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
+//            return;
+//        }
+//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//        if (mLastLocation != null) {
+//            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+//            if (!Geocoder.isPresent()) {
+//                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
+//                return;
+//            }
+//            if (mAddressRequested) {
+//                initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
+//            }
+//        }
     }
 
     @Override

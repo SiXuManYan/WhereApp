@@ -93,8 +93,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private int size = 10;
     private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
     private final List<View> views = new ArrayList<View>();
-    private String lat = "14.6778362";
-    private String lng = "120.5306459";
+    private double lat = 14.6778362;
+    private double lng = 120.5306459;
     private TextView startDayTv, endDayTv, cityTv;
     private RelativeLayout hotelMapRl;
     private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
@@ -111,6 +111,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private boolean mAddressRequested;
+    private boolean clickLocation = false;
 
     public static void goTo(Context context, String startDate, String endDate, String startWeek, String endWeek, String allDay, String city, String cityId, String price, String star, String startYear, String endYear, String roomNumber) {
         Intent intent = new Intent(context, HotelMapActivity.class);
@@ -328,6 +329,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         if (views != null) {
             views.clear();
         }
+        Log.d("ssss", url);
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelMapActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -342,7 +344,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                     lastPostition = 0;
                     lastScrollPosition = 0;
                     if (list != null) {
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ADELAIDE, 10f));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
                         for (int i = 0; i < list.size(); i++) {
                             View view = LayoutInflater.from(HotelMapActivity.this).inflate(R.layout.custom_marker_layout, null);
                             TextView peiceTv = V.f(view, R.id.tv_price);
@@ -372,6 +374,12 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                         viewPager.setAdapter(mCardAdapter);
                         viewPager.setPageTransformer(false, mCardShadowTransformer);
                         viewPager.setOffscreenPageLimit(3);
+                        if (clickLocation == true) {
+
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng(lat, lng))
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
+                        }
                     } else {
                         ToastUtils.showLong(HotelMapActivity.this, "未查询到该酒店");
                     }
@@ -577,10 +585,10 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     }
 
     private void initArea(Location location) {
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10f));
+        lat = location.getLatitude();
+        lng = location.getLongitude();
+        clickLocation = true;
+        initData();
     }
 
 

@@ -35,6 +35,7 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.GuessYouLikeHotelBean;
+import com.jcs.where.home.dialog.HotelStarDialog;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.hotel.HotelListActivity;
@@ -81,6 +82,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private Location mLastLocation;
     private LatLng lastLatLng, perthLatLng;
     private boolean mAddressRequested;
+
+    private HotelStarDialog mHotelStarDialog;
 
 
     public static void goTo(Context context) {
@@ -199,6 +202,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         //  initLoaction();
         checkIsGooglePlayConn();
 
+        mHotelStarDialog = new HotelStarDialog();
     }
 
     private void initData() {
@@ -269,93 +273,94 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 roomNumTv.setText(roomNum1 + "");
                 break;
             case R.id.tv_priceandstar:
-                new ChoosePricePop.Builder(HotelActivity.this, view, transmitPrice, transmitStar)
-                        .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
-                            @Override
-                            public void getDate(String price, String star) {
-                                if (price == null && star == null) {
-                                    clearIv.setVisibility(View.GONE);
-                                    priceAndStarTv.setText("价格/星级");
-                                    priceAndStarTv.setTextColor(getResources().getColor(R.color.grey_999999));
-                                    transmitPrice = null;
-                                    transmitStar = null;
-                                } else if (price == null) {
-                                    priceAndStarTv.setText(star);
-                                    if (star.equals("二星及以下")) {
-                                        useStar = "[1,2]";
-                                    } else if (star.equals("三星")) {
-                                        useStar = "[3]";
-                                    } else if (star.equals("四星")) {
-                                        useStar = "[4]";
-                                    } else if (star.equals("五星")) {
-                                        useStar = "[5]";
-                                    }
-                                    transmitStar = star;
-                                    transmitPrice = null;
-                                    usePrice = null;
-                                    clearIv.setVisibility(View.VISIBLE);
-                                } else if (star == null) {
-                                    priceAndStarTv.setText(price);
-                                    if (price.equals("₱ 100以下")) {
-
-                                        usePrice = "[0,100]";
-                                    } else if (price.equals("₱ 100-200")) {
-                                        usePrice = "[100,200]";
-                                    } else if (price.equals("₱ 200-300")) {
-                                        usePrice = "[200,300]";
-                                    } else if (price.equals("₱ 300-400")) {
-                                        usePrice = "[300,400]";
-                                    } else if (price.equals("₱ 400-500")) {
-                                        usePrice = "[400,500]";
-                                    } else if (price.equals("₱ 500-700")) {
-                                        usePrice = "[500,700]";
-                                    } else if (price.equals("₱ 700-900")) {
-                                        usePrice = "[700,900]";
-                                    } else if (price.equals("₱ 900以上")) {
-                                        usePrice = "[900,100000]";
-                                    }
-                                    transmitStar = null;
-                                    transmitPrice = price;
-                                    useStar = null;
-                                    clearIv.setVisibility(View.VISIBLE);
-                                } else {
-                                    priceAndStarTv.setText(price + "，" + star);
-                                    if (price.equals("₱ 100以下")) {
-                                        usePrice = "[0,100]";
-                                    } else if (price.equals("₱ 100-200")) {
-                                        usePrice = "[100,200]";
-                                    } else if (price.equals("₱ 200-300")) {
-                                        usePrice = "[200,300]";
-                                    } else if (price.equals("₱ 300-400")) {
-                                        usePrice = "[300,400]";
-                                    } else if (price.equals("₱ 400-500")) {
-                                        usePrice = "[400,500]";
-                                    } else if (price.equals("₱ 500-700")) {
-                                        usePrice = "[500,700]";
-                                    } else if (price.equals("₱ 700-900")) {
-                                        usePrice = "[700,900]";
-                                    } else if (price.equals("₱ 900以上")) {
-                                        usePrice = "[900,100000]";
-                                    }
-                                    if (star.equals("二星及以下")) {
-                                        useStar = "[1,2]";
-                                    } else if (star.equals("三星")) {
-                                        useStar = "[3]";
-                                    } else if (star.equals("四星")) {
-                                        useStar = "[4]";
-                                    } else if (star.equals("五星")) {
-                                        useStar = "[5]";
-                                    }
-                                    transmitStar = star;
-                                    transmitPrice = price;
-                                    clearIv.setVisibility(View.VISIBLE);
-                                }
-
-                                priceAndStarTv.setTextColor(getResources().getColor(R.color.black_333333));
-
-
-                            }
-                        }).builder();
+                mHotelStarDialog.show(getSupportFragmentManager());
+//                new ChoosePricePop.Builder(HotelActivity.this, view, transmitPrice, transmitStar)
+//                        .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
+//                            @Override
+//                            public void getDate(String price, String star) {
+//                                if (price == null && star == null) {
+//                                    clearIv.setVisibility(View.GONE);
+//                                    priceAndStarTv.setText("价格/星级");
+//                                    priceAndStarTv.setTextColor(getResources().getColor(R.color.grey_999999));
+//                                    transmitPrice = null;
+//                                    transmitStar = null;
+//                                } else if (price == null) {
+//                                    priceAndStarTv.setText(star);
+//                                    if (star.equals("二星及以下")) {
+//                                        useStar = "[1,2]";
+//                                    } else if (star.equals("三星")) {
+//                                        useStar = "[3]";
+//                                    } else if (star.equals("四星")) {
+//                                        useStar = "[4]";
+//                                    } else if (star.equals("五星")) {
+//                                        useStar = "[5]";
+//                                    }
+//                                    transmitStar = star;
+//                                    transmitPrice = null;
+//                                    usePrice = null;
+//                                    clearIv.setVisibility(View.VISIBLE);
+//                                } else if (star == null) {
+//                                    priceAndStarTv.setText(price);
+//                                    if (price.equals("₱ 100以下")) {
+//
+//                                        usePrice = "[0,100]";
+//                                    } else if (price.equals("₱ 100-200")) {
+//                                        usePrice = "[100,200]";
+//                                    } else if (price.equals("₱ 200-300")) {
+//                                        usePrice = "[200,300]";
+//                                    } else if (price.equals("₱ 300-400")) {
+//                                        usePrice = "[300,400]";
+//                                    } else if (price.equals("₱ 400-500")) {
+//                                        usePrice = "[400,500]";
+//                                    } else if (price.equals("₱ 500-700")) {
+//                                        usePrice = "[500,700]";
+//                                    } else if (price.equals("₱ 700-900")) {
+//                                        usePrice = "[700,900]";
+//                                    } else if (price.equals("₱ 900以上")) {
+//                                        usePrice = "[900,100000]";
+//                                    }
+//                                    transmitStar = null;
+//                                    transmitPrice = price;
+//                                    useStar = null;
+//                                    clearIv.setVisibility(View.VISIBLE);
+//                                } else {
+//                                    priceAndStarTv.setText(price + "，" + star);
+//                                    if (price.equals("₱ 100以下")) {
+//                                        usePrice = "[0,100]";
+//                                    } else if (price.equals("₱ 100-200")) {
+//                                        usePrice = "[100,200]";
+//                                    } else if (price.equals("₱ 200-300")) {
+//                                        usePrice = "[200,300]";
+//                                    } else if (price.equals("₱ 300-400")) {
+//                                        usePrice = "[300,400]";
+//                                    } else if (price.equals("₱ 400-500")) {
+//                                        usePrice = "[400,500]";
+//                                    } else if (price.equals("₱ 500-700")) {
+//                                        usePrice = "[500,700]";
+//                                    } else if (price.equals("₱ 700-900")) {
+//                                        usePrice = "[700,900]";
+//                                    } else if (price.equals("₱ 900以上")) {
+//                                        usePrice = "[900,100000]";
+//                                    }
+//                                    if (star.equals("二星及以下")) {
+//                                        useStar = "[1,2]";
+//                                    } else if (star.equals("三星")) {
+//                                        useStar = "[3]";
+//                                    } else if (star.equals("四星")) {
+//                                        useStar = "[4]";
+//                                    } else if (star.equals("五星")) {
+//                                        useStar = "[5]";
+//                                    }
+//                                    transmitStar = star;
+//                                    transmitPrice = price;
+//                                    clearIv.setVisibility(View.VISIBLE);
+//                                }
+//
+//                                priceAndStarTv.setTextColor(getResources().getColor(R.color.black_333333));
+//
+//
+//                            }
+//                        }).builder();
                 break;
             case R.id.tv_search:
                 HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString());

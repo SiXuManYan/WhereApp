@@ -9,6 +9,22 @@
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
     <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
     <string name="permission_required_toast">Location permission is required for this demo.</string>
+    <string name="price_prompt">价格</string>
+    <string name="price_0_to_1">₱ 0–1k</string>
+    <string name="price_1_to_2">₱ 1–2k</string>
+    <string name="price_2_to_5">₱ 2–5k</string>
+    <string name="price_above_5">₱ 5k+</string>
+    <string name="star_prompt">星级</string>
+    <string name="score_prompt">评分</string>
+    <string name="start_less_than_2"><![CDATA[<2]]></string>
+    <string name="digital_3">3</string>
+    <string name="digital_4">4</string>
+    <string name="digital_5">5</string>
+    <string name="score_3_0">3.0\n一般</string>
+    <string name="score_3_5">3.5\n满意</string>
+    <string name="score_4_0">4.0\n很好</string>
+    <string name="score_4_5">4.5\n超赞</string>
+    <string name="ensure">确定</string>
 
 
 </resources>

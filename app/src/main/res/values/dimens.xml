@@ -26,4 +26,9 @@
     <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_35">35dp</dimen>
     <dimen name="dp_21">21dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_78">78dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_11">11dp</dimen>
+    <dimen name="dp_388">388dp</dimen>
 </resources>

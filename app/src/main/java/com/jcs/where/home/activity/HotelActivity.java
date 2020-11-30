@@ -1,4 +1,4 @@
-package com.jcs.where.hotel;
+package com.jcs.where.home.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -35,6 +35,9 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.GuessYouLikeHotelBean;
+import com.jcs.where.hotel.CityPickerActivity;
+import com.jcs.where.hotel.HotelDetailActivity;
+import com.jcs.where.hotel.HotelListActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.popupwindow.ChoosePricePop;
 import com.makeramen.roundedimageview.RoundedImageView;

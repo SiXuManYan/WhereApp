@@ -2,6 +2,7 @@ package com.jcs.where.home.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelResponse;
 
@@ -12,10 +13,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class TravelStayModel extends BaseModel {
     public void getCategories(int level, int[] categories, BaseObserver<List<CategoryResponse>> observer) {
-        mRetrofit.getCategories(level, categories).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(observer);
+        dealResponse(mRetrofit.getCategories(level, categories), observer);
     }
 
     public void getYouLike(BaseObserver<List<HotelResponse>> observer) {
-        mRetrofit.getYouLike().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(observer);
+        dealResponse(mRetrofit.getYouLike(), observer);
     }
+
+    public void getBanners(int type, BaseObserver<List<BannerResponse>> observer) {
+        dealResponse(mRetrofit.getBanners(type), observer);
+    }
+
 }

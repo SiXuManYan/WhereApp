@@ -1,12 +1,7 @@
 package com.jcs.where.home.activity;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Outline;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -15,13 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.base.BaseActivity;
@@ -30,14 +23,11 @@ import com.jcs.where.home.adapter.ModulesCategoryAdapter;
 import com.jcs.where.home.adapter.TravelStayHotelAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.home.model.TravelStayModel;
-import com.jcs.where.utils.GlideRoundTransform;
-import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.stx.xhb.androidx.XBanner;
+import com.stx.xhb.androidx.entity.BaseBannerInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import pl.droidsonroids.gif.GifImageView;
 
 public class TravelStayActivity extends BaseActivity implements OnItemClickListener {
     private XBanner mBanner;
@@ -48,6 +38,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
     private TravelStayModel mModel;
 
+    private final int HOTEL_STAY = 107;
 
     @Override
     protected void initView() {
@@ -90,6 +81,19 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
             public void onNext(@io.reactivex.annotations.NonNull List<HotelResponse> hotelResponses) {
                 mTravelStayHotelAdapter.getData().clear();
                 mTravelStayHotelAdapter.addData(hotelResponses);
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
+
+        mModel.getBanners(2, new BaseObserver<List<BannerResponse>>() {
+            @Override
+            public void onNext(@io.reactivex.annotations.NonNull List<BannerResponse> bannerResponses) {
+                mBanner.setBannerData(R.layout.banner_travel_stay, bannerResponses);
+                mBanner.loadImage((banner, model, view, position) -> Glide.with(TravelStayActivity.this).load(((BaseBannerInfo) model).getXBannerUrl()).into((ImageView) view));
             }
 
             @Override
@@ -144,13 +148,17 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
         }
 
 
-
     }
 
     @Override
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
         if (adapter == mModulesCategoryAdapter) {
-            Log.e("TravelStayActivity", "----onItemClick---");
+            int id = mModulesCategoryAdapter.getItem(position).getId();
+            switch (id) {
+                case HOTEL_STAY:
+                    toActivity(HotelActivity.class);
+                    break;
+            }
         }
     }
 }

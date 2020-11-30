@@ -1,6 +1,7 @@
 package com.jcs.where.base;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,6 +58,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void bindListener();
 
     protected abstract int getLayoutId();
+
+    protected void toActivity(Class<?> clazz){
+        startActivity(new Intent(this,clazz));
+    }
 
     protected void setIsHasStatusBarColor(boolean b) {
         mIsHasStatusBarColor = b;

@@ -65,7 +65,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelActivity"
+            android:name=".home.activity.HotelActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 

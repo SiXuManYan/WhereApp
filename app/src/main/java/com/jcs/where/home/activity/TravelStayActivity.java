@@ -32,7 +32,7 @@ import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.home.model.TravelStayModel;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
-import com.jcs.where.view.XBanner.XBanner;
+import com.stx.xhb.androidx.XBanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,67 +142,8 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
         for (int i = 0; i < list.size(); i++) {
             bannerUrls.add(list.get(i).src);
         }
-        mBanner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                .setImageUrls(bannerUrls)
-                .setImageLoader(new AbstractUrlLoader() {
-                    @Override
-                    public void loadImages(Context context, String url, ImageView image) {
-//                        Glide.with(context)
-//                                .load(url)
-//                                .into(image);
-                        RequestOptions options = new RequestOptions()
-                                .centerCrop()
-                                .error(R.drawable.ic_test) //加载失败图片
-                                .priority(Priority.HIGH) //优先级
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
-                                .transform(new GlideRoundTransform(10)); //圆角
-                        Glide.with(context).load(url).apply(options).into(image);
-                    }
 
-                    @Override
-                    public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-//                        Glide.with(context).asGif().load(url).into(gifImageView);
-                        RequestOptions options = new RequestOptions()
-                                .centerCrop()
-                                .error(R.drawable.ic_test) //加载失败图片
-                                .priority(Priority.HIGH) //优先级
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
-                                .transform(new GlideRoundTransform(10)); //圆角
-                        Glide.with(context).load(url).apply(options).into(gifImageView);
-                    }
-                })
-                .setTitleHeight(50)
-                .isAutoPlay(true)
-                .setDelay(5000)
-                .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
-                .setUpIndicatorSize(20, 6)
-                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
-                .setBannerPageListener(new XBanner.BannerPageListener() {
-                    @Override
-                    public void onBannerClick(int item) {
-                    }
 
-                    @Override
-                    public void onBannerDragging(int item) {
-
-                    }
-
-                    @Override
-                    public void onBannerIdle(int item) {
-
-                    }
-                })
-                .start();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBanner.setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    float radius = Resources.getSystem().getDisplayMetrics().density * 10;
-                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
-                }
-            });
-            mBanner.setClipToOutline(true);
-        }
 
     }
 

@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.jcs.where.view.XBanner.XBanner
+            <com.stx.xhb.androidx.XBanner
                 android:id="@+id/travelStayBanner"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="160dp"
@@ -38,7 +38,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="@dimen/dp_15"
-                android:layout_marginEnd="@dimen/dp_15" />
+                android:layout_marginEnd="@dimen/dp_15"
+                app:AutoPlayTime="3000"
+                app:pointsPosition="CENTER"
+                app:pageChangeDuration="800"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/moduleRecycler"

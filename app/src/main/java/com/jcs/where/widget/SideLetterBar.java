@@ -53,7 +53,7 @@ public class SideLetterBar extends View {
         int width = getWidth();
         int singleHeight = height / b.length;
         for (int i = 0; i < b.length; i++) {
-            paint.setTextSize(getResources().getDimension(R.dimen.font_12sp));
+            paint.setTextSize(getResources().getDimension(R.dimen.sp_12));
             paint.setColor(Color.parseColor("#999999"));
             paint.setAntiAlias(true);
             if (i == choose) {

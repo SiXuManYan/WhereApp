@@ -15,9 +15,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.gson.Gson;
-import com.huantansheng.easyphotos.EasyPhotos;
-import com.huantansheng.easyphotos.callback.SelectCallback;
-import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
@@ -25,7 +22,6 @@ import com.jcs.where.bean.UserBean;
 import com.jcs.where.login.event.LoginEvent;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.presenter.UploadFilePresenter;
-import com.jcs.where.utils.GlideEngine;
 import com.jcs.where.utils.SoftKeyBoardListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -71,41 +67,6 @@ public class PersonalDataActivity extends BaseActivity {
         headerIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EasyPhotos.createAlbum((Activity) PersonalDataActivity.this, true, GlideEngine.getInstance())
-                        .setFileProviderAuthority("com.jcs.where.fileprovider")
-                        .setCount(1)
-                        .start(new SelectCallback() {
-                            @Override
-                            public void onResult(ArrayList<Photo> photos, boolean isOriginal) {
-                                ImageLoader.get().load(headerIv, photos.get(0).path, false);
-                                List<String> photo = new ArrayList<>();
-                                for (int i = 0; i < photos.size(); i++) {
-                                    photo.add(photos.get(i).path);
-                                }
-                                showLoading();
-                                addSubscription(mUploadPresenter.uploadFiles(photo)
-                                        .subscribe(new Subscriber<List<String>>() {
-                                            @Override
-                                            public void onCompleted() {
-                                                stopLoading();
-                                            }
-
-                                            @Override
-                                            public void onError(Throwable e) {
-                                                stopLoading();
-                                                e.printStackTrace();
-                                                ToastUtils.showLong(PersonalDataActivity.this, e.getMessage());
-                                            }
-
-                                            @Override
-                                            public void onNext(List<String> strings) {
-                                                stopLoading();
-                                                changeAvater(strings);
-                                            }
-                                        }));
-
-                            }
-                        });
             }
         });
         nameEt = V.f(this, R.id.et_name);

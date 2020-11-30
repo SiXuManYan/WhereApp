@@ -23,9 +23,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.atuan.datepickerlibrary.CalendarUtil;
-import com.atuan.datepickerlibrary.DatePopupWindow;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -119,11 +116,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         startWeekTv = V.f(this, R.id.tv_startweek);
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = new Date(System.currentTimeMillis());
-        startWeekTv.setText("周" + CalendarUtil.getWeekByFormat(simpleDateFormat1.format(date1)));
+//        startWeekTv.setText("周" + CalendarUtil.getWeekByFormat(simpleDateFormat1.format(date1)));
         endDateTv = V.f(this, R.id.tv_endday);
         endDateTv.setText(getOldDate(1));
         endWeekTv = V.f(this, R.id.tv_endweek);
-        endWeekTv.setText("周" + CalendarUtil.getWeekByFormat(getOldWeek(1)));
+//        endWeekTv.setText("周" + CalendarUtil.getWeekByFormat(getOldWeek(1)));
         allDayTv = V.f(this, R.id.tv_allday);
         roomNumTv = V.f(this, R.id.tv_roomnum);
         reduceIv = V.f(this, R.id.iv_roomreduce);
@@ -223,28 +220,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 startActivityForResult(intent, REQ_SELECT_CITY);
                 break;
             case R.id.rl_choosedate:
-                new DatePopupWindow
-                        .Builder(HotelActivity.this, Calendar.getInstance().getTime(), view)
-                        .setInitSelect(startGroup, startChild, endGroup, endChild)
-                        .setInitDay(false)
-                        .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
-                            @Override
-                            public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
-                                startGroup = startGroupPosition;
-                                startChild = startChildPosition;
-                                endGroup = endGroupPosition;
-                                endChild = endChildPosition;
-                                String mStartTime = CalendarUtil.FormatDateYMD(startDate);
-                                String mEndTime = CalendarUtil.FormatDateYMD(endDate);
-                                startDateTv.setText(mStartTime);
-                                startWeekTv.setText(startWeek);
-                                endDateTv.setText(mEndTime);
-                                endWeekTv.setText(endWeek);
-                                allDayTv.setText("共" + allDay + "晚");
-                                useStartYear = startYear;
-                                useEndYear = endYear;
-                            }
-                        }).builder();
                 break;
             case R.id.iv_roomreduce:
                 int roomNum = Integer.valueOf(roomNumTv.getText().toString());

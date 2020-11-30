@@ -13,12 +13,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
-import com.atuan.datepickerlibrary.CalendarUtil;
-import com.atuan.datepickerlibrary.DatePopupWindow;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hmy.popwindow.PopWindow;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
@@ -136,10 +132,6 @@ public class HotelListActivity extends BaseActivity {
 //                        }).builder();
 
                 View customView = View.inflate(HotelListActivity.this, R.layout.pop_maptitle, null);
-                new PopWindow.Builder(HotelListActivity.this)
-                        .setStyle(PopWindow.PopWindowStyle.PopDown)
-                        .setView(customView)
-                        .show(view);
                 TextView startDateTv = V.f(customView, R.id.tv_startdate);
                 startDateTv.setText(mStartDate);
                 TextView endDateTv = V.f(customView, R.id.tv_enddate);
@@ -180,32 +172,7 @@ public class HotelListActivity extends BaseActivity {
                 V.f(customView, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new DatePopupWindow
-                                .Builder(HotelListActivity.this, Calendar.getInstance().getTime(), hotelListLl)
-                                .setInitSelect(-1, -1, -1, -1)
-                                .setInitDay(false)
-                                .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
-                                    @Override
-                                    public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
-                                        String mStartTime = CalendarUtil.FormatDateYMD(startDate);
-                                        String mEndTime = CalendarUtil.FormatDateYMD(endDate);
-                                        startDayTv.setText(mStartTime.replace("月", "-").replace("日", ""));
-                                        endDayTv.setText(mEndTime.replace("月", "-").replace("日", ""));
-                                        startDateTv.setText(mStartTime);
-                                        endDateTv.setText(mEndTime);
-                                        allDayTv.setText("共" + allDay + "晚");
-                                        mStartYear = startYear;
-                                        mEndYear = endYear;
-                                        mStartDate = mStartTime;
-                                        mEndData = mEndTime;
-                                        mStartWeek = startWeek;
-                                        mEndWeek = endWeek;
-                                        mAllDay = "共" + allDay + "晚";
-                                        for (int i = 0; i < fragments.size(); i++) {
-                                            ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
-                                        }
-                                    }
-                                }).builder();
+
                     }
                 });
             }

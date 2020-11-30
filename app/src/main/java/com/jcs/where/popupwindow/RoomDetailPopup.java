@@ -50,7 +50,6 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         this.setContentView(rootView);
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        this.setAnimationStyle(com.atuan.datepickerlibrary.R.style.dialogWindowAnim);
         this.setFocusable(true);
         this.setBackgroundDrawable(new BitmapDrawable());
         this.setOnDismissListener(new ShareDismissListener());

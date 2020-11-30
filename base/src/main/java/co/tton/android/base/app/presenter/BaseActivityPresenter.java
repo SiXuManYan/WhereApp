@@ -8,7 +8,7 @@ import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.manager.CompositeSubscriptionHelper;
 import rx.Subscription;
 
-public class BaseActivityPresenter {
+public class BaseActivityPresenter<T> {
 
     protected BaseActivity mActivity;
 

@@ -14,8 +14,7 @@
         android:id="@+id/rl_choose"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_choosedate">
+        android:layout_alignParentBottom="true">
 
         <ImageView
             android:id="@+id/btn_close"
@@ -24,8 +23,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
-            android:padding="10dp"
-            android:src="@drawable/ic_closedate" />
+            android:padding="10dp" />
 
         <TextView
             android:layout_width="wrap_content"

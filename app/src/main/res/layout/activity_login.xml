@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/login_activity_background"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="180.5dp"
-        android:background="@drawable/ic_loginbg">
+        android:layout_height="180.5dp">
 
         <TextView
             android:id="@+id/tv_account"
@@ -127,13 +126,12 @@
                 android:id="@+id/tv_accounterror"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginLeft="65.5dp"
+                android:gravity="center"
                 android:text="密码输入错误"
                 android:textColor="@color/red_FF0000"
                 android:textSize="11sp"
-                android:layout_marginLeft="65.5dp"
-                android:gravity="center"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_accountlogin"
@@ -246,13 +244,12 @@
                 android:id="@+id/tv_phoneerror"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginLeft="65.5dp"
+                android:gravity="center"
                 android:text="验证码输入错误"
                 android:textColor="@color/red_FF0000"
                 android:textSize="11sp"
-                android:layout_marginLeft="65.5dp"
-                android:gravity="center"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_phonelogin"
@@ -410,8 +407,7 @@
         android:layout_width="match_parent"
         android:layout_height="36.5dp"
         android:layout_alignParentBottom="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_loginbottom" />
+        android:scaleType="fitXY" />
 
 
 </RelativeLayout>

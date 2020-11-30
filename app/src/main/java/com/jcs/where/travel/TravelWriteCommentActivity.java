@@ -18,16 +18,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.huantansheng.easyphotos.EasyPhotos;
-import com.huantansheng.easyphotos.callback.SelectCallback;
-import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.dialog.CommentSuccessDialog;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.presenter.UploadFilePresenter;
-import com.jcs.where.utils.GlideEngine;
 import com.jcs.where.view.GridItemDecoration;
 
 import java.util.ArrayList;
@@ -280,15 +276,6 @@ public class TravelWriteCommentActivity extends BaseActivity implements View.OnC
                             return;
                         }
                         int size = getItemCount() - 1;
-                        EasyPhotos.createAlbum((Activity) mContext, true, GlideEngine.getInstance())
-                                .setFileProviderAuthority("com.jcs.where.fileprovider")
-                                .setCount(4 - size)
-                                .start(new SelectCallback() {
-                                    @Override
-                                    public void onResult(ArrayList<Photo> photos, boolean isOriginal) {
-                                        refresh(photos);
-                                    }
-                                });
 
                     }
                 }
@@ -319,14 +306,5 @@ public class TravelWriteCommentActivity extends BaseActivity implements View.OnC
         }
     }
 
-    private void refresh(List<Photo> photos) {
-        List<String> selectedPaths = new ArrayList<>();
-        for (int i = 0; i < photos.size(); i++) {
-            selectedPaths.add(photos.get(i).path);
-        }
-        mAdapter.removeData(mAdapter.getItemCount() - 1);
-        mAdapter.addData(selectedPaths);
-        mAdapter.addData("0");
-    }
 
 }

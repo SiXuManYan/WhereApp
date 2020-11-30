@@ -29,9 +29,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.atuan.datepickerlibrary.CalendarUtil;
-import com.atuan.datepickerlibrary.DatePopupWindow;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -290,23 +287,6 @@ public class HotelDetailActivity extends BaseActivity {
         V.f(this, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePopupWindow
-                        .Builder(HotelDetailActivity.this, Calendar.getInstance().getTime(), view)
-                        .setInitSelect(-1, -1, -1, -1)
-                        .setInitDay(false)
-                        .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
-                            @Override
-                            public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
-
-                                String mStartTime = CalendarUtil.FormatDateYMD(startDate);
-                                String mEndTime = CalendarUtil.FormatDateYMD(endDate);
-                                startDateTv.setText(mStartTime);
-                                startWeekTv.setText(startWeek);
-                                endDateTv.setText(mEndTime);
-                                endWeekTv.setText(endWeek);
-                                allDayTv.setText("共" + allDay + "晚");
-                            }
-                        }).builder();
             }
         });
         star1Iv = V.f(this, R.id.iv_star1);

@@ -42,7 +42,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.flyco.tablayout.SlidingTabLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -119,7 +118,6 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private final int READ_LOCATIONCODE = 11;
     private FusedLocationProviderClient fusedLocationClient;
     private String useInputText = null;
-    private SlidingTabLayout mTab;
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, TravelMapActivity.class);
@@ -240,7 +238,6 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
-        mTab = V.f(this, R.id.tab);
         mViewPager = V.f(this, R.id.viewPager);
         listStatusIv = V.f(this, R.id.iv_liststatus);
         mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
@@ -416,7 +413,6 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 return titles.get(position);
             }
         });
-        mTab.setViewPager(mViewPager, titles);
 
     }
 

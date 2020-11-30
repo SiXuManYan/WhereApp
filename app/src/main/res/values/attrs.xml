@@ -41,4 +41,15 @@
         <attr name="realtimeBlurRoundCornerRadius" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="JcsTitle">
+        <attr name="middleTitle" format="string|reference"/>
+        <attr name="showBackIv" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="StarView">
+        <attr name="starNum" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="LabelView">
+        <attr name="labelNum" format="integer"/>
+    </declare-styleable>
 </resources>

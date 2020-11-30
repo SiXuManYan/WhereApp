@@ -63,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             StatusBarUtil.setColor(this, ValueUtils.getColor(this, R.color.colorPrimary), 0);
         }
 
+
         initToolbar();
         sActivityList.add(this);
     }

@@ -184,19 +184,6 @@
 
         </RelativeLayout>
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tab"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            tl:tl_indicator_color="@color/blue_4B9DF1"
-            tl:tl_indicator_corner_radius="1dp"
-            tl:tl_indicator_height="2dp"
-            tl:tl_indicator_width="25dp"
-            tl:tl_textBold="BOTH"
-            tl:tl_textSelectColor="@color/blue_4B9DF1"
-            tl:tl_textUnselectColor="@color/black_333333" />
-
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"

@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,15 +32,19 @@ import com.gongwen.marqueen.util.OnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.bean.BusinessBean;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
+import com.jcs.where.home.activity.TravelStayActivity;
+import com.jcs.where.home.adapter.ModulesAdapter;
+import com.jcs.where.home.decoration.HomeModulesItemDecoration;
+import com.jcs.where.home.model.HomeModel;
 import com.jcs.where.hotel.CityPickerActivity;
-import com.jcs.where.hotel.HotelActivity;
 import com.jcs.where.manager.TokenManager;
-import com.jcs.where.travel.TravelMapActivity;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -57,11 +62,15 @@ import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import io.reactivex.annotations.NonNull;
 import pl.droidsonroids.gif.GifImageView;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HomeFragment extends BaseFragment {
+/**
+ * 首页
+ */
+public class HomeFragment extends BaseFragment implements com.chad.library.adapter.base.listener.OnItemClickListener {
 
     private static final int REQ_SELECT_CITY = 100;
     private View view;
@@ -73,8 +82,13 @@ public class HomeFragment extends BaseFragment {
     private LinearLayout bannerLl;
     private int refreshBanner = 0;
 
+    private HomeModel mModel;
+    private RecyclerView mModuleRecycler;
+    private ModulesAdapter mModulesAdapter;
+
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mModel = new HomeModel();
         view = inflater.inflate(R.layout.fragment_home, container, false);
         bannerLl = V.f(view, R.id.ll_banner);
         ViewGroup.LayoutParams lp;
@@ -106,10 +120,42 @@ public class HomeFragment extends BaseFragment {
                 startActivityForResult(intent, REQ_SELECT_CITY);
             }
         });
+
+        mModuleRecycler = view.findViewById(R.id.moduleRecycler);
+        mModulesAdapter = new ModulesAdapter(R.layout.item_home_modules);
+        mModuleRecycler.addItemDecoration(new HomeModulesItemDecoration());
+        mModuleRecycler.setLayoutManager(new GridLayoutManager(getContext(), 5, RecyclerView.VERTICAL, false));
+        mModuleRecycler.setAdapter(mModulesAdapter);
+        mModulesAdapter.setOnItemClickListener(this);
         getBannerData();
         getNewsData();
         initView();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@androidx.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getModules();
+    }
+
+
+    /**
+     * 获得金刚圈的信息
+     */
+    private void getModules() {
+        mModel.getModules(new BaseObserver<List<ModulesResponse>>() {
+            @Override
+            public void onNext(@NonNull List<ModulesResponse> modulesResponses) {
+                mModulesAdapter.getData().clear();
+                mModulesAdapter.addData(modulesResponses);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                ToastUtils.showLong(getContext(), e.getMessage());
+            }
+        });
     }
 
     private void getBannerData() {
@@ -280,18 +326,76 @@ public class HomeFragment extends BaseFragment {
         };
         homeRv.setLayoutManager(linearLayoutManager);
         homeRv.setAdapter(adapter);
-        V.f(view, R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HotelActivity.goTo(getContext());
+    }
+
+    @Override
+    public void onItemClick(@androidx.annotation.NonNull com.chad.library.adapter.base.BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
+        if (adapter == mModulesAdapter) {
+            //点击了金刚圈
+            /*
+            金刚区模块跳转说明：
+            1：政府机构->带地图的综合服务页面
+            2：企业黄页->三级联动筛选的综合服务页面
+            3：旅游住宿->旅游住宿二级页
+            4：便民服务、教育机构、健康&医疗、家政服务->横向二级联动筛选的综合服务页面
+            5：金融服务->横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）
+            6：餐饮美食->餐厅列表
+            7：线上商店->Comming soon
+             */
+            //首先判断状态 1：已上线 2：开发中
+            ModulesResponse item = mModulesAdapter.getItem(position);
+            switch (item.getDev_status()) {
+                case 1:
+                    //根据id做不同的处理
+                    dealModulesById(item);
+
+                    break;
+                case 2:
+                    ToastUtils.showLong(getContext(),"开发中");
+                    break;
             }
-        });
-        V.f(view, R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TravelMapActivity.goTo(getContext());
-            }
-        });
+        }
+    }
+
+    /**
+     * 处理金刚圈item点击后的跳转逻辑
+     * @param item item
+     */
+    private void dealModulesById(ModulesResponse item) {
+        switch (item.getId()){
+            case 1:
+                ToastUtils.showLong(getContext(),"带地图的综合服务页面");
+                break;
+            case 2:
+                ToastUtils.showLong(getContext(),"三级联动筛选的综合服务页面");
+                break;
+            case 3:
+                Intent toTravelStay = new Intent(getContext(), TravelStayActivity.class);
+                toTravelStay.putIntegerArrayListExtra("categories",(ArrayList<Integer>) item.getCategories());
+                startActivity(toTravelStay);
+                break;
+            case 4:
+                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                break;
+            case 5:
+                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）");
+                break;
+            case 6:
+                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                break;
+            case 7:
+                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                break;
+            case 8:
+                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                break;
+            case 9:
+                ToastUtils.showLong(getContext(),"餐厅列表");
+                break;
+            case 10:
+                ToastUtils.showLong(getContext(),"开发中");
+                break;
+        }
     }
 
     private class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

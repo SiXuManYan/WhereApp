@@ -153,6 +153,11 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".home.activity.TravelStayActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

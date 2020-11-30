@@ -32,6 +32,7 @@ public class JcsTitle extends ConstraintLayout {
         middleTitle = array.getString(R.styleable.JcsTitle_middleTitle);
         showBackIv = array.getBoolean(R.styleable.JcsTitle_showBackIv, true);
 
+        array.recycle();
         initView(context);
     }
 

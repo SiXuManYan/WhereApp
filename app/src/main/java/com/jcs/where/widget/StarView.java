@@ -33,6 +33,7 @@ public class StarView extends LinearLayout {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.StarView);
         mStarNum = array.getInteger(R.styleable.StarView_starNum, 0);
 
+        array.recycle();
         addStar();
     }
 

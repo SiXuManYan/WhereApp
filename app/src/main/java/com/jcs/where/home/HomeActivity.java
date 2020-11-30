@@ -35,9 +35,6 @@ import java.util.List;
 import co.tton.android.base.app.activity.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
-    private ImageView icon1, icon2, icon3;
-    private TextView text1, text2, text3;
-    private LinearLayout tab1, tab2, tab3;
     private List<HomeTabBean> mTabBeans;
     FragmentManager fm;
     private ArrayList<Fragment> frList = new ArrayList<Fragment>();

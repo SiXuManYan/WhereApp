@@ -48,15 +48,12 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
     private ModulesCategoryAdapter mModulesCategoryAdapter;
     private TravelStayHotelAdapter mTravelStayHotelAdapter;
 
-    private JcsTitle mJcsTitle;
-
     private TravelStayModel mModel;
 
 
     @Override
     protected void initView() {
         mBanner = findViewById(R.id.travelStayBanner);
-        mJcsTitle = findViewById(R.id.jcsTitle);
         initModuleRecycler();
         initHotelRecycler();
 

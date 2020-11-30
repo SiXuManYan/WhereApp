@@ -15,7 +15,7 @@ public class Api {
 
     private static volatile Api sInstance;
 
-    private InternalApi mApi;
+    private final InternalApi mApi;
 
     private Api() {
         RxApiClient.setBaseUrl(Const.API_ENDPOINT);

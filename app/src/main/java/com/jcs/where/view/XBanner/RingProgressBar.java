@@ -20,38 +20,22 @@ import java.lang.annotation.RetentionPolicy;
 
 public class RingProgressBar extends View {
 
-    private Paint paint;
-
-    private int width;
-
-    private int height;
-
-    private int result = 0;
-
-    private float padding = 0;
-
-    private int ringColor;
-
-    private int ringProgressColor;
-
-    private int textColor;
-
-    private float textSize;
-
-    private float ringWidth;
-
-    private int max;
-
-    private int progress;
-
-    private boolean textIsShow;
-
-    private int style;
-
     public static final int STROKE = 0;
-
     public static final int FILL = 1;
-
+    private final Paint paint;
+    private int width;
+    private int height;
+    private int result = 0;
+    private final float padding = 0;
+    private int ringColor;
+    private int ringProgressColor;
+    private int textColor;
+    private float textSize;
+    private float ringWidth;
+    private int max;
+    private int progress;
+    private boolean textIsShow;
+    private int style;
     private OnProgressListener mOnProgressListener;
 
     private int centre;
@@ -115,7 +99,6 @@ public class RingProgressBar extends View {
     }
 
 
-
     private void drawCircle(Canvas canvas) {
 
         paint.setColor(ringColor);
@@ -128,8 +111,6 @@ public class RingProgressBar extends View {
 
         canvas.drawCircle(centre, centre, radius, paint);
     }
-
-
 
 
     private void drawTextContent(Canvas canvas) {
@@ -150,8 +131,6 @@ public class RingProgressBar extends View {
             canvas.drawText(percent + "%", centre - textWidth / 2, centre + textSize / 2, paint);
         }
     }
-
-
 
 
     private void drawProgress(Canvas canvas) {
@@ -187,12 +166,8 @@ public class RingProgressBar extends View {
         }
     }
 
-
-    @IntDef({STROKE,FILL})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface  PROGRESS_STYLE{};
-    public void setStyle(@PROGRESS_STYLE int style){
-        this.style=style;
+    public void setStyle(@PROGRESS_STYLE int style) {
+        this.style = style;
     }
 
     @Override
@@ -223,7 +198,6 @@ public class RingProgressBar extends View {
         setMeasuredDimension(width, height);
     }
 
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 
@@ -233,17 +207,12 @@ public class RingProgressBar extends View {
         height = h;
     }
 
-
-
-
-    public  int getMax() {
+    public int getMax() {
 
         return max;
     }
 
-
-
-    public  void setMax(int max) {
+    public void setMax(int max) {
 
         if (max < 0) {
             throw new IllegalArgumentException("The max progress of 0");
@@ -251,17 +220,12 @@ public class RingProgressBar extends View {
         this.max = max;
     }
 
-
-
-    public  int getProgress() {
+    public int getProgress() {
 
         return progress;
     }
 
-
-
-
-    public  void setProgress(int progress) {
+    public void setProgress(int progress) {
 
         if (progress < 0) {
             throw new IllegalArgumentException("The progress of 0");
@@ -280,86 +244,55 @@ public class RingProgressBar extends View {
         }
     }
 
-
-
-
     public int getRingColor() {
 
         return ringColor;
     }
-
-
-
 
     public void setRingColor(int ringColor) {
 
         this.ringColor = ringColor;
     }
 
-
-
-
     public int getRingProgressColor() {
 
         return ringProgressColor;
     }
-
-
-
 
     public void setRingProgressColor(int ringProgressColor) {
 
         this.ringProgressColor = ringProgressColor;
     }
 
-
-
     public int getTextColor() {
 
         return textColor;
     }
-
-
-
 
     public void setTextColor(int textColor) {
 
         this.textColor = textColor;
     }
 
-
-
-
     public float getTextSize() {
 
         return textSize;
     }
-
-
-
 
     public void setTextSize(float textSize) {
 
         this.textSize = textSize;
     }
 
-
-
-
     public float getRingWidth() {
 
         return ringWidth;
     }
 
-
-
-
     public void setRingWidth(float ringWidth) {
 
         this.ringWidth = ringWidth;
     }
-
-
 
     public int dp2px(int dp) {
 
@@ -367,16 +300,20 @@ public class RingProgressBar extends View {
         return (int) (dp * density + 0.5f);
     }
 
+    public void setOnProgressListener(OnProgressListener mOnProgressListener) {
+
+        this.mOnProgressListener = mOnProgressListener;
+    }
+
+
+    @IntDef({STROKE, FILL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PROGRESS_STYLE {
+    }
 
 
     public interface OnProgressListener {
 
         void progressToComplete();
-    }
-
-
-    public void setOnProgressListener(OnProgressListener mOnProgressListener) {
-
-        this.mOnProgressListener = mOnProgressListener;
     }
 }

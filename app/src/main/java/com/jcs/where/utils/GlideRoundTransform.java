@@ -29,22 +29,8 @@ public class GlideRoundTransform extends BitmapTransformation {
 
     public GlideRoundTransform(int dp) {
         super();
-        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
+        radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
-
-
-    @Override
-    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-        //变换的时候裁切
-        Bitmap bitmap = TransformationUtils.centerCrop(pool, toTransform, outWidth, outHeight);
-        return roundCrop(pool, bitmap);
-    }
-
-    @Override
-    public void updateDiskCacheKey(MessageDigest messageDigest) {
-
-    }
-
 
     private static Bitmap roundCrop(BitmapPool pool, Bitmap source) {
         if (source == null) {
@@ -64,5 +50,17 @@ public class GlideRoundTransform extends BitmapTransformation {
 //        RectF rectRound = new RectF(0f, 100f, source.getWidth(), source.getHeight());
 //        canvas.drawRect(rectRound, paint);
         return result;
+    }
+
+    @Override
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+        //变换的时候裁切
+        Bitmap bitmap = TransformationUtils.centerCrop(pool, toTransform, outWidth, outHeight);
+        return roundCrop(pool, bitmap);
+    }
+
+    @Override
+    public void updateDiskCacheKey(MessageDigest messageDigest) {
+
     }
 }

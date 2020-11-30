@@ -26,31 +26,32 @@ public class RealtimeBlurView extends View {
 
     private static final String TAG = "RealtimeBlurView2";
 
-    private int mOverlayColor; // default #aaffffff
-    private float mBlurRadius; // default 10dp (0 < r <= 25)
-    private float mScaleFractor;//
-    private float mRoundCornerRadius;
+    private final int mOverlayColor; // default #aaffffff
+    private final float mBlurRadius; // default 10dp (0 < r <= 25)
+    private final float mScaleFractor;//
+    private final float mRoundCornerRadius;
 
     private Bitmap mBlurredBitmap;
     private Bitmap mBlurringBitmap;
     private Canvas mBlurringCanvas;
 
-    private Paint mPaint;
-    private BlurPreDrawListener mBlurPreDrawListener;
+    private final Paint mPaint;
+    private final BlurPreDrawListener mBlurPreDrawListener;
 
     private View mTargetView;
 
-    private Rect mRectSrc, mRectDst;
+    private final Rect mRectSrc;
+    private final Rect mRectDst;
 
 
     public RealtimeBlurView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RealtimeBlurView);
-        mBlurRadius = a.getFloat(R.styleable.RealtimeBlurView_realtimeBlurRadius,2);
+        mBlurRadius = a.getFloat(R.styleable.RealtimeBlurView_realtimeBlurRadius, 2);
         mOverlayColor = a.getColor(R.styleable.RealtimeBlurView_realtimeOverlayColor, 0x04000000);
-        mScaleFractor = a.getFloat(R.styleable.RealtimeBlurView_realtimeDownsampleFactor,1);
-        mRoundCornerRadius=a.getDimension(R.styleable.RealtimeBlurView_realtimeBlurRoundCornerRadius,
+        mScaleFractor = a.getFloat(R.styleable.RealtimeBlurView_realtimeDownsampleFactor, 1);
+        mRoundCornerRadius = a.getDimension(R.styleable.RealtimeBlurView_realtimeBlurRoundCornerRadius,
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0, context.getResources().getDisplayMetrics()));
         a.recycle();
 
@@ -73,29 +74,6 @@ public class RealtimeBlurView extends View {
         return this;
     }
 
-    private class BlurPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
-        @Override
-        public boolean onPreDraw() {
-            if (canBlur() && prepare()) {
-                int[] targetLocation = new int[2];
-                getLocationOnScreen(targetLocation);
-                int saveC = mBlurringCanvas.save();//少了这个判断不出效果
-                try {
-                    mBlurringCanvas.scale(1 / mScaleFractor, 1 / mScaleFractor);
-                    mBlurringCanvas.translate(-targetLocation[0],-targetLocation[1]);
-                    mTargetView.draw(mBlurringCanvas);
-                }catch (RuntimeException e){
-
-                }finally {
-                    mBlurringCanvas.restoreToCount(saveC);//少了这个判断不出效果
-                }
-                mBlurredBitmap = FastBlur.doBlur(mBlurringBitmap, (int) mBlurRadius,true);
-            }
-
-            return true;
-        }
-    }
-
     protected boolean prepare() {//实时更新关键代码，可参考上面错误代码
         if (mBlurRadius == 0) {
             return false;
@@ -103,41 +81,37 @@ public class RealtimeBlurView extends View {
 
         if (mBlurringBitmap == null) {//少了这个判断不出效果
             mBlurringBitmap = Bitmap.createBitmap((int) (getMeasuredWidth() / mScaleFractor),
-                (int) (getMeasuredHeight() / mScaleFractor), Bitmap.Config.RGB_565);
+                    (int) (getMeasuredHeight() / mScaleFractor), Bitmap.Config.RGB_565);
         }
         if (mBlurringBitmap == null) {
             return false;
         }
-        if (mBlurringCanvas==null) {
+        if (mBlurringCanvas == null) {
             mBlurringCanvas = new Canvas(mBlurringBitmap);
         }
-        if (mBlurredBitmap==null) {
+        if (mBlurredBitmap == null) {
             mBlurredBitmap = Bitmap.createBitmap((int) (getMeasuredWidth() / mScaleFractor),
-                (int) (getMeasuredHeight() / mScaleFractor), Bitmap.Config.RGB_565);
+                    (int) (getMeasuredHeight() / mScaleFractor), Bitmap.Config.RGB_565);
         }
 
-        if (mBlurredBitmap == null) {
-            return false;
-        }
-        return true;
+        return mBlurredBitmap != null;
     }
 
-
     //为性能上考虑，这个值根据实际逻辑开启，默认开启
-    protected boolean canBlur(){
+    protected boolean canBlur() {
         return true;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mBlurredBitmap==null){
+        if (mBlurredBitmap == null) {
             return;
         }
-        drawBlurredBitmap(canvas, mBlurredBitmap, mOverlayColor,mRoundCornerRadius);
+        drawBlurredBitmap(canvas, mBlurredBitmap, mOverlayColor, mRoundCornerRadius);
     }
 
-    protected void drawBlurredBitmap(Canvas canvas, Bitmap blurredBitmap, int overlayColor,float roundCornerRadius) {
+    protected void drawBlurredBitmap(Canvas canvas, Bitmap blurredBitmap, int overlayColor, float roundCornerRadius) {
         if (blurredBitmap != null) {
             mRectSrc.right = blurredBitmap.getWidth();
             mRectSrc.bottom = blurredBitmap.getHeight();
@@ -148,7 +122,6 @@ public class RealtimeBlurView extends View {
         mPaint.setColor(overlayColor);
         canvas.drawRect(mRectDst, mPaint);
     }
-
 
     protected View getTargetView() {
         Context ctx = getContext();
@@ -176,6 +149,29 @@ public class RealtimeBlurView extends View {
         super.onDetachedFromWindow();
         if (mBlurPreDrawListener != null && mTargetView != null) {
             mTargetView.getViewTreeObserver().removeOnPreDrawListener(mBlurPreDrawListener);
+        }
+    }
+
+    private class BlurPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
+        @Override
+        public boolean onPreDraw() {
+            if (canBlur() && prepare()) {
+                int[] targetLocation = new int[2];
+                getLocationOnScreen(targetLocation);
+                int saveC = mBlurringCanvas.save();//少了这个判断不出效果
+                try {
+                    mBlurringCanvas.scale(1 / mScaleFractor, 1 / mScaleFractor);
+                    mBlurringCanvas.translate(-targetLocation[0], -targetLocation[1]);
+                    mTargetView.draw(mBlurringCanvas);
+                } catch (RuntimeException e) {
+
+                } finally {
+                    mBlurringCanvas.restoreToCount(saveC);//少了这个判断不出效果
+                }
+                mBlurredBitmap = FastBlur.doBlur(mBlurringBitmap, (int) mBlurRadius, true);
+            }
+
+            return true;
         }
     }
 

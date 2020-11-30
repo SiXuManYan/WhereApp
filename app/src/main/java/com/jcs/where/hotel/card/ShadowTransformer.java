@@ -8,8 +8,8 @@ import androidx.viewpager.widget.ViewPager;
 
 public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPager.PageTransformer {
 
-    private ViewPager mViewPager;
-    private CardAdapter mAdapter;
+    private final ViewPager mViewPager;
+    private final CardAdapter mAdapter;
     private float mLastOffset;
     private boolean mScalingEnabled;
 
@@ -27,7 +27,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
                 currentCard.animate().scaleY(1);
                 currentCard.animate().scaleX(1);
             }
-        }else if(!mScalingEnabled && enable){
+        } else if (!mScalingEnabled && enable) {
             // grow main card
             CardView currentCard = mAdapter.getCardViewAt(mViewPager.getCurrentItem());
             if (currentCard != null) {

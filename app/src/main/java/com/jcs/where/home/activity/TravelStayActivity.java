@@ -30,11 +30,9 @@ import com.jcs.where.home.adapter.ModulesCategoryAdapter;
 import com.jcs.where.home.adapter.TravelStayHotelAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.home.model.TravelStayModel;
-import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
-import com.jcs.where.widget.JcsTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +83,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
         mModel = new TravelStayModel();
         //获取二级分类选项
         ArrayList<Integer> categories = getIntent().getIntegerArrayListExtra("categories");
-        getCategories(2,categories);
+        getCategories(2, categories);
 
         mModel.getYouLike(new BaseObserver<List<HotelResponse>>() {
             @Override
@@ -107,14 +105,14 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
         int[] c = new int[s];
         for (int i = 0; i < s; i++) {
             c[i] = categories.get(i);
-            Log.e("TravelStayActivity","----getCategories---c[i]="+c[i]);
+            Log.e("TravelStayActivity", "----getCategories---c[i]=" + c[i]);
         }
         mModel.getCategories(level, c, new BaseObserver<List<CategoryResponse>>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull List<CategoryResponse> categoryResponses) {
-                Log.e("TravelStayActivity","----onNext---");
+                Log.e("TravelStayActivity", "----onNext---");
                 for (int i = 0; i < categoryResponses.size(); i++) {
-                    Log.e("TravelStayActivity","----onNext---"+categoryResponses.get(i).getName());
+                    Log.e("TravelStayActivity", "----onNext---" + categoryResponses.get(i).getName());
                 }
                 mModulesCategoryAdapter.getData().clear();
                 mModulesCategoryAdapter.addData(categoryResponses);
@@ -210,8 +208,8 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
     @Override
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-        if(adapter == mModulesCategoryAdapter){
-            Log.e("TravelStayActivity","----onItemClick---");
+        if (adapter == mModulesCategoryAdapter) {
+            Log.e("TravelStayActivity", "----onItemClick---");
         }
     }
 }

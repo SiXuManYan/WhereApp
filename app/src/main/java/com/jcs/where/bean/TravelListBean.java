@@ -166,7 +166,7 @@ public class TravelListBean {
          * image : https://whereoss.oss-cn-beijing.aliyuncs.com/travels/6d830c4ff14e0fb8c4128cb071312a44111017.jpg
          * name : McDermott-Corkery
          * address : 50717 Maeve Creek
-         Dexterfort, KS 76682-2742
+         * Dexterfort, KS 76682-2742
          * lat : 14.596036
          * lng : 120.49796
          * grade : 3.1

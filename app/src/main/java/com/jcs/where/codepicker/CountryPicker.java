@@ -23,11 +23,12 @@ import java.util.ArrayList;
 
 public class CountryPicker extends DialogFragment {
 
-    private ArrayList<Country> allCountries = new ArrayList<>();
-    private ArrayList<Country> selectedCountries = new ArrayList<>();
+    private final ArrayList<Country> allCountries = new ArrayList<>();
+    private final ArrayList<Country> selectedCountries = new ArrayList<>();
     private OnPick onPick;
 
-    public CountryPicker() { }
+    public CountryPicker() {
+    }
 
     public static CountryPicker newInstance(Bundle args, OnPick onPick) {
         CountryPicker picker = new CountryPicker();
@@ -49,24 +50,26 @@ public class CountryPicker extends DialogFragment {
         final Adapter adapter = new Adapter(getContext());
         adapter.setOnPick(country -> {
             dismiss();
-            if(onPick != null) onPick.onPick(country);
+            if (onPick != null) onPick.onPick(country);
         });
         adapter.setSelectedCountries(selectedCountries);
         rvCountry.setAdapter(adapter);
         rvCountry.setLayoutManager(new LinearLayoutManager(getContext()));
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String string = s.toString();
                 selectedCountries.clear();
                 for (Country country : allCountries) {
-                    if(country.name.toLowerCase().contains(string.toLowerCase()))
+                    if (country.name.toLowerCase().contains(string.toLowerCase()))
                         selectedCountries.add(country);
                 }
                 adapter.notifyDataSetChanged();

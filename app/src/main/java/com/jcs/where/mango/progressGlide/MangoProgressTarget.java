@@ -13,10 +13,10 @@ import com.jcs.where.mango.progressview.RingProgressView;
 public class MangoProgressTarget<Z> extends ProgressTarget<String, Z> {
 
     private static final String TAG = MangoProgressTarget.class.getName();
-    private RingProgressView progressView;
+    private final RingProgressView progressView;
 
     public MangoProgressTarget(Context context, Target<Z> target, RingProgressView progressView) {
-        super(context,target);
+        super(context, target);
         this.progressView = progressView;
     }
 

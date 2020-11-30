@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -57,7 +58,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import co.tton.android.base.app.activity.BaseActivity;
@@ -80,14 +80,16 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private static final String EXT_STARTYEAR = "startYear";
     private static final String EXT_ENDYEAR = "endYear";
     private static final String EXT_ROOMNUMBER = "roomNumber";
-
+    private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
+    private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
+    private final List<View> views = new ArrayList<View>();
+    private final int READ_CODE = 10;
+    private final int READ_LOCATIONCODE = 11;
     private GoogleMap mMap;
     private ViewPager viewPager;
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
-    private int size = 10;
-    private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
-    private final List<View> views = new ArrayList<View>();
+    private final int size = 10;
     private double lat = 14.6778362;
     private double lng = 120.5306459;
     private TextView startDayTv, endDayTv, cityTv;
@@ -96,11 +98,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private int lastPostition = 0;
     private int lastScrollPosition = 0;
     private ImageView clearIv;
-
-    private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
-
-    private final int READ_CODE = 10;
-    private final int READ_LOCATIONCODE = 11;
     private FusedLocationProviderClient fusedLocationClient;
     private String useInputText = "";
     private GoogleApiClient mGoogleApiClient;
@@ -229,7 +226,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 });
                 V.f(customView, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {}
+                    public void onClick(View view) {
+                    }
                 });
             }
         });

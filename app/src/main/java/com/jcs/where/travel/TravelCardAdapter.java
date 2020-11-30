@@ -14,7 +14,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.jcs.where.R;
 import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.CardAdapter;
-import com.jcs.where.hotel.event.HotelEvent;
 import com.jcs.where.travel.event.TravelEvent;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -24,13 +23,11 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.view.ToastUtils;
-
 public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
 
-    private List<CardView> mViews;
-    private List<TravelMapListBean.DataBean> mData;
-    private Context useContext;
+    private final List<CardView> mViews;
+    private final List<TravelMapListBean.DataBean> mData;
+    private final Context useContext;
     private float mBaseElevation;
 
     public TravelCardAdapter(Context context) {

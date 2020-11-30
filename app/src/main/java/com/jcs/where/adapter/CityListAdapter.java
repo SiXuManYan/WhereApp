@@ -23,7 +23,7 @@ import java.util.List;
 public class CityListAdapter extends BaseAdapter {
     private static final int VIEW_TYPE_COUNT = 2;
 
-    private Context mContext;
+    private final Context mContext;
     private LayoutInflater inflater;
     private List<City> mCities;
     private HashMap<String, Integer> letterIndexes;
@@ -31,8 +31,12 @@ public class CityListAdapter extends BaseAdapter {
     private OnCityClickListener onCityClickListener;
     private String locatedCity;
     private String locatedCityId;
-    private List<City> mHotData = new ArrayList<>();
+    private final List<City> mHotData = new ArrayList<>();
     private int locateState = LocateState.LOCATING;
+
+    public CityListAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
 
     public void setData(List<City> mCities) {
         this.mCities = mCities;
@@ -58,11 +62,6 @@ public class CityListAdapter extends BaseAdapter {
         }
         notifyDataSetChanged();
     }
-
-    public CityListAdapter(Context mContext) {
-        this.mContext = mContext;
-    }
-
 
     /**
      * 获取字母索引的位置
@@ -176,13 +175,15 @@ public class CityListAdapter extends BaseAdapter {
         return view;
     }
 
-    public static class CityViewHolder {
-        TextView letter;
-        TextView name;
-    }
-
     public void setOnCityClickListener(OnCityClickListener listener) {
         this.onCityClickListener = listener;
+    }
+
+    public void updateLocateState(int state, String city, String cityId) {
+        this.locateState = state;
+        this.locatedCity = city;
+        this.locatedCityId = cityId;
+        notifyDataSetChanged();
     }
 
     public interface OnCityClickListener {
@@ -191,10 +192,8 @@ public class CityListAdapter extends BaseAdapter {
         void onLocateClick();
     }
 
-    public void updateLocateState(int state, String city, String cityId) {
-        this.locateState = state;
-        this.locatedCity = city;
-        this.locatedCityId = cityId;
-        notifyDataSetChanged();
+    public static class CityViewHolder {
+        TextView letter;
+        TextView name;
     }
 }

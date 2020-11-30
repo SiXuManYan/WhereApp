@@ -21,8 +21,16 @@ import co.tton.android.base.utils.ValueUtils;
 public abstract class BaseActivity extends AppCompatActivity {
 
 
-    private boolean mIsHasStatusBarColor = true;
     protected JcsTitle mJcsTitle;
+    private boolean mIsHasStatusBarColor = true;
+
+    public static void setMargins(View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         fullScreen(this);
         setContentView(getLayoutId());
         mJcsTitle = findViewById(R.id.jcsTitle);
-        if(mJcsTitle != null){
+        if (mJcsTitle != null) {
             setMargins(mJcsTitle, 0, getStatusBarHeight(), 0, 0);
         }
         initView();
@@ -104,14 +112,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(co.tton.android.base.R.color.bg_color));//设置状态栏颜色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
-        }
-    }
-
-    public static void setMargins(View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
         }
     }
 }

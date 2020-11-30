@@ -5,10 +5,7 @@ import com.jcs.where.Const;
 public class ImageUtils {
 
     public static boolean isLocalPath(String url) {
-        if (url.startsWith(Const.IMAGE_ROOT_PATH)) {
-            return false;
-        }
-        return true;
+        return !url.startsWith(Const.IMAGE_ROOT_PATH);
     }
 
 }

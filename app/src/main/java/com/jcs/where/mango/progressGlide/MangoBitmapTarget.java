@@ -14,7 +14,7 @@ public class MangoBitmapTarget extends ImageViewTarget<Bitmap> {
 
     private static final String TAG = MangoBitmapTarget.class.getName();
 
-    private PhotoViewAttacher photoViewAttacher;
+    private final PhotoViewAttacher photoViewAttacher;
 
     public MangoBitmapTarget(PhotoViewAttacher photoViewAttacher) {
         super(photoViewAttacher.getImageView());

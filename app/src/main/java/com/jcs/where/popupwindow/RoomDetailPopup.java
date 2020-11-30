@@ -31,12 +31,12 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class RoomDetailPopup extends PopupWindow implements View.OnClickListener {
 
-    private Activity activity;
-    private View rootView;
+    private final Activity activity;
+    private final View rootView;
     private SubscribeOnClickListener mOnClickListener = null;
     private ImageView closeIv;
-    private int useId;
-    private RoomDetailBean useRoomDetailBean;
+    private final int useId;
+    private final RoomDetailBean useRoomDetailBean;
     private XBanner banner;
     private TextView roomNameTv, bedTv, squareTv, windowTv, floorTv, wifiTv, peopleTv, policyTv, bathroomTv, amenitiesTv, mediaTv, foodTv, outdoorTv, otherTv, priceTv, nowSubscribeTv;
 
@@ -192,20 +192,23 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         }
     }
 
-    private class ShareDismissListener implements PopupWindow.OnDismissListener {
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(activity, 1f);
-        }
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        banner.releaseBanner();
     }
 
 
+    public interface SubscribeOnClickListener {
+        void getDate(int id, String name, String bed, int window, int wifi, int people, int cancel);
+    }
+
     public static class Builder {
-        private Activity context;
-        private View parentView;
+        private final Activity context;
+        private final View parentView;
         private SubscribeOnClickListener mOnClickListener = null;
-        private int id;
-        private RoomDetailBean roomDetailBean;
+        private final int id;
+        private final RoomDetailBean roomDetailBean;
 
         public Builder(Activity context, View parentView, int id, RoomDetailBean roomDetailBean) {
             this.context = context;
@@ -224,14 +227,11 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         }
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        banner.releaseBanner();
-    }
-
-    public interface SubscribeOnClickListener {
-        void getDate(int id, String name, String bed, int window, int wifi, int people, int cancel);
+    private class ShareDismissListener implements PopupWindow.OnDismissListener {
+        @Override
+        public void onDismiss() {
+            backgroundAlpha(activity, 1f);
+        }
     }
 
 }

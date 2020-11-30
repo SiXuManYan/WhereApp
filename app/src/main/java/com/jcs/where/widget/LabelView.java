@@ -1,13 +1,11 @@
 package com.jcs.where.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,7 +18,7 @@ import java.util.List;
 
 public class LabelView extends LinearLayout {
 
-    private int mLabelNum = 0;
+    private final int mLabelNum = 0;
 
     public LabelView(Context context) {
         this(context, null);

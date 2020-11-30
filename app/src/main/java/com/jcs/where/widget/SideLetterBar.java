@@ -15,7 +15,7 @@ import com.jcs.where.R;
 public class SideLetterBar extends View {
     private static final String[] b = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     private int choose = -1;
-    private Paint paint = new Paint();
+    private final Paint paint = new Paint();
     private boolean showBg = false;
     private OnLetterChangedListener onLetterChangedListener;
     private TextView overlay;
@@ -107,7 +107,7 @@ public class SideLetterBar extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 showBg = false;
-              //  choose = -1;
+                //  choose = -1;
                 invalidate();
                 if (overlay != null) {
                     overlay.setVisibility(GONE);

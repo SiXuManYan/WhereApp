@@ -3,8 +3,6 @@ package com.jcs.where.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -44,8 +42,8 @@ public class StarView extends LinearLayout {
             ImageView star = new ImageView(getContext());
             star.setImageResource(R.drawable.ic_star_yellow);
             if (i > 0) {
-                LinearLayout.LayoutParams lp = new LayoutParams(DimenUtil.toDp(getContext(),10),DimenUtil.toDp(getContext(),10));
-                lp.leftMargin = DimenUtil.toDp(getContext(),3);
+                LinearLayout.LayoutParams lp = new LayoutParams(DimenUtil.toDp(getContext(), 10), DimenUtil.toDp(getContext(), 10));
+                lp.leftMargin = DimenUtil.toDp(getContext(), 3);
                 star.setLayoutParams(lp);
             }
             addView(star);

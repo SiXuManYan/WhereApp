@@ -19,7 +19,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import com.jcs.where.R;
-import com.jcs.where.hotel.HotelListActivity;
 import com.jcs.where.view.WebLayout;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
@@ -39,6 +38,27 @@ public class WebViewActivity extends BaseActivity {
     private Toolbar mToolbar;
     private TextView mTitleTextView;
     private AlertDialog mAlertDialog;
+    private final com.just.agentweb.WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            return super.shouldOverrideUrlLoading(view, request);
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            //do you  work
+            Log.i("Info", "BaseWebActivity onPageStarted");
+        }
+    };
+    private final com.just.agentweb.WebChromeClient mWebChromeClient = new WebChromeClient() {
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            if (mTitleTextView != null) {
+                mTitleTextView.setText(title);
+            }
+        }
+    };
 
     public static void goTo(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -127,29 +147,6 @@ public class WebViewActivity extends BaseActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
         }
     }
-
-    private com.just.agentweb.WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            return super.shouldOverrideUrlLoading(view, request);
-        }
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            //do you  work
-            Log.i("Info", "BaseWebActivity onPageStarted");
-        }
-    };
-
-    private com.just.agentweb.WebChromeClient mWebChromeClient = new WebChromeClient() {
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            if (mTitleTextView != null) {
-                mTitleTextView.setText(title);
-            }
-        }
-    };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

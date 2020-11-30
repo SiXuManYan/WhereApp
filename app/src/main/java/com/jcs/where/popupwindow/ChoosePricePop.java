@@ -17,8 +17,8 @@ import com.jcs.where.R;
 
 public class ChoosePricePop extends PopupWindow implements View.OnClickListener {
 
-    private Activity activity;
-    private View rootView;
+    private final Activity activity;
+    private final View rootView;
     private ImageView btnClose;
     private TextView priceTv1, priceTv2, priceTv3, priceTv4, priceTv5, priceTv6, priceTv7, priceTv8;
     private TextView starTv1, starTv2, starTv3, starTv4;
@@ -268,7 +268,7 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
                 starTv4.setBackgroundResource(R.drawable.bg_priceunselect);
                 starTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
                 star = starTv1.getText().toString();
-            }else if (star.equals(starTv2.getText().toString())) {
+            } else if (star.equals(starTv2.getText().toString())) {
                 starTv1.setBackgroundResource(R.drawable.bg_priceunselect);
                 starTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
                 starTv2.setBackgroundResource(R.drawable.bg_priceselected);
@@ -278,7 +278,7 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
                 starTv4.setBackgroundResource(R.drawable.bg_priceunselect);
                 starTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
                 star = starTv2.getText().toString();
-            }else if (star.equals(starTv3.getText().toString())) {
+            } else if (star.equals(starTv3.getText().toString())) {
                 starTv1.setBackgroundResource(R.drawable.bg_priceunselect);
                 starTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
                 starTv2.setBackgroundResource(R.drawable.bg_priceunselect);
@@ -288,7 +288,7 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
                 starTv4.setBackgroundResource(R.drawable.bg_priceunselect);
                 starTv4.setTextColor(activity.getResources().getColor(R.color.grey_666666));
                 star = starTv3.getText().toString();
-            }else if (star.equals(starTv4.getText().toString())) {
+            } else if (star.equals(starTv4.getText().toString())) {
                 starTv1.setBackgroundResource(R.drawable.bg_priceunselect);
                 starTv1.setTextColor(activity.getResources().getColor(R.color.grey_666666));
                 starTv2.setBackgroundResource(R.drawable.bg_priceunselect);
@@ -549,19 +549,16 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
         }
     }
 
-    private class ShareDismissListener implements OnDismissListener {
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(activity, 1f);
-        }
+    public interface PriceOnClickListener {
+        void getDate(String price, String star);
     }
 
-
     public static class Builder {
-        private Activity context;
-        private View parentView;
+        private final Activity context;
+        private final View parentView;
         private PriceOnClickListener mOnClickListener = null;
-        private String price, star;
+        private final String price;
+        private final String star;
 
         public Builder(Activity context, View parentView, String price, String star) {
             this.context = context;
@@ -580,8 +577,11 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
         }
     }
 
-    public interface PriceOnClickListener {
-        void getDate(String price, String star);
+    private class ShareDismissListener implements OnDismissListener {
+        @Override
+        public void onDismiss() {
+            backgroundAlpha(activity, 1f);
+        }
     }
 
 }

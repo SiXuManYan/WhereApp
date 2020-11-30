@@ -12,8 +12,8 @@ import co.tton.android.base.view.BaseQuickAdapter;
 
 public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
-    private int mHorizontalSpacing;
-    private int mVerticalSpacing;
+    private final int mHorizontalSpacing;
+    private final int mVerticalSpacing;
 
     public GridItemDecoration(Context context) {
         this(context, 8, 10);

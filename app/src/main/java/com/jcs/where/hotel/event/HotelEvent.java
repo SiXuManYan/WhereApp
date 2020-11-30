@@ -3,8 +3,8 @@ package com.jcs.where.hotel.event;
 public class HotelEvent {
     private int id;
 
-    public HotelEvent(int id){
-        this.id=id;
+    public HotelEvent(int id) {
+        this.id = id;
     }
 
     public int getId() {

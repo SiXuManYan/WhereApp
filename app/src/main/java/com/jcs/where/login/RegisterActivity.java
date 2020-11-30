@@ -41,6 +41,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         context.startActivity(intent);
     }
 
+    /**
+     * 验证手机格式
+     */
+    public static boolean isMobileNO(String mobiles) {
+        /*
+         * 移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
+         * 联通：130、131、132、152、155、156、185、186 电信：133、153、180、189、（1349卫通）
+         * 总结起来就是第一位必定为1，第二位必定为3或5或8，其他位置的可以为0-9
+         */
+        String telRegex = "[1][3456789]\\d{9}";// "[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。
+        if (TextUtils.isEmpty(mobiles))
+            return false;
+        else
+            return mobiles.matches(telRegex);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +96,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }
         });
         errorTv = V.f(this, R.id.tv_error);
-        V.f(this,R.id.tv_havecount).setOnClickListener(new View.OnClickListener() {
+        V.f(this, R.id.tv_havecount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -210,6 +226,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
+        }
+    }
+
     //倒计时函数
     private class MyCountDownTimer extends CountDownTimer {
 
@@ -232,29 +255,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             getCodeTv.setText("重新获取");
             //设置可点击
             getCodeTv.setClickable(true);
-        }
-    }
-
-    /**
-     * 验证手机格式
-     */
-    public static boolean isMobileNO(String mobiles) {
-        /*
-         * 移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
-         * 联通：130、131、132、152、155、156、185、186 电信：133、153、180、189、（1349卫通）
-         * 总结起来就是第一位必定为1，第二位必定为3或5或8，其他位置的可以为0-9
-         */
-        String telRegex = "[1][3456789]\\d{9}";// "[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。
-        if (TextUtils.isEmpty(mobiles))
-            return false;
-        else
-            return mobiles.matches(telRegex);
-    }
-
-    protected void setStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
         }
     }
 }

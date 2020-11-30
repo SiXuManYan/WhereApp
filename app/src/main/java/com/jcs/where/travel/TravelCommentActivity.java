@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.GridLayout;
@@ -45,15 +44,15 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class TravelCommentActivity extends BaseActivity {
 
     private static final String EXT_ID = "id";
+    // 屏幕宽度
+    public float Width;
+    // 屏幕高度
+    public float Height;
     private MyPtrClassicFrameLayout ptrFrame;
     private RecyclerView commentListRv;
     private int page = 1;
     private List<TravelCommentListBean.DataBean> list;
     private CommentAdapter commentAdapter;
-    // 屏幕宽度
-    public float Width;
-    // 屏幕高度
-    public float Height;
 
     public static void goTo(Context context, int id) {
         Intent intent = new Intent(context, TravelCommentActivity.class);
@@ -174,10 +173,14 @@ public class TravelCommentActivity extends BaseActivity {
         return R.layout.activity_travelcomment;
     }
 
+    public int dip2px(float dpValue) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
     private class CommentAdapter extends BaseQuickAdapter<TravelCommentListBean.DataBean> {
 
-        private int ImagaId[] = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
+        private final int[] ImagaId = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
 
         public CommentAdapter(Context context) {
             super(context);
@@ -241,7 +244,7 @@ public class TravelCommentActivity extends BaseActivity {
             }
             GridLayout gridview = (GridLayout) holder.findViewById(R.id.gridview);
             ImageView showimage = (ImageView) holder.findViewById(R.id.showimage);
-            RoundedImageView imgview[] = new RoundedImageView[9];
+            RoundedImageView[] imgview = new RoundedImageView[9];
             for (int i = 0; i < 9; i++) {
                 imgview[i] = (RoundedImageView) holder.findViewById(ImagaId[i]);
             }
@@ -334,9 +337,9 @@ public class TravelCommentActivity extends BaseActivity {
 
         class fullTextOnclick implements View.OnClickListener {
 
-            private TextView usercontent;
-            private TextView fullText;
-            private int index;
+            private final TextView usercontent;
+            private final TextView fullText;
+            private final int index;
 
             fullTextOnclick(TextView usercontent, TextView fullText, int index) {
                 this.fullText = fullText;
@@ -360,10 +363,5 @@ public class TravelCommentActivity extends BaseActivity {
                 list.set(index, info);
             }
         }
-    }
-
-    public int dip2px(float dpValue) {
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 }

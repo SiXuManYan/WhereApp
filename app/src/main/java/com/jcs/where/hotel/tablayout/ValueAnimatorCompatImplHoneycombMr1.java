@@ -100,11 +100,6 @@ class ValueAnimatorCompatImplHoneycombMr1 extends ValueAnimatorCompat.Impl {
     }
 
     @Override
-    public void setDuration(long duration) {
-        mValueAnimator.setDuration(duration);
-    }
-
-    @Override
     public void cancel() {
         mValueAnimator.cancel();
     }
@@ -122,5 +117,10 @@ class ValueAnimatorCompatImplHoneycombMr1 extends ValueAnimatorCompat.Impl {
     @Override
     public long getDuration() {
         return mValueAnimator.getDuration();
+    }
+
+    @Override
+    public void setDuration(long duration) {
+        mValueAnimator.setDuration(duration);
     }
 }

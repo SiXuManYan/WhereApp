@@ -170,7 +170,7 @@ public class HotelListBean {
          * comment_counts : 17
          * tags : [{"name":"商务出行","pivot":{"hotel_id":40,"hotel_tag_id":1}},{"name":"火车站周边","pivot":{"hotel_id":40,"hotel_tag_id":7}},{"name":"休闲度假","pivot":{"hotel_id":40,"hotel_tag_id":2}}]
          * address : 172 Moen Ramp
-         South Dayne, WY 88212-6609
+         * South Dayne, WY 88212-6609
          * lat : 14.6135404
          * lng : 120.3235242
          * price : 652

@@ -86,14 +86,17 @@ import co.tton.android.base.view.ToastUtils;
 
 public class TravelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
+    private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
+    private final List<View> views = new ArrayList<View>();
+    private final int READ_CODE = 10;
+    private final int READ_LOCATIONCODE = 11;
     private GoogleMap mMap;
     private ViewPager viewPager;
     private TravelCardAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
-    private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
-    private final List<View> views = new ArrayList<View>();
-    private String lat = "14.5916712";
-    private String lng = "120.4811866";
+    private final String lat = "14.5916712";
+    private final String lng = "120.4811866";
     private EditText searchEt;
     private RelativeLayout hotelMapRl;
     private int lastPostition = 0;
@@ -110,12 +113,6 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private boolean mAddressRequested;
-
-
-    private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
-
-    private final int READ_CODE = 10;
-    private final int READ_LOCATIONCODE = 11;
     private FusedLocationProviderClient fusedLocationClient;
     private String useInputText = null;
 
@@ -618,33 +615,6 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
 
     }
 
-    private class RecommendAdapter extends BaseQuickAdapter<TravelListBean.DataBean> {
-
-        public RecommendAdapter(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_recommendsearch;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, TravelListBean.DataBean data, int position) {
-            TextView nameTv = holder.findViewById(R.id.tv_name);
-            nameTv.setText(matcherSearchText(data.getName(), useText));
-            holder.findViewById(R.id.ll_search).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    hideKeyboard(view);
-                    searchEt.setText(data.getName());
-                    useInputText = data.getName();
-                    initData();
-                }
-            });
-        }
-    }
-
     public SpannableString matcherSearchText(String text, String keyword) {
         SpannableString ss = new SpannableString(text);
         Pattern pattern = Pattern.compile(keyword);
@@ -676,6 +646,33 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
+        }
+    }
+
+    private class RecommendAdapter extends BaseQuickAdapter<TravelListBean.DataBean> {
+
+        public RecommendAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected int getLayoutId(int viewType) {
+            return R.layout.item_recommendsearch;
+        }
+
+        @Override
+        protected void initViews(QuickHolder holder, TravelListBean.DataBean data, int position) {
+            TextView nameTv = holder.findViewById(R.id.tv_name);
+            nameTv.setText(matcherSearchText(data.getName(), useText));
+            holder.findViewById(R.id.ll_search).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hideKeyboard(view);
+                    searchEt.setText(data.getName());
+                    useInputText = data.getName();
+                    initData();
+                }
+            });
         }
     }
 

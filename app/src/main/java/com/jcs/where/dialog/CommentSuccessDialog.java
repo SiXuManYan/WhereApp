@@ -12,8 +12,8 @@ import com.jcs.where.R;
 public class CommentSuccessDialog extends Dialog implements View.OnClickListener {
     private TextView sureTv;
 
-    private OnCloseListener listener;
-    private Context mContext;
+    private final OnCloseListener listener;
+    private final Context mContext;
 
     public CommentSuccessDialog(Context context, int themeResId, CommentSuccessDialog.OnCloseListener listener) {
         super(context, themeResId);

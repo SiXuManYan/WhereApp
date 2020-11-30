@@ -10,10 +10,10 @@ import com.bumptech.glide.request.transition.Transition;
 
 
 public abstract class ProgressTarget<T, Z> extends WrappingTarget<Z> implements OkHttpGlideModule.UIProgressListener {
-    private static String TAG = ProgressTarget.class.getName();
+    private static final String TAG = ProgressTarget.class.getName();
     private T model;
     private boolean ignoreProgress = true;
-    private Context context;
+    private final Context context;
 
     public ProgressTarget(Context context, Target<Z> target) {
         this(null, context, target);
@@ -25,13 +25,13 @@ public abstract class ProgressTarget<T, Z> extends WrappingTarget<Z> implements 
         this.context = context;
     }
 
+    public T getModel() {
+        return model;
+    }
+
     public final void setModel(T model) {
         Glide.with(context).clear(this);
         this.model = model;
-    }
-
-    public T getModel() {
-        return model;
     }
 
     /**
@@ -76,7 +76,8 @@ public abstract class ProgressTarget<T, Z> extends WrappingTarget<Z> implements 
     /**
      * Called when there's any progress on the download; not called when loading from cache.
      * At this time we know how many bytes have been transferred through the wire.
-     * @param bytesRead download bytes
+     *
+     * @param bytesRead      download bytes
      * @param expectedLength all length
      */
     protected abstract void onDownloading(long bytesRead, long expectedLength);

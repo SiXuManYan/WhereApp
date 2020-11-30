@@ -49,17 +49,16 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
 
     public static final String EXTRA_CITY = "city";
     public static final String EXTRA_CITYID = "cityId";
-
+    public static CustomProgressDialog dialog;
+    private final int READ_CODE = 10;
+    private final int READ_LOCATIONCODE = 11;
     private ListView mListView;
     private SideLetterBar mLetterBar;
     private CityListAdapter mCityAdapter;
-    public static CustomProgressDialog dialog;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private LatLng lastLatLng, perthLatLng;
     private boolean mAddressRequested;
-    private final int READ_CODE = 10;
-    private final int READ_LOCATIONCODE = 11;
 
     public static void goTo(Activity activity, int requestCode) {
         Intent intent = new Intent(activity, CityPickerActivity.class);

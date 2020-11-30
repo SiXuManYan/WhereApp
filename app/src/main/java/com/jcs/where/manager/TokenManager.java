@@ -26,10 +26,15 @@ public class TokenManager {
         return sInstance;
     }
 
+    private static LoginBean parseToken(Context context) {
+        String json = (String) PreferencesUtils.getData(context, PreferencesUtils.KEY_TOKEN, "");
+        Gson gson = new Gson();
+        return gson.fromJson(json, LoginBean.class);
+    }
+
     public void login(Context context, LoginBean loginBean) {
         saveToken(context, loginBean);
     }
-
 
     private void saveToken(Context context, LoginBean login) {
         mLogin = login;
@@ -56,12 +61,6 @@ public class TokenManager {
         if (mLogin == null) {
             mLogin = new LoginBean();
         }
-    }
-
-    private static LoginBean parseToken(Context context) {
-        String json = (String) PreferencesUtils.getData(context, PreferencesUtils.KEY_TOKEN, "");
-        Gson gson = new Gson();
-        return gson.fromJson(json, LoginBean.class);
     }
 
 }

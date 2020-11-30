@@ -161,6 +161,7 @@ public class TravelCommentListBean {
     }
 
     public static class DataBean {
+        public boolean is_select = false;
         /**
          * id : 971
          * images : ["https://whereoss.oss-cn-beijing.aliyuncs.com/travels/%28%E7%85%A7%E7%89%87%29%E5%8F%B0%E7%81%A3%E5%8D%81%E5%A4%A7%E8%A1%8C%E7%A8%8B-%E6%97%A5%E6%9C%88%E6%BD%AD-S.png","https://whereoss.oss-cn-beijing.aliyuncs.com/travels/e00f3cf7891aa3f2851f8483524cd51a326276.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/travels/unnamed%20%281%29.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/travels/unnamed%20%284%29.jpg"]
@@ -178,7 +179,6 @@ public class TravelCommentListBean {
         private String avatar;
         private String content;
         private List<String> images;
-        public boolean is_select = false;
 
         public int getId() {
             return id;

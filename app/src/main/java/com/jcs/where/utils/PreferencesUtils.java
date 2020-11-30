@@ -6,11 +6,9 @@ import android.content.SharedPreferences;
 import co.tton.android.base.utils.AppUtils;
 
 public final class PreferencesUtils {
-    private static final String FILE_NAME = "preferences";
-
     public static final String KEY_USER = "user";
-
     public static final String KEY_TOKEN = "toekn";
+    private static final String FILE_NAME = "preferences";
     private static final String KEY_FIRST_LAUNCH = "first_launch";
 
     // data不能穿null, 否则无法判断是什么类型的数据

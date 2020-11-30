@@ -16,7 +16,7 @@ import java.util.List;
  * 热门城市列表适配器
  */
 public class HotCityGridAdapter extends BaseAdapter {
-    private Context mContext;
+    private final Context mContext;
     private List<City> mCities;
 
     public HotCityGridAdapter(Context context) {

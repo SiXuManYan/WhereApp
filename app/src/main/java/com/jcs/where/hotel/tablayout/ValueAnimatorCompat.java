@@ -27,89 +27,6 @@ import androidx.annotation.NonNull;
  */
 class ValueAnimatorCompat {
 
-    interface AnimatorUpdateListener {
-        /**
-         * <p>Notifies the occurrence of another frame of the animation.</p>
-         *
-         * @param animator The animation which was repeated.
-         */
-        void onAnimationUpdate(ValueAnimatorCompat animator);
-    }
-
-    /**
-     * An animation listener receives notifications from an animation.
-     * Notifications indicate animation related events, such as the end or the
-     * repetition of the animation.
-     */
-    interface AnimatorListener {
-        /**
-         * <p>Notifies the start of the animation.</p>
-         *
-         * @param animator The started animation.
-         */
-        void onAnimationStart(ValueAnimatorCompat animator);
-        /**
-         * <p>Notifies the end of the animation. This callback is not invoked
-         * for animations with repeat count set to INFINITE.</p>
-         *
-         * @param animator The animation which reached its end.
-         */
-        void onAnimationEnd(ValueAnimatorCompat animator);
-        /**
-         * <p>Notifies the cancellation of the animation. This callback is not invoked
-         * for animations with repeat count set to INFINITE.</p>
-         *
-         * @param animator The animation which was canceled.
-         */
-        void onAnimationCancel(ValueAnimatorCompat animator);
-    }
-
-    static class AnimatorListenerAdapter implements AnimatorListener {
-        @Override
-        public void onAnimationStart(ValueAnimatorCompat animator) {
-        }
-
-        @Override
-        public void onAnimationEnd(ValueAnimatorCompat animator) {
-        }
-
-        @Override
-        public void onAnimationCancel(ValueAnimatorCompat animator) {
-        }
-    }
-
-    interface Creator {
-        @NonNull
-        ValueAnimatorCompat createAnimator();
-    }
-
-    static abstract class Impl {
-        interface AnimatorUpdateListenerProxy {
-            void onAnimationUpdate();
-        }
-
-        interface AnimatorListenerProxy {
-            void onAnimationStart();
-            void onAnimationEnd();
-            void onAnimationCancel();
-        }
-
-        abstract void start();
-        abstract boolean isRunning();
-        abstract void setInterpolator(Interpolator interpolator);
-        abstract void addListener(AnimatorListenerProxy listener);
-        abstract void addUpdateListener(AnimatorUpdateListenerProxy updateListener);
-        abstract void setIntValues(int from, int to);
-        abstract int getAnimatedIntValue();
-        abstract void setFloatValues(float from, float to);
-        abstract float getAnimatedFloatValue();
-        abstract void setDuration(long duration);
-        abstract void cancel();
-        abstract float getAnimatedFraction();
-        abstract void end();
-        abstract long getDuration();
-    }
-
     private final Impl mImpl;
 
     ValueAnimatorCompat(Impl impl) {
@@ -180,10 +97,6 @@ class ValueAnimatorCompat {
         return mImpl.getAnimatedFloatValue();
     }
 
-    public void setDuration(long duration) {
-        mImpl.setDuration(duration);
-    }
-
     public void cancel() {
         mImpl.cancel();
     }
@@ -198,5 +111,109 @@ class ValueAnimatorCompat {
 
     public long getDuration() {
         return mImpl.getDuration();
+    }
+
+    public void setDuration(long duration) {
+        mImpl.setDuration(duration);
+    }
+
+    interface AnimatorUpdateListener {
+        /**
+         * <p>Notifies the occurrence of another frame of the animation.</p>
+         *
+         * @param animator The animation which was repeated.
+         */
+        void onAnimationUpdate(ValueAnimatorCompat animator);
+    }
+
+    /**
+     * An animation listener receives notifications from an animation.
+     * Notifications indicate animation related events, such as the end or the
+     * repetition of the animation.
+     */
+    interface AnimatorListener {
+        /**
+         * <p>Notifies the start of the animation.</p>
+         *
+         * @param animator The started animation.
+         */
+        void onAnimationStart(ValueAnimatorCompat animator);
+
+        /**
+         * <p>Notifies the end of the animation. This callback is not invoked
+         * for animations with repeat count set to INFINITE.</p>
+         *
+         * @param animator The animation which reached its end.
+         */
+        void onAnimationEnd(ValueAnimatorCompat animator);
+
+        /**
+         * <p>Notifies the cancellation of the animation. This callback is not invoked
+         * for animations with repeat count set to INFINITE.</p>
+         *
+         * @param animator The animation which was canceled.
+         */
+        void onAnimationCancel(ValueAnimatorCompat animator);
+    }
+
+    interface Creator {
+        @NonNull
+        ValueAnimatorCompat createAnimator();
+    }
+
+    static class AnimatorListenerAdapter implements AnimatorListener {
+        @Override
+        public void onAnimationStart(ValueAnimatorCompat animator) {
+        }
+
+        @Override
+        public void onAnimationEnd(ValueAnimatorCompat animator) {
+        }
+
+        @Override
+        public void onAnimationCancel(ValueAnimatorCompat animator) {
+        }
+    }
+
+    static abstract class Impl {
+        abstract void start();
+
+        abstract boolean isRunning();
+
+        abstract void setInterpolator(Interpolator interpolator);
+
+        abstract void addListener(AnimatorListenerProxy listener);
+
+        abstract void addUpdateListener(AnimatorUpdateListenerProxy updateListener);
+
+        abstract void setIntValues(int from, int to);
+
+        abstract int getAnimatedIntValue();
+
+        abstract void setFloatValues(float from, float to);
+
+        abstract float getAnimatedFloatValue();
+
+        abstract void cancel();
+
+        abstract float getAnimatedFraction();
+
+        abstract void end();
+
+        abstract long getDuration();
+
+        abstract void setDuration(long duration);
+
+        interface AnimatorUpdateListenerProxy {
+            void onAnimationUpdate();
+        }
+
+        interface AnimatorListenerProxy {
+            void onAnimationStart();
+
+            void onAnimationEnd();
+
+            void onAnimationCancel();
+        }
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
@@ -25,7 +26,6 @@ import com.jcs.where.manager.TokenManager;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import co.tton.android.base.app.activity.BaseActivity;
@@ -202,7 +202,7 @@ public class HotelListActivity extends BaseActivity {
                 HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
             }
         });
-        clearIv = V.f(this,R.id.iv_clear);
+        clearIv = V.f(this, R.id.iv_clear);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(new View.OnClickListener() {
             @Override

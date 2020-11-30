@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -28,11 +27,10 @@ import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_SETTLING;
 
 public class ColorClipTabLayout extends TabLayout {
 
+    private static final int INVALID_TAB_POS = -1;
     private int tabTextSize;//每个tab字体大小
     private int tabSelectedTextColor;//每个tab选中字体颜色
     private int tabTextColor;//每个tab未选中颜色
-    private static final int INVALID_TAB_POS = -1;
-
     //最后的选中位置
     private int lastSelectedTabPosition = INVALID_TAB_POS;
 

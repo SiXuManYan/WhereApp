@@ -9,6 +9,17 @@ import android.os.Parcelable;
  */
 
 public class MultiplexImage implements Parcelable {
+    public static final Creator<MultiplexImage> CREATOR = new Creator<MultiplexImage>() {
+        @Override
+        public MultiplexImage createFromParcel(Parcel source) {
+            return new MultiplexImage(source);
+        }
+
+        @Override
+        public MultiplexImage[] newArray(int size) {
+            return new MultiplexImage[size];
+        }
+    };
     /**
      * original image
      */
@@ -32,9 +43,16 @@ public class MultiplexImage implements Parcelable {
         this.type = type;
     }
 
-    public MultiplexImage(String TPath, int type){
+    public MultiplexImage(String TPath, int type) {
         this.TPath = TPath;
         this.type = type;
+    }
+
+    protected MultiplexImage(Parcel in) {
+        this.OPath = in.readString();
+        this.TPath = in.readString();
+        this.type = in.readInt();
+        this.Loading = in.readByte() != 0;
     }
 
     public String getOPath() {
@@ -69,12 +87,6 @@ public class MultiplexImage implements Parcelable {
         this.type = type;
     }
 
-    public static final class ImageType{
-        public static final int NORMAL = 1;
-        public static final int GIF = 2;
-    }
-
-
     @Override
     public int describeContents() {
         return 0;
@@ -88,22 +100,8 @@ public class MultiplexImage implements Parcelable {
         dest.writeByte(this.Loading ? (byte) 1 : (byte) 0);
     }
 
-    protected MultiplexImage(Parcel in) {
-        this.OPath = in.readString();
-        this.TPath = in.readString();
-        this.type = in.readInt();
-        this.Loading = in.readByte() != 0;
+    public static final class ImageType {
+        public static final int NORMAL = 1;
+        public static final int GIF = 2;
     }
-
-    public static final Creator<MultiplexImage> CREATOR = new Creator<MultiplexImage>() {
-        @Override
-        public MultiplexImage createFromParcel(Parcel source) {
-            return new MultiplexImage(source);
-        }
-
-        @Override
-        public MultiplexImage[] newArray(int size) {
-            return new MultiplexImage[size];
-        }
-    };
 }

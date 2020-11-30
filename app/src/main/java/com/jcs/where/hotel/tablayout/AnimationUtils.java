@@ -15,6 +15,7 @@
  */
 
 package com.jcs.where.hotel.tablayout;
+
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;

@@ -2,7 +2,6 @@ package com.jcs.where.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.media.Image;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,23 +30,23 @@ public class JcsTitle extends ConstraintLayout {
         super(context, attrs, defStyleAttr);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.JcsTitle);
         middleTitle = array.getString(R.styleable.JcsTitle_middleTitle);
-        showBackIv = array.getBoolean(R.styleable.JcsTitle_showBackIv,true);
+        showBackIv = array.getBoolean(R.styleable.JcsTitle_showBackIv, true);
 
         initView(context);
     }
 
     private void initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.widget_jcs_title,this);
+        View view = LayoutInflater.from(context).inflate(R.layout.widget_jcs_title, this);
         mBackIv = view.findViewById(R.id.backIv);
         mMiddleTitleTv = view.findViewById(R.id.middleTitle);
         mMiddleTitleTv.setText(middleTitle);
 
-        if(!showBackIv){
+        if (!showBackIv) {
             mBackIv.setVisibility(GONE);
         }
     }
 
-    public void setBackIvClickListener(View.OnClickListener listener){
+    public void setBackIvClickListener(View.OnClickListener listener) {
         mBackIv.setOnClickListener(listener);
     }
 

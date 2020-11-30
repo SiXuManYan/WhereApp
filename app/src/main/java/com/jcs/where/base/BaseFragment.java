@@ -16,10 +16,18 @@ import androidx.fragment.app.Fragment;
 
 public abstract class BaseFragment extends Fragment {
 
+    public static void setMargins(View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(),container,false);
+        View view = inflater.inflate(getLayoutId(), container, false);
         return view;
     }
 
@@ -82,14 +90,6 @@ public abstract class BaseFragment extends Fragment {
 //                attributes.flags |= flagTranslucentNavigation;
                 window.setAttributes(attributes);
             }
-        }
-    }
-
-    public static void setMargins(View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
         }
     }
 }

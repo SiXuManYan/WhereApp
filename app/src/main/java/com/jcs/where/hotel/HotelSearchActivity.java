@@ -44,8 +44,8 @@ import co.tton.android.base.view.ToastUtils;
 public class HotelSearchActivity extends BaseActivity {
 
 
-    private static final String EXT_CITYID = "cityId";
     public static final String EXT_SELECTSEARCH = "select_search";
+    private static final String EXT_CITYID = "cityId";
     private TextView cancelTv;
     private EditText searchEt;
     private LinearLayout searchHistoryLl;
@@ -242,6 +242,18 @@ public class HotelSearchActivity extends BaseActivity {
         }
     }
 
+    public SpannableString matcherSearchText(String text, String keyword) {
+        SpannableString ss = new SpannableString(text);
+        Pattern pattern = Pattern.compile(keyword);
+        Matcher matcher = pattern.matcher(ss);
+        while (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            ss.setSpan(new TextAppearanceSpan(this, R.style.style_grey_999999), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//new ForegroundColorSpan(color)
+        }
+        return ss;
+    }
+
     private class SearchHistoryAdapter extends BaseQuickAdapter<String> {
 
         public SearchHistoryAdapter(Context context) {
@@ -323,18 +335,6 @@ public class HotelSearchActivity extends BaseActivity {
                 }
             });
         }
-    }
-
-    public SpannableString matcherSearchText(String text, String keyword) {
-        SpannableString ss = new SpannableString(text);
-        Pattern pattern = Pattern.compile(keyword);
-        Matcher matcher = pattern.matcher(ss);
-        while (matcher.find()) {
-            int start = matcher.start();
-            int end = matcher.end();
-            ss.setSpan(new TextAppearanceSpan(this, R.style.style_grey_999999), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//new ForegroundColorSpan(color)
-        }
-        return ss;
     }
 
 }

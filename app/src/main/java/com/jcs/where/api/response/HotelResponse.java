@@ -14,7 +14,7 @@ public class HotelResponse {
      * comment_counts : 17
      * tags : [{"name":"机场周边","pivot":{"hotel_id":75,"hotel_tag_id":5}},{"name":"地铁周边","pivot":{"hotel_id":75,"hotel_tag_id":4}}]
      * address : 6963 Dibbert Station Suite 000
-     West Alysaview, ID 58620
+     * West Alysaview, ID 58620
      * lat : 14.7147249
      * lng : 120.3734724
      * price : 871

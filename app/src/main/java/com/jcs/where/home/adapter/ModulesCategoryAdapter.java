@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.api.response.ModulesResponse;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -9,7 +9,8 @@ import pl.droidsonroids.gif.GifImageView;
  * Created by Abby on 9/22/2017.
  */
 
-public  interface ImageLoader {
+public interface ImageLoader {
     void loadImages(Context context, String url, ImageView image);
+
     void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType);
 }

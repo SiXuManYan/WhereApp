@@ -7,6 +7,17 @@ import java.util.List;
 
 public class RoomDetailBean implements Parcelable {
 
+    public static final Creator<RoomDetailBean> CREATOR = new Creator<RoomDetailBean>() {
+        @Override
+        public RoomDetailBean createFromParcel(Parcel in) {
+            return new RoomDetailBean(in);
+        }
+
+        @Override
+        public RoomDetailBean[] newArray(int size) {
+            return new RoomDetailBean[size];
+        }
+    };
     /**
      * id : 168
      * images : ["https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/rooms/124033028.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/rooms/AC-Hotel-Park-City.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/rooms/Hotelroom-Alamy.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/rooms/hotelreview1a.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/rooms/hotelroom-2000x1200.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/hotels/rooms/iStock-185270129.jpg"]
@@ -72,18 +83,6 @@ public class RoomDetailBean implements Parcelable {
         is_cancel = in.readInt();
         images = in.createStringArrayList();
     }
-
-    public static final Creator<RoomDetailBean> CREATOR = new Creator<RoomDetailBean>() {
-        @Override
-        public RoomDetailBean createFromParcel(Parcel in) {
-            return new RoomDetailBean(in);
-        }
-
-        @Override
-        public RoomDetailBean[] newArray(int size) {
-            return new RoomDetailBean[size];
-        }
-    };
 
     public int getId() {
         return id;

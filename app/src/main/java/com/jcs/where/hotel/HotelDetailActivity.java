@@ -29,6 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,7 +52,6 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,6 +117,24 @@ public class HotelDetailActivity extends BaseActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(intent);
+    }
+
+    public static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
     }
 
     @Override
@@ -275,11 +293,7 @@ public class HotelDetailActivity extends BaseActivity {
         likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (like == 1) {
-                    collection(false);
-                } else {
-                    collection(true);
-                }
+                collection(like != 1);
             }
         });
         hotelDetailRl = V.f(this, R.id.rl_hoteldetail);
@@ -519,6 +533,183 @@ public class HotelDetailActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    private void collection(boolean status) {
+        showLoading();
+        if (status == true) {
+            Map<String, Integer> params = new HashMap<>();
+            params.put("hotel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
+            HttpUtils.doHttpintReqeust("POST", "hotelapi/v1/collects", params, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+                @Override
+                public void onSuccess(int code, String result) {
+                    stopLoading();
+                    if (code == 200) {
+                        ToastUtils.showLong(HotelDetailActivity.this, "收藏成功");
+                        like = 1;
+                        if (toolbarStatus == 0) {
+                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        } else {
+                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        }
+                    } else {
+                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                        ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                    }
+                }
+
+                @Override
+                public void onFaileure(int code, Exception e) {
+                    stopLoading();
+                    ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                }
+            });
+        } else {
+            Map<String, Integer> params = new HashMap<>();
+            params.put("hotel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
+            HttpUtils.doHttpintReqeust("DELETE", "hotelapi/v1/collects", params, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+                @Override
+                public void onSuccess(int code, String result) {
+                    stopLoading();
+                    if (code == 200) {
+                        ToastUtils.showLong(HotelDetailActivity.this, "取消成功");
+                        like = 2;
+                        if (toolbarStatus == 0) {
+                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
+                        } else {
+                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteunlike));
+                        }
+                    } else {
+                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                        ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                    }
+                }
+
+                @Override
+                public void onFaileure(int code, Exception e) {
+                    stopLoading();
+                    ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                }
+            });
+        }
+    }
+
+    private void initRoomDetail(final int roomId, final int breakfast) {
+        showLoading();
+        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
+        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    RoomDetailBean roomDetailBean = new Gson().fromJson(result, RoomDetailBean.class);
+                    new RoomDetailPopup.Builder(HotelDetailActivity.this, hotelDetailRl, roomId, roomDetailBean)
+                            .setPriceOnClickListener(new RoomDetailPopup.SubscribeOnClickListener() {
+                                @Override
+                                public void getDate(int id, String name, String bed, int window, int wifi, int people, int cancel) {
+                                    // ToastUtils.showLong(HotelDetailActivity.this, id + "");
+                                    SubscribeBean subscribeBean = new SubscribeBean();
+                                    subscribeBean.hotelName = hotelName;
+                                    subscribeBean.roomId = id;
+                                    subscribeBean.roomName = name;
+                                    subscribeBean.bed = bed;
+                                    if (breakfast == 1) {
+                                        subscribeBean.breakfast = "有早餐";
+                                    } else {
+                                        subscribeBean.breakfast = "无早餐";
+                                    }
+                                    subscribeBean.window = window;
+                                    subscribeBean.wifi = wifi;
+                                    subscribeBean.people = people;
+                                    subscribeBean.cancel = cancel;
+                                    subscribeBean.startDate = startDateTv.getText().toString();
+                                    subscribeBean.startWeek = startWeekTv.getText().toString();
+                                    subscribeBean.endDate = endDateTv.getText().toString();
+                                    subscribeBean.endWeek = endWeekTv.getText().toString();
+                                    subscribeBean.night = allDayTv.getText().toString();
+                                    subscribeBean.roomNumber = getIntent().getStringExtra(EXT_ROOMNUMBER);
+                                    subscribeBean.roomPrice = roomDetailBean.getPrice();
+                                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
+                                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
+                                    HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
+                                }
+                            }).builder();
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                }
+            }
+
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+            }
+        });
+
+    }
+
+    private void subRoom(final int roomId, final int breakfast) {
+        showLoading();
+        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
+        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    RoomDetailBean roomDetailBean = new Gson().fromJson(result, RoomDetailBean.class);
+                    // ToastUtils.showLong(HotelDetailActivity.this, id + "");
+                    SubscribeBean subscribeBean = new SubscribeBean();
+                    subscribeBean.hotelName = hotelName;
+                    subscribeBean.roomId = roomDetailBean.getId();
+                    subscribeBean.roomName = roomDetailBean.getName();
+                    subscribeBean.bed = roomDetailBean.getHotel_room_type();
+                    if (breakfast == 1) {
+                        subscribeBean.breakfast = "有早餐";
+                    } else {
+                        subscribeBean.breakfast = "无早餐";
+                    }
+                    subscribeBean.window = roomDetailBean.getWindow_type();
+                    subscribeBean.wifi = roomDetailBean.getWifi_type();
+                    subscribeBean.people = roomDetailBean.getPeople();
+                    subscribeBean.cancel = roomDetailBean.getIs_cancel();
+                    subscribeBean.startDate = startDateTv.getText().toString();
+                    subscribeBean.startWeek = startWeekTv.getText().toString();
+                    subscribeBean.endDate = endDateTv.getText().toString();
+                    subscribeBean.endWeek = endWeekTv.getText().toString();
+                    subscribeBean.night = allDayTv.getText().toString();
+                    subscribeBean.roomNumber = getIntent().getStringExtra(EXT_ROOMNUMBER);
+                    subscribeBean.roomPrice = roomDetailBean.getPrice();
+                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
+                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
+                    HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
+
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                }
+            }
+
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+            }
+        });
+
+    }
+
+    public void startNaviGoogle(String lat, String lng) {
+        if (isAvilible(this, "com.google.android.apps.maps")) {
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        } else {
+            ToastUtils.showLong(this, "您尚未安装谷歌地图或地图版本过低");
+        }
+    }
+
     private class RoomAdapter extends BaseQuickAdapter<RoomListBean> {
 
         private TagAdapter tagAdapter;
@@ -649,203 +840,6 @@ public class HotelDetailActivity extends BaseActivity {
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
         }
-    }
-
-    private void collection(boolean status) {
-        showLoading();
-        if (status == true) {
-            Map<String, Integer> params = new HashMap<>();
-            params.put("hotel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
-            HttpUtils.doHttpintReqeust("POST", "hotelapi/v1/collects", params, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
-                @Override
-                public void onSuccess(int code, String result) {
-                    stopLoading();
-                    if (code == 200) {
-                        ToastUtils.showLong(HotelDetailActivity.this, "收藏成功");
-                        like = 1;
-                        if (toolbarStatus == 0) {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
-                        } else {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
-                        }
-                    } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
-                    }
-                }
-
-                @Override
-                public void onFaileure(int code, Exception e) {
-                    stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
-                }
-            });
-        } else {
-            Map<String, Integer> params = new HashMap<>();
-            params.put("hotel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
-            HttpUtils.doHttpintReqeust("DELETE", "hotelapi/v1/collects", params, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
-                @Override
-                public void onSuccess(int code, String result) {
-                    stopLoading();
-                    if (code == 200) {
-                        ToastUtils.showLong(HotelDetailActivity.this, "取消成功");
-                        like = 2;
-                        if (toolbarStatus == 0) {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
-                        } else {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteunlike));
-                        }
-                    } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
-                    }
-                }
-
-                @Override
-                public void onFaileure(int code, Exception e) {
-                    stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
-                }
-            });
-        }
-    }
-
-
-    private void initRoomDetail(final int roomId, final int breakfast) {
-        showLoading();
-        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
-        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    RoomDetailBean roomDetailBean = new Gson().fromJson(result, RoomDetailBean.class);
-                    new RoomDetailPopup.Builder(HotelDetailActivity.this, hotelDetailRl, roomId, roomDetailBean)
-                            .setPriceOnClickListener(new RoomDetailPopup.SubscribeOnClickListener() {
-                                @Override
-                                public void getDate(int id, String name, String bed, int window, int wifi, int people, int cancel) {
-                                    // ToastUtils.showLong(HotelDetailActivity.this, id + "");
-                                    SubscribeBean subscribeBean = new SubscribeBean();
-                                    subscribeBean.hotelName = hotelName;
-                                    subscribeBean.roomId = id;
-                                    subscribeBean.roomName = name;
-                                    subscribeBean.bed = bed;
-                                    if (breakfast == 1) {
-                                        subscribeBean.breakfast = "有早餐";
-                                    } else {
-                                        subscribeBean.breakfast = "无早餐";
-                                    }
-                                    subscribeBean.window = window;
-                                    subscribeBean.wifi = wifi;
-                                    subscribeBean.people = people;
-                                    subscribeBean.cancel = cancel;
-                                    subscribeBean.startDate = startDateTv.getText().toString();
-                                    subscribeBean.startWeek = startWeekTv.getText().toString();
-                                    subscribeBean.endDate = endDateTv.getText().toString();
-                                    subscribeBean.endWeek = endWeekTv.getText().toString();
-                                    subscribeBean.night = allDayTv.getText().toString();
-                                    subscribeBean.roomNumber = getIntent().getStringExtra(EXT_ROOMNUMBER);
-                                    subscribeBean.roomPrice = roomDetailBean.getPrice();
-                                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
-                                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
-                                    HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
-                                }
-                            }).builder();
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
-                }
-            }
-
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
-            }
-        });
-
-    }
-
-    private void subRoom(final int roomId, final int breakfast) {
-        showLoading();
-        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
-        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    RoomDetailBean roomDetailBean = new Gson().fromJson(result, RoomDetailBean.class);
-                    // ToastUtils.showLong(HotelDetailActivity.this, id + "");
-                    SubscribeBean subscribeBean = new SubscribeBean();
-                    subscribeBean.hotelName = hotelName;
-                    subscribeBean.roomId = roomDetailBean.getId();
-                    subscribeBean.roomName = roomDetailBean.getName();
-                    subscribeBean.bed = roomDetailBean.getHotel_room_type();
-                    if (breakfast == 1) {
-                        subscribeBean.breakfast = "有早餐";
-                    } else {
-                        subscribeBean.breakfast = "无早餐";
-                    }
-                    subscribeBean.window = roomDetailBean.getWindow_type();
-                    subscribeBean.wifi = roomDetailBean.getWifi_type();
-                    subscribeBean.people = roomDetailBean.getPeople();
-                    subscribeBean.cancel = roomDetailBean.getIs_cancel();
-                    subscribeBean.startDate = startDateTv.getText().toString();
-                    subscribeBean.startWeek = startWeekTv.getText().toString();
-                    subscribeBean.endDate = endDateTv.getText().toString();
-                    subscribeBean.endWeek = endWeekTv.getText().toString();
-                    subscribeBean.night = allDayTv.getText().toString();
-                    subscribeBean.roomNumber = getIntent().getStringExtra(EXT_ROOMNUMBER);
-                    subscribeBean.roomPrice = roomDetailBean.getPrice();
-                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
-                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
-                    HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
-
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
-                }
-            }
-
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
-            }
-        });
-
-    }
-
-
-    public void startNaviGoogle(String lat, String lng) {
-        if (isAvilible(this, "com.google.android.apps.maps")) {
-            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
-            startActivity(mapIntent);
-        } else {
-            ToastUtils.showLong(this, "您尚未安装谷歌地图或地图版本过低");
-        }
-    }
-
-    public static boolean isAvilible(Context context, String packageName) {
-        //获取packagemanager
-        final PackageManager packageManager = context.getPackageManager();
-        //获取所有已安装程序的包信息
-        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
-        //用于存储所有已安装程序的包名
-        List<String> packageNames = new ArrayList<String>();
-        //从pinfo中将包名字逐一取出，压入pName list中
-        if (packageInfos != null) {
-            for (int i = 0; i < packageInfos.size(); i++) {
-                String packName = packageInfos.get(i).packageName;
-                packageNames.add(packName);
-            }
-        }
-        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
-        return packageNames.contains(packageName);
     }
 
 }

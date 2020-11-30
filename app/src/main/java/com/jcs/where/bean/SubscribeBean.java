@@ -4,6 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class SubscribeBean implements Parcelable {
+    public static final Creator<SubscribeBean> CREATOR = new Creator<SubscribeBean>() {
+        @Override
+        public SubscribeBean createFromParcel(Parcel in) {
+            return new SubscribeBean(in);
+        }
+
+        @Override
+        public SubscribeBean[] newArray(int size) {
+            return new SubscribeBean[size];
+        }
+    };
     public int roomId;
     public String roomName;
     public String bed;
@@ -74,16 +85,4 @@ public class SubscribeBean implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<SubscribeBean> CREATOR = new Creator<SubscribeBean>() {
-        @Override
-        public SubscribeBean createFromParcel(Parcel in) {
-            return new SubscribeBean(in);
-        }
-
-        @Override
-        public SubscribeBean[] newArray(int size) {
-            return new SubscribeBean[size];
-        }
-    };
 }

@@ -39,18 +39,6 @@ public class OkHttpGlideModule extends AppGlideModule {
 
     private static final String TAG = OkHttpGlideModule.class.getName();
 
-    @Override
-    public void registerComponents(Context context, Glide glide, Registry registry) {
-        OkHttpClient client = new OkHttpClient().newBuilder().addInterceptor(createInterceptor(new DispatchingProgressListener())).build();
-        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(client));
-    }
-
-
-    @Override
-    public boolean isManifestParsingEnabled() {
-        return false;
-    }
-
     private static Interceptor createInterceptor(final ResponseProgressListener listener) {
         return new Interceptor() {
             @Override
@@ -64,6 +52,25 @@ public class OkHttpGlideModule extends AppGlideModule {
         };
     }
 
+    public static void forget(String url) {
+        DispatchingProgressListener.forget(url);
+    }
+
+    public static void expect(String url, UIProgressListener listener) {
+        DispatchingProgressListener.expect(url, listener);
+    }
+
+    @Override
+    public void registerComponents(Context context, Glide glide, Registry registry) {
+        OkHttpClient client = new OkHttpClient().newBuilder().addInterceptor(createInterceptor(new DispatchingProgressListener())).build();
+        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(client));
+    }
+
+    @Override
+    public boolean isManifestParsingEnabled() {
+        return false;
+    }
+
     public interface UIProgressListener {
         void onProgress(long bytesRead, long expectedLength);
 
@@ -73,14 +80,6 @@ public class OkHttpGlideModule extends AppGlideModule {
          * @return in percentage (0.2 = call {@link #onProgress} around every 0.2 percent of progress)
          */
         float getGranualityPercentage();
-    }
-
-    public static void forget(String url) {
-        DispatchingProgressListener.forget(url);
-    }
-
-    public static void expect(String url, UIProgressListener listener) {
-        DispatchingProgressListener.expect(url, listener);
     }
 
     private interface ResponseProgressListener {

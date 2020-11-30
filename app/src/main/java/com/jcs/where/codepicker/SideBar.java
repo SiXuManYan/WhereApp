@@ -26,16 +26,18 @@ public class SideBar extends View {
 
     public final ArrayList<String> indexes = new ArrayList<>();
     private OnLetterChangeListener onLetterChangeListener;
-    private Paint paint;
-    private float textHeight;
+    private final Paint paint;
+    private final float textHeight;
     private int cellWidth;
     private int cellHeight;
     private int currentIndex = -1;
-    private int letterColor;
-    private int selectColor;
+    private final int letterColor;
+    private final int selectColor;
     private int letterSize;
 
-    public SideBar(Context context) { this(context, null); }
+    public SideBar(Context context) {
+        this(context, null);
+    }
 
     public SideBar(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
@@ -71,7 +73,7 @@ public class SideBar extends View {
     }
 
     public void setLetterSize(int letterSize) {
-        if(this.letterSize == letterSize) return;
+        if (this.letterSize == letterSize) return;
         this.letterSize = letterSize;
         invalidate();
     }
@@ -112,15 +114,8 @@ public class SideBar extends View {
     }
 
     public String getLetter(int position) {
-        if(position < 0 || position >= indexes.size()) return "";
+        if (position < 0 || position >= indexes.size()) return "";
         return indexes.get(position);
-    }
-
-    public interface OnLetterChangeListener {
-        void onLetterChange(String letter);
-
-        //手指抬起
-        void onReset();
     }
 
     /**
@@ -170,5 +165,12 @@ public class SideBar extends View {
         }
         // 为了 能够接受  move+up事件
         return true;
+    }
+
+    public interface OnLetterChangeListener {
+        void onLetterChange(String letter);
+
+        //手指抬起
+        void onReset();
     }
 }

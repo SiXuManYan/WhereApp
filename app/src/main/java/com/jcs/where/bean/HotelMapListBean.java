@@ -12,7 +12,7 @@ public class HotelMapListBean {
      * comment_counts : 17
      * tags : [{"name":"火车站周边","pivot":{"hotel_id":58,"hotel_tag_id":7}},{"name":"地铁周边","pivot":{"hotel_id":58,"hotel_tag_id":4}}]
      * address : 72744 Rippin Flat Apt. 401
-     Mabelstad, MA 91146-7898
+     * Mabelstad, MA 91146-7898
      * lat : 14.6824169
      * lng : 120.557012
      * price : 722

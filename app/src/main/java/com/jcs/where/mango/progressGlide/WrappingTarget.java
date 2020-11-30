@@ -43,7 +43,7 @@ public class WrappingTarget<Z> implements Target<Z> {
 
     @Override
     public void onResourceReady(Z resource, Transition<? super Z> transition) {
-        target.onResourceReady(resource,(Transition)transition);
+        target.onResourceReady(resource, (Transition) transition);
     }
 
     @Override

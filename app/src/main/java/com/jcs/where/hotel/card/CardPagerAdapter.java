@@ -24,9 +24,9 @@ import java.util.List;
 
 public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
-    private List<CardView> mViews;
-    private List<HotelMapListBean> mData;
-    private Context useContext;
+    private final List<CardView> mViews;
+    private final List<HotelMapListBean> mData;
+    private final Context useContext;
     private float mBaseElevation;
 
     public CardPagerAdapter(Context context) {

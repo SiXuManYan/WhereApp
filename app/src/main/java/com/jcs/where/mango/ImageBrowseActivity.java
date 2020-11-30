@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -27,13 +26,12 @@ import java.util.List;
 public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ImageBrowseView {
 
     private static final String TAG = ImageBrowseActivity.class.getName();
-
+    ImageBrowsePresenter presenter;
     private ViewPager vp;
     private TextView hint;
     private TextView save;
     private TextView origin;
     private ViewPageAdapter adapter;
-    ImageBrowsePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +47,7 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
     /**
      * init view
      */
-    private void initView(){
+    private void initView() {
         vp = (ViewPager) this.findViewById(R.id.viewPager);
         hint = (TextView) this.findViewById(R.id.hint);
         save = (TextView) this.findViewById(R.id.save);
@@ -61,8 +59,8 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
     /**
      * hide toolbar
      */
-    private void hideToolBar(){
-        if(getSupportActionBar() != null){
+    private void hideToolBar() {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
     }
@@ -70,11 +68,11 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
     /**
      * set status bar color
      */
-    private void setStatusBar(){
+    private void setStatusBar() {
         StatusBarUtils.setStatusBar(this, Color.BLACK);
     }
 
-    public void loadPresenter(){
+    public void loadPresenter() {
         presenter = new ImageBrowsePresenter(this);
     }
 
@@ -95,8 +93,8 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
 
     @Override
     public void setImageBrowse(List<MultiplexImage> images, int position) {
-        if(adapter == null && images != null && images.size() != 0){
-            adapter = new ViewPageAdapter(this,images);
+        if (adapter == null && images != null && images.size() != 0) {
+            adapter = new ViewPageAdapter(this, images);
             hiddenOriginalButton(position);
             vp.setAdapter(adapter);
             vp.setCurrentItem(position);
@@ -108,14 +106,14 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        
+
     }
 
-    public void hiddenOriginalButton(int position){
+    public void hiddenOriginalButton(int position) {
         //if the image is load original,hidden show original button
-        if(TextUtils.isEmpty(presenter.getImages().get(position).getOPath()) || presenter.getImages().get(position).isLoading()){
+        if (TextUtils.isEmpty(presenter.getImages().get(position).getOPath()) || presenter.getImages().get(position).isLoading()) {
             origin.setVisibility(View.GONE);
-        }else{
+        } else {
             origin.setVisibility(View.VISIBLE);
         }
     }
@@ -124,7 +122,7 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
     public void onPageSelected(int position) {
         adapter.setPosition(position);
         hint.setText(position + 1 + "/" + presenter.getImages().size());
-        if(Mango.imageSelectListener != null){
+        if (Mango.imageSelectListener != null) {
             Mango.imageSelectListener.select(position);
         }
         hiddenOriginalButton(position);
@@ -132,7 +130,7 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if(state == 0 && adapter.getPrePosition() != vp.getCurrentItem()){
+        if (state == 0 && adapter.getPrePosition() != vp.getCurrentItem()) {
             adapter.updatePhotoView(adapter.getPrePosition());
         }
     }
@@ -140,9 +138,9 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id == R.id.save){
+        if (id == R.id.save) {
             presenter.saveImage();
-        }else if(id == R.id.origin){
+        } else if (id == R.id.origin) {
             adapter.loadOriginalPicture();
         }
     }

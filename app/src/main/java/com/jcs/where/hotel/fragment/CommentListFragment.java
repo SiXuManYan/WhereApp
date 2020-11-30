@@ -45,6 +45,10 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class CommentListFragment extends BaseFragment {
 
+    // 屏幕宽度
+    public float Width;
+    // 屏幕高度
+    public float Height;
     private View view;
     private MyPtrClassicFrameLayout ptrFrame;
     private RecyclerView commentListRv;
@@ -52,10 +56,6 @@ public class CommentListFragment extends BaseFragment {
     private List<CommentListBean.DataBean> list;
     private CommentListBean useCommentListBean;
     private CommentAdapter commentAdapter;
-    // 屏幕宽度
-    public float Width;
-    // 屏幕高度
-    public float Height;
 
     public static CommentListFragment newInstance(String id, String type) {
         Bundle args = new Bundle();
@@ -188,10 +188,14 @@ public class CommentListFragment extends BaseFragment {
         });
     }
 
+    public int dip2px(float dpValue) {
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
     private class CommentAdapter extends BaseQuickAdapter<CommentListBean.DataBean> {
 
-        private int ImagaId[] = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
+        private final int[] ImagaId = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
 
         public CommentAdapter(Context context) {
             super(context);
@@ -255,7 +259,7 @@ public class CommentListFragment extends BaseFragment {
             }
             GridLayout gridview = (GridLayout) holder.findViewById(R.id.gridview);
             ImageView showimage = (ImageView) holder.findViewById(R.id.showimage);
-            RoundedImageView imgview[] = new RoundedImageView[9];
+            RoundedImageView[] imgview = new RoundedImageView[9];
             for (int i = 0; i < 9; i++) {
                 imgview[i] = (RoundedImageView) holder.findViewById(ImagaId[i]);
             }
@@ -348,9 +352,9 @@ public class CommentListFragment extends BaseFragment {
 
         class fullTextOnclick implements View.OnClickListener {
 
-            private TextView usercontent;
-            private TextView fullText;
-            private int index;
+            private final TextView usercontent;
+            private final TextView fullText;
+            private final int index;
 
             fullTextOnclick(TextView usercontent, TextView fullText, int index) {
                 this.fullText = fullText;
@@ -374,11 +378,6 @@ public class CommentListFragment extends BaseFragment {
                 list.set(index, info);
             }
         }
-    }
-
-    public int dip2px(float dpValue) {
-        final float scale = getContext().getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 
 

@@ -24,10 +24,11 @@ public class StatusBarUtils {
 
     /**
      * Set the status bar color
+     *
      * @param activity Activity
-     * @param color Color
+     * @param color    Color
      */
-    public static void setStatusBar(Activity activity, @ColorInt int color){
+    public static void setStatusBar(Activity activity, @ColorInt int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -50,6 +51,7 @@ public class StatusBarUtils {
 
     /**
      * Generate a translucent rectangle with the same size as the status bar
+     *
      * @param activity Activity
      * @param color    Color
      * @return View
@@ -66,6 +68,7 @@ public class StatusBarUtils {
 
     /**
      * Set the root layout parameters
+     *
      * @param activity Activity
      */
     private static void setRootView(Activity activity) {
@@ -81,6 +84,7 @@ public class StatusBarUtils {
 
     /**
      * Get status bar height
+     *
      * @param context context
      * @return status bar height
      */

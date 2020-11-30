@@ -17,22 +17,6 @@ public class MyPtrClassicFrameLayout extends PtrFrameLayout {
 
     private PtrClassicDefaultHeader mPtrClassicHeader;
     private PtrClassicDefaultFooter mPtrClassicFooter;
-
-    public MyPtrClassicFrameLayout(Context context) {
-        super(context);
-        initViews();
-    }
-
-    public MyPtrClassicFrameLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initViews();
-    }
-
-    public MyPtrClassicFrameLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initViews();
-    }
-
     private float startY;
     private float startX;
     // 记录viewPager是否拖拽的标记
@@ -41,6 +25,18 @@ public class MyPtrClassicFrameLayout extends PtrFrameLayout {
     private boolean isDeal;
     private boolean needHorizontalMove;
     private int mTouchSlop;
+    public MyPtrClassicFrameLayout(Context context) {
+        super(context);
+        initViews();
+    }
+    public MyPtrClassicFrameLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initViews();
+    }
+    public MyPtrClassicFrameLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initViews();
+    }
 
     @Override
     public void disableWhenHorizontalMove(boolean disable) {

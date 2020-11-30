@@ -45,6 +45,18 @@ public class RingProgressView extends View {
         this.paint.setStrokeCap(Paint.Cap.ROUND);
     }
 
+    /**
+     * dip to px
+     *
+     * @param context Context
+     * @param dpValue dp value
+     * @return px value
+     */
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         drawProgress(canvas, progress);
@@ -119,18 +131,6 @@ public class RingProgressView extends View {
         int bottom = centerY + innerCircle;
         paint.setStrokeWidth(ringWidth);
         canvas.drawArc(new RectF(left, top, right, bottom), -90, (float) (progress * 3.6), false, paint);
-    }
-
-    /**
-     * dip to px
-     *
-     * @param context Context
-     * @param dpValue dp value
-     * @return px value
-     */
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 
 }

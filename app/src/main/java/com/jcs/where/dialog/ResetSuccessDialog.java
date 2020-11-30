@@ -9,17 +9,12 @@ import android.widget.TextView;
 
 import com.jcs.where.R;
 
-import org.w3c.dom.Text;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class ResetSuccessDialog extends Dialog implements View.OnClickListener {
 
     private TextView sureTv;
 
-    private OnCloseListener listener;
-    private Context mContext;
+    private final OnCloseListener listener;
+    private final Context mContext;
 
     public ResetSuccessDialog(Context context, int themeResId, OnCloseListener listener) {
         super(context, themeResId);
@@ -37,7 +32,7 @@ public class ResetSuccessDialog extends Dialog implements View.OnClickListener {
     }
 
     private void initView() {
-        sureTv = (TextView)findViewById(R.id.tv_sure);
+        sureTv = (TextView) findViewById(R.id.tv_sure);
         sureTv.setOnClickListener(this);
     }
 

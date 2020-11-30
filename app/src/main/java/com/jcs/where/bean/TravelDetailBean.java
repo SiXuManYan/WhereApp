@@ -9,7 +9,7 @@ public class TravelDetailBean {
      * images : ["https://whereoss.oss-cn-beijing.aliyuncs.com/travels/%28%E7%85%A7%E7%89%87%29%E5%8F%B0%E7%81%A3%E5%8D%81%E5%A4%A7%E8%A1%8C%E7%A8%8B-%E6%97%A5%E6%9C%88%E6%BD%AD-S.png","https://whereoss.oss-cn-beijing.aliyuncs.com/travels/10.png","https://whereoss.oss-cn-beijing.aliyuncs.com/travels/Cii_JV13DySIASD7AAkMkPopAi0AAIdogPrrFAACQyo594_w640_h320_c1_t0.png","https://whereoss.oss-cn-beijing.aliyuncs.com/travels/unnamed%20%283%29.jpg","https://whereoss.oss-cn-beijing.aliyuncs.com/travels/unnamed%20%284%29.jpg"]
      * name : Heathcote Ltd
      * address : 5647 Marvin Keys
-     Julienland, HI 47332
+     * Julienland, HI 47332
      * lat : 14.5854206
      * lng : 120.3406515
      * grade : 3.9

@@ -123,7 +123,6 @@ public class TravelListFragment extends BaseFragment {
     private void getmoredata() {
         showLoading();
         String url = "travelapi/v1/travel?category_id=" + getArguments().getString("travelId") + "&lat=" + getArguments().getString("lat") + "&lng=" + getArguments().getString("lng") + "&page=" + page;
-        ;
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {

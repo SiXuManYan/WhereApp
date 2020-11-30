@@ -1,7 +1,5 @@
 package com.jcs.where.api;
 
-import retrofit2.Retrofit;
-
 public class BaseModel {
     protected RetrofitManager mManager;
     protected RetrofitApi mRetrofit;

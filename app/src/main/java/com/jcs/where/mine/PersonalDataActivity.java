@@ -26,7 +26,6 @@ import com.jcs.where.utils.SoftKeyBoardListener;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,6 @@ import co.tton.android.base.manager.ImageLoader;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
-import rx.Subscriber;
 
 public class PersonalDataActivity extends BaseActivity {
 

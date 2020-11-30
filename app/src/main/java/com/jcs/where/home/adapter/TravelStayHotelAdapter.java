@@ -1,7 +1,6 @@
 package com.jcs.where.home.adapter;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;

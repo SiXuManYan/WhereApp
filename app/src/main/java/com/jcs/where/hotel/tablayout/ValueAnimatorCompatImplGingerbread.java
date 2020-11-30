@@ -33,14 +33,11 @@ class ValueAnimatorCompatImplGingerbread extends ValueAnimatorCompat.Impl {
     private static final int DEFAULT_DURATION = 200;
 
     private static final Handler sHandler = new Handler(Looper.getMainLooper());
-
+    private final int[] mIntValues = new int[2];
+    private final float[] mFloatValues = new float[2];
     private long mStartTime;
     private boolean mIsRunning;
     private float mAnimatedFraction;
-
-    private final int[] mIntValues = new int[2];
-    private final float[] mFloatValues = new float[2];
-
     private long mDuration = DEFAULT_DURATION;
     private Interpolator mInterpolator;
     private ArrayList<AnimatorListenerProxy> mListeners;
@@ -126,11 +123,6 @@ class ValueAnimatorCompatImplGingerbread extends ValueAnimatorCompat.Impl {
     }
 
     @Override
-    public void setDuration(long duration) {
-        mDuration = duration;
-    }
-
-    @Override
     public void cancel() {
         mIsRunning = false;
         sHandler.removeCallbacks(mRunnable);
@@ -159,6 +151,11 @@ class ValueAnimatorCompatImplGingerbread extends ValueAnimatorCompat.Impl {
     @Override
     public long getDuration() {
         return mDuration;
+    }
+
+    @Override
+    public void setDuration(long duration) {
+        mDuration = duration;
     }
 
     final void update() {

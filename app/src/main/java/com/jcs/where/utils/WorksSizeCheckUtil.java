@@ -3,7 +3,6 @@ package com.jcs.where.utils;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,7 +21,7 @@ public class WorksSizeCheckUtil {
      * 以及输入框后面的X的可见性，X点击删除输入框的内容
      */
     public static class textChangeListener {
-        private TextView button;
+        private final TextView button;
         private EditText[] editTexts;
 
         public textChangeListener(TextView button) {
@@ -42,6 +41,21 @@ public class WorksSizeCheckUtil {
             }
         }
 
+        /**
+         * 检查所有的edit是否输入了数据
+         *
+         * @return
+         */
+        private boolean checkAllEdit() {
+            for (EditText editText : editTexts) {
+                if (!TextUtils.isEmpty(editText.getText() + "")) {
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         /**
          * edit输入的变化来改变按钮的是否点击
@@ -66,22 +80,6 @@ public class WorksSizeCheckUtil {
             @Override
             public void afterTextChanged(Editable editable) {
             }
-        }
-
-        /**
-         * 检查所有的edit是否输入了数据
-         *
-         * @return
-         */
-        private boolean checkAllEdit() {
-            for (EditText editText : editTexts) {
-                if (!TextUtils.isEmpty(editText.getText() + "")) {
-                    continue;
-                } else {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }

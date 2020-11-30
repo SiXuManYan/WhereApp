@@ -91,7 +91,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
         HttpUtils.doHttpReqeust("GET", "hotelapi/v1/orders/" + getIntent().getStringExtra(EXT_ID), null, "", TokenManager.get().getToken(HotelOrderDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
-                Log.d("ssss",result);
+                Log.d("ssss", result);
                 stopLoading();
                 if (code == 200) {
                     HotelOrderDetailBean hotelOrderDetailBean = new Gson().fromJson(result, HotelOrderDetailBean.class);

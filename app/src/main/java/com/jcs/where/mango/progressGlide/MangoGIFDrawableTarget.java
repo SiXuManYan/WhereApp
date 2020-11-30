@@ -12,7 +12,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class MangoGIFDrawableTarget extends ImageViewTarget<GifDrawable> {
 
     private static final String TAG = MangoGIFDrawableTarget.class.getName();
-    private PhotoViewAttacher photoViewAttacher;
+    private final PhotoViewAttacher photoViewAttacher;
 
     public MangoGIFDrawableTarget(PhotoViewAttacher photoViewAttacher) {
         super(photoViewAttacher.getImageView());

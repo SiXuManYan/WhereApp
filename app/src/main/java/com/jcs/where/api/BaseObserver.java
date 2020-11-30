@@ -6,7 +6,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public abstract class BaseObserver<T> implements Observer<T> {
-    private CompositeDisposable mCompositeDisposable;
+    private final CompositeDisposable mCompositeDisposable;
 
     public BaseObserver() {
         this.mCompositeDisposable = new CompositeDisposable();

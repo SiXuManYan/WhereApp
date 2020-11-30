@@ -25,39 +25,40 @@ public class ImageBrowsePresenter {
 
     private static final String TAG = ImageBrowsePresenter.class.getName();
 
-    private ImageBrowseView view;
+    private final ImageBrowseView view;
     private List<MultiplexImage> images;
+
     public ImageBrowsePresenter(ImageBrowseView view) {
         this.view = view;
     }
 
-    public void loadImage(){
+    public void loadImage() {
         Intent intent = view.getDataIntent();
         images = intent.getParcelableArrayListExtra("images");
-        view.setImageBrowse(images,intent.getIntExtra("position",0));
+        view.setImageBrowse(images, intent.getIntExtra("position", 0));
     }
 
     public void saveImage() {
 
-        final String imageUrl = !TextUtils.isEmpty(getPositionImage().getOPath()) ? getPositionImage().getOPath(): getPositionImage().getTPath();
+        final String imageUrl = !TextUtils.isEmpty(getPositionImage().getOPath()) ? getPositionImage().getOPath() : getPositionImage().getTPath();
 
         Glide.with(view.getMyContext()).asBitmap().load(imageUrl).into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                 // 其次把文件插入到系统图库
-                MediaStore.Images.Media.insertImage(view.getMyContext().getContentResolver(),resource,"title", "description");
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-                    view.getMyContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
-                }else{
-                    view.getMyContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
+                MediaStore.Images.Media.insertImage(view.getMyContext().getContentResolver(), resource, "title", "description");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    view.getMyContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+                } else {
+                    view.getMyContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
                 }
-                Toast.makeText(view.getMyContext(),"保存成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getMyContext(), "保存成功", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-    public MultiplexImage getPositionImage(){
+    public MultiplexImage getPositionImage() {
         return images.get(view.getPosition());
     }
 

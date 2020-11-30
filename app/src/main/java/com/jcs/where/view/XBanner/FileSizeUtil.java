@@ -23,8 +23,7 @@ public class FileSizeUtil {
         try {
             if (file.isDirectory()) {
                 blockSize = getFileSizes(file);
-            }
-            else {
+            } else {
                 blockSize = getFileSize(file);
             }
         } catch (Exception e) {
@@ -36,7 +35,7 @@ public class FileSizeUtil {
 
 
     /**
-     *get the size of a specific file
+     * get the size of a specific file
      */
     private static long getFileSize(File file) throws Exception {
         long size = 0;
@@ -44,8 +43,7 @@ public class FileSizeUtil {
             FileInputStream fis;
             fis = new FileInputStream(file);
             size = fis.available();
-        }
-        else {
+        } else {
             file.createNewFile();
         }
         return size;
@@ -53,7 +51,7 @@ public class FileSizeUtil {
 
 
     /**
-     *get the size of a specific directory
+     * get the size of a specific directory
      */
     private static long getFileSizes(File f) throws Exception {
         long size = 0;
@@ -61,8 +59,7 @@ public class FileSizeUtil {
         for (int i = 0; i < fList.length; i++) {
             if (fList[i].isDirectory()) {
                 size = size + getFileSizes(fList[i]);
-            }
-            else {
+            } else {
                 size = size + getFileSize(fList[i]);
             }
         }

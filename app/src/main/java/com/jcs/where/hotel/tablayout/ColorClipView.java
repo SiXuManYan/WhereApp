@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -18,24 +17,20 @@ import com.jcs.where.R;
 
 public class ColorClipView extends View {
 
-    private Paint paint;//画笔
-    private String text = "我是不哦车网";//绘制的文本
-    private int textSize = sp2px(18);//文本字体大小
-
-    private int textWidth;//文本的宽度
-    private int textHeight;//文本的高度
-
-    private int textUnselectColor = R.color.colorPrimary;//文本未选中字体颜色
-    private int textSelectedColor = R.color.colorAccent;//文本选中颜色
-
     private static final int DIRECTION_LEFT = 0;
     private static final int DIRECTION_RIGHT = 1;
     private static final int DIRECTION_TOP = 2;
     private static final int DIRECTION_BOTTOM = 3;
-
+    private final Paint paint;//画笔
+    private String text = "我是不哦车网";//绘制的文本
+    private int textSize = sp2px(18);//文本字体大小
+    private int textWidth;//文本的宽度
+    private int textHeight;//文本的高度
+    private int textUnselectColor = R.color.colorPrimary;//文本未选中字体颜色
+    private int textSelectedColor = R.color.colorAccent;//文本选中颜色
     private int mDirection = DIRECTION_LEFT;
 
-    private Rect textRect = new Rect();//文本显示区域
+    private final Rect textRect = new Rect();//文本显示区域
 
     private int startX;//X轴开始绘制的坐标
 

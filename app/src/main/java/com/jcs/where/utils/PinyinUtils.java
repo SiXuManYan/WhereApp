@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
  * 拼音工具类
  */
 public class PinyinUtils {
+    public static StringBuffer sb = new StringBuffer();
+
     /**
      * 获取拼音的首字母（大写）
      *
@@ -32,8 +34,6 @@ public class PinyinUtils {
         }
         return "定位";
     }
-
-    public static StringBuffer sb = new StringBuffer();
 
     /**
      * 获取汉字字符串的首字母，英文字符不变

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.request.target.Target;
 import com.jcs.where.mango.progressview.RingProgressView;
+
 /**
  * show original image target
  * Created by Jelly on 2017/9/2.
@@ -13,11 +14,11 @@ import com.jcs.where.mango.progressview.RingProgressView;
 
 public class OMangoProgressTarget<Z> extends ProgressTarget<String, Z> {
     private static final String TAG = OMangoProgressTarget.class.getName();
-    private RingProgressView progressView;
-    private ImageView image;
+    private final RingProgressView progressView;
+    private final ImageView image;
 
     public OMangoProgressTarget(Context context, Target<Z> target, RingProgressView progressView, ImageView image) {
-        super(context,target);
+        super(context, target);
         this.progressView = progressView;
         this.image = image;
     }

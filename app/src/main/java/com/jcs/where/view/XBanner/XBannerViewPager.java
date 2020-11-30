@@ -11,12 +11,12 @@ import androidx.viewpager.widget.ViewPager;
 
 public class XBannerViewPager extends ViewPager {
 
-    public XBannerViewPager(Context context){
+    public XBannerViewPager(Context context) {
         super(context);
     }
 
-    public XBannerViewPager(Context context, AttributeSet attrs){
-        super(context,attrs);
+    public XBannerViewPager(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
 

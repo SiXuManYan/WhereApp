@@ -161,6 +161,7 @@ public class CommentListBean {
     }
 
     public static class DataBean {
+        public boolean is_select = false;
         /**
          * id : 1
          * images : ["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png","https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png","https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png","https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"]
@@ -184,7 +185,6 @@ public class CommentListBean {
         private int user_id;
         private String content;
         private List<String> images;
-        public boolean is_select = false;
 
         public int getId() {
             return id;

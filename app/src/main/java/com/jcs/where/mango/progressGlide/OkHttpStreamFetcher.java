@@ -26,91 +26,91 @@ import okhttp3.ResponseBody;
  * Fetches an {@link InputStream} using the okhttp library.
  */
 public class OkHttpStreamFetcher implements DataFetcher<InputStream>, Callback {
-  private static final String TAG = "OkHttpFetcher";
-  private final Call.Factory client;
-  private final GlideUrl url;
-  private InputStream stream;
-  private ResponseBody responseBody;
-  private DataCallback<? super InputStream> callback;
-  // call may be accessed on the main thread while the object is in use on other threads. All other
-  // accesses to variables may occur on different threads, but only one at a time.
-  private volatile Call call;
+    private static final String TAG = "OkHttpFetcher";
+    private final Call.Factory client;
+    private final GlideUrl url;
+    private InputStream stream;
+    private ResponseBody responseBody;
+    private DataCallback<? super InputStream> callback;
+    // call may be accessed on the main thread while the object is in use on other threads. All other
+    // accesses to variables may occur on different threads, but only one at a time.
+    private volatile Call call;
 
-  // Public API.
-  @SuppressWarnings("WeakerAccess")
-  public OkHttpStreamFetcher(Call.Factory client, GlideUrl url) {
-    this.client = client;
-    this.url = url;
-  }
-
-  @Override
-  public void loadData(@NonNull Priority priority,
-                       @NonNull final DataFetcher.DataCallback<? super InputStream> callback) {
-    Request.Builder requestBuilder = new Request.Builder().url(url.toStringUrl());
-    for (Map.Entry<String, String> headerEntry : url.getHeaders().entrySet()) {
-      String key = headerEntry.getKey();
-      requestBuilder.addHeader(key, headerEntry.getValue());
-    }
-    Request request = requestBuilder.build();
-    this.callback = callback;
-
-    call = client.newCall(request);
-    call.enqueue(this);
-  }
-
-  @Override
-  public void onFailure(@NonNull Call call, @NonNull IOException e) {
-    if (Log.isLoggable(TAG, Log.DEBUG)) {
-      Log.d(TAG, "OkHttp failed to obtain result", e);
+    // Public API.
+    @SuppressWarnings("WeakerAccess")
+    public OkHttpStreamFetcher(Call.Factory client, GlideUrl url) {
+        this.client = client;
+        this.url = url;
     }
 
-    callback.onLoadFailed(e);
-  }
+    @Override
+    public void loadData(@NonNull Priority priority,
+                         @NonNull final DataFetcher.DataCallback<? super InputStream> callback) {
+        Request.Builder requestBuilder = new Request.Builder().url(url.toStringUrl());
+        for (Map.Entry<String, String> headerEntry : url.getHeaders().entrySet()) {
+            String key = headerEntry.getKey();
+            requestBuilder.addHeader(key, headerEntry.getValue());
+        }
+        Request request = requestBuilder.build();
+        this.callback = callback;
 
-  @Override
-  public void onResponse(@NonNull Call call, @NonNull Response response) {
-    responseBody = response.body();
-    if (response.isSuccessful()) {
-      long contentLength = Preconditions.checkNotNull(responseBody).contentLength();
-      stream = ContentLengthInputStream.obtain(responseBody.byteStream(), contentLength);
-      callback.onDataReady(stream);
-    } else {
-      callback.onLoadFailed(new HttpException(response.message(), response.code()));
+        call = client.newCall(request);
+        call.enqueue(this);
     }
-  }
 
-  @Override
-  public void cleanup() {
-    try {
-      if (stream != null) {
-        stream.close();
-      }
-    } catch (IOException e) {
-      // Ignored
+    @Override
+    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, "OkHttp failed to obtain result", e);
+        }
+
+        callback.onLoadFailed(e);
     }
-    if (responseBody != null) {
-      responseBody.close();
+
+    @Override
+    public void onResponse(@NonNull Call call, @NonNull Response response) {
+        responseBody = response.body();
+        if (response.isSuccessful()) {
+            long contentLength = Preconditions.checkNotNull(responseBody).contentLength();
+            stream = ContentLengthInputStream.obtain(responseBody.byteStream(), contentLength);
+            callback.onDataReady(stream);
+        } else {
+            callback.onLoadFailed(new HttpException(response.message(), response.code()));
+        }
     }
-    callback = null;
-  }
 
-  @Override
-  public void cancel() {
-    Call local = call;
-    if (local != null) {
-      local.cancel();
+    @Override
+    public void cleanup() {
+        try {
+            if (stream != null) {
+                stream.close();
+            }
+        } catch (IOException e) {
+            // Ignored
+        }
+        if (responseBody != null) {
+            responseBody.close();
+        }
+        callback = null;
     }
-  }
 
-  @NonNull
-  @Override
-  public Class<InputStream> getDataClass() {
-    return InputStream.class;
-  }
+    @Override
+    public void cancel() {
+        Call local = call;
+        if (local != null) {
+            local.cancel();
+        }
+    }
 
-  @NonNull
-  @Override
-  public DataSource getDataSource() {
-    return DataSource.REMOTE;
-  }
+    @NonNull
+    @Override
+    public Class<InputStream> getDataClass() {
+        return InputStream.class;
+    }
+
+    @NonNull
+    @Override
+    public DataSource getDataSource() {
+        return DataSource.REMOTE;
+    }
 }

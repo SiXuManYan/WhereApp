@@ -10,9 +10,10 @@ import java.util.List;
 
 public class SearchHistoryUtils {
     private final static String PREFERENCE_NAME = "superservice_ly";
-    private final static String SEARCH_HISTORY="linya_history";
+    private final static String SEARCH_HISTORY = "linya_history";
+
     // 保存搜索记录
-    public static void saveSearchHistory(Context context,String inputText) {
+    public static void saveSearchHistory(Context context, String inputText) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         if (TextUtils.isEmpty(inputText)) {
             return;
@@ -47,10 +48,11 @@ public class SearchHistoryUtils {
             editor.commit();
         }
     }
+
     //获取搜索记录
-    public static List<String> getSearchHistory(Context context){
+    public static List<String> getSearchHistory(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-        String longHistory =sp.getString(SEARCH_HISTORY, "");
+        String longHistory = sp.getString(SEARCH_HISTORY, "");
         String[] tmpHistory = longHistory.split(","); //split后长度为1有一个空串对象
         List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
         if (historyList.size() == 1 && historyList.get(0).equals("")) { //如果没有搜索记录，split之后第0位是个空串的情况下
@@ -59,7 +61,7 @@ public class SearchHistoryUtils {
         return historyList;
     }
 
-    public static void clear(Context context){
+    public static void clear(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();

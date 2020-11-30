@@ -19,8 +19,8 @@ import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
 public class WebLayout implements IWebLayout {
 
-    private Activity mActivity;
     private final TwinklingRefreshLayout mTwinklingRefreshLayout;
+    private final Activity mActivity;
     private WebView mWebView = null;
 
     public WebLayout(Activity activity) {
@@ -41,7 +41,6 @@ public class WebLayout implements IWebLayout {
     public WebView getWebView() {
         return mWebView;
     }
-
 
 
 }

@@ -24,8 +24,8 @@ import java.util.concurrent.Executors;
 public class HttpUtils {
 
     //线程池
-    private static ExecutorService executor;
-    private static Handler mHandler;
+    private static final ExecutorService executor;
+    private static final Handler mHandler;
 
     static {
         executor = Executors.newFixedThreadPool(5);

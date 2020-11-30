@@ -351,7 +351,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
                     break;
                 case 2:
-                    ToastUtils.showLong(getContext(),"开发中");
+                    ToastUtils.showLong(getContext(), "开发中");
                     break;
             }
         }
@@ -359,56 +359,83 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
     /**
      * 处理金刚圈item点击后的跳转逻辑
+     *
      * @param item item
      */
     private void dealModulesById(ModulesResponse item) {
-        switch (item.getId()){
+        switch (item.getId()) {
             case 1:
-                ToastUtils.showLong(getContext(),"带地图的综合服务页面");
+                ToastUtils.showLong(getContext(), "带地图的综合服务页面");
                 break;
             case 2:
-                ToastUtils.showLong(getContext(),"三级联动筛选的综合服务页面");
+                ToastUtils.showLong(getContext(), "三级联动筛选的综合服务页面");
                 break;
             case 3:
                 Intent toTravelStay = new Intent(getContext(), TravelStayActivity.class);
-                toTravelStay.putIntegerArrayListExtra("categories",(ArrayList<Integer>) item.getCategories());
+                toTravelStay.putIntegerArrayListExtra("categories", (ArrayList<Integer>) item.getCategories());
                 startActivity(toTravelStay);
                 break;
             case 4:
-                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
                 break;
             case 5:
-                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）");
+                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）");
                 break;
             case 6:
-                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
                 break;
             case 7:
-                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
                 break;
             case 8:
-                ToastUtils.showLong(getContext(),"横向二级联动筛选的综合服务页面");
+                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
                 break;
             case 9:
-                ToastUtils.showLong(getContext(),"餐厅列表");
+                ToastUtils.showLong(getContext(), "餐厅列表");
                 break;
             case 10:
-                ToastUtils.showLong(getContext(),"开发中");
+                ToastUtils.showLong(getContext(), "开发中");
                 break;
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        banner3.releaseBanner();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
+            cityNameTv.setText(data.getStringExtra(CityPickerActivity.EXTRA_CITY));
+        }
+    }
+
+    public void getBanner() {
+
+    }
+
+    public int getScreenWidth() {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //宽度 dm.widthPixels
+        //高度 dm.heightPixels
+        return dm.widthPixels;
+    }
+
     private class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private final Context context;
-        //布局标识集合
-        private final List<Integer> typeList;
         //1.按钮 2.直播
         //设置常量
         //横向附近
         private static final int TYPE_NEARBY_TRANSVERSE = 1;
         //竖向附件
         private static final int TYPE_NEARBY_VERICAL = 2;
+        private final Context context;
+        //布局标识集合
+        private final List<Integer> typeList;
 
 
         public HomeRecyclerViewAdapter(Context context, List<Integer> typeList) {
@@ -447,32 +474,6 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 initNebaryTransverse((NebaryTransverseViewHolder) holder);
             } else if (holder instanceof NearbyVericalViewHolder) {
                 initNearbyVerical((NearbyVericalViewHolder) holder);
-            }
-        }
-
-        public class NebaryTransverseViewHolder extends RecyclerView.ViewHolder {
-
-            public TextView titleTv, seeMoreTv;
-            public RecyclerView businessRv;
-
-            public NebaryTransverseViewHolder(View itemView) {
-                super(itemView);
-                titleTv = (TextView) itemView.findViewById(R.id.tv_title);
-                businessRv = (RecyclerView) itemView.findViewById(R.id.rv_business);
-                seeMoreTv = (TextView) itemView.findViewById(R.id.tv_seemore);
-            }
-        }
-
-        public class NearbyVericalViewHolder extends RecyclerView.ViewHolder {
-
-            public TextView titleTv, seeMoreTv;
-            public RecyclerView businessRv;
-
-            public NearbyVericalViewHolder(View itemView) {
-                super(itemView);
-                titleTv = (TextView) itemView.findViewById(R.id.tv_title);
-                businessRv = (RecyclerView) itemView.findViewById(R.id.rv_business);
-                seeMoreTv = (TextView) itemView.findViewById(R.id.tv_seemore);
             }
         }
 
@@ -535,7 +536,6 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
         }
 
-
         private void initNearbyVerical(NearbyVericalViewHolder holder) {
 
             List<BusinessBean> list = new ArrayList<>();
@@ -568,6 +568,32 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         @Override
         public int getItemCount() {
             return typeList.size();
+        }
+
+        public class NebaryTransverseViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView titleTv, seeMoreTv;
+            public RecyclerView businessRv;
+
+            public NebaryTransverseViewHolder(View itemView) {
+                super(itemView);
+                titleTv = (TextView) itemView.findViewById(R.id.tv_title);
+                businessRv = (RecyclerView) itemView.findViewById(R.id.rv_business);
+                seeMoreTv = (TextView) itemView.findViewById(R.id.tv_seemore);
+            }
+        }
+
+        public class NearbyVericalViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView titleTv, seeMoreTv;
+            public RecyclerView businessRv;
+
+            public NearbyVericalViewHolder(View itemView) {
+                super(itemView);
+                titleTv = (TextView) itemView.findViewById(R.id.tv_title);
+                businessRv = (RecyclerView) itemView.findViewById(R.id.rv_business);
+                seeMoreTv = (TextView) itemView.findViewById(R.id.tv_seemore);
+            }
         }
     }
 
@@ -629,33 +655,6 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
             TextView distanceTv = holder.findViewById(R.id.tv_distance);
             distanceTv.setText("<1.5Km");
         }
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        banner3.releaseBanner();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
-            cityNameTv.setText(data.getStringExtra(CityPickerActivity.EXTRA_CITY));
-        }
-    }
-
-    public void getBanner() {
-
-    }
-
-    public int getScreenWidth() {
-        DisplayMetrics dm = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
-        //宽度 dm.widthPixels
-        //高度 dm.heightPixels
-        return dm.widthPixels;
     }
 
 }

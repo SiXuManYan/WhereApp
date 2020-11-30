@@ -20,17 +20,19 @@ import java.lang.reflect.Method;
 
 /**
  * Created by xiongxuesong-pc on 2016/5/15.
- *
+ * <p>
  * 动态设置状态栏中字体颜色
  */
 public class StatusBarUtilss {
 
+    public static final String HOME_CURRENT_TAB_POSITION = "HOME_CURRENT_TAB_POSITION";
+    private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
+    private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
+    private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
     public static int screenWidth;
     public static int screenHeight;
     public static int navigationHeight = 0;
-
     private static DisplayMetrics mMetrics;
-    public static final String HOME_CURRENT_TAB_POSITION = "HOME_CURRENT_TAB_POSITION";
 
     /**
      * 通过反射的方式获取状态栏高度
@@ -157,19 +159,16 @@ public class StatusBarUtilss {
             Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
             Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
             darkModeFlag = field.getInt(layoutParams);
-            Method extraFlagField = clazz.getMethod("setExtraFlags",int.class,int.class);
-            extraFlagField.invoke(activity.getWindow(), lightStatusBar? darkModeFlag : 0, darkModeFlag);
+            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+            extraFlagField.invoke(activity.getWindow(), lightStatusBar ? darkModeFlag : 0, darkModeFlag);
         } catch (Exception ignored) {
             ignored.printStackTrace();
         }
     }
 
-    private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
-    private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
-    private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
-
     /**
      * 判断手机是否是小米
+     *
      * @return
      */
     public static boolean isMIUI() throws IOException {
@@ -181,6 +180,7 @@ public class StatusBarUtilss {
 
     /**
      * 判断手机是否是魅族
+     *
      * @return
      */
     public static boolean isFlyme() {
@@ -195,7 +195,8 @@ public class StatusBarUtilss {
 
     /**
      * 设置状态栏文字色值为深色调
-     * @param useDart 是否使用深色调
+     *
+     * @param useDart  是否使用深色调
      * @param activity
      */
     public static void setStatusTextColor(boolean useDart, Activity activity) {

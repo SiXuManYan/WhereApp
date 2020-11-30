@@ -22,25 +22,25 @@ public class Mango {
     public static boolean isShowLoading = true;
 
     public static void open(Context context) throws IllegalAccessError {
-        if(images == null){
+        if (images == null) {
             throw new IllegalAccessError("must set imageUrls");
         }
 
-        Intent intent = new Intent(context,ImageBrowseActivity.class);
+        Intent intent = new Intent(context, ImageBrowseActivity.class);
         intent.putParcelableArrayListExtra("images", (ArrayList<? extends Parcelable>) images);
-        intent.putExtra("position",position);
+        intent.putExtra("position", position);
         context.startActivity(intent);
     }
 
-    public static void setImages(List<MultiplexImage> images){
+    public static void setImages(List<MultiplexImage> images) {
         Mango.images = images;
     }
 
-    public static void setPosition(int position){
+    public static void setPosition(int position) {
         Mango.position = position;
     }
 
-    public static void setImageSelectListener(ImageSelectListener listener){
+    public static void setImageSelectListener(ImageSelectListener listener) {
         Mango.imageSelectListener = listener;
     }
 

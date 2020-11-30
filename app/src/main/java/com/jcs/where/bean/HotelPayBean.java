@@ -4,6 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class HotelPayBean implements Parcelable {
+    public static final Creator<HotelPayBean> CREATOR = new Creator<HotelPayBean>() {
+        @Override
+        public HotelPayBean createFromParcel(Parcel in) {
+            return new HotelPayBean(in);
+        }
+
+        @Override
+        public HotelPayBean[] newArray(int size) {
+            return new HotelPayBean[size];
+        }
+    };
     public String hotelName;
     public String roomName;
     public String bed;
@@ -18,10 +29,10 @@ public class HotelPayBean implements Parcelable {
     public String orderId;
     public String trade_no;
 
+
     public HotelPayBean() {
 
     }
-
 
     protected HotelPayBean(Parcel in) {
         hotelName = in.readString();
@@ -38,18 +49,6 @@ public class HotelPayBean implements Parcelable {
         orderId = in.readString();
         trade_no = in.readString();
     }
-
-    public static final Creator<HotelPayBean> CREATOR = new Creator<HotelPayBean>() {
-        @Override
-        public HotelPayBean createFromParcel(Parcel in) {
-            return new HotelPayBean(in);
-        }
-
-        @Override
-        public HotelPayBean[] newArray(int size) {
-            return new HotelPayBean[size];
-        }
-    };
 
     @Override
     public int describeContents() {

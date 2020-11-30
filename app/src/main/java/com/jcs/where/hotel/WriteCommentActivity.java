@@ -273,7 +273,7 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
         params.put("images", g.toJson(pathList));
         //  params.put("comment_travel_type_id", typeId + "");
         params.put("hotel_id", getIntent().getIntExtra(EXT_ID, 0) + "");
-       // params.put("order_id", "1");
+        // params.put("order_id", "1");
         HttpUtils.doHttpReqeust("POST", "hotelapi/v1/hotel/comment", params, "", TokenManager.get().getToken(WriteCommentActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {

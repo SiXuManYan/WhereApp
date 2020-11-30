@@ -29,6 +29,20 @@ public class UserManager {
         return sInstance;
     }
 
+    private static UserBean parseUser(Context context) {
+        String json = (String) PreferencesUtils.getData(context, PreferencesUtils.KEY_USER, "");
+        Gson gson = new Gson();
+        return gson.fromJson(json, UserBean.class);
+    }
+
+    public static boolean checkLogin(Context context) {
+        boolean isLogin = UserManager.get().isLogin(context);
+        if (!isLogin) {
+            LoginActivity.goTo(context);
+        }
+        return isLogin;
+    }
+
     public void login(Context context, UserBean userBean) {
         saveUser(context, userBean);
     }
@@ -70,20 +84,6 @@ public class UserManager {
         if (mUser == null) {
             mUser = new UserBean();
         }
-    }
-
-    private static UserBean parseUser(Context context) {
-        String json = (String) PreferencesUtils.getData(context, PreferencesUtils.KEY_USER, "");
-        Gson gson = new Gson();
-        return gson.fromJson(json, UserBean.class);
-    }
-
-    public static boolean checkLogin(Context context) {
-        boolean isLogin = UserManager.get().isLogin(context);
-        if (!isLogin) {
-            LoginActivity.goTo(context);
-        }
-        return isLogin;
     }
 
 

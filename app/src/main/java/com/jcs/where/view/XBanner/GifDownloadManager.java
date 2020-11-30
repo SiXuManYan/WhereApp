@@ -11,14 +11,13 @@ import pl.droidsonroids.gif.GifImageView;
 public class GifDownloadManager {
 
 
-    public interface ProgressListener{
+    public static void downloagGif(String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
+        GifDownloader.displayImage(url, gifImageView, scaleType);
+    }
+
+    public interface ProgressListener {
         void showProgress(int index, int progress);
     }
-
-    public static void downloagGif(String url, GifImageView gifImageView, ImageView.ScaleType scaleType){
-        GifDownloader.displayImage(url,gifImageView,scaleType);
-    }
-
 
 
 }

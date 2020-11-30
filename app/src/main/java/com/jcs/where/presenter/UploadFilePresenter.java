@@ -25,8 +25,8 @@ import rx.schedulers.Schedulers;
 
 public class UploadFilePresenter {
 
-    private HashMap<String, String> mUploadRecordMap = new HashMap<>(); //存放上传记录
-    private Context mContext;
+    private final HashMap<String, String> mUploadRecordMap = new HashMap<>(); //存放上传记录
+    private final Context mContext;
 
     public UploadFilePresenter(Context context) {
         mContext = context;
@@ -42,7 +42,7 @@ public class UploadFilePresenter {
                         subscriber.onNext("");
                         subscriber.onCompleted();
                     } else if (!ImageUtils.isLocalPath(path)) {
-                        String newPath = path.substring(Const.IMAGE_ROOT_PATH.length(), path.length());
+                        String newPath = path.substring(Const.IMAGE_ROOT_PATH.length());
                         subscriber.onNext(newPath);
                         subscriber.onCompleted();
                     } else {

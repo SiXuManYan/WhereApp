@@ -59,6 +59,10 @@ import pl.droidsonroids.gif.GifImageView;
 public class TravelDetailActivity extends BaseActivity {
 
     private static final String EXT_ID = "id";
+    // 屏幕宽度
+    public float Width;
+    // 屏幕高度
+    public float Height;
     private Toolbar toolbar;
     private XBanner banner;
     private View useView;
@@ -70,10 +74,6 @@ public class TravelDetailActivity extends BaseActivity {
     private RelativeLayout navigationRl;
     private String phone;
     private TextView introduceTv, noticeTv;
-    // 屏幕宽度
-    public float Width;
-    // 屏幕高度
-    public float Height;
     private List<TravelCommentListBean.DataBean> list;
     private RecyclerView commentRv;
     private CommentAdapter commentAdapter;
@@ -88,6 +88,24 @@ public class TravelDetailActivity extends BaseActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(intent);
+    }
+
+    public static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
     }
 
     @Override
@@ -113,11 +131,7 @@ public class TravelDetailActivity extends BaseActivity {
         likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (like == 1) {
-                    collection(false);
-                } else {
-                    collection(true);
-                }
+                collection(like != 1);
             }
         });
         shareIv = V.f(this, R.id.iv_share);
@@ -344,7 +358,6 @@ public class TravelDetailActivity extends BaseActivity {
         });
     }
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_traveldetail;
@@ -425,28 +438,14 @@ public class TravelDetailActivity extends BaseActivity {
         }
     }
 
-    public static boolean isAvilible(Context context, String packageName) {
-        //获取packagemanager
-        final PackageManager packageManager = context.getPackageManager();
-        //获取所有已安装程序的包信息
-        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
-        //用于存储所有已安装程序的包名
-        List<String> packageNames = new ArrayList<String>();
-        //从pinfo中将包名字逐一取出，压入pName list中
-        if (packageInfos != null) {
-            for (int i = 0; i < packageInfos.size(); i++) {
-                String packName = packageInfos.get(i).packageName;
-                packageNames.add(packName);
-            }
-        }
-        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
-        return packageNames.contains(packageName);
+    public int dip2px(float dpValue) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
-
 
     private class CommentAdapter extends BaseQuickAdapter<TravelCommentListBean.DataBean> {
 
-        private int ImagaId[] = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
+        private final int[] ImagaId = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
 
         public CommentAdapter(Context context) {
             super(context);
@@ -510,7 +509,7 @@ public class TravelDetailActivity extends BaseActivity {
             }
             GridLayout gridview = (GridLayout) holder.findViewById(R.id.gridview);
             ImageView showimage = (ImageView) holder.findViewById(R.id.showimage);
-            RoundedImageView imgview[] = new RoundedImageView[9];
+            RoundedImageView[] imgview = new RoundedImageView[9];
             for (int i = 0; i < 9; i++) {
                 imgview[i] = (RoundedImageView) holder.findViewById(ImagaId[i]);
             }
@@ -603,9 +602,9 @@ public class TravelDetailActivity extends BaseActivity {
 
         class fullTextOnclick implements View.OnClickListener {
 
-            private TextView usercontent;
-            private TextView fullText;
-            private int index;
+            private final TextView usercontent;
+            private final TextView fullText;
+            private final int index;
 
             fullTextOnclick(TextView usercontent, TextView fullText, int index) {
                 this.fullText = fullText;
@@ -629,11 +628,6 @@ public class TravelDetailActivity extends BaseActivity {
                 list.set(index, info);
             }
         }
-    }
-
-    public int dip2px(float dpValue) {
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 
 

@@ -2,7 +2,6 @@ package com.jcs.where.api;
 
 import android.content.Context;
 
-import com.jcs.where.BaseApplication;
 import com.jcs.where.manager.TokenManager;
 
 import java.io.IOException;
@@ -20,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitManager {
     private static RetrofitManager manager;
     private final int timeout = 2;
+    private Retrofit retrofit;
 
     public static synchronized RetrofitManager getManager() {
         if (manager == null) {
@@ -28,13 +28,11 @@ public class RetrofitManager {
         return manager;
     }
 
-    private Retrofit retrofit;
-
     public Retrofit getRetrofit() {
         return retrofit;
     }
 
-    public void initRetrofit(Context context){
+    public void initRetrofit(Context context) {
         if (retrofit == null) {
             create(context);
         }
@@ -50,11 +48,11 @@ public class RetrofitManager {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
-                Request.Builder requestBuilder = original.newBuilder().header("Content-Type","application/x-www-form-urlencoded")
-                        .header("Accept","application/json")
-                        .header("Locale","zh-CN");
+                Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
+                        .header("Accept", "application/json")
+                        .header("Locale", "zh-CN");
                 String token = TokenManager.get().getToken(context);
-                if(token != null){
+                if (token != null) {
                     requestBuilder.header("Authorization", token);
                 }
                 Request build = requestBuilder.build();

@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
@@ -35,10 +31,7 @@ import java.util.List;
 import co.tton.android.base.app.activity.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
-    private List<HomeTabBean> mTabBeans;
-    FragmentManager fm;
-    private ArrayList<Fragment> frList = new ArrayList<Fragment>();
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CALL_PHONE,
@@ -47,7 +40,10 @@ public class HomeActivity extends BaseActivity {
             Manifest.permission.CAMERA,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.ACCESS_WIFI_STATE};
-    private static int REQUEST_PERMISSION_CODE = 1;
+    private static final int REQUEST_PERMISSION_CODE = 1;
+    FragmentManager fm;
+    private List<HomeTabBean> mTabBeans;
+    private final ArrayList<Fragment> frList = new ArrayList<Fragment>();
     private TabLayout mTabLayout;
 
     @Override
@@ -87,7 +83,7 @@ public class HomeActivity extends BaseActivity {
                 Fragment fragment = frList.get(position);
                 if (!fragment.isAdded()) {
                     transaction.add(R.id.homeFrame, fragment);
-                }else {
+                } else {
                     transaction.show(fragment);
                 }
 

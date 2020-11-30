@@ -198,6 +198,31 @@ public class HotelListFragment extends BaseFragment {
         });
     }
 
+    public void setSearchText(String inputText) {
+        if (hotelListRv != null) {
+            hotelListRv.removeAllViews();
+        }
+        if (hotelListAdpater != null) {
+            hotelListAdpater.clearData();
+        }
+        if (list != null) {
+            list.clear();
+        }
+        page = 1;
+        useInputText = inputText;
+        getdata();
+    }
+
+    public void changeData(String startData, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNum) {
+        mStartDate = startData;
+        mEndData = endDate;
+        mStartWeek = startWeek;
+        mEndWeek = endWeek;
+        mAllDay = allDay;
+        mStartYear = startYear;
+        mEndYear = endYear;
+        mRoomNum = roomNum;
+    }
 
     private class HotelListAdpater extends BaseQuickAdapter<HotelListBean.DataBean> {
 
@@ -221,7 +246,7 @@ public class HotelListFragment extends BaseFragment {
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
             if (data.getFacebook_link() == null) {
-               nameTv.setCompoundDrawables(null, null, null, null);
+                nameTv.setCompoundDrawables(null, null, null, null);
             }
             TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
             TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);
@@ -253,32 +278,6 @@ public class HotelListFragment extends BaseFragment {
                 }
             });
         }
-    }
-
-    public void setSearchText(String inputText) {
-        if (hotelListRv != null) {
-            hotelListRv.removeAllViews();
-        }
-        if (hotelListAdpater != null) {
-            hotelListAdpater.clearData();
-        }
-        if (list != null) {
-            list.clear();
-        }
-        page = 1;
-        useInputText = inputText;
-        getdata();
-    }
-
-    public void changeData(String startData, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNum) {
-        mStartDate = startData;
-        mEndData = endDate;
-        mStartWeek = startWeek;
-        mEndWeek = endWeek;
-        mAllDay = allDay;
-        mStartYear = startYear;
-        mEndYear = endYear;
-        mRoomNum = roomNum;
     }
 
 

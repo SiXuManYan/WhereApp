@@ -23,8 +23,8 @@ import java.util.List;
 
 public class PickActivity extends AppCompatActivity {
 
-    private ArrayList<Country> selectedCountries = new ArrayList<>();
-    private ArrayList<Country> allCountries = new ArrayList<>();
+    private final ArrayList<Country> selectedCountries = new ArrayList<>();
+    private final ArrayList<Country> allCountries = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,17 +46,19 @@ public class PickActivity extends AppCompatActivity {
         rvPick.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String string = s.toString();
                 selectedCountries.clear();
                 for (Country country : allCountries) {
-                    if(country.name.toLowerCase().contains(string.toLowerCase()))
+                    if (country.name.toLowerCase().contains(string.toLowerCase()))
                         selectedCountries.add(country);
                 }
                 adapter.update(selectedCountries);
@@ -69,7 +71,7 @@ public class PickActivity extends AppCompatActivity {
             public void onLetterChange(String letter) {
                 tvLetter.setVisibility(View.VISIBLE);
                 tvLetter.setText(letter);
-                int  position = adapter.getLetterPosition(letter);
+                int position = adapter.getLetterPosition(letter);
                 if (position != -1) {
                     manager.scrollToPositionWithOffset(position, 0);
                 }
@@ -100,22 +102,22 @@ public class PickActivity extends AppCompatActivity {
 
         @Override
         public void onBindHolder(RecyclerView.ViewHolder holder, PyEntity entity, int position) {
-            VH vh = (VH)holder;
-            final Country country = (Country)entity;
+            VH vh = (VH) holder;
+            final Country country = (Country) entity;
             vh.ivFlag.setImageResource(country.flag);
             vh.tvName.setText(country.name);
             vh.tvCode.setText("+" + country.code);
             holder.itemView.setOnClickListener(v -> {
                 Intent data = new Intent();
                 data.putExtra("country", country.toJson());
-                setResult(Activity.RESULT_OK , data);
+                setResult(Activity.RESULT_OK, data);
                 finish();
             });
         }
 
         @Override
         public void onBindLetterHolder(RecyclerView.ViewHolder holder, LetterEntity entity, int position) {
-            ((LetterHolder)holder).textView.setText(entity.letter.toUpperCase());
+            ((LetterHolder) holder).textView.setText(entity.letter.toUpperCase());
         }
     }
 }

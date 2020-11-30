@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,21 +57,21 @@ import co.tton.android.base.view.ToastUtils;
 public class HotelActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final int REQ_SELECT_CITY = 100;
+    private final int READ_CODE = 10;
+    private final int READ_LOCATIONCODE = 11;
     private TextView locationTv, startDateTv, startWeekTv, endDateTv, endWeekTv, allDayTv, roomNumTv, priceAndStarTv;
     private RelativeLayout chooseDateRl;
     private ImageView reduceIv, addIv;
     private RecyclerView showRv;
     private GuessYouLikeAdapter guessYouLikeAdapter;
-    private int startGroup = -1;
-    private int endGroup = -1;
-    private int startChild = -1;
-    private int endChild = -1;
+    private final int startGroup = -1;
+    private final int endGroup = -1;
+    private final int startChild = -1;
+    private final int endChild = -1;
     private String cityId = "0";
     private String usePrice = null;
     private String useStar = null;
     private String useStartYear, useEndYear;
-    private final int READ_CODE = 10;
-    private final int READ_LOCATIONCODE = 11;
     private ImageView clearIv;
     private String transmitPrice, transmitStar;
     private GoogleApiClient mGoogleApiClient;
@@ -86,6 +87,36 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(intent);
+    }
+
+    public static String getOldDate(int distanceDay) {
+        SimpleDateFormat dft = new SimpleDateFormat("MM月dd日");
+        Date beginDate = new Date();
+        Calendar date = Calendar.getInstance();
+        date.setTime(beginDate);
+        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
+        Date endDate = null;
+        try {
+            endDate = dft.parse(dft.format(date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dft.format(endDate);
+    }
+
+    public static String getOldWeek(int distanceDay) {
+        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+        Date beginDate = new Date();
+        Calendar date = Calendar.getInstance();
+        date.setTime(beginDate);
+        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
+        Date endDate = null;
+        try {
+            endDate = dft.parse(dft.format(date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dft.format(endDate);
     }
 
     @Override
@@ -167,7 +198,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-
     private void initData() {
         showLoading();
         Map<String, String> params = new HashMap<>();
@@ -198,7 +228,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             }
         });
     }
-
 
     @Override
     protected int getLayoutId() {
@@ -345,37 +374,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-
-    public static String getOldDate(int distanceDay) {
-        SimpleDateFormat dft = new SimpleDateFormat("MM月dd日");
-        Date beginDate = new Date();
-        Calendar date = Calendar.getInstance();
-        date.setTime(beginDate);
-        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
-        Date endDate = null;
-        try {
-            endDate = dft.parse(dft.format(date.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dft.format(endDate);
-    }
-
-    public static String getOldWeek(int distanceDay) {
-        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
-        Date beginDate = new Date();
-        Calendar date = Calendar.getInstance();
-        date.setTime(beginDate);
-        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
-        Date endDate = null;
-        try {
-            endDate = dft.parse(dft.format(date.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dft.format(endDate);
-    }
-
     private void checkIsGooglePlayConn() {
 //        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
 //            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
@@ -428,6 +426,61 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+    private void checkPermission() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (PermissionChecker.checkSelfPermission(HotelActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PermissionChecker.PERMISSION_GRANTED) {
+                    // 不相等 请求授权
+                    ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
+                }
+            } else {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initArea(String lat, String lng) {
+        showLoading();
+        HttpUtils.doGoogleMapReqeust("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk", null, new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    GoogleMapBean googleMapBean = new Gson().fromJson(result, GoogleMapBean.class);
+                    if (googleMapBean.getResults().get(0) != null) {
+                        if (googleMapBean.getResults().get(0).getAddress_components().get(2) != null) {
+                            String usecity = googleMapBean.getResults().get(0).getAddress_components().get(2).getLong_name();
+                            if (usecity != null) {
+                                if (usecity.contains("City of ")) {
+                                    usecity = usecity.substring(8);
+                                }
+                                locationTv.setText(usecity);
+                                cityId = "0";
+                            }
+                        }
+                    }
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    ToastUtils.showLong(HotelActivity.this, errorBean.message);
+                }
+            }
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                ToastUtils.showLong(HotelActivity.this, e.getMessage());
+            }
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        mGoogleApiClient.disconnect();
+        super.onDestroy();
+    }
 
     private class GuessYouLikeAdapter extends BaseQuickAdapter<GuessYouLikeHotelBean> {
 
@@ -483,63 +536,5 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 }
             });
         }
-    }
-
-
-    private void checkPermission() {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (PermissionChecker.checkSelfPermission(HotelActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PermissionChecker.PERMISSION_GRANTED) {
-                    // 不相等 请求授权
-                    ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
-                }
-            } else {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initArea(String lat, String lng) {
-        showLoading();
-        HttpUtils.doGoogleMapReqeust("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk", null, new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    GoogleMapBean googleMapBean = new Gson().fromJson(result, GoogleMapBean.class);
-                    if (googleMapBean.getResults().get(0) != null) {
-                        if (googleMapBean.getResults().get(0).getAddress_components().get(2) != null) {
-                            String usecity = googleMapBean.getResults().get(0).getAddress_components().get(2).getLong_name();
-                            if (usecity != null) {
-                                if (usecity.contains("City of ")) {
-                                    usecity = usecity.substring(8);
-                                }
-                                locationTv.setText(usecity);
-                                cityId = "0";
-                            }
-                        }
-                    }
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelActivity.this, errorBean.message);
-                }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ToastUtils.showLong(HotelActivity.this, e.getMessage());
-            }
-        });
-
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        mGoogleApiClient.disconnect();
-        super.onDestroy();
     }
 }

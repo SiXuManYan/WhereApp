@@ -226,6 +226,25 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
         this.mCallback = callback;
     }
 
+    public void clear() {
+        mSelectStartBean = null;
+        int priceSize = priceTvs.size();
+        for (int i = 0; i < priceSize; i++) {
+            priceTvs.get(i).setSelected(false);
+        }
+
+        int starSize = starTvs.size();
+        for (int i = 0; i < starSize; i++) {
+            starTvs.get(i).setSelected(false);
+        }
+
+        int scoreSize = scoreTvs.size();
+        for (int i = 0; i < scoreSize; i++) {
+            scoreTvs.get(i).setSelected(false);
+        }
+        priceTv.setText("");
+    }
+
     static class PriceIntervalBean {
         int start;
         int end;

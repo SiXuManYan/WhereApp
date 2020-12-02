@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +41,6 @@ import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.hotel.HotelListActivity;
 import com.jcs.where.manager.TokenManager;
-import com.jcs.where.popupwindow.ChoosePricePop;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -189,11 +189,12 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void onClick(View view) {
                 priceAndStarTv.setText("价格/星级");
-                priceAndStarTv.setTextColor(getResources().getColor(R.color.grey_999999));
+                priceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
                 usePrice = null;
                 useStar = null;
                 transmitPrice = null;
                 transmitStar = null;
+                mHotelStarDialog = new HotelStarDialog();
                 clearIv.setVisibility(View.GONE);
             }
         });
@@ -275,93 +276,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.tv_priceandstar:
                 mHotelStarDialog.show(getSupportFragmentManager());
-//                new ChoosePricePop.Builder(HotelActivity.this, view, transmitPrice, transmitStar)
-//                        .setPriceOnClickListener(new ChoosePricePop.PriceOnClickListener() {
-//                            @Override
-//                            public void getDate(String price, String star) {
-//                                if (price == null && star == null) {
-//                                    clearIv.setVisibility(View.GONE);
-//                                    priceAndStarTv.setText("价格/星级");
-//                                    priceAndStarTv.setTextColor(getResources().getColor(R.color.grey_999999));
-//                                    transmitPrice = null;
-//                                    transmitStar = null;
-//                                } else if (price == null) {
-//                                    priceAndStarTv.setText(star);
-//                                    if (star.equals("二星及以下")) {
-//                                        useStar = "[1,2]";
-//                                    } else if (star.equals("三星")) {
-//                                        useStar = "[3]";
-//                                    } else if (star.equals("四星")) {
-//                                        useStar = "[4]";
-//                                    } else if (star.equals("五星")) {
-//                                        useStar = "[5]";
-//                                    }
-//                                    transmitStar = star;
-//                                    transmitPrice = null;
-//                                    usePrice = null;
-//                                    clearIv.setVisibility(View.VISIBLE);
-//                                } else if (star == null) {
-//                                    priceAndStarTv.setText(price);
-//                                    if (price.equals("₱ 100以下")) {
-//
-//                                        usePrice = "[0,100]";
-//                                    } else if (price.equals("₱ 100-200")) {
-//                                        usePrice = "[100,200]";
-//                                    } else if (price.equals("₱ 200-300")) {
-//                                        usePrice = "[200,300]";
-//                                    } else if (price.equals("₱ 300-400")) {
-//                                        usePrice = "[300,400]";
-//                                    } else if (price.equals("₱ 400-500")) {
-//                                        usePrice = "[400,500]";
-//                                    } else if (price.equals("₱ 500-700")) {
-//                                        usePrice = "[500,700]";
-//                                    } else if (price.equals("₱ 700-900")) {
-//                                        usePrice = "[700,900]";
-//                                    } else if (price.equals("₱ 900以上")) {
-//                                        usePrice = "[900,100000]";
-//                                    }
-//                                    transmitStar = null;
-//                                    transmitPrice = price;
-//                                    useStar = null;
-//                                    clearIv.setVisibility(View.VISIBLE);
-//                                } else {
-//                                    priceAndStarTv.setText(price + "，" + star);
-//                                    if (price.equals("₱ 100以下")) {
-//                                        usePrice = "[0,100]";
-//                                    } else if (price.equals("₱ 100-200")) {
-//                                        usePrice = "[100,200]";
-//                                    } else if (price.equals("₱ 200-300")) {
-//                                        usePrice = "[200,300]";
-//                                    } else if (price.equals("₱ 300-400")) {
-//                                        usePrice = "[300,400]";
-//                                    } else if (price.equals("₱ 400-500")) {
-//                                        usePrice = "[400,500]";
-//                                    } else if (price.equals("₱ 500-700")) {
-//                                        usePrice = "[500,700]";
-//                                    } else if (price.equals("₱ 700-900")) {
-//                                        usePrice = "[700,900]";
-//                                    } else if (price.equals("₱ 900以上")) {
-//                                        usePrice = "[900,100000]";
-//                                    }
-//                                    if (star.equals("二星及以下")) {
-//                                        useStar = "[1,2]";
-//                                    } else if (star.equals("三星")) {
-//                                        useStar = "[3]";
-//                                    } else if (star.equals("四星")) {
-//                                        useStar = "[4]";
-//                                    } else if (star.equals("五星")) {
-//                                        useStar = "[5]";
-//                                    }
-//                                    transmitStar = star;
-//                                    transmitPrice = price;
-//                                    clearIv.setVisibility(View.VISIBLE);
-//                                }
-//
-//                                priceAndStarTv.setTextColor(getResources().getColor(R.color.black_333333));
-//
-//
-//                            }
-//                        }).builder();
                 break;
             case R.id.tv_search:
                 HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString());
@@ -494,6 +408,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void selectPriceOrStar(String show) {
         priceAndStarTv.setText(show);
+        priceAndStarTv.setTextColor(ContextCompat.getColor(this, R.color.black_333333));
+        clearIv.setVisibility(View.VISIBLE);
     }
 
     private class GuessYouLikeAdapter extends BaseQuickAdapter<GuessYouLikeHotelBean> {

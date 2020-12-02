@@ -2,6 +2,7 @@ package com.jcs.where.home.dialog;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jaygoo.widget.OnRangeChangedListener;
@@ -17,6 +18,7 @@ import java.util.List;
 public class HotelStarDialog extends BaseDialog implements View.OnClickListener {
 
     private TextView priceTv;
+    private Button ensureBtn;
     private TextView price0To1, price1To2, price2To5, priceAbove5;
     private TextView starLessThan2, star3, star4, star5;
     private TextView score30, score35, score40, score45;
@@ -24,8 +26,11 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
     private List<TextView> starTvs;
     private List<TextView> scoreTvs;
     private HashMap<TextView, PriceIntervalBean> priceBeans;
+    private HashMap<TextView, StarBean> starBeans;
+    private StarBean mSelectStartBean;
     private RangeSeekBar mSeekBar;
     private DecimalFormat mDecimalFormat;
+    private HotelStarCallback mCallback;
 
     private final String TAG_PRICE = "price";
     private final String TAG_STAR = "star";
@@ -39,6 +44,7 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
     @Override
     protected void initView(View view) {
         priceTv = view.findViewById(R.id.priceTv);
+        ensureBtn = view.findViewById(R.id.ensureBtn);
 
         price0To1 = view.findViewById(R.id.price0To1);
         price1To2 = view.findViewById(R.id.price1To2);
@@ -81,6 +87,12 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
         starTvs.add(star4);
         starTvs.add(star5);
 
+        starBeans = new HashMap<>();
+        starBeans.put(starLessThan2, new StarBean("二星及以下"));
+        starBeans.put(star3, new StarBean("三星"));
+        starBeans.put(star4, new StarBean("四星"));
+        starBeans.put(star5, new StarBean("五星"));
+
         scoreTvs = new ArrayList<>();
         scoreTvs.add(score30);
         scoreTvs.add(score35);
@@ -90,6 +102,8 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     protected void bindListener() {
+        ensureBtn.setOnClickListener(this);
+
         int priceSize = priceTvs.size();
         for (int i = 0; i < priceSize; i++) {
             TextView textView = priceTvs.get(i);
@@ -178,6 +192,17 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        if (view instanceof Button) {
+            //点击了确定
+            StringBuilder callbackToShow = new StringBuilder(priceTv.getText().toString());
+            if (mSelectStartBean != null) {
+                callbackToShow.append("，").append(mSelectStartBean.starShow);
+            }
+            mCallback.selectPriceOrStar(callbackToShow.toString());
+            dismiss();
+            return;
+        }
+
         if (view instanceof TextView) {
             unSelectByTag((TextView) view);
             view.setSelected(true);
@@ -188,7 +213,17 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
                 priceTv.setText(priceIntervalBean.priceShow);
                 mSeekBar.setProgress(priceIntervalBean.start, priceIntervalBean.end);
             }
+
+            StarBean starBean = starBeans.get(view);
+            if (starBean != null) {
+                //说明点击的是星级
+                mSelectStartBean = starBean;
+            }
         }
+    }
+
+    public void setCallback(HotelStarCallback callback) {
+        this.mCallback = callback;
     }
 
     static class PriceIntervalBean {
@@ -201,14 +236,18 @@ public class HotelStarDialog extends BaseDialog implements View.OnClickListener 
             this.end = end;
             this.priceShow = priceShow;
         }
+    }
 
-        @Override
-        public String toString() {
-            return "PriceIntervalBean{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    ", priceShow='" + priceShow + '\'' +
-                    '}';
+    static class StarBean {
+        String starShow;
+
+        public StarBean(String starShow) {
+            this.starShow = starShow;
         }
+    }
+
+
+    public interface HotelStarCallback {
+        void selectPriceOrStar(String show);
     }
 }

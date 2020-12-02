@@ -58,7 +58,7 @@ import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
 
-public class HotelActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class HotelActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, HotelStarDialog.HotelStarCallback {
 
     private static final int REQ_SELECT_CITY = 100;
     private final int READ_CODE = 10;
@@ -203,6 +203,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         checkIsGooglePlayConn();
 
         mHotelStarDialog = new HotelStarDialog();
+        mHotelStarDialog.setCallback(this);
     }
 
     private void initData() {
@@ -488,6 +489,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     protected void onDestroy() {
         mGoogleApiClient.disconnect();
         super.onDestroy();
+    }
+
+    @Override
+    public void selectPriceOrStar(String show) {
+        priceAndStarTv.setText(show);
     }
 
     private class GuessYouLikeAdapter extends BaseQuickAdapter<GuessYouLikeHotelBean> {

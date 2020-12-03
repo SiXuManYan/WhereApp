@@ -80,6 +80,7 @@ public class HotelDetailActivity extends BaseActivity {
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
     private RelativeLayout faceBookRl;
     private TextView faceBookTv;
+    private String faceBookLink;
     private View faceLine;
     private TextView checkInTv, checkOutTv, addressTv;
     private String phone;
@@ -168,7 +169,7 @@ public class HotelDetailActivity extends BaseActivity {
         faceBookRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WebViewActivity.goTo(HotelDetailActivity.this, faceBookTv.getText().toString().trim());
+                WebViewActivity.goTo(HotelDetailActivity.this, faceBookLink.trim());
             }
         });
         faceLine = V.f(this, R.id.faceline);
@@ -389,7 +390,7 @@ public class HotelDetailActivity extends BaseActivity {
                     } else {
                         faceBookRl.setVisibility(View.VISIBLE);
                         faceLine.setVisibility(View.VISIBLE);
-                        faceBookTv.setText(hotelDetailBean.getFacebook_link());
+                        faceBookLink = hotelDetailBean.getFacebook_link();
                     }
                     checkInTv.setText("入住时间：" + hotelDetailBean.getPolicy().getCheck_in_time().substring(0, 5));
                     checkOutTv.setText("退房时间：" + hotelDetailBean.getPolicy().getCheck_out_time().substring(0, 5));

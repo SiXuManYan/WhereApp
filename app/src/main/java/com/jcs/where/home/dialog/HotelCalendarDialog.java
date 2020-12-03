@@ -2,6 +2,7 @@ package com.jcs.where.home.dialog;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class HotelCalendarDialog extends BaseDialog {
 
+    private ImageView closeIv;
     private RecyclerView mRecycler;
     private List<HotelCalendarBean> mBeans;
     private HotelCalendarAdapter mAdapter;
@@ -37,6 +39,7 @@ public class HotelCalendarDialog extends BaseDialog {
     @Override
     protected void initView(View view) {
         mRecycler = view.findViewById(R.id.calendarRecycler);
+        closeIv = view.findViewById(R.id.close);
     }
 
     @Override
@@ -61,7 +64,7 @@ public class HotelCalendarDialog extends BaseDialog {
 
     @Override
     protected void bindListener() {
-
+        closeIv.setOnClickListener(view -> dismiss());
     }
 
     @Override

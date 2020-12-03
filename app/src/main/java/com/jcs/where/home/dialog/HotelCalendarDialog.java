@@ -31,7 +31,7 @@ public class HotelCalendarDialog extends BaseDialog {
 
     @Override
     protected int getHeight() {
-        return 640;
+        return 684;
     }
 
     @Override

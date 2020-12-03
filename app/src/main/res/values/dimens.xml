@@ -40,4 +40,9 @@
     <dimen name="dp_69">69dp</dimen>
     <dimen name="dp_26">26dp</dimen>
     <dimen name="dp_74">74dp</dimen>
+    <dimen name="dp_636">636dp</dimen>
+    <dimen name="dp_640">640dp</dimen>
+    <dimen name="dp_270">270dp</dimen>
+    <dimen name="dp_37">37dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
 </resources>

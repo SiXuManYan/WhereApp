@@ -2,6 +2,8 @@ package com.jcs.where.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -36,13 +38,15 @@ public abstract class BaseDialog extends DialogFragment {
         bindListener();
     }
 
-    protected abstract void bindListener();
+    protected abstract int getLayout();
+
+    protected abstract int getHeight();
+
+    protected abstract void initView(View view);
 
     protected abstract void initData();
 
-    protected abstract int getLayout();
-
-    protected abstract void initView(View view);
+    protected abstract void bindListener();
 
 
     @NonNull
@@ -68,12 +72,17 @@ public abstract class BaseDialog extends DialogFragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         //这里可以配置弹出动画
 //        window.setWindowAnimations(R.style.DataSheetAnimation);
-
+        if (isTransparent()) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
         return dialog;
     }
 
     protected boolean isWidthMatch(){
         return true;
+    }
+    protected boolean isTransparent(){
+        return false;
     }
 
     protected int getDp(int height){
@@ -83,8 +92,6 @@ public abstract class BaseDialog extends DialogFragment {
         }
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,height, context.getResources().getDisplayMetrics());
     }
-
-    protected abstract int getHeight();
 
     protected String getDialogTag() {
         return getClass().getSimpleName();

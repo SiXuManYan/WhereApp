@@ -36,6 +36,7 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.GuessYouLikeHotelBean;
+import com.jcs.where.home.dialog.HotelCalendarDialog;
 import com.jcs.where.home.dialog.HotelStarDialog;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.hotel.HotelDetailActivity;
@@ -84,6 +85,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private boolean mAddressRequested;
 
     private HotelStarDialog mHotelStarDialog;
+    private HotelCalendarDialog mHotelCalendarDialog;
 
 
     public static void goTo(Context context) {
@@ -205,6 +207,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
         mHotelStarDialog = new HotelStarDialog();
         mHotelStarDialog.setCallback(this);
+
+        mHotelCalendarDialog = new HotelCalendarDialog();
     }
 
     private void initData() {
@@ -258,6 +262,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 startActivityForResult(intent, REQ_SELECT_CITY);
                 break;
             case R.id.rl_choosedate:
+                mHotelCalendarDialog.show(getSupportFragmentManager());
                 break;
             case R.id.iv_roomreduce:
                 int roomNum = Integer.valueOf(roomNumTv.getText().toString());

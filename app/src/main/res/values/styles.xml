@@ -105,4 +105,12 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <style name="day_of_week">
+        <item name="android:layout_width">@dimen/dp_37</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:textColor">@color/black_333333</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

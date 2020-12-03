@@ -94,6 +94,7 @@ public class HotelDetailActivity extends BaseActivity {
     private CircleImageView commentAvaterIv;
     private TextView commentNameTv, commentDetailTv, seeMoreTv;
     private ImageView likeIv, shareIv;
+    private TextView titleTv;
     private int like = 2;
     private int toolbarStatus = 0;
     private RelativeLayout hotelDetailRl, navigationRl;
@@ -156,6 +157,7 @@ public class HotelDetailActivity extends BaseActivity {
         useView = V.f(this, R.id.useView);
         likeIv = V.f(this, R.id.iv_like);
         shareIv = V.f(this, R.id.iv_share);
+        titleTv = findViewById(R.id.titleTv);
         nameTv = V.f(this, R.id.tv_name);
         banner = V.f(this, R.id.banner3);
         startTimeTv = V.f(this, R.id.tv_startTime);
@@ -269,6 +271,12 @@ public class HotelDetailActivity extends BaseActivity {
                 }
                 useView.getBackground().setAlpha(alpha);
                 toolbar.getBackground().setAlpha(alpha);
+                if(alpha == 255){
+                    titleTv.setText(nameTv.getText().toString());
+                }
+                if(alpha == 0){
+                    titleTv.setText("");
+                }
             }
         });
         useView.getBackground().setAlpha(0);

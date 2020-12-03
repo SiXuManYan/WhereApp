@@ -659,7 +659,7 @@
         android:id="@+id/RealtimeBlurView"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
     <View
         android:id="@+id/useView"
@@ -674,34 +674,32 @@
         android:background="@color/transparency"
         android:minHeight="?attr/actionBarSize"
         android:navigationIcon="@drawable/ic_back_white"
-        app:navigationIcon="@drawable/ic_back_white"
-        app:theme="@style/AppTheme.ActionBar">
+        app:navigationIcon="@drawable/ic_back_white">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_17" />
 
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_share_white" />
 
-            <ImageView
-                android:id="@+id/iv_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
-                android:layout_toLeftOf="@+id/iv_share"
-                android:padding="10dp"
-                android:src="@drawable/ic_hoteltransparentunlike" />
+        <ImageView
+            android:id="@+id/iv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_hoteltransparentunlike" />
 
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_share_white" />
-
-
-        </RelativeLayout>
 
 
     </androidx.appcompat.widget.Toolbar>

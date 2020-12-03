@@ -34,6 +34,11 @@
     <string name="thursday">四</string>
     <string name="friday">五</string>
     <string name="saturday">六</string>
+    <string name="cancel">取消</string>
+    <string name="search_hotel_name">搜索酒店名称</string>
+    <string name="history_search">历史搜索</string>
+    <string name="clear">清空</string>
+    <string name="hot_search">热门搜索</string>
 
 
 </resources>

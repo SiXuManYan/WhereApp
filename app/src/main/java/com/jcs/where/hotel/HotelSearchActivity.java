@@ -48,7 +48,6 @@ public class HotelSearchActivity extends BaseActivity {
     private static final String EXT_CITYID = "cityId";
     private TextView cancelTv;
     private EditText searchEt;
-    private LinearLayout searchHistoryLl;
     private RecyclerView searchHistoryRv, searchHotRv;
     private SearchHistoryAdapter searchHistoryAdapter;
     private HotSearchAdapter hotSearchAdapter;
@@ -121,14 +120,12 @@ public class HotelSearchActivity extends BaseActivity {
                 recommendSearch(s.toString(), s.toString().length());
             }
         });
-        searchHistoryLl = V.f(this, R.id.ll_searchhistory);
         searchHistoryRv = V.f(this, R.id.rv_searchhistory1);
         searchHistoryAdapter = new SearchHistoryAdapter(HotelSearchActivity.this);
         V.f(this, R.id.tv_clear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SearchHistoryUtils.clear(HotelSearchActivity.this);
-                searchHistoryLl.setVisibility(View.GONE);
             }
         });
         searchHotRv = V.f(this, R.id.rv_searchhot);
@@ -147,11 +144,6 @@ public class HotelSearchActivity extends BaseActivity {
     }
 
     private void initSearshHistory() {
-        if (SearchHistoryUtils.getSearchHistory(HotelSearchActivity.this).size() == 0) {
-            searchHistoryLl.setVisibility(View.GONE);
-        } else {
-            searchHistoryLl.setVisibility(View.VISIBLE);
-        }
         if (searchHistoryRv != null) {
             searchHistoryRv.removeAllViews();
         }

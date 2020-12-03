@@ -87,4 +87,5 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.github.xiaohaibin:XBanner:androidx_v1.1.2'
     implementation 'com.github.Jay-Goo:RangeSeekBar:3.0.0'
+    implementation 'com.haibin:calendarview:3.7.0'
 }

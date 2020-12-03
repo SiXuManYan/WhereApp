@@ -59,8 +59,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutId();
 
-    protected void toActivity(Class<?> clazz){
-        startActivity(new Intent(this,clazz));
+    protected void toActivity(Class<?> clazz) {
+        startActivity(new Intent(this, clazz));
+    }
+
+    protected void toActivity(Class<?> clazz, IntentEntry... entrys) {
+        Intent intent = new Intent(this, clazz);
+        int length = entrys.length;
+        for (int i = 0; i < length; i++) {
+            IntentEntry entry = entrys[i];
+            intent.putExtra(entry.key, entry.value);
+        }
+        startActivity(intent);
     }
 
     protected void setIsHasStatusBarColor(boolean b) {

@@ -18,6 +18,7 @@ import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.home.adapter.ModulesCategoryAdapter;
 import com.jcs.where.home.adapter.TravelStayHotelAdapter;
@@ -153,10 +154,11 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
     @Override
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
         if (adapter == mModulesCategoryAdapter) {
-            int id = mModulesCategoryAdapter.getItem(position).getId();
+            CategoryResponse item = mModulesCategoryAdapter.getItem(position);
+            int id = item.getId();
             switch (id) {
                 case HOTEL_STAY:
-                    toActivity(HotelActivity.class);
+                    toActivity(HotelActivity.class, new IntentEntry("categoryId", String.valueOf(id)));
                     break;
             }
         }

@@ -283,7 +283,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 mHotelStarDialog.show(getSupportFragmentManager());
                 break;
             case R.id.tv_search:
-                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString());
+                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString(),getIntent().getStringExtra("categoryId"));
                 break;
             case R.id.tv_chooselocation:
                 //   initLoaction();

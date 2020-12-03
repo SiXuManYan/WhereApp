@@ -17,12 +17,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
-import com.jcs.where.api.HttpUtils;
-import com.jcs.where.bean.ErrorBean;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.bean.HotelTypeBean;
+import com.jcs.where.home.model.HotelListModel;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
-import com.jcs.where.manager.TokenManager;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import java.util.List;
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
+import io.reactivex.annotations.NonNull;
 
 public class HotelListActivity extends BaseActivity {
 
@@ -47,16 +48,19 @@ public class HotelListActivity extends BaseActivity {
     private static final String EXT_STARTYEAR = "startYear";
     private static final String EXT_ENDYEAR = "endYear";
     private static final String EXT_ROOMNUMBER = "roomNumber";
+    private static final String EXT_CATEGORY_ID = "categoryId";
     private ColorClipTabLayout mTab;
     private ViewPager mViewPager;
     private TextView startDayTv, endDayTv, cityTv;
     private LinearLayout chooseDateLl;
-    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
+    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum, mParentCategoryId;
     private List<Fragment> fragments;
     private LinearLayout hotelListLl;
     private ImageView clearIv;
 
-    public static void goTo(Context context, String startDate, String endDate, String startWeek, String endWeek, String allDay, String city, String cityId, String price, String star, String startYear, String endYear, String roomNumber) {
+    private HotelListModel mModel;
+
+    public static void goTo(Context context, String startDate, String endDate, String startWeek, String endWeek, String allDay, String city, String cityId, String price, String star, String startYear, String endYear, String roomNumber, String categoryId) {
         Intent intent = new Intent(context, HotelListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(EXT_STARTDATE, startDate);
@@ -71,6 +75,7 @@ public class HotelListActivity extends BaseActivity {
         intent.putExtra(EXT_STARTYEAR, startYear);
         intent.putExtra(EXT_ENDYEAR, endYear);
         intent.putExtra(EXT_ROOMNUMBER, roomNumber);
+        intent.putExtra(EXT_CATEGORY_ID, categoryId);
 
         if (!(context instanceof Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -91,6 +96,7 @@ public class HotelListActivity extends BaseActivity {
         mEndWeek = getIntent().getStringExtra(EXT_ENDWEEK);
         mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
         mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
+        mParentCategoryId = getIntent().getStringExtra(EXT_CATEGORY_ID);
         initView();
         initData();
     }
@@ -216,36 +222,29 @@ public class HotelListActivity extends BaseActivity {
     }
 
     private void initData() {
+        mModel = new HotelListModel();
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/types", null, "", TokenManager.get().getToken(HotelListActivity.this), new HttpUtils.StringCallback() {
+        int[] categories = new int[]{Integer.parseInt(mParentCategoryId)};
+        mModel.getCategories(3, categories, new BaseObserver<List<CategoryResponse>>() {
             @Override
-            public void onSuccess(int code, String result) {
+            public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
                 stopLoading();
-                if (code == 200) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<HotelTypeBean>>() {
-                    }.getType();
-                    List<HotelTypeBean> list = gson.fromJson(result, type);
-                    HotelTypeBean bean = new HotelTypeBean();
-                    bean.setId(0);
-                    bean.setName("全部");
-                    list.add(0, bean);
-                    initTab(list);
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelListActivity.this, errorBean.message);
-                }
+                CategoryResponse first = new CategoryResponse();
+                first.setName("全部");
+                categoryResponses.add(0, first);
+                initTab(categoryResponses);
             }
 
             @Override
-            public void onFaileure(int code, Exception e) {
+            public void onError(@NonNull Throwable e) {
+
                 stopLoading();
                 ToastUtils.showLong(HotelListActivity.this, e.getMessage());
             }
         });
     }
 
-    private void initTab(List<HotelTypeBean> list) {
+    private void initTab(List<CategoryResponse> list) {
 
         final List<String> titles = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {

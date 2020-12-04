@@ -2,6 +2,7 @@ package com.jcs.where.api;
 
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.SuccessResponse;
@@ -13,6 +14,7 @@ import retrofit2.Response;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RetrofitApi {
@@ -62,4 +64,11 @@ public interface RetrofitApi {
      */
     @DELETE("hotelapi/v1/collects")
     Observable<Response<SuccessResponse>> delCollectHotel(@Query("hotel_id") int hotelId);
+
+
+    /**
+     * 获取酒店详情
+     */
+    @GET("hotelapi/v1/hotel/{id}")
+    Observable<HotelDetailResponse> getHotelDetail(@Path("id") int hotelId);
 }

@@ -38,10 +38,10 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelCommentBean;
-import com.jcs.where.bean.HotelDetailBean;
 import com.jcs.where.bean.RoomDetailBean;
 import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
@@ -332,108 +332,101 @@ public class HotelDetailActivity extends BaseActivity {
         mModel = new HotelDetailModel();
         hotelId = getIntent().getIntExtra(EXT_ID, 0);
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getIntent().getIntExtra(EXT_ID, 0), null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+        //获取酒店详情
+        mModel.getHotelDetail(hotelId, new BaseObserver<HotelDetailResponse>() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                if (code == 200) {
-                    HotelDetailBean hotelDetailBean = new Gson().fromJson(result, HotelDetailBean.class);
-                    if (hotelDetailBean.getImages() != null) {
-                        banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                                .setImageUrls(hotelDetailBean.getImages())
-                                .setImageLoader(new AbstractUrlLoader() {
-                                    @Override
-                                    public void loadImages(Context context, String url, ImageView image) {
-                                        Glide.with(context)
-                                                .load(url)
-                                                .into(image);
-                                    }
-
-                                    @Override
-                                    public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-                                        Glide.with(context).asGif().load(url).into(gifImageView);
-                                    }
-                                })
-                                .setTitleHeight(50)
-                                .isAutoPlay(true)
-                                .setDelay(5000)
-                                .setUpIndicators(R.drawable.ic_roomselected, R.drawable.ic_roomunselected)
-                                .setUpIndicatorSize(20, 6)
-                                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
-                                .setBannerPageListener(new XBanner.BannerPageListener() {
-                                    @Override
-                                    public void onBannerClick(int item) {
-
-                                    }
-
-                                    @Override
-                                    public void onBannerDragging(int item) {
-
-                                    }
-
-                                    @Override
-                                    public void onBannerIdle(int item) {
-
-                                    }
-                                })
-                                .start();
-                    } else {
-
-                    }
-                    nameTv.setText(hotelDetailBean.getName());
-
-                    shareIv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            WriteCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0), hotelDetailBean.getName());
-                        }
-                    });
-                    hotelName = hotelDetailBean.getName();
-                    hotelBreakfast = hotelDetailBean.getPolicy().getBreadfast();
-                    startTimeTv.setText(hotelDetailBean.getStart_business_time() + "开业");
-                    starTv.setText(hotelDetailBean.getGrade() + "");
-                    commnetNumberTv.setText(hotelDetailBean.getComment_counts() + "条评论");
-                    if (TextUtils.isEmpty(hotelDetailBean.getFacebook_link())) {
-                        faceBookRl.setVisibility(View.GONE);
-                        faceLine.setVisibility(View.GONE);
-                    } else {
-                        faceBookRl.setVisibility(View.VISIBLE);
-                        faceLine.setVisibility(View.VISIBLE);
-                        faceBookLink = hotelDetailBean.getFacebook_link();
-                    }
-                    checkInTv.setText("入住时间：" + hotelDetailBean.getPolicy().getCheck_in_time().substring(0, 5));
-                    checkOutTv.setText("退房时间：" + hotelDetailBean.getPolicy().getCheck_out_time().substring(0, 5));
-                    addressTv.setText(hotelDetailBean.getAddress());
-                    phone = hotelDetailBean.getTel();
-                    facilitiesAdapter.setData(hotelDetailBean.getFacilities());
-                    facilitiesRv.setAdapter(facilitiesAdapter);
-                    policyStartTimeTv.setText("入住时间：" + hotelDetailBean.getPolicy().getCheck_in_time());
-                    policyEndTimeTv.setText("退房时间：" + hotelDetailBean.getPolicy().getCheck_out_time());
-                    policyChildrenTv.setText("儿童及加床：" + hotelDetailBean.getPolicy().getChildren());
-                    if (hotelDetailBean.getCollect_status() == 1) {
-                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
-                    } else {
-                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
-                    }
-                    like = hotelDetailBean.getCollect_status();
-                    navigationRl.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startNaviGoogle("38.888025", "121.594476");
-                        }
-                    });
-                    initRoomList();
-                    initCommentList();
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
-                }
+                ToastUtils.showLong(HotelDetailActivity.this, errorResponse.getErrMsg());
             }
 
             @Override
-            public void onFaileure(int code, Exception e) {
+            public void onNext(@NonNull HotelDetailResponse hotelDetailResponse) {
                 stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                if (hotelDetailResponse.getImages() != null) {
+                    banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
+                            .setImageUrls(hotelDetailResponse.getImages())
+                            .setImageLoader(new AbstractUrlLoader() {
+                                @Override
+                                public void loadImages(Context context, String url, ImageView image) {
+                                    Glide.with(context)
+                                            .load(url)
+                                            .into(image);
+                                }
+
+                                @Override
+                                public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
+                                    Glide.with(context).asGif().load(url).into(gifImageView);
+                                }
+                            })
+                            .setTitleHeight(50)
+                            .isAutoPlay(true)
+                            .setDelay(5000)
+                            .setUpIndicators(R.drawable.ic_roomselected, R.drawable.ic_roomunselected)
+                            .setUpIndicatorSize(20, 6)
+                            .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+                            .setBannerPageListener(new XBanner.BannerPageListener() {
+                                @Override
+                                public void onBannerClick(int item) {
+
+                                }
+
+                                @Override
+                                public void onBannerDragging(int item) {
+
+                                }
+
+                                @Override
+                                public void onBannerIdle(int item) {
+
+                                }
+                            })
+                            .start();
+                }
+                nameTv.setText(hotelDetailResponse.getName());
+
+                shareIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        WriteCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0), hotelDetailResponse.getName());
+                    }
+                });
+                hotelName = hotelDetailResponse.getName();
+                hotelBreakfast = hotelDetailResponse.getPolicy().getBreadfast();
+                startTimeTv.setText(hotelDetailResponse.getStart_business_time() + "开业");
+                starTv.setText(hotelDetailResponse.getGrade() + "");
+                commnetNumberTv.setText(hotelDetailResponse.getComment_counts() + "条评论");
+                if (TextUtils.isEmpty(hotelDetailResponse.getFacebook_link())) {
+                    faceBookRl.setVisibility(View.GONE);
+                    faceLine.setVisibility(View.GONE);
+                } else {
+                    faceBookRl.setVisibility(View.VISIBLE);
+                    faceLine.setVisibility(View.VISIBLE);
+                    faceBookLink = hotelDetailResponse.getFacebook_link();
+                }
+                checkInTv.setText("入住时间：" + hotelDetailResponse.getPolicy().getCheck_in_time().substring(0, 5));
+                checkOutTv.setText("退房时间：" + hotelDetailResponse.getPolicy().getCheck_out_time().substring(0, 5));
+                addressTv.setText(hotelDetailResponse.getAddress());
+                phone = hotelDetailResponse.getTel();
+                facilitiesAdapter.setData(hotelDetailResponse.getFacilities());
+                facilitiesRv.setAdapter(facilitiesAdapter);
+                policyStartTimeTv.setText("入住时间：" + hotelDetailResponse.getPolicy().getCheck_in_time());
+                policyEndTimeTv.setText("退房时间：" + hotelDetailResponse.getPolicy().getCheck_out_time());
+                policyChildrenTv.setText("儿童及加床：" + hotelDetailResponse.getPolicy().getChildren());
+                if (hotelDetailResponse.getCollect_status() == 1) {
+                    likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
+                } else {
+                    likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
+                }
+                like = hotelDetailResponse.getCollect_status();
+                navigationRl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startNaviGoogle("38.888025", "121.594476");
+                    }
+                });
+                initRoomList();
+                initCommentList();
             }
         });
     }
@@ -822,7 +815,7 @@ public class HotelDetailActivity extends BaseActivity {
         }
     }
 
-    private class FacilitiesAdapter extends BaseQuickAdapter<HotelDetailBean.FacilitiesBean> {
+    private class FacilitiesAdapter extends BaseQuickAdapter<HotelDetailResponse.FacilitiesBean> {
 
         public FacilitiesAdapter(Context context) {
             super(context);
@@ -834,7 +827,7 @@ public class HotelDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected void initViews(QuickHolder holder, HotelDetailBean.FacilitiesBean data, int position) {
+        protected void initViews(QuickHolder holder, HotelDetailResponse.FacilitiesBean data, int position) {
             ImageView iconIv = holder.findViewById(R.id.iv_icon);
             if (!TextUtils.isEmpty(data.getIcon())) {
                 Picasso.with(HotelDetailActivity.this).load(data.getIcon()).into(iconIv);

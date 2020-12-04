@@ -51,10 +51,12 @@ public class RetrofitManager {
                 Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
                         .header("Accept", "application/json")
                         .header("Locale", "zh-CN");
-                String token = TokenManager.get().getToken(context);
-                if (token != null) {
-                    requestBuilder.header("Authorization", token);
-                }
+//                String token = TokenManager.get().getToken(context);
+//                if (token != null) {
+//                    requestBuilder.header("Authorization", token);
+//                }
+                requestBuilder.header("Authorization",
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmpjc3Rlc3QuY29tXC91c2VyYXBpXC92MVwvbG9naW4iLCJpYXQiOjE2MDY5ODUwNTQsImV4cCI6MTYwOTU3NzA1NCwibmJmIjoxNjA2OTg1MDU0LCJqdGkiOiIwRnZLNW9NMUZtUVNIN25sIiwic3ViIjoxMSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.UrQy6Wi6qlTyAMPgtUVYreR7maSUpwPxO7vPFXm1MKE");
                 Request build = requestBuilder.build();
                 return chain.proceed(build);
             }
@@ -70,11 +72,11 @@ public class RetrofitManager {
         builder.baseUrl("https://api.jcstest.com/");
         //用于做网络请求到客户端（okHttp3）
         builder.client(okBuilder.build());
+        builder.addConverterFactory(new NullOrEmptyConvertFactory());
         //解析工程，可以帮我们把数据直接解析成对象
         builder.addConverterFactory(GsonConverterFactory.create());
         //异步回调适配工程
         builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
-
 
         retrofit = builder.build();
     }

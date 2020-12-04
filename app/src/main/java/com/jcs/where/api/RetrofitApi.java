@@ -9,6 +9,8 @@ import com.jcs.where.api.response.SuccessResponse;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -49,7 +51,15 @@ public interface RetrofitApi {
 
     /**
      * 收藏酒店
+     * @param hotelId 酒店id
      */
     @POST("hotelapi/v1/collects")
-    Observable<SuccessResponse> postCollectHotel(@Query("hotel_id") String hotelId);
+    Observable<Response<SuccessResponse>> postCollectHotel(@Query("hotel_id") int hotelId);
+
+    /**
+     * 取消收藏
+     * @param hotelId 酒店id
+     */
+    @DELETE("hotelapi/v1/collects")
+    Observable<Response<SuccessResponse>> delCollectHotel(@Query("hotel_id") int hotelId);
 }

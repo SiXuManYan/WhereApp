@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.bean.BusinessBean;
@@ -152,8 +153,8 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
             }
 
             @Override
-            public void onError(@NonNull Throwable e) {
-                ToastUtils.showLong(getContext(), e.getMessage());
+            protected void onError(ErrorResponse errorResponse) {
+                ToastUtils.showLong(getContext(), errorResponse.getErrMsg());
             }
         });
     }

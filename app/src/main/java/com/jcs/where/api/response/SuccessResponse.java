@@ -1,4 +1,4 @@
 package com.jcs.where.api.response;
 
-public class SuccssResponse {
+public class SuccessResponse {
 }

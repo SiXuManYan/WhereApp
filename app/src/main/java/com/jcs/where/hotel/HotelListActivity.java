@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.bean.HotelTypeBean;
 import com.jcs.where.home.model.HotelListModel;
@@ -236,10 +237,9 @@ public class HotelListActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(@NonNull Throwable e) {
-
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                ToastUtils.showLong(HotelListActivity.this, e.getMessage());
+                ToastUtils.showLong(HotelListActivity.this, errorResponse.getErrMsg());
             }
         });
     }

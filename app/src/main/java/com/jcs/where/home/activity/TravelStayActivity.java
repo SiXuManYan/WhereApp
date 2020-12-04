@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelResponse;
@@ -29,6 +30,8 @@ import com.stx.xhb.androidx.entity.BaseBannerInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import co.tton.android.base.view.ToastUtils;
 
 public class TravelStayActivity extends BaseActivity implements OnItemClickListener {
     private XBanner mBanner;
@@ -85,8 +88,8 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
             }
 
             @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
+            protected void onError(ErrorResponse errorResponse) {
+                ToastUtils.showLong(TravelStayActivity.this, errorResponse.getErrMsg());
             }
         });
 
@@ -98,8 +101,8 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
             }
 
             @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
+            protected void onError(ErrorResponse errorResponse) {
+                ToastUtils.showLong(TravelStayActivity.this, errorResponse.getErrMsg());
             }
         });
 
@@ -124,8 +127,8 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
             }
 
             @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
+            protected void onError(ErrorResponse errorResponse) {
+                ToastUtils.showLong(TravelStayActivity.this, errorResponse.getErrMsg());
             }
         });
     }

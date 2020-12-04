@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +35,10 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelCommentBean;
 import com.jcs.where.bean.HotelDetailBean;
@@ -42,6 +46,7 @@ import com.jcs.where.bean.RoomDetailBean;
 import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.home.model.HotelDetailModel;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.popupwindow.RoomDetailPopup;
 import com.jcs.where.view.ObservableScrollView;
@@ -52,16 +57,16 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.annotations.NonNull;
 import pl.droidsonroids.gif.GifImageView;
+import retrofit2.Response;
 
 public class HotelDetailActivity extends BaseActivity {
 
@@ -102,6 +107,8 @@ public class HotelDetailActivity extends BaseActivity {
     private String hotelName, hotelBreakfast;
     private ImageView star1Iv, star2Iv, star3Iv, star4Iv, star5Iv;
     private TextView timeTv;
+    private HotelDetailModel mModel;
+    private int hotelId;
 
     public static void goTo(Context context, int id, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -272,10 +279,10 @@ public class HotelDetailActivity extends BaseActivity {
                 }
                 useView.getBackground().setAlpha(alpha);
                 toolbar.getBackground().setAlpha(alpha);
-                if(alpha == 255){
+                if (alpha == 255) {
                     titleTv.setText(nameTv.getText().toString());
                 }
-                if(alpha == 0){
+                if (alpha == 0) {
                     titleTv.setText("");
                 }
             }
@@ -322,6 +329,8 @@ public class HotelDetailActivity extends BaseActivity {
     }
 
     private void initData() {
+        mModel = new HotelDetailModel();
+        hotelId = getIntent().getIntExtra(EXT_ID, 0);
         showLoading();
         HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getIntent().getIntExtra(EXT_ID, 0), null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
@@ -544,58 +553,44 @@ public class HotelDetailActivity extends BaseActivity {
 
     private void collection(boolean status) {
         showLoading();
-        if (status == true) {
-            Map<String, Integer> params = new HashMap<>();
-            params.put("hotel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
-            HttpUtils.doHttpintReqeust("POST", "hotelapi/v1/collects", params, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+        if (status) {
+            mModel.postCollectHotel(hotelId, new BaseObserver<Response<SuccessResponse>>() {
                 @Override
-                public void onSuccess(int code, String result) {
+                public void onNext(@NonNull Response<SuccessResponse> successResponse) {
                     stopLoading();
-                    if (code == 200) {
-                        ToastUtils.showLong(HotelDetailActivity.this, "收藏成功");
-                        like = 1;
-                        if (toolbarStatus == 0) {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
-                        } else {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
-                        }
+                    ToastUtils.showLong(HotelDetailActivity.this, "收藏成功");
+                    like = 1;
+                    if (toolbarStatus == 0) {
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     }
                 }
 
                 @Override
-                public void onFaileure(int code, Exception e) {
+                protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                    ToastUtils.showLong(HotelDetailActivity.this, errorResponse.getErrMsg());
                 }
             });
         } else {
-            Map<String, Integer> params = new HashMap<>();
-            params.put("hotel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
-            HttpUtils.doHttpintReqeust("DELETE", "hotelapi/v1/collects", params, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+            mModel.delCollectHotel(hotelId, new BaseObserver<Response<SuccessResponse>>() {
                 @Override
-                public void onSuccess(int code, String result) {
+                public void onNext(@NonNull Response<SuccessResponse> successResponse) {
                     stopLoading();
-                    if (code == 200) {
-                        ToastUtils.showLong(HotelDetailActivity.this, "取消成功");
-                        like = 2;
-                        if (toolbarStatus == 0) {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
-                        } else {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteunlike));
-                        }
+                    ToastUtils.showLong(HotelDetailActivity.this, "取消成功");
+                    like = 2;
+                    if (toolbarStatus == 0) {
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                     } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhiteunlike));
                     }
                 }
 
                 @Override
-                public void onFaileure(int code, Exception e) {
+                protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                    ToastUtils.showLong(HotelDetailActivity.this, errorResponse.getErrMsg());
                 }
             });
         }

@@ -1,4 +1,20 @@
 package com.jcs.where.home.model;
 
-public class HotelDetailModel {
+import com.jcs.where.api.BaseModel;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.response.SuccessResponse;
+
+import retrofit2.Response;
+
+public class HotelDetailModel extends BaseModel {
+
+    public void postCollectHotel(int hotelId, BaseObserver<Response<SuccessResponse>> observer) {
+        dealResponse(mRetrofit.postCollectHotel(hotelId), observer);
+    }
+
+    public void delCollectHotel(int hotelId, BaseObserver<Response<SuccessResponse>> observer) {
+        dealResponse(mRetrofit.delCollectHotel(hotelId), observer);
+    }
+
+
 }

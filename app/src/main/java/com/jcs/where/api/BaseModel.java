@@ -13,8 +13,7 @@ public class BaseModel {
         this.mRetrofit = mManager.getRetrofit().create(RetrofitApi.class);
     }
 
-
-    protected  <T> void dealResponse(Observable<T> observable, BaseObserver<T> observer) {
+    protected <T> void dealResponse(Observable<T> observable, BaseObserver<T> observer) {
         observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(observer);
     }
 }

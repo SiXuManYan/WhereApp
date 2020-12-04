@@ -260,21 +260,21 @@ public class HotelDetailActivity extends BaseActivity {
                 }
                 if (alpha > 130) {
                     if (like == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     } else {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteunlike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhiteunlike));
                     }
-                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_black));
-                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_black));
+                    shareIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_share_black));
+                    toolbar.setNavigationIcon(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_back_black));
                     toolbarStatus = 1;
                 } else {
                     if (like == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     } else {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                     }
-                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_white));
-                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_white));
+                    shareIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_share_white));
+                    toolbar.setNavigationIcon(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_back_white));
                     toolbarStatus = 0;
                 }
                 useView.getBackground().setAlpha(alpha);
@@ -411,9 +411,9 @@ public class HotelDetailActivity extends BaseActivity {
                     policyEndTimeTv.setText("退房时间：" + hotelDetailBean.getPolicy().getCheck_out_time());
                     policyChildrenTv.setText("儿童及加床：" + hotelDetailBean.getPolicy().getChildren());
                     if (hotelDetailBean.getCollect_status() == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     } else {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                     }
                     like = hotelDetailBean.getCollect_status();
                     navigationRl.setOnClickListener(new View.OnClickListener() {
@@ -486,40 +486,40 @@ public class HotelDetailActivity extends BaseActivity {
                         if (!TextUtils.isEmpty(hotelCommentBean.getData().get(0).getAvatar())) {
                             Picasso.with(HotelDetailActivity.this).load(hotelCommentBean.getData().get(0).getAvatar()).into(commentAvaterIv);
                         } else {
-                            commentAvaterIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                            commentAvaterIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
                         }
                         commentNameTv.setText(hotelCommentBean.getData().get(0).getUsername());
                         timeTv.setText(hotelCommentBean.getData().get(0).getCreated_at());
                         if (hotelCommentBean.getData().get(0).getStar() == 1) {
-                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
+                            star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
+                            star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
+                            star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
                         } else if (hotelCommentBean.getData().get(0).getStar() == 2) {
-                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
+                            star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
+                            star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
                         } else if (hotelCommentBean.getData().get(0).getStar() == 3) {
-                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
+                            star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
                         } else if (hotelCommentBean.getData().get(0).getStar() == 4) {
-                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
+                            star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
                         } else if (hotelCommentBean.getData().get(0).getStar() == 5) {
-                            star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                            star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
+                            star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
+                            star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
                         }
                         commentDetailTv.setText(hotelCommentBean.getData().get(0).getContent());
                     }
@@ -733,7 +733,7 @@ public class HotelDetailActivity extends BaseActivity {
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Picasso.with(HotelDetailActivity.this).load(data.getImages().get(0)).into(photoIv);
             } else {
-                photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                photoIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());
@@ -771,7 +771,7 @@ public class HotelDetailActivity extends BaseActivity {
             LinearLayout tagLl = holder.findViewById(R.id.ll_tag);
             if (data.getRemain_room_num() == 0) {
                 subscribeTv.setText("已客满");
-                subscribeTv.setBackground(getResources().getDrawable(R.drawable.bg_noroom));
+                subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_noroom));
                 subscribeTv.setTextColor(getResources().getColor(R.color.grey_999999));
                 subscribeTv.setEnabled(false);
                 tagLl.setVisibility(View.GONE);
@@ -782,7 +782,7 @@ public class HotelDetailActivity extends BaseActivity {
                 photoIv.setColorFilter(filter);
             } else {
                 subscribeTv.setText("预订");
-                subscribeTv.setBackground(getResources().getDrawable(R.drawable.bg_roomsubscribe));
+                subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_roomsubscribe));
                 subscribeTv.setTextColor(getResources().getColor(R.color.white));
                 subscribeTv.setEnabled(true);
                 tagLl.setVisibility(View.VISIBLE);
@@ -839,7 +839,7 @@ public class HotelDetailActivity extends BaseActivity {
             if (!TextUtils.isEmpty(data.getIcon())) {
                 Picasso.with(HotelDetailActivity.this).load(data.getIcon()).into(iconIv);
             } else {
-                iconIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                iconIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }
             TextView nameTv = holder.findViewById(R.id.tv_name);
             nameTv.setText(data.getName());

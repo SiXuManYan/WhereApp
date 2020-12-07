@@ -158,6 +158,11 @@
             android:screenOrientation="portrait"
             />
 
+        <activity android:name=".utils.ImagePreviewActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

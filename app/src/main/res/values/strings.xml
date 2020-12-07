@@ -44,6 +44,7 @@
     <string name="hotel_comment_tag_booking">Booking</string>
     <string name="customer_comments">住客评价</string>
     <string name="full_text">全文</string>
+    <string name="comment_icon">commentIcon</string>
 
 
 </resources>

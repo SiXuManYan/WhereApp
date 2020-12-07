@@ -1,6 +1,5 @@
 package com.jcs.where.base;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -44,6 +43,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             StatusBarUtil.setColor(this, ValueUtils.getColor(this, co.tton.android.base.R.color.colorPrimary), 0);
         }
         fullScreen(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(getLayoutId());
         mJcsTitle = findViewById(R.id.jcsTitle);
         if (mJcsTitle != null) {
@@ -115,7 +117,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param activity
      */
-    public void fullScreen(Activity activity) {
+    public void fullScreen(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = activity.getWindow();

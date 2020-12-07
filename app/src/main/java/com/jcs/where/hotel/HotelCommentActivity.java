@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,6 +20,8 @@ import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.home.adapter.HotelCommentsAdapter;
 import com.jcs.where.home.model.HotelCommentModel;
+import com.jcs.where.utils.ImagePreviewActivity;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +152,32 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
                 bean.is_select = !bean.is_select;
                 mAdapter.notifyItemChanged(position);
             }
+
+            if (view instanceof RoundedImageView) {
+                if (view.getId() == R.id.commentIcon01) {
+                    Intent to = new Intent(this, ImagePreviewActivity.class);
+                    HotelCommentsResponse.DataBean dataBean = mAdapter.getData().get(position);
+                    ArrayList<String> images = (ArrayList<String>) dataBean.getImages();
+                    to.putStringArrayListExtra(ImagePreviewActivity.IMAGES_URL_KEY, images);
+                    ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "commentIcon");
+
+                    startActivity(to, option.toBundle());
+//                    ActivityCompat.startActivity(this, new Intent(this, GalleryActivity.class), option.toBundle());
+                }
+
+                if (view.getId() == R.id.commentIcon02) {
+
+                }
+
+                if (view.getId() == R.id.commentIcon03) {
+
+                }
+
+                if (view.getId() == R.id.commentIcon04) {
+
+                }
+            }
+
         });
 
     }

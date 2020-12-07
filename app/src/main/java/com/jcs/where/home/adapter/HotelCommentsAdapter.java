@@ -1,7 +1,9 @@
 package com.jcs.where.home.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -30,13 +32,26 @@ public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelCommentsResponse.DataBean dataBean) {
         baseViewHolder.setText(R.id.username, dataBean.getUsername());
+
         ImageView circleIcon = (ImageView) baseViewHolder.findView(R.id.circleIcon);
         if (circleIcon != null) {
             Glide.with(getContext()).load(dataBean.getAvatar()).into(circleIcon);
         }
 
         baseViewHolder.setText(R.id.dateTv, dataBean.getCreated_at());
-        baseViewHolder.setText(R.id.commentContent, dataBean.getContent());
+        TextView commentContentTv = baseViewHolder.findView(R.id.commentContent);
+        commentContentTv.setText(dataBean.getContent());
+        if(dataBean.is_select){
+            baseViewHolder.setText(R.id.fullText, "收起");
+
+            commentContentTv.setMaxLines(Integer.MAX_VALUE);
+            commentContentTv.setEllipsize(null);
+        }else {
+            baseViewHolder.setText(R.id.fullText, "全文");
+
+            commentContentTv.setMaxLines(3);
+            commentContentTv.setEllipsize(TextUtils.TruncateAt.END);
+        }
         List<String> images = dataBean.getImages();
 
         int imgSize = 0;
@@ -46,14 +61,14 @@ public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse
 
         for (int i = 0; i < 4; i++) {
             RoundedImageView commentIv = (RoundedImageView) baseViewHolder.getView(mCommentImgResIds.get(i));
-            if(i < imgSize){
+            if (i < imgSize) {
                 String img = images.get(i);
                 commentIv.setVisibility(View.VISIBLE);
                 Glide.with(getContext()).load(img).into(commentIv);
-            }else {
-                if(imgSize == 0){
+            } else {
+                if (imgSize == 0) {
                     commentIv.setVisibility(View.GONE);
-                }else {
+                } else {
                     commentIv.setVisibility(View.INVISIBLE);
                 }
             }

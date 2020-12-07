@@ -99,11 +99,12 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
 
         mAllTv.setSelected(true);
         mWhereTv.setSelected(true);
+
+        showLoading();
         getCommentByType(0);
     }
 
     private void getCommentByType(int type) {
-        showLoading();
         mModel.getComments(hotelId, type, new BaseObserver<HotelCommentsResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
@@ -137,12 +138,19 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
         mAgodaTv.setOnClickListener(this);
         mBookingTv.setOnClickListener(this);
 
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getCommentByType(getCurrentType(mCategoryTvs));
+        mSwipeLayout.setOnRefreshListener(() -> getCommentByType(getCurrentType(mCategoryTvs)));
+
+        mAdapter.addChildClickViewIds(R.id.fullText, R.id.commentIcon01, R.id.commentIcon02, R.id.commentIcon03, R.id.commentIcon04);
+
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.fullText) {
+                Log.e("HotelCommentActivity", "----bindListener---fullText");
+                HotelCommentsResponse.DataBean bean = (HotelCommentsResponse.DataBean) adapter.getData().get(position);
+                bean.is_select = !bean.is_select;
+                mAdapter.notifyItemChanged(position);
             }
         });
+
     }
 
 

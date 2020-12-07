@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dp_10">
+    android:paddingBottom="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_10">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleIcon"
@@ -60,6 +61,7 @@
         app:riv_corner_radius="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/commentIcon02"
+        android:layout_marginTop="@dimen/dp_15"
         />
 
     <com.makeramen.roundedimageview.RoundedImageView
@@ -67,7 +69,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_70"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/fullText"
+        app:layout_constraintTop_toTopOf="@id/commentIcon01"
         app:layout_constraintStart_toEndOf="@id/commentIcon01"
         app:layout_constraintEnd_toStartOf="@id/commentIcon03"
         app:riv_corner_radius="2dp"
@@ -78,7 +80,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_70"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/fullText"
+        app:layout_constraintTop_toTopOf="@id/commentIcon01"
         app:riv_corner_radius="2dp"
         app:layout_constraintStart_toEndOf="@id/commentIcon02"
         app:layout_constraintEnd_toStartOf="@id/commentIcon04"
@@ -89,7 +91,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_70"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/fullText"
+        app:layout_constraintTop_toTopOf="@id/commentIcon01"
         app:riv_corner_radius="2dp"
         app:layout_constraintStart_toEndOf="@id/commentIcon03"
         app:layout_constraintEnd_toEndOf="parent"

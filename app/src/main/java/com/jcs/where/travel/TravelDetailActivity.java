@@ -445,7 +445,6 @@ public class TravelDetailActivity extends BaseActivity {
 
     private class CommentAdapter extends BaseQuickAdapter<TravelCommentListBean.DataBean> {
 
-        private final int[] ImagaId = {R.id.img_0, R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_5, R.id.img_6, R.id.img_7, R.id.img_8};
 
         public CommentAdapter(Context context) {
             super(context);
@@ -506,56 +505,6 @@ public class TravelDetailActivity extends BaseActivity {
                 star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
                 star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
                 star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-            }
-            GridLayout gridview = (GridLayout) holder.findViewById(R.id.gridview);
-            RoundedImageView[] imgview = new RoundedImageView[9];
-            for (int i = 0; i < 9; i++) {
-                imgview[i] = (RoundedImageView) holder.findViewById(ImagaId[i]);
-            }
-            if (data.getImages().size() == 0) {
-                gridview.setVisibility(View.GONE);
-            } else if (data.getImages().size() > 0) {
-                gridview.setVisibility(View.VISIBLE);
-                int a = data.getImages().size() / 4;
-                int b = data.getImages().size() % 4;
-                if (b > 0) {
-                    a++;
-                }
-                float width = (Width - dip2px(60) - dip2px(2)) / 4;
-                gridview.getLayoutParams().height = (int) (a * width);
-
-                for (int i = 0; i < 9; i++) {
-                    imgview[i].setVisibility(View.GONE);
-                }
-
-                List<MultiplexImage> images = new ArrayList<>();
-                images.clear();
-                for (int i = 0; i < data.getImages().size(); i++) {
-                    imgview[i].setVisibility(View.VISIBLE);
-                    imgview[i].getLayoutParams().width = (int) width;
-                    imgview[i].getLayoutParams().height = (int) width;
-                    ImageLoaders.setsendimg(data.getImages().get(i), imgview[i]);
-                    images.add(new MultiplexImage(data.getImages().get(i), MultiplexImage.ImageType.NORMAL));
-                    int finalI = i;
-                    imgview[i].setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Mango.setImages(images);
-                            Mango.setPosition(finalI);
-                            Mango.setImageSelectListener(new ImageSelectListener() {
-                                @Override
-                                public void select(int index) {
-
-                                }
-                            });
-                            try {
-                                Mango.open(TravelDetailActivity.this);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
             }
             setContentLayout(usercontent, fullText);
             if (data.is_select) {

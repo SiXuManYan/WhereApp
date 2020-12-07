@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp_10">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleIcon"
@@ -12,7 +13,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         android:textColor="@color/black_333333"
         android:textSize="@dimen/sp_13"
         app:layout_constraintStart_toEndOf="@id/circleIcon"
-        app:layout_constraintTop_toTopOf="@id/circleIcon"/>
+        app:layout_constraintTop_toTopOf="@id/circleIcon" />
 
     <TextView
         android:id="@+id/dateTv"
@@ -29,107 +29,71 @@
         android:textColor="@color/grey_999999"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/circleIcon"/>
+        app:layout_constraintTop_toTopOf="@id/circleIcon" />
 
     <TextView
         android:id="@+id/commentContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/circleIcon"
         android:layout_marginTop="10dp"
         android:maxLines="3"
         android:textColor="@android:color/primary_text_light"
         android:textSize="@dimen/sp_14"
-        app:layout_constraintStart_toStartOf="@id/circleIcon"/>
+        app:layout_constraintStart_toStartOf="@id/circleIcon"
+        app:layout_constraintTop_toBottomOf="@id/circleIcon" />
 
     <TextView
         android:id="@+id/fullText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/commentContent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/full_text"
-        android:textColor="@color/blue_4C9EF2" />
+        android:textColor="@color/blue_4C9EF2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commentContent" />
 
-    <GridLayout
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:rowCount="1"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/fullText">
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/commentIcon01"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_70"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/fullText"
+        app:riv_corner_radius="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/commentIcon02"
+        />
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_0"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/commentIcon02"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_70"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/fullText"
+        app:layout_constraintStart_toEndOf="@id/commentIcon01"
+        app:layout_constraintEnd_toStartOf="@id/commentIcon03"
+        app:riv_corner_radius="2dp"
+        android:layout_marginStart="@dimen/dp_10"/>
 
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/commentIcon03"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_70"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/fullText"
+        app:riv_corner_radius="2dp"
+        app:layout_constraintStart_toEndOf="@id/commentIcon02"
+        app:layout_constraintEnd_toStartOf="@id/commentIcon04"
+        android:layout_marginStart="@dimen/dp_10"/>
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_6"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_7"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_8"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="2dp" />
-
-
-    </GridLayout>
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/commentIcon04"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_70"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/fullText"
+        app:riv_corner_radius="2dp"
+        app:layout_constraintStart_toEndOf="@id/commentIcon03"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/dp_10"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

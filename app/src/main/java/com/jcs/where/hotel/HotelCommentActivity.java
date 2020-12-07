@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,8 +30,8 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
     private static final String EXT_ID = "id";
     private HotelCommentModel mModel;
     private int hotelId;
-    private TextView mAllTv,mShowImageTv,mLowScoreTv,mNewestTv;
-    private TextView mWhereTv,mAgodaTv,mBookingTv;
+    private TextView mAllTv, mShowImageTv, mLowScoreTv, mNewestTv;
+    private TextView mWhereTv, mAgodaTv, mBookingTv;
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecycler;
     private HotelCommentsAdapter mAdapter;
@@ -116,7 +117,11 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
                 stopLoading();
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
-                mAdapter.addData(hotelCommentsResponse.getData());
+                List<HotelCommentsResponse.DataBean> data = hotelCommentsResponse.getData();
+                mAdapter.addData(data);
+                for (int i = 0; i < data.size(); i++) {
+                    Log.e("HotelCommentActivity", "----onNext---" + i + "====" + data.get(i).toString());
+                }
             }
         });
     }
@@ -198,12 +203,12 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private int getCurrentType(List<TextView> temp){
+    private int getCurrentType(List<TextView> temp) {
         if (temp != null) {
             int size = temp.size();
             for (int j = 0; j < size; j++) {
                 TextView tv = temp.get(j);
-                if (tv.isSelected()){
+                if (tv.isSelected()) {
                     return j;
                 }
             }

@@ -265,5 +265,22 @@ public class HotelCommentsResponse {
         public void setImages(List<String> images) {
             this.images = images;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "is_select=" + is_select +
+                    ", id=" + id +
+                    ", star=" + star +
+                    ", created_at='" + created_at + '\'' +
+                    ", hotel_id=" + hotel_id +
+                    ", comment_travel_type_id=" + comment_travel_type_id +
+                    ", username='" + username + '\'' +
+                    ", avatar='" + avatar + '\'' +
+                    ", user_id=" + user_id +
+                    ", content='" + content + '\'' +
+                    ", images=" + images +
+                    '}';
+        }
     }
 }

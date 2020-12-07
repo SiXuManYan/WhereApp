@@ -46,4 +46,6 @@
     <dimen name="dp_37">37dp</dimen>
     <dimen name="dp_16">16dp</dimen>
     <dimen name="dp_58">58dp</dimen>
+    <dimen name="dp_115">115dp</dimen>
+    <dimen name="dp_9">9dp</dimen>
 </resources>

@@ -1,41 +1,41 @@
 package com.jcs.where.hotel;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
-import com.jcs.where.api.HttpUtils;
-import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.hotel.fragment.CommentListFragment;
-import com.jcs.where.hotel.tablayout.TabLayout;
-import com.jcs.where.manager.TokenManager;
-import com.jcs.where.utils.StatusBarUtils;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.response.HotelCommentsResponse;
+import com.jcs.where.base.BaseActivity;
+import com.jcs.where.home.adapter.HotelCommentsAdapter;
+import com.jcs.where.home.model.HotelCommentModel;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.utils.ValueUtils;
-import co.tton.android.base.view.ToastUtils;
+import io.reactivex.annotations.NonNull;
 
-public class HotelCommentActivity extends BaseActivity {
+public class HotelCommentActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String EXT_ID = "id";
-    private TabLayout mTablayout;
-    private ViewPager viewPager;
-    private List<Fragment> fragments = new ArrayList<>();
-    private List<String> titles = new ArrayList<>();
+    private HotelCommentModel mModel;
+    private int hotelId;
+    private TextView mAllTv,mShowImageTv,mLowScoreTv,mNewestTv;
+    private TextView mWhereTv,mAgodaTv,mBookingTv;
+    private SwipeRefreshLayout mSwipeLayout;
+    private RecyclerView mRecycler;
+    private HotelCommentsAdapter mAdapter;
+    private List<TextView> mCategoryTvs;
+    private List<TextView> mTagTvs;
 
     public static void goTo(Context context, int id) {
         Intent intent = new Intent(context, HotelCommentActivity.class);
@@ -48,79 +48,166 @@ public class HotelCommentActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        StatusBarUtil.setColor(this, ValueUtils.getColor(this, R.color.white), 0);
-        StatusBarUtils.setStatusBarLightMode(getWindow());
-        initView();
+    protected void initView() {
+        mSwipeLayout = findViewById(R.id.swipeLayout);
+        mWhereTv = findViewById(R.id.whereTag);
+        mAgodaTv = findViewById(R.id.agodaTag);
+        mBookingTv = findViewById(R.id.bookingTag);
+
+        mAllTv = findViewById(R.id.allTv);
+        mShowImageTv = findViewById(R.id.showImageTv);
+        mLowScoreTv = findViewById(R.id.lowScoreTv);
+        mNewestTv = findViewById(R.id.newestTv);
+
+        mRecycler = findViewById(R.id.commentsRecycler);
+        mAdapter = new HotelCommentsAdapter(R.layout.item_commentlist);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler.setAdapter(mAdapter);
     }
 
-    private void initView() {
-        mTablayout = V.f(this, R.id.main_tab);
-        viewPager = V.f(this, R.id.viewpager);
-        titles = new ArrayList<>();
-        initData();
-    }
+    @Override
+    protected void initData() {
+        mModel = new HotelCommentModel();
+        hotelId = getIntent().getIntExtra(EXT_ID, 0);
+        mCategoryTvs = new ArrayList<>();
+        mCategoryTvs.add(mAllTv);
+        mCategoryTvs.add(mShowImageTv);
+        mCategoryTvs.add(mLowScoreTv);
+        mCategoryTvs.add(mNewestTv);
 
-    private void initData() {
-        showLoading();
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getIntent().getIntExtra(EXT_ID, 0) + "/comment/nums", null, "", TokenManager.get().getToken(HotelCommentActivity.this), new HttpUtils.StringCallback() {
+        mTagTvs = new ArrayList<>();
+        mTagTvs.add(mWhereTv);
+        mTagTvs.add(mAgodaTv);
+        mTagTvs.add(mBookingTv);
+
+        mModel.getHotelCommentNum(hotelId, new BaseObserver<List<Integer>>() {
             @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<String>>() {
-                    }.getType();
-                    List<String> list = gson.fromJson(result, type);
-                    // Center camera on Adelaide
-                    titles.add("全部(" + list.get(0) + ")");
-                    titles.add("晒图(" + list.get(1) + ")");
-                    titles.add("低分(" + list.get(2) + ")");
-                    titles.add("最新(" + list.get(3) + ")");
-                    fragments = new ArrayList<>();
-                    fragments.add(CommentListFragment.newInstance(String.valueOf(getIntent().getIntExtra(EXT_ID, 0)), "0"));
-                    fragments.add(CommentListFragment.newInstance(String.valueOf(getIntent().getIntExtra(EXT_ID, 0)), "1"));
-                    fragments.add(CommentListFragment.newInstance(String.valueOf(getIntent().getIntExtra(EXT_ID, 0)), "2"));
-                    fragments.add(CommentListFragment.newInstance(String.valueOf(getIntent().getIntExtra(EXT_ID, 0)), "3"));
-                    viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-                        @Override
-                        public Fragment getItem(int position) {
-                            return fragments.get(position);
-                        }
-
-                        @Override
-                        public int getCount() {
-                            return fragments.size();
-                        }
-
-                        @Override
-                        public CharSequence getPageTitle(int position) {
-                            return titles.get(position);
-                        }
-                    });
-
-                    viewPager.setOffscreenPageLimit(fragments.size() - 1);
-                    mTablayout.setupWithViewPager(viewPager);
-
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelCommentActivity.this, errorBean.message);
-                }
+            protected void onError(ErrorResponse errorResponse) {
+                showNetError(errorResponse);
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ToastUtils.showLong(HotelCommentActivity.this, e.getMessage());
+            public void onNext(@NonNull List<Integer> integers) {
+                mAllTv.setText("全部" + integers.get(0));
+                mShowImageTv.setText("晒图" + integers.get(1));
+                mLowScoreTv.setText("低分" + integers.get(2));
+                mNewestTv.setText("最新" + integers.get(3));
             }
         });
 
+        mAllTv.setSelected(true);
+        mWhereTv.setSelected(true);
+        getCommentByType(0);
+    }
+
+    private void getCommentByType(int type) {
+        showLoading();
+        mModel.getComments(hotelId, type, new BaseObserver<HotelCommentsResponse>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                mSwipeLayout.setRefreshing(false);
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NonNull HotelCommentsResponse hotelCommentsResponse) {
+                stopLoading();
+                mSwipeLayout.setRefreshing(false);
+                mAdapter.getData().clear();
+                mAdapter.addData(hotelCommentsResponse.getData());
+            }
+        });
+    }
+
+    @Override
+    protected void bindListener() {
+        mAllTv.setOnClickListener(this);
+        mShowImageTv.setOnClickListener(this);
+        mLowScoreTv.setOnClickListener(this);
+        mNewestTv.setOnClickListener(this);
+
+        mWhereTv.setOnClickListener(this);
+        mAgodaTv.setOnClickListener(this);
+        mBookingTv.setOnClickListener(this);
+
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getCommentByType(getCurrentType(mCategoryTvs));
+            }
+        });
     }
 
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_hotelcomment;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view instanceof TextView && mCategoryTvs.contains(view)) {
+            TextView temp = (TextView) view;
+            temp.setSelected(true);
+            if (view == mAllTv) {
+                getCommentByType(0);
+            }
+
+            if (view == mShowImageTv) {
+                getCommentByType(1);
+            }
+
+            if (view == mLowScoreTv) {
+                getCommentByType(2);
+            }
+
+            if (view == mNewestTv) {
+                getCommentByType(3);
+            }
+
+            unSelectByList(temp, mCategoryTvs);
+        }
+
+        if (view instanceof TextView && mTagTvs.contains(view)) {
+            TextView temp = (TextView) view;
+            temp.setSelected(true);
+            if (view == mWhereTv) {
+            }
+
+            if (view == mAgodaTv) {
+            }
+
+            if (view == mBookingTv) {
+            }
+
+            unSelectByList(temp, mTagTvs);
+        }
+    }
+
+    private void unSelectByList(TextView textView, List<TextView> temp) {
+        if (temp != null) {
+            int size = temp.size();
+            for (int j = 0; j < size; j++) {
+                TextView tv = temp.get(j);
+                if (tv != textView) {
+                    tv.setSelected(false);
+                }
+            }
+        }
+    }
+
+    private int getCurrentType(List<TextView> temp){
+        if (temp != null) {
+            int size = temp.size();
+            for (int j = 0; j < size; j++) {
+                TextView tv = temp.get(j);
+                if (tv.isSelected()){
+                    return j;
+                }
+            }
+        }
+        return 0;
     }
 }

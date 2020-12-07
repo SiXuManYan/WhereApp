@@ -458,7 +458,7 @@ public class TravelDetailActivity extends BaseActivity {
 
         @Override
         protected void initViews(QuickHolder holder, TravelCommentListBean.DataBean data, int position) {
-            CircleImageView avaterIv = holder.findViewById(R.id.listuserimg);
+            CircleImageView avaterIv = holder.findViewById(R.id.circleIcon);
             if (!TextUtils.isEmpty(data.getAvatar())) {
                 Picasso.with(TravelDetailActivity.this).load(data.getAvatar()).into(avaterIv);
             } else {
@@ -466,7 +466,7 @@ public class TravelDetailActivity extends BaseActivity {
             }
             TextView nameTv = holder.findViewById(R.id.username);
             nameTv.setText(data.getUsername());
-            TextView usercontent = holder.findViewById(R.id.usercontent);
+            TextView usercontent = holder.findViewById(R.id.commentContent);
             usercontent.setText(data.getContent());
             TextView timeTv = holder.findViewById(R.id.tv_time);
             timeTv.setText(data.getCreated_at());
@@ -508,16 +508,13 @@ public class TravelDetailActivity extends BaseActivity {
                 star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
             }
             GridLayout gridview = (GridLayout) holder.findViewById(R.id.gridview);
-            ImageView showimage = (ImageView) holder.findViewById(R.id.showimage);
             RoundedImageView[] imgview = new RoundedImageView[9];
             for (int i = 0; i < 9; i++) {
                 imgview[i] = (RoundedImageView) holder.findViewById(ImagaId[i]);
             }
             if (data.getImages().size() == 0) {
-                showimage.setVisibility(View.GONE);
                 gridview.setVisibility(View.GONE);
             } else if (data.getImages().size() > 0) {
-                showimage.setVisibility(View.GONE);
                 gridview.setVisibility(View.VISIBLE);
                 int a = data.getImages().size() / 4;
                 int b = data.getImages().size() % 4;

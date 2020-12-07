@@ -1,242 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingTop="10dp"
-    android:paddingRight="15dp"
-    android:paddingBottom="10dp">
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/listuserimg"
+        android:id="@+id/circleIcon"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/ic_test" />
+        android:src="@drawable/ic_test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/ll_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/listuserimg"
-        android:layout_alignBottom="@+id/listuserimg"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/listuserimg"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="DavidWang"
-                    android:textColor="@color/black_333333"
-                    android:textSize="13dp" />
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="2020-8-8"
-                    android:textColor="@color/grey_999999"
-                    android:textSize="12sp" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_star1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_commentlistlightstar" />
-
-
-                <ImageView
-                    android:id="@+id/iv_star2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/ic_commentlistlightstar" />
-
-
-                <ImageView
-                    android:id="@+id/iv_star3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/ic_commentlistlightstar" />
-
-
-                <ImageView
-                    android:id="@+id/iv_star4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/ic_commentlistlightstar" />
-
-
-                <ImageView
-                    android:id="@+id/iv_star5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/ic_commentlistgreystar" />
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </RelativeLayout>
 
     <TextView
-        android:id="@+id/usercontent"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_username"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintStart_toEndOf="@id/circleIcon"
+        app:layout_constraintTop_toTopOf="@id/circleIcon"/>
+
+    <TextView
+        android:id="@+id/dateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_999999"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/circleIcon"/>
+
+    <TextView
+        android:id="@+id/commentContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/circleIcon"
         android:layout_marginTop="10dp"
         android:maxLines="3"
-        android:text="这是一个单张的演示"
         android:textColor="@android:color/primary_text_light"
-        android:textSize="14dp" />
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toStartOf="@id/circleIcon"/>
 
     <TextView
         android:id="@+id/fullText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/usercontent"
-        android:layout_alignParentRight="true"
-        android:padding="5dp"
-        android:text="全文"
+        app:layout_constraintTop_toBottomOf="@id/commentContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/full_text"
         android:textColor="@color/blue_4C9EF2" />
 
-    <LinearLayout
-        android:id="@+id/allLayout"
+    <GridLayout
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fullText"
-        android:orientation="vertical"
-        android:paddingTop="10dp">
+        android:columnCount="4"
+        android:rowCount="1"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/fullText">
 
-        <ImageView
-            android:id="@+id/showimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#333333"
-            android:visibility="gone" />
-
-        <GridLayout
-            android:id="@+id/gridview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="4"
-            android:rowCount="1"
-            android:visibility="gone">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_0"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="3dp"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="3dp"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="3dp"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
 
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="3dp"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginTop="1dp"
-
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="1dp"
-
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginTop="1dp"
-
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginTop="1dp"
-
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="2dp" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
 
-        </GridLayout>
+    </GridLayout>
 
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

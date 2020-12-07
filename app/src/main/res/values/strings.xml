@@ -39,6 +39,11 @@
     <string name="history_search">历史搜索</string>
     <string name="clear">清空</string>
     <string name="hot_search">热门搜索</string>
+    <string name="hotel_comment_tag_where">Where</string>
+    <string name="hotel_comment_tag_agoda">Agoda</string>
+    <string name="hotel_comment_tag_booking">Booking</string>
+    <string name="customer_comments">住客评价</string>
+    <string name="full_text">全文</string>
 
 
 </resources>

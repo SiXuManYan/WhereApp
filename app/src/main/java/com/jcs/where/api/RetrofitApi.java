@@ -2,6 +2,7 @@ package com.jcs.where.api;
 
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.ModulesResponse;
@@ -22,6 +23,7 @@ public interface RetrofitApi {
 
     /**
      * 获得首页金刚圈的信息
+     *
      * @return 金刚圈
      */
     @GET("commonapi/v1/modules")
@@ -29,7 +31,8 @@ public interface RetrofitApi {
 
     /**
      * 获得分类列表
-     * @param level 分类级别
+     *
+     * @param level      分类级别
      * @param categories parentId 上级分类的id
      * @return 分类列表
      */
@@ -38,6 +41,7 @@ public interface RetrofitApi {
 
     /**
      * 酒店猜你喜欢的酒店列表
+     *
      * @return 酒店列表
      */
     @GET("hotelapi/v1/hotels/recommends")
@@ -45,6 +49,7 @@ public interface RetrofitApi {
 
     /**
      * 获得轮播图
+     *
      * @param type 区分是哪个页面的轮播图
      * @return 轮播图
      */
@@ -53,6 +58,7 @@ public interface RetrofitApi {
 
     /**
      * 收藏酒店
+     *
      * @param hotelId 酒店id
      */
     @POST("hotelapi/v1/collects")
@@ -60,6 +66,7 @@ public interface RetrofitApi {
 
     /**
      * 取消收藏
+     *
      * @param hotelId 酒店id
      */
     @DELETE("hotelapi/v1/collects")
@@ -71,4 +78,30 @@ public interface RetrofitApi {
      */
     @GET("hotelapi/v1/hotel/{id}")
     Observable<HotelDetailResponse> getHotelDetail(@Path("id") int hotelId);
+
+
+    /**
+     * 获取酒店评价
+     *
+     * @param hotelId 酒店id
+     */
+    @GET("hotelapi/v1/hotel/{hotel_id}/comments")
+    Observable<HotelCommentsResponse> getHotelComments(@Path("hotel_id") int hotelId);
+
+    /**
+     * 获取酒店评价
+     *
+     * @param hotelId 酒店id
+     * @param type    评价类型：1-晒图 2-低分 3-最新
+     */
+    @GET("hotelapi/v1/hotel/{hotel_id}/comments")
+    Observable<HotelCommentsResponse> getHotelComments(@Path("hotel_id") int hotelId, @Query("type") int type);
+
+    /**
+     * 获取酒店评论数量
+     *
+     * @param hotelId 酒店id
+     */
+    @GET("hotelapi/v1/hotel/{hotel_id}/comment/nums")
+    Observable<List<Integer>> getHotelCommentNum(@Path("hotel_id") int hotelId);
 }

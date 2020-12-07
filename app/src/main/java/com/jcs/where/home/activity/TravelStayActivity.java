@@ -136,7 +136,6 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
     @Override
     protected void bindListener() {
         mModulesCategoryAdapter.setOnItemClickListener(this);
-        mJcsTitle.setBackIvClickListener(view -> finish());
     }
 
     @Override

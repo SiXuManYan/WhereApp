@@ -15,15 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.widget.JcsTitle;
 
 import co.tton.android.base.utils.ValueUtils;
+import co.tton.android.base.view.ToastUtils;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected JcsTitle mJcsTitle;
     private boolean mIsHasStatusBarColor = true;
+    private CustomProgressDialog mProgressDialog;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
@@ -45,6 +48,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         mJcsTitle = findViewById(R.id.jcsTitle);
         if (mJcsTitle != null) {
             setMargins(mJcsTitle, 0, getStatusBarHeight(), 0, 0);
+            mJcsTitle.setBackIvClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                    afterJcsBack();
+                }
+            });
         }
         initView();
         bindListener();
@@ -58,6 +68,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void bindListener();
 
     protected abstract int getLayoutId();
+
+    protected boolean hasJcsBack(){
+        return true;
+    }
+
+    protected void afterJcsBack(){
+
+    }
 
     protected void toActivity(Class<?> clazz) {
         startActivity(new Intent(this, clazz));
@@ -127,6 +145,36 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(co.tton.android.base.R.color.bg_color));//设置状态栏颜色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
+        }
+    }
+
+    protected void showNetError(ErrorResponse errorResponse) {
+        ToastUtils.showLong(this, errorResponse.getErrMsg());
+    }
+
+    public void showLoading(String msg) {
+        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+            mProgressDialog = new CustomProgressDialog(this, msg);
+            mProgressDialog.show();
+        }
+    }
+
+    public void showLoading() {
+        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+            mProgressDialog = new CustomProgressDialog(this, "");
+            mProgressDialog.show();
+        }
+    }
+
+    public void stopLoading() {
+        try {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+                mProgressDialog = null;
+            }
+
+        } catch (Exception e) {
+
         }
     }
 }

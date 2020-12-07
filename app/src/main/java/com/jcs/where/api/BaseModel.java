@@ -5,11 +5,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class BaseModel {
-    protected RetrofitManager mManager;
     protected RetrofitApi mRetrofit;
 
     public BaseModel() {
-        this.mManager = RetrofitManager.getManager();
+        RetrofitManager mManager = RetrofitManager.getManager();
         this.mRetrofit = mManager.getRetrofit().create(RetrofitApi.class);
     }
 

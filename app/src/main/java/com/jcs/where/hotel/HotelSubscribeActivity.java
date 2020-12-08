@@ -25,6 +25,7 @@ import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.codepicker.Country;
 import com.jcs.where.codepicker.CountryPicker;
 import com.jcs.where.codepicker.OnPick;
+import com.jcs.where.home.dialog.AreaCodeListDialog;
 import com.jcs.where.manager.TokenManager;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
 
-public class HotelSubscribeActivity extends BaseActivity implements View.OnClickListener {
+public class HotelSubscribeActivity extends BaseActivity implements View.OnClickListener, AreaCodeListDialog.AreaCodeListCallback {
 
     private static final String EXT_BEAN = "bean";
     private TextView hotelNameTv, roomNameTv, startDateTv, startWeekTv, endDateTv, endWeekTv, nightTv;
@@ -46,6 +47,7 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
     private ImageView reduceIv, addIv;
     private EditText nameEt, phoneEt;
     private int night = 1;
+    private AreaCodeListDialog mAreaCodeListDialog;
 
     public static void goTo(Context context, SubscribeBean subscribeBean) {
         Intent intent = new Intent(context, HotelSubscribeActivity.class);
@@ -138,6 +140,9 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
         V.f(this, R.id.tv_submit).setOnClickListener(this);
         nameEt = V.f(this, R.id.et_name);
         phoneEt = V.f(this, R.id.et_phone);
+
+        mAreaCodeListDialog = new AreaCodeListDialog();
+        mAreaCodeListDialog.injectCallback(this);
     }
 
     @Override
@@ -177,7 +182,7 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
                 submit();
                 break;
             case R.id.areaCodeTv:
-                showToast("哈哈哈");
+                mAreaCodeListDialog.show(getSupportFragmentManager());
                 break;
         }
     }
@@ -227,5 +232,10 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
                 ToastUtils.showLong(HotelSubscribeActivity.this, e.getMessage());
             }
         });
+    }
+
+    @Override
+    public void select(String area) {
+        mAreaTv.setText(area);
     }
 }

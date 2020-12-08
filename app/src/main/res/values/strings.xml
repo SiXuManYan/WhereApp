@@ -46,6 +46,8 @@
     <string name="full_text">全文</string>
     <string name="comment_icon">commentIcon</string>
     <string name="save">保存</string>
+    <string name="area_chain">中国 +86</string>
+    <string name="area_philippines">菲律宾 +63</string>
 
 
 </resources>

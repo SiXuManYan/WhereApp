@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -20,6 +21,9 @@ import java.util.List;
 
 public class ImagePreviewActivity extends BaseActivity {
     private ViewPager mViewPager;
+    private TextView mImgPositionTv;
+    private TextView mSaveTv;
+
     private List<String> mImageUrls;
     private int mShowPosition;
     public static final String IMAGES_URL_KEY = "imageUrls";
@@ -32,6 +36,8 @@ public class ImagePreviewActivity extends BaseActivity {
         ChangeImageTransform changeImageTransform = new ChangeImageTransform();
         getWindow().setSharedElementEnterTransition(changeImageTransform);
         mViewPager = findViewById(R.id.viewpager);
+        mImgPositionTv = findViewById(R.id.imgPositionTv);
+        mSaveTv = findViewById(R.id.saveTv);
     }
 
     @Override
@@ -40,6 +46,12 @@ public class ImagePreviewActivity extends BaseActivity {
         mShowPosition = getIntent().getIntExtra(IMAGE_POSITION, -1);
 
         mViewPager.setAdapter(new ImagePreviewAdapter());
+
+        String msg = 1 +
+                "/" +
+                mImageUrls.size();
+        mImgPositionTv.setText(msg);
+
         if (mShowPosition != -1 && mShowPosition < mImageUrls.size()) {
             mViewPager.setCurrentItem(mShowPosition);
         }
@@ -48,7 +60,32 @@ public class ImagePreviewActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
+        mSaveTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast("保存");
+            }
+        });
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                String msg = (position + 1) +
+                        "/" +
+                        mImageUrls.size();
+                mImgPositionTv.setText(msg);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

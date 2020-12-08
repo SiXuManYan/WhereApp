@@ -71,11 +71,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutId();
 
-    protected boolean hasJcsBack(){
+    protected boolean hasJcsBack() {
         return true;
     }
 
-    protected void afterJcsBack(){
+    protected void afterJcsBack() {
 
     }
 
@@ -178,5 +178,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
+    }
+
+    protected void showToast(String msg) {
+        ToastUtils.showLong(this, msg);
     }
 }

@@ -45,6 +45,7 @@
     <string name="customer_comments">住客评价</string>
     <string name="full_text">全文</string>
     <string name="comment_icon">commentIcon</string>
+    <string name="save">保存</string>
 
 
 </resources>

@@ -42,6 +42,7 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
     private SubscribeBean subscribeBean;
     private TextView bedTv, breakfastTv, windowTv, wifiTv, peopleTv, cancelTv;
     private TextView phoneTv, roomNumTv, priceTv;
+    private TextView mAreaTv;
     private ImageView reduceIv, addIv;
     private EditText nameEt, phoneEt;
     private int night = 1;
@@ -92,6 +93,8 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
         breakfastTv = V.f(this, R.id.tv_breakfast);
         breakfastTv.setText(subscribeBean.breakfast);
         windowTv = V.f(this, R.id.tv_window);
+        mAreaTv = findViewById(R.id.areaCodeTv);
+        mAreaTv.setOnClickListener(this);
         if (subscribeBean.window == 1) {
             windowTv.setText("有窗");
         } else {
@@ -172,6 +175,9 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
                     return;
                 }
                 submit();
+                break;
+            case R.id.areaCodeTv:
+                showToast("哈哈哈");
                 break;
         }
     }

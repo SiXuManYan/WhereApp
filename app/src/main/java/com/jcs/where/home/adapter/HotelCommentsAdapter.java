@@ -65,6 +65,7 @@ public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse
                 String img = images.get(i);
                 commentIv.setVisibility(View.VISIBLE);
                 Glide.with(getContext()).load(img).into(commentIv);
+                commentIv.setTag(i);
             } else {
                 if (imgSize == 0) {
                     commentIv.setVisibility(View.GONE);

@@ -154,28 +154,16 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
             if (view instanceof RoundedImageView) {
-                if (view.getId() == R.id.commentIcon01) {
-                    Intent to = new Intent(this, ImagePreviewActivity.class);
-                    HotelCommentsResponse.DataBean dataBean = mAdapter.getData().get(position);
-                    ArrayList<String> images = (ArrayList<String>) dataBean.getImages();
-                    to.putStringArrayListExtra(ImagePreviewActivity.IMAGES_URL_KEY, images);
-                    ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "commentIcon");
+                Intent to = new Intent(this, ImagePreviewActivity.class);
+                HotelCommentsResponse.DataBean dataBean = mAdapter.getData().get(position);
+                ArrayList<String> images = (ArrayList<String>) dataBean.getImages();
+                to.putStringArrayListExtra(ImagePreviewActivity.IMAGES_URL_KEY, images);
+                ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "commentIcon");
+                to.putExtra(ImagePreviewActivity.IMAGE_POSITION, (int) view.getTag());
 
-                    startActivity(to, option.toBundle());
-//                    ActivityCompat.startActivity(this, new Intent(this, GalleryActivity.class), option.toBundle());
-                }
 
-                if (view.getId() == R.id.commentIcon02) {
-
-                }
-
-                if (view.getId() == R.id.commentIcon03) {
-
-                }
-
-                if (view.getId() == R.id.commentIcon04) {
-
-                }
+                startActivity(to);
+                overridePendingTransition(R.anim.activity_out, R.anim.activity_in);
             }
 
         });

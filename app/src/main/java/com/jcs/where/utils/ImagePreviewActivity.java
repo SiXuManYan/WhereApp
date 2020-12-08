@@ -2,7 +2,6 @@ package com.jcs.where.utils;
 
 import android.os.Build;
 import android.transition.ChangeImageTransform;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,8 +9,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,10 +19,11 @@ import com.jcs.where.base.BaseActivity;
 import java.util.List;
 
 public class ImagePreviewActivity extends BaseActivity {
-    private ImageView mBigIv;
     private ViewPager mViewPager;
     private List<String> mImageUrls;
+    private int mShowPosition;
     public static final String IMAGES_URL_KEY = "imageUrls";
+    public static final String IMAGE_POSITION = "imagePosition";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -39,8 +37,13 @@ public class ImagePreviewActivity extends BaseActivity {
     @Override
     protected void initData() {
         mImageUrls = getIntent().getStringArrayListExtra(IMAGES_URL_KEY);
+        mShowPosition = getIntent().getIntExtra(IMAGE_POSITION, -1);
 
         mViewPager.setAdapter(new ImagePreviewAdapter());
+        if (mShowPosition != -1 && mShowPosition < mImageUrls.size()) {
+            mViewPager.setCurrentItem(mShowPosition);
+        }
+
     }
 
     @Override
@@ -77,7 +80,8 @@ public class ImagePreviewActivity extends BaseActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    finishAfterTransition();
+                    finish();
+                    overridePendingTransition(R.anim.activity_out, R.anim.activity_in);
                 }
             });
             return imageView;

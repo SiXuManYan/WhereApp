@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,25 +14,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.gson.Gson;
 import com.jcs.where.R;
-import com.jcs.where.api.HttpUtils;
-import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.bean.HotelOrderBean;
-import com.jcs.where.bean.HotelPayBean;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.request.HotelOrderRequest;
+import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.codepicker.Country;
 import com.jcs.where.codepicker.CountryPicker;
 import com.jcs.where.codepicker.OnPick;
 import com.jcs.where.home.dialog.AreaCodeListDialog;
-import com.jcs.where.manager.TokenManager;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.jcs.where.home.model.HotelSubscribeModel;
 
 import co.tton.android.base.app.activity.BaseActivity;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.ToastUtils;
+import io.reactivex.annotations.NonNull;
 
 public class HotelSubscribeActivity extends BaseActivity implements View.OnClickListener, AreaCodeListDialog.AreaCodeListCallback {
 
@@ -48,6 +44,7 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
     private EditText nameEt, phoneEt;
     private int night = 1;
     private AreaCodeListDialog mAreaCodeListDialog;
+    private HotelSubscribeModel mModel;
 
     public static void goTo(Context context, SubscribeBean subscribeBean) {
         Intent intent = new Intent(context, HotelSubscribeActivity.class);
@@ -70,6 +67,7 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         subscribeBean = getIntent().getParcelableExtra(EXT_BEAN);
+        mModel = new HotelSubscribeModel();
         initView();
     }
 
@@ -189,47 +187,26 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
 
     private void submit() {
         showLoading();
-        Map<String, String> params = new HashMap<>();
-        params.put("hotel_room_id", subscribeBean.roomId + "");
-        params.put("price", priceTv.getText().toString().replace("₱", ""));
-        params.put("username", nameEt.getText().toString());
-        params.put("phone", phoneEt.getText().toString());
-        params.put("start_date", subscribeBean.startYear + "-" + subscribeBean.startDate.replace("月", "-").replace("日", ""));
-        params.put("end_date", subscribeBean.endYear + "-" + subscribeBean.endDate.replace("月", "-").replace("日", ""));
-        params.put("room_num", roomNumTv.getText().toString());
-        Log.d("ssss", params + "");
-        HttpUtils.doHttpReqeust("POST", "hotelapi/v1/orders", params, "", TokenManager.get().getToken(HotelSubscribeActivity.this), new HttpUtils.StringCallback() {
+        HotelOrderRequest request = new HotelOrderRequest();
+        request.setHotel_room_id(subscribeBean.roomId + "");
+        request.setPrice(priceTv.getText().toString().replace("₱", ""));
+        request.setPhone(phoneEt.getText().toString());
+        request.setUsername(nameEt.getText().toString());
+        request.setStart_date(subscribeBean.startYear + "-" + subscribeBean.startDate.replace("月", "-").replace("日", ""));
+        request.setEnd_date(subscribeBean.endYear + "-" + subscribeBean.endDate.replace("月", "-").replace("日", ""));
+        request.setRoom_num(roomNumTv.getText().toString());
+        mModel.postHotelOrder(request, new BaseObserver<HotelOrderResponse>() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                if (code == 200) {
-                    ToastUtils.showLong(HotelSubscribeActivity.this, "预订成功");
-                    HotelOrderBean hotelOrderBean = new Gson().fromJson(result, HotelOrderBean.class);
-                    HotelPayBean hotelPayBean = new HotelPayBean();
-                    hotelPayBean.hotelName = subscribeBean.hotelName;
-                    hotelPayBean.roomName = subscribeBean.roomName;
-                    hotelPayBean.bed = subscribeBean.bed;
-                    hotelPayBean.breakfast = subscribeBean.breakfast;
-                    hotelPayBean.window = subscribeBean.window;
-                    hotelPayBean.people = subscribeBean.people;
-                    hotelPayBean.startDate = subscribeBean.startDate;
-                    hotelPayBean.endDate = subscribeBean.endDate;
-                    hotelPayBean.night = subscribeBean.night;
-                    hotelPayBean.roomNumber = roomNumTv.getText().toString();
-                    hotelPayBean.price = priceTv.getText().toString();
-                    hotelPayBean.orderId = hotelOrderBean.getId();
-                    hotelPayBean.trade_no = hotelOrderBean.getTrade_no();
-                    HotelPayActivity.goTo(HotelSubscribeActivity.this, hotelPayBean);
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelSubscribeActivity.this, errorBean.message);
-                }
+                ToastUtils.showLong(HotelSubscribeActivity.this, errorResponse.getErrMsg());
             }
 
             @Override
-            public void onFaileure(int code, Exception e) {
+            public void onNext(@NonNull HotelOrderResponse hotelOrderResponse) {
                 stopLoading();
-                ToastUtils.showLong(HotelSubscribeActivity.this, e.getMessage());
+                ToastUtils.showLong(HotelSubscribeActivity.this, "预订成功");
+                HotelPayActivity.goTo(HotelSubscribeActivity.this, hotelOrderResponse);
             }
         });
     }

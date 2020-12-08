@@ -1,9 +1,12 @@
 package com.jcs.where.api;
 
+import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
+import com.jcs.where.api.response.HotelOrderDetailResponse;
+import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.SuccessResponse;
@@ -12,6 +15,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -104,4 +108,16 @@ public interface RetrofitApi {
      */
     @GET("hotelapi/v1/hotel/{hotel_id}/comment/nums")
     Observable<List<Integer>> getHotelCommentNum(@Path("hotel_id") int hotelId);
+
+    /**
+     * 酒店下订单
+     */
+    @POST("hotelapi/v1/orders")
+    Observable<HotelOrderResponse> postHotelOrder(@Body HotelOrderRequest request);
+
+    /**
+     * 酒店订单详情
+     */
+    @GET("/hotelapi/v1/orders/{order_id}")
+    Observable<HotelOrderDetailResponse> getHotelOrderDetail(@Path("order_id") int orderId);
 }

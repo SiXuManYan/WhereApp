@@ -146,7 +146,8 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
         mAdapter.addChildClickViewIds(R.id.fullText, R.id.commentIcon01, R.id.commentIcon02, R.id.commentIcon03, R.id.commentIcon04);
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.fullText) {
+            int id = view.getId();
+            if (id == R.id.fullText) {
                 Log.e("HotelCommentActivity", "----bindListener---fullText");
                 HotelCommentsResponse.DataBean bean = (HotelCommentsResponse.DataBean) adapter.getData().get(position);
                 bean.is_select = !bean.is_select;
@@ -159,7 +160,21 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
                 ArrayList<String> images = (ArrayList<String>) dataBean.getImages();
                 to.putStringArrayListExtra(ImagePreviewActivity.IMAGES_URL_KEY, images);
                 ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "commentIcon");
-                to.putExtra(ImagePreviewActivity.IMAGE_POSITION, (int) view.getTag());
+
+                int imgPosition = -1;
+                if(id == R.id.commentIcon01){
+                    imgPosition = 0;
+                }
+                if(id == R.id.commentIcon02){
+                    imgPosition = 1;
+                }
+                if(id == R.id.commentIcon03){
+                    imgPosition = 2;
+                }
+                if(id == R.id.commentIcon04){
+                    imgPosition = 3;
+                }
+                to.putExtra(ImagePreviewActivity.IMAGE_POSITION, imgPosition);
 
 
                 startActivity(to);

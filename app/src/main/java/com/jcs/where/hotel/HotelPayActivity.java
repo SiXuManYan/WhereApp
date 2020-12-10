@@ -48,11 +48,7 @@ public class HotelPayActivity extends BaseActivity implements View.OnClickListen
         wechatPayCb.setChecked(true);
         aliPayCb = findViewById(R.id.cb_alipay);
         bankPayCb = findViewById(R.id.cb_bankpay);
-        findViewById(R.id.rl_wechatpay).setOnClickListener(this);
-        findViewById(R.id.rl_alipay).setOnClickListener(this);
-        findViewById(R.id.rl_bankpay).setOnClickListener(this);
         payTv = findViewById(R.id.tv_pay);
-        payTv.setOnClickListener(this);
     }
 
     @Override
@@ -95,7 +91,10 @@ public class HotelPayActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void bindListener() {
-
+        findViewById(R.id.rl_wechatpay).setOnClickListener(this);
+        findViewById(R.id.rl_alipay).setOnClickListener(this);
+        findViewById(R.id.rl_bankpay).setOnClickListener(this);
+        payTv.setOnClickListener(this);
     }
 
     @Override

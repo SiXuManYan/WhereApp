@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,13 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import co.tton.android.base.dialog.CustomProgressDialog;
 
 public abstract class BaseFragment extends Fragment {
 
-    public static void setMargins(View v, int l, int t, int r, int b) {
+    public CustomProgressDialog dialog;
+
+    public void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             p.setMargins(l, t, r, b);
@@ -90,6 +94,36 @@ public abstract class BaseFragment extends Fragment {
 //                attributes.flags |= flagTranslucentNavigation;
                 window.setAttributes(attributes);
             }
+        }
+    }
+
+
+
+    public void showLoading(String msg) {
+        if (dialog != null && dialog.isShowing()) {
+        } else {
+            dialog = new CustomProgressDialog(getContext(), msg);
+            dialog.show();
+        }
+    }
+
+    public void showLoading() {
+        if (dialog != null && dialog.isShowing()) {
+        } else {
+            dialog = new CustomProgressDialog(getContext(), "");
+            dialog.show();
+        }
+    }
+
+    public void stopLoading() {
+        try {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+                dialog = null;
+            }
+
+        } catch (Exception e) {
+
         }
     }
 }

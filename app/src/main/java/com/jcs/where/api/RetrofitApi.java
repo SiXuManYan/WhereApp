@@ -9,6 +9,8 @@ import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.ModulesResponse;
+import com.jcs.where.api.response.OrderListResponse;
+import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.SuccessResponse;
 
 import java.util.List;
@@ -120,4 +122,16 @@ public interface RetrofitApi {
      */
     @GET("/hotelapi/v1/orders/{order_id}")
     Observable<HotelOrderDetailResponse> getHotelOrderDetail(@Path("order_id") int orderId);
+
+    /**
+     * 获得订单各个类型的数量
+     */
+    @GET("/commonapi/v1/orders/nums")
+    Observable<OrderNumResponse> getOrderNum();
+
+    /**
+     * 获得订单列表
+     */
+    @GET("/commonapi/v1/orders")
+    Observable<OrderListResponse> getOrderList(@Query("type") int type,@Query("search_input") String keyword);
 }

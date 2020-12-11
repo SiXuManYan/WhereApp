@@ -50,21 +50,21 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
         view = inflater.inflate(R.layout.fragment_mine, container, false);
-        initView();
+//        initView();
         return view;
     }
 
     private void initView() {
-        settingIv = V.f(view, R.id.iv_setting);
-        settingIv.setOnClickListener(this);
-        nameTv = V.f(view, R.id.tv_name);
-        accountTv = V.f(view, R.id.tv_account);
-        mUploadPresenter = new UploadFilePresenter(getContext());
-        headerIv = V.f(view, R.id.iv_header);
-        V.f(view, R.id.ll_changelangue).setOnClickListener(this);
-        V.f(view, R.id.ll_settlement).setOnClickListener(this);
-        V.f(view, R.id.rl_minemessage).setOnClickListener(this);
-        initData(TokenManager.get().getToken(getContext()));
+//        settingIv = V.f(view, R.id.iv_setting);
+//        settingIv.setOnClickListener(this);
+//        nameTv = V.f(view, R.id.tv_name);
+//        accountTv = V.f(view, R.id.tv_account);
+//        mUploadPresenter = new UploadFilePresenter(getContext());
+//        headerIv = V.f(view, R.id.iv_header);
+//        V.f(view, R.id.ll_changelangue).setOnClickListener(this);
+//        V.f(view, R.id.ll_settlement).setOnClickListener(this);
+//        V.f(view, R.id.rl_minemessage).setOnClickListener(this);
+//        initData(TokenManager.get().getToken(getContext()));
     }
 
     private void initData(String token) {

@@ -50,4 +50,7 @@
     <dimen name="dp_9">9dp</dimen>
     <dimen name="dp_79">79dp</dimen>
     <dimen name="dp_75">75dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_22">22dp</dimen>
+    <dimen name="dp_56">56dp</dimen>
 </resources>

@@ -49,6 +49,8 @@
     <string name="area_chain">中国 +86</string>
     <string name="area_philippines">菲律宾 +63</string>
     <string name="pay_order">支付订单</string>
+    <string name="to_pay">支付</string>
+    <string name="to_cancel_order">取消订单</string>
 
 
 </resources>

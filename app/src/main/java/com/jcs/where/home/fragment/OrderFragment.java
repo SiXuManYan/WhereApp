@@ -79,21 +79,21 @@ public class OrderFragment extends BaseFragment {
                 clearStringBuilder(stringBuilder);
 
                 for (int i = 0; i < mTabTitles.length; i++) {
-                    Log.e("OrderFragment", "onNext: "+mTabTitles[i]);
+                    Log.e("OrderFragment", "onNext: " + mTabTitles[i]);
                 }
 
                 Log.e("OrderFragment", "onNext: " + mTabTitles.toString());
-                initTabTitle();
 
                 mViewPager.setAdapter(mAdapter);
                 mTabLayout.setupWithViewPager(mViewPager);
                 mViewPager.setOffscreenPageLimit(5);
+                initTabTitle();
             }
         });
     }
 
     private View makeTabView(String title) {
-        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_home_activity, null);
+        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_order_fragment, null);
         TextView tabTitle = tabView.findViewById(R.id.tabTitle);
         tabTitle.setText(title);
         return tabView;
@@ -131,10 +131,13 @@ public class OrderFragment extends BaseFragment {
     }
 
     private void initTabTitle() {
+        mTabLayout.removeAllTabs();
         for (int i = 0; i < mTabTitles.length; i++) {
             TabLayout.Tab tab = mTabLayout.newTab();
-            tab.setCustomView(makeTabView(mTabTitles[0]));
-            mTabLayout.addTab(tab);
+            if (tab != null) {
+                tab.setCustomView(makeTabView(mTabTitles[i]));
+                mTabLayout.addTab(tab);
+            }
         }
     }
 

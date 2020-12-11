@@ -24,12 +24,14 @@
         app:layout_constraintTop_toTopOf="@id/orderIcon"
         app:layout_constraintBottom_toBottomOf="@id/orderIcon"
         android:textSize="@dimen/sp_14"
+        android:includeFontPadding="false"
         android:textColor="@color/black_333333"/>
 
     <ImageView
         android:layout_width="@dimen/dp_6"
         android:layout_height="@dimen/dp_10"
         android:src="@drawable/arrow_right"
+        android:layout_marginStart="@dimen/dp_15"
         app:layout_constraintTop_toTopOf="@id/orderIcon"
         app:layout_constraintBottom_toBottomOf="@id/orderIcon"
         app:layout_constraintStart_toEndOf="@id/orderTitleTv"/>

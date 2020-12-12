@@ -1,7 +1,6 @@
 package com.jcs.where.home.fragment;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -14,6 +13,7 @@ import com.jcs.where.home.model.OrderModel;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -22,6 +22,7 @@ import io.reactivex.annotations.NonNull;
 public class OrderListFragment extends BaseFragment {
 
     private OrderType mOrderType;
+    private SwipeRefreshLayout mSwipeRefresh;
     private RecyclerView mRecycler;
     private OrderListAdapter mAdapter;
     private boolean isFirstLoad = true;
@@ -34,6 +35,7 @@ public class OrderListFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         mRecycler = view.findViewById(R.id.orderRecycler);
+        mSwipeRefresh = view.findViewById(R.id.swipeLayout);
     }
 
     @Override
@@ -53,26 +55,42 @@ public class OrderListFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
-
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getOrderByType();
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (isFirstLoad) {
-            mModel.getOrderList(mOrderType.type, new BaseObserver<OrderListResponse>() {
-                @Override
-                protected void onError(ErrorResponse errorResponse) {
-
-                }
-
-                @Override
-                public void onNext(@NonNull OrderListResponse orderListResponse) {
-                    mAdapter.getData().clear();
-                    mAdapter.addData(orderListResponse.getData());
-                }
-            });
+            getOrderByType();
             isFirstLoad = false;
+        }
+    }
+
+    private void getOrderByType() {
+        mModel.getOrderList(mOrderType.type, new BaseObserver<OrderListResponse>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopRefresh();
+            }
+
+            @Override
+            public void onNext(@NonNull OrderListResponse orderListResponse) {
+                mAdapter.getData().clear();
+                mAdapter.addData(orderListResponse.getData());
+                stopRefresh();
+            }
+        });
+    }
+
+    private void stopRefresh() {
+        if (mSwipeRefresh.isRefreshing()) {
+            mSwipeRefresh.setRefreshing(false);
         }
     }
 

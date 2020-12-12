@@ -5,6 +5,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
+import com.chad.library.adapter.base.module.UpFetchModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.OrderListResponse;
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * create by zyf on 2020/12/11 9:11 PM
  */
-public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBean, BaseViewHolder> {
+public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBean, BaseViewHolder> implements UpFetchModule, LoadMoreModule {
     private HashMap<Integer, String> mOrderStatus;
 
 

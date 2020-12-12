@@ -28,7 +28,11 @@
         android:paddingStart="@dimen/dp_50"
         android:gravity="center_vertical"
         android:background="@drawable/shape_white_radius_15"
-        tools:ignore="RtlSymmetry" />
+        tools:ignore="RtlSymmetry"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:lines="1"
+        android:inputType="text"/>
 
     <ImageView
         android:layout_width="@dimen/dp_20"

@@ -1,8 +1,12 @@
 package com.jcs.where.home.fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -13,6 +17,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.home.model.OrderModel;
+import com.jcs.where.home.watcher.EmptyTextWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,19 +116,28 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
+        mSearchEt.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String input = textView.getText().toString();
+                OrderListFragment orderListFragment = getCurrentOrderListFragment();
+                orderListFragment.getOrderByType(input);
+                return true;
+            }
+            return false;
+        });
 
+        mSearchEt.addTextChangedListener(new EmptyTextWatcher() {
+            @Override
+            protected void onEtEmpty() {
+                OrderListFragment orderListFragment = getCurrentOrderListFragment();
+                orderListFragment.getOrderByType();
+            }
+        });
     }
 
-
-    private void updateTabTitle() {
-        for (int i = 0; i < mTabTitles.length; i++) {
-            TabLayout.Tab tab = mTabLayout.getTabAt(i);
-            if (tab != null) {
-                View customView = tab.getCustomView();
-                TextView tabTitle = customView.findViewById(R.id.tabTitle);
-                tabTitle.setText(mTabTitles[i]);
-            }
-        }
+    private OrderListFragment getCurrentOrderListFragment() {
+        int currentItem = mViewPager.getCurrentItem();
+        return mOrderListFragments.get(currentItem);
     }
 
     private void initTabTitle() {

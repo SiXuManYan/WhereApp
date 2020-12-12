@@ -86,8 +86,12 @@ public class OrderListFragment extends BaseFragment {
         }
     }
 
-    private void getOrderByType() {
-        mModel.getOrderList(mOrderType.type, new BaseObserver<OrderListResponse>() {
+    public void getOrderByType() {
+        getOrderByType("");
+    }
+
+    public void getOrderByType(String keyword) {
+        mModel.getOrderList(mOrderType.type,keyword, new BaseObserver<OrderListResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopRefresh();

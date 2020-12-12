@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,6 +13,31 @@
         android:layout_height="@dimen/dp_44"
         android:background="@color/blue_5A9DFE"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/searchEt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_15"
+        app:layout_constraintTop_toTopOf="@id/topBg"
+        app:layout_constraintBottom_toBottomOf="@id/topBg"
+        android:hint="@string/search_my_order"
+        android:textColorHint="@color/grey_BFBFBF"
+        android:textSize="@dimen/sp_13"
+        android:paddingStart="@dimen/dp_50"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_white_radius_15"
+        tools:ignore="RtlSymmetry" />
+
+    <ImageView
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        app:layout_constraintTop_toTopOf="@id/searchEt"
+        app:layout_constraintBottom_toBottomOf="@id/searchEt"
+        app:layout_constraintStart_toStartOf="@id/searchEt"
+        android:layout_marginStart="@dimen/dp_15"
+        android:src="@drawable/ic_hotelsearch"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/orderTabLayout"

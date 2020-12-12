@@ -3,6 +3,7 @@ package com.jcs.where.home.fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -30,6 +31,7 @@ public class OrderFragment extends BaseFragment {
     private OrderAdapter mAdapter;
     private View mTopBg;
     private OrderModel mModel;
+    private EditText mSearchEt;
 
     private List<OrderListFragment> mOrderListFragments;
     private String[] mTabTitles = new String[]{"全部", "待付款", "待使用", "待评价", "退款/售后"};
@@ -40,7 +42,7 @@ public class OrderFragment extends BaseFragment {
         setMargins(mTopBg, 0, getStatusBarHeight(), 0, 0);
         mViewPager = view.findViewById(R.id.viewpager);
         mTabLayout = view.findViewById(R.id.orderTabLayout);
-
+        mSearchEt = view.findViewById(R.id.searchEt);
     }
 
 

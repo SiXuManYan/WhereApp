@@ -51,6 +51,7 @@
     <string name="pay_order">支付订单</string>
     <string name="to_pay">支付</string>
     <string name="to_cancel_order">取消订单</string>
+    <string name="search_my_order">搜索我的订单</string>
 
 
 </resources>

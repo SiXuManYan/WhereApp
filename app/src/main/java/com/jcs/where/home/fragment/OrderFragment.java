@@ -78,12 +78,6 @@ public class OrderFragment extends BaseFragment {
                 mTabTitles[4] = mTabTitles[4] + getTabTitleSuffix(stringBuilder, orderNumResponse.getRefund());
                 clearStringBuilder(stringBuilder);
 
-                for (int i = 0; i < mTabTitles.length; i++) {
-                    Log.e("OrderFragment", "onNext: " + mTabTitles[i]);
-                }
-
-                Log.e("OrderFragment", "onNext: " + mTabTitles.toString());
-
                 mViewPager.setAdapter(mAdapter);
                 mTabLayout.setupWithViewPager(mViewPager);
                 mViewPager.setOffscreenPageLimit(5);

@@ -1,7 +1,9 @@
 package com.jcs.where.home.fragment;
 
+import android.util.Log;
 import android.view.View;
 
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -61,6 +63,18 @@ public class OrderListFragment extends BaseFragment {
                 getOrderByType();
             }
         });
+
+        mAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mSwipeRefresh.setRefreshing(false);
+                mAdapter.getLoadMoreModule().setEnableLoadMore(true);
+                getOrderByType();
+            }
+        });
+        //不自动加载
+        mAdapter.getLoadMoreModule().setAutoLoadMore(false);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
     }
 
     @Override

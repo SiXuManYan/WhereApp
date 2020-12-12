@@ -142,10 +142,10 @@ public class OrderFragment extends BaseFragment {
 
     private void initTabTitle() {
         mTabLayout.removeAllTabs();
-        for (int i = 0; i < mTabTitles.length; i++) {
+        for (String mTabTitle : mTabTitles) {
             TabLayout.Tab tab = mTabLayout.newTab();
             if (tab != null) {
-                tab.setCustomView(makeTabView(mTabTitles[i]));
+                tab.setCustomView(makeTabView(mTabTitle));
                 mTabLayout.addTab(tab);
             }
         }

@@ -15,10 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
 import co.tton.android.base.utils.ValueUtils;
-import co.tton.android.base.view.ToastUtils;
 
 public abstract class BaseActivity extends AppCompatActivity {
 

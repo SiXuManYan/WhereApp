@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.jcs.where.utils.ToastUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -125,5 +127,9 @@ public abstract class BaseFragment extends Fragment {
         } catch (Exception e) {
 
         }
+    }
+
+    protected void showToast(String msg) {
+        ToastUtils.showLong(getContext(), msg);
     }
 }

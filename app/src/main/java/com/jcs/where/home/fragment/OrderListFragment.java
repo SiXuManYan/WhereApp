@@ -3,6 +3,9 @@ package com.jcs.where.home.fragment;
 import android.util.Log;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -44,6 +47,7 @@ public class OrderListFragment extends BaseFragment {
     protected void initData() {
         mModel = new OrderModel();
         mAdapter = new OrderListAdapter(R.layout.item_order_list);
+        mAdapter.addChildClickViewIds(R.id.toPayTv,R.id.toCancelTv);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.addItemDecoration(new MarginTopDecoration() {
             @Override
@@ -75,6 +79,27 @@ public class OrderListFragment extends BaseFragment {
         //不自动加载
         mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+
+        mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
+                int id = view.getId();
+                if(id == R.id.toPayTv){
+                    showToast("跳转到支付页面");
+                }
+
+                if(id == R.id.toCancelTv){
+                    showToast("取消订单");
+                }
+            }
+        });
+
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@androidx.annotation.NonNull BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
+                showToast("跳转到订单详情");
+            }
+        });
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.jcs.where.home.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 
@@ -20,6 +21,10 @@ public class OrderModel extends BaseModel {
 
     public void getOrderList(int type, String keyword, BaseObserver<OrderListResponse> observer) {
         dealResponse(mRetrofit.getOrderList(type, keyword), observer);
+    }
+
+    public void getHotelOrderDetail(int orderId, BaseObserver<HotelOrderDetailResponse> observer) {
+        dealResponse(mRetrofit.getHotelOrderDetail(orderId), observer);
     }
 
 }

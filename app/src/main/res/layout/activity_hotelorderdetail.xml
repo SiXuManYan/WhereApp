@@ -11,51 +11,20 @@
         android:background="@drawable/ic_orderdetailbg" />
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/useView"
-        android:background="@color/transparency"
-        android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_white"
-        app:navigationIcon="@drawable/ic_back_white"
-        app:theme="@style/AppTheme.ActionBar">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/tv_ordernumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@+id/iv_share"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="订单号123456"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_sharewhite" />
-
-        </RelativeLayout>
-
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_alignParentTop="true"
+        app:middleTitle="订单号"
+        app:middleTitleColor="@color/white"
+        app:backIcon="@drawable/ic_back_white"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/jcsTitle"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"

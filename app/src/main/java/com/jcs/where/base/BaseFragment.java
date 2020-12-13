@@ -9,13 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.jaeger.library.StatusBarUtil;
+import com.jcs.where.R;
 import com.jcs.where.utils.ToastUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import co.tton.android.base.dialog.CustomProgressDialog;
 
@@ -23,10 +28,24 @@ public abstract class BaseFragment extends Fragment {
 
     public CustomProgressDialog dialog;
 
-    public void setMargins(View v, int l, int t, int r, int b) {
+    public void setMargins(View v, int left, int top, int right, int bottom, int barColor) {
+        setMargins(v, left, top, right, bottom);
+        if(barColor != 0){
+
+            ConstraintLayout parent = (ConstraintLayout) v.getParent();
+            View bar = new View(getContext());
+            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, top);
+            bar.setBackgroundResource(barColor);
+            lp.topToTop = parent.getTop();
+            bar.setLayoutParams(lp);
+            parent.addView(bar);
+        }
+    }
+
+    public void setMargins(View v, int left, int top, int right, int bottom) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
+            p.setMargins(left, top, right, bottom);
             v.requestLayout();
         }
     }
@@ -41,6 +60,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        StatusBarUtil.setColor(getActivity(), ContextCompat.getColor(getContext(), R.color.colorPrimary), 0);
+        fullScreen(getActivity());
         initView(view);
         initData();
         bindListener();
@@ -99,7 +120,6 @@ public abstract class BaseFragment extends Fragment {
             }
         }
     }
-
 
 
     public void showLoading(String msg) {

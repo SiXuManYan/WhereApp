@@ -18,7 +18,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
-import co.tton.android.base.utils.ValueUtils;
+import androidx.core.content.ContextCompat;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (mIsHasStatusBarColor) {
-            StatusBarUtil.setColor(this, ValueUtils.getColor(this, co.tton.android.base.R.color.colorPrimary), 0);
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorPrimary), 0);
         }
         fullScreen(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

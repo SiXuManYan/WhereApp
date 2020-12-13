@@ -1,6 +1,7 @@
 package com.jcs.where.base;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -127,6 +128,20 @@ public abstract class BaseFragment extends Fragment {
         } catch (Exception e) {
 
         }
+    }
+
+    protected void toActivity(Class<?> clazz) {
+        startActivity(new Intent(getContext(), clazz));
+    }
+
+    protected void toActivity(Class<?> clazz, IntentEntry... entrys) {
+        Intent intent = new Intent(getContext(), clazz);
+        int length = entrys.length;
+        for (int i = 0; i < length; i++) {
+            IntentEntry entry = entrys[i];
+            intent.putExtra(entry.key, entry.value);
+        }
+        startActivity(intent);
     }
 
     protected void showToast(String msg) {

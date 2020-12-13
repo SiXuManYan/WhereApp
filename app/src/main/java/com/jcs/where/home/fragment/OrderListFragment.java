@@ -1,6 +1,5 @@
 package com.jcs.where.home.fragment;
 
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,9 +11,11 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.adapter.OrderListAdapter;
 import com.jcs.where.home.decoration.MarginTopDecoration;
 import com.jcs.where.home.model.OrderModel;
+import com.jcs.where.hotel.HotelOrderDetailActivity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 /**
+ * 首页订单列表展示列表的Fragment
  * create by zyf on 2020/12/10 10:30 PM
  */
 public class OrderListFragment extends BaseFragment {
@@ -47,7 +49,7 @@ public class OrderListFragment extends BaseFragment {
     protected void initData() {
         mModel = new OrderModel();
         mAdapter = new OrderListAdapter(R.layout.item_order_list);
-        mAdapter.addChildClickViewIds(R.id.toPayTv,R.id.toCancelTv);
+        mAdapter.addChildClickViewIds(R.id.rightToTv, R.id.leftToTv);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.addItemDecoration(new MarginTopDecoration() {
             @Override
@@ -84,12 +86,12 @@ public class OrderListFragment extends BaseFragment {
             @Override
             public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
                 int id = view.getId();
-                if(id == R.id.toPayTv){
-                    showToast("跳转到支付页面");
+                if (id == R.id.rightToTv) {
+                    toActivity(mAdapter.getToRightClass(position), new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
                 }
 
-                if(id == R.id.toCancelTv){
-                    showToast("取消订单");
+                if (id == R.id.leftToTv) {
+                    toActivity(mAdapter.getToLeftClass(position), new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
                 }
             }
         });
@@ -97,7 +99,7 @@ public class OrderListFragment extends BaseFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@androidx.annotation.NonNull BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
-                showToast("跳转到订单详情");
+                HotelOrderDetailActivity.goTo(getContext(), String.valueOf(mAdapter.getItemId(position)));
             }
         });
     }
@@ -116,7 +118,7 @@ public class OrderListFragment extends BaseFragment {
     }
 
     public void getOrderByType(String keyword) {
-        mModel.getOrderList(mOrderType.type,keyword, new BaseObserver<OrderListResponse>() {
+        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<OrderListResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopRefresh();

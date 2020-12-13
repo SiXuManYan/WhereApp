@@ -44,7 +44,7 @@ public class OrderFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         mTopBg = view.findViewById(R.id.topBg);
-        setMargins(mTopBg, 0, getStatusBarHeight(), 0, 0);
+        setMargins(mTopBg, 0, getStatusBarHeight(), 0, 0, R.color.blue_5A9DFE);
         mViewPager = view.findViewById(R.id.viewpager);
         mTabLayout = view.findViewById(R.id.orderTabLayout);
         mSearchEt = view.findViewById(R.id.searchEt);

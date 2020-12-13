@@ -36,6 +36,7 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.ModulesResponse;
+import com.jcs.where.base.BaseFragment;
 import com.jcs.where.bean.BusinessBean;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HomeBannerBean;
@@ -57,7 +58,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.app.fragment.BaseFragment;
 import co.tton.android.base.utils.V;
 import co.tton.android.base.view.BaseQuickAdapter;
 import co.tton.android.base.view.ToastUtils;
@@ -88,9 +88,14 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
     private ModulesAdapter mModulesAdapter;
 
     @Override
-    protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@androidx.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getModules();
+    }
+
+    @Override
+    protected void initView(View view) {
         mModel = new HomeModel();
-        view = inflater.inflate(R.layout.fragment_home, container, false);
         bannerLl = V.f(view, R.id.ll_banner);
         ViewGroup.LayoutParams lp;
         lp = bannerLl.getLayoutParams();
@@ -130,14 +135,21 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         mModulesAdapter.setOnItemClickListener(this);
         getBannerData();
         getNewsData();
-        initView();
-        return view;
     }
 
     @Override
-    public void onViewCreated(@androidx.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getModules();
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void bindListener() {
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home;
     }
 
 

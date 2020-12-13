@@ -88,21 +88,15 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
     private ModulesAdapter mModulesAdapter;
 
     @Override
-    public void onViewCreated(@androidx.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getModules();
-    }
-
-    @Override
     protected void initView(View view) {
         mModel = new HomeModel();
-        bannerLl = V.f(view, R.id.ll_banner);
+        bannerLl = view.findViewById(R.id.ll_banner);
         ViewGroup.LayoutParams lp;
         lp = bannerLl.getLayoutParams();
         lp.height = getScreenWidth() * 100 / 345;
         bannerLl.setLayoutParams(lp);
-        banner3 = V.f(view, R.id.banner3);
-        ptrFrame = V.f(view, R.id.ptr_frame);
+        banner3 = view.findViewById(R.id.banner3);
+        ptrFrame = view.findViewById(R.id.ptr_frame);
         ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
         ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
             @Override
@@ -116,9 +110,9 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 getNewsData();
             }
         });
-        marqueeView = V.f(view, R.id.simpleMarqueeView);
-        homeRv = V.f(view, R.id.rv_home);
-        cityNameTv = V.f(view, R.id.tv_cityname);
+        marqueeView = view.findViewById(R.id.simpleMarqueeView);
+        homeRv = view.findViewById(R.id.rv_home);
+        cityNameTv = view.findViewById(R.id.tv_cityname);
         cityNameTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,13 +127,29 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         mModuleRecycler.setLayoutManager(new GridLayoutManager(getContext(), 5, RecyclerView.VERTICAL, false));
         mModuleRecycler.setAdapter(mModulesAdapter);
         mModulesAdapter.setOnItemClickListener(this);
-        getBannerData();
-        getNewsData();
+
+        List<Integer> typeList = new ArrayList<>();
+        typeList.add(1);
+        typeList.add(2);
+        HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(getContext(), typeList);
+        homeRv.removeAllViews();
+        adapter.notifyDataSetChanged();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        homeRv.setLayoutManager(linearLayoutManager);
+        homeRv.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
-
+        getBannerData();
+        getModules();
+        getNewsData();
     }
 
     @Override
@@ -319,26 +329,6 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 ToastUtils.showLong(getContext(), messageList.get(mPosition));
             }
         });
-    }
-
-    private void initView() {
-
-
-        List<Integer> typeList = new ArrayList<>();
-        typeList.add(1);
-        typeList.add(2);
-        HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(getContext(), typeList);
-        homeRv.removeAllViews();
-        adapter.notifyDataSetChanged();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        homeRv.setLayoutManager(linearLayoutManager);
-        homeRv.setAdapter(adapter);
     }
 
     @Override

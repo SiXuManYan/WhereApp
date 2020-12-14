@@ -11,13 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.category.CategoryFragment;
@@ -28,6 +21,12 @@ import com.jcs.where.home.fragment.OrderFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import co.tton.android.base.app.activity.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
@@ -86,7 +85,6 @@ public class HomeActivity extends BaseActivity {
                 } else {
                     transaction.show(fragment);
                 }
-
                 transaction.commit();
             }
 

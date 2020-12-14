@@ -67,6 +67,32 @@ public abstract class BaseFragment extends Fragment {
         bindListener();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeStatusTextColor();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        changeStatusTextColor();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        changeStatusTextColor();
+    }
+
+    private void changeStatusTextColor() {
+        setAndroidNativeLightStatusBar(getActivity(), isStatusDark());
+    }
+
+    protected boolean isStatusDark(){
+        return false;
+    }
+
     protected abstract void initView(View view);
 
     protected abstract void initData();
@@ -166,5 +192,15 @@ public abstract class BaseFragment extends Fragment {
 
     protected void showToast(String msg) {
         ToastUtils.showLong(getContext(), msg);
+    }
+
+
+    protected void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
+        View decor = activity.getWindow().getDecorView();
+        if (dark) {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 }

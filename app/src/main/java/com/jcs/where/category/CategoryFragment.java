@@ -2,8 +2,10 @@ package com.jcs.where.category;
 
 import android.view.View;
 
+import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.utils.StatusBarUtils;
 import com.jcs.where.widget.JcsTitle;
 
 
@@ -25,6 +27,11 @@ public class CategoryFragment extends BaseFragment {
     @Override
     protected void bindListener() {
 
+    }
+
+    @Override
+    protected boolean isStatusDark() {
+        return true;
     }
 
     @Override

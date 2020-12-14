@@ -90,7 +90,7 @@ public class OrderFragment extends BaseFragment {
     }
 
     private View makeTabView(String title) {
-        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_order_fragment, null);
+        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_normal_only_text, null);
         TextView tabTitle = tabView.findViewById(R.id.tabTitle);
         tabTitle.setText(title);
         return tabView;

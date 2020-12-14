@@ -1,20 +1,16 @@
 package com.jcs.where.category;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
-import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.home.HomeActivity;
 import com.jcs.where.model.CategoryModel;
-import com.jcs.where.utils.StatusBarUtils;
 import com.jcs.where.widget.JcsTitle;
 
 import java.util.ArrayList;
@@ -69,7 +65,7 @@ public class CategoryFragment extends BaseFragment {
     }
 
     private View makeTabView(String title) {
-        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_order_fragment, null);
+        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_normal_only_text, null);
         TextView tabTitle = tabView.findViewById(R.id.tabTitle);
         tabTitle.setText(title);
         return tabView;

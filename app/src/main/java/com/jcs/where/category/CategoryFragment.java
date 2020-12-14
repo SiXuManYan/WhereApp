@@ -37,14 +37,17 @@ public class CategoryFragment extends BaseFragment {
     protected void initData() {
         mModel = new CategoryModel();
         mTabCategories = new ArrayList<>();
+        showLoading();
         mModel.getCategories(new BaseObserver<List<CategoryResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-
+                stopLoading();
+                showNetError(errorResponse);
             }
 
             @Override
             public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
+                stopLoading();
                 mTabCategories.clear();
                 mTabCategories.addAll(categoryResponses);
                 int size = categoryResponses.size();

@@ -41,7 +41,7 @@ import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
 import com.jcs.where.home.activity.TravelStayActivity;
-import com.jcs.where.home.adapter.ModulesAdapter;
+import com.jcs.where.adapter.ModulesAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.model.HomeModel;
 import com.jcs.where.hotel.CityPickerActivity;

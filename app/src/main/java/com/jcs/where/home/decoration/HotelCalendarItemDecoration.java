@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcs.where.R;
 import com.jcs.where.base.BaseItemDecoration;
-import com.jcs.where.home.adapter.HotelCalendarAdapter;
+import com.jcs.where.adapter.HotelCalendarAdapter;
 
 public class HotelCalendarItemDecoration extends BaseItemDecoration {
     private Paint mHeaderBgPaint;

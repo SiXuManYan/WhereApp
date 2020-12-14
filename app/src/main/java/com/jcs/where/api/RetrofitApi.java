@@ -2,6 +2,7 @@ package com.jcs.where.api;
 
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.response.BannerResponse;
+import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
@@ -44,6 +45,12 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v1/categories")
     Observable<List<CategoryResponse>> getCategories(@Query("level") int level, @Query("pid") int[] categories);
+
+    /**
+     * 获得CategoryFragment页面展示的一级二级分类数据
+     */
+    @GET("/commonapi/v1/categories/list")
+    Observable<List<ParentCategoryResponse>> getParentCategory();
 
     /**
      * 酒店猜你喜欢的酒店列表

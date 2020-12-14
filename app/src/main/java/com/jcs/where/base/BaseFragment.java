@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.utils.ToastUtils;
 
 import androidx.annotation.NonNull;
@@ -202,5 +203,9 @@ public abstract class BaseFragment extends Fragment {
         } else {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
+    }
+
+    protected void showNetError(ErrorResponse errorResponse) {
+        ToastUtils.showLong(getContext(), errorResponse.getErrMsg());
     }
 }

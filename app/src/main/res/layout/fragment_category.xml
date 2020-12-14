@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_35"
         app:tabMode="scrollable"
+        android:background="@color/grey_F5F5F5"
         app:layout_constraintTop_toBottomOf="@id/jcsTitle">
 
     </com.google.android.material.tabs.TabLayout>

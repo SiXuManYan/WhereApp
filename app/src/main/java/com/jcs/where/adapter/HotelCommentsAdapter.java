@@ -1,4 +1,4 @@
-package com.jcs.where.home.adapter;
+package com.jcs.where.adapter;
 
 import android.text.TextUtils;
 import android.view.View;

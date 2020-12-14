@@ -9,6 +9,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.model.CategoryModel;
 import com.jcs.where.widget.JcsTitle;
@@ -58,6 +59,18 @@ public class CategoryFragment extends BaseFragment {
                     tab.setCustomView(makeTabView(categoryResponse.getName()));
                     mTabLayout.addTab(tab);
                 }
+            }
+        });
+
+        mModel.getParentCategory(new BaseObserver<List<ParentCategoryResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NonNull List<ParentCategoryResponse> parentCategoryResponses) {
+
             }
         });
     }

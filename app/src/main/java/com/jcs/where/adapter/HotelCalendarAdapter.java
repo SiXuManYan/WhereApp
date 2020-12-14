@@ -1,4 +1,4 @@
-package com.jcs.where.home.adapter;
+package com.jcs.where.adapter;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.entity.JSectionEntity;

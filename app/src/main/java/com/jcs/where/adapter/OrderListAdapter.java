@@ -1,6 +1,5 @@
-package com.jcs.where.home.adapter;
+package com.jcs.where.adapter;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;

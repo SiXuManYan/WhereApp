@@ -1,6 +1,5 @@
 package com.jcs.where.home.dialog;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcs.where.R;
 import com.jcs.where.base.BaseDialog;
-import com.jcs.where.home.adapter.HotelCalendarAdapter;
-import com.jcs.where.home.adapter.HotelCalendarAdapter.HotelCalendarBean;
+import com.jcs.where.adapter.HotelCalendarAdapter;
+import com.jcs.where.adapter.HotelCalendarAdapter.HotelCalendarBean;
 import com.jcs.where.home.decoration.HotelCalendarItemDecoration;
 
 import java.text.SimpleDateFormat;

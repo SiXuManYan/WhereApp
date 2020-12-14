@@ -3,6 +3,7 @@ package com.jcs.where.model;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.ParentCategoryResponse;
 
 import java.util.List;
 
@@ -16,5 +17,12 @@ public class CategoryModel extends BaseModel {
      */
     public void getCategories(BaseObserver<List<CategoryResponse>> observer) {
         dealResponse(mRetrofit.getCategories(1, new int[]{0}), observer);
+    }
+
+    /**
+     * 获得CategoryFragment页面展示的一级二级分类数据
+     */
+    public void getParentCategory(BaseObserver<List<ParentCategoryResponse>> observer) {
+        dealResponse(mRetrofit.getParentCategory(), observer);
     }
 }

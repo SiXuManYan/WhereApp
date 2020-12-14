@@ -1,4 +1,4 @@
-package com.jcs.where.home.model;
+package com.jcs.where.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;

@@ -1,9 +1,5 @@
 package com.jcs.where.home.fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,7 +12,7 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.home.model.OrderModel;
+import com.jcs.where.model.OrderModel;
 import com.jcs.where.home.watcher.EmptyTextWatcher;
 
 import java.util.ArrayList;

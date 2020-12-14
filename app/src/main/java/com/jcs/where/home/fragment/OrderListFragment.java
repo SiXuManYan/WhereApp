@@ -14,7 +14,7 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.adapter.OrderListAdapter;
 import com.jcs.where.home.decoration.MarginTopDecoration;
-import com.jcs.where.home.model.OrderModel;
+import com.jcs.where.model.OrderModel;
 import com.jcs.where.hotel.HotelOrderDetailActivity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;

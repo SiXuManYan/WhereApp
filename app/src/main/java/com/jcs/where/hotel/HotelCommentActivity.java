@@ -19,7 +19,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.home.adapter.HotelCommentsAdapter;
-import com.jcs.where.home.model.HotelCommentModel;
+import com.jcs.where.model.HotelCommentModel;
 import com.jcs.where.utils.ImagePreviewActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 

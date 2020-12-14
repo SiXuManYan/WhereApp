@@ -24,7 +24,7 @@ import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.home.adapter.ModulesCategoryAdapter;
 import com.jcs.where.home.adapter.TravelStayHotelAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
-import com.jcs.where.home.model.TravelStayModel;
+import com.jcs.where.model.TravelStayModel;
 import com.stx.xhb.androidx.XBanner;
 import com.stx.xhb.androidx.entity.BaseBannerInfo;
 

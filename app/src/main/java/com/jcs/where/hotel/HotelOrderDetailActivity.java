@@ -10,7 +10,7 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.home.model.OrderModel;
+import com.jcs.where.model.OrderModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 

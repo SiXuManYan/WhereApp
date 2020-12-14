@@ -46,7 +46,7 @@ import com.jcs.where.bean.RoomDetailBean;
 import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
-import com.jcs.where.home.model.HotelDetailModel;
+import com.jcs.where.model.HotelDetailModel;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.popupwindow.RoomDetailPopup;
 import com.jcs.where.view.ObservableScrollView;

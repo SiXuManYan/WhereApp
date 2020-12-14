@@ -14,18 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.bean.HotelTypeBean;
-import com.jcs.where.home.model.HotelListModel;
+import com.jcs.where.model.HotelListModel;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 

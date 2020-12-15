@@ -1,6 +1,5 @@
 package com.jcs.where.category;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +33,8 @@ public class CategoryFragment extends BaseFragment {
     private CategoryGroupAdapter mAdapter;
     private List<CategoryResponse> mTabCategories;
     private List<ParentCategoryResponse> mData;
+    private boolean isRecyclerScrolling = true;
+    private boolean isTabSelected = false;
 
     @Override
 
@@ -98,26 +99,51 @@ public class CategoryFragment extends BaseFragment {
             @Override
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                //判断是当前layoutManager是否为LinearLayoutManager
-                // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
-                if (layoutManager instanceof GridLayoutManager) {
-                    GridLayoutManager linearManager = (GridLayoutManager) layoutManager;
-                    //获取第一个可见view的位置
-                    int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                    BaseNode baseNode = mAdapter.getData().get(firstItemPosition);
-                    if (baseNode instanceof ParentCategoryResponse) {
-                        firstItemPosition = mData.indexOf(baseNode);
-                    } else {
-                        firstItemPosition = mData.indexOf(mAdapter.getItem(mAdapter.findParentNode(baseNode)));
+                if (newState == 0 && !isTabSelected && isRecyclerScrolling) {
+                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                    if (layoutManager instanceof GridLayoutManager) {
+                        GridLayoutManager linearManager = (GridLayoutManager) layoutManager;
+                        //获取第一个可见view的位置
+                        int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                        BaseNode baseNode = mAdapter.getData().get(firstItemPosition);
+                        if (baseNode instanceof ParentCategoryResponse) {
+                            firstItemPosition = mData.indexOf(baseNode);
+                        } else {
+                            firstItemPosition = mData.indexOf(mAdapter.getItem(mAdapter.findParentNode(baseNode)));
+                        }
+                        mTabLayout.selectTab(mTabLayout.getTabAt(firstItemPosition));
                     }
-                    mTabLayout.selectTab(mTabLayout.getTabAt(firstItemPosition));
                 }
+
             }
 
             @Override
             public void onScrolled(@androidx.annotation.NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                isTabSelected = true;
+                isRecyclerScrolling = false;
+                if (mAdapter != null && mAdapter.getItemCount() > 0 && !isRecyclerScrolling) {
+                    int tabPosition = tab.getPosition();
+                    ParentCategoryResponse parentCategoryResponse = mData.get(tabPosition);
+                    int parentPosition = mAdapter.getItemPosition(parentCategoryResponse);
+                    mRecycler.scrollToPosition(parentPosition);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }

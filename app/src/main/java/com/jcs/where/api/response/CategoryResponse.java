@@ -1,6 +1,12 @@
 package com.jcs.where.api.response;
 
-public class CategoryResponse {
+import com.chad.library.adapter.base.entity.node.BaseNode;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+public class CategoryResponse extends BaseNode {
 
     /**
      * id : 119
@@ -54,5 +60,11 @@ public class CategoryResponse {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    @Nullable
+    @Override
+    public List<BaseNode> getChildNode() {
+        return null;
     }
 }

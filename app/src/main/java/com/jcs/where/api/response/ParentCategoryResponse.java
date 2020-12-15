@@ -1,11 +1,17 @@
 package com.jcs.where.api.response;
 
+import com.chad.library.adapter.base.entity.SectionEntity;
+import com.chad.library.adapter.base.entity.node.BaseNode;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * create by zyf on 2020/12/14 9:09 PM
  */
-public class ParentCategoryResponse {
+public class ParentCategoryResponse extends BaseNode {
 
 
     /**
@@ -70,5 +76,13 @@ public class ParentCategoryResponse {
 
     public void setChild_categories(List<CategoryResponse> child_categories) {
         this.child_categories = child_categories;
+    }
+
+    @Nullable
+    @Override
+    public List<BaseNode> getChildNode() {
+        List<BaseNode> temp = new ArrayList<>();
+        temp.addAll(child_categories);
+        return temp;
     }
 }

@@ -99,7 +99,12 @@ public class CategoryFragment extends BaseFragment {
             @Override
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == 0 && !isTabSelected && isRecyclerScrolling) {
+                if (isTabSelected) {
+                    isTabSelected = false;
+                    return;
+                }
+                isRecyclerScrolling = true;
+                if (newState == 0) {
                     RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                     if (layoutManager instanceof GridLayoutManager) {
                         GridLayoutManager linearManager = (GridLayoutManager) layoutManager;
@@ -126,13 +131,17 @@ public class CategoryFragment extends BaseFragment {
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if (isRecyclerScrolling) {
+                    isRecyclerScrolling = false;
+                    return;
+                }
                 isTabSelected = true;
-                isRecyclerScrolling = false;
-                if (mAdapter != null && mAdapter.getItemCount() > 0 && !isRecyclerScrolling) {
+                if (mAdapter != null && mAdapter.getItemCount() > 0) {
                     int tabPosition = tab.getPosition();
                     ParentCategoryResponse parentCategoryResponse = mData.get(tabPosition);
                     int parentPosition = mAdapter.getItemPosition(parentCategoryResponse);
-                    mRecycler.scrollToPosition(parentPosition);
+                    GridLayoutManager manager = (GridLayoutManager) mRecycler.getLayoutManager();
+                    manager.scrollToPositionWithOffset(parentPosition, 0);
                 }
             }
 

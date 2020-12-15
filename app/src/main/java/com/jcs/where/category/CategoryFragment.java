@@ -108,11 +108,8 @@ public class CategoryFragment extends BaseFragment {
                     BaseNode baseNode = mAdapter.getData().get(firstItemPosition);
                     if (baseNode instanceof ParentCategoryResponse) {
                         firstItemPosition = mData.indexOf(baseNode);
-                        Log.e("CategoryFragment", "ParentCategoryResponse: " + "firstItemPosition=" + firstItemPosition);
                     } else {
                         firstItemPosition = mData.indexOf(mAdapter.getItem(mAdapter.findParentNode(baseNode)));
-                        Log.e("CategoryFragment", "CategoryResponse: " + "firstItemPosition=" + firstItemPosition);
-
                     }
                     mTabLayout.selectTab(mTabLayout.getTabAt(firstItemPosition));
                 }

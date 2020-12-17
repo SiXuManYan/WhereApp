@@ -18,6 +18,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.model.HotelListModel;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
@@ -25,9 +26,6 @@ import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
 import io.reactivex.annotations.NonNull;
 
 public class HotelListActivity extends BaseActivity {
@@ -98,17 +96,18 @@ public class HotelListActivity extends BaseActivity {
         initData();
     }
 
-    private void initView() {
-        mTab = V.f(this, R.id.tab);
-        mViewPager = V.f(this, R.id.viewPager);
-        startDayTv = V.f(this, R.id.tv_startday);
-        hotelListLl = V.f(this, R.id.ll_hotellist);
+    @Override
+    protected void initView() {
+        mTab = findViewById(R.id.tab);
+        mViewPager = findViewById(R.id.viewPager);
+        startDayTv = findViewById(R.id.tv_startday);
+        hotelListLl = findViewById(R.id.ll_hotellist);
         startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
-        endDayTv = V.f(this, R.id.tv_endday);
+        endDayTv = findViewById(R.id.tv_endday);
         endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
-        cityTv = V.f(this, R.id.tv_city);
+        cityTv = findViewById(R.id.tv_city);
         // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
-        chooseDateLl = V.f(this, R.id.ll_choosedate);
+        chooseDateLl = findViewById(R.id.ll_choosedate);
         chooseDateLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,24 +134,23 @@ public class HotelListActivity extends BaseActivity {
 //                        }).builder();
 
                 View customView = View.inflate(HotelListActivity.this, R.layout.pop_maptitle, null);
-                TextView startDateTv = V.f(customView, R.id.tv_startdate);
+                TextView startDateTv = customView.findViewById(R.id.tv_startdate);
                 startDateTv.setText(mStartDate);
-                TextView endDateTv = V.f(customView, R.id.tv_enddate);
+                TextView endDateTv = customView.findViewById(R.id.tv_enddate);
                 endDateTv.setText(mEndData);
-                TextView allDayTv = V.f(customView, R.id.tv_allday);
+                TextView allDayTv = customView.findViewById(R.id.tv_allday);
                 allDayTv.setText(mAllDay);
-                TextView roomNumTv = V.f(customView, R.id.tv_roomnum);
+                TextView roomNumTv = customView.findViewById(R.id.tv_roomnum);
                 roomNumTv.setText(mRoomNum);
-                V.f(customView, R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
+                customView.findViewById(R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int roomNum = Integer.valueOf(roomNumTv.getText().toString());
+                        int roomNum = Integer.parseInt(roomNumTv.getText().toString());
                         if (roomNum == 1) {
-                            ToastUtils.showLong(HotelListActivity.this, "不能再减了");
-                            return;
+                            showToast("不能再减了");
                         } else {
                             roomNum--;
-                            roomNumTv.setText(roomNum + "");
+                            roomNumTv.setText(String.valueOf(roomNum));
                             for (int i = 0; i < fragments.size(); i++) {
                                 ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
                             }
@@ -160,19 +158,19 @@ public class HotelListActivity extends BaseActivity {
                         }
                     }
                 });
-                V.f(customView, R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
+                customView.findViewById(R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int roomNum1 = Integer.valueOf(roomNumTv.getText().toString());
+                        int roomNum1 = Integer.parseInt(roomNumTv.getText().toString());
                         roomNum1++;
-                        roomNumTv.setText(roomNum1 + "");
+                        roomNumTv.setText(String.valueOf(roomNum1));
                         for (int i = 0; i < fragments.size(); i++) {
                             ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
                         }
                         mRoomNum = roomNumTv.getText().toString();
                     }
                 });
-                V.f(customView, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+                customView.findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -180,45 +178,33 @@ public class HotelListActivity extends BaseActivity {
                 });
             }
         });
-        V.f(this, R.id.iv_map).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HotelMapActivity.goTo(HotelListActivity.this,
-                        mStartDate,
-                        mEndData,
-                        mStartWeek,
-                        mEndWeek,
-                        mAllDay,
-                        getIntent().getStringExtra(EXT_CITY),
-                        getIntent().getStringExtra(EXT_CITYID),
-                        getIntent().getStringExtra(EXT_PRICE),
-                        getIntent().getStringExtra(EXT_STAR),
-                        mStartYear,
-                        mEndYear,
-                        mRoomNum
-                );
-            }
-        });
-        V.f(this, R.id.rl_search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
-            }
-        });
-        clearIv = V.f(this, R.id.iv_clear);
+        findViewById(R.id.iv_map).setOnClickListener(view -> HotelMapActivity.goTo(HotelListActivity.this,
+                mStartDate,
+                mEndData,
+                mStartWeek,
+                mEndWeek,
+                mAllDay,
+                getIntent().getStringExtra(EXT_CITY),
+                getIntent().getStringExtra(EXT_CITYID),
+                getIntent().getStringExtra(EXT_PRICE),
+                getIntent().getStringExtra(EXT_STAR),
+                mStartYear,
+                mEndYear,
+                mRoomNum
+        ));
+        findViewById(R.id.rl_search).setOnClickListener(view -> HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH));
+        clearIv = findViewById(R.id.iv_clear);
         clearIv.setVisibility(View.GONE);
-        clearIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cityTv.setText("请输入酒店名称");
-                ((HotelListFragment) fragments.get(0)).setSearchText("");
-                clearIv.setVisibility(View.GONE);
-                cityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
-            }
+        clearIv.setOnClickListener(view -> {
+            cityTv.setText("请输入酒店名称");
+            ((HotelListFragment) fragments.get(0)).setSearchText("");
+            clearIv.setVisibility(View.GONE);
+            cityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
         });
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         mModel = new HotelListModel();
         showLoading();
         int[] categories = new int[]{Integer.parseInt(mParentCategoryId)};
@@ -235,9 +221,14 @@ public class HotelListActivity extends BaseActivity {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                ToastUtils.showLong(HotelListActivity.this, errorResponse.getErrMsg());
+                showNetError(errorResponse);
             }
         });
+    }
+
+    @Override
+    protected void bindListener() {
+        
     }
 
     private void initTab(List<CategoryResponse> list) {
@@ -305,9 +296,9 @@ public class HotelListActivity extends BaseActivity {
         if (requestCode == REQ_SEARCH && data != null) {
             clearIv.setVisibility(View.VISIBLE);
             mViewPager.setCurrentItem(0);
-            cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
+            cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
             cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
-            ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
+            ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
         }
     }
 }

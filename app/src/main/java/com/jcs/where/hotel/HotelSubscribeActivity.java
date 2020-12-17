@@ -19,6 +19,7 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.response.HotelOrderResponse;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.codepicker.Country;
 import com.jcs.where.codepicker.CountryPicker;
@@ -26,9 +27,6 @@ import com.jcs.where.codepicker.OnPick;
 import com.jcs.where.home.dialog.AreaCodeListDialog;
 import com.jcs.where.model.HotelSubscribeModel;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
 import io.reactivex.annotations.NonNull;
 
 public class HotelSubscribeActivity extends BaseActivity implements View.OnClickListener, AreaCodeListDialog.AreaCodeListCallback {
@@ -71,28 +69,29 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
         initView();
     }
 
-    private void initView() {
-        toolbar = V.f(this, R.id.toolbar);
+    @Override
+    protected void initView() {
+        toolbar = findViewById(R.id.toolbar);
         setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
-        hotelNameTv = V.f(this, R.id.tv_hotelname);
+        hotelNameTv = findViewById(R.id.tv_hotelname);
         hotelNameTv.setText(subscribeBean.hotelName);
-        roomNameTv = V.f(this, R.id.tv_roomname);
+        roomNameTv = findViewById(R.id.tv_roomname);
         roomNameTv.setText(subscribeBean.roomName);
-        startDateTv = V.f(this, R.id.tv_startdate);
+        startDateTv = findViewById(R.id.tv_startdate);
         startDateTv.setText(subscribeBean.startDate);
-        startWeekTv = V.f(this, R.id.tv_startweek);
+        startWeekTv = findViewById(R.id.tv_startweek);
         startWeekTv.setText("(" + subscribeBean.startWeek + ")");
-        endDateTv = V.f(this, R.id.tv_enddate);
+        endDateTv = findViewById(R.id.tv_enddate);
         endDateTv.setText(subscribeBean.endDate);
-        endWeekTv = V.f(this, R.id.tv_endweek);
+        endWeekTv = findViewById(R.id.tv_endweek);
         endWeekTv.setText("(" + subscribeBean.endWeek + ")");
-        nightTv = V.f(this, R.id.tv_night);
+        nightTv = findViewById(R.id.tv_night);
         nightTv.setText(subscribeBean.night);
-        bedTv = V.f(this, R.id.tv_bed);
+        bedTv = findViewById(R.id.tv_bed);
         bedTv.setText(subscribeBean.bed);
-        breakfastTv = V.f(this, R.id.tv_breakfast);
+        breakfastTv = findViewById(R.id.tv_breakfast);
         breakfastTv.setText(subscribeBean.breakfast);
-        windowTv = V.f(this, R.id.tv_window);
+        windowTv = findViewById(R.id.tv_window);
         mAreaTv = findViewById(R.id.areaCodeTv);
         mAreaTv.setOnClickListener(this);
         if (subscribeBean.window == 1) {
@@ -100,22 +99,22 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
         } else {
             windowTv.setText("无窗");
         }
-        wifiTv = V.f(this, R.id.tv_wifi);
+        wifiTv = findViewById(R.id.tv_wifi);
         if (subscribeBean.wifi == 1) {
             wifiTv.setText("有WIFI");
         } else {
             wifiTv.setText("无WIFI");
         }
-        peopleTv = V.f(this, R.id.tv_people);
+        peopleTv = findViewById(R.id.tv_people);
         peopleTv.setText(subscribeBean.people + "人入住");
-        cancelTv = V.f(this, R.id.tv_cancel);
+        cancelTv = findViewById(R.id.tv_cancel);
         if (subscribeBean.cancel == 1) {
             cancelTv.setText("可取消");
         } else {
             cancelTv.setText("不可取消");
         }
-        phoneTv = V.f(this, R.id.tv_phone);
-        V.f(this, R.id.rl_choosephone).setOnClickListener(new View.OnClickListener() {
+        phoneTv = findViewById(R.id.tv_phone);
+        findViewById(R.id.rl_choosephone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CountryPicker.newInstance(null, new OnPick() {
@@ -126,21 +125,32 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
                 }).show(getSupportFragmentManager(), "country");
             }
         });
-        roomNumTv = V.f(this, R.id.tv_roomnum);
+        roomNumTv = findViewById(R.id.tv_roomnum);
         roomNumTv.setText(subscribeBean.roomNumber);
-        reduceIv = V.f(this, R.id.iv_roomreduce);
+        reduceIv = findViewById(R.id.iv_roomreduce);
         reduceIv.setOnClickListener(this);
-        addIv = V.f(this, R.id.iv_roomadd);
+        addIv = findViewById(R.id.iv_roomadd);
         addIv.setOnClickListener(this);
-        priceTv = V.f(this, R.id.tv_price);
-        night = Integer.valueOf(subscribeBean.night.replace("₱", "").replace("共", "").replace("晚", ""));
-        priceTv.setText("₱" + Integer.valueOf(roomNumTv.getText().toString()) * subscribeBean.roomPrice * night);
-        V.f(this, R.id.tv_submit).setOnClickListener(this);
-        nameEt = V.f(this, R.id.et_name);
-        phoneEt = V.f(this, R.id.et_phone);
+        priceTv = findViewById(R.id.tv_price);
+        night = Integer.parseInt(subscribeBean.night.replace("₱", "").replace("共", "").replace("晚", ""));
+        String priceText = "₱" + Integer.parseInt(roomNumTv.getText().toString()) * subscribeBean.roomPrice * night;
+        priceTv.setText(priceText);
+        findViewById(R.id.tv_submit).setOnClickListener(this);
+        nameEt = findViewById(R.id.et_name);
+        phoneEt = findViewById(R.id.et_phone);
 
         mAreaCodeListDialog = new AreaCodeListDialog();
         mAreaCodeListDialog.injectCallback(this);
+    }
+
+    @Override
+    protected void initData() {
+        
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     @Override
@@ -154,7 +164,7 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
             case R.id.iv_roomreduce:
                 int roomNum = Integer.valueOf(roomNumTv.getText().toString());
                 if (roomNum == 1) {
-                    ToastUtils.showLong(HotelSubscribeActivity.this, "不能再减了");
+                    showToast("不能再减了");
                     return;
                 } else {
                     roomNum--;
@@ -170,11 +180,11 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.tv_submit:
                 if (TextUtils.isEmpty(nameEt.getText().toString())) {
-                    ToastUtils.showLong(HotelSubscribeActivity.this, "请填写姓名");
+                    showToast("请填写姓名");
                     return;
                 }
                 if (TextUtils.isEmpty(phoneEt.getText().toString().trim())) {
-                    ToastUtils.showLong(HotelSubscribeActivity.this, "请填写手机");
+                    showToast("请填写手机");
                     return;
                 }
                 submit();
@@ -199,13 +209,13 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                ToastUtils.showLong(HotelSubscribeActivity.this, errorResponse.getErrMsg());
+                showNetError(errorResponse);
             }
 
             @Override
             public void onNext(@NonNull HotelOrderResponse hotelOrderResponse) {
                 stopLoading();
-                ToastUtils.showLong(HotelSubscribeActivity.this, "预订成功");
+                showToast("预订成功");
                 HotelPayActivity.goTo(HotelSubscribeActivity.this, hotelOrderResponse);
             }
         });

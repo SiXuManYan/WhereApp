@@ -32,6 +32,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
@@ -40,6 +42,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelCommentBean;
 import com.jcs.where.bean.RoomDetailBean;
@@ -55,14 +58,12 @@ import com.jcs.where.view.XBanner.XBanner;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
-import co.tton.android.base.view.ToastUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import pl.droidsonroids.gif.GifImageView;
@@ -159,37 +160,38 @@ public class HotelDetailActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
-        toolbar = V.f(this, R.id.toolbar);
+    @Override
+    protected void initView() {
+        toolbar = findViewById(R.id.toolbar);
         //  setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
-        useView = V.f(this, R.id.useView);
-        likeIv = V.f(this, R.id.iv_like);
-        shareIv = V.f(this, R.id.iv_share);
+        useView = findViewById(R.id.useView);
+        likeIv = findViewById(R.id.iv_like);
+        shareIv = findViewById(R.id.iv_share);
         titleTv = findViewById(R.id.titleTv);
-        nameTv = V.f(this, R.id.tv_name);
-        banner = V.f(this, R.id.banner3);
-        startTimeTv = V.f(this, R.id.tv_startTime);
-        starTv = V.f(this, R.id.tv_star);
-        commnetNumberTv = V.f(this, R.id.tv_commentnumber);
-        faceBookRl = V.f(this, R.id.rl_facebook);
-        faceBookTv = V.f(this, R.id.tv_facebookadress);
+        nameTv = findViewById(R.id.tv_name);
+        banner = findViewById(R.id.banner3);
+        startTimeTv = findViewById(R.id.tv_startTime);
+        starTv = findViewById(R.id.tv_star);
+        commnetNumberTv = findViewById(R.id.tv_commentnumber);
+        faceBookRl = findViewById(R.id.rl_facebook);
+        faceBookTv = findViewById(R.id.tv_facebookadress);
         faceBookRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 WebViewActivity.goTo(HotelDetailActivity.this, faceBookLink.trim());
             }
         });
-        faceLine = V.f(this, R.id.faceline);
-        checkInTv = V.f(this, R.id.tv_checkin);
-        checkOutTv = V.f(this, R.id.tv_checkout);
-        addressTv = V.f(this, R.id.tv_address);
-        V.f(this, R.id.rl_navigation).setOnClickListener(new View.OnClickListener() {
+        faceLine = findViewById(R.id.faceline);
+        checkInTv = findViewById(R.id.tv_checkin);
+        checkOutTv = findViewById(R.id.tv_checkout);
+        addressTv = findViewById(R.id.tv_address);
+        findViewById(R.id.rl_navigation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showLong(HotelDetailActivity.this, "导航");
+                showToast("导航");
             }
         });
-        V.f(this, R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(HotelDetailActivity.this)
@@ -212,17 +214,17 @@ public class HotelDetailActivity extends BaseActivity {
                 alertDialog2.show();
             }
         });
-        startDateTv = V.f(this, R.id.tv_startday);
+        startDateTv = findViewById(R.id.tv_startday);
         startDateTv.setText(getIntent().getStringExtra(EXT_STARTDAY));
-        startWeekTv = V.f(this, R.id.tv_startweek);
+        startWeekTv = findViewById(R.id.tv_startweek);
         startWeekTv.setText(getIntent().getStringExtra(EXT_STARTWEEK));
-        endDateTv = V.f(this, R.id.tv_endday);
+        endDateTv = findViewById(R.id.tv_endday);
         endDateTv.setText(getIntent().getStringExtra(EXT_ENDDAY));
-        endWeekTv = V.f(this, R.id.tv_endweek);
+        endWeekTv = findViewById(R.id.tv_endweek);
         endWeekTv.setText(getIntent().getStringExtra(EXT_ENDWEEK));
-        allDayTv = V.f(this, R.id.tv_allday);
+        allDayTv = findViewById(R.id.tv_allday);
         allDayTv.setText(getIntent().getStringExtra(EXT_ALLDAY));
-        roomRv = V.f(this, R.id.rv_room);
+        roomRv = findViewById(R.id.rv_room);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                 LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -230,9 +232,9 @@ public class HotelDetailActivity extends BaseActivity {
                 return false;
             }
         };
-        roomAdapter = new RoomAdapter(HotelDetailActivity.this);
+        roomAdapter = new RoomAdapter();
         roomRv.setLayoutManager(linearLayoutManager);
-        facilitiesRv = V.f(this, R.id.rv_facilities);
+        facilitiesRv = findViewById(R.id.rv_facilities);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HotelDetailActivity.this, 2) {
             @Override
             public boolean canScrollVertically() {
@@ -240,11 +242,11 @@ public class HotelDetailActivity extends BaseActivity {
             }
         };
         facilitiesRv.setLayoutManager(gridLayoutManager);
-        facilitiesAdapter = new FacilitiesAdapter(HotelDetailActivity.this);
-        policyStartTimeTv = V.f(this, R.id.tv_policystarttime);
-        policyEndTimeTv = V.f(this, R.id.tv_policyendtime);
-        policyChildrenTv = V.f(this, R.id.tv_policychildren);
-        scrollView = V.f(this, R.id.scrollView);
+        facilitiesAdapter = new FacilitiesAdapter();
+        policyStartTimeTv = findViewById(R.id.tv_policystarttime);
+        policyEndTimeTv = findViewById(R.id.tv_policyendtime);
+        policyChildrenTv = findViewById(R.id.tv_policychildren);
+        scrollView = findViewById(R.id.scrollView);
         useView.setBackgroundColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(getResources().getColor(R.color.white));
         scrollView.setScrollViewListener(new ObservableScrollView.OnScrollChangeListener() {
@@ -289,18 +291,18 @@ public class HotelDetailActivity extends BaseActivity {
         });
         useView.getBackground().setAlpha(0);
         toolbar.getBackground().setAlpha(0);//透明
-        commentLl = V.f(this, R.id.ll_comment);
-        commentAvaterIv = V.f(this, R.id.iv_commentavatar);
-        commentNameTv = V.f(this, R.id.username);
-        commentDetailTv = V.f(this, R.id.tv_commentdetail);
-        seeMoreTv = V.f(this, R.id.tv_seemore);
+        commentLl = findViewById(R.id.ll_comment);
+        commentAvaterIv = findViewById(R.id.iv_commentavatar);
+        commentNameTv = findViewById(R.id.username);
+        commentDetailTv = findViewById(R.id.tv_commentdetail);
+        seeMoreTv = findViewById(R.id.tv_seemore);
         seeMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
             }
         });
-        V.f(this, R.id.tv_commentnumber).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_commentnumber).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
@@ -312,23 +314,24 @@ public class HotelDetailActivity extends BaseActivity {
                 collection(like != 1);
             }
         });
-        hotelDetailRl = V.f(this, R.id.rl_hoteldetail);
-        navigationRl = V.f(this, R.id.rl_navigation);
-        V.f(this, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+        hotelDetailRl = findViewById(R.id.rl_hoteldetail);
+        navigationRl = findViewById(R.id.rl_navigation);
+        findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         });
-        star1Iv = V.f(this, R.id.iv_star1);
-        star2Iv = V.f(this, R.id.iv_star2);
-        star3Iv = V.f(this, R.id.iv_star3);
-        star4Iv = V.f(this, R.id.iv_star4);
-        star5Iv = V.f(this, R.id.iv_star5);
-        timeTv = V.f(this, R.id.tv_time);
+        star1Iv = findViewById(R.id.iv_star1);
+        star2Iv = findViewById(R.id.iv_star2);
+        star3Iv = findViewById(R.id.iv_star3);
+        star4Iv = findViewById(R.id.iv_star4);
+        star5Iv = findViewById(R.id.iv_star5);
+        timeTv = findViewById(R.id.tv_time);
         initData();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         mModel = new HotelDetailModel();
         hotelId = getIntent().getIntExtra(EXT_ID, 0);
         showLoading();
@@ -337,7 +340,7 @@ public class HotelDetailActivity extends BaseActivity {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, errorResponse.getErrMsg());
+                showNetError(errorResponse);
             }
 
             @Override
@@ -393,9 +396,11 @@ public class HotelDetailActivity extends BaseActivity {
                 });
                 hotelName = hotelDetailResponse.getName();
                 hotelBreakfast = hotelDetailResponse.getPolicy().getBreadfast();
-                startTimeTv.setText(hotelDetailResponse.getStart_business_time() + "开业");
-                starTv.setText(hotelDetailResponse.getGrade() + "");
-                commnetNumberTv.setText(hotelDetailResponse.getComment_counts() + "条评论");
+                String startText = hotelDetailResponse.getStart_business_time() + "开业";
+                startTimeTv.setText(startText);
+                starTv.setText(String.valueOf(hotelDetailResponse.getGrade()));
+                String commentNumberText = hotelDetailResponse.getComment_counts() + "条评论";
+                commnetNumberTv.setText(commentNumberText);
                 if (TextUtils.isEmpty(hotelDetailResponse.getFacebook_link())) {
                     faceBookRl.setVisibility(View.GONE);
                     faceLine.setVisibility(View.GONE);
@@ -404,15 +409,16 @@ public class HotelDetailActivity extends BaseActivity {
                     faceLine.setVisibility(View.VISIBLE);
                     faceBookLink = hotelDetailResponse.getFacebook_link();
                 }
-                checkInTv.setText("入住时间：" + hotelDetailResponse.getPolicy().getCheck_in_time().substring(0, 5));
-                checkOutTv.setText("退房时间：" + hotelDetailResponse.getPolicy().getCheck_out_time().substring(0, 5));
+                checkInTv.setText(String.format(getString(R.string.check_in_time), hotelDetailResponse.getPolicy().getCheck_in_time().substring(0, 5)));
+                checkOutTv.setText(String.format(getString(R.string.check_out_time), hotelDetailResponse.getPolicy().getCheck_out_time().substring(0, 5)));
                 addressTv.setText(hotelDetailResponse.getAddress());
                 phone = hotelDetailResponse.getTel();
-                facilitiesAdapter.setData(hotelDetailResponse.getFacilities());
+                facilitiesAdapter.addData(hotelDetailResponse.getFacilities());
                 facilitiesRv.setAdapter(facilitiesAdapter);
-                policyStartTimeTv.setText("入住时间：" + hotelDetailResponse.getPolicy().getCheck_in_time());
-                policyEndTimeTv.setText("退房时间：" + hotelDetailResponse.getPolicy().getCheck_out_time());
-                policyChildrenTv.setText("儿童及加床：" + hotelDetailResponse.getPolicy().getChildren());
+                policyStartTimeTv.setText(String.format(getString(R.string.check_in_time), hotelDetailResponse.getPolicy().getCheck_in_time()));
+                policyEndTimeTv.setText(String.format(getString(R.string.check_out_time), hotelDetailResponse.getPolicy().getCheck_out_time()));
+
+                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), hotelDetailResponse.getPolicy().getChildren()));
                 if (hotelDetailResponse.getCollect_status() == 1) {
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                 } else {
@@ -431,6 +437,11 @@ public class HotelDetailActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void bindListener() {
+
+    }
+
     private void initRoomList() {
         showLoading();
         String url = "hotelapi/v1/hotel/" + getIntent().getIntExtra(EXT_ID, 0) + "/rooms?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
@@ -443,18 +454,18 @@ public class HotelDetailActivity extends BaseActivity {
                     Type type = new TypeToken<List<RoomListBean>>() {
                     }.getType();
                     List<RoomListBean> list = gson.fromJson(result, type);
-                    roomAdapter.setData(list);
+                    roomAdapter.addData(list);
                     roomRv.setAdapter(roomAdapter);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
@@ -519,14 +530,14 @@ public class HotelDetailActivity extends BaseActivity {
 
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
 
@@ -551,7 +562,7 @@ public class HotelDetailActivity extends BaseActivity {
                 @Override
                 public void onNext(@NonNull Response<SuccessResponse> successResponse) {
                     stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, "收藏成功");
+                    showToast("收藏成功");
                     like = 1;
                     if (toolbarStatus == 0) {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
@@ -563,7 +574,7 @@ public class HotelDetailActivity extends BaseActivity {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, errorResponse.getErrMsg());
+                    showNetError(errorResponse);
                 }
             });
         } else {
@@ -571,7 +582,7 @@ public class HotelDetailActivity extends BaseActivity {
                 @Override
                 public void onNext(@NonNull Response<SuccessResponse> successResponse) {
                     stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, "取消成功");
+                    showLoading("取消成功");
                     like = 2;
                     if (toolbarStatus == 0) {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
@@ -583,7 +594,7 @@ public class HotelDetailActivity extends BaseActivity {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
-                    ToastUtils.showLong(HotelDetailActivity.this, errorResponse.getErrMsg());
+                    showNetError(errorResponse);
                 }
             });
         }
@@ -631,7 +642,7 @@ public class HotelDetailActivity extends BaseActivity {
                             }).builder();
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
@@ -639,7 +650,7 @@ public class HotelDetailActivity extends BaseActivity {
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
 
@@ -682,7 +693,7 @@ public class HotelDetailActivity extends BaseActivity {
 
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelDetailActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
@@ -690,7 +701,7 @@ public class HotelDetailActivity extends BaseActivity {
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(HotelDetailActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
 
@@ -703,52 +714,48 @@ public class HotelDetailActivity extends BaseActivity {
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         } else {
-            ToastUtils.showLong(this, "您尚未安装谷歌地图或地图版本过低");
+            showToast("您尚未安装谷歌地图或地图版本过低");
         }
     }
 
-    private class RoomAdapter extends BaseQuickAdapter<RoomListBean> {
+    private class RoomAdapter extends BaseQuickAdapter<RoomListBean, BaseViewHolder> {
 
         private TagAdapter tagAdapter;
 
-        public RoomAdapter(Context context) {
-            super(context);
+        public RoomAdapter() {
+            super(R.layout.item_room);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_room;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, final RoomListBean data, int position) {
-            RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, RoomListBean data) {
+            RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Picasso.with(HotelDetailActivity.this).load(data.getImages().get(0)).into(photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }
-            TextView nameTv = holder.findViewById(R.id.tv_name);
+            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());
-            TextView typeTv = holder.findViewById(R.id.tv_hotelType);
+            TextView typeTv = baseViewHolder.findView(R.id.tv_hotelType);
             String breakfast = null;
             if (data.getBreakfast_type() == 1) {
                 breakfast = "有早餐";
             } else {
                 breakfast = "无早餐";
             }
-            typeTv.setText(data.getHotel_room_type() + "  " + breakfast + "  ");
+            String typeText = data.getHotel_room_type() + "  " + breakfast + "  ";
+            typeTv.setText(typeText);
 
             SpannableString m2 = new SpannableString("m2");
             m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
             m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(data.getRoom_area());
             spannableStringBuilder.append(m2);
-            TextView roomAreaTv = holder.findViewById(R.id.tv_roomarea);
+            TextView roomAreaTv = baseViewHolder.findView(R.id.tv_roomarea);
             roomAreaTv.setText(spannableStringBuilder);
-            TextView priceTv = holder.findViewById(R.id.tv_price);
-            priceTv.setText("₱" + data.getPrice());
-            RecyclerView tagRv = holder.findViewById(R.id.rv_tag);
+            TextView priceTv = baseViewHolder.findView(R.id.tv_price);
+            priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), data.getPrice()));
+            RecyclerView tagRv = baseViewHolder.findView(R.id.rv_tag);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                     LinearLayoutManager.HORIZONTAL, false) {
                 @Override
@@ -756,12 +763,12 @@ public class HotelDetailActivity extends BaseActivity {
                     return false;
                 }
             };
-            tagAdapter = new TagAdapter(mContext);
+            tagAdapter = new TagAdapter();
             tagRv.setLayoutManager(linearLayoutManager);
-            tagAdapter.setData(data.getTags());
+            tagAdapter.addData(data.getTags());
             tagRv.setAdapter(tagAdapter);
-            TextView subscribeTv = holder.findViewById(R.id.tv_subscribe);
-            LinearLayout tagLl = holder.findViewById(R.id.ll_tag);
+            TextView subscribeTv = baseViewHolder.findView(R.id.tv_subscribe);
+            LinearLayout tagLl = baseViewHolder.findView(R.id.ll_tag);
             if (data.getRemain_room_num() == 0) {
                 subscribeTv.setText("已客满");
                 subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_noroom));
@@ -781,13 +788,13 @@ public class HotelDetailActivity extends BaseActivity {
                 tagLl.setVisibility(View.VISIBLE);
                 priceTv.setTextColor(getResources().getColor(R.color.orange_FF5B1B));
             }
-            holder.findViewById(R.id.tv_subscribe).setOnClickListener(new View.OnClickListener() {
+            baseViewHolder.findView(R.id.tv_subscribe).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     subRoom(data.getId(), data.getBreakfast_type());
                 }
             });
-            holder.findViewById(R.id.rl_room).setOnClickListener(new View.OnClickListener() {
+            baseViewHolder.findView(R.id.rl_room).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     initRoomDetail(data.getId(), data.getBreakfast_type());
@@ -797,44 +804,35 @@ public class HotelDetailActivity extends BaseActivity {
         }
     }
 
-    private class TagAdapter extends BaseQuickAdapter<RoomListBean.TagsBean> {
+    private static class TagAdapter extends BaseQuickAdapter<RoomListBean.TagsBean, BaseViewHolder> {
 
-        public TagAdapter(Context context) {
-            super(context);
+        public TagAdapter() {
+            super(R.layout.item_roomtag);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_roomtag;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, RoomListBean.TagsBean data, int position) {
-            TextView tagTv = holder.findViewById(R.id.tv_tag);
-            tagTv.setText(data.getZh_cn_name());
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, RoomListBean.TagsBean tagsBean) {
+            TextView tagTv = baseViewHolder.findView(R.id.tv_tag);
+            tagTv.setText(tagsBean.getZh_cn_name());
         }
     }
 
-    private class FacilitiesAdapter extends BaseQuickAdapter<HotelDetailResponse.FacilitiesBean> {
+    private static class FacilitiesAdapter extends BaseQuickAdapter<HotelDetailResponse.FacilitiesBean, BaseViewHolder> {
 
-        public FacilitiesAdapter(Context context) {
-            super(context);
+        public FacilitiesAdapter() {
+            super(R.layout.item_facilities);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_facilities;
-        }
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelDetailResponse.FacilitiesBean data) {
 
-        @Override
-        protected void initViews(QuickHolder holder, HotelDetailResponse.FacilitiesBean data, int position) {
-            ImageView iconIv = holder.findViewById(R.id.iv_icon);
+            ImageView iconIv = baseViewHolder.findView(R.id.iv_icon);
             if (!TextUtils.isEmpty(data.getIcon())) {
-                Picasso.with(HotelDetailActivity.this).load(data.getIcon()).into(iconIv);
+                Glide.with(getContext()).load(data.getIcon()).into(iconIv);
             } else {
-                iconIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
+                iconIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_test));
             }
-            TextView nameTv = holder.findViewById(R.id.tv_name);
+            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());
         }
     }

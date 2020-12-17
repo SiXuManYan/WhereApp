@@ -473,8 +473,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             clearIv.setVisibility(View.VISIBLE);
 
             cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
-            cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH));
-            useInputText = data.getStringExtra(HotelSearchActivity.EXT_SELECTSEARCH);
+            cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
+            useInputText = data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH);
             initData();
         }
     }

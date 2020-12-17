@@ -25,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
@@ -53,12 +55,12 @@ import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.view.BaseQuickAdapter;
-import co.tton.android.base.view.ToastUtils;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import io.reactivex.annotations.NonNull;
@@ -174,7 +176,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                ToastUtils.showLong(getContext(), errorResponse.getErrMsg());
+                showNetError(errorResponse);
             }
         });
     }
@@ -196,14 +198,14 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 } else {
                     ptrFrame.refreshComplete();
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(getContext(), errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(getContext(), e.getMessage());
+                showToast(e.getMessage());
             }
         });
 
@@ -225,14 +227,14 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 } else {
                     ptrFrame.refreshComplete();
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(getContext(), errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(getContext(), e.getMessage());
+                showToast(e.getMessage());
             }
         });
 
@@ -324,7 +326,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         marqueeView.setOnItemClickListener(new OnItemClickListener<TextView, String>() {
             @Override
             public void onItemClickListener(TextView mView, String mData, int mPosition) {
-                ToastUtils.showLong(getContext(), messageList.get(mPosition));
+                showToast(messageList.get(mPosition));
             }
         });
     }
@@ -352,7 +354,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
                     break;
                 case 2:
-                    ToastUtils.showLong(getContext(), "开发中");
+                    showToast("开发中");
                     break;
             }
         }
@@ -366,10 +368,10 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
     private void dealModulesById(ModulesResponse item) {
         switch (item.getId()) {
             case 1:
-                ToastUtils.showLong(getContext(), "带地图的综合服务页面");
+                showToast("带地图的综合服务页面");
                 break;
             case 2:
-                ToastUtils.showLong(getContext(), "三级联动筛选的综合服务页面");
+                showToast("三级联动筛选的综合服务页面");
                 break;
             case 3:
                 Intent toTravelStay = new Intent(getContext(), TravelStayActivity.class);
@@ -377,25 +379,25 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 startActivity(toTravelStay);
                 break;
             case 4:
-                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
+                showToast("横向二级联动筛选的综合服务页面");
                 break;
             case 5:
-                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）");
+                showToast("横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）");
                 break;
             case 6:
-                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
+                showToast("横向二级联动筛选的综合服务页面");
                 break;
             case 7:
-                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
+                showToast("横向二级联动筛选的综合服务页面");
                 break;
             case 8:
-                ToastUtils.showLong(getContext(), "横向二级联动筛选的综合服务页面");
+                showToast("横向二级联动筛选的综合服务页面");
                 break;
             case 9:
-                ToastUtils.showLong(getContext(), "餐厅列表");
+                showToast("餐厅列表");
                 break;
             case 10:
-                ToastUtils.showLong(getContext(), "开发中");
+                showToast("开发中");
                 break;
         }
     }
@@ -474,7 +476,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
             if (holder instanceof NebaryTransverseViewHolder) {
                 initNebaryTransverse((NebaryTransverseViewHolder) holder);
             } else if (holder instanceof NearbyVericalViewHolder) {
-                initNearbyVerical((NearbyVericalViewHolder) holder);
+                initNearbyVertical((NearbyVericalViewHolder) holder);
             }
         }
 
@@ -530,14 +532,15 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
             businessBean3.setPrice("245");
             businessBean3.setDistance("< 2km");
             list.add(businessBean3);
-            NearbyTransverseAdapter nearbyTransverseAdapter = new NearbyTransverseAdapter(getContext());
+            NearbyTransverseAdapter nearbyTransverseAdapter = new NearbyTransverseAdapter(R.layout.item_homebusinessone);
             holder.businessRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            nearbyTransverseAdapter.setData(list);
+            nearbyTransverseAdapter.getData().clear();
+            nearbyTransverseAdapter.addData(list);
             holder.businessRv.setAdapter(nearbyTransverseAdapter);
 
         }
 
-        private void initNearbyVerical(NearbyVericalViewHolder holder) {
+        private void initNearbyVertical(NearbyVericalViewHolder holder) {
 
             List<BusinessBean> list = new ArrayList<>();
             BusinessBean businessBean = new BusinessBean();
@@ -553,7 +556,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
             BusinessBean businessBean5 = new BusinessBean();
             list.add(businessBean5);
 
-            NearbyVericalAdapter nearbyVericalAdapter = new NearbyVericalAdapter(getContext());
+            NearbyVerticalAdapter nearbyVerticalAdapter = new NearbyVerticalAdapter(R.layout.item_hotellist);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                     LinearLayoutManager.VERTICAL, false) {
                 @Override
@@ -562,8 +565,9 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 }
             };
             holder.businessRv.setLayoutManager(linearLayoutManager);
-            nearbyVericalAdapter.setData(list);
-            holder.businessRv.setAdapter(nearbyVericalAdapter);
+            nearbyVerticalAdapter.getData().clear();
+            nearbyVerticalAdapter.addData(list);
+            holder.businessRv.setAdapter(nearbyVerticalAdapter);
         }
 
         @Override
@@ -598,33 +602,29 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         }
     }
 
-    private class NearbyTransverseAdapter extends BaseQuickAdapter<BusinessBean> {
+    private class NearbyTransverseAdapter extends BaseQuickAdapter<BusinessBean, BaseViewHolder> {
 
-        public NearbyTransverseAdapter(Context context) {
-            super(context);
+
+        public NearbyTransverseAdapter(int layoutResId) {
+            super(layoutResId);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_homebusinessone;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, BusinessBean data, int position) {
-            RoundedImageView roundedImageView = holder.findViewById(R.id.iv_photo);
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessBean data) {
+            RoundedImageView roundedImageView = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImg())) {
                 Picasso.with(getContext()).load(data.getImg()).into(roundedImageView);
             } else {
                 roundedImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
             }
-            TextView scoreTv = holder.findViewById(R.id.tv_score);
+            TextView scoreTv = baseViewHolder.findView(R.id.tv_score);
             scoreTv.setText(data.getScore());
-            TextView nameTv = holder.findViewById(R.id.tv_name);
+            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());
-            TextView detailTv = holder.findViewById(R.id.tv_detail);
+            TextView detailTv = baseViewHolder.findView(R.id.tv_detail);
             detailTv.setText(data.getDetail());
-            TextView lableOneTv = holder.findViewById(R.id.tv_lableone);
-            TextView lableTwoTv = holder.findViewById(R.id.tv_labletwo);
+            TextView lableOneTv = baseViewHolder.findView(R.id.tv_lableone);
+            TextView lableTwoTv = baseViewHolder.findView(R.id.tv_labletwo);
             if (data.getProject().size() > 1) {
                 lableOneTv.setText(data.getProject().get(0));
                 lableTwoTv.setText(data.getProject().get(1));
@@ -632,29 +632,23 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 lableOneTv.setText(data.getProject().get(0));
                 lableTwoTv.setVisibility(View.GONE);
             }
-            TextView priceTv = holder.findViewById(R.id.tv_price);
+            TextView priceTv = baseViewHolder.findView(R.id.tv_price);
             priceTv.setText(data.getPrice());
-            TextView distanceTv = holder.findViewById(R.id.tv_distance);
+            TextView distanceTv = baseViewHolder.findView(R.id.tv_distance);
             distanceTv.setText("距您" + data.getDistance());
-
         }
     }
 
-    private class NearbyVericalAdapter extends BaseQuickAdapter<BusinessBean> {
+    private class NearbyVerticalAdapter extends BaseQuickAdapter<BusinessBean,BaseViewHolder> {
+        
 
-        public NearbyVericalAdapter(Context context) {
-            super(context);
+        public NearbyVerticalAdapter(int layoutResId) {
+            super(layoutResId);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_hotellist;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, BusinessBean data, int position) {
-            TextView distanceTv = holder.findViewById(R.id.tv_distance);
-            distanceTv.setText("<1.5Km");
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessBean businessBean) {
+            baseViewHolder.setText(R.id.tv_distance,"<1.5Km");
         }
     }
 

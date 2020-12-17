@@ -11,8 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import co.tton.android.base.R;
-
+import com.jcs.where.R;
 
 public class CustomProgressDialog extends ProgressDialog {
 

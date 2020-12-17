@@ -31,8 +31,6 @@ import com.stx.xhb.androidx.entity.BaseBannerInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.view.ToastUtils;
-
 public class TravelStayActivity extends BaseActivity implements OnItemClickListener {
     private XBanner mBanner;
     private RecyclerView mModuleRecycler;
@@ -89,7 +87,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                ToastUtils.showLong(TravelStayActivity.this, errorResponse.getErrMsg());
+                showNetError(errorResponse);
             }
         });
 
@@ -102,7 +100,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                ToastUtils.showLong(TravelStayActivity.this, errorResponse.getErrMsg());
+                showNetError(errorResponse);
             }
         });
 
@@ -128,7 +126,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                ToastUtils.showLong(TravelStayActivity.this, errorResponse.getErrMsg());
+                showNetError(errorResponse);
             }
         });
     }

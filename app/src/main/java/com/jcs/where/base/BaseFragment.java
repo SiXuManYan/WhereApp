@@ -23,7 +23,6 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import co.tton.android.base.dialog.CustomProgressDialog;
 
 public abstract class BaseFragment extends Fragment {
 

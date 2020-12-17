@@ -26,6 +26,8 @@ import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.adapter.CityListAdapter;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.CustomProgressDialog;
 import com.jcs.where.bean.AreaBean;
 import com.jcs.where.bean.City;
 import com.jcs.where.bean.ErrorBean;
@@ -39,10 +41,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.dialog.CustomProgressDialog;
-import co.tton.android.base.view.ToastUtils;
 
 public class CityPickerActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -93,22 +91,12 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
         checkIsGooglePlayConn();
     }
 
-
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.cp_activity_city_list);
-//        setStatusBar();
-//        initView();
-//        initData();
-//        // getLocation();
-//    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.cp_activity_city_list;
     }
 
+    @Override
     protected void initView() {
         mListView = findViewById(R.id.listview_all_city);
         TextView overlay = findViewById(R.id.tv_letter_overlay);
@@ -152,14 +140,14 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                     mCityAdapter.setData(cities);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(CityPickerActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(CityPickerActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
 
@@ -170,7 +158,6 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
         mCityAdapter.setOnCityClickListener(new CityListAdapter.OnCityClickListener() {
             @Override
             public void onCityClick(String name, String id) {//选择城市
-                // Toast.makeText(CityPickerActivity.this, name, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_CITY, name);
                 intent.putExtra(EXTRA_CITYID, id);
@@ -184,6 +171,11 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                 checkIsGooglePlayConn();//重新定位
             }
         });
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     public void showLoading() {
@@ -275,14 +267,14 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                     }
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(CityPickerActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(CityPickerActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
 

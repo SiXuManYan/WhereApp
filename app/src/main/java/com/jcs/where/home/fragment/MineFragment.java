@@ -1,39 +1,22 @@
 package com.jcs.where.home.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-
-import com.google.gson.Gson;
 import com.jcs.where.R;
-import com.jcs.where.api.HttpUtils;
-import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.bean.UserBean;
+import com.jcs.where.base.BaseFragment;
 import com.jcs.where.home.event.TokenEvent;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
 import com.jcs.where.login.event.LoginEvent;
-import com.jcs.where.manager.TokenManager;
-import com.jcs.where.manager.UserManager;
 import com.jcs.where.mine.PersonalDataActivity;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.makeramen.roundedimageview.RoundedImageView;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import co.tton.android.base.app.fragment.BaseFragment;
-import co.tton.android.base.manager.ImageLoader;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
-
+import androidx.annotation.Nullable;
 import static android.app.Activity.RESULT_OK;
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
@@ -47,53 +30,28 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private RoundedImageView headerIv;
 
     @Override
-    protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void initView(View view) {
         EventBus.getDefault().register(this);
-        view = inflater.inflate(R.layout.fragment_mine, container, false);
-//        initView();
-        return view;
+
+        settingIv = view.findViewById(R.id.iv_setting);
+        settingIv.setOnClickListener(this);
+        nameTv = view.findViewById(R.id.tv_name);
+        accountTv = view.findViewById(R.id.tv_account);
+        mUploadPresenter = new UploadFilePresenter(getContext());
+        headerIv = view.findViewById(R.id.iv_header);
+        view.findViewById(R.id.ll_changelangue).setOnClickListener(this);
+        view.findViewById(R.id.ll_settlement).setOnClickListener(this);
+        view.findViewById(R.id.rl_minemessage).setOnClickListener(this);
     }
 
-    private void initView() {
-//        settingIv = V.f(view, R.id.iv_setting);
-//        settingIv.setOnClickListener(this);
-//        nameTv = V.f(view, R.id.tv_name);
-//        accountTv = V.f(view, R.id.tv_account);
-//        mUploadPresenter = new UploadFilePresenter(getContext());
-//        headerIv = V.f(view, R.id.iv_header);
-//        V.f(view, R.id.ll_changelangue).setOnClickListener(this);
-//        V.f(view, R.id.ll_settlement).setOnClickListener(this);
-//        V.f(view, R.id.rl_minemessage).setOnClickListener(this);
-//        initData(TokenManager.get().getToken(getContext()));
+    @Override
+    protected void initData() {
+
     }
 
-    private void initData(String token) {
-        if (token != null) {
-            showLoading();
-            HttpUtils.doHttpReqeust("GET", "userapi/v1/user/info", null, "", token, new HttpUtils.StringCallback() {
-                @Override
-                public void onSuccess(int code, String result) {
-                    stopLoading();
-                    if (code == 200) {
-                        UserBean userBean = new Gson().fromJson(result, UserBean.class);
-                        UserManager.get().login(getContext(), userBean);
-                        accountTv.setVisibility(View.VISIBLE);
-                        nameTv.setText(userBean.nickname);
-                        accountTv.setText(userBean.phone);
-                        ImageLoader.get().loadAvatar(headerIv, userBean.avatar);
-                    } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(getContext(), errorBean.message);
-                    }
-                }
+    @Override
+    protected void bindListener() {
 
-                @Override
-                public void onFaileure(int code, Exception e) {
-                    stopLoading();
-                    ToastUtils.showLong(getContext(), e.getMessage());
-                }
-            });
-        }
     }
 
     @Override
@@ -120,19 +78,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
-            ToastUtils.showLong(getContext(), "您选择了：" + data.getStringExtra(CityPickerActivity.EXTRA_CITY));
+            showToast("您选择了：" + data.getStringExtra(CityPickerActivity.EXTRA_CITY));
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Evect(TokenEvent tokenEvent) throws InterruptedException {
-        initData(tokenEvent.getToken());
+        //TODO 更新UI
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LoginEvent event) {
         if (event == LoginEvent.LOGIN) {
-            initData(TokenManager.get().getToken(getContext()));
+            //TODO 更新UI
         }
     }
 
@@ -140,5 +98,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_mine;
     }
 }

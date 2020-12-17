@@ -1,21 +1,18 @@
 package com.jcs.where.hotel.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseFragment;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelListBean;
 import com.jcs.where.hotel.HotelDetailActivity;
@@ -24,12 +21,13 @@ import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
-import co.tton.android.base.app.fragment.BaseFragment;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
-import co.tton.android.base.view.ToastUtils;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -64,49 +62,6 @@ public class HotelListFragment extends BaseFragment {
         return fragment;
     }
 
-    @Override
-    protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_test, container, false);
-        mStartYear = getArguments().getString("startYear");
-        mStartDate = getArguments().getString("startDate");
-        mStartWeek = getArguments().getString("startWeek");
-        mEndYear = getArguments().getString("endYear");
-        mEndData = getArguments().getString("endDate");
-        mEndWeek = getArguments().getString("endWeek");
-        mAllDay = getArguments().getString("allDay");
-        mRoomNum = getArguments().getString("roomNumber");
-        initView();
-        return view;
-    }
-
-    private void initView() {
-        ptrFrame = V.f(view, R.id.ptr_frame);
-        hotelListRv = V.f(view, R.id.rv_hotellist);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        hotelListRv.setLayoutManager(linearLayoutManager);
-        hotelListAdpater = new HotelListAdpater(getContext());
-        ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
-            @Override
-            public void onLoadMoreBegin(PtrFrameLayout frame) {
-                page++;
-                getmoredata();
-            }
-
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                page = 1;
-                getdata();
-            }
-        });
-        getdata();
-    }
-
     private void getdata() {
         showLoading();
         String url = null;
@@ -134,12 +89,12 @@ public class HotelListFragment extends BaseFragment {
                     } else {
                         ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
                     }
-                    hotelListAdpater.setData(list);
+                    hotelListAdpater.addData(list);
                     hotelListRv.setAdapter(hotelListAdpater);
                     ptrFrame.refreshComplete();
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(getContext(), errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
@@ -147,7 +102,7 @@ public class HotelListFragment extends BaseFragment {
             public void onFaileure(int code, Exception e) {
                 stopLoading();
                 ptrFrame.refreshComplete();
-                ToastUtils.showLong(getContext(), e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
@@ -179,13 +134,13 @@ public class HotelListFragment extends BaseFragment {
                         ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
                     }
                     list.addAll(hotelListBean.getData());
-                    hotelListAdpater.setData(list);
+                    hotelListAdpater.addData(list);
                     hotelListRv.setAdapter(hotelListAdpater);
                     ptrFrame.refreshComplete();
 
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(getContext(), errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
@@ -193,7 +148,7 @@ public class HotelListFragment extends BaseFragment {
             public void onFaileure(int code, Exception e) {
                 stopLoading();
                 ptrFrame.refreshComplete();
-                ToastUtils.showLong(getContext(), e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
@@ -203,7 +158,8 @@ public class HotelListFragment extends BaseFragment {
             hotelListRv.removeAllViews();
         }
         if (hotelListAdpater != null) {
-            hotelListAdpater.clearData();
+            hotelListAdpater.getData().clear();
+            hotelListAdpater.notifyDataSetChanged();
         }
         if (list != null) {
             list.clear();
@@ -224,33 +180,92 @@ public class HotelListFragment extends BaseFragment {
         mRoomNum = roomNum;
     }
 
-    private class HotelListAdpater extends BaseQuickAdapter<HotelListBean.DataBean> {
+    @Override
+    protected void initView(View view) {
+        ptrFrame = view.findViewById(R.id.ptr_frame);
+        hotelListRv = view.findViewById(R.id.rv_hotellist);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        hotelListRv.setLayoutManager(linearLayoutManager);
+        ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
+            @Override
+            public void onLoadMoreBegin(PtrFrameLayout frame) {
+                page++;
+                getmoredata();
+            }
 
-        public HotelListAdpater(Context context) {
-            super(context);
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                page = 1;
+                getdata();
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        mStartYear = getArguments().getString("startYear");
+        mStartDate = getArguments().getString("startDate");
+        mStartWeek = getArguments().getString("startWeek");
+        mEndYear = getArguments().getString("endYear");
+        mEndData = getArguments().getString("endDate");
+        mEndWeek = getArguments().getString("endWeek");
+        mAllDay = getArguments().getString("allDay");
+        mRoomNum = getArguments().getString("roomNumber");
+
+        hotelListAdpater = new HotelListAdpater();
+        hotelListAdpater.addChildClickViewIds(R.id.ll_hotel);
+
+        getdata();
+    }
+
+    @Override
+    protected void bindListener() {
+        hotelListAdpater.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                if (view.getId() == R.id.ll_hotel) {
+                    HotelDetailActivity.goTo(getContext(), (int) adapter.getItemId(position), mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, mRoomNum);
+                }
+
+            }
+        });
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_test;
+    }
+
+    private class HotelListAdpater extends BaseQuickAdapter<HotelListBean.DataBean, BaseViewHolder> {
+
+
+        public HotelListAdpater() {
+            super(R.layout.item_hotellist);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_hotellist;
-        }
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelListBean.DataBean data) {
 
-        @Override
-        protected void initViews(QuickHolder holder, final HotelListBean.DataBean data, int position) {
-            RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
+            RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Picasso.with(getContext()).load(data.getImages().get(0)).into(photoIv);
             } else {
                 photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
             }
-            TextView nameTv = holder.findViewById(R.id.tv_name);
+            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());
             if (data.getFacebook_link() == null) {
                 nameTv.setCompoundDrawables(null, null, null, null);
             }
-            TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
-            TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);
-            LinearLayout tagLl = holder.findViewById(R.id.ll_tag);
+            TextView tagOneTv = baseViewHolder.findView(R.id.tv_tagone);
+            TextView tagTwoTv = baseViewHolder.findView(R.id.tv_tagtwo);
+            LinearLayout tagLl = baseViewHolder.findView(R.id.ll_tag);
             if (data.getTags().size() == 0) {
                 tagLl.setVisibility(View.GONE);
             } else if (data.getTags().size() == 1) {
@@ -261,24 +276,25 @@ public class HotelListFragment extends BaseFragment {
                 tagOneTv.setText(data.getTags().get(0).getName());
                 tagTwoTv.setText(data.getTags().get(1).getName());
             }
-            TextView addressTv = holder.findViewById(R.id.tv_address);
+            TextView addressTv = view.findViewById(R.id.tv_address);
             addressTv.setText(data.getAddress());
-            TextView distanceTv = holder.findViewById(R.id.tv_distance);
-            distanceTv.setText("<" + data.getDistance() + "Km");
-            TextView scoreTv = holder.findViewById(R.id.tv_score);
-            scoreTv.setText(data.getGrade() + "");
-            TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
-            commentNumTv.setText(data.getComment_counts() + "条评论");
-            TextView priceTv = holder.findViewById(R.id.tv_price);
-            priceTv.setText("₱" + data.getPrice() + "起");
-            holder.findViewById(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    HotelDetailActivity.goTo(getContext(), data.getId(), mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, mRoomNum);
-                }
-            });
+            TextView distanceTv = baseViewHolder.findView(R.id.tv_distance);
+            String distanceText = "<" + data.getDistance() + "Km";
+            distanceTv.setText(distanceText);
+            TextView scoreTv = baseViewHolder.findView(R.id.tv_score);
+            String scoreText = data.getGrade() + "";
+            scoreTv.setText(scoreText);
+            TextView commentNumTv = baseViewHolder.findView(R.id.tv_commentnumber);
+            String commentNumText = data.getComment_counts() + "条评论";
+            commentNumTv.setText(commentNumText);
+            TextView priceTv = baseViewHolder.findView(R.id.tv_price);
+            String priceText = "₱" + data.getPrice() + "起";
+            priceTv.setText(priceText);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return getData().get(position).getId();
         }
     }
-
-
 }

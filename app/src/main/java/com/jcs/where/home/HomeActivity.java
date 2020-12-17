@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.category.CategoryFragment;
 import com.jcs.where.home.fragment.HomeFragment;
 import com.jcs.where.home.fragment.MineFragment;
@@ -27,7 +28,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import co.tton.android.base.app.activity.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
     private static final String[] PERMISSIONS_STORAGE = {
@@ -72,7 +72,8 @@ public class HomeActivity extends BaseActivity {
         bindListener();
     }
 
-    private void bindListener() {
+    @Override
+    protected void bindListener() {
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -103,7 +104,8 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
 
     }
 
@@ -116,7 +118,8 @@ public class HomeActivity extends BaseActivity {
         return tabView;
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         initFragment();
         mTabLayout = findViewById(R.id.homeTabs);
 

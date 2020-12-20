@@ -56,6 +56,10 @@
     <string name="check_in_time">入住时间：%1$s</string>
     <string name="check_out_time">退房时间：%1$s</string>
     <string name="child_and_bed_added">儿童及加床：%1$s</string>
+    <string name="hotel_reservation">酒店预订</string>
+    <string name="live">住</string>
+    <string name="leave">离</string>
+    <string name="input_hotel_name">请输入酒店名称</string>
 
 
 </resources>

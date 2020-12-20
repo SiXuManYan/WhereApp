@@ -15,44 +15,38 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TravelCommentListBean;
 import com.jcs.where.bean.TravelDetailBean;
 import com.jcs.where.manager.TokenManager;
-import com.jcs.where.mango.ImageSelectListener;
-import com.jcs.where.mango.Mango;
-import com.jcs.where.mango.MultiplexImage;
-import com.jcs.where.utils.ImageLoaders;
 import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
-import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
-import co.tton.android.base.view.ToastUtils;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -124,27 +118,28 @@ public class TravelDetailActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
-        toolbar = V.f(this, R.id.toolbar);
-        useView = V.f(this, R.id.useView);
-        likeIv = V.f(this, R.id.iv_like);
+    @Override
+    protected void initView() {
+        toolbar = findViewById(R.id.toolbar);
+        useView = findViewById(R.id.useView);
+        likeIv = findViewById(R.id.iv_like);
         likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 collection(like != 1);
             }
         });
-        shareIv = V.f(this, R.id.iv_share);
+        shareIv = findViewById(R.id.iv_share);
         shareIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TravelWriteCommentActivity.goTo(TravelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
             }
         });
-        banner = V.f(this, R.id.banner3);
+        banner = findViewById(R.id.banner3);
         useView.setBackgroundColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(getResources().getColor(R.color.white));
-        scrollView = V.f(this, R.id.scrollView);
+        scrollView = findViewById(R.id.scrollView);
         scrollView.setScrollViewListener(new ObservableScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
@@ -158,21 +153,21 @@ public class TravelDetailActivity extends BaseActivity {
                 }
                 if (alpha > 130) {
                     if (like == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     } else {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteunlike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hotelwhiteunlike));
                     }
-                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_black));
-                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_black));
+                    shareIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_share_black));
+                    toolbar.setNavigationIcon(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_back_black));
                     toolbarStatus = 1;
                 } else {
                     if (like == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     } else {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                     }
-                    shareIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_white));
-                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_white));
+                    shareIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_share_white));
+                    toolbar.setNavigationIcon(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_back_white));
                     toolbarStatus = 0;
                 }
                 useView.getBackground().setAlpha(alpha);
@@ -181,13 +176,13 @@ public class TravelDetailActivity extends BaseActivity {
         });
         useView.getBackground().setAlpha(0);
         toolbar.getBackground().setAlpha(0);//透明
-        nameTv = V.f(this, R.id.tv_name);
-        scoreTv = V.f(this, R.id.tv_score);
-        commnetNumberTv = V.f(this, R.id.tv_commentnumber);
-        startTimeTv = V.f(this, R.id.tv_starttime);
-        addressTv = V.f(this, R.id.tv_address);
-        navigationRl = V.f(this, R.id.rl_navigation);
-        V.f(this, R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
+        nameTv = findViewById(R.id.tv_name);
+        scoreTv = findViewById(R.id.tv_score);
+        commnetNumberTv = findViewById(R.id.tv_commentnumber);
+        startTimeTv = findViewById(R.id.tv_starttime);
+        addressTv = findViewById(R.id.tv_address);
+        navigationRl = findViewById(R.id.rl_navigation);
+        findViewById(R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(TravelDetailActivity.this)
@@ -210,9 +205,9 @@ public class TravelDetailActivity extends BaseActivity {
                 alertDialog2.show();
             }
         });
-        introduceTv = V.f(this, R.id.tv_introduce);
-        noticeTv = V.f(this, R.id.tv_notice);
-        commentRv = V.f(this, R.id.rv_comment);
+        introduceTv = findViewById(R.id.tv_introduce);
+        noticeTv = findViewById(R.id.tv_notice);
+        commentRv = findViewById(R.id.rv_comment);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TravelDetailActivity.this,
                 LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -221,9 +216,9 @@ public class TravelDetailActivity extends BaseActivity {
             }
         };
         commentRv.setLayoutManager(linearLayoutManager);
-        commentAdapter = new CommentAdapter(TravelDetailActivity.this);
-        commentLl = V.f(this, R.id.ll_comment);
-        seeMoreTv = V.f(this, R.id.tv_seemore);
+        commentAdapter = new CommentAdapter();
+        commentLl = findViewById(R.id.ll_comment);
+        seeMoreTv = findViewById(R.id.tv_seemore);
         seeMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,7 +228,8 @@ public class TravelDetailActivity extends BaseActivity {
         initData();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         showLoading();
         HttpUtils.doHttpReqeust("GET", "travelapi/v1/travel/" + getIntent().getIntExtra(EXT_ID, 0), null, "", TokenManager.get().getToken(TravelDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
@@ -289,9 +285,9 @@ public class TravelDetailActivity extends BaseActivity {
                     startTimeTv.setText("营业时间：" + travelDetailBean.getStart_time() + "-" + travelDetailBean.getEnd_time());
                     addressTv.setText(travelDetailBean.getAddress());
                     if (travelDetailBean.getIs_collect() == 1) {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     } else {
-                        likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
+                        likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                     }
                     like = travelDetailBean.getIs_collect();
                     phone = travelDetailBean.getPhone();
@@ -306,16 +302,21 @@ public class TravelDetailActivity extends BaseActivity {
                     initComment();
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(TravelDetailActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(TravelDetailActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     private void initComment() {
@@ -332,28 +333,28 @@ public class TravelDetailActivity extends BaseActivity {
                     } else if (travelCommentListBean.getData().size() == 1) {
                         commentLl.setVisibility(View.VISIBLE);
                         list.add(travelCommentListBean.getData().get(0));
-                        commentAdapter.setData(list);
+                        commentAdapter.setNewInstance(list);
                         commentRv.setAdapter(commentAdapter);
                         seeMoreTv.setVisibility(View.GONE);
                     } else if (travelCommentListBean.getData().size() > 1) {
                         commentLl.setVisibility(View.VISIBLE);
                         list.add(travelCommentListBean.getData().get(0));
                         list.add(travelCommentListBean.getData().get(1));
-                        commentAdapter.setData(list);
+                        commentAdapter.setNewInstance(list);
                         commentRv.setAdapter(commentAdapter);
                         seeMoreTv.setVisibility(View.VISIBLE);
                     }
 
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(TravelDetailActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(TravelDetailActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
@@ -373,23 +374,23 @@ public class TravelDetailActivity extends BaseActivity {
                 public void onSuccess(int code, String result) {
                     stopLoading();
                     if (code == 200) {
-                        ToastUtils.showLong(TravelDetailActivity.this, "收藏成功");
+                        showToast("收藏成功");
                         like = 1;
                         if (toolbarStatus == 0) {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                            likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                         } else {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhitelike));
+                            likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                         }
                     } else {
                         ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(TravelDetailActivity.this, errorBean.message);
+                        showToast(errorBean.message);
                     }
                 }
 
                 @Override
                 public void onFaileure(int code, Exception e) {
                     stopLoading();
-                    ToastUtils.showLong(TravelDetailActivity.this, e.getMessage());
+                    showToast(e.getMessage());
                 }
             });
         } else {
@@ -398,23 +399,23 @@ public class TravelDetailActivity extends BaseActivity {
                 public void onSuccess(int code, String result) {
                     stopLoading();
                     if (code == 200) {
-                        ToastUtils.showLong(TravelDetailActivity.this, "取消成功");
+                        showToast("取消成功");
                         like = 2;
                         if (toolbarStatus == 0) {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hoteltransparentunlike));
+                            likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                         } else {
-                            likeIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_hotelwhiteunlike));
+                            likeIv.setImageDrawable(ContextCompat.getDrawable(TravelDetailActivity.this, R.drawable.ic_hotelwhiteunlike));
                         }
                     } else {
                         ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(TravelDetailActivity.this, errorBean.message);
+                        showToast(errorBean.message);
                     }
                 }
 
                 @Override
                 public void onFaileure(int code, Exception e) {
                     stopLoading();
-                    ToastUtils.showLong(TravelDetailActivity.this, e.getMessage());
+                    showToast(e.getMessage());
                 }
             });
         }
@@ -434,7 +435,7 @@ public class TravelDetailActivity extends BaseActivity {
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         } else {
-            ToastUtils.showLong(this, "您尚未安装谷歌地图或地图版本过低");
+            showToast("您尚未安装谷歌地图或地图版本过低");
         }
     }
 
@@ -443,80 +444,11 @@ public class TravelDetailActivity extends BaseActivity {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    private class CommentAdapter extends BaseQuickAdapter<TravelCommentListBean.DataBean> {
+    private class CommentAdapter extends BaseQuickAdapter<TravelCommentListBean.DataBean, BaseViewHolder> {
 
 
-        public CommentAdapter(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_commentlist;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, TravelCommentListBean.DataBean data, int position) {
-            CircleImageView avaterIv = holder.findViewById(R.id.circleIcon);
-            if (!TextUtils.isEmpty(data.getAvatar())) {
-                Picasso.with(TravelDetailActivity.this).load(data.getAvatar()).into(avaterIv);
-            } else {
-                avaterIv.setImageDrawable(TravelDetailActivity.this.getResources().getDrawable(R.drawable.ic_noheader));
-            }
-            TextView nameTv = holder.findViewById(R.id.username);
-            nameTv.setText(data.getUsername());
-            TextView usercontent = holder.findViewById(R.id.commentContent);
-            usercontent.setText(data.getContent());
-            TextView timeTv = holder.findViewById(R.id.tv_time);
-            timeTv.setText(data.getCreated_at());
-            TextView fullText = holder.findViewById(R.id.fullText);
-            ImageView star1Iv = holder.findViewById(R.id.iv_star1);
-            ImageView star2Iv = holder.findViewById(R.id.iv_star2);
-            ImageView star3Iv = holder.findViewById(R.id.iv_star3);
-            ImageView star4Iv = holder.findViewById(R.id.iv_star4);
-            ImageView star5Iv = holder.findViewById(R.id.iv_star5);
-            if (data.getStar_level() == 1) {
-                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 2) {
-                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 3) {
-                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 4) {
-                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 5) {
-                star1Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star2Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star3Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star4Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-                star5Iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_commentlistlightstar));
-            }
-            setContentLayout(usercontent, fullText);
-            if (data.is_select) {
-                fullText.setText("收起");
-                usercontent.setMaxLines(50);
-            } else {
-                fullText.setText("全文");
-                usercontent.setMaxLines(3);
-            }
-
-            fullText.setOnClickListener(new CommentAdapter.fullTextOnclick(usercontent, fullText, position));
-
+        public CommentAdapter() {
+            super(R.layout.item_commentlist);
         }
 
         private void setContentLayout(final TextView usercontent,
@@ -544,6 +476,70 @@ public class TravelDetailActivity extends BaseActivity {
                     return true;
                 }
             });
+        }
+
+        @Override
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, TravelCommentListBean.DataBean data) {
+            CircleImageView avaterIv = baseViewHolder.findView(R.id.circleIcon);
+            if (!TextUtils.isEmpty(data.getAvatar())) {
+                Glide.with(TravelDetailActivity.this).load(data.getAvatar()).into(avaterIv);
+            } else {
+                avaterIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_noheader));
+            }
+            TextView nameTv = baseViewHolder.findView(R.id.username);
+            nameTv.setText(data.getUsername());
+            TextView usercontent = baseViewHolder.findView(R.id.commentContent);
+            usercontent.setText(data.getContent());
+            TextView timeTv = baseViewHolder.findView(R.id.tv_time);
+            timeTv.setText(data.getCreated_at());
+            TextView fullText = baseViewHolder.findView(R.id.fullText);
+            ImageView star1Iv = baseViewHolder.findView(R.id.iv_star1);
+            ImageView star2Iv = baseViewHolder.findView(R.id.iv_star2);
+            ImageView star3Iv = baseViewHolder.findView(R.id.iv_star3);
+            ImageView star4Iv = baseViewHolder.findView(R.id.iv_star4);
+            ImageView star5Iv = baseViewHolder.findView(R.id.iv_star5);
+            if (data.getStar_level() == 1) {
+                star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+                star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+                star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+                star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 2) {
+                star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+                star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+                star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 3) {
+                star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+                star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 4) {
+                star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
+            } else if (data.getStar_level() == 5) {
+                star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+                star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
+            }
+            setContentLayout(usercontent, fullText);
+            if (data.is_select) {
+                fullText.setText("收起");
+                usercontent.setMaxLines(50);
+            } else {
+                fullText.setText("全文");
+                usercontent.setMaxLines(3);
+            }
+
+            fullText.setOnClickListener(new CommentAdapter.fullTextOnclick(usercontent, fullText, baseViewHolder.getAdapterPosition()));
+
         }
 
         class fullTextOnclick implements View.OnClickListener {

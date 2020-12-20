@@ -12,8 +12,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import co.tton.android.base.R;
 import co.tton.android.base.app.presenter.LoadMorePresenter;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import co.tton.android.base.view.CommonLayout;
 
 public abstract class BaseListFragment<T> extends BaseLazyLoadFragment implements LoadMorePresenter.PullRefreshListener {
@@ -41,13 +41,13 @@ public abstract class BaseListFragment<T> extends BaseLazyLoadFragment implement
         // 初始化分页加载列表
         mCommonLayout.showContent();
         View view = mCommonLayout.getContentView();
-        mRecyclerView = V.f(view, R.id.common_list);
+        mRecyclerView = view.findViewById(R.id.common_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = initAdapter();
         setRecyclerView(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mLoadMoreComponent = initLoadMoreComponent();
-        mSwipeRefreshLayout = V.f(view, R.id.swipe_layout);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
         mLoadMoreComponent.setPullRefreshListener(this);
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_image_placeholder);

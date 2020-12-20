@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import co.tton.android.base.app.activity.BaseActivity;
+import com.jcs.where.base.BaseActivity;
 import co.tton.android.base.manager.CompositeSubscriptionHelper;
 import rx.Subscription;
 

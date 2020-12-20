@@ -3,9 +3,9 @@ package com.jcs.where;
 import android.app.Application;
 import android.content.Context;
 
-import androidx.multidex.MultiDex;
-
 import com.jcs.where.api.RetrofitManager;
+
+import androidx.multidex.MultiDex;
 
 public class BaseApplication extends Application {
 

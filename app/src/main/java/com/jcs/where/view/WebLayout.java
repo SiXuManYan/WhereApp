@@ -5,12 +5,12 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.jcs.where.R;
 import com.just.agentweb.IWebLayout;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by cenxiaozhong on 2017/7/1.

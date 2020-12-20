@@ -6,10 +6,10 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
-
 import com.jcs.where.R;
 import com.jcs.where.utils.DimenUtil;
+
+import androidx.annotation.Nullable;
 
 public class StarView extends LinearLayout {
 

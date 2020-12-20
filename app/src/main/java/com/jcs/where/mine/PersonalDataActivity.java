@@ -12,16 +12,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
 import com.jcs.where.login.event.LoginEvent;
 import com.jcs.where.manager.TokenManager;
-import com.jcs.where.presenter.UploadFilePresenter;
 import com.jcs.where.utils.SoftKeyBoardListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,16 +29,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.manager.ImageLoader;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
+import androidx.appcompat.app.AlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonalDataActivity extends BaseActivity {
 
     private CircleImageView headerIv;
-    private UploadFilePresenter mUploadPresenter;
     private EditText nameEt;
     private TextView createTimeTv;
 
@@ -56,18 +51,18 @@ public class PersonalDataActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBar();
-        mUploadPresenter = new UploadFilePresenter(PersonalDataActivity.this);
         initView();
     }
 
-    private void initView() {
-        headerIv = V.f(this, R.id.iv_header);
+    @Override
+    protected void initView() {
+        headerIv = findViewById(R.id.iv_header);
         headerIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         });
-        nameEt = V.f(this, R.id.et_name);
+        nameEt = findViewById(R.id.et_name);
 
 
         nameEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -109,11 +104,12 @@ public class PersonalDataActivity extends BaseActivity {
                 alertDialog2.show();
             }
         });
-        createTimeTv = V.f(this, R.id.tv_creattime);
+        createTimeTv = findViewById(R.id.tv_creattime);
         initData();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         showLoading();
         HttpUtils.doHttpReqeust("GET", "userapi/v1/user/info", null, "", TokenManager.get().getToken(PersonalDataActivity.this), new HttpUtils.StringCallback() {
             @Override
@@ -121,21 +117,26 @@ public class PersonalDataActivity extends BaseActivity {
                 stopLoading();
                 if (code == 200) {
                     UserBean userBean = new Gson().fromJson(result, UserBean.class);
-                    ImageLoader.get().loadAvatar(headerIv, userBean.avatar);
+                    Glide.with(PersonalDataActivity.this).load(userBean.avatar).into(headerIv);
                     nameEt.setText(userBean.nickname);
                     createTimeTv.setText("创建时间  " + userBean.created_at);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(PersonalDataActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(PersonalDataActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
 
@@ -148,18 +149,18 @@ public class PersonalDataActivity extends BaseActivity {
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
-                    ToastUtils.showLong(PersonalDataActivity.this, "头像修改成功");
+                    showToast("头像修改成功");
                     EventBus.getDefault().post(LoginEvent.LOGIN);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(PersonalDataActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(PersonalDataActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
@@ -173,18 +174,18 @@ public class PersonalDataActivity extends BaseActivity {
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
-                    ToastUtils.showLong(PersonalDataActivity.this, "昵称修改成功");
+                    showToast("昵称修改成功");
                     EventBus.getDefault().post(LoginEvent.LOGIN);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(PersonalDataActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(PersonalDataActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }

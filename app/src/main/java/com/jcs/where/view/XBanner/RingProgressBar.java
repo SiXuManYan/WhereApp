@@ -9,10 +9,10 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.annotation.IntDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * Created by Abby on 12/2/2017.

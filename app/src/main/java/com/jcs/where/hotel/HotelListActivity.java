@@ -4,30 +4,31 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.model.HotelListModel;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
+import com.jcs.where.model.HotelListModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import io.reactivex.annotations.NonNull;
 
+/**
+ * 酒店商家列表模式
+ * 酒店查询搜索页面
+ */
 public class HotelListActivity extends BaseActivity {
 
     private static final int REQ_SEARCH = 666;
@@ -47,10 +48,9 @@ public class HotelListActivity extends BaseActivity {
     private ColorClipTabLayout mTab;
     private ViewPager mViewPager;
     private TextView startDayTv, endDayTv, cityTv;
-    private LinearLayout chooseDateLl;
+    private View mChooseDataView;
     private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum, mParentCategoryId;
     private List<Fragment> fragments;
-    private LinearLayout hotelListLl;
     private ImageView clearIv;
 
     private HotelListModel mModel;
@@ -78,37 +78,18 @@ public class HotelListActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBar();
-        mStartYear = getIntent().getStringExtra(EXT_STARTYEAR);
-        mStartDate = getIntent().getStringExtra(EXT_STARTDATE);
-        mStartWeek = getIntent().getStringExtra(EXT_STARTWEEK);
-        mEndYear = getIntent().getStringExtra(EXT_ENDYEAR);
-        mEndData = getIntent().getStringExtra(EXT_ENDDATE);
-        mEndWeek = getIntent().getStringExtra(EXT_ENDWEEK);
-        mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
-        mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
-        mParentCategoryId = getIntent().getStringExtra(EXT_CATEGORY_ID);
-        initView();
-        initData();
-    }
-
     @Override
     protected void initView() {
         mTab = findViewById(R.id.tab);
         mViewPager = findViewById(R.id.viewPager);
-        startDayTv = findViewById(R.id.tv_startday);
-        hotelListLl = findViewById(R.id.ll_hotellist);
+        startDayTv = findViewById(R.id.startDayTv);
         startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
-        endDayTv = findViewById(R.id.tv_endday);
+        endDayTv = findViewById(R.id.endDayTv);
         endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
-        cityTv = findViewById(R.id.tv_city);
+        cityTv = findViewById(R.id.cityEt);
         // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
-        chooseDateLl = findViewById(R.id.ll_choosedate);
-        chooseDateLl.setOnClickListener(new View.OnClickListener() {
+        mChooseDataView = findViewById(R.id.toChooseDate);
+        mChooseDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                new DatePopupWindow
@@ -192,8 +173,8 @@ public class HotelListActivity extends BaseActivity {
                 mEndYear,
                 mRoomNum
         ));
-        findViewById(R.id.rl_search).setOnClickListener(view -> HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH));
-        clearIv = findViewById(R.id.iv_clear);
+        findViewById(R.id.cityTv).setOnClickListener(view -> HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH));
+        clearIv = findViewById(R.id.clearIv);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(view -> {
             cityTv.setText("请输入酒店名称");
@@ -205,6 +186,16 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mStartYear = getIntent().getStringExtra(EXT_STARTYEAR);
+        mStartDate = getIntent().getStringExtra(EXT_STARTDATE);
+        mStartWeek = getIntent().getStringExtra(EXT_STARTWEEK);
+        mEndYear = getIntent().getStringExtra(EXT_ENDYEAR);
+        mEndData = getIntent().getStringExtra(EXT_ENDDATE);
+        mEndWeek = getIntent().getStringExtra(EXT_ENDWEEK);
+        mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
+        mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
+        mParentCategoryId = getIntent().getStringExtra(EXT_CATEGORY_ID);
+
         mModel = new HotelListModel();
         showLoading();
         int[] categories = new int[]{Integer.parseInt(mParentCategoryId)};
@@ -228,7 +219,7 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        
+
     }
 
     private void initTab(List<CategoryResponse> list) {
@@ -275,7 +266,11 @@ public class HotelListActivity extends BaseActivity {
         mTab.setLastSelectedTabPosition(0);
         mTab.setCurrentItem(0);
         mViewPager.setOffscreenPageLimit(titles.size());
+    }
 
+    @Override
+    protected boolean isStatusDark() {
+        return true;
     }
 
     @Override

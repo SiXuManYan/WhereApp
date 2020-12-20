@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import androidx.annotation.ColorInt;
-
 import com.jcs.where.R;
+
+import androidx.annotation.ColorInt;
 
 
 /**

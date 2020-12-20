@@ -3,8 +3,6 @@ package com.jcs.where.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import co.tton.android.base.utils.AppUtils;
-
 public final class PreferencesUtils {
     public static final String KEY_USER = "user";
     public static final String KEY_TOKEN = "toekn";

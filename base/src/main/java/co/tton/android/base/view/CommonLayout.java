@@ -10,7 +10,7 @@ import android.view.ViewStub;
 import android.widget.FrameLayout;
 
 import co.tton.android.base.R;
-import co.tton.android.base.utils.V;
+
 
 public class CommonLayout extends FrameLayout {
 
@@ -68,19 +68,19 @@ public class CommonLayout extends FrameLayout {
 
         View view = inflate(context, R.layout.common_layout, this);
 
-        mEmptyStub = V.f(view, R.id.vs_empty);
+        mEmptyStub = view.findViewById(R.id.vs_empty);
         mEmptyStub.setLayoutResource(mEmptyLayoutId);
 
-        mErrorStub = V.f(view, R.id.vs_error);
+        mErrorStub = view.findViewById(R.id.vs_error);
         mErrorStub.setLayoutResource(mErrorLayoutId);
 
-        mLoadingStub = V.f(view, R.id.vs_loading);
+        mLoadingStub = view.findViewById(R.id.vs_loading);
         mLoadingStub.setLayoutResource(mLoadingLayoutId);
 
-        mContentStub = V.f(view, R.id.vs_content);
+        mContentStub = view.findViewById(R.id.vs_content);
         mContentStub.setLayoutResource(mContentLayoutId);
 
-        mSearchEmptyStub = V.f(view, R.id.vs_search_empty);
+        mSearchEmptyStub = view.findViewById(R.id.vs_search_empty);
         mSearchEmptyStub.setLayoutResource(mSearchEmptyLayoutId);
     }
 

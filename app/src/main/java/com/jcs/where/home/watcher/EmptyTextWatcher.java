@@ -2,7 +2,6 @@ package com.jcs.where.home.watcher;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 
 /**
  * create by zyf on 2020/12/12 7:58 PM

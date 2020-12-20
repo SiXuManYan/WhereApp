@@ -11,13 +11,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 
-import androidx.annotation.IntDef;
-import androidx.appcompat.widget.AppCompatTextView;
-
 import com.jcs.where.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
+import androidx.appcompat.widget.AppCompatTextView;
 
 /**
  * @author deadline
@@ -28,9 +28,9 @@ import java.lang.annotation.RetentionPolicy;
 public class DrawableTextView extends AppCompatTextView {
 
     private Drawable[] drawables;
-    private StateListDrawable mRightListDrawable;
-    private int mRightListDrawableWidth;
-    private int mRightListDrawableHeight;
+    private final StateListDrawable mRightListDrawable;
+    private final int mRightListDrawableWidth;
+    private final int mRightListDrawableHeight;
     private int[] widths;
     private int[] heights;
 

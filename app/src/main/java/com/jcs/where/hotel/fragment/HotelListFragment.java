@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -19,7 +20,6 @@ import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,8 +32,6 @@ import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class HotelListFragment extends BaseFragment {
-    private View view;
-    private TextView testTv;
     private MyPtrClassicFrameLayout ptrFrame;
     private RecyclerView hotelListRv;
     private int page = 1;
@@ -254,7 +252,7 @@ public class HotelListFragment extends BaseFragment {
 
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                Picasso.with(getContext()).load(data.getImages().get(0)).into(photoIv);
+                Glide.with(getContext()).load(data.getImages().get(0)).into(photoIv);
             } else {
                 photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
             }
@@ -276,7 +274,7 @@ public class HotelListFragment extends BaseFragment {
                 tagOneTv.setText(data.getTags().get(0).getName());
                 tagTwoTv.setText(data.getTags().get(1).getName());
             }
-            TextView addressTv = view.findViewById(R.id.tv_address);
+            TextView addressTv = baseViewHolder.findView(R.id.tv_address);
             addressTv.setText(data.getAddress());
             TextView distanceTv = baseViewHolder.findView(R.id.tv_distance);
             String distanceText = "<" + data.getDistance() + "Km";

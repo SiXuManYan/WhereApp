@@ -2,8 +2,6 @@ package com.jcs.where.api;
 
 import android.content.Context;
 
-import com.jcs.where.manager.TokenManager;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 

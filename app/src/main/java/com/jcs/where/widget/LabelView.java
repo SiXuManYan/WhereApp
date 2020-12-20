@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.jcs.where.R;
 import com.jcs.where.utils.DimenUtil;
 
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 public class LabelView extends LinearLayout {
 

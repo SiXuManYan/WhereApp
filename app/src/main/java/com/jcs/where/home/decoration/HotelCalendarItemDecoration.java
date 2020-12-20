@@ -6,14 +6,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
 
+import com.jcs.where.R;
+import com.jcs.where.adapter.HotelCalendarAdapter;
+import com.jcs.where.base.BaseItemDecoration;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jcs.where.R;
-import com.jcs.where.base.BaseItemDecoration;
-import com.jcs.where.adapter.HotelCalendarAdapter;
 
 public class HotelCalendarItemDecoration extends BaseItemDecoration {
     private Paint mHeaderBgPaint;

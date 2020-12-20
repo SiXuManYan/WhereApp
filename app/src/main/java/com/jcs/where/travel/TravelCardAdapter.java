@@ -8,20 +8,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
-import androidx.viewpager.widget.PagerAdapter;
-
+import com.bumptech.glide.Glide;
 import com.jcs.where.R;
 import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.CardAdapter;
 import com.jcs.where.travel.event.TravelEvent;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.cardview.widget.CardView;
+import androidx.viewpager.widget.PagerAdapter;
 
 public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
 
@@ -93,7 +93,7 @@ public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
         nameTv.setText(bean.getName());
         RoundedImageView photoIv = (RoundedImageView) view.findViewById(R.id.iv_photo);
         if (!TextUtils.isEmpty(bean.getImage())) {
-            Picasso.with(useContext).load(bean.getImage()).into(photoIv);
+            Glide.with(useContext).load(bean.getImage()).into(photoIv);
         } else {
             photoIv.setImageDrawable(useContext.getResources().getDrawable(R.drawable.ic_test));
         }

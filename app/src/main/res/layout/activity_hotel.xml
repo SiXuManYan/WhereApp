@@ -6,26 +6,12 @@
     android:background="@color/grey_F5F5F5"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_black"
-        app:navigationIcon="@drawable/ic_back_black"
-        app:theme="@style/AppTheme.ActionBar">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:text="酒店预定"
-            android:textColor="@color/black_333333"
-            android:textSize="17sp" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:middleTitle="@string/hotel_reservation"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -97,7 +83,7 @@
                         android:layout_toLeftOf="@+id/tv_allday">
 
                         <TextView
-                            android:id="@+id/tv_startday"
+                            android:id="@+id/startDayTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -110,10 +96,10 @@
                             android:id="@+id/tv_startweek"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/tv_startday"
+                            android:layout_alignBottom="@+id/startDayTv"
                             android:layout_gravity="center"
                             android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/tv_startday"
+                            android:layout_toRightOf="@+id/startDayTv"
                             android:text="周日"
                             android:textColor="@color/grey_666666"
                             android:textSize="12sp" />
@@ -128,7 +114,7 @@
                             android:background="@color/grey_666666" />
 
                         <TextView
-                            android:id="@+id/tv_endday"
+                            android:id="@+id/endDayTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -143,10 +129,10 @@
                             android:id="@+id/tv_endweek"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/tv_endday"
+                            android:layout_alignBottom="@+id/endDayTv"
                             android:layout_gravity="center"
                             android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/tv_endday"
+                            android:layout_toRightOf="@+id/endDayTv"
                             android:text="周日"
                             android:textColor="@color/grey_666666"
                             android:textSize="12sp" />
@@ -195,7 +181,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/iv_clear"
+                        android:id="@+id/clearIv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"

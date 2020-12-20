@@ -33,15 +33,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -59,6 +52,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelTypeBean;
 import com.jcs.where.bean.TravelListBean;
@@ -72,6 +66,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -79,10 +74,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
-import co.tton.android.base.view.ToastUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 
 public class TravelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -145,9 +145,10 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         initView();
     }
 
-    private void initView() {
-        viewPager = V.f(this, R.id.viewpager);
-        hotelMapRl = V.f(this, R.id.rl_hotelmap);
+    @Override
+    protected void initView() {
+        viewPager = findViewById(R.id.viewpager);
+        hotelMapRl = findViewById(R.id.rl_hotelmap);
         mCardAdapter = new TravelCardAdapter(TravelMapActivity.this);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -176,8 +177,8 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
 
             }
         });
-        searchEt = V.f(this, R.id.et_search);
-        clearIv = V.f(this, R.id.iv_clear);
+        searchEt = findViewById(R.id.et_search);
+        clearIv = findViewById(R.id.clearIv);
         searchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -208,7 +209,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 recommendSearch(s.toString(), s.toString().length());
             }
         });
-        V.f(this, R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkIsGooglePlayConn();
@@ -227,7 +228,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 initData();
             }
         });
-        mLayout = V.f(this, R.id.sliding_layout);
+        mLayout = findViewById(R.id.sliding_layout);
 
         mLayout.setFadeOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,8 +236,8 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
-        mViewPager = V.f(this, R.id.viewPager);
-        listStatusIv = V.f(this, R.id.iv_liststatus);
+        mViewPager = findViewById(R.id.viewPager);
+        listStatusIv = findViewById(R.id.iv_liststatus);
         mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -252,7 +253,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
             }
         });
         mLayout.setTouchEnabled(false);
-        V.f(this, R.id.rl_showlist).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.rl_showlist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listStatus == false) {
@@ -264,15 +265,16 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                 }
             }
         });
-        recommendSearchRv = V.f(this, R.id.rv_searchrecommend);
+        recommendSearchRv = findViewById(R.id.rv_searchrecommend);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TravelMapActivity.this,
                 LinearLayoutManager.VERTICAL, false);
         recommendSearchRv.setLayoutManager(linearLayoutManager);
-        recommendAdapter = new RecommendAdapter(TravelMapActivity.this);
+        recommendAdapter = new RecommendAdapter();
         initData();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         showLoading();
         String url;
         if (useInputText != null) {
@@ -307,7 +309,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ADELAIDE, 10f));
                         for (int i = 0; i < travelListBean.getData().size(); i++) {
                             View view = LayoutInflater.from(TravelMapActivity.this).inflate(R.layout.custom_marker_layout, null);
-                            TextView peiceTv = V.f(view, R.id.tv_price);
+                            TextView peiceTv = view.findViewById(R.id.tv_price);
                             peiceTv.setText(travelListBean.getData().get(i).getName());
                             views.add(view);
                             BitmapDescriptor bitmapDescriptor = fromView(TravelMapActivity.this, view);
@@ -336,20 +338,25 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                         viewPager.setOffscreenPageLimit(3);
                         getTab();
                     } else {
-                        ToastUtils.showLong(TravelMapActivity.this, "未查询到该酒店");
+                        showToast("未查询到该酒店");
                     }
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(TravelMapActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(TravelMapActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     private void getTab() {
@@ -370,14 +377,14 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                     initTab(list);
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(TravelMapActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(TravelMapActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
@@ -559,18 +566,18 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
                     stopLoading();
                     if (code == 200) {
                         TravelListBean travelListBean = new Gson().fromJson(result, TravelListBean.class);
-                        recommendAdapter.setData(travelListBean.getData());
+                        recommendAdapter.setNewInstance(travelListBean.getData());
                         recommendSearchRv.setAdapter(recommendAdapter);
                     } else {
                         ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        ToastUtils.showLong(TravelMapActivity.this, errorBean.message);
+                        showToast(errorBean.message);
                     }
                 }
 
                 @Override
                 public void onFaileure(int code, Exception e) {
                     stopLoading();
-                    ToastUtils.showLong(TravelMapActivity.this, e.getMessage());
+                    showToast(e.getMessage());
                 }
             });
         }
@@ -649,22 +656,17 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
         }
     }
 
-    private class RecommendAdapter extends BaseQuickAdapter<TravelListBean.DataBean> {
+    private class RecommendAdapter extends BaseQuickAdapter<TravelListBean.DataBean, BaseViewHolder> {
 
-        public RecommendAdapter(Context context) {
-            super(context);
+        public RecommendAdapter() {
+            super(R.layout.item_recommendsearch);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_recommendsearch;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, TravelListBean.DataBean data, int position) {
-            TextView nameTv = holder.findViewById(R.id.tv_name);
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, TravelListBean.DataBean data) {
+            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(matcherSearchText(data.getName(), useText));
-            holder.findViewById(R.id.ll_search).setOnClickListener(new View.OnClickListener() {
+            baseViewHolder.findView(R.id.ll_search).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     hideKeyboard(view);

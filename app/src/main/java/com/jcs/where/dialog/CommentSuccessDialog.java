@@ -30,7 +30,7 @@ public class CommentSuccessDialog extends Dialog implements View.OnClickListener
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         sureTv = (TextView) findViewById(R.id.tv_sure);
         sureTv.setOnClickListener(this);
     }

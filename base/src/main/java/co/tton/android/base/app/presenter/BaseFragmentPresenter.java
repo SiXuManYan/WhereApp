@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import co.tton.android.base.app.fragment.BaseFragment;
+import com.jcs.where.base.BaseFragment;
 import co.tton.android.base.manager.CompositeSubscriptionHelper;
 import rx.Subscription;
 

@@ -9,7 +9,7 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
 
 public class JcsMonthView extends MonthView {
-    private Paint mDayPaint;
+    private final Paint mDayPaint;
 
     public JcsMonthView(Context context) {
         super(context);

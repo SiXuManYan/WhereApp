@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -16,10 +15,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -42,6 +37,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+/**
+ * 酒店搜索页面
+ */
 public class HotelSearchActivity extends BaseActivity implements OnItemChildClickListener {
 
 
@@ -49,22 +51,13 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
     private static final String EXT_CITY_ID = "cityId";
     private TextView cancelTv;
     private EditText searchEt;
+    private View topBg;
     private RecyclerView searchHistoryRv, searchHotRv;
     private HotSearchAdapter hotSearchAdapter;
     private SearchHistoryAdapter searchHistoryAdapter;
     private RecommendAdapter recommendAdapter;
     private RecyclerView recommendSearchRv;
     private String useText;
-
-    public static void goTo(Context context, String cityId) {
-        Intent intent = new Intent(context, HotelSearchActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(EXT_CITY_ID, cityId);
-        if (!(context instanceof Activity)) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        context.startActivity(intent);
-    }
 
     public static void goTo(Activity activity, String cityId, int requestCode) {
         Intent intent = new Intent(activity, HotelSearchActivity.class);
@@ -74,20 +67,23 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBar();
-        initView();
-    }
-
-    @Override
     protected void initView() {
         cancelTv = findViewById(R.id.tv_cancel);
         searchEt = findViewById(R.id.et_search);
+        topBg = findViewById(R.id.topBg);
+        setMarginTopForStatusBar(topBg);
         searchHistoryRv = findViewById(R.id.rv_searchhistory1);
         searchHotRv = findViewById(R.id.rv_searchhot);
-        hotSearchAdapter.addChildClickViewIds(R.id.rl_searchhistory);
         recommendSearchRv = findViewById(R.id.rv_searchrecommend);
+
+        searchHistoryAdapter = new SearchHistoryAdapter();
+        searchHistoryAdapter.addChildClickViewIds(R.id.rl_searchhistory);
+        recommendAdapter = new RecommendAdapter();
+        recommendAdapter.addChildClickViewIds(R.id.ll_search);
+        recommendSearchRv.setAdapter(recommendAdapter);
+        hotSearchAdapter = new HotSearchAdapter();
+        hotSearchAdapter.addChildClickViewIds(R.id.rl_searchhistory);
+        searchHotRv.setAdapter(hotSearchAdapter);
     }
 
     private void initSearchHistory() {
@@ -110,15 +106,6 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
     protected void initData() {
         showLoading();
 
-        searchHistoryAdapter = new SearchHistoryAdapter();
-        searchHistoryAdapter.addChildClickViewIds(R.id.rl_searchhistory);
-        recommendAdapter = new RecommendAdapter();
-        recommendAdapter.addChildClickViewIds(R.id.ll_search);
-        recommendSearchRv.setAdapter(recommendAdapter);
-        hotSearchAdapter = new HotSearchAdapter();
-        hotSearchAdapter.addChildClickViewIds(R.id.rl_searchhistory);
-        searchHotRv.setAdapter(hotSearchAdapter);
-
         MyLayoutManager layout1 = new MyLayoutManager();
         //必须，防止recyclerview高度为wrap时测量item高度0
         layout1.setAutoMeasureEnabled(true);
@@ -126,8 +113,8 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelSearchActivity.this,
                 LinearLayoutManager.VERTICAL, false);
         recommendSearchRv.setLayoutManager(linearLayoutManager);
-
         initSearchHistory();
+
         HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hot/searches?area_id=" + getIntent().getStringExtra(EXT_CITY_ID), null, "", TokenManager.get().getToken(HotelSearchActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -269,7 +256,7 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
 
     @Override
     public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-        if (adapter == hotSearchAdapter && view.getId() == R.id.rl_searchhistory){
+        if (adapter == hotSearchAdapter && view.getId() == R.id.rl_searchhistory) {
             String item = hotSearchAdapter.getItem(position);
             SearchHistoryUtils.saveSearchHistory(HotelSearchActivity.this, item);
             Intent intent = new Intent();
@@ -278,14 +265,14 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
             finish();
         }
 
-        if (adapter == searchHistoryAdapter && view.getId() == R.id.rl_searchhistory){
+        if (adapter == searchHistoryAdapter && view.getId() == R.id.rl_searchhistory) {
             Intent intent = new Intent();
             intent.putExtra(EXT_SELECT_SEARCH, searchHistoryAdapter.getItem(position));
             setResult(RESULT_OK, intent);
             finish();
         }
 
-        if (adapter == recommendAdapter && view.getId() == R.id.ll_search){
+        if (adapter == recommendAdapter && view.getId() == R.id.ll_search) {
             HotelListBean.DataBean item = recommendAdapter.getItem(position);
             SearchHistoryUtils.saveSearchHistory(HotelSearchActivity.this, item.getName());
             Intent intent = new Intent();
@@ -295,7 +282,7 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
         }
     }
 
-    private static class SearchHistoryAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
+    private static class SearchHistoryAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
         public SearchHistoryAdapter() {
             super(R.layout.item_searchhistory);

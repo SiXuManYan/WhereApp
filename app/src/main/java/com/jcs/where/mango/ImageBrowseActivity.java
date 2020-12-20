@@ -8,9 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import com.jcs.where.R;
 import com.jcs.where.mango.adapter.ViewPageAdapter;
 import com.jcs.where.mango.presenter.ImageBrowsePresenter;
@@ -18,6 +15,9 @@ import com.jcs.where.mango.util.StatusBarUtils;
 import com.jcs.where.mango.view.ImageBrowseView;
 
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Mango main Activity
@@ -47,7 +47,7 @@ public class ImageBrowseActivity extends AppCompatActivity implements ViewPager.
     /**
      * init view
      */
-    private void initView() {
+    protected void initView() {
         vp = (ViewPager) this.findViewById(R.id.viewPager);
         hint = (TextView) this.findViewById(R.id.hint);
         save = (TextView) this.findViewById(R.id.save);

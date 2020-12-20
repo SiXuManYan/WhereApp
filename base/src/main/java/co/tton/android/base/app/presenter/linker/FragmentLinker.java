@@ -9,7 +9,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import co.tton.android.base.app.fragment.BaseFragment;
+import com.jcs.where.base.BaseFragment;
 import co.tton.android.base.app.presenter.BaseFragmentPresenter;
 import co.tton.android.base.app.presenter.Presenter;
 

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse.DataBean, BaseViewHolder> {
-    private List<Integer> mCommentImgResIds;
+    private final List<Integer> mCommentImgResIds;
 
     public HotelCommentsAdapter(int layoutResId) {
         super(layoutResId);
@@ -41,12 +41,12 @@ public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse
         baseViewHolder.setText(R.id.dateTv, dataBean.getCreated_at());
         TextView commentContentTv = baseViewHolder.findView(R.id.commentContent);
         commentContentTv.setText(dataBean.getContent());
-        if(dataBean.is_select){
+        if (dataBean.is_select) {
             baseViewHolder.setText(R.id.fullText, "收起");
 
             commentContentTv.setMaxLines(Integer.MAX_VALUE);
             commentContentTv.setEllipsize(null);
-        }else {
+        } else {
             baseViewHolder.setText(R.id.fullText, "全文");
 
             commentContentTv.setMaxLines(3);

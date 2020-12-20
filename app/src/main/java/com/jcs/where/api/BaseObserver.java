@@ -28,7 +28,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
     public void onError(@NonNull Throwable e) {
         String message = e.getMessage();
         ErrorResponse errorResponse = new ErrorResponse();
-        if (message == null){
+        if (message == null) {
             errorResponse.errMsg = "空的错误信息";
             onError(errorResponse);
             return;

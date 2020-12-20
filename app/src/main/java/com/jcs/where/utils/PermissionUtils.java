@@ -23,11 +23,11 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.jcs.where.R;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
-
-import com.jcs.where.R;
 
 /**
  * Utility class for access to runtime permissions.

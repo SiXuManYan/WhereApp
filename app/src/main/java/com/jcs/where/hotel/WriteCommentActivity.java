@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -28,7 +27,6 @@ import com.jcs.where.view.GridItemDecoration;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +123,7 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
         starIv4.setOnClickListener(this);
         starIv5.setOnClickListener(this);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.iv_picture_delete){
+            if (view.getId() == R.id.iv_picture_delete) {
                 mAdapter.removeAt(position);
             }
         });

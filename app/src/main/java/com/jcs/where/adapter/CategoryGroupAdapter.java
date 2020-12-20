@@ -1,6 +1,5 @@
 package com.jcs.where.adapter;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -54,11 +53,7 @@ public class CategoryGroupAdapter extends BaseNodeAdapter {
         public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode baseNode) {
             ParentCategoryResponse parent = (ParentCategoryResponse) baseNode;
             baseViewHolder.setText(R.id.categoryGroupTitle, parent.getName());
-            if (baseViewHolder.getAdapterPosition() == 0) {
-                baseViewHolder.setGone(R.id.line, true);
-            } else {
-                baseViewHolder.setGone(R.id.line, false);
-            }
+            baseViewHolder.setGone(R.id.line, baseViewHolder.getAdapterPosition() == 0);
         }
     }
 

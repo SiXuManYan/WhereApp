@@ -4,8 +4,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-
 import com.jcs.where.R;
 import com.jcs.where.view.XBanner.GifDownloadManager.ProgressListener;
 
@@ -27,6 +25,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import androidx.annotation.NonNull;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 

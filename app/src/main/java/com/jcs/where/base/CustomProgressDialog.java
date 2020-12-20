@@ -15,8 +15,8 @@ import com.jcs.where.R;
 
 public class CustomProgressDialog extends ProgressDialog {
 
-    private Context mContext;
-    private String mLoadingTip;
+    private final Context mContext;
+    private final String mLoadingTip;
     private TextView mLoadingTv;
 
 
@@ -41,7 +41,7 @@ public class CustomProgressDialog extends ProgressDialog {
         initData();
     }
 
-    private void initData() {
+    protected void initData() {
         mLoadingTv.setText(mLoadingTip);
 
     }
@@ -50,7 +50,7 @@ public class CustomProgressDialog extends ProgressDialog {
         mLoadingTv.setText(str);
     }
 
-    private void initView() {
+    protected void initView() {
         mLoadingTv = (TextView) findViewById(R.id.progress_tv);
     }
 

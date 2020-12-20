@@ -58,7 +58,7 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         create(builder.parentView);
     }
 
-    private void initView() {
+    protected void initView() {
         closeIv = (ImageView) rootView.findViewById(R.id.btn_close);
         closeIv.setOnClickListener(new View.OnClickListener() {
             @Override

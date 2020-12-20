@@ -17,14 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.PermissionChecker;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.gms.common.ConnectionResult;
@@ -46,7 +39,6 @@ import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.hotel.HotelListActivity;
 import com.jcs.where.manager.TokenManager;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -59,6 +51,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+/**
+ * 酒店预订页面
+ */
 public class HotelActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, HotelStarDialog.HotelStarCallback {
 
     private static final int REQ_SELECT_CITY = 100;
@@ -128,9 +131,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBar();
+    protected void initView() {
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -139,17 +140,13 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                     .build();
         }
         mGoogleApiClient.connect();
-        initView();
         guessYouLikeAdapter = new GuessYouLikeAdapter(R.layout.item_hotellist);
-    }
 
-    @Override
-    protected void initView() {
         locationTv = findViewById(R.id.tv_location);
         locationTv.setOnClickListener(this);
         chooseDateRl = findViewById(R.id.rl_choosedate);
         chooseDateRl.setOnClickListener(this);
-        startDateTv = findViewById(R.id.tv_startday);
+        startDateTv = findViewById(R.id.startDayTv);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
         Date date = new Date(System.currentTimeMillis());
         startDateTv.setText(simpleDateFormat.format(date));
@@ -157,7 +154,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = new Date(System.currentTimeMillis());
 //        startWeekTv.setText("周" + CalendarUtil.getWeekByFormat(simpleDateFormat1.format(date1)));
-        endDateTv = findViewById(R.id.tv_endday);
+        endDateTv = findViewById(R.id.endDayTv);
         endDateTv.setText(getOldDate(1));
         endWeekTv = findViewById(R.id.tv_endweek);
 //        endWeekTv.setText("周" + CalendarUtil.getWeekByFormat(getOldWeek(1)));
@@ -186,7 +183,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         useStartYear = simpleDateFormat2.format(date);
         useEndYear = getOldWeek(1).substring(0, 4);
         findViewById(R.id.tv_chooselocation).setOnClickListener(this);
-        clearIv = findViewById(R.id.iv_clear);
+        clearIv = findViewById(R.id.clearIv);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,19 +243,12 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void bindListener() {
-        
+
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_hotel;
-    }
-
-    protected void setStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
-        }
     }
 
     @Override
@@ -290,7 +280,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 mHotelStarDialog.show(getSupportFragmentManager());
                 break;
             case R.id.tv_search:
-                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString(),getIntent().getStringExtra("categoryId"));
+                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
                 break;
             case R.id.tv_chooselocation:
                 //   initLoaction();
@@ -424,6 +414,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         clearIv.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
     private class GuessYouLikeAdapter extends BaseQuickAdapter<GuessYouLikeHotelBean, BaseViewHolder> {
 
 
@@ -435,7 +430,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         protected void convert(@NotNull BaseViewHolder baseViewHolder, GuessYouLikeHotelBean data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                Picasso.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
+                Glide.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
             } else {
                 photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
             }

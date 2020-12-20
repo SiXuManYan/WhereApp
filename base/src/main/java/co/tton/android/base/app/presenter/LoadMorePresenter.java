@@ -10,8 +10,8 @@ import java.util.List;
 
 import co.tton.android.base.R;
 import co.tton.android.base.manager.CompositeSubscriptionHelper;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import co.tton.android.base.view.CommonLayout;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -134,7 +134,7 @@ public abstract class LoadMorePresenter<T> {
                     } else {
                         mCommonLayout.showSearchEmpty();
                         View view = mCommonLayout.getSearchEmptyView();
-                        TextView textView = V.f(view, R.id.tv_search_empty);
+                        TextView textView = view.findViewById(R.id.tv_search_empty);
                         textView.setText(mRecyclerView.getContext().getString(R.string.common_search_empty, mKeyword));
                     }
                 }

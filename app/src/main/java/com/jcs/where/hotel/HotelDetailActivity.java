@@ -6,12 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -23,13 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -49,14 +39,13 @@ import com.jcs.where.bean.RoomDetailBean;
 import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
-import com.jcs.where.model.HotelDetailModel;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
 import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -64,6 +53,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import pl.droidsonroids.gif.GifImageView;
@@ -148,19 +143,6 @@ public class HotelDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-        initView();
-    }
-
-    @Override
     protected void initView() {
         toolbar = findViewById(R.id.toolbar);
         //  setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
@@ -214,11 +196,11 @@ public class HotelDetailActivity extends BaseActivity {
                 alertDialog2.show();
             }
         });
-        startDateTv = findViewById(R.id.tv_startday);
+        startDateTv = findViewById(R.id.startDayTv);
         startDateTv.setText(getIntent().getStringExtra(EXT_STARTDAY));
         startWeekTv = findViewById(R.id.tv_startweek);
         startWeekTv.setText(getIntent().getStringExtra(EXT_STARTWEEK));
-        endDateTv = findViewById(R.id.tv_endday);
+        endDateTv = findViewById(R.id.endDayTv);
         endDateTv.setText(getIntent().getStringExtra(EXT_ENDDAY));
         endWeekTv = findViewById(R.id.tv_endweek);
         endWeekTv.setText(getIntent().getStringExtra(EXT_ENDWEEK));
@@ -488,7 +470,7 @@ public class HotelDetailActivity extends BaseActivity {
                             seeMoreTv.setVisibility(View.GONE);
                         }
                         if (!TextUtils.isEmpty(hotelCommentBean.getData().get(0).getAvatar())) {
-                            Picasso.with(HotelDetailActivity.this).load(hotelCommentBean.getData().get(0).getAvatar()).into(commentAvaterIv);
+                            Glide.with(HotelDetailActivity.this).load(hotelCommentBean.getData().get(0).getAvatar()).into(commentAvaterIv);
                         } else {
                             commentAvaterIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
                         }
@@ -730,7 +712,7 @@ public class HotelDetailActivity extends BaseActivity {
         protected void convert(@NotNull BaseViewHolder baseViewHolder, RoomListBean data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                Picasso.with(HotelDetailActivity.this).load(data.getImages().get(0)).into(photoIv);
+                Glide.with(HotelDetailActivity.this).load(data.getImages().get(0)).into(photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }

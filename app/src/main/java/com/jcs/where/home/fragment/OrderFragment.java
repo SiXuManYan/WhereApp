@@ -12,8 +12,8 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.model.OrderModel;
 import com.jcs.where.home.watcher.EmptyTextWatcher;
+import com.jcs.where.model.OrderModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class OrderFragment extends BaseFragment {
     private EditText mSearchEt;
 
     private List<OrderListFragment> mOrderListFragments;
-    private String[] mTabTitles = new String[]{"全部", "待付款", "待使用", "待评价", "退款/售后"};
+    private final String[] mTabTitles = new String[]{"全部", "待付款", "待使用", "待评价", "退款/售后"};
 
     @Override
     protected void initView(View view) {
@@ -145,6 +145,11 @@ public class OrderFragment extends BaseFragment {
                 mTabLayout.addTab(tab);
             }
         }
+    }
+
+    @Override
+    protected boolean needChangeStatusBarStatus() {
+        return true;
     }
 
     @Override

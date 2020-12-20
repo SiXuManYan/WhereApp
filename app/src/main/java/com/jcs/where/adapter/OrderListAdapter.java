@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * create by zyf on 2020/12/11 9:11 PM
  */
 public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBean, BaseViewHolder> implements UpFetchModule, LoadMoreModule {
-    private HashMap<Integer,OrderStatusHolder> mOrderHolder;
+    private final HashMap<Integer, OrderStatusHolder> mOrderHolder;
 
 
     public OrderListAdapter(int layoutResId) {
@@ -77,15 +78,25 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
         return getData().get(position).getId();
     }
 
-    public Class<? extends AppCompatActivity> getToLeftClass(int position){
-        return mOrderHolder.get(getData().get(position).getOrder_status()).toLeftClazz;
+    public Class<? extends AppCompatActivity> getToLeftClass(int position) {
+        OrderStatusHolder orderStatusHolder = mOrderHolder.get(getData().get(position).getOrder_status());
+        if (orderStatusHolder != null) {
+            return orderStatusHolder.toLeftClazz;
+        }else {
+            return null;
+        }
     }
 
-    public Class<? extends AppCompatActivity> getToRightClass(int position){
-        return mOrderHolder.get(getData().get(position).getOrder_status()).toRightClazz;
+    public Class<? extends AppCompatActivity> getToRightClass(int position) {
+        OrderStatusHolder orderStatusHolder = mOrderHolder.get(getData().get(position).getOrder_status());
+        if (orderStatusHolder != null) {
+            return orderStatusHolder.toRightClazz;
+        }else {
+            return null;
+        }
     }
 
-    public static class OrderStatusHolder{
+    public static class OrderStatusHolder {
         public int orderStatus;
         public String statusText;
         public String leftText;

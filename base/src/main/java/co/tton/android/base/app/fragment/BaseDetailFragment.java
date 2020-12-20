@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import co.tton.android.base.R;
-import co.tton.android.base.utils.V;
+
 import co.tton.android.base.view.CommonLayout;
 import rx.Subscription;
 
@@ -19,7 +19,7 @@ public abstract class BaseDetailFragment extends BaseLazyLoadFragment {
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
-        mCommonLayout = V.f(view, R.id.common_layout);
+        mCommonLayout = view.findViewById(R.id.common_layout);
         mCommonLayout.setContentLayoutId(getContentLayoutId());
         mCommonLayout.showContent();
         mCommonLayout.setOnErrorClickListener(new View.OnClickListener() {

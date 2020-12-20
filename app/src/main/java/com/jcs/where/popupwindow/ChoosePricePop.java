@@ -44,7 +44,7 @@ public class ChoosePricePop extends PopupWindow implements View.OnClickListener 
         create(builder.parentView);
     }
 
-    private void initView() {
+    protected void initView() {
         btnClose = (ImageView) rootView.findViewById(R.id.btn_close);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override

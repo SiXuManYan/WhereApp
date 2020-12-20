@@ -4,13 +4,13 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jcs.where.base.BaseItemDecoration;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import co.tton.android.base.utils.ValueUtils;
-import co.tton.android.base.view.BaseQuickAdapter;
-
-public class GridItemDecoration extends RecyclerView.ItemDecoration {
+public class GridItemDecoration extends BaseItemDecoration {
 
     private final int mHorizontalSpacing;
     private final int mVerticalSpacing;
@@ -20,8 +20,8 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     public GridItemDecoration(Context context, int horizontalSpacing, int verticalSpacing) {
-        mHorizontalSpacing = ValueUtils.dpToPx(context, horizontalSpacing);
-        mVerticalSpacing = ValueUtils.dpToPx(context, verticalSpacing);
+        mHorizontalSpacing = getPxFromDp(context, horizontalSpacing);
+        mVerticalSpacing = getPxFromDp(context, verticalSpacing);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
         BaseQuickAdapter adapter = (BaseQuickAdapter) parent.getAdapter();
         int position = parent.getChildAdapterPosition(view);
         int itemViewType = adapter.getItemViewType(position);
-        if (itemViewType == BaseQuickAdapter.NORMAL_VIEW) {
-            position -= adapter.getHeaderViewCount();
+        if (itemViewType == 0) {
+            position -= adapter.getHeaderLayoutCount();
 
             int span = ((GridLayoutManager) parent.getLayoutManager()).getSpanCount();
             int itemOffset = mHorizontalSpacing / 2;

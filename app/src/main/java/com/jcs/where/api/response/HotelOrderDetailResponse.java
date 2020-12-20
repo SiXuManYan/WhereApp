@@ -12,7 +12,7 @@ public class HotelOrderDetailResponse {
      * hotel_id : 0
      * hotel_name : McDermott-Balistreri Hotel
      * hotel_addr : 25632 Cali Unions Apt. 909
-     South Toy, NV 81128-1696
+     * South Toy, NV 81128-1696
      * hotel_tel : 13130033471
      * hotel_lat : 14.6171339
      * hotel_lng : 120.3683139

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.tton.android.base.R;
-import co.tton.android.base.utils.V;
+
 
 public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<BaseQuickAdapter.QuickHolder> {
 

@@ -1,8 +1,6 @@
 package com.jcs.where.mango.progressGlide;
 
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelLoader;
@@ -11,6 +9,7 @@ import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 
 import java.io.InputStream;
 
+import androidx.annotation.NonNull;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 

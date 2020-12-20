@@ -530,7 +530,8 @@ public class XBanner extends RelativeLayout {
             mIndicators.addAll(createIndicators());
             //applyIndicatorGravity();
             for (int i = 0; i < mIndicators.size(); i++) {
-                mIndicatorContainer.addView(mIndicators.get(i));
+//                TODO 轮播图下面的 dot 视图
+//                mIndicatorContainer.addView(mIndicators.get(i));
             }
         }
 

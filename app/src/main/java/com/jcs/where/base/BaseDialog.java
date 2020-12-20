@@ -13,13 +13,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.jcs.where.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
-
-import com.jcs.where.R;
 
 public abstract class BaseDialog extends DialogFragment {
 
@@ -61,7 +60,7 @@ public abstract class BaseDialog extends DialogFragment {
         Window window = dialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
         wlp.gravity = Gravity.BOTTOM;
-        if(isWidthMatch()){
+        if (isWidthMatch()) {
             wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         }
         wlp.height = getDp(getHeight());
@@ -78,19 +77,20 @@ public abstract class BaseDialog extends DialogFragment {
         return dialog;
     }
 
-    protected boolean isWidthMatch(){
+    protected boolean isWidthMatch() {
         return true;
     }
-    protected boolean isTransparent(){
+
+    protected boolean isTransparent() {
         return false;
     }
 
-    protected int getDp(int height){
+    protected int getDp(int height) {
         Context context = getContext();
         if (context == null) {
             return 0;
         }
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,height, context.getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.getResources().getDisplayMetrics());
     }
 
     protected String getDialogTag() {

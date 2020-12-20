@@ -2,12 +2,12 @@ package com.jcs.where.mango.progressGlide;
 
 import android.graphics.drawable.Drawable;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+
+import androidx.annotation.NonNull;
 
 public class WrappingTarget<Z> implements Target<Z> {
 

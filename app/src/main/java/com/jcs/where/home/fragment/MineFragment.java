@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.jcs.where.R;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.home.event.TokenEvent;
@@ -13,10 +14,13 @@ import com.jcs.where.login.event.LoginEvent;
 import com.jcs.where.mine.PersonalDataActivity;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.makeramen.roundedimageview.RoundedImageView;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import androidx.annotation.Nullable;
+
 import static android.app.Activity.RESULT_OK;
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
@@ -72,6 +76,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             default:
         }
+    }
+
+    @Override
+    protected boolean needChangeStatusBarStatus() {
+        return true;
     }
 
     @Override

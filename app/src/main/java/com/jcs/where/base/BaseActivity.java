@@ -9,15 +9,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -27,14 +26,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private boolean mIsHasStatusBarColor = true;
     private CustomProgressDialog mProgressDialog;
 
-    public static void setMargins(View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
-        }
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +34,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorPrimary), 0);
         }
         fullScreen(this);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
+
+        changeStatusTextColor();
         setContentView(getLayoutId());
         mJcsTitle = findViewById(R.id.jcsTitle);
         if (mJcsTitle != null) {
-            setMargins(mJcsTitle, 0, getStatusBarHeight(), 0, 0);
+            setMarginTopForStatusBar(mJcsTitle);
             mJcsTitle.setBackIvClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -61,6 +55,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         bindListener();
         initData();
+    }
+
+    private void changeStatusTextColor() {
+        View decor = getWindow().getDecorView();
+        if (isStatusDark()) {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 
     protected abstract void initView();
@@ -148,6 +151,27 @@ public abstract class BaseActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.bg_color));//设置状态栏颜色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
         }
+    }
+
+
+    public void setMargins(View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
+
+    public void setMarginTopForStatusBar(View view){
+        setMargins(view, 0, getStatusBarHeight(), 0, 0);
+    }
+
+    protected void setAndroidNativeLightStatusBar(boolean dark) {
+
+    }
+
+    protected boolean isStatusDark() {
+        return false;
     }
 
     protected void showNetError(ErrorResponse errorResponse) {

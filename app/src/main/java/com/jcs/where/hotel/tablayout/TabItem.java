@@ -21,9 +21,9 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.appcompat.widget.TintTypedArray;
-
 import com.jcs.where.R;
+
+import androidx.appcompat.widget.TintTypedArray;
 
 /**
  * TabItem is a special 'view' which allows you to declare tab items for a {@link TabLayout}

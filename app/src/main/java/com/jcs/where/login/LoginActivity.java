@@ -14,11 +14,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
-
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.LoginBean;
 import com.jcs.where.home.event.TokenEvent;
@@ -33,9 +32,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
+import androidx.appcompat.widget.Toolbar;
+
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -84,24 +82,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         fullScreen(this);
-        myCountDownTimer = new MyCountDownTimer(60000, 1000);
         initView();
     }
 
-    private void initView() {
-        toolbar = V.f(this, R.id.toolbar);
+    @Override
+    protected void initView() {
+        myCountDownTimer = new MyCountDownTimer(60000, 1000);
+
+        toolbar = findViewById(R.id.toolbar);
         setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
-        accountTv = V.f(this, R.id.tv_account);
+        accountTv = findViewById(R.id.tv_account);
         accountTv.setOnClickListener(this);
-        phoneTv = V.f(this, R.id.tv_phone);
+        phoneTv = findViewById(R.id.tv_phone);
         phoneTv.setOnClickListener(this);
-        accountEt = V.f(this, R.id.et_account);
-        passwordEt = V.f(this, R.id.et_password);
-        accountLl = V.f(this, R.id.ll_account);
-        phoneLl = V.f(this, R.id.ll_phone);
-        getCodeTv = V.f(this, R.id.tv_getcode);
+        accountEt = findViewById(R.id.et_account);
+        passwordEt = findViewById(R.id.et_password);
+        accountLl = findViewById(R.id.ll_account);
+        phoneLl = findViewById(R.id.ll_phone);
+        getCodeTv = findViewById(R.id.tv_getcode);
         getCodeTv.setOnClickListener(this);
-        accountLoginTv = V.f(this, R.id.tv_accountlogin);
+        accountLoginTv = findViewById(R.id.tv_accountlogin);
         accountLoginTv.setOnClickListener(this);
         accountLoginTv.setClickable(false);
         //1.创建工具类对象 把要改变颜色的btn先传过去
@@ -123,9 +123,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
             }
         });
-        phoneEt = V.f(this, R.id.et_phone);
-        codeEt = V.f(this, R.id.et_code);
-        phoneLoginTv = V.f(this, R.id.tv_phonelogin);
+        phoneEt = findViewById(R.id.et_phone);
+        codeEt = findViewById(R.id.et_code);
+        phoneLoginTv = findViewById(R.id.tv_phonelogin);
         phoneLoginTv.setOnClickListener(this);
         phoneLoginTv.setClickable(false);
         //1.创建工具类对象 把要改变颜色的btn先传过去
@@ -147,10 +147,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
             }
         });
-        accountErrorTv = V.f(this, R.id.tv_accounterror);
-        phoneErrorTv = V.f(this, R.id.tv_phoneerror);
-        V.f(this, R.id.tv_forgetpas).setOnClickListener(this);
-        V.f(this, R.id.tv_register).setOnClickListener(this);
+        accountErrorTv = findViewById(R.id.tv_accounterror);
+        phoneErrorTv = findViewById(R.id.tv_phoneerror);
+        findViewById(R.id.tv_forgetpas).setOnClickListener(this);
+        findViewById(R.id.tv_register).setOnClickListener(this);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     @Override
@@ -179,7 +189,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_getcode:
                 if (!isMobileNO(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(LoginActivity.this, "请输入正确手机号");
+                    showToast("请输入正确手机号");
                     return;
                 }
                 myCountDownTimer.start();
@@ -192,27 +202,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onSuccess(int code, String result) {
                         stopLoading();
                         if (code == 200) {
-                            ToastUtils.showLong(LoginActivity.this, "发送成功，请注意查收");
+                            showToast("发送成功，请注意查收");
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                            ToastUtils.showLong(LoginActivity.this, errorBean.message);
+                            showToast(errorBean.message);
                         }
                     }
 
                     @Override
                     public void onFaileure(int code, Exception e) {
                         stopLoading();
-                        ToastUtils.showLong(LoginActivity.this, e.getMessage());
+                        showToast(e.getMessage());
                     }
                 });
                 break;
             case R.id.tv_accountlogin:
                 if (passwordEt.getText().toString().length() < 6) {
-                    ToastUtils.showLong(LoginActivity.this, "密码长度不符");
+                    showToast("密码长度不符");
                     return;
                 }
                 if (passwordEt.getText().toString().length() > 16) {
-                    ToastUtils.showLong(LoginActivity.this, "密码长度不符");
+                    showToast("密码长度不符");
                     return;
                 }
                 showLoading();
@@ -228,7 +238,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
                             EventBus.getDefault().post(new TokenEvent(loginBean.token));
                             TokenManager.get().login(LoginActivity.this, loginBean);
-                            ToastUtils.showLong(LoginActivity.this, "登录成功");
+                            showToast("登录成功");
                             finish();
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
@@ -240,13 +250,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onFaileure(int code, Exception e) {
                         stopLoading();
-                        ToastUtils.showLong(LoginActivity.this, e.getMessage());
+                        showToast(e.getMessage());
                     }
                 });
                 break;
             case R.id.tv_phonelogin:
                 if (!isMobileNO(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(LoginActivity.this, "请输入正确手机号");
+                    showToast("请输入正确手机号");
                     return;
                 }
                 if (!codeEt.getText().toString().equals("1234")) {
@@ -268,7 +278,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
                             EventBus.getDefault().post(new TokenEvent(loginBean.token));
                             TokenManager.get().login(LoginActivity.this, loginBean);
-                            ToastUtils.showLong(LoginActivity.this, "登录成功");
+                            showToast("登录成功");
                             finish();
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
@@ -280,7 +290,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onFaileure(int code, Exception e) {
                         stopLoading();
-                        ToastUtils.showLong(LoginActivity.this, e.getMessage());
+                        showToast(e.getMessage());
                     }
                 });
                 break;

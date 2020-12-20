@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.dialog.ResetSuccessDialog;
 import com.jcs.where.utils.IEditTextChangeListener;
@@ -23,9 +24,6 @@ import com.jcs.where.utils.WorksSizeCheckUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
 
 public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
 
@@ -63,19 +61,21 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBar();
-        myCountDownTimer = new MyCountDownTimer(60000, 1000);
         initView();
     }
 
-    private void initView() {
-        phoneEt = V.f(this, R.id.et_phone);
-        codeEt = V.f(this, R.id.et_code);
-        pasEt = V.f(this, R.id.et_password);
-        surePasEt = V.f(this, R.id.et_surepassword);
-        getCodeTv = V.f(this, R.id.tv_getcode);
+    @Override
+    protected void initView() {
+        myCountDownTimer = new MyCountDownTimer(60000, 1000);
+
+        phoneEt = findViewById(R.id.et_phone);
+        codeEt = findViewById(R.id.et_code);
+        pasEt = findViewById(R.id.et_password);
+        surePasEt = findViewById(R.id.et_surepassword);
+        getCodeTv = findViewById(R.id.tv_getcode);
         getCodeTv.setOnClickListener(this);
-        errorTv = V.f(this, R.id.tv_error);
-        resetTv = V.f(this, R.id.tv_reset);
+        errorTv = findViewById(R.id.tv_error);
+        resetTv = findViewById(R.id.tv_reset);
         resetTv.setOnClickListener(this);
         resetTv.setClickable(false);
         WorksSizeCheckUtil.textChangeListener textChangeListener = new WorksSizeCheckUtil.textChangeListener(resetTv);
@@ -111,6 +111,16 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void bindListener() {
+
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_forgetpassword;
     }
@@ -127,11 +137,11 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.tv_getcode:
                 if (TextUtils.isEmpty(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(ForgetPasswordActivity.this, "请输入手机号");
+                    showToast("请输入手机号");
                     return;
                 }
                 if (!isMobileNO(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(ForgetPasswordActivity.this, "请输入正确手机号");
+                    showToast("请输入正确手机号");
                     return;
                 }
                 myCountDownTimer.start();
@@ -144,17 +154,17 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                     public void onSuccess(int code, String result) {
                         stopLoading();
                         if (code == 200) {
-                            ToastUtils.showLong(ForgetPasswordActivity.this, "发送成功，请注意查收");
+                            showToast("发送成功，请注意查收");
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                            ToastUtils.showLong(ForgetPasswordActivity.this, errorBean.message);
+                            showToast(errorBean.message);
                         }
                     }
 
                     @Override
                     public void onFaileure(int code, Exception e) {
                         stopLoading();
-                        ToastUtils.showLong(ForgetPasswordActivity.this, e.getMessage());
+                        showToast(e.getMessage());
                     }
                 });
                 break;
@@ -188,14 +198,14 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                             resetSuccessDialog.show();
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                            ToastUtils.showLong(ForgetPasswordActivity.this, errorBean.message);
+                            showToast(errorBean.message);
                         }
                     }
 
                     @Override
                     public void onFaileure(int code, Exception e) {
                         stopLoading();
-                        ToastUtils.showLong(ForgetPasswordActivity.this, e.getMessage());
+                        showToast(e.getMessage());
                     }
                 });
 

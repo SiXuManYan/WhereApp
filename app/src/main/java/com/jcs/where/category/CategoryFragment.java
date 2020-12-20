@@ -13,6 +13,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.BaseFullFragment;
 import com.jcs.where.model.CategoryModel;
 import com.jcs.where.widget.JcsTitle;
 
@@ -24,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.annotations.NonNull;
 
 
-public class CategoryFragment extends BaseFragment {
+public class CategoryFragment extends BaseFullFragment {
 
     private JcsTitle mJcsTitle;
     private TabLayout mTabLayout;
@@ -166,6 +167,11 @@ public class CategoryFragment extends BaseFragment {
 
     @Override
     protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
+    protected boolean needChangeStatusBarStatus() {
         return true;
     }
 

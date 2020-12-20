@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import co.tton.android.base.R;
-import co.tton.android.base.utils.V;
+
 import co.tton.android.base.view.CommonLayout;
 import rx.Subscription;
 
@@ -16,7 +16,7 @@ public abstract class BaseDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mCommonLayout = V.f(this, R.id.common_layout);
+        mCommonLayout = findViewById(R.id.common_layout);
         mCommonLayout.setContentLayoutId(getContentLayoutId());
         mCommonLayout.setOnErrorClickListener(new View.OnClickListener() {
             @Override

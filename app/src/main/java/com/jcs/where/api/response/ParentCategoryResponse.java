@@ -1,6 +1,5 @@
 package com.jcs.where.api.response;
 
-import com.chad.library.adapter.base.entity.SectionEntity;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 
 import org.jetbrains.annotations.Nullable;

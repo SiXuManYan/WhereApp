@@ -9,8 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import co.tton.android.base.R;
 import co.tton.android.base.app.presenter.LoadMorePresenter;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import co.tton.android.base.view.CommonLayout;
 
 public abstract class BaseListActivity<T> extends BaseActivity implements LoadMorePresenter.PullRefreshListener {
@@ -27,7 +27,7 @@ public abstract class BaseListActivity<T> extends BaseActivity implements LoadMo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 初始化通用布局
-        mCommonLayout = V.f(this, R.id.common_layout);
+        mCommonLayout = findViewById(R.id.common_layout);
         mCommonLayout.setContentLayoutId(getContentLayoutId());
         mCommonLayout.setOnErrorClickListener(new View.OnClickListener() {
             @Override
@@ -38,12 +38,12 @@ public abstract class BaseListActivity<T> extends BaseActivity implements LoadMo
         // 初始化分页加载列表
         mCommonLayout.showContent();
         View view = mCommonLayout.getContentView();
-        mRecyclerView = V.f(view, R.id.common_list);
+        mRecyclerView = view.findViewById(R.id.common_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = initAdapter();
         setRecyclerView(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
-        mSwipeRefreshLayout = V.f(view, R.id.swipe_layout);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
         mLoadMoreComponent = initLoadMoreComponent();
         mLoadMoreComponent.setPullRefreshListener(this);
         mLoadMoreComponent.init(mCommonLayout, mRecyclerView, mAdapter);

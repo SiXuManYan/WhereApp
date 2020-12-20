@@ -16,11 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -33,6 +28,7 @@ import com.gongwen.marqueen.util.OnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.adapter.ModulesAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
@@ -43,17 +39,15 @@ import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
 import com.jcs.where.home.activity.TravelStayActivity;
-import com.jcs.where.adapter.ModulesAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
-import com.jcs.where.model.HomeModel;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.model.HomeModel;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -61,6 +55,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import io.reactivex.annotations.NonNull;
@@ -416,8 +414,9 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         }
     }
 
-    public void getBanner() {
-
+    @Override
+    protected boolean needChangeStatusBarStatus() {
+        return true;
     }
 
     public int getScreenWidth() {
@@ -613,7 +612,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessBean data) {
             RoundedImageView roundedImageView = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImg())) {
-                Picasso.with(getContext()).load(data.getImg()).into(roundedImageView);
+                Glide.with(getContext()).load(data.getImg()).into(roundedImageView);
             } else {
                 roundedImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
             }
@@ -639,8 +638,8 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         }
     }
 
-    private class NearbyVerticalAdapter extends BaseQuickAdapter<BusinessBean,BaseViewHolder> {
-        
+    private class NearbyVerticalAdapter extends BaseQuickAdapter<BusinessBean, BaseViewHolder> {
+
 
         public NearbyVerticalAdapter(int layoutResId) {
             super(layoutResId);
@@ -648,7 +647,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessBean businessBean) {
-            baseViewHolder.setText(R.id.tv_distance,"<1.5Km");
+            baseViewHolder.setText(R.id.tv_distance, "<1.5Km");
         }
     }
 

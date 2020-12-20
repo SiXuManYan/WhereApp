@@ -7,16 +7,17 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.jcs.where.R;
+import com.jcs.where.adapter.OrderListAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
-import com.jcs.where.adapter.OrderListAdapter;
 import com.jcs.where.home.decoration.MarginTopDecoration;
-import com.jcs.where.model.OrderModel;
 import com.jcs.where.hotel.HotelOrderDetailActivity;
+import com.jcs.where.model.OrderModel;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -28,7 +29,7 @@ import io.reactivex.annotations.NonNull;
  */
 public class OrderListFragment extends BaseFragment {
 
-    private OrderType mOrderType;
+    private final OrderType mOrderType;
     private SwipeRefreshLayout mSwipeRefresh;
     private RecyclerView mRecycler;
     private OrderListAdapter mAdapter;
@@ -87,11 +88,17 @@ public class OrderListFragment extends BaseFragment {
             public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
                 int id = view.getId();
                 if (id == R.id.rightToTv) {
-                    toActivity(mAdapter.getToRightClass(position), new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                    Class<? extends AppCompatActivity> toRightClass = mAdapter.getToRightClass(position);
+                    if (toRightClass != null) {
+                        toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                    }
                 }
 
                 if (id == R.id.leftToTv) {
-                    toActivity(mAdapter.getToLeftClass(position), new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                    Class<? extends AppCompatActivity> toLeftClass = mAdapter.getToLeftClass(position);
+                    if (toLeftClass != null) {
+                        toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                    }
                 }
             }
         });

@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.jcs.where.R;
+
+import java.util.ArrayList;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jcs.where.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by android on 17/10/17.

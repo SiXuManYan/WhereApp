@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.viewpager.widget.PagerAdapter;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.jcs.where.R;
@@ -27,6 +25,7 @@ import com.jcs.where.mango.progressview.RingProgressView;
 import java.lang.ref.SoftReference;
 import java.util.List;
 
+import androidx.viewpager.widget.PagerAdapter;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 

@@ -3,33 +3,31 @@ package com.jcs.where.travel.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseFragment;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TravelListBean;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.travel.TravelDetailActivity;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import co.tton.android.base.app.fragment.BaseFragment;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.BaseQuickAdapter;
-import co.tton.android.base.view.ToastUtils;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -52,17 +50,10 @@ public class TravelListFragment extends BaseFragment {
         return fragment;
     }
 
-
     @Override
-    protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_travellist, container, false);
-        initView();
-        return view;
-    }
-
-    private void initView() {
-        ptrFrame = V.f(view, R.id.ptr_frame);
-        travelListRv = V.f(view, R.id.rv_travellist);
+    protected void initView(View view) {
+        ptrFrame = view.findViewById(R.id.ptr_frame);
+        travelListRv = view.findViewById(R.id.rv_travellist);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -103,19 +94,19 @@ public class TravelListFragment extends BaseFragment {
                     } else {
                         ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
                     }
-                    travelAdapter.setData(useList);
+                    travelAdapter.setNewInstance(useList);
                     travelListRv.setAdapter(travelAdapter);
                     ptrFrame.refreshComplete();
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(getContext(), errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(getContext(), e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
@@ -135,13 +126,13 @@ public class TravelListFragment extends BaseFragment {
                         ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
                     }
                     useList.addAll(travelListBean.getData());
-                    travelAdapter.setData(useList);
+                    travelAdapter.setNewInstance(useList);
                     travelListRv.setAdapter(travelAdapter);
                     ptrFrame.refreshComplete();
 
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(getContext(), errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
@@ -149,36 +140,46 @@ public class TravelListFragment extends BaseFragment {
             public void onFaileure(int code, Exception e) {
                 stopLoading();
                 ptrFrame.refreshComplete();
-                ToastUtils.showLong(getContext(), e.getMessage());
+                showToast(e.getMessage());
             }
         });
     }
 
-    private class TravelAdapter extends BaseQuickAdapter<TravelListBean.DataBean> {
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void bindListener() {
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_travellist;
+    }
+
+    private class TravelAdapter extends BaseQuickAdapter<TravelListBean.DataBean, BaseViewHolder> {
 
         public TravelAdapter(Context context) {
-            super(context);
+            super(R.layout.item_travellist);
         }
 
         @Override
-        protected int getLayoutId(int viewType) {
-            return R.layout.item_travellist;
-        }
-
-        @Override
-        protected void initViews(QuickHolder holder, TravelListBean.DataBean data, int position) {
-            RoundedImageView photoIv = holder.findViewById(R.id.iv_photo);
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, TravelListBean.DataBean data) {
+            RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImage())) {
-                Picasso.with(getContext()).load(data.getImage()).into(photoIv);
+                Glide.with(getContext()).load(data.getImage()).into(photoIv);
             } else {
-                photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                photoIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_test));
             }
-            TextView nameTv = holder.findViewById(R.id.tv_name);
+            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());
 
-            TextView tagOneTv = holder.findViewById(R.id.tv_tagone);
-            TextView tagTwoTv = holder.findViewById(R.id.tv_tagtwo);
-            LinearLayout tagLl = holder.findViewById(R.id.ll_tag);
+            TextView tagOneTv = baseViewHolder.findView(R.id.tv_tagone);
+            TextView tagTwoTv = baseViewHolder.findView(R.id.tv_tagtwo);
+            LinearLayout tagLl = baseViewHolder.findView(R.id.ll_tag);
             if (data.getTags().size() == 0) {
                 tagLl.setVisibility(View.GONE);
             } else if (data.getTags().size() == 1) {
@@ -189,15 +190,15 @@ public class TravelListFragment extends BaseFragment {
                 tagOneTv.setText(data.getTags().get(0));
                 tagTwoTv.setText(data.getTags().get(1));
             }
-            TextView addressTv = holder.findViewById(R.id.tv_address);
+            TextView addressTv = baseViewHolder.findView(R.id.tv_address);
             addressTv.setText(data.getAddress());
-            TextView distanceTv = holder.findViewById(R.id.tv_distance);
+            TextView distanceTv = baseViewHolder.findView(R.id.tv_distance);
             distanceTv.setText("<" + data.getKm() + "Km");
-            TextView scoreTv = holder.findViewById(R.id.tv_score);
+            TextView scoreTv = baseViewHolder.findView(R.id.tv_score);
             scoreTv.setText(data.getGrade() + "");
-            TextView commentNumTv = holder.findViewById(R.id.tv_commentnumber);
+            TextView commentNumTv = baseViewHolder.findView(R.id.tv_commentnumber);
             commentNumTv.setText(data.getComments_count() + "条评论");
-            holder.findViewById(R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
+            baseViewHolder.findView(R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     TravelDetailActivity.goTo(getContext(), data.getId());

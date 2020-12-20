@@ -2,7 +2,6 @@ package com.jcs.where.api;
 
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.response.BannerResponse;
-import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
@@ -12,6 +11,7 @@ import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
+import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.SuccessResponse;
 
 import java.util.List;
@@ -140,5 +140,5 @@ public interface RetrofitApi {
      * 获得订单列表
      */
     @GET("/commonapi/v1/orders")
-    Observable<OrderListResponse> getOrderList(@Query("type") int type,@Query("search_input") String keyword);
+    Observable<OrderListResponse> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
 }

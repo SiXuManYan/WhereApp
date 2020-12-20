@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
-import co.tton.android.base.R;
+import com.jcs.where.R;
 
 public class ToastUtils {
 

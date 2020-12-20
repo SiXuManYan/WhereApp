@@ -58,7 +58,7 @@
                             android:textSize="11sp" />
 
                         <TextView
-                            android:id="@+id/tv_startday"
+                            android:id="@+id/startDayTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -82,7 +82,7 @@
                             android:textSize="11sp" />
 
                         <TextView
-                            android:id="@+id/tv_endday"
+                            android:id="@+id/endDayTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -106,20 +106,20 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/iv_search"
+                        android:id="@+id/searchIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_hotelsearch" />
+                        android:src="@drawable/ic_hotel_search" />
 
                     <TextView
-                        android:id="@+id/tv_city"
+                        android:id="@+id/cityEt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_toLeftOf="@id/iv_clear"
-                        android:layout_toRightOf="@+id/iv_search"
+                        android:layout_toLeftOf="@id/clearIv"
+                        android:layout_toRightOf="@+id/searchIcon"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -129,14 +129,14 @@
 
 
                     <ImageView
-                        android:id="@+id/iv_clear"
+                        android:id="@+id/clearIv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:padding="5dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_clearsearch" />
+                        android:src="@drawable/ic_clear_search" />
 
 
                 </RelativeLayout>

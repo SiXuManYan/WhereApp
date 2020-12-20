@@ -25,14 +25,17 @@ public class MyPtrClassicFrameLayout extends PtrFrameLayout {
     private boolean isDeal;
     private boolean needHorizontalMove;
     private int mTouchSlop;
+
     public MyPtrClassicFrameLayout(Context context) {
         super(context);
         initViews();
     }
+
     public MyPtrClassicFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initViews();
     }
+
     public MyPtrClassicFrameLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initViews();

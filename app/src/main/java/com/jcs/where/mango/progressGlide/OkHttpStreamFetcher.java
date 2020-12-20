@@ -2,8 +2,6 @@ package com.jcs.where.mango.progressGlide;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.HttpException;
@@ -16,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;

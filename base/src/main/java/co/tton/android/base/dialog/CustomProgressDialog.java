@@ -43,7 +43,8 @@ public class CustomProgressDialog extends ProgressDialog {
         initData();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         mLoadingTv.setText(mLoadingTip);
 
     }
@@ -52,7 +53,8 @@ public class CustomProgressDialog extends ProgressDialog {
         mLoadingTv.setText(str);
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         mLoadingTv = (TextView) findViewById(R.id.progress_tv);
     }
 

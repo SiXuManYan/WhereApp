@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -12,7 +13,6 @@ import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.model.OrderModel;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import io.reactivex.annotations.NonNull;
 
@@ -46,7 +46,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
 //            decorView.setSystemUiVisibility(option);
 //            getWindow().setStatusBarColor(Color.TRANSPARENT);
 //        }
-    
+
     @Override
     protected void initView() {
         typeTv = findViewById(R.id.tv_ordertype);
@@ -89,7 +89,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
                 cancelTv.setText(hotelOrderDetailResponse.getStart_date() + "00:00前可致电商家免费取消");
                 priceTv.setText("₱" + hotelOrderDetailResponse.getPrice());
                 if (hotelOrderDetailResponse.getImages() != null) {
-                    Picasso.with(HotelOrderDetailActivity.this).load(hotelOrderDetailResponse.getImages().get(0)).into(photoIv);
+                    Glide.with(HotelOrderDetailActivity.this).load(hotelOrderDetailResponse.getImages().get(0)).into(photoIv);
                 } else {
                     photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
                 }
@@ -119,14 +119,14 @@ public class HotelOrderDetailActivity extends BaseActivity {
                 peopleTv.setText(hotelOrderDetailResponse.getPeople_num() + "人入住");
                 contactsTv.setText(hotelOrderDetailResponse.getUsername());
                 phoneTv.setText(hotelOrderDetailResponse.getPhone());
-            
+
             }
         });
     }
 
     @Override
     protected void bindListener() {
-        
+
     }
 
     @Override

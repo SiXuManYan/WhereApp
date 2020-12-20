@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.UserBean;
 import com.jcs.where.utils.IEditTextChangeListener;
@@ -23,9 +23,6 @@ import com.jcs.where.utils.WorksSizeCheckUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private EditText phoneEt, codeEt, accountEt, passEt, surePassEt, invitationEt;
@@ -58,22 +55,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBar();
+    protected void initView() {
         myCountDownTimer = new MyCountDownTimer(60000, 1000);
-        initView();
-    }
 
-    private void initView() {
-        phoneEt = V.f(this, R.id.et_phone);
-        codeEt = V.f(this, R.id.et_code);
-        accountEt = V.f(this, R.id.et_account);
-        passEt = V.f(this, R.id.et_password);
-        surePassEt = V.f(this, R.id.et_surepassword);
-        invitationEt = V.f(this, R.id.et_invitation);
-        getCodeTv = V.f(this, R.id.tv_getcode);
-        registerTv = V.f(this, R.id.tv_register);
+        phoneEt = findViewById(R.id.et_phone);
+        codeEt = findViewById(R.id.et_code);
+        accountEt = findViewById(R.id.et_account);
+        passEt = findViewById(R.id.et_password);
+        surePassEt = findViewById(R.id.et_surepassword);
+        invitationEt = findViewById(R.id.et_invitation);
+        getCodeTv = findViewById(R.id.tv_getcode);
+        registerTv = findViewById(R.id.tv_register);
         getCodeTv.setOnClickListener(this);
         registerTv.setOnClickListener(this);
         registerTv.setClickable(false);
@@ -95,13 +87,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             }
         });
-        errorTv = V.f(this, R.id.tv_error);
-        V.f(this, R.id.tv_havecount).setOnClickListener(new View.OnClickListener() {
+        errorTv = findViewById(R.id.tv_error);
+        findViewById(R.id.tv_havecount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     @Override
@@ -114,11 +116,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.tv_getcode:
                 if (TextUtils.isEmpty(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(RegisterActivity.this, "请输入手机号");
+                    showToast("请输入手机号");
                     return;
                 }
                 if (!isMobileNO(phoneEt.getText().toString())) {
-                    ToastUtils.showLong(RegisterActivity.this, "请输入正确手机号");
+                    showToast("请输入正确手机号");
                     return;
                 }
                 myCountDownTimer.start();
@@ -131,17 +133,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     public void onSuccess(int code, String result) {
                         stopLoading();
                         if (code == 200) {
-                            ToastUtils.showLong(RegisterActivity.this, "发送成功，请注意查收");
+                            showToast("发送成功，请注意查收");
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                            ToastUtils.showLong(RegisterActivity.this, errorBean.message);
+                            showToast(errorBean.message);
                         }
                     }
 
                     @Override
                     public void onFaileure(int code, Exception e) {
                         stopLoading();
-                        ToastUtils.showLong(RegisterActivity.this, e.getMessage());
+                        showToast(e.getMessage());
                     }
                 });
                 break;
@@ -178,14 +180,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (surePassEt.getText().toString().length() < 6) {
                     errorTv.setVisibility(View.VISIBLE);
                     errorTv.setText("密码长度不符");
-                    ToastUtils.showLong(RegisterActivity.this, "密码长度不符");
+                    showToast("密码长度不符");
                     return;
                 } else {
                     errorTv.setVisibility(View.INVISIBLE);
                 }
                 if (surePassEt.getText().toString().length() > 16) {
                     errorTv.setText("密码长度不符");
-                    ToastUtils.showLong(RegisterActivity.this, "密码长度不符");
+                    showToast("密码长度不符");
                     return;
                 } else {
                     errorTv.setVisibility(View.INVISIBLE);
@@ -207,17 +209,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         stopLoading();
                         if (code == 200) {
                             UserBean userBean = new Gson().fromJson(result, UserBean.class);
-                            ToastUtils.showLong(RegisterActivity.this, userBean.id);
+                            showToast(userBean.id);
                         } else {
                             ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                            ToastUtils.showLong(RegisterActivity.this, errorBean.message);
+                            showToast(errorBean.message);
                         }
                     }
 
                     @Override
                     public void onFaileure(int code, Exception e) {
                         stopLoading();
-                        ToastUtils.showLong(RegisterActivity.this, e.getMessage());
+                        showToast(e.getMessage());
                     }
                 });
 

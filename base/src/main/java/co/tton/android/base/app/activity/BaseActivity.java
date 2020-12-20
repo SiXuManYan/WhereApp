@@ -26,7 +26,7 @@ import co.tton.android.base.app.presenter.BaseActivityPresenter;
 import co.tton.android.base.app.presenter.linker.ActivityLinker;
 import co.tton.android.base.dialog.CustomProgressDialog;
 import co.tton.android.base.manager.CompositeSubscriptionHelper;
-import co.tton.android.base.utils.V;
+
 import co.tton.android.base.utils.ValueUtils;
 import rx.Subscription;
 
@@ -128,7 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        mToolbar = V.f(this, R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         if (mToolbar != null) {
             mTitleTv = V.f(mToolbar, R.id.tv_toolbar_title);
             setSupportActionBar(mToolbar);

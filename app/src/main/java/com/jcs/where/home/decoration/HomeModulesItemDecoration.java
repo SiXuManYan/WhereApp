@@ -3,10 +3,10 @@ package com.jcs.where.home.decoration;
 import android.graphics.Rect;
 import android.view.View;
 
+import com.jcs.where.base.BaseItemDecoration;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jcs.where.base.BaseItemDecoration;
 
 public class HomeModulesItemDecoration extends BaseItemDecoration {
 

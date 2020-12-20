@@ -4,15 +4,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
+import com.jcs.where.adapter.ModulesCategoryAdapter;
+import com.jcs.where.adapter.TravelStayHotelAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.BannerResponse;
@@ -21,8 +18,6 @@ import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.HomeBannerBean;
-import com.jcs.where.adapter.ModulesCategoryAdapter;
-import com.jcs.where.adapter.TravelStayHotelAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.model.TravelStayModel;
 import com.stx.xhb.androidx.XBanner;
@@ -31,6 +26,14 @@ import com.stx.xhb.androidx.entity.BaseBannerInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+/**
+ * 旅游住宿页面
+ */
 public class TravelStayActivity extends BaseActivity implements OnItemClickListener {
     private XBanner mBanner;
     private RecyclerView mModuleRecycler;
@@ -134,6 +137,11 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
     @Override
     protected void bindListener() {
         mModulesCategoryAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected boolean isStatusDark() {
+        return true;
     }
 
     @Override

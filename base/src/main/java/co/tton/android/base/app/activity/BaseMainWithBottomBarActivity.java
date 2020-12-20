@@ -9,8 +9,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import co.tton.android.base.R;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
+
+
 
 public abstract class BaseMainWithBottomBarActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
     private static final String ARGS_CURRENT_POSITION = "current_position";
@@ -28,13 +28,13 @@ public abstract class BaseMainWithBottomBarActivity extends BaseActivity impleme
     }
 
     private void initViewPager() {
-        mViewPager = V.f(this, getViewPagerId());
+        mViewPager = findViewById(getViewPagerId());
         mViewPager.setOffscreenPageLimit(mBottomBar.getTabCount());
         mViewPager.setAdapter(initPagerAdapter());
     }
 
     private void initBottomBar(Bundle savedInstanceState) {
-        mBottomBar = V.f(this, getBottomBarId());
+        mBottomBar = findViewById(getBottomBarId());
         initBottomItems();
         mBottomBar.addOnTabSelectedListener(this);
         // Activity重建时回复当前选择的页面

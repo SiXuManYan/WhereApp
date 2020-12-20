@@ -7,13 +7,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 
 import java.security.MessageDigest;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by yu on 2020/5/15.

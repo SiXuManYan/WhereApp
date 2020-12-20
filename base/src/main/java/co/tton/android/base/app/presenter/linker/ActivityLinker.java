@@ -8,7 +8,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import co.tton.android.base.app.activity.BaseActivity;
+import com.jcs.where.base.BaseActivity;
 import co.tton.android.base.app.presenter.BaseActivityPresenter;
 import co.tton.android.base.app.presenter.Presenter;
 

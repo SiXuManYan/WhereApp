@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,18 +14,17 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-
 import com.jcs.where.R;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.view.WebLayout;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+
 
 public class WebViewActivity extends BaseActivity {
 
@@ -72,22 +70,16 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBar();
-        initView();
-    }
-
-    private void initView() {
-        mLinearLayout = V.f(this, R.id.container);
-        mToolbar = V.f(this, R.id.toolbar);
+    protected void initView() {
+        mLinearLayout = findViewById(R.id.container);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
             }
         });
-        mTitleTextView = V.f(this, R.id.toolbar_title);
+        mTitleTextView = findViewById(R.id.toolbar_title);
         long p = System.currentTimeMillis();
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mLinearLayout, new LinearLayout.LayoutParams(-1, -1))
@@ -106,6 +98,16 @@ public class WebViewActivity extends BaseActivity {
         //mAgentWeb.getUrlLoader().loadUrl(getUrl());
 
         long n = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     private void showDialog() {

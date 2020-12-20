@@ -23,11 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -45,6 +40,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.hotel.card.CardPagerAdapter;
@@ -60,9 +56,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tton.android.base.app.activity.BaseActivity;
-import co.tton.android.base.utils.V;
-import co.tton.android.base.view.ToastUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.viewpager.widget.ViewPager;
 
 public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -147,9 +144,10 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         initData();
     }
 
-    private void initView() {
-        viewPager = V.f(this, R.id.viewpager);
-        hotelMapRl = V.f(this, R.id.rl_hotelmap);
+    @Override
+    protected void initView() {
+        viewPager = findViewById(R.id.viewpager);
+        hotelMapRl = findViewById(R.id.rl_hotelmap);
         mCardAdapter = new CardPagerAdapter(HotelMapActivity.this);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -178,35 +176,35 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
             }
         });
-        startDayTv = V.f(this, R.id.tv_startday);
+        startDayTv = findViewById(R.id.startDayTv);
         startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
-        endDayTv = V.f(this, R.id.tv_endday);
+        endDayTv = findViewById(R.id.endDayTv);
         endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
-        cityTv = V.f(this, R.id.tv_city);
-        V.f(this, R.id.iv_list).setOnClickListener(new View.OnClickListener() {
+        cityTv = findViewById(R.id.cityEt);
+        findViewById(R.id.iv_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        V.f(this, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View customView = View.inflate(HotelMapActivity.this, R.layout.pop_maptitle, null);
-                TextView startDateTv = V.f(customView, R.id.tv_startdate);
+                TextView startDateTv = customView.findViewById(R.id.tv_startdate);
                 startDateTv.setText(getIntent().getStringExtra(EXT_STARTDATE));
-                TextView endDateTv = V.f(customView, R.id.tv_enddate);
+                TextView endDateTv = customView.findViewById(R.id.tv_enddate);
                 endDateTv.setText(getIntent().getStringExtra(EXT_ENDDATE));
-                TextView allDayTv = V.f(customView, R.id.tv_allday);
+                TextView allDayTv = customView.findViewById(R.id.tv_allday);
                 allDayTv.setText(getIntent().getStringExtra(EXT_ALLDAY));
-                TextView roomNumTv = V.f(customView, R.id.tv_roomnum);
+                TextView roomNumTv = customView.findViewById(R.id.tv_roomnum);
                 roomNumTv.setText(mRoomNum);
-                V.f(customView, R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
+                customView.findViewById(R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         int roomNum = Integer.valueOf(roomNumTv.getText().toString());
                         if (roomNum == 1) {
-                            ToastUtils.showLong(HotelMapActivity.this, "不能再减了");
+                            showToast("不能再减了");
                             return;
                         } else {
                             roomNum--;
@@ -215,7 +213,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                         }
                     }
                 });
-                V.f(customView, R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
+                customView.findViewById(R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         int roomNum1 = Integer.valueOf(roomNumTv.getText().toString());
@@ -224,26 +222,26 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                         mRoomNum = roomNumTv.getText().toString();
                     }
                 });
-                V.f(customView, R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+                customView.findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                     }
                 });
             }
         });
-        V.f(this, R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkIsGooglePlayConn();
             }
         });
-        V.f(this, R.id.rl_search).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.rl_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
             }
         });
-        clearIv = V.f(this, R.id.iv_clear);
+        clearIv = findViewById(R.id.clearIv);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,11 +254,11 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             }
         });
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ToastUtils.showLong(HotelMapActivity.this, "无权限");
-            V.f(this, R.id.rl_mylocation).setVisibility(View.GONE);
+            showToast("无权限");
+            findViewById(R.id.rl_mylocation).setVisibility(View.GONE);
         } else {
-            ToastUtils.showLong(HotelMapActivity.this, "有权限");
-            V.f(this, R.id.rl_mylocation).setVisibility(View.VISIBLE);
+            showToast("有权限");
+            findViewById(R.id.rl_mylocation).setVisibility(View.VISIBLE);
             if (mGoogleApiClient == null) {
                 mGoogleApiClient = new GoogleApiClient.Builder(this)
                         .addConnectionCallbacks(this)
@@ -273,7 +271,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         showLoading();
         String url = null;
         if (getIntent().getStringExtra(EXT_PRICE) == null) {
@@ -320,7 +319,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
                         for (int i = 0; i < list.size(); i++) {
                             View view = LayoutInflater.from(HotelMapActivity.this).inflate(R.layout.custom_marker_layout, null);
-                            TextView peiceTv = V.f(view, R.id.tv_price);
+                            TextView peiceTv = view.findViewById(R.id.tv_price);
                             peiceTv.setText("php " + list.get(i).getPrice());
                             views.add(view);
                             BitmapDescriptor bitmapDescriptor = fromView(HotelMapActivity.this, view);
@@ -354,20 +353,25 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
                         }
                     } else {
-                        ToastUtils.showLong(HotelMapActivity.this, "未查询到该酒店");
+                        showToast("未查询到该酒店");
                     }
                 } else {
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    ToastUtils.showLong(HotelMapActivity.this, errorBean.message);
+                    showToast(errorBean.message);
                 }
             }
 
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                ToastUtils.showLong(HotelMapActivity.this, e.getMessage());
+                showToast(e.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void bindListener() {
+
     }
 
     @Override

@@ -8,17 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.jcs.where.R;
+import com.jcs.where.adapter.HotelCommentsAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.adapter.HotelCommentsAdapter;
 import com.jcs.where.model.HotelCommentModel;
 import com.jcs.where.utils.ImagePreviewActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -26,6 +21,10 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 public class HotelCommentActivity extends BaseActivity implements View.OnClickListener {
@@ -162,16 +161,16 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
                 ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "commentIcon");
 
                 int imgPosition = -1;
-                if(id == R.id.commentIcon01){
+                if (id == R.id.commentIcon01) {
                     imgPosition = 0;
                 }
-                if(id == R.id.commentIcon02){
+                if (id == R.id.commentIcon02) {
                     imgPosition = 1;
                 }
-                if(id == R.id.commentIcon03){
+                if (id == R.id.commentIcon03) {
                     imgPosition = 2;
                 }
-                if(id == R.id.commentIcon04){
+                if (id == R.id.commentIcon04) {
                     imgPosition = 3;
                 }
                 to.putExtra(ImagePreviewActivity.IMAGE_POSITION, imgPosition);

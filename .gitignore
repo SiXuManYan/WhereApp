@@ -8,9 +8,10 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+
 .DS_Store
 /build
-/debug
+/app/debug
 /captures
 .externalNativeBuild
 .cxx

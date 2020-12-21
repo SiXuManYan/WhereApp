@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_hotelmap"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <fragment
         android:id="@+id/map"
@@ -12,197 +11,182 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/searchBg"
+        android:layout_width="@dimen/dp_270"
+        android:layout_height="@dimen/dp_30"
+        android:background="@drawable/shape_eeeeee_radius_15"
+        app:layout_constraintBottom_toBottomOf="@id/jcsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/jcsTitle" />
+
+    <ImageView
+        android:id="@+id/listIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_list"
+        app:layout_constraintBottom_toBottomOf="@id/jcsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/jcsTitle" />
+
+    <ImageView
+        android:id="@+id/searchIcon"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_hotel_search"
+        app:layout_constraintBottom_toBottomOf="@id/searchBg"
+        app:layout_constraintStart_toEndOf="@id/whiteLine"
+        app:layout_constraintTop_toTopOf="@id/searchBg" />
+
+    <ImageView
+        android:id="@+id/clearIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:padding="5dp"
+        android:src="@drawable/ic_clear_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/searchBg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cityTv"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginStart="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/input_hotel_name"
+        android:textColor="@color/grey_666666"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/searchBg"
+        app:layout_constraintEnd_toStartOf="@id/clearIv"
+        app:layout_constraintStart_toEndOf="@id/searchIcon"
+        app:layout_constraintTop_toTopOf="@id/searchBg" />
+
+    <TextView
+        android:id="@+id/liveTextPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:text="@string/live"
+        android:textColor="@color/grey_999999"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@id/searchBg"
+        app:layout_constraintTop_toTopOf="@id/searchBg" />
+
+    <TextView
+        android:id="@+id/leaveTextPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leave"
+        android:textColor="@color/grey_999999"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/searchBg"
+        app:layout_constraintStart_toStartOf="@id/liveTextPrompt" />
+
+    <TextView
+        android:id="@+id/startDayTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="07-12"
+        android:textColor="@color/blue_4C9EF2"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@id/liveTextPrompt"
+        app:layout_constraintTop_toTopOf="@id/liveTextPrompt" />
+
+    <TextView
+        android:id="@+id/endDayTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="07-14"
+        android:textColor="@color/blue_4C9EF2"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/leaveTextPrompt"
+        app:layout_constraintStart_toEndOf="@id/leaveTextPrompt" />
+
+    <View
+        android:id="@+id/myLocationView"
+        android:layout_width="@dimen/dp_42"
+        android:layout_height="@dimen/dp_42"
+        app:layout_constraintBottom_toTopOf="@id/viewpager"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@color/white"/>
+
+    <ImageView
+        android:id="@+id/myLocationIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_location"
+        app:layout_constraintStart_toStartOf="@id/myLocationView"
+        app:layout_constraintEnd_toEndOf="@id/myLocationView"
+        app:layout_constraintTop_toTopOf="@id/myLocationView"
+        app:layout_constraintBottom_toTopOf="@id/myLocationPrompt"/>
+
+    <TextView
+        android:id="@+id/myLocationPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/my_location"
+        android:textColor="@color/grey_666666"
+        android:textSize="9sp"
+        app:layout_constraintTop_toBottomOf="@id/myLocationIcon"
+        app:layout_constraintBottom_toBottomOf="@id/myLocationView"
+        app:layout_constraintStart_toStartOf="@id/myLocationView"
+        app:layout_constraintEnd_toEndOf="@id/myLocationView"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/myLocationGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="myLocationView,myLocationIcon,myLocationPrompt"/>
+
+    <View
+        android:id="@+id/whiteLine"
+        android:layout_width="@dimen/dp_1"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_70"
         android:background="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_black"
-        app:navigationIcon="@drawable/ic_back_black"
-        app:theme="@style/AppTheme.ActionBar">
+        app:layout_constraintBottom_toBottomOf="@id/searchBg"
+        app:layout_constraintStart_toStartOf="@id/searchBg"
+        app:layout_constraintTop_toTopOf="@id/searchBg" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <View
+        android:id="@+id/toChooseDate"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toBottomOf="@id/searchBg"
+        app:layout_constraintEnd_toStartOf="@id/whiteLine"
+        app:layout_constraintStart_toStartOf="@id/liveTextPrompt"
+        app:layout_constraintTop_toTopOf="@id/searchBg" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@+id/iv_list"
-                android:background="@drawable/bg_hotelsearch"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/ll_choosedate"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="15dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="住"
-                            android:textColor="@color/grey_999999"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:id="@+id/startDayTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="07-12"
-                            android:textColor="@color/blue_4C9EF2"
-                            android:textSize="11sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="离"
-                            android:textColor="@color/grey_999999"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:id="@+id/endDayTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="07-14"
-                            android:textColor="@color/blue_4C9EF2"
-                            android:textSize="11sp" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/white" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/searchIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_hotel_search" />
-
-                    <TextView
-                        android:id="@+id/cityEt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toLeftOf="@id/clearIv"
-                        android:layout_toRightOf="@+id/searchIcon"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:text="输入酒店名称"
-                        android:textColor="@color/grey_b7b7b7"
-                        android:textSize="13sp" />
-
-
-                    <ImageView
-                        android:id="@+id/clearIv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:padding="5dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_clear_search" />
-
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
-
-            <ImageView
-                android:id="@+id/iv_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_list" />
-
-
-        </RelativeLayout>
-
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <RelativeLayout
-        android:id="@+id/rl_mylocation"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_above="@+id/viewpager"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/ic_mylocationbg">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="6.5dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_location" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="我的位置"
-                android:textColor="@color/grey_666666"
-                android:textSize="9sp" />
-
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:padding="30dp" />
+        android:padding="30dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

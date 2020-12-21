@@ -19,7 +19,6 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,9 +58,13 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
-public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+/**
+ * 目的地选择页面
+ */
+public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
 
     private static final int REQ_SEARCH = 777;
@@ -90,11 +93,10 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private double lat = 14.6778362;
     private double lng = 120.5306459;
     private TextView startDayTv, endDayTv, cityTv;
-    private RelativeLayout hotelMapRl;
     private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
     private int lastPostition = 0;
     private int lastScrollPosition = 0;
-    private ImageView clearIv;
+    private ImageView clearIv, mHotelListIv;
     private FusedLocationProviderClient fusedLocationClient;
     private String useInputText = "";
     private GoogleApiClient mGoogleApiClient;
@@ -125,29 +127,13 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView() {
         EventBus.getDefault().register(this);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        setStatusBar();
-        mStartYear = getIntent().getStringExtra(EXT_STARTYEAR);
-        mStartDate = getIntent().getStringExtra(EXT_STARTDATE);
-        mStartWeek = getIntent().getStringExtra(EXT_STARTWEEK);
-        mEndYear = getIntent().getStringExtra(EXT_ENDYEAR);
-        mEndData = getIntent().getStringExtra(EXT_ENDDATE);
-        mEndWeek = getIntent().getStringExtra(EXT_ENDWEEK);
-        mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
-        mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
-        initView();
-        initData();
-    }
-
-    @Override
-    protected void initView() {
         viewPager = findViewById(R.id.viewpager);
-        hotelMapRl = findViewById(R.id.rl_hotelmap);
+        mHotelListIv = findViewById(R.id.listIv);
         mCardAdapter = new CardPagerAdapter(HotelMapActivity.this);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -159,12 +145,12 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             public void onPageSelected(int position) {
                 mMarkerRainbow.get(position).showInfoWindow();
                 TextView priceTv = views.get(position).findViewById(R.id.tv_price);
-                views.get(position).setBackground(getResources().getDrawable(R.drawable.ic_markselected));
+                views.get(position).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_markselected));
                 priceTv.setTextColor(getResources().getColor(R.color.white));
                 ((ViewGroup) views.get(position).getParent()).removeView(views.get(position));
                 mMarkerRainbow.get(position).setIcon(fromView(HotelMapActivity.this, views.get(position)));
                 TextView price1Tv = views.get(lastScrollPosition).findViewById(R.id.tv_price);
-                views.get(lastScrollPosition).setBackground(getResources().getDrawable(R.drawable.ic_mark));
+                views.get(lastScrollPosition).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_mark));
                 price1Tv.setTextColor(getResources().getColor(R.color.blue_4C9EF2));
                 ((ViewGroup) views.get(lastScrollPosition).getParent()).removeView(views.get(lastScrollPosition));
                 mMarkerRainbow.get(lastScrollPosition).setIcon(fromView(HotelMapActivity.this, views.get(lastScrollPosition)));
@@ -177,17 +163,9 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             }
         });
         startDayTv = findViewById(R.id.startDayTv);
-        startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
         endDayTv = findViewById(R.id.endDayTv);
-        endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
-        cityTv = findViewById(R.id.cityEt);
-        findViewById(R.id.iv_list).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+        cityTv = findViewById(R.id.cityTv);
+        findViewById(R.id.toChooseDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View customView = View.inflate(HotelMapActivity.this, R.layout.pop_maptitle, null);
@@ -216,9 +194,9 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 customView.findViewById(R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int roomNum1 = Integer.valueOf(roomNumTv.getText().toString());
+                        int roomNum1 = Integer.parseInt(roomNumTv.getText().toString());
                         roomNum1++;
-                        roomNumTv.setText(roomNum1 + "");
+                        roomNumTv.setText(String.valueOf(roomNum1));
                         mRoomNum = roomNumTv.getText().toString();
                     }
                 });
@@ -229,13 +207,13 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 });
             }
         });
-        findViewById(R.id.rl_mylocation).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.myLocationView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkIsGooglePlayConn();
             }
         });
-        findViewById(R.id.rl_search).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.searchBg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
@@ -255,10 +233,10 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         });
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             showToast("无权限");
-            findViewById(R.id.rl_mylocation).setVisibility(View.GONE);
+            findViewById(R.id.myLocationGroup).setVisibility(View.GONE);
         } else {
             showToast("有权限");
-            findViewById(R.id.rl_mylocation).setVisibility(View.VISIBLE);
+            findViewById(R.id.myLocationGroup).setVisibility(View.VISIBLE);
             if (mGoogleApiClient == null) {
                 mGoogleApiClient = new GoogleApiClient.Builder(this)
                         .addConnectionCallbacks(this)
@@ -273,6 +251,17 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void initData() {
+        mStartYear = getIntent().getStringExtra(EXT_STARTYEAR);
+        mStartDate = getIntent().getStringExtra(EXT_STARTDATE);
+        mStartWeek = getIntent().getStringExtra(EXT_STARTWEEK);
+        mEndYear = getIntent().getStringExtra(EXT_ENDYEAR);
+        mEndData = getIntent().getStringExtra(EXT_ENDDATE);
+        mEndWeek = getIntent().getStringExtra(EXT_ENDWEEK);
+        mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
+        mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
+        startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
+        endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
+
         showLoading();
         String url = null;
         if (getIntent().getStringExtra(EXT_PRICE) == null) {
@@ -332,7 +321,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                             mMarkerRainbow.add(marker);
                         }
 
-                        views.get(0).setBackground(getResources().getDrawable(R.drawable.ic_markselected));
+                        views.get(0).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_markselected));
                         TextView priceTv = views.get(0).findViewById(R.id.tv_price);
                         priceTv.setTextColor(getResources().getColor(R.color.white));
                         ((ViewGroup) views.get(0).getParent()).removeView(views.get(0));
@@ -371,7 +360,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void bindListener() {
-
+        mHotelListIv.setOnClickListener(this);
     }
 
     @Override
@@ -426,12 +415,12 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 if (marker.getId().equals(mMarkerRainbow.get(i).getId())) {
                     viewPager.setCurrentItem(i);
                     TextView priceTv = views.get(i).findViewById(R.id.tv_price);
-                    views.get(i).setBackground(getResources().getDrawable(R.drawable.ic_markselected));
+                    views.get(i).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_markselected));
                     priceTv.setTextColor(getResources().getColor(R.color.white));
                     ((ViewGroup) views.get(i).getParent()).removeView(views.get(i));
                     marker.setIcon(fromView(HotelMapActivity.this, views.get(i)));
                     TextView price1Tv = views.get(lastPostition).findViewById(R.id.tv_price);
-                    views.get(lastPostition).setBackground(getResources().getDrawable(R.drawable.ic_mark));
+                    views.get(lastPostition).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_mark));
                     price1Tv.setTextColor(getResources().getColor(R.color.blue_4C9EF2));
                     ((ViewGroup) views.get(lastPostition).getParent()).removeView(views.get(lastPostition));
                     mMarkerRainbow.get(lastPostition).setIcon(fromView(HotelMapActivity.this, views.get(lastPostition)));
@@ -569,5 +558,15 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         initData();
     }
 
+    @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
 
+    @Override
+    public void onClick(View view) {
+        if (view == mHotelListIv){
+            finish();
+        }
+    }
 }

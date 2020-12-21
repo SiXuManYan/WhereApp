@@ -86,7 +86,7 @@ public class HotelListActivity extends BaseActivity {
         startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
         endDayTv = findViewById(R.id.endDayTv);
         endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
-        cityTv = findViewById(R.id.cityEt);
+        cityTv = findViewById(R.id.cityTv);
         // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
         mChooseDataView = findViewById(R.id.toChooseDate);
         mChooseDataView.setOnClickListener(new View.OnClickListener() {

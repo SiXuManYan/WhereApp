@@ -61,6 +61,7 @@
     <string name="leave">离</string>
     <string name="input_hotel_name">请输入酒店名称</string>
     <string name="current_location">当前位置</string>
+    <string name="my_location">我的位置</string>
 
 
 </resources>

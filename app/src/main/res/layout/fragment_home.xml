@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_F5F5F5"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_hometitle" />
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="27dp">
+
+        <TextView
+            android:id="@+id/tv_cityname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16.5dp"
+            android:text="巴丹"
+            android:textColor="@color/white_FEFEFE"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_homechoose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6.5dp"
+            android:layout_toRightOf="@+id/tv_cityname"
+            android:src="@drawable/ic_homechoosecity" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="6.5dp"
+            android:layout_marginRight="26dp"
+            android:layout_toLeftOf="@+id/rl_message"
+            android:layout_toRightOf="@+id/iv_homechoose"
+            android:background="@drawable/bg_homesearch"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="14.5dp"
+                android:src="@drawable/ic_homesearch" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="14.5dp"
+                android:text="输入商家、地点或品类"
+                android:textColor="@color/grey_BFBFBF"
+                android:textSize="13sp" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_message"
+            android:layout_width="24dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="14.5dp">
+
+            <ImageView
+                android:layout_width="20.5dp"
+                android:layout_height="16dp"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_homemessage" />
+
+            <TextView
+                android:layout_width="8.5dp"
+                android:layout_height="8.5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_messagenumber"
+                android:gravity="center"
+                android:text="33"
+                android:textColor="#ffffffff"
+                android:textSize="6sp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <com.jcs.where.view.ptr.MyPtrClassicFrameLayout
+        android:id="@+id/ptr_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_title"
+        android:layout_marginTop="10dp"
+        cube_ptr:ptr_duration_to_close_either="1000"
+        cube_ptr:ptr_duration_to_close_footer="0"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/rl_title"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp">
+
+                    <com.jcs.where.view.XBanner.XBanner
+                        android:id="@+id/banner3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/moduleRecycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:overScrollMode="never">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <RelativeLayout
+                    android:id="@+id/newsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/bg_homenews"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_newsone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_homenews" />
+
+                    <com.gongwen.marqueen.SimpleMarqueeView
+                        android:id="@+id/simpleMarqueeView"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_toLeftOf="@+id/iv_newstwo"
+                        android:layout_toRightOf="@+id/iv_newsone"
+                        android:flipInterval="3000"
+                        android:inAnimation="@anim/in_bottom"
+                        android:outAnimation="@anim/out_top"
+                        android:visibility="invisible"
+                        app:marqueeAnimDuration="300"
+                        app:smvTextColor="@color/black_333333"
+                        app:smvTextEllipsize="end"
+                        app:smvTextGravity="center_vertical"
+                        app:smvTextSingleLine="true"
+                        app:smvTextSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_newstwo"
+                        android:layout_width="6dp"
+                        android:layout_height="10.5dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/ic_homenewsnext" />
+
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="20dp" />
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </com.jcs.where.view.ptr.MyPtrClassicFrameLayout>
+
+
+</RelativeLayout>

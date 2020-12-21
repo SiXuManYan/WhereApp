@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_hoteldetail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_F5F5F5">
+
+    <com.jcs.where.view.ObservableScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.jcs.where.view.XBanner.XBanner
+                android:id="@+id/banner3"
+                android:layout_width="match_parent"
+                android:layout_height="205dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/banner3"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/bg_traveldetailone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="Crown Royale Hotel"
+                        android:textColor="@color/black_333333"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp">
+
+                        <TextView
+                            android:id="@+id/tv_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_travelgrade"
+                            android:paddingLeft="4dp"
+                            android:paddingTop="3dp"
+                            android:paddingRight="4dp"
+                            android:paddingBottom="3dp"
+                            android:text="4.9"
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_commentnumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/tv_score"
+                            android:text="170条点评"
+                            android:textColor="@color/blue_4C9EF2"
+                            android:textSize="11sp" />
+
+
+                    </RelativeLayout>
+
+
+                    <View
+                        android:id="@+id/faceline"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginLeft="11dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="11dp"
+                        android:background="@color/grey_F5F5F5" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_hoteldetail_time" />
+
+                        <TextView
+                            android:id="@+id/tv_starttime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
+                            android:text="营业时间：08:00-18:00"
+                            android:textColor="@color/grey_666666" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_hoteldetail_location" />
+
+
+                        <TextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="G/F GICC Technopark,Luzon Avenue,Freeport..."
+                            android:textColor="@color/grey_666666"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_navigation"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="6.5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_hoteldetailphone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginBottom="7dp"
+                                android:layout_weight="1"
+                                android:drawableLeft="@drawable/ic_hoteldetail_navigation"
+                                android:drawablePadding="10dp"
+                                android:gravity="center"
+                                android:text="导航"
+                                android:textColor="@color/grey_666666"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rl_phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6.5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_hoteldetailphone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="6.5dp"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginBottom="7dp"
+                                android:drawableLeft="@drawable/ic_hoteldetail_phone"
+                                android:drawablePadding="10dp"
+                                android:gravity="center"
+                                android:text="电话"
+                                android:textColor="@color/grey_666666"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="景点介绍"
+                        android:textColor="@color/black_333333"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tv_introduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginRight="18dp"
+                        android:layout_marginBottom="18dp"
+                        android:text="巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。 "
+                        android:textColor="@color/grey_666666"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="游客须知"
+                        android:textColor="@color/black_333333"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tv_notice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginRight="18dp"
+                        android:layout_marginBottom="18dp"
+                        android:text="巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。 "
+                        android:textColor="@color/grey_666666"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="住客评价"
+                            android:textColor="@color/black_333333"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/tv_seemore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="12.5dp"
+                            android:background="@drawable/bg_allcomment"
+                            android:paddingLeft="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="7dp"
+                            android:paddingBottom="5dp"
+                            android:text="全部评价"
+                            android:textColor="@color/blue_4C9EF2"
+                            android:textSize="12sp"
+                            android:visibility="visible"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="没有更多了~"
+                    android:textColor="@color/grey_999999"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </com.jcs.where.view.ObservableScrollView>
+
+    <com.jcs.where.view.RealtimeBlurView
+        android:id="@+id/RealtimeBlurView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:id="@+id/useView"
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/useView"
+        android:background="@color/transparency"
+        android:minHeight="?attr/actionBarSize"
+        android:navigationIcon="@drawable/ic_back_white"
+        app:navigationIcon="@drawable/ic_back_white"
+        app:theme="@style/AppTheme.ActionBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/iv_share"
+                android:padding="10dp"
+                android:src="@drawable/ic_hoteltransparentunlike" />
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_share_white" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+</RelativeLayout>

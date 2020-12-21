@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rl_pop">
+
+    <View
+        android:id="@+id/close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_choose"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_choose"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14.5dp"
+            android:text="选择价格/星级"
+            android:textColor="#ff333333"
+            android:textSize="14sp" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_close"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_price1"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 100以下"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_price2"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 100-200"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_price3"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 200-300"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_price4"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 300-400"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_price5"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 400-500"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_price6"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 500-700"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_price7"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 700-900"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_price8"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="₱ 900以上"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_price"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星级"
+                android:textColor="@color/black_333333"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_star1"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="二星及以下"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_star2"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="三星"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_star3"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_marginRight="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="四星"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_star4"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="5.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_priceunselect"
+                    android:gravity="center"
+                    android:text="五星"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_priceunselect"
+            android:paddingLeft="50dp"
+            android:paddingTop="10dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="10dp"
+            android:text="重置"
+            android:textColor="#ff333333"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_choosefinish"
+            android:paddingLeft="50dp"
+            android:paddingTop="10dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="10dp"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jcs.where">
+
+    <!--允许程序打开网络套接字-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--允许程序设置内置sd卡的写权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <!--允许程序获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--允许程序访问WiFi网络信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+
+    <application
+        android:name=".BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:replace="android:icon, android:theme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/maps_api_key" />
+
+
+        <activity android:name=".home.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.jcs.where.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public" />
+        </provider>
+
+
+        <activity
+            android:name=".login.LoginActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".login.ForgetPasswordActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".login.RegisterActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".home.activity.HotelActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.CityPickerActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelListActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelDetailActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelSubscribeActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelPayActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelOrderDetailActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelMapActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelCommentActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mango.ImageBrowseActivity"
+            android:theme="@style/mangoAppTheme" />
+
+        <activity
+            android:name=".hotel.WriteCommentActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".hotel.HotelSearchActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".currency.WebViewActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mine.PersonalDataActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".travel.TravelMapActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".travel.TravelDetailActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".travel.TravelWriteCommentActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".travel.TravelCommentActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".home.activity.TravelStayActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".utils.ImagePreviewActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            />
+
+    </application>
+
+</manifest>

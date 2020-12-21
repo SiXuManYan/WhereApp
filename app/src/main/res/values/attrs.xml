@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="text" format="string" />
+    <attr name="text_size" format="dimension" />
+    <attr name="text_unselected_color" format="color|reference" />
+    <attr name="text_selected_color" format="color|reference" />
+    <attr name="progress" format="float" />
+    <attr name="direction">
+        <enum name="left" value="0" />
+        <enum name="right" value="1" />
+        <enum name="top" value="2" />
+        <enum name="bottom" value="3" />
+    </attr>
+
+    <declare-styleable name="ColorClipView">
+        <attr name="text" />
+        <attr name="text_size" />
+        <attr name="text_unselected_color" />
+        <attr name="text_selected_color" />
+        <attr name="progress" />
+        <attr name="direction" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorClipTabLayout">
+        <attr name="text_size" />
+        <attr name="text_unselected_color" />
+        <attr name="text_selected_color" />
+    </declare-styleable>
+
+    <declare-styleable name="SideBar">
+        <attr name="letterColor" format="color" />
+        <attr name="selectColor" format="color" />
+        <attr name="letterSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RealtimeBlurView">
+        <attr name="realtimeBlurRadius" format="float" />
+        <attr name="realtimeDownsampleFactor" format="float" />
+        <attr name="realtimeOverlayColor" format="color" />
+        <attr name="realtimeBlurRoundCornerRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="JcsTitle">
+        <attr name="middleTitle" format="string|reference" />
+        <attr name="middleTitleColor" format="color|reference" />
+        <attr name="backIcon" format="reference" />
+        <attr name="showBackIv" format="boolean" />
+        <attr name="showBottomLine" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="StarView">
+        <attr name="starNum" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="LabelView">
+        <attr name="labelNum" format="integer" />
+    </declare-styleable>
+
+
+    <declare-styleable name="DrawableTextView">
+        <attr name="leftDrawable" format="reference|color" />
+        <attr name="rightDrawable" format="reference|color" />
+        <attr name="topDrawable" format="reference|color" />
+        <attr name="bottomDrawable" format="reference|color" />
+
+        <attr name="leftDrawableWidth" format="reference|dimension" />
+        <attr name="rightDrawableWidth" format="reference|dimension" />
+        <attr name="topDrawableWidth" format="reference|dimension" />
+        <attr name="bottomDrawableWidth" format="reference|dimension" />
+
+        <attr name="leftDrawableHeight" format="reference|dimension" />
+        <attr name="rightDrawableHeight" format="reference|dimension" />
+        <attr name="topDrawableHeight" format="reference|dimension" />
+        <attr name="bottomDrawableHeight" format="reference|dimension" />
+
+        <attr name="rightDrawableList" format="reference" />
+        <attr name="rightDrawableListWidth" format="reference|dimension" />
+        <attr name="rightDrawableListHeight" format="reference|dimension" />
+    </declare-styleable>
+</resources>

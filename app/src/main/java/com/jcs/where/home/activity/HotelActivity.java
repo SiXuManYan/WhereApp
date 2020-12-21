@@ -10,6 +10,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,16 +22,18 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.GuessYouLikeHotelBean;
 import com.jcs.where.home.dialog.HotelCalendarDialog;
 import com.jcs.where.home.dialog.HotelStarDialog;
@@ -38,6 +41,7 @@ import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.hotel.HotelListActivity;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.model.HotelModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -67,9 +71,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private static final int REQ_SELECT_CITY = 100;
     private final int READ_CODE = 10;
     private final int READ_LOCATIONCODE = 11;
-    private TextView locationTv, startDateTv, startWeekTv, endDateTv, endWeekTv, allDayTv, roomNumTv, priceAndStarTv;
-    private RelativeLayout chooseDateRl;
-    private ImageView reduceIv, addIv;
+    private TextView mLocationTv, startDateTv, startWeekTv, endDateTv, endWeekTv, allDayTv, mRoomNumTv, mPriceAndStarTv;
+    private RelativeLayout mChooseDateRl;
+    private ImageView mRoomReduceIv, mRoomAddIv;
     private RecyclerView showRv;
     private GuessYouLikeAdapter guessYouLikeAdapter;
     private final int startGroup = -1;
@@ -80,15 +84,18 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private String usePrice = null;
     private String useStar = null;
     private String useStartYear, useEndYear;
-    private ImageView clearIv;
+    private ImageView mClearIv;
     private String transmitPrice, transmitStar;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private LatLng lastLatLng, perthLatLng;
     private boolean mAddressRequested;
+    private HotelModel mModel;
 
     private HotelStarDialog mHotelStarDialog;
     private HotelCalendarDialog mHotelCalendarDialog;
+    private TextView mChooseLocationTv;
+    private TextView mSearchTv;
 
 
     public static void goTo(Context context) {
@@ -132,20 +139,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void initView() {
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-        mGoogleApiClient.connect();
         guessYouLikeAdapter = new GuessYouLikeAdapter(R.layout.item_hotellist);
-
-        locationTv = findViewById(R.id.tv_location);
-        locationTv.setOnClickListener(this);
-        chooseDateRl = findViewById(R.id.rl_choosedate);
-        chooseDateRl.setOnClickListener(this);
+        mLocationTv = findViewById(R.id.tv_location);
+        mLocationTv.setOnClickListener(this);
+        mChooseDateRl = findViewById(R.id.rl_choosedate);
+        mChooseDateRl.setOnClickListener(this);
         startDateTv = findViewById(R.id.startDayTv);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
         Date date = new Date(System.currentTimeMillis());
@@ -159,13 +157,13 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         endWeekTv = findViewById(R.id.tv_endweek);
 //        endWeekTv.setText("周" + CalendarUtil.getWeekByFormat(getOldWeek(1)));
         allDayTv = findViewById(R.id.tv_allday);
-        roomNumTv = findViewById(R.id.tv_roomnum);
-        reduceIv = findViewById(R.id.iv_roomreduce);
-        reduceIv.setOnClickListener(this);
-        addIv = findViewById(R.id.iv_roomadd);
-        addIv.setOnClickListener(this);
-        priceAndStarTv = findViewById(R.id.tv_priceandstar);
-        priceAndStarTv.setOnClickListener(this);
+        mRoomNumTv = findViewById(R.id.tv_roomnum);
+        mRoomReduceIv = findViewById(R.id.iv_roomreduce);
+        mRoomReduceIv.setOnClickListener(this);
+        mRoomAddIv = findViewById(R.id.iv_roomadd);
+        mRoomAddIv.setOnClickListener(this);
+        mPriceAndStarTv = findViewById(R.id.tv_priceandstar);
+        mPriceAndStarTv.setOnClickListener(this);
         showRv = findViewById(R.id.rv_show);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelActivity.this,
 //                LinearLayoutManager.VERTICAL, false);
@@ -178,30 +176,17 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         };
         showRv.setLayoutManager(linearLayoutManager);
         showRv.setNestedScrollingEnabled(false);
-        findViewById(R.id.tv_search).setOnClickListener(this);
+        mSearchTv = findViewById(R.id.tv_search);
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy");
         useStartYear = simpleDateFormat2.format(date);
         useEndYear = getOldWeek(1).substring(0, 4);
-        findViewById(R.id.tv_chooselocation).setOnClickListener(this);
-        clearIv = findViewById(R.id.clearIv);
-        clearIv.setVisibility(View.GONE);
-        clearIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priceAndStarTv.setText("价格/星级");
-                priceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
-                usePrice = null;
-                useStar = null;
-                transmitPrice = null;
-                transmitStar = null;
-                mHotelStarDialog = new HotelStarDialog();
-                clearIv.setVisibility(View.GONE);
-            }
-        });
-        initData();
+        mChooseLocationTv = findViewById(R.id.tv_chooselocation);
+        mClearIv = findViewById(R.id.clearIv);
+        mClearIv.setVisibility(View.GONE);
+
         checkPermission();
         //  initLoaction();
-        checkIsGooglePlayConn();
+//        checkIsGooglePlayConn();
 
         mHotelStarDialog = new HotelStarDialog();
         mHotelStarDialog.setCallback(this);
@@ -211,6 +196,8 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void initData() {
+        mModel = new HotelModel();
+        initGoogleApi();
         showLoading();
         Map<String, String> params = new HashMap<>();
         params.put("lat", "");
@@ -241,9 +228,22 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         });
     }
 
+    private void initGoogleApi() {
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+        mGoogleApiClient.connect();
+    }
+
     @Override
     protected void bindListener() {
-
+        mChooseLocationTv.setOnClickListener(this);
+        mSearchTv.setOnClickListener(this);
+        mClearIv.setOnClickListener(this);
     }
 
     @Override
@@ -253,47 +253,65 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_location:
-                Intent intent = new Intent(HotelActivity.this, CityPickerActivity.class);
-                startActivityForResult(intent, REQ_SELECT_CITY);
-                break;
-            case R.id.rl_choosedate:
-                mHotelCalendarDialog.show(getSupportFragmentManager());
-                break;
-            case R.id.iv_roomreduce:
-                int roomNum = Integer.valueOf(roomNumTv.getText().toString());
-                if (roomNum == 1) {
-                    showToast("不能再减了");
-                    return;
-                } else {
-                    roomNum--;
-                    roomNumTv.setText(roomNum + "");
-                }
-                break;
-            case R.id.iv_roomadd:
-                int roomNum1 = Integer.valueOf(roomNumTv.getText().toString());
-                roomNum1++;
-                roomNumTv.setText(roomNum1 + "");
-                break;
-            case R.id.tv_priceandstar:
-                mHotelStarDialog.show(getSupportFragmentManager());
-                break;
-            case R.id.tv_search:
-                HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), locationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, roomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
-                break;
-            case R.id.tv_chooselocation:
-                checkIsGooglePlayConn();
-                break;
-            default:
+        if (view == mLocationTv){
+            Intent intent = new Intent(HotelActivity.this, CityPickerActivity.class);
+            startActivityForResult(intent, REQ_SELECT_CITY);
         }
+
+        if (view == mChooseDateRl){
+            mHotelCalendarDialog.show(getSupportFragmentManager());
+        }
+
+        if (view == mRoomReduceIv){
+            int roomNum = Integer.parseInt(mRoomNumTv.getText().toString());
+            if (roomNum == 1) {
+                showToast("不能再减了");
+                return;
+            } else {
+                roomNum--;
+                mRoomNumTv.setText(String.valueOf(roomNum));
+            }
+        }
+
+        if (view == mRoomAddIv){
+            int roomNum = Integer.parseInt(mRoomNumTv.getText().toString());
+            roomNum++;
+            mRoomNumTv.setText(String.valueOf(roomNum));
+        }
+
+        if (view == mPriceAndStarTv){
+            mHotelStarDialog.show(getSupportFragmentManager());
+        }
+
+        if (view == mSearchTv){
+            HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
+        }
+
+        if (view == mChooseLocationTv){
+            checkIsGooglePlayConn();
+        }
+
+        if (view == mClearIv){
+            onClearClicked();
+        }
+    }
+
+    private void onClearClicked() {
+        mPriceAndStarTv.setText("价格/星级");
+        mPriceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
+        usePrice = null;
+        useStar = null;
+        transmitPrice = null;
+        transmitStar = null;
+        mHotelStarDialog = new HotelStarDialog();
+        mClearIv.setVisibility(View.GONE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
-            locationTv.setText(data.getStringExtra(CityPickerActivity.EXTRA_CITY));
+            mLocationTv.setText(data.getStringExtra(CityPickerActivity.EXTRA_CITY));
             cityId = data.getStringExtra(CityPickerActivity.EXTRA_CITYID);
         }
     }
@@ -367,36 +385,48 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     private void initArea(String lat, String lng) {
         showLoading();
-        HttpUtils.doGoogleMapReqeust("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk", null, new HttpUtils.StringCallback() {
+        mModel.getLocation(lat, lng, new BaseObserver<String>() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                if (code == 200) {
-                    GoogleMapBean googleMapBean = new Gson().fromJson(result, GoogleMapBean.class);
-                    if (googleMapBean.getResults().get(0) != null) {
-                        if (googleMapBean.getResults().get(0).getAddress_components().get(2) != null) {
-                            String usecity = googleMapBean.getResults().get(0).getAddress_components().get(2).getLong_name();
-                            if (usecity != null) {
-                                if (usecity.contains("City of ")) {
-                                    usecity = usecity.substring(8);
-                                }
-                                locationTv.setText(usecity);
-                                cityId = "0";
-                            }
-                        }
-                    }
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
             }
 
             @Override
-            public void onFaileure(int code, Exception e) {
+            public void onNext(@io.reactivex.annotations.NonNull String s) {
                 stopLoading();
-                showToast(e.getMessage());
+                Log.e("HotelActivity", "onNext: " + "s=" + s);
             }
         });
+//        HttpUtils.doGoogleMapReqeust("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk", null, new HttpUtils.StringCallback() {
+//            @Override
+//            public void onSuccess(int code, String result) {
+//                stopLoading();
+//                if (code == 200) {
+//                    GoogleMapBean googleMapBean = new Gson().fromJson(result, GoogleMapBean.class);
+//                    if (googleMapBean.getResults().get(0) != null) {
+//                        if (googleMapBean.getResults().get(0).getAddress_components().get(2) != null) {
+//                            String usecity = googleMapBean.getResults().get(0).getAddress_components().get(2).getLong_name();
+//                            if (usecity != null) {
+//                                if (usecity.contains("City of ")) {
+//                                    usecity = usecity.substring(8);
+//                                }
+//                                locationTv.setText(usecity);
+//                                cityId = "0";
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+//                    showToast(errorBean.message);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaileure(int code, Exception e) {
+//                stopLoading();
+//                showToast(e.getMessage());
+//            }
+//        });
 
     }
 
@@ -408,9 +438,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void selectPriceOrStar(String show) {
-        priceAndStarTv.setText(show);
-        priceAndStarTv.setTextColor(ContextCompat.getColor(this, R.color.black_333333));
-        clearIv.setVisibility(View.VISIBLE);
+        mPriceAndStarTv.setText(show);
+        mPriceAndStarTv.setTextColor(ContextCompat.getColor(this, R.color.black_333333));
+        mClearIv.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -464,7 +494,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             baseViewHolder.findView(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HotelDetailActivity.goTo(getContext(), data.getId(), startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, roomNumTv.getText().toString());
+                    HotelDetailActivity.goTo(getContext(), data.getId(), startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, mRoomNumTv.getText().toString());
                 }
             });
         }

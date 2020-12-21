@@ -21,6 +21,8 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -49,7 +51,7 @@ public interface RetrofitApi {
     /**
      * 获得CategoryFragment页面展示的一级二级分类数据
      */
-    @GET("/commonapi/v1/categories/list")
+    @GET("commonapi/v1/categories/list")
     Observable<List<ParentCategoryResponse>> getParentCategory();
 
     /**
@@ -127,18 +129,23 @@ public interface RetrofitApi {
     /**
      * 酒店订单详情
      */
-    @GET("/hotelapi/v1/orders/{order_id}")
+    @GET("hotelapi/v1/orders/{order_id}")
     Observable<HotelOrderDetailResponse> getHotelOrderDetail(@Path("order_id") int orderId);
 
     /**
      * 获得订单各个类型的数量
      */
-    @GET("/commonapi/v1/orders/nums")
+    @GET("commonapi/v1/orders/nums")
     Observable<OrderNumResponse> getOrderNum();
 
     /**
      * 获得订单列表
      */
-    @GET("/commonapi/v1/orders")
+    @GET("commonapi/v1/orders")
     Observable<OrderListResponse> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
+
+
+    @Headers("baseUrl:google/map")
+    @GET("maps/api/geocode/json?key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk")
+    Observable<String> getLocation(@Query("latlng") String latlng);
 }

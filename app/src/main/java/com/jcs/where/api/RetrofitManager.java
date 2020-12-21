@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,6 +12,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.jcs.where.api.convert.NullOrEmptyConvertFactory;
+import com.jcs.where.api.interceptor.BaseUrlInterceptor;
 
 public class RetrofitManager {
     private static RetrofitManager manager;
@@ -60,6 +61,7 @@ public class RetrofitManager {
             }
         });
         okBuilder.addInterceptor(interceptor);
+//        okBuilder.addInterceptor(new BaseUrlInterceptor());
         okBuilder.connectTimeout(timeout, TimeUnit.MINUTES);
         okBuilder.readTimeout(timeout, TimeUnit.MINUTES);
         okBuilder.writeTimeout(timeout, TimeUnit.MINUTES);

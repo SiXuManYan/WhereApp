@@ -1,4 +1,4 @@
-package com.jcs.where.api;
+package com.jcs.where.api.convert;
 
 import org.jetbrains.annotations.NotNull;
 

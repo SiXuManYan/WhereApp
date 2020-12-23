@@ -110,6 +110,7 @@ public class HotelCalendarDialog extends BaseDialog {
 
             HotelCalendarBean day = new HotelCalendarBean();
             day.setDay(start.get(Calendar.DAY_OF_MONTH));
+            day.setShowDate(sf.format(start.getTime()));
             mBeans.add(day);
             start.add(Calendar.DAY_OF_MONTH, 1);
         }

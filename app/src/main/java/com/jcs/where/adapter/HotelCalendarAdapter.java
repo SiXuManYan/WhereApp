@@ -1,5 +1,8 @@
 package com.jcs.where.adapter;
 
+import android.view.View;
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.entity.JSectionEntity;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -9,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
 
 public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarAdapter.HotelCalendarBean, BaseViewHolder> {
 
@@ -40,7 +45,26 @@ public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarA
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelCalendarBean hotelCalendarBean) {
-        baseViewHolder.setText(R.id.dayTv, String.valueOf(hotelCalendarBean.day == 0 ? "" : hotelCalendarBean.day));
+        // day 为 0 ，说明是空白item，不需要绘制
+        if (hotelCalendarBean.day != 0) {
+            View itemView = baseViewHolder.itemView;
+            TextView actionTv = baseViewHolder.findView(R.id.actionTv);
+            baseViewHolder.setText(R.id.dayTv, String.valueOf(hotelCalendarBean.day));
+            if (hotelCalendarBean.isStartDay) {
+                itemView.setBackgroundResource(R.mipmap.start_date_selected);
+                actionTv.setText(R.string.enter_stay);
+            } else if (hotelCalendarBean.isEndDay) {
+                itemView.setBackgroundResource(R.mipmap.end_date_selected);
+                actionTv.setText(R.string.leave_stay);
+            } else if (hotelCalendarBean.isSelected) {
+                itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
+                actionTv.setText("");
+            } else {
+                actionTv.setText("");
+                itemView.setBackgroundResource(0);
+                itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            }
+        }
     }
 
     public static class HotelCalendarBean extends JSectionEntity {
@@ -50,6 +74,8 @@ public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarA
         int month;
         int day;
         boolean isSelected;
+        boolean isStartDay;
+        boolean isEndDay;
         boolean isToday;
         public static final int YEAR_MONTH_DAY = 1;
         public static final int DAY = 2;
@@ -118,6 +144,24 @@ public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarA
 
         public void setIsHeader(boolean isHeader) {
             this.isHeader = isHeader;
+        }
+
+        public boolean isStartDay() {
+            return isStartDay;
+        }
+
+        public void setStartDay(boolean select) {
+            isSelected = select;
+            isStartDay = select;
+        }
+
+        public boolean isEndDay() {
+            return isEndDay;
+        }
+
+        public void setEndDay(boolean select) {
+            isSelected = select;
+            isEndDay = select;
         }
 
         @Override

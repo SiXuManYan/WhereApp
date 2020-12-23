@@ -1,8 +1,10 @@
 package com.jcs.where.home.dialog;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.adapter.HotelCalendarAdapter;
 import com.jcs.where.adapter.HotelCalendarAdapter.HotelCalendarBean;
@@ -15,15 +17,17 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HotelCalendarDialog extends BaseDialog {
 
-    private ImageView closeIv;
+    private ImageView mCloseIv;
     private RecyclerView mRecycler;
     private List<HotelCalendarBean> mBeans;
     private HotelCalendarAdapter mAdapter;
+    private int[] mSelectItemPosition = new int[2];
 
     @Override
     protected int getLayout() {
@@ -38,7 +42,7 @@ public class HotelCalendarDialog extends BaseDialog {
     @Override
     protected void initView(View view) {
         mRecycler = view.findViewById(R.id.calendarRecycler);
-        closeIv = view.findViewById(R.id.close);
+        mCloseIv = view.findViewById(R.id.close);
     }
 
     @Override
@@ -63,7 +67,73 @@ public class HotelCalendarDialog extends BaseDialog {
 
     @Override
     protected void bindListener() {
-        closeIv.setOnClickListener(view -> dismiss());
+        mCloseIv.setOnClickListener(view -> dismiss());
+        mAdapter.setOnItemClickListener(this::onItemClick);
+    }
+
+    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+        Log.e("HotelCalendarDialog", "onItemChildClick: " + "-----");
+        HotelCalendarBean item = mAdapter.getItem(position);
+        // item.getDay() 为 0，说明点击的是空白位置，不需要执行
+        if (item.getDay() != 0) {
+            // mSelectItemPosition索引为0存储startDate
+            // mSelectItemPosition索引为1存储endDate
+            int startDatePosition = mSelectItemPosition[0];
+            int endDatePosition = mSelectItemPosition[1];
+            if (startDatePosition != 0 && endDatePosition != 0) {
+                // 说明已经选好了开始和结束日期，再次点击，把已保存的日期索引都清空
+                // 重新选择
+                unSelectStart(mAdapter.getItem(startDatePosition));
+                unSelectEnd(mAdapter.getItem(endDatePosition));
+                mAdapter.notifyItemChanged(startDatePosition);
+                mAdapter.notifyItemChanged(endDatePosition);
+                // 把已保存的日期索引都清空
+                mSelectItemPosition[0] = 0;
+                mSelectItemPosition[1] = 0;
+                startDatePosition = 0;
+                endDatePosition = 0;
+            }
+            // 若为0表示这次选择的是开始日期
+            // 若当前选择的索引小于mSelectItemPosition[0]，说明选择了一个更早的开始日期
+            //   则需要对已保存的开始日期覆盖
+            if (startDatePosition == 0) {
+                // 保存 开始 日期的索引
+                mSelectItemPosition[0] = position;
+                selectStart(item);
+            } else if (startDatePosition > position) {
+                // 重置原来保存的 开始 日期的选择状态
+                HotelCalendarBean oldStart = mAdapter.getItem(startDatePosition);
+                unSelectStart(oldStart);
+                mAdapter.notifyItemChanged(startDatePosition);
+                // 保存 开始 日期的索引
+                mSelectItemPosition[0] = position;
+                selectStart(item);
+            } else {
+                // 保存 结束 日期的索引
+                mSelectItemPosition[1] = position;
+                selectEnd(item);
+            }
+            // 刷新索引位置的item视图
+            mAdapter.notifyItemChanged(position);
+        }
+    }
+
+    private void selectStart(HotelCalendarBean bean) {
+        bean.setEndDay(false);
+        bean.setStartDay(true);
+    }
+
+    private void selectEnd(HotelCalendarBean bean) {
+        bean.setStartDay(false);
+        bean.setEndDay(true);
+    }
+
+    private void unSelectStart(HotelCalendarBean bean) {
+        bean.setStartDay(false);
+    }
+
+    private void unSelectEnd(HotelCalendarBean bean) {
+        bean.setEndDay(false);
     }
 
     @Override

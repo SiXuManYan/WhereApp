@@ -80,5 +80,7 @@
     <string name="symbol_short_link">-</string>
     <string name="total">共</string>
     <string name="night">晚</string>
+    <string name="enter_stay">入店</string>
+    <string name="leave_stay">离店</string>
 
 </resources>

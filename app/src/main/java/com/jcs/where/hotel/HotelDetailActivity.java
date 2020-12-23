@@ -64,6 +64,9 @@ import io.reactivex.annotations.NonNull;
 import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Response;
 
+/**
+ * 酒店详情页
+ */
 public class HotelDetailActivity extends BaseActivity {
 
     private static final String EXT_ID = "id";
@@ -309,7 +312,6 @@ public class HotelDetailActivity extends BaseActivity {
         star4Iv = findViewById(R.id.iv_star4);
         star5Iv = findViewById(R.id.iv_star5);
         timeTv = findViewById(R.id.tv_time);
-        initData();
     }
 
     @Override
@@ -421,7 +423,11 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
+        toolbar.setNavigationOnClickListener(this::onBackIconClicked);
+    }
 
+    public void onBackIconClicked(View view){
+        finish();
     }
 
     private void initRoomList() {
@@ -527,7 +533,7 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hoteldetail;
+        return R.layout.activity_hotel_detail;
     }
 
     public void callPhone() {

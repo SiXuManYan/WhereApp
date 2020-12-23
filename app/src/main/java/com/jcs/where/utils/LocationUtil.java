@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class LocationUtil {
     /**
      * 清空回调事件
      */
-    public void cleareAddressCallback(){
+    public void clearAddressCallback(){
         removeLocationUpdatesListener();
         addressCallbacks.clear();
     }

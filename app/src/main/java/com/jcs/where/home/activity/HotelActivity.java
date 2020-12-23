@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
@@ -22,7 +23,6 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -42,6 +42,7 @@ import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.hotel.HotelListActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.model.HotelModel;
+import com.jcs.where.utils.LocationUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -140,7 +141,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void initView() {
         guessYouLikeAdapter = new GuessYouLikeAdapter(R.layout.item_hotellist);
-        mLocationTv = findViewById(R.id.tv_location);
+        mLocationTv = findViewById(R.id.locationTv);
         mLocationTv.setOnClickListener(this);
         mChooseDateRl = findViewById(R.id.rl_choosedate);
         mChooseDateRl.setOnClickListener(this);
@@ -241,9 +242,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void bindListener() {
-        mChooseLocationTv.setOnClickListener(this);
-        mSearchTv.setOnClickListener(this);
-        mClearIv.setOnClickListener(this);
+        mChooseLocationTv.setOnClickListener(this::onChooseLocationTvClick);
+        mSearchTv.setOnClickListener(this::onSearchTvClick);
+        mClearIv.setOnClickListener(this::onClearClicked);
     }
 
     @Override
@@ -253,16 +254,16 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
-        if (view == mLocationTv){
+        if (view == mLocationTv) {
             Intent intent = new Intent(HotelActivity.this, CityPickerActivity.class);
             startActivityForResult(intent, REQ_SELECT_CITY);
         }
 
-        if (view == mChooseDateRl){
+        if (view == mChooseDateRl) {
             mHotelCalendarDialog.show(getSupportFragmentManager());
         }
 
-        if (view == mRoomReduceIv){
+        if (view == mRoomReduceIv) {
             int roomNum = Integer.parseInt(mRoomNumTv.getText().toString());
             if (roomNum == 1) {
                 showToast("不能再减了");
@@ -273,30 +274,22 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             }
         }
 
-        if (view == mRoomAddIv){
+        if (view == mRoomAddIv) {
             int roomNum = Integer.parseInt(mRoomNumTv.getText().toString());
             roomNum++;
             mRoomNumTv.setText(String.valueOf(roomNum));
         }
 
-        if (view == mPriceAndStarTv){
+        if (view == mPriceAndStarTv) {
             mHotelStarDialog.show(getSupportFragmentManager());
-        }
-
-        if (view == mSearchTv){
-            HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
-        }
-
-        if (view == mChooseLocationTv){
-            checkIsGooglePlayConn();
-        }
-
-        if (view == mClearIv){
-            onClearClicked();
         }
     }
 
-    private void onClearClicked() {
+    public void onSearchTvClick(View view) {
+        HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
+    }
+
+    public void onClearClicked(View view) {
         mPriceAndStarTv.setText("价格/星级");
         mPriceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
         usePrice = null;
@@ -316,6 +309,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    public void onChooseLocationTvClick(View view) {
+        checkIsGooglePlayConn();
+    }
+
     private void checkIsGooglePlayConn() {
 //        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
 //            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
@@ -326,15 +323,33 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
             return;
         }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            if (!Geocoder.isPresent()) {
-                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
-                return;
+
+        LocationUtil.getInstance(this).setAddressCallback(new LocationUtil.AddressCallback() {
+            @Override
+            public void onGetAddress(Address address) {
+                String countryName = address.getCountryName();//国家
+                String adminArea = address.getAdminArea();//省
+                String locality = address.getLocality();//市
+                String subLocality = address.getSubLocality();//区
+                String featureName = address.getFeatureName();//街道
+                mLocationTv.setText(locality);
             }
-            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
-        }
+
+            @Override
+            public void onGetLocation(double lat, double lng) {
+                Log.e("HotelActivity", "onGetLocation: " + "lat=" + lat + "----lng=" + lng);
+            }
+        });
+//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//        Log.e("HotelActivity", "checkIsGooglePlayConn: " + "mLastLocation=" + mLastLocation);
+//        if (mLastLocation != null) {
+//            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+//            if (!Geocoder.isPresent()) {
+//                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
+//                return;
+//            }
+//            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
+//        }
     }
 
 
@@ -385,6 +400,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     private void initArea(String lat, String lng) {
         showLoading();
+        Log.e("HotelActivity", "initArea: " + "-------lat=" + lat + "----lng=" + lng);
         mModel.getLocation(lat, lng, new BaseObserver<String>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {

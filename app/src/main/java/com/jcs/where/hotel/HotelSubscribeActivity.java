@@ -3,9 +3,6 @@ package com.jcs.where.hotel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -28,7 +25,7 @@ import com.jcs.where.model.HotelSubscribeModel;
 import androidx.appcompat.widget.Toolbar;
 import io.reactivex.annotations.NonNull;
 
-public class HotelSubscribeActivity extends BaseActivity implements View.OnClickListener, AreaCodeListDialog.AreaCodeListCallback {
+public class HotelSubscribeActivity extends BaseActivity {
 
     private static final String EXT_BEAN = "bean";
     private TextView hotelNameTv, roomNameTv, startDateTv, startWeekTv, endDateTv, endWeekTv, nightTv;
@@ -80,7 +77,7 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
         phoneEt = findViewById(R.id.et_phone);
 
         mAreaCodeListDialog = new AreaCodeListDialog();
-        mAreaCodeListDialog.injectCallback(this);
+        mAreaCodeListDialog.injectCallback(this::select);
     }
 
     @Override
@@ -91,105 +88,120 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
         hotelNameTv.setText(subscribeBean.hotelName);
         roomNameTv.setText(subscribeBean.roomName);
         startDateTv.setText(subscribeBean.startDate);
-        startWeekTv.setText("(" + subscribeBean.startWeek + ")");
+
+        startWeekTv.setText(String.format(getString(R.string.parentheses_contain_string), subscribeBean.startWeek));
         endDateTv.setText(subscribeBean.endDate);
-        endWeekTv.setText("(" + subscribeBean.endWeek + ")");
+        endWeekTv.setText(String.format(getString(R.string.parentheses_contain_string), subscribeBean.endWeek));
         nightTv.setText(subscribeBean.night);
         bedTv.setText(subscribeBean.bed);
         breakfastTv.setText(subscribeBean.breakfast);
         if (subscribeBean.window == 1) {
-            windowTv.setText("有窗");
+            windowTv.setText(R.string.with_window);
         } else {
-            windowTv.setText("无窗");
+            windowTv.setText(R.string.no_window);
         }
         if (subscribeBean.wifi == 1) {
-            wifiTv.setText("有WIFI");
+            wifiTv.setText(R.string.with_wifi);
         } else {
-            wifiTv.setText("无WIFI");
+            wifiTv.setText(R.string.no_wifi);
         }
-        peopleTv.setText(subscribeBean.people + "人入住");
+        peopleTv.setText(String.format(getString(R.string.stay_people_number), subscribeBean.people));
+
+        //cancel 为 1 表示 可取消 不为 1 表示不可取消
         if (subscribeBean.cancel == 1) {
-            cancelTv.setText("可取消");
+            cancelTv.setText(R.string.cancelable);
         } else {
-            cancelTv.setText("不可取消");
+            cancelTv.setText(R.string.not_cancelable);
         }
         roomNumTv.setText(subscribeBean.roomNumber);
-        night = Integer.parseInt(subscribeBean.night.replace("₱", "").replace("共", "").replace("晚", ""));
-        String priceText = "₱" + Integer.parseInt(roomNumTv.getText().toString()) * subscribeBean.roomPrice * night;
+        night = Integer.parseInt(subscribeBean.night.replace(getString(R.string.price_unit), "").replace(getString(R.string.total), "").replace(getString(R.string.night), ""));
+        // 订单总价
+        float priceFloat = Integer.parseInt(roomNumTv.getText().toString()) * subscribeBean.roomPrice * night;
+        String priceText = String.format(getString(R.string.show_price_with_forward_unit_f), priceFloat);
         priceTv.setText(priceText);
     }
 
     @Override
     protected void bindListener() {
-        reduceIv.setOnClickListener(this);
-        addIv.setOnClickListener(this);
-        mAreaTv.setOnClickListener(this);
-        findViewById(R.id.tv_submit).setOnClickListener(this);
-        findViewById(R.id.rl_choosephone).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CountryPicker.newInstance(null, new OnPick() {
-                    @Override
-                    public void onPick(Country country) {
-                        phoneTv.setText("+" + country.code);
-                    }
-                }).show(getSupportFragmentManager(), "country");
-            }
-        });
+        reduceIv.setOnClickListener(this::onRoomReduceClicked);
+        addIv.setOnClickListener(this::onRoomAddClicked);
+        mAreaTv.setOnClickListener(this::onAreaTvClicked);
+        findViewById(R.id.tv_submit).setOnClickListener(this::onSubmitTvClicked);
+        findViewById(R.id.rl_choosephone).setOnClickListener(this::onChoosePhoneClicked);
 
+        toolbar.setNavigationOnClickListener(this::onBackIconClicked);
+    }
+
+    public void onBackIconClicked(View view) {
+        finish();
+    }
+
+    public void onRoomReduceClicked(View view) {
+        int roomNum = Integer.parseInt(roomNumTv.getText().toString());
+        if (roomNum == 1) {
+            showToast(getString(R.string.can_not_reduce));
+        } else {
+            roomNum--;
+            roomNumTv.setText(String.valueOf(roomNum));
+            // 订单总价
+            float priceFloat = roomNum * subscribeBean.roomPrice * night;
+            String price = String.format(getString(R.string.show_price_with_forward_unit_f), priceFloat);
+            priceTv.setText(price);
+        }
+    }
+
+    public void onRoomAddClicked(View view) {
+        int roomNum = Integer.parseInt(roomNumTv.getText().toString());
+        roomNum++;
+        roomNumTv.setText(String.valueOf(roomNum));
+        // 订单总价
+        float priceFloat = roomNum * subscribeBean.roomPrice * night;
+        String price = String.format(getString(R.string.show_price_with_forward_unit_f), priceFloat);
+        priceTv.setText(price);
+    }
+
+    public void onAreaTvClicked(View view) {
+        mAreaCodeListDialog.show(getSupportFragmentManager());
+    }
+
+    public void onSubmitTvClicked(View view) {
+        if (TextUtils.isEmpty(nameEt.getText().toString())) {
+            showToast(getString(R.string.please_input_name));
+            return;
+        }
+        if (TextUtils.isEmpty(phoneEt.getText().toString().trim())) {
+            showToast(getString(R.string.please_input_phone_number));
+            return;
+        }
+        submit();
+    }
+
+    public void onChoosePhoneClicked(View view) {
+        CountryPicker.newInstance(null, new OnPick() {
+            @Override
+            public void onPick(Country country) {
+                phoneTv.setText(String.valueOf(country.code));
+            }
+        }).show(getSupportFragmentManager(), "country");
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hotelsubscribe;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_roomreduce:
-                int roomNum = Integer.valueOf(roomNumTv.getText().toString());
-                if (roomNum == 1) {
-                    showToast("不能再减了");
-                    return;
-                } else {
-                    roomNum--;
-                    roomNumTv.setText(roomNum + "");
-                    priceTv.setText("₱" + roomNum * subscribeBean.roomPrice * night);
-                }
-                break;
-            case R.id.iv_roomadd:
-                int roomNum1 = Integer.valueOf(roomNumTv.getText().toString());
-                roomNum1++;
-                roomNumTv.setText(roomNum1 + "");
-                priceTv.setText("₱" + roomNum1 * subscribeBean.roomPrice * night);
-                break;
-            case R.id.tv_submit:
-                if (TextUtils.isEmpty(nameEt.getText().toString())) {
-                    showToast("请填写姓名");
-                    return;
-                }
-                if (TextUtils.isEmpty(phoneEt.getText().toString().trim())) {
-                    showToast("请填写手机");
-                    return;
-                }
-                submit();
-                break;
-            case R.id.areaCodeTv:
-                mAreaCodeListDialog.show(getSupportFragmentManager());
-                break;
-        }
+        return R.layout.activity_hotel_subscribe;
     }
 
     private void submit() {
         showLoading();
         HotelOrderRequest request = new HotelOrderRequest();
-        request.setHotel_room_id(subscribeBean.roomId + "");
-        request.setPrice(priceTv.getText().toString().replace("₱", ""));
+        String month = getString(R.string.month);
+        String day = getString(R.string.day);
+        String symbolShortLink = getString(R.string.symbol_short_link);
+        request.setHotel_room_id(String.valueOf(subscribeBean.roomId));
+        request.setPrice(priceTv.getText().toString().replace(getString(R.string.price_unit), ""));
         request.setPhone(phoneEt.getText().toString());
         request.setUsername(nameEt.getText().toString());
-        request.setStart_date(subscribeBean.startYear + "-" + subscribeBean.startDate.replace("月", "-").replace("日", ""));
-        request.setEnd_date(subscribeBean.endYear + "-" + subscribeBean.endDate.replace("月", "-").replace("日", ""));
+        request.setStart_date(subscribeBean.startYear + symbolShortLink + subscribeBean.startDate.replace(month, symbolShortLink).replace(day, ""));
+        request.setEnd_date(subscribeBean.endYear + symbolShortLink + subscribeBean.endDate.replace(month, symbolShortLink).replace(day, ""));
         request.setRoom_num(roomNumTv.getText().toString());
         mModel.postHotelOrder(request, new BaseObserver<HotelOrderResponse>() {
             @Override
@@ -201,13 +213,12 @@ public class HotelSubscribeActivity extends BaseActivity implements View.OnClick
             @Override
             public void onNext(@NonNull HotelOrderResponse hotelOrderResponse) {
                 stopLoading();
-                showToast("预订成功");
+                showToast(getString(R.string.subscribe_success));
                 HotelPayActivity.goTo(HotelSubscribeActivity.this, hotelOrderResponse);
             }
         });
     }
 
-    @Override
     public void select(String area) {
         mAreaTv.setText(area);
     }

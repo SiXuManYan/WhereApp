@@ -16,6 +16,7 @@
     <string name="price_above_5">₱ 5k+</string>
     <string name="price_unit">₱</string>
     <string name="show_price_with_forward_unit">₱%1$d</string>
+    <string name="show_price_with_forward_unit_f">₱%1$f</string>
     <string name="star_prompt">星级</string>
     <string name="score_prompt">评分</string>
     <string name="start_less_than_2"><![CDATA[<2]]></string>
@@ -62,6 +63,22 @@
     <string name="input_hotel_name">请输入酒店名称</string>
     <string name="current_location">当前位置</string>
     <string name="my_location">我的位置</string>
-
+    <string name="parentheses_contain_string">(%1$s)</string>
+    <string name="stay_people_number">%1$d人入住</string>
+    <string name="with_wifi">有WIFI</string>
+    <string name="no_wifi">无WIFI</string>
+    <string name="subscribe_success">预订成功</string>
+    <string name="please_input_phone_number">请填写手机</string>
+    <string name="please_input_name">请填写姓名</string>
+    <string name="can_not_reduce">不能再减了</string>
+    <string name="cancelable">可取消</string>
+    <string name="not_cancelable">不可取消</string>
+    <string name="with_window">有窗</string>
+    <string name="no_window">无窗</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="symbol_short_link">-</string>
+    <string name="total">共</string>
+    <string name="night">晚</string>
 
 </resources>

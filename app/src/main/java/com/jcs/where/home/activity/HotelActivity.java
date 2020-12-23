@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -324,7 +322,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             return;
         }
 
-        LocationUtil.getInstance(this).setAddressCallback(new LocationUtil.AddressCallback() {
+        LocationUtil.getInstance().setAddressCallback(new LocationUtil.AddressCallback() {
             @Override
             public void onGetAddress(Address address) {
                 String countryName = address.getCountryName();//国家

@@ -15,7 +15,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         RetrofitManager.getManager().initRetrofit(this);
-        LocationUtil.getInstance(this);
+        LocationUtil.initInstance(this);
     }
 
 

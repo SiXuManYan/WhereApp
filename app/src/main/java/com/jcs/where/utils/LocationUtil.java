@@ -11,7 +11,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,28 +29,25 @@ public class LocationUtil {
     private Context mContext;
     private static ArrayList<AddressCallback> addressCallbacks;
     private AddressCallback addressCallback;
+
     public AddressCallback getAddressCallback() {
         return addressCallback;
     }
 
     public void setAddressCallback(AddressCallback addressCallback) {
         this.addressCallback = addressCallback;
-        if(isInit){
-            showLocation();
-        }else {
-            isInit = true;
-        }
+        showLocation();
     }
 
     private static Location location;
-    private boolean isInit = false;//是否加载过
+
     private LocationUtil(Context context) {
         mContext = context;
         getLocation();
     }
 
     //采用Double CheckLock(DCL)实现单例
-    public static LocationUtil getInstance(Context context) {
+    public static LocationUtil initInstance(Context context) {
         if (uniqueInstance == null) {
             synchronized (LocationUtil.class) {
                 if (uniqueInstance == null) {
@@ -63,23 +59,26 @@ public class LocationUtil {
         return uniqueInstance;
     }
 
+    public static LocationUtil getInstance() {
+        return uniqueInstance;
+    }
+
     /**
      * 添加回调事件
+     *
      * @param addressCallback
      */
-    private void addAddressCallback(AddressCallback addressCallback){
+    private void addAddressCallback(AddressCallback addressCallback) {
         addressCallbacks.add(addressCallback);
-        if(isInit){
-            showLocation();
-        }
     }
 
     /**
      * 移除回调事件
+     *
      * @param addressCallback
      */
-    public void removeAddressCallback(AddressCallback addressCallback){
-        if(addressCallbacks.contains(addressCallback)){
+    public void removeAddressCallback(AddressCallback addressCallback) {
+        if (addressCallbacks.contains(addressCallback)) {
             addressCallbacks.remove(addressCallback);
         }
     }
@@ -87,10 +86,11 @@ public class LocationUtil {
     /**
      * 清空回调事件
      */
-    public void clearAddressCallback(){
+    public void clearAddressCallback() {
         removeLocationUpdatesListener();
         addressCallbacks.clear();
     }
+
     private void getLocation() {
         //1.获取位置管理器
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
@@ -138,16 +138,16 @@ public class LocationUtil {
 
     //获取经纬度
     private void showLocation() {
-        if(location == null){
+        if (location == null) {
             getLocation();
-        }else {
+        } else {
             double latitude = location.getLatitude();//纬度
             double longitude = location.getLongitude();//经度
 //            for(AddressCallback addressCallback:addressCallbacks){
 //                addressCallback.onGetLocation(latitude,longitude);
 //            }
-            if(addressCallback != null){
-                addressCallback.onGetLocation(latitude,longitude);
+            if (addressCallback != null) {
+                addressCallback.onGetLocation(latitude, longitude);
             }
             getAddress(latitude, longitude);
         }
@@ -173,7 +173,7 @@ public class LocationUtil {
                     //街道名称:广东省深圳市罗湖区蔡屋围一街深圳瑞吉酒店
                     System.out.println("addressLine=====" + addressLine);
                 }
-                if(addressCallback != null){
+                if (addressCallback != null) {
                     addressCallback.onGetAddress(address);
                 }
 //                for(AddressCallback addressCallback:addressCallbacks){
@@ -230,9 +230,11 @@ public class LocationUtil {
         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         showLocation();
     }
-    public interface AddressCallback{
+
+    public interface AddressCallback {
         void onGetAddress(Address address);
-        void onGetLocation(double lat,double lng);
+
+        void onGetLocation(double lat, double lng);
     }
 }
 

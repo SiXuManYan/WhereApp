@@ -291,15 +291,12 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             mStartDate = startDate;
             mStartDateTv.setText(startDate.getShowMonthDayDate());
             mStartWeekTv.setText(startDate.getShowWeekday());
-            Log.e("HotelActivity", "onDateSelected: " + "mStartDate=" + mStartDate);
         }
 
         if (endDate != null) {
             mEndDate = endDate;
             mEndDateTv.setText(endDate.getShowMonthDayDate());
-            mEndWeekTv.setText(startDate.getShowWeekday());
-            Log.e("HotelActivity", "onDateSelected: " + "mEndDate=" + mEndDate);
-
+            mEndWeekTv.setText(endDate.getShowWeekday());
         }
     }
 

@@ -110,7 +110,7 @@
                             android:layout_height="1dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/tv_startweek"
+                            android:layout_toRightOf="@+id/startWeekTv"
                             android:background="@color/grey_666666" />
 
                         <TextView

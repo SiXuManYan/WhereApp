@@ -234,7 +234,7 @@ public class HotelCalendarDialog extends BaseDialog {
 
 
         SimpleDateFormat yearMonthSF = new SimpleDateFormat("yyyy年MM月");
-        SimpleDateFormat monthDaySF = new SimpleDateFormat("MM月DD日");
+        SimpleDateFormat monthDaySF = new SimpleDateFormat("MM月dd日");
         SimpleDateFormat weekdaySF = new SimpleDateFormat("E");
         int tempMonth = -1;
         int tempYear = 0;

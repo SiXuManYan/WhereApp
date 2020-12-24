@@ -93,8 +93,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sunday"
         android:layout_marginTop="@dimen/dp_8"
-        android:overScrollMode="never"
-        android:background="@color/red_F93E3F">
+        android:overScrollMode="never">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -16,7 +16,10 @@ import java.util.List;
 import androidx.core.content.ContextCompat;
 
 public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarAdapter.HotelCalendarBean, BaseViewHolder> {
-
+    private boolean mIsEndSelected = false;
+    public final int TAG_IS_SELECT = 100;
+    public final int TAG_IS_START = 101;
+    public final int TAG_IS_END = 102;
 
     public HotelCalendarAdapter(int sectionHeadResId, @Nullable List<HotelCalendarBean> data) {
         super(sectionHeadResId, data);
@@ -47,24 +50,44 @@ public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarA
     protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelCalendarBean hotelCalendarBean) {
         // day 为 0 ，说明是空白item，不需要绘制
         if (hotelCalendarBean.day != 0) {
+            baseViewHolder.setText(R.id.dayTv, String.valueOf(hotelCalendarBean.day));
+            View dateView = baseViewHolder.findView(R.id.dateView);
+            View leftView = baseViewHolder.findView(R.id.leftView);
+            View rightView = baseViewHolder.findView(R.id.rightView);
             View itemView = baseViewHolder.itemView;
             TextView actionTv = baseViewHolder.findView(R.id.actionTv);
-            baseViewHolder.setText(R.id.dayTv, String.valueOf(hotelCalendarBean.day));
             if (hotelCalendarBean.isStartDay) {
-                itemView.setBackgroundResource(R.mipmap.start_date_selected);
+                if (mIsEndSelected) {
+                    rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
+                }
+                dateView.setBackgroundResource(R.mipmap.start_date_selected);
                 actionTv.setText(R.string.enter_stay);
             } else if (hotelCalendarBean.isEndDay) {
-                itemView.setBackgroundResource(R.mipmap.end_date_selected);
+                leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
+                dateView.setBackgroundResource(R.mipmap.end_date_selected);
                 actionTv.setText(R.string.leave_stay);
             } else if (hotelCalendarBean.isSelected) {
                 itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
                 actionTv.setText("");
             } else {
                 actionTv.setText("");
+                dateView.setBackgroundResource(0);
                 itemView.setBackgroundResource(0);
                 itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
             }
+        } else {
+            baseViewHolder.setText(R.id.dayTv, "");
         }
+    }
+
+    public boolean isEndSelected() {
+        return mIsEndSelected;
+    }
+
+    public void setEndSelected(boolean mIsEndSelected) {
+        this.mIsEndSelected = mIsEndSelected;
     }
 
     public static class HotelCalendarBean extends JSectionEntity {

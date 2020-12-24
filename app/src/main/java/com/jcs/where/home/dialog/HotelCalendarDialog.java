@@ -1,6 +1,5 @@
 package com.jcs.where.home.dialog;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -27,7 +26,9 @@ public class HotelCalendarDialog extends BaseDialog {
     private RecyclerView mRecycler;
     private List<HotelCalendarBean> mBeans;
     private HotelCalendarAdapter mAdapter;
-    private int[] mSelectItemPosition = new int[2];
+    private int[] mStartAndEndItemPosition = new int[2];
+    private List<Integer> mSelectBetweenStartAndEnd = new ArrayList<>();
+    private HotelCalendarItemDecoration mItemDecoration;
 
     @Override
     protected int getLayout() {
@@ -61,7 +62,8 @@ public class HotelCalendarDialog extends BaseDialog {
             }
         });
         mRecycler.setLayoutManager(gridLayoutManager);
-        mRecycler.addItemDecoration(new HotelCalendarItemDecoration());
+        mItemDecoration = new HotelCalendarItemDecoration(getContext());
+        mRecycler.addItemDecoration(mItemDecoration);
 
     }
 
@@ -72,14 +74,17 @@ public class HotelCalendarDialog extends BaseDialog {
     }
 
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-        Log.e("HotelCalendarDialog", "onItemChildClick: " + "-----");
         HotelCalendarBean item = mAdapter.getItem(position);
+        if (position == mStartAndEndItemPosition[0]){
+            //点击位置是已保存的开始日期，什么都不做
+            return;
+        }
         // item.getDay() 为 0，说明点击的是空白位置，不需要执行
         if (item.getDay() != 0) {
             // mSelectItemPosition索引为0存储startDate
             // mSelectItemPosition索引为1存储endDate
-            int startDatePosition = mSelectItemPosition[0];
-            int endDatePosition = mSelectItemPosition[1];
+            int startDatePosition = mStartAndEndItemPosition[0];
+            int endDatePosition = mStartAndEndItemPosition[1];
             if (startDatePosition != 0 && endDatePosition != 0) {
                 // 说明已经选好了开始和结束日期，再次点击，把已保存的日期索引都清空
                 // 重新选择
@@ -88,17 +93,19 @@ public class HotelCalendarDialog extends BaseDialog {
                 mAdapter.notifyItemChanged(startDatePosition);
                 mAdapter.notifyItemChanged(endDatePosition);
                 // 把已保存的日期索引都清空
-                mSelectItemPosition[0] = 0;
-                mSelectItemPosition[1] = 0;
+                mStartAndEndItemPosition[0] = 0;
+                mStartAndEndItemPosition[1] = 0;
                 startDatePosition = 0;
                 endDatePosition = 0;
+                unSelectStartToEnd();
+                mAdapter.setEndSelected(false);
             }
             // 若为0表示这次选择的是开始日期
             // 若当前选择的索引小于mSelectItemPosition[0]，说明选择了一个更早的开始日期
             //   则需要对已保存的开始日期覆盖
             if (startDatePosition == 0) {
                 // 保存 开始 日期的索引
-                mSelectItemPosition[0] = position;
+                mStartAndEndItemPosition[0] = position;
                 selectStart(item);
             } else if (startDatePosition > position) {
                 // 重置原来保存的 开始 日期的选择状态
@@ -106,15 +113,63 @@ public class HotelCalendarDialog extends BaseDialog {
                 unSelectStart(oldStart);
                 mAdapter.notifyItemChanged(startDatePosition);
                 // 保存 开始 日期的索引
-                mSelectItemPosition[0] = position;
+                mStartAndEndItemPosition[0] = position;
                 selectStart(item);
+                unSelectStartToEnd();
             } else {
                 // 保存 结束 日期的索引
-                mSelectItemPosition[1] = position;
+                mStartAndEndItemPosition[1] = position;
                 selectEnd(item);
+                // 表示已经选择了结束日期
+                // 在 ItemDecoration 的 onDraw() 中需要这个状态
+                mAdapter.setEndSelected(true);
+                // 开始日期与结束日期之间的item设置为选择状态
+                // 并将这部分item的position保存，用于重置状态
+                selectStartToEnd(startDatePosition, position);
+                mItemDecoration.setStartPosition(startDatePosition);
+                mItemDecoration.setEndPosition(position);
+                mAdapter.notifyItemChanged(startDatePosition);
             }
             // 刷新索引位置的item视图
             mAdapter.notifyItemChanged(position);
+        }
+    }
+
+    /**
+     * 将已选择的开始结束日期之间的item重置选择状态
+     */
+    private void unSelectStartToEnd(){
+        int size = mSelectBetweenStartAndEnd.size();
+        int itemCount = mAdapter.getItemCount();
+        for (int i = 0; i < size; i++) {
+            Integer position = mSelectBetweenStartAndEnd.get(i);
+            if (position < itemCount){
+                HotelCalendarBean item = mAdapter.getItem(position);
+                if (item != null) {
+                    item.setSelected(false);
+                    mAdapter.notifyItemChanged(position);
+                }
+            }
+        }
+
+        mSelectBetweenStartAndEnd.clear();
+    }
+
+    /**
+     * 将开始日期和结束日期之间的item设置为选择状态
+     * @param startDatePosition 开始日期索引
+     * @param position 结束日期索引
+     */
+    private void selectStartToEnd(int startDatePosition, int position) {
+        int itemCount = mAdapter.getItemCount();
+        int middlePosition = startDatePosition + 1;
+        while (middlePosition < position) {
+            if (middlePosition < itemCount) {
+                mSelectBetweenStartAndEnd.add(middlePosition);
+                mAdapter.getItem(middlePosition).setSelected(true);
+                mAdapter.notifyItemChanged(middlePosition);
+            }
+            middlePosition++;
         }
     }
 

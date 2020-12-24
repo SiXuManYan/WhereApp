@@ -205,7 +205,7 @@ public class HotelDetailActivity extends BaseActivity {
         startWeekTv.setText(getIntent().getStringExtra(EXT_STARTWEEK));
         endDateTv = findViewById(R.id.endDayTv);
         endDateTv.setText(getIntent().getStringExtra(EXT_ENDDAY));
-        endWeekTv = findViewById(R.id.tv_endweek);
+        endWeekTv = findViewById(R.id.endWeekTv);
         endWeekTv.setText(getIntent().getStringExtra(EXT_ENDWEEK));
         allDayTv = findViewById(R.id.tv_allday);
         allDayTv.setText(getIntent().getStringExtra(EXT_ALLDAY));

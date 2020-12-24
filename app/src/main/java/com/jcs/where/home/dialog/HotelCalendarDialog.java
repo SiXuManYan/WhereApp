@@ -1,6 +1,7 @@
 package com.jcs.where.home.dialog;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,11 +25,13 @@ public class HotelCalendarDialog extends BaseDialog {
 
     private ImageView mCloseIv;
     private RecyclerView mRecycler;
+    private Button mEnsureBtn;
     private List<HotelCalendarBean> mBeans;
     private HotelCalendarAdapter mAdapter;
     private final int[] mStartAndEndItemPosition = new int[2];
     private final List<Integer> mSelectBetweenStartAndEnd = new ArrayList<>();
     private HotelCalendarItemDecoration mItemDecoration;
+    private OnDateSelectedListener mOnDateSelectedListener;
 
     @Override
     protected int getLayout() {
@@ -44,6 +47,7 @@ public class HotelCalendarDialog extends BaseDialog {
     protected void initView(View view) {
         mRecycler = view.findViewById(R.id.calendarRecycler);
         mCloseIv = view.findViewById(R.id.close);
+        mEnsureBtn = view.findViewById(R.id.ensureBtn);
     }
 
     @Override
@@ -64,18 +68,31 @@ public class HotelCalendarDialog extends BaseDialog {
         mRecycler.setLayoutManager(gridLayoutManager);
         mItemDecoration = new HotelCalendarItemDecoration(getContext());
         mRecycler.addItemDecoration(mItemDecoration);
-
     }
 
     @Override
     protected void bindListener() {
         mCloseIv.setOnClickListener(view -> dismiss());
         mAdapter.setOnItemClickListener(this::onItemClick);
+        mEnsureBtn.setOnClickListener(this::onEnsureBtnClicked);
+    }
+
+    public void onEnsureBtnClicked(View view) {
+        int start = mStartAndEndItemPosition[0];
+        int end = mStartAndEndItemPosition[1];
+        if (start > 0 && end > 0) {
+            mOnDateSelectedListener.onDateSelected(mAdapter.getItem(start), mAdapter.getItem(end));
+        }
+        dismiss();
+    }
+
+    public void setOnDateSelectedListener(OnDateSelectedListener onDateSelectedListener) {
+        this.mOnDateSelectedListener = onDateSelectedListener;
     }
 
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
         HotelCalendarBean item = mAdapter.getItem(position);
-        if (position == mStartAndEndItemPosition[0]){
+        if (position == mStartAndEndItemPosition[0]) {
             //点击位置是已保存的开始日期，什么都不做
             return;
         }
@@ -138,12 +155,12 @@ public class HotelCalendarDialog extends BaseDialog {
     /**
      * 将已选择的开始结束日期之间的item重置选择状态
      */
-    private void unSelectStartToEnd(){
+    private void unSelectStartToEnd() {
         int size = mSelectBetweenStartAndEnd.size();
         int itemCount = mAdapter.getItemCount();
         for (int i = 0; i < size; i++) {
             Integer position = mSelectBetweenStartAndEnd.get(i);
-            if (position < itemCount){
+            if (position < itemCount) {
                 HotelCalendarBean item = mAdapter.getItem(position);
                 if (item != null) {
                     item.setSelected(false);
@@ -157,8 +174,9 @@ public class HotelCalendarDialog extends BaseDialog {
 
     /**
      * 将开始日期和结束日期之间的item设置为选择状态
+     *
      * @param startDatePosition 开始日期索引
-     * @param position 结束日期索引
+     * @param position          结束日期索引
      */
     private void selectStartToEnd(int startDatePosition, int position) {
         int itemCount = mAdapter.getItemCount();
@@ -215,7 +233,9 @@ public class HotelCalendarDialog extends BaseDialog {
         mBeans = new ArrayList<>();
 
 
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月");
+        SimpleDateFormat yearMonthSF = new SimpleDateFormat("yyyy年MM月");
+        SimpleDateFormat monthDaySF = new SimpleDateFormat("MM月DD日");
+        SimpleDateFormat weekdaySF = new SimpleDateFormat("E");
         int tempMonth = -1;
         int tempYear = 0;
         while (start.getTime().getTime() <= end.getTime().getTime()) {
@@ -223,7 +243,7 @@ public class HotelCalendarDialog extends BaseDialog {
                 tempMonth = start.get(Calendar.MONTH);
                 tempYear = start.get(Calendar.YEAR);
                 HotelCalendarBean header = new HotelCalendarBean();
-                header.setShowDate(sf.format(start.getTime()));
+                header.setShowYearMonthDate(yearMonthSF.format(start.getTime()));
                 header.setIsHeader(true);
                 mBeans.add(header);
 
@@ -235,9 +255,15 @@ public class HotelCalendarDialog extends BaseDialog {
 
             HotelCalendarBean day = new HotelCalendarBean();
             day.setDay(start.get(Calendar.DAY_OF_MONTH));
-            day.setShowDate(sf.format(start.getTime()));
+            day.setShowYearMonthDate(yearMonthSF.format(start.getTime()));
+            day.setShowMonthDayDate(monthDaySF.format(start.getTime()));
+            day.setShowWeekday(weekdaySF.format(start.getTime()));
             mBeans.add(day);
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
+    }
+
+    public interface OnDateSelectedListener {
+        void onDateSelected(HotelCalendarBean startDate, HotelCalendarBean endDate);
     }
 }

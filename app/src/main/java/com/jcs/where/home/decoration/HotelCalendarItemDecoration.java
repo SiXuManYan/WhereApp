@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextPaint;
-import android.util.Log;
 import android.view.View;
 
 import com.jcs.where.R;
@@ -136,7 +135,7 @@ public class HotelCalendarItemDecoration extends BaseItemDecoration {
                 HotelCalendarAdapter adapter = (HotelCalendarAdapter) parent.getAdapter();
                 if (adapter != null) {
                     HotelCalendarAdapter.HotelCalendarBean item = adapter.getItem(firstVisibleItemPosition);
-                    String showDate = item.getShowDate();
+                    String showDate = item.getShowYearMonthDate();
                     if (showDate != null) {
                         mCurrentDate = showDate;
                     }

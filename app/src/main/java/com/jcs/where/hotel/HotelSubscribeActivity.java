@@ -59,7 +59,7 @@ public class HotelSubscribeActivity extends BaseActivity {
         startDateTv = findViewById(R.id.tv_startdate);
         startWeekTv = findViewById(R.id.tv_startweek);
         endDateTv = findViewById(R.id.tv_enddate);
-        endWeekTv = findViewById(R.id.tv_endweek);
+        endWeekTv = findViewById(R.id.endWeekTv);
         nightTv = findViewById(R.id.tv_night);
         bedTv = findViewById(R.id.tv_bed);
         breakfastTv = findViewById(R.id.tv_breakfast);

@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.adapter.HotelCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
@@ -70,7 +71,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private static final int REQ_SELECT_CITY = 100;
     private final int READ_CODE = 10;
     private final int READ_LOCATIONCODE = 11;
-    private TextView mLocationTv, startDateTv, startWeekTv, endDateTv, endWeekTv, allDayTv, mRoomNumTv, mPriceAndStarTv;
+    private TextView mLocationTv, mStartDateTv, mStartWeekTv, mEndDateTv, mEndWeekTv, allDayTv, mRoomNumTv, mPriceAndStarTv;
     private RelativeLayout mChooseDateRl;
     private ImageView mRoomReduceIv, mRoomAddIv;
     private RecyclerView showRv;
@@ -95,6 +96,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private HotelCalendarDialog mHotelCalendarDialog;
     private TextView mChooseLocationTv;
     private TextView mSearchTv;
+    private HotelCalendarAdapter.HotelCalendarBean mStartDate, mEndDate;
 
 
     public static void goTo(Context context) {
@@ -143,17 +145,17 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mLocationTv.setOnClickListener(this);
         mChooseDateRl = findViewById(R.id.rl_choosedate);
         mChooseDateRl.setOnClickListener(this);
-        startDateTv = findViewById(R.id.startDayTv);
+        mStartDateTv = findViewById(R.id.startDayTv);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
         Date date = new Date(System.currentTimeMillis());
-        startDateTv.setText(simpleDateFormat.format(date));
-        startWeekTv = findViewById(R.id.tv_startweek);
+        mStartDateTv.setText(simpleDateFormat.format(date));
+        mStartWeekTv = findViewById(R.id.startWeekTv);
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = new Date(System.currentTimeMillis());
 //        startWeekTv.setText("周" + CalendarUtil.getWeekByFormat(simpleDateFormat1.format(date1)));
-        endDateTv = findViewById(R.id.endDayTv);
-        endDateTv.setText(getOldDate(1));
-        endWeekTv = findViewById(R.id.tv_endweek);
+        mEndDateTv = findViewById(R.id.endDayTv);
+//        mEndDateTv.setText(getOldDate(1));
+        mEndWeekTv = findViewById(R.id.endWeekTv);
 //        endWeekTv.setText("周" + CalendarUtil.getWeekByFormat(getOldWeek(1)));
         allDayTv = findViewById(R.id.tv_allday);
         mRoomNumTv = findViewById(R.id.tv_roomnum);
@@ -243,6 +245,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mChooseLocationTv.setOnClickListener(this::onChooseLocationTvClick);
         mSearchTv.setOnClickListener(this::onSearchTvClick);
         mClearIv.setOnClickListener(this::onClearClicked);
+        mHotelCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
     }
 
     @Override
@@ -283,8 +286,26 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    public void onDateSelected(HotelCalendarAdapter.HotelCalendarBean startDate, HotelCalendarAdapter.HotelCalendarBean endDate) {
+        if (startDate != null) {
+            mStartDate = startDate;
+            mStartDateTv.setText(startDate.getShowMonthDayDate());
+            mStartWeekTv.setText(startDate.getShowWeekday());
+            Log.e("HotelActivity", "onDateSelected: " + "mStartDate=" + mStartDate);
+        }
+
+        if (endDate != null) {
+            mEndDate = endDate;
+            mEndDateTv.setText(endDate.getShowMonthDayDate());
+            mEndWeekTv.setText(startDate.getShowWeekday());
+            Log.e("HotelActivity", "onDateSelected: " + "mEndDate=" + mEndDate);
+
+        }
+    }
+
+
     public void onSearchTvClick(View view) {
-        HotelListActivity.goTo(HotelActivity.this, startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
+        HotelListActivity.goTo(HotelActivity.this, mStartDateTv.getText().toString(), mEndDateTv.getText().toString(), mStartWeekTv.getText().toString(), mEndWeekTv.getText().toString(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
     }
 
     public void onClearClicked(View view) {
@@ -508,7 +529,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             baseViewHolder.findView(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HotelDetailActivity.goTo(getContext(), data.getId(), startDateTv.getText().toString(), endDateTv.getText().toString(), startWeekTv.getText().toString(), endWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, mRoomNumTv.getText().toString());
+                    HotelDetailActivity.goTo(getContext(), data.getId(), mStartDateTv.getText().toString(), mEndDateTv.getText().toString(), mStartWeekTv.getText().toString(), mEndWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, mRoomNumTv.getText().toString());
                 }
             });
         }

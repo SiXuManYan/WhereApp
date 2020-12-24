@@ -26,8 +26,8 @@ public class HotelCalendarDialog extends BaseDialog {
     private RecyclerView mRecycler;
     private List<HotelCalendarBean> mBeans;
     private HotelCalendarAdapter mAdapter;
-    private int[] mStartAndEndItemPosition = new int[2];
-    private List<Integer> mSelectBetweenStartAndEnd = new ArrayList<>();
+    private final int[] mStartAndEndItemPosition = new int[2];
+    private final List<Integer> mSelectBetweenStartAndEnd = new ArrayList<>();
     private HotelCalendarItemDecoration mItemDecoration;
 
     @Override

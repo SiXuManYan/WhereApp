@@ -17,7 +17,8 @@
     <string name="price_unit">₱</string>
     <string name="show_price_with_forward_unit">₱%1$d</string>
     <string name="show_price_with_forward_unit_f">₱%1$f</string>
-    <string name="star_prompt">星级</string>
+    <string name="prompt_star">星级</string>
+    <string name="prompt_price_star">价格/星级</string>
     <string name="score_prompt">评分</string>
     <string name="start_less_than_2"><![CDATA[<2]]></string>
     <string name="digital_3">3</string>
@@ -82,5 +83,7 @@
     <string name="night">晚</string>
     <string name="enter_stay">入店</string>
     <string name="leave_stay">离店</string>
+    <string name="date_format_month_day">MM月dd日</string>
+    <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
 
 </resources>

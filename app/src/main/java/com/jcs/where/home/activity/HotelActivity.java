@@ -53,6 +53,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -146,11 +147,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mChooseDateRl = findViewById(R.id.rl_choosedate);
         mChooseDateRl.setOnClickListener(this);
         mStartDateTv = findViewById(R.id.startDayTv);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.date_format_month_day), Locale.CHINA);
         Date date = new Date(System.currentTimeMillis());
         mStartDateTv.setText(simpleDateFormat.format(date));
         mStartWeekTv = findViewById(R.id.startWeekTv);
-        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(getString(R.string.date_format_yyyy_mm_dd), Locale.CHINA);
         Date date1 = new Date(System.currentTimeMillis());
 //        startWeekTv.setText("周" + CalendarUtil.getWeekByFormat(simpleDateFormat1.format(date1)));
         mEndDateTv = findViewById(R.id.endDayTv);
@@ -267,7 +268,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         if (view == mRoomReduceIv) {
             int roomNum = Integer.parseInt(mRoomNumTv.getText().toString());
             if (roomNum == 1) {
-                showToast("不能再减了");
+                showToast(getString(R.string.can_not_reduce));
                 return;
             } else {
                 roomNum--;
@@ -306,7 +307,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void onClearClicked(View view) {
-        mPriceAndStarTv.setText("价格/星级");
+        mPriceAndStarTv.setText(getString(R.string.prompt_price_star));
         mPriceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
         usePrice = null;
         useStar = null;

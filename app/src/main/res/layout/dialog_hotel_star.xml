@@ -102,7 +102,7 @@
         android:id="@+id/starPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/star_prompt"
+        android:text="@string/prompt_star"
         android:textSize="@dimen/sp_13"
         android:textColor="@color/black_333333"
         android:layout_marginTop="@dimen/dp_15"

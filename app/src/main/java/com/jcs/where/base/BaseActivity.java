@@ -1,9 +1,11 @@
 package com.jcs.where.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -206,5 +208,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void showToast(String msg) {
         ToastUtils.showLong(this, msg);
+    }
+
+    protected int getPxFromDp(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }

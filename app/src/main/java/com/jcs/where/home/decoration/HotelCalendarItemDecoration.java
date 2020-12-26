@@ -8,7 +8,7 @@ import android.text.TextPaint;
 import android.view.View;
 
 import com.jcs.where.R;
-import com.jcs.where.adapter.HotelCalendarAdapter;
+import com.jcs.where.adapter.JcsCalendarAdapter;
 import com.jcs.where.base.BaseItemDecoration;
 
 import androidx.annotation.NonNull;
@@ -66,9 +66,9 @@ public class HotelCalendarItemDecoration extends BaseItemDecoration {
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         int childAdapterPosition = parent.getChildAdapterPosition(view);
-        HotelCalendarAdapter adapter = (HotelCalendarAdapter) parent.getAdapter();
+        JcsCalendarAdapter adapter = (JcsCalendarAdapter) parent.getAdapter();
         if (adapter != null) {
-            HotelCalendarAdapter.HotelCalendarBean bean = adapter.getItem(childAdapterPosition);
+            JcsCalendarAdapter.CalendarBean bean = adapter.getItem(childAdapterPosition);
             Context context = view.getContext();
             if (!bean.isHeader()) {
                 int recyclerWidth = parent.getMeasuredWidth();
@@ -89,7 +89,7 @@ public class HotelCalendarItemDecoration extends BaseItemDecoration {
      * 暂时无用
      */
     private void drawMarginBg(@NonNull Canvas c, @NonNull RecyclerView parent) {
-        HotelCalendarAdapter adapter = (HotelCalendarAdapter) parent.getAdapter();
+        JcsCalendarAdapter adapter = (JcsCalendarAdapter) parent.getAdapter();
         if (adapter != null) {
             for (int i = mStartPosition; i <= mEndPosition; i++) {
                 View itemView = parent.getChildAt(i);
@@ -132,9 +132,9 @@ public class HotelCalendarItemDecoration extends BaseItemDecoration {
             LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
             if (layoutManager != null) {
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-                HotelCalendarAdapter adapter = (HotelCalendarAdapter) parent.getAdapter();
+                JcsCalendarAdapter adapter = (JcsCalendarAdapter) parent.getAdapter();
                 if (adapter != null) {
-                    HotelCalendarAdapter.HotelCalendarBean item = adapter.getItem(firstVisibleItemPosition);
+                    JcsCalendarAdapter.CalendarBean item = adapter.getItem(firstVisibleItemPosition);
                     String showDate = item.getShowYearMonthDate();
                     if (showDate != null) {
                         mCurrentDate = showDate;

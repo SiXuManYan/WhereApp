@@ -161,7 +161,10 @@
         android:background="@color/red_FE8E8E"
         android:visibility="gone" >
 
-        <include layout="@layout/view_enter_stay_info"/>
+        <com.jcs.where.view.EnterStayInfoView
+            android:id="@+id/enterStayInfoView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_120"/>
 
     </com.jcs.where.view.popup.TopPopupConstraintLayout>
 

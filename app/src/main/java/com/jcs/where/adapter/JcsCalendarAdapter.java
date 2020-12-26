@@ -11,59 +11,45 @@ import com.jcs.where.R;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.List;
 
 import androidx.core.content.ContextCompat;
 
-public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarAdapter.HotelCalendarBean, BaseViewHolder> {
+public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapter.CalendarBean, BaseViewHolder> {
     private boolean mIsEndSelected = false;
 
-    public HotelCalendarAdapter(int sectionHeadResId, @Nullable List<HotelCalendarBean> data) {
-        super(sectionHeadResId, data);
-//        init();
-    }
-
-    public HotelCalendarAdapter(int sectionHeadResId) {
-        super(sectionHeadResId);
-//        init();
-    }
-
-    public HotelCalendarAdapter(int sectionHeadResId, int layoutResId, @Nullable List<HotelCalendarBean> data) {
+    public JcsCalendarAdapter(int sectionHeadResId, int layoutResId, @Nullable List<CalendarBean> data) {
         super(sectionHeadResId, layoutResId, data);
-//        init();
     }
 
-    public void init() {
-        addItemType(HotelCalendarBean.YEAR_MONTH_DAY, R.layout.item_hotel_calendar_dialog_header);
-        addItemType(HotelCalendarBean.DAY, R.layout.item_hotel_calendar_dialog_child);
+
+    @Override
+    protected void convertHeader(@NotNull BaseViewHolder baseViewHolder, @NotNull CalendarBean calendarBean) {
+        baseViewHolder.setText(R.id.yearMonthTv, calendarBean.showYearMonthDate);
     }
 
     @Override
-    protected void convertHeader(@NotNull BaseViewHolder baseViewHolder, @NotNull HotelCalendarBean hotelCalendarBean) {
-        baseViewHolder.setText(R.id.yearMonthTv, hotelCalendarBean.showYearMonthDate);
-    }
-
-    @Override
-    protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelCalendarBean hotelCalendarBean) {
+    protected void convert(@NotNull BaseViewHolder baseViewHolder, CalendarBean calendarBean) {
         View dateView = baseViewHolder.findView(R.id.dateView);
         View leftView = baseViewHolder.findView(R.id.leftView);
         View rightView = baseViewHolder.findView(R.id.rightView);
         // day 为 0 ，说明是空白item
-        if (hotelCalendarBean.day != 0) {
-            baseViewHolder.setText(R.id.dayTv, String.valueOf(hotelCalendarBean.day));
+        if (calendarBean.day != 0) {
+            baseViewHolder.setText(R.id.dayTv, String.valueOf(calendarBean.day));
             View itemView = baseViewHolder.itemView;
             TextView actionTv = baseViewHolder.findView(R.id.actionTv);
-            if (hotelCalendarBean.isStartDay) {
+            if (calendarBean.isStartDay) {
                 if (mIsEndSelected) {
                     rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
                 }
                 dateView.setBackgroundResource(R.mipmap.start_date_selected);
                 actionTv.setText(R.string.enter_stay);
-            } else if (hotelCalendarBean.isEndDay) {
+            } else if (calendarBean.isEndDay) {
                 leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
                 dateView.setBackgroundResource(R.mipmap.end_date_selected);
                 actionTv.setText(R.string.leave_stay);
-            } else if (hotelCalendarBean.isSelected) {
+            } else if (calendarBean.isSelected) {
                 leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
                 rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
                 dateView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
@@ -91,10 +77,17 @@ public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarA
         this.mIsEndSelected = mIsEndSelected;
     }
 
-    public static class HotelCalendarBean extends JSectionEntity {
+    public static class CalendarBean extends JSectionEntity implements Serializable {
         long time;
         String showYearMonthDate;
+        /**
+         * 9月10日
+         */
         String showMonthDayDate;
+        /**
+         * 09-10
+         */
+        String showMonthDayDateWithSplit;
         String showWeekday;
         int year;
         int month;
@@ -103,8 +96,6 @@ public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarA
         boolean isStartDay;
         boolean isEndDay;
         boolean isToday;
-        public static final int YEAR_MONTH_DAY = 1;
-        public static final int DAY = 2;
         int itemType;
         boolean isHeader;
 
@@ -204,6 +195,14 @@ public class HotelCalendarAdapter extends BaseSectionQuickAdapter<HotelCalendarA
 
         public void setShowWeekday(String showWeekday) {
             this.showWeekday = showWeekday;
+        }
+
+        public String getShowMonthDayDateWithSplit() {
+            return showMonthDayDateWithSplit;
+        }
+
+        public void setShowMonthDayDateWithSplit(String showMonthDayDateWithSplit) {
+            this.showMonthDayDateWithSplit = showMonthDayDateWithSplit;
         }
 
         @Override

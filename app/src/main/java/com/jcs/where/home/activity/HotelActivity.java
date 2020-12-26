@@ -27,15 +27,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
-import com.jcs.where.adapter.HotelCalendarAdapter;
+import com.jcs.where.adapter.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GuessYouLikeHotelBean;
-import com.jcs.where.home.dialog.HotelCalendarDialog;
 import com.jcs.where.home.dialog.HotelStarDialog;
+import com.jcs.where.home.dialog.JcsCalendarDialog;
 import com.jcs.where.hotel.CityPickerActivity;
 import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.hotel.HotelListActivity;
@@ -94,11 +94,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private HotelModel mModel;
 
     private HotelStarDialog mHotelStarDialog;
-    private HotelCalendarDialog mHotelCalendarDialog;
+    private JcsCalendarDialog mJcsCalendarDialog;
     private TextView mChooseLocationTv;
     private TextView mSearchTv;
-    private HotelCalendarAdapter.HotelCalendarBean mStartDate, mEndDate;
-
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, HotelActivity.class);
@@ -193,12 +191,15 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mHotelStarDialog = new HotelStarDialog();
         mHotelStarDialog.setCallback(this);
 
-        mHotelCalendarDialog = new HotelCalendarDialog();
+        mJcsCalendarDialog = new JcsCalendarDialog();
     }
 
     @Override
     protected void initData() {
         mModel = new HotelModel();
+        mJcsCalendarDialog.initCalendar();
+        deployDateTv(mStartDateTv, mStartWeekTv, mJcsCalendarDialog.getStartBean());
+        deployDateTv(mEndDateTv, mEndWeekTv, mJcsCalendarDialog.getEndBean());
         initGoogleApi();
         showLoading();
         Map<String, String> params = new HashMap<>();
@@ -246,7 +247,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mChooseLocationTv.setOnClickListener(this::onChooseLocationTvClick);
         mSearchTv.setOnClickListener(this::onSearchTvClick);
         mClearIv.setOnClickListener(this::onClearClicked);
-        mHotelCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
+        mJcsCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
     }
 
     @Override
@@ -262,7 +263,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         }
 
         if (view == mChooseDateRl) {
-            mHotelCalendarDialog.show(getSupportFragmentManager());
+            mJcsCalendarDialog.show(getSupportFragmentManager());
         }
 
         if (view == mRoomReduceIv) {
@@ -287,23 +288,24 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    public void onDateSelected(HotelCalendarAdapter.HotelCalendarBean startDate, HotelCalendarAdapter.HotelCalendarBean endDate) {
+    public void onDateSelected(JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate) {
         if (startDate != null) {
-            mStartDate = startDate;
-            mStartDateTv.setText(startDate.getShowMonthDayDate());
-            mStartWeekTv.setText(startDate.getShowWeekday());
+            deployDateTv(mStartDateTv, mStartWeekTv, startDate);
         }
 
         if (endDate != null) {
-            mEndDate = endDate;
-            mEndDateTv.setText(endDate.getShowMonthDayDate());
-            mEndWeekTv.setText(endDate.getShowWeekday());
+            deployDateTv(mEndDateTv, mEndWeekTv, endDate);
         }
+    }
+
+    public void deployDateTv(TextView dateTv, TextView weekTv, JcsCalendarAdapter.CalendarBean calendarBean) {
+        dateTv.setText(calendarBean.getShowMonthDayDate());
+        weekTv.setText(calendarBean.getShowWeekday());
     }
 
 
     public void onSearchTvClick(View view) {
-        HotelListActivity.goTo(HotelActivity.this, mStartDateTv.getText().toString(), mEndDateTv.getText().toString(), mStartWeekTv.getText().toString(), mEndWeekTv.getText().toString(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, useStartYear, useEndYear, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
+        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
     }
 
     public void onClearClicked(View view) {

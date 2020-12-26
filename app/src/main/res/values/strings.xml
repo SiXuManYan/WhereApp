@@ -85,5 +85,6 @@
     <string name="leave_stay">离店</string>
     <string name="date_format_month_day">MM月dd日</string>
     <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
+    <string name="prompt_room_num">间数</string>
 
 </resources>

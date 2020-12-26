@@ -16,6 +16,8 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
 import com.jcs.where.model.HotelListModel;
+import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
+import com.jcs.where.view.popup.TopPopupConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class HotelListActivity extends BaseActivity {
     private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum, mParentCategoryId;
     private List<Fragment> fragments;
     private ImageView clearIv;
+    private TopPopupConstraintLayout mTopPopupLayout;
 
     private HotelListModel mModel;
 
@@ -80,6 +83,7 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mTopPopupLayout = findViewById(R.id.topPopupLayout);
         mTab = findViewById(R.id.tab);
         mViewPager = findViewById(R.id.viewPager);
         startDayTv = findViewById(R.id.startDayTv);
@@ -92,71 +96,51 @@ public class HotelListActivity extends BaseActivity {
         mChooseDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                new DatePopupWindow
-//                        .Builder((Activity) HotelListActivity.this, Calendar.getInstance().getTime(), view)
-//                        .setInitSelect(-1, -1, -1, -1)
-//                        .setInitDay(false)
-//                        .setDateOnClickListener(new DatePopupWindow.DateOnClickListener() {
-//                            @Override
-//                            public void getDate(String startYear, String endYear, String startDate, String endDate, String startWeek, String endWeek, int allDay, int startGroupPosition, int startChildPosition, int endGroupPosition, int endChildPosition) {
-//                                String mStartTime = CalendarUtil.FormatDateYMD(startDate);
-//                                String mEndTime = CalendarUtil.FormatDateYMD(endDate);
-//                                startDayTv.setText(mStartTime.replace("月", "-").replace("日", ""));
-//                                endDayTv.setText(mEndTime.replace("月", "-").replace("日", ""));
-//                                mStartYear = startYear;
-//                                mEndYear = endYear;
-//                                mStartDate = mStartTime;
-//                                mEndData = mEndTime;
-//                                mStartWeek = startWeek;
-//                                mEndWeek = endWeek;
-//                                mAllDay = "共" + allDay + "晚";
-//                                //  ToastUtils.showLong(HotelListActivity.this, "您选择了：" + mStartTime + startWeek + "到" + mEndTime + endWeek);
+                mTopPopupLayout.showOrHide();
+
+//                View customView = View.inflate(HotelListActivity.this, R.layout.pop_map_title, null);
+//                TextView startDateTv = customView.findViewById(R.id.tv_startdate);
+//                startDateTv.setText(mStartDate);
+//                TextView endDateTv = customView.findViewById(R.id.tv_enddate);
+//                endDateTv.setText(mEndData);
+//                TextView allDayTv = customView.findViewById(R.id.tv_allday);
+//                allDayTv.setText(mAllDay);
+//                TextView roomNumTv = customView.findViewById(R.id.tv_roomnum);
+//                roomNumTv.setText(mRoomNum);
+//                customView.findViewById(R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        int roomNum = Integer.parseInt(roomNumTv.getText().toString());
+//                        if (roomNum == 1) {
+//                            showToast("不能再减了");
+//                        } else {
+//                            roomNum--;
+//                            roomNumTv.setText(String.valueOf(roomNum));
+//                            for (int i = 0; i < fragments.size(); i++) {
+//                                ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
 //                            }
-//                        }).builder();
-
-                View customView = View.inflate(HotelListActivity.this, R.layout.pop_maptitle, null);
-                TextView startDateTv = customView.findViewById(R.id.tv_startdate);
-                startDateTv.setText(mStartDate);
-                TextView endDateTv = customView.findViewById(R.id.tv_enddate);
-                endDateTv.setText(mEndData);
-                TextView allDayTv = customView.findViewById(R.id.tv_allday);
-                allDayTv.setText(mAllDay);
-                TextView roomNumTv = customView.findViewById(R.id.tv_roomnum);
-                roomNumTv.setText(mRoomNum);
-                customView.findViewById(R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int roomNum = Integer.parseInt(roomNumTv.getText().toString());
-                        if (roomNum == 1) {
-                            showToast("不能再减了");
-                        } else {
-                            roomNum--;
-                            roomNumTv.setText(String.valueOf(roomNum));
-                            for (int i = 0; i < fragments.size(); i++) {
-                                ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
-                            }
-                            mRoomNum = roomNumTv.getText().toString();
-                        }
-                    }
-                });
-                customView.findViewById(R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int roomNum1 = Integer.parseInt(roomNumTv.getText().toString());
-                        roomNum1++;
-                        roomNumTv.setText(String.valueOf(roomNum1));
-                        for (int i = 0; i < fragments.size(); i++) {
-                            ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
-                        }
-                        mRoomNum = roomNumTv.getText().toString();
-                    }
-                });
-                customView.findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
+//                            mRoomNum = roomNumTv.getText().toString();
+//                        }
+//                    }
+//                });
+//                customView.findViewById(R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        int roomNum1 = Integer.parseInt(roomNumTv.getText().toString());
+//                        roomNum1++;
+//                        roomNumTv.setText(String.valueOf(roomNum1));
+//                        for (int i = 0; i < fragments.size(); i++) {
+//                            ((HotelListFragment) fragments.get(i)).changeData(mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, roomNumTv.getText().toString());
+//                        }
+//                        mRoomNum = roomNumTv.getText().toString();
+//                    }
+//                });
+//                customView.findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//
+//                    }
+//                });
             }
         });
         findViewById(R.id.iv_map).setOnClickListener(view -> HotelMapActivity.goTo(HotelListActivity.this,
@@ -195,6 +179,13 @@ public class HotelListActivity extends BaseActivity {
         mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
         mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
         mParentCategoryId = getIntent().getStringExtra(EXT_CATEGORY_ID);
+        mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter(){
+
+            @Override
+            public int getMaxHeight() {
+                return getPxFromDp(120);
+            }
+        });
 
         mModel = new HotelListModel();
         showLoading();

@@ -168,7 +168,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         findViewById(R.id.toChooseDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View customView = View.inflate(HotelMapActivity.this, R.layout.pop_maptitle, null);
+                View customView = View.inflate(HotelMapActivity.this, R.layout.view_enter_stay_info, null);
                 TextView startDateTv = customView.findViewById(R.id.tv_startdate);
                 startDateTv.setText(getIntent().getStringExtra(EXT_STARTDATE));
                 TextView endDateTv = customView.findViewById(R.id.tv_enddate);

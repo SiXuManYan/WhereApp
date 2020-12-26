@@ -271,7 +271,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_hotelreduce" />
+                    android:src="@mipmap/ic_hotel_reduce" />
 
                 <TextView
                     android:id="@+id/tv_roomnum"
@@ -289,7 +289,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="19dp"
-                    android:src="@drawable/ic_hoteladd" />
+                    android:src="@mipmap/ic_hotel_add" />
 
             </LinearLayout>
 

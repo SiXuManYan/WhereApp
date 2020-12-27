@@ -305,7 +305,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void onSearchTvClick(View view) {
-        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, mRoomNumTv.getText().toString(), getIntent().getStringExtra("categoryId"));
+        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra("categoryId"));
     }
 
     public void onClearClicked(View view) {

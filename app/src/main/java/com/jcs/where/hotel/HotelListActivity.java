@@ -48,13 +48,14 @@ public class HotelListActivity extends BaseActivity {
     private static final String EXT_STAR = "star";
     private static final String EXT_STARTYEAR = "startYear";
     private static final String EXT_ENDYEAR = "endYear";
-    private static final String EXT_ROOMNUMBER = "roomNumber";
+    private static final String EXT_ROOM_NUMBER = "roomNumber";
     private static final String EXT_CATEGORY_ID = "categoryId";
     private ColorClipTabLayout mTab;
     private ViewPager mViewPager;
     private TextView startDayTv, endDayTv, cityTv;
     private View mChooseDataView;
-    private String mAllDay, mRoomNum, mParentCategoryId;
+    private String mAllDay, mParentCategoryId;
+    private int mRoomNum;
     private List<Fragment> fragments;
     private ImageView clearIv;
     private TopPopupConstraintLayout mTopPopupLayout;
@@ -65,7 +66,7 @@ public class HotelListActivity extends BaseActivity {
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
 
-    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, String allDay, String city, String cityId, String price, String star, String roomNumber, String categoryId) {
+    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, String allDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
         Intent intent = new Intent(context, HotelListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(EXT_START_DATE_BEAN, startDateBean);
@@ -75,7 +76,7 @@ public class HotelListActivity extends BaseActivity {
         intent.putExtra(EXT_CITYID, cityId);
         intent.putExtra(EXT_PRICE, price);
         intent.putExtra(EXT_STAR, star);
-        intent.putExtra(EXT_ROOMNUMBER, roomNumber);
+        intent.putExtra(EXT_ROOM_NUMBER, roomNumber);
         intent.putExtra(EXT_CATEGORY_ID, categoryId);
 
         if (!(context instanceof Activity)) {
@@ -86,6 +87,9 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mCalendarDialog = new JcsCalendarDialog();
+        mCalendarDialog.initCalendar();
+
         mTopPopupLayout = findViewById(R.id.topPopupLayout);
         mEnterStayInfoView = findViewById(R.id.enterStayInfoView);
         mTab = findViewById(R.id.tab);
@@ -123,13 +127,11 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mCalendarDialog = new JcsCalendarDialog();
-        mCalendarDialog.initCalendar();
         Intent intent = getIntent();
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(EXT_START_DATE_BEAN);
         mEndDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(EXT_END_DATE_BEAN);
         mAllDay = intent.getStringExtra(EXT_ALLDAY);
-        mRoomNum = intent.getStringExtra(EXT_ROOMNUMBER);
+        mRoomNum = intent.getIntExtra(EXT_ROOM_NUMBER, 1);
         mParentCategoryId = intent.getStringExtra(EXT_CATEGORY_ID);
         startDayTv.setText(mStartDateBean.getShowMonthDayDateWithSplit());
         endDayTv.setText(mEndDateBean.getShowMonthDayDateWithSplit());
@@ -143,6 +145,7 @@ public class HotelListActivity extends BaseActivity {
 
         mEnterStayInfoView.bindEnterStayInfoAdapter(this::toShowCalendarDialog);
         mEnterStayInfoView.setStartAndEnd(mStartDateBean, mEndDateBean);
+        mEnterStayInfoView.setRoomNum(mRoomNum);
 
         mModel = new HotelListModel();
         showLoading();
@@ -168,6 +171,7 @@ public class HotelListActivity extends BaseActivity {
     @Override
     protected void bindListener() {
         mChooseDataView.setOnClickListener(this::onChooseViewClicked);
+        mCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
     }
 
     private void initTab(List<CategoryResponse> list) {
@@ -191,7 +195,7 @@ public class HotelListActivity extends BaseActivity {
                     getIntent().getStringExtra(EXT_ALLDAY),
                     getIntent().getStringExtra(EXT_STARTYEAR),
                     getIntent().getStringExtra(EXT_ENDYEAR),
-                    getIntent().getStringExtra(EXT_ROOMNUMBER)));
+                    getIntent().getStringExtra(EXT_ROOM_NUMBER)));
         }
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -223,6 +227,17 @@ public class HotelListActivity extends BaseActivity {
     public void toShowCalendarDialog() {
         if (!mCalendarDialog.isVisible()) {
             mCalendarDialog.show(getSupportFragmentManager());
+        }
+    }
+
+    public void onDateSelected(JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate) {
+        mEnterStayInfoView.setStartAndEnd(startDate, endDate);
+        if (startDate != null) {
+            startDayTv.setText(startDate.getShowMonthDayDateWithSplit());
+        }
+
+        if (endDate != null) {
+            endDayTv.setText(endDate.getShowMonthDayDateWithSplit());
         }
     }
 

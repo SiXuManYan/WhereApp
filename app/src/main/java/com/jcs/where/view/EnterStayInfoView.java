@@ -68,10 +68,15 @@ public class EnterStayInfoView extends ConstraintLayout {
     }
 
     public EnterStayInfoView setStartAndEnd(JcsCalendarAdapter.CalendarBean startBean, JcsCalendarAdapter.CalendarBean endBean) {
-        mStartBean = startBean;
-        mEndBean = endBean;
-        setStartDay(mStartBean.getShowMonthDayDate());
-        setEndDay(mEndBean.getShowMonthDayDate());
+        if (startBean != null) {
+            mStartBean = startBean;
+            setStartDay(mStartBean.getShowMonthDayDate());
+        }
+
+        if (endBean != null) {
+            mEndBean = endBean;
+            setEndDay(mEndBean.getShowMonthDayDate());
+        }
         mTotalDayTv.setText(getTotalDay());
         return this;
     }

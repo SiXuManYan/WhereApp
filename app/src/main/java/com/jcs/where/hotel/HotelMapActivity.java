@@ -86,8 +86,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private double lat = 14.6778362;
     private double lng = 120.5306459;
     private TextView mStartDayTv, mEndDayTv, mCityTv;
-    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay;
-    private int mRoomNum;
+    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek;
+    private int mTotalDay, mRoomNum;
     private int lastPostition = 0;
     private int lastScrollPosition = 0;
     private ImageView clearIv, mHotelListIv;
@@ -105,12 +105,12 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
 
-    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, String allDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
+    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, int totalDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
         Intent intent = new Intent(context, HotelMapActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN, startDateBean);
         intent.putExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN, endDateBean);
-        intent.putExtra(HotelSelectDateHelper.EXT_ALL_DAY, allDay);
+        intent.putExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, totalDay);
         intent.putExtra(HotelSelectDateHelper.EXT_CITY, city);
         intent.putExtra(HotelSelectDateHelper.EXT_CITY_ID, cityId);
         intent.putExtra(HotelSelectDateHelper.EXT_PRICE, price);
@@ -202,7 +202,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     protected void initData() {
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
         mEndDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
-        mAllDay = getIntent().getStringExtra(HotelSelectDateHelper.EXT_ALL_DAY);
+        mTotalDay = getIntent().getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
         mRoomNum = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 0);
         mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
 
@@ -414,7 +414,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
                 hotelEvent.getId(),
                 mStartDateBean,
                 mEndDateBean,
-                mAllDay,
+                mTotalDay,
                 mStartYear,
                 mEndYear,
                 mRoomNum);

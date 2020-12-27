@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -37,6 +38,7 @@ public class JcsCalendarDialog extends BaseDialog {
     private SimpleDateFormat mYearMonthSF;
     private SimpleDateFormat mMonthDaySF;
     private SimpleDateFormat mMonthDayWithSplitSF;
+    private SimpleDateFormat mYearMonthDayWithSplitSF;
     private SimpleDateFormat mWeekdaySF;
 
     @Override
@@ -249,6 +251,7 @@ public class JcsCalendarDialog extends BaseDialog {
         mYearMonthSF = new SimpleDateFormat("yyyy年MM月");
         mMonthDaySF = new SimpleDateFormat("MM月dd日");
         mMonthDayWithSplitSF = new SimpleDateFormat("MM-dd");
+        mYearMonthDayWithSplitSF = new SimpleDateFormat("yyyy-MM-dd");
         mWeekdaySF = new SimpleDateFormat("E");
 
         Calendar instance = Calendar.getInstance();
@@ -313,7 +316,16 @@ public class JcsCalendarDialog extends BaseDialog {
         calendarBean.setShowYearMonthDate(mYearMonthSF.format(instance.getTime()));
         calendarBean.setShowMonthDayDate(mMonthDaySF.format(instance.getTime()));
         calendarBean.setShowMonthDayDateWithSplit(mMonthDayWithSplitSF.format(instance.getTime()));
+        calendarBean.setShowYearMonthDayDateWithSplit(mYearMonthDayWithSplitSF.format(instance.getTime()));
         calendarBean.setShowWeekday(mWeekdaySF.format(instance.getTime()));
+    }
+
+    public String getTotalDay() {
+        long startTime = mStartBean.getTime();
+        long endTime = mEndBean.getTime();
+        long temp = endTime - startTime;
+        long dayNum = TimeUnit.DAYS.convert(temp, TimeUnit.MILLISECONDS);
+        return String.format(getContext().getString(R.string.total_night), dayNum);
     }
 
     public interface OnDateSelectedListener {

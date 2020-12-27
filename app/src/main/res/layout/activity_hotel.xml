@@ -80,7 +80,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_toLeftOf="@+id/tv_allday">
+                        android:layout_toLeftOf="@id/totalDayTv">
 
                         <TextView
                             android:id="@+id/startDayTv"
@@ -140,7 +140,7 @@
 
 
                     <TextView
-                        android:id="@+id/tv_allday"
+                        android:id="@+id/totalDayTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

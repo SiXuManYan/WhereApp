@@ -8,6 +8,7 @@ import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.OrderListResponse;
@@ -96,6 +97,7 @@ public interface RetrofitApi {
 
     /**
      * 获取酒店房间列表
+     * hotel/{hotel_id}/rooms?start_date=2020-06-16&end_date=2020-06-17&room_num=1
      */
     @GET("hotelapi/v1/hotel/{hotel_id}/rooms")
     Observable<List<HotelRoomListResponse>> getHotelRooms(
@@ -105,6 +107,16 @@ public interface RetrofitApi {
             @Query("room_num") int roomNum
     );
 
+    /**
+     * 根据房间id获得酒店房间详情
+     */
+    @GET("hotelapi/v1/hotel/room/{room_id}")
+    Observable<HotelRoomDetailResponse> getHotelRoomById(
+            @Path("room_id") int roomId,
+            @Query("start_date") String starDate,
+            @Query("end_date") String endDate,
+            @Query("room_num") int roomNum
+    );
 
     /**
      * 获取酒店评价

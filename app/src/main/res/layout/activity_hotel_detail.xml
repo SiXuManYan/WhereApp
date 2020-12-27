@@ -38,7 +38,7 @@
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -51,16 +51,16 @@
                         android:id="@+id/tv_startTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:text="2017年开业"
                         android:textColor="@color/grey_666666"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/sp_11" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginLeft="11dp"
+                        android:layout_marginStart="11dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="11dp"
                         android:background="@color/grey_F5F5F5" />
@@ -68,7 +68,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp">
 
@@ -90,7 +90,7 @@
                             android:layout_centerVertical="true"
                             android:text="170条点评"
                             android:textColor="@color/blue_4C9EF2"
-                            android:textSize="11sp" />
+                            android:textSize="@dimen/sp_11" />
 
 
                     </RelativeLayout>
@@ -99,7 +99,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginLeft="11dp"
+                        android:layout_marginStart="11dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="11dp"
                         android:background="@color/grey_F5F5F5" />
@@ -108,7 +108,7 @@
                         android:id="@+id/rl_facebook"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginRight="15dp">
 
@@ -123,7 +123,7 @@
                             android:id="@+id/tv_facebookadress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:layout_toRightOf="@+id/iv_facebook"
                             android:text="Facebook 网页链接"
                             android:textColor="@color/blue_4C9EF2"
@@ -136,7 +136,7 @@
                         android:id="@+id/faceline"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginLeft="11dp"
+                        android:layout_marginStart="11dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginRight="11dp"
                         android:background="@color/grey_F5F5F5" />
@@ -144,7 +144,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp"
                         android:orientation="horizontal">
@@ -158,7 +158,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -186,7 +186,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp"
                         android:orientation="horizontal">
@@ -202,7 +202,7 @@
                             android:id="@+id/tv_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:singleLine="true"
@@ -216,7 +216,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="10dp"
@@ -250,7 +250,7 @@
                             android:id="@+id/rl_phone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="6.5dp"
+                            android:layout_marginStart="6.5dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_hoteldetailphone">
 
@@ -258,7 +258,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="6.5dp"
+                                android:layout_marginStart="6.5dp"
                                 android:layout_marginTop="7dp"
                                 android:layout_marginBottom="7dp"
                                 android:drawableLeft="@drawable/ic_hoteldetail_phone"
@@ -287,38 +287,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
-                        android:text="23 Jul"
+                        android:layout_marginStart="15dp"
                         android:textColor="@color/blue_4C9EF2"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_startweek"
+                        android:id="@+id/startWeekTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
-                        android:text="Sun"
+                        android:layout_marginStart="6dp"
                         android:textColor="@color/blue_4C9EF2"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/sp_11" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="3.5dp"
-                        android:text="live"
+                        android:layout_marginStart="3.5dp"
+                        android:text="@string/enter_stay"
                         android:textColor="@color/grey_999999"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/sp_11" />
 
                     <TextView
                         android:id="@+id/endDayTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:text="23 Jul"
+                        android:layout_marginStart="20dp"
                         android:textColor="@color/blue_4C9EF2"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -328,19 +325,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
-                        android:text="Sun"
+                        android:layout_marginStart="6dp"
                         android:textColor="@color/blue_4C9EF2"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/sp_11" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="3.5dp"
-                        android:text="leave"
+                        android:layout_marginStart="3.5dp"
+                        android:text="@string/leave_stay"
                         android:textColor="@color/grey_999999"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/sp_11" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -349,7 +345,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_allday"
+                            android:id="@+id/totalDayTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -384,7 +380,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
                         android:text="政策"
                         android:textColor="@color/black_333333"
@@ -394,7 +390,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="15dp"
                         android:orientation="horizontal">
@@ -431,7 +427,7 @@
                         android:id="@+id/tv_policychildren"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:text="儿童及加床"
@@ -451,7 +447,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
                         android:text="设施"
                         android:textColor="@color/black_333333"
@@ -462,7 +458,7 @@
                         android:id="@+id/rv_facilities"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginStart="40dp"
                         android:layout_marginTop="15dp"
                         android:background="@color/white" />
 
@@ -486,7 +482,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="15dp"
                             android:layout_marginTop="10dp"
                             android:text="住客评价"
                             android:textColor="@color/black_333333"
@@ -510,7 +506,7 @@
                                 android:id="@+id/iv_commentavatar"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginStart="15dp"
                                 android:src="@drawable/ic_test" />
 
                             <RelativeLayout
@@ -519,7 +515,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignTop="@+id/iv_commentavatar"
                                 android:layout_alignBottom="@+id/iv_commentavatar"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:layout_toRightOf="@+id/iv_commentavatar"
                                 android:orientation="vertical">
 
@@ -571,7 +567,7 @@
                                             android:id="@+id/iv_star2"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="3dp"
+                                            android:layout_marginStart="3dp"
                                             android:src="@drawable/ic_commentlistlightstar" />
 
 
@@ -579,7 +575,7 @@
                                             android:id="@+id/iv_star3"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="3dp"
+                                            android:layout_marginStart="3dp"
                                             android:src="@drawable/ic_commentlistlightstar" />
 
 
@@ -587,7 +583,7 @@
                                             android:id="@+id/iv_star4"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="3dp"
+                                            android:layout_marginStart="3dp"
                                             android:src="@drawable/ic_commentlistlightstar" />
 
 
@@ -595,7 +591,7 @@
                                             android:id="@+id/iv_star5"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="3dp"
+                                            android:layout_marginStart="3dp"
                                             android:src="@drawable/ic_commentlistgreystar" />
 
 
@@ -612,7 +608,7 @@
                             android:id="@+id/tv_commentdetail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="15dp"
                             android:layout_marginTop="7dp"
                             android:text="酒店的位置很好找，周边购物吃饭都非常方便。"
                             android:textColor="@color/grey_666666"

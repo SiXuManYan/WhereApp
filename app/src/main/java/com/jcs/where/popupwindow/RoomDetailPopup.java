@@ -21,6 +21,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
+import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.bean.RoomDetailBean;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
@@ -36,7 +37,7 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
     private SubscribeOnClickListener mOnClickListener = null;
     private ImageView closeIv;
     private final int useId;
-    private final RoomDetailBean useRoomDetailBean;
+    private final HotelRoomDetailResponse hotelRoomDetailResponse;
     private XBanner banner;
     private TextView roomNameTv, bedTv, squareTv, windowTv, floorTv, wifiTv, peopleTv, policyTv, bathroomTv, amenitiesTv, mediaTv, foodTv, outdoorTv, otherTv, priceTv, nowSubscribeTv;
 
@@ -44,7 +45,7 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         this.activity = builder.context;
         this.mOnClickListener = builder.mOnClickListener;
         this.useId = builder.id;
-        this.useRoomDetailBean = builder.roomDetailBean;
+        this.hotelRoomDetailResponse = builder.hotelRoomDetailResponse;
         LayoutInflater inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         rootView = inflater.inflate(R.layout.popupwindow_roomdetail, null);
         this.setContentView(rootView);
@@ -68,7 +69,7 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         });
         banner = (XBanner) rootView.findViewById(R.id.banner3);
         banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                .setImageUrls(useRoomDetailBean.getImages())
+                .setImageUrls(hotelRoomDetailResponse.getImages())
                 .setImageLoader(new AbstractUrlLoader() {
                     @Override
                     public void loadImages(Context context, String url, ImageView image) {
@@ -127,43 +128,43 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
             banner.setClipToOutline(true);
         }
         roomNameTv = (TextView) rootView.findViewById(R.id.tv_roomname);
-        roomNameTv.setText(useRoomDetailBean.getName());
+        roomNameTv.setText(hotelRoomDetailResponse.getName());
         bedTv = (TextView) rootView.findViewById(R.id.tv_bed);
-        bedTv.setText(useRoomDetailBean.getHotel_room_type());
+        bedTv.setText(hotelRoomDetailResponse.getHotel_room_type());
         squareTv = (TextView) rootView.findViewById(R.id.tv_square);
-        squareTv.setText(useRoomDetailBean.getRoom_area());
+        squareTv.setText(hotelRoomDetailResponse.getRoom_area());
         windowTv = (TextView) rootView.findViewById(R.id.tv_window);
-        if (useRoomDetailBean.getWindow_type() == 1) {
+        if (hotelRoomDetailResponse.getWindow_type() == 1) {
             windowTv.setText("有");
         } else {
             windowTv.setText("无");
         }
         floorTv = (TextView) rootView.findViewById(R.id.tv_floor);
-        floorTv.setText(useRoomDetailBean.getFloor());
+        floorTv.setText(hotelRoomDetailResponse.getFloor());
         wifiTv = (TextView) rootView.findViewById(R.id.tv_wifi);
-        if (useRoomDetailBean.getWifi_type() == 1) {
+        if (hotelRoomDetailResponse.getWifi_type() == 1) {
             wifiTv.setText("有");
         } else {
             wifiTv.setText("无");
         }
         peopleTv = (TextView) rootView.findViewById(R.id.tv_people);
-        peopleTv.setText(useRoomDetailBean.getPeople() + "");
+        peopleTv.setText(hotelRoomDetailResponse.getPeople() + "");
         policyTv = (TextView) rootView.findViewById(R.id.tv_policy);
-        policyTv.setText(useRoomDetailBean.getPolicy());
+        policyTv.setText(hotelRoomDetailResponse.getPolicy());
         bathroomTv = (TextView) rootView.findViewById(R.id.tv_bathroom);
-        bathroomTv.setText(useRoomDetailBean.getShower_room());
+        bathroomTv.setText(hotelRoomDetailResponse.getShower_room());
         amenitiesTv = (TextView) rootView.findViewById(R.id.tv_amenities);
-        amenitiesTv.setText(useRoomDetailBean.getFacility());
+        amenitiesTv.setText(hotelRoomDetailResponse.getFacility());
         mediaTv = (TextView) rootView.findViewById(R.id.tv_media);
-        mediaTv.setText(useRoomDetailBean.getMedia());
+        mediaTv.setText(hotelRoomDetailResponse.getMedia());
         foodTv = (TextView) rootView.findViewById(R.id.tv_food);
-        foodTv.setText(useRoomDetailBean.getFood());
+        foodTv.setText(hotelRoomDetailResponse.getFood());
         outdoorTv = (TextView) rootView.findViewById(R.id.tv_outdoor);
-        outdoorTv.setText(useRoomDetailBean.getScene());
+        outdoorTv.setText(hotelRoomDetailResponse.getScene());
         otherTv = (TextView) rootView.findViewById(R.id.tv_other);
-        otherTv.setText(useRoomDetailBean.getOther());
+        otherTv.setText(hotelRoomDetailResponse.getOther());
         priceTv = (TextView) rootView.findViewById(R.id.tv_price);
-        priceTv.setText("₱" + useRoomDetailBean.getPrice());
+        priceTv.setText("₱" + hotelRoomDetailResponse.getPrice());
         nowSubscribeTv = (TextView) rootView.findViewById(R.id.tv_nowsubscribe);
         nowSubscribeTv.setOnClickListener(this);
 
@@ -185,7 +186,7 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         switch (view.getId()) {
             case R.id.tv_nowsubscribe:
                 if (mOnClickListener != null) {
-                    mOnClickListener.getDate(useId, useRoomDetailBean.getName(), useRoomDetailBean.getHotel_room_type(), useRoomDetailBean.getWindow_type(), useRoomDetailBean.getWifi_type(), useRoomDetailBean.getPeople(), useRoomDetailBean.getIs_cancel());
+                    mOnClickListener.getDate(useId, hotelRoomDetailResponse.getName(), hotelRoomDetailResponse.getHotel_room_type(), hotelRoomDetailResponse.getWindow_type(), hotelRoomDetailResponse.getWifi_type(), hotelRoomDetailResponse.getPeople(), hotelRoomDetailResponse.getIs_cancel());
                 }
                 RoomDetailPopup.this.dismiss();
                 break;
@@ -208,13 +209,13 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         private final View parentView;
         private SubscribeOnClickListener mOnClickListener = null;
         private final int id;
-        private final RoomDetailBean roomDetailBean;
+        private final HotelRoomDetailResponse hotelRoomDetailResponse;
 
-        public Builder(Activity context, View parentView, int id, RoomDetailBean roomDetailBean) {
+        public Builder(Activity context, View parentView, int id, HotelRoomDetailResponse hotelRoomDetailResponse) {
             this.context = context;
             this.parentView = parentView;
             this.id = id;
-            this.roomDetailBean = roomDetailBean;
+            this.hotelRoomDetailResponse = hotelRoomDetailResponse;
         }
 
         public RoomDetailPopup builder() {

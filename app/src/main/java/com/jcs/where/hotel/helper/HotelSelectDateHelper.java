@@ -9,7 +9,7 @@ public class HotelSelectDateHelper {
     public static final String EXT_END_DATE_BEAN = "endDate";
     public static final String EXT_START_WEEK = "startWeek";
     public static final String EXT_END_WEEK = "endWeek";
-    public static final String EXT_ALL_DAY = "allDay";
+    public static final String EXT_TOTAL_DAY = "totalDay";
     public static final String EXT_CITY = "city";
     public static final String EXT_CITY_ID = "cityId";
     public static final String EXT_PRICE = "price";

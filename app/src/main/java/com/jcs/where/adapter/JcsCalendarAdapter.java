@@ -88,6 +88,10 @@ public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapt
          * 09-10
          */
         String showMonthDayDateWithSplit;
+        /**
+         * 2021-01-10
+         */
+        String showYearMonthDayDateWithSplit;
         String showWeekday;
         int year;
         int month;
@@ -205,23 +209,12 @@ public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapt
             this.showMonthDayDateWithSplit = showMonthDayDateWithSplit;
         }
 
-        @Override
-        public String toString() {
-            return "HotelCalendarBean{" +
-                    "time=" + time +
-                    ", showYearMonthDate='" + showYearMonthDate + '\'' +
-                    ", showMonthDayDate='" + showMonthDayDate + '\'' +
-                    ", showWeekday='" + showWeekday + '\'' +
-                    ", year=" + year +
-                    ", month=" + month +
-                    ", day=" + day +
-                    ", isSelected=" + isSelected +
-                    ", isStartDay=" + isStartDay +
-                    ", isEndDay=" + isEndDay +
-                    ", isToday=" + isToday +
-                    ", itemType=" + itemType +
-                    ", isHeader=" + isHeader +
-                    '}';
+        public String getShowYearMonthDayDateWithSplit() {
+            return showYearMonthDayDateWithSplit;
+        }
+
+        public void setShowYearMonthDayDateWithSplit(String showYearMonthDayDateWithSplit) {
+            this.showYearMonthDayDateWithSplit = showYearMonthDayDateWithSplit;
         }
 
         @Override

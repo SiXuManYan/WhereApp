@@ -37,7 +37,6 @@ import com.jcs.where.bean.GuessYouLikeHotelBean;
 import com.jcs.where.home.dialog.HotelStarDialog;
 import com.jcs.where.home.dialog.JcsCalendarDialog;
 import com.jcs.where.hotel.CityPickerActivity;
-import com.jcs.where.hotel.HotelDetailActivity;
 import com.jcs.where.hotel.HotelListActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.model.HotelModel;
@@ -72,7 +71,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private static final int REQ_SELECT_CITY = 100;
     private final int READ_CODE = 10;
     private final int READ_LOCATIONCODE = 11;
-    private TextView mLocationTv, mStartDateTv, mStartWeekTv, mEndDateTv, mEndWeekTv, allDayTv, mRoomNumTv, mPriceAndStarTv;
+    private TextView mLocationTv, mStartDateTv, mStartWeekTv, mEndDateTv, mEndWeekTv, mTotalDayTv, mRoomNumTv, mPriceAndStarTv;
     private RelativeLayout mChooseDateRl;
     private ImageView mRoomReduceIv, mRoomAddIv;
     private RecyclerView showRv;
@@ -156,7 +155,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 //        mEndDateTv.setText(getOldDate(1));
         mEndWeekTv = findViewById(R.id.endWeekTv);
 //        endWeekTv.setText("周" + CalendarUtil.getWeekByFormat(getOldWeek(1)));
-        allDayTv = findViewById(R.id.tv_allday);
+        mTotalDayTv = findViewById(R.id.totalDayTv);
         mRoomNumTv = findViewById(R.id.tv_roomnum);
         mRoomReduceIv = findViewById(R.id.iv_roomreduce);
         mRoomReduceIv.setOnClickListener(this);
@@ -296,6 +295,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         if (endDate != null) {
             deployDateTv(mEndDateTv, mEndWeekTv, endDate);
         }
+        mTotalDayTv.setText(mJcsCalendarDialog.getTotalDay());
     }
 
     public void deployDateTv(TextView dateTv, TextView weekTv, JcsCalendarAdapter.CalendarBean calendarBean) {
@@ -305,7 +305,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void onSearchTvClick(View view) {
-        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), allDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra("categoryId"));
+        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), mTotalDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra("categoryId"));
     }
 
     public void onClearClicked(View view) {

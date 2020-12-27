@@ -2,7 +2,9 @@ package com.jcs.where.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
+import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.SuccessResponse;
 
@@ -26,5 +28,13 @@ public class HotelDetailModel extends BaseModel {
 
     public void getHotelRooms(int hotelId, String startDate, String endDate, int roomNum, BaseObserver<List<HotelRoomListResponse>> observer) {
         dealResponse(mRetrofit.getHotelRooms(hotelId, startDate, endDate, roomNum), observer);
+    }
+
+    public void getHotelRoomById(int roomId, String startDate, String endDate, int roomNum, BaseObserver<HotelRoomDetailResponse> observer) {
+        dealResponse(mRetrofit.getHotelRoomById(roomId, startDate, endDate, roomNum), observer);
+    }
+
+    public void getComments(int hotelId, BaseObserver<HotelCommentsResponse> observer) {
+        dealResponse(mRetrofit.getHotelComments(hotelId), observer);
     }
 }

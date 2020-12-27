@@ -143,6 +143,7 @@ public class TopPopupConstraintLayout extends ConstraintLayout {
             layoutParams.topToBottom = this.getId();
             layoutParams.bottomToBottom = viewGroup.getId();
             mShadowView.setLayoutParams(layoutParams);
+            mShadowView.setVisibility(GONE);
 
             viewGroup.addView(mShadowView, viewGroup.getChildCount());
             mShadowView.setOnClickListener(this::onShadowViewClicked);

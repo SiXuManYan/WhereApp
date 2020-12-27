@@ -111,6 +111,11 @@ public class HotelListActivity extends BaseActivity {
         mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
 
             @Override
+            public boolean showShadow() {
+                return true;
+            }
+
+            @Override
             public int getMaxHeight() {
                 return getPxFromDp(120);
             }
@@ -234,7 +239,7 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hotellist;
+        return R.layout.activity_hotel_list;
     }
 
     protected void setStatusBar() {

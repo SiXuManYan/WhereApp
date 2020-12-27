@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/white">
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
@@ -89,7 +88,7 @@
         android:layout_marginStart="@dimen/dp_15"
         android:text="@string/live"
         android:textColor="@color/grey_999999"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         app:layout_constraintStart_toStartOf="@id/searchBg"
         app:layout_constraintTop_toTopOf="@id/searchBg" />
 
@@ -99,7 +98,7 @@
         android:layout_height="wrap_content"
         android:text="@string/leave"
         android:textColor="@color/grey_999999"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         app:layout_constraintBottom_toBottomOf="@id/searchBg"
         app:layout_constraintStart_toStartOf="@id/liveTextPrompt" />
 
@@ -109,9 +108,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="07-12"
         android:textColor="@color/blue_4C9EF2"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         app:layout_constraintStart_toEndOf="@id/liveTextPrompt"
         app:layout_constraintTop_toTopOf="@id/liveTextPrompt" />
 
@@ -120,9 +118,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="07-14"
         android:textColor="@color/blue_4C9EF2"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         app:layout_constraintBottom_toBottomOf="@id/leaveTextPrompt"
         app:layout_constraintStart_toEndOf="@id/leaveTextPrompt" />
 
@@ -158,7 +155,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/searchBg"
-        android:background="@color/red_FE8E8E"
         android:visibility="gone" >
 
         <com.jcs.where.view.EnterStayInfoView

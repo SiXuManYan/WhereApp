@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_hotel_map"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <fragment
         android:id="@+id/map"
@@ -93,7 +94,7 @@
         android:layout_height="wrap_content"
         android:text="@string/leave"
         android:textColor="@color/grey_999999"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         app:layout_constraintBottom_toBottomOf="@id/searchBg"
         app:layout_constraintStart_toStartOf="@id/liveTextPrompt" />
 
@@ -102,9 +103,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="07-12"
         android:textColor="@color/blue_4C9EF2"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         app:layout_constraintStart_toEndOf="@id/liveTextPrompt"
         app:layout_constraintTop_toTopOf="@id/liveTextPrompt" />
 
@@ -113,9 +113,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="07-14"
         android:textColor="@color/blue_4C9EF2"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         app:layout_constraintBottom_toBottomOf="@id/leaveTextPrompt"
         app:layout_constraintStart_toEndOf="@id/leaveTextPrompt" />
 
@@ -147,7 +146,7 @@
         android:layout_marginTop="5dp"
         android:text="@string/my_location"
         android:textColor="@color/grey_666666"
-        android:textSize="9sp"
+        android:textSize="@dimen/sp_9"
         app:layout_constraintTop_toBottomOf="@id/myLocationIcon"
         app:layout_constraintBottom_toBottomOf="@id/myLocationView"
         app:layout_constraintStart_toStartOf="@id/myLocationView"

@@ -8,6 +8,7 @@ import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
@@ -21,7 +22,6 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -93,6 +93,17 @@ public interface RetrofitApi {
      */
     @GET("hotelapi/v1/hotel/{id}")
     Observable<HotelDetailResponse> getHotelDetail(@Path("id") int hotelId);
+
+    /**
+     * 获取酒店房间列表
+     */
+    @GET("hotelapi/v1/hotel/{hotel_id}/rooms")
+    Observable<List<HotelRoomListResponse>> getHotelRooms(
+            @Path("hotel_id") int hotelId,
+            @Query("start_date") String starDate,
+            @Query("end_date") String endDate,
+            @Query("room_num") int roomNum
+    );
 
 
     /**

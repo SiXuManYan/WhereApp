@@ -25,13 +25,13 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.adapter.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.HotelDetailResponse;
+import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
@@ -51,7 +51,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +98,7 @@ public class HotelDetailActivity extends BaseActivity {
     private ImageView star1Iv, star2Iv, star3Iv, star4Iv, star5Iv;
     private TextView timeTv;
     private HotelDetailModel mModel;
-    private int hotelId;
+    private int mHotelId;
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
     private int mRoomNum;
@@ -272,13 +271,13 @@ public class HotelDetailActivity extends BaseActivity {
         seeMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0));
+                HotelCommentActivity.goTo(HotelDetailActivity.this, mHotelId);
             }
         });
         findViewById(R.id.tv_commentnumber).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0));
+                HotelCommentActivity.goTo(HotelDetailActivity.this, mHotelId);
             }
         });
         likeIv.setOnClickListener(new View.OnClickListener() {
@@ -307,12 +306,11 @@ public class HotelDetailActivity extends BaseActivity {
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
         mEndDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
         mRoomNum = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 0);
-
         mModel = new HotelDetailModel();
-        hotelId = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0);
+        mHotelId = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0);
         showLoading();
         //获取酒店详情
-        mModel.getHotelDetail(hotelId, new BaseObserver<HotelDetailResponse>() {
+        mModel.getHotelDetail(mHotelId, new BaseObserver<HotelDetailResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -367,7 +365,7 @@ public class HotelDetailActivity extends BaseActivity {
                 shareIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        WriteCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0), hotelDetailResponse.getName());
+                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, hotelDetailResponse.getName());
                     }
                 });
                 hotelName = hotelDetailResponse.getName();
@@ -424,35 +422,25 @@ public class HotelDetailActivity extends BaseActivity {
 
     private void initRoomList() {
         showLoading();
-        String url = "hotelapi/v1/hotel/" + getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0) + "/rooms?start_date=" + mStartDateBean.getShowMonthDayDateWithSplit() + "&end_date=" + mEndDateBean.getShowMonthDayDateWithSplit() + "&room_num=" + mRoomNum;
-        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+        mModel.getHotelRooms(mHotelId, mStartDateBean.getShowMonthDayDateWithSplit(), mEndDateBean.getShowMonthDayDateWithSplit(), mRoomNum, new BaseObserver<List<HotelRoomListResponse>>() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                if (code == 200) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<RoomListBean>>() {
-                    }.getType();
-                    List<RoomListBean> list = gson.fromJson(result, type);
-                    roomAdapter.addData(list);
-                    roomRv.setAdapter(roomAdapter);
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
+                showNetError(errorResponse);
             }
 
             @Override
-            public void onFaileure(int code, Exception e) {
+            public void onNext(@NonNull List<HotelRoomListResponse> hotelRoomListRespons) {
                 stopLoading();
-                showToast(e.getMessage());
+                roomAdapter.addData(hotelRoomListRespons);
+                roomRv.setAdapter(roomAdapter);
             }
         });
     }
 
     private void initCommentList() {
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0) + "/comments", null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + mHotelId + "/comments", null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
                 stopLoading();
@@ -538,7 +526,7 @@ public class HotelDetailActivity extends BaseActivity {
     private void collection(boolean status) {
         showLoading();
         if (status) {
-            mModel.postCollectHotel(hotelId, new BaseObserver<Response<SuccessResponse>>() {
+            mModel.postCollectHotel(mHotelId, new BaseObserver<Response<SuccessResponse>>() {
                 @Override
                 public void onNext(@NonNull Response<SuccessResponse> successResponse) {
                     stopLoading();
@@ -558,7 +546,7 @@ public class HotelDetailActivity extends BaseActivity {
                 }
             });
         } else {
-            mModel.delCollectHotel(hotelId, new BaseObserver<Response<SuccessResponse>>() {
+            mModel.delCollectHotel(mHotelId, new BaseObserver<Response<SuccessResponse>>() {
                 @Override
                 public void onNext(@NonNull Response<SuccessResponse> successResponse) {
                     stopLoading();
@@ -698,7 +686,7 @@ public class HotelDetailActivity extends BaseActivity {
         }
     }
 
-    private class RoomAdapter extends BaseQuickAdapter<RoomListBean, BaseViewHolder> {
+    private class RoomAdapter extends BaseQuickAdapter<HotelRoomListResponse, BaseViewHolder> {
 
         private TagAdapter tagAdapter;
 
@@ -707,7 +695,7 @@ public class HotelDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, RoomListBean data) {
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelRoomListResponse data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Glide.with(HotelDetailActivity.this).load(data.getImages().get(0)).into(photoIv);
@@ -745,8 +733,8 @@ public class HotelDetailActivity extends BaseActivity {
             };
             tagAdapter = new TagAdapter();
             tagRv.setLayoutManager(linearLayoutManager);
-            tagAdapter.addData(data.getTags());
-            tagRv.setAdapter(tagAdapter);
+//            tagAdapter.addData(data.getTags());
+//            tagRv.setAdapter(tagAdapter);
             TextView subscribeTv = baseViewHolder.findView(R.id.tv_subscribe);
             LinearLayout tagLl = baseViewHolder.findView(R.id.ll_tag);
             if (data.getRemain_room_num() == 0) {

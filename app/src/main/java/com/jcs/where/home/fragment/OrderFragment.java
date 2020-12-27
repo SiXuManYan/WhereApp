@@ -64,7 +64,7 @@ public class OrderFragment extends BaseFragment {
         mModel.getOrderNum(new BaseObserver<OrderNumResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-
+                showNetError(errorResponse);
             }
 
             @Override

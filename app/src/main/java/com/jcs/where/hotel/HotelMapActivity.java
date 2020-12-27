@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -38,14 +37,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.adapter.JcsCalendarAdapter;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelMapListBean;
+import com.jcs.where.home.dialog.JcsCalendarDialog;
 import com.jcs.where.hotel.card.CardPagerAdapter;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.hotel.event.HotelEvent;
+import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.view.EnterStayInfoView;
+import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
+import com.jcs.where.view.popup.TopPopupConstraintLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,22 +69,10 @@ import androidx.viewpager.widget.ViewPager;
 /**
  * 目的地选择页面
  */
-public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     private static final int REQ_SEARCH = 777;
-    private static final String EXT_STARTDATE = "startDate";
-    private static final String EXT_ENDDATE = "endDate";
-    private static final String EXT_STARTWEEK = "startWeek";
-    private static final String EXT_ENDWEEK = "endWeek";
-    private static final String EXT_ALLDAY = "allDay";
-    private static final String EXT_CITY = "city";
-    private static final String EXT_CITYID = "cityId";
-    private static final String EXT_PRICE = "price";
-    private static final String EXT_STAR = "star";
-    private static final String EXT_STARTYEAR = "startYear";
-    private static final String EXT_ENDYEAR = "endYear";
-    private static final String EXT_ROOMNUMBER = "roomNumber";
     private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
     private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
     private final List<View> views = new ArrayList<View>();
@@ -92,8 +85,9 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private final int size = 10;
     private double lat = 14.6778362;
     private double lng = 120.5306459;
-    private TextView startDayTv, endDayTv, cityTv;
-    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
+    private TextView mStartDayTv, mEndDayTv, mCityTv;
+    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay;
+    private int mRoomNum;
     private int lastPostition = 0;
     private int lastScrollPosition = 0;
     private ImageView clearIv, mHotelListIv;
@@ -103,22 +97,25 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private Location mLastLocation;
     private boolean mAddressRequested;
     private boolean clickLocation = false;
+    private View mChooseDataView;
+    private JcsCalendarDialog mCalendarDialog;
+    private TopPopupConstraintLayout mTopPopupLayout;
+    private EnterStayInfoView mEnterStayInfoView;
 
-    public static void goTo(Context context, String startDate, String endDate, String startWeek, String endWeek, String allDay, String city, String cityId, String price, String star, String startYear, String endYear, String roomNumber) {
+    private JcsCalendarAdapter.CalendarBean mStartDateBean;
+    private JcsCalendarAdapter.CalendarBean mEndDateBean;
+
+    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, String allDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
         Intent intent = new Intent(context, HotelMapActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(EXT_STARTDATE, startDate);
-        intent.putExtra(EXT_ENDDATE, endDate);
-        intent.putExtra(EXT_STARTWEEK, startWeek);
-        intent.putExtra(EXT_ENDWEEK, endWeek);
-        intent.putExtra(EXT_ALLDAY, allDay);
-        intent.putExtra(EXT_CITY, city);
-        intent.putExtra(EXT_CITYID, cityId);
-        intent.putExtra(EXT_PRICE, price);
-        intent.putExtra(EXT_STAR, star);
-        intent.putExtra(EXT_STARTYEAR, startYear);
-        intent.putExtra(EXT_ENDYEAR, endYear);
-        intent.putExtra(EXT_ROOMNUMBER, roomNumber);
+        intent.putExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN, startDateBean);
+        intent.putExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN, endDateBean);
+        intent.putExtra(HotelSelectDateHelper.EXT_ALL_DAY, allDay);
+        intent.putExtra(HotelSelectDateHelper.EXT_CITY, city);
+        intent.putExtra(HotelSelectDateHelper.EXT_CITY_ID, cityId);
+        intent.putExtra(HotelSelectDateHelper.EXT_PRICE, price);
+        intent.putExtra(HotelSelectDateHelper.EXT_STAR, star);
+        intent.putExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
 
         if (!(context instanceof Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -129,6 +126,11 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     @Override
     protected void initView() {
         EventBus.getDefault().register(this);
+        mCalendarDialog = new JcsCalendarDialog();
+        mCalendarDialog.initCalendar();
+        mChooseDataView = findViewById(R.id.toChooseDate);
+        mTopPopupLayout = findViewById(R.id.topPopupLayout);
+        mEnterStayInfoView = findViewById(R.id.enterStayInfoView);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -162,80 +164,27 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
             }
         });
-        startDayTv = findViewById(R.id.startDayTv);
-        endDayTv = findViewById(R.id.endDayTv);
-        cityTv = findViewById(R.id.cityTv);
-        findViewById(R.id.toChooseDate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View customView = View.inflate(HotelMapActivity.this, R.layout.view_enter_stay_info, null);
-                TextView startDateTv = customView.findViewById(R.id.tv_startdate);
-                startDateTv.setText(getIntent().getStringExtra(EXT_STARTDATE));
-                TextView endDateTv = customView.findViewById(R.id.tv_enddate);
-                endDateTv.setText(getIntent().getStringExtra(EXT_ENDDATE));
-                TextView allDayTv = customView.findViewById(R.id.tv_allday);
-                allDayTv.setText(getIntent().getStringExtra(EXT_ALLDAY));
-                TextView roomNumTv = customView.findViewById(R.id.tv_roomnum);
-                roomNumTv.setText(mRoomNum);
-                customView.findViewById(R.id.iv_roomreduce).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int roomNum = Integer.valueOf(roomNumTv.getText().toString());
-                        if (roomNum == 1) {
-                            showToast("不能再减了");
-                            return;
-                        } else {
-                            roomNum--;
-                            roomNumTv.setText(roomNum + "");
-                            mRoomNum = roomNumTv.getText().toString();
-                        }
-                    }
-                });
-                customView.findViewById(R.id.iv_roomadd).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int roomNum1 = Integer.parseInt(roomNumTv.getText().toString());
-                        roomNum1++;
-                        roomNumTv.setText(String.valueOf(roomNum1));
-                        mRoomNum = roomNumTv.getText().toString();
-                    }
-                });
-                customView.findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                    }
-                });
-            }
-        });
-        findViewById(R.id.myLocationView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkIsGooglePlayConn();
-            }
-        });
-        findViewById(R.id.searchBg).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(EXT_CITYID), REQ_SEARCH);
-            }
-        });
+        mStartDayTv = findViewById(R.id.startDayTv);
+        mEndDayTv = findViewById(R.id.endDayTv);
+        mCityTv = findViewById(R.id.cityTv);
+
         clearIv = findViewById(R.id.clearIv);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cityTv.setText("请输入酒店名称");
+                mCityTv.setText(getString(R.string.input_hotel_name));
                 useInputText = "";
-                cityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
+                mCityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
                 clearIv.setVisibility(View.GONE);
                 initData();
             }
         });
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            showToast("无权限");
+            showToast(getString(R.string.permission_none));
             findViewById(R.id.myLocationGroup).setVisibility(View.GONE);
         } else {
-            showToast("有权限");
+            showToast(getString(R.string.permission_has));
             findViewById(R.id.myLocationGroup).setVisibility(View.VISIBLE);
             if (mGoogleApiClient == null) {
                 mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -251,30 +200,37 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void initData() {
-        mStartYear = getIntent().getStringExtra(EXT_STARTYEAR);
-        mStartDate = getIntent().getStringExtra(EXT_STARTDATE);
-        mStartWeek = getIntent().getStringExtra(EXT_STARTWEEK);
-        mEndYear = getIntent().getStringExtra(EXT_ENDYEAR);
-        mEndData = getIntent().getStringExtra(EXT_ENDDATE);
-        mEndWeek = getIntent().getStringExtra(EXT_ENDWEEK);
-        mAllDay = getIntent().getStringExtra(EXT_ALLDAY);
-        mRoomNum = getIntent().getStringExtra(EXT_ROOMNUMBER);
-        startDayTv.setText(getIntent().getStringExtra(EXT_STARTDATE).replace("月", "-").replace("日", ""));
-        endDayTv.setText(getIntent().getStringExtra(EXT_ENDDATE).replace("月", "-").replace("日", ""));
+        mStartDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
+        mEndDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
+        mAllDay = getIntent().getStringExtra(HotelSelectDateHelper.EXT_ALL_DAY);
+        mRoomNum = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 0);
+        mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
+
+            @Override
+            public int getMaxHeight() {
+                return getPxFromDp(120);
+            }
+        });
+
+        mStartDayTv.setText(mStartDateBean.getShowMonthDayDateWithSplit());
+        mEndDayTv.setText(mEndDateBean.getShowMonthDayDateWithSplit());
+        mEnterStayInfoView.bindEnterStayInfoAdapter(this::toShowCalendarDialog);
+        mEnterStayInfoView.setStartAndEnd(mStartDateBean, mEndDateBean);
+        mEnterStayInfoView.setRoomNum(mRoomNum);
 
         showLoading();
         String url = null;
-        if (getIntent().getStringExtra(EXT_PRICE) == null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(EXT_CITYID) + "&star_level=" + getIntent().getStringExtra(EXT_STAR) + "&search_input=" + useInputText;
+        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) == null) {
+            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&star_level=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) + "&search_input=" + useInputText;
         }
-        if (getIntent().getStringExtra(EXT_STAR) == null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(EXT_CITYID) + "&price_range=" + getIntent().getStringExtra(EXT_PRICE) + "&search_input=" + useInputText;
+        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) == null) {
+            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&price_range=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) + "&search_input=" + useInputText;
         }
-        if (getIntent().getStringExtra(EXT_PRICE) == null && getIntent().getStringExtra(EXT_STAR) == null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(EXT_CITYID) + "&search_input=" + useInputText;
+        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) == null && getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) == null) {
+            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&search_input=" + useInputText;
         }
-        if (getIntent().getStringExtra(EXT_PRICE) != null && getIntent().getStringExtra(EXT_STAR) != null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(EXT_CITYID) + "&price_range=" + getIntent().getStringExtra(EXT_PRICE) + "&star_level=" + getIntent().getStringExtra(EXT_STAR) + "&search_input=" + useInputText;
+        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) != null && getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) != null) {
+            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&price_range=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) + "&star_level=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) + "&search_input=" + useInputText;
         }
         if (mMap != null) {
             mMap.clear();
@@ -360,12 +316,26 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void bindListener() {
-        mHotelListIv.setOnClickListener(this);
+        mChooseDataView.setOnClickListener(this::onChooseViewClicked);
+        mHotelListIv.setOnClickListener(v -> finish());
+        mCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
+        findViewById(R.id.myLocationView).setOnClickListener(view -> checkIsGooglePlayConn());
+        mCityTv.setOnClickListener(view -> HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), REQ_SEARCH));
+    }
+
+    public void toShowCalendarDialog() {
+        if (!mCalendarDialog.isVisible()) {
+            mCalendarDialog.show(getSupportFragmentManager());
+        }
+    }
+
+    public void onChooseViewClicked(View view) {
+        mTopPopupLayout.showOrHide();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hotelmap;
+        return R.layout.activity_hotel_map;
     }
 
     @Override
@@ -378,10 +348,14 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         mMap.setOnMarkerClickListener(this);
     }
 
-    protected void setStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
+    public void onDateSelected(JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate) {
+        mEnterStayInfoView.setStartAndEnd(startDate, endDate);
+        if (startDate != null) {
+            mStartDayTv.setText(startDate.getShowMonthDayDateWithSplit());
+        }
+
+        if (endDate != null) {
+            mEndDayTv.setText(endDate.getShowMonthDayDateWithSplit());
         }
     }
 
@@ -438,10 +412,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     public void Evect(HotelEvent hotelEvent) {
         HotelDetailActivity.goTo(HotelMapActivity.this,
                 hotelEvent.getId(),
-                mStartDate,
-                mEndData,
-                mStartWeek,
-                mEndWeek,
+                mStartDateBean,
+                mEndDateBean,
                 mAllDay,
                 mStartYear,
                 mEndYear,
@@ -465,8 +437,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         if (requestCode == REQ_SEARCH && data != null) {
             clearIv.setVisibility(View.VISIBLE);
 
-            cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
-            cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
+            mCityTv.setTextColor(getResources().getColor(R.color.grey_666666));
+            mCityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
             useInputText = data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH);
             initData();
         }
@@ -561,12 +533,5 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     @Override
     protected boolean isStatusDark() {
         return true;
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view == mHotelListIv){
-            finish();
-        }
     }
 }

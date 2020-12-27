@@ -148,7 +148,7 @@ public class TravelMapActivity extends BaseActivity implements OnMapReadyCallbac
     @Override
     protected void initView() {
         viewPager = findViewById(R.id.viewpager);
-        hotelMapRl = findViewById(R.id.rl_hotelmap);
+        hotelMapRl = findViewById(R.id.rl_hotel_map);
         mCardAdapter = new TravelCardAdapter(TravelMapActivity.this);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

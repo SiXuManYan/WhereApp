@@ -27,6 +27,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.adapter.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
@@ -39,6 +40,7 @@ import com.jcs.where.bean.RoomDetailBean;
 import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
@@ -69,16 +71,6 @@ import retrofit2.Response;
  */
 public class HotelDetailActivity extends BaseActivity {
 
-    private static final String EXT_ID = "id";
-    private static final String EXT_STARTDAY = "startDay";
-    private static final String EXT_ENDDAY = "endDay";
-    private static final String EXT_STARTWEEK = "startWeek";
-    private static final String EXT_ENDWEEK = "endWeek";
-    private static final String EXT_ALLDAY = "allDay";
-    private static final String EXT_STARTYEAR = "startYear";
-    private static final String EXT_ENDYEAR = "endYear";
-    private static final String EXT_ROOMNUMBER = "roomNumber";
-
     private Toolbar toolbar;
     private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
@@ -108,18 +100,19 @@ public class HotelDetailActivity extends BaseActivity {
     private TextView timeTv;
     private HotelDetailModel mModel;
     private int hotelId;
+    private JcsCalendarAdapter.CalendarBean mStartDateBean;
+    private JcsCalendarAdapter.CalendarBean mEndDateBean;
+    private int mRoomNum;
 
-    public static void goTo(Context context, int id, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNumber) {
+    public static void goTo(Context context, int id, JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate, String allDay, String startYear, String endYear, int roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
-        intent.putExtra(EXT_ID, id);
-        intent.putExtra(EXT_STARTDAY, startDate);
-        intent.putExtra(EXT_ENDDAY, endDate);
-        intent.putExtra(EXT_STARTWEEK, startWeek);
-        intent.putExtra(EXT_ENDWEEK, endWeek);
-        intent.putExtra(EXT_ALLDAY, allDay);
-        intent.putExtra(EXT_STARTYEAR, startYear);
-        intent.putExtra(EXT_ENDYEAR, endYear);
-        intent.putExtra(EXT_ROOMNUMBER, roomNumber);
+        intent.putExtra(HotelSelectDateHelper.EXT_ID, id);
+        intent.putExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN, startDate);
+        intent.putExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN, endDate);
+        intent.putExtra(HotelSelectDateHelper.EXT_ALL_DAY, allDay);
+        intent.putExtra(HotelSelectDateHelper.EXT_START_YEAR, startYear);
+        intent.putExtra(HotelSelectDateHelper.EXT_END_YEAR, endYear);
+        intent.putExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (!(context instanceof Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -200,15 +193,10 @@ public class HotelDetailActivity extends BaseActivity {
             }
         });
         startDateTv = findViewById(R.id.startDayTv);
-        startDateTv.setText(getIntent().getStringExtra(EXT_STARTDAY));
         startWeekTv = findViewById(R.id.tv_startweek);
-        startWeekTv.setText(getIntent().getStringExtra(EXT_STARTWEEK));
         endDateTv = findViewById(R.id.endDayTv);
-        endDateTv.setText(getIntent().getStringExtra(EXT_ENDDAY));
         endWeekTv = findViewById(R.id.endWeekTv);
-        endWeekTv.setText(getIntent().getStringExtra(EXT_ENDWEEK));
         allDayTv = findViewById(R.id.tv_allday);
-        allDayTv.setText(getIntent().getStringExtra(EXT_ALLDAY));
         roomRv = findViewById(R.id.rv_room);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                 LinearLayoutManager.VERTICAL, false) {
@@ -284,13 +272,13 @@ public class HotelDetailActivity extends BaseActivity {
         seeMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
+                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0));
             }
         });
         findViewById(R.id.tv_commentnumber).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0));
+                HotelCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0));
             }
         });
         likeIv.setOnClickListener(new View.OnClickListener() {
@@ -316,8 +304,12 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mStartDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
+        mEndDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
+        mRoomNum = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 0);
+
         mModel = new HotelDetailModel();
-        hotelId = getIntent().getIntExtra(EXT_ID, 0);
+        hotelId = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0);
         showLoading();
         //获取酒店详情
         mModel.getHotelDetail(hotelId, new BaseObserver<HotelDetailResponse>() {
@@ -375,7 +367,7 @@ public class HotelDetailActivity extends BaseActivity {
                 shareIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        WriteCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0), hotelDetailResponse.getName());
+                        WriteCommentActivity.goTo(HotelDetailActivity.this, getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0), hotelDetailResponse.getName());
                     }
                 });
                 hotelName = hotelDetailResponse.getName();
@@ -426,13 +418,13 @@ public class HotelDetailActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(this::onBackIconClicked);
     }
 
-    public void onBackIconClicked(View view){
+    public void onBackIconClicked(View view) {
         finish();
     }
 
     private void initRoomList() {
         showLoading();
-        String url = "hotelapi/v1/hotel/" + getIntent().getIntExtra(EXT_ID, 0) + "/rooms?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
+        String url = "hotelapi/v1/hotel/" + getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0) + "/rooms?start_date=" + mStartDateBean.getShowMonthDayDateWithSplit() + "&end_date=" + mEndDateBean.getShowMonthDayDateWithSplit() + "&room_num=" + mRoomNum;
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -460,7 +452,7 @@ public class HotelDetailActivity extends BaseActivity {
 
     private void initCommentList() {
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getIntent().getIntExtra(EXT_ID, 0) + "/comments", null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
+        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotel/" + getIntent().getIntExtra(HotelSelectDateHelper.EXT_ID, 0) + "/comments", null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
                 stopLoading();
@@ -590,7 +582,7 @@ public class HotelDetailActivity extends BaseActivity {
 
     private void initRoomDetail(final int roomId, final int breakfast) {
         showLoading();
-        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
+        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + mStartDateBean.getShowMonthDayDateWithSplit() + "&end_date=" + mEndDateBean.getShowMonthDayDateWithSplit() + "&room_num=" + mRoomNum;
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -621,10 +613,10 @@ public class HotelDetailActivity extends BaseActivity {
                                     subscribeBean.endDate = endDateTv.getText().toString();
                                     subscribeBean.endWeek = endWeekTv.getText().toString();
                                     subscribeBean.night = allDayTv.getText().toString();
-                                    subscribeBean.roomNumber = getIntent().getStringExtra(EXT_ROOMNUMBER);
+                                    subscribeBean.roomNumber = String.valueOf(mRoomNum);
                                     subscribeBean.roomPrice = roomDetailBean.getPrice();
-                                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
-                                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
+//                                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
+//                                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
                                     HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
                                 }
                             }).builder();
@@ -646,7 +638,7 @@ public class HotelDetailActivity extends BaseActivity {
 
     private void subRoom(final int roomId, final int breakfast) {
         showLoading();
-        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + getIntent().getStringExtra(EXT_STARTYEAR) + "-" + getIntent().getStringExtra(EXT_STARTDAY).replace("月", "-").replace("日", "") + "&end_date=" + getIntent().getStringExtra(EXT_ENDYEAR) + "-" + getIntent().getStringExtra(EXT_ENDDAY).replace("月", "-").replace("日", "") + "&room_num=" + getIntent().getStringExtra(EXT_ROOMNUMBER);
+        String url = "hotelapi/v1/hotel/room/" + roomId + "?start_date=" + mStartDateBean.getShowMonthDayDateWithSplit() + "&end_date=" + mEndDateBean.getShowMonthDayDateWithSplit() + "&room_num=" + mRoomNum;
         HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelDetailActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
@@ -673,10 +665,10 @@ public class HotelDetailActivity extends BaseActivity {
                     subscribeBean.endDate = endDateTv.getText().toString();
                     subscribeBean.endWeek = endWeekTv.getText().toString();
                     subscribeBean.night = allDayTv.getText().toString();
-                    subscribeBean.roomNumber = getIntent().getStringExtra(EXT_ROOMNUMBER);
+                    subscribeBean.roomNumber = String.valueOf(mRoomNum);
                     subscribeBean.roomPrice = roomDetailBean.getPrice();
-                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
-                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
+//                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
+//                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
                     HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
 
                 } else {

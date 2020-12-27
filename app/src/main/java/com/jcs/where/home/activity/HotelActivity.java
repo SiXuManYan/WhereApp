@@ -529,7 +529,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             baseViewHolder.findView(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HotelDetailActivity.goTo(getContext(), data.getId(), mStartDateTv.getText().toString(), mEndDateTv.getText().toString(), mStartWeekTv.getText().toString(), mEndWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, mRoomNumTv.getText().toString());
+//                    HotelDetailActivity.goTo(getContext(), data.getId(),mStartDateTv.getText().toString(), mEndDateTv.getText().toString(), mStartWeekTv.getText().toString(), mEndWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, mRoomNumTv.getText().toString());
                 }
             });
         }

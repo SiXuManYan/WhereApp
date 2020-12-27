@@ -12,11 +12,13 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.jcs.where.R;
+import com.jcs.where.adapter.JcsCalendarAdapter;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelListBean;
 import com.jcs.where.hotel.HotelDetailActivity;
+import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -38,23 +40,21 @@ public class HotelListFragment extends BaseFragment {
     private HotelListAdpater hotelListAdpater;
     private List<HotelListBean.DataBean> list;
     private String useInputText = "";
-    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek, mAllDay, mRoomNum;
+    private String mStartYear, mEndYear, mAllDay;
+    private int mRoomNum;
+    private JcsCalendarAdapter.CalendarBean mStartDateBean;
+    private JcsCalendarAdapter.CalendarBean mEndDateBean;
 
-
-    public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, String startDate, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNumber) {
+    public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, JcsCalendarAdapter.CalendarBean startBean, JcsCalendarAdapter.CalendarBean endBean, String allDay, int roomNumber) {
         Bundle args = new Bundle();
         args.putString("hotelTypeIds", hotelTypeIds);
-        args.putString("cityId", cityId);
-        args.putString("price", price);
-        args.putString("star", star);
-        args.putString("startDate", startDate);
-        args.putString("endDate", endDate);
-        args.putString("startWeek", startWeek);
-        args.putString("endWeek", endWeek);
-        args.putString("allDay", allDay);
-        args.putString("startYear", startYear);
-        args.putString("endYear", endYear);
-        args.putString("roomNumber", roomNumber);
+        args.putString(HotelSelectDateHelper.EXT_CITY_ID, cityId);
+        args.putString(HotelSelectDateHelper.EXT_PRICE, price);
+        args.putString(HotelSelectDateHelper.EXT_STAR, star);
+        args.putString(HotelSelectDateHelper.EXT_ALL_DAY, allDay);
+        args.putInt(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
+        args.putSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN, startBean);
+        args.putSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN, endBean);
         HotelListFragment fragment = new HotelListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -167,11 +167,7 @@ public class HotelListFragment extends BaseFragment {
         getdata();
     }
 
-    public void changeData(String startData, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, String roomNum) {
-        mStartDate = startData;
-        mEndData = endDate;
-        mStartWeek = startWeek;
-        mEndWeek = endWeek;
+    public void changeData(String startData, String endDate, String startWeek, String endWeek, String allDay, String startYear, String endYear, int roomNum) {
         mAllDay = allDay;
         mStartYear = startYear;
         mEndYear = endYear;
@@ -207,14 +203,15 @@ public class HotelListFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        mStartYear = getArguments().getString("startYear");
-        mStartDate = getArguments().getString("startDate");
-        mStartWeek = getArguments().getString("startWeek");
-        mEndYear = getArguments().getString("endYear");
-        mEndData = getArguments().getString("endDate");
-        mEndWeek = getArguments().getString("endWeek");
-        mAllDay = getArguments().getString("allDay");
-        mRoomNum = getArguments().getString("roomNumber");
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mStartDateBean = (JcsCalendarAdapter.CalendarBean) arguments.getSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN);
+            mEndDateBean = (JcsCalendarAdapter.CalendarBean) arguments.getSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN);
+            mStartYear = arguments.getString(HotelSelectDateHelper.EXT_START_YEAR);
+            mEndYear = arguments.getString(HotelSelectDateHelper.EXT_END_YEAR);
+            mAllDay = arguments.getString(HotelSelectDateHelper.EXT_ALL_DAY);
+            mRoomNum = arguments.getInt(HotelSelectDateHelper.EXT_ROOM_NUMBER);
+        }
 
         hotelListAdpater = new HotelListAdpater();
         hotelListAdpater.addChildClickViewIds(R.id.ll_hotel);
@@ -228,7 +225,7 @@ public class HotelListFragment extends BaseFragment {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if (view.getId() == R.id.ll_hotel) {
-                    HotelDetailActivity.goTo(getContext(), (int) adapter.getItemId(position), mStartDate, mEndData, mStartWeek, mEndWeek, mAllDay, mStartYear, mEndYear, mRoomNum);
+                    HotelDetailActivity.goTo(getContext(), (int) adapter.getItemId(position), mStartDateBean, mEndDateBean, mAllDay, mStartYear, mEndYear, mRoomNum);
                 }
 
             }

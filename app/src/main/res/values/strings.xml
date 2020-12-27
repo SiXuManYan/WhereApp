@@ -87,5 +87,7 @@
     <string name="date_format_month_day">MM月dd日</string>
     <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
     <string name="prompt_room_num">间数</string>
+    <string name="permission_none">无权限</string>
+    <string name="permission_has">有权限</string>
 
 </resources>

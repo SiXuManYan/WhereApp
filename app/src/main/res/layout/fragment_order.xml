@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="@id/searchEt"
         app:layout_constraintStart_toStartOf="@id/searchEt"
         android:layout_marginStart="@dimen/dp_15"
-        android:src="@drawable/ic_hotel_search"/>
+        android:src="@mipmap/ic_hotel_search"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/orderTabLayout"

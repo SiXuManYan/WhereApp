@@ -61,7 +61,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="10dp"
-                            android:src="@drawable/ic_hotel_search" />
+                            android:src="@mipmap/ic_hotel_search" />
 
                         <EditText
                             android:id="@+id/et_search"

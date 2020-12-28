@@ -176,6 +176,11 @@
             android:screenOrientation="portrait"
             />
 
+        <activity android:name=".government.activity.GovernmentMapActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

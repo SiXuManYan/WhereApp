@@ -89,5 +89,6 @@
     <string name="prompt_room_num">间数</string>
     <string name="permission_none">无权限</string>
     <string name="permission_has">有权限</string>
+    <string name="prompt_input_government_name">输入机构名称</string>
 
 </resources>

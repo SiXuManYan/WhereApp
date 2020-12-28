@@ -38,6 +38,7 @@ import com.jcs.where.bean.BusinessBean;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
+import com.jcs.where.government.activity.GovernmentMapActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.CityPickerActivity;
@@ -366,7 +367,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
     private void dealModulesById(ModulesResponse item) {
         switch (item.getId()) {
             case 1:
-                showToast("带地图的综合服务页面");
+                toActivity(GovernmentMapActivity.class);
                 break;
             case 2:
                 showToast("三级联动筛选的综合服务页面");

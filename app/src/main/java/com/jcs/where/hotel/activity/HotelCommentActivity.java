@@ -1,4 +1,4 @@
-package com.jcs.where.hotel;
+package com.jcs.where.hotel.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.adapter.HotelCommentsAdapter;
+import com.jcs.where.hotel.adapter.HotelCommentsAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;

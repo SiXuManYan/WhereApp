@@ -1,4 +1,4 @@
-package com.jcs.where.hotel;
+package com.jcs.where.hotel.activity;
 
 import android.app.Activity;
 import android.content.Context;

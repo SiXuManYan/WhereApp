@@ -1,4 +1,4 @@
-package com.jcs.where.hotel;
+package com.jcs.where.hotel.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,7 +26,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
-import com.jcs.where.adapter.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;

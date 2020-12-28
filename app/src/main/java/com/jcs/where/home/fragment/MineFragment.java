@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.home.event.TokenEvent;
-import com.jcs.where.hotel.CityPickerActivity;
+import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
 import com.jcs.where.login.event.LoginEvent;
 import com.jcs.where.mine.PersonalDataActivity;

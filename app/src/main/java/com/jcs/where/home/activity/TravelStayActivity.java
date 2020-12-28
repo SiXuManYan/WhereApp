@@ -19,6 +19,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
+import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.model.TravelStayModel;
 import com.stx.xhb.androidx.XBanner;
 import com.stx.xhb.androidx.entity.BaseBannerInfo;

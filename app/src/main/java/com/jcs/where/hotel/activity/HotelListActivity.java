@@ -1,4 +1,4 @@
-package com.jcs.where.hotel;
+package com.jcs.where.hotel.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.adapter.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.home.dialog.JcsCalendarDialog;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.tablayout.ColorClipTabLayout;

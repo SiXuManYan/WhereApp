@@ -1,4 +1,4 @@
-package com.jcs.where.adapter;
+package com.jcs.where.widget.calendar;
 
 import android.view.View;
 import android.widget.TextView;

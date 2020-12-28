@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.adapter.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.utils.ToastUtils;
 
 import java.util.concurrent.TimeUnit;

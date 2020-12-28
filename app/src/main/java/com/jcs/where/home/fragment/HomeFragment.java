@@ -40,7 +40,7 @@ import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
 import com.jcs.where.home.activity.TravelStayActivity;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
-import com.jcs.where.hotel.CityPickerActivity;
+import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.model.HomeModel;
 import com.jcs.where.utils.GlideRoundTransform;

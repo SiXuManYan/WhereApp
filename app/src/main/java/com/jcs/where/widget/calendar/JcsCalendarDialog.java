@@ -1,4 +1,4 @@
-package com.jcs.where.home.dialog;
+package com.jcs.where.widget.calendar;
 
 import android.util.Log;
 import android.view.View;
@@ -7,8 +7,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
-import com.jcs.where.adapter.JcsCalendarAdapter;
-import com.jcs.where.adapter.JcsCalendarAdapter.CalendarBean;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean;
 import com.jcs.where.base.BaseDialog;
 import com.jcs.where.home.decoration.HotelCalendarItemDecoration;
 

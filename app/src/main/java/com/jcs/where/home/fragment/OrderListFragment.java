@@ -14,7 +14,7 @@ import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.decoration.MarginTopDecoration;
-import com.jcs.where.hotel.HotelOrderDetailActivity;
+import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.model.OrderModel;
 
 import androidx.appcompat.app.AppCompatActivity;

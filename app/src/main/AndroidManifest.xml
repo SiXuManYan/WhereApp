@@ -78,47 +78,47 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".home.activity.HotelActivity"
+            android:name=".hotel.activity.HotelActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.CityPickerActivity"
+            android:name=".hotel.activity.CityPickerActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelListActivity"
+            android:name=".hotel.activity.HotelListActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelDetailActivity"
+            android:name=".hotel.activity.HotelDetailActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelSubscribeActivity"
+            android:name=".hotel.activity.HotelSubscribeActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelPayActivity"
+            android:name=".hotel.activity.HotelPayActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelOrderDetailActivity"
+            android:name=".hotel.activity.HotelOrderDetailActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelMapActivity"
+            android:name=".hotel.activity.HotelMapActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelCommentActivity"
+            android:name=".hotel.activity.HotelCommentActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
@@ -127,12 +127,12 @@
             android:theme="@style/mangoAppTheme" />
 
         <activity
-            android:name=".hotel.WriteCommentActivity"
+            android:name=".hotel.activity.WriteCommentActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".hotel.HotelSearchActivity"
+            android:name=".hotel.activity.HotelSearchActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
 

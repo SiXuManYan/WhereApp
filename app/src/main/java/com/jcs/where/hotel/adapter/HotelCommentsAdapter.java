@@ -1,4 +1,4 @@
-package com.jcs.where.adapter;
+package com.jcs.where.hotel.adapter;
 
 import android.text.TextUtils;
 import android.view.View;

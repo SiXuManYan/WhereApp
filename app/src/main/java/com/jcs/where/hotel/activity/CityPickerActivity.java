@@ -1,4 +1,4 @@
-package com.jcs.where.hotel;
+package com.jcs.where.hotel.activity;
 
 import android.Manifest;
 import android.app.Activity;

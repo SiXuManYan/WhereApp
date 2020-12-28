@@ -8,7 +8,7 @@ import android.text.TextPaint;
 import android.view.View;
 
 import com.jcs.where.R;
-import com.jcs.where.adapter.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.base.BaseItemDecoration;
 
 import androidx.annotation.NonNull;

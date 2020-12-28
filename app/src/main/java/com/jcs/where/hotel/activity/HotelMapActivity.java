@@ -1,4 +1,4 @@
-package com.jcs.where.hotel;
+package com.jcs.where.hotel.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -37,12 +37,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
-import com.jcs.where.adapter.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelMapListBean;
-import com.jcs.where.home.dialog.JcsCalendarDialog;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.hotel.card.CardPagerAdapter;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.hotel.event.HotelEvent;

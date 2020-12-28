@@ -9,16 +9,15 @@ import com.chad.library.adapter.base.module.UpFetchModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.OrderListResponse;
-import com.jcs.where.hotel.HotelCommentActivity;
-import com.jcs.where.hotel.HotelDetailActivity;
-import com.jcs.where.hotel.HotelOrderDetailActivity;
-import com.jcs.where.hotel.HotelPayActivity;
+import com.jcs.where.hotel.activity.HotelCommentActivity;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
+import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
+import com.jcs.where.hotel.activity.HotelPayActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 

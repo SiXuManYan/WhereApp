@@ -14,6 +14,7 @@ public abstract class PopupConstraintLayoutAdapter {
     public boolean clickOutSideClose() {
         return true;
     }
+    public boolean isGoneAfterBottom(){return true;}
     public long getDuration() {
         return 500;
     }

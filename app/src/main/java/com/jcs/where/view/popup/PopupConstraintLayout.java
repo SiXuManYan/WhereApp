@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class TopPopupConstraintLayout extends ConstraintLayout {
+public class PopupConstraintLayout extends ConstraintLayout {
     private PopupConstraintLayoutAdapter mAdapter;
     private View mShadowView;
     private boolean mIsShow = false;
@@ -23,15 +23,15 @@ public class TopPopupConstraintLayout extends ConstraintLayout {
     private ValueAnimator mSlideTop = null;
     private ValueAnimator mSlideBottom = null;
 
-    public TopPopupConstraintLayout(@NonNull Context context) {
+    public PopupConstraintLayout(@NonNull Context context) {
         this(context, null);
     }
 
-    public TopPopupConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public PopupConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TopPopupConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public PopupConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mInit(context);
     }
@@ -115,7 +115,7 @@ public class TopPopupConstraintLayout extends ConstraintLayout {
     private void bottomUpdateListener(ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         getLayoutParams().height = value;
-        if (value == mAdapter.getMinHeight()) {
+        if (value == mAdapter.getMinHeight() && mAdapter.isGoneAfterBottom()) {
             setVisibility(View.GONE);
         }
         requestLayout();

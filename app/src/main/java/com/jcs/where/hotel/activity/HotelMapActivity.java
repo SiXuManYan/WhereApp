@@ -50,7 +50,7 @@ import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.view.EnterStayInfoView;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
-import com.jcs.where.view.popup.TopPopupConstraintLayout;
+import com.jcs.where.view.popup.PopupConstraintLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -99,7 +99,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     private boolean clickLocation = false;
     private View mChooseDataView;
     private JcsCalendarDialog mCalendarDialog;
-    private TopPopupConstraintLayout mTopPopupLayout;
+    private PopupConstraintLayout mTopPopupLayout;
     private EnterStayInfoView mEnterStayInfoView;
 
     private JcsCalendarAdapter.CalendarBean mStartDateBean;

@@ -21,7 +21,7 @@ import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
 import com.jcs.where.model.HotelListModel;
 import com.jcs.where.view.EnterStayInfoView;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
-import com.jcs.where.view.popup.TopPopupConstraintLayout;
+import com.jcs.where.view.popup.PopupConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class HotelListActivity extends BaseActivity {
     private int mTotalDay, mRoomNum;
     private List<Fragment> fragments;
     private ImageView clearIv;
-    private TopPopupConstraintLayout mTopPopupLayout;
+    private PopupConstraintLayout mTopPopupLayout;
     private EnterStayInfoView mEnterStayInfoView;
     private JcsCalendarDialog mCalendarDialog;
 

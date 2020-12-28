@@ -150,7 +150,7 @@
         app:text_size="14sp"
         app:text_unselected_color="@color/black_333333" />
 
-    <com.jcs.where.view.popup.TopPopupConstraintLayout
+    <com.jcs.where.view.popup.PopupConstraintLayout
         android:id="@+id/topPopupLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_120"/>
 
-    </com.jcs.where.view.popup.TopPopupConstraintLayout>
+    </com.jcs.where.view.popup.PopupConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

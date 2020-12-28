@@ -1,6 +1,5 @@
 package com.jcs.where.base;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -164,7 +163,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void setMarginTopForStatusBar(View view){
+    public void setMarginTopForStatusBar(View view) {
         setMargins(view, 0, getStatusBarHeight(), 0, 0);
     }
 
@@ -177,7 +176,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showNetError(ErrorResponse errorResponse) {
-        ToastUtils.showLong(this, errorResponse.getErrMsg());
+        ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
     }
 
     public void showLoading(String msg) {

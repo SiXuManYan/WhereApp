@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.jaeger.library.StatusBarUtil;
-import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.utils.ToastUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 public abstract class BaseFragment extends Fragment {
@@ -207,6 +204,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showNetError(ErrorResponse errorResponse) {
-        ToastUtils.showLong(getContext(), errorResponse.getErrMsg());
+        ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
     }
 }

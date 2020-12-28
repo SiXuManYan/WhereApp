@@ -10,6 +10,7 @@ import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
+import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
@@ -171,4 +172,7 @@ public interface RetrofitApi {
     @Headers("baseUrl:google/map")
     @GET("maps/api/geocode/json?key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk")
     Observable<String> getLocation(@Query("latlng") String latlng);
+
+    @GET("generalapi/v1/infos")
+    Observable<MechanismPageResponse> getMechanismListById(@Query("cate_id")int categoryId, @Query("search_input") String search);
 }

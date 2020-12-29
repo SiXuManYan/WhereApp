@@ -37,6 +37,14 @@
         app:layout_constraintStart_toStartOf="@id/searchEt"
         app:layout_constraintTop_toTopOf="@id/searchEt" />
 
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
+        app:layout_constraintBottom_toTopOf="@id/bottomPopupLayout"/>
+
     <com.jcs.where.view.popup.PopupConstraintLayout
         android:id="@+id/bottomPopupLayout"
         android:layout_width="match_parent"

@@ -1,10 +1,16 @@
 package com.jcs.where.government.activity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -31,7 +37,9 @@ import io.reactivex.annotations.NonNull;
  * 政府机构列表是本页的fragment
  * create by zyf on 2020/12/28 7:44 PM
  */
-public class GovernmentMapActivity extends BaseActivity {
+public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCallback {
+    private SupportMapFragment mMapFragment;
+
     private PopupConstraintLayout mBottomPopupLayout;
     private ImageView mTopArrowIv;
     private TabLayout mTabLayout;
@@ -45,6 +53,8 @@ public class GovernmentMapActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mMapFragment.getMapAsync(this::onMapAsync);
         mTopArrowIv = findViewById(R.id.topArrowIv);
         mTabLayout = findViewById(R.id.governmentTabs);
         mViewPager = findViewById(R.id.governmentViewPager);
@@ -52,6 +62,16 @@ public class GovernmentMapActivity extends BaseActivity {
         // 绑定PopupLayout适配器
         bindPopupLayoutAdapter();
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.e("GovernmentMapActivity", "onMapReady: "+"");
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    }
+
+    private void onMapAsync(GoogleMap googleMap) {
+        Log.e("GovernmentMapActivity", "onMapAsync: "+"");
     }
 
     private void bindPopupLayoutAdapter() {

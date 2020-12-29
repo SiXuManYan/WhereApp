@@ -89,12 +89,15 @@ public class GovernmentMapActivity extends BaseActivity {
             public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
                 mTabCategories.clear();
                 mMechanismListFragments.clear();
+
+                // 添加全部对应的Tab
                 CategoryResponse allCategory = new CategoryResponse();
                 allCategory.setName(getString(R.string.all));
                 allCategory.setId(0);
                 allCategory.setType(TYPE_GOVERNMENT);
                 mTabCategories.add(allCategory);
-                // 0 表示要获得全部的信息
+
+                // 0 表示要获得全部的信息，添加全部对应的ListFragment
                 mMechanismListFragments.add(MechanismListFragment.newInstance(allCategory));
                 mTabCategories.addAll(categoryResponses);
                 int size = mTabCategories.size();
@@ -104,6 +107,8 @@ public class GovernmentMapActivity extends BaseActivity {
                     CategoryResponse categoryResponse = mTabCategories.get(i);
                     tab.setCustomView(makeTabView(categoryResponse.getName()));
                     mTabLayout.addTab(tab);
+
+                    // 0 位置对应的是全部，已经在循环外添加过了
                     if (i != 0) {
                         mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse));
                     }

@@ -4,9 +4,10 @@ import com.chad.library.adapter.base.entity.node.BaseNode;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CategoryResponse extends BaseNode {
+public class CategoryResponse extends BaseNode implements Serializable {
 
     /**
      * id : 119

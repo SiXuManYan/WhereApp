@@ -41,6 +41,7 @@ public class GovernmentMapActivity extends BaseActivity {
 
     private GovernmentMapModel mModel;
     private List<CategoryResponse> mTabCategories;
+    private final int TYPE_GOVERNMENT = 3;
 
     @Override
     protected void initView() {
@@ -90,18 +91,22 @@ public class GovernmentMapActivity extends BaseActivity {
                 mMechanismListFragments.clear();
                 CategoryResponse allCategory = new CategoryResponse();
                 allCategory.setName(getString(R.string.all));
+                allCategory.setId(0);
+                allCategory.setType(TYPE_GOVERNMENT);
                 mTabCategories.add(allCategory);
                 // 0 表示要获得全部的信息
-                mMechanismListFragments.add(MechanismListFragment.newInstance(0));
+                mMechanismListFragments.add(MechanismListFragment.newInstance(allCategory));
                 mTabCategories.addAll(categoryResponses);
-                int size = categoryResponses.size();
+                int size = mTabCategories.size();
                 mTabLayout.removeAllTabs();
                 for (int i = 0; i < size; i++) {
                     TabLayout.Tab tab = mTabLayout.newTab();
                     CategoryResponse categoryResponse = mTabCategories.get(i);
                     tab.setCustomView(makeTabView(categoryResponse.getName()));
                     mTabLayout.addTab(tab);
-                    mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse.getId()));
+                    if (i != 0) {
+                        mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse));
+                    }
                 }
 
                 mViewPager.setAdapter(mViewPagerAdapter);

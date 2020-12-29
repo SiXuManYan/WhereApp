@@ -1,19 +1,25 @@
 package com.jcs.where.government.fragment;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.government.adapter.MechanismListAdapter;
 import com.jcs.where.government.model.MechanismListModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -26,15 +32,17 @@ import io.reactivex.annotations.NonNull;
 public class MechanismListFragment extends BaseFragment {
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecycler;
+    private RadioGroup mRadioGroup;
     private MechanismListAdapter mAdapter;
     private MechanismListModel mModel;
-    private int mCategoryId;
-    private static final String KEY_CATEGORY_ID = "categoryId";
+    private CategoryResponse mCategoryResponse;
+    private List<CategoryResponse> mChildCategorys;
+    private static final String KEY_CATEGORY_RESPONSE = "categoryResponse";
 
-    public static MechanismListFragment newInstance(int categoryId) {
+    public static MechanismListFragment newInstance(CategoryResponse category) {
 
         Bundle args = new Bundle();
-        args.putInt(KEY_CATEGORY_ID, categoryId);
+        args.putSerializable(KEY_CATEGORY_RESPONSE, category);
         MechanismListFragment fragment = new MechanismListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -45,6 +53,7 @@ public class MechanismListFragment extends BaseFragment {
         mSwipeLayout = view.findViewById(R.id.mechanismRefresh);
         mRecycler = view.findViewById(R.id.mechanismRecycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRadioGroup = view.findViewById(R.id.mechanismRadioGroup);
     }
 
     @Override
@@ -54,14 +63,47 @@ public class MechanismListFragment extends BaseFragment {
         mRecycler.setAdapter(mAdapter);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mCategoryId = arguments.getInt(KEY_CATEGORY_ID);
+            mChildCategorys = new ArrayList<>();
+            mCategoryResponse = (CategoryResponse) arguments.getSerializable(KEY_CATEGORY_RESPONSE);
             mSwipeLayout.setRefreshing(true);
-            getNetData();
+            getMechanismList();
+            getChildCategory();
         }
     }
 
-    private void getNetData() {
-        mModel.getMechanismList(mCategoryId, new BaseObserver<MechanismPageResponse>() {
+    private void getChildCategory() {
+        mModel.getChildCategories(mCategoryResponse.getType(),mCategoryResponse.getId(), new BaseObserver<List<CategoryResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
+                RadioButton allRadio = (RadioButton) mRadioGroup.getChildAt(0);
+                mChildCategorys.clear();
+                mChildCategorys.addAll(categoryResponses);
+                if (categoryResponses != null && categoryResponses.size() > 0) {
+                    for (int i = 0; i < categoryResponses.size(); i++) {
+                        RadioButton temp = new RadioButton(getContext());
+                        temp.setButtonDrawable(null);
+                        temp.setBackgroundResource(R.drawable.selector_mechanism_child_radio);
+                        temp.setText(categoryResponses.get(i).getName());
+                        temp.setTextColor(ContextCompat.getColorStateList(getContext(), R.color.selector_333_666));
+                        temp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+                        temp.setLayoutParams(allRadio.getLayoutParams());
+                        temp.setId(i);
+                        temp.setPadding(allRadio.getPaddingLeft(), allRadio.getPaddingTop(), allRadio.getPaddingRight(), allRadio.getPaddingBottom());
+                        mRadioGroup.addView(temp, mRadioGroup.getChildCount());
+                    }
+
+                }
+            }
+        });
+    }
+
+    private void getMechanismList() {
+        mModel.getMechanismList(mCategoryResponse.getId(), new BaseObserver<MechanismPageResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
@@ -88,7 +130,7 @@ public class MechanismListFragment extends BaseFragment {
     }
 
     private void onSwipeRefresh() {
-        getNetData();
+        getMechanismList();
     }
 
     @Override

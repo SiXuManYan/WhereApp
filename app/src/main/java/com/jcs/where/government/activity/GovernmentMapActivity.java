@@ -40,7 +40,7 @@ import io.reactivex.annotations.NonNull;
 public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCallback {
     private SupportMapFragment mMapFragment;
 
-    private PopupConstraintLayout mBottomPopupLayout;
+    private PopupConstraintLayout mPopupLayout;
     private ImageView mTopArrowIv;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -58,7 +58,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         mTopArrowIv = findViewById(R.id.topArrowIv);
         mTabLayout = findViewById(R.id.governmentTabs);
         mViewPager = findViewById(R.id.governmentViewPager);
-        mBottomPopupLayout = findViewById(R.id.bottomPopupLayout);
+        mPopupLayout = findViewById(R.id.bottomPopupLayout);
         // 绑定PopupLayout适配器
         bindPopupLayoutAdapter();
 
@@ -66,16 +66,29 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.e("GovernmentMapActivity", "onMapReady: "+"");
+        Log.e("GovernmentMapActivity", "onMapReady: " + "");
         googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
     private void onMapAsync(GoogleMap googleMap) {
-        Log.e("GovernmentMapActivity", "onMapAsync: "+"");
+        Log.e("GovernmentMapActivity", "onMapAsync: " + "");
     }
 
     private void bindPopupLayoutAdapter() {
-        mBottomPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
+        mPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
+            @Override
+            public void onShowCompleted() {
+                if (mMechanismListFragments != null && mMechanismListFragments.size() > 0) {
+                    MechanismListFragment fistFragment = mMechanismListFragments.get(0);
+                    fistFragment.getNetData();
+                }
+            }
+
+            @Override
+            public long getDuration() {
+                return 300;
+            }
+
             @Override
             public boolean isGoneAfterBottom() {
                 return false;
@@ -118,7 +131,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 mTabCategories.add(allCategory);
 
                 // 0 表示要获得全部的信息，添加全部对应的ListFragment
-                mMechanismListFragments.add(MechanismListFragment.newInstance(allCategory));
+                mMechanismListFragments.add(MechanismListFragment.newInstance(allCategory, true));
                 mTabCategories.addAll(categoryResponses);
                 int size = mTabCategories.size();
                 mTabLayout.removeAllTabs();
@@ -154,7 +167,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     }
 
     private void onTopArrowClick(View view) {
-        mBottomPopupLayout.showOrHide();
+        mPopupLayout.showOrHide();
     }
 
     @Override

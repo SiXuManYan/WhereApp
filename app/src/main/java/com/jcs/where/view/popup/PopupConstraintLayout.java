@@ -56,7 +56,7 @@ public class PopupConstraintLayout extends ConstraintLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 changeSlideStatus();
-                mAdapter.getShowCompleted();
+                mAdapter.onShowCompleted();
             }
 
             @Override
@@ -85,7 +85,7 @@ public class PopupConstraintLayout extends ConstraintLayout {
             public void onAnimationEnd(Animator animation) {
                 mShadowView.setVisibility(View.GONE);
                 changeSlideStatus();
-                mAdapter.getHideCompleted();
+                mAdapter.onHideCompleted();
             }
 
             @Override

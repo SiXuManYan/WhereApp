@@ -42,16 +42,33 @@ public class MechanismListFragment extends BaseFragment {
      * 此 tag 表示是否已经获取过网络数据
      */
     private boolean mIsDataLoaded = false;
+
+    /**
+     * 是否是ViewPager中的第一个Fragment
+     * 第一个Fragment在onResume中加载数据时会导致
+     * PopupLayout弹出时略微卡顿，所以第一个Fragment不在onResume中加载数据
+     * 而是在 《PopupLayout弹出后》 手动调用方法获取数据
+     */
+    private boolean mIsFirstFragment = false;
     /**
      * 当前展示的数据是属于哪个分类的
      */
     private int mCurrentCategoryId;
     private static final String KEY_CATEGORY_RESPONSE = "categoryResponse";
+    private static final String KEY_IS_FIRST_FRAGMENT = "isFirstFragment";
 
     public static MechanismListFragment newInstance(CategoryResponse category) {
-
         Bundle args = new Bundle();
         args.putSerializable(KEY_CATEGORY_RESPONSE, category);
+        MechanismListFragment fragment = new MechanismListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static MechanismListFragment newInstance(CategoryResponse category, boolean isFirst) {
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_CATEGORY_RESPONSE, category);
+        args.putBoolean(KEY_IS_FIRST_FRAGMENT, isFirst);
         MechanismListFragment fragment = new MechanismListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -76,8 +93,14 @@ public class MechanismListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (!mIsFirstFragment) {
+            getNetData();
+        }
+    }
+
+    public void getNetData() {
         Bundle arguments = getArguments();
-        if (!mIsDataLoaded && arguments != null) {
+        if (arguments != null && !mIsDataLoaded) {
             mChildCategories = new ArrayList<>();
             mCategoryResponse = (CategoryResponse) arguments.getSerializable(KEY_CATEGORY_RESPONSE);
             getMechanismList(mCategoryResponse.getId());
@@ -86,13 +109,6 @@ public class MechanismListFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-
-        }
-    }
 
     /**
      * 获得当前分类下的子分类

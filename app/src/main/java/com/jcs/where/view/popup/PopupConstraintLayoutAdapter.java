@@ -18,8 +18,8 @@ public abstract class PopupConstraintLayoutAdapter {
     public long getDuration() {
         return 500;
     }
-    public void getHideCompleted(){}
+    public void onHideCompleted(){}
 
-    public void getShowCompleted() {}
+    public void onShowCompleted() {}
 
 }

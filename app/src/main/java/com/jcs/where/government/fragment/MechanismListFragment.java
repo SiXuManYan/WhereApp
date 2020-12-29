@@ -38,6 +38,11 @@ public class MechanismListFragment extends BaseFragment {
     private CategoryResponse mCategoryResponse;
     private List<CategoryResponse> mChildCategories;
     /**
+     * 第一次展示时获取网络数据
+     * 此 tag 表示是否已经获取过网络数据
+     */
+    private boolean mIsDataLoaded = false;
+    /**
      * 当前展示的数据是属于哪个分类的
      */
     private int mCurrentCategoryId;
@@ -65,15 +70,33 @@ public class MechanismListFragment extends BaseFragment {
         mModel = new MechanismListModel();
         mAdapter = new MechanismListAdapter();
         mRecycler.setAdapter(mAdapter);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         Bundle arguments = getArguments();
-        if (arguments != null) {
+        if (!mIsDataLoaded && arguments != null) {
             mChildCategories = new ArrayList<>();
             mCategoryResponse = (CategoryResponse) arguments.getSerializable(KEY_CATEGORY_RESPONSE);
             getMechanismList(mCategoryResponse.getId());
             getChildCategory();
+            mIsDataLoaded = true;
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+
+        }
+    }
+
+    /**
+     * 获得当前分类下的子分类
+     */
     private void getChildCategory() {
         mModel.getChildCategories(mCategoryResponse.getType(), mCategoryResponse.getId(), new BaseObserver<List<CategoryResponse>>() {
             @Override
@@ -98,6 +121,7 @@ public class MechanismListFragment extends BaseFragment {
                             temp.setTextColor(ContextCompat.getColorStateList(getContext(), R.color.selector_333_666));
                             temp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
                             temp.setLayoutParams(allRadio.getLayoutParams());
+                            // 使用分类id作为RadioButton的id
                             temp.setId(categoryResponse.getId());
                             temp.setPadding(allRadio.getPaddingLeft(), allRadio.getPaddingTop(), allRadio.getPaddingRight(), allRadio.getPaddingBottom());
                             mRadioGroup.addView(temp, mRadioGroup.getChildCount());
@@ -109,6 +133,11 @@ public class MechanismListFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 根据分类id获取机构信息
+     *
+     * @param categoryId 分类id
+     */
     private void getMechanismList(int categoryId) {
         mCurrentCategoryId = categoryId;
         mSwipeLayout.setRefreshing(true);
@@ -139,6 +168,11 @@ public class MechanismListFragment extends BaseFragment {
         mRadioGroup.setOnCheckedChangeListener(this::onRadioChecked);
     }
 
+    /**
+     * radioButton 的选择事件
+     *
+     * @param i radioButton 的id
+     */
     private void onRadioChecked(RadioGroup radioGroup, int i) {
         // 当前不处于刷新状态才可以执行操作
         // 防止连续多次点击或者网速慢在刷新的点击

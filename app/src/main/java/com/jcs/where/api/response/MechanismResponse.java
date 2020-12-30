@@ -22,8 +22,8 @@ public class MechanismResponse {
     private int id;
     private String title;
     private String address;
-    private String lat;
-    private String lng;
+    private double lat;
+    private double lng;
     private String distance;
     private List<String> images;
     private List<String> tags;
@@ -52,19 +52,19 @@ public class MechanismResponse {
         this.address = address;
     }
 
-    public String getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(String lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public String getLng() {
+    public double getLng() {
         return lng;
     }
 
-    public void setLng(String lng) {
+    public void setLng(double lng) {
         this.lng = lng;
     }
 

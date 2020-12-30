@@ -1,6 +1,5 @@
 package com.jcs.where.government.activity;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +8,9 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -16,14 +18,17 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.government.bean.MarkerBitmapDescriptors;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.GovernmentMapModel;
+import com.jcs.where.utils.MapMarkerUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 import com.jcs.where.view.popup.PopupConstraintLayout;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -46,10 +51,26 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private MechanismAdapter mViewPagerAdapter;
+    /**
+     * 展示机构列表的Fragment集合
+     */
     private List<MechanismListFragment> mMechanismListFragments;
-
-    private GovernmentMapModel mModel;
+    /**
+     * 存储展示在地图上的数据
+     */
+    private List<MechanismResponse> mMechanismsForMap;
+    /**
+     * 机构列表分类数据，展示在TabLayout上
+     */
     private List<CategoryResponse> mTabCategories;
+    /**
+     * 存储展示在Map上的marker
+     */
+    private HashMap<Marker, MarkerBitmapDescriptors> mMarkersOnMap;
+    private GovernmentMapModel mModel;
+    private MapMarkerUtil mMapMarkerUtil;
+    private GoogleMap mGoogleMap;
+
     private final int TYPE_GOVERNMENT = 3;
     private int mAreaId = -1;
 
@@ -72,10 +93,9 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
         // 获取要展示在地图上的数据
         showLoading();
-        Log.e("GovernmentMapActivity", "onMapReady: TYPE_GOVERNMENT=" + TYPE_GOVERNMENT);
-        Log.e("GovernmentMapActivity", "onMapReady: getAreaId=" + mAreaId);
         mModel.getMechanismListForMap(TYPE_GOVERNMENT, mAreaId, new BaseObserver<List<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
@@ -86,25 +106,72 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
             @Override
             public void onNext(@NonNull List<MechanismResponse> mechanismResponses) {
                 stopLoading();
+                mMechanismsForMap.clear();
                 if (mechanismResponses != null && mechanismResponses.size() > 0) {
-                    int size = mechanismResponses.size();
-                    Log.e("GovernmentMapActivity", "onNext: " + "size=" + size);
+                    mMechanismsForMap.addAll(mechanismResponses);
+                    int size = mMechanismsForMap.size();
                     for (int i = 0; i < size; i++) {
-                        MechanismResponse mechanismResponse = mechanismResponses.get(i);
-                        Log.e("GovernmentMapActivity", "onNext: " + mechanismResponse.getTitle());
+                        MechanismResponse mechanismResponse = mMechanismsForMap.get(i);
+                        if (mechanismResponse != null) {
+                            // 向map上添加marker
+                            addMarkerToMap(mechanismResponse, mGoogleMap);
+                        }
                     }
                 }
             }
         });
+
+//        这个应该就是移动了
+//        googleMap.moveCamera();
+        mGoogleMap.setOnMarkerClickListener(this::onMarkerClicked);
+    }
+
+    /**
+     * marker 的点击回调
+     *
+     * @return 返回false表示我们尚未使用该事件，并且希望
+     * 使默认行为发生，这是为了使摄像机移动以使标记居中，打开标记的信息窗口（如果有）。
+     */
+    private boolean onMarkerClicked(Marker marker) {
+
+        // 根据marker当前的选择状态更改点击后的icon
+        mMapMarkerUtil.changeMarkerStatus(marker, mMarkersOnMap);
+        return false;
+    }
+
+    /**
+     * 向map上添加marker
+     */
+    private void addMarkerToMap(MechanismResponse mechanismResponse, GoogleMap googleMap) {
+        LatLng latLng = new LatLng(mechanismResponse.getLat(), mechanismResponse.getLng());
+
+        TextView markerView = (TextView) mMapMarkerUtil.getMarkerView(this);
+        markerView.setText(mechanismResponse.getTitle());
+        MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
+        markerBitmapDescriptors.setSelectedBitmapDescriptor(mMapMarkerUtil.getSelectView(this, markerView));
+        markerBitmapDescriptors.setUnselectedBitmapDescriptor(mMapMarkerUtil.getUnselectedView(this, markerView));
+
+        MarkerOptions option = new MarkerOptions()
+                .position(latLng)
+                .icon(markerBitmapDescriptors.getUnselectedBitmapDescriptor())
+                .zIndex(4)
+                .draggable(false);
+        // 在地图上绘制
+        Marker marker = googleMap.addMarker(option);
+        marker.setTag(mechanismResponse);
+        mMarkersOnMap.put(marker, markerBitmapDescriptors);
     }
 
     private int getAreaId() {
-        return Integer.parseInt(SPUtil.getInstance().getString(SPKey.K_AREA_ID));
+        try {
+            return Integer.parseInt(SPUtil.getInstance().getString(SPKey.K_AREA_ID));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     private void onMapAsync(GoogleMap googleMap) {
         onMapReady(googleMap);
-        Log.e("GovernmentMapActivity", "onMapAsync: " + "");
     }
 
     private void bindPopupLayoutAdapter() {
@@ -142,10 +209,14 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     @Override
     protected void initData() {
         mModel = new GovernmentMapModel();
+        mMapMarkerUtil = new MapMarkerUtil();
         mAreaId = getAreaId();
         mTabCategories = new ArrayList<>();
         mMechanismListFragments = new ArrayList<>();
+        mMechanismsForMap = new ArrayList<>();
+        mMarkersOnMap = new HashMap<>();
         mViewPagerAdapter = new MechanismAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        // 初始化地图，初始化成功后会获取要在地图上展示的数据
         mMapFragment.getMapAsync(this::onMapAsync);
         mModel.getCategories(new BaseObserver<List<CategoryResponse>>() {
             @Override
@@ -189,6 +260,11 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         });
     }
 
+    /**
+     * 获得tab view
+     *
+     * @param title tab title
+     */
     private View makeTabView(String title) {
         View tabView = LayoutInflater.from(this).inflate(R.layout.tab_normal_only_text, null);
         TextView tabTitle = tabView.findViewById(R.id.tabTitle);

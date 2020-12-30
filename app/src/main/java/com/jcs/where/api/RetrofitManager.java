@@ -2,8 +2,12 @@ package com.jcs.where.api;
 
 import android.content.Context;
 
+import com.jcs.where.BuildConfig;
+import com.jcs.where.api.convert.NullOrEmptyConvertFactory;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,8 +16,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import com.jcs.where.api.convert.NullOrEmptyConvertFactory;
-import com.jcs.where.api.interceptor.BaseUrlInterceptor;
 
 public class RetrofitManager {
     private static RetrofitManager manager;
@@ -38,8 +40,8 @@ public class RetrofitManager {
     }
 
     private void create(Context context) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
         //添加请求头
@@ -60,7 +62,9 @@ public class RetrofitManager {
                 return chain.proceed(build);
             }
         });
-        okBuilder.addInterceptor(interceptor);
+        if (BuildConfig.DEBUG) {
+            okBuilder.addInterceptor(loggingInterceptor);
+        }
 //        okBuilder.addInterceptor(new BaseUrlInterceptor());
         okBuilder.connectTimeout(timeout, TimeUnit.MINUTES);
         okBuilder.readTimeout(timeout, TimeUnit.MINUTES);

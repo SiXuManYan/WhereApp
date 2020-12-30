@@ -11,6 +11,7 @@ import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
+import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
@@ -173,6 +174,31 @@ public interface RetrofitApi {
     @GET("maps/api/geocode/json?key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk")
     Observable<String> getLocation(@Query("latlng") String latlng);
 
+    /**
+     * 获得机构列表数据
+     *
+     * @param categoryId 机构分类
+     * @param search     查询字段
+     * @return
+     */
     @GET("generalapi/v1/infos")
-    Observable<MechanismPageResponse> getMechanismListById(@Query("cate_id")int categoryId, @Query("search_input") String search);
+    Observable<MechanismPageResponse> getMechanismListById(@Query("cate_id") int categoryId, @Query("search_input") String search);
+
+    /**
+     * 获得展示在地图上的机构数据
+     * @param categoryId 机构分类
+     * @param areaId     区域id
+     * @param search     查询字段
+     * @param lat        若不需要根据经纬度获取数据，传 0 即可
+     * @param lng        若不需要根据经纬度获取数据，传 0 即可
+     * @return
+     */
+    @GET("generalapi/v1/map/infos")
+    Observable<List<MechanismResponse>> getMechanismListForMap(
+            @Query("cate_id") int categoryId,
+            @Query("area_id") int areaId
+//            @Query("search_input") String search,
+//            @Query("lat") String lat,
+//            @Query("lng") String lng
+    );
 }

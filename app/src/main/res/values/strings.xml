@@ -92,5 +92,6 @@
     <string name="permission_has">有权限</string>
     <string name="prompt_input_government_name">输入机构名称</string>
     <string name="all">全部</string>
+    <string name="title_select_city">城市选择</string>
 
 </resources>

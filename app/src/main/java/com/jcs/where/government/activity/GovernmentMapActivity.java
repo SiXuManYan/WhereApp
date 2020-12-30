@@ -9,16 +9,17 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.GovernmentMapModel;
+import com.jcs.where.utils.SPKey;
+import com.jcs.where.utils.SPUtil;
 import com.jcs.where.view.popup.PopupConstraintLayout;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 
@@ -50,27 +51,59 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     private GovernmentMapModel mModel;
     private List<CategoryResponse> mTabCategories;
     private final int TYPE_GOVERNMENT = 3;
+    private int mAreaId = -1;
 
     @Override
     protected void initView() {
         mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mMapFragment.getMapAsync(this::onMapAsync);
         mTopArrowIv = findViewById(R.id.topArrowIv);
         mTabLayout = findViewById(R.id.governmentTabs);
         mViewPager = findViewById(R.id.governmentViewPager);
         mPopupLayout = findViewById(R.id.bottomPopupLayout);
         // 绑定PopupLayout适配器
         bindPopupLayoutAdapter();
-
     }
 
+    /**
+     * Google 地图加载完成的回调
+     * 与地图有关的操作，在此回调中执行
+     *
+     * @param googleMap 地图对象
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.e("GovernmentMapActivity", "onMapReady: " + "");
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        // 获取要展示在地图上的数据
+        showLoading();
+        Log.e("GovernmentMapActivity", "onMapReady: TYPE_GOVERNMENT=" + TYPE_GOVERNMENT);
+        Log.e("GovernmentMapActivity", "onMapReady: getAreaId=" + mAreaId);
+        mModel.getMechanismListForMap(TYPE_GOVERNMENT, mAreaId, new BaseObserver<List<MechanismResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NonNull List<MechanismResponse> mechanismResponses) {
+                stopLoading();
+                if (mechanismResponses != null && mechanismResponses.size() > 0) {
+                    int size = mechanismResponses.size();
+                    Log.e("GovernmentMapActivity", "onNext: " + "size=" + size);
+                    for (int i = 0; i < size; i++) {
+                        MechanismResponse mechanismResponse = mechanismResponses.get(i);
+                        Log.e("GovernmentMapActivity", "onNext: " + mechanismResponse.getTitle());
+                    }
+                }
+            }
+        });
+    }
+
+    private int getAreaId() {
+        return Integer.parseInt(SPUtil.getInstance().getString(SPKey.K_AREA_ID));
     }
 
     private void onMapAsync(GoogleMap googleMap) {
+        onMapReady(googleMap);
         Log.e("GovernmentMapActivity", "onMapAsync: " + "");
     }
 
@@ -109,9 +142,11 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     @Override
     protected void initData() {
         mModel = new GovernmentMapModel();
+        mAreaId = getAreaId();
         mTabCategories = new ArrayList<>();
         mMechanismListFragments = new ArrayList<>();
         mViewPagerAdapter = new MechanismAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mMapFragment.getMapAsync(this::onMapAsync);
         mModel.getCategories(new BaseObserver<List<CategoryResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {

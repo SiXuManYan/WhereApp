@@ -7,25 +7,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_black"
-        app:navigationIcon="@drawable/ic_back_black"
-        app:theme="@style/AppTheme.ActionBar">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:text="目的地选择"
-            android:textColor="@color/black_333333"
-            android:textSize="17sp" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:middleTitle="@string/title_select_city"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,6 +47,5 @@
             tools:ignore="RtlHardcoded" />
 
     </RelativeLayout>
-
 
 </LinearLayout>

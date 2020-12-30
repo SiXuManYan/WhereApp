@@ -31,6 +31,8 @@ import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.LocateState;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.PinyinUtils;
+import com.jcs.where.utils.SPKey;
+import com.jcs.where.utils.SPUtil;
 import com.jcs.where.widget.SideLetterBar;
 
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+/**
+ * 城市选择页面
+ */
 public class CityPickerActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
@@ -162,6 +167,7 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                 intent.putExtra(EXTRA_CITY, name);
                 intent.putExtra(EXTRA_CITYID, id);
                 setResult(RESULT_OK, intent);
+                SPUtil.getInstance().saveString(SPKey.K_AREA_ID, id);
                 finish();
             }
 

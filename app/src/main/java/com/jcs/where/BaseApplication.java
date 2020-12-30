@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.jcs.where.api.RetrofitManager;
 import com.jcs.where.utils.LocationUtil;
+import com.jcs.where.utils.SPUtil;
 
 import androidx.multidex.MultiDex;
 
@@ -16,6 +17,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         RetrofitManager.getManager().initRetrofit(this);
         LocationUtil.initInstance(this);
+        SPUtil.initInstance(this);
     }
 
 

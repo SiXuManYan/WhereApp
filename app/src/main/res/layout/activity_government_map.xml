@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false">
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
@@ -45,6 +46,15 @@
         app:layout_constraintTop_toBottomOf="@id/jcsTitle"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="@dimen/dp_55"/>
+
+    <fragment
+        android:id="@+id/viewpagerFrag"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90"
+        android:name="com.jcs.where.government.fragment.CardViewPagerFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/dp_80"
+        />
 
     <com.jcs.where.view.popup.PopupConstraintLayout
         android:id="@+id/bottomPopupLayout"

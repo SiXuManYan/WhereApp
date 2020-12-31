@@ -16,6 +16,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.government.fragment.CardViewPagerFragment;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.GovernmentMapModel;
 import com.jcs.where.utils.MapMarkerUtil;
@@ -41,6 +42,7 @@ import io.reactivex.annotations.NonNull;
  */
 public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCallback {
     private SupportMapFragment mMapFragment;
+    private CardViewPagerFragment mViewPagerFragment;
 
     private PopupConstraintLayout mPopupLayout;
     private ImageView mTopArrowIv;
@@ -64,7 +66,9 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
 
     @Override
     protected void initView() {
-        mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        mMapFragment = (SupportMapFragment) supportFragmentManager.findFragmentById(R.id.map);
+        mViewPagerFragment = (CardViewPagerFragment) supportFragmentManager.findFragmentById(R.id.viewpagerFrag);
         mTopArrowIv = findViewById(R.id.topArrowIv);
         mTabLayout = findViewById(R.id.governmentTabs);
         mViewPager = findViewById(R.id.governmentViewPager);
@@ -153,6 +157,8 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 if (mechanismResponses != null && mechanismResponses.size() > 0) {
                     mMapMarkerUtil.addAllMechanismForMap(mechanismResponses);
                     mMapMarkerUtil.addMarkerToMap(mGoogleMap);
+
+                    mViewPagerFragment.bindAllData(mechanismResponses);
                 }
             }
         });
@@ -171,7 +177,6 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     private boolean onMarkerClicked(Marker marker) {
 
         // 根据marker当前的选择状态更改点击后的icon
-        //TODO 改成存上一个选择状态的Marker，这样能省去一个map的遍历
         mMapMarkerUtil.changeMarkerStatus(marker);
         return false;
     }
@@ -235,9 +240,24 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     @Override
     protected void bindListener() {
         mTopArrowIv.setOnClickListener(this::onTopArrowClick);
+        mViewPagerFragment.bindPageSelectedListener(this::onVpPageSelected);
     }
 
+    /**
+     * ViewPager item 滑动选择回调
+     * @param position 索引
+     */
+    private void onVpPageSelected(int position) {
+        // 选中 position 对应的 marker
+        mMapMarkerUtil.selectMarker(position);
+    }
+
+    /**
+     * 点击了箭头，展示政府机构列表
+     * @param view
+     */
     private void onTopArrowClick(View view) {
+        //TODO  要更换 箭头 icon
         mPopupLayout.showOrHide();
     }
 

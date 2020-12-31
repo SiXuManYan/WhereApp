@@ -63,4 +63,6 @@
     <dimen name="dp_530">530dp</dimen>
     <dimen name="dp_55">55dp</dimen>
     <dimen name="dp_105">105dp</dimen>
+    <dimen name="dp_305">305dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
 </resources>

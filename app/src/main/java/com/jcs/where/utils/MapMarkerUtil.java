@@ -236,4 +236,29 @@ public class MapMarkerUtil {
     public void addAllMechanismForMap(List<MechanismResponse> mechanismResponses) {
         mMechanismsForMap.addAll(mechanismResponses);
     }
+
+    //TODO bug，另外要将选中的marker置于屏幕中央
+    public void selectMarker(int position) {
+        if (mMarkersOnMap != null && mMarkersOnMap.size() >= position) {
+            Marker marker = mMarkersOnMap.get(position);
+            if(mCurrentMarker != null && mCurrentMarker.getTag() == marker.getTag()){
+                // 已经被选中了，什么都不需要执行
+            }else {
+                // 对应 position 位置的marker未被选中，则应该选中
+                MarkerBitmapDescriptors markerBitmapDescriptors = mDescriptors.get(position);
+                markerBitmapDescriptors.setSelected(true);
+                marker.setIcon(markerBitmapDescriptors.getSelectedBitmapDescriptor());
+
+                // 重置上一次选择的marker的状态
+                if (mCurrentMarker != null) {
+                    MarkerBitmapDescriptors currentDescriptor = mDescriptors.get(mCurrentPosition);
+                    currentDescriptor.setSelected(false);
+                    mCurrentMarker.setIcon(currentDescriptor.getUnselectedBitmapDescriptor());
+                }else {
+                    mCurrentMarker = marker;
+                }
+                mCurrentPosition = position;
+            }
+        }
+    }
 }

@@ -21,18 +21,26 @@ public class GovernmentMapModel extends BaseModel {
     /**
      * 获取某区域下的所有政府机构
      * @param categoryId 分类id，当前页面展示什么分类数据（政府机构是一个分类，酒店是一个分类）
-     * @param areaId 区域id（地理位置，在HomeFragment左上角可以选择）
+
      */
-    public void getMechanismListForMap(int categoryId, int areaId,
+    public void getMechanismListForMap(int categoryId, double lat, double lng,
                                        BaseObserver<List<MechanismResponse>> observer) {
-        getMechanismListForMap(categoryId, areaId, "", "0", "0", observer);
+        getMechanismListForMap(categoryId, 0, "", lat, lng, observer);
     }
 
+    /**
+     *
+     * @param categoryId 分类id
+     * @param areaId 区域id（地理位置，在HomeFragment左上角可以选择）
+     * @param search 查询字段
+     * @param lat 经度
+     * @param lng 纬度
+     */
     public void getMechanismListForMap(int categoryId, int areaId,
-                                       String search, String lat, String lng, BaseObserver<List<MechanismResponse>> observer) {
+                                       String search, double lat, double lng, BaseObserver<List<MechanismResponse>> observer) {
 
         dealResponse(mRetrofit.getMechanismListForMap(categoryId, areaId
-//                , search, lat, lng
+                , search, lat, lng
         ), observer);
 
     }

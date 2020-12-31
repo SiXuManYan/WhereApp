@@ -186,6 +186,7 @@ public interface RetrofitApi {
 
     /**
      * 获得展示在地图上的机构数据
+     *
      * @param categoryId 机构分类
      * @param areaId     区域id
      * @param search     查询字段
@@ -196,9 +197,9 @@ public interface RetrofitApi {
     @GET("generalapi/v1/map/infos")
     Observable<List<MechanismResponse>> getMechanismListForMap(
             @Query("cate_id") int categoryId,
-            @Query("area_id") int areaId
-//            @Query("search_input") String search,
-//            @Query("lat") String lat,
-//            @Query("lng") String lng
+            @Query("area_id") int areaId,
+            @Query("search_input") String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng
     );
 }

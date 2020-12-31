@@ -8,15 +8,19 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.jcs.where.R;
+import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.bean.MarkerBitmapDescriptors;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,22 +28,47 @@ import androidx.appcompat.app.AppCompatActivity;
  * create by zyf on 2020/12/30 10:29 PM
  */
 public class MapMarkerUtil {
-    public View getMarkerView(AppCompatActivity context) {
-        return context.getLayoutInflater().inflate(R.layout.view_map_marker, null);
+    private Marker mCurrentMarker;
+    private int mCurrentPosition;
+    /**
+     * 存储展示在地图上的数据
+     */
+    private List<MechanismResponse> mMechanismsForMap;
+    /**
+     * 存储展示在Map上的marker
+     */
+    private List<Marker> mMarkersOnMap;
+    /**
+     * 与 mMarkersOnMap 的position是一一对应关系
+     * 存储 marker 不同选择状态的 icon
+     */
+    private List<MarkerBitmapDescriptors> mDescriptors;
+
+    private BaseActivity mContext;
+
+    public MapMarkerUtil(BaseActivity context) {
+        mMechanismsForMap = new ArrayList<>();
+        mDescriptors = new ArrayList<>();
+        mMarkersOnMap = new ArrayList<>();
+        mContext = context;
     }
 
-    public BitmapDescriptor getSelectView(AppCompatActivity context, View view) {
+    public View getMarkerView() {
+        return mContext.getLayoutInflater().inflate(R.layout.view_map_marker, null);
+    }
+
+    public BitmapDescriptor getSelectView(View view) {
         TextView tv = (TextView) view;
-        tv.setTextColor(context.getColor(R.color.white));
+        tv.setTextColor(mContext.getColor(R.color.white));
         tv.setBackgroundResource(R.mipmap.ic_map_marker_selected);
-        return fromView(context, tv);
+        return fromView(mContext, tv);
     }
 
-    public BitmapDescriptor getUnselectedView(AppCompatActivity context, View view) {
+    public BitmapDescriptor getUnselectedView(View view) {
         TextView tv = (TextView) view;
-        tv.setTextColor(context.getColor(R.color.blue_4C9EF2));
+        tv.setTextColor(mContext.getColor(R.color.blue_4C9EF2));
         tv.setBackgroundResource(R.mipmap.ic_map_marker_unselected);
-        return fromView(context, tv);
+        return fromView(mContext, tv);
     }
 
     public BitmapDescriptor getUnSelectMarker(AppCompatActivity context, String title) {
@@ -111,28 +140,100 @@ public class MapMarkerUtil {
      * 则改变当前点击 marker 的 icon 为选择状态
      * 否则设置为非选择状态
      *
-     * @param marker        目标marker
-     * @param mMarkersOnMap marker map集合
+     * @param marker 目标marker
+     * @return 数据的索引位置
      */
-    public void changeMarkerStatus(Marker marker, HashMap<Marker, MarkerBitmapDescriptors> mMarkersOnMap) {
-        Set<Map.Entry<Marker, MarkerBitmapDescriptors>> entries = mMarkersOnMap.entrySet();
-        for (Map.Entry<Marker, MarkerBitmapDescriptors> entry : entries) {
-            Marker key = entry.getKey();
-            MarkerBitmapDescriptors value = entry.getValue();
-            Object keyTag = key.getTag();
-            Object markerTag = marker.getTag();
-            if (keyTag == markerTag) {
-                if (value.isSelected()) {
-                    value.setSelected(false);
-                    marker.setIcon(value.getUnselectedBitmapDescriptor());
-                } else {
-                    value.setSelected(true);
-                    marker.setIcon(value.getSelectedBitmapDescriptor());
+    public int changeMarkerStatus(Marker marker) {
+        if (mCurrentMarker == null) {
+            mCurrentMarker = marker;
+        }
+        Object currentTag = mCurrentMarker.getTag();
+        Object markerTag = marker.getTag();
+
+        // 此索引  是 marker，BitmapDescriptor，MechanismResponse 的索引
+        if (markerTag instanceof MechanismResponse) {
+            int position = mMechanismsForMap.indexOf(markerTag);
+            MarkerBitmapDescriptors descriptor = null;
+            if (position > -1) {
+                mCurrentPosition = position;
+                descriptor = mDescriptors.get(position);
+            }
+
+            // 当前点击的是已经选中的marker
+            if (currentTag == markerTag) {
+                if (descriptor != null) {
+                    if (descriptor.isSelected()) {
+                        descriptor.setSelected(false);
+                        marker.setIcon(descriptor.getUnselectedBitmapDescriptor());
+                    } else {
+                        descriptor.setSelected(true);
+                        marker.setIcon(descriptor.getSelectedBitmapDescriptor());
+                    }
                 }
             } else {
-                value.setSelected(false);
-                key.setIcon(value.getUnselectedBitmapDescriptor());
+                // 点击的是未选中的marker
+                if (descriptor != null) {
+                    descriptor.setSelected(true);
+                    marker.setIcon(descriptor.getSelectedBitmapDescriptor());
+
+                    // 将原有的 marker 设置成未选择状态
+                    MarkerBitmapDescriptors lastDescriptor = mDescriptors.get(mCurrentPosition);
+                    lastDescriptor.setSelected(false);
+                    mCurrentMarker.setIcon(lastDescriptor.getUnselectedBitmapDescriptor());
+
+                    // 存储marker
+                    mCurrentMarker = marker;
+                }
+
             }
         }
+
+        return mCurrentPosition;
+    }
+
+    /**
+     * 向map上添加marker
+     */
+    public void addMarkerToMap(GoogleMap googleMap) {
+        int size = mMechanismsForMap.size();
+        for (int i = 0; i < size; i++) {
+            MechanismResponse mechanismResponse = mMechanismsForMap.get(i);
+            if (mechanismResponse != null) {
+                // 向map上添加marker
+                LatLng latLng = new LatLng(mechanismResponse.getLat(), mechanismResponse.getLng());
+
+                TextView markerView = (TextView) getMarkerView();
+                markerView.setText(mechanismResponse.getTitle());
+                MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
+                markerBitmapDescriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
+                markerBitmapDescriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
+
+                MarkerOptions option = new MarkerOptions()
+                        .position(latLng)
+                        .icon(markerBitmapDescriptors.getUnselectedBitmapDescriptor())
+                        .zIndex(4)
+                        .draggable(false);
+                // 在地图上绘制
+                Marker marker = googleMap.addMarker(option);
+                marker.setTag(mechanismResponse);
+                mMarkersOnMap.add(marker);
+                mDescriptors.add(markerBitmapDescriptors);
+            }
+        }
+    }
+
+    /**
+     * 清空缓存
+     */
+    public void clear() {
+        mMarkersOnMap.clear();
+        mDescriptors.clear();
+        mMechanismsForMap.clear();
+        mCurrentMarker = null;
+        mCurrentPosition = -1;
+    }
+
+    public void addAllMechanismForMap(List<MechanismResponse> mechanismResponses) {
+        mMechanismsForMap.addAll(mechanismResponses);
     }
 }

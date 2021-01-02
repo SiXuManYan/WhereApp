@@ -43,7 +43,7 @@ public class CardViewPagerFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -139,18 +139,18 @@ public class CardViewPagerFragment extends BaseFragment {
 
         private void bind(MechanismResponse mechanismResponse, View view) {
             view.setOnClickListener(this::onPageClicked);
-            TextView nameTv = (TextView) view.findViewById(R.id.mechanismTitleTv);
+            TextView nameTv = view.findViewById(R.id.mechanismTitleTv);
             nameTv.setText(mechanismResponse.getTitle());
-            RoundedImageView photoIv = (RoundedImageView) view.findViewById(R.id.mechanismIconIv);
+            RoundedImageView photoIv =  view.findViewById(R.id.mechanismIconIv);
             photoIv.setCornerRadius(getPxFromDp(4), 0, getPxFromDp(4), 0);
             if (!TextUtils.isEmpty(mechanismResponse.getImages().get(0))) {
                 Glide.with(mContext).load(mechanismResponse.getImages().get(0)).into(photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_test));
             }
-            TextView addressTv = (TextView) view.findViewById(R.id.mechanismAddressTv);
+            TextView addressTv = view.findViewById(R.id.mechanismAddressTv);
             addressTv.setText(mechanismResponse.getAddress());
-            TextView distanceTv = (TextView) view.findViewById(R.id.mechanismDistanceTv);
+            TextView distanceTv = view.findViewById(R.id.mechanismDistanceTv);
             String distance = mechanismResponse.getDistance() + "Km";
             distanceTv.setText(distance);
         }

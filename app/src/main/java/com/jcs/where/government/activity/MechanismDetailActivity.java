@@ -1,6 +1,7 @@
 package com.jcs.where.government.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.dialog.CallPhoneDialog;
 import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.government.model.MechanismDetailModel;
+import com.jcs.where.widget.JcsBanner;
 
 import io.reactivex.annotations.NonNull;
 import retrofit2.Response;
@@ -29,6 +31,7 @@ public class MechanismDetailActivity extends BaseActivity {
     private TextView mBusinessWeekTv, mBusinessTimeTv, mTelTv,
             mWebsiteTv, mEmailTv, mFacebookTv, mAddressTv, mIntroduceTv;
     private View mToCallView, mToNavigationView;
+    private JcsBanner mJcsBanner;
 
     private CallPhoneDialog mCallDialog;
     private ToNavigationDialog mToNavigationDialog;
@@ -51,6 +54,8 @@ public class MechanismDetailActivity extends BaseActivity {
 
         mToCallView = findViewById(R.id.toCallView);
         mToNavigationView = findViewById(R.id.toNavigationView);
+
+        mJcsBanner = findViewById(R.id.jcsBanner);
     }
 
     @Override
@@ -85,8 +90,12 @@ public class MechanismDetailActivity extends BaseActivity {
                     // 配置数据
                     injectResponseToView();
 
+                    // 导航
                     mToNavigationDialog.setLatitude(mMechanismDetailResponse.getLat());
                     mToNavigationDialog.setLongitude(mMechanismDetailResponse.getLng());
+
+                    // banner
+                    mJcsBanner.setPicData(mMechanismDetailResponse.getImages());
                 }
             });
         } else {

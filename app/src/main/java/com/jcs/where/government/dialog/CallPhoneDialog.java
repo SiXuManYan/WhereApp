@@ -7,13 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jcs.where.R;
+import com.jcs.where.base.BaseBottomDialog;
 import com.jcs.where.base.BaseDialog;
 
 /**
  * 拨打电话
  * create by zyf on 2021/1/2 7:07 PM
  */
-public class CallPhoneDialog extends BaseDialog {
+public class CallPhoneDialog extends BaseBottomDialog {
 
     private Button mCancelBtn;
     private TextView mPhoneTv;

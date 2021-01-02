@@ -105,5 +105,6 @@
     <string name="no_introduce">暂无介绍</string>
     <string name="call">呼叫</string>
     <string name="not_provide_tel_number">未提供电话号码</string>
+    <string name="google_map_not_installed">您尚未安装谷歌地图</string>
 
 </resources>

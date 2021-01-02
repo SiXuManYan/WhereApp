@@ -5,9 +5,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jcs.where.R;
+import com.jcs.where.base.BaseBottomDialog;
 import com.jcs.where.base.BaseDialog;
 
-public class AreaCodeListDialog extends BaseDialog {
+public class AreaCodeListDialog extends BaseBottomDialog {
 
     private Button mCancelBtn;
     private TextView mChinaArea, mPhilippinesArea;

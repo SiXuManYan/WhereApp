@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.jcs.where.R;
+import com.jcs.where.utils.ToastUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +42,10 @@ public abstract class BaseDialog extends DialogFragment {
 
     protected abstract int getHeight();
 
+    protected int getWidth() {
+        return 0;
+    }
+
     protected abstract void initView(View view);
 
     protected abstract void initData();
@@ -59,10 +64,10 @@ public abstract class BaseDialog extends DialogFragment {
         // 设置宽度为屏宽、靠近屏幕底部。
         Window window = dialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
-        wlp.gravity = Gravity.BOTTOM;
-        if (isWidthMatch()) {
-            wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        if (isBottom()) {
+            wlp.gravity = Gravity.BOTTOM;
         }
+        wlp.width = getWidth() == 0 ? WindowManager.LayoutParams.MATCH_PARENT : getDp(getWidth());
         wlp.height = getDp(getHeight());
         window.setAttributes(wlp);
         //以下三句代码等价于在theme中配置<item name="android:windowBackground">@null</item><item name="android:backgroundDimEnabled">true</item>
@@ -99,5 +104,13 @@ public abstract class BaseDialog extends DialogFragment {
 
     public void show(FragmentManager fm) {
         this.show(fm, getDialogTag());
+    }
+
+    protected void showToast(String msg) {
+        ToastUtils.showLong(getContext(), msg);
+    }
+
+    protected boolean isBottom() {
+        return false;
     }
 }

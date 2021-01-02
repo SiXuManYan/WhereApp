@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
+import com.jcs.where.base.BaseBottomDialog;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean;
 import com.jcs.where.base.BaseDialog;
 import com.jcs.where.home.decoration.HotelCalendarItemDecoration;
@@ -22,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class JcsCalendarDialog extends BaseDialog {
+public class JcsCalendarDialog extends BaseBottomDialog {
 
     private ImageView mCloseIv;
     private RecyclerView mRecycler;

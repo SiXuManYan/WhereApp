@@ -11,6 +11,7 @@ import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.dialog.CallPhoneDialog;
+import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.government.model.MechanismDetailModel;
 
 import io.reactivex.annotations.NonNull;
@@ -30,6 +31,7 @@ public class MechanismDetailActivity extends BaseActivity {
     private View mToCallView, mToNavigationView;
 
     private CallPhoneDialog mCallDialog;
+    private ToNavigationDialog mToNavigationDialog;
 
     private int mMechanismId;
     private MechanismDetailModel mModel;
@@ -55,6 +57,7 @@ public class MechanismDetailActivity extends BaseActivity {
     protected void initData() {
         mModel = new MechanismDetailModel();
         mCallDialog = new CallPhoneDialog();
+        mToNavigationDialog = new ToNavigationDialog();
         Intent intent = getIntent();
         String temp = intent.getStringExtra(K_MECHANISM_ID);
         if (temp != null) {
@@ -81,6 +84,9 @@ public class MechanismDetailActivity extends BaseActivity {
                     mMechanismDetailResponse = response;
                     // 配置数据
                     injectResponseToView();
+
+                    mToNavigationDialog.setLatitude(mMechanismDetailResponse.getLat());
+                    mToNavigationDialog.setLongitude(mMechanismDetailResponse.getLng());
                 }
             });
         } else {
@@ -100,7 +106,7 @@ public class MechanismDetailActivity extends BaseActivity {
      * 导航
      */
     public void onToNavigationClicked(View view) {
-
+        mToNavigationDialog.show(getSupportFragmentManager());
     }
 
     /**

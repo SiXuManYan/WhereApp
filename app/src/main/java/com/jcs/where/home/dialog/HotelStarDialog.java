@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 import com.jcs.where.R;
+import com.jcs.where.base.BaseBottomDialog;
 import com.jcs.where.base.BaseDialog;
 
 import java.text.DecimalFormat;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HotelStarDialog extends BaseDialog implements View.OnClickListener {
+public class HotelStarDialog extends BaseBottomDialog implements View.OnClickListener {
 
     private TextView priceTv;
     private Button ensureBtn;

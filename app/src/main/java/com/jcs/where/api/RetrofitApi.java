@@ -10,6 +10,7 @@ import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
+import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
@@ -188,10 +189,10 @@ public interface RetrofitApi {
      * 获得展示在地图上的机构数据
      *
      * @param categoryId 机构分类
-     * @param areaId     区域id
+     * @param areaId     区域id，非必须（0）
      * @param search     查询字段
-     * @param lat        若不需要根据经纬度获取数据，传 0 即可
-     * @param lng        若不需要根据经纬度获取数据，传 0 即可
+     * @param lat        必须
+     * @param lng        必须
      * @return
      */
     @GET("generalapi/v1/map/infos")
@@ -202,4 +203,8 @@ public interface RetrofitApi {
             @Query("lat") double lat,
             @Query("lng") double lng
     );
+
+    @GET("generalapi/v1/infos/{info_id}")
+    Observable<MechanismDetailResponse> getMechanismDetailById(@Path("info_id") int mechanismId);
+
 }

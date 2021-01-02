@@ -156,7 +156,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
             public void onNext(@NonNull List<MechanismResponse> mechanismResponses) {
                 stopLoading();
                 mMapMarkerUtil.clear();
-                if (mechanismResponses != null && mechanismResponses.size() > 0) {
+                if (mechanismResponses.size() > 0) {
                     mMapMarkerUtil.addAllMechanismForMap(mechanismResponses);
                     mMapMarkerUtil.addMarkerToMap();
 
@@ -176,10 +176,12 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
      * @return 返回false表示我们尚未使用该事件，并且希望
      * 使默认行为发生，这是为了使摄像机移动以使标记居中，打开标记的信息窗口（如果有）。
      */
-    private boolean onMarkerClicked(Marker marker) {
+    public boolean onMarkerClicked(Marker marker) {
 
         // 根据marker当前的选择状态更改点击后的icon
         mMapMarkerUtil.changeMarkerStatus(marker);
+        int selectPosition = mMapMarkerUtil.getMarkerPosition(marker);
+        mViewPagerFragment.selectPosition(selectPosition);
         return false;
     }
 

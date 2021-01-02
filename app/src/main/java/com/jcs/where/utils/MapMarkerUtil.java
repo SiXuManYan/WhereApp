@@ -262,6 +262,15 @@ public class MapMarkerUtil {
         mCurrentPosition = -1;
     }
 
+    public int getMarkerPosition(Marker marker) {
+        int index = -1;
+        Object tag = marker.getTag();
+        if (tag != null) {
+            index = mMechanismsForMap.indexOf(tag);
+        }
+        return index;
+    }
+
     public void addAllMechanismForMap(List<MechanismResponse> mechanismResponses) {
         mMechanismsForMap.addAll(mechanismResponses);
     }

@@ -86,6 +86,12 @@ public class CardViewPagerFragment extends BaseFragment {
         toActivity(MechanismDetailActivity.class,new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID,String.valueOf(mechanismId)));
     }
 
+    public void selectPosition(int selectPosition) {
+        if (selectPosition > -1){
+            mViewPager.setCurrentItem(selectPosition);
+        }
+    }
+
     private class Adapter extends PagerAdapter {
 
         private final List<MechanismResponse> mData;

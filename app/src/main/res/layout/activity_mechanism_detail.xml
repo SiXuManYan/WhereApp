@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:rightFirstIcon="@drawable/ic_share_black"
+        app:rightSecondIcon="@drawable/ic_collection"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View

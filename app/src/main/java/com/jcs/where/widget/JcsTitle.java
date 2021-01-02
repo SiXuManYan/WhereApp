@@ -70,13 +70,14 @@ public class JcsTitle extends ConstraintLayout {
 
         if (mFirstRightIconRes == 0) {
             mFirstRightIv.setVisibility(GONE);
-        }else {
+        } else {
             mFirstRightIv.setImageResource(mFirstRightIconRes);
         }
 
         if (mSecondRightIconRes == 0) {
             mSecondRightIv.setVisibility(GONE);
-            mFirstRightIv.setImageResource(mSecondRightIconRes);
+        } else {
+            mSecondRightIv.setImageResource(mSecondRightIconRes);
         }
     }
 
@@ -111,6 +112,7 @@ public class JcsTitle extends ConstraintLayout {
         this.mFirstRightIconRes = firstRightIcon;
         this.mFirstRightIv.setImageResource(firstRightIcon);
     }
+
     public void setSecondRightIcon(int secondRightIcon) {
         this.mSecondRightIconRes = secondRightIcon;
         this.mSecondRightIv.setImageResource(secondRightIcon);

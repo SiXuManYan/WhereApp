@@ -228,7 +228,7 @@ public class MapMarkerUtil {
                         .draggable(false);
 
                 // 将第一个设置为选中状态
-                if (i == 0){
+                if (i == 0) {
                     markerBitmapDescriptors.setSelected(true);
                     option.icon(markerBitmapDescriptors.getSelectedBitmapDescriptor());
                 }
@@ -236,6 +236,12 @@ public class MapMarkerUtil {
                 // 在地图上绘制
                 Marker marker = mMap.addMarker(option);
                 marker.setTag(mechanismResponse);
+
+                // 初始化 mCurrentMarker
+                if (i == 0) {
+                    mCurrentMarker = marker;
+                    mCurrentPosition = i;
+                }
                 mMarkersOnMap.add(marker);
                 mDescriptors.add(markerBitmapDescriptors);
             }
@@ -260,7 +266,6 @@ public class MapMarkerUtil {
         mMechanismsForMap.addAll(mechanismResponses);
     }
 
-    //TODO bug
     public void selectMarker(int position) {
         if (mMarkersOnMap != null && mMarkersOnMap.size() >= position) {
             Marker marker = mMarkersOnMap.get(position);
@@ -281,9 +286,9 @@ public class MapMarkerUtil {
                     MarkerBitmapDescriptors currentDescriptor = mDescriptors.get(mCurrentPosition);
                     currentDescriptor.setSelected(false);
                     mCurrentMarker.setIcon(currentDescriptor.getUnselectedBitmapDescriptor());
-                } else {
-                    mCurrentMarker = marker;
                 }
+
+                mCurrentMarker = marker;
                 mCurrentPosition = position;
             }
         }

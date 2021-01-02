@@ -273,7 +273,7 @@ public class MapMarkerUtil {
                 marker.setIcon(markerBitmapDescriptors.getSelectedBitmapDescriptor());
                 if (mMap != null) {
                     // 将点击的 marker 展示在屏幕中心
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 100));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
                 }
 
                 // 重置上一次选择的marker的状态

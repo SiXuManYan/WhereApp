@@ -179,6 +179,7 @@
         <activity android:name=".government.activity.GovernmentMapActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
             />
 
     </application>

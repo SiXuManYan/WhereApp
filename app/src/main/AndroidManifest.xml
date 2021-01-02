@@ -182,6 +182,11 @@
             android:windowSoftInputMode="stateHidden"
             />
 
+        <activity android:name=".government.activity.MechanismDetailActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

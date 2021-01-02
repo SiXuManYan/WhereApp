@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide;
 import com.jcs.where.R;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.IntentEntry;
+import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class CardViewPagerFragment extends BaseFragment {
     }
 
     public void bindAllData(List<MechanismResponse> mechanismResponses) {
-        mAdapter = new Adapter(getContext());
+        mAdapter = new Adapter(getContext(), this::onPageClicked);
         mAdapter.addAllData(mechanismResponses);
         mPageAnimation = new PageAnimation();
         mViewPager.setAdapter(mAdapter);
@@ -79,14 +81,21 @@ public class CardViewPagerFragment extends BaseFragment {
         this.mPageSelectedListener = onVpPageSelectedListener;
     }
 
+    public void onPageClicked(int position) {
+        int mechanismId = mAdapter.mData.get(position).getId();
+        toActivity(MechanismDetailActivity.class,new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID,String.valueOf(mechanismId)));
+    }
+
     private class Adapter extends PagerAdapter {
 
         private final List<MechanismResponse> mData;
         private final Context mContext;
+        private OnVpPageClickedListener mOnVpPageClicked;
 
-        public Adapter(Context context) {
+        public Adapter(Context context, OnVpPageClickedListener listener) {
             mData = new ArrayList<>();
             mContext = context;
+            mOnVpPageClicked = listener;
         }
 
         public void addAllData(List<MechanismResponse> mechanismResponses) {
@@ -117,6 +126,7 @@ public class CardViewPagerFragment extends BaseFragment {
         public Object instantiateItem(ViewGroup container, int position) {
             View view = LayoutInflater.from(container.getContext())
                     .inflate(R.layout.page_mechainsm, container, false);
+            view.setTag(position);
             container.addView(view);
             bind(mData.get(position), view);
             return view;
@@ -128,6 +138,7 @@ public class CardViewPagerFragment extends BaseFragment {
         }
 
         private void bind(MechanismResponse mechanismResponse, View view) {
+            view.setOnClickListener(this::onPageClicked);
             TextView nameTv = (TextView) view.findViewById(R.id.mechanismTitleTv);
             nameTv.setText(mechanismResponse.getTitle());
             RoundedImageView photoIv = (RoundedImageView) view.findViewById(R.id.mechanismIconIv);
@@ -143,9 +154,17 @@ public class CardViewPagerFragment extends BaseFragment {
             String distance = mechanismResponse.getDistance() + "Km";
             distanceTv.setText(distance);
         }
+
+        public void onPageClicked(View view) {
+            mOnVpPageClicked.onPageClicked((int) view.getTag());
+        }
     }
 
     public interface OnVpPageSelectedListener {
         void onPageSelected(int position);
+    }
+
+    public interface OnVpPageClickedListener {
+        void onPageClicked(int position);
     }
 }

@@ -8,10 +8,12 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jcs.where.R;
@@ -30,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MapMarkerUtil {
     private Marker mCurrentMarker;
     private int mCurrentPosition;
+    private GoogleMap mMap;
     /**
      * 存储展示在地图上的数据
      */
@@ -44,6 +47,8 @@ public class MapMarkerUtil {
      */
     private List<MarkerBitmapDescriptors> mDescriptors;
 
+    private LatLngBounds mLatLngBounds;
+    private LatLngBounds.Builder mLatLngBoundsBuilder;
     private BaseActivity mContext;
 
     public MapMarkerUtil(BaseActivity context) {
@@ -51,6 +56,11 @@ public class MapMarkerUtil {
         mDescriptors = new ArrayList<>();
         mMarkersOnMap = new ArrayList<>();
         mContext = context;
+        mLatLngBoundsBuilder = new LatLngBounds.Builder();
+    }
+
+    public void setMap(GoogleMap map) {
+        this.mMap = map;
     }
 
     public View getMarkerView() {
@@ -194,7 +204,7 @@ public class MapMarkerUtil {
     /**
      * 向map上添加marker
      */
-    public void addMarkerToMap(GoogleMap googleMap) {
+    public void addMarkerToMap() {
         int size = mMechanismsForMap.size();
         for (int i = 0; i < size; i++) {
             MechanismResponse mechanismResponse = mMechanismsForMap.get(i);
@@ -202,6 +212,8 @@ public class MapMarkerUtil {
                 // 向map上添加marker
                 LatLng latLng = new LatLng(mechanismResponse.getLat(), mechanismResponse.getLng());
 
+                // 将坐标点保存到 bounders 中，用于设置最佳的 map zoom
+                mLatLngBoundsBuilder.include(latLng);
                 TextView markerView = (TextView) getMarkerView();
                 markerView.setText(mechanismResponse.getTitle());
                 MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
@@ -214,12 +226,15 @@ public class MapMarkerUtil {
                         .zIndex(4)
                         .draggable(false);
                 // 在地图上绘制
-                Marker marker = googleMap.addMarker(option);
+                Marker marker = mMap.addMarker(option);
                 marker.setTag(mechanismResponse);
                 mMarkersOnMap.add(marker);
                 mDescriptors.add(markerBitmapDescriptors);
             }
         }
+
+        mLatLngBounds = mLatLngBoundsBuilder.build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mLatLngBounds, 100));
     }
 
     /**
@@ -237,24 +252,28 @@ public class MapMarkerUtil {
         mMechanismsForMap.addAll(mechanismResponses);
     }
 
-    //TODO bug，另外要将选中的marker置于屏幕中央
+    //TODO bug
     public void selectMarker(int position) {
         if (mMarkersOnMap != null && mMarkersOnMap.size() >= position) {
             Marker marker = mMarkersOnMap.get(position);
-            if(mCurrentMarker != null && mCurrentMarker.getTag() == marker.getTag()){
+            if (mCurrentMarker != null && mCurrentMarker.getTag() == marker.getTag()) {
                 // 已经被选中了，什么都不需要执行
-            }else {
+            } else {
                 // 对应 position 位置的marker未被选中，则应该选中
                 MarkerBitmapDescriptors markerBitmapDescriptors = mDescriptors.get(position);
                 markerBitmapDescriptors.setSelected(true);
                 marker.setIcon(markerBitmapDescriptors.getSelectedBitmapDescriptor());
+                if (mMap != null) {
+                    // 将点击的 marker 展示在屏幕中心
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 100));
+                }
 
                 // 重置上一次选择的marker的状态
                 if (mCurrentMarker != null) {
                     MarkerBitmapDescriptors currentDescriptor = mDescriptors.get(mCurrentPosition);
                     currentDescriptor.setSelected(false);
                     mCurrentMarker.setIcon(currentDescriptor.getUnselectedBitmapDescriptor());
-                }else {
+                } else {
                     mCurrentMarker = marker;
                 }
                 mCurrentPosition = position;

@@ -140,6 +140,8 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
+        mMapMarkerUtil.setMap(mGoogleMap);
+
         // 获取要展示在地图上的数据
         showLoading();
         // 获得展示在地图上的数据
@@ -156,7 +158,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 mMapMarkerUtil.clear();
                 if (mechanismResponses != null && mechanismResponses.size() > 0) {
                     mMapMarkerUtil.addAllMechanismForMap(mechanismResponses);
-                    mMapMarkerUtil.addMarkerToMap(mGoogleMap);
+                    mMapMarkerUtil.addMarkerToMap();
 
                     mViewPagerFragment.bindAllData(mechanismResponses);
                 }

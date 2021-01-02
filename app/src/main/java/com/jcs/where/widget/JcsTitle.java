@@ -14,14 +14,17 @@ import com.jcs.where.R;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class JcsTitle extends ConstraintLayout {
-    private String middleTitle = "";
-    private int middleTitleColor = -1;
-    private boolean showBackIv = true;
-    private int backIconRes = -1;
-    private boolean showBottomLine = false;
+    private String mMiddleTitle = "";
+    private int mMiddleTitleColor = -1;
+    private boolean mShowBackIv = true;
+    private int mBackIconRes = -1;
+    private int mFirstRightIconRes = -1;
+    private int mSecondRightIconRes = -1;
+    private boolean mShowBottomLine = false;
     private ImageView mBackIv;
     private View mBottomLine;
     private TextView mMiddleTitleTv;
+    private ImageView mFirstRightIv, mSecondRightIv;
 
     public JcsTitle(Context context) {
         this(context, null, 0);
@@ -34,11 +37,13 @@ public class JcsTitle extends ConstraintLayout {
     public JcsTitle(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.JcsTitle);
-        middleTitle = array.getString(R.styleable.JcsTitle_middleTitle);
-        middleTitleColor = array.getColor(R.styleable.JcsTitle_middleTitleColor, Color.parseColor("#333333"));
-        showBackIv = array.getBoolean(R.styleable.JcsTitle_showBackIv, true);
-        backIconRes = array.getResourceId(R.styleable.JcsTitle_backIcon, R.drawable.ic_back_black);
-        showBottomLine = array.getBoolean(R.styleable.JcsTitle_showBottomLine, false);
+        mMiddleTitle = array.getString(R.styleable.JcsTitle_middleTitle);
+        mMiddleTitleColor = array.getColor(R.styleable.JcsTitle_middleTitleColor, Color.parseColor("#333333"));
+        mShowBackIv = array.getBoolean(R.styleable.JcsTitle_showBackIv, true);
+        mBackIconRes = array.getResourceId(R.styleable.JcsTitle_backIcon, R.drawable.ic_back_black);
+        mFirstRightIconRes = array.getResourceId(R.styleable.JcsTitle_rightFirstIcon, 0);
+        mSecondRightIconRes = array.getResourceId(R.styleable.JcsTitle_rightSecondIcon, 0);
+        mShowBottomLine = array.getBoolean(R.styleable.JcsTitle_showBottomLine, false);
 
         array.recycle();
         initView(context);
@@ -48,17 +53,30 @@ public class JcsTitle extends ConstraintLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.widget_jcs_title, this);
         mBottomLine = view.findViewById(R.id.bottomLine);
         mBackIv = view.findViewById(R.id.backIv);
-        mBackIv.setImageResource(backIconRes);
+        mBackIv.setImageResource(mBackIconRes);
         mMiddleTitleTv = view.findViewById(R.id.middleTitle);
-        mMiddleTitleTv.setText(middleTitle);
-        mMiddleTitleTv.setTextColor(middleTitleColor);
+        mMiddleTitleTv.setText(mMiddleTitle);
+        mMiddleTitleTv.setTextColor(mMiddleTitleColor);
+        mFirstRightIv = view.findViewById(R.id.firstRightIv);
+        mSecondRightIv = view.findViewById(R.id.secondRightIv);
 
-        if (!showBackIv) {
+        if (!mShowBackIv) {
             mBackIv.setVisibility(GONE);
         }
 
-        if (showBottomLine) {
+        if (mShowBottomLine) {
             mBottomLine.setVisibility(VISIBLE);
+        }
+
+        if (mFirstRightIconRes == 0) {
+            mFirstRightIv.setVisibility(GONE);
+        }else {
+            mFirstRightIv.setImageResource(mFirstRightIconRes);
+        }
+
+        if (mSecondRightIconRes == 0) {
+            mSecondRightIv.setVisibility(GONE);
+            mFirstRightIv.setImageResource(mSecondRightIconRes);
         }
     }
 
@@ -66,19 +84,36 @@ public class JcsTitle extends ConstraintLayout {
         mBackIv.setOnClickListener(listener);
     }
 
+    public void setFirstRightIvClickListener(View.OnClickListener listener) {
+        mFirstRightIv.setOnClickListener(listener);
+    }
+
+    public void setSecondRightIvClickListener(View.OnClickListener listener) {
+        mSecondRightIv.setOnClickListener(listener);
+    }
+
     public void setMiddleTitle(String middleTitle) {
-        this.middleTitle = middleTitle;
+        this.mMiddleTitle = middleTitle;
         this.mMiddleTitleTv.setText(middleTitle);
     }
 
     public void setMiddleTitleColor(int color) {
-        this.middleTitleColor = color;
-        this.mMiddleTitleTv.setTextColor(middleTitleColor);
+        this.mMiddleTitleColor = color;
+        this.mMiddleTitleTv.setTextColor(mMiddleTitleColor);
     }
 
     public void setBackIcon(int backIconRes) {
-        this.backIconRes = backIconRes;
+        this.mBackIconRes = backIconRes;
         this.mBackIv.setImageResource(backIconRes);
+    }
+
+    public void setFirstRightIcon(int firstRightIcon) {
+        this.mFirstRightIconRes = firstRightIcon;
+        this.mFirstRightIv.setImageResource(firstRightIcon);
+    }
+    public void setSecondRightIcon(int secondRightIcon) {
+        this.mSecondRightIconRes = secondRightIcon;
+        this.mSecondRightIv.setImageResource(secondRightIcon);
     }
 
 }

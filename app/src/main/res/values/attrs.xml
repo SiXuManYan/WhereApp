@@ -45,6 +45,8 @@
         <attr name="middleTitle" format="string|reference" />
         <attr name="middleTitleColor" format="color|reference" />
         <attr name="backIcon" format="reference" />
+        <attr name="rightFirstIcon" format="reference" />
+        <attr name="rightSecondIcon" format="reference" />
         <attr name="showBackIv" format="boolean" />
         <attr name="showBottomLine" format="boolean" />
     </declare-styleable>

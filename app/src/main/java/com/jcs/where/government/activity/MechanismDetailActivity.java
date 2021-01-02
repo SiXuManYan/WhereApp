@@ -1,16 +1,19 @@
 package com.jcs.where.government.activity;
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
+import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.model.MechanismDetailModel;
 
 import io.reactivex.annotations.NonNull;
+import retrofit2.Response;
 
 /**
  * 机构详情页
@@ -68,13 +71,8 @@ public class MechanismDetailActivity extends BaseActivity {
                 public void onNext(@NonNull MechanismDetailResponse response) {
                     stopLoading();
                     mMechanismDetailResponse = response;
-                    if (mMechanismDetailResponse != null) {
-
-                        // 配制数据
-                        injectResponseToView();
-
-
-                    }
+                    // 配置数据
+                    injectResponseToView();
                 }
             });
         } else {
@@ -84,7 +82,55 @@ public class MechanismDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
+        mJcsTitle.setSecondRightIvClickListener(this::onJcsSecondRightClicked);
+    }
 
+    public void onJcsSecondRightClicked(View view) {
+        showLoading();
+        int collectStatus = mMechanismDetailResponse.getCollect_status();
+        if (collectStatus == STATUS_UNCOLLECTED) {
+            // 状态是未收藏，点击后收藏该机构
+            toCollect();
+        } else {
+            // 状态是已收藏，点击后取消收藏该机构
+            toDelCollect();
+        }
+    }
+
+    private void toDelCollect() {
+        mModel.delCollectMechanism(mMechanismId, new BaseObserver<Response<SuccessResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NonNull Response<SuccessResponse> successResponseResponse) {
+                stopLoading();
+                // 取消收藏成功
+                mJcsTitle.setSecondRightIcon(R.mipmap.ic_uncollected_black);
+                mMechanismDetailResponse.setCollect_status(STATUS_UNCOLLECTED);
+            }
+        });
+    }
+
+    private void toCollect() {
+        mModel.postCollectMechanism(mMechanismId, new BaseObserver<Response<SuccessResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NonNull Response<SuccessResponse> successResponseResponse) {
+                stopLoading();
+                // 收藏成功
+                mJcsTitle.setSecondRightIcon(R.mipmap.ic_collected_red);
+                mMechanismDetailResponse.setCollect_status(STATUS_COLLECTED);
+            }
+        });
     }
 
     private void deployJcsTitle() {
@@ -155,6 +201,11 @@ public class MechanismDetailActivity extends BaseActivity {
         String startTime = mMechanismDetailResponse.getStart_time();
         String endTime = mMechanismDetailResponse.getEnd_time();
         return startTime + "-" + endTime;
+    }
+
+    @Override
+    protected boolean isStatusDark() {
+        return true;
     }
 
     @Override

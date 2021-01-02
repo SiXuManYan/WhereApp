@@ -204,7 +204,24 @@ public interface RetrofitApi {
             @Query("lng") double lng
     );
 
+    /**
+     * 根据机构id，获取机构详情
+     * @param mechanismId 机构id
+     */
     @GET("generalapi/v1/infos/{info_id}")
     Observable<MechanismDetailResponse> getMechanismDetailById(@Path("info_id") int mechanismId);
 
+    /**
+     * 收藏机构
+     * @param mechanismId 机构id
+     */
+    @GET("generalapi/v1/collects")
+    Observable<Response<SuccessResponse>> postCollectMechanism(@Query("info_id") int mechanismId);
+
+    /**
+     * 取消收藏机构
+     * @param mechanismId 机构id
+     */
+    @GET("generalapi/v1/collects")
+    Observable<Response<SuccessResponse>> delCollectMechanism(@Query("info_id") int mechanismId);
 }

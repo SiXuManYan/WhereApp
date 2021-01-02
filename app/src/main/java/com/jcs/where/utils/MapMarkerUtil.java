@@ -220,11 +220,19 @@ public class MapMarkerUtil {
                 markerBitmapDescriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
                 markerBitmapDescriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
 
+
                 MarkerOptions option = new MarkerOptions()
                         .position(latLng)
                         .icon(markerBitmapDescriptors.getUnselectedBitmapDescriptor())
                         .zIndex(4)
                         .draggable(false);
+
+                // 将第一个设置为选中状态
+                if (i == 0){
+                    markerBitmapDescriptors.setSelected(true);
+                    option.icon(markerBitmapDescriptors.getSelectedBitmapDescriptor());
+                }
+
                 // 在地图上绘制
                 Marker marker = mMap.addMarker(option);
                 marker.setTag(mechanismResponse);

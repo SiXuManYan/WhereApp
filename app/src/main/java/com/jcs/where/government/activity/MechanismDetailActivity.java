@@ -10,6 +10,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.government.dialog.CallPhoneDialog;
 import com.jcs.where.government.model.MechanismDetailModel;
 
 import io.reactivex.annotations.NonNull;
@@ -26,6 +27,9 @@ public class MechanismDetailActivity extends BaseActivity {
 
     private TextView mBusinessWeekTv, mBusinessTimeTv, mTelTv,
             mWebsiteTv, mEmailTv, mFacebookTv, mAddressTv, mIntroduceTv;
+    private View mToCallView, mToNavigationView;
+
+    private CallPhoneDialog mCallDialog;
 
     private int mMechanismId;
     private MechanismDetailModel mModel;
@@ -42,11 +46,15 @@ public class MechanismDetailActivity extends BaseActivity {
         mFacebookTv = findViewById(R.id.facebookTv);
         mAddressTv = findViewById(R.id.addressTv);
         mIntroduceTv = findViewById(R.id.introduceTv);
+
+        mToCallView = findViewById(R.id.toCallView);
+        mToNavigationView = findViewById(R.id.toNavigationView);
     }
 
     @Override
     protected void initData() {
         mModel = new MechanismDetailModel();
+        mCallDialog = new CallPhoneDialog();
         Intent intent = getIntent();
         String temp = intent.getStringExtra(K_MECHANISM_ID);
         if (temp != null) {
@@ -82,9 +90,41 @@ public class MechanismDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
+        mJcsTitle.setSecondRightIvClickListener(this::onJcsFirstRightClicked);
         mJcsTitle.setSecondRightIvClickListener(this::onJcsSecondRightClicked);
+        mToCallView.setOnClickListener(this::onToCallClicked);
+        mToNavigationView.setOnClickListener(this::onToNavigationClicked);
     }
 
+    /**
+     * 导航
+     */
+    public void onToNavigationClicked(View view) {
+
+    }
+
+    /**
+     * 拨打电话
+     */
+    public void onToCallClicked(View view) {
+        String tel = mMechanismDetailResponse.getTel();
+        if (tel != null && !tel.isEmpty()) {
+            mCallDialog.show(getSupportFragmentManager());
+        } else {
+            showToast(getString(R.string.not_provide_tel_number));
+        }
+    }
+
+    /**
+     * 对应当前页面的 分享
+     */
+    public void onJcsFirstRightClicked(View view) {
+
+    }
+
+    /**
+     * 对应当前页面的 收藏
+     */
     public void onJcsSecondRightClicked(View view) {
         showLoading();
         int collectStatus = mMechanismDetailResponse.getCollect_status();
@@ -156,6 +196,7 @@ public class MechanismDetailActivity extends BaseActivity {
         if (tel != null && !tel.isEmpty()) {
             String telStr = "：" + tel;
             mTelTv.setText(telStr);
+            mCallDialog.setPhoneNumber(tel);
         }
 
         String website = mMechanismDetailResponse.getWeb_site();

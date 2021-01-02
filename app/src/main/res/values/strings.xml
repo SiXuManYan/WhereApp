@@ -103,5 +103,7 @@
     <string name="navigation">导航</string>
     <string name="mechanism_introduce">机构介绍</string>
     <string name="no_introduce">暂无介绍</string>
+    <string name="call">呼叫</string>
+    <string name="not_provide_tel_number">未提供电话号码</string>
 
 </resources>

@@ -65,4 +65,6 @@
     <dimen name="dp_105">105dp</dimen>
     <dimen name="dp_305">305dp</dimen>
     <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_165">165dp</dimen>
+    <dimen name="dp_17">17dp</dimen>
 </resources>

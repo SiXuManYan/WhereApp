@@ -93,5 +93,15 @@
     <string name="prompt_input_government_name">输入机构名称</string>
     <string name="all">全部</string>
     <string name="title_select_city">城市选择</string>
+    <string name="government_name">政府名字</string>
+    <string name="business_hour">营业时间</string>
+    <string name="extension_number">分机号码</string>
+    <string name="website">网站</string>
+    <string name="email">邮箱</string>
+    <string name="facebook">Facebook</string>
+    <string name="telephone">电话</string>
+    <string name="navigation">导航</string>
+    <string name="mechanism_introduce">机构介绍</string>
+    <string name="no_introduce">暂无介绍</string>
 
 </resources>

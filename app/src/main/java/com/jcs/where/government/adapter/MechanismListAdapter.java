@@ -24,7 +24,20 @@ public class MechanismListAdapter extends BaseQuickAdapter<MechanismResponse, Ba
     protected void convert(@NotNull BaseViewHolder baseViewHolder, MechanismResponse mechanismResponse) {
         baseViewHolder.setText(R.id.mechanismTitleTv, mechanismResponse.getTitle());
         baseViewHolder.setText(R.id.mechanismAddressTv, mechanismResponse.getAddress());
-        baseViewHolder.setText(R.id.mechanismDistanceTv, mechanismResponse.getDistance() + "km");
+        String distanceStr = mechanismResponse.getDistance();
+        int distance = 0;
+        if (distanceStr != null && !distanceStr.isEmpty()) {
+            try {
+                distance = Integer.parseInt(distanceStr);
+            } catch (NumberFormatException e) {
+            }
+        }
+        if (distance == 0) {
+            baseViewHolder.setVisible(R.id.mechanismDistanceTv, false);
+        } else {
+            baseViewHolder.setVisible(R.id.mechanismDistanceTv, true);
+            baseViewHolder.setText(R.id.mechanismDistanceTv, distance + "km");
+        }
         ImageView mechanismIconIv = baseViewHolder.findView(R.id.mechanismIconIv);
         List<String> images = mechanismResponse.getImages();
         if (images != null && images.size() > 0) {

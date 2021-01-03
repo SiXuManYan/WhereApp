@@ -371,7 +371,16 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 toActivity(GovernmentMapActivity.class);
                 break;
             case 2:
-                toActivity(YellowPageActivity.class);
+                // 跳转到企业黄页
+                Intent toYellowPage = new Intent(getContext(), YellowPageActivity.class);
+
+                // 传递企业黄页下级分类id
+                ArrayList<Integer> categories = (ArrayList<Integer>) item.getCategories();
+                toYellowPage.putIntegerArrayListExtra(YellowPageActivity.K_CATEGORIES, categories);
+
+                // 传递企业黄页的id
+                toYellowPage.putExtra(YellowPageActivity.K_ID, String.valueOf(item.getId()));
+                startActivity(toYellowPage);
                 break;
             case 3:
                 Intent toTravelStay = new Intent(getContext(), TravelStayActivity.class);

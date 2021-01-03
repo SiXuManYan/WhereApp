@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TravelStayModel extends BaseModel {
     public void getCategories(int level, int[] categories, BaseObserver<List<CategoryResponse>> observer) {
-        dealResponse(mRetrofit.getCategories(level, categories), observer);
+        dealResponse(mRetrofit.getCategories(level, String.valueOf(categories)), observer);
     }
 
     public void getYouLike(BaseObserver<List<HotelResponse>> observer) {

@@ -67,4 +67,5 @@
     <dimen name="dp_200">200dp</dimen>
     <dimen name="dp_165">165dp</dimen>
     <dimen name="dp_17">17dp</dimen>
+    <dimen name="dp_286">286dp</dimen>
 </resources>

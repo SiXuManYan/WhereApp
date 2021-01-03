@@ -16,7 +16,7 @@ public class CategoryModel extends BaseModel {
      * 获得分类页面TabLayout展示的一级分类
      */
     public void getCategories(BaseObserver<List<CategoryResponse>> observer) {
-        dealResponse(mRetrofit.getCategories(1, new int[]{0}), observer);
+        dealResponse(mRetrofit.getCategories(String.valueOf(0)), observer);
     }
 
     /**

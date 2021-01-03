@@ -15,7 +15,7 @@ public class GovernmentMapModel extends BaseModel {
      * 获得页面TabLayout展示的二级分类
      */
     public void getCategories(BaseObserver<List<CategoryResponse>> observer) {
-        dealResponse(mRetrofit.getCategories(2, new int[]{1}), observer);
+        dealResponse(mRetrofit.getCategories(2, String.valueOf(1)), observer);
     }
 
     /**

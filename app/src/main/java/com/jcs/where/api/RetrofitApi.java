@@ -22,6 +22,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -50,7 +51,17 @@ public interface RetrofitApi {
      * @return 分类列表
      */
     @GET("commonapi/v1/categories")
-    Observable<List<CategoryResponse>> getCategories(@Query("level") int level, @Query("pid") int[] categories);
+    Observable<List<CategoryResponse>> getCategories(@Query("level") int level, @Query("pid") String categories);
+
+    /**
+     * 根据一个分类id集合，获得对应的分类数据
+     * 默认传递一个 level=1 的参数，表示一级分类
+     *
+     * @param categories 分类id集合转化成的字符串
+     * @return 分类列表
+     */
+    @GET("commonapi/v1/categories?level=1")
+    Observable<List<CategoryResponse>> getCategories(@Query("pid") String categories);
 
     /**
      * 获得CategoryFragment页面展示的一级二级分类数据
@@ -183,7 +194,7 @@ public interface RetrofitApi {
      * @return
      */
     @GET("generalapi/v1/infos")
-    Observable<MechanismPageResponse> getMechanismListById(@Query("cate_id") int categoryId, @Query("search_input") String search);
+    Observable<MechanismPageResponse> getMechanismListById(@Query("cate_id") String categoryId, @Query("search_input") String search);
 
     /**
      * 获得展示在地图上的机构数据

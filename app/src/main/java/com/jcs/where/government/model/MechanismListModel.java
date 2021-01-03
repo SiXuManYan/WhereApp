@@ -12,7 +12,8 @@ import java.util.List;
  */
 public class MechanismListModel extends BaseModel {
     public void getMechanismList(int category, BaseObserver<MechanismPageResponse> observer) {
-        dealResponse(mRetrofit.getMechanismListById(category, ""), observer);
+
+        dealResponse(mRetrofit.getMechanismListById(String.valueOf(category), ""), observer);
     }
 
     /**
@@ -20,6 +21,6 @@ public class MechanismListModel extends BaseModel {
      */
     public void getChildCategories(int level, int categoryId, BaseObserver<List<CategoryResponse>> observer) {
         // level 3，表示3级分类
-        dealResponse(mRetrofit.getCategories(level, new int[]{categoryId}), observer);
+        dealResponse(mRetrofit.getCategories(level, String.valueOf(categoryId)), observer);
     }
 }

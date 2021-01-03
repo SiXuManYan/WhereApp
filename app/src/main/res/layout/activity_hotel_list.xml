@@ -65,7 +65,7 @@
         android:layout_height="@dimen/dp_20"
         android:layout_centerVertical="true"
         android:layout_marginStart="15dp"
-        android:src="@mipmap/ic_hotel_search"
+        android:src="@mipmap/ic_search_black"
         app:layout_constraintBottom_toBottomOf="@id/searchBg"
         app:layout_constraintStart_toEndOf="@id/whiteLine"
         app:layout_constraintTop_toTopOf="@id/searchBg" />

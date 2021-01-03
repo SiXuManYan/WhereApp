@@ -48,6 +48,7 @@ import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
+import com.jcs.where.yellow_page.activity.YellowPageActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -370,7 +371,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 toActivity(GovernmentMapActivity.class);
                 break;
             case 2:
-                showToast("三级联动筛选的综合服务页面");
+                toActivity(YellowPageActivity.class);
                 break;
             case 3:
                 Intent toTravelStay = new Intent(getContext(), TravelStayActivity.class);

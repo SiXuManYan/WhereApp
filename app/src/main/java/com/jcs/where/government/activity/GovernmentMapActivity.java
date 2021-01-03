@@ -266,6 +266,11 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_government_map;
     }

@@ -1,5 +1,7 @@
 package com.jcs.where.yellow_page.model;
 
+import android.util.Log;
+
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.CategoryResponse;
@@ -45,11 +47,11 @@ public class YellowPageModel extends BaseModel {
         dealResponse(mRetrofit.getCategories(2, String.valueOf(categoryId)), observer);
     }
 
-    public void getInitData(List<Integer> categoryIds, BaseObserver<YellowPageZipResponse> observer) {
+    public void getInitData(String categoryIds, BaseObserver<YellowPageZipResponse> observer) {
 
-        Observable<MechanismPageResponse> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds.toString(), "");
+        Observable<MechanismPageResponse> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "");
         // 获取一级分类
-        Observable<List<CategoryResponse>> categoriesObservable = mRetrofit.getCategories(1, categoryIds.toString());
+        Observable<List<CategoryResponse>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
         Observable<YellowPageZipResponse> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<MechanismPageResponse, List<CategoryResponse>, YellowPageZipResponse>() {
             @NonNull
             @Override

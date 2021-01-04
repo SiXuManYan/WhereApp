@@ -22,6 +22,7 @@ public class CategoryResponse extends BaseNode implements Serializable {
     private int has_children;
     private int type;
     private String icon;
+    private List<CategoryResponse> child_categories;
 
     public int getId() {
         return id;
@@ -61,6 +62,14 @@ public class CategoryResponse extends BaseNode implements Serializable {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public List<CategoryResponse> getChild_categories() {
+        return child_categories;
+    }
+
+    public void setChild_categories(List<CategoryResponse> child_categories) {
+        this.child_categories = child_categories;
     }
 
     @Nullable

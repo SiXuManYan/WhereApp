@@ -39,8 +39,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
-
-        changeStatusTextColor();
         setContentView(getLayoutId());
         mJcsTitle = findViewById(R.id.jcsTitle);
         if (mJcsTitle != null) {
@@ -56,6 +54,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         bindListener();
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        changeStatusTextColor();
     }
 
     private void changeStatusTextColor() {

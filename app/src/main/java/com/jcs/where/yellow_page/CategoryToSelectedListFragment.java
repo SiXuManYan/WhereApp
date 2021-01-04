@@ -30,6 +30,8 @@ public class CategoryToSelectedListFragment extends BaseFragment {
      * index = 2：三级分类选中的item
      */
     private List<Integer> mSelectPosition;
+    private List<CategoryResponse> mTotalCategories;
+    private String mFirstLevelTotalIds = "";
     public static final int LEVEL_FIRST = 1;
     public static final int LEVEL_SECOND = 2;
     public static final int LEVEL_THIRD = 3;
@@ -91,6 +93,14 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         mLevel = level;
     }
 
+    public void setTotalCategories(List<CategoryResponse> totalCategories) {
+        this.mTotalCategories = totalCategories;
+    }
+
+    public void setFirstLevelTotalIds(String firstLevelTotalIds) {
+        this.mFirstLevelTotalIds = firstLevelTotalIds;
+    }
+
     public void setListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
@@ -115,18 +125,48 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         return mLevel == -1;
     }
 
-    public int getSelectFirst(){
+    public int getSelectFirstPosition(){
         return mSelectPosition.get(0);
     }
     
-    public int getSelectSecond(){
+    public int getSelectSecondPosition(){
         return mSelectPosition.get(1);
     }
     
-    public int getSelectThird(){
+    public int getSelectThirdPosition(){
         return mSelectPosition.get(2);
     }
-    
+
+    public CategoryResponse getSelectFirstCate(){
+        return mTotalCategories.get(getSelectFirstPosition());
+    }
+
+    public CategoryResponse getSelectSecondCate(){
+        return getSelectFirstCate().getChild_categories().get(getSelectSecondPosition());
+    }
+
+    public CategoryResponse getSelectThirdCate(){
+        return getSelectSecondCate().getChild_categories().get(getSelectThirdPosition());
+    }
+
+    /**
+     * 获得当前分类id
+     *
+     * @return 分类id字符串，可能是 "1" "[1,2,3]"
+     */
+    public String getCurrentCategoryId(){
+        switch (mLevel) {
+            case LEVEL_FIRST:
+                return String.valueOf(getSelectFirstCate().getId());
+            case LEVEL_SECOND:
+                return String.valueOf(getSelectSecondCate().getId());
+            case LEVEL_THIRD:
+                return String.valueOf(getSelectThirdCate().getId());
+        }
+
+        return mFirstLevelTotalIds;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragmeng_category_list;
@@ -175,9 +215,11 @@ public class CategoryToSelectedListFragment extends BaseFragment {
 
             // 选中状态的item
             if (selectedPosition != null && baseViewHolder.getAdapterPosition() == selectedPosition) {
+                baseViewHolder.setTextColor(R.id.categoryTitleTv,getContext().getColor(R.color.blue_4D9FF2));
                 baseViewHolder.setGone(R.id.categoryCheckedIcon, false);
             } else {
                 baseViewHolder.setGone(R.id.categoryCheckedIcon, true);
+                baseViewHolder.setTextColor(R.id.categoryTitleTv,getContext().getColor(R.color.black_333333));
             }
         }
     }

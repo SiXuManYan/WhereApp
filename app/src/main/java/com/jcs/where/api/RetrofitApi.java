@@ -54,6 +54,16 @@ public interface RetrofitApi {
     Observable<List<CategoryResponse>> getCategories(@Query("level") int level, @Query("pid") String categories);
 
     /**
+     * 获得分类列表
+     *
+     * @param level      分类级别
+     * @param categories parentId 上级分类的id
+     * @return 分类列表
+     */
+    @GET("commonapi/v1/categories?type=2")
+    Observable<List<CategoryResponse>> getAllChildCategories(@Query("level") int level, @Query("pid") String categories);
+
+    /**
      * 根据一个分类id集合，获得对应的分类数据
      * 默认传递一个 level=1 的参数，表示一级分类
      *

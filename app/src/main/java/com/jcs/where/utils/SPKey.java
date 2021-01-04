@@ -5,4 +5,5 @@ package com.jcs.where.utils;
  */
 public final class SPKey {
     public static final String K_AREA_ID = "k_area_id";
+    public static final String K_YELLOW_PAGE_CATEGORIES = "k_yellow_page_categories";
 }

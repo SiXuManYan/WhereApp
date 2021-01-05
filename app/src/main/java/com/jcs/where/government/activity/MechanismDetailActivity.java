@@ -16,6 +16,7 @@ import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.government.model.MechanismDetailModel;
 import com.jcs.where.widget.JcsBanner;
 
+import androidx.constraintlayout.widget.Group;
 import io.reactivex.annotations.NonNull;
 import retrofit2.Response;
 
@@ -28,9 +29,10 @@ public class MechanismDetailActivity extends BaseActivity {
     private final int STATUS_UNCOLLECTED = 1;
     private final int STATUS_COLLECTED = 2;
 
-    private TextView mBusinessWeekTv, mBusinessTimeTv, mTelTv,
+    private TextView mMechanismTitleTv, mBusinessWeekTv, mBusinessTimeTv, mTelTv,
             mWebsiteTv, mEmailTv, mFacebookTv, mAddressTv, mIntroduceTv;
     private View mToCallView, mToNavigationView;
+    private Group mTelGroup, mWebsiteGroup, mEmailGroup, mFacebookGroup;
     private JcsBanner mJcsBanner;
 
     private CallPhoneDialog mCallDialog;
@@ -43,6 +45,12 @@ public class MechanismDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mTelGroup = findViewById(R.id.telGroup);
+        mWebsiteGroup = findViewById(R.id.websiteGroup);
+        mEmailGroup = findViewById(R.id.emailGroup);
+        mFacebookGroup = findViewById(R.id.facebookGroup);
+
+        mMechanismTitleTv = findViewById(R.id.mechanismTitleTv);
         mBusinessWeekTv = findViewById(R.id.businessWeekTv);
         mBusinessTimeTv = findViewById(R.id.businessTimeTv);
         mTelTv = findViewById(R.id.telTv);
@@ -201,6 +209,8 @@ public class MechanismDetailActivity extends BaseActivity {
         // title 设置
         deployJcsTitle();
 
+        mMechanismTitleTv.setText(mMechanismDetailResponse.getTitle());
+
         // 周一至周五营业
         mBusinessWeekTv.setText(getBusinessWeek());
 
@@ -212,24 +222,32 @@ public class MechanismDetailActivity extends BaseActivity {
             String telStr = "：" + tel;
             mTelTv.setText(telStr);
             mCallDialog.setPhoneNumber(tel);
+        } else {
+            mTelGroup.setVisibility(View.GONE);
         }
 
         String website = mMechanismDetailResponse.getWeb_site();
         if (website != null && !website.isEmpty()) {
             String websiteStr = "：" + website;
             mWebsiteTv.setText(websiteStr);
+        } else {
+            mWebsiteGroup.setVisibility(View.GONE);
         }
 
         String email = mMechanismDetailResponse.getEmail();
         if (email != null && !email.isEmpty()) {
             String emailStr = "：" + email;
             mEmailTv.setText(emailStr);
+        } else {
+            mEmailGroup.setVisibility(View.GONE);
         }
 
         String facebook = mMechanismDetailResponse.getFacebook();
         if (facebook != null && !facebook.isEmpty()) {
             String facebookStr = "：" + facebook;
             mFacebookTv.setText(facebookStr);
+        } else {
+            mFacebookGroup.setVisibility(View.GONE);
         }
 
         mAddressTv.setText(mMechanismDetailResponse.getAddress());

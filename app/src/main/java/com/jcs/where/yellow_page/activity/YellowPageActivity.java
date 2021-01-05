@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -14,6 +15,8 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.IntentEntry;
+import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.government.adapter.MechanismListAdapter;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
@@ -77,6 +80,8 @@ public class YellowPageActivity extends BaseActivity {
         mSwipeLayout = findViewById(R.id.swipeLayout);
         mRecyclerView = findViewById(R.id.yellowPageRecycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new MechanismListAdapter();
+        mRecyclerView.setAdapter(mAdapter);
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         mToSelectedListFragment = (CategoryToSelectedListFragment) supportFragmentManager.findFragmentById(R.id.categoryFragment);
@@ -89,8 +94,6 @@ public class YellowPageActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new YellowPageModel();
-        mAdapter = new MechanismListAdapter();
-        mRecyclerView.setAdapter(mAdapter);
         mIntent = getIntent();
 
         // 获取id
@@ -216,6 +219,13 @@ public class YellowPageActivity extends BaseActivity {
         mFirstCateTv.setOnClickListener(this::onFirstCateClicked);
 
         mSwipeLayout.setOnRefreshListener(this::onSwipeRefresh);
+
+        mAdapter.setOnItemClickListener(this::onMechanismItemClicked);
+    }
+
+    private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        MechanismResponse mechanismResponse = mAdapter.getData().get(position);
+        toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(mechanismResponse.getId())));
     }
 
     private void onSwipeRefresh() {

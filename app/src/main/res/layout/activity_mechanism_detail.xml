@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@id/jcsTitle" />
 
     <TextView
-        android:id="@+id/titlePrompt"
+        android:id="@+id/mechanismTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/government_name"
@@ -36,9 +36,9 @@
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
         android:src="@drawable/ic_hoteldetail_time"
-        app:layout_constraintTop_toBottomOf="@id/titlePrompt"
+        app:layout_constraintTop_toBottomOf="@id/mechanismTitleTv"
         android:layout_marginTop="@dimen/dp_10"
-        app:layout_constraintStart_toStartOf="@id/titlePrompt"/>
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
 
     <TextView
         android:id="@+id/timePrompt"
@@ -81,6 +81,12 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/grey_CCCCCC"/>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/telGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="telIcon,telLine,telPrompt,telTv"/>
+
     <ImageView
         android:id="@+id/telIcon"
         android:layout_width="@dimen/dp_16"
@@ -88,7 +94,7 @@
         android:src="@drawable/ic_hotelorderdetailphone"
         app:layout_constraintTop_toBottomOf="@id/timeIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/titlePrompt"/>
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
 
     <TextView
         android:id="@+id/telPrompt"
@@ -112,6 +118,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/telPrompt" />
 
     <View
+        android:id="@+id/telLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
@@ -120,6 +127,11 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/grey_CCCCCC"/>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/websiteGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="websiteIcon,websiteLine,websitePrompt,websiteTv"/>
 
     <ImageView
         android:id="@+id/websiteIcon"
@@ -128,7 +140,7 @@
         android:src="@mipmap/ic_website_black"
         app:layout_constraintTop_toBottomOf="@id/telIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/titlePrompt"/>
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
 
     <TextView
         android:id="@+id/websitePrompt"
@@ -152,6 +164,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/websitePrompt" />
 
     <View
+        android:id="@+id/websiteLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
@@ -160,6 +173,12 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/grey_CCCCCC"/>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/emailGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="emailIcon,emailPrompt,emailTv,emailLine"/>
+
     <ImageView
         android:id="@+id/emailIcon"
         android:layout_width="@dimen/dp_16"
@@ -167,7 +186,7 @@
         android:src="@mipmap/ic_email_black"
         app:layout_constraintTop_toBottomOf="@id/websiteIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/titlePrompt"/>
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
 
     <TextView
         android:id="@+id/emailPrompt"
@@ -191,6 +210,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/emailPrompt" />
 
     <View
+        android:id="@+id/emailLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
@@ -199,6 +219,12 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/grey_CCCCCC"/>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/facebookGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="facebookIcon,facebookTv,facebookPrompt,faceLine"/>
+
     <ImageView
         android:id="@+id/facebookIcon"
         android:layout_width="@dimen/dp_16"
@@ -206,7 +232,7 @@
         android:src="@mipmap/ic_facebook_black"
         app:layout_constraintTop_toBottomOf="@id/emailIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/titlePrompt"/>
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
 
     <TextView
         android:id="@+id/facebookPrompt"
@@ -230,6 +256,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/facebookPrompt" />
 
     <View
+        android:id="@+id/faceLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
@@ -246,18 +273,21 @@
         android:src="@mipmap/ic_address_black"
         app:layout_constraintTop_toBottomOf="@id/facebookIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/titlePrompt"/>
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
 
     <TextView
         android:id="@+id/addressTv"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:text="@string/email"
         android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintTop_toTopOf="@id/addressIcon"
         app:layout_constraintBottom_toBottomOf="@id/addressIcon"
         app:layout_constraintStart_toEndOf="@id/addressIcon"
+        app:layout_constraintEnd_toStartOf="@id/toNavigationView"
+        android:layout_marginEnd="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_5"/>
 
     <View

@@ -125,28 +125,41 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         return mLevel == -1;
     }
 
-    public int getSelectFirstPosition(){
+    public Integer getSelectFirstPosition(){
         return mSelectPosition.get(0);
     }
     
-    public int getSelectSecondPosition(){
+    public Integer getSelectSecondPosition(){
         return mSelectPosition.get(1);
     }
     
-    public int getSelectThirdPosition(){
+    public Integer getSelectThirdPosition(){
         return mSelectPosition.get(2);
     }
 
     public CategoryResponse getSelectFirstCate(){
-        return mTotalCategories.get(getSelectFirstPosition());
+        Integer selectFirstPosition = getSelectFirstPosition();
+        if (selectFirstPosition == null) {
+            return null;
+        }
+        return mTotalCategories.get(selectFirstPosition);
     }
 
     public CategoryResponse getSelectSecondCate(){
-        return getSelectFirstCate().getChild_categories().get(getSelectSecondPosition());
+        CategoryResponse selectFirstCate = getSelectFirstCate();
+        Integer selectSecondPosition = getSelectSecondPosition();
+        if (selectFirstCate == null || selectSecondPosition == null) {
+            return null;
+        }
+        return selectFirstCate.getChild_categories().get(selectSecondPosition);
     }
 
     public CategoryResponse getSelectThirdCate(){
-        return getSelectSecondCate().getChild_categories().get(getSelectThirdPosition());
+        CategoryResponse selectSecondCate = getSelectSecondCate();
+        if (selectSecondCate == null) {
+            return null;
+        }
+        return selectSecondCate.getChild_categories().get(getSelectThirdPosition());
     }
 
     /**

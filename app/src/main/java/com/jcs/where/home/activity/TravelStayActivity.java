@@ -111,19 +111,9 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
     }
 
     private void getCategories(int level, ArrayList<Integer> categories) {
-        int s = categories.size();
-        int[] c = new int[s];
-        for (int i = 0; i < s; i++) {
-            c[i] = categories.get(i);
-            Log.e("TravelStayActivity", "----getCategories---c[i]=" + c[i]);
-        }
-        mModel.getCategories(level, c, new BaseObserver<List<CategoryResponse>>() {
+        mModel.getCategories(level, categories, new BaseObserver<List<CategoryResponse>>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull List<CategoryResponse> categoryResponses) {
-                Log.e("TravelStayActivity", "----onNext---");
-                for (int i = 0; i < categoryResponses.size(); i++) {
-                    Log.e("TravelStayActivity", "----onNext---" + categoryResponses.get(i).getName());
-                }
                 mModulesCategoryAdapter.getData().clear();
                 mModulesCategoryAdapter.addData(categoryResponses);
             }

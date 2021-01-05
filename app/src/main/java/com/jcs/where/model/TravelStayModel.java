@@ -9,8 +9,8 @@ import com.jcs.where.api.response.HotelResponse;
 import java.util.List;
 
 public class TravelStayModel extends BaseModel {
-    public void getCategories(int level, int[] categories, BaseObserver<List<CategoryResponse>> observer) {
-        dealResponse(mRetrofit.getCategories(level, String.valueOf(categories)), observer);
+    public void getCategories(int level, List<Integer> categories, BaseObserver<List<CategoryResponse>> observer) {
+        dealResponse(mRetrofit.getCategories(level, categories.toString()), observer);
     }
 
     public void getYouLike(BaseObserver<List<HotelResponse>> observer) {

@@ -127,8 +127,7 @@ public class HotelListActivity extends BaseActivity {
 
         mModel = new HotelListModel();
         showLoading();
-        int[] categories = new int[]{Integer.parseInt(mParentCategoryId)};
-        mModel.getCategories(3, categories, new BaseObserver<List<CategoryResponse>>() {
+        mModel.getCategories(3, mParentCategoryId, new BaseObserver<List<CategoryResponse>>() {
             @Override
             public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
                 stopLoading();

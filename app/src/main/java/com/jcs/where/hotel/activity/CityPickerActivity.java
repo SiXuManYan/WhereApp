@@ -25,7 +25,7 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.CustomProgressDialog;
 import com.jcs.where.bean.AreaBean;
-import com.jcs.where.bean.City;
+import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.LocateState;
@@ -126,20 +126,20 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                 stopLoading();
                 if (code == 200) {
                     AreaBean bean = new Gson().fromJson(result, AreaBean.class);
-                    HashSet<City> citys = new HashSet<>();
+                    HashSet<CityResponse> cityResponses = new HashSet<>();
                     for (int i = 0; i < bean.lists.size(); i++) {
                         for (int j = 0; j < bean.lists.get(i).areas.size(); j++) {
                             String name = bean.lists.get(i).areas.get(j).name.replace("　", "");
-                            citys.add(new City(bean.lists.get(i).areas.get(j).id, name, PinyinUtils.getPinYin(name), false));
+                            cityResponses.add(new CityResponse(bean.lists.get(i).areas.get(j).id, name, PinyinUtils.getPinYin(name), false));
                         }
                     }
                     //set转换list
-                    ArrayList<City> cities = new ArrayList<>(citys);
+                    ArrayList<CityResponse> cities = new ArrayList<>(cityResponses);
                     //按照字母排序
-                    Collections.sort(cities, new Comparator<City>() {
+                    Collections.sort(cities, new Comparator<CityResponse>() {
                         @Override
-                        public int compare(City city, City t1) {
-                            return city.getPinyin().compareTo(t1.getPinyin());
+                        public int compare(CityResponse cityResponse, CityResponse t1) {
+                            return cityResponse.getPinyin().compareTo(t1.getPinyin());
                         }
                     });
                     mCityAdapter.setData(cities);
@@ -167,7 +167,7 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                 intent.putExtra(EXTRA_CITY, name);
                 intent.putExtra(EXTRA_CITYID, id);
                 setResult(RESULT_OK, intent);
-                SPUtil.getInstance().saveString(SPKey.K_AREA_ID, id);
+                SPUtil.getInstance().saveString(SPKey.K_CURRENT_AREA_ID, id);
                 finish();
             }
 

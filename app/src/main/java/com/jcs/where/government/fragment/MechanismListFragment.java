@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -13,6 +14,8 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.IntentEntry;
+import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.government.adapter.MechanismListAdapter;
 import com.jcs.where.government.model.MechanismListModel;
 
@@ -182,6 +185,18 @@ public class MechanismListFragment extends BaseFragment {
     protected void bindListener() {
         mSwipeLayout.setOnRefreshListener(this::onSwipeRefresh);
         mRadioGroup.setOnCheckedChangeListener(this::onRadioChecked);
+        mAdapter.setOnItemClickListener(this::onMechanismItemClicked);
+    }
+
+    private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        int mechanismId = mAdapter.getData().get(position).getId();
+        toActivity(
+                MechanismDetailActivity.class,
+                new IntentEntry(
+                        MechanismDetailActivity.K_MECHANISM_ID,
+                        String.valueOf(mechanismId)
+                )
+        );
     }
 
     /**

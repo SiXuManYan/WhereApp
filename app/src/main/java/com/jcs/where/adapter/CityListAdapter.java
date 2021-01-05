@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.bean.City;
+import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.LocateState;
 import com.jcs.where.utils.PinyinUtils;
 
@@ -25,26 +25,26 @@ public class CityListAdapter extends BaseAdapter {
 
     private final Context mContext;
     private LayoutInflater inflater;
-    private List<City> mCities;
+    private List<CityResponse> mCities;
     private HashMap<String, Integer> letterIndexes;
     private String[] sections;
     private OnCityClickListener onCityClickListener;
     private String locatedCity;
     private String locatedCityId;
-    private final List<City> mHotData = new ArrayList<>();
+    private final List<CityResponse> mHotData = new ArrayList<>();
     private int locateState = LocateState.LOCATING;
 
     public CityListAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void setData(List<City> mCities) {
+    public void setData(List<CityResponse> mCities) {
         this.mCities = mCities;
         this.inflater = LayoutInflater.from(mContext);
         if (mCities == null) {
             mCities = new ArrayList<>();
         }
-        mCities.add(0, new City("-1", "定位", "0"));
+        mCities.add(0, new CityResponse("-1", "定位", "0"));
         //   mCities.add(1, new City("-1", "热门", "1"));
         int size = mCities.size();
         letterIndexes = new HashMap<>();
@@ -90,7 +90,7 @@ public class CityListAdapter extends BaseAdapter {
     }
 
     @Override
-    public City getItem(int position) {
+    public CityResponse getItem(int position) {
         return mCities == null ? null : mCities.get(position);
     }
 

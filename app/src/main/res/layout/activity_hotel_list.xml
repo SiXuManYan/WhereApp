@@ -142,7 +142,7 @@
     <com.jcs.where.hotel.tablayout.ColorClipTabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/dp_48"
         app:layout_constraintTop_toBottomOf="@id/jcsTitle"
         app:tabIndicatorHeight="0dp"
         app:tabMode="scrollable"

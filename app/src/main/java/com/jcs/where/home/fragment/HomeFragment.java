@@ -34,10 +34,12 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.BusinessBean;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
+import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
@@ -388,7 +390,8 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 startActivity(toTravelStay);
                 break;
             case 4:
-                showToast("横向二级联动筛选的综合服务页面");
+                String convenienceCategoryId = item.getCategories().toString();
+                toActivity(ConvenienceServiceActivity.class, new IntentEntry(ConvenienceServiceActivity.K_CATEGORIES, convenienceCategoryId));
                 break;
             case 5:
                 showToast("横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）");

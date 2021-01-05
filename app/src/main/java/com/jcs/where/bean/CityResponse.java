@@ -2,28 +2,28 @@ package com.jcs.where.bean;
 
 import java.util.Objects;
 
-public class City {
+public class CityResponse {
     private String id;
     private String name;
     private String pinyin;
     private boolean isHot;
 
-    public City() {
+    public CityResponse() {
     }
 
-    public City(String name, String pinyin) {
+    public CityResponse(String name, String pinyin) {
         this.name = name;
         this.pinyin = pinyin;
         this.id = id;
     }
 
-    public City(String id, String name, String pinyin) {
+    public CityResponse(String id, String name, String pinyin) {
         this.name = name;
         this.pinyin = pinyin;
         this.id = id;
     }
 
-    public City(String id, String name, String pinyin, boolean isHot) {
+    public CityResponse(String id, String name, String pinyin, boolean isHot) {
         this.name = name;
         this.pinyin = pinyin;
         this.id = id;
@@ -66,8 +66,8 @@ public class City {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        City city = (City) o;
-        return Objects.equals(name, city.name);
+        CityResponse cityResponse = (CityResponse) o;
+        return Objects.equals(name, cityResponse.name);
     }
 
     @Override

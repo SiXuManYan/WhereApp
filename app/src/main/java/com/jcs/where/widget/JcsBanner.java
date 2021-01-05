@@ -96,6 +96,10 @@ public class JcsBanner extends ConstraintLayout {
 
     private void addDot(int size) {
         ImageView lastDot = null;
+        // 只有一个图片的话不需要展示dot
+        if (size == 1){
+            return;
+        }
         for (int i = 0; i < size; i++) {
             ImageView dot = new ImageView(getContext());
             dot.setId(i);

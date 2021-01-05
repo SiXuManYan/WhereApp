@@ -16,6 +16,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.government.adapter.MechanismAdapter;
 import com.jcs.where.government.fragment.CardViewPagerFragment;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.GovernmentMapModel;
@@ -28,8 +29,6 @@ import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -84,7 +83,9 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         mAreaId = getAreaId();
         mTabCategories = new ArrayList<>();
         mMechanismListFragments = new ArrayList<>();
-        mViewPagerAdapter = new MechanismAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mViewPagerAdapter = new MechanismAdapter(getSupportFragmentManager(),
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+
         // 初始化地图，初始化成功后会获取要在地图上展示的数据
         mMapFragment.getMapAsync(this::onMapAsync);
         // 获得标签分类
@@ -122,6 +123,9 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                         mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse));
                     }
                 }
+
+                mViewPagerAdapter.setMechanismListFragments(mMechanismListFragments);
+                mViewPagerAdapter.setTabCategories(mTabCategories);
 
                 mViewPager.setAdapter(mViewPagerAdapter);
                 mTabLayout.setupWithViewPager(mViewPager);
@@ -187,7 +191,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
 
     private int getAreaId() {
         try {
-            return Integer.parseInt(SPUtil.getInstance().getString(SPKey.K_AREA_ID));
+            return Integer.parseInt(SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID));
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -273,29 +277,5 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     @Override
     protected int getLayoutId() {
         return R.layout.activity_government_map;
-    }
-
-    class MechanismAdapter extends FragmentStatePagerAdapter {
-
-        public MechanismAdapter(@androidx.annotation.NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTabCategories.get(position).getName();
-        }
-
-        @androidx.annotation.NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return mMechanismListFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mMechanismListFragments.size();
-        }
     }
 }

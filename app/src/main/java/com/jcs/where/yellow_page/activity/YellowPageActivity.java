@@ -51,11 +51,6 @@ public class YellowPageActivity extends BaseActivity {
     private CategoryToSelectedListFragment mToSelectedListFragment;
 
     /**
-     * 默认存储分类数据一天
-     */
-    private final long CATEGORY_SAVE_TIME = 60 * 1000 * 60 * 24;
-
-    /**
      * 企业黄页对应的分类id
      */
     private int mId;
@@ -112,7 +107,7 @@ public class YellowPageActivity extends BaseActivity {
         String jsonStr = "";
         try {
             if (jsonData != null) {
-                String[] strArray = jsonData.split("_____");
+                String[] strArray = jsonData.split(SPKey.K_DELIMITER);
                 savedTime = Long.parseLong(strArray[1]);
                 jsonStr = strArray[0];
             }
@@ -120,7 +115,7 @@ public class YellowPageActivity extends BaseActivity {
             Log.e("YellowPageActivity", "initData: " + e.getMessage());
         }
         long currentTime = System.currentTimeMillis();
-        if (currentTime - savedTime >= CATEGORY_SAVE_TIME) {
+        if (currentTime - savedTime >= SPKey.SAVE_TIME) {
             // 获取网路数据
             getInitYellowPage();
         } else {
@@ -154,7 +149,7 @@ public class YellowPageActivity extends BaseActivity {
                 injectToSelectFragment();
 
                 String value = JsonUtil.getInstance().toJsonStr(mFirstLevelCategories);
-                String valueWithTime = value + "_____" + System.currentTimeMillis();
+                String valueWithTime = value + SPKey.K_DELIMITER + System.currentTimeMillis();
                 SPUtil.getInstance().saveString(SPKey.K_YELLOW_PAGE_CATEGORIES, valueWithTime);
                 MechanismPageResponse mechanismPageResponse = yellowPageZipResponse.getMechanismPageResponse();
                 updateAdapter(mechanismPageResponse);

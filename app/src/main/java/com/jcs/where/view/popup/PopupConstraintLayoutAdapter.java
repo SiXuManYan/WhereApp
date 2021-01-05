@@ -22,4 +22,6 @@ public abstract class PopupConstraintLayoutAdapter {
 
     public void onShowCompleted() {}
 
+    public boolean enableAnim(){return true;}
+
 }

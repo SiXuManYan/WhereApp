@@ -263,8 +263,8 @@ public class MechanismDetailActivity extends BaseActivity {
      * 获得营业时间（单位周）
      */
     private String getBusinessWeek() {
-        String startWeek = weekStr[mMechanismDetailResponse.getWeek_start()];
-        String endWeek = weekStr[mMechanismDetailResponse.getWeek_end()];
+        String startWeek = weekStr[mMechanismDetailResponse.getWeek_start() - 1];
+        String endWeek = weekStr[mMechanismDetailResponse.getWeek_end() -1];
         return startWeek + "至" + endWeek;
     }
 

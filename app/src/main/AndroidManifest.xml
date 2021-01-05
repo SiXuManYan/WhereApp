@@ -2,20 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jcs.where">
-
-    <!--允许程序打开网络套接字-->
-    <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序设置内置sd卡的写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <!--允许程序获取网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!--允许程序访问WiFi网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--允许程序读写手机状态和身份-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,10 +23,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!--允许程序打开网络套接字-->
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -43,14 +44,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/maps_api_key" />
 
-        <activity android:name=".home.HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.jcs.where.fileprovider"
@@ -61,66 +54,86 @@
                 android:resource="@xml/file_paths_public" />
         </provider>
 
+        <activity android:name=".home.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".login.LoginActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".login.ForgetPasswordActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
 
         <activity
             android:name=".login.RegisterActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.CityPickerActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelListActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelDetailActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelSubscribeActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelPayActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelOrderDetailActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelMapActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelCommentActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".mango.ImageBrowseActivity"
@@ -129,68 +142,89 @@
         <activity
             android:name=".hotel.activity.WriteCommentActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".hotel.activity.HotelSearchActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".currency.WebViewActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".mine.PersonalDataActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".travel.TravelMapActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".travel.TravelDetailActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".travel.TravelWriteCommentActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".travel.TravelCommentActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".home.activity.TravelStayActivity"
+        <activity
+            android:name=".travel.TravelCommentActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".utils.ImagePreviewActivity"
+        <activity
+            android:name=".home.activity.TravelStayActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".government.activity.GovernmentMapActivity"
+        <activity
+            android:name=".utils.ImagePreviewActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".government.activity.MechanismDetailActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            />
-
-        <activity android:name=".yellow_page.activity.YellowPageActivity"
+        <activity
+            android:name=".government.activity.GovernmentMapActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".government.activity.MechanismDetailActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".yellow_page.activity.YellowPageActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity android:name=".convenience.activity.ConvenienceServiceActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity"
             />
 
     </application>

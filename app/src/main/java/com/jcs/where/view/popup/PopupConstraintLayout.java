@@ -152,7 +152,7 @@ public class PopupConstraintLayout extends ConstraintLayout {
 
     public void onShadowViewClicked(View view) {
         if (mAdapter.clickOutSideClose()) {
-            hide();
+            hideWithAnim();
         }
     }
 
@@ -167,20 +167,40 @@ public class PopupConstraintLayout extends ConstraintLayout {
 
     public void showOrHide() {
         if (mIsShow) {
-            hide();
+            if (mAdapter.enableAnim()) {
+                hideWithAnim();
+            } else {
+                hide();
+            }
         } else {
-            show();
+            if (mAdapter.enableAnim()) {
+                showWithAnim();
+            } else {
+                show();
+            }
         }
     }
 
     public void show() {
+        mShadowView.setVisibility(VISIBLE);
+        setVisibility(VISIBLE);
+        changeShowStatus();
+    }
+
+    public void hide() {
+        mShadowView.setVisibility(GONE);
+        setVisibility(GONE);
+        changeShowStatus();
+    }
+
+    public void showWithAnim() {
         if (!mIsShow && !mIsSliding && mSlideTop != null) {
             mSlideTop.start();
             changeShowStatus();
         }
     }
 
-    public void hide() {
+    public void hideWithAnim() {
         if (mIsShow && !mIsSliding && mSlideBottom != null) {
             mSlideBottom.start();
             changeShowStatus();
@@ -200,8 +220,10 @@ public class PopupConstraintLayout extends ConstraintLayout {
         //配置动画
         mDeployAnimator();
 
-        //配置阴影点击时间
-        mDeployShadow();
+        if (mAdapter.enableAnim()) {
+            //配置阴影点击事件
+            mDeployShadow();
+        }
 
         //配置点击默认点击时间，否则点击时间会穿过Constraint，使得Shadow响应
         mDeployDefaultListener();

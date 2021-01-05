@@ -18,6 +18,7 @@ import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.SuccessResponse;
+import com.jcs.where.bean.CityResponse;
 
 import java.util.List;
 
@@ -245,4 +246,10 @@ public interface RetrofitApi {
      */
     @GET("generalapi/v1/collects")
     Observable<Response<SuccessResponse>> delCollectMechanism(@Query("info_id") int mechanismId);
+
+    /**
+     * 获取综合服务页面的区域列表
+     */
+    @GET("generalapi/v1/areas")
+    Observable<List<CityResponse>> getAreaForService();
 }

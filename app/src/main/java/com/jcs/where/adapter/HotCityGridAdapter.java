@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.bean.City;
+import com.jcs.where.bean.CityResponse;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ import java.util.List;
  */
 public class HotCityGridAdapter extends BaseAdapter {
     private final Context mContext;
-    private List<City> mCities;
+    private List<CityResponse> mCities;
 
     public HotCityGridAdapter(Context context) {
         this.mContext = context;
     }
 
-    public void setData(List<City> data) {
+    public void setData(List<CityResponse> data) {
         mCities = data;
         notifyDataSetChanged();
     }
@@ -34,7 +34,7 @@ public class HotCityGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public City getItem(int position) {
+    public CityResponse getItem(int position) {
         return mCities == null ? null : mCities.get(position);
     }
 

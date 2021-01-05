@@ -52,14 +52,7 @@ public class YellowPageModel extends BaseModel {
         Observable<MechanismPageResponse> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "");
         // 获取一级分类
         Observable<List<CategoryResponse>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
-        Observable<YellowPageZipResponse> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<MechanismPageResponse, List<CategoryResponse>, YellowPageZipResponse>() {
-            @NonNull
-            @Override
-            public YellowPageZipResponse apply(@NonNull MechanismPageResponse mechanismPageResponse, @NonNull List<CategoryResponse> categoryResponses) throws Exception {
-
-                return new YellowPageZipResponse(mechanismPageResponse, categoryResponses);
-            }
-        });
+        Observable<YellowPageZipResponse> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, YellowPageZipResponse::new);
         dealResponse(zip, observer);
     }
 

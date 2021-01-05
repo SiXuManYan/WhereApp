@@ -1,5 +1,7 @@
 package com.jcs.where.model;
 
+import android.util.Log;
+
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.BannerResponse;
@@ -10,6 +12,7 @@ import java.util.List;
 
 public class TravelStayModel extends BaseModel {
     public void getCategories(int level, List<Integer> categories, BaseObserver<List<CategoryResponse>> observer) {
+        Log.e("TravelStayModel", "getCategories: " + categories.toString());
         dealResponse(mRetrofit.getCategories(level, categories.toString()), observer);
     }
 

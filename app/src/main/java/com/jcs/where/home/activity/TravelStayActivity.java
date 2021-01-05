@@ -36,6 +36,8 @@ import androidx.recyclerview.widget.RecyclerView;
  * 旅游住宿页面
  */
 public class TravelStayActivity extends BaseActivity implements OnItemClickListener {
+    public static final String K_CATEGORY_IDS = "categoryIds";
+
     private XBanner mBanner;
     private RecyclerView mModuleRecycler;
     private RecyclerView mHotelRecycler;
@@ -79,7 +81,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
     protected void initData() {
         mModel = new TravelStayModel();
         //获取二级分类选项
-        ArrayList<Integer> categories = getIntent().getIntegerArrayListExtra("categories");
+        ArrayList<Integer> categories = getIntent().getIntegerArrayListExtra(K_CATEGORY_IDS);
         getCategories(2, categories);
 
         mModel.getYouLike(new BaseObserver<List<HotelResponse>>() {

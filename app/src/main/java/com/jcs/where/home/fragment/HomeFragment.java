@@ -384,7 +384,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 break;
             case 3:
                 Intent toTravelStay = new Intent(getContext(), TravelStayActivity.class);
-                toTravelStay.putIntegerArrayListExtra("categories", (ArrayList<Integer>) item.getCategories());
+                toTravelStay.putIntegerArrayListExtra(TravelStayActivity.K_CATEGORY_IDS, (ArrayList<Integer>) item.getCategories());
                 startActivity(toTravelStay);
                 break;
             case 4:

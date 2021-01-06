@@ -182,4 +182,15 @@
         <item name="android:activityCloseEnterAnimation">@anim/anim_fade_in</item>
         <item name="android:activityCloseExitAnimation">@anim/anim_fade_out</item>
     </style>
+
+    <!--TabLayout字体样式-->
+    <style name="TabLayoutTextSelected">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/blue_4C9EF2</item>
+    </style>
+
+    <style name="TabLayoutTextUnSelected">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black_333333</item>
+    </style>
 </resources>

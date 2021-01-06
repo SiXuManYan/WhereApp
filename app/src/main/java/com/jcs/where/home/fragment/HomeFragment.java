@@ -42,11 +42,13 @@ import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
+import com.jcs.where.home.HomeActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.model.HomeModel;
+import com.jcs.where.news.NewsActivity;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -64,6 +66,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import io.reactivex.annotations.NonNull;
@@ -342,7 +345,8 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         marqueeView.setOnItemClickListener(new OnItemClickListener<TextView, String>() {
             @Override
             public void onItemClickListener(TextView mView, String mData, int mPosition) {
-                showToast(messageList.get(mPosition));
+                Intent intent = new Intent(getContext(), NewsActivity.class);
+                startActivity(intent);
             }
         });
     }

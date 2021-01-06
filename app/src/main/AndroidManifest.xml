@@ -236,6 +236,13 @@
             tools:ignore="LockedOrientationActivity"
             />
 
+        <activity android:name=".news.NewsActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity"
+            />
+
     </application>
 
 </manifest>

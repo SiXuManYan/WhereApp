@@ -48,8 +48,6 @@ import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.model.HomeModel;
 import com.jcs.where.utils.GlideRoundTransform;
-import com.jcs.where.utils.SPKey;
-import com.jcs.where.utils.SPUtil;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
@@ -164,7 +162,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
             if (currentCity == null) {
                 // 默认巴郎牙
                 cityNameTv.setText(R.string.default_city_name);
-            }else {
+            } else {
                 cityNameTv.setText(currentCity.getName());
             }
         }
@@ -405,21 +403,17 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 toTravelStay.putIntegerArrayListExtra(TravelStayActivity.K_CATEGORY_IDS, (ArrayList<Integer>) item.getCategories());
                 startActivity(toTravelStay);
                 break;
-            case 4:
+            case 4:// 便民服务
+            case 5:// 金融服务
+            case 6:// 教育机构
+            case 7:// 医疗健康
+            case 8:// 家政服务
                 String convenienceCategoryId = item.getCategories().toString();
-                toActivity(ConvenienceServiceActivity.class, new IntentEntry(ConvenienceServiceActivity.K_CATEGORIES, convenienceCategoryId));
-                break;
-            case 5:
-                showToast("横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）");
-                break;
-            case 6:
-                showToast("横向二级联动筛选的综合服务页面");
-                break;
-            case 7:
-                showToast("横向二级联动筛选的综合服务页面");
-                break;
-            case 8:
-                showToast("横向二级联动筛选的综合服务页面");
+                String convenienceName = item.getName();
+                toActivity(ConvenienceServiceActivity.class,
+                        new IntentEntry(ConvenienceServiceActivity.K_CATEGORIES, convenienceCategoryId),
+                        new IntentEntry(ConvenienceServiceActivity.K_SERVICE_NAME, convenienceName)
+                );
                 break;
             case 9:
                 showToast("餐厅列表");

@@ -1,5 +1,6 @@
 package com.jcs.where.convenience.activity;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -39,8 +40,7 @@ import androidx.viewpager.widget.ViewPager;
  */
 public class ConvenienceServiceActivity extends BaseActivity {
     public static final String K_CATEGORIES = "categoryId";
-    private final int TYPE_GOVERNMENT = 3;
-
+    public static final String K_SERVICE_NAME = "serviceName";
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -52,6 +52,8 @@ public class ConvenienceServiceActivity extends BaseActivity {
     private CityAdapter mCityAdapter;
 
     private String mCategoryId;
+    private String mServiceName;
+
     /**
      * 展示机构列表的Fragment集合
      */
@@ -88,6 +90,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
         mViewPager = findViewById(R.id.viewPager);
         mViewPagerAdapter = new MechanismAdapter(getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+
         mCityAdapter = new CityAdapter();
         mCityRecycler.setLayoutManager(new LinearLayoutManager(this));
         mCityRecycler.setAdapter(mCityAdapter);
@@ -97,7 +100,10 @@ public class ConvenienceServiceActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new ConvenienceServiceModel();
-        mCategoryId = getIntent().getStringExtra(K_CATEGORIES);
+        Intent intent = getIntent();
+        mCategoryId = intent.getStringExtra(K_CATEGORIES);
+        mServiceName = intent.getStringExtra(K_SERVICE_NAME);
+        mJcsTitle.setMiddleTitle(mServiceName);
         mTabCategories = new ArrayList<>();
         mMechanismListFragments = new ArrayList<>();
 
@@ -106,7 +112,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
     private void getDataFromNativeOrNet() {
         String jsonCity = mModel.needUpdateCity();
-        String jsonCategory = mModel.needUpdateCategory();
+        String jsonCategory = mModel.needUpdateCategory(mCategoryId);
         if (jsonCity.isEmpty()) {
             // 获取 或 更新 city 数据
             getCitiesFromNet();
@@ -226,7 +232,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
                 // 存储当前分类信息
                 String categoriesJsonStr = JsonUtil.getInstance().toJsonStr(categories);
                 String saveCategories = categoriesJsonStr + SPKey.K_DELIMITER + currentTime;
-                SPUtil.getInstance().saveString(SPKey.K_CONVENIENCE_SERVICE_CATEGORIES, saveCategories);
+                SPUtil.getInstance().saveString(SPKey.K_SERVICE_CATEGORIES + mCategoryId, saveCategories);
 
                 // 展示数据
                 injectTabDataToView();
@@ -258,15 +264,14 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setOffscreenPageLimit(mTabCategories.size());
+        mViewPager.setOffscreenPageLimit(mViewPagerAdapter.getCount());
     }
 
     private void addCategoryNamedAll() {
         // 添加全部对应的Tab
         CategoryResponse allCategory = new CategoryResponse();
         allCategory.setName(getString(R.string.all));
-        allCategory.setId(0);
-        allCategory.setType(TYPE_GOVERNMENT);
+        allCategory.setId(mCategoryId);
         mTabCategories.add(allCategory);
 
         // 0 表示要获得全部的信息，添加全部对应的ListFragment
@@ -312,4 +317,5 @@ public class ConvenienceServiceActivity extends BaseActivity {
     protected int getLayoutId() {
         return R.layout.activity_convenience_service;
     }
+
 }

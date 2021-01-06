@@ -11,6 +11,8 @@ import com.jcs.where.utils.SPUtil;
  * create by zyf on 2021/1/6 10:17 上午
  */
 public class FlashActivity extends BaseActivity {
+    private boolean isAlive = true;
+
     @Override
     protected void initView() {
 
@@ -27,25 +29,28 @@ public class FlashActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(1000);
-                    toHomeActivity();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    toHomeActivity();
+                for (int i = 0; i < 20; i++) {
+                    try {
+                        if (isAlive) {
+                            Thread.sleep(50);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        toHomeActivity();
+                    }
                 }
+                toHomeActivity();
             }
         }).start();
     }
 
     private void toHomeActivity() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        if (isAlive) {
+            runOnUiThread(() -> {
                 toActivity(HomeActivity.class);
                 finish();
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -56,5 +61,11 @@ public class FlashActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_flash;
+    }
+
+    @Override
+    protected void onDestroy() {
+        isAlive = false;
+        super.onDestroy();
     }
 }

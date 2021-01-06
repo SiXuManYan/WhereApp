@@ -23,7 +23,7 @@ public class GovernmentMapModel extends BaseModel {
      * @param categoryId 分类id，当前页面展示什么分类数据（政府机构是一个分类，酒店是一个分类）
 
      */
-    public void getMechanismListForMap(int categoryId, double lat, double lng,
+    public void getMechanismListForMap(String categoryId, double lat, double lng,
                                        BaseObserver<List<MechanismResponse>> observer) {
         getMechanismListForMap(categoryId, 0, "", lat, lng, observer);
     }
@@ -36,7 +36,7 @@ public class GovernmentMapModel extends BaseModel {
      * @param lat 经度
      * @param lng 纬度
      */
-    public void getMechanismListForMap(int categoryId, int areaId,
+    public void getMechanismListForMap(String categoryId, int areaId,
                                        String search, double lat, double lng, BaseObserver<List<MechanismResponse>> observer) {
 
         dealResponse(mRetrofit.getMechanismListForMap(categoryId, areaId

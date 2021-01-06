@@ -219,7 +219,7 @@ public interface RetrofitApi {
      */
     @GET("generalapi/v1/map/infos")
     Observable<List<MechanismResponse>> getMechanismListForMap(
-            @Query("cate_id") int categoryId,
+            @Query("cate_id") String categoryId,
             @Query("area_id") int areaId,
             @Query("search_input") String search,
             @Query("lat") double lat,

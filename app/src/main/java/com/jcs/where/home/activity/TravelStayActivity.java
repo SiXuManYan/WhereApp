@@ -46,7 +46,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
     private TravelStayModel mModel;
 
-    private final int HOTEL_STAY = 107;
+    private final String HOTEL_STAY = "107";
 
     @Override
     protected void initView() {
@@ -156,10 +156,10 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
         if (adapter == mModulesCategoryAdapter) {
             CategoryResponse item = mModulesCategoryAdapter.getItem(position);
-            int id = item.getId();
+            String id = item.getId();
             switch (id) {
                 case HOTEL_STAY:
-                    toActivity(HotelActivity.class, new IntentEntry("categoryId", String.valueOf(id)));
+                    toActivity(HotelActivity.class, new IntentEntry("categoryId", id));
                     break;
             }
         }

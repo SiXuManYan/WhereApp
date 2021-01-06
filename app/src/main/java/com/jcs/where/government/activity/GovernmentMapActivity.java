@@ -60,7 +60,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     private MapMarkerUtil mMapMarkerUtil;
     private GoogleMap mGoogleMap;
 
-    private final int TYPE_GOVERNMENT = 3;
+    private final String TYPE_GOVERNMENT = "3";
     private int mAreaId = -1;
 
     @Override
@@ -103,8 +103,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 // 添加全部对应的Tab
                 CategoryResponse allCategory = new CategoryResponse();
                 allCategory.setName(getString(R.string.all));
-                allCategory.setId(0);
-                allCategory.setType(TYPE_GOVERNMENT);
+                allCategory.setId(TYPE_GOVERNMENT);
                 mTabCategories.add(allCategory);
 
                 // 0 表示要获得全部的信息，添加全部对应的ListFragment

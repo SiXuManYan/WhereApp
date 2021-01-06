@@ -1,7 +1,5 @@
 package com.jcs.where.convenience.model;
 
-import android.util.Log;
-
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.CategoryResponse;
@@ -11,14 +9,10 @@ import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
-import com.jcs.where.yellow_page.model.YellowPageModel;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Function3;
 
 /**
  * create by zyf on 2021/1/5 4:35 下午
@@ -47,7 +41,7 @@ public class ConvenienceServiceModel extends BaseModel {
         dealResponse(mRetrofit.getAreaForService(), observer);
     }
 
-    public int getCityResponseIndexById(List<CityResponse> cityResponses){
+    public int getCityResponseIndexById(List<CityResponse> cityResponses) {
         String cityId = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID);
         int size = cityResponses.size();
         for (int i = 0; i < size; i++) {
@@ -68,8 +62,8 @@ public class ConvenienceServiceModel extends BaseModel {
         return CacheUtil.needUpdateBySpKey(SPKey.K_ALL_CITIES);
     }
 
-    public String needUpdateCategory() {
-        return CacheUtil.needUpdateBySpKey(SPKey.K_CONVENIENCE_SERVICE_CATEGORIES);
+    public String needUpdateCategory(String categoryId) {
+        return CacheUtil.needUpdateBySpKey(SPKey.K_SERVICE_CATEGORIES + categoryId);
     }
 
     public void getInitData(String categoryIds, BaseObserver<ConvenienceServiceModel.ConvenienceServiceZipResponse> observer) {

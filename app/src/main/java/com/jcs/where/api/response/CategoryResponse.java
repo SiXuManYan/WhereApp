@@ -17,18 +17,18 @@ public class CategoryResponse extends BaseNode implements Serializable {
      * icon : https://whereoss.oss-cn-beijing.aliyuncs.com/images/igxYypaTnQuhy3U15KHBGF7SV7Sul2br6vhDoD7y.png
      */
 
-    private int id;
+    private String id;
     private String name;
     private int has_children;
     private int type;
     private String icon;
     private List<CategoryResponse> child_categories;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

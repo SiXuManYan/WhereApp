@@ -28,7 +28,7 @@ public final class SPKey {
     public static final String K_YELLOW_PAGE_CATEGORIES = "k_yellow_page_categories";
 
     /**
-     * 便民服务页面的分类存储key
+     * 综合服务页面的分类存储key，使用时需要在后面拼接分类idid
      */
-    public static final String K_CONVENIENCE_SERVICE_CATEGORIES = "k_convenience_service_categories";
+    public static final String K_SERVICE_CATEGORIES = "k_service_categories_";
 }

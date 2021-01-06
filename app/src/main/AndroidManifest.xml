@@ -37,7 +37,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AnimActivity"
         tools:replace="android:icon, android:theme">
 
         <meta-data
@@ -54,13 +54,22 @@
                 android:resource="@xml/file_paths_public" />
         </provider>
 
-        <activity android:name=".home.HomeActivity">
+        <activity android:name=".flash.activity.FlashActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".home.HomeActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            />
 
         <activity
             android:name=".login.LoginActivity"

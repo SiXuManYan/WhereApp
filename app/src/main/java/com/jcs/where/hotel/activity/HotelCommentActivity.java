@@ -177,7 +177,7 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
 
 
                 startActivity(to);
-                overridePendingTransition(R.anim.activity_out, R.anim.activity_in);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             }
 
         });

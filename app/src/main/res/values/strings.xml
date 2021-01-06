@@ -110,5 +110,6 @@
     <string name="please_input_keyword">请输入关键字</string>
     <string name="please_input_merchant_or_goods">请输入商户/商品等</string>
     <string name="title_convenience_service">便民服务</string>
+    <string name="default_city_name">巴郎牙</string>
 
 </resources>

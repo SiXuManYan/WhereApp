@@ -7,6 +7,7 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.bean.CityResponse;
+import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
@@ -64,45 +65,11 @@ public class ConvenienceServiceModel extends BaseModel {
      * @return 城市数据json字符串，为""表示要更新
      */
     public String needUpdateCity() {
-        String citiesJsonData = SPUtil.getInstance().getString(SPKey.K_ALL_CITIES);
-        long savedTime = 0;
-        String jsonStr = "";
-        try {
-            if (citiesJsonData != null) {
-                String[] strArray = citiesJsonData.split(SPKey.K_DELIMITER);
-                savedTime = Long.parseLong(strArray[1]);
-                jsonStr = strArray[0];
-            }
-        } catch (Exception e) {
-            Log.e("ConvenienceService", "initData: " + e.getMessage());
-        }
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - savedTime >= SPKey.SAVE_TIME) {
-            // 获取网路数据
-            return jsonStr;
-        }
-        return "";
+        return CacheUtil.needUpdateBySpKey(SPKey.K_ALL_CITIES);
     }
 
     public String needUpdateCategory() {
-        String categoriesJsonData = SPUtil.getInstance().getString(SPKey.K_CONVENIENCE_SERVICE_CATEGORIES);
-        long savedTime = 0;
-        String jsonStr = "";
-        try {
-            if (categoriesJsonData != null) {
-                String[] strArray = categoriesJsonData.split(SPKey.K_DELIMITER);
-                savedTime = Long.parseLong(strArray[1]);
-                jsonStr = strArray[0];
-            }
-        } catch (Exception e) {
-            Log.e("ConvenienceService", "initData: " + e.getMessage());
-        }
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - savedTime >= SPKey.SAVE_TIME) {
-            // 获取网路数据
-            return jsonStr;
-        }
-        return "";
+        return CacheUtil.needUpdateBySpKey(SPKey.K_CONVENIENCE_SERVICE_CATEGORIES);
     }
 
     public void getInitData(String categoryIds, BaseObserver<ConvenienceServiceModel.ConvenienceServiceZipResponse> observer) {

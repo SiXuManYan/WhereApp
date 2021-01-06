@@ -118,7 +118,7 @@ public class ImagePreviewActivity extends BaseActivity {
                 @Override
                 public void onClick(View view) {
                     finish();
-                    overridePendingTransition(R.anim.activity_out, R.anim.activity_in);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 }
             });
             return imageView;

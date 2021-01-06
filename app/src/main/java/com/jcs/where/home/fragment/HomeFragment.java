@@ -36,6 +36,7 @@ import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.BusinessBean;
+import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
@@ -47,6 +48,8 @@ import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.model.HomeModel;
 import com.jcs.where.utils.GlideRoundTransform;
+import com.jcs.where.utils.SPKey;
+import com.jcs.where.utils.SPUtil;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
@@ -152,6 +155,19 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         getBannerData();
         getModules();
         getNewsData();
+        String areaId = mModel.getCurrentAreaId();
+        if (areaId.equals("3")) {
+            // 默认巴郎牙
+            cityNameTv.setText(R.string.default_city_name);
+        } else {
+            CityResponse currentCity = mModel.getCurrentCity(areaId);
+            if (currentCity == null) {
+                // 默认巴郎牙
+                cityNameTv.setText(R.string.default_city_name);
+            }else {
+                cityNameTv.setText(currentCity.getName());
+            }
+        }
     }
 
     @Override

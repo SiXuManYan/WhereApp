@@ -4,7 +4,7 @@
     <!-- fromAlpha:开始时透明度；toAlpha：结束时透明度；duration：动画持续时间 -->
     <alpha
         android:duration="500"
-        android:fromAlpha="1.0"
-        android:toAlpha="0.0" />
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
 
 </set>

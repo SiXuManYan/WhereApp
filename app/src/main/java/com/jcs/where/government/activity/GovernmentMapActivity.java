@@ -328,6 +328,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         if (input.isEmpty()) {
             mMapMarkerUtil.restoreMap();
             mCardFragment.restore();
+            mCardFragment.selectPosition(mMapMarkerUtil.getCurrentPosition());
             hideInput();
         } else {
             showLoading();

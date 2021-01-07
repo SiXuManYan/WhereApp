@@ -318,6 +318,10 @@ public class MapMarkerUtil {
         }
     }
 
+    public int getCurrentPosition(){
+        return mCurrentPosition;
+    }
+
     /**
      * 在map clear 后，恢复原来的状态
      */

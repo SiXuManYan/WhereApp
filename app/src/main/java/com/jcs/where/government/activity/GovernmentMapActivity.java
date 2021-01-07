@@ -359,6 +359,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 stopLoading();
                 mMapMarkerUtil.clearMap();
                 mSearchRecycler.setVisibility(View.GONE);
+                mMapMarkerUtil.addTempMarker(mechanismDetailResponse);
                 Log.e("GovernmentMapActivity", "onNext: " + mechanismDetailResponse.getId());
             }
         });

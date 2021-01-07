@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jcs.where.R;
+import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.bean.MarkerBitmapDescriptors;
@@ -55,6 +56,11 @@ public class MapMarkerUtil {
      * map是否刚被clear过
      */
     private boolean isCleared = false;
+
+    /**
+     * 是否是在展示一个单独的marker
+     */
+    private boolean isSingleMarker = false;
 
     public MapMarkerUtil(BaseActivity context) {
         mMechanismsForMap = new ArrayList<>();
@@ -281,10 +287,12 @@ public class MapMarkerUtil {
     }
 
     public void selectMarker(int position) {
+        if (isSingleMarker) {
+            return;
+        }
         if (mMarkersOnMap != null && mMarkersOnMap.size() >= position) {
+
             Marker marker = mMarkersOnMap.get(position);
-            MechanismResponse currentMarkerTag = (MechanismResponse) mCurrentMarker.getTag();
-            MechanismResponse markerTag = (MechanismResponse) marker.getTag();
             if (mCurrentMarker != null && mCurrentMarker.getTag() == marker.getTag()) {
                 // 已经被选中了，什么都不需要执行
             } else {
@@ -317,6 +325,7 @@ public class MapMarkerUtil {
         if (isCleared) {
             addMarkerToMap();
             isCleared = false;
+            isSingleMarker = false;
         }
     }
 
@@ -325,5 +334,32 @@ public class MapMarkerUtil {
         mMarkersOnMap.clear();
         mCurrentMarker = null;
         isCleared = true;
+    }
+
+    public void addTempMarker(MechanismDetailResponse mechanismDetailResponse) {
+        LatLng latLng = new LatLng(mechanismDetailResponse.getLat(), mechanismDetailResponse.getLng());
+        TextView markerView = (TextView) getMarkerView();
+        markerView.setText(mechanismDetailResponse.getTitle());
+        MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
+        markerBitmapDescriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
+        markerBitmapDescriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
+
+        MarkerOptions option = new MarkerOptions()
+                .position(latLng)
+                .icon(markerBitmapDescriptors.getSelectedBitmapDescriptor())
+                .zIndex(4)
+                .draggable(false);//是否可以拖动
+
+        markerBitmapDescriptors.setSelected(true);
+
+        // 在地图上绘制
+        Marker marker = mMap.addMarker(option);
+        marker.setTag(mechanismDetailResponse);
+
+        if (mMap != null) {
+            // 将点击的 marker 展示在屏幕中心
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+        }
+        isSingleMarker = true;
     }
 }

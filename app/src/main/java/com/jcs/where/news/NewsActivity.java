@@ -22,10 +22,10 @@ import java.util.List;
 
 public class NewsActivity extends BaseActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private NewsViewPagerAdapter newsViewPagerAdapter;
-    private ArrayList<String> titleList;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private NewsViewPagerAdapter mNewsViewPagerAdapter;
+    private ArrayList<String> mTitleList;
     /**
      * 新闻Fragment集合
      */
@@ -33,31 +33,31 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager = findViewById(R.id.viewPager);
+        mTabLayout = findViewById(R.id.tabLayout);
+        mViewPager = findViewById(R.id.viewPager);
     }
 
     @Override
     protected void initData() {
-        titleList = new ArrayList<>();
+        mTitleList = new ArrayList<>();
         newFragments = new ArrayList<>();
-        titleList.add("关注");
-        titleList.add("推荐");
-        titleList.add("巴丹");
-        titleList.add("热点");
-        titleList.add("抗击肺炎");
-        titleList.add("视频");
-        for (int i = 0; i < titleList.size(); i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(titleList.get(i)));
+        mTitleList.add("关注");
+        mTitleList.add("推荐");
+        mTitleList.add("巴丹");
+        mTitleList.add("热点");
+        mTitleList.add("抗击肺炎");
+        mTitleList.add("视频");
+        for (int i = 0; i < mTitleList.size(); i++) {
+            mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(i)));
             newFragments.add(NewFragment.newInstance());
         }
-        newsViewPagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(),
+        mNewsViewPagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        newsViewPagerAdapter.setNewsFragments(newFragments);
-        newsViewPagerAdapter.setTabCategories(titleList);
-        viewPager.setAdapter(newsViewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setOffscreenPageLimit(newsViewPagerAdapter.getCount());
+        mNewsViewPagerAdapter.setNewsFragments(newFragments);
+        mNewsViewPagerAdapter.setTabCategories(mTitleList);
+        mViewPager.setAdapter(mNewsViewPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(mNewsViewPagerAdapter.getCount());
     }
 
     @Override

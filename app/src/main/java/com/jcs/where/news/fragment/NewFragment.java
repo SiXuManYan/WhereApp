@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class NewFragment extends BaseFragment {
 
-    private RecyclerView recyclerView;
-    private NewFragmentAdapter newFragmentAdapter;
+    private RecyclerView mRecyclerView;
+    private NewFragmentAdapter mNewFragmentAdapter;
 
     public static NewFragment newInstance() {
         Bundle args = new Bundle();
@@ -34,7 +34,7 @@ public class NewFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        recyclerView = view.findViewById(R.id.recycler);
+        mRecyclerView = view.findViewById(R.id.recycler);
     }
 
     @Override
@@ -43,9 +43,9 @@ public class NewFragment extends BaseFragment {
         for (int i = 0; i < 10; i++) {
             list.add("" + i);
         }
-        newFragmentAdapter = new NewFragmentAdapter(list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(newFragmentAdapter);
+        mNewFragmentAdapter = new NewFragmentAdapter(list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mNewFragmentAdapter);
 
     }
 

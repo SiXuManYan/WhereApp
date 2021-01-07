@@ -15,8 +15,8 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toStartOf="@+id/image_add"
+        android:layout_width="@dimen/dp_0"
+        app:layout_constraintEnd_toStartOf="@+id/imageAdd"
         android:layout_height="@dimen/dp_30"
         app:tabMode="scrollable"
         app:tabIndicatorColor="@color/blue_4C9EF2"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/jcsTitle"/>
 
     <ImageView
-        android:id="@+id/image_add"
+        android:id="@+id/imageAdd"
         android:padding="@dimen/dp_5"
         android:src="@drawable/ic_news_add"
         app:layout_constraintEnd_toEndOf="parent"

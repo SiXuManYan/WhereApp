@@ -164,6 +164,9 @@ public class PopupConstraintLayout extends ConstraintLayout {
         mIsShow = !mIsShow;
     }
 
+    public boolean isShow(){
+        return mIsShow;
+    }
 
     public void showOrHide() {
         if (mIsShow) {

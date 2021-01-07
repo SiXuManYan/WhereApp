@@ -252,6 +252,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
 
     /**
      * ViewPager item 滑动选择回调
+     *
      * @param position 索引
      */
     private void onVpPageSelected(int position) {
@@ -261,11 +262,20 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
 
     /**
      * 点击了箭头，展示政府机构列表
+     *
      * @param view
      */
     private void onTopArrowClick(View view) {
-        //TODO  要更换 箭头 icon
         mPopupLayout.showOrHide();
+        changeArrowIcon();
+    }
+
+    private void changeArrowIcon() {
+        if (mPopupLayout.isShow()) {
+            mTopArrowIv.setImageResource(R.mipmap.ic_big_arrow_bottom);
+        } else {
+            mTopArrowIv.setImageResource(R.mipmap.ic_big_arrow_top);
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.jcs.where.government.activity;
 
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -57,7 +56,7 @@ import io.reactivex.annotations.NonNull;
  */
 public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCallback {
     private SupportMapFragment mMapFragment;
-    private CardViewPagerFragment mViewPagerFragment;
+    private CardViewPagerFragment mCardFragment;
 
     private PopupConstraintLayout mPopupLayout;
     private ImageView mTopArrowIv;
@@ -67,6 +66,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
 
     // 搜索相关
     private EditText mSearchEt;
+    private ImageView mDelInputIv;
     private RecyclerView mSearchRecycler;
     private GovernmentSearchAdapter mSearchAdapter;
     /**
@@ -88,13 +88,14 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     protected void initView() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         mMapFragment = (SupportMapFragment) supportFragmentManager.findFragmentById(R.id.map);
-        mViewPagerFragment = (CardViewPagerFragment) supportFragmentManager.findFragmentById(R.id.viewpagerFrag);
+        mCardFragment = (CardViewPagerFragment) supportFragmentManager.findFragmentById(R.id.viewpagerFrag);
         mTopArrowIv = findViewById(R.id.topArrowIv);
         mTabLayout = findViewById(R.id.governmentTabs);
         mViewPager = findViewById(R.id.governmentViewPager);
         mPopupLayout = findViewById(R.id.bottomPopupLayout);
 
         // 搜索相关
+        mDelInputIv = findViewById(R.id.delInputIv);
         mSearchEt = findViewById(R.id.searchEt);
         mSearchRecycler = findViewById(R.id.searchRecycler);
         mSearchAdapter = new GovernmentSearchAdapter();
@@ -191,7 +192,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                     mMapMarkerUtil.addAllMechanismForMap(mechanismResponses);
                     mMapMarkerUtil.addMarkerToMap();
 
-                    mViewPagerFragment.bindAllData(mechanismResponses);
+                    mCardFragment.bindAllData(mechanismResponses);
                 }
             }
         });
@@ -212,7 +213,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         // 根据marker当前的选择状态更改点击后的icon
         mMapMarkerUtil.changeMarkerStatus(marker);
         int selectPosition = mMapMarkerUtil.getMarkerPosition(marker);
-        mViewPagerFragment.selectPosition(selectPosition);
+        mCardFragment.selectPosition(selectPosition);
         return false;
     }
 
@@ -275,7 +276,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     @Override
     protected void bindListener() {
         mTopArrowIv.setOnClickListener(this::onTopArrowClick);
-        mViewPagerFragment.bindPageSelectedListener(this::onVpPageSelected);
+        mCardFragment.bindPageSelectedListener(this::onVpPageSelected);
         mSearchAdapter.setOnItemClickListener(this::onSearchItemClicked);
         mSearchEt.setOnEditorActionListener(this::onSearchActionClicked);
         mSearchEt.addTextChangedListener(new EmptyWatcher() {
@@ -283,16 +284,28 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
             public void afterTextChanged(Editable s) {
                 Log.e("GovernmentMapActivity", "afterTextChanged: " + s.toString());
                 if (s.length() == 0) {
-                    mSearchAdapter.getData().clear();
-                    mSearchAdapter.notifyDataSetChanged();
-                    mSearchAdapter.setEmptyView(R.layout.view_empty_data_brvah);
-
+                    showEmptySearchAdapter();
+                } else {
+                    mDelInputIv.setVisibility(View.VISIBLE);
                 }
             }
         });
+        mDelInputIv.setOnClickListener(this::onDelInputClicked);
 
         // 监听软键盘显示隐藏
         KeyboardVisibilityEvent.setEventListener(this, this::onKeyboardStatusChanged);
+    }
+
+    private void onDelInputClicked(View view) {
+        ((TextView) mSearchEt).setText("");
+        mDelInputIv.setVisibility(View.GONE);
+        showEmptySearchAdapter();
+    }
+
+    private void showEmptySearchAdapter() {
+        mSearchAdapter.getData().clear();
+        mSearchAdapter.notifyDataSetChanged();
+        mSearchAdapter.setEmptyView(R.layout.view_empty_data_brvah);
     }
 
     /**
@@ -314,6 +327,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         String input = textView.getText().toString();
         if (input.isEmpty()) {
             mMapMarkerUtil.restoreMap();
+            mCardFragment.restore();
             hideInput();
         } else {
             showLoading();
@@ -360,12 +374,24 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 mMapMarkerUtil.clearMap();
                 mSearchRecycler.setVisibility(View.GONE);
                 mMapMarkerUtil.addTempMarker(mechanismDetailResponse);
+                mCardFragment.bindSingleData(getMechanismResponse(mechanismDetailResponse));
                 Log.e("GovernmentMapActivity", "onNext: " + mechanismDetailResponse.getId());
             }
         });
 
         hideInput();
         Log.e("GovernmentMapActivity", "onSearchItemClicked: " + id);
+    }
+
+    private MechanismResponse getMechanismResponse(MechanismDetailResponse mechanismDetailResponse) {
+        MechanismResponse mechanismResponse = new MechanismResponse();
+        mechanismResponse.setId(mechanismDetailResponse.getId());
+        mechanismResponse.setAddress(mechanismDetailResponse.getAddress());
+        mechanismResponse.setImages(mechanismDetailResponse.getImages());
+        mechanismResponse.setTitle(mechanismDetailResponse.getTitle());
+        mechanismResponse.setLat(mechanismDetailResponse.getLat());
+        mechanismResponse.setLng(mechanismDetailResponse.getLng());
+        return mechanismResponse;
     }
 
     /**

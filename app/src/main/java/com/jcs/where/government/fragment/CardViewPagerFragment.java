@@ -31,6 +31,7 @@ public class CardViewPagerFragment extends BaseFragment {
     private PageAnimation mPageAnimation;
     private Adapter mAdapter;
     private OnVpPageSelectedListener mPageSelectedListener;
+    private List<MechanismResponse> mMechanismResponse;
 
     @Override
     protected void initView(View view) {
@@ -68,6 +69,7 @@ public class CardViewPagerFragment extends BaseFragment {
     }
 
     public void bindAllData(List<MechanismResponse> mechanismResponses) {
+        mMechanismResponse = mechanismResponses;
         mAdapter = new Adapter(getContext(), this::onPageClicked);
         mAdapter.addAllData(mechanismResponses);
         mPageAnimation = new PageAnimation();
@@ -75,6 +77,16 @@ public class CardViewPagerFragment extends BaseFragment {
         mViewPager.setPageMargin(getPxFromDp(15));
         mViewPager.setPageTransformer(false, mPageAnimation);
         mViewPager.setOffscreenPageLimit(3);
+    }
+
+    public void restore(){
+        mViewPager.setAdapter(mAdapter);
+    }
+
+    public void bindSingleData(MechanismResponse mechanismResponses) {
+        Adapter adapter = new Adapter(getContext(), this::onPageClicked);
+        adapter.addCardItem(mechanismResponses);
+        mViewPager.setAdapter(adapter);
     }
 
     public void bindPageSelectedListener(OnVpPageSelectedListener onVpPageSelectedListener) {

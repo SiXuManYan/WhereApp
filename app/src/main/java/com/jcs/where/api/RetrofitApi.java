@@ -17,6 +17,7 @@ import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
+import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.bean.CityResponse;
 
@@ -252,4 +253,11 @@ public interface RetrofitApi {
      */
     @GET("generalapi/v1/areas")
     Observable<List<CityResponse>> getAreaForService();
+
+    /**
+     * 搜索接口
+     * @param input 关键字
+     */
+    @GET("commonapi/v1/searches")
+    Observable<List<SearchResponse>> getSearchByInput(@Query("search_input") String input);
 }

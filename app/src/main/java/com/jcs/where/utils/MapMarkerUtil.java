@@ -2,6 +2,7 @@ package com.jcs.where.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -50,6 +51,10 @@ public class MapMarkerUtil {
     private LatLngBounds mLatLngBounds;
     private LatLngBounds.Builder mLatLngBoundsBuilder;
     private BaseActivity mContext;
+    /**
+     * map是否刚被clear过
+     */
+    private boolean isCleared = false;
 
     public MapMarkerUtil(BaseActivity context) {
         mMechanismsForMap = new ArrayList<>();
@@ -225,10 +230,10 @@ public class MapMarkerUtil {
                         .position(latLng)
                         .icon(markerBitmapDescriptors.getUnselectedBitmapDescriptor())
                         .zIndex(4)
-                        .draggable(false);
+                        .draggable(false);//是否可以拖动
 
                 // 将第一个设置为选中状态
-                if (i == 0) {
+                if (i == mCurrentPosition) {
                     markerBitmapDescriptors.setSelected(true);
                     option.icon(markerBitmapDescriptors.getSelectedBitmapDescriptor());
                 }
@@ -238,7 +243,7 @@ public class MapMarkerUtil {
                 marker.setTag(mechanismResponse);
 
                 // 初始化 mCurrentMarker
-                if (i == 0) {
+                if (i == mCurrentPosition) {
                     mCurrentMarker = marker;
                     mCurrentPosition = i;
                 }
@@ -259,7 +264,7 @@ public class MapMarkerUtil {
         mDescriptors.clear();
         mMechanismsForMap.clear();
         mCurrentMarker = null;
-        mCurrentPosition = -1;
+        mCurrentPosition = 0;
     }
 
     public int getMarkerPosition(Marker marker) {
@@ -278,6 +283,8 @@ public class MapMarkerUtil {
     public void selectMarker(int position) {
         if (mMarkersOnMap != null && mMarkersOnMap.size() >= position) {
             Marker marker = mMarkersOnMap.get(position);
+            MechanismResponse currentMarkerTag = (MechanismResponse) mCurrentMarker.getTag();
+            MechanismResponse markerTag = (MechanismResponse) marker.getTag();
             if (mCurrentMarker != null && mCurrentMarker.getTag() == marker.getTag()) {
                 // 已经被选中了，什么都不需要执行
             } else {
@@ -301,5 +308,22 @@ public class MapMarkerUtil {
                 mCurrentPosition = position;
             }
         }
+    }
+
+    /**
+     * 在map clear 后，恢复原来的状态
+     */
+    public void restoreMap() {
+        if (isCleared) {
+            addMarkerToMap();
+            isCleared = false;
+        }
+    }
+
+    public void clearMap() {
+        mMap.clear();
+        mMarkersOnMap.clear();
+        mCurrentMarker = null;
+        isCleared = true;
     }
 }

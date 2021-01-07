@@ -2,12 +2,13 @@ package com.jcs.where.api.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * create by zyf on 2021/1/2 11:42 AM
  */
-public class MechanismDetailResponse {
+public class MechanismDetailResponse implements Serializable {
 
     /**
      * id : 1

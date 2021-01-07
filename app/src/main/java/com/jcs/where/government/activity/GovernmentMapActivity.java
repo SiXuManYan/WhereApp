@@ -1,10 +1,16 @@
 package com.jcs.where.government.activity;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -14,23 +20,33 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.government.adapter.GovernmentSearchAdapter;
 import com.jcs.where.government.adapter.MechanismAdapter;
 import com.jcs.where.government.fragment.CardViewPagerFragment;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.GovernmentMapModel;
+import com.jcs.where.utils.EmptyWatcher;
 import com.jcs.where.utils.MapMarkerUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 import com.jcs.where.view.popup.PopupConstraintLayout;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import io.reactivex.annotations.NonNull;
 
@@ -48,6 +64,11 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private MechanismAdapter mViewPagerAdapter;
+
+    // 搜索相关
+    private EditText mSearchEt;
+    private RecyclerView mSearchRecycler;
+    private GovernmentSearchAdapter mSearchAdapter;
     /**
      * 展示机构列表的Fragment集合
      */
@@ -72,6 +93,13 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         mTabLayout = findViewById(R.id.governmentTabs);
         mViewPager = findViewById(R.id.governmentViewPager);
         mPopupLayout = findViewById(R.id.bottomPopupLayout);
+
+        // 搜索相关
+        mSearchEt = findViewById(R.id.searchEt);
+        mSearchRecycler = findViewById(R.id.searchRecycler);
+        mSearchAdapter = new GovernmentSearchAdapter();
+        mSearchRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mSearchRecycler.setAdapter(mSearchAdapter);
         // 绑定PopupLayout适配器
         bindPopupLayoutAdapter();
     }
@@ -248,6 +276,95 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     protected void bindListener() {
         mTopArrowIv.setOnClickListener(this::onTopArrowClick);
         mViewPagerFragment.bindPageSelectedListener(this::onVpPageSelected);
+        mSearchAdapter.setOnItemClickListener(this::onSearchItemClicked);
+        mSearchEt.setOnEditorActionListener(this::onSearchActionClicked);
+        mSearchEt.addTextChangedListener(new EmptyWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("GovernmentMapActivity", "afterTextChanged: " + s.toString());
+                if (s.length() == 0) {
+                    mSearchAdapter.getData().clear();
+                    mSearchAdapter.notifyDataSetChanged();
+                    mSearchAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+
+                }
+            }
+        });
+
+        // 监听软键盘显示隐藏
+        KeyboardVisibilityEvent.setEventListener(this, this::onKeyboardStatusChanged);
+    }
+
+    /**
+     * 软键盘显示隐藏的监听回调
+     *
+     * @param open true：显示 false：隐藏
+     */
+    private void onKeyboardStatusChanged(boolean open) {
+        if (!open) {
+            mSearchRecycler.setVisibility(View.GONE);
+        } else {
+            if (mSearchAdapter.getItemCount() > 0) {
+                mSearchRecycler.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private boolean onSearchActionClicked(TextView textView, int actionId, KeyEvent keyEvent) {
+        String input = textView.getText().toString();
+        if (input.isEmpty()) {
+            mMapMarkerUtil.restoreMap();
+            hideInput();
+        } else {
+            showLoading();
+            mModel.getSearchByInput(input, new BaseObserver<List<SearchResponse>>() {
+                @Override
+                protected void onError(ErrorResponse errorResponse) {
+                    stopLoading();
+                    showNetError(errorResponse);
+                }
+
+                @Override
+                public void onNext(@NotNull List<SearchResponse> searchResponses) {
+                    stopLoading();
+                    mSearchAdapter.getData().clear();
+                    if (searchResponses.size() > 0) {
+                        mSearchAdapter.addData(searchResponses);
+                    } else {
+                        mSearchAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+                    }
+                    if (mSearchRecycler.getVisibility() == View.GONE) {
+                        mSearchRecycler.setVisibility(View.VISIBLE);
+                    }
+                    mSearchEt.requestFocus();
+                }
+            });
+        }
+        return false;
+    }
+
+    private void onSearchItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        SearchResponse searchResponse = mSearchAdapter.getData().get(position);
+        Integer id = searchResponse.getId();
+        showLoading();
+        mModel.getMechanismDetailById(id, new BaseObserver<MechanismDetailResponse>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NotNull MechanismDetailResponse mechanismDetailResponse) {
+                stopLoading();
+                mMapMarkerUtil.clearMap();
+                mSearchRecycler.setVisibility(View.GONE);
+                Log.e("GovernmentMapActivity", "onNext: " + mechanismDetailResponse.getId());
+            }
+        });
+
+        hideInput();
+        Log.e("GovernmentMapActivity", "onSearchItemClicked: " + id);
     }
 
     /**

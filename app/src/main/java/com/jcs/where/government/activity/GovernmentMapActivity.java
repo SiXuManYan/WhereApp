@@ -346,7 +346,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                     if (searchResponses.size() > 0) {
                         mSearchAdapter.addData(searchResponses);
                     } else {
-                        mSearchAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+                        showEmptySearchAdapter();
                     }
                     if (mSearchRecycler.getVisibility() == View.GONE) {
                         mSearchRecycler.setVisibility(View.VISIBLE);

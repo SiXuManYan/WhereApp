@@ -1,9 +1,12 @@
 package com.jcs.where.category;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
@@ -96,6 +99,7 @@ public class CategoryFragment extends BaseFullFragment {
 
     @Override
     protected void bindListener() {
+        mAdapter.setOnItemClickListener(this::onItemClicked);
         mRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
@@ -115,9 +119,16 @@ public class CategoryFragment extends BaseFullFragment {
                         if (baseNode instanceof ParentCategoryResponse) {
                             firstItemPosition = mData.indexOf(baseNode);
                         } else {
-                            firstItemPosition = mData.indexOf(mAdapter.getItem(mAdapter.findParentNode(baseNode)));
+                            BaseNode item = mAdapter.getItem(mAdapter.findParentNode(baseNode));
+                            if (item instanceof ParentCategoryResponse) {
+                                firstItemPosition = mData.indexOf(item);
+                            }
                         }
-                        mTabLayout.selectTab(mTabLayout.getTabAt(firstItemPosition));
+                        if (firstItemPosition == -1) {
+                            mTabLayout.selectTab(mTabLayout.getTabAt(firstItemPosition));
+                        } else {
+                            Log.e("CategoryFragment", "onScrollStateChanged: " + "firstItemPosition=-1");
+                        }
                     }
                 }
 
@@ -156,6 +167,11 @@ public class CategoryFragment extends BaseFullFragment {
 
             }
         });
+    }
+
+    private void onItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        Intent toTargetCategory = null;
+
     }
 
     private View makeTabView(String title) {

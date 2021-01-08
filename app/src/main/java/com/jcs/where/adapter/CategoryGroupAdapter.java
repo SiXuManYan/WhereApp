@@ -19,6 +19,8 @@ import java.util.List;
  * create by zyf on 2020/12/14 9:55 PM
  */
 public class CategoryGroupAdapter extends BaseNodeAdapter {
+    public static final int ITEM_TYPE_GROUP = 0;
+    public static final int ITEM_TYPE_CATEGORY = 1;
 
     public CategoryGroupAdapter() {
         super();
@@ -30,9 +32,9 @@ public class CategoryGroupAdapter extends BaseNodeAdapter {
     protected int getItemType(@NotNull List<? extends BaseNode> list, int position) {
         BaseNode node = list.get(position);
         if (node instanceof ParentCategoryResponse) {
-            return 0;
+            return ITEM_TYPE_GROUP;
         } else if (node instanceof CategoryResponse) {
-            return 1;
+            return ITEM_TYPE_CATEGORY;
         }
         return -1;
     }

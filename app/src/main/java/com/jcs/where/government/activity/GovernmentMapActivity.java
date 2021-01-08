@@ -56,6 +56,7 @@ import io.reactivex.annotations.NonNull;
  * create by zyf on 2020/12/28 7:44 PM
  */
 public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCallback {
+    public static final String K_CHILD_CATEGORY_ID = "childCategoryId";
     private SupportMapFragment mMapFragment;
     private CardViewPagerFragment mCardFragment;
 
@@ -84,6 +85,8 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
 
     private final String TYPE_GOVERNMENT = "3";
     private int mAreaId = -1;
+    private String mChildCategoryId = "";
+    private int mChildTabIndex = -1;
 
     @Override
     protected void initView() {
@@ -110,6 +113,8 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     protected void initData() {
         mModel = new GovernmentMapModel();
         mMapMarkerUtil = new MapMarkerUtil(this);
+        // 从CategoryFragment点击item跳转过来，要选择子分类的列表
+        mChildCategoryId = getIntent().getStringExtra(K_CHILD_CATEGORY_ID);
         mAreaId = getAreaId();
         mTabCategories = new ArrayList<>();
         mMechanismListFragments = new ArrayList<>();
@@ -151,6 +156,9 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                     if (i != 0) {
                         mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse));
                     }
+                    if (categoryResponse.getId().equals(mChildCategoryId)) {
+                        mChildTabIndex = i;
+                    }
                 }
 
                 mViewPagerAdapter.setMechanismListFragments(mMechanismListFragments);
@@ -159,6 +167,9 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 mViewPager.setAdapter(mViewPagerAdapter);
                 mTabLayout.setupWithViewPager(mViewPager);
                 mViewPager.setOffscreenPageLimit(mTabCategories.size());
+                if (mChildTabIndex != -1) {
+                    mViewPager.setCurrentItem(mChildTabIndex);
+                }
             }
         });
     }

@@ -67,6 +67,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HotelActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, HotelStarDialog.HotelStarCallback {
 
     private static final int REQ_SELECT_CITY = 100;
+    public static final String K_CATEGORY_ID = "categoryId";
     private final int READ_CODE = 10;
     private final int READ_LOCATIONCODE = 11;
     private TextView mLocationTv, mStartDateTv, mStartWeekTv, mEndDateTv, mEndWeekTv, mTotalDayTv, mRoomNumTv, mPriceAndStarTv;
@@ -303,7 +304,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void onSearchTvClick(View view) {
-        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), mTotalDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra("categoryId"));
+        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), mTotalDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra(K_CATEGORY_ID));
     }
 
     public void onClearClicked(View view) {

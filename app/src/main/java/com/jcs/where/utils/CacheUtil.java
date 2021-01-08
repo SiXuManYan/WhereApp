@@ -34,4 +34,10 @@ public class CacheUtil {
         }
         return "";
     }
+
+    public static void cacheWithCurrentTime(String key, Object value) {
+        String jsonStr = JsonUtil.getInstance().toJsonStr(value);
+        String valueWithTime = jsonStr + SPKey.K_DELIMITER + System.currentTimeMillis();
+        SPUtil.getInstance().saveString(key, valueWithTime);
+    }
 }

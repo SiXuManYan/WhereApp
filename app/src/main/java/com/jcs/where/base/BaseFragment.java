@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.utils.ToastUtils;
 
@@ -188,6 +189,9 @@ public abstract class BaseFragment extends Fragment {
         ToastUtils.showLong(getContext(), msg);
     }
 
+    public void showComing(){
+        showToast(getString(R.string.coming_soon));
+    }
 
     protected void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
         if (needChangeStatusBarStatus()) {

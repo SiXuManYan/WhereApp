@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.adapter.CategoryGroupAdapter;
 import com.jcs.where.api.BaseObserver;
@@ -17,8 +18,15 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.base.BaseFullFragment;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
+import com.jcs.where.government.activity.GovernmentMapActivity;
+import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.model.CategoryModel;
+import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.JsonUtil;
+import com.jcs.where.utils.SPKey;
+import com.jcs.where.utils.SPUtil;
 import com.jcs.where.widget.JcsTitle;
+import com.jcs.where.yellow_page.activity.YellowPageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,32 +215,52 @@ public class CategoryFragment extends BaseFullFragment {
         if (baseNode instanceof CategoryResponse) {
             CategoryResponse item = (CategoryResponse) baseNode;
             ParentCategoryResponse parentCategory = item.getParentCategory();
+
+            String itemId = item.getId();
             switch (item.getType()) {
                 case TYPE_SERVICE:
                     toTargetCategory = new Intent(getContext(), ConvenienceServiceActivity.class);
                     toTargetCategory.putExtra(ConvenienceServiceActivity.K_SERVICE_NAME, parentCategory.getName());
                     toTargetCategory.putExtra(ConvenienceServiceActivity.K_CATEGORIES, String.valueOf(parentCategory.getId()));
-                    toTargetCategory.putExtra(ConvenienceServiceActivity.K_CHILD_CATEGORY_ID, String.valueOf(item.getId()));
+                    toTargetCategory.putExtra(ConvenienceServiceActivity.K_CHILD_CATEGORY_ID, itemId);
                     break;
                 case TYPE_HOTEL:
+                    toTargetCategory = new Intent(getContext(), HotelActivity.class);
+                    toTargetCategory.putExtra(HotelActivity.K_CATEGORY_ID, itemId);
                     break;
                 case TYPE_TOURISM:
+                    // 旅游景点
                     break;
                 case TYPE_GOVERNMENT:
+                    toTargetCategory = new Intent(getContext(), GovernmentMapActivity.class);
+                    toTargetCategory.putExtra(GovernmentMapActivity.K_CHILD_CATEGORY_ID, itemId);
                     break;
                 case TYPE_TRAVEL:
+                    // 旅游旅行
                     break;
                 case TYPE_RESTAURANT:
+                    // 餐厅
                     break;
                 case TYPE_YELLOW_PAGE:
+                    Log.e("CategoryFragment", "onItemClicked: " + "itemId=" + itemId);
+                    // 传递企业黄页一级分类id
+                    String jsonStr = CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID);
+                    if (!jsonStr.equals("")) {
+                        toTargetCategory = new Intent(getContext(), YellowPageActivity.class);
+                        List<Integer> categoryIds = JsonUtil.getInstance().fromJsonToList(jsonStr, new TypeToken<List<Integer>>() {
+                        }.getType());
+                        ArrayList<Integer> categories = (ArrayList<Integer>) categoryIds;
+                        toTargetCategory.putIntegerArrayListExtra(YellowPageActivity.K_CATEGORIES, categories);
+                        toTargetCategory.putExtra(YellowPageActivity.K_DEFAULT_CHILD_CATEGORY_ID, itemId);
+                    }
                     break;
             }
+            if (toTargetCategory != null) {
+                startActivity(toTargetCategory);
+            } else {
+                showComing();
+            }
         }
-
-        if (toTargetCategory != null) {
-            startActivity(toTargetCategory);
-        }
-
     }
 
     private View makeTabView(String title) {

@@ -18,6 +18,7 @@ import com.jcs.where.convenience.adapter.CityAdapter;
 import com.jcs.where.convenience.model.ConvenienceServiceModel;
 import com.jcs.where.government.adapter.MechanismAdapter;
 import com.jcs.where.government.fragment.MechanismListFragment;
+import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
@@ -222,11 +223,9 @@ public class ConvenienceServiceActivity extends BaseActivity {
                 mMechanismListFragments.clear();
 
                 List<CityResponse> cities = convenienceServiceZipResponse.getCities();
-                long currentTime = System.currentTimeMillis();
                 if (cities != null) {
-                    String citiesJsonStr = JsonUtil.getInstance().toJsonStr(cities);
-                    String saveCities = citiesJsonStr + SPKey.K_DELIMITER + currentTime;
-                    SPUtil.getInstance().saveString(SPKey.K_ALL_CITIES, saveCities);
+                    // 存储城市数据
+                    CacheUtil.cacheWithCurrentTime(SPKey.K_ALL_CITIES, cities);
                 }
 
 
@@ -236,13 +235,13 @@ public class ConvenienceServiceActivity extends BaseActivity {
                 mTabCategories.addAll(categories);
 
                 // 存储当前分类信息
-                String categoriesJsonStr = JsonUtil.getInstance().toJsonStr(categories);
-                String saveCategories = categoriesJsonStr + SPKey.K_DELIMITER + currentTime;
-                SPUtil.getInstance().saveString(SPKey.K_SERVICE_CATEGORIES + mCategoryId, saveCategories);
+                CacheUtil.cacheWithCurrentTime(SPKey.K_SERVICE_CATEGORIES, categories);
 
                 // 展示数据
                 injectTabDataToView();
-                injectCityDataToView(cities);
+                if (cities != null) {
+                    injectCityDataToView(cities);
+                }
             }
         });
     }

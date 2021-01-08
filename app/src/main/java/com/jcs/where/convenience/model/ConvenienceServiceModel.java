@@ -79,10 +79,7 @@ public class ConvenienceServiceModel extends BaseModel {
     }
 
     public void saveCities(List<CityResponse> cityResponses) {
-        String cityJsonStr = JsonUtil.getInstance().toJsonStr(cityResponses);
-        long currentTime = System.currentTimeMillis();
-        String saveJson = cityJsonStr + SPKey.K_DELIMITER + currentTime;
-        SPUtil.getInstance().saveString(SPKey.K_ALL_CITIES, saveJson);
+        CacheUtil.cacheWithCurrentTime(SPKey.K_ALL_CITIES, cityResponses);
     }
 
     public static class ConvenienceServiceZipResponse {

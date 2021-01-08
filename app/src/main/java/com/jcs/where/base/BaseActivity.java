@@ -215,6 +215,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtils.showLong(this, msg);
     }
 
+    public void showComing(){
+        showToast(getString(R.string.coming_soon));
+    }
+
     protected int getPxFromDp(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }

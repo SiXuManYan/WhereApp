@@ -159,7 +159,7 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
             String id = item.getId();
             switch (id) {
                 case HOTEL_STAY:
-                    toActivity(HotelActivity.class, new IntentEntry("categoryId", id));
+                    toActivity(HotelActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
                     break;
             }
         }

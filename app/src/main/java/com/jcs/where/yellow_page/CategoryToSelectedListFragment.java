@@ -1,5 +1,6 @@
 package com.jcs.where.yellow_page;
 
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -32,6 +33,7 @@ public class CategoryToSelectedListFragment extends BaseFragment {
     private List<Integer> mSelectPosition;
     private List<CategoryResponse> mTotalCategories;
     private String mFirstLevelTotalIds = "";
+    private String mDefaultChildCategoryId;
     public static final int LEVEL_FIRST = 1;
     public static final int LEVEL_SECOND = 2;
     public static final int LEVEL_THIRD = 3;
@@ -101,43 +103,84 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         this.mFirstLevelTotalIds = firstLevelTotalIds;
     }
 
+    public String getDefaultChildCategoryId() {
+        return mDefaultChildCategoryId;
+    }
+
+    public void setDefaultChildCategoryId(String defaultChildCategoryId) {
+        int size = mTotalCategories.size();
+        for (int i = 0; i < size; i++) {
+            CategoryResponse first = mTotalCategories.get(i);
+            if (first.getId().equals(defaultChildCategoryId)) {
+                mSelectPosition.set(0, i);
+                mLevel= LEVEL_FIRST;
+                return;
+            }
+            List<CategoryResponse> secondCategories = first.getChild_categories();
+            for (int j = 0; j < secondCategories.size(); j++) {
+                CategoryResponse second = secondCategories.get(j);
+                if (second.getId().equals(defaultChildCategoryId)) {
+                    mSelectPosition.set(0,i);
+                    mSelectPosition.set(1,j);
+                    mLevel= LEVEL_SECOND;
+                    return;
+                }
+                List<CategoryResponse> thirdCategories = second.getChild_categories();
+                for (int k = 0; k < thirdCategories.size(); k++) {
+                    CategoryResponse third = thirdCategories.get(k);
+                    if (third.getId().equals(defaultChildCategoryId)) {
+                        mSelectPosition.set(0,i);
+                        mSelectPosition.set(1,j);
+                        mSelectPosition.set(2,k);
+                        mLevel= LEVEL_THIRD;
+                        return;
+                    }
+                }
+            }
+        }
+
+        Log.e("CategoryFragment", "setDefaultChildCategoryId: "+"");
+    }
+
+
     public void setListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
-    public boolean isFirstLevel(){
+    public boolean isFirstLevel() {
         return mLevel == LEVEL_FIRST;
     }
 
-    public boolean isSecondLevel(){
+    public boolean isSecondLevel() {
         return mLevel == LEVEL_SECOND;
     }
 
-    public boolean isThirdLevel(){
+    public boolean isThirdLevel() {
         return mLevel == LEVEL_THIRD;
     }
 
     /**
      * level 为 -1，说明还没有点击选择子分类，应该展示全部数据
+     *
      * @return
      */
-    public boolean isNoLevel(){
+    public boolean isNoLevel() {
         return mLevel == -1;
     }
 
-    public Integer getSelectFirstPosition(){
+    public Integer getSelectFirstPosition() {
         return mSelectPosition.get(0);
     }
-    
-    public Integer getSelectSecondPosition(){
+
+    public Integer getSelectSecondPosition() {
         return mSelectPosition.get(1);
     }
-    
-    public Integer getSelectThirdPosition(){
+
+    public Integer getSelectThirdPosition() {
         return mSelectPosition.get(2);
     }
 
-    public CategoryResponse getSelectFirstCate(){
+    public CategoryResponse getSelectFirstCate() {
         Integer selectFirstPosition = getSelectFirstPosition();
         if (selectFirstPosition == null) {
             return null;
@@ -145,7 +188,7 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         return mTotalCategories.get(selectFirstPosition);
     }
 
-    public CategoryResponse getSelectSecondCate(){
+    public CategoryResponse getSelectSecondCate() {
         CategoryResponse selectFirstCate = getSelectFirstCate();
         Integer selectSecondPosition = getSelectSecondPosition();
         if (selectFirstCate == null || selectSecondPosition == null) {
@@ -154,12 +197,13 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         return selectFirstCate.getChild_categories().get(selectSecondPosition);
     }
 
-    public CategoryResponse getSelectThirdCate(){
+    public CategoryResponse getSelectThirdCate() {
         CategoryResponse selectSecondCate = getSelectSecondCate();
-        if (selectSecondCate == null) {
+        Integer selectThirdPosition = getSelectThirdPosition();
+        if (selectSecondCate == null || selectThirdPosition == null) {
             return null;
         }
-        return selectSecondCate.getChild_categories().get(getSelectThirdPosition());
+        return selectSecondCate.getChild_categories().get(selectThirdPosition);
     }
 
     /**
@@ -167,7 +211,7 @@ public class CategoryToSelectedListFragment extends BaseFragment {
      *
      * @return 分类id字符串，可能是 "1" "[1,2,3]"
      */
-    public String getCurrentCategoryId(){
+    public String getCurrentCategoryId() {
         switch (mLevel) {
             case LEVEL_FIRST:
                 return String.valueOf(getSelectFirstCate().getId());
@@ -191,13 +235,13 @@ public class CategoryToSelectedListFragment extends BaseFragment {
 
     public void unSelectSecond() {
         if (mSelectPosition != null) {
-            mSelectPosition.set(1,null);
+            mSelectPosition.set(1, null);
         }
     }
 
     public void unSelectThird() {
         if (mSelectPosition != null) {
-            mSelectPosition.set(2,null);
+            mSelectPosition.set(2, null);
         }
     }
 
@@ -228,11 +272,11 @@ public class CategoryToSelectedListFragment extends BaseFragment {
 
             // 选中状态的item
             if (selectedPosition != null && baseViewHolder.getAdapterPosition() == selectedPosition) {
-                baseViewHolder.setTextColor(R.id.categoryTitleTv,getContext().getColor(R.color.blue_4D9FF2));
+                baseViewHolder.setTextColor(R.id.categoryTitleTv, getContext().getColor(R.color.blue_4D9FF2));
                 baseViewHolder.setGone(R.id.categoryCheckedIcon, false);
             } else {
                 baseViewHolder.setGone(R.id.categoryCheckedIcon, true);
-                baseViewHolder.setTextColor(R.id.categoryTitleTv,getContext().getColor(R.color.black_333333));
+                baseViewHolder.setTextColor(R.id.categoryTitleTv, getContext().getColor(R.color.black_333333));
             }
         }
     }

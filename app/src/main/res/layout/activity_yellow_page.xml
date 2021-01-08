@@ -134,5 +134,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_286"
         android:name="com.jcs.where.yellow_page.CategoryToSelectedListFragment"
-        app:layout_constraintTop_toBottomOf="@id/line" />
+        app:layout_constraintTop_toBottomOf="@id/line"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

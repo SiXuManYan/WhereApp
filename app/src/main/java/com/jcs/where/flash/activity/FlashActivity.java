@@ -1,10 +1,20 @@
 package com.jcs.where.flash.activity;
 
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.flash.model.FlashModel;
 import com.jcs.where.home.HomeActivity;
+import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
+import com.jcs.where.yellow_page.model.YellowPageModel;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * 闪屏页
@@ -12,6 +22,7 @@ import com.jcs.where.utils.SPUtil;
  */
 public class FlashActivity extends BaseActivity {
     private boolean isAlive = true;
+    private FlashModel mModel;
 
     @Override
     protected void initView() {
@@ -20,11 +31,26 @@ public class FlashActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mModel = new FlashModel();
         String cityId = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID);
         if (cityId.isEmpty()) {
             // 默认巴郎牙
             SPUtil.getInstance().saveString(SPKey.K_CURRENT_AREA_ID, "3");
         }
+
+        mModel.getYellowPageAllCategories(new BaseObserver<List<CategoryResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+
+            }
+
+            @Override
+            public void onNext(@NotNull List<CategoryResponse> categoryResponses) {
+                if (CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_CATEGORIES).equals("") && categoryResponses.size() > 0) {
+                    CacheUtil.cacheWithCurrentTime(SPKey.K_YELLOW_PAGE_CATEGORIES, categoryResponses);
+                }
+            }
+        });
 
         new Thread(new Runnable() {
             @Override

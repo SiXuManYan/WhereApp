@@ -394,12 +394,11 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 // 跳转到企业黄页
                 Intent toYellowPage = new Intent(getContext(), YellowPageActivity.class);
 
-                // 传递企业黄页下级分类id
+                // 传递企业黄页一级分类id
                 ArrayList<Integer> categories = (ArrayList<Integer>) item.getCategories();
                 toYellowPage.putIntegerArrayListExtra(YellowPageActivity.K_CATEGORIES, categories);
 
                 // 传递企业黄页的id
-                toYellowPage.putExtra(YellowPageActivity.K_ID, String.valueOf(item.getId()));
                 startActivity(toYellowPage);
                 break;
             case 3:
@@ -419,11 +418,9 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                         new IntentEntry(ConvenienceServiceActivity.K_SERVICE_NAME, convenienceName)
                 );
                 break;
-            case 9:
-                showToast("餐厅列表");
-                break;
-            case 10:
-                showToast("开发中");
+            case 9:// 餐厅列表
+            case 10:// 线上商店
+                showComing();
                 break;
         }
     }

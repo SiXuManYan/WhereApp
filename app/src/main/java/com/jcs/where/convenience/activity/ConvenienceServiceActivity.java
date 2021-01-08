@@ -35,12 +35,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 /**
- * 便民服务
+ * 综合服务页面
  * create by zyf on 2021/1/5 3:55 下午
  */
 public class ConvenienceServiceActivity extends BaseActivity {
     public static final String K_CATEGORIES = "categoryId";
     public static final String K_SERVICE_NAME = "serviceName";
+    public static final String K_CHILD_CATEGORY_ID = "childCategoryId";
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -53,6 +54,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
     private String mCategoryId;
     private String mServiceName;
+    private String mChildCategoryId;
 
     /**
      * 展示机构列表的Fragment集合
@@ -69,6 +71,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
      */
     private List<CityResponse> mCities;
     private CityResponse mCurrentCityResponse;
+    private int mDefaultIndex;
 
     @Override
     protected void initView() {
@@ -103,6 +106,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
         Intent intent = getIntent();
         mCategoryId = intent.getStringExtra(K_CATEGORIES);
         mServiceName = intent.getStringExtra(K_SERVICE_NAME);
+        mChildCategoryId = intent.getStringExtra(K_CHILD_CATEGORY_ID);
         mJcsTitle.setMiddleTitle(mServiceName);
         mTabCategories = new ArrayList<>();
         mMechanismListFragments = new ArrayList<>();
@@ -113,22 +117,16 @@ public class ConvenienceServiceActivity extends BaseActivity {
     private void getDataFromNativeOrNet() {
         String jsonCity = mModel.needUpdateCity();
         String jsonCategory = mModel.needUpdateCategory(mCategoryId);
-        if (jsonCity.isEmpty()) {
-            // 获取 或 更新 city 数据
-            getCitiesFromNet();
-        } else {
-            List<CityResponse> cities = JsonUtil.getInstance().fromJsonToList(
-                    jsonCity, new TypeToken<List<CategoryResponse>>() {
-                    }.getType()
-            );
-            injectCityDataToView(cities);
-        }
 
+        if (jsonCity.isEmpty() && jsonCategory.isEmpty()) {
+            // 获取网路数据
+            getInitConvenienceService();
+            return;
+        }
 
         if (jsonCategory.isEmpty()) {
             // 获取 或 更新 当前页的分类数据
             getCategoriesFromNet();
-
         } else {
             addCategoryNamedAll();
             mTabCategories.addAll(
@@ -141,10 +139,18 @@ public class ConvenienceServiceActivity extends BaseActivity {
             injectTabDataToView();
         }
 
-        if (jsonCity.isEmpty() && jsonCategory.isEmpty()) {
-            // 获取网路数据
-            getInitConvenienceService();
+        if (jsonCity.isEmpty()) {
+            // 获取 或 更新 city 数据
+            getCitiesFromNet();
+        } else {
+            List<CityResponse> cities = JsonUtil.getInstance().fromJsonToList(
+                    jsonCity, new TypeToken<List<CityResponse>>() {
+                    }.getType()
+            );
+            injectCityDataToView(cities);
         }
+
+
     }
 
     private void getCategoriesFromNet() {
@@ -245,6 +251,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
      * 展示数据
      */
     private void injectTabDataToView() {
+        mDefaultIndex = 0;
         int size = mTabCategories.size();
         mTabLayout.removeAllTabs();
         for (int i = 0; i < size; i++) {
@@ -257,6 +264,9 @@ public class ConvenienceServiceActivity extends BaseActivity {
             if (i != 0) {
                 mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse));
             }
+            if (categoryResponse.getId().equals(mChildCategoryId)) {
+                mDefaultIndex = i;
+            }
         }
 
         mViewPagerAdapter.setMechanismListFragments(mMechanismListFragments);
@@ -265,6 +275,10 @@ public class ConvenienceServiceActivity extends BaseActivity {
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(mViewPagerAdapter.getCount());
+        mViewPagerAdapter.notifyDataSetChanged();
+        if (mDefaultIndex != 0) {
+            mViewPager.setCurrentItem(mDefaultIndex);
+        }
     }
 
     private void addCategoryNamedAll() {

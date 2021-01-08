@@ -28,7 +28,7 @@ public class CacheUtil {
             Log.e("CacheUtil", "needUpdateBySpKey:" + spKey + "-- " + e.getMessage());
         }
         long currentTime = System.currentTimeMillis();
-        if (currentTime - savedTime >= SPKey.SAVE_TIME) {
+        if (currentTime - savedTime <= SPKey.SAVE_TIME) {
             // 获取网路数据
             return jsonStr;
         }

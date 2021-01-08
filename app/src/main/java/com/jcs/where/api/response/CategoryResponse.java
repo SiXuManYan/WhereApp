@@ -19,6 +19,11 @@ public class CategoryResponse extends BaseNode implements Serializable {
 
     private String id;
     private String name;
+    /**
+     * 根据业务逻辑，添加本地字段
+     * 用于分类列表中，点击item能拿到上级分类的 response
+     */
+    private ParentCategoryResponse parentCategory;
     private int has_children;
     private int type;
     private String icon;
@@ -70,6 +75,14 @@ public class CategoryResponse extends BaseNode implements Serializable {
 
     public void setChild_categories(List<CategoryResponse> child_categories) {
         this.child_categories = child_categories;
+    }
+
+    public ParentCategoryResponse getParentCategory() {
+        return parentCategory;
+    }
+
+    public void setParentCategory(ParentCategoryResponse parentCategory) {
+        this.parentCategory = parentCategory;
     }
 
     @Nullable

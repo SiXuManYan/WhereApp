@@ -1,5 +1,7 @@
 package com.jcs.where.api.response;
 
+import android.util.Log;
+
 import com.chad.library.adapter.base.entity.node.BaseNode;
 
 import org.jetbrains.annotations.Nullable;
@@ -80,8 +82,10 @@ public class ParentCategoryResponse extends BaseNode {
     @Nullable
     @Override
     public List<BaseNode> getChildNode() {
-        List<BaseNode> temp = new ArrayList<>();
-        temp.addAll(child_categories);
-        return temp;
+        int size = this.child_categories.size();
+        for (int i = 0; i < size; i++) {
+            this.child_categories.get(i).setParentCategory(this);
+        }
+        return new ArrayList<>(child_categories);
     }
 }

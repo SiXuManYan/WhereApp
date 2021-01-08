@@ -15,8 +15,8 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
-import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.BaseFullFragment;
+import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.model.CategoryModel;
 import com.jcs.where.widget.JcsTitle;
 
@@ -39,6 +39,34 @@ public class CategoryFragment extends BaseFullFragment {
     private List<ParentCategoryResponse> mData;
     private boolean isRecyclerScrolling = true;
     private boolean isTabSelected = false;
+    /**
+     * 点击 item 跳转到 综合服务 页面
+     */
+    private final int TYPE_SERVICE = 0;
+    /**
+     * 点击 item 跳转到 酒店 页面
+     */
+    private final int TYPE_HOTEL = 1;
+    /**
+     * 点击 item 跳转到 旅游 页面
+     */
+    private final int TYPE_TOURISM = 2;
+    /**
+     * 点击 item 跳转到 政府地图 页面
+     */
+    private final int TYPE_GOVERNMENT = 3;
+    /**
+     * 点击 item 跳转到 旅游旅行 页面
+     */
+    private final int TYPE_TRAVEL = 4;
+    /**
+     * 点击 item 跳转到 餐厅 页面
+     */
+    private final int TYPE_RESTAURANT = 5;
+    /**
+     * 点击 item 跳转到 企业黄页 页面
+     */
+    private final int TYPE_YELLOW_PAGE = 6;
 
     @Override
 
@@ -171,6 +199,39 @@ public class CategoryFragment extends BaseFullFragment {
 
     private void onItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         Intent toTargetCategory = null;
+        BaseNode baseNode = mAdapter.getData().get(position);
+        if (baseNode instanceof ParentCategoryResponse) {
+            return;
+        }
+
+        if (baseNode instanceof CategoryResponse) {
+            CategoryResponse item = (CategoryResponse) baseNode;
+            ParentCategoryResponse parentCategory = item.getParentCategory();
+            switch (item.getType()) {
+                case TYPE_SERVICE:
+                    toTargetCategory = new Intent(getContext(), ConvenienceServiceActivity.class);
+                    toTargetCategory.putExtra(ConvenienceServiceActivity.K_SERVICE_NAME, parentCategory.getName());
+                    toTargetCategory.putExtra(ConvenienceServiceActivity.K_CATEGORIES, String.valueOf(parentCategory.getId()));
+                    toTargetCategory.putExtra(ConvenienceServiceActivity.K_CHILD_CATEGORY_ID, String.valueOf(item.getId()));
+                    break;
+                case TYPE_HOTEL:
+                    break;
+                case TYPE_TOURISM:
+                    break;
+                case TYPE_GOVERNMENT:
+                    break;
+                case TYPE_TRAVEL:
+                    break;
+                case TYPE_RESTAURANT:
+                    break;
+                case TYPE_YELLOW_PAGE:
+                    break;
+            }
+        }
+
+        if (toTargetCategory != null) {
+            startActivity(toTargetCategory);
+        }
 
     }
 

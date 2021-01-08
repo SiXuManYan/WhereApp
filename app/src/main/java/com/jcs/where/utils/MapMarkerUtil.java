@@ -340,10 +340,10 @@ public class MapMarkerUtil {
         isCleared = true;
     }
 
-    public void addTempMarker(MechanismDetailResponse mechanismDetailResponse) {
-        LatLng latLng = new LatLng(mechanismDetailResponse.getLat(), mechanismDetailResponse.getLng());
+    public void addTempMarker(MechanismResponse mechanismResponse) {
+        LatLng latLng = new LatLng(mechanismResponse.getLat(), mechanismResponse.getLng());
         TextView markerView = (TextView) getMarkerView();
-        markerView.setText(mechanismDetailResponse.getTitle());
+        markerView.setText(mechanismResponse.getTitle());
         MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
         markerBitmapDescriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
         markerBitmapDescriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
@@ -358,7 +358,7 @@ public class MapMarkerUtil {
 
         // 在地图上绘制
         Marker marker = mMap.addMarker(option);
-        marker.setTag(mechanismDetailResponse);
+        marker.setTag(mechanismResponse);
 
         if (mMap != null) {
             // 将点击的 marker 展示在屏幕中心

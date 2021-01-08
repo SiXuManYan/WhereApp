@@ -28,6 +28,7 @@ import com.jcs.where.government.adapter.MechanismAdapter;
 import com.jcs.where.government.fragment.CardViewPagerFragment;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.GovernmentMapModel;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.EmptyWatcher;
 import com.jcs.where.utils.MapMarkerUtil;
 import com.jcs.where.utils.SPKey;
@@ -177,7 +178,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
         // 获取要展示在地图上的数据
         showLoading();
         // 获得展示在地图上的数据
-        mModel.getMechanismListForMap(TYPE_GOVERNMENT, 14.6631685, 120.5887840, new BaseObserver<List<MechanismResponse>>() {
+        mModel.getMechanismListForMap(TYPE_GOVERNMENT, Constant.LAT, Constant.LNG, new BaseObserver<List<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -332,7 +333,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
             hideInput();
         } else {
             showLoading();
-            mModel.getSearchByInput(input, new BaseObserver<List<SearchResponse>>() {
+            mModel.getMechanismListForMapSearch(input, new BaseObserver<List<MechanismResponse>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
@@ -340,11 +341,11 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 }
 
                 @Override
-                public void onNext(@NotNull List<SearchResponse> searchResponses) {
+                public void onNext(@NotNull List<MechanismResponse> mechanismResponses) {
                     stopLoading();
                     mSearchAdapter.getData().clear();
-                    if (searchResponses.size() > 0) {
-                        mSearchAdapter.addData(searchResponses);
+                    if (mechanismResponses.size() > 0) {
+                        mSearchAdapter.addData(mechanismResponses);
                     } else {
                         showEmptySearchAdapter();
                     }
@@ -359,40 +360,12 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
     }
 
     private void onSearchItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        SearchResponse searchResponse = mSearchAdapter.getData().get(position);
-        Integer id = searchResponse.getId();
-        showLoading();
-        mModel.getMechanismDetailById(id, new BaseObserver<MechanismDetailResponse>() {
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-                showNetError(errorResponse);
-            }
-
-            @Override
-            public void onNext(@NotNull MechanismDetailResponse mechanismDetailResponse) {
-                stopLoading();
-                mMapMarkerUtil.clearMap();
-                mSearchRecycler.setVisibility(View.GONE);
-                mMapMarkerUtil.addTempMarker(mechanismDetailResponse);
-                mCardFragment.bindSingleData(getMechanismResponse(mechanismDetailResponse));
-                Log.e("GovernmentMapActivity", "onNext: " + mechanismDetailResponse.getId());
-            }
-        });
-
+        MechanismResponse item = mSearchAdapter.getData().get(position);
+        mMapMarkerUtil.clearMap();
+        mSearchRecycler.setVisibility(View.GONE);
+        mMapMarkerUtil.addTempMarker(item);
+        mCardFragment.bindSingleData(item);
         hideInput();
-        Log.e("GovernmentMapActivity", "onSearchItemClicked: " + id);
-    }
-
-    private MechanismResponse getMechanismResponse(MechanismDetailResponse mechanismDetailResponse) {
-        MechanismResponse mechanismResponse = new MechanismResponse();
-        mechanismResponse.setId(mechanismDetailResponse.getId());
-        mechanismResponse.setAddress(mechanismDetailResponse.getAddress());
-        mechanismResponse.setImages(mechanismDetailResponse.getImages());
-        mechanismResponse.setTitle(mechanismDetailResponse.getTitle());
-        mechanismResponse.setLat(mechanismDetailResponse.getLat());
-        mechanismResponse.setLng(mechanismDetailResponse.getLng());
-        return mechanismResponse;
     }
 
     /**

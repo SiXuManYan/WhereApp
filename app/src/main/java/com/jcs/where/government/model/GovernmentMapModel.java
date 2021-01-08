@@ -6,6 +6,7 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.SearchResponse;
+import com.jcs.where.utils.Constant;
 
 import java.util.List;
 
@@ -28,6 +29,14 @@ public class GovernmentMapModel extends BaseModel {
     public void getMechanismListForMap(String categoryId, double lat, double lng,
                                        BaseObserver<List<MechanismResponse>> observer) {
         getMechanismListForMap(categoryId, 0, "", lat, lng, observer);
+    }
+
+    /**
+     * 搜索某区域下的所有政府机构
+     */
+    public void getMechanismListForMapSearch(String searchInput,
+                                       BaseObserver<List<MechanismResponse>> observer) {
+        getMechanismListForMap("0", 0, searchInput, Constant.LAT, Constant.LNG, observer);
     }
 
     /**

@@ -25,10 +25,10 @@ public class MechanismListAdapter extends BaseQuickAdapter<MechanismResponse, Ba
         baseViewHolder.setText(R.id.mechanismTitleTv, mechanismResponse.getTitle());
         baseViewHolder.setText(R.id.mechanismAddressTv, mechanismResponse.getAddress());
         String distanceStr = mechanismResponse.getDistance();
-        int distance = 0;
+        double distance = 0;
         if (distanceStr != null && !distanceStr.isEmpty()) {
             try {
-                distance = Integer.parseInt(distanceStr);
+                distance = Double.parseDouble(distanceStr);
             } catch (NumberFormatException e) {
             }
         }
@@ -40,7 +40,7 @@ public class MechanismListAdapter extends BaseQuickAdapter<MechanismResponse, Ba
         }
         ImageView mechanismIconIv = baseViewHolder.findView(R.id.mechanismIconIv);
         List<String> images = mechanismResponse.getImages();
-        if (images != null && images.size() > 0) {
+        if (images != null && images.size() > 0 && mechanismIconIv != null) {
             Glide.with(getContext()).load(images.get(0)).into(mechanismIconIv);
         }
     }

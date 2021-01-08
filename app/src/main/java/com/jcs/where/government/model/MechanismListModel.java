@@ -4,6 +4,7 @@ import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
+import com.jcs.where.utils.Constant;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class MechanismListModel extends BaseModel {
     public void getMechanismList(String categoryId, BaseObserver<MechanismPageResponse> observer) {
 
-        dealResponse(mRetrofit.getMechanismListById(categoryId, ""), observer);
+        dealResponse(mRetrofit.getMechanismListById(categoryId, "", Constant.LAT, Constant.LNG), observer);
     }
 
     /**

@@ -6,6 +6,7 @@ import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
+import com.jcs.where.utils.Constant;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class YellowPageModel extends BaseModel {
     public void getMechanismList(String categoryId,
                                  String search, BaseObserver<MechanismPageResponse> observer) {
 
-        dealResponse(mRetrofit.getMechanismListById(categoryId, search), observer);
+        dealResponse(mRetrofit.getMechanismListById(categoryId, search, Constant.LAT, Constant.LNG), observer);
 
     }
 
@@ -49,7 +50,8 @@ public class YellowPageModel extends BaseModel {
 
     public void getInitData(String categoryIds, BaseObserver<YellowPageZipResponse> observer) {
 
-        Observable<MechanismPageResponse> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "");
+        // 获取机构列表
+        Observable<MechanismPageResponse> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "", Constant.LAT, Constant.LNG);
         // 获取一级分类
         Observable<List<CategoryResponse>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
         Observable<YellowPageZipResponse> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, YellowPageZipResponse::new);

@@ -1,6 +1,7 @@
 package com.jcs.where.government.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RadioButton;
@@ -162,6 +163,7 @@ public class MechanismListFragment extends BaseFragment {
     private void getMechanismList(String categoryId) {
         mCurrentCategoryId = categoryId;
         mSwipeLayout.setRefreshing(true);
+        Log.e("MechanismListFragment", "getMechanismList: " + "id=" + categoryId);
         mModel.getMechanismList(categoryId, new BaseObserver<MechanismPageResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {

@@ -206,7 +206,11 @@ public interface RetrofitApi {
      * @return
      */
     @GET("generalapi/v1/infos")
-    Observable<MechanismPageResponse> getMechanismListById(@Query("cate_id") String categoryId, @Query("search_input") String search);
+    Observable<MechanismPageResponse> getMechanismListById(
+            @Query("cate_id") String categoryId,
+            @Query("search_input") String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng);
 
     /**
      * 获得展示在地图上的机构数据
@@ -229,6 +233,7 @@ public interface RetrofitApi {
 
     /**
      * 根据机构id，获取机构详情
+     *
      * @param mechanismId 机构id
      */
     @GET("generalapi/v1/infos/{info_id}")
@@ -236,6 +241,7 @@ public interface RetrofitApi {
 
     /**
      * 收藏机构
+     *
      * @param mechanismId 机构id
      */
     @GET("generalapi/v1/collects")
@@ -243,6 +249,7 @@ public interface RetrofitApi {
 
     /**
      * 取消收藏机构
+     *
      * @param mechanismId 机构id
      */
     @GET("generalapi/v1/collects")
@@ -256,6 +263,7 @@ public interface RetrofitApi {
 
     /**
      * 搜索接口
+     *
      * @param input 关键字
      */
     @GET("commonapi/v1/searches")

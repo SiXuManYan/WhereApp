@@ -36,7 +36,12 @@ public class CacheUtil {
     }
 
     public static void cacheWithCurrentTime(String key, Object value) {
-        String jsonStr = JsonUtil.getInstance().toJsonStr(value);
+        String jsonStr;
+        if (value instanceof String){
+            jsonStr = (String) value;
+        }else {
+            jsonStr = JsonUtil.getInstance().toJsonStr(value);
+        }
         String valueWithTime = jsonStr + SPKey.K_DELIMITER + System.currentTimeMillis();
         SPUtil.getInstance().saveString(key, valueWithTime);
     }

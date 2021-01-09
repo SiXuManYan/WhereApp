@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.jcs.where.BuildConfig;
 import com.jcs.where.api.convert.NullOrEmptyConvertFactory;
+import com.jcs.where.api.response.LoginResponse;
+import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.JsonUtil;
+import com.jcs.where.utils.SPKey;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +49,7 @@ public class RetrofitManager {
 
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
         // 四秒请求超时
-        okBuilder.callTimeout(4,TimeUnit.SECONDS);
+        okBuilder.callTimeout(4, TimeUnit.SECONDS);
         // 添加请求头
         okBuilder.addInterceptor(new Interceptor() {
             @Override
@@ -58,8 +62,11 @@ public class RetrofitManager {
 //                if (token != null) {
 //                    requestBuilder.header("Authorization", token);
 //                }
-                requestBuilder.header("Authorization",
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmpjc3Rlc3QuY29tXC91c2VyYXBpXC92MVwvbG9naW4iLCJpYXQiOjE2MDY5ODUwNTQsImV4cCI6MTYwOTU3NzA1NCwibmJmIjoxNjA2OTg1MDU0LCJqdGkiOiIwRnZLNW9NMUZtUVNIN25sIiwic3ViIjoxMSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.UrQy6Wi6qlTyAMPgtUVYreR7maSUpwPxO7vPFXm1MKE");
+
+                String jsonStr = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+                if (!jsonStr.equals("")) {
+                    requestBuilder.header("Authorization", "Bearer " + jsonStr);
+                }
                 Request build = requestBuilder.build();
                 return chain.proceed(build);
             }

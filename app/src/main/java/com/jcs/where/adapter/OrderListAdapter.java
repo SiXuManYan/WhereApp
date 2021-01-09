@@ -56,14 +56,17 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
         baseViewHolder.setText(R.id.orderTitleTv, dataBean.getTitle());
         Integer orderStatus = dataBean.getOrder_status();
         OrderStatusHolder orderStatusHolder = mOrderHolder.get(orderStatus);
-        baseViewHolder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
-        if (orderStatusHolder.leftText.equals("")) {
-            baseViewHolder.setGone(R.id.leftToTv, true);
-        } else {
-            baseViewHolder.setGone(R.id.leftToTv, false);
-            baseViewHolder.setText(R.id.leftToTv, orderStatusHolder.leftText);
+        if (orderStatusHolder != null) {
+            baseViewHolder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
+            if (orderStatusHolder.leftText.equals("")) {
+                baseViewHolder.setGone(R.id.leftToTv, true);
+            } else {
+                baseViewHolder.setGone(R.id.leftToTv, false);
+                baseViewHolder.setText(R.id.leftToTv, orderStatusHolder.leftText);
+                baseViewHolder.setText(R.id.rightToTv, orderStatusHolder.rightText);
+            }
         }
-        baseViewHolder.setText(R.id.rightToTv, orderStatusHolder.rightText);
+
         //model 中存储的是酒店数据
         OrderListResponse.DataBean.ModelDataBean hotelData = dataBean.getModel_data();
         baseViewHolder.setText(R.id.hotelDescTv, hotelData.getRoom_num() + "间，" + hotelData.getRoom_type());
@@ -81,7 +84,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
         OrderStatusHolder orderStatusHolder = mOrderHolder.get(getData().get(position).getOrder_status());
         if (orderStatusHolder != null) {
             return orderStatusHolder.toLeftClazz;
-        }else {
+        } else {
             return null;
         }
     }
@@ -90,7 +93,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
         OrderStatusHolder orderStatusHolder = mOrderHolder.get(getData().get(position).getOrder_status());
         if (orderStatusHolder != null) {
             return orderStatusHolder.toRightClazz;
-        }else {
+        } else {
             return null;
         }
     }

@@ -1,6 +1,8 @@
 package com.jcs.where.api;
 
 import com.jcs.where.api.request.HotelOrderRequest;
+import com.jcs.where.api.request.LoginRequest;
+import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
@@ -10,6 +12,7 @@ import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
+import com.jcs.where.api.response.LoginResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
@@ -25,11 +28,13 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -268,4 +273,16 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v1/searches")
     Observable<List<SearchResponse>> getSearchByInput(@Query("search_input") String input);
+
+    /**
+     * 登录
+     */
+    @PATCH("userapi/v1/login")
+    Observable<LoginResponse> patchLogin(@Body LoginRequest loginRequest);
+
+    /**
+     * 发送验证码
+     */
+    @POST("userapi/v1/mobile/auth/code")
+    Observable<ResponseBody> postSendCode(@Body SendCodeRequest sendCodeRequest);
 }

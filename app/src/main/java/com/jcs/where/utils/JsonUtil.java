@@ -38,9 +38,8 @@ public class JsonUtil {
         return mGson.toJson(obj);
     }
 
-    public <T> T fromJson(String jsonStr) {
-        return (T) mGson.fromJson(jsonStr, new TypeToken<T>() {
-        }.getType());
+    public <T> T fromJson(String jsonStr, Class<T> clazz) {
+        return (T) mGson.fromJson(jsonStr, clazz);
     }
 
     public <T> List<T> fromJsonToList(String jsonStr, Type typeOfT) {

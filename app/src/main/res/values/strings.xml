@@ -114,5 +114,14 @@
     <string name="default_city_name">巴郎牙</string>
     <string name="search_none">没有搜索到相关内容~</string>
     <string name="coming_soon">即将上线</string>
+    <string name="prompt_input_correct_phone">请输入正确手机号</string>
+    <string name="login_success">登录成功</string>
+    <string name="error_password_length">密码长度不符</string>
+    <string name="prompt_send_success">发送成功，请注意查收</string>
+    <string name="hint_input_code">请输入验证码</string>
+    <string name="hint_input_phone_number">请输入手机号</string>
+    <string name="hint_input_password">请输入密码</string>
+    <string name="login_account">账号登录</string>
+    <string name="login_phone">手机登录</string>
 
 </resources>

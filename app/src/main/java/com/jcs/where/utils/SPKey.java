@@ -12,6 +12,8 @@ public final class SPKey {
 
     public static final String K_DELIMITER = "_____";
 
+    public static final String K_TOKEN = "token";
+
     /**
      * 存储所有的城市
      */

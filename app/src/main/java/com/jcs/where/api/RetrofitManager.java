@@ -58,11 +58,6 @@ public class RetrofitManager {
                 Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
                         .header("Accept", "application/json")
                         .header("Locale", "zh-CN");
-//                String token = TokenManager.get().getToken(context);
-//                if (token != null) {
-//                    requestBuilder.header("Authorization", token);
-//                }
-
                 String jsonStr = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
                 if (!jsonStr.equals("")) {
                     requestBuilder.header("Authorization", "Bearer " + jsonStr);

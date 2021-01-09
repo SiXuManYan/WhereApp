@@ -167,7 +167,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".mine.PersonalDataActivity"
+            android:name=".mine.activity.PersonalDataActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

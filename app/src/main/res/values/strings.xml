@@ -123,5 +123,9 @@
     <string name="hint_input_password">请输入密码</string>
     <string name="login_account">账号登录</string>
     <string name="login_phone">手机登录</string>
+    <string name="personal_data">个人资料</string>
+    <string name="show_create_time">创建时间  %1$s</string>
+    <string name="nickname_change_success">昵称修改成功</string>
+    <string name="avatar_change_success">头像修改成功</string>
 
 </resources>

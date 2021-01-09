@@ -12,7 +12,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.category.CategoryFragment;
 import com.jcs.where.home.fragment.HomeFragment;
-import com.jcs.where.home.fragment.MineFragment;
+import com.jcs.where.mine.fragment.MineFragment;
 import com.jcs.where.home.fragment.OrderFragment;
 
 import java.util.ArrayList;

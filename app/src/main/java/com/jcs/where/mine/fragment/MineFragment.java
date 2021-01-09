@@ -1,4 +1,4 @@
-package com.jcs.where.home.fragment;
+package com.jcs.where.mine.fragment;
 
 import android.content.Intent;
 import android.view.View;
@@ -6,18 +6,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.home.event.TokenEvent;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
-import com.jcs.where.login.event.LoginEvent;
-import com.jcs.where.mine.PersonalDataActivity;
+import com.jcs.where.mine.activity.PersonalDataActivity;
+import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
+import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.SPKey;
+import com.jcs.where.widget.VerticalSwipeRefreshLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.Nullable;
 
@@ -27,35 +34,65 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
 
     private static final int REQ_SELECT_CITY = 100;
+    private static final int REQ_TO_LOGIN = 101;
     private View view;
     private ImageView settingIv;
-    private TextView nameTv, accountTv;
+    private TextView nicknameTv, accountTv;
     private UploadFilePresenter mUploadPresenter;
     private RoundedImageView headerIv;
+    private MineModel mModel;
+    private VerticalSwipeRefreshLayout mSwipeLayout;
 
     @Override
     protected void initView(View view) {
         EventBus.getDefault().register(this);
 
+        mSwipeLayout = view.findViewById(R.id.mineSwipeLayout);
         settingIv = view.findViewById(R.id.iv_setting);
         settingIv.setOnClickListener(this);
-        nameTv = view.findViewById(R.id.tv_name);
+        nicknameTv = view.findViewById(R.id.nicknameTv);
         accountTv = view.findViewById(R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
         headerIv = view.findViewById(R.id.iv_header);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this);
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this);
+
+
     }
 
     @Override
     protected void initData() {
-
+        mModel = new MineModel();
     }
 
     @Override
     protected void bindListener() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUserInfo();
+
+    }
+
+    public void updateUserInfo(){
+        showLoading();
+        mModel.getUserInfo(new BaseObserver<UserInfoResponse>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NotNull UserInfoResponse userInfoResponse) {
+                stopLoading();
+                nicknameTv.setText(userInfoResponse.getNickname());
+            }
+        });
     }
 
     @Override
@@ -68,10 +105,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_changelangue:
                 break;
             case R.id.rl_minemessage:
-                if (!nameTv.getText().toString().equals("登录/注册")) {
-                    PersonalDataActivity.goTo(getContext());
-                } else {
+                if (CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN).equals("")) {
                     LoginActivity.goTo(getContext());
+                } else {
+                    PersonalDataActivity.goTo(getContext());
                 }
                 break;
             default:
@@ -94,13 +131,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Evect(TokenEvent tokenEvent) throws InterruptedException {
         //TODO 更新UI
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(LoginEvent event) {
-        if (event == LoginEvent.LOGIN) {
-            //TODO 更新UI
-        }
     }
 
     @Override

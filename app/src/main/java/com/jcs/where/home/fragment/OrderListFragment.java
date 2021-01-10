@@ -51,7 +51,7 @@ public class OrderListFragment extends BaseFragment {
     @Override
     protected void initData() {
         mModel = new OrderModel();
-        mAdapter = new OrderListAdapter(R.layout.item_order_list);
+        mAdapter = new OrderListAdapter(getContext());
         mAdapter.addChildClickViewIds(R.id.rightToTv, R.id.leftToTv);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.addItemDecoration(new MarginTopDecoration() {

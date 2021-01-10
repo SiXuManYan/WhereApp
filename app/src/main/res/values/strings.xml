@@ -95,6 +95,7 @@
     <string name="date_format_month_day">MM月dd日</string>
     <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
     <string name="prompt_room_num">间数</string>
+    <string name="prompt_room">间</string>
     <string name="permission_none">无权限</string>
     <string name="permission_has">有权限</string>
     <string name="prompt_input_government_name">输入机构名称</string>
@@ -162,5 +163,8 @@
     <string name="search">查询</string>
     <string name="guess_you_like">猜你喜欢</string>
     <string name="search_hotel">搜索酒店</string>
+    <string name="order_room_price">房价：₱%1$d</string>
+    <string name="cancelled">已取消</string>
+    <string name="completed">已完成</string>
 
 </resources>

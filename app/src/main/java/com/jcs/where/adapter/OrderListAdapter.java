@@ -1,5 +1,6 @@
 package com.jcs.where.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -54,53 +55,57 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
      */
     private final int ORDER_TYPE_TAKEAWAY = 3;
 
+    private String mRoomText;
+    private String mRoomPriceText;
 
-    public OrderListAdapter(int layoutResId) {
-        super(layoutResId);
-        initHotelOrderHolder();
-        initDineOrderHolder();
-        initTakeawayOrderHolder();
-   }
+    public OrderListAdapter(Context context) {
+        super(R.layout.item_order_list);
+        initHotelOrderHolder(context);
+        initDineOrderHolder(context);
+        initTakeawayOrderHolder(context);
+        mRoomText = context.getString(R.string.prompt_room);
+        mRoomPriceText = context.getString(R.string.order_room_price);
+    }
 
-    private void initHotelOrderHolder() {
+    private void initHotelOrderHolder(Context context) {
         mHotelOrderHolder = new HashMap<>();
-        mHotelOrderHolder.put(1, new OrderStatusHolder(1, "代付款", "取消订单", null, "支付", HotelPayActivity.class));
-        mHotelOrderHolder.put(2, new OrderStatusHolder(2, "待使用", "", null, "去使用", HotelOrderDetailActivity.class));
-        mHotelOrderHolder.put(3, new OrderStatusHolder(3, "待评价", "去评价", HotelCommentActivity.class, "再次预定", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), "取消订单", null, "支付", HotelPayActivity.class));
+        mHotelOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.mine_booked), "", null, "去使用", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_reviews), "去评价", HotelCommentActivity.class, "再次预定", HotelOrderDetailActivity.class));
         //TODO 评价详情页面还没有，查看评价无法跳转
-        mHotelOrderHolder.put(4, new OrderStatusHolder(4, "已完成", "查看评价", null, "再次预定", HotelOrderDetailActivity.class));
-        mHotelOrderHolder.put(5, new OrderStatusHolder(5, "已取消", "", null, "再次预定", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.completed), "查看评价", null, "再次预定", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.cancelled), "", null, "再次预定", HotelOrderDetailActivity.class));
         mHotelOrderHolder.put(6, new OrderStatusHolder(6, "退款中", "", null, "再次预定", HotelOrderDetailActivity.class));
         mHotelOrderHolder.put(7, new OrderStatusHolder(7, "退款成功", "", null, "再次预定", HotelOrderDetailActivity.class));
         //TODO 退款失败未在UI图中找到对应的
         mHotelOrderHolder.put(8, new OrderStatusHolder(8, "退款失败", "退款失败", HotelDetailActivity.class, "退款失败", null));
     }
 
-    private void initDineOrderHolder(){
+    private void initDineOrderHolder(Context context) {
         mDineOrderHolder = new HashMap<>();
-        mDineOrderHolder.put(1, new OrderStatusHolder(1, "代付款", "取消订单", null, "支付", HotelPayActivity.class));
-        mDineOrderHolder.put(2, new OrderStatusHolder(2, "已取消", "", null, "去使用", HotelOrderDetailActivity.class));
-        mDineOrderHolder.put(3, new OrderStatusHolder(3, "待使用", "去评价", HotelCommentActivity.class, "再次预定", HotelOrderDetailActivity.class));
-        mDineOrderHolder.put(4, new OrderStatusHolder(4, "已完成", "查看评价", null, "再次预定", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), "取消订单", null, "支付", HotelPayActivity.class));
+        mDineOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.cancelled), "", null, "去使用", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_booked), "去评价", HotelCommentActivity.class, "再次预定", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.completed), "查看评价", null, "再次预定", HotelOrderDetailActivity.class));
         mDineOrderHolder.put(5, new OrderStatusHolder(5, "支付失败", "", null, "再次预定", HotelOrderDetailActivity.class));
         mDineOrderHolder.put(6, new OrderStatusHolder(6, "退款中", "", null, "再次预定", HotelOrderDetailActivity.class));
         mDineOrderHolder.put(7, new OrderStatusHolder(7, "已退款", "", null, "再次预定", HotelOrderDetailActivity.class));
         mDineOrderHolder.put(8, new OrderStatusHolder(8, "退款失败", "退款失败", HotelDetailActivity.class, "退款失败", null));
-        mDineOrderHolder.put(9, new OrderStatusHolder(9, "待评价", "去评价", HotelDetailActivity.class, "再次预定", null));
+        mDineOrderHolder.put(9, new OrderStatusHolder(9, context.getString(R.string.mine_reviews), "去评价", HotelDetailActivity.class, "再次预定", null));
     }
 
-    private void initTakeawayOrderHolder(){
+    private void initTakeawayOrderHolder(Context context) {
         mTakeawayOrderHolder = new HashMap<>();
         mTakeawayOrderHolder.put(1, new OrderStatusHolder(1, "待支付", "", null, "", HotelPayActivity.class));
         mTakeawayOrderHolder.put(2, new OrderStatusHolder(2, "未接单", "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(3, new OrderStatusHolder(3, "已接单", "", HotelCommentActivity.class, "", HotelOrderDetailActivity.class));
-        mTakeawayOrderHolder.put(4, new OrderStatusHolder(4, "已取消", "", null, "", HotelOrderDetailActivity.class));
-        mTakeawayOrderHolder.put(5, new OrderStatusHolder(5, "已完成", "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.cancelled), "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.completed), "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(6, new OrderStatusHolder(6, "支付失败", "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(7, new OrderStatusHolder(7, "退款中", "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(8, new OrderStatusHolder(8, "已退款", "", HotelDetailActivity.class, "", null));
         mTakeawayOrderHolder.put(9, new OrderStatusHolder(9, "退款失败", "", HotelDetailActivity.class, "", null));
-        mTakeawayOrderHolder.put(10, new OrderStatusHolder(10, "待评价", "", HotelDetailActivity.class, "", null));
+        mTakeawayOrderHolder.put(10, new OrderStatusHolder(10, context.getString(R.string.mine_reviews), "", HotelDetailActivity.class, "", null));
     }
 
     @Override
@@ -129,9 +134,9 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         OrderListResponse.ModelDataDTO modelData = orderListResponse.getModelData();
         switch (orderListResponse.getOrderType()) {
             case ORDER_TYPE_HOTEL:
-                baseViewHolder.setText(R.id.hotelDescTv, modelData.getRoomNum() + "间，" + modelData.getRoomType());
+                baseViewHolder.setText(R.id.hotelDescTv, modelData.getRoomNum() + mRoomText + "，" + modelData.getRoomType());
                 baseViewHolder.setText(R.id.orderDateTv, modelData.getStartDate() + "-" + modelData.getEndDate());
-                baseViewHolder.setText(R.id.priceTv, "房价：$" + modelData.getRoomPrice());
+                baseViewHolder.setText(R.id.priceTv, String.format(mRoomPriceText, modelData.getRoomPrice()));
                 break;
             case ORDER_TYPE_DINE:
                 break;

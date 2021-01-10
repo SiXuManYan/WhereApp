@@ -163,4 +163,8 @@
 	<string name="search">Search</string>
 	<string name="guess_you_like">Guess You Might Like</string>
 	<string name="search_hotel">Search Hotel</string>
+	<string name="prompt_room">room</string>
+	<string name="order_room_price">Price：₱%1$d</string>
+	<string name="cancelled">Cancelled</string>
+	<string name="completed">Completed</string>
 </resources>

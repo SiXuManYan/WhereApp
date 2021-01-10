@@ -27,7 +27,18 @@ import androidx.appcompat.app.AppCompatActivity;
  * create by zyf on 2020/12/11 9:11 PM
  */
 public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseViewHolder> implements UpFetchModule, LoadMoreModule {
-    private final HashMap<Integer, OrderStatusHolder> mOrderHolder;
+    /**
+     * 酒店订单状态
+     */
+    private HashMap<Integer, OrderStatusHolder> mHotelOrderHolder;
+    /**
+     * 堂食订单状态
+     */
+    private HashMap<Integer, OrderStatusHolder> mDineOrderHolder;
+    /**
+     * 外卖订单状态
+     */
+    private HashMap<Integer, OrderStatusHolder> mTakeawayOrderHolder;
     /**
      * 订单类型：酒店订单
      */
@@ -46,18 +57,50 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
 
     public OrderListAdapter(int layoutResId) {
         super(layoutResId);
-        mOrderHolder = new HashMap<>();
-        mOrderHolder.put(1, new OrderStatusHolder(1, "代付款", "取消订单", null, "支付", HotelPayActivity.class));
-        mOrderHolder.put(2, new OrderStatusHolder(2, "待使用", "", null, "去使用", HotelOrderDetailActivity.class));
-        mOrderHolder.put(3, new OrderStatusHolder(3, "待评价", "去评价", HotelCommentActivity.class, "再次预定", HotelOrderDetailActivity.class));
-        //TODO 评价详情页面还没有，查看评价无法跳转
-        mOrderHolder.put(4, new OrderStatusHolder(4, "已完成", "查看评价", null, "再次预定", HotelOrderDetailActivity.class));
-        mOrderHolder.put(5, new OrderStatusHolder(5, "已取消", "", null, "再次预定", HotelOrderDetailActivity.class));
-        mOrderHolder.put(6, new OrderStatusHolder(6, "退款中", "", null, "再次预定", HotelOrderDetailActivity.class));
-        mOrderHolder.put(7, new OrderStatusHolder(7, "退款成功", "", null, "再次预定", HotelOrderDetailActivity.class));
-        //TODO 退款失败未在UI图中找到对应的
-        mOrderHolder.put(8, new OrderStatusHolder(8, "退款失败", "退款失败", HotelDetailActivity.class, "退款失败", null));
+        initHotelOrderHolder();
+        initDineOrderHolder();
+        initTakeawayOrderHolder();
+   }
 
+    private void initHotelOrderHolder() {
+        mHotelOrderHolder = new HashMap<>();
+        mHotelOrderHolder.put(1, new OrderStatusHolder(1, "代付款", "取消订单", null, "支付", HotelPayActivity.class));
+        mHotelOrderHolder.put(2, new OrderStatusHolder(2, "待使用", "", null, "去使用", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(3, new OrderStatusHolder(3, "待评价", "去评价", HotelCommentActivity.class, "再次预定", HotelOrderDetailActivity.class));
+        //TODO 评价详情页面还没有，查看评价无法跳转
+        mHotelOrderHolder.put(4, new OrderStatusHolder(4, "已完成", "查看评价", null, "再次预定", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(5, new OrderStatusHolder(5, "已取消", "", null, "再次预定", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(6, new OrderStatusHolder(6, "退款中", "", null, "再次预定", HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(7, new OrderStatusHolder(7, "退款成功", "", null, "再次预定", HotelOrderDetailActivity.class));
+        //TODO 退款失败未在UI图中找到对应的
+        mHotelOrderHolder.put(8, new OrderStatusHolder(8, "退款失败", "退款失败", HotelDetailActivity.class, "退款失败", null));
+    }
+
+    private void initDineOrderHolder(){
+        mDineOrderHolder = new HashMap<>();
+        mDineOrderHolder.put(1, new OrderStatusHolder(1, "代付款", "取消订单", null, "支付", HotelPayActivity.class));
+        mDineOrderHolder.put(2, new OrderStatusHolder(2, "已取消", "", null, "去使用", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(3, new OrderStatusHolder(3, "待使用", "去评价", HotelCommentActivity.class, "再次预定", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(4, new OrderStatusHolder(4, "已完成", "查看评价", null, "再次预定", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(5, new OrderStatusHolder(5, "支付失败", "", null, "再次预定", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(6, new OrderStatusHolder(6, "退款中", "", null, "再次预定", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(7, new OrderStatusHolder(7, "已退款", "", null, "再次预定", HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(8, new OrderStatusHolder(8, "退款失败", "退款失败", HotelDetailActivity.class, "退款失败", null));
+        mDineOrderHolder.put(9, new OrderStatusHolder(9, "待评价", "去评价", HotelDetailActivity.class, "再次预定", null));
+    }
+
+    private void initTakeawayOrderHolder(){
+        mTakeawayOrderHolder = new HashMap<>();
+        mTakeawayOrderHolder.put(1, new OrderStatusHolder(1, "待支付", "", null, "", HotelPayActivity.class));
+        mTakeawayOrderHolder.put(2, new OrderStatusHolder(2, "未接单", "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(3, new OrderStatusHolder(3, "已接单", "", HotelCommentActivity.class, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(4, new OrderStatusHolder(4, "已取消", "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(5, new OrderStatusHolder(5, "已完成", "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(6, new OrderStatusHolder(6, "支付失败", "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(7, new OrderStatusHolder(7, "退款中", "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(8, new OrderStatusHolder(8, "已退款", "", HotelDetailActivity.class, "", null));
+        mTakeawayOrderHolder.put(9, new OrderStatusHolder(9, "退款失败", "", HotelDetailActivity.class, "", null));
+        mTakeawayOrderHolder.put(10, new OrderStatusHolder(10, "待评价", "", HotelDetailActivity.class, "", null));
     }
 
     @Override
@@ -70,7 +113,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
 
         baseViewHolder.setText(R.id.orderTitleTv, orderListResponse.getTitle());
         Integer orderStatus = orderListResponse.getModelData().getOrderStatus();
-        OrderStatusHolder orderStatusHolder = mOrderHolder.get(orderStatus);
+        OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         if (orderStatusHolder != null) {
             baseViewHolder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
             if (orderStatusHolder.leftText.equals("")) {
@@ -106,7 +149,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
     public Class<? extends AppCompatActivity> getToLeftClass(int position) {
 
         Integer orderStatus = getData().get(position).getModelData().getOrderStatus();
-        OrderStatusHolder orderStatusHolder = mOrderHolder.get(orderStatus);
+        OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         Log.e("OrderListAdapter", "getToLeftClass: " + orderStatus);
         if (orderStatusHolder != null) {
             return orderStatusHolder.toLeftClazz;
@@ -117,7 +160,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
 
     public Class<? extends AppCompatActivity> getToRightClass(int position) {
         Integer orderStatus = getData().get(position).getModelData().getOrderStatus();
-        OrderStatusHolder orderStatusHolder = mOrderHolder.get(orderStatus);
+        OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         Log.e("OrderListAdapter", "getToRightClass: " + orderStatus);
         if (orderStatusHolder != null) {
             return orderStatusHolder.toRightClazz;

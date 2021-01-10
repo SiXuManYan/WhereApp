@@ -20,6 +20,7 @@ import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SuccessResponse;
@@ -198,7 +199,7 @@ public interface RetrofitApi {
      * 获得订单列表
      */
     @GET("commonapi/v1/orders")
-    Observable<OrderListResponse> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
+    Observable<PageResponse<OrderListResponse>> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
 
 
     @Headers("baseUrl:google/map")

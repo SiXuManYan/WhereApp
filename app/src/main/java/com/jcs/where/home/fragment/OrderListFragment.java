@@ -1,5 +1,6 @@
 package com.jcs.where.home.fragment;
 
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,6 +12,7 @@ import com.jcs.where.adapter.OrderListAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderListResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.decoration.MarginTopDecoration;
@@ -88,6 +90,7 @@ public class OrderListFragment extends BaseFragment {
             public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
                 int id = view.getId();
                 if (id == R.id.rightToTv) {
+                    Log.e("OrderListFragment", "onItemChildClick: " + "right");
                     Class<? extends AppCompatActivity> toRightClass = mAdapter.getToRightClass(position);
                     if (toRightClass != null) {
                         toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
@@ -95,6 +98,7 @@ public class OrderListFragment extends BaseFragment {
                 }
 
                 if (id == R.id.leftToTv) {
+                    Log.e("OrderListFragment", "onItemChildClick: " + "left");
                     Class<? extends AppCompatActivity> toLeftClass = mAdapter.getToLeftClass(position);
                     if (toLeftClass != null) {
                         toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
@@ -125,16 +129,16 @@ public class OrderListFragment extends BaseFragment {
     }
 
     public void getOrderByType(String keyword) {
-        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<OrderListResponse>() {
+        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<PageResponse<OrderListResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopRefresh();
             }
 
             @Override
-            public void onNext(@NonNull OrderListResponse orderListResponse) {
+            public void onNext(@NonNull PageResponse<OrderListResponse> pageResponse) {
                 mAdapter.getData().clear();
-                mAdapter.addData(orderListResponse.getData());
+                mAdapter.addData(pageResponse.getData());
                 stopRefresh();
             }
         });

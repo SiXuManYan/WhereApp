@@ -1,5 +1,6 @@
 package com.jcs.where.adapter;
 
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -25,8 +26,22 @@ import androidx.appcompat.app.AppCompatActivity;
  * 首页订单列表的Adapter
  * create by zyf on 2020/12/11 9:11 PM
  */
-public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBean, BaseViewHolder> implements UpFetchModule, LoadMoreModule {
+public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseViewHolder> implements UpFetchModule, LoadMoreModule {
     private final HashMap<Integer, OrderStatusHolder> mOrderHolder;
+    /**
+     * 订单类型：酒店订单
+     */
+    private final int ORDER_TYPE_HOTEL = 1;
+
+    /**
+     * 订单类型：餐饮-堂食
+     */
+    private final int ORDER_TYPE_DINE = 2;
+
+    /**
+     * 订单类型：餐饮-外卖
+     */
+    private final int ORDER_TYPE_TAKEAWAY = 3;
 
 
     public OrderListAdapter(int layoutResId) {
@@ -46,15 +61,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder baseViewHolder, OrderListResponse.DataBean dataBean) {
-        List<String> image = dataBean.getImage();
+    protected void convert(@NotNull BaseViewHolder baseViewHolder, OrderListResponse orderListResponse) {
+        List<String> image = orderListResponse.getImage();
         ImageView hotelIconIv = baseViewHolder.findView(R.id.hotelIcon);
         if (hotelIconIv != null && image != null && image.size() > 0) {
             Glide.with(getContext()).load(image.get(0)).into(hotelIconIv);
         }
 
-        baseViewHolder.setText(R.id.orderTitleTv, dataBean.getTitle());
-        Integer orderStatus = dataBean.getOrder_status();
+        baseViewHolder.setText(R.id.orderTitleTv, orderListResponse.getTitle());
+        Integer orderStatus = orderListResponse.getModelData().getOrderStatus();
         OrderStatusHolder orderStatusHolder = mOrderHolder.get(orderStatus);
         if (orderStatusHolder != null) {
             baseViewHolder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
@@ -67,11 +82,19 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
             }
         }
 
-        //model 中存储的是酒店数据
-        OrderListResponse.DataBean.ModelDataBean hotelData = dataBean.getModel_data();
-        baseViewHolder.setText(R.id.hotelDescTv, hotelData.getRoom_num() + "间，" + hotelData.getRoom_type());
-        baseViewHolder.setText(R.id.orderDateTv, hotelData.getStart_date() + "-" + hotelData.getEnd_date());
-        baseViewHolder.setText(R.id.priceTv, "房价：$" + hotelData.getRoom_price());
+        //model 中存储的是酒店、餐饮-堂食、餐饮-外卖的数据
+        OrderListResponse.ModelDataDTO modelData = orderListResponse.getModelData();
+        switch (orderListResponse.getOrderType()) {
+            case ORDER_TYPE_HOTEL:
+                baseViewHolder.setText(R.id.hotelDescTv, modelData.getRoomNum() + "间，" + modelData.getRoomType());
+                baseViewHolder.setText(R.id.orderDateTv, modelData.getStartDate() + "-" + modelData.getEndDate());
+                baseViewHolder.setText(R.id.priceTv, "房价：$" + modelData.getRoomPrice());
+                break;
+            case ORDER_TYPE_DINE:
+                break;
+            case ORDER_TYPE_TAKEAWAY:
+                break;
+        }
 
     }
 
@@ -81,7 +104,10 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
     }
 
     public Class<? extends AppCompatActivity> getToLeftClass(int position) {
-        OrderStatusHolder orderStatusHolder = mOrderHolder.get(getData().get(position).getOrder_status());
+
+        Integer orderStatus = getData().get(position).getModelData().getOrderStatus();
+        OrderStatusHolder orderStatusHolder = mOrderHolder.get(orderStatus);
+        Log.e("OrderListAdapter", "getToLeftClass: " + orderStatus);
         if (orderStatusHolder != null) {
             return orderStatusHolder.toLeftClazz;
         } else {
@@ -90,7 +116,9 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse.DataBea
     }
 
     public Class<? extends AppCompatActivity> getToRightClass(int position) {
-        OrderStatusHolder orderStatusHolder = mOrderHolder.get(getData().get(position).getOrder_status());
+        Integer orderStatus = getData().get(position).getModelData().getOrderStatus();
+        OrderStatusHolder orderStatusHolder = mOrderHolder.get(orderStatus);
+        Log.e("OrderListAdapter", "getToRightClass: " + orderStatus);
         if (orderStatusHolder != null) {
             return orderStatusHolder.toRightClazz;
         } else {

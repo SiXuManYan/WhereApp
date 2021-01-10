@@ -27,7 +27,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="附近商家"
+            android:text="@string/home_near_hotel"
             android:textColor="@color/black_333333"
             android:textSize="18sp"
             android:layout_toRightOf="@+id/view"
@@ -44,6 +44,7 @@
             android:text="查看全部"
             android:textColor="@color/black_333333"
             android:textSize="12sp"
+            android:visibility="gone"
             android:layout_centerVertical="true" />
 
 

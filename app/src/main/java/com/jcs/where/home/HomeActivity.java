@@ -1,6 +1,8 @@
 package com.jcs.where.home;
 
 import android.Manifest;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,7 +121,6 @@ public class HomeActivity extends BaseActivity {
         mTabLayout = findViewById(R.id.homeTabs);
 
         initTabLayout();
-
     }
 
     private void initFragment() {

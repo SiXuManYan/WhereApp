@@ -35,7 +35,7 @@ public class OrderFragment extends BaseFragment {
     private EditText mSearchEt;
 
     private List<OrderListFragment> mOrderListFragments;
-    private final String[] mTabTitles = new String[]{"全部", "待付款", "待使用", "待评价", "退款/售后"};
+    private String[] mTabTitles;
 
     @Override
     protected void initView(View view) {
@@ -49,6 +49,7 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        mTabTitles = new String[]{getString(R.string.all), getString(R.string.mine_unpaid), getString(R.string.mine_booked), getString(R.string.mine_reviews), getString(R.string.mine_after_sales)};
         mModel = new OrderModel();
         mOrderListFragments = new ArrayList<>();
         mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.All));

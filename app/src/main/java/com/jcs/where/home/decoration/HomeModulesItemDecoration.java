@@ -1,6 +1,7 @@
 package com.jcs.where.home.decoration;
 
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 
 import com.jcs.where.base.BaseItemDecoration;

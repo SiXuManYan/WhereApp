@@ -8,6 +8,7 @@ import android.graphics.Outline;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,7 +129,8 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         });
 
         mModuleRecycler = view.findViewById(R.id.moduleRecycler);
-        mModulesAdapter = new ModulesAdapter(R.layout.item_home_modules);
+        int recyclerWidth = getScreenWidth() - getPxFromDp(30);
+        mModulesAdapter = new ModulesAdapter(recyclerWidth / 5, getPxFromDp(70));
         mModuleRecycler.addItemDecoration(new HomeModulesItemDecoration());
         mModuleRecycler.setLayoutManager(new GridLayoutManager(getContext(), 5, RecyclerView.VERTICAL, false));
         mModuleRecycler.setAdapter(mModulesAdapter);
@@ -354,7 +356,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
     @Override
     public void onItemClick(@androidx.annotation.NonNull com.chad.library.adapter.base.BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
         if (adapter == mModulesAdapter) {
-            //点击了金刚圈
+            //点击了金刚区
             /*
             金刚区模块跳转说明：
             1：政府机构->带地图的综合服务页面
@@ -374,7 +376,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
                     break;
                 case 2:
-                    showToast("开发中");
+                    showToast(getString(R.string.coming_soon));
                     break;
             }
         }

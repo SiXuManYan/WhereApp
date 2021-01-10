@@ -36,7 +36,7 @@ public class CallPhoneDialog extends BaseBottomDialog {
 
         mPhoneTv = view.findViewById(R.id.phoneTv);
 
-        String phoneStr = getString(R.string.call) + this.mPhoneNumber;
+        String phoneStr = getString(R.string.call) + "  " + this.mPhoneNumber;
         mPhoneTv.setText(phoneStr);
     }
 

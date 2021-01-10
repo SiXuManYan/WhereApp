@@ -2,6 +2,8 @@ package com.jcs.where.utils;
 
 import android.util.Log;
 
+import java.util.Locale;
+
 /**
  * create by zyf on 2021/1/6 11:45 上午
  */
@@ -37,12 +39,25 @@ public class CacheUtil {
 
     public static void cacheWithCurrentTime(String key, Object value) {
         String jsonStr;
-        if (value instanceof String){
+        if (value instanceof String) {
             jsonStr = (String) value;
-        }else {
+        } else {
             jsonStr = JsonUtil.getInstance().toJsonStr(value);
         }
         String valueWithTime = jsonStr + SPKey.K_DELIMITER + System.currentTimeMillis();
         SPUtil.getInstance().saveString(key, valueWithTime);
+    }
+
+    public static void cacheLanguage(String language) {
+        SPUtil.getInstance().saveString(SPKey.K_LANGUAGE, language);
+    }
+
+    /**
+     * 获取保存的语言环境
+     * 默认为 auto
+     */
+    public static String getLanguageFromCache() {
+        String language = SPUtil.getInstance().getString(SPKey.K_LANGUAGE);
+        return language.equals("") ? "auto" : language;
     }
 }

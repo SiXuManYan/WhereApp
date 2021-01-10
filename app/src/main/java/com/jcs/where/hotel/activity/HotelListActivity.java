@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcs.where.R;
+import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -25,6 +26,7 @@ import com.jcs.where.view.popup.PopupConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -41,6 +43,7 @@ public class HotelListActivity extends BaseActivity {
     private ColorClipTabLayout mTab;
     private ViewPager mViewPager;
     private TextView startDayTv, endDayTv, cityTv;
+    private TextView mLiveTextPromptTv, mLeaveTextPromptTv, mCityTv;
     private View mChooseDataView;
     private String mParentCategoryId;
     private int mTotalDay, mRoomNum;
@@ -84,6 +87,8 @@ public class HotelListActivity extends BaseActivity {
         startDayTv = findViewById(R.id.startDayTv);
         endDayTv = findViewById(R.id.endDayTv);
         cityTv = findViewById(R.id.cityTv);
+        mLeaveTextPromptTv = findViewById(R.id.leaveTextPrompt);
+        mLiveTextPromptTv = findViewById(R.id.liveTextPrompt);
         // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
         mChooseDataView = findViewById(R.id.toChooseDate);
 
@@ -100,6 +105,11 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        Locale languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this);
+        if (!languageLocale.getLanguage().equals("zh")){
+            mLiveTextPromptTv.setVisibility(View.GONE);
+            mLeaveTextPromptTv.setVisibility(View.GONE);
+        }
         Intent intent = getIntent();
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
         mEndDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);

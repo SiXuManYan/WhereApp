@@ -243,6 +243,13 @@
             tools:ignore="LockedOrientationActivity"
             />
 
+        <activity android:name=".mine.activity.LanguageActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity"
+            />
+
     </application>
 
 </manifest>

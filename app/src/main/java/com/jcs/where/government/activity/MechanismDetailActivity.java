@@ -1,7 +1,6 @@
 package com.jcs.where.government.activity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,7 +40,7 @@ public class MechanismDetailActivity extends BaseActivity {
     private int mMechanismId;
     private MechanismDetailModel mModel;
     private MechanismDetailResponse mMechanismDetailResponse;
-    private String[] weekStr = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    private String[] weekStr;
 
     @Override
     protected void initView() {
@@ -68,6 +67,15 @@ public class MechanismDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        weekStr = new String[]{
+                getString(R.string.monday),
+                getString(R.string.tuesday),
+                getString(R.string.wednesday),
+                getString(R.string.thursday),
+                getString(R.string.friday),
+                getString(R.string.saturday),
+                getString(R.string.sunday),
+        };
         mModel = new MechanismDetailModel();
         mCallDialog = new CallPhoneDialog();
         mToNavigationDialog = new ToNavigationDialog();
@@ -219,7 +227,7 @@ public class MechanismDetailActivity extends BaseActivity {
 
         String tel = mMechanismDetailResponse.getTel();
         if (tel != null && !tel.isEmpty()) {
-            String telStr = "：" + tel;
+            String telStr = tel;
             mTelTv.setText(telStr);
             mCallDialog.setPhoneNumber(tel);
         } else {
@@ -264,8 +272,8 @@ public class MechanismDetailActivity extends BaseActivity {
      */
     private String getBusinessWeek() {
         String startWeek = weekStr[mMechanismDetailResponse.getWeek_start() - 1];
-        String endWeek = weekStr[mMechanismDetailResponse.getWeek_end() -1];
-        return startWeek + "至" + endWeek;
+        String endWeek = weekStr[mMechanismDetailResponse.getWeek_end() - 1];
+        return startWeek + getString(R.string.mechanism_to) + endWeek;
     }
 
     /**

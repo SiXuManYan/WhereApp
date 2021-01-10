@@ -13,6 +13,7 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.home.event.TokenEvent;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
+import com.jcs.where.mine.activity.LanguageActivity;
 import com.jcs.where.mine.activity.PersonalDataActivity;
 import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
@@ -57,24 +58,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this);
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this);
+        view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
 
+    }
 
+    private void onChangeLanguageClicked(View view) {
+        toActivity(LanguageActivity.class);
     }
 
     @Override
     protected void initData() {
         mModel = new MineModel();
+        updateUserInfo();
     }
 
     @Override
     protected void bindListener() {
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateUserInfo();
 
     }
 
@@ -84,7 +83,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                showNetError(errorResponse);
+//                showNetError(errorResponse);
             }
 
             @Override

@@ -1,6 +1,8 @@
 package com.jcs.where.adapter;
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,15 +19,25 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHolder> {
 
-    public ModulesAdapter(int layoutResId) {
-        super(layoutResId);
+    private int mItemWidth = 0;
+    private int mItemHeight = 0;
+
+    public ModulesAdapter(int itemWidth, int height) {
+        super(R.layout.item_home_modules);
+        this.mItemWidth = itemWidth;
+        this.mItemHeight = height;
     }
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, ModulesResponse modulesResponse) {
         Context context = baseViewHolder.itemView.getContext();
+        View view = baseViewHolder.getView(R.id.moduleLayout);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(mItemWidth, mItemHeight);
+        view.setLayoutParams(lp);
         Glide.with(context).load(modulesResponse.getIcon()).into((ImageView) baseViewHolder.getView(R.id.modules_icon));
         baseViewHolder.setText(R.id.modules_name, modulesResponse.getName());
 

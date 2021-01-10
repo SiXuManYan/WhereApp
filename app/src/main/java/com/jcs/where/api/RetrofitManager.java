@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitManager {
     private static RetrofitManager manager;
-    private final int timeout = 2;
+    private final int timeout = 5;
     private Retrofit retrofit;
 
     public static synchronized RetrofitManager getManager() {
@@ -56,8 +56,12 @@ public class RetrofitManager {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
-                        .header("Accept", "application/json")
-                        .header("Locale", "zh-CN");
+                        .header("Accept", "application/json");
+                String language = CacheUtil.getLanguageFromCache();
+                if (language.equals("auto")) {
+                    language = "zh-CN";
+                }
+                requestBuilder.header("Locale", language);
                 String jsonStr = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
                 if (!jsonStr.equals("")) {
                     requestBuilder.header("Authorization", "Bearer " + jsonStr);

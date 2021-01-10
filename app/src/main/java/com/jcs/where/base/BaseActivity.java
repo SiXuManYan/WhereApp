@@ -1,9 +1,12 @@
 package com.jcs.where.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
@@ -243,5 +247,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         et.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalLanguageUtil.getInstance().setLocal(newBase));
+    }
+
+    /**
+     * 获取屏幕宽度
+     * @return
+     */
+    public int getScreenWidth() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //宽度 dm.widthPixels
+        //高度 dm.heightPixels
+        return dm.widthPixels;
     }
 }

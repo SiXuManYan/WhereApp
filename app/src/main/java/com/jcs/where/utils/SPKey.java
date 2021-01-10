@@ -15,6 +15,11 @@ public final class SPKey {
     public static final String K_TOKEN = "token";
 
     /**
+     * 存储用户选择的语言
+     */
+    public static final String K_LANGUAGE = "language";
+
+    /**
      * 存储所有的城市
      */
     public static final String K_ALL_CITIES = "k_all_cities";

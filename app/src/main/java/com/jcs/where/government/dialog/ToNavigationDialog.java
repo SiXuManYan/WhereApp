@@ -24,7 +24,7 @@ public class ToNavigationDialog extends BaseBottomDialog {
     private final String GOOGLE_MAP_PACKAGE_NAME = "com.google.android.apps.maps";
     private Double mLatitude;
     private Double mLongitude;
-    private String mNavigationName = "Google 地图";
+    private String mNavigationName;
 
     @Override
     protected int getLayout() {
@@ -42,6 +42,7 @@ public class ToNavigationDialog extends BaseBottomDialog {
         mCancelBtn = view.findViewById(R.id.cancelBtn);
         mNavigationTv = view.findViewById(R.id.navigationTv);
 
+        mNavigationName  = getString(R.string.google_map);
         mNavigationTv.setText(mNavigationName);
 
     }

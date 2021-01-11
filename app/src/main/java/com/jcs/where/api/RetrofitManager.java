@@ -56,7 +56,8 @@ public class RetrofitManager {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
-                        .header("Accept", "application/json");
+                        .header("Accept", "application/json")
+                        .header("device","android");
                 String language = CacheUtil.getLanguageFromCache();
                 if (language.equals("auto")) {
                     language = "zh-CN";

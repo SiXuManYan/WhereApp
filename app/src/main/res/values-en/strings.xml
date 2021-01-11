@@ -16,7 +16,7 @@
 	<string name="price_1_to_2">₱ 1–2k</string>
 	<string name="price_2_to_5">₱ 2–5k</string>
 	<string name="price_above_5">₱ 5k+</string>
-	<string name="price_unit">Bamboo</string>
+	<string name="price_unit">₱</string>
 	<string name="show_price_with_forward_unit">₱%1$d</string>
 	<string name="show_price_with_forward_unit_f">₱%1$f</string>
 	<string name="prompt_star">Star Rating</string>
@@ -90,10 +90,11 @@
 	<string name="symbol_short_link">-</string>
 	<string name="total">Total</string>
 	<string name="night">late</string>
+	<string name="slash_night">&#047;late</string>
 	<string name="total_night">%1$d night</string>
 	<string name="enter_stay">Check-in</string>
 	<string name="leave_stay">Check-out</string>
-	<string name="date_format_month_day">MMM d</string>
+	<string name="date_format_month_day">MMM&#032;d</string>
 	<string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
 	<string name="prompt_room_num">Rooms</string>
 	<string name="permission_none">No permission</string>
@@ -167,4 +168,12 @@
 	<string name="order_room_price">Price：₱%1$d</string>
 	<string name="cancelled">Cancelled</string>
 	<string name="completed">Completed</string>
+	<string name="comment_num_prompt">Article %1$d the comments</string>
+	<string name="date_format_year_month">MMM yyyy</string>
+	<string name="date_format_mm_dd">MMM d</string>
+	<string name="main_tab_title_home">Home</string>
+	<string name="maiin_tab_title_category">Category</string>
+	<string name="main_tab_title_order">Order</string>
+	<string name="main_tab_title_mine">My</string>
+	<string name="to_login">Login</string>
 </resources>

@@ -89,11 +89,14 @@
     <string name="symbol_short_link">-</string>
     <string name="total">共</string>
     <string name="night">晚</string>
+    <string name="slash_night">&#047;晚</string>
     <string name="total_night">共%1$d晚</string>
     <string name="enter_stay">入店</string>
     <string name="leave_stay">离店</string>
     <string name="date_format_month_day">MM月dd日</string>
     <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
+    <string name="date_format_mm_dd">MM-dd</string>
+    <string name="date_format_year_month">yyyy年MM月</string>
     <string name="prompt_room_num">间数</string>
     <string name="prompt_room">间</string>
     <string name="permission_none">无权限</string>
@@ -166,5 +169,11 @@
     <string name="order_room_price">房价：₱%1$d</string>
     <string name="cancelled">已取消</string>
     <string name="completed">已完成</string>
+    <string name="comment_num_prompt">%1$d条评论</string>
+    <string name="main_tab_title_home">首页</string>
+    <string name="maiin_tab_title_category">分类</string>
+    <string name="main_tab_title_order">订单</string>
+    <string name="main_tab_title_mine">我的</string>
+    <string name="to_login">登录</string>
 
 </resources>

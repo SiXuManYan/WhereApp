@@ -78,7 +78,7 @@ public class HotelListActivity extends BaseActivity {
     @Override
     protected void initView() {
         mCalendarDialog = new JcsCalendarDialog();
-        mCalendarDialog.initCalendar();
+        mCalendarDialog.initCalendar(this);
 
         mTopPopupLayout = findViewById(R.id.topPopupLayout);
         mEnterStayInfoView = findViewById(R.id.enterStayInfoView);

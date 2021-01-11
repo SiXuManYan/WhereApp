@@ -9,7 +9,9 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.home.event.TokenEvent;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
@@ -77,7 +79,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-    public void updateUserInfo(){
+    public void updateUserInfo() {
         showLoading();
         mModel.getUserInfo(new BaseObserver<UserInfoResponse>() {
             @Override
@@ -128,8 +130,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Evect(TokenEvent tokenEvent) throws InterruptedException {
-        //TODO 更新UI
+    public void onEventReceive(BaseEvent baseEvent) {
+        if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
+            updateUserInfo();
+        }
     }
 
     @Override

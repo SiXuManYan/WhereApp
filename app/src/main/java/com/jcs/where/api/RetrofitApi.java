@@ -6,6 +6,7 @@ import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
@@ -52,6 +53,9 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v1/modules")
     Observable<List<ModulesResponse>> getModules();
+
+    @GET("newsapi/v1/news/notices?notice_num=10")
+    Observable<List<HomeNewsResponse>> getHomeNews();
 
     /**
      * 获得分类列表

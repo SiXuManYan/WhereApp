@@ -8,7 +8,6 @@ import android.graphics.Outline;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,9 @@ import com.jcs.where.adapter.ModulesAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.api.response.BannerResponse;
+import com.jcs.where.api.response.HomeNewsResponse;
+import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
@@ -43,17 +45,19 @@ import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.bean.HomeNewsBean;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
-import com.jcs.where.home.HomeActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
+import com.jcs.where.home.adapter.HomeYouLikeAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
+import com.jcs.where.home.model.HomeModel;
 import com.jcs.where.hotel.activity.CityPickerActivity;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.manager.TokenManager;
-import com.jcs.where.model.HomeModel;
-import com.jcs.where.news.NewsActivity;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.yellow_page.activity.YellowPageActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -61,13 +65,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import io.reactivex.annotations.NonNull;
@@ -78,7 +82,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * 首页
  */
-public class HomeFragment extends BaseFragment implements com.chad.library.adapter.base.listener.OnItemClickListener {
+public class HomeFragment extends BaseFragment {
 
     private static final int REQ_SELECT_CITY = 100;
     private View view;
@@ -86,6 +90,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
     private MyPtrClassicFrameLayout ptrFrame;
     private SimpleMarqueeView marqueeView;
     private RecyclerView homeRv;
+    private HomeYouLikeAdapter mHomeYouLikeAdapter;
     private TextView cityNameTv;
     private LinearLayout bannerLl;
     private int refreshBanner = 0;
@@ -134,14 +139,8 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         mModuleRecycler.addItemDecoration(new HomeModulesItemDecoration());
         mModuleRecycler.setLayoutManager(new GridLayoutManager(getContext(), 5, RecyclerView.VERTICAL, false));
         mModuleRecycler.setAdapter(mModulesAdapter);
-        mModulesAdapter.setOnItemClickListener(this);
 
-        List<Integer> typeList = new ArrayList<>();
-        typeList.add(1);
-        typeList.add(2);
-        HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(getContext(), typeList);
-        homeRv.removeAllViews();
-        adapter.notifyDataSetChanged();
+        mHomeYouLikeAdapter = new HomeYouLikeAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -150,14 +149,37 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
             }
         };
         homeRv.setLayoutManager(linearLayoutManager);
-        homeRv.setAdapter(adapter);
+        homeRv.setAdapter(mHomeYouLikeAdapter);
+    }
+
+    private void onModuleItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        //点击了金刚区
+            /*
+            金刚区模块跳转说明：
+            1：政府机构->带地图的综合服务页面
+            2：企业黄页->三级联动筛选的综合服务页面
+            3：旅游住宿->旅游住宿二级页
+            4：便民服务、教育机构、健康&医疗、家政服务->横向二级联动筛选的综合服务页面
+            5：金融服务->横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）
+            6：餐饮美食->餐厅列表
+            7：线上商店->Comming soon
+             */
+        //首先判断状态 1：已上线 2：开发中
+        ModulesResponse item = mModulesAdapter.getItem(position);
+        switch (item.getDev_status()) {
+            case 1:
+                //根据id做不同的处理
+                dealModulesById(item);
+
+                break;
+            case 2:
+                showToast(getString(R.string.coming_soon));
+                break;
+        }
     }
 
     @Override
     protected void initData() {
-        getBannerData();
-        getModules();
-        getNewsData();
         String areaId = mModel.getCurrentAreaId();
         if (areaId.equals("3")) {
             // 默认巴郎牙
@@ -171,11 +193,59 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                 cityNameTv.setText(currentCity.getName());
             }
         }
+
+        // 获取金刚区，猜你喜欢，banner，滚动新闻并一起返回
+        getInitHomeData();
+    }
+
+    private void getInitHomeData() {
+        showLoading();
+        mModel.getInitHomeData(new BaseObserver<HomeModel.HomeZipResponse>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            public void onNext(@NotNull HomeModel.HomeZipResponse homeZipResponse) {
+                stopLoading();
+
+                // 金刚区
+                injectDataToModule(homeZipResponse.getModulesResponses());
+
+                // 猜你喜欢
+                injectDataToYouLike(homeZipResponse.getYouLikeResponses());
+
+                // banner
+                initBanner(homeZipResponse.getBannerResponses());
+
+                // 滚动新闻
+                initNews(homeZipResponse.getHomeNewsResponses());
+            }
+        });
+    }
+
+    private void injectDataToYouLike(List<HotelResponse> youLikeResponses) {
+        mHomeYouLikeAdapter.getData().clear();
+        mHomeYouLikeAdapter.addData(youLikeResponses);
+    }
+
+    private void injectDataToModule(List<ModulesResponse> modulesResponses) {
+        mModulesAdapter.getData().clear();
+        mModulesAdapter.addData(modulesResponses);
     }
 
     @Override
     protected void bindListener() {
+        mModulesAdapter.setOnItemClickListener(this::onModuleItemClicked);
+        mHomeYouLikeAdapter.setOnItemClickListener(this::onYouLickItemClicked);
+    }
 
+    private void onYouLickItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        JcsCalendarDialog dialog = new JcsCalendarDialog();
+        dialog.initCalendar(getContext());
+        HotelDetailActivity.goTo(getContext(), mHomeYouLikeAdapter.getItem(position).getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
     }
 
     @Override
@@ -215,7 +285,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                     }.getType();
                     List<HomeBannerBean> list = gson.fromJson(result, type);
                     refreshBanner = refreshBanner + 1;
-                    initBanner(list);
+//                    initBanner(list);
                 } else {
                     ptrFrame.refreshComplete();
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
@@ -244,7 +314,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
                     Type type = new TypeToken<List<HomeNewsBean>>() {
                     }.getType();
                     List<HomeNewsBean> list = gson.fromJson(result, type);
-                    initNews(list);
+//                    initNews(list);
                 } else {
                     ptrFrame.refreshComplete();
                     ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
@@ -261,7 +331,7 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
     }
 
-    private void initBanner(List<HomeBannerBean> list) {
+    private void initBanner(List<BannerResponse> list) {
         if (refreshBanner > 1) {
             banner3.releaseBanner();
         }
@@ -333,10 +403,10 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
 
     }
 
-    private void initNews(List<HomeNewsBean> list) {
+    private void initNews(List<HomeNewsResponse> list) {
         final List<String> messageList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            messageList.add(list.get(i).title);
+            messageList.add(list.get(i).getTitle());
         }
         SimpleMF<String> marqueeFactory = new SimpleMF(getContext());
         marqueeFactory.setData(messageList);
@@ -347,39 +417,12 @@ public class HomeFragment extends BaseFragment implements com.chad.library.adapt
         marqueeView.setOnItemClickListener(new OnItemClickListener<TextView, String>() {
             @Override
             public void onItemClickListener(TextView mView, String mData, int mPosition) {
-                Intent intent = new Intent(getContext(), NewsActivity.class);
-                startActivity(intent);
+                // TODO 新闻未做
+                showComing();
+//                Intent intent = new Intent(getContext(), NewsActivity.class);
+//                startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public void onItemClick(@androidx.annotation.NonNull com.chad.library.adapter.base.BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
-        if (adapter == mModulesAdapter) {
-            //点击了金刚区
-            /*
-            金刚区模块跳转说明：
-            1：政府机构->带地图的综合服务页面
-            2：企业黄页->三级联动筛选的综合服务页面
-            3：旅游住宿->旅游住宿二级页
-            4：便民服务、教育机构、健康&医疗、家政服务->横向二级联动筛选的综合服务页面
-            5：金融服务->横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）
-            6：餐饮美食->餐厅列表
-            7：线上商店->Comming soon
-             */
-            //首先判断状态 1：已上线 2：开发中
-            ModulesResponse item = mModulesAdapter.getItem(position);
-            switch (item.getDev_status()) {
-                case 1:
-                    //根据id做不同的处理
-                    dealModulesById(item);
-
-                    break;
-                case 2:
-                    showToast(getString(R.string.coming_soon));
-                    break;
-            }
-        }
     }
 
     /**

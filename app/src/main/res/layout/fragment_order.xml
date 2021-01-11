@@ -7,12 +7,49 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/dataGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="searchEt,searchIcon,orderTabLayout,viewpager"
+        android:visibility="gone"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/noDataGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="jcsTitle"
+        android:visibility="gone"/>
+
     <View
         android:id="@+id/topBg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:background="@color/blue_5A9DFE"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:middleTitle="@string/main_tab_title_order"
+        app:middleTitleColor="@color/white"
+        app:showBackIv="false"
+        app:layout_constraintBottom_toBottomOf="@id/topBg"
+        android:background="@color/blue_5A9DFE"/>
+
+    <TextView
+        android:id="@+id/toLoginTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to_login"
+        android:textColor="@color/blue_5A9DFE"
+        android:background="@drawable/shape_white_radius_4_stroke_5a9dfe_1"
+        android:padding="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
         android:id="@+id/searchEt"
@@ -35,6 +72,7 @@
         android:inputType="text"/>
 
     <ImageView
+        android:id="@+id/searchIcon"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
         app:layout_constraintTop_toTopOf="@id/searchEt"

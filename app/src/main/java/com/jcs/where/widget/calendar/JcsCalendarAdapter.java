@@ -34,11 +34,14 @@ public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapt
         View dateView = baseViewHolder.findView(R.id.dateView);
         View leftView = baseViewHolder.findView(R.id.leftView);
         View rightView = baseViewHolder.findView(R.id.rightView);
+        TextView actionTv = baseViewHolder.findView(R.id.actionTv);
+        if (actionTv == null || dateView == null || leftView == null || rightView == null) {
+            return;
+        }
         // day 为 0 ，说明是空白item
         if (calendarBean.day != 0) {
             baseViewHolder.setText(R.id.dayTv, String.valueOf(calendarBean.day));
             View itemView = baseViewHolder.itemView;
-            TextView actionTv = baseViewHolder.findView(R.id.actionTv);
             if (calendarBean.isStartDay) {
                 if (mIsEndSelected) {
                     rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));

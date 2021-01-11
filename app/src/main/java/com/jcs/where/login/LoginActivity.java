@@ -23,12 +23,15 @@ import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.response.LoginResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.login.model.LoginModel;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.PhoneCheckUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.WorksSizeCheckUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
 import androidx.appcompat.widget.Toolbar;
@@ -177,6 +180,7 @@ public class LoginActivity extends BaseActivity {
             public void onNext(@NotNull LoginResponse loginResponse) {
                 stopLoading();
                 CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, loginResponse.getToken());
+                EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
                 showToast(getString(R.string.login_success));
                 finish();
             }
@@ -211,6 +215,7 @@ public class LoginActivity extends BaseActivity {
             public void onNext(@NotNull LoginResponse loginResponse) {
                 stopLoading();
                 CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, loginResponse.getToken());
+                EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
                 showToast(getString(R.string.login_success));
                 finish();
             }

@@ -127,13 +127,15 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     protected void initView() {
         EventBus.getDefault().register(this);
         mCalendarDialog = new JcsCalendarDialog();
-        mCalendarDialog.initCalendar();
+        mCalendarDialog.initCalendar(this);
         mChooseDataView = findViewById(R.id.toChooseDate);
         mTopPopupLayout = findViewById(R.id.topPopupLayout);
         mEnterStayInfoView = findViewById(R.id.enterStayInfoView);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
         viewPager = findViewById(R.id.viewpager);
         mHotelListIv = findViewById(R.id.listIv);
         mCardAdapter = new CardPagerAdapter(HotelMapActivity.this);

@@ -1,5 +1,6 @@
 package com.jcs.where.home.fragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,15 +12,23 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderNumResponse;
+import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.home.watcher.EmptyTextWatcher;
+import com.jcs.where.login.LoginActivity;
 import com.jcs.where.model.OrderModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -33,17 +42,23 @@ public class OrderFragment extends BaseFragment {
     private View mTopBg;
     private OrderModel mModel;
     private EditText mSearchEt;
+    private TextView mToLogin;
 
     private List<OrderListFragment> mOrderListFragments;
     private String[] mTabTitles;
+    private Group mDataGroup, mNoDataGroup;
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         mTopBg = view.findViewById(R.id.topBg);
         setMargins(mTopBg, 0, getStatusBarHeight(), 0, 0, R.color.blue_5A9DFE);
         mViewPager = view.findViewById(R.id.viewpager);
         mTabLayout = view.findViewById(R.id.orderTabLayout);
         mSearchEt = view.findViewById(R.id.searchEt);
+        mToLogin = view.findViewById(R.id.toLoginTv);
+        mDataGroup = view.findViewById(R.id.dataGroup);
+        mNoDataGroup = view.findViewById(R.id.noDataGroup);
     }
 
 
@@ -62,14 +77,26 @@ public class OrderFragment extends BaseFragment {
 
         deployView();
 
+        getNetData();
+    }
+
+    private void getNetData() {
         mModel.getOrderNum(new BaseObserver<OrderNumResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
+                if (errorResponse.getErrCode() == 401) {
+                    mNoDataGroup.setVisibility(View.VISIBLE);
+                    mDataGroup.setVisibility(View.GONE);
+                } else {
+                    showNetError(errorResponse);
+                }
             }
 
             @Override
             public void onNext(@io.reactivex.annotations.NonNull OrderNumResponse orderNumResponse) {
+                mNoDataGroup.setVisibility(View.GONE);
+                mDataGroup.setVisibility(View.VISIBLE);
+
                 StringBuilder stringBuilder = new StringBuilder();
                 mTabTitles[0] = mTabTitles[0] + getTabTitleSuffix(stringBuilder, orderNumResponse.getAll());
                 clearStringBuilder(stringBuilder);
@@ -113,15 +140,7 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
-        mSearchEt.setOnEditorActionListener((textView, actionId, keyEvent) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                String input = textView.getText().toString();
-                OrderListFragment orderListFragment = getCurrentOrderListFragment();
-                orderListFragment.getOrderByType(input);
-                return true;
-            }
-            return false;
-        });
+        mSearchEt.setOnEditorActionListener(this::onSearchActionClicked);
 
         mSearchEt.addTextChangedListener(new EmptyTextWatcher() {
             @Override
@@ -130,6 +149,22 @@ public class OrderFragment extends BaseFragment {
                 orderListFragment.getOrderByType();
             }
         });
+
+        mToLogin.setOnClickListener(this::onToLoginClicked);
+    }
+
+    private boolean onSearchActionClicked(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            String input = textView.getText().toString();
+            OrderListFragment orderListFragment = getCurrentOrderListFragment();
+            orderListFragment.getOrderByType(input);
+            return true;
+        }
+        return false;
+    }
+
+    private void onToLoginClicked(View view) {
+        toActivity(LoginActivity.class);
     }
 
     private OrderListFragment getCurrentOrderListFragment() {
@@ -149,6 +184,12 @@ public class OrderFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     protected boolean needChangeStatusBarStatus() {
         return true;
     }
@@ -156,6 +197,13 @@ public class OrderFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceive(BaseEvent baseEvent) {
+        if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
+            getNetData();
+        }
     }
 
     class OrderAdapter extends FragmentStatePagerAdapter {

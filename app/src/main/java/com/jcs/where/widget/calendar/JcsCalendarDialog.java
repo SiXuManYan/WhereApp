@@ -1,5 +1,6 @@
 package com.jcs.where.widget.calendar;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -8,8 +9,8 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseBottomDialog;
+import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean;
-import com.jcs.where.base.BaseDialog;
 import com.jcs.where.home.decoration.HotelCalendarItemDecoration;
 
 import java.text.SimpleDateFormat;
@@ -61,7 +62,7 @@ public class JcsCalendarDialog extends BaseBottomDialog {
     @Override
     protected void initData() {
         if (mBeans == null || mBeans.size() == 0) {
-            Log.e("JcsCalendarDialog", "initData: "+"please invoke method: initCalendar");
+            Log.e("JcsCalendarDialog", "initData: " + "please invoke method: initCalendar");
             return;
         }
         mAdapter = new JcsCalendarAdapter(R.layout.item_hotel_calendar_dialog_header, R.layout.item_hotel_calendar_dialog_child, mBeans);
@@ -247,12 +248,12 @@ public class JcsCalendarDialog extends BaseBottomDialog {
         return true;
     }
 
-    public void initCalendar() {
-        mYearMonthSF = new SimpleDateFormat("yyyy年MM月");
-        mMonthDaySF = new SimpleDateFormat("MM月dd日");
-        mMonthDayWithSplitSF = new SimpleDateFormat("MM-dd");
-        mYearMonthDayWithSplitSF = new SimpleDateFormat("yyyy-MM-dd");
-        mWeekdaySF = new SimpleDateFormat("E");
+    public void initCalendar(Context context) {
+        mYearMonthSF = new SimpleDateFormat(context.getString(R.string.date_format_year_month), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
+        mMonthDaySF = new SimpleDateFormat(context.getString(R.string.date_format_month_day), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
+        mMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_mm_dd), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
+        mYearMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_yyyy_mm_dd), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
+        mWeekdaySF = new SimpleDateFormat("E", LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
 
         Calendar instance = Calendar.getInstance();
 

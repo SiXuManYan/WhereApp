@@ -17,7 +17,6 @@
     <color name="grey_999999">#999999</color>
     <color name="blue_9FC7F1">#9FC7F1</color>
     <color name="green_06BA1B">#06BA1B</color>
-    <color name="orange_F77719">#F77719</color>
     <color name="orange_FBCC88">#FBCC88</color>
     <color name="grey_666666">#666666</color>
     <color name="grey_EAEAEA">#EAEAEA</color>
@@ -27,6 +26,7 @@
     <color name="grey_CCCCCC">#CCCCCC</color>
     <color name="blue_E7F0FB">#E7F0FB</color>
     <color name="orange_FF5B1B">#FF5B1B</color>
+    <color name="orange_F77719">#F77719</color>
     <color name="grey_EEEEEE">#EEEEEE</color>
     <color name="grey_B7C9DC">#B7C9DC</color>
     <color name="pink_FBA4B5">#FBA4B5</color>

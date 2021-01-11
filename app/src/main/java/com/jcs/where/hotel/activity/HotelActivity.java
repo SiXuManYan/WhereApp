@@ -195,7 +195,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void initData() {
         mModel = new HotelModel();
-        mJcsCalendarDialog.initCalendar();
+        mJcsCalendarDialog.initCalendar(this);
         deployDateTv(mStartDateTv, mStartWeekTv, mJcsCalendarDialog.getStartBean());
         deployDateTv(mEndDateTv, mEndWeekTv, mJcsCalendarDialog.getEndBean());
         initGoogleApi();

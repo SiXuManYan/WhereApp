@@ -1,8 +1,6 @@
 package com.jcs.where.home;
 
 import android.Manifest;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,10 +133,10 @@ public class HomeActivity extends BaseActivity {
 
     private void initTabLayout() {
         mTabBeans = new ArrayList<>();
-        mTabBeans.add(new HomeTabBean("首页", R.drawable.selector_tab_home_home));
-        mTabBeans.add(new HomeTabBean("分类", R.drawable.selector_tab_home_category));
-        mTabBeans.add(new HomeTabBean("订单", R.drawable.selector_tab_home_order));
-        mTabBeans.add(new HomeTabBean("我的", R.drawable.selector_tab_home_mine));
+        mTabBeans.add(new HomeTabBean(getString(R.string.main_tab_title_home), R.drawable.selector_tab_home_home));
+        mTabBeans.add(new HomeTabBean(getString(R.string.maiin_tab_title_category), R.drawable.selector_tab_home_category));
+        mTabBeans.add(new HomeTabBean(getString(R.string.main_tab_title_order), R.drawable.selector_tab_home_order));
+        mTabBeans.add(new HomeTabBean(getString(R.string.main_tab_title_mine), R.drawable.selector_tab_home_mine));
 
         int size = mTabBeans.size();
         for (int i = 0; i < size; i++) {

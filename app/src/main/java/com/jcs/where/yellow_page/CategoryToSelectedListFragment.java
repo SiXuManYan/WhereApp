@@ -214,6 +214,9 @@ public class CategoryToSelectedListFragment extends BaseFragment {
     public String getCurrentCategoryId() {
         switch (mLevel) {
             case LEVEL_FIRST:
+                if (getSelectFirstCate() == null) {
+                    return "[10,17,21,27,94,114,209,226]";
+                }
                 return String.valueOf(getSelectFirstCate().getId());
             case LEVEL_SECOND:
                 return String.valueOf(getSelectSecondCate().getId());

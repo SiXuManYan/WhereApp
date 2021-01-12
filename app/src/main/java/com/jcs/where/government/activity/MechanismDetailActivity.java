@@ -236,24 +236,24 @@ public class MechanismDetailActivity extends BaseActivity {
 
         String website = mMechanismDetailResponse.getWeb_site();
         if (website != null && !website.isEmpty()) {
-            String websiteStr = "：" + website;
-            mWebsiteTv.setText(websiteStr);
+//            String websiteStr = "：" + website;
+            mWebsiteTv.setText(website);
         } else {
             mWebsiteGroup.setVisibility(View.GONE);
         }
 
         String email = mMechanismDetailResponse.getEmail();
         if (email != null && !email.isEmpty()) {
-            String emailStr = "：" + email;
-            mEmailTv.setText(emailStr);
+//            String emailStr = "：" + email;
+            mEmailTv.setText(email);
         } else {
             mEmailGroup.setVisibility(View.GONE);
         }
 
         String facebook = mMechanismDetailResponse.getFacebook();
         if (facebook != null && !facebook.isEmpty()) {
-            String facebookStr = "：" + facebook;
-            mFacebookTv.setText(facebookStr);
+//            String facebookStr = "：" + facebook;
+            mFacebookTv.setText(facebook);
         } else {
             mFacebookGroup.setVisibility(View.GONE);
         }

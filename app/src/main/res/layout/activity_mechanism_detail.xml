@@ -61,8 +61,7 @@
         android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
         app:layout_constraintStart_toEndOf="@id/timePrompt"
-        app:layout_constraintBaseline_toBaselineOf="@id/timePrompt"
-        android:layout_marginStart="@dimen/dp_5"/>
+        app:layout_constraintBaseline_toBaselineOf="@id/timePrompt" />
 
     <TextView
         android:id="@+id/businessTimeTv"

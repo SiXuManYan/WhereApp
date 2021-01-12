@@ -304,8 +304,8 @@
                                 android:layout_marginTop="15dp">
 
                                 <ImageView
-                                    android:layout_width="27dp"
-                                    android:layout_height="27dp"
+                                    android:layout_width="@dimen/dp_27"
+                                    android:layout_height="@dimen/dp_27"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
                                     android:src="@drawable/ic_tobepaid" />
@@ -348,8 +348,8 @@
                                 android:layout_marginTop="15dp">
 
                                 <ImageView
-                                    android:layout_width="27dp"
-                                    android:layout_height="27dp"
+                                    android:layout_width="@dimen/dp_27"
+                                    android:layout_height="@dimen/dp_27"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
                                     android:src="@drawable/ic_tobeuse" />
@@ -391,8 +391,8 @@
                                 android:layout_marginTop="15dp">
 
                                 <ImageView
-                                    android:layout_width="27dp"
-                                    android:layout_height="27dp"
+                                    android:layout_width="@dimen/dp_27"
+                                    android:layout_height="@dimen/dp_27"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
                                     android:src="@drawable/ic_tobeevaluated" />
@@ -437,8 +437,8 @@
                                 android:layout_marginTop="15dp">
 
                                 <ImageView
-                                    android:layout_width="27dp"
-                                    android:layout_height="27dp"
+                                    android:layout_width="@dimen/dp_27"
+                                    android:layout_height="@dimen/dp_27"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
                                     android:src="@drawable/ic_refund" />
@@ -500,11 +500,11 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_address" />
+                                android:src="@mipmap/ic_manager_address" />
 
 
                             <TextView
@@ -526,8 +526,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
                                 android:src="@drawable/ic_collection" />
@@ -552,11 +552,11 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_exchange" />
+                                android:src="@mipmap/ic_mine_foot_print" />
 
 
                             <TextView
@@ -578,11 +578,11 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_invitation" />
+                                android:src="@mipmap/ic_invite_with_gift" />
 
 
                             <TextView
@@ -624,6 +624,33 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/aboutUsLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="5dp"
+                                android:src="@mipmap/ic_about_us" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="11dp"
+                                android:layout_marginBottom="15dp"
+                                android:text="@string/mine_about_us"
+                                android:textColor="@color/black_333333"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/ll_settlement"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -631,8 +658,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
                                 android:src="@drawable/ic_business" />
@@ -658,8 +685,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
                                 android:src="@drawable/ic_language" />

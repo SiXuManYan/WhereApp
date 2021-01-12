@@ -175,5 +175,6 @@
     <string name="main_tab_title_order">订单</string>
     <string name="main_tab_title_mine">我的</string>
     <string name="to_login">登录</string>
+    <string name="mine_about_us">关于我们</string>
 
 </resources>

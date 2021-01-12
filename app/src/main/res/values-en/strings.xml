@@ -172,9 +172,19 @@
 	<string name="date_format_year_month">MMM yyyy</string>
 	<string name="date_format_mm_dd">MMM d</string>
 	<string name="main_tab_title_home">Home</string>
-	<string name="maiin_tab_title_category">Category</string>
+	<string name="main_tab_title_category">Category</string>
 	<string name="main_tab_title_order">Order</string>
 	<string name="main_tab_title_mine">My</string>
 	<string name="to_login">Login</string>
     <string name="mine_about_us">about us</string>
+    <string name="cancel_order">Cancel</string>
+	<string name="book_again">Book again</string>
+	<string name="to_use">To use</string>
+	<string name="to_review">To review</string>
+	<string name="see_review">See review</string>
+	<string name="payment_failed">Payment failed</string>
+	<string name="refunding">refunding</string>
+	<string name="refunded">refunded</string>
+	<string name="refund_failed">Refund failed</string>
+	<string name="unpaid">Unpaid</string>
 </resources>

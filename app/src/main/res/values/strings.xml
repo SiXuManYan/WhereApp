@@ -171,10 +171,20 @@
     <string name="completed">已完成</string>
     <string name="comment_num_prompt">%1$d条评论</string>
     <string name="main_tab_title_home">首页</string>
-    <string name="maiin_tab_title_category">分类</string>
+    <string name="main_tab_title_category">分类</string>
     <string name="main_tab_title_order">订单</string>
     <string name="main_tab_title_mine">我的</string>
     <string name="to_login">登录</string>
     <string name="mine_about_us">关于我们</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="book_again">再次预定</string>
+    <string name="to_use">去使用</string>
+    <string name="to_review">去评价</string>
+    <string name="see_review">查看评价</string>
+    <string name="payment_failed">支付失败</string>
+    <string name="refunding">退款中</string>
+    <string name="refunded">已退款</string>
+    <string name="refund_failed">退款失败</string>
+    <string name="unpaid">代付款</string>
 
 </resources>

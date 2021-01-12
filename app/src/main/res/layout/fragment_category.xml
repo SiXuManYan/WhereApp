@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:middleTitle="分类"
+        app:middleTitle="@string/main_tab_title_category"
         app:showBackIv="false" />
 
     <com.google.android.material.tabs.TabLayout

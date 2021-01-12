@@ -138,8 +138,14 @@ public class OrderListFragment extends BaseFragment {
             @Override
             public void onNext(@NonNull PageResponse<OrderListResponse> pageResponse) {
                 mAdapter.getData().clear();
-                mAdapter.addData(pageResponse.getData());
+                if (pageResponse.getData().size() > 0) {
+                    mAdapter.addData(pageResponse.getData());
+                }else {
+                    mAdapter.notifyDataSetChanged();
+                    mAdapter.setEmptyView(R.layout.view_empty_data_brvah_mechanism);
+                }
                 stopRefresh();
+                mAdapter.getLoadMoreModule().loadMoreComplete();
             }
         });
     }

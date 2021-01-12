@@ -18,7 +18,7 @@
         android:id="@+id/noDataGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="jcsTitle"
+        app:constraint_referenced_ids="jcsTitle,toLoginTv"
         android:visibility="gone"/>
 
     <View

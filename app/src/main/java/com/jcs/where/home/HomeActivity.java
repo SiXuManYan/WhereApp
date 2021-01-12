@@ -134,7 +134,7 @@ public class HomeActivity extends BaseActivity {
     private void initTabLayout() {
         mTabBeans = new ArrayList<>();
         mTabBeans.add(new HomeTabBean(getString(R.string.main_tab_title_home), R.drawable.selector_tab_home_home));
-        mTabBeans.add(new HomeTabBean(getString(R.string.maiin_tab_title_category), R.drawable.selector_tab_home_category));
+        mTabBeans.add(new HomeTabBean(getString(R.string.main_tab_title_category), R.drawable.selector_tab_home_category));
         mTabBeans.add(new HomeTabBean(getString(R.string.main_tab_title_order), R.drawable.selector_tab_home_order));
         mTabBeans.add(new HomeTabBean(getString(R.string.main_tab_title_mine), R.drawable.selector_tab_home_mine));
 

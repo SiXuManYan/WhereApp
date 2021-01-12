@@ -19,7 +19,7 @@ import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
-import com.jcs.where.model.HotelListModel;
+import com.jcs.where.hotel.model.HotelListModel;
 import com.jcs.where.view.EnterStayInfoView;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 import com.jcs.where.view.popup.PopupConstraintLayout;

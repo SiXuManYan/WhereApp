@@ -20,7 +20,7 @@ import com.jcs.where.codepicker.Country;
 import com.jcs.where.codepicker.CountryPicker;
 import com.jcs.where.codepicker.OnPick;
 import com.jcs.where.home.dialog.AreaCodeListDialog;
-import com.jcs.where.model.HotelSubscribeModel;
+import com.jcs.where.hotel.model.HotelSubscribeModel;
 
 import androidx.appcompat.widget.Toolbar;
 import io.reactivex.annotations.NonNull;

@@ -151,20 +151,24 @@ public class CategoryFragment extends BaseFullFragment {
                         GridLayoutManager linearManager = (GridLayoutManager) layoutManager;
                         //获取第一个可见view的位置
                         int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                        BaseNode baseNode = mAdapter.getData().get(firstItemPosition);
-                        if (baseNode instanceof ParentCategoryResponse) {
-                            firstItemPosition = mData.indexOf(baseNode);
-                        } else {
-                            BaseNode item = mAdapter.getItem(mAdapter.findParentNode(baseNode));
-                            if (item instanceof ParentCategoryResponse) {
-                                firstItemPosition = mData.indexOf(item);
+                        if (mAdapter.getData().size() > 0) {
+
+                            BaseNode baseNode = mAdapter.getData().get(firstItemPosition);
+                            if (baseNode instanceof ParentCategoryResponse) {
+                                firstItemPosition = mData.indexOf(baseNode);
+                            } else {
+                                BaseNode item = mAdapter.getItem(mAdapter.findParentNode(baseNode));
+                                if (item instanceof ParentCategoryResponse) {
+                                    firstItemPosition = mData.indexOf(item);
+                                }
+                            }
+                            if (firstItemPosition == -1) {
+                                mTabLayout.selectTab(mTabLayout.getTabAt(firstItemPosition));
+                            } else {
+                                Log.e("CategoryFragment", "onScrollStateChanged: " + "firstItemPosition=-1");
                             }
                         }
-                        if (firstItemPosition == -1) {
-                            mTabLayout.selectTab(mTabLayout.getTabAt(firstItemPosition));
-                        } else {
-                            Log.e("CategoryFragment", "onScrollStateChanged: " + "firstItemPosition=-1");
-                        }
+
                     }
                 }
 

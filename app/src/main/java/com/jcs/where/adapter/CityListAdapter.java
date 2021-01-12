@@ -110,16 +110,16 @@ public class CityListAdapter extends BaseAdapter {
                 TextView state = (TextView) view.findViewById(R.id.tv_located_city);
                 switch (locateState) {
                     case LocateState.LOCATING:
-                        state.setText("正在定位…");
+                        state.setText(R.string.positioning);
                         break;
                     case LocateState.FAILED:
-                        state.setText("定位失败");
+                        state.setText(R.string.position_failed);
                         break;
                     case LocateState.SUCCESS:
                         state.setText(locatedCity);
                         break;
                     case LocateState.INIT:
-                        state.setText("定位");
+                        state.setText(R.string.position);
                         break;
                 }
                 container.setOnClickListener(new View.OnClickListener() {

@@ -6,6 +6,7 @@ import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.CityPickerResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
@@ -54,6 +55,9 @@ public interface RetrofitApi {
     @GET("commonapi/v1/modules")
     Observable<List<ModulesResponse>> getModules();
 
+    /**
+     * 首页新闻接口
+     */
     @GET("newsapi/v1/news/notices?notice_num=10")
     Observable<List<HomeNewsResponse>> getHomeNews();
 
@@ -304,4 +308,7 @@ public interface RetrofitApi {
      */
     @PATCH("userapi/v1/users")
     Observable<UserInfoResponse> patchUpdateUserInfo(@Body UpdateUserInfoRequest request);
+
+    @GET("commonapi/v1/areas")
+    Observable<CityPickerResponse> getCityPickers();
 }

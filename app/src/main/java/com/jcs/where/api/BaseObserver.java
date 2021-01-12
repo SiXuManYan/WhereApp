@@ -61,7 +61,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
             errorResponse.errCode = 500;
             errorResponse.errMsg = "系统异常";
         } else {
-            errorResponse.errMsg = "我也不知道发生了什么：" + message;
+            errorResponse.errMsg = message;
             Log.e("BaseObserver", "----onError---" + message);
         }
 

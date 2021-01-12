@@ -24,7 +24,7 @@ public class CustomProgressDialog extends ProgressDialog {
         super(context, R.style.dialog);
         this.mContext = context;
         if (TextUtils.isEmpty(content)) {
-            this.mLoadingTip = "加载中...";
+            this.mLoadingTip = context.getString(R.string.loading);
         } else {
             this.mLoadingTip = content;
         }

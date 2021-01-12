@@ -21,7 +21,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.adapter.CityListAdapter;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.api.response.CityPickerResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.CustomProgressDialog;
 import com.jcs.where.bean.AreaBean;
@@ -29,16 +32,20 @@ import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.LocateState;
+import com.jcs.where.hotel.model.CityPickerModel;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.PinyinUtils;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 import com.jcs.where.widget.SideLetterBar;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,6 +69,7 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
     private Location mLastLocation;
     private LatLng lastLatLng, perthLatLng;
     private boolean mAddressRequested;
+    private CityPickerModel mModel;
 
     public static void goTo(Activity activity, int requestCode) {
         Intent intent = new Intent(activity, CityPickerActivity.class);
@@ -120,45 +128,40 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
 
     public void getCityData() {
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "commonapi/v1/areas", null, "", TokenManager.get().getToken(CityPickerActivity.this), new HttpUtils.StringCallback() {
+        mModel.getCityPickers(new BaseObserver<CityPickerResponse>() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                if (code == 200) {
-                    AreaBean bean = new Gson().fromJson(result, AreaBean.class);
-                    HashSet<CityResponse> cityResponses = new HashSet<>();
-                    for (int i = 0; i < bean.lists.size(); i++) {
-                        for (int j = 0; j < bean.lists.get(i).areas.size(); j++) {
-                            String name = bean.lists.get(i).areas.get(j).name.replace("　", "");
-                            cityResponses.add(new CityResponse(bean.lists.get(i).areas.get(j).id, name, PinyinUtils.getPinYin(name), false));
-                        }
-                    }
-                    //set转换list
-                    ArrayList<CityResponse> cities = new ArrayList<>(cityResponses);
-                    //按照字母排序
-                    Collections.sort(cities, new Comparator<CityResponse>() {
-                        @Override
-                        public int compare(CityResponse cityResponse, CityResponse t1) {
-                            return cityResponse.getPinyin().compareTo(t1.getPinyin());
-                        }
-                    });
-                    mCityAdapter.setData(cities);
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
+                showNetError(errorResponse);
             }
 
             @Override
-            public void onFaileure(int code, Exception e) {
+            public void onNext(@NotNull CityPickerResponse cityPickerResponse) {
                 stopLoading();
-                showToast(e.getMessage());
+                HashSet<CityResponse> cityResponses = new HashSet<>();
+                List<CityPickerResponse.ListsDTO> lists = cityPickerResponse.getLists();
+                int listSize = lists.size();
+                for (int i = 0; i < listSize; i++) {
+                    List<CityPickerResponse.ListsDTO.AreasDTO> areas = lists.get(i).getAreas();
+                    int areaSize = areas.size();
+                    for (int j = 0; j < areaSize; j++) {
+                        CityPickerResponse.ListsDTO.AreasDTO areasDTO = areas.get(j);
+                        String name = areasDTO.getName().replace("　", "");
+                        cityResponses.add(new CityResponse(areasDTO.getId(), name, PinyinUtils.getPinYin(name), false));
+                    }
+                }
+                //set转换list
+                ArrayList<CityResponse> cities = new ArrayList<>(cityResponses);
+                //按照字母排序
+                Collections.sort(cities, (cityResponse, t1) -> cityResponse.getPinyin().compareTo(t1.getPinyin()));
+                mCityAdapter.setData(cities);
+
             }
         });
-
     }
 
     protected void initData() {
+        mModel = new CityPickerModel();
         getCityData();
         mCityAdapter.setOnCityClickListener(new CityListAdapter.OnCityClickListener() {
             @Override
@@ -280,7 +283,7 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
             @Override
             public void onFaileure(int code, Exception e) {
                 stopLoading();
-                showToast(e.getMessage());
+//                showToast(e.getMessage());
             }
         });
 

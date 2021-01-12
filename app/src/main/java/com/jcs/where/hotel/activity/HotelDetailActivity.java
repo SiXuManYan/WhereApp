@@ -39,7 +39,7 @@ import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
-import com.jcs.where.model.HotelDetailModel;
+import com.jcs.where.hotel.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
 import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;

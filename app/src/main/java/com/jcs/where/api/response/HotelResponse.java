@@ -25,7 +25,7 @@ public class HotelResponse {
 
     private int id;
     private String name;
-    private int grade;
+    private double grade;
     private int comment_counts;
     private String address;
     private double lat;
@@ -53,11 +53,11 @@ public class HotelResponse {
         this.name = name;
     }
 
-    public int getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(double grade) {
         this.grade = grade;
     }
 

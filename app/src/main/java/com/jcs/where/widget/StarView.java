@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 
 public class StarView extends LinearLayout {
 
-    private int mStarNum = 0;
+    private double mStarNum = 0;
 
     public StarView(Context context) {
         this(context, null);
@@ -52,7 +52,7 @@ public class StarView extends LinearLayout {
     }
 
 
-    public void setStartNum(int startNum) {
+    public void setStartNum(double startNum) {
         this.mStarNum = startNum;
         addStar();
         invalidate();

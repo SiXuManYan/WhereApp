@@ -38,7 +38,7 @@ import com.jcs.where.bean.GuessYouLikeHotelBean;
 import com.jcs.where.home.dialog.HotelStarDialog;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.manager.TokenManager;
-import com.jcs.where.model.HotelModel;
+import com.jcs.where.hotel.model.HotelModel;
 import com.jcs.where.utils.LocationUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 

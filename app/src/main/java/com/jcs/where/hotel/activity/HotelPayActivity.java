@@ -12,7 +12,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.model.HotelPayModel;
+import com.jcs.where.hotel.model.HotelPayModel;
 
 import io.reactivex.annotations.NonNull;
 

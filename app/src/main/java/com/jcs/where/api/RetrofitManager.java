@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitManager {
     private static RetrofitManager manager;
-    private final int timeout = 5;
+    private final int timeout = 10;
     private Retrofit retrofit;
 
     public static synchronized RetrofitManager getManager() {
@@ -75,13 +75,17 @@ public class RetrofitManager {
             okBuilder.addInterceptor(loggingInterceptor);
         }
 //        okBuilder.addInterceptor(new BaseUrlInterceptor());
-        okBuilder.connectTimeout(timeout, TimeUnit.MINUTES);
-        okBuilder.readTimeout(timeout, TimeUnit.MINUTES);
-        okBuilder.writeTimeout(timeout, TimeUnit.MINUTES);
+//        okBuilder.connectTimeout(timeout, TimeUnit.MINUTES);
+//        okBuilder.readTimeout(timeout, TimeUnit.MINUTES);
+//        okBuilder.writeTimeout(timeout, TimeUnit.MINUTES);
 
 
         Retrofit.Builder builder = new Retrofit.Builder();
         //请求链接前缀，所有接口不变的部分，字符串必须以/结尾
+        // TODO baseurl 应该放在gradle中，没时间
+        // 正式版
+//        builder.baseUrl("https://appapi.wheretech.ph/");
+        // 测试版
         builder.baseUrl("https://api.jcstest.com/");
         //用于做网络请求到客户端（okHttp3）
         builder.client(okBuilder.build());

@@ -140,10 +140,9 @@
                 android:layout_marginRight="45dp"
                 android:background="@drawable/bg_loginbtnunclick"
                 android:gravity="center"
-                android:text="登录"
+                android:text="@string/to_login"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
-
 
         </LinearLayout>
 
@@ -233,7 +232,7 @@
                     android:gravity="center"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="获取验证码"
+                    android:text="@string/get_v_code"
                     android:textColor="@color/grey_666666"
                     android:textSize="13sp" />
 
@@ -259,7 +258,7 @@
                 android:layout_marginRight="45dp"
                 android:background="@drawable/bg_loginbtnunclick"
                 android:gravity="center"
-                android:text="登录"
+                android:text="@string/to_login"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -293,7 +292,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="新用户注册"
+                android:text="@string/to_register"
                 android:textColor="@color/grey_999999"
                 android:textSize="13sp" />
 
@@ -321,7 +320,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="其他登录方式"
+                android:text="@string/other_login_method"
                 android:textColor="@color/grey_999999"
                 android:textSize="12sp" />
 
@@ -359,7 +358,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="9.5dp"
-                    android:text="使用Facebook登录"
+                    android:text="@string/login_by_facebook"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 
@@ -391,7 +390,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="9.5dp"
-                    android:text="使用邮箱登录"
+                    android:text="@string/login_by_email"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 

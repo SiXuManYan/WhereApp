@@ -25,7 +25,7 @@
             android:layout_below="@+id/progress_bar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="加载中..."
+            android:text="@string/loading"
             android:textColor="#ffffff" />
     </RelativeLayout>
 

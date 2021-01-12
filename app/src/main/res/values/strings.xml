@@ -186,5 +186,6 @@
     <string name="refunded">已退款</string>
     <string name="refund_failed">退款失败</string>
     <string name="unpaid">代付款</string>
+    <string name="mine_footprint">我的足迹</string>
 
 </resources>

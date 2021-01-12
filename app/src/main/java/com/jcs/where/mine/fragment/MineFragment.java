@@ -12,7 +12,6 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
-import com.jcs.where.home.event.TokenEvent;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.login.LoginActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
@@ -33,7 +32,7 @@ import androidx.annotation.Nullable;
 
 import static android.app.Activity.RESULT_OK;
 
-public class MineFragment extends BaseFragment implements View.OnClickListener {
+public class MineFragment extends BaseFragment {
 
 
     private static final int REQ_SELECT_CITY = 100;
@@ -45,6 +44,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private RoundedImageView headerIv;
     private MineModel mModel;
     private VerticalSwipeRefreshLayout mSwipeLayout;
+    private TextView mToSeeBalanceTv;
 
     @Override
     protected void initView(View view) {
@@ -52,16 +52,40 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         mSwipeLayout = view.findViewById(R.id.mineSwipeLayout);
         settingIv = view.findViewById(R.id.iv_setting);
-        settingIv.setOnClickListener(this);
         nicknameTv = view.findViewById(R.id.nicknameTv);
         accountTv = view.findViewById(R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
         headerIv = view.findViewById(R.id.iv_header);
-        view.findViewById(R.id.ll_changelangue).setOnClickListener(this);
-        view.findViewById(R.id.ll_settlement).setOnClickListener(this);
-        view.findViewById(R.id.rl_minemessage).setOnClickListener(this);
+        view.findViewById(R.id.toSeeBalanceTv).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.mineBalanceLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.pointLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.couponLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.toSeeAllOrderTv).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.unpaidLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.bookedLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.reviewsLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.afterSalesLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.managerAddressLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.collectionLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.footprintLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.inviteLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.ll_settlement).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
 
+    }
+
+    private void onUserDataClicked(View view) {
+        if (CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN).equals("")) {
+            LoginActivity.goTo(getContext());
+        } else {
+            PersonalDataActivity.goTo(getContext());
+        }
+    }
+
+    private void toShowComing(View view) {
+        showComing();
     }
 
     private void onChangeLanguageClicked(View view) {
@@ -94,26 +118,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 nicknameTv.setText(userInfoResponse.getNickname());
             }
         });
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_setting:
-                break;
-            case R.id.ll_settlement:
-                break;
-            case R.id.ll_changelangue:
-                break;
-            case R.id.rl_minemessage:
-                if (CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN).equals("")) {
-                    LoginActivity.goTo(getContext());
-                } else {
-                    PersonalDataActivity.goTo(getContext());
-                }
-                break;
-            default:
-        }
     }
 
     @Override

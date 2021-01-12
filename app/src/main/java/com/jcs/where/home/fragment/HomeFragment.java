@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -98,11 +99,15 @@ public class HomeFragment extends BaseFragment {
     private HomeModel mModel;
     private RecyclerView mModuleRecycler;
     private ModulesAdapter mModulesAdapter;
+    private RelativeLayout mMessageLayout;
+    private LinearLayout mSearchLayout;
 
     @Override
     protected void initView(View view) {
         mModel = new HomeModel();
         bannerLl = view.findViewById(R.id.ll_banner);
+        mMessageLayout = view.findViewById(R.id.rl_message);
+        mSearchLayout = view.findViewById(R.id.searchLayout);
         ViewGroup.LayoutParams lp;
         lp = bannerLl.getLayoutParams();
         lp.height = getScreenWidth() * 100 / 345;
@@ -240,6 +245,16 @@ public class HomeFragment extends BaseFragment {
     protected void bindListener() {
         mModulesAdapter.setOnItemClickListener(this::onModuleItemClicked);
         mHomeYouLikeAdapter.setOnItemClickListener(this::onYouLickItemClicked);
+        mMessageLayout.setOnClickListener(this::onMessageLayoutClicked);
+        mSearchLayout.setOnClickListener(this::onSearchLayoutClicked);
+    }
+
+    private void onSearchLayoutClicked(View view) {
+        showComing();
+    }
+
+    private void onMessageLayoutClicked(View view) {
+        showComing();
     }
 
     private void onYouLickItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {

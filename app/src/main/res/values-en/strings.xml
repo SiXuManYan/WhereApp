@@ -187,4 +187,5 @@
 	<string name="refunded">refunded</string>
 	<string name="refund_failed">Refund failed</string>
 	<string name="unpaid">Unpaid</string>
+	<string name="mine_footprint">footprint</string>
 </resources>

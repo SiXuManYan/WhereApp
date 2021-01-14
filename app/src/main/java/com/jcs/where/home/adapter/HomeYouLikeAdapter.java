@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +35,7 @@ public class HomeYouLikeAdapter extends BaseQuickAdapter<HotelResponse, BaseView
         RoundedImageView icon = baseViewHolder.findView(R.id.youLikeIcon);
         List<String> images = hotelResponse.getImages();
         if (icon != null && images.size() > 0) {
-            Glide.with(getContext()).load(images.get(0)).into(icon);
+            GlideUtil.load(getContext(), images.get(0), icon);
         }
 
     }

@@ -112,7 +112,7 @@ public class ImagePreviewActivity extends BaseActivity {
             ImageView imageView = new ImageView(ImagePreviewActivity.this);
             imageView.setTransitionName(getString(R.string.comment_icon));
             imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            Glide.with(ImagePreviewActivity.this).load(mImageUrls.get(position)).into(imageView);
+            GlideUtil.load(ImagePreviewActivity.this, mImageUrls.get(position), imageView);
             ((ViewPager) container).addView(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

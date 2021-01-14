@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.utils.GlideUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +42,7 @@ public class MechanismListAdapter extends BaseQuickAdapter<MechanismResponse, Ba
         ImageView mechanismIconIv = baseViewHolder.findView(R.id.mechanismIconIv);
         List<String> images = mechanismResponse.getImages();
         if (images != null && images.size() > 0 && mechanismIconIv != null) {
-            Glide.with(getContext()).load(images.get(0)).into(mechanismIconIv);
+            GlideUtil.load(getContext(), images.get(0), mechanismIconIv);
         }
     }
 }

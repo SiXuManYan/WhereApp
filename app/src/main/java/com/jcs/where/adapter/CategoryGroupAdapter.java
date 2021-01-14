@@ -10,6 +10,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
+import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
+import com.jcs.where.utils.GlideUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -77,7 +79,7 @@ public class CategoryGroupAdapter extends BaseNodeAdapter {
             baseViewHolder.setText(R.id.categoryChildTitle, category.getName());
             ImageView childIcon = baseViewHolder.findView(R.id.categoryChildIcon);
             if (childIcon != null) {
-                Glide.with(getContext()).load(category.getIcon()).into(childIcon);
+                GlideUtil.load(getContext(), category.getIcon(), childIcon);
             }
         }
     }

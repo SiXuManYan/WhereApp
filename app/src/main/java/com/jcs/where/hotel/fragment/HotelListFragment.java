@@ -12,6 +12,8 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.jcs.where.R;
+import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseFragment;
@@ -249,9 +251,9 @@ public class HotelListFragment extends BaseFragment {
 
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                Glide.with(getContext()).load(data.getImages().get(0)).into(photoIv);
+                GlideUtil.load(getContext(), data.getImages().get(0), photoIv);
             } else {
-                photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                photoIv.setImageResource(R.mipmap.ic_glide_default);
             }
             TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());

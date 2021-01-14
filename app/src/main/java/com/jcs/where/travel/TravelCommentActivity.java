@@ -20,6 +20,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TravelCommentListBean;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -202,9 +203,9 @@ public class TravelCommentActivity extends BaseActivity {
         protected void convert(@NotNull BaseViewHolder baseViewHolder, TravelCommentListBean.DataBean data) {
             CircleImageView avaterIv = baseViewHolder.findView(R.id.circleIcon);
             if (!TextUtils.isEmpty(data.getAvatar())) {
-                Glide.with(getContext()).load(data.getAvatar()).into(avaterIv);
+                GlideUtil.load(getContext(), data.getAvatar(), avaterIv);
             } else {
-                avaterIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_noheader));
+                avaterIv.setImageResource(R.mipmap.ic_glide_default);
             }
             TextView nameTv = baseViewHolder.findView(R.id.username);
             nameTv.setText(data.getUsername());

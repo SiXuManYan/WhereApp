@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.HotelCommentsResponse;
+import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +36,7 @@ public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse
 
         ImageView circleIcon = (ImageView) baseViewHolder.findView(R.id.circleIcon);
         if (circleIcon != null) {
-            Glide.with(getContext()).load(dataBean.getAvatar()).into(circleIcon);
+            GlideUtil.load(getContext(), dataBean.getAvatar(), circleIcon);
         }
 
         baseViewHolder.setText(R.id.dateTv, dataBean.getCreated_at());
@@ -64,7 +65,7 @@ public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse
             if (i < imgSize) {
                 String img = images.get(i);
                 commentIv.setVisibility(View.VISIBLE);
-                Glide.with(getContext()).load(img).into(commentIv);
+                GlideUtil.load(getContext(), img, commentIv);
             } else {
                 if (imgSize == 0) {
                     commentIv.setVisibility(View.GONE);

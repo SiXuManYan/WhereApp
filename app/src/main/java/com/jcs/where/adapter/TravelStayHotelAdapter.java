@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.LabelView;
 import com.jcs.where.widget.StarView;
 
@@ -32,7 +33,7 @@ public class TravelStayHotelAdapter extends BaseQuickAdapter<HotelResponse, Base
         Context context = baseViewHolder.itemView.getContext();
         List<String> images = hotelResponse.getImages();
         if (images != null && images.size() > 0) {
-            Glide.with(context).load(images.get(0)).into((ImageView) baseViewHolder.getView(R.id.hotelIcon));
+            GlideUtil.load(getContext(), images.get(0), baseViewHolder.getView(R.id.hotelIcon));
         }
         baseViewHolder.setText(R.id.hotelName, hotelResponse.getName());
         baseViewHolder.setText(R.id.distanceTv, String.valueOf(hotelResponse.getDistance()));

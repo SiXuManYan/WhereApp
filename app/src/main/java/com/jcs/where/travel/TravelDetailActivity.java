@@ -31,6 +31,7 @@ import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TravelCommentListBean;
 import com.jcs.where.bean.TravelDetailBean;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -243,14 +244,12 @@ public class TravelDetailActivity extends BaseActivity {
                                 .setImageLoader(new AbstractUrlLoader() {
                                     @Override
                                     public void loadImages(Context context, String url, ImageView image) {
-                                        Glide.with(context)
-                                                .load(url)
-                                                .into(image);
+                                        GlideUtil.load(context, url, image);
                                     }
 
                                     @Override
                                     public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-                                        Glide.with(context).asGif().load(url).into(gifImageView);
+                                        GlideUtil.loadGif(context, url, gifImageView);
                                     }
                                 })
                                 .setTitleHeight(50)
@@ -482,9 +481,9 @@ public class TravelDetailActivity extends BaseActivity {
         protected void convert(@NotNull BaseViewHolder baseViewHolder, TravelCommentListBean.DataBean data) {
             CircleImageView avaterIv = baseViewHolder.findView(R.id.circleIcon);
             if (!TextUtils.isEmpty(data.getAvatar())) {
-                Glide.with(TravelDetailActivity.this).load(data.getAvatar()).into(avaterIv);
+                GlideUtil.load(getContext(), data.getAvatar(), avaterIv);
             } else {
-                avaterIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_noheader));
+                avaterIv.setImageResource(R.mipmap.ic_glide_default);
             }
             TextView nameTv = baseViewHolder.findView(R.id.username);
             nameTv.setText(data.getUsername());

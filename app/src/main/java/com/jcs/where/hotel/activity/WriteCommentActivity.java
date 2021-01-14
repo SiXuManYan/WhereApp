@@ -23,6 +23,7 @@ import com.jcs.where.bean.CommentTypeBean;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.dialog.CommentSuccessDialog;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.view.GridItemDecoration;
 
 import org.jetbrains.annotations.NotNull;
@@ -279,7 +280,7 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
                 pictureIv.setBackgroundColor(Color.TRANSPARENT);
             } else {
                 deleteIv.setVisibility(View.VISIBLE);
-                Glide.with(getContext()).load(s).into(pictureIv);
+                GlideUtil.load(getContext(), s, pictureIv);
             }
         }
     }

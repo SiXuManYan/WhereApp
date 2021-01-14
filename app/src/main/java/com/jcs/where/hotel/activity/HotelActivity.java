@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
@@ -390,7 +391,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         return true;
     }
 
-    private class GuessYouLikeAdapter extends BaseQuickAdapter<HotelResponse, BaseViewHolder> {
+    private static class GuessYouLikeAdapter extends BaseQuickAdapter<HotelResponse, BaseViewHolder> {
 
 
         public GuessYouLikeAdapter() {
@@ -401,9 +402,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelResponse data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                Glide.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
+                GlideUtil.load(getContext(), data.getImages().get(0), photoIv);
             } else {
-                photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                photoIv.setImageResource(R.mipmap.ic_glide_default);
             }
             TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());

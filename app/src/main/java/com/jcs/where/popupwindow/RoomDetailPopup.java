@@ -73,11 +73,11 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
                 .setImageLoader(new AbstractUrlLoader() {
                     @Override
                     public void loadImages(Context context, String url, ImageView image) {
-//                        Glide.with(context)
-//                                .load(url)
-//                                .into(image);
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
+                                .error(R.mipmap.ic_glide_default)//加载失败图片
+                                .placeholder(R.mipmap.ic_glide_default)//图片加载出来前，显示的图片
+                                .fallback(R.mipmap.ic_glide_default) //url为空的时候,显示的图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
                                 .transform(new GlideRoundTransform(8)); //圆角
@@ -87,7 +87,10 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
                     @Override
                     public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
                         RequestOptions options = new RequestOptions()
-                                .centerCrop()//加载失败图片
+                                .centerCrop()
+                                .error(R.mipmap.ic_glide_default)//加载失败图片
+                                .placeholder(R.mipmap.ic_glide_default)//图片加载出来前，显示的图片
+                                .fallback(R.mipmap.ic_glide_default) //url为空的时候,显示的图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
                                 .transform(new GlideRoundTransform(10)); //圆角

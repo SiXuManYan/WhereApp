@@ -20,6 +20,7 @@ import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.model.TravelStayModel;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.stx.xhb.androidx.XBanner;
 import com.stx.xhb.androidx.entity.BaseBannerInfo;
@@ -100,7 +101,7 @@ public class TravelStayActivity extends BaseActivity {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull List<BannerResponse> bannerResponses) {
                 mBanner.setBannerData(R.layout.banner_travel_stay, bannerResponses);
-                mBanner.loadImage((banner, model, view, position) -> Glide.with(TravelStayActivity.this).load(((BaseBannerInfo) model).getXBannerUrl()).into((ImageView) view));
+                mBanner.loadImage((banner, model, view, position) -> GlideUtil.load(TravelStayActivity.this,((BaseBannerInfo) model).getXBannerUrl().toString(),(ImageView)view));
             }
 
             @Override

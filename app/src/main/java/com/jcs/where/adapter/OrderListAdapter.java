@@ -15,6 +15,7 @@ import com.jcs.where.hotel.activity.HotelCommentActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.hotel.activity.HotelPayActivity;
+import com.jcs.where.utils.GlideUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -113,7 +114,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         List<String> image = orderListResponse.getImage();
         ImageView hotelIconIv = baseViewHolder.findView(R.id.hotelIcon);
         if (hotelIconIv != null && image != null && image.size() > 0) {
-            Glide.with(getContext()).load(image.get(0)).into(hotelIconIv);
+            GlideUtil.load(getContext(), image.get(0), hotelIconIv);
         }
 
         baseViewHolder.setText(R.id.orderTitleTv, orderListResponse.getTitle());

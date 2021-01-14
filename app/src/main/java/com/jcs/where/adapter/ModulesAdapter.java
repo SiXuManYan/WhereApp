@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 
@@ -38,7 +39,7 @@ public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHo
         View view = baseViewHolder.getView(R.id.moduleLayout);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(mItemWidth, mItemHeight);
         view.setLayoutParams(lp);
-        Glide.with(context).load(modulesResponse.getIcon()).into((ImageView) baseViewHolder.getView(R.id.modules_icon));
+        GlideUtil.load(context, modulesResponse.getIcon(), baseViewHolder.getView(R.id.modules_icon));
         baseViewHolder.setText(R.id.modules_name, modulesResponse.getName());
 
         if (modulesResponse.getId() == 2 && CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID).equals("")) {

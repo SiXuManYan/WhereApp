@@ -13,6 +13,7 @@ import com.jcs.where.R;
 import com.jcs.where.bean.TravelMapListBean;
 import com.jcs.where.hotel.card.CardAdapter;
 import com.jcs.where.travel.event.TravelEvent;
+import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -93,9 +94,9 @@ public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
         nameTv.setText(bean.getName());
         RoundedImageView photoIv = (RoundedImageView) view.findViewById(R.id.iv_photo);
         if (!TextUtils.isEmpty(bean.getImage())) {
-            Glide.with(useContext).load(bean.getImage()).into(photoIv);
+            GlideUtil.load(useContext, bean.getImage(), photoIv);
         } else {
-            photoIv.setImageDrawable(useContext.getResources().getDrawable(R.drawable.ic_test));
+            photoIv.setImageResource(R.mipmap.ic_glide_default);
         }
         TextView addressTv = (TextView) view.findViewById(R.id.tv_address);
         addressTv.setText(bean.getAddress());

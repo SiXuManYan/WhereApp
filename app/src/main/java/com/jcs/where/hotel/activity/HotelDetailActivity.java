@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -334,14 +335,14 @@ public class HotelDetailActivity extends BaseActivity {
                             .setImageLoader(new AbstractUrlLoader() {
                                 @Override
                                 public void loadImages(Context context, String url, ImageView image) {
-                                    Glide.with(context)
-                                            .load(url)
-                                            .into(image);
+                                    GlideUtil.load(context, url, image);
+
                                 }
 
                                 @Override
                                 public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-                                    Glide.with(context).asGif().load(url).into(gifImageView);
+                                    GlideUtil.loadGif(context, url, gifImageView);
+
                                 }
                             })
                             .setTitleHeight(50)
@@ -469,7 +470,7 @@ public class HotelDetailActivity extends BaseActivity {
                         seeMoreTv.setVisibility(View.GONE);
                     }
                     if (!TextUtils.isEmpty(hotelCommentsResponse.getData().get(0).getAvatar())) {
-                        Glide.with(HotelDetailActivity.this).load(hotelCommentsResponse.getData().get(0).getAvatar()).into(commentAvaterIv);
+                        GlideUtil.load(HotelDetailActivity.this, hotelCommentsResponse.getData().get(0).getAvatar(), commentAvaterIv);
                     } else {
                         commentAvaterIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
                     }
@@ -641,7 +642,7 @@ public class HotelDetailActivity extends BaseActivity {
         protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelRoomListResponse data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                Glide.with(HotelDetailActivity.this).load(data.getImages().get(0)).into(photoIv);
+                GlideUtil.load(getContext(), data.getImages().get(0), photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }
@@ -739,7 +740,7 @@ public class HotelDetailActivity extends BaseActivity {
 
             ImageView iconIv = baseViewHolder.findView(R.id.iv_icon);
             if (!TextUtils.isEmpty(data.getIcon())) {
-                Glide.with(getContext()).load(data.getIcon()).into(iconIv);
+                GlideUtil.load(getContext(), data.getIcon(), iconIv);
             } else {
                 iconIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_test));
             }

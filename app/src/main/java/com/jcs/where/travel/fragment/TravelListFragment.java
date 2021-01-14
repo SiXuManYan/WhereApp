@@ -18,6 +18,8 @@ import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TravelListBean;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.travel.TravelDetailActivity;
+import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.utils.ImagePreviewActivity;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -62,7 +64,7 @@ public class TravelListFragment extends BaseFragment {
             }
         };
         travelListRv.setLayoutManager(linearLayoutManager);
-        travelAdapter = new TravelAdapter(getContext());
+        travelAdapter = new TravelAdapter();
         ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
@@ -160,9 +162,9 @@ public class TravelListFragment extends BaseFragment {
         return R.layout.fragment_travellist;
     }
 
-    private class TravelAdapter extends BaseQuickAdapter<TravelListBean.DataBean, BaseViewHolder> {
+    private static class TravelAdapter extends BaseQuickAdapter<TravelListBean.DataBean, BaseViewHolder> {
 
-        public TravelAdapter(Context context) {
+        public TravelAdapter() {
             super(R.layout.item_travellist);
         }
 
@@ -170,9 +172,9 @@ public class TravelListFragment extends BaseFragment {
         protected void convert(@NotNull BaseViewHolder baseViewHolder, TravelListBean.DataBean data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImage())) {
-                Glide.with(getContext()).load(data.getImage()).into(photoIv);
+                GlideUtil.load(getContext(), data.getImage(), photoIv);
             } else {
-                photoIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_test));
+                photoIv.setImageResource(R.mipmap.ic_glide_default);
             }
             TextView nameTv = baseViewHolder.findView(R.id.tv_name);
             nameTv.setText(data.getName());

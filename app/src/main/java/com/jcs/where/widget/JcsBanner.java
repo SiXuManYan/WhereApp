@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jcs.where.R;
+import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -173,7 +174,7 @@ public class JcsBanner extends ConstraintLayout {
             view.setTag(position);
             RoundedImageView photoIv = view.findViewById(R.id.iconIv);
             String picUrl = mPicData.get(position);
-            Glide.with(getContext()).load(picUrl).into(photoIv);
+            GlideUtil.load(getContext(), picUrl, photoIv);
             container.addView(view);
             return view;
         }

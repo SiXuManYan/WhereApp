@@ -12,6 +12,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.model.OrderModel;
+import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import io.reactivex.annotations.NonNull;
@@ -89,9 +90,9 @@ public class HotelOrderDetailActivity extends BaseActivity {
                 cancelTv.setText(hotelOrderDetailResponse.getStart_date() + "00:00前可致电商家免费取消");
                 priceTv.setText("₱" + hotelOrderDetailResponse.getPrice());
                 if (hotelOrderDetailResponse.getImages() != null) {
-                    Glide.with(HotelOrderDetailActivity.this).load(hotelOrderDetailResponse.getImages().get(0)).into(photoIv);
+                    GlideUtil.load(HotelOrderDetailActivity.this,hotelOrderDetailResponse.getImages().get(0),photoIv);
                 } else {
-                    photoIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
+                    photoIv.setImageResource(R.mipmap.ic_glide_default);
                 }
                 hotelNmaeTv.setText(hotelOrderDetailResponse.getHotel_name());
                 scoreTv.setText(String.valueOf(hotelOrderDetailResponse.getGrade()));

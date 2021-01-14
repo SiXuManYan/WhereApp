@@ -54,6 +54,7 @@ import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.GlideRoundTransform;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
@@ -364,7 +365,7 @@ public class HomeFragment extends BaseFragment {
 //                                .into(image);
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
-                                .error(R.drawable.ic_test) //加载失败图片
+                                .error(R.mipmap.ic_glide_default) //加载失败图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
                                 .transform(new GlideRoundTransform(10)); //圆角
@@ -376,7 +377,7 @@ public class HomeFragment extends BaseFragment {
 //                        Glide.with(context).asGif().load(url).into(gifImageView);
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
-                                .error(R.drawable.ic_test) //加载失败图片
+                                .error(R.mipmap.ic_glide_default) //加载失败图片
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
                                 .transform(new GlideRoundTransform(10)); //圆角
@@ -696,11 +697,7 @@ public class HomeFragment extends BaseFragment {
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessBean data) {
             RoundedImageView roundedImageView = baseViewHolder.findView(R.id.iv_photo);
-            if (!TextUtils.isEmpty(data.getImg())) {
-                Glide.with(getContext()).load(data.getImg()).into(roundedImageView);
-            } else {
-                roundedImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_test));
-            }
+            GlideUtil.load(getContext(), data.getImg(), roundedImageView);
             TextView scoreTv = baseViewHolder.findView(R.id.tv_score);
             scoreTv.setText(data.getScore());
             TextView nameTv = baseViewHolder.findView(R.id.tv_name);

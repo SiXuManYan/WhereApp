@@ -13,6 +13,7 @@ import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class CardViewPagerFragment extends BaseFragment {
         mViewPager.setOffscreenPageLimit(3);
     }
 
-    public void restore(){
+    public void restore() {
         mViewPager.setAdapter(mAdapter);
     }
 
@@ -95,11 +96,11 @@ public class CardViewPagerFragment extends BaseFragment {
 
     public void onPageClicked(int position) {
         int mechanismId = mAdapter.mData.get(position).getId();
-        toActivity(MechanismDetailActivity.class,new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID,String.valueOf(mechanismId)));
+        toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(mechanismId)));
     }
 
     public void selectPosition(int selectPosition) {
-        if (selectPosition > -1){
+        if (selectPosition > -1) {
             mViewPager.setCurrentItem(selectPosition);
         }
     }
@@ -159,10 +160,10 @@ public class CardViewPagerFragment extends BaseFragment {
             view.setOnClickListener(this::onPageClicked);
             TextView nameTv = view.findViewById(R.id.mechanismTitleTv);
             nameTv.setText(mechanismResponse.getTitle());
-            RoundedImageView photoIv =  view.findViewById(R.id.mechanismIconIv);
+            RoundedImageView photoIv = view.findViewById(R.id.mechanismIconIv);
             photoIv.setCornerRadius(getPxFromDp(4), 0, getPxFromDp(4), 0);
             if (!TextUtils.isEmpty(mechanismResponse.getImages().get(0))) {
-                Glide.with(mContext).load(mechanismResponse.getImages().get(0)).into(photoIv);
+                GlideUtil.load(mContext, mechanismResponse.getImages().get(0), photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_test));
             }

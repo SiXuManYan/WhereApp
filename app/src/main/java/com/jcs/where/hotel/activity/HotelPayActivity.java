@@ -73,7 +73,7 @@ public class HotelPayActivity extends BaseActivity implements View.OnClickListen
         mOrderDetail = hotelOrderDetailResponse;
         hotelNameTv.setText(hotelOrderDetailResponse.getHotel_name());
         roomNameTv.setText(hotelOrderDetailResponse.getRoom_name());
-        breakfaseTv.setText(hotelOrderDetailResponse.getBreakfast_type() == 1 ? "有早餐," : "无早餐,");
+        breakfaseTv.setText(hotelOrderDetailResponse.getBreakfast_type() == 1 ? getString(R.string.with_breakfast) + "," : getString(R.string.no_breakfast) + ",");
         bedTv.setText(hotelOrderDetailResponse.getRoom_type() + ",");
         peopleTv.setText(hotelOrderDetailResponse.getPeople_num() + "人入住,");
         if (hotelOrderDetailResponse.getWindow_type() == 1) {

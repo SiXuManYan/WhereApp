@@ -54,7 +54,7 @@
     <string name="hotel_comment_tag_agoda">Agoda</string>
     <string name="hotel_comment_tag_booking">Booking</string>
     <string name="customer_comments">住客评价</string>
-    <string name="full_text">全文</string>
+    <string name="customer_name">住客姓名</string>
     <string name="comment_icon">commentIcon</string>
     <string name="save">保存</string>
     <string name="area_chain">中国 +86</string>
@@ -77,6 +77,7 @@
     <string name="with_wifi">有WIFI</string>
     <string name="no_wifi">无WIFI</string>
     <string name="subscribe_success">预订成功</string>
+    <string name="subscribe_prompt">预订</string>
     <string name="please_input_phone_number">请填写手机</string>
     <string name="please_input_name">请填写姓名</string>
     <string name="can_not_reduce">不能再减了</string>
@@ -195,8 +196,27 @@
     <string name="login_by_email">使用邮箱登录</string>
     <string name="to_register">新用户注册</string>
     <string name="other_login_method">其他登录方式</string>
-    <string name="loading">加载中...</string>
+    <string name="loading">加载中…</string>
     <string name="default_area_code">+86</string>
     <string name="close_page_prompt">您确定要关闭该页面吗?</string>
+    <string name="facebook_website">Facebook 网页链接</string>
+    <string name="prompt">提示</string>
+    <string name="ask_call_merchant_phone">是否拨打商家电话：%1$s</string>
+    <string name="no_install_google_map_prompt">您尚未安装谷歌地图或地图版本过低</string>
+    <string name="open_time">%1$s开业</string>
+    <string name="with_breakfast">含早</string>
+    <string name="no_breakfast">不含早</string>
+    <string name="subscribe_now">立即预订</string>
+    <string name="all_reviews">全部评价</string>
+    <string name="full_text">全文</string>
+    <string name="put_up">收起</string>
+    <string name="all_with_number">全部%1$d</string>
+    <string name="show_icon_with_number">晒图%1$d</string>
+    <string name="low_rating_with_number">低分%1$d</string>
+    <string name="new_with_number">最新%1$d</string>
+    <string name="no_more">没有更多了~</string>
+    <string name="policy_prompt">政策</string>
+    <string name="amenities_prompt">设施</string>
+    <string name="price_above_number">₱%1$d起</string>
 
 </resources>

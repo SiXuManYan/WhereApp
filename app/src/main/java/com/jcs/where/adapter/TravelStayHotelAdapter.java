@@ -38,8 +38,9 @@ public class TravelStayHotelAdapter extends BaseQuickAdapter<HotelResponse, Base
         baseViewHolder.setText(R.id.hotelName, hotelResponse.getName());
         baseViewHolder.setText(R.id.distanceTv, String.valueOf(hotelResponse.getDistance()));
         baseViewHolder.setText(R.id.locationTv, hotelResponse.getAddress());
-        baseViewHolder.setText(R.id.priceTv, hotelResponse.getPrice() + "起");
-        baseViewHolder.setText(R.id.commentTv, hotelResponse.getComment_counts() + "条评论");
+        baseViewHolder.setText(R.id.priceTv, String.format(getContext().getString(R.string.price_above_number), hotelResponse.getPrice()));
+        String commentNumberText = String.format(getContext().getString(R.string.comment_num_prompt), hotelResponse.getComment_counts());
+        baseViewHolder.setText(R.id.commentTv, commentNumberText);
 
         StarView startView = baseViewHolder.findView(R.id.starView);
         startView.setStartNum(hotelResponse.getGrade());

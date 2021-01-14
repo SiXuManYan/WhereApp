@@ -295,7 +295,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="10dp"
-                            android:text="住客评价"
+                            android:text="@string/customer_comments"
                             android:textColor="@color/black_333333"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -342,7 +342,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="没有更多了~"
+                    android:text="@string/no_more"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 

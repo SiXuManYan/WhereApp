@@ -199,7 +199,9 @@ public class TravelListFragment extends BaseFragment {
             TextView scoreTv = baseViewHolder.findView(R.id.tv_score);
             scoreTv.setText(data.getGrade() + "");
             TextView commentNumTv = baseViewHolder.findView(R.id.tv_commentnumber);
-            commentNumTv.setText(data.getComments_count() + "条评论");
+            String commentNumberText = String.format(getContext().getString(R.string.comment_num_prompt), data.getComments_count());
+
+            commentNumTv.setText(commentNumberText);
             baseViewHolder.findView(R.id.ll_travel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

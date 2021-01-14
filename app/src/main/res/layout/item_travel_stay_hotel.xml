@@ -138,8 +138,7 @@
         app:layout_constraintEnd_toStartOf="@id/priceTv"
         android:layout_marginEnd="@dimen/dp_3"
         app:layout_constraintBottom_toBottomOf="@id/priceTv"
-        android:layout_marginBottom="@dimen/dp_2"
-        android:src="@drawable/ic_alipay"/>
+        android:layout_marginBottom="@dimen/dp_2" />
 
     <View
         android:id="@+id/line"

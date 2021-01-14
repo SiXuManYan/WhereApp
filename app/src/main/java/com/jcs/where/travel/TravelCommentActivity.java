@@ -252,10 +252,10 @@ public class TravelCommentActivity extends BaseActivity {
             }
             setContentLayout(usercontent, fullText);
             if (data.is_select) {
-                fullText.setText("收起");
+                fullText.setText(getString(R.string.put_up));
                 usercontent.setMaxLines(50);
             } else {
-                fullText.setText("全文");
+                fullText.setText(getString(R.string.full_text));
                 usercontent.setMaxLines(3);
             }
 
@@ -280,11 +280,11 @@ public class TravelCommentActivity extends BaseActivity {
                 TravelCommentListBean.DataBean info = list.get(index);
                 if (info.is_select) {
                     usercontent.setMaxLines(3);
-                    fullText.setText("全文");
+                    fullText.setText(getString(R.string.full_text));
                     usercontent.invalidate();
                 } else {
                     usercontent.setMaxLines(50);
-                    fullText.setText("收起");
+                    fullText.setText(getString(R.string.put_up));
                     usercontent.invalidate();
                 }
                 info.is_select = !info.is_select;

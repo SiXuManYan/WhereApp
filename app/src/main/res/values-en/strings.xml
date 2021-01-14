@@ -54,8 +54,8 @@
 	<string name="hotel_comment_tag_where">Where</string>
 	<string name="hotel_comment_tag_agoda">Agoda</string>
 	<string name="hotel_comment_tag_booking">Booking</string>
-	<string name="customer_comments">Guesttest evaluation</string>
-	<string name="full_text">full text</string>
+	<string name="customer_comments">Guest Reviews</string>
+	<string name="full_text">Unfold</string>
 	<string name="comment_icon">commenticus</string>
 	<string name="save">save</string>
 	<string name="area_chain">China +86</string>
@@ -168,7 +168,7 @@
 	<string name="order_room_price">Price：₱%1$d</string>
 	<string name="cancelled">Cancelled</string>
 	<string name="completed">Completed</string>
-	<string name="comment_num_prompt">Article %1$d the comments</string>
+	<string name="comment_num_prompt">%1$d reviews</string>
 	<string name="date_format_year_month">MMM yyyy</string>
 	<string name="date_format_mm_dd">MMM d</string>
 	<string name="main_tab_title_home">Home</string>
@@ -198,4 +198,25 @@
 	<string name="other_login_method">More options</string>
     <string name="loading">Loading</string>
     <string name="default_area_code">+63</string>
+    <string name="facebook_website">Facebook Link</string>
+	<string name="close_page_prompt">Are you sure you want to close this page?</string>
+    <string name="prompt">Prompt</string>
+	<string name="ask_call_merchant_phone">Do you call the merchant number %1$s?</string>
+	<string name="no_install_google_map_prompt">You have not installed Google Maps or the map version is too low</string>
+	<string name="open_time">Opened:%1$s</string>
+	<string name="with_breakfast">With breakfast</string>
+	<string name="no_breakfast">No breakfast</string>
+	<string name="subscribe_prompt">Book</string>
+	<string name="subscribe_now">Book Now</string>
+	<string name="customer_name">Guest Name</string>
+	<string name="all_reviews">All Reviews</string>
+	<string name="put_up">Put Up</string>
+	<string name="all_with_number">All%1$d</string>
+	<string name="show_icon_with_number">Photo%1$d</string>
+	<string name="low_rating_with_number">Low Rating%1$d</string>
+	<string name="new_with_number">New%1$d</string>
+	<string name="no_more">No More</string>
+	<string name="policy_prompt">Policy</string>
+	<string name="amenities_prompt">Amenities</string>
+	<string name="price_above_number">₱%1$d</string>
 </resources>

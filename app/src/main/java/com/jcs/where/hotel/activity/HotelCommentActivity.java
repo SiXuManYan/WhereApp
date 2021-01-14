@@ -18,6 +18,8 @@ import com.jcs.where.hotel.model.HotelCommentModel;
 import com.jcs.where.utils.ImagePreviewActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,10 +94,10 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
             @SuppressLint("SetTextI18n")
             @Override
             public void onNext(@NonNull List<Integer> integers) {
-                mAllTv.setText("全部" + integers.get(0));
-                mShowImageTv.setText("晒图" + integers.get(1));
-                mLowScoreTv.setText("低分" + integers.get(2));
-                mNewestTv.setText("最新" + integers.get(3));
+                injectToSubTab(mAllTv, R.string.all_with_number, integers.get(0));
+                injectToSubTab(mShowImageTv, R.string.show_icon_with_number, integers.get(1));
+                injectToSubTab(mLowScoreTv, R.string.low_rating_with_number, integers.get(2));
+                injectToSubTab(mNewestTv, R.string.new_with_number, integers.get(3));
             }
         });
 
@@ -104,6 +106,16 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
 
         showLoading();
         getCommentByType(0);
+    }
+
+    private void injectToSubTab(TextView tv, int strResId, int num) {
+        String show = "";
+        if (num > 0) {
+            show = String.format(getString(strResId), num);
+        } else {
+            show = getString(strResId).replace("%1$d", "");
+        }
+        tv.setText(show);
     }
 
     private void getCommentByType(int type) {
@@ -215,18 +227,19 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
         }
 
         if (view instanceof TextView && mTagTvs.contains(view)) {
-            TextView temp = (TextView) view;
-            temp.setSelected(true);
-            if (view == mWhereTv) {
-            }
-
-            if (view == mAgodaTv) {
-            }
-
-            if (view == mBookingTv) {
-            }
-
-            unSelectByList(temp, mTagTvs);
+//            TextView temp = (TextView) view;
+//            temp.setSelected(true);
+//            if (view == mWhereTv) {
+//            }
+//
+//            if (view == mAgodaTv) {
+//            }
+//
+//            if (view == mBookingTv) {
+//            }
+//
+//            unSelectByList(temp, mTagTvs);
+            showComing();
         }
     }
 

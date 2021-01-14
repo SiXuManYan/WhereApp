@@ -157,6 +157,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mEndWeekTv = findViewById(R.id.endWeekTv);
 //        endWeekTv.setText("周" + CalendarUtil.getWeekByFormat(getOldWeek(1)));
         mTotalDayTv = findViewById(R.id.totalDayTv);
+        mTotalDayTv.setText(String.format(getString(R.string.total_night), 1));
         mRoomNumTv = findViewById(R.id.tv_roomnum);
         mRoomReduceIv = findViewById(R.id.iv_roomreduce);
         mRoomReduceIv.setOnClickListener(this);
@@ -431,9 +432,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             TextView scoreTv = baseViewHolder.findView(R.id.tv_score);
             scoreTv.setText(data.getGrade() + "");
             TextView commentNumTv = baseViewHolder.findView(R.id.tv_commentnumber);
-            commentNumTv.setText(data.getComment_counts() + "条评论");
+            String commentNumberText = String.format(getContext().getString(R.string.comment_num_prompt), data.getComment_counts());
+            commentNumTv.setText(commentNumberText);
             TextView priceTv = baseViewHolder.findView(R.id.tv_price);
-            priceTv.setText("₱" + data.getPrice() + "起");
+            priceTv.setText(String.format(getContext().getString(R.string.price_above_number), data.getPrice()));
         }
     }
 }

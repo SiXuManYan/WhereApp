@@ -280,7 +280,8 @@ public class TravelDetailActivity extends BaseActivity {
                     }
                     nameTv.setText(travelDetailBean.getName());
                     scoreTv.setText(travelDetailBean.getGrade() + "");
-                    commnetNumberTv.setText(travelDetailBean.getComments_count() + "条评论");
+                    String commentNumberText = String.format(getString(R.string.comment_num_prompt), travelDetailBean.getComments_count());
+                    commnetNumberTv.setText(commentNumberText);
                     startTimeTv.setText("营业时间：" + travelDetailBean.getStart_time() + "-" + travelDetailBean.getEnd_time());
                     addressTv.setText(travelDetailBean.getAddress());
                     if (travelDetailBean.getIs_collect() == 1) {
@@ -530,10 +531,10 @@ public class TravelDetailActivity extends BaseActivity {
             }
             setContentLayout(usercontent, fullText);
             if (data.is_select) {
-                fullText.setText("收起");
+                fullText.setText(getString(R.string.put_up));
                 usercontent.setMaxLines(50);
             } else {
-                fullText.setText("全文");
+                fullText.setText(getString(R.string.full_text));
                 usercontent.setMaxLines(3);
             }
 
@@ -558,11 +559,11 @@ public class TravelDetailActivity extends BaseActivity {
                 TravelCommentListBean.DataBean info = list.get(index);
                 if (info.is_select) {
                     usercontent.setMaxLines(3);
-                    fullText.setText("全文");
+                    fullText.setText(getString(R.string.full_text));
                     usercontent.invalidate();
                 } else {
                     usercontent.setMaxLines(50);
-                    fullText.setText("收起");
+                    fullText.setText(getString(R.string.put_up));
                     usercontent.invalidate();
                 }
                 info.is_select = !info.is_select;

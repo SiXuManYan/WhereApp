@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_hoteldetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,7 +43,7 @@
                         android:layout_marginTop="10dp"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="Crown Royale Hotel"
+                        tools:text="Crown Royale Hotel"
                         android:textColor="@color/black_333333"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -53,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
-                        android:text="2017年开业"
+                        tools:text="2017年开业"
                         android:textColor="@color/grey_666666"
                         android:textSize="@dimen/sp_11" />
 
@@ -88,7 +89,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:text="170条点评"
+                            tools:text="170条点评"
                             android:textColor="@color/blue_4C9EF2"
                             android:textSize="@dimen/sp_11" />
 
@@ -125,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_toRightOf="@+id/iv_facebook"
-                            android:text="Facebook 网页链接"
+                            android:text="@string/facebook_website"
                             android:textColor="@color/blue_4C9EF2"
                             android:textSize="12sp" />
 
@@ -166,7 +167,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="入住时间：14:00之后"
+                                tools:text="入住时间：14:00之后"
                                 android:textColor="@color/grey_666666"
                                 android:textSize="12sp" />
 
@@ -175,7 +176,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="退房时间：12:00以前"
+                                tools:text="退房时间：12:00以前"
                                 android:textColor="@color/grey_666666"
                                 android:textSize="12sp" />
 
@@ -206,7 +207,7 @@
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:singleLine="true"
-                            android:text="G/F GICC Technopark,Luzon Avenue,Freeport..."
+                            tools:text="G/F GICC Technopark,Luzon Avenue,Freeport..."
                             android:textColor="@color/grey_666666"
                             android:textSize="12sp" />
 
@@ -240,7 +241,7 @@
                                 android:drawableLeft="@drawable/ic_hoteldetail_navigation"
                                 android:drawablePadding="10dp"
                                 android:gravity="center"
-                                android:text="导航"
+                                android:text="@string/navigation"
                                 android:textColor="@color/grey_666666"
                                 android:textSize="12sp" />
                         </RelativeLayout>
@@ -264,7 +265,7 @@
                                 android:drawableLeft="@drawable/ic_hoteldetail_phone"
                                 android:drawablePadding="10dp"
                                 android:gravity="center"
-                                android:text="电话"
+                                android:text="@string/telephone"
                                 android:textColor="@color/grey_666666"
                                 android:textSize="12sp" />
 
@@ -356,7 +357,7 @@
                             android:paddingTop="2dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="2dp"
-                            android:text="5night"
+                            tools:text="5night"
                             android:textColor="@color/blue_4C9EF2"
                             android:textSize="12sp" />
 
@@ -382,7 +383,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
-                        android:text="政策"
+                        android:text="@string/policy_prompt"
                         android:textColor="@color/black_333333"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -449,7 +450,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
-                        android:text="设施"
+                        android:text="@string/amenities_prompt"
                         android:textColor="@color/black_333333"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -484,7 +485,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:layout_marginTop="10dp"
-                            android:text="住客评价"
+                            android:text="@string/customer_comments"
                             android:textColor="@color/black_333333"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -626,7 +627,7 @@
                             android:paddingTop="5dp"
                             android:paddingRight="7dp"
                             android:paddingBottom="5dp"
-                            android:text="全部评价"
+                            android:text="@string/all_reviews"
                             android:textColor="@color/blue_4C9EF2"
                             android:textSize="12sp" />
 
@@ -640,7 +641,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="没有更多了~"
+                    android:text="@string/no_more"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 

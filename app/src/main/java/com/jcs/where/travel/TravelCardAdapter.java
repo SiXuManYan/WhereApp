@@ -105,7 +105,8 @@ public class TravelCardAdapter extends PagerAdapter implements CardAdapter {
         TextView scoreTv = (TextView) view.findViewById(R.id.tv_score);
         scoreTv.setText(bean.getGrade() + "分");
         TextView commentNumTv = (TextView) view.findViewById(R.id.tv_commentnumber);
-        commentNumTv.setText(bean.getComments_count() + "条评论");
+        String commentNumberText = String.format(useContext.getString(R.string.comment_num_prompt), bean.getComments_count());
+        commentNumTv.setText(commentNumberText);
         LinearLayout cardLl = (LinearLayout) view.findViewById(R.id.ll_card);
         cardLl.setOnClickListener(new View.OnClickListener() {
             @Override

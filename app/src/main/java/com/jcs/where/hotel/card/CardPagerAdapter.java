@@ -104,9 +104,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         TextView scoreTv = (TextView) view.findViewById(R.id.tv_score);
         scoreTv.setText(bean.getGrade() + "分");
         TextView commentNumTv = (TextView) view.findViewById(R.id.tv_commentnumber);
-        commentNumTv.setText(bean.getComment_counts() + "条评论");
+        String commentNumberText = String.format(useContext.getString(R.string.comment_num_prompt), bean.getComment_counts());
+        commentNumTv.setText(commentNumberText);
         TextView priceTv = (TextView) view.findViewById(R.id.tv_price);
-        priceTv.setText("₱" + bean.getPrice() + "起");
+        priceTv.setText(String.format(useContext.getString(R.string.price_above_number), bean.getPrice()));
         LinearLayout cardLl = (LinearLayout) view.findViewById(R.id.ll_card);
         cardLl.setOnClickListener(new View.OnClickListener() {
             @Override

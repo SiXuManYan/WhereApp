@@ -103,9 +103,9 @@ public class HotelOrderDetailActivity extends BaseActivity {
                 nightTv.setText(hotelOrderDetailResponse.getDays() + "晚");
                 bedTv.setText(hotelOrderDetailResponse.getRoom_type());
                 if (hotelOrderDetailResponse.getBreakfast_type() == 1) {
-                    breakfastTv.setText("含早");
+                    breakfastTv.setText(getString(R.string.with_breakfast));
                 } else {
-                    breakfastTv.setText("不含早");
+                    breakfastTv.setText(getString(R.string.no_breakfast));
                 }
                 if (hotelOrderDetailResponse.getWindow_type() == 1) {
                     windowTv.setText("有窗");

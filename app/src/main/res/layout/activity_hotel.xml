@@ -145,7 +145,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="19.5dp"
-                        android:text="共1晚"
                         android:textColor="@color/grey_999999"
                         android:textSize="12sp" />
 

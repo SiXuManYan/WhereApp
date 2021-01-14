@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/grey_F5F5F5"
     android:orientation="vertical">
 
@@ -52,7 +53,7 @@
                 android:id="@+id/tv_breakfast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="不含早,"
+                tools:text="不含早,"
                 android:textColor="@color/grey_999999"
                 android:textSize="12sp" />
 

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="horizontal"
     android:layout_marginBottom="5dp">
@@ -65,7 +66,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="14dp"
                 android:layout_toRightOf="@+id/tv_unit"
-                android:text="170条评论"
+                tools:text="170条评论"
                 android:textColor="@color/grey_999999"
                 android:textSize="12sp" />
 
@@ -141,7 +142,7 @@
                 android:paddingTop="2dp"
                 android:paddingRight="3dp"
                 android:paddingBottom="2dp"
-                android:text="供应早餐"
+                tools:text="供应早餐"
                 android:textColor="#06ba1b"
                 android:textSize="10sp" />
 

@@ -282,10 +282,10 @@ public class HotelListFragment extends BaseFragment {
             String scoreText = data.getGrade() + "";
             scoreTv.setText(scoreText);
             TextView commentNumTv = baseViewHolder.findView(R.id.tv_commentnumber);
-            String commentNumText = data.getComment_counts() + "条评论";
-            commentNumTv.setText(commentNumText);
+            String commentNumberText = String.format(getContext().getString(R.string.comment_num_prompt), data.getComment_counts());
+            commentNumTv.setText(commentNumberText);
             TextView priceTv = baseViewHolder.findView(R.id.tv_price);
-            String priceText = "₱" + data.getPrice() + "起";
+            String priceText = String.format(getContext().getString(R.string.price_above_number), data.getPrice());
             priceTv.setText(priceText);
         }
 

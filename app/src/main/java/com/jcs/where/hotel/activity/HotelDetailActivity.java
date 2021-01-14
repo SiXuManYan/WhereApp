@@ -161,27 +161,21 @@ public class HotelDetailActivity extends BaseActivity {
         checkInTv = findViewById(R.id.tv_checkin);
         checkOutTv = findViewById(R.id.tv_checkout);
         addressTv = findViewById(R.id.tv_address);
-        findViewById(R.id.rl_navigation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showToast("导航");
-            }
-        });
         findViewById(R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(HotelDetailActivity.this)
-                        .setTitle("提示")
-                        .setMessage("是否拨打商家电话" + "tel:" + phone)
+                        .setTitle(R.string.prompt)
+                        .setMessage(String.format(getString(R.string.ask_call_merchant_phone), phone))
                         .setIcon(R.mipmap.ic_launcher)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
+                        .setPositiveButton(R.string.ensure, new DialogInterface.OnClickListener() {//添加"Yes"按钮
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 callPhone();
                             }
                         })
 
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加取消
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
@@ -379,10 +373,11 @@ public class HotelDetailActivity extends BaseActivity {
                 });
                 hotelName = hotelDetailResponse.getName();
                 hotelBreakfast = hotelDetailResponse.getPolicy().getBreadfast();
-                String startText = hotelDetailResponse.getStart_business_time() + "开业";
+
+                String startText = String.format(getString(R.string.open_time), hotelDetailResponse.getStart_business_time());
                 startTimeTv.setText(startText);
                 starTv.setText(String.valueOf(hotelDetailResponse.getGrade()));
-                String commentNumberText = hotelDetailResponse.getComment_counts() + "条评论";
+                String commentNumberText = String.format(getString(R.string.comment_num_prompt), hotelDetailResponse.getComment_counts());
                 commnetNumberTv.setText(commentNumberText);
                 if (TextUtils.isEmpty(hotelDetailResponse.getFacebook_link())) {
                     faceBookRl.setVisibility(View.GONE);
@@ -593,9 +588,9 @@ public class HotelDetailActivity extends BaseActivity {
                                 subscribeBean.roomName = name;
                                 subscribeBean.bed = bed;
                                 if (breakfast == 1) {
-                                    subscribeBean.breakfast = "有早餐";
+                                    subscribeBean.breakfast = getString(R.string.with_breakfast);
                                 } else {
-                                    subscribeBean.breakfast = "无早餐";
+                                    subscribeBean.breakfast = getString(R.string.no_breakfast);
                                 }
                                 subscribeBean.window = window;
                                 subscribeBean.wifi = wifi;
@@ -626,7 +621,7 @@ public class HotelDetailActivity extends BaseActivity {
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         } else {
-            showToast("您尚未安装谷歌地图或地图版本过低");
+            showToast(getString(R.string.no_install_google_map_prompt));
         }
     }
 
@@ -651,9 +646,9 @@ public class HotelDetailActivity extends BaseActivity {
             TextView typeTv = baseViewHolder.findView(R.id.tv_hotelType);
             String breakfast = null;
             if (data.getBreakfast_type() == 1) {
-                breakfast = "有早餐";
+                breakfast = getString(R.string.with_breakfast);
             } else {
-                breakfast = "无早餐";
+                breakfast = getString(R.string.no_breakfast);
             }
             String typeText = data.getHotel_room_type() + "  " + breakfast + "  ";
             typeTv.setText(typeText);
@@ -693,7 +688,7 @@ public class HotelDetailActivity extends BaseActivity {
                 ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
                 photoIv.setColorFilter(filter);
             } else {
-                subscribeTv.setText("预订");
+                subscribeTv.setText(getString(R.string.subscribe_prompt));
                 subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_roomsubscribe));
                 subscribeTv.setTextColor(getResources().getColor(R.color.white));
                 subscribeTv.setEnabled(true);

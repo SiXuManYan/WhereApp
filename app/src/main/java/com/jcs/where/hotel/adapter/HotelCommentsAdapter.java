@@ -43,12 +43,12 @@ public class HotelCommentsAdapter extends BaseQuickAdapter<HotelCommentsResponse
         TextView commentContentTv = baseViewHolder.findView(R.id.commentContent);
         commentContentTv.setText(dataBean.getContent());
         if (dataBean.is_select) {
-            baseViewHolder.setText(R.id.fullText, "收起");
+            baseViewHolder.setText(R.id.fullText, getContext().getString(R.string.put_up));
 
             commentContentTv.setMaxLines(Integer.MAX_VALUE);
             commentContentTv.setEllipsize(null);
         } else {
-            baseViewHolder.setText(R.id.fullText, "全文");
+            baseViewHolder.setText(R.id.fullText, getContext().getString(R.string.full_text));
 
             commentContentTv.setMaxLines(3);
             commentContentTv.setEllipsize(TextUtils.TruncateAt.END);

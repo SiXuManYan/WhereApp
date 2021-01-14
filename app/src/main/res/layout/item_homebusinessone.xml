@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/bg_business"
     android:layout_marginRight="5.5dp">
@@ -89,7 +90,7 @@
             android:id="@+id/tv_labletwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="供应早餐"
+            tools:text="供应早餐"
             android:textColor="#06ba1b"
             android:textSize="10sp"
             android:paddingTop="2dp"

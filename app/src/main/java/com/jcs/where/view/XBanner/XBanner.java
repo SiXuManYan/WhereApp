@@ -996,7 +996,9 @@ public class XBanner extends RelativeLayout {
             mIndicators.clear();
         }
 
-        mIndicatorContainer.removeAllViews();
+        if (mIndicatorContainer != null) {
+            mIndicatorContainer.removeAllViews();
+        }
 
 
         mHandler.removeCallbacks(mRunnable);

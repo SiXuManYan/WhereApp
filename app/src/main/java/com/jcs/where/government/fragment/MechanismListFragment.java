@@ -182,7 +182,9 @@ public class MechanismListFragment extends BaseFragment {
                     mRadioGroup.setVisibility(View.VISIBLE);
                 } else {
                     mAdapter.notifyDataSetChanged();
-                    mRadioGroup.setVisibility(View.INVISIBLE);
+                    if (mChildCategories.size() == 1) {
+                        mRadioGroup.setVisibility(View.GONE);
+                    }
                     mSearchNoneGroup.setVisibility(View.VISIBLE);
                 }
             }
@@ -219,7 +221,7 @@ public class MechanismListFragment extends BaseFragment {
             if (i == R.id.allRadio) {
                 // 选择了全部
                 mCurrentCategoryId = String.valueOf(mCategoryResponse.getId());
-                mSwipeLayout.setRefreshing(true);
+                getMechanismList(mCurrentCategoryId);
             } else {
                 // 选择了其他的子分类
                 int size = mChildCategories.size();
@@ -228,7 +230,7 @@ public class MechanismListFragment extends BaseFragment {
                     int categoryId = Integer.parseInt(categoryResponse.getId());
                     if (i == categoryId) {
                         mCurrentCategoryId = String.valueOf(categoryResponse.getId());
-                        mSwipeLayout.setRefreshing(true);
+                        getMechanismList(mCurrentCategoryId);
                     }
                 }
             }
@@ -237,6 +239,7 @@ public class MechanismListFragment extends BaseFragment {
     }
 
     private void onSwipeRefresh() {
+        Log.e("MechanismListFragment", "onSwipeRefresh: " + "-----");
         getMechanismList(mCurrentCategoryId);
     }
 

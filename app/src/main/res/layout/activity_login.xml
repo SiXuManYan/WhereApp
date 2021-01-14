@@ -43,7 +43,7 @@
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:backIcon="@drawable/ic_back_white"/>
+        app:backIcon="@drawable/ic_back_white" />
 
     <RelativeLayout
         android:id="@+id/rl_account"
@@ -61,9 +61,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
-                android:layout_marginLeft="45dp"
+                android:layout_marginLeft="@dimen/dp_30"
                 android:layout_marginTop="39dp"
-                android:layout_marginRight="45dp"
+                android:layout_marginRight="@dimen/dp_30"
                 android:background="@drawable/bg_logininput"
                 android:orientation="horizontal">
 
@@ -92,9 +92,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
-                android:layout_marginLeft="45dp"
+                android:layout_marginLeft="@dimen/dp_30"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="45dp"
+                android:layout_marginRight="@dimen/dp_30"
                 android:background="@drawable/bg_logininput"
                 android:orientation="horizontal">
 
@@ -156,9 +156,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
-                android:layout_marginLeft="45dp"
+                android:layout_marginLeft="@dimen/dp_30"
                 android:layout_marginTop="39dp"
-                android:layout_marginRight="45dp"
+                android:layout_marginRight="@dimen/dp_30"
                 android:background="@drawable/bg_logininput"
                 android:orientation="horizontal">
 
@@ -169,11 +169,37 @@
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_loginphone" />
 
+                <LinearLayout
+                    android:id="@+id/areaCodeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/areaCodeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:text="@string/default_area_code"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_gravity="center_vertical"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:src="@drawable/arrow_down"
+                        android:layout_marginBottom="@dimen/dp_5"/>
+                </LinearLayout>
+
                 <EditText
                     android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="14.5dp"
                     android:background="@null"
                     android:hint="@string/hint_input_phone_number"
@@ -187,9 +213,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
-                android:layout_marginLeft="45dp"
+                android:layout_marginLeft="@dimen/dp_30"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="45dp"
+                android:layout_marginRight="@dimen/dp_30"
                 android:background="@drawable/bg_logininput"
                 android:orientation="horizontal">
 

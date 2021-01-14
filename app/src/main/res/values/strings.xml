@@ -196,5 +196,6 @@
     <string name="to_register">新用户注册</string>
     <string name="other_login_method">其他登录方式</string>
     <string name="loading">加载中...</string>
+    <string name="default_area_code">+86</string>
 
 </resources>

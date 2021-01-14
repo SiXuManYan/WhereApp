@@ -25,6 +25,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.home.dialog.AreaCodeListDialog;
 import com.jcs.where.login.model.LoginModel;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.PhoneCheckUtil;
@@ -45,10 +46,13 @@ public class LoginActivity extends BaseActivity {
     private TextView accountTv, phoneTv;
     private EditText accountEt, passwordEt, phoneEt, codeEt;
     private LinearLayout accountLl, phoneLl;
+    private LinearLayout mAreaCodeLayout;
+    private TextView mAreaCodeTv;
     private TextView getCodeTv, accountLoginTv, phoneLoginTv;
     private MyCountDownTimer myCountDownTimer;
     private TextView accountErrorTv, phoneErrorTv;
     private LoginModel mModel;
+    private AreaCodeListDialog mAreaCodeDialog;
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -100,6 +104,8 @@ public class LoginActivity extends BaseActivity {
         accountLl = findViewById(R.id.ll_account);
         phoneLl = findViewById(R.id.ll_phone);
         getCodeTv = findViewById(R.id.tv_getcode);
+        mAreaCodeLayout = findViewById(R.id.areaCodeLayout);
+        mAreaCodeTv = findViewById(R.id.areaCodeTv);
         accountLoginTv = findViewById(R.id.tv_accountlogin);
         accountLoginTv.setClickable(false);
         phoneEt = findViewById(R.id.et_phone);
@@ -113,6 +119,12 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new LoginModel();
+        mAreaCodeDialog = new AreaCodeListDialog();
+        mAreaCodeDialog.injectCallback(this::onAreaSelected);
+    }
+
+    private void onAreaSelected(String areaCode) {
+        mAreaCodeTv.setText(areaCode);
     }
 
     private void setTextChangeListener() {
@@ -146,6 +158,12 @@ public class LoginActivity extends BaseActivity {
 
         findViewById(R.id.tv_forgetpas).setOnClickListener(v -> ForgetPasswordActivity.goTo(LoginActivity.this));
         findViewById(R.id.tv_register).setOnClickListener(v -> RegisterActivity.goTo(LoginActivity.this));
+
+        mAreaCodeLayout.setOnClickListener(this::onAreaCodeLayoutClicked);
+    }
+
+    private void onAreaCodeLayoutClicked(View view) {
+        mAreaCodeDialog.show(getSupportFragmentManager());
     }
 
     /**
@@ -235,6 +253,7 @@ public class LoginActivity extends BaseActivity {
         SendCodeRequest sendCodeRequest = new SendCodeRequest();
         sendCodeRequest.setPhone(phoneEt.getText().toString());
         sendCodeRequest.setType(sendCodeRequest.TYPE_LOGIN);
+        sendCodeRequest.setCountryCode(mAreaCodeTv.getText().toString().replace("+", ""));
         mModel.sendCode(sendCodeRequest, new BaseObserver<ResponseBody>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {

@@ -65,6 +65,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
             Log.e("BaseObserver", "----onError---" + message);
         }
 
+        errorResponse.errMsg = "";
         onError(errorResponse);
     }
 

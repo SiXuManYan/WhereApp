@@ -1,12 +1,10 @@
 package com.jcs.where.home.activity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
 import com.jcs.where.adapter.ModulesCategoryAdapter;
 import com.jcs.where.adapter.TravelStayHotelAdapter;
@@ -20,14 +18,15 @@ import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.HotelActivity;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.model.TravelStayModel;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.stx.xhb.androidx.XBanner;
 import com.stx.xhb.androidx.entity.BaseBannerInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * 旅游住宿页面
  */
-public class TravelStayActivity extends BaseActivity implements OnItemClickListener {
+public class TravelStayActivity extends BaseActivity {
     public static final String K_CATEGORY_IDS = "categoryIds";
 
     private XBanner mBanner;
@@ -129,7 +128,27 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
     @Override
     protected void bindListener() {
-        mModulesCategoryAdapter.setOnItemClickListener(this);
+        mModulesCategoryAdapter.setOnItemClickListener(this::onModulesCategoryItemClicked);
+        mTravelStayHotelAdapter.setOnItemClickListener(this::onHotelItemClicked);
+    }
+
+    private void onHotelItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        JcsCalendarDialog dialog = new JcsCalendarDialog();
+        dialog.initCalendar(this);
+        HotelDetailActivity.goTo(this, mTravelStayHotelAdapter.getItem(position).getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+    }
+
+    private void onModulesCategoryItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+    CategoryResponse item = mModulesCategoryAdapter.getItem(position);
+        String id = item.getId();
+        switch (id) {
+            case HOTEL_STAY:
+                toActivity(HotelActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
+                break;
+            default:
+                showComing();
+                break;
+        }
     }
 
     @Override
@@ -152,16 +171,4 @@ public class TravelStayActivity extends BaseActivity implements OnItemClickListe
 
     }
 
-    @Override
-    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-        if (adapter == mModulesCategoryAdapter) {
-            CategoryResponse item = mModulesCategoryAdapter.getItem(position);
-            String id = item.getId();
-            switch (id) {
-                case HOTEL_STAY:
-                    toActivity(HotelActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
-                    break;
-            }
-        }
-    }
 }

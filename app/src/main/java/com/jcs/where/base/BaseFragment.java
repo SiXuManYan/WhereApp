@@ -209,7 +209,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showNetError(ErrorResponse errorResponse) {
-        ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+//        ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
     }
 
     protected int getPxFromDp(int dp) {

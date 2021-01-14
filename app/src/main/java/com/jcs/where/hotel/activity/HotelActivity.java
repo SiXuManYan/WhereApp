@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
@@ -74,7 +75,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private RelativeLayout mChooseDateRl;
     private ImageView mRoomReduceIv, mRoomAddIv;
     private RecyclerView showRv;
-    private GuessYouLikeAdapter guessYouLikeAdapter;
+    private GuessYouLikeAdapter mGuessYouLikeAdapter;
     private final int startGroup = -1;
     private final int endGroup = -1;
     private final int startChild = -1;
@@ -137,7 +138,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void initView() {
-        guessYouLikeAdapter = new GuessYouLikeAdapter(R.layout.item_hotellist);
+        mGuessYouLikeAdapter = new GuessYouLikeAdapter();
         mLocationTv = findViewById(R.id.locationTv);
         mLocationTv.setOnClickListener(this);
         mChooseDateRl = findViewById(R.id.rl_choosedate);
@@ -163,17 +164,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mPriceAndStarTv = findViewById(R.id.tv_priceandstar);
         mPriceAndStarTv.setOnClickListener(this);
         showRv = findViewById(R.id.rv_show);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelActivity.this,
-//                LinearLayoutManager.VERTICAL, false);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelActivity.this,
-                LinearLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        showRv.setLayoutManager(linearLayoutManager);
+        showRv.setLayoutManager(new LinearLayoutManager(this));
         showRv.setNestedScrollingEnabled(false);
+        showRv.setAdapter(mGuessYouLikeAdapter);
         mSearchTv = findViewById(R.id.tv_search);
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy");
         useStartYear = simpleDateFormat2.format(date);
@@ -200,31 +193,17 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         deployDateTv(mEndDateTv, mEndWeekTv, mJcsCalendarDialog.getEndBean());
         initGoogleApi();
         showLoading();
-        Map<String, String> params = new HashMap<>();
-        params.put("lat", "");
-        params.put("lng", "");
-        params.put("area_id", "1");
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotels/recommends", null, "", TokenManager.get().getToken(HotelActivity.this), new HttpUtils.StringCallback() {
+        mModel.getYouLike(new BaseObserver<List<HotelResponse>>() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                if (code == 200) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<GuessYouLikeHotelBean>>() {
-                    }.getType();
-                    List<GuessYouLikeHotelBean> list = gson.fromJson(result, type);
-                    guessYouLikeAdapter.addData(list);
-                    showRv.setAdapter(guessYouLikeAdapter);
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
             }
 
             @Override
-            public void onFaileure(int code, Exception e) {
+            public void onNext(@NotNull List<HotelResponse> hotelResponses) {
                 stopLoading();
-                showToast(e.getMessage());
+                mGuessYouLikeAdapter.getData().clear();
+                mGuessYouLikeAdapter.addData(hotelResponses);
             }
         });
     }
@@ -246,6 +225,13 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mSearchTv.setOnClickListener(this::onSearchTvClick);
         mClearIv.setOnClickListener(this::onClearClicked);
         mJcsCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
+        mGuessYouLikeAdapter.setOnItemClickListener(this::onYouLikeItemClicked);
+    }
+
+    private void onYouLikeItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        JcsCalendarDialog dialog = new JcsCalendarDialog();
+        dialog.initCalendar(this);
+        HotelDetailActivity.goTo(this, mGuessYouLikeAdapter.getItem(position).getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
     }
 
     @Override
@@ -332,10 +318,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void checkIsGooglePlayConn() {
-//        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
-//            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
-//        }
-//        mAddressRequested = true;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
             ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
@@ -358,37 +340,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 Log.e("HotelActivity", "onGetLocation: " + "lat=" + lat + "----lng=" + lng);
             }
         });
-//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        Log.e("HotelActivity", "checkIsGooglePlayConn: " + "mLastLocation=" + mLastLocation);
-//        if (mLastLocation != null) {
-//            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-//            if (!Geocoder.isPresent()) {
-//                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
-//                return;
-//            }
-//            initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
-//        }
     }
 
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
-//            ActivityCompat.requestPermissions(HotelActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
-//            return;
-//        }
-//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-//            if (!Geocoder.isPresent()) {
-//                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
-//                return;
-//            }
-//            if (mAddressRequested) {
-//                initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
-//            }
-//        }
     }
 
     @Override
@@ -416,54 +372,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    private void initArea(String lat, String lng) {
-        showLoading();
-        Log.e("HotelActivity", "initArea: " + "-------lat=" + lat + "----lng=" + lng);
-        mModel.getLocation(lat, lng, new BaseObserver<String>() {
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-            }
-
-            @Override
-            public void onNext(@io.reactivex.annotations.NonNull String s) {
-                stopLoading();
-                Log.e("HotelActivity", "onNext: " + "s=" + s);
-            }
-        });
-//        HttpUtils.doGoogleMapReqeust("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk", null, new HttpUtils.StringCallback() {
-//            @Override
-//            public void onSuccess(int code, String result) {
-//                stopLoading();
-//                if (code == 200) {
-//                    GoogleMapBean googleMapBean = new Gson().fromJson(result, GoogleMapBean.class);
-//                    if (googleMapBean.getResults().get(0) != null) {
-//                        if (googleMapBean.getResults().get(0).getAddress_components().get(2) != null) {
-//                            String usecity = googleMapBean.getResults().get(0).getAddress_components().get(2).getLong_name();
-//                            if (usecity != null) {
-//                                if (usecity.contains("City of ")) {
-//                                    usecity = usecity.substring(8);
-//                                }
-//                                locationTv.setText(usecity);
-//                                cityId = "0";
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-//                    showToast(errorBean.message);
-//                }
-//            }
-//
-//            @Override
-//            public void onFaileure(int code, Exception e) {
-//                stopLoading();
-//                showToast(e.getMessage());
-//            }
-//        });
-
-    }
-
     @Override
     protected void onDestroy() {
         mGoogleApiClient.disconnect();
@@ -482,15 +390,15 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         return true;
     }
 
-    private class GuessYouLikeAdapter extends BaseQuickAdapter<GuessYouLikeHotelBean, BaseViewHolder> {
+    private class GuessYouLikeAdapter extends BaseQuickAdapter<HotelResponse, BaseViewHolder> {
 
 
-        public GuessYouLikeAdapter(int layoutResId) {
-            super(layoutResId);
+        public GuessYouLikeAdapter() {
+            super(R.layout.item_hotellist);
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, GuessYouLikeHotelBean data) {
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelResponse data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 Glide.with(HotelActivity.this).load(data.getImages().get(0)).into(photoIv);
@@ -525,12 +433,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             commentNumTv.setText(data.getComment_counts() + "条评论");
             TextView priceTv = baseViewHolder.findView(R.id.tv_price);
             priceTv.setText("₱" + data.getPrice() + "起");
-            baseViewHolder.findView(R.id.ll_hotel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    HotelDetailActivity.goTo(getContext(), data.getId(),mStartDateTv.getText().toString(), mEndDateTv.getText().toString(), mStartWeekTv.getText().toString(), mEndWeekTv.getText().toString(), allDayTv.getText().toString(), useStartYear, useEndYear, mRoomNumTv.getText().toString());
-                }
-            });
         }
     }
 }

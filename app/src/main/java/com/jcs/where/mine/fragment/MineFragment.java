@@ -100,21 +100,29 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
+        mSwipeLayout.setOnRefreshListener(this::onRefreshListener);
+    }
 
+    private void onRefreshListener() {
+        updateUserInfo();
     }
 
     public void updateUserInfo() {
-        showLoading();
+        if (!mSwipeLayout.isRefreshing()) {
+            showLoading();
+        }
         mModel.getUserInfo(new BaseObserver<UserInfoResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
+                mSwipeLayout.setRefreshing(false);
 //                showNetError(errorResponse);
             }
 
             @Override
             public void onNext(@NotNull UserInfoResponse userInfoResponse) {
                 stopLoading();
+                mSwipeLayout.setRefreshing(false);
                 nicknameTv.setText(userInfoResponse.getNickname());
             }
         });

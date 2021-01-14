@@ -33,8 +33,6 @@ public class WebViewActivity extends BaseActivity {
 
     private AgentWeb mAgentWeb;
     private LinearLayout mLinearLayout;
-    private Toolbar mToolbar;
-    private TextView mTitleTextView;
     private AlertDialog mAlertDialog;
     private final com.just.agentweb.WebViewClient mWebViewClient = new WebViewClient() {
         @Override
@@ -52,9 +50,7 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
-            if (mTitleTextView != null) {
-                mTitleTextView.setText(title);
-            }
+            mJcsTitle.setMiddleTitle(title);
         }
     };
 
@@ -72,14 +68,6 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initView() {
         mLinearLayout = findViewById(R.id.container);
-        mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });
-        mTitleTextView = findViewById(R.id.toolbar_title);
         long p = System.currentTimeMillis();
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mLinearLayout, new LinearLayout.LayoutParams(-1, -1))
@@ -107,14 +95,17 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
+    }
 
+    private void onBackClicked(View view) {
+//        showDialog();
     }
 
     private void showDialog() {
 
         if (mAlertDialog == null) {
             mAlertDialog = new AlertDialog.Builder(this)
-                    .setMessage("您确定要关闭该页面吗?")
+                    .setMessage(R.string.close_page_prompt)
                     .setNegativeButton("再逛逛", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -179,6 +170,10 @@ public class WebViewActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
 
     @Override
     protected void onDestroy() {

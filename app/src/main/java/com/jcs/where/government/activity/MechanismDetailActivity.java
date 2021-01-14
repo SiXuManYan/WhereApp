@@ -1,6 +1,7 @@
 package com.jcs.where.government.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.government.dialog.CallPhoneDialog;
 import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.government.model.MechanismDetailModel;
@@ -54,8 +56,12 @@ public class MechanismDetailActivity extends BaseActivity {
         mBusinessTimeTv = findViewById(R.id.businessTimeTv);
         mTelTv = findViewById(R.id.telTv);
         mWebsiteTv = findViewById(R.id.websiteTv);
+        mWebsiteTv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        mWebsiteTv.getPaint().setAntiAlias(true);//抗锯齿
         mEmailTv = findViewById(R.id.emailTv);
         mFacebookTv = findViewById(R.id.facebookTv);
+        mFacebookTv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        mFacebookTv.getPaint().setAntiAlias(true);//抗锯齿
         mAddressTv = findViewById(R.id.addressTv);
         mIntroduceTv = findViewById(R.id.introduceTv);
 
@@ -125,6 +131,17 @@ public class MechanismDetailActivity extends BaseActivity {
         mJcsTitle.setSecondRightIvClickListener(this::onJcsSecondRightClicked);
         mToCallView.setOnClickListener(this::onToCallClicked);
         mToNavigationView.setOnClickListener(this::onToNavigationClicked);
+
+        mFacebookTv.setOnClickListener(this::onFaceBookClicked);
+        mWebsiteTv.setOnClickListener(this::onWebsiteClicked);
+    }
+
+    private void onWebsiteClicked(View view) {
+        WebViewActivity.goTo(this, mMechanismDetailResponse.getWeb_site());
+    }
+
+    private void onFaceBookClicked(View view) {
+        WebViewActivity.goTo(this, mMechanismDetailResponse.getFacebook());
     }
 
     /**

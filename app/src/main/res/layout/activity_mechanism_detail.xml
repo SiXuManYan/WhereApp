@@ -160,7 +160,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_13"
-        android:textColor="@color/grey_666666"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/blue_4C9EF2"
         app:layout_constraintStart_toEndOf="@id/websitePrompt"
         app:layout_constraintBaseline_toBaselineOf="@id/websitePrompt" />
 
@@ -252,9 +254,9 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_13"
-        android:textColor="@color/grey_666666"
         android:maxLines="1"
         android:ellipsize="end"
+        android:textColor="@color/blue_4C9EF2"
         app:layout_constraintStart_toEndOf="@id/facebookPrompt"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/dp_15"

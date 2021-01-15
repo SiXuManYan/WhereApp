@@ -58,6 +58,6 @@ public class CacheUtil {
      */
     public static String getLanguageFromCache() {
         String language = SPUtil.getInstance().getString(SPKey.K_LANGUAGE);
-        return language.equals("") ? "auto" : language;
+        return language.equals("") ? "en" : language;
     }
 }

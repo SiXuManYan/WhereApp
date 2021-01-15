@@ -45,7 +45,7 @@ public class LocalLanguageUtil {
      */
     public Locale getSetLanguageLocale(Context context) {
         if (context == null) {
-            return Locale.CHINA;
+            return Locale.ENGLISH;
         }
 
         String language = CacheUtil.getLanguageFromCache();

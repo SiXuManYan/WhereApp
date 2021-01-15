@@ -140,9 +140,9 @@
 	<string name="mine_merchant_settled">Merchant</string>
 	<string name="mine_invite">invite</string>
 	<string name="mine_gift">gift</string>
-	<string name="mine_collection">collectioin</string>
+	<string name="mine_collection">collection</string>
 	<string name="mine_address">address</string>
-	<string name="mine_manager">manager</string>
+	<string name="mine_manager">Account</string>
 	<string name="mine_after_sales">After-Sales</string>
 	<string name="mine_reviews">Reviews</string>
 	<string name="mine_login_register">Login/Register</string>
@@ -219,4 +219,5 @@
 	<string name="policy_prompt">Policy</string>
 	<string name="amenities_prompt">Amenities</string>
 	<string name="price_above_number">₱%1$d</string>
+	<string name="mine_other">Others</string>
 </resources>

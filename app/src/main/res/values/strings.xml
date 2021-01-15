@@ -218,5 +218,6 @@
     <string name="policy_prompt">政策</string>
     <string name="amenities_prompt">设施</string>
     <string name="price_above_number">₱%1$d起</string>
+    <string name="mine_other">其他</string>
 
 </resources>

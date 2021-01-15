@@ -626,7 +626,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_margin="15dp"
-                        android:text="其他"
+                        android:text="@string/mine_other"
                         android:textColor="@color/black_333333"
                         android:textSize="14sp" />
 

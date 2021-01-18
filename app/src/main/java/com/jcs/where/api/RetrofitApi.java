@@ -20,6 +20,8 @@ import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
+import com.jcs.where.api.response.NewsResponse;
+import com.jcs.where.api.response.NewsTabResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
@@ -309,6 +311,20 @@ public interface RetrofitApi {
     @PATCH("userapi/v1/users")
     Observable<UserInfoResponse> patchUpdateUserInfo(@Body UpdateUserInfoRequest request);
 
+    /**
+     * 获得城市选择列表
+     *
+     * @return
+     */
     @GET("commonapi/v1/areas")
     Observable<CityPickerResponse> getCityPickers();
+
+    /**
+     * 获得新闻页的标签
+     */
+    @GET("newsapi/v1/channels")
+    Observable<List<NewsTabResponse>> getNewsTabs();
+
+    @GET("newsapi/v1/news")
+    Observable<PageResponse<NewsResponse>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
 }

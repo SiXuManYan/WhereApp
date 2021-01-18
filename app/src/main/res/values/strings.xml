@@ -219,5 +219,7 @@
     <string name="amenities_prompt">设施</string>
     <string name="price_above_number">₱%1$d起</string>
     <string name="mine_other">其他</string>
+    <string name="news_follow">关注</string>
+    <string name="news_recommend">推荐</string>
 
 </resources>

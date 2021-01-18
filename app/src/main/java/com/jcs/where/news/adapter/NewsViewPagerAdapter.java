@@ -1,5 +1,8 @@
 package com.jcs.where.news.adapter;
 
+import com.jcs.where.api.response.NewsTabResponse;
+import com.jcs.where.news.fragment.NewsFragment;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,8 +11,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.List;
 
 public class NewsViewPagerAdapter extends FragmentStatePagerAdapter {
-    private List<? extends Fragment> mNewsFragments;
-    private List<String> mTabCategories;
+    private List<NewsFragment> mNewsFragments;
+    private List<NewsTabResponse> mTabCategories;
 
     public NewsViewPagerAdapter(@androidx.annotation.NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -18,7 +21,7 @@ public class NewsViewPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTabCategories.get(position);
+        return mTabCategories.get(position).getName();
     }
 
     @androidx.annotation.NonNull
@@ -32,11 +35,11 @@ public class NewsViewPagerAdapter extends FragmentStatePagerAdapter {
         return mNewsFragments.size();
     }
 
-    public void setNewsFragments(List<? extends Fragment> mNewsFragments) {
-        this.mNewsFragments = mNewsFragments;
+    public void setNewsFragments(List<NewsFragment> newsFragments) {
+        this.mNewsFragments = newsFragments;
     }
 
-    public void setTabCategories(List<String> tabCategories) {
+    public void setTabCategories(List<NewsTabResponse> tabCategories) {
         this.mTabCategories = tabCategories;
     }
 }

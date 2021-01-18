@@ -84,9 +84,9 @@ public class RetrofitManager {
         //请求链接前缀，所有接口不变的部分，字符串必须以/结尾
         // TODO baseurl 应该放在gradle中，没时间
         // 正式版
-        builder.baseUrl("https://appapi.wheretech.ph/");
+//        builder.baseUrl("https://appapi.wheretech.ph/");
         // 测试版
-//        builder.baseUrl("https://api.jcstest.com/");
+        builder.baseUrl("https://api.jcstest.com/");
         //用于做网络请求到客户端（okHttp3）
         builder.client(okBuilder.build());
         builder.addConverterFactory(new NullOrEmptyConvertFactory());

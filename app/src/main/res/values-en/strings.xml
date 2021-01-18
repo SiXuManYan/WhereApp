@@ -220,4 +220,6 @@
 	<string name="amenities_prompt">Amenities</string>
 	<string name="price_above_number">₱%1$d</string>
 	<string name="mine_other">Others</string>
+	<string name="news_follow">Follow</string>
+	<string name="news_recommend">Recommend</string>
 </resources>

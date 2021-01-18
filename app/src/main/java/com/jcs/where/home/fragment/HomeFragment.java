@@ -53,6 +53,7 @@ import com.jcs.where.home.model.HomeModel;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.news.NewsActivity;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
@@ -124,8 +125,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getBannerData();
-                getNewsData();
+                getInitHomeData();
             }
         });
         marqueeView = view.findViewById(R.id.simpleMarqueeView);
@@ -269,84 +269,6 @@ public class HomeFragment extends BaseFragment {
         return R.layout.fragment_home;
     }
 
-
-    /**
-     * 获得金刚圈的信息
-     */
-    private void getModules() {
-        mModel.getModules(new BaseObserver<List<ModulesResponse>>() {
-            @Override
-            public void onNext(@NonNull List<ModulesResponse> modulesResponses) {
-                mModulesAdapter.getData().clear();
-                mModulesAdapter.addData(modulesResponses);
-            }
-
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
-            }
-        });
-    }
-
-    private void getBannerData() {
-        showLoading();
-        HttpUtils.doHttpReqeust("GET", "commonapi/v1/banners", null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    ptrFrame.refreshComplete();
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<HomeBannerBean>>() {
-                    }.getType();
-                    List<HomeBannerBean> list = gson.fromJson(result, type);
-                    refreshBanner = refreshBanner + 1;
-//                    initBanner(list);
-                } else {
-                    ptrFrame.refreshComplete();
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                showToast(e.getMessage());
-            }
-        });
-
-    }
-
-    private void getNewsData() {
-        showLoading();
-        HttpUtils.doHttpReqeust("GET", "newsapi/v1/news/notices?notice_num=10", null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    ptrFrame.refreshComplete();
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<HomeNewsBean>>() {
-                    }.getType();
-                    List<HomeNewsBean> list = gson.fromJson(result, type);
-//                    initNews(list);
-                } else {
-                    ptrFrame.refreshComplete();
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                showToast(e.getMessage());
-            }
-        });
-
-    }
-
     private void initBanner(List<BannerResponse> list) {
         if (refreshBanner > 1) {
             banner3.releaseBanner();
@@ -360,9 +282,6 @@ public class HomeFragment extends BaseFragment {
                 .setImageLoader(new AbstractUrlLoader() {
                     @Override
                     public void loadImages(Context context, String url, ImageView image) {
-//                        Glide.with(context)
-//                                .load(url)
-//                                .into(image);
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
                                 .error(R.mipmap.ic_glide_default) //加载失败图片
@@ -374,7 +293,6 @@ public class HomeFragment extends BaseFragment {
 
                     @Override
                     public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-//                        Glide.with(context).asGif().load(url).into(gifImageView);
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
                                 .error(R.mipmap.ic_glide_default) //加载失败图片
@@ -406,17 +324,14 @@ public class HomeFragment extends BaseFragment {
                     }
                 })
                 .start();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            banner3.setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    float radius = Resources.getSystem().getDisplayMetrics().density * 10;
-                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
-                }
-            });
-            banner3.setClipToOutline(true);
-        }
-
+        banner3.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                float radius = Resources.getSystem().getDisplayMetrics().density * 10;
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+            }
+        });
+        banner3.setClipToOutline(true);
     }
 
     private void initNews(List<HomeNewsResponse> list) {
@@ -433,10 +348,8 @@ public class HomeFragment extends BaseFragment {
         marqueeView.setOnItemClickListener(new OnItemClickListener<TextView, String>() {
             @Override
             public void onItemClickListener(TextView mView, String mData, int mPosition) {
-                // TODO 新闻未做
-                showComing();
-//                Intent intent = new Intent(getContext(), NewsActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getContext(), NewsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -511,226 +424,6 @@ public class HomeFragment extends BaseFragment {
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
         return dm.widthPixels;
-    }
-
-    private class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-        //1.按钮 2.直播
-        //设置常量
-        //横向附近
-        private static final int TYPE_NEARBY_TRANSVERSE = 1;
-        //竖向附件
-        private static final int TYPE_NEARBY_VERICAL = 2;
-        private final Context context;
-        //布局标识集合
-        private final List<Integer> typeList;
-
-
-        public HomeRecyclerViewAdapter(Context context, List<Integer> typeList) {
-            this.context = context;
-            this.typeList = typeList;
-        }
-
-
-        @Override
-        public int getItemViewType(int position) {
-            if (typeList.get(position) == 1) {
-                return TYPE_NEARBY_TRANSVERSE;
-            } else if (typeList.get(position) == 2) {
-                return TYPE_NEARBY_VERICAL;
-            }
-            return 0;
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == TYPE_NEARBY_TRANSVERSE) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transversenearby, parent, false);
-                NebaryTransverseViewHolder nebaryTransverseViewHolder = new NebaryTransverseViewHolder(view);
-                return nebaryTransverseViewHolder;
-            } else if (viewType == TYPE_NEARBY_VERICAL) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nearbyverical, parent, false);
-                NearbyVericalViewHolder nearbyVericalViewHolder = new NearbyVericalViewHolder(view);
-                return nearbyVericalViewHolder;
-            }
-            return null;
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof NebaryTransverseViewHolder) {
-                initNebaryTransverse((NebaryTransverseViewHolder) holder);
-            } else if (holder instanceof NearbyVericalViewHolder) {
-                initNearbyVertical((NearbyVericalViewHolder) holder);
-            }
-        }
-
-        private void initNebaryTransverse(NebaryTransverseViewHolder holder) {
-            List<BusinessBean> list = new ArrayList<>();
-            BusinessBean businessBean = new BusinessBean();
-            businessBean.setImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536187&di=4d4f79fee6c1203e41f73bfbce99f596&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2F2013qcpd%2Fzsgz%2F201403%2FW020140327358771316323.jpg");
-            businessBean.setName("Batanes North");
-            businessBean.setScore("4.9分");
-            businessBean.setDetail("距离各大景点近,自助");
-            List<String> list1 = new ArrayList<>();
-            list1.add("商务出行");
-            list1.add("供应早餐");
-            businessBean.setProject(list1);
-            businessBean.setPrice("245");
-            businessBean.setDistance("< 2km");
-            list.add(businessBean);
-
-            BusinessBean businessBean1 = new BusinessBean();
-            businessBean1.setImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536187&di=4d4f79fee6c1203e41f73bfbce99f596&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2F2013qcpd%2Fzsgz%2F201403%2FW020140327358771316323.jpg");
-            businessBean1.setName("Batanes North");
-            businessBean1.setScore("4.9分");
-            businessBean1.setDetail("距离各大景点近,自助");
-            List<String> list2 = new ArrayList<>();
-            list2.add("供应早餐");
-            businessBean1.setProject(list2);
-            businessBean1.setPrice("245");
-            businessBean1.setDistance("< 2km");
-            list.add(businessBean1);
-
-            BusinessBean businessBean2 = new BusinessBean();
-            businessBean2.setImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536187&di=4d4f79fee6c1203e41f73bfbce99f596&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2F2013qcpd%2Fzsgz%2F201403%2FW020140327358771316323.jpg");
-            businessBean2.setName("Batanes North");
-            businessBean2.setScore("4.9分");
-            businessBean2.setDetail("距离各大景点近,自助");
-            List<String> list3 = new ArrayList<>();
-            list3.add("商务出行");
-            list3.add("供应早餐");
-            businessBean2.setProject(list2);
-            businessBean2.setPrice("245");
-            businessBean2.setDistance("< 2km");
-            list.add(businessBean2);
-
-
-            BusinessBean businessBean3 = new BusinessBean();
-            businessBean3.setImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594037536187&di=4d4f79fee6c1203e41f73bfbce99f596&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2F2013qcpd%2Fzsgz%2F201403%2FW020140327358771316323.jpg");
-            businessBean3.setName("Batanes North");
-            businessBean3.setScore("4.9分");
-            businessBean3.setDetail("距离各大景点近,自助");
-            List<String> list4 = new ArrayList<>();
-            list4.add("供应早餐");
-            businessBean3.setProject(list2);
-            businessBean3.setPrice("245");
-            businessBean3.setDistance("< 2km");
-            list.add(businessBean3);
-            NearbyTransverseAdapter nearbyTransverseAdapter = new NearbyTransverseAdapter(R.layout.item_homebusinessone);
-            holder.businessRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            nearbyTransverseAdapter.getData().clear();
-            nearbyTransverseAdapter.addData(list);
-            holder.businessRv.setAdapter(nearbyTransverseAdapter);
-
-        }
-
-        private void initNearbyVertical(NearbyVericalViewHolder holder) {
-
-            List<BusinessBean> list = new ArrayList<>();
-            BusinessBean businessBean = new BusinessBean();
-            list.add(businessBean);
-            BusinessBean businessBean1 = new BusinessBean();
-            list.add(businessBean1);
-            BusinessBean businessBean2 = new BusinessBean();
-            list.add(businessBean2);
-            BusinessBean businessBean3 = new BusinessBean();
-            list.add(businessBean3);
-            BusinessBean businessBean4 = new BusinessBean();
-            list.add(businessBean4);
-            BusinessBean businessBean5 = new BusinessBean();
-            list.add(businessBean5);
-
-            NearbyVerticalAdapter nearbyVerticalAdapter = new NearbyVerticalAdapter(R.layout.item_hotellist);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
-                    LinearLayoutManager.VERTICAL, false) {
-                @Override
-                public boolean canScrollVertically() {
-                    return false;
-                }
-            };
-            holder.businessRv.setLayoutManager(linearLayoutManager);
-            nearbyVerticalAdapter.getData().clear();
-            nearbyVerticalAdapter.addData(list);
-            holder.businessRv.setAdapter(nearbyVerticalAdapter);
-        }
-
-        @Override
-        public int getItemCount() {
-            return typeList.size();
-        }
-
-        public class NebaryTransverseViewHolder extends RecyclerView.ViewHolder {
-
-            public TextView titleTv, seeMoreTv;
-            public RecyclerView businessRv;
-
-            public NebaryTransverseViewHolder(View itemView) {
-                super(itemView);
-                titleTv = (TextView) itemView.findViewById(R.id.tv_title);
-                businessRv = (RecyclerView) itemView.findViewById(R.id.rv_business);
-                seeMoreTv = (TextView) itemView.findViewById(R.id.tv_seemore);
-            }
-        }
-
-        public class NearbyVericalViewHolder extends RecyclerView.ViewHolder {
-
-            public TextView titleTv, seeMoreTv;
-            public RecyclerView businessRv;
-
-            public NearbyVericalViewHolder(View itemView) {
-                super(itemView);
-                titleTv = (TextView) itemView.findViewById(R.id.tv_title);
-                businessRv = (RecyclerView) itemView.findViewById(R.id.rv_business);
-                seeMoreTv = (TextView) itemView.findViewById(R.id.tv_seemore);
-            }
-        }
-    }
-
-    private class NearbyTransverseAdapter extends BaseQuickAdapter<BusinessBean, BaseViewHolder> {
-
-
-        public NearbyTransverseAdapter(int layoutResId) {
-            super(layoutResId);
-        }
-
-        @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessBean data) {
-            RoundedImageView roundedImageView = baseViewHolder.findView(R.id.iv_photo);
-            GlideUtil.load(getContext(), data.getImg(), roundedImageView);
-            TextView scoreTv = baseViewHolder.findView(R.id.tv_score);
-            scoreTv.setText(data.getScore());
-            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
-            nameTv.setText(data.getName());
-            TextView detailTv = baseViewHolder.findView(R.id.tv_detail);
-            detailTv.setText(data.getDetail());
-            TextView lableOneTv = baseViewHolder.findView(R.id.tv_lableone);
-            TextView lableTwoTv = baseViewHolder.findView(R.id.tv_labletwo);
-            if (data.getProject().size() > 1) {
-                lableOneTv.setText(data.getProject().get(0));
-                lableTwoTv.setText(data.getProject().get(1));
-            } else {
-                lableOneTv.setText(data.getProject().get(0));
-                lableTwoTv.setVisibility(View.GONE);
-            }
-            TextView priceTv = baseViewHolder.findView(R.id.tv_price);
-            priceTv.setText(data.getPrice());
-            TextView distanceTv = baseViewHolder.findView(R.id.tv_distance);
-            distanceTv.setText("距您" + data.getDistance());
-        }
-    }
-
-    private class NearbyVerticalAdapter extends BaseQuickAdapter<BusinessBean, BaseViewHolder> {
-
-
-        public NearbyVerticalAdapter(int layoutResId) {
-            super(layoutResId);
-        }
-
-        @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessBean businessBean) {
-            baseViewHolder.setText(R.id.tv_distance, "<1.5Km");
-        }
     }
 
 }

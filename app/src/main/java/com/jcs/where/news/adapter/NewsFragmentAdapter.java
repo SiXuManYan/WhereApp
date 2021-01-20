@@ -1,17 +1,22 @@
 package com.jcs.where.news.adapter;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.news.view_type.NewsType;
 import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.widget.JcsVideoPlayer;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jzvd.JzvdStd;
 
 /**
  * author : hwd
@@ -52,9 +57,13 @@ public class NewsFragmentAdapter extends BaseMultiItemQuickAdapter<NewsResponse,
                 dealThreeImages(images, baseViewHolder);
                 break;
             case NewsType.VIDEO:
-                RoundedImageView videoIcon = baseViewHolder.findView(R.id.newsVideoIconIv);
-                GlideUtil.load(getContext(), images.get(0), videoIcon);
-                baseViewHolder.setText(R.id.newsVideoDurationTv, newsResponse.getVideoTime());
+
+                JcsVideoPlayer videoPlayer = baseViewHolder.findView(R.id.newsVideoPlayer);
+                if (videoPlayer != null) {
+                    videoPlayer.setUp(newsResponse.getVideoLink(), newsResponse.getTitle());
+                    GlideUtil.load(getContext(), images.get(0), videoPlayer.posterImageView);
+                    baseViewHolder.setText(R.id.newsVideoDurationTv, newsResponse.getVideoTime());
+                }
                 break;
         }
     }

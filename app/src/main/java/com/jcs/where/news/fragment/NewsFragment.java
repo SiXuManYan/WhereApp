@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import cn.jzvd.Jzvd;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
@@ -128,6 +129,12 @@ public class NewsFragment extends BaseFragment {
 
     private void onRefreshListener() {
         getNewsList();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

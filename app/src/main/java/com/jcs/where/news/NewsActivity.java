@@ -2,6 +2,7 @@ package com.jcs.where.news;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import cn.jzvd.Jzvd;
 
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
@@ -86,6 +87,19 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.jcs.where.news.model.NewsFragModel;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * 新闻列表
  * author : hwd
  * date   : 2021/1/6-23:19
  */

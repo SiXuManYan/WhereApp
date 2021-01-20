@@ -222,4 +222,10 @@
 	<string name="mine_other">Others</string>
 	<string name="news_follow">Follow</string>
 	<string name="news_recommend">Recommend</string>
+	<string name="news_my_channel">My Channel</string>
+	<string name="news_more_channel">More Channels</string>
+	<string name="news_click_to_channel">Click-in channel</string>
+	<string name="news_edit_channel">Edit</string>
+	<string name="news_finish_channel">Finished</string>
+	<string name="news_click_to_add_channel">Click to add channel</string>
 </resources>

@@ -1,13 +1,17 @@
 package com.jcs.where.api.response;
 
+import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * create by zyf on 2021/1/18 9:25 下午
  */
-public class NewsTabResponse implements Serializable {
+public class NewsTabResponse extends BaseNode implements Serializable {
 
     /**
      * id : 4
@@ -40,5 +44,11 @@ public class NewsTabResponse implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Nullable
+    @Override
+    public List<BaseNode> getChildNode() {
+        return null;
     }
 }

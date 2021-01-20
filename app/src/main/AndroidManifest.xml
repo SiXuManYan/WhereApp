@@ -250,7 +250,7 @@
             tools:ignore="LockedOrientationActivity"
             />
 
-        <activity android:name=".news.SelectNewsCategoryActivity"
+        <activity android:name=".news.SelectNewsChannelActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"

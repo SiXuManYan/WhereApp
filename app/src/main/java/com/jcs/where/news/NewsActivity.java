@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 新闻页
  * author : hwd
  * date   : 2021/1/6-22:54
  */
@@ -114,7 +115,7 @@ public class NewsActivity extends BaseActivity {
 
     private void onAddTabClicked(View view) {
         // 弹出选择新闻分类的页面
-        toActivity(SelectNewsCategoryActivity.class);
+        toActivity(SelectNewsChannelActivity.class);
     }
 
     @Override

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/myChannelPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_15"
+        android:text="@string/news_my_channel"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_17"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/clickToChannelTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:text="@string/news_click_to_channel"
+        android:textColor="@color/grey_999999"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="@id/myChannelPrompt"
+        app:layout_constraintStart_toEndOf="@id/myChannelPrompt"
+        app:layout_constraintTop_toTopOf="@id/myChannelPrompt" />
+
+    <TextView
+        android:id="@+id/operateMyChannelTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sp_12"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:textColor="@color/orange_FD8181"
+        android:textSize="@dimen/sp_12"
+        android:text="@string/news_edit_channel"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/shape_white_radius_2_stroke_1_fabbbb"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

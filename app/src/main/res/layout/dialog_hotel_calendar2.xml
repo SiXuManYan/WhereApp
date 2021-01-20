@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_15"
         android:layout_marginEnd="@dimen/dp_15"
-        android:src="@drawable/close_black"
+        android:src="@mipmap/ic_close_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

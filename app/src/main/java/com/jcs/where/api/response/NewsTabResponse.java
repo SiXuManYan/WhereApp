@@ -19,6 +19,13 @@ public class NewsTabResponse implements Serializable {
     @SerializedName("name")
     private String name;
 
+    public NewsTabResponse() {
+    }
+
+    public NewsTabResponse(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

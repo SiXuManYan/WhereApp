@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ public class JcsTitle extends ConstraintLayout {
     private int mFirstRightIconRes = -1;
     private int mSecondRightIconRes = -1;
     private boolean mShowBottomLine = false;
+    private float mBackIconWidth, mBackIconHeight;
     private ImageView mBackIv;
     private View mBottomLine;
     private TextView mMiddleTitleTv;
@@ -40,6 +43,8 @@ public class JcsTitle extends ConstraintLayout {
         mMiddleTitle = array.getString(R.styleable.JcsTitle_middleTitle);
         mMiddleTitleColor = array.getColor(R.styleable.JcsTitle_middleTitleColor, Color.parseColor("#333333"));
         mShowBackIv = array.getBoolean(R.styleable.JcsTitle_showBackIv, true);
+        mBackIconWidth = array.getDimension(R.styleable.JcsTitle_backIconWidth, -1);
+        mBackIconHeight = array.getDimension(R.styleable.JcsTitle_backIconHeight, -1);
         mBackIconRes = array.getResourceId(R.styleable.JcsTitle_backIcon, R.drawable.ic_back_black);
         mFirstRightIconRes = array.getResourceId(R.styleable.JcsTitle_rightFirstIcon, 0);
         mSecondRightIconRes = array.getResourceId(R.styleable.JcsTitle_rightSecondIcon, 0);
@@ -62,6 +67,15 @@ public class JcsTitle extends ConstraintLayout {
 
         if (!mShowBackIv) {
             mBackIv.setVisibility(GONE);
+        } else {
+            if (mBackIconHeight != -1 && mBackIconWidth != -1) {
+                ConstraintLayout.LayoutParams layoutParams = (LayoutParams) mBackIv.getLayoutParams();
+                // 默认左右有个padding为5，所以这里是加上左右总的padding10为总宽度
+                layoutParams.width = (int) mBackIconWidth + getDp(10);
+                layoutParams.height = (int) mBackIconHeight;
+                layoutParams.leftMargin = getDp(10);
+                mBackIv.setLayoutParams(layoutParams);
+            }
         }
 
         if (mShowBottomLine) {
@@ -117,5 +131,11 @@ public class JcsTitle extends ConstraintLayout {
         this.mSecondRightIconRes = secondRightIcon;
         this.mSecondRightIv.setImageResource(secondRightIcon);
     }
-
+    protected int getDp(int height) {
+        Context context = getContext();
+        if (context == null) {
+            return 0;
+        }
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.getResources().getDisplayMetrics());
+    }
 }

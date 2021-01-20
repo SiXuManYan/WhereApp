@@ -1,5 +1,8 @@
 package com.jcs.where.news;
 
+import android.view.View;
+import android.widget.LinearLayout;
+
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import cn.jzvd.Jzvd;
@@ -31,6 +34,8 @@ public class NewsActivity extends BaseActivity {
     private NewsViewPagerAdapter mNewsViewPagerAdapter;
     private List<NewsTabResponse> mTabs;
     private NewsAtyModel mModel;
+    private View mAddTabView;
+
     /**
      * 新闻Fragment集合
      */
@@ -40,6 +45,7 @@ public class NewsActivity extends BaseActivity {
     protected void initView() {
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
+        mAddTabView = findViewById(R.id.addTabView);
     }
 
     @Override
@@ -67,6 +73,8 @@ public class NewsActivity extends BaseActivity {
                 mTabs.add(follow);
                 mTabs.add(recommend);
                 mTabs.addAll(newsTabResponses);
+                // 添加一个占位的 tab，用于滑动效果
+                mTabs.add(new NewsTabResponse(""));
 
                 for (int i = 0; i < mTabs.size(); i++) {
                     NewsTabResponse newsTabResponse = mTabs.get(i);
@@ -81,12 +89,32 @@ public class NewsActivity extends BaseActivity {
                 mViewPager.setAdapter(mNewsViewPagerAdapter);
                 mTabLayout.setupWithViewPager(mViewPager);
                 mViewPager.setOffscreenPageLimit(mNewsViewPagerAdapter.getCount());
+
+                // 设置最后一个占位的 tab 不可点击
+                notClickLastTab();
             }
         });
     }
 
+    private void notClickLastTab() {
+        LinearLayout tabStrip = (LinearLayout) mTabLayout.getChildAt(0);
+        int childCount = tabStrip.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View tabView = tabStrip.getChildAt(i);
+            if (tabView != null && i == childCount - 1) {
+                tabView.setClickable(false);
+            }
+        }
+    }
+
     @Override
     protected void bindListener() {
+        mAddTabView.setOnClickListener(this::onAddTabClicked);
+    }
+
+    private void onAddTabClicked(View view) {
+        // 弹出选择新闻分类的页面
+        toActivity(SelectNewsCategoryActivity.class);
     }
 
     @Override
@@ -96,6 +124,7 @@ public class NewsActivity extends BaseActivity {
         }
         super.onBackPressed();
     }
+
     @Override
     protected void onPause() {
         super.onPause();

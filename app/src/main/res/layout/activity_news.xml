@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.jcs.where.widget.JcsTitle
@@ -14,24 +15,34 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="@dimen/dp_0"
-        app:layout_constraintEnd_toStartOf="@+id/imageAdd"
         android:layout_height="@dimen/dp_30"
         app:tabTextAppearance="@style/TabNormalText"
         app:tabMode="scrollable"
         app:tabIndicatorColor="@color/blue_4C9EF2"
         app:tabIndicatorFullWidth="false"
-        app:layout_constraintTop_toBottomOf="@id/jcsTitle"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/shape_news_tab_layout"/>
 
-    <ImageView
-        android:id="@+id/imageAdd"
-        android:padding="@dimen/dp_5"
-        android:src="@drawable/ic_news_add"
+    <View
+        android:id="@+id/addTabView"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tabLayout"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_30"/>
+        android:background="@drawable/shape_news_add_view"/>
+
+    <ImageView
+        android:id="@+id/addIcon"
+        android:layout_width="@dimen/dp_17"
+        android:layout_height="@dimen/dp_17"
+        android:src="@mipmap/ic_news_add_black"
+        app:layout_constraintTop_toTopOf="@id/addTabView"
+        app:layout_constraintBottom_toBottomOf="@id/addTabView"
+        app:layout_constraintStart_toStartOf="@id/addTabView"
+        app:layout_constraintEnd_toEndOf="@id/addTabView"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"

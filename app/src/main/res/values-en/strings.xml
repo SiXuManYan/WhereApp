@@ -228,4 +228,5 @@
 	<string name="news_edit_channel">Edit</string>
 	<string name="news_finish_channel">Finished</string>
 	<string name="news_click_to_add_channel">Click to add channel</string>
+    <string name="integral">My Integral</string>
 </resources>

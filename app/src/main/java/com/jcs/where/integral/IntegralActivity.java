@@ -38,6 +38,28 @@ public class IntegralActivity extends BaseActivity {
 
 
 
+    private class InnerPagerAdapter extends FragmentPagerAdapter{
+
+
+        public InnerPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+
+
+    }
+
 
 
 }

@@ -1,5 +1,8 @@
 package com.jcs.where.news;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -24,7 +27,7 @@ import java.util.List;
 
 /**
  * 新闻页
- * author : hwd
+ * author : zyf
  * date   : 2021/1/6-22:54
  */
 
@@ -133,7 +136,9 @@ public class NewsActivity extends BaseActivity {
 
     private void onAddTabClicked(View view) {
         // 弹出选择新闻分类的页面
-        toActivity(SelectNewsChannelActivity.class);
+        Intent to = new Intent(this, SelectNewsChannelActivity.class);
+        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+        startActivity(to,bundle);
     }
 
     @Override

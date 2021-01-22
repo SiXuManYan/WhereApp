@@ -1,5 +1,6 @@
 package com.jcs.where.news;
 
+import android.transition.Explode;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 
 /**
  * 选择新闻频道的页面
@@ -47,6 +50,16 @@ public class SelectNewsChannelActivity extends BaseActivity {
         });
         mRecycler.setLayoutManager(manager);
         mRecycler.setAdapter(mAdapter);
+
+//        Transition explode = TransitionInflater.from(this).inflateTransition(R.transition.activity_to_top);
+        //退出时使用
+//        getWindow().setExitTransition(new Explode().setDuration(2000));
+        //第一次进入时使用
+//        getWindow().setEnterTransition(explode);
+//        getWindow().setEnterTransition(explode);
+        //再次进入时使用
+//        getWindow().setReenterTransition(new Explode().setDuration(2000));
+//        getWindow().setReenterTransition(explode);
     }
 
     @Override

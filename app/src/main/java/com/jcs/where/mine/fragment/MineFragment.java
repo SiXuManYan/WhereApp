@@ -13,6 +13,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.hotel.activity.CityPickerActivity;
+import com.jcs.where.integral.IntegralActivity;
 import com.jcs.where.login.LoginActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
 import com.jcs.where.mine.activity.PersonalDataActivity;
@@ -56,6 +57,7 @@ public class MineFragment extends BaseFragment {
         accountTv = view.findViewById(R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
         headerIv = view.findViewById(R.id.iv_header);
+        view.findViewById(R.id.iv_integral).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.toSeeBalanceTv).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.mineBalanceLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.pointLayout).setOnClickListener(this::toShowComing);
@@ -74,6 +76,10 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
 
+    }
+
+    private void onIntegralIvClicked(View view) {
+        toActivity(IntegralActivity.class);
     }
 
     private void onUserDataClicked(View view) {

@@ -21,7 +21,7 @@ import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsResponse;
-import com.jcs.where.api.response.NewsTabResponse;
+import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
@@ -34,7 +34,6 @@ import com.jcs.where.bean.CityResponse;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -323,7 +322,7 @@ public interface RetrofitApi {
      * 获得新闻页的标签
      */
     @GET("newsapi/v1/channels")
-    Observable<List<NewsTabResponse>> getNewsTabs();
+    Observable<List<NewsChannelResponse>> getNewsTabs();
 
     @GET("newsapi/v1/news")
     Observable<PageResponse<NewsResponse>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);

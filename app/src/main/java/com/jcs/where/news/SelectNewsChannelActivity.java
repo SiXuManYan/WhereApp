@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.jcs.where.R;
-import com.jcs.where.api.response.NewsTabResponse;
+import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.ParentNewsTabResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.news.adapter.SelectNewsChannelAdapter;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -64,13 +63,13 @@ public class SelectNewsChannelActivity extends BaseActivity {
         List<BaseNode> my = new ArrayList<>();
         for (int i = 0; i < 19; i++) {
             String name = "my：" + i + "";
-            my.add(new NewsTabResponse(name));
+            my.add(new NewsChannelResponse(name));
         }
         myChannel.setChildren(my);
         List<BaseNode> more = new ArrayList<>();
         for (int i = 0; i < 19; i++) {
             String name = "more：" + i + "";
-            more.add(new NewsTabResponse(name));
+            more.add(new NewsChannelResponse(name));
         }
         moreChannel.setChildren(more);
 
@@ -91,7 +90,7 @@ public class SelectNewsChannelActivity extends BaseActivity {
     private void onItemChannelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
 
         BaseNode item = mAdapter.getItem(position);
-        if (item instanceof NewsTabResponse) {
+        if (item instanceof NewsChannelResponse) {
             if (position > mData.get(0).getChildNode().size() + 1) {
                 mAdapter.notifyItemMoved(position, mData.get(0).getChildNode().size());
             }

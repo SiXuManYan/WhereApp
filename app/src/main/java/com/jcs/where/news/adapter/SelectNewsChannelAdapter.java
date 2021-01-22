@@ -7,8 +7,7 @@ import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.provider.BaseNodeProvider;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
-import com.jcs.where.api.response.NewsTabResponse;
-import com.jcs.where.api.response.ParentCategoryResponse;
+import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.ParentNewsTabResponse;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +32,7 @@ public class SelectNewsChannelAdapter extends BaseNodeAdapter {
         BaseNode node = list.get(position);
         if (node instanceof ParentNewsTabResponse) {
             return ITEM_TYPE_GROUP;
-        } else if (node instanceof NewsTabResponse) {
+        } else if (node instanceof NewsChannelResponse) {
             return ITEM_TYPE_CHILD;
         }
         return -1;
@@ -78,8 +77,8 @@ public class SelectNewsChannelAdapter extends BaseNodeAdapter {
 
         @Override
         public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode baseNode) {
-            NewsTabResponse newsTabResponse = (NewsTabResponse) baseNode;
-            baseViewHolder.setText(R.id.channelTitleTv, newsTabResponse.getName());
+            NewsChannelResponse newsChannelResponse = (NewsChannelResponse) baseNode;
+            baseViewHolder.setText(R.id.channelTitleTv, newsChannelResponse.getName());
         }
     }
 }

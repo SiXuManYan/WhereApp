@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.api.response.NewsTabResponse;
+import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.news.adapter.NewsViewPagerAdapter;
 import com.jcs.where.news.fragment.NewsFragment;
@@ -33,9 +33,11 @@ public class NewsActivity extends BaseActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private NewsViewPagerAdapter mNewsViewPagerAdapter;
-    private List<NewsTabResponse> mTabs;
     private NewsAtyModel mModel;
     private View mAddTabView;
+    private List<NewsChannelResponse> mFollowChannels;
+    private List<NewsChannelResponse> mAllChannels;
+    private List<NewsChannelResponse> mTabs;
 
     /**
      * 新闻Fragment集合
@@ -52,35 +54,40 @@ public class NewsActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new NewsAtyModel();
+        mFollowChannels = new ArrayList<>();
         mTabs = new ArrayList<>();
         mNewsFragments = new ArrayList<>();
 
-        mModel.getNewsTabs(new BaseObserver<List<NewsTabResponse>>() {
+        mModel.getNewsTabs(new BaseObserver<List<NewsChannelResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
 
             }
 
             @Override
-            public void onNext(@NotNull List<NewsTabResponse> newsTabResponses) {
-                NewsTabResponse follow = new NewsTabResponse();
+            public void onNext(@NotNull List<NewsChannelResponse> newsChannelResponses) {
+                mAllChannels = newsChannelResponses;
+                // 拆分出已经关注的新闻频道
+                getFollowedChannels();
+                NewsChannelResponse follow = new NewsChannelResponse();
                 follow.setName(getString(R.string.news_follow));
                 follow.setId(-1);
 
-                NewsTabResponse recommend = new NewsTabResponse();
+                NewsChannelResponse recommend = new NewsChannelResponse();
                 recommend.setName(getString(R.string.news_recommend));
                 recommend.setId(-2);
 
                 mTabs.add(follow);
                 mTabs.add(recommend);
-                mTabs.addAll(newsTabResponses);
+
+                mTabs.addAll(mFollowChannels);
                 // 添加一个占位的 tab，用于滑动效果
-                mTabs.add(new NewsTabResponse(""));
+                mTabs.add(new NewsChannelResponse(""));
 
                 for (int i = 0; i < mTabs.size(); i++) {
-                    NewsTabResponse newsTabResponse = mTabs.get(i);
-                    mTabLayout.addTab(mTabLayout.newTab().setText(newsTabResponse.getName()));
-                    mNewsFragments.add(NewsFragment.newInstance(newsTabResponse, i == 0));
+                    NewsChannelResponse newsChannelResponse = mTabs.get(i);
+                    mTabLayout.addTab(mTabLayout.newTab().setText(newsChannelResponse.getName()));
+                    mNewsFragments.add(NewsFragment.newInstance(newsChannelResponse, i == 0));
                 }
 
                 mNewsViewPagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(),
@@ -95,6 +102,17 @@ public class NewsActivity extends BaseActivity {
                 notClickLastTab();
             }
         });
+    }
+
+    private void getFollowedChannels() {
+        mFollowChannels = new ArrayList<>();
+        int size = mAllChannels.size();
+        for (int i = 0; i < size; i++) {
+            NewsChannelResponse newsChannelResponse = mAllChannels.get(i);
+            if (newsChannelResponse.getFollowStatus() == 1) {
+                mFollowChannels.add(newsChannelResponse);
+            }
+        }
     }
 
     private void notClickLastTab() {

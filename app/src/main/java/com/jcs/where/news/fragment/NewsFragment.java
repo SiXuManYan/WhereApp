@@ -13,7 +13,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.NewsResponse;
-import com.jcs.where.api.response.NewsTabResponse;
+import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.news.adapter.NewsFragmentAdapter;
@@ -35,13 +35,13 @@ public class NewsFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeLayout;
     private NewsFragmentAdapter mAdapter;
-    private NewsTabResponse mTabResponse;
+    private NewsChannelResponse mTabResponse;
     private NewsFragModel mModel;
     private PageResponse<NewsResponse> mPageNews;
     private boolean mIsFirst = false;
     private boolean mIsLoaded = false;
 
-    public static NewsFragment newInstance(NewsTabResponse tabResponse, boolean isFirst) {
+    public static NewsFragment newInstance(NewsChannelResponse tabResponse, boolean isFirst) {
         Bundle args = new Bundle();
         args.putSerializable(K_NEW_TAB_RESPONSE, tabResponse);
         args.putBoolean(K_IS_FIRST, isFirst);
@@ -56,7 +56,7 @@ public class NewsFragment extends BaseFragment {
         mRecyclerView = view.findViewById(R.id.newsRecycler);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mTabResponse = (NewsTabResponse) arguments.getSerializable(K_NEW_TAB_RESPONSE);
+            mTabResponse = (NewsChannelResponse) arguments.getSerializable(K_NEW_TAB_RESPONSE);
             mIsFirst = arguments.getBoolean(K_IS_FIRST);
         }
         mAdapter = new NewsFragmentAdapter();

@@ -1,6 +1,6 @@
 package com.jcs.where.news.adapter;
 
-import com.jcs.where.api.response.NewsTabResponse;
+import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.news.fragment.NewsFragment;
 
 import androidx.annotation.Nullable;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class NewsViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<NewsFragment> mNewsFragments;
-    private List<NewsTabResponse> mTabCategories;
+    private List<NewsChannelResponse> mTabCategories;
 
     public NewsViewPagerAdapter(@androidx.annotation.NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -39,7 +39,7 @@ public class NewsViewPagerAdapter extends FragmentStatePagerAdapter {
         this.mNewsFragments = newsFragments;
     }
 
-    public void setTabCategories(List<NewsTabResponse> tabCategories) {
+    public void setTabCategories(List<NewsChannelResponse> tabCategories) {
         this.mTabCategories = tabCategories;
     }
 }

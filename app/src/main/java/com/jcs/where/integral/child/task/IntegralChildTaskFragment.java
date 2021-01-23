@@ -1,4 +1,4 @@
-package com.jcs.where.integral.child;
+package com.jcs.where.integral.child.task;
 
 
 import android.view.View;
@@ -8,8 +8,15 @@ import com.jcs.where.base.BaseFragment;
 
 /**
  * Created by Wangsw  2021/1/22 10:06.
+ * 积分任务
  */
-public class IntegralFragment extends BaseFragment {
+public class IntegralChildTaskFragment extends BaseFragment {
+
+
+    public static IntegralChildTaskFragment newInstance() {
+        return new IntegralChildTaskFragment();
+    }
+
 
     @Override
     protected int getLayoutId() {
@@ -23,6 +30,11 @@ public class IntegralFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void loadOnVisible() {
 
     }
 

@@ -51,6 +51,9 @@
     <color name="blue_84c0f8">#84c0f8</color>
     <color name="blue_ACD8FF">#ACD8FF</color>
     <color name="red_ACD8FF">#F64C09</color>
+    <color name="blue_5570FF">#5570FF</color>
+
+
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>
 

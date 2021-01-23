@@ -12,18 +12,23 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.jcs.where.R;
-import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.utils.ToastUtils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.jcs.where.R;
+import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.utils.ToastUtils;
+
 public abstract class BaseFragment extends Fragment {
 
     public CustomProgressDialog dialog;
+
+
+    protected boolean isViewCreated = false;
+    protected boolean isViewVisible = false;
+    protected boolean hasLoad = false;
 
     public void setMargins(View v, int left, int top, int right, int bottom, int barColor) {
         setMargins(v, left, top, right, bottom);
@@ -60,6 +65,7 @@ public abstract class BaseFragment extends Fragment {
         initView(view);
         initData();
         bindListener();
+        isViewCreated = true;
     }
 
     @Override
@@ -72,7 +78,15 @@ public abstract class BaseFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         changeStatusTextColor();
+        isViewVisible = isVisibleToUser;
+
+        if (!hasLoad && isViewVisible && isViewCreated) {
+            hasLoad = true;
+            loadOnVisible();
+        }
+
     }
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -189,7 +203,7 @@ public abstract class BaseFragment extends Fragment {
         ToastUtils.showLong(getContext(), msg);
     }
 
-    public void showComing(){
+    public void showComing() {
         showToast(getString(R.string.coming_soon));
     }
 
@@ -214,5 +228,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected int getPxFromDp(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
+    }
+
+    protected void loadOnVisible() {
+
     }
 }

@@ -228,5 +228,11 @@
 	<string name="news_edit_channel">Edit</string>
 	<string name="news_finish_channel">Finished</string>
 	<string name="news_click_to_add_channel">Click to add channel</string>
+
     <string name="integral">My Integral</string>
+    <string name="consecutive_check_in_to_win_integral">Consecutive check in to win integral</string>
+    <string name="my_scores">My scores</string>
+    <string name="sign_in_now">Sign in now</string>
+	<string name="points_task">Points task</string>
+	<string name="points_details">Points details</string>
 </resources>

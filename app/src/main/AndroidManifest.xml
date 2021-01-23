@@ -54,7 +54,8 @@
                 android:resource="@xml/file_paths_public" />
         </provider>
 
-        <activity android:name=".flash.activity.FlashActivity"
+        <activity
+            android:name=".flash.activity.FlashActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
@@ -65,11 +66,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.HomeActivity"
+        <activity
+            android:name=".home.HomeActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".login.LoginActivity"
@@ -229,39 +230,39 @@
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".convenience.activity.ConvenienceServiceActivity"
+        <activity
+            android:name=".convenience.activity.ConvenienceServiceActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
-            tools:ignore="LockedOrientationActivity"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".news.NewsActivity"
+        <activity
+            android:name=".news.NewsActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
-            tools:ignore="LockedOrientationActivity"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".mine.activity.LanguageActivity"
+        <activity
+            android:name=".mine.activity.LanguageActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
-            tools:ignore="LockedOrientationActivity"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".news.SelectNewsChannelActivity"
+        <activity
+            android:name=".news.SelectNewsChannelActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".integral.IntegralActivity"
+        <activity
+            android:name=".integral.IntegralActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            />
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

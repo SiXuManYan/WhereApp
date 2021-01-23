@@ -1,84 +1,52 @@
 package com.jcs.where.news.adapter;
 
-import android.view.View;
-
-import com.chad.library.adapter.base.BaseNodeAdapter;
-import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.chad.library.adapter.base.provider.BaseNodeProvider;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.NewsChannelResponse;
-import com.jcs.where.api.response.ParentNewsTabResponse;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * create by zyf on 2021/1/20 10:18 下午
  */
-public class SelectNewsChannelAdapter extends BaseNodeAdapter {
+public class SelectNewsChannelAdapter extends BaseQuickAdapter<NewsChannelResponse, BaseViewHolder> {
 
-    public static final int ITEM_TYPE_GROUP = 0;
-    public static final int ITEM_TYPE_CHILD = 1;
+    private boolean mIsShowDel = false;
+
 
     public SelectNewsChannelAdapter() {
-        addFullSpanNodeProvider(new GroupProvider());
-        addNodeProvider(new ChildProvider());
+        super(R.layout.item_select_news_channel_child);
     }
 
     @Override
-    protected int getItemType(@NotNull List<? extends BaseNode> list, int position) {
-        BaseNode node = list.get(position);
-        if (node instanceof ParentNewsTabResponse) {
-            return ITEM_TYPE_GROUP;
-        } else if (node instanceof NewsChannelResponse) {
-            return ITEM_TYPE_CHILD;
-        }
-        return -1;
-    }
+    protected void convert(@NotNull BaseViewHolder baseViewHolder, NewsChannelResponse newsChannelResponse) {
+        baseViewHolder.setText(R.id.channelTitleTv, newsChannelResponse.getName());
+        // 默认文字颜色
+        baseViewHolder.setTextColor(R.id.channelTitleTv,getContext().getColor(R.color.black_333333));
 
-    public static class GroupProvider extends BaseNodeProvider {
-
-        @Override
-        public int getItemViewType() {
-            return 0;
-        }
-
-        @Override
-        public int getLayoutId() {
-            return R.layout.item_select_news_channel_group;
-        }
-
-        @Override
-        public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode baseNode) {
-            if (baseViewHolder.getAdapterPosition() == 0) {
-                ParentNewsTabResponse parent = (ParentNewsTabResponse) baseNode;
-                baseViewHolder.setText(R.id.myChannelPrompt, parent.getPrompt());
-                baseViewHolder.setText(R.id.clickToChannelTv, parent.getAction());
-                baseViewHolder.setGone(R.id.operateMyChannelTv, parent.isShowEdit());
-            }else {
-                baseViewHolder.itemView.setVisibility(View.INVISIBLE);
+        if (newsChannelResponse.isEditable()) {
+            //根据tag设置删除icon的显示隐藏
+            baseViewHolder.setGone(R.id.delChannelIv, !mIsShowDel);
+        }else {
+            baseViewHolder.setGone(R.id.delChannelIv, true);
+            // -2 表示是推荐频道，UI要求推荐频道的颜色
+            if (newsChannelResponse.getId() == -2){
+                baseViewHolder.setTextColor(R.id.channelTitleTv,getContext().getColor(R.color.orange_FD8181));
             }
         }
+
+        // 已关注的不需要展示添加图片
+        baseViewHolder.setGone(R.id.addIcon, newsChannelResponse.getFollowStatus() == 1);
     }
 
-    public static class ChildProvider extends BaseNodeProvider {
+    public void showDel() {
+        mIsShowDel = true;
+        notifyDataSetChanged();
+    }
 
-        @Override
-        public int getItemViewType() {
-            return 1;
-        }
-
-        @Override
-        public int getLayoutId() {
-            return R.layout.item_select_news_channel_child;
-        }
-
-        @Override
-        public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode baseNode) {
-            NewsChannelResponse newsChannelResponse = (NewsChannelResponse) baseNode;
-            baseViewHolder.setText(R.id.channelTitleTv, newsChannelResponse.getName());
-        }
+    public void hideDel() {
+        mIsShowDel = false;
+        notifyDataSetChanged();
     }
 }

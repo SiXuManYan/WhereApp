@@ -26,6 +26,12 @@ public class NewsChannelResponse extends BaseNode implements Serializable {
     @SerializedName("follow_status")
     private int followStatus;
 
+    /**
+     * 从网络拉取的都是可编辑的
+     * 只有本地添加的：（关注）（推荐）是不可编辑的，需要手动设置
+     */
+    private boolean isEditable = true;
+
     public NewsChannelResponse() {
     }
 
@@ -55,6 +61,14 @@ public class NewsChannelResponse extends BaseNode implements Serializable {
 
     public void setFollowStatus(int followStatus) {
         this.followStatus = followStatus;
+    }
+
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+    public void setEditable(boolean editable) {
+        isEditable = editable;
     }
 
     @Nullable

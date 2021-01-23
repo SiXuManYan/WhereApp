@@ -1,8 +1,6 @@
 package com.jcs.where.news;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -22,6 +20,7 @@ import com.jcs.where.news.model.NewsAtyModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +38,7 @@ public class NewsActivity extends BaseActivity {
     private NewsAtyModel mModel;
     private View mAddTabView;
     private List<NewsChannelResponse> mFollowChannels;
+    private List<NewsChannelResponse> mMoreChannels;
     private List<NewsChannelResponse> mAllChannels;
     private List<NewsChannelResponse> mTabs;
 
@@ -58,6 +58,7 @@ public class NewsActivity extends BaseActivity {
     protected void initData() {
         mModel = new NewsAtyModel();
         mFollowChannels = new ArrayList<>();
+        mMoreChannels = new ArrayList<>();
         mTabs = new ArrayList<>();
         mNewsFragments = new ArrayList<>();
 
@@ -70,15 +71,21 @@ public class NewsActivity extends BaseActivity {
             @Override
             public void onNext(@NotNull List<NewsChannelResponse> newsChannelResponses) {
                 mAllChannels = newsChannelResponses;
-                // 拆分出已经关注的新闻频道
-                getFollowedChannels();
+                // 拆分出已经关注的和未关注的新闻频道
+                getFollowedAndMoreChannels();
+                // 本地添加关注频道
                 NewsChannelResponse follow = new NewsChannelResponse();
                 follow.setName(getString(R.string.news_follow));
                 follow.setId(-1);
+                follow.setFollowStatus(1);
+                follow.setEditable(false);
 
+                // 本地添加推荐频道
                 NewsChannelResponse recommend = new NewsChannelResponse();
                 recommend.setName(getString(R.string.news_recommend));
                 recommend.setId(-2);
+                recommend.setFollowStatus(1);
+                recommend.setEditable(false);
 
                 mTabs.add(follow);
                 mTabs.add(recommend);
@@ -107,13 +114,17 @@ public class NewsActivity extends BaseActivity {
         });
     }
 
-    private void getFollowedChannels() {
+    private void getFollowedAndMoreChannels() {
         mFollowChannels = new ArrayList<>();
         int size = mAllChannels.size();
         for (int i = 0; i < size; i++) {
             NewsChannelResponse newsChannelResponse = mAllChannels.get(i);
             if (newsChannelResponse.getFollowStatus() == 1) {
                 mFollowChannels.add(newsChannelResponse);
+            }
+
+            if (newsChannelResponse.getFollowStatus() == 2) {
+                mMoreChannels.add(newsChannelResponse);
             }
         }
     }
@@ -137,8 +148,10 @@ public class NewsActivity extends BaseActivity {
     private void onAddTabClicked(View view) {
         // 弹出选择新闻分类的页面
         Intent to = new Intent(this, SelectNewsChannelActivity.class);
-        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
-        startActivity(to,bundle);
+        to.putExtra(SelectNewsChannelActivity.K_NEWS_FOLLOW_CHANNEL, (Serializable) mTabs);
+        to.putExtra(SelectNewsChannelActivity.K_NEWS_MORE_CHANNEL, (Serializable) mMoreChannels);
+
+        startActivity(to);
     }
 
     @Override

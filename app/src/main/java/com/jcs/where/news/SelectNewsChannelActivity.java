@@ -1,24 +1,22 @@
 package com.jcs.where.news;
 
-import android.transition.Explode;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.jcs.where.R;
 import com.jcs.where.api.response.NewsChannelResponse;
-import com.jcs.where.api.response.ParentNewsTabResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.news.adapter.SelectNewsChannelAdapter;
+import com.jcs.where.news.item_decoration.NewsChannelItemDecoration;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 
 /**
  * 选择新闻频道的页面
@@ -26,98 +24,97 @@ import android.transition.TransitionInflater;
  */
 public class SelectNewsChannelActivity extends BaseActivity {
     private boolean mIsEditing = false;
+    public static final String K_NEWS_FOLLOW_CHANNEL = "follow";
+    public static final String K_NEWS_MORE_CHANNEL = "more";
 
     private TextView mOperateChannelTv;
-    private RecyclerView mRecycler;
-    private SelectNewsChannelAdapter mAdapter;
-    private List<ParentNewsTabResponse> mData;
+    private RecyclerView mFollowRecycler, mMoreRecycler;
+    private SelectNewsChannelAdapter mFollowAdapter;
+    private SelectNewsChannelAdapter mMoreAdapter;
+    private List<NewsChannelResponse> mFollowChannel;
+    private List<NewsChannelResponse> mMoreChannel;
 
     @Override
     protected void initView() {
-//        mOperateChannelTv = findViewById(R.id.operateMyChannelTv);
-        mRecycler = findViewById(R.id.channelRecycler);
-        mAdapter = new SelectNewsChannelAdapter();
-        GridLayoutManager manager = new GridLayoutManager(this, 4);
-        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                BaseNode item = mAdapter.getItem(position);
-                if (item instanceof ParentNewsTabResponse) {
-                    return 4;
-                }
-                return 1;
-            }
-        });
-        mRecycler.setLayoutManager(manager);
-        mRecycler.setAdapter(mAdapter);
+        NewsChannelItemDecoration decor = new NewsChannelItemDecoration();
+        mOperateChannelTv = findViewById(R.id.operateMyChannelTv);
+        mFollowRecycler = findViewById(R.id.followRecycler);
+        mFollowAdapter = new SelectNewsChannelAdapter();
+        mFollowRecycler.setLayoutManager(new GridLayoutManager(this, 4));
+        mFollowRecycler.setAdapter(mFollowAdapter);
+        mFollowRecycler.addItemDecoration(decor);
 
-//        Transition explode = TransitionInflater.from(this).inflateTransition(R.transition.activity_to_top);
-        //退出时使用
-//        getWindow().setExitTransition(new Explode().setDuration(2000));
-        //第一次进入时使用
-//        getWindow().setEnterTransition(explode);
-//        getWindow().setEnterTransition(explode);
-        //再次进入时使用
-//        getWindow().setReenterTransition(new Explode().setDuration(2000));
-//        getWindow().setReenterTransition(explode);
+        mMoreRecycler = findViewById(R.id.moreRecycler);
+        mMoreAdapter = new SelectNewsChannelAdapter();
+        mMoreRecycler.setLayoutManager(new GridLayoutManager(this, 4));
+        mMoreRecycler.setAdapter(mMoreAdapter);
+        mMoreRecycler.addItemDecoration(decor);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void initData() {
-        mData = new ArrayList<>();
-        ParentNewsTabResponse myChannel = new ParentNewsTabResponse();
-        myChannel.setPrompt(getString(R.string.news_my_channel));
-        myChannel.setAction(getString(R.string.news_click_to_channel));
-        myChannel.setShowEdit(true);
-        ParentNewsTabResponse moreChannel = new ParentNewsTabResponse();
-        moreChannel.setPrompt(getString(R.string.news_more_channel));
-        moreChannel.setPrompt(getString(R.string.news_click_to_add_channel));
-        moreChannel.setShowEdit(false);
-        List<BaseNode> my = new ArrayList<>();
-        for (int i = 0; i < 19; i++) {
-            String name = "my：" + i + "";
-            my.add(new NewsChannelResponse(name));
-        }
-        myChannel.setChildren(my);
-        List<BaseNode> more = new ArrayList<>();
-        for (int i = 0; i < 19; i++) {
-            String name = "more：" + i + "";
-            more.add(new NewsChannelResponse(name));
-        }
-        moreChannel.setChildren(more);
+        Intent intent = getIntent();
 
-        mData.add(myChannel);
-        mData.add(moreChannel);
+        Serializable follows = intent.getSerializableExtra(K_NEWS_FOLLOW_CHANNEL);
+        if (follows instanceof List) {
+            mFollowChannel = (List<NewsChannelResponse>) follows;
+            // 将在新闻列表页，用于占位TabLayout的最后一个对象移除
+            mFollowChannel.remove(mFollowChannel.size() - 1);
+        }
 
-        mAdapter.getData().clear();
-        mAdapter.addData(mData);
+        Serializable mores = intent.getSerializableExtra(K_NEWS_MORE_CHANNEL);
+        if (mores instanceof List) {
+            mMoreChannel = (List<NewsChannelResponse>) mores;
+        }
+
+        // 展示已关注的频道
+        mFollowAdapter.getData().clear();
+        mFollowAdapter.addData(mFollowChannel);
+
+        // 展示未关注的频道
+        mMoreAdapter.getData().clear();
+        mMoreAdapter.addData(mMoreChannel);
+
     }
 
     @Override
     protected void bindListener() {
-//        mOperateChannelTv.setOnClickListener(this::onOperateChannelClicked);
-        mAdapter.setOnItemClickListener(this::onItemChannelClicked);
+        mOperateChannelTv.setOnClickListener(this::onOperateFollowChannelClicked);
+        mFollowAdapter.setOnItemClickListener(this::onFollowChannelClicked);
+        mMoreAdapter.setOnItemClickListener(this::onMoreChannelClicked);
 
     }
 
-    private void onItemChannelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-
-        BaseNode item = mAdapter.getItem(position);
-        if (item instanceof NewsChannelResponse) {
-            if (position > mData.get(0).getChildNode().size() + 1) {
-                mAdapter.notifyItemMoved(position, mData.get(0).getChildNode().size());
-            }
-        }
-
+    private void onMoreChannelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        NewsChannelResponse channel = mMoreAdapter.getItem(position);
+        mMoreAdapter.notifyItemRemoved(position);
+        mFollowAdapter.addData(mFollowAdapter.getItemCount(), channel);
     }
 
-    private void onOperateChannelClicked(View view) {
+    private void onFollowChannelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        NewsChannelResponse channel = mFollowAdapter.getItem(position);
+        mFollowAdapter.notifyItemRemoved(position);
+        mMoreAdapter.addData(0, channel);
+    }
+
+    private void onOperateFollowChannelClicked(View view) {
         if (mIsEditing) {
             mOperateChannelTv.setText(getString(R.string.news_finish_channel));
+            showNormalRecycler();
         } else {
             mOperateChannelTv.setText(getString(R.string.news_edit_channel));
+            showActionRecycler();
         }
         mIsEditing = !mIsEditing;
+    }
+
+    private void showActionRecycler() {
+        mFollowAdapter.showDel();
+    }
+
+    private void showNormalRecycler() {
+        mFollowAdapter.hideDel();
     }
 
     @Override

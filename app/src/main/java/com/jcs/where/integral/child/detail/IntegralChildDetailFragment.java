@@ -4,13 +4,17 @@ package com.jcs.where.integral.child.detail;
 import android.view.View;
 
 import com.jcs.where.R;
+import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.response.IntegralDetailResponse;
 import com.jcs.where.base.BaseFragment;
+
+import java.util.List;
 
 /**
  * Created by Wangsw  2021/1/22 10:06.
  * 积分明细
  */
-public class IntegralChildDetailFragment extends BaseFragment {
+public class IntegralChildDetailFragment extends BaseFragment implements IntegralChildDetailView{
 
 
     public static IntegralChildDetailFragment newInstance() {
@@ -39,4 +43,13 @@ public class IntegralChildDetailFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onDetailError(ErrorResponse errorResponse) {
+
+    }
+
+    @Override
+    public void bindDetailData(List<IntegralDetailResponse> data) {
+
+    }
 }

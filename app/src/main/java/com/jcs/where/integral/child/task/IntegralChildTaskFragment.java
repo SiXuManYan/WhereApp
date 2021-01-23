@@ -4,13 +4,14 @@ package com.jcs.where.integral.child.task;
 import android.view.View;
 
 import com.jcs.where.R;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.base.BaseFragment;
 
 /**
  * Created by Wangsw  2021/1/22 10:06.
  * 积分任务
  */
-public class IntegralChildTaskFragment extends BaseFragment {
+public class IntegralChildTaskFragment extends BaseFragment implements IntegralChildTaskView{
 
 
     public static IntegralChildTaskFragment newInstance() {
@@ -44,4 +45,8 @@ public class IntegralChildTaskFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onDetailError(ErrorResponse errorResponse) {
+
+    }
 }

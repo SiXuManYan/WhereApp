@@ -20,12 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class NewsChannelItemDecoration extends BaseItemDecoration {
 
-    private final int mDividerHeight = 5;
+    private final int mDividerHeight = 10;
 
     @Override
     public void getItemOffsets(@NonNull @NotNull Rect outRect, @NonNull @NotNull View view, @NonNull @NotNull RecyclerView parent, @NonNull @NotNull RecyclerView.State state) {
         outRect.top = getPxFromDp(parent.getContext(), mDividerHeight);
-        outRect.bottom = getPxFromDp(parent.getContext(), mDividerHeight);
     }
 
 }

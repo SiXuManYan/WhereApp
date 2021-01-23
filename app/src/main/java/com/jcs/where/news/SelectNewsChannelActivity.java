@@ -1,7 +1,6 @@
 package com.jcs.where.news;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,6 +32,9 @@ public class SelectNewsChannelActivity extends BaseActivity {
     private SelectNewsChannelAdapter mMoreAdapter;
     private List<NewsChannelResponse> mFollowChannel;
     private List<NewsChannelResponse> mMoreChannel;
+
+    private final int STATUS_FOLLOWED = 1;
+    private final int STATUS_UNFOLLOWED = 2;
 
     @Override
     protected void initView() {
@@ -80,30 +82,34 @@ public class SelectNewsChannelActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
+        mFollowAdapter.addChildClickViewIds(R.id.delChannelIv);
         mOperateChannelTv.setOnClickListener(this::onOperateFollowChannelClicked);
-        mFollowAdapter.setOnItemClickListener(this::onFollowChannelClicked);
+        mFollowAdapter.setOnItemChildClickListener(this::onFollowDelClicked);
         mMoreAdapter.setOnItemClickListener(this::onMoreChannelClicked);
+    }
 
+    private void onFollowDelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        NewsChannelResponse channel = mFollowAdapter.getData().remove(position);
+        mFollowAdapter.notifyItemRemoved(position);
+        // 改变为未关注状态
+        channel.setFollowStatus(STATUS_UNFOLLOWED);
+        mMoreAdapter.addData(0, channel);
     }
 
     private void onMoreChannelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        NewsChannelResponse channel = mMoreAdapter.getItem(position);
+        NewsChannelResponse channel = mMoreAdapter.getData().remove(position);
         mMoreAdapter.notifyItemRemoved(position);
+        // 改变为关注状态
+        channel.setFollowStatus(STATUS_FOLLOWED);
         mFollowAdapter.addData(mFollowAdapter.getItemCount(), channel);
-    }
-
-    private void onFollowChannelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        NewsChannelResponse channel = mFollowAdapter.getItem(position);
-        mFollowAdapter.notifyItemRemoved(position);
-        mMoreAdapter.addData(0, channel);
     }
 
     private void onOperateFollowChannelClicked(View view) {
         if (mIsEditing) {
-            mOperateChannelTv.setText(getString(R.string.news_finish_channel));
+            mOperateChannelTv.setText(getString(R.string.news_edit_channel));
             showNormalRecycler();
         } else {
-            mOperateChannelTv.setText(getString(R.string.news_edit_channel));
+            mOperateChannelTv.setText(getString(R.string.news_finish_channel));
             showActionRecycler();
         }
         mIsEditing = !mIsEditing;

@@ -38,12 +38,12 @@
 
     <ImageView
         android:id="@+id/delChannelIv"
-        android:layout_width="@dimen/dp_12"
-        android:layout_height="@dimen/dp_12"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:src="@mipmap/ic_news_del_channel"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:translationY="-6dp"
-        android:translationX="@dimen/dp_6"/>
+        android:translationY="-5dp"
+        android:translationX="@dimen/dp_5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

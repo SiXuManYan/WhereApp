@@ -136,7 +136,7 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
             }
 
             @Override
-            public void onNext(@NotNull CityPickerResponse cityPickerResponse) {
+            public void onSuccess(@NotNull CityPickerResponse cityPickerResponse) {
                 stopLoading();
                 HashSet<CityResponse> cityResponses = new HashSet<>();
                 List<CityPickerResponse.ListsDTO> lists = cityPickerResponse.getLists();

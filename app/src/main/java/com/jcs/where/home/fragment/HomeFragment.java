@@ -33,6 +33,7 @@ import com.jcs.where.adapter.ModulesAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.HotelResponse;
@@ -214,20 +215,21 @@ public class HomeFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(@NotNull HomeModel.HomeZipResponse homeZipResponse) {
+            protected void onSuccess(HomeModel.HomeZipResponse response) {
+
                 stopLoading();
 
                 // 金刚区
-                injectDataToModule(homeZipResponse.getModulesResponses());
+                injectDataToModule(response.getModulesResponses());
 
                 // 猜你喜欢
-                injectDataToYouLike(homeZipResponse.getYouLikeResponses());
+                injectDataToYouLike(response.getYouLikeResponses());
 
                 // banner
-                initBanner(homeZipResponse.getBannerResponses());
+                initBanner(response.getBannerResponses());
 
                 // 滚动新闻
-                initNews(homeZipResponse.getHomeNewsResponses());
+                initNews(response.getHomeNewsResponses());
             }
         });
     }

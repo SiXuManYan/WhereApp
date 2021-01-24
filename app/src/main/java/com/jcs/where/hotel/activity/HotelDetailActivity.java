@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
+import com.jcs.where.api.JcsResponse;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
@@ -321,7 +322,7 @@ public class HotelDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull HotelDetailResponse hotelDetailResponse) {
+            public void onSuccess(@NonNull HotelDetailResponse hotelDetailResponse) {
                 stopLoading();
                 if (hotelDetailResponse.getImages() != null) {
                     banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
@@ -436,7 +437,7 @@ public class HotelDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull List<HotelRoomListResponse> hotelRoomListRespons) {
+            public void onSuccess(@NonNull List<HotelRoomListResponse> hotelRoomListRespons) {
                 stopLoading();
                 roomAdapter.addData(hotelRoomListRespons);
                 roomRv.setAdapter(roomAdapter);
@@ -453,7 +454,7 @@ public class HotelDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull HotelCommentsResponse hotelCommentsResponse) {
+            public void onSuccess(@NonNull HotelCommentsResponse hotelCommentsResponse) {
                 stopLoading();
                 if (hotelCommentsResponse.getData().size() == 0) {
                     commentLl.setVisibility(View.GONE);
@@ -523,9 +524,16 @@ public class HotelDetailActivity extends BaseActivity {
     private void collection(boolean status) {
         showLoading();
         if (status) {
-            mModel.postCollectHotel(mHotelId, new BaseObserver<Response<SuccessResponse>>() {
+            mModel.postCollectHotel(mHotelId, new BaseObserver<Object>() {
+
                 @Override
-                public void onNext(@NonNull Response<SuccessResponse> successResponse) {
+                protected void onError(ErrorResponse errorResponse) {
+                    stopLoading();
+                    showNetError(errorResponse);
+                }
+
+                @Override
+                protected void onSuccess(Object response) {
                     stopLoading();
                     showToast("收藏成功");
                     like = 1;
@@ -535,17 +543,18 @@ public class HotelDetailActivity extends BaseActivity {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                     }
                 }
+            });
+        } else {
+            mModel.delCollectHotel(mHotelId, new BaseObserver<Object>() {
 
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
                     showNetError(errorResponse);
                 }
-            });
-        } else {
-            mModel.delCollectHotel(mHotelId, new BaseObserver<Response<SuccessResponse>>() {
+
                 @Override
-                public void onNext(@NonNull Response<SuccessResponse> successResponse) {
+                protected void onSuccess(Object response) {
                     stopLoading();
                     showToast("取消成功");
                     like = 2;
@@ -556,11 +565,6 @@ public class HotelDetailActivity extends BaseActivity {
                     }
                 }
 
-                @Override
-                protected void onError(ErrorResponse errorResponse) {
-                    stopLoading();
-                    showNetError(errorResponse);
-                }
             });
         }
     }
@@ -575,9 +579,9 @@ public class HotelDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull HotelRoomDetailResponse hotelRoomDetailResponse) {
-                stopLoading();
-                new RoomDetailPopup.Builder(HotelDetailActivity.this, hotelDetailRl, roomId, hotelRoomDetailResponse)
+            protected void onSuccess(HotelRoomDetailResponse response) {
+                   stopLoading();
+                new RoomDetailPopup.Builder(HotelDetailActivity.this, hotelDetailRl, roomId, response)
                         .setPriceOnClickListener(new RoomDetailPopup.SubscribeOnClickListener() {
                             @Override
                             public void getDate(int id, String name, String bed, int window, int wifi, int people, int cancel) {
@@ -602,7 +606,7 @@ public class HotelDetailActivity extends BaseActivity {
                                 subscribeBean.endWeek = mEndWeekTv.getText().toString();
                                 subscribeBean.night = mTotalDayTv.getText().toString();
                                 subscribeBean.roomNumber = String.valueOf(mRoomNum);
-                                subscribeBean.roomPrice = hotelRoomDetailResponse.getPrice();
+                                subscribeBean.roomPrice = response.getPrice();
 //                                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
 //                                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
                                 HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
@@ -610,6 +614,7 @@ public class HotelDetailActivity extends BaseActivity {
                         }).builder();
 
             }
+
         });
 
     }

@@ -140,7 +140,7 @@ public class YellowPageActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull YellowPageModel.YellowPageZipResponse yellowPageZipResponse) {
+            public void onSuccess(@NonNull YellowPageModel.YellowPageZipResponse yellowPageZipResponse) {
                 stopLoading();
                 mFirstLevelCategories = yellowPageZipResponse.getCategories();
                 // 将分类数据注入分类选择Fragment中
@@ -214,7 +214,7 @@ public class YellowPageActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull MechanismPageResponse mechanismPageResponse) {
+            public void onSuccess(@NonNull MechanismPageResponse mechanismPageResponse) {
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
                 updateAdapter(mechanismPageResponse);

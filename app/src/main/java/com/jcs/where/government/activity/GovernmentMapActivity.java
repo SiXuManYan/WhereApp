@@ -131,7 +131,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
+            public void onSuccess(@NonNull List<CategoryResponse> categoryResponses) {
                 mTabCategories.clear();
                 mMechanismListFragments.clear();
 
@@ -197,7 +197,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onNext(@NonNull List<MechanismResponse> mechanismResponses) {
+            public void onSuccess(@NonNull List<MechanismResponse> mechanismResponses) {
                 stopLoading();
                 mMapMarkerUtil.clear();
                 if (mechanismResponses.size() > 0) {
@@ -352,7 +352,7 @@ public class GovernmentMapActivity extends BaseActivity implements OnMapReadyCal
                 }
 
                 @Override
-                public void onNext(@NotNull List<MechanismResponse> mechanismResponses) {
+                public void onSuccess(@NotNull List<MechanismResponse> mechanismResponses) {
                     stopLoading();
                     mSearchAdapter.getData().clear();
                     if (mechanismResponses.size() > 0) {

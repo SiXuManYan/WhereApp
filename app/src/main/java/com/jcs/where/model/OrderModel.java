@@ -7,6 +7,8 @@ import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
 
+import java.util.List;
+
 /**
  * create by zyf on 2020/12/11 8:21 PM
  */
@@ -16,11 +18,11 @@ public class OrderModel extends BaseModel {
         dealResponse(mRetrofit.getOrderNum(), observer);
     }
 
-    public void getOrderList(int type, BaseObserver<PageResponse<OrderListResponse>> observer) {
+    public void getOrderList(int type, BaseObserver<PageResponse<List<OrderListResponse>>> observer) {
         getOrderList(type, "", observer);
     }
 
-    public void getOrderList(int type, String keyword, BaseObserver<PageResponse<OrderListResponse>> observer) {
+    public void getOrderList(int type, String keyword, BaseObserver<PageResponse<List<OrderListResponse>>> observer) {
         dealResponse(mRetrofit.getOrderList(type, keyword), observer);
     }
 

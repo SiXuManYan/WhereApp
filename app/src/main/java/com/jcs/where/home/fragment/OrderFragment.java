@@ -93,7 +93,7 @@ public class OrderFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull OrderNumResponse orderNumResponse) {
+            public void onSuccess(@io.reactivex.annotations.NonNull OrderNumResponse orderNumResponse) {
                 mNoDataGroup.setVisibility(View.GONE);
                 mDataGroup.setVisibility(View.VISIBLE);
 

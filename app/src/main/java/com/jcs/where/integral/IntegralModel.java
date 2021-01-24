@@ -27,7 +27,7 @@ public class IntegralModel extends BaseModel {
         dealResponse(mRetrofit.getSignList(), new BaseObserver<SignListResponse>() {
 
             @Override
-            public void onNext(@NonNull SignListResponse response) {
+            public void onSuccess(@NonNull SignListResponse response) {
 
                     mView.bindDetailData(response);
             }

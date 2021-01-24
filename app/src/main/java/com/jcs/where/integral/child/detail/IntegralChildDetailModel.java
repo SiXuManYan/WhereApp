@@ -28,21 +28,7 @@ public class IntegralChildDetailModel extends BaseModel {
      * 积分明细列表
      */
     public void getIntegralDetailList() {
-        dealResponse(mRetrofit.getIntegralsDetailList(), new BaseObserver<PageResponse<IntegralDetailResponse>>() {
 
-            @Override
-            public void onNext(@NonNull PageResponse<IntegralDetailResponse> response) {
-                List<IntegralDetailResponse> data = response.getData();
-                if (!data.isEmpty()) {
-                    mView.bindDetailData(data);
-                }
-            }
-
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                mView.onDetailError(errorResponse);
-            }
-        });
     }
 
 

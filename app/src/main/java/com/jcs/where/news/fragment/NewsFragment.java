@@ -22,6 +22,8 @@ import com.jcs.where.news.model.NewsFragModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * 新闻列表
  * author : hwd
@@ -37,7 +39,7 @@ public class NewsFragment extends BaseFragment {
     private NewsFragmentAdapter mAdapter;
     private NewsChannelResponse mTabResponse;
     private NewsFragModel mModel;
-    private PageResponse<NewsResponse> mPageNews;
+    private PageResponse<List<NewsResponse>> mPageNews;
     private boolean mIsFirst = false;
     private boolean mIsLoaded = false;
 
@@ -86,7 +88,7 @@ public class NewsFragment extends BaseFragment {
 
     private void getNewsList() {
         if (mTabResponse != null) {
-            mModel.getNews(mTabResponse.getId(), new BaseObserver<PageResponse<NewsResponse>>() {
+            mModel.getNews(mTabResponse.getId(), new BaseObserver<PageResponse<List<NewsResponse>>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
@@ -95,7 +97,7 @@ public class NewsFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onNext(@NotNull PageResponse<NewsResponse> newsResponsePageResponse) {
+                public void onSuccess(@NotNull PageResponse<List<NewsResponse>> newsResponsePageResponse) {
                     stopLoading();
                     mPageNews = newsResponsePageResponse;
                     mAdapter.getData().clear();

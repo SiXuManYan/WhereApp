@@ -63,7 +63,7 @@ public class HotelPayActivity extends BaseActivity implements View.OnClickListen
             }
 
             @Override
-            public void onNext(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
+            public void onSuccess(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
                 deployOrderDetail(hotelOrderDetailResponse);
             }
         });

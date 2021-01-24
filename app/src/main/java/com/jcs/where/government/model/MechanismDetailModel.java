@@ -16,11 +16,11 @@ public class MechanismDetailModel extends BaseModel {
         dealResponse(mRetrofit.getMechanismDetailById(mechanismId), observer);
     }
 
-    public void postCollectMechanism(int mechanismId, BaseObserver<Response<SuccessResponse>> observer) {
+    public void postCollectMechanism(int mechanismId, BaseObserver<Object> observer) {
         dealResponse(mRetrofit.postCollectMechanism(mechanismId), observer);
     }
 
-    public void delCollectMechanism(int mechanismId, BaseObserver<Response<SuccessResponse>> observer) {
+    public void delCollectMechanism(int mechanismId, BaseObserver<Object> observer) {
         dealResponse(mRetrofit.delCollectMechanism(mechanismId), observer);
     }
 }

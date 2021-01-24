@@ -103,7 +103,7 @@ public class CategoryFragment extends BaseFullFragment {
             }
 
             @Override
-            public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
+            public void onSuccess(@NonNull List<CategoryResponse> categoryResponses) {
                 stopLoading();
                 mTabCategories.clear();
                 mTabCategories.addAll(categoryResponses);
@@ -125,7 +125,7 @@ public class CategoryFragment extends BaseFullFragment {
             }
 
             @Override
-            public void onNext(@NonNull List<ParentCategoryResponse> parentCategoryResponses) {
+            public void onSuccess(@NonNull List<ParentCategoryResponse> parentCategoryResponses) {
                 mData = parentCategoryResponses;
                 mAdapter.getData().clear();
                 mAdapter.addData(parentCategoryResponses);

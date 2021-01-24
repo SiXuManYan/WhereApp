@@ -106,7 +106,7 @@ public class MechanismDetailActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onNext(@NonNull MechanismDetailResponse response) {
+                public void onSuccess(@NonNull MechanismDetailResponse response) {
                     stopLoading();
                     mMechanismDetailResponse = response;
                     // 配置数据
@@ -186,7 +186,7 @@ public class MechanismDetailActivity extends BaseActivity {
     }
 
     private void toDelCollect() {
-        mModel.delCollectMechanism(mMechanismId, new BaseObserver<Response<SuccessResponse>>() {
+        mModel.delCollectMechanism(mMechanismId, new BaseObserver<Object>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -194,7 +194,7 @@ public class MechanismDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull Response<SuccessResponse> successResponseResponse) {
+            public void onSuccess(@NonNull Object successResponseResponse) {
                 stopLoading();
                 // 取消收藏成功
                 mJcsTitle.setSecondRightIcon(R.mipmap.ic_uncollected_black);
@@ -204,7 +204,7 @@ public class MechanismDetailActivity extends BaseActivity {
     }
 
     private void toCollect() {
-        mModel.postCollectMechanism(mMechanismId, new BaseObserver<Response<SuccessResponse>>() {
+        mModel.postCollectMechanism(mMechanismId, new BaseObserver<Object>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -212,7 +212,7 @@ public class MechanismDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull Response<SuccessResponse> successResponseResponse) {
+            public void onSuccess(@NonNull Object successResponseResponse) {
                 stopLoading();
                 // 收藏成功
                 mJcsTitle.setSecondRightIcon(R.mipmap.ic_collected_red);

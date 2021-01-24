@@ -211,7 +211,7 @@ public class HotelSubscribeActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull HotelOrderResponse hotelOrderResponse) {
+            public void onSuccess(@NonNull HotelOrderResponse hotelOrderResponse) {
                 stopLoading();
                 showToast(getString(R.string.subscribe_success));
                 HotelPayActivity.goTo(HotelSubscribeActivity.this, hotelOrderResponse);

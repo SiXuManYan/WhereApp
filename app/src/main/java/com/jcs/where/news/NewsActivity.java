@@ -80,7 +80,7 @@ public class NewsActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull List<NewsChannelResponse> newsChannelResponses) {
+            public void onSuccess(@NotNull List<NewsChannelResponse> newsChannelResponses) {
                 mAllChannels = newsChannelResponses;
                 // 拆分出已经关注的和未关注的新闻频道
                 getFollowedAndMoreChannels();
@@ -150,7 +150,7 @@ public class NewsActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull NewsAtyModel.UpdateFollowZipResponse updateFollowZipResponse) {
+            public void onSuccess(@NotNull NewsAtyModel.UpdateFollowZipResponse updateFollowZipResponse) {
                 stopLoading();
 
                 // 清空缓存数据

@@ -19,7 +19,7 @@ public class LoginModel extends BaseModel {
         dealResponse(mRetrofit.patchLogin(loginRequest), observer);
     }
 
-    public void sendCode(SendCodeRequest sendCodeRequest, BaseObserver<ResponseBody> observer) {
+    public void sendCode(SendCodeRequest sendCodeRequest, BaseObserver<Object> observer) {
         dealResponse(mRetrofit.postSendCode(sendCodeRequest), observer);
     }
 

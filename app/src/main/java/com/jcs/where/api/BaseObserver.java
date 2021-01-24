@@ -2,12 +2,15 @@ package com.jcs.where.api;
 
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseObserver<T> implements Observer<T> {
+public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
     private final CompositeDisposable mCompositeDisposable;
 
     public BaseObserver() {
@@ -25,13 +28,36 @@ public abstract class BaseObserver<T> implements Observer<T> {
     }
 
     @Override
+    public void onNext(@NotNull JcsResponse<T> tJcsResponse) {
+        if (tJcsResponse.getCode() == 200) {
+            onSuccess(tJcsResponse.getData());
+        }else {
+            int code = tJcsResponse.getCode();
+            ErrorResponse errorResponse = deployErrorResponse(String.valueOf(code));
+            if (errorResponse == null) return;
+
+            errorResponse.errMsg = tJcsResponse.getMessage();
+            onError(errorResponse);
+        }
+    }
+
+    @Override
     public void onError(@NonNull Throwable e) {
         String message = e.getMessage();
+        ErrorResponse errorResponse = deployErrorResponse(message);
+        if (errorResponse == null) return;
+
+        errorResponse.errMsg = "";
+        onError(errorResponse);
+    }
+
+    @Nullable
+    private ErrorResponse deployErrorResponse(String message) {
         ErrorResponse errorResponse = new ErrorResponse();
         if (message == null) {
             errorResponse.errMsg = "空的错误信息";
             onError(errorResponse);
-            return;
+            return null;
         }
         if (message.contains("400")) {
             errorResponse.errCode = 400;
@@ -64,10 +90,9 @@ public abstract class BaseObserver<T> implements Observer<T> {
             errorResponse.errMsg = message;
             Log.e("BaseObserver", "----onError---" + message);
         }
-
-        errorResponse.errMsg = "";
-        onError(errorResponse);
+        return errorResponse;
     }
 
     protected abstract void onError(ErrorResponse errorResponse);
+    protected abstract void onSuccess(T response);
 }

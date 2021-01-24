@@ -2,6 +2,7 @@ package com.jcs.where.hotel.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
@@ -14,11 +15,11 @@ import retrofit2.Response;
 
 public class HotelDetailModel extends BaseModel {
 
-    public void postCollectHotel(int hotelId, BaseObserver<Response<SuccessResponse>> observer) {
+    public void postCollectHotel(int hotelId, BaseObserver<Object> observer) {
         dealResponse(mRetrofit.postCollectHotel(hotelId), observer);
     }
 
-    public void delCollectHotel(int hotelId, BaseObserver<Response<SuccessResponse>> observer) {
+    public void delCollectHotel(int hotelId, BaseObserver<Object> observer) {
         dealResponse(mRetrofit.delCollectHotel(hotelId), observer);
     }
 

@@ -3,6 +3,7 @@ package com.jcs.where.home.model;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.HotelResponse;
@@ -13,28 +14,73 @@ import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function4;
 
 public class HomeModel extends BaseModel {
 
     public void getInitHomeData(BaseObserver<HomeZipResponse> observer) {
         // 金刚区
-        Observable<List<ModulesResponse>> modules = mRetrofit.getModules();
+        Observable<JcsResponse<List<ModulesResponse>>> modules = mRetrofit.getModules();
 
         // 猜你喜欢
-        Observable<List<HotelResponse>> youLike = mRetrofit.getYouLike();
+        Observable<JcsResponse<List<HotelResponse>>> youLike = mRetrofit.getYouLike();
 
         // 1 表示获得首页的banner
-        Observable<List<BannerResponse>> banners = mRetrofit.getBanners(1);
+        Observable<JcsResponse<List<BannerResponse>>> banners = mRetrofit.getBanners(1);
 
         // 获得首页滚动的新闻提示
-        Observable<List<HomeNewsResponse>> homeNews = mRetrofit.getHomeNews();
+        Observable<JcsResponse<List<HomeNewsResponse>>> homeNews = mRetrofit.getHomeNews();
 
-        Observable<HomeZipResponse> zip = Observable.zip(modules, youLike, banners, homeNews, HomeZipResponse::new);
+        Observable<JcsResponse<HomeZipResponse>> zip = Observable.zip(modules, youLike, banners, homeNews, new Function4<JcsResponse<List<ModulesResponse>>, JcsResponse<List<HotelResponse>>, JcsResponse<List<BannerResponse>>, JcsResponse<List<HomeNewsResponse>>, JcsResponse<HomeZipResponse>>() {
+            @NotNull
+            @Override
+            public JcsResponse<HomeZipResponse> apply(@NotNull JcsResponse<List<ModulesResponse>> listJcsResponse, @NotNull JcsResponse<List<HotelResponse>> listJcsResponse2, @NotNull JcsResponse<List<BannerResponse>> listJcsResponse3, @NotNull JcsResponse<List<HomeNewsResponse>> listJcsResponse4) throws Exception {
+                JcsResponse<HomeZipResponse> jcsResponse = new JcsResponse<>();
+                int code1 = listJcsResponse.getCode();
+                int code2 = listJcsResponse2.getCode();
+                int code3 = listJcsResponse3.getCode();
+                int code4 = listJcsResponse4.getCode();
+
+                if (code1 != 200) {
+                    jcsResponse.setCode(code1);
+                    jcsResponse.setMessage(listJcsResponse.getMessage());
+                    jcsResponse.setData(null);
+                    return jcsResponse;
+                }
+
+                if (code2 != 200) {
+                    jcsResponse.setCode(code2);
+                    jcsResponse.setMessage(listJcsResponse2.getMessage());
+                    jcsResponse.setData(null);
+                    return jcsResponse;
+                }
+
+                if (code3 != 200) {
+                    jcsResponse.setCode(code3);
+                    jcsResponse.setMessage(listJcsResponse3.getMessage());
+                    jcsResponse.setData(null);
+                    return jcsResponse;
+                }
+
+                if (code4 != 200) {
+                    jcsResponse.setCode(code4);
+                    jcsResponse.setMessage(listJcsResponse4.getMessage());
+                    jcsResponse.setData(null);
+                    return jcsResponse;
+                }
+                jcsResponse.setCode(200);
+                jcsResponse.setMessage("success");
+                HomeZipResponse homeZipResponse = new HomeZipResponse(listJcsResponse.getData(), listJcsResponse2.getData(), listJcsResponse3.getData(), listJcsResponse4.getData());
+                jcsResponse.setData(homeZipResponse);
+                return jcsResponse;
+            }
+        });
         dealResponse(zip, observer);
-
     }
 
     public void getModules(BaseObserver<List<ModulesResponse>> observer) {
@@ -75,7 +121,7 @@ public class HomeModel extends BaseModel {
         List<BannerResponse> bannerResponses;
         List<HomeNewsResponse> homeNewsResponses;
 
-        public HomeZipResponse(List<ModulesResponse> modulesResponses, List<HotelResponse> hotelResponses, List<BannerResponse> bannerResponses, List<HomeNewsResponse> homeNewsResponses) {
+        public HomeZipResponse(List<ModulesResponse> modulesResponses,List<HotelResponse> hotelResponses, List<BannerResponse> bannerResponses, List<HomeNewsResponse> homeNewsResponses) {
             this.modulesResponses = modulesResponses;
             this.youLikeResponses = hotelResponses;
             this.bannerResponses = bannerResponses;

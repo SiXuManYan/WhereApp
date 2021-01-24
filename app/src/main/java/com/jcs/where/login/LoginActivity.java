@@ -195,7 +195,7 @@ public class LoginActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull LoginResponse loginResponse) {
+            public void onSuccess(@NotNull LoginResponse loginResponse) {
                 stopLoading();
                 CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, loginResponse.getToken());
                 EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
@@ -230,7 +230,7 @@ public class LoginActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull LoginResponse loginResponse) {
+            public void onSuccess(@NotNull LoginResponse loginResponse) {
                 stopLoading();
                 CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, loginResponse.getToken());
                 EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
@@ -254,7 +254,7 @@ public class LoginActivity extends BaseActivity {
         sendCodeRequest.setPhone(phoneEt.getText().toString());
         sendCodeRequest.setType(sendCodeRequest.TYPE_LOGIN);
         sendCodeRequest.setCountryCode(mAreaCodeTv.getText().toString().replace("+", ""));
-        mModel.sendCode(sendCodeRequest, new BaseObserver<ResponseBody>() {
+        mModel.sendCode(sendCodeRequest, new BaseObserver<Object>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -262,7 +262,7 @@ public class LoginActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull ResponseBody successResponseResponse) {
+            protected void onSuccess(Object response) {
                 stopLoading();
                 showToast(getString(R.string.prompt_send_success));
             }

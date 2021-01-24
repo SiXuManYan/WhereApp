@@ -4,9 +4,13 @@ import android.util.Log;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
+import com.jcs.where.news.model.NewsAtyModel;
 import com.jcs.where.utils.Constant;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -51,10 +55,35 @@ public class YellowPageModel extends BaseModel {
     public void getInitData(String categoryIds, BaseObserver<YellowPageZipResponse> observer) {
 
         // 获取机构列表
-        Observable<MechanismPageResponse> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "", Constant.LAT, Constant.LNG);
+        Observable<JcsResponse<MechanismPageResponse>> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "", Constant.LAT, Constant.LNG);
         // 获取一级分类
-        Observable<List<CategoryResponse>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
-        Observable<YellowPageZipResponse> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, YellowPageZipResponse::new);
+        Observable<JcsResponse<List<CategoryResponse>>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
+        Observable<JcsResponse<YellowPageZipResponse>> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<JcsResponse<MechanismPageResponse>, JcsResponse<List<CategoryResponse>>, JcsResponse<YellowPageZipResponse>>() {
+            @NotNull
+            @Override
+            public JcsResponse<YellowPageZipResponse> apply(@NotNull JcsResponse<MechanismPageResponse> mechanismPageResponseJcsResponse, @NotNull JcsResponse<List<CategoryResponse>> listJcsResponse) throws Exception {
+                JcsResponse<YellowPageZipResponse> jcsResponse = new JcsResponse<>();
+                int code = mechanismPageResponseJcsResponse.getCode();
+                int code2 = listJcsResponse.getCode();
+                if (code != 200) {
+                    jcsResponse.setCode(code);
+                    jcsResponse.setMessage(mechanismPageResponseJcsResponse.getMessage());
+                    return jcsResponse;
+                }
+
+                if (code2 != 200) {
+                    jcsResponse.setCode(code2);
+                    jcsResponse.setMessage(listJcsResponse.getMessage());
+                    return jcsResponse;
+                }
+
+                jcsResponse.setCode(200);
+                jcsResponse.setMessage("success");
+                YellowPageZipResponse zipResponse = new YellowPageZipResponse(mechanismPageResponseJcsResponse.getData(), listJcsResponse.getData());
+                jcsResponse.setData(zipResponse);
+                return jcsResponse;
+            }
+        });
         dealResponse(zip, observer);
     }
 

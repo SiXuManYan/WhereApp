@@ -31,6 +31,7 @@ import java.util.List;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.annotations.NonNull;
 
 /**
  * 旅游住宿页面
@@ -86,7 +87,7 @@ public class TravelStayActivity extends BaseActivity {
 
         mModel.getYouLike(new BaseObserver<List<HotelResponse>>() {
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull List<HotelResponse> hotelResponses) {
+            public void onSuccess(@NonNull List<HotelResponse> hotelResponses) {
                 mTravelStayHotelAdapter.getData().clear();
                 mTravelStayHotelAdapter.addData(hotelResponses);
             }
@@ -99,7 +100,7 @@ public class TravelStayActivity extends BaseActivity {
 
         mModel.getBanners(2, new BaseObserver<List<BannerResponse>>() {
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull List<BannerResponse> bannerResponses) {
+            public void onSuccess(@NonNull List<BannerResponse> bannerResponses) {
                 mBanner.setBannerData(R.layout.banner_travel_stay, bannerResponses);
                 mBanner.loadImage((banner, model, view, position) -> GlideUtil.load(TravelStayActivity.this,((BaseBannerInfo) model).getXBannerUrl().toString(),(ImageView)view));
             }
@@ -115,7 +116,7 @@ public class TravelStayActivity extends BaseActivity {
     private void getCategories(int level, ArrayList<Integer> categories) {
         mModel.getCategories(level, categories, new BaseObserver<List<CategoryResponse>>() {
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull List<CategoryResponse> categoryResponses) {
+            public void onSuccess(@io.reactivex.annotations.NonNull List<CategoryResponse> categoryResponses) {
                 mModulesCategoryAdapter.getData().clear();
                 mModulesCategoryAdapter.addData(categoryResponses);
             }

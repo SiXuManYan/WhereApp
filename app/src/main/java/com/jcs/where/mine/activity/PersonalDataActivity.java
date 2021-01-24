@@ -115,7 +115,7 @@ public class PersonalDataActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull UserInfoResponse userInfoResponse) {
+            public void onSuccess(@NotNull UserInfoResponse userInfoResponse) {
                 stopLoading();
                 if (!userInfoResponse.getAvatar().equals("")) {
                     Glide.with(PersonalDataActivity.this).load(userInfoResponse.getAvatar()).into(headerIv);
@@ -167,7 +167,7 @@ public class PersonalDataActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull UserInfoResponse userInfoResponse) {
+            public void onSuccess(@NotNull UserInfoResponse userInfoResponse) {
                 stopLoading();
                 showToast(getString(R.string.nickname_change_success));
                 mNameEt.setText(Editable.Factory.getInstance().newEditable(userInfoResponse.getNickname()));

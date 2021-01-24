@@ -129,7 +129,7 @@ public class MechanismListFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
+            public void onSuccess(@NonNull List<CategoryResponse> categoryResponses) {
                 RadioButton allRadio = (RadioButton) mRadioGroup.getChildAt(0);
                 mChildCategories.clear();
                 mChildCategories.addAll(categoryResponses);
@@ -172,7 +172,7 @@ public class MechanismListFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(@NonNull MechanismPageResponse mechanismPageResponse) {
+            public void onSuccess(@NonNull MechanismPageResponse mechanismPageResponse) {
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
                 List<MechanismResponse> data = mechanismPageResponse.getData();

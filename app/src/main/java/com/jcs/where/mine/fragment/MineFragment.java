@@ -126,7 +126,7 @@ public class MineFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(@NotNull UserInfoResponse userInfoResponse) {
+            public void onSuccess(@NotNull UserInfoResponse userInfoResponse) {
                 stopLoading();
                 mSwipeLayout.setRefreshing(false);
                 nicknameTv.setText(userInfoResponse.getNickname());

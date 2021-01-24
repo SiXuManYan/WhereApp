@@ -139,7 +139,7 @@ public class HotelListActivity extends BaseActivity {
         showLoading();
         mModel.getCategories(3, mParentCategoryId, new BaseObserver<List<CategoryResponse>>() {
             @Override
-            public void onNext(@NonNull List<CategoryResponse> categoryResponses) {
+            public void onSuccess(@NonNull List<CategoryResponse> categoryResponses) {
                 stopLoading();
                 CategoryResponse first = new CategoryResponse();
                 first.setName("全部");

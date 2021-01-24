@@ -45,7 +45,7 @@ public class FlashActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull List<CategoryResponse> categoryResponses) {
+            public void onSuccess(@NotNull List<CategoryResponse> categoryResponses) {
                 if (CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_CATEGORIES).equals("") && categoryResponses.size() > 0) {
                     CacheUtil.cacheWithCurrentTime(SPKey.K_YELLOW_PAGE_CATEGORIES, categoryResponses);
                 }

@@ -164,7 +164,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull List<CategoryResponse> categoryResponses) {
+            public void onSuccess(@NotNull List<CategoryResponse> categoryResponses) {
                 stopLoading();
                 addCategoryNamedAll();
                 mTabCategories.addAll(categoryResponses);
@@ -184,7 +184,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull List<CityResponse> cityResponses) {
+            public void onSuccess(@NotNull List<CityResponse> cityResponses) {
                 stopLoading();
                 injectCityDataToView(cityResponses);
             }
@@ -217,7 +217,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NotNull ConvenienceServiceModel.ConvenienceServiceZipResponse convenienceServiceZipResponse) {
+            public void onSuccess(@NotNull ConvenienceServiceModel.ConvenienceServiceZipResponse convenienceServiceZipResponse) {
                 stopLoading();
                 mTabCategories.clear();
                 mMechanismListFragments.clear();

@@ -93,7 +93,7 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onNext(@NonNull List<Integer> integers) {
+            public void onSuccess(@NonNull List<Integer> integers) {
                 injectToSubTab(mAllTv, R.string.all_with_number, integers.get(0));
                 injectToSubTab(mShowImageTv, R.string.show_icon_with_number, integers.get(1));
                 injectToSubTab(mLowScoreTv, R.string.low_rating_with_number, integers.get(2));
@@ -128,7 +128,7 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onNext(@NonNull HotelCommentsResponse hotelCommentsResponse) {
+            public void onSuccess(@NonNull HotelCommentsResponse hotelCommentsResponse) {
                 stopLoading();
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();

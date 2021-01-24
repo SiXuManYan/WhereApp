@@ -2,6 +2,7 @@ package com.jcs.where.convenience.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.bean.CityResponse;
@@ -10,10 +11,14 @@ import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
+import com.jcs.where.yellow_page.model.YellowPageModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
 
 /**
  * create by zyf on 2021/1/5 4:35 下午
@@ -70,11 +75,36 @@ public class ConvenienceServiceModel extends BaseModel {
     public void getInitData(String categoryIds, BaseObserver<ConvenienceServiceModel.ConvenienceServiceZipResponse> observer) {
 
         // 获取二级分类用于tab展示
-        Observable<List<CategoryResponse>> categoriesObservable = mRetrofit.getCategories(2, categoryIds);
-        Observable<List<CityResponse>> citiesObservable = mRetrofit.getAreaForService();
+        Observable<JcsResponse<List<CategoryResponse>>> categoriesObservable = mRetrofit.getCategories(2, categoryIds);
+        Observable<JcsResponse<List<CityResponse>>> citiesObservable = mRetrofit.getAreaForService();
 
 
-        Observable<ConvenienceServiceModel.ConvenienceServiceZipResponse> zip = Observable.zip(citiesObservable, categoriesObservable, ConvenienceServiceZipResponse::new);
+        Observable<JcsResponse<ConvenienceServiceZipResponse>> zip = Observable.zip(citiesObservable, categoriesObservable, new BiFunction<JcsResponse<List<CityResponse>>, JcsResponse<List<CategoryResponse>>, JcsResponse<ConvenienceServiceZipResponse>>() {
+            @NotNull
+            @Override
+            public JcsResponse<ConvenienceServiceZipResponse> apply(@NotNull JcsResponse<List<CityResponse>> listJcsResponse, @NotNull JcsResponse<List<CategoryResponse>> listJcsResponse2) throws Exception {
+                JcsResponse<ConvenienceServiceZipResponse> jcsResponse = new JcsResponse<>();
+                int code = listJcsResponse.getCode();
+                int code2 = listJcsResponse2.getCode();
+                if (code != 200) {
+                    jcsResponse.setCode(code);
+                    jcsResponse.setMessage(listJcsResponse.getMessage());
+                    return jcsResponse;
+                }
+
+                if (code2 != 200) {
+                    jcsResponse.setCode(code2);
+                    jcsResponse.setMessage(listJcsResponse2.getMessage());
+                    return jcsResponse;
+                }
+
+                ConvenienceServiceZipResponse zipResponse = new ConvenienceServiceZipResponse(listJcsResponse.getData(),listJcsResponse2.getData());
+                jcsResponse.setCode(200);
+                jcsResponse.setMessage("success");
+                jcsResponse.setData(zipResponse);
+                return jcsResponse;
+            }
+        });
         dealResponse(zip, observer);
     }
 

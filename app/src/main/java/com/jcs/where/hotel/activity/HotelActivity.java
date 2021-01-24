@@ -202,7 +202,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             }
 
             @Override
-            public void onNext(@NotNull List<HotelResponse> hotelResponses) {
+            public void onSuccess(@NotNull List<HotelResponse> hotelResponses) {
                 stopLoading();
                 mGuessYouLikeAdapter.getData().clear();
                 mGuessYouLikeAdapter.addData(hotelResponses);

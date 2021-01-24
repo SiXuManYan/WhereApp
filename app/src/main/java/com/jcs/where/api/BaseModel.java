@@ -15,7 +15,7 @@ public class BaseModel {
 
 
 
-    protected <T> void dealResponse(Observable<T> observable, BaseObserver<T> observer) {
+    protected <T> void dealResponse(Observable<JcsResponse<T>> observable, BaseObserver<T> observer) {
         observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(observer);
     }
 }

@@ -83,7 +83,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
+            public void onSuccess(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
                 stopLoading();
                 mJcsTitle.setMiddleTitle("订单号" + hotelOrderDetailResponse.getTrade_no());
                 typeTv.setText("已支付");

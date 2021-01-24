@@ -19,6 +19,8 @@ import com.jcs.where.home.decoration.MarginTopDecoration;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.model.OrderModel;
 
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -129,14 +131,14 @@ public class OrderListFragment extends BaseFragment {
     }
 
     public void getOrderByType(String keyword) {
-        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<PageResponse<OrderListResponse>>() {
+        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<PageResponse<List<OrderListResponse>>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopRefresh();
             }
 
             @Override
-            public void onNext(@NonNull PageResponse<OrderListResponse> pageResponse) {
+            public void onSuccess(@NonNull PageResponse<List<OrderListResponse>> pageResponse) {
                 mAdapter.getData().clear();
                 if (pageResponse.getData().size() > 0) {
                     mAdapter.addData(pageResponse.getData());

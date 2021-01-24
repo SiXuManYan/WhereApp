@@ -326,4 +326,10 @@ public interface RetrofitApi {
 
     @GET("newsapi/v1/news")
     Observable<PageResponse<NewsResponse>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
+
+    @POST("newsapi/v1/channels/follows")
+    Observable<ResponseBody> postFollowChannels(@Query("cate_ids") String channelIds);
+
+    @DELETE("newsapi/v1/channels/follows")
+    Observable<ResponseBody> delFollowChannels(@Query("cate_ids") String channelIds);
 }

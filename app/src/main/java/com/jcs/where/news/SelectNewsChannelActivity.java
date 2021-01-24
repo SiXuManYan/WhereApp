@@ -8,8 +8,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.news.adapter.SelectNewsChannelAdapter;
+import com.jcs.where.news.dto.FollowAndUnfollowDTO;
 import com.jcs.where.news.item_decoration.NewsChannelItemDecoration;
+import com.jcs.where.utils.RequestResultCode;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.List;
@@ -85,9 +91,38 @@ public class SelectNewsChannelActivity extends BaseActivity {
         mFollowAdapter.addChildClickViewIds(R.id.delChannelIv);
         mOperateChannelTv.setOnClickListener(this::onOperateFollowChannelClicked);
         mFollowAdapter.setOnItemChildClickListener(this::onFollowDelClicked);
+        mFollowAdapter.setOnItemClickListener(this::onFollowClicked);
         mMoreAdapter.setOnItemClickListener(this::onMoreChannelClicked);
     }
 
+    /**
+     * 普通状态下-点击了关注列表的item
+     * 1，finish当前页面
+     * 2，在新闻页面将关注列表更新
+     * 3，在新闻页面，展示当前点击的item的新闻信息
+     */
+    private void onFollowClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        if (!mIsEditing) {
+            FollowAndUnfollowDTO dto = new FollowAndUnfollowDTO();
+            // 新闻页 TabLayout 要展示的所有频道标签数据
+            dto.followed = mFollowAdapter.getData();
+
+            // 未关注的数据要取消关注
+            dto.more = mMoreAdapter.getData();
+
+            // 新闻页要展示哪个频道的新闻
+            dto.showPosition = position;
+
+            Intent result = new Intent();
+            result.putExtra("dto", dto);
+            setResult(RequestResultCode.RESULT_FOLLOW_TO_NEWS, result);
+            finish();
+        }
+    }
+
+    /**
+     * 编辑状态下-点击了关注频道中的 del icon
+     */
     private void onFollowDelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         NewsChannelResponse channel = mFollowAdapter.getData().remove(position);
         mFollowAdapter.notifyItemRemoved(position);
@@ -96,6 +131,9 @@ public class SelectNewsChannelActivity extends BaseActivity {
         mMoreAdapter.addData(0, channel);
     }
 
+    /**
+     * 点击了更多频道中的item，将所点击的item添加到关注频道列表中
+     */
     private void onMoreChannelClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         NewsChannelResponse channel = mMoreAdapter.getData().remove(position);
         mMoreAdapter.notifyItemRemoved(position);
@@ -104,6 +142,9 @@ public class SelectNewsChannelActivity extends BaseActivity {
         mFollowAdapter.addData(mFollowAdapter.getItemCount(), channel);
     }
 
+    /**
+     * 点击了编辑按钮，切换关注列表的展示状态
+     */
     private void onOperateFollowChannelClicked(View view) {
         if (mIsEditing) {
             mOperateChannelTv.setText(getString(R.string.news_edit_channel));
@@ -115,10 +156,16 @@ public class SelectNewsChannelActivity extends BaseActivity {
         mIsEditing = !mIsEditing;
     }
 
+    /**
+     * 展示关注列表的 del icon
+     */
     private void showActionRecycler() {
         mFollowAdapter.showDel();
     }
 
+    /**
+     * 隐藏关注列表的 del icon
+     */
     private void showNormalRecycler() {
         mFollowAdapter.hideDel();
     }

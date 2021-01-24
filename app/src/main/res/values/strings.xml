@@ -229,5 +229,12 @@
     <string name="news_finish_channel">完成</string>
 
     <string name="integral">我的积分</string>
+    <string name="consecutive_check_in_to_win_integral">连续签到赢积分</string>
+    <string name="integral_rule">规则</string>
+    <string name="integral_continuous_time">1天</string>
+    <string name="my_scores">我的积分</string>
+    <string name="sign_in_now">立即签到</string>
+    <string name="points_task">积分任务</string>
+    <string name="points_details">积分明细</string>
 
 </resources>

@@ -15,18 +15,20 @@ import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
+import com.jcs.where.api.response.IntegralDetailResponse;
 import com.jcs.where.api.response.LoginResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
-import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
+import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.SearchResponse;
+import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.bean.CityResponse;
@@ -326,4 +328,24 @@ public interface RetrofitApi {
 
     @GET("newsapi/v1/news")
     Observable<PageResponse<NewsResponse>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
+
+
+
+    /**
+     * 获取积分明细列表
+     */
+    @GET("commonapi/v1/integrals")
+    Observable<PageResponse<IntegralDetailResponse>> getIntegralsDetailList();
+
+
+    /**
+     * 签到列表
+     */
+    @GET("com/commonapi/v2/sign")
+    Observable<SignListResponse> getSignList();
+
+
+
+
+
 }

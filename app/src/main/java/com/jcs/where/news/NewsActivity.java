@@ -55,8 +55,10 @@ public class NewsActivity extends BaseActivity {
      * 首先要显示的Tab对应新闻列表的索引
      * 默认情况是第一个
      * 在新闻频道关注页面点击了已关注的频道后，这个索引会更改为点击的已关注频道对应的索引
+     *
+     * 1 为默认展示推荐的新闻列表
      */
-    private int mFirstVisibleTabPosition = 0;
+    private int mFirstVisibleTabPosition = 1;
 
     @Override
     protected void initView() {

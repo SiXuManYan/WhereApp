@@ -200,7 +200,7 @@ public class OrderFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventReceive(BaseEvent baseEvent) {
+    public void onEventReceived(BaseEvent baseEvent) {
         if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
             getNetData();
         }

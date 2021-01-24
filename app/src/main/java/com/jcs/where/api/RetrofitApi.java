@@ -49,7 +49,6 @@ import retrofit2.http.Query;
 
 public interface RetrofitApi {
 
-
     /**
      * 获得首页金刚圈的信息
      *
@@ -326,10 +325,12 @@ public interface RetrofitApi {
     @GET("newsapi/v1/channels")
     Observable<List<NewsChannelResponse>> getNewsTabs();
 
+    /**
+     * 根据频道id获得对应的新闻列表
+     * @param channelId 频道id
+     */
     @GET("newsapi/v1/news")
     Observable<PageResponse<NewsResponse>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
-
-
 
     /**
      * 获取积分明细列表
@@ -337,15 +338,21 @@ public interface RetrofitApi {
     @GET("commonapi/v1/integrals")
     Observable<PageResponse<IntegralDetailResponse>> getIntegralsDetailList();
 
-
     /**
      * 签到列表
      */
     @GET("com/commonapi/v2/sign")
     Observable<SignListResponse> getSignList();
 
+    /**
+     * 订阅新闻频道
+     */
+    @POST("newsapi/v1/channels/follows")
+    Observable<ResponseBody> postFollowChannels(@Query("cate_ids") String channelIds);
 
-
-
-
+    /**
+     * 取消订阅新闻频道
+     */
+    @DELETE("newsapi/v1/channels/follows")
+    Observable<ResponseBody> delFollowChannels(@Query("cate_ids") String channelIds);
 }

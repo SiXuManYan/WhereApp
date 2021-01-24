@@ -99,10 +99,15 @@ public class NewsFragment extends BaseFragment {
                 @Override
                 public void onSuccess(@NotNull PageResponse<List<NewsResponse>> newsResponsePageResponse) {
                     stopLoading();
+                    mSwipeLayout.setRefreshing(false);
                     mPageNews = newsResponsePageResponse;
                     mAdapter.getData().clear();
-                    mAdapter.addData(newsResponsePageResponse.getData());
-                    mSwipeLayout.setRefreshing(false);
+                    List<NewsResponse> data = newsResponsePageResponse.getData();
+                    if (data.size() > 0) {
+                        mAdapter.addData(data);
+                    }else {
+                        mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+                    }
                 }
             });
         }

@@ -16,9 +16,12 @@ import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.IntentEntry;
+import com.jcs.where.news.NewsDetailActivity;
 import com.jcs.where.news.adapter.NewsFragmentAdapter;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.news.model.NewsFragModel;
+import com.jcs.where.news.view_type.NewsType;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -105,7 +108,7 @@ public class NewsFragment extends BaseFragment {
                     List<NewsResponse> data = newsResponsePageResponse.getData();
                     if (data.size() > 0) {
                         mAdapter.addData(data);
-                    }else {
+                    } else {
                         mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
                     }
                 }
@@ -121,7 +124,7 @@ public class NewsFragment extends BaseFragment {
         mAdapter.setOnItemChildClickListener(this::onNewsItemChildClicked);
     }
 
-    private void onNewsItemChildClicked(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+    private void onNewsItemChildClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         if (view.getId() == R.id.newsVideoDurationView) {
             NewsResponse item = mAdapter.getItem(position);
             int itemViewType = mAdapter.getItemViewType(position);
@@ -132,7 +135,9 @@ public class NewsFragment extends BaseFragment {
     private void onNewsItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         NewsResponse item = mAdapter.getItem(position);
         int itemViewType = mAdapter.getItemViewType(position);
-        showToast("跳转到新闻详情页：type=" + itemViewType);
+        if (itemViewType != NewsType.VIDEO) {
+            toActivity(NewsDetailActivity.class, new IntentEntry("newsId", String.valueOf(item.getId())));
+        }
     }
 
     private void onRefreshListener() {

@@ -351,4 +351,7 @@ public interface RetrofitApi {
      */
     @DELETE("newsapi/v2/channels/follows")
     Observable<JcsResponse<Object>> delFollowChannels(@Query("cate_ids") String channelIds);
+
+    @GET("newsapi/v2/news/{news}")
+    Observable<JcsResponse<NewsResponse>> getNewsDetail(@Path("news") String newsId);
 }

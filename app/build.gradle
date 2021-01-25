@@ -11,11 +11,13 @@ android {
         versionName "V0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        flavorDimensions "versionCode"
     }
 
     signingConfigs {
+        debug { storeFile file("../keystore/debug.keystore") }
         release {
-            storeFile file("Where.jks")
+            storeFile file('../keystore/Where.jks')
             storePassword "JCSWhere@"
             keyAlias "key0"
             keyPassword "JCSWhere@"
@@ -23,6 +25,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -38,6 +45,19 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+
+    productFlavors {
+        dev {
+            buildConfigField "String", "SERVER_HOST", SERVER_HOST_TEST
+        }
+
+        formal {
+            buildConfigField "String", "SERVER_HOST", SERVER_HOST_RELEASE
+
+        }
+
+    }
+
 }
 
 dependencies {

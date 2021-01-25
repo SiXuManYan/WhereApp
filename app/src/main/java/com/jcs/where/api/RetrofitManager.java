@@ -1,12 +1,11 @@
 package com.jcs.where.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.jcs.where.BuildConfig;
 import com.jcs.where.api.convert.NullOrEmptyConvertFactory;
-import com.jcs.where.api.response.LoginResponse;
 import com.jcs.where.utils.CacheUtil;
-import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 
 import java.io.IOException;
@@ -44,7 +43,9 @@ public class RetrofitManager {
     }
 
     private void create(Context context) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message ->
+                Log.d("请求日志", message)
+        );
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
@@ -57,7 +58,7 @@ public class RetrofitManager {
                 Request original = chain.request();
                 Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
                         .header("Accept", "application/json")
-                        .header("device","android");
+                        .header("device", "android");
                 String language = CacheUtil.getLanguageFromCache();
                 if (language.equals("auto")) {
                     language = "zh-CN";
@@ -86,7 +87,10 @@ public class RetrofitManager {
         // 正式版
 //        builder.baseUrl("https://appapi.wheretech.ph/");
         // 测试版
-        builder.baseUrl("https://api.jcstest.com/");
+//        builder.baseUrl("https://api.jcstest.com/");
+        builder.baseUrl(BuildConfig.SERVER_HOST);
+
+
         //用于做网络请求到客户端（okHttp3）
         builder.client(okBuilder.build());
         builder.addConverterFactory(new NullOrEmptyConvertFactory());

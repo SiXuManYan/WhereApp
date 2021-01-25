@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -46,6 +50,12 @@ android {
         abortOnError false
     }
 
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Where_v${defaultConfig.versionCode}_(${defaultConfig.versionName})_${releaseTime()}.apk"
+        }
+    }
+
     productFlavors {
         dev {
             buildConfigField "String", "SERVER_HOST", SERVER_HOST_TEST
@@ -53,7 +63,6 @@ android {
 
         formal {
             buildConfigField "String", "SERVER_HOST", SERVER_HOST_RELEASE
-
         }
 
     }

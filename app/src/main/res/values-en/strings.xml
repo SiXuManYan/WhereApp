@@ -231,8 +231,11 @@
 
     <string name="integral">My Integral</string>
     <string name="consecutive_check_in_to_win_integral">Consecutive check in to win integral</string>
+	<string name="integral_rule">Rule</string>
+	<string name="integral_continuous_time">1day</string>
     <string name="my_scores">My scores</string>
     <string name="sign_in_now">Sign in now</string>
+	<string name="already_sign_in">Already sign in</string>
 	<string name="points_task">Points task</string>
 	<string name="points_details">Points details</string>
 </resources>

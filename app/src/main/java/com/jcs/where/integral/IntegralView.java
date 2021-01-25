@@ -11,5 +11,16 @@ public interface IntegralView {
 
     void bindDetailData(SignListResponse response);
 
-    void onDetailError(ErrorResponse errorResponse);
+    void onError(ErrorResponse errorResponse);
+
+    /**
+     * 设置积分
+     * @param integral 积分
+     */
+    void bindIntegral(String integral);
+
+    /**
+     * 签到成功
+     */
+    void signInSuccess();
 }

@@ -234,6 +234,7 @@
     <string name="integral_continuous_time">1天</string>
     <string name="my_scores">我的积分</string>
     <string name="sign_in_now">立即签到</string>
+    <string name="already_sign_in">已签到</string>
     <string name="points_task">积分任务</string>
     <string name="points_details">积分明细</string>
 

@@ -10,7 +10,6 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <LinearLayout
@@ -21,8 +20,9 @@
 
 
             <com.jcs.where.widget.JcsTitle
-                android:id="@+id/jcsTitle2"
+                android:id="@+id/jcsTitle"
                 android:layout_width="match_parent"
+                app:showBackIv="true"
                 android:layout_height="175dp"
                 android:background="@drawable/shape_gradient_integral"
                 app:backIcon="@drawable/ic_back_white"
@@ -68,12 +68,12 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/sign_in"
+                    android:id="@+id/sign_in_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/shape_gradient_integral_yellow"
+                    android:background="@drawable/selector_integral_sign_in"
                     android:includeFontPadding="false"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_5"
@@ -180,6 +180,7 @@
 
 
         <RadioGroup
+            android:id="@+id/tab_rg"
             android:layout_width="260dp"
             android:layout_height="@dimen/dp_35"
             android:layout_marginTop="20dp"
@@ -193,11 +194,12 @@
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/verify_rb"
+                android:id="@+id/task_rb"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
                 android:button="@null"
                 android:checked="true"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:text="@string/points_task"
                 android:textColor="@color/black_333333"
@@ -205,7 +207,7 @@
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/password_rb"
+                android:id="@+id/detail_rb"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
                 android:button="@null"

@@ -264,4 +264,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //高度 dm.heightPixels
         return dm.widthPixels;
     }
+
+
+
 }

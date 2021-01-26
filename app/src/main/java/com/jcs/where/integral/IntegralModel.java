@@ -14,7 +14,6 @@ import io.reactivex.annotations.NonNull;
  */
 public class IntegralModel extends BaseModel {
 
-
     private final IntegralView mView;
 
     public IntegralModel(IntegralView view) {

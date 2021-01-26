@@ -27,7 +27,6 @@ import static com.jcs.where.R.id.task_rb;
  */
 public class IntegralActivity extends BaseActivity implements IntegralView {
 
-
     private TextView mIntegralTv;
     private TextView mSignInTv;
     private RadioButton taskRb;

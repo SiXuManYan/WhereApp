@@ -11,10 +11,16 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
+
+
     private final CompositeDisposable mCompositeDisposable;
 
     public BaseObserver() {
         this.mCompositeDisposable = new CompositeDisposable();
+    }
+
+    public CompositeDisposable getCompositeDisposable() {
+        return mCompositeDisposable;
     }
 
     @Override
@@ -29,13 +35,12 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
 
     @Override
     public void onNext(@NotNull JcsResponse<T> tJcsResponse) {
-        if (tJcsResponse.getCode() == 200) {
+        int code = tJcsResponse.getCode();
+        if (code == 200) {
             onSuccess(tJcsResponse.getData());
         }else {
-            int code = tJcsResponse.getCode();
             ErrorResponse errorResponse = deployErrorResponse(String.valueOf(code));
             if (errorResponse == null) return;
-
             errorResponse.errMsg = tJcsResponse.getMessage();
             onError(errorResponse);
         }

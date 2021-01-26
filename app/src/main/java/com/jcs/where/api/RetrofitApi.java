@@ -23,6 +23,7 @@ import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
+import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
@@ -361,5 +362,5 @@ public interface RetrofitApi {
     Observable<JcsResponse<Object>> delFollowChannels(@Query("cate_ids") String channelIds);
 
     @GET("newsapi/v2/news/{news}")
-    Observable<JcsResponse<NewsResponse>> getNewsDetail(@Path("news") String newsId);
+    Observable<JcsResponse<NewsDetailResponse>> getNewsDetail(@Path("news") String newsId);
 }

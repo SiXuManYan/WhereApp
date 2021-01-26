@@ -11,6 +11,7 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.hotel.activity.HotelSearchActivity;
 import com.jcs.where.news.adapter.NewsViewPagerAdapter;
 import com.jcs.where.news.dto.FollowAndUnfollowDTO;
 import com.jcs.where.news.fragment.NewsFragment;
@@ -55,7 +56,7 @@ public class NewsActivity extends BaseActivity {
      * 首先要显示的Tab对应新闻列表的索引
      * 默认情况是第一个
      * 在新闻频道关注页面点击了已关注的频道后，这个索引会更改为点击的已关注频道对应的索引
-     *
+     * <p>
      * 1 为默认展示推荐的新闻列表
      */
     private int mFirstVisibleTabPosition = 1;
@@ -209,6 +210,14 @@ public class NewsActivity extends BaseActivity {
     @Override
     protected void bindListener() {
         mAddTabView.setOnClickListener(this::onAddTabClicked);
+        mJcsTitle.setFirstRightIvClickListener(this::onSearchIconClicked);
+    }
+
+    /**
+     * 搜索
+     */
+    private void onSearchIconClicked(View view) {
+        HotelSearchActivity.goTo(this, "", HotelSearchActivity.SearchTag.NEWS, RequestResultCode.REQUEST_NEWS_TO_SEARCH);
     }
 
     /**

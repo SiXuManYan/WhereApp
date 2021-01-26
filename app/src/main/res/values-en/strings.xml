@@ -239,4 +239,5 @@
 	<string name="points_task">Points task</string>
 	<string name="points_details">Points details</string>
 	<string name="news_followed">Followed</string>
+	<string name="search_news_keyword">Search news by keywords</string>
 </resources>

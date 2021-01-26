@@ -92,7 +92,7 @@ public class HotelListActivity extends BaseActivity {
         // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
         mChooseDataView = findViewById(R.id.toChooseDate);
 
-        findViewById(R.id.cityTv).setOnClickListener(view -> HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), REQ_SEARCH));
+        findViewById(R.id.cityTv).setOnClickListener(view -> HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), HotelSearchActivity.SearchTag.HOTEL, REQ_SEARCH));
         clearIv = findViewById(R.id.clearIv);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(view -> {
@@ -106,7 +106,7 @@ public class HotelListActivity extends BaseActivity {
     @Override
     protected void initData() {
         Locale languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this);
-        if (!languageLocale.getLanguage().equals("zh")){
+        if (!languageLocale.getLanguage().equals("zh")) {
             mLiveTextPromptTv.setVisibility(View.GONE);
             mLeaveTextPromptTv.setVisibility(View.GONE);
         }

@@ -208,7 +208,7 @@ public interface RetrofitApi {
      * 获得订单列表
      */
     @GET("commonapi/v2/orders")
-    Observable<JcsResponse<PageResponse<List<OrderListResponse>>>> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
+    Observable<JcsResponse<PageResponse<OrderListResponse>>> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
 
 
     @Headers("baseUrl:google/map")
@@ -329,7 +329,7 @@ public interface RetrofitApi {
      * @param channelId 频道id
      */
     @GET("newsapi/v2/news")
-    Observable<JcsResponse<PageResponse<List<NewsResponse>>>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
+    Observable<JcsResponse<PageResponse<NewsResponse>>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
 
     /**
      * 获取积分明细列表

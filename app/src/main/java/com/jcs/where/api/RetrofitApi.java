@@ -31,6 +31,7 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SignListResponse;
+import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.bean.CityResponse;
 
@@ -361,6 +362,21 @@ public interface RetrofitApi {
     @DELETE("newsapi/v2/channels/follows")
     Observable<JcsResponse<Object>> delFollowChannels(@Query("cate_ids") String channelIds);
 
+    /**
+     * 新闻详情
+     */
     @GET("newsapi/v2/news/{news}")
     Observable<JcsResponse<NewsDetailResponse>> getNewsDetail(@Path("news") String newsId);
+
+    /**
+     * 关注新闻发布者
+     */
+    @POST("newsapi/v2/follows")
+    Observable<JcsResponse<SuccessResponse>> postFollowNewsPublisher(@Query("publisher_id") int publisherId);
+
+    /**
+     * 取消关注新闻发布者
+     */
+    @DELETE("newsapi/v2/follows")
+    Observable<JcsResponse<SuccessResponse>> delFollowNewsPublisher(@Query("publisher_id") int publisherId);
 }

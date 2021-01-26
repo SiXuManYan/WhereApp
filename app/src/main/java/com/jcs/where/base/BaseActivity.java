@@ -185,7 +185,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showNetError(ErrorResponse errorResponse) {
-//        ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+        ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
     }
 
     public void showLoading(String msg) {

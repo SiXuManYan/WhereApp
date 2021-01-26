@@ -75,11 +75,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="toFollowView,toFollowTv,addIcon" />
+                    app:constraint_referenced_ids="toFollowView,toFollowTv,toFollowIcon" />
 
                 <View
                     android:id="@+id/toFollowView"
-                    android:layout_width="@dimen/dp_60"
+                    android:layout_width="@dimen/dp_68"
                     android:layout_height="@dimen/dp_25"
                     android:layout_marginEnd="@dimen/dp_15"
                     android:background="@drawable/shape_489bf8_radius_4"
@@ -97,11 +97,11 @@
                     android:includeFontPadding="false"
                     app:layout_constraintBottom_toBottomOf="@id/toFollowView"
                     app:layout_constraintEnd_toEndOf="@id/toFollowView"
-                    app:layout_constraintStart_toEndOf="@id/addIcon"
+                    app:layout_constraintStart_toEndOf="@id/toFollowIcon"
                     app:layout_constraintTop_toTopOf="@id/toFollowView" />
 
                 <ImageView
-                    android:id="@+id/addIcon"
+                    android:id="@+id/toFollowIcon"
                     android:layout_width="@dimen/dp_12"
                     android:layout_height="@dimen/dp_12"
                     android:src="@mipmap/ic_add_white"

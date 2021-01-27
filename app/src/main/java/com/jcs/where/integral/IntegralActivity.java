@@ -1,5 +1,6 @@
 package com.jcs.where.integral;
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -88,20 +89,35 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
             public void onPageSelected(int position) {
                 MaterialRadioButton child = (MaterialRadioButton) mTabRg.getChildAt(position);
                 child.setSelected(true);
+
+                if (position == 0) {
+                    mTaskRb.setTypeface(null, Typeface.BOLD);
+                    mDetailRb.setTypeface(null, Typeface.NORMAL);
+                }else {
+                    mTaskRb.setTypeface(null, Typeface.NORMAL);
+                    mDetailRb.setTypeface(null, Typeface.BOLD);
+                }
+
             }
 
         });
         mTaskRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
-            if (!isCheck) {
-                return;
+            if (isCheck) {
+                mTaskRb.setTypeface(null, Typeface.BOLD);
+                mPagerVp.setCurrentItem(0);
+            }else {
+                mTaskRb.setTypeface(null, Typeface.NORMAL);
             }
-            mPagerVp.setCurrentItem(0);
+
         });
         mDetailRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
-            if (!isCheck) {
-                return;
+            if (isCheck) {
+                mDetailRb.setTypeface(null, Typeface.BOLD);
+                mPagerVp.setCurrentItem(1);
+            }else {
+                mDetailRb.setTypeface(null, Typeface.NORMAL);
             }
-            mPagerVp.setCurrentItem(1);
+
         });
     }
 

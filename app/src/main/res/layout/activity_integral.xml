@@ -1,233 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parent_cl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_layout"
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="50dp"
+        android:background="@drawable/shape_gradient_integral"
+        app:backIcon="@drawable/ic_back_white"
+        app:middleTitle="@string/integral"
+        app:middleTitleColor="@color/white"
+        app:showBackIv="true"
+        tools:ignore="MissingConstraints" />
 
-        <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/parent_cl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
-
-
-            <com.jcs.where.widget.JcsTitle
-                android:id="@+id/jcsTitle"
-                android:layout_width="match_parent"
-                app:showBackIv="true"
-                android:layout_height="175dp"
-                android:background="@drawable/shape_gradient_integral"
-                app:backIcon="@drawable/ic_back_white"
-                app:middleTitle="@string/integral"
-                app:middleTitleColor="@color/white"
-                tools:ignore="MissingConstraints" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
-                android:layout_marginStart="@dimen/dp_15"
-                android:layout_marginTop="-80dp"
-                android:layout_marginEnd="@dimen/dp_15"
-                android:background="@drawable/shape_white_radius_8"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_scores"
-                        android:textColor="@color/grey_999999"
-                        android:textSize="@dimen/sp_13" />
-
-                    <TextView
-                        android:id="@+id/my_integral_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/blue_5570FF"
-                        android:textSize="@dimen/sp_26"
-                        android:textStyle="bold"
-                        android:text="@string/temp_zero" />
-
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/sign_in_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/selector_integral_sign_in"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_5"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:onClick="signInClick"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:text="@string/sign_in_now"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
-
-
-            </RelativeLayout>
-
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
-                android:layout_marginStart="@dimen/dp_15"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_15"
-                android:background="@drawable/shape_white_radius_8"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/dp_15">
+                android:paddingBottom="20dp"
 
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="125dp"
+                    android:background="@drawable/shape_gradient_integral" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="@dimen/dp_100"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="-80dp"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:background="@drawable/shape_white_radius_8"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/consecutive_check_in_to_win_integral"
-                        android:textColor="@color/black_333333"
-                        android:textSize="@dimen/sp_16" />
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/my_scores"
+                            android:textColor="@color/grey_999999"
+                            android:textSize="@dimen/sp_13" />
+
+                        <TextView
+                            android:id="@+id/my_integral_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/temp_zero"
+                            android:textColor="@color/blue_5570FF"
+                            android:textSize="@dimen/sp_26"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/rule_tv"
+                        android:id="@+id/sign_in_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:background="@drawable/shape_blue_radius_8"
-                        android:paddingStart="@dimen/dp_5"
-                        android:paddingTop="@dimen/dp_2"
-                        android:paddingEnd="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_2"
-                        android:onClick="onRuleClick"
-                        android:text="@string/integral_rule"
-                        android:textColor="@color/black_333333"
-                        android:textSize="@dimen/sp_12" />
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/selector_integral_sign_in"
+                        android:includeFontPadding="false"
+                        android:onClick="signInClick"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="@string/sign_in_now"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
 
 
                 </RelativeLayout>
 
+
                 <LinearLayout
-                    android:id="@+id/sign_in_container_ll"
+                    android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:orientation="horizontal">
+                    android:layout_height="@dimen/dp_100"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:background="@drawable/shape_white_radius_8"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_15">
 
-                    <com.jcs.where.widget.IntegralItemView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
 
-                    <com.jcs.where.widget.IntegralItemView
-                        android:layout_width="0dp"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:orientation="horizontal">
 
-                    <com.jcs.where.widget.IntegralItemView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/consecutive_check_in_to_win_integral"
+                            android:textColor="@color/black_333333"
+                            android:textSize="@dimen/sp_16" />
 
-                    <com.jcs.where.widget.IntegralItemView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        <TextView
+                            android:id="@+id/rule_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/shape_blue_radius_8"
+                            android:onClick="onRuleClick"
+                            android:paddingStart="@dimen/dp_5"
+                            android:paddingTop="@dimen/dp_2"
+                            android:paddingEnd="@dimen/dp_5"
+                            android:paddingBottom="@dimen/dp_2"
+                            android:text="@string/integral_rule"
+                            android:textColor="@color/black_333333"
+                            android:textSize="@dimen/sp_12" />
 
-                    <com.jcs.where.widget.IntegralItemView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
 
-                    <com.jcs.where.widget.IntegralItemView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                    </RelativeLayout>
 
-                    <com.jcs.where.widget.IntegralItemView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:id="@+id/sign_in_container_ll"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:orientation="horizontal">
+
+                        <com.jcs.where.widget.IntegralItemView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.jcs.where.widget.IntegralItemView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.jcs.where.widget.IntegralItemView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.jcs.where.widget.IntegralItemView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.jcs.where.widget.IntegralItemView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.jcs.where.widget.IntegralItemView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.jcs.where.widget.IntegralItemView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
 
-
             </LinearLayout>
 
-        </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/tab_rg"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintVertical_bias="0.0">
 
 
-        <RadioGroup
-            android:id="@+id/tab_rg"
-            android:layout_width="260dp"
-            android:layout_height="@dimen/dp_35"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.0">
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/task_rb"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="@string/points_task"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/task_rb"
-                android:layout_width="130dp"
-                android:layout_height="35dp"
-                android:button="@null"
-                android:checked="true"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:text="@string/points_task"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_16" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/detail_rb"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/points_details"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+            </RadioGroup>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/detail_rb"
-                android:layout_width="130dp"
-                android:layout_height="35dp"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/points_details"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_16" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
 
-        </RadioGroup>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager_vp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

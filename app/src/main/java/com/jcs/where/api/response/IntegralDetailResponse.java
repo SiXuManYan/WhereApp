@@ -23,10 +23,7 @@ public class IntegralDetailResponse {
     /**
      * 积分
      */
-    public String integral;
+    public int integral;
     public String created_at;
-
-
-
 
 }

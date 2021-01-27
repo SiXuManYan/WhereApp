@@ -84,7 +84,6 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
             } else {
                 loadMoreModule.loadMoreComplete();
             }
-
         }
 
     }

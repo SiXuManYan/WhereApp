@@ -268,5 +268,13 @@
 	<string name="sign_in_type_4">Sign in</string>
 
 	<string name="empty_data_default">No data</string>
+    <string name="item_sign_in">Sign in</string>
+	<string name="item_sign_in_content">Points for successful sign-in</string>
+	<string name="item_comment">Comment points</string>
+	<string name="ic_task_comment_content">Give praise to get higher points</string>
+	<string name="ic_task_invite">Invite new users to register</string>
+	<string name="ic_task_invite_content">After successful registration, the inviter can get 500 points</string>
+	<string name="ic_task_register">Register points</string>
+	<string name="ic_task_register_content">Get 500 points after successful registration</string>
 
 </resources>

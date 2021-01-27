@@ -31,7 +31,7 @@ public class PageResponse<T> {
     @SerializedName("from")
     private Integer from;
     @SerializedName("last_page")
-    private Integer lastPage;
+    private Integer lastPage = 1;
     @SerializedName("last_page_url")
     private String lastPageUrl;
     @SerializedName("next_page_url")

@@ -65,10 +65,6 @@ public class IntegralPresenter extends BaseMvpPresenter {
                 mView.signInSuccess();
             }
 
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                mView.onError(errorResponse);
-            }
         });
 
     }

@@ -12,6 +12,6 @@ public interface BaseMvpView {
      *
      * @param errorResponse 错误信息返回
      */
-    abstract void onError(ErrorResponse errorResponse);
+    void onError(ErrorResponse errorResponse);
 
 }

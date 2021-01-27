@@ -3,8 +3,12 @@ package com.jcs.where.api;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.jcs.where.BuildConfig;
 import com.jcs.where.api.convert.NullOrEmptyConvertFactory;
+import com.jcs.where.api.util.StringConverter;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.SPKey;
 
@@ -95,10 +99,20 @@ public class RetrofitManager {
         builder.client(okBuilder.build());
         builder.addConverterFactory(new NullOrEmptyConvertFactory());
         //解析工程，可以帮我们把数据直接解析成对象
-        builder.addConverterFactory(GsonConverterFactory.create());
+        builder.addConverterFactory(GsonConverterFactory.create(buildGson()));
         //异步回调适配工程
         builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 
         retrofit = builder.build();
+    }
+
+    /**
+     * 增加后台返回"null"的处理
+     * 转换成 "" 字符串
+     */
+    public Gson buildGson() {
+        return new GsonBuilder()
+                 .registerTypeAdapter(JsonElement.class, new StringConverter())
+                 .create();
     }
 }

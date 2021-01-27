@@ -16,7 +16,7 @@ import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.SignListResponse;
-import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.integral.child.detail.IntegralChildDetailFragment;
 import com.jcs.where.integral.child.task.IntegralChildTaskFragment;
 
@@ -25,7 +25,7 @@ import static com.jcs.where.R.id.task_rb;
 /**
  * 我的积分
  */
-public class IntegralActivity extends BaseActivity implements IntegralView {
+public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> implements IntegralView {
 
     private TextView mIntegralTv;
     private TextView mSignInTv;
@@ -33,7 +33,7 @@ public class IntegralActivity extends BaseActivity implements IntegralView {
     private RadioButton detailRb;
     private RadioGroup tabRg;
 
-    private IntegralModel mModel;
+    private IntegralPresenter mModel;
     private ViewPager mPagerVp;
 
     @Override
@@ -97,7 +97,7 @@ public class IntegralActivity extends BaseActivity implements IntegralView {
 
     @Override
     protected void initData() {
-        mModel = new IntegralModel(this);
+        mModel = new IntegralPresenter(this);
         mModel.getSignInList();
     }
 

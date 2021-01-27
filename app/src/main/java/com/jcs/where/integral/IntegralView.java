@@ -1,17 +1,15 @@
 package com.jcs.where.integral;
 
-import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.api.response.SignListResponse;
 
 /**
  * Created by Wangsw  2021/1/23 15:09.
  */
-public interface IntegralView {
+public interface IntegralView extends BaseMvpView {
 
 
     void bindDetailData(SignListResponse response);
-
-    void onError(ErrorResponse errorResponse);
 
     /**
      * 设置积分

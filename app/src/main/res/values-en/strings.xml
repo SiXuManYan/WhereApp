@@ -238,4 +238,8 @@
 	<string name="already_sign_in">Already sign in</string>
 	<string name="points_task">Points task</string>
 	<string name="points_details">Points details</string>
+	<string name="hint">Prompt</string>
+	<string name="login_expired_hint">Please login again</string>
+	<string name="login_again">Login again</string>
+	<string name="request_error">Request error %1$d</string>
 </resources>

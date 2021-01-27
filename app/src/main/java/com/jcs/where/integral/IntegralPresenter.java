@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 
@@ -12,11 +13,11 @@ import io.reactivex.annotations.NonNull;
 /**
  * Created by Wangsw  2021/1/23 15:10.
  */
-public class IntegralModel extends BaseModel {
+public class IntegralPresenter extends BaseMvpPresenter {
 
     private final IntegralView mView;
 
-    public IntegralModel(IntegralView view) {
+    public IntegralPresenter(IntegralView view) {
         this.mView = view;
     }
 

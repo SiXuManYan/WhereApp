@@ -11,9 +11,10 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class BaseMvpPresenter extends BaseModel {
 
+
     private BaseMvpView view;
 
-    public BaseMvpPresenter(BaseMvpView view) {
+    public void setView(BaseMvpView view) {
         this.view = view;
     }
 

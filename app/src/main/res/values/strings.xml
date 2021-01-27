@@ -237,5 +237,9 @@
     <string name="already_sign_in">已签到</string>
     <string name="points_task">积分任务</string>
     <string name="points_details">积分明细</string>
+    <string name="hint">提示</string>
+    <string name="login_expired_hint">请重新登录</string>
+    <string name="login_again">重新登录</string>
+    <string name="request_error">请求错误%1$d</string>
 
 </resources>

@@ -75,7 +75,7 @@ public class SignListResponse {
          * 	签到获得积分
          */
         @SerializedName("integral")
-        private String integral;
+        private int integral;
 
         public int getSignStatus() {
             return signStatus;
@@ -93,11 +93,11 @@ public class SignListResponse {
             this.date = date;
         }
 
-        public String getIntegral() {
+        public int getIntegral() {
             return integral;
         }
 
-        public void setIntegral(String integral) {
+        public void setIntegral(int integral) {
             this.integral = integral;
         }
     }

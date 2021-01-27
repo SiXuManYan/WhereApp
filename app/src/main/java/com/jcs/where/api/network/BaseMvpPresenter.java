@@ -19,17 +19,20 @@ public class BaseMvpPresenter extends BaseModel {
     }
 
 
-
     protected <T> void requestApi(Observable<JcsResponse<T>> observable, BaseMvpObserver<T> observer) {
         dealResponse(observable, observer);
     }
 
     public void detachView() {
         mBaseMvpView = null;
-        CompositeDisposable compositeDisposable = mObserver.getCompositeDisposable();
-        if (compositeDisposable != null) {
-            compositeDisposable.clear();
+
+        if (mObserver != null) {
+            CompositeDisposable compositeDisposable = mObserver.getCompositeDisposable();
+            if (compositeDisposable != null) {
+                compositeDisposable.clear();
+            }
         }
+
     }
 
 }

@@ -10,6 +10,7 @@ import android.util.Log;
 import com.blankj.utilcode.util.LanguageUtils;
 import com.jcs.where.api.RetrofitManager;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
@@ -29,6 +30,9 @@ public class BaseApplication extends Application {
         SPUtil.initInstance(this);
         changeLanguage();
 //        setLanguage();
+
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
     }
 
     public void changeLanguage() {

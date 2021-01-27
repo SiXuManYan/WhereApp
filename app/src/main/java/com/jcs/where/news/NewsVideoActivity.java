@@ -22,8 +22,11 @@ public class NewsVideoActivity extends BaseNewsDetailActivity {
 
     @Override
     protected void dealDiff() {
-        if (mVideoPlayer != null) {
-            mVideoPlayer.setUp(mNewsDetailResponse.getVideoLink(), mNewsDetailResponse.getTitle());
+        String videoLink = mNewsDetailResponse.getVideoLink();
+        if (mVideoPlayer != null && videoLink != null && !videoLink.equals("")) {
+            mVideoPlayer.setUp(videoLink, mNewsDetailResponse.getTitle());
+            // 进入页面加载成功后自动播放
+            mVideoPlayer.startVideo();
         }
     }
 

@@ -322,7 +322,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         mHotelListIv.setOnClickListener(v -> finish());
         mCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
         findViewById(R.id.myLocationView).setOnClickListener(view -> checkIsGooglePlayConn());
-        mCityTv.setOnClickListener(view -> HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), REQ_SEARCH));
+        mCityTv.setOnClickListener(view -> HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), HotelSearchActivity.SearchTag.HOTEL, REQ_SEARCH));
     }
 
     public void toShowCalendarDialog() {

@@ -7,7 +7,6 @@ import android.os.Build;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextWatcher;
 import android.text.style.TextAppearanceSpan;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,16 +21,24 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
+import com.jcs.where.api.response.NewsResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelListBean;
+import com.jcs.where.hotel.watcher.AfterInputWatcher;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.news.NewsSearchResultActivity;
 import com.jcs.where.utils.SearchHistoryUtils;
 import com.jcs.where.view.MyLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -49,6 +56,7 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
 
     public static final String EXT_SELECT_SEARCH = "select_search";
     private static final String EXT_CITY_ID = "cityId";
+    private static final String EXT_SEARCH_TAG = "searchTag";
     private TextView cancelTv;
     private EditText searchEt;
     private View topBg;
@@ -58,11 +66,13 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
     private RecommendAdapter recommendAdapter;
     private RecyclerView recommendSearchRv;
     private String useText;
+    private SearchTag mSearchTag;
 
-    public static void goTo(Activity activity, String cityId, int requestCode) {
+    public static void goTo(Activity activity, String cityId, SearchTag searchTag, int requestCode) {
         Intent intent = new Intent(activity, HotelSearchActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(EXT_CITY_ID, cityId);
+        intent.putExtra(EXT_SEARCH_TAG, searchTag);
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -104,6 +114,12 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
 
     @Override
     protected void initData() {
+        Intent intent = getIntent();
+        mSearchTag = (SearchTag) intent.getSerializableExtra(EXT_SEARCH_TAG);
+
+        // 根据SearchTag，设置 EditText#hint
+        deployEtHint();
+
         showLoading();
 
         MyLayoutManager layout1 = new MyLayoutManager();
@@ -115,7 +131,7 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
         recommendSearchRv.setLayoutManager(linearLayoutManager);
         initSearchHistory();
 
-        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hot/searches?area_id=" + getIntent().getStringExtra(EXT_CITY_ID), null, "", TokenManager.get().getToken(HotelSearchActivity.this), new HttpUtils.StringCallback() {
+        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hot/searches?area_id=" + intent.getStringExtra(EXT_CITY_ID), null, "", TokenManager.get().getToken(HotelSearchActivity.this), new HttpUtils.StringCallback() {
             @Override
             public void onSuccess(int code, String result) {
                 stopLoading();
@@ -141,86 +157,102 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
         });
     }
 
+    /**
+     * 根据SearchTag，设置 EditText#hint
+     */
+    private void deployEtHint() {
+        if (mSearchTag == SearchTag.HOTEL) {
+            searchEt.setHint(R.string.search_hotel_name);
+        }
+        if (mSearchTag == SearchTag.NEWS) {
+            searchEt.setHint(R.string.search_news_keyword);
+        }
+    }
+
     @Override
     protected void bindListener() {
-        cancelTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        searchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    //点击搜索的时候隐藏软键盘
-                    hideKeyboard(searchEt);
-                    SearchHistoryUtils.saveSearchHistory(HotelSearchActivity.this, searchEt.getText().toString());
-                    initSearchHistory();
-                    searchEt.clearFocus();
-                    return true;
-                }
-
-                return false;
-            }
-        });
-        searchEt.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+        cancelTv.setOnClickListener(view -> finish());
+        searchEt.setOnEditorActionListener(this::onEditorActionClicked);
+        searchEt.addTextChangedListener(new AfterInputWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 recommendSearch(s.toString(), s.toString().length());
             }
         });
 
-        findViewById(R.id.tv_clear).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SearchHistoryUtils.clear(HotelSearchActivity.this);
-            }
-        });
+        findViewById(R.id.tv_clear).setOnClickListener(this::onClearClicked);
 
         hotSearchAdapter.setOnItemChildClickListener(this);
         searchHistoryAdapter.setOnItemChildClickListener(this);
         recommendAdapter.setOnItemChildClickListener(this);
     }
 
+    private void onClearClicked(View view) {
+        SearchHistoryUtils.clear(HotelSearchActivity.this);
+    }
+
+    /**
+     * 点击了搜索按钮
+     */
+    private boolean onEditorActionClicked(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            //点击搜索的时候隐藏软键盘
+            hideKeyboard(searchEt);
+            SearchHistoryUtils.saveSearchHistory(HotelSearchActivity.this, searchEt.getText().toString());
+            initSearchHistory();
+            searchEt.clearFocus();
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 根据SearchTag、输入后的内容搜索
+     */
     private void recommendSearch(String text, int length) {
         if (length == 0) {
             recommendSearchRv.setVisibility(View.GONE);
         } else {
             recommendSearchRv.setVisibility(View.VISIBLE);
             useText = text;
-            HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotels?area_id=" + getIntent().getStringExtra(EXT_CITY_ID) + "&search_input=" + text, null, "", TokenManager.get().getToken(HotelSearchActivity.this), new HttpUtils.StringCallback() {
-                @Override
-                public void onSuccess(int code, String result) {
-                    stopLoading();
-                    if (code == 200) {
-                        HotelListBean hotelListBean = new Gson().fromJson(result, HotelListBean.class);
-                        recommendAdapter.getData().clear();
-                        recommendAdapter.addData(hotelListBean.getData());
-                    } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        showToast(errorBean.message);
-                    }
-                }
 
-                @Override
-                public void onFaileure(int code, Exception e) {
-                    stopLoading();
-                    showToast(e.getMessage());
-                }
-            });
+            if (mSearchTag == SearchTag.NEWS) {
+                searchNews(text);
+            }
+
+            if (mSearchTag == SearchTag.HOTEL) {
+                searchHotel(text);
+            }
         }
 
+    }
+
+    private void searchNews(String text) {
+        toActivity(NewsSearchResultActivity.class, new IntentEntry(NewsSearchResultActivity.K_INPUT, text));
+    }
+
+    private void searchHotel(String text) {
+        HttpUtils.doHttpReqeust("GET", "hotelapi/v1/hotels?area_id=" + getIntent().getStringExtra(EXT_CITY_ID) + "&search_input=" + text, null, "", TokenManager.get().getToken(HotelSearchActivity.this), new HttpUtils.StringCallback() {
+            @Override
+            public void onSuccess(int code, String result) {
+                stopLoading();
+                if (code == 200) {
+                    HotelListBean hotelListBean = new Gson().fromJson(result, HotelListBean.class);
+                    recommendAdapter.getData().clear();
+                    recommendAdapter.addData(hotelListBean.getData());
+                } else {
+                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+                    showToast(errorBean.message);
+                }
+            }
+
+            @Override
+            public void onFaileure(int code, Exception e) {
+                stopLoading();
+                showToast(e.getMessage());
+            }
+        });
     }
 
     @Override
@@ -321,4 +353,8 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
         }
     }
 
+
+    public enum SearchTag implements Serializable {
+        HOTEL, NEWS
+    }
 }

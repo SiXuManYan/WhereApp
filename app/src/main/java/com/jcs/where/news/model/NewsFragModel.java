@@ -11,11 +11,15 @@ import java.util.List;
  * create by zyf on 2021/1/18 10:01 下午
  */
 public class NewsFragModel extends BaseModel {
-    public void getNews(int channelId, String input, BaseObserver<PageResponse<List<NewsResponse>>> observer) {
+    public void getNews(int channelId, String input, BaseObserver<PageResponse<NewsResponse>> observer) {
         dealResponse(mRetrofit.getNews(channelId, input), observer);
     }
 
-    public void getNews(int channelId, BaseObserver<PageResponse<List<NewsResponse>>> observer) {
+    public void getNews(int channelId, BaseObserver<PageResponse<NewsResponse>> observer) {
         getNews(channelId, "", observer);
+    }
+
+    public void getNews(String input, BaseObserver<PageResponse<NewsResponse>> observer) {
+        getNews(0, input, observer);
     }
 }

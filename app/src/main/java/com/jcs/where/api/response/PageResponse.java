@@ -2,6 +2,8 @@ package com.jcs.where.api.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * create by zyf on 2021/1/10 10:52 上午
  */
@@ -45,13 +47,13 @@ public class PageResponse<T> {
     @SerializedName("total")
     private Integer total;
 
-    private T data;
+    private List<T> data;
 
-    public T getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 

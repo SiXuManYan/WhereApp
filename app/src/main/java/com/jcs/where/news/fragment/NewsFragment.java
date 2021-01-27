@@ -35,6 +35,7 @@ import java.util.List;
 public class NewsFragment extends BaseFragment {
 
     private final static String K_NEW_TAB_RESPONSE = "newTabResponse";
+    private final static String K_NEW_INPUT = "input";
     private final static String K_IS_FIRST = "isFirst";
 
     private RecyclerView mRecyclerView;
@@ -42,13 +43,23 @@ public class NewsFragment extends BaseFragment {
     private NewsFragmentAdapter mAdapter;
     private NewsChannelResponse mTabResponse;
     private NewsFragModel mModel;
-    private PageResponse<List<NewsResponse>> mPageNews;
+    private PageResponse<NewsResponse> mPageNews;
     private boolean mIsFirst = false;
     private boolean mIsLoaded = false;
+    private String mInput;
 
     public static NewsFragment newInstance(NewsChannelResponse tabResponse, boolean isFirst) {
         Bundle args = new Bundle();
         args.putSerializable(K_NEW_TAB_RESPONSE, tabResponse);
+        args.putBoolean(K_IS_FIRST, isFirst);
+        NewsFragment fragment = new NewsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static NewsFragment newInstance(String input, boolean isFirst) {
+        Bundle args = new Bundle();
+        args.putSerializable(K_NEW_INPUT, input);
         args.putBoolean(K_IS_FIRST, isFirst);
         NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
@@ -62,6 +73,7 @@ public class NewsFragment extends BaseFragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             mTabResponse = (NewsChannelResponse) arguments.getSerializable(K_NEW_TAB_RESPONSE);
+            mInput = arguments.getString(K_NEW_INPUT);
             mIsFirst = arguments.getBoolean(K_IS_FIRST);
         }
         mAdapter = new NewsFragmentAdapter();
@@ -91,7 +103,7 @@ public class NewsFragment extends BaseFragment {
 
     private void getNewsList() {
         if (mTabResponse != null) {
-            mModel.getNews(mTabResponse.getId(), new BaseObserver<PageResponse<List<NewsResponse>>>() {
+            mModel.getNews(mTabResponse.getId(), new BaseObserver<PageResponse<NewsResponse>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
@@ -100,7 +112,32 @@ public class NewsFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onSuccess(@NotNull PageResponse<List<NewsResponse>> newsResponsePageResponse) {
+                public void onSuccess(@NotNull PageResponse<NewsResponse> newsResponsePageResponse) {
+                    stopLoading();
+                    mSwipeLayout.setRefreshing(false);
+                    mPageNews = newsResponsePageResponse;
+                    mAdapter.getData().clear();
+                    List<NewsResponse> data = newsResponsePageResponse.getData();
+                    if (data.size() > 0) {
+                        mAdapter.addData(data);
+                    } else {
+                        mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+                    }
+                }
+            });
+        }
+
+        if (mInput != null){
+            mModel.getNews(mInput, new BaseObserver<PageResponse<NewsResponse>>() {
+                @Override
+                protected void onError(ErrorResponse errorResponse) {
+                    stopLoading();
+                    showNetError(errorResponse);
+                    mSwipeLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onSuccess(@NotNull PageResponse<NewsResponse> newsResponsePageResponse) {
                     stopLoading();
                     mSwipeLayout.setRefreshing(false);
                     mPageNews = newsResponsePageResponse;
@@ -141,6 +178,11 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void onRefreshListener() {
+        getNewsList();
+    }
+
+    public void injectSearch(String input){
+        mInput = input;
         getNewsList();
     }
 

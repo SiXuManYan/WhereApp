@@ -47,6 +47,7 @@
     <string name="saturday">周六</string>
     <string name="cancel">取消</string>
     <string name="search_hotel_name">搜索酒店名称</string>
+    <string name="search_news_keyword">搜索新闻关键字</string>
     <string name="history_search">历史搜索</string>
     <string name="clear">清空</string>
     <string name="hot_search">热门搜索</string>
@@ -220,6 +221,7 @@
     <string name="price_above_number">₱%1$d起</string>
     <string name="mine_other">其他</string>
     <string name="news_follow">关注</string>
+    <string name="news_followed">已关注</string>
     <string name="news_recommend">推荐</string>
     <string name="news_my_channel">我的频道</string>
     <string name="news_more_channel">更多频道</string>

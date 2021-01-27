@@ -18,11 +18,11 @@ public class OrderModel extends BaseModel {
         dealResponse(mRetrofit.getOrderNum(), observer);
     }
 
-    public void getOrderList(int type, BaseObserver<PageResponse<List<OrderListResponse>>> observer) {
+    public void getOrderList(int type, BaseObserver<PageResponse<OrderListResponse>> observer) {
         getOrderList(type, "", observer);
     }
 
-    public void getOrderList(int type, String keyword, BaseObserver<PageResponse<List<OrderListResponse>>> observer) {
+    public void getOrderList(int type, String keyword, BaseObserver<PageResponse<OrderListResponse>> observer) {
         dealResponse(mRetrofit.getOrderList(type, keyword), observer);
     }
 

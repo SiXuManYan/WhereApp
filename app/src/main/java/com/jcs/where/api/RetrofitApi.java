@@ -23,6 +23,7 @@ import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
+import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
@@ -30,6 +31,7 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SignListResponse;
+import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.bean.CityResponse;
 
@@ -206,7 +208,7 @@ public interface RetrofitApi {
      * 获得订单列表
      */
     @GET("commonapi/v2/orders")
-    Observable<JcsResponse<PageResponse<List<OrderListResponse>>>> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
+    Observable<JcsResponse<PageResponse<OrderListResponse>>> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
 
 
     @Headers("baseUrl:google/map")
@@ -327,7 +329,7 @@ public interface RetrofitApi {
      * @param channelId 频道id
      */
     @GET("newsapi/v2/news")
-    Observable<JcsResponse<PageResponse<List<NewsResponse>>>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
+    Observable<JcsResponse<PageResponse<NewsResponse>>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
 
     /**
      * 获取积分明细列表
@@ -360,6 +362,21 @@ public interface RetrofitApi {
     @DELETE("newsapi/v2/channels/follows")
     Observable<JcsResponse<Object>> delFollowChannels(@Query("cate_ids") String channelIds);
 
+    /**
+     * 新闻详情
+     */
     @GET("newsapi/v2/news/{news}")
-    Observable<JcsResponse<NewsResponse>> getNewsDetail(@Path("news") String newsId);
+    Observable<JcsResponse<NewsDetailResponse>> getNewsDetail(@Path("news") String newsId);
+
+    /**
+     * 关注新闻发布者
+     */
+    @POST("newsapi/v2/follows")
+    Observable<JcsResponse<SuccessResponse>> postFollowNewsPublisher(@Query("publisher_id") int publisherId);
+
+    /**
+     * 取消关注新闻发布者
+     */
+    @DELETE("newsapi/v2/follows")
+    Observable<JcsResponse<SuccessResponse>> delFollowNewsPublisher(@Query("publisher_id") int publisherId);
 }

@@ -131,14 +131,14 @@ public class OrderListFragment extends BaseFragment {
     }
 
     public void getOrderByType(String keyword) {
-        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<PageResponse<List<OrderListResponse>>>() {
+        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<PageResponse<OrderListResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopRefresh();
             }
 
             @Override
-            public void onSuccess(@NonNull PageResponse<List<OrderListResponse>> pageResponse) {
+            public void onSuccess(@NonNull PageResponse<OrderListResponse> pageResponse) {
                 mAdapter.getData().clear();
                 if (pageResponse.getData().size() > 0) {
                     mAdapter.addData(pageResponse.getData());

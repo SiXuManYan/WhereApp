@@ -39,11 +39,11 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
     @Override
     protected void initView(View view) {
         mRv = view.findViewById(R.id.integral_rv);
-
     }
 
     @Override
     protected void initData() {
+        presenter = new IntegralChildDetailPresenter(this);
         mAdapter = new IntegralChildAdapter();
         mRv.setAdapter(mAdapter);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);

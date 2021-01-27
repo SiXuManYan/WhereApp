@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.IntegralDetailResponse;
@@ -14,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * Created by Wangsw  2021/1/27 15:06.
  * 积分明细列表
  */
-public class IntegralChildAdapter extends BaseQuickAdapter<IntegralDetailResponse, BaseViewHolder> {
+public class IntegralChildAdapter extends BaseQuickAdapter<IntegralDetailResponse, BaseViewHolder> implements LoadMoreModule {
 
     public IntegralChildAdapter() {
         super(R.layout.item_integral_child);
@@ -31,7 +32,7 @@ public class IntegralChildAdapter extends BaseQuickAdapter<IntegralDetailRespons
         title_tv.setText(stringArray[type]);
 
         time_tv.setText(data.created_at);
-        score_tv.setText(StringUtils.getString(R.string.add_format,data.integral));
+        score_tv.setText(StringUtils.getString(R.string.add_format, data.integral));
 
 
     }

@@ -36,7 +36,7 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
             return;
         }
         if (errCode == 401) {
-            new AlertDialog.Builder(Utils.getApp())
+            new AlertDialog.Builder(getContext())
                     .setTitle(R.string.hint)
                     .setCancelable(false)
                     .setMessage(R.string.login_expired_hint)

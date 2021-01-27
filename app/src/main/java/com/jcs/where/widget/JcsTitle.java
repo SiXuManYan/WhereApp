@@ -22,12 +22,14 @@ public class JcsTitle extends ConstraintLayout {
     private int mBackIconRes = -1;
     private int mFirstRightIconRes = -1;
     private int mSecondRightIconRes = -1;
+    private int mBackgroundRes = -1;
     private boolean mShowBottomLine = false;
     private float mBackIconWidth, mBackIconHeight;
     private ImageView mBackIv;
     private View mBottomLine;
     private TextView mMiddleTitleTv;
     private ImageView mFirstRightIv, mSecondRightIv;
+    private ConstraintLayout mTitleLayout;
 
     public JcsTitle(Context context) {
         this(context, null, 0);
@@ -48,7 +50,9 @@ public class JcsTitle extends ConstraintLayout {
         mBackIconRes = array.getResourceId(R.styleable.JcsTitle_backIcon, R.drawable.ic_back_black);
         mFirstRightIconRes = array.getResourceId(R.styleable.JcsTitle_rightFirstIcon, 0);
         mSecondRightIconRes = array.getResourceId(R.styleable.JcsTitle_rightSecondIcon, 0);
+        mBackgroundRes = array.getResourceId(R.styleable.JcsTitle_backgroundRes, 0);
         mShowBottomLine = array.getBoolean(R.styleable.JcsTitle_showBottomLine, false);
+
 
         array.recycle();
         initView(context);
@@ -64,6 +68,7 @@ public class JcsTitle extends ConstraintLayout {
         mMiddleTitleTv.setTextColor(mMiddleTitleColor);
         mFirstRightIv = view.findViewById(R.id.firstRightIv);
         mSecondRightIv = view.findViewById(R.id.secondRightIv);
+        mTitleLayout = view.findViewById(R.id.titleLayout);
 
         if (!mShowBackIv) {
             mBackIv.setVisibility(GONE);
@@ -92,6 +97,10 @@ public class JcsTitle extends ConstraintLayout {
             mSecondRightIv.setVisibility(GONE);
         } else {
             mSecondRightIv.setImageResource(mSecondRightIconRes);
+        }
+
+        if (mBackgroundRes != 0) {
+            mTitleLayout.setBackgroundResource(mBackgroundRes);
         }
     }
 
@@ -131,6 +140,7 @@ public class JcsTitle extends ConstraintLayout {
         this.mSecondRightIconRes = secondRightIcon;
         this.mSecondRightIv.setImageResource(secondRightIcon);
     }
+
     protected int getDp(int height) {
         Context context = getContext();
         if (context == null) {

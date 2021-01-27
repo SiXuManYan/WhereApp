@@ -266,14 +266,6 @@ public class HotelSearchActivity extends BaseActivity implements OnItemChildClic
         manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-
-    protected void setStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.white));//设置状态栏颜色
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
-        }
-    }
-
     public SpannableString matcherSearchText(String text, String keyword) {
         SpannableString ss = new SpannableString(text);
         Pattern pattern = Pattern.compile(keyword);

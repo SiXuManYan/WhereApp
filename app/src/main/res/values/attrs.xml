@@ -49,6 +49,7 @@
         <attr name="backIconHeight" format="dimension|reference" />
         <attr name="rightFirstIcon" format="reference" />
         <attr name="rightSecondIcon" format="reference" />
+        <attr name="backgroundRes" format="reference" />
         <attr name="showBackIv" format="boolean" />
         <attr name="showBottomLine" format="boolean" />
     </declare-styleable>

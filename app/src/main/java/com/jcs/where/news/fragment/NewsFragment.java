@@ -18,6 +18,7 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.news.NewsDetailActivity;
+import com.jcs.where.news.NewsVideoActivity;
 import com.jcs.where.news.adapter.NewsFragmentAdapter;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.news.model.NewsFragModel;
@@ -127,7 +128,7 @@ public class NewsFragment extends BaseFragment {
             });
         }
 
-        if (mInput != null){
+        if (mInput != null) {
             mModel.getNews(mInput, new BaseObserver<PageResponse<NewsResponse>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
@@ -174,6 +175,9 @@ public class NewsFragment extends BaseFragment {
         int itemViewType = mAdapter.getItemViewType(position);
         if (itemViewType != NewsType.VIDEO) {
             toActivity(NewsDetailActivity.class, new IntentEntry("newsId", String.valueOf(item.getId())));
+        } else {
+            // 跳转到播放视频的详情页面
+            toActivity(NewsVideoActivity.class, new IntentEntry("newsId", String.valueOf(item.getId())));
         }
     }
 
@@ -181,7 +185,7 @@ public class NewsFragment extends BaseFragment {
         getNewsList();
     }
 
-    public void injectSearch(String input){
+    public void injectSearch(String input) {
         mInput = input;
         getNewsList();
     }

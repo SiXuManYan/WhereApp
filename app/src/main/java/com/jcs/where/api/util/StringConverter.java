@@ -1,4 +1,5 @@
 package com.jcs.where.api.util;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -8,6 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
+
 /**
  * create by zyf on 2021/1/27 10:39 下午
  */

@@ -120,12 +120,11 @@
         android:id="@+id/moreRecommendTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/news_more_recommend"
         app:layout_constraintTop_toBottomOf="@id/newsVideoDesTv"
         android:layout_marginTop="@dimen/dp_15"
         app:layout_constraintStart_toStartOf="@id/authorIcon"
         android:textSize="@dimen/sp_16"
         android:textColor="@color/black_333333"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

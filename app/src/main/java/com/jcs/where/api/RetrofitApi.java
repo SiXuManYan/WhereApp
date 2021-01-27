@@ -335,7 +335,7 @@ public interface RetrofitApi {
      * 获取积分明细列表
      */
     @GET("commonapi/v2/integrals")
-    Observable<JcsResponse<PageResponse<IntegralDetailResponse>>> getIntegralsDetailList();
+    Observable<JcsResponse<PageResponse<IntegralDetailResponse>>> getIntegralsDetailList(@Query("page") int page);
 
     /**
      * 签到列表

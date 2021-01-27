@@ -3,10 +3,14 @@ package com.jcs.where.integral.child.detail;
 
 import android.view.View;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
-import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.IntegralDetailResponse;
-import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.mvp.BaseMvpFragment;
+import com.jcs.where.utils.Constant;
 
 import java.util.List;
 
@@ -14,7 +18,12 @@ import java.util.List;
  * Created by Wangsw  2021/1/22 10:06.
  * 积分明细
  */
-public class IntegralChildDetailFragment extends BaseFragment implements IntegralChildDetailView{
+public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDetailPresenter> implements IntegralChildDetailView, OnLoadMoreListener {
+
+
+    private RecyclerView mRv;
+    private IntegralChildAdapter mAdapter;
+    private int page = Constant.DEFAULT_FIRST_PAGE;
 
 
     public static IntegralChildDetailFragment newInstance() {
@@ -29,12 +38,23 @@ public class IntegralChildDetailFragment extends BaseFragment implements Integra
 
     @Override
     protected void initView(View view) {
+        mRv = view.findViewById(R.id.integral_rv);
 
     }
 
     @Override
     protected void initData() {
+        mAdapter = new IntegralChildAdapter();
+        mRv.setAdapter(mAdapter);
+        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        mAdapter.getLoadMoreModule().setAutoLoadMore(false);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+    }
 
+    @Override
+    protected void loadOnVisible() {
+        presenter.getIntegralDetailList(page);
     }
 
     @Override
@@ -44,12 +64,34 @@ public class IntegralChildDetailFragment extends BaseFragment implements Integra
 
 
     @Override
-    public void onDetailError(ErrorResponse errorResponse) {
+    public void bindDetailData(List<IntegralDetailResponse> data, boolean isLastPage) {
+        BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+        if (data.isEmpty()) {
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                loadMoreModule.loadMoreComplete();
+            } else {
+                loadMoreModule.loadMoreEnd();
+            }
+            return;
+        }
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mAdapter.setDiffNewData(data);
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage();
+        } else {
+            mAdapter.addData(data);
+            if (isLastPage) {
+                loadMoreModule.loadMoreEnd();
+            } else {
+                loadMoreModule.loadMoreComplete();
+            }
+
+        }
 
     }
 
     @Override
-    public void bindDetailData(List<IntegralDetailResponse> data) {
-
+    public void onLoadMore() {
+        page++;
+        presenter.getIntegralDetailList(page);
     }
 }

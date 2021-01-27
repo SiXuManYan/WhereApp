@@ -12,11 +12,12 @@ import io.reactivex.disposables.CompositeDisposable;
 public class BaseMvpPresenter extends BaseModel {
 
 
-    private BaseMvpView view;
+    private BaseMvpView mBaseMvpView;
 
-    public void setView(BaseMvpView view) {
-        this.view = view;
+    public BaseMvpPresenter(BaseMvpView baseMvpView) {
+        mBaseMvpView = baseMvpView;
     }
+
 
 
     protected <T> void requestApi(Observable<JcsResponse<T>> observable, BaseMvpObserver<T> observer) {
@@ -24,7 +25,7 @@ public class BaseMvpPresenter extends BaseModel {
     }
 
     public void detachView() {
-        view = null;
+        mBaseMvpView = null;
         CompositeDisposable compositeDisposable = mObserver.getCompositeDisposable();
         if (compositeDisposable != null) {
             compositeDisposable.clear();

@@ -12,4 +12,7 @@
         android:type="linear"
         android:useLevel="true" />
 
+
+    <corners android:radius="@dimen/dp_12"/>
+
 </shape>

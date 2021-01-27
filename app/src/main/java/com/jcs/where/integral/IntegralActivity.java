@@ -1,11 +1,13 @@
 package com.jcs.where.integral;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -14,11 +16,19 @@ import androidx.viewpager.widget.ViewPager;
 import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.jcs.where.R;
-import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.SignListResponse;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.integral.child.detail.IntegralChildDetailFragment;
 import com.jcs.where.integral.child.task.IntegralChildTaskFragment;
+import com.jcs.where.widget.IntegralItemView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import static com.jcs.where.R.id.task_rb;
 
@@ -29,12 +39,12 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
 
     private TextView mIntegralTv;
     private TextView mSignInTv;
-    private RadioButton taskRb;
-    private RadioButton detailRb;
-    private RadioGroup tabRg;
+    private RadioButton mTaskRb;
+    private RadioButton mDetailRb;
+    private RadioGroup mTabRg;
 
-    private IntegralPresenter mModel;
     private ViewPager mPagerVp;
+    private LinearLayout mSignInContainerLl;
 
     @Override
     protected int getLayoutId() {
@@ -48,16 +58,16 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
         BarUtils.setStatusBarColor(this, R.drawable.shape_gradient_integral, true);
 
         mPagerVp = findViewById(R.id.pager_vp);
-        InnerPagerAdapter mPagerAdapter = new InnerPagerAdapter(getSupportFragmentManager(), 0);
-        mPagerVp.setAdapter(mPagerAdapter);
-
         mIntegralTv = findViewById(R.id.my_integral_tv);
         mSignInTv = findViewById(R.id.sign_in_tv);
-        tabRg = findViewById(R.id.tab_rg);
-        taskRb = findViewById(task_rb);
-        detailRb = findViewById(R.id.detail_rb);
-    }
+        mTabRg = findViewById(R.id.tab_rg);
+        mTaskRb = findViewById(task_rb);
+        mDetailRb = findViewById(R.id.detail_rb);
+        mSignInContainerLl = findViewById(R.id.sign_in_container_ll);
 
+        InnerPagerAdapter mPagerAdapter = new InnerPagerAdapter(getSupportFragmentManager(), 0);
+        mPagerVp.setAdapter(mPagerAdapter);
+    }
 
 
     @Override
@@ -75,19 +85,18 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
 
             @Override
             public void onPageSelected(int position) {
-                MaterialRadioButton child = (MaterialRadioButton) tabRg.getChildAt(position);
+                MaterialRadioButton child = (MaterialRadioButton) mTabRg.getChildAt(position);
                 child.setSelected(true);
             }
 
         });
-
-        taskRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
+        mTaskRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
             if (!isCheck) {
                 return;
             }
             mPagerVp.setCurrentItem(0);
         });
-        detailRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
+        mDetailRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
             if (!isCheck) {
                 return;
             }
@@ -97,39 +106,88 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
 
     @Override
     protected void initData() {
-        mModel = new IntegralPresenter(this);
-        mModel.getSignInList();
+        presenter = new IntegralPresenter(this);
+        presenter.getUserInfo();
+        presenter.getSignInList();
     }
 
+    /**
+     * 绑定积分列表
+     * @param response
+     */
     @Override
-    public void bindDetailData(SignListResponse response) {
+    public void bindSignInList(SignListResponse response) {
         stopLoading();
+        List<SignListResponse.DataBean> data = response.getData();
+        for (int i = 0; i < data.size(); i++) {
+            IntegralItemView child = (IntegralItemView) mSignInContainerLl.getChildAt(i);
+            child.setContent(i, data.get(i));
+        }
     }
 
+    /**
+     * 设置用户积分
+     * @param integral 积分
+     * @param isSigned
+     */
     @Override
-    public void onError(ErrorResponse errorResponse) {
-        stopLoading();
-    }
-
-    @Override
-    public void bindIntegral(String integral) {
+    public void bindUserIntegral(String integral, boolean isSigned) {
         mIntegralTv.setText(integral);
+        changeSignStatus(isSigned);
+        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_IN_CHANGE_STATUS, isSigned));
     }
 
     @Override
     public void signInSuccess() {
-        mSignInTv.setText(R.string.already_sign_in);
-        mSignInTv.setEnabled(false);
+        changeSignStatus(true);
+        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_IN_CHANGE_STATUS, true));
     }
 
 
     /**
-     * 立即签到
+     * 积分任务请求签到
+     * @param baseEvent
      */
-    public void signInClick(View view) {
-        mModel.signIn();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<Object> baseEvent) {
+        if (baseEvent.code == EventCode.EVENT_SIGN_IN_REQUEST) {
+            mSignInTv.performClick();
+        }
     }
 
+
+    /**
+     * 签到
+     * @param view
+     */
+    public void signInClick(View view) {
+        presenter.signIn();
+    }
+
+
+    private void changeSignStatus(boolean isSigned) {
+        mSignInTv.setEnabled(!isSigned);
+        if (isSigned) {
+            mSignInTv.setText(R.string.already_sign_in);
+        } else {
+            mSignInTv.setText(R.string.sign_in_now);
+        }
+    }
+
+    /**
+     * 签到规则
+     * @param view
+     */
+    public void onRuleClick(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.sign_in_rule)
+                .setMessage(R.string.sign_in_rule_message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                })
+                .create().show();
+    }
 
     private static class InnerPagerAdapter extends FragmentPagerAdapter {
 
@@ -153,6 +211,5 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
 
 
     }
-
 
 }

@@ -82,4 +82,24 @@
         <attr name="rightDrawableListWidth" format="reference|dimension" />
         <attr name="rightDrawableListHeight" format="reference|dimension" />
     </declare-styleable>
+
+    <string-array name="sign_in_index">
+        <item>@string/day_1</item>
+        <item>@string/day_2</item>
+        <item>@string/day_3</item>
+        <item>@string/day_4</item>
+        <item>@string/day_5</item>
+        <item>@string/day_6</item>
+        <item>@string/day_7</item>
+    </string-array>
+
+
+    <string-array name="sign_in_type">
+        <item>@string/sign_in_type_0</item>
+        <item>@string/sign_in_type_1</item>
+        <item>@string/sign_in_type_2</item>
+        <item>@string/sign_in_type_3</item>
+        <item>@string/sign_in_type_4</item>
+    </string-array>
+
 </resources>

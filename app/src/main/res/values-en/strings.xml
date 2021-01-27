@@ -234,7 +234,7 @@
 	<string name="integral_rule">Rule</string>
 	<string name="integral_continuous_time">1day</string>
     <string name="my_scores">My scores</string>
-    <string name="sign_in_now">Sign in now</string>
+    <string name="sign_in_now">Checked in now</string>
 	<string name="already_sign_in">Already sign in</string>
 	<string name="points_task">Points task</string>
 	<string name="points_details">Points details</string>
@@ -244,4 +244,29 @@
 	<string name="request_error">Request error %1$d</string>
 	<string name="news_followed">Followed</string>
 	<string name="search_news_keyword">Search news by keywords</string>
+
+	<string name="day_1">1st</string>
+	<string name="day_2">2ed</string>
+	<string name="day_3">3rd</string>
+	<string name="day_4">4th</string>
+	<string name="day_5">5th</string>
+	<string name="day_6">6th</string>
+	<string name="day_7">7th</string>
+    <string name="sign_in_rule">Sign in rule</string>
+	<string name="sign_in_rule_message">1. Log-in users can sign in once a day and receive rewards.\n\n2. There will be extra points for 7 consecutive check-in days, and no extra points for the remaining consecutive check-in days.\n\n3. When the continuous check-in is interrupted, the accumulated points will be retained, and will not be cleared, but the consecutive check-in days will be accumulated again.\n\n4. If there is a user violation, where has the right to terminate its sign-in immediately.</string>
+	<string name="temp_zero">0</string>
+
+	<string name="to_finish">to finish</string>
+	<string name="finished">finished</string>
+
+	<string name="add_format">+%1$d</string>
+
+	<string name="sign_in_type_0">Register</string>
+	<string name="sign_in_type_1">Invite</string>
+	<string name="sign_in_type_2">Consumption</string>
+	<string name="sign_in_type_3">Comment</string>
+	<string name="sign_in_type_4">Sign in</string>
+
+	<string name="empty_data_default">No data</string>
+
 </resources>

@@ -9,9 +9,12 @@ public class Constant {
     public static final double LAT = 14.6631685;
     public static final double LNG = 120.5887840;
 
+    /**
+     * 列表接口"第一页"页码
+     */
+    public static final int DEFAULT_FIRST_PAGE = 1;
+
     public static final String PARAM_POSITION = "position";
-
-
 
 
 }

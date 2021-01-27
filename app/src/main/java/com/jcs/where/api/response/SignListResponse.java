@@ -65,7 +65,7 @@ public class SignListResponse {
          * 	签到状态（1：已签到，2：未签到）
          */
         @SerializedName("sign_status")
-        private String signStatus;
+        private int signStatus;
 
 
         @SerializedName("date")
@@ -77,11 +77,11 @@ public class SignListResponse {
         @SerializedName("integral")
         private String integral;
 
-        public String getSignStatus() {
+        public int getSignStatus() {
             return signStatus;
         }
 
-        public void setSignStatus(String signStatus) {
+        public void setSignStatus(int signStatus) {
             this.signStatus = signStatus;
         }
 

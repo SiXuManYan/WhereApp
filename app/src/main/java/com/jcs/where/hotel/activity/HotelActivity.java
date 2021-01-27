@@ -17,15 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.utils.GlideUtil;
@@ -33,27 +30,20 @@ import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.bean.GuessYouLikeHotelBean;
 import com.jcs.where.home.dialog.HotelStarDialog;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
-import com.jcs.where.manager.TokenManager;
 import com.jcs.where.hotel.model.HotelModel;
 import com.jcs.where.utils.LocationUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

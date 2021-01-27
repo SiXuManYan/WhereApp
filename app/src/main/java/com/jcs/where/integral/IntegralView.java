@@ -9,13 +9,16 @@ import com.jcs.where.api.response.SignListResponse;
 public interface IntegralView extends BaseMvpView {
 
 
-    void bindDetailData(SignListResponse response);
+    /**
+     * 签到列表
+     */
+    void bindSignInList(SignListResponse response);
 
     /**
-     * 设置积分
+     * 设置用户积分
      * @param integral 积分
      */
-    void bindIntegral(String integral);
+    void bindUserIntegral(String integral,boolean isSigned);
 
     /**
      * 签到成功

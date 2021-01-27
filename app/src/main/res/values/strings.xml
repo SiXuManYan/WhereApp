@@ -236,6 +236,7 @@
     <string name="integral_continuous_time">1天</string>
     <string name="my_scores">我的积分</string>
     <string name="sign_in_now">立即签到</string>
+
     <string name="already_sign_in">已签到</string>
     <string name="points_task">积分任务</string>
     <string name="points_details">积分明细</string>
@@ -243,5 +244,28 @@
     <string name="login_expired_hint">请重新登录</string>
     <string name="login_again">重新登录</string>
     <string name="request_error">请求错误%1$d</string>
+
+    <string name="day_1">1天</string>
+    <string name="day_2">2天</string>
+    <string name="day_3">3天</string>
+    <string name="day_4">4天</string>
+    <string name="day_5">5天</string>
+    <string name="day_6">6天</string>
+    <string name="day_7">7天</string>
+    <string name="sign_in_rule">签到规则</string>
+    <string name="sign_in_rule_message">1、登录用户每天可签到1次，并领取奖励。\n2、连续签到7天会有额外积分，其余连续签到天数均无额外积分\n3、当连续签到中断后，之前攒下的积分会保留，不会清零但是会重新累计连续签到天数。\n4、如果出现用户违规行为，where有权立即终止其签到。</string>
+    <string name="temp_zero">0</string>
+    <string name="to_finish">去完成</string>
+    <string name="finished">已完成</string>
+    <string name="add_format">+%1$d</string>
+    <string name="sign_in_type_0">注册</string>
+    <string name="sign_in_type_1">邀请</string>
+    <string name="sign_in_type_2">消费</string>
+    <string name="sign_in_type_3">评论</string>
+    <string name="sign_in_type_4">签到</string>
+    <string name="empty_data_default">暂无数据</string>
+
+
+
 
 </resources>

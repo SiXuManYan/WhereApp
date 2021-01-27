@@ -3,28 +3,27 @@ package com.jcs.where.base.mvp;
 import androidx.appcompat.app.AlertDialog;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.network.BaseMvpView;
-import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.BaseFragment;
 
 /**
- * Created by Wangsw  2021/1/26 11:06.
+ * Created by Wangsw  2021/1/26 15:02.
  */
-public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseActivity implements BaseMvpView {
-
+public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFragment implements BaseMvpView {
 
     public T presenter;
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         if (presenter != null) {
             presenter.detachView();
         }
     }
-
 
     @Override
     public void onError(ErrorResponse errorResponse) {
@@ -37,7 +36,7 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
             return;
         }
         if (errCode == 401) {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(Utils.getApp())
                     .setTitle(R.string.hint)
                     .setCancelable(false)
                     .setMessage(R.string.login_expired_hint)

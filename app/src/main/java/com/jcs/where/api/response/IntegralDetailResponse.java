@@ -14,10 +14,19 @@ public class IntegralDetailResponse {
     }*/
 
 
-    public int id ;
-    public int type ;
-    public String integral ;
-    public String created_at ;
+    public int id;
+    /**
+     * 类型（1：注册，2：邀请，3：消费，4：评论，5：签到）
+     */
+    public int type;
+
+    /**
+     * 积分
+     */
+    public String integral;
+    public String created_at;
+
+
 
 
 }

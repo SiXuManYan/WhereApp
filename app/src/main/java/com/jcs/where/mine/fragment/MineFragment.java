@@ -75,8 +75,10 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.ll_settlement).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
+        view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
 
     }
+
 
     private void onIntegralIvClicked(View view) {
         toActivity(IntegralActivity.class);
@@ -97,6 +99,12 @@ public class MineFragment extends BaseFragment {
     private void onChangeLanguageClicked(View view) {
         toActivity(LanguageActivity.class);
     }
+
+
+    private void onCustomerServiceClick(View view) {
+
+    }
+
 
     @Override
     protected void initData() {

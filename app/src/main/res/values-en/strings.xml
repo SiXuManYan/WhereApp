@@ -277,5 +277,6 @@
 	<string name="ic_task_register">Register points</string>
 	<string name="ic_task_register_content">Get 500 points after successful registration</string>
     <string name="news_more_recommend">More recommend</string>
+    <string name="mine_customer_service">Service</string>
 
 </resources>

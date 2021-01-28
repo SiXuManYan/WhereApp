@@ -1,5 +1,6 @@
 package com.jcs.where.api;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.LoginRequest;
@@ -348,7 +349,7 @@ public interface RetrofitApi {
      * 立即签到
      */
     @POST("commonapi/v2/sign")
-    Observable<JcsResponse<JsonObject>> signIn();
+    Observable<JcsResponse<JsonElement>> signIn();
 
     /**
      * 订阅新闻频道

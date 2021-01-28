@@ -1,5 +1,6 @@
 package com.jcs.where.integral;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
@@ -58,10 +59,10 @@ public class IntegralPresenter extends BaseMvpPresenter {
      */
     public void signIn() {
 
-        requestApi(mRetrofit.signIn(), new BaseMvpObserver<JsonObject>(mView) {
+        requestApi(mRetrofit.signIn(), new BaseMvpObserver<JsonElement>(mView) {
 
             @Override
-            public void onSuccess(@NonNull JsonObject response) {
+            public void onSuccess(@NonNull JsonElement response) {
                 mView.signInSuccess();
             }
 

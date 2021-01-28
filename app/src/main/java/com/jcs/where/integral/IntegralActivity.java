@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.jcs.where.R;
 import com.jcs.where.api.response.SignListResponse;
@@ -27,8 +26,6 @@ import com.jcs.where.integral.child.task.IntegralChildTaskFragment;
 import com.jcs.where.widget.IntegralItemView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -93,7 +90,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
                 if (position == 0) {
                     mTaskRb.setTypeface(null, Typeface.BOLD);
                     mDetailRb.setTypeface(null, Typeface.NORMAL);
-                }else {
+                } else {
                     mTaskRb.setTypeface(null, Typeface.NORMAL);
                     mDetailRb.setTypeface(null, Typeface.BOLD);
                 }
@@ -105,7 +102,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
             if (isCheck) {
                 mTaskRb.setTypeface(null, Typeface.BOLD);
                 mPagerVp.setCurrentItem(0);
-            }else {
+            } else {
                 mTaskRb.setTypeface(null, Typeface.NORMAL);
             }
 
@@ -114,7 +111,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
             if (isCheck) {
                 mDetailRb.setTypeface(null, Typeface.BOLD);
                 mPagerVp.setCurrentItem(1);
-            }else {
+            } else {
                 mDetailRb.setTypeface(null, Typeface.NORMAL);
             }
 
@@ -130,6 +127,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
 
     /**
      * 绑定积分列表
+     *
      * @param response
      */
     @Override
@@ -140,10 +138,14 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
             IntegralItemView child = (IntegralItemView) mSignInContainerLl.getChildAt(i);
             child.setContent(i, data.get(i));
         }
+        if (mSignInContainerLl.getVisibility() != View.VISIBLE) {
+            mSignInContainerLl.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
      * 设置用户积分
+     *
      * @param integral 积分
      * @param isSigned
      */
@@ -151,6 +153,10 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
     public void bindUserIntegral(String integral, boolean isSigned) {
         mIntegralTv.setText(integral);
         changeSignStatus(isSigned);
+
+//        new Handler(Looper.myLooper()).postDelayed(() -> {
+//
+//        }, 2000);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_IN_CHANGE_STATUS, isSigned));
     }
 
@@ -161,20 +167,19 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
     }
 
 
-    /**
-     * 积分任务请求签到
-     * @param baseEvent
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventReceived(BaseEvent<Object> baseEvent) {
+
+
+    @Override
+    public void onEventReceived(BaseEvent<?> baseEvent) {
         if (baseEvent.code == EventCode.EVENT_SIGN_IN_REQUEST) {
             mSignInTv.performClick();
         }
-    }
 
+    }
 
     /**
      * 签到
+     *
      * @param view
      */
     public void signInClick(View view) {
@@ -183,6 +188,9 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
 
 
     private void changeSignStatus(boolean isSigned) {
+        if (mSignInTv.getVisibility() != View.VISIBLE) {
+            mSignInTv.setVisibility(View.VISIBLE);
+        }
         mSignInTv.setEnabled(!isSigned);
         if (isSigned) {
             mSignInTv.setText(R.string.already_sign_in);
@@ -193,6 +201,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
 
     /**
      * 签到规则
+     *
      * @param view
      */
     public void onRuleClick(View view) {

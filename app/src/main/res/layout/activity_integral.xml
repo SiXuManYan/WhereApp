@@ -90,6 +90,8 @@
                         android:includeFontPadding="false"
                         android:onClick="signInClick"
                         android:paddingStart="@dimen/dp_10"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:paddingTop="@dimen/dp_5"
                         android:paddingEnd="@dimen/dp_10"
                         android:paddingBottom="@dimen/dp_5"
@@ -147,6 +149,8 @@
                     <LinearLayout
                         android:id="@+id/sign_in_container_ll"
                         android:layout_width="match_parent"
+                        android:visibility="gone"
+                        tools:visibility="invisible"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_15"
                         android:orientation="horizontal">

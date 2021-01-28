@@ -34,8 +34,15 @@ public class IntegralChildTaskFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         mSignInTv = view.findViewById(R.id.sign_in_tv);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -54,6 +61,7 @@ public class IntegralChildTaskFragment extends BaseFragment {
     }
 
     public void signInClick(View view) {
+
         if (mSignInTv.isEnabled()) {
             EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_IN_REQUEST));
         }
@@ -72,7 +80,11 @@ public class IntegralChildTaskFragment extends BaseFragment {
         }
     }
 
+
     private void changeSignStatus(boolean isSigned) {
+        if (mSignInTv.getVisibility() != View.VISIBLE) {
+            mSignInTv.setVisibility(View.VISIBLE);
+        }
         mSignInTv.setEnabled(!isSigned);
         if (isSigned) {
             mSignInTv.setText(R.string.already_sign_in);

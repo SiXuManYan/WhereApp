@@ -1,6 +1,11 @@
 package com.jcs.where.news;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +27,7 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     protected NewsDetailModel mModel;
     protected ImageView mAuthorIcon, mToFollowIv;
     protected TextView mNewsTitleTv, mAuthorNameTv, mNewsTimeTv, mToFollowTv;
+    protected WebView mWebView;
     protected Group mToFollowGroup;
     protected View mToFollowView;
     protected NewsDetailResponse mNewsDetailResponse;
@@ -39,7 +45,21 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mToFollowTv = findViewById(R.id.toFollowTv);
         mToFollowIv = findViewById(R.id.toFollowIcon);
         mToFollowGroup = findViewById(R.id.toFollowGroup);
+        mWebView = findViewById(R.id.webView);
+        mWebView.setWebViewClient(new WebViewClient());
+        deployWebView();
     }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void deployWebView() {
+        WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setAppCacheEnabled(true);
+        mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+    }
+
 
     @Override
     protected void initData() {
@@ -69,6 +89,9 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
                 mNewsTitleTv.setText(response.getTitle());
                 mNewsTimeTv.setText(response.getCreatedAt());
                 mAuthorNameTv.setText(publisher.getNickname());
+                //使用WebView加载显示url
+                Log.e("BaseNewsDetailActivity", "onSuccess: " + response.getTitle());
+                mWebView.loadUrl(mNewsDetailResponse.getArticleLink());
                 dealDiff();
             }
         });

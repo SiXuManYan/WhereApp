@@ -1,6 +1,7 @@
 package com.jcs.where.news;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
@@ -45,6 +46,8 @@ public class NewsVideoActivity extends BaseNewsDetailActivity {
             // 进入页面加载成功后自动播放
             mVideoPlayer.startVideo();
         }
+
+
     }
 
     @Override

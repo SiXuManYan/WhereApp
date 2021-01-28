@@ -20,6 +20,7 @@ import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.model.TravelStayModel;
+import com.jcs.where.travel.TravelMapActivity;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.stx.xhb.androidx.XBanner;
@@ -148,7 +149,7 @@ public class TravelStayActivity extends BaseActivity {
                 toActivity(HotelActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
                 break;
             default:
-                showComing();
+                toActivity(TravelMapActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
                 break;
         }
     }

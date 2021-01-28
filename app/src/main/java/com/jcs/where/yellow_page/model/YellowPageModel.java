@@ -1,13 +1,11 @@
 package com.jcs.where.yellow_page.model;
 
-import android.util.Log;
-
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.api.response.MechanismPageResponse;
-import com.jcs.where.news.model.NewsAtyModel;
+import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.utils.Constant;
 
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiFunction;
 
 /**
@@ -28,7 +25,7 @@ public class YellowPageModel extends BaseModel {
      * @param search     查询字段
      */
     public void getMechanismList(String categoryId,
-                                 String search, BaseObserver<MechanismPageResponse> observer) {
+                                 String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
 
         dealResponse(mRetrofit.getMechanismListById(categoryId, search, Constant.LAT, Constant.LNG), observer);
 
@@ -55,13 +52,13 @@ public class YellowPageModel extends BaseModel {
     public void getInitData(String categoryIds, BaseObserver<YellowPageZipResponse> observer) {
 
         // 获取机构列表
-        Observable<JcsResponse<MechanismPageResponse>> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "", Constant.LAT, Constant.LNG);
+        Observable<JcsResponse<PageResponse<MechanismResponse>>> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "", Constant.LAT, Constant.LNG);
         // 获取一级分类
         Observable<JcsResponse<List<CategoryResponse>>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
-        Observable<JcsResponse<YellowPageZipResponse>> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<JcsResponse<MechanismPageResponse>, JcsResponse<List<CategoryResponse>>, JcsResponse<YellowPageZipResponse>>() {
+        Observable<JcsResponse<YellowPageZipResponse>> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<JcsResponse<PageResponse<MechanismResponse>>, JcsResponse<List<CategoryResponse>>, JcsResponse<YellowPageZipResponse>>() {
             @NotNull
             @Override
-            public JcsResponse<YellowPageZipResponse> apply(@NotNull JcsResponse<MechanismPageResponse> mechanismPageResponseJcsResponse, @NotNull JcsResponse<List<CategoryResponse>> listJcsResponse) throws Exception {
+            public JcsResponse<YellowPageZipResponse> apply(@NotNull JcsResponse<PageResponse<MechanismResponse>> mechanismPageResponseJcsResponse, @NotNull JcsResponse<List<CategoryResponse>> listJcsResponse) throws Exception {
                 JcsResponse<YellowPageZipResponse> jcsResponse = new JcsResponse<>();
                 int code = mechanismPageResponseJcsResponse.getCode();
                 int code2 = listJcsResponse.getCode();
@@ -88,15 +85,15 @@ public class YellowPageModel extends BaseModel {
     }
 
     public static class YellowPageZipResponse {
-        MechanismPageResponse mechanismPageResponse;
+        PageResponse<MechanismResponse> mechanismPageResponse;
         List<CategoryResponse> categories;
 
-        public YellowPageZipResponse(MechanismPageResponse mechanismPageResponse, List<CategoryResponse> categories) {
+        public YellowPageZipResponse(PageResponse<MechanismResponse> mechanismPageResponse, List<CategoryResponse> categories) {
             this.mechanismPageResponse = mechanismPageResponse;
             this.categories = categories;
         }
 
-        public MechanismPageResponse getMechanismPageResponse() {
+        public PageResponse<MechanismResponse> getMechanismPageResponse() {
             return mechanismPageResponse;
         }
 

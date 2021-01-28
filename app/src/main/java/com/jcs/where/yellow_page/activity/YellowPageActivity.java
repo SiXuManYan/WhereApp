@@ -14,6 +14,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
@@ -154,7 +155,7 @@ public class YellowPageActivity extends BaseActivity {
                 if (mFirstLevelCategories.size() > 0) {
                     CacheUtil.cacheWithCurrentTime(SPKey.K_YELLOW_PAGE_CATEGORIES, mFirstLevelCategories);
                 }
-                MechanismPageResponse mechanismPageResponse = yellowPageZipResponse.getMechanismPageResponse();
+                PageResponse<MechanismResponse> mechanismPageResponse = yellowPageZipResponse.getMechanismPageResponse();
                 updateAdapter(mechanismPageResponse);
             }
         });
@@ -206,7 +207,7 @@ public class YellowPageActivity extends BaseActivity {
     }
 
     private void getMechanismDataFromNet(String categoryId, String search) {
-        mModel.getMechanismList(categoryId, search, new BaseObserver<MechanismPageResponse>() {
+        mModel.getMechanismList(categoryId, search, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
@@ -214,7 +215,7 @@ public class YellowPageActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull MechanismPageResponse mechanismPageResponse) {
+            public void onSuccess(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
                 updateAdapter(mechanismPageResponse);
@@ -222,7 +223,7 @@ public class YellowPageActivity extends BaseActivity {
         });
     }
 
-    private void updateAdapter(@NonNull MechanismPageResponse mechanismPageResponse) {
+    private void updateAdapter(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
         List<MechanismResponse> data = mechanismPageResponse.getData();
         if (data != null && data.size() > 0) {
             mAdapter.addData(data);

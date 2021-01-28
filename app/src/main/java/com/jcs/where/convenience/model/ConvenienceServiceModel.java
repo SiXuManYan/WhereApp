@@ -5,6 +5,8 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismPageResponse;
+import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
@@ -30,7 +32,7 @@ public class ConvenienceServiceModel extends BaseModel {
      * @param search     查询字段
      */
     public void getMechanismList(String categoryId,
-                                 String search, BaseObserver<MechanismPageResponse> observer) {
+                                 String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
 
         dealResponse(mRetrofit.getMechanismListById(categoryId, search, Constant.LAT, Constant.LNG), observer);
 

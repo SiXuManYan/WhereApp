@@ -32,6 +32,7 @@ import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.SuccessResponse;
+import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.bean.CityResponse;
 
@@ -223,7 +224,7 @@ public interface RetrofitApi {
      * @return
      */
     @GET("generalapi/v2/infos")
-    Observable<JcsResponse<MechanismPageResponse>> getMechanismListById(
+    Observable<JcsResponse<PageResponse<MechanismResponse>>> getMechanismListById(
             @Query("cate_id") String categoryId,
             @Query("search_input") String search,
             @Query("lat") double lat,
@@ -379,4 +380,38 @@ public interface RetrofitApi {
      */
     @DELETE("newsapi/v2/follows")
     Observable<JcsResponse<SuccessResponse>> delFollowNewsPublisher(@Query("publisher_id") int publisherId);
+
+
+    /**
+     * 获得展示在地图上的景点数据
+     *
+     * @param categoryId 景点分类
+     * @param areaId     区域id，非必须（0）
+     * @param search     查询字段
+     * @param lat        必须
+     * @param lng        必须
+     * @return
+     */
+    @GET("travelapi/v2/map/travels")
+    Observable<JcsResponse<List<MechanismResponse>>> getTouristAttractionListForMap(
+            @Query("cate_id") String categoryId,
+            @Query("area_id") int areaId,
+            @Query("search_input") String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng
+    );
+
+    /**
+     * 获得旅游景点的列表数据
+     *
+     * @param categoryId 机构分类
+     * @param search     查询字段
+     * @return
+     */
+    @GET("travelapi/v2/travels")
+    Observable<JcsResponse<PageResponse<TouristAttractionResponse>>> getTouristAttractionListById(
+            @Query("cate_id") String categoryId,
+            @Query("search_input") String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng);
 }

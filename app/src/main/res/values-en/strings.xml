@@ -278,5 +278,21 @@
 	<string name="ic_task_register_content">Get 500 points after successful registration</string>
     <string name="news_more_recommend">More recommend</string>
     <string name="mine_customer_service">Service</string>
+    <string name="title_setting">Setting</string>
+	<string name="sign_out">Sign out</string>
+    <string name="personal_information">Personal information</string>
+    <string name="modify_information">Modify information</string>
+	<string name="login_password">Login password</string>
+	<string name="modify">modify</string>
+	<string name="account_binding_management">Account bind management</string>
+	<string name="binding_unbinding">Bing/Unbind</string>
+	<string name="modify_mobile_phone_number">Modify phone number</string>
+	<string name="notification">Notification</string>
+	<string name="message_hint">Receive reminders the first time</string>
+	<string name="go_open">Go open</string>
+	<string name="cache_cleaning">Cache cleaning(0M)</string>
+	<string name="feedback">Feedback</string>
+	<string name="privacy_policy">Privacy policy</string>
+	<string name="about_app">About where app</string>
 
 </resources>

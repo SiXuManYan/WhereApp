@@ -274,6 +274,22 @@
     <string name="ic_task_register_content">注册成功后可获得500积分</string>
     <string name="news_more_recommend">更多推荐</string>
     <string name="mine_customer_service">我的客服</string>
+    <string name="title_setting">设置</string>
+    <string name="sign_out">退出登录</string>
+    <string name="personal_information">个人信息</string>
+    <string name="modify_information">修改个人资料</string>
+    <string name="login_password">登录密码</string>
+    <string name="modify">修改</string>
+    <string name="account_binding_management">账号绑定管理</string>
+    <string name="binding_unbinding">绑定/解绑</string>
+    <string name="modify_mobile_phone_number">修改手机号码</string>
+    <string name="notification">消息通知</string>
+    <string name="message_hint">第一时间接收订单提醒、优惠促销</string>
+    <string name="go_open">去开启</string>
+    <string name="cache_cleaning">缓存清理(0M)</string>
+    <string name="feedback">意见反馈</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="about_app">关于where</string>
 
 
 </resources>

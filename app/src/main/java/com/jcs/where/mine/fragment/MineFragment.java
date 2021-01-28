@@ -39,7 +39,6 @@ public class MineFragment extends BaseFragment {
     private static final int REQ_SELECT_CITY = 100;
     private static final int REQ_TO_LOGIN = 101;
     private View view;
-    private ImageView settingIv;
     private TextView nicknameTv, accountTv;
     private UploadFilePresenter mUploadPresenter;
     private RoundedImageView headerIv;
@@ -52,7 +51,7 @@ public class MineFragment extends BaseFragment {
         EventBus.getDefault().register(this);
 
         mSwipeLayout = view.findViewById(R.id.mineSwipeLayout);
-        settingIv = view.findViewById(R.id.iv_setting);
+
         nicknameTv = view.findViewById(R.id.nicknameTv);
         accountTv = view.findViewById(R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
@@ -76,8 +75,10 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
+        view.findViewById(R.id.iv_setting).setOnClickListener(this::onSettingClick);
 
     }
+
 
 
     private void onIntegralIvClicked(View view) {
@@ -102,6 +103,12 @@ public class MineFragment extends BaseFragment {
 
 
     private void onCustomerServiceClick(View view) {
+
+    }
+
+
+    private void onSettingClick(View view) {
+
 
     }
 
@@ -172,4 +179,7 @@ public class MineFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_mine;
     }
+
+
+
 }

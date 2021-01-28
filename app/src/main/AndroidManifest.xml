@@ -270,15 +270,26 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".news.NewsSearchResultActivity"
+        <activity
+            android:name=".news.NewsSearchResultActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".news.NewsVideoActivity"
+        <activity
+            android:name=".news.NewsVideoActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".features.setting.SettingActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+
+
     </application>
 
 </manifest>

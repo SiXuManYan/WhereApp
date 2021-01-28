@@ -1,8 +1,6 @@
 package com.jcs.where.integral;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.SignListResponse;

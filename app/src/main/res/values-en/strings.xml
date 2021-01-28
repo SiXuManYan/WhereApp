@@ -294,5 +294,14 @@
 	<string name="feedback">Feedback</string>
 	<string name="privacy_policy">Privacy policy</string>
 	<string name="about_app">About where app</string>
+    <string name="login_phone_input">Enter phone number</string>
+    <string name="get_verify">Get verify code</string>
+	<string name="login_in">login in</string>
+	<string name="register_login">Register/Login</string>
+	<string name="verify_code_hint">Enter verify code</string>
+	<string name="password_login">Password login</string>
+	<string name="verify_login">Verify login</string>
+	<string name="other_login_type">Other login methods</string>
+    <string name="login_rule">The login representative agrees to the "User Agreement" and "Privacy Policy"</string>
 
 </resources>

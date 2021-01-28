@@ -287,7 +287,7 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
+        <activity android:name=".features.account.login.LoginActivity" />
 
 
     </application>

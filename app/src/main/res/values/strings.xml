@@ -290,6 +290,15 @@
     <string name="feedback">意见反馈</string>
     <string name="privacy_policy">隐私政策</string>
     <string name="about_app">关于where</string>
+    <string name="login_phone_input">请输入手机号</string>
+    <string name="verify_code_hint">请输入验证码</string>
+    <string name="get_verify">获取验证码</string>
+    <string name="login_in">登录</string>
+    <string name="register_login">注册/登录</string>
+    <string name="password_login">密码登录</string>
+    <string name="verify_login">验证码登录</string>
+    <string name="other_login_type">其他登录方式</string>
+    <string name="login_rule">登录代表同意《用户协议》和《隐私政策》</string>
 
 
 </resources>

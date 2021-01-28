@@ -2,8 +2,9 @@ package com.jcs.where.mine.fragment;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -12,6 +13,7 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
 import com.jcs.where.login.LoginActivity;
@@ -28,8 +30,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
-
-import androidx.annotation.Nullable;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -80,7 +80,6 @@ public class MineFragment extends BaseFragment {
     }
 
 
-
     private void onIntegralIvClicked(View view) {
         toActivity(IntegralActivity.class);
     }
@@ -108,8 +107,7 @@ public class MineFragment extends BaseFragment {
 
 
     private void onSettingClick(View view) {
-
-
+        toActivity(SettingActivity.class);
     }
 
 
@@ -179,7 +177,6 @@ public class MineFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_mine;
     }
-
 
 
 }

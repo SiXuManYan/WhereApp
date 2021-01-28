@@ -22,9 +22,9 @@ android {
         debug { storeFile file("../keystore/debug.keystore") }
         release {
             storeFile file('../keystore/Where.jks')
-            storePassword "JCSWhere@"
+            storePassword "jcs12345678"
             keyAlias "key0"
-            keyPassword "JCSWhere@"
+            keyPassword "jcs12345678"
         }
     }
 

@@ -163,6 +163,7 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void onNewsItemChildClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        // 这部分是适配蓝湖上的UI，但是不咋好写，时间原因先搁置
         if (view.getId() == R.id.newsVideoDurationView) {
             NewsResponse item = mAdapter.getItem(position);
             int itemViewType = mAdapter.getItemViewType(position);

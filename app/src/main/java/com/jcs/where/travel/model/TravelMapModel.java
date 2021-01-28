@@ -1,4 +1,4 @@
-package com.jcs.where.government.model;
+package com.jcs.where.travel.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
@@ -11,47 +11,53 @@ import com.jcs.where.utils.Constant;
 import java.util.List;
 
 /**
- * create by zyf on 2020/12/28 8:50 PM
+ * create by zyf on 2021/1/28 11:57 上午
  */
-public class GovernmentMapModel extends BaseModel {
+public class TravelMapModel extends BaseModel {
 
     /**
-     * 获取某区域下的所有政府机构
+     * 获得页面TabLayout展示的二级分类
+     */
+    public void getCategories(BaseObserver<List<CategoryResponse>> observer) {
+        dealResponse(mRetrofit.getCategories(2, String.valueOf(1)), observer);
+    }
+
+    /**
+     * 获取某区域下的所有旅游景点
      *
-     * @param categoryId 分类id，当前页面展示什么分类数据（政府机构是一个分类，酒店是一个分类）
+     * @param categoryId 分类id，当前页面展示什么子分类数据
      */
-    public void getMechanismListForMap(String categoryId, double lat, double lng,
+    public void getTouristAttractionListForMap(String categoryId, double lat, double lng,
                                        BaseObserver<List<MechanismResponse>> observer) {
-        getMechanismListForMap(categoryId, 0, "", lat, lng, observer);
+        getTouristAttractionListForMap(categoryId, 0, "", lat, lng, observer);
     }
 
     /**
-     * 搜索某区域下的所有政府机构
+     * 搜索某区域下的所有旅游景点
      */
-    public void getMechanismListForMapSearch(String searchInput,
+    public void getTouristAttractionListForMap(String searchInput,
                                              BaseObserver<List<MechanismResponse>> observer) {
-        getMechanismListForMap("0", 0, searchInput, Constant.LAT, Constant.LNG, observer);
+        getTouristAttractionListForMap("0", 0, searchInput, Constant.LAT, Constant.LNG, observer);
     }
 
     /**
+     * 获得展示在地图上的景点数据
      * @param categoryId 分类id
      * @param areaId     区域id（地理位置，在HomeFragment左上角可以选择）
      * @param search     查询字段
      * @param lat        经度
      * @param lng        纬度
      */
-    public void getMechanismListForMap(String categoryId, int areaId,
-                                       String search, double lat, double lng, BaseObserver<List<MechanismResponse>> observer) {
+    public void getTouristAttractionListForMap(String categoryId, int areaId,
+                                               String search, double lat, double lng, BaseObserver<List<MechanismResponse>> observer) {
 
-        dealResponse(mRetrofit.getMechanismListForMap(categoryId, areaId
+        dealResponse(mRetrofit.getTouristAttractionListForMap(categoryId, areaId
                 , search, lat, lng
         ), observer);
-
     }
 
     /**
      * 搜索
-     *
      * @param input 关键字
      */
     public void getSearchByInput(String input, BaseObserver<List<SearchResponse>> observer) {
@@ -59,9 +65,8 @@ public class GovernmentMapModel extends BaseModel {
     }
 
     /**
-     * 根据机构id获得机构详情（主要用于搜索功能）
-     *
-     * @param mechanismId 机构id
+     * 根据景点id获得旅游景点详情（主要用于搜索功能）
+     * @param mechanismId 旅游景点id
      */
     public void getMechanismDetailById(int mechanismId, BaseObserver<MechanismDetailResponse> observer) {
         dealResponse(mRetrofit.getMechanismDetailById(mechanismId), observer);

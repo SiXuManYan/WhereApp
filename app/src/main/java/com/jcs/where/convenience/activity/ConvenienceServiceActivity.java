@@ -16,12 +16,11 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.convenience.adapter.CityAdapter;
 import com.jcs.where.convenience.model.ConvenienceServiceModel;
-import com.jcs.where.government.adapter.MechanismAdapter;
+import com.jcs.where.government.adapter.MapListFragmentAdapter;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
-import com.jcs.where.utils.SPUtil;
 import com.jcs.where.view.popup.PopupConstraintLayout;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 
@@ -49,7 +48,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
     private PopupConstraintLayout mPopupLayout;
     private RecyclerView mCityRecycler;
     private TextView mCityTv;
-    private MechanismAdapter mViewPagerAdapter;
+    private MapListFragmentAdapter mViewPagerAdapter;
     private ConvenienceServiceModel mModel;
     private CityAdapter mCityAdapter;
 
@@ -92,7 +91,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
         mCityRecycler = findViewById(R.id.cityRecycler);
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
-        mViewPagerAdapter = new MechanismAdapter(getSupportFragmentManager(),
+        mViewPagerAdapter = new MapListFragmentAdapter(getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
         mCityAdapter = new CityAdapter();
@@ -268,7 +267,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
             }
         }
 
-        mViewPagerAdapter.setMechanismListFragments(mMechanismListFragments);
+        mViewPagerAdapter.setListFragments(mMechanismListFragments);
         mViewPagerAdapter.setTabCategories(mTabCategories);
 
         mViewPager.setAdapter(mViewPagerAdapter);

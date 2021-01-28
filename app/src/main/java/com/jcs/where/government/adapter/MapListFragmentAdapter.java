@@ -1,7 +1,6 @@
 package com.jcs.where.government.adapter;
 
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.government.fragment.MechanismListFragment;
 
 import java.util.List;
 
@@ -13,11 +12,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 /**
  * create by zyf on 2021/1/5 4:30 下午
  */
-public class MechanismAdapter extends FragmentStatePagerAdapter {
-    private List<? extends Fragment> mMechanismListFragments;
+public class MapListFragmentAdapter extends FragmentStatePagerAdapter {
+    private List<? extends Fragment> mListFragment;
     private List<CategoryResponse> mTabCategories;
 
-    public MechanismAdapter(@androidx.annotation.NonNull FragmentManager fm, int behavior) {
+    public MapListFragmentAdapter(@androidx.annotation.NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 
@@ -30,16 +29,16 @@ public class MechanismAdapter extends FragmentStatePagerAdapter {
     @androidx.annotation.NonNull
     @Override
     public Fragment getItem(int position) {
-        return mMechanismListFragments.get(position);
+        return mListFragment.get(position);
     }
 
     @Override
     public int getCount() {
-        return mMechanismListFragments.size();
+        return mListFragment.size();
     }
 
-    public void setMechanismListFragments(List<? extends Fragment> mechanismListFragments) {
-        this.mMechanismListFragments = mechanismListFragments;
+    public void setListFragments(List<? extends Fragment> listFragments) {
+        this.mListFragment = listFragments;
     }
 
     public void setTabCategories(List<CategoryResponse> tabCategories) {

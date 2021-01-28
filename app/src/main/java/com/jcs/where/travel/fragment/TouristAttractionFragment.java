@@ -1,4 +1,4 @@
-package com.jcs.where.government.fragment;
+package com.jcs.where.travel.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +12,13 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
-import com.jcs.where.government.adapter.MechanismListAdapter;
-import com.jcs.where.government.model.MechanismListModel;
+import com.jcs.where.travel.adapter.TouristAttractionListAdapter;
+import com.jcs.where.travel.model.TouristAttractionListModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +34,12 @@ import io.reactivex.annotations.NonNull;
  * 机构列表
  * create by zyf on 2020/12/28 9:07 PM
  */
-public class MechanismListFragment extends BaseFragment {
+public class TouristAttractionFragment extends BaseFragment {
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecycler;
     private RadioGroup mRadioGroup;
-    private MechanismListAdapter mAdapter;
-    private MechanismListModel mModel;
+    private TouristAttractionListAdapter mAdapter;
+    private TouristAttractionListModel mModel;
     private CategoryResponse mCategoryResponse;
     private List<CategoryResponse> mChildCategories;
     private Group mSearchNoneGroup;
@@ -63,20 +63,20 @@ public class MechanismListFragment extends BaseFragment {
     private static final String KEY_CATEGORY_RESPONSE = "categoryResponse";
     private static final String KEY_IS_FIRST_FRAGMENT = "isFirstFragment";
 
-    public static MechanismListFragment newInstance(CategoryResponse category) {
+    public static TouristAttractionFragment newInstance(CategoryResponse category) {
         Bundle args = new Bundle();
         return deployArgs(category, args);
     }
 
-    public static MechanismListFragment newInstance(CategoryResponse category, boolean isFirst) {
+    public static TouristAttractionFragment newInstance(CategoryResponse category, boolean isFirst) {
         Bundle args = new Bundle();
         args.putBoolean(KEY_IS_FIRST_FRAGMENT, isFirst);
         return deployArgs(category, args);
     }
 
-    private static MechanismListFragment deployArgs(CategoryResponse category, Bundle args) {
+    private static TouristAttractionFragment deployArgs(CategoryResponse category, Bundle args) {
         args.putSerializable(KEY_CATEGORY_RESPONSE, category);
-        MechanismListFragment fragment = new MechanismListFragment();
+        TouristAttractionFragment fragment = new TouristAttractionFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,8 +92,8 @@ public class MechanismListFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        mModel = new MechanismListModel();
-        mAdapter = new MechanismListAdapter();
+        mModel = new TouristAttractionListModel();
+        mAdapter = new TouristAttractionListAdapter();
         mRecycler.setAdapter(mAdapter);
         mChildCategories = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class MechanismListFragment extends BaseFragment {
     public void getNetData() {
         Bundle arguments = getArguments();
         if (arguments != null && !mIsDataLoaded) {
-            getMechanismList(mCurrentCategoryId);
+            getTouristAttractionList(mCurrentCategoryId);
             getChildCategory();
             mIsDataLoaded = true;
         }
@@ -161,16 +161,16 @@ public class MechanismListFragment extends BaseFragment {
     }
 
     /**
-     * 根据分类id获取机构信息
+     * 根据分类id获取旅游景点信息
      *
      * @param categoryId 分类id
      */
-    private void getMechanismList(String categoryId) {
+    private void getTouristAttractionList(String categoryId) {
         mCurrentCategoryId = categoryId;
         mSwipeLayout.setRefreshing(true);
-        Log.e("MechanismListFragment", "getMechanismList: " + "id=" + categoryId);
+        Log.e("MechanismListFragment", "getTouristAttractionList: " + "id=" + categoryId);
 
-        mModel.getMechanismList(categoryId, new BaseObserver<PageResponse<MechanismResponse>>() {
+        mModel.getTouristAttractionList(categoryId, new BaseObserver<PageResponse<TouristAttractionResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
@@ -178,10 +178,10 @@ public class MechanismListFragment extends BaseFragment {
             }
 
             @Override
-            public void onSuccess(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
+            public void onSuccess(@NonNull PageResponse<TouristAttractionResponse> pageResponse) {
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
-                List<MechanismResponse> data = mechanismPageResponse.getData();
+                List<TouristAttractionResponse> data = pageResponse.getData();
                 if (data != null && data.size() > 0) {
                     mAdapter.addData(data);
                     mSearchNoneGroup.setVisibility(View.GONE);
@@ -227,7 +227,7 @@ public class MechanismListFragment extends BaseFragment {
             if (i == R.id.allRadio) {
                 // 选择了全部
                 mCurrentCategoryId = String.valueOf(mCategoryResponse.getId());
-                getMechanismList(mCurrentCategoryId);
+                getTouristAttractionList(mCurrentCategoryId);
             } else {
                 // 选择了其他的子分类
                 int size = mChildCategories.size();
@@ -236,7 +236,7 @@ public class MechanismListFragment extends BaseFragment {
                     int categoryId = Integer.parseInt(categoryResponse.getId());
                     if (i == categoryId) {
                         mCurrentCategoryId = String.valueOf(categoryResponse.getId());
-                        getMechanismList(mCurrentCategoryId);
+                        getTouristAttractionList(mCurrentCategoryId);
                     }
                 }
             }
@@ -246,7 +246,7 @@ public class MechanismListFragment extends BaseFragment {
 
     private void onSwipeRefresh() {
         Log.e("MechanismListFragment", "onSwipeRefresh: " + "-----");
-        getMechanismList(mCurrentCategoryId);
+        getTouristAttractionList(mCurrentCategoryId);
     }
 
     @Override
@@ -254,4 +254,7 @@ public class MechanismListFragment extends BaseFragment {
         return R.layout.fragment_mechanism_list;
     }
 
+    public enum DataType {
+        Mechanism, TouristAttraction
+    }
 }

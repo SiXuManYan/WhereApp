@@ -25,6 +25,8 @@ import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
 
@@ -266,6 +268,47 @@ public abstract class BaseActivity extends AppCompatActivity {
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
         return dm.widthPixels;
+    }
+
+
+    protected final void startActivity(@NotNull Class<?> target) {
+        startActivity(new Intent(this, target));
+    }
+
+    protected final void startActivity(@NotNull Class<?> target, @NotNull Bundle bundle) {
+        startActivity((new Intent(this, target)).putExtras(bundle));
+    }
+
+
+    protected final void startActivityClearTop(@NotNull Class<?> target, @Nullable Bundle bundle) {
+        if (bundle == null) {
+            startActivity((new Intent(this.getApplicationContext(), target)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        } else {
+            startActivity((new Intent(this.getApplicationContext(), target)).putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        }
+
+    }
+
+    protected final void startActivityWithArgument(@NotNull Class<?> target, @NotNull String key, @NotNull Object value) {
+        Bundle bundle = new Bundle();
+        if (value instanceof String) {
+            bundle.putString(key, (String)value);
+        } else if (value instanceof Long) {
+            bundle.putLong(key, ((Number)value).longValue());
+        } else if (value instanceof Integer) {
+            bundle.putInt(key, ((Number)value).intValue());
+        }
+
+        startActivity(target, bundle);
+    }
+
+    protected final void startActivityForResult(@NotNull Class<?>  target, int requestCode, @Nullable Bundle bundle) {
+        if (bundle == null) {
+            startActivityForResult(new Intent(this, target), requestCode);
+        } else {
+            startActivityForResult((new Intent(this, target)).putExtras(bundle), requestCode);
+        }
+
     }
 
 

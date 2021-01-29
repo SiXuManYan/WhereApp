@@ -16,5 +16,31 @@ public class Constant {
 
     public static final String PARAM_POSITION = "position";
 
+    /**
+     * 验证码类型 1 登录
+     */
+    public static final int VERIFY_CODE_TYPE_1_LOGIN = 1;
+
+    /**
+     * 验证码类型 1 注册
+     */
+    public static final int VERIFY_CODE_TYPE_2_REGISTER = 2;
+
+    /**
+     * 验证码登录
+     */
+    public static final int LOGIN_TYPE_VERIFY_CODE = 1;
+
+    /**
+     * 密码登录
+     */
+    public static final int LOGIN_TYPE_PASSWORD = 2;
+
+
+    /**
+     * 验证码等待时间
+     */
+    public static final long WAIT_DELAYS = 60;
+
 
 }

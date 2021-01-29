@@ -103,4 +103,9 @@
         <item>@string/sign_in_type_4</item>
     </string-array>
 
+    <string-array name="country_prefix">
+        <item>63</item>
+        <item>86</item>
+    </string-array>
+
 </resources>

@@ -1,9 +1,9 @@
 package com.jcs.where.api;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.LoginRequest;
+import com.jcs.where.api.request.RegisterRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.response.BannerResponse;
@@ -20,7 +20,6 @@ import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.IntegralDetailResponse;
 import com.jcs.where.api.response.LoginResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
-import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
@@ -40,7 +39,6 @@ import com.jcs.where.bean.CityResponse;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -328,6 +326,7 @@ public interface RetrofitApi {
 
     /**
      * 根据频道id获得对应的新闻列表
+     *
      * @param channelId 频道id
      */
     @GET("newsapi/v2/news")
@@ -415,4 +414,25 @@ public interface RetrofitApi {
             @Query("search_input") String search,
             @Query("lat") double lat,
             @Query("lng") double lng);
+
+
+    /**
+     * 登录
+     */
+    @PATCH("userapi/v2/login")
+    Observable<JcsResponse<LoginResponse>> login(@Body LoginRequest loginRequest);
+
+    /**
+     * 注册
+     */
+    @PATCH("userapi/v2/register")
+    Observable<JcsResponse<LoginResponse>> register(@Body RegisterRequest registerRequest);
+
+    /**
+     * 获取验证码
+     */
+    @PATCH("userapi/v2/mobile/auth/code")
+    Observable<JcsResponse<JsonElement>> getVerifyCode(@Body SendCodeRequest sendCodeRequest);
+
+
 }

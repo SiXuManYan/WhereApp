@@ -127,4 +127,9 @@ dependencies {
 
     //饺子播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
+
+    // Room db https://developer.android.google.cn/training/data-storage/room#java
+    def room_version = "2.2.6"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }

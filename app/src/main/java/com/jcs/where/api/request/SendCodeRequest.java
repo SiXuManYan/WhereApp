@@ -15,6 +15,11 @@ public class SendCodeRequest {
 
     @SerializedName("phone")
     private String phone;
+
+
+    /**
+     * 发送类型（1：登录，2：注册，3：忘记密码，4：更换手机号）
+     */
     @SerializedName("type")
     private int type;
     @SerializedName("country_code")

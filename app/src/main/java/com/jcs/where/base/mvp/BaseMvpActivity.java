@@ -1,5 +1,7 @@
 package com.jcs.where.base.mvp;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,6 +18,9 @@ import com.jcs.where.base.BaseEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
+
+import kotlin.jvm.internal.Intrinsics;
 
 /**
  * Created by Wangsw  2021/1/26 11:06.
@@ -78,5 +83,9 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
     public void onEventReceived(BaseEvent<?> baseEvent) {
 
     }
+
+
+
+
 
 }

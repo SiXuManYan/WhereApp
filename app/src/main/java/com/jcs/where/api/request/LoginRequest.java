@@ -14,6 +14,9 @@ public class LoginRequest {
      * password : 123456
      */
 
+    /**
+     * 登录类型（1：手机验证码，2：手机密码）
+     */
     @SerializedName("type")
     private int type;
     @SerializedName("phone")

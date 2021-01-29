@@ -299,6 +299,19 @@
     <string name="verify_login">验证码登录</string>
     <string name="other_login_type">其他登录方式</string>
     <string name="login_rule">登录代表同意《用户协议》和《隐私政策》</string>
+    <string name="login_rule_default">登录代表同意</string>
+    <string name="login_rule_keyword_0">《用户协议》</string>
+    <string name="login_rule_default_and">和</string>
+    <string name="login_rule_keyword_1">隐私政策</string>
+    <string name="input_password_hint">请输入密码</string>
+    <string name="confirm">确定</string>
+    <string name="philippines_63">菲律宾 +63</string>
+    <string name="china_86">中国 +86</string>
+    <string name="wrong_phone_hint">手机号格式错误</string>
+    <string name="country_code_format">+%1$s</string>
+    <string name="get_again">重新获取</string>
+    <string name="count_down_format">%1$d 秒</string>
+    <string name="verify_code_send_success">验证码发送成功</string>
 
 
 </resources>

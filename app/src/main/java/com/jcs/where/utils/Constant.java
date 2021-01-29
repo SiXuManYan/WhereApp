@@ -17,6 +17,21 @@ public class Constant {
     public static final String PARAM_POSITION = "position";
 
     /**
+     * 账号
+     */
+    public static final String PARAM_ACCOUNT = "account";
+
+    /**
+     * 验证码
+     */
+    public static final String PARAM_VERIFY_CODE = "verify_code";
+
+    /**
+     * 国际码
+     */
+    public static final String PARAM_COUNTRY_CODE = "country_code";
+
+    /**
      * 验证码类型 1 登录
      */
     public static final int VERIFY_CODE_TYPE_1_LOGIN = 1;

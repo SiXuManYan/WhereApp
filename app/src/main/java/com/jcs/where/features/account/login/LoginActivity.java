@@ -1,6 +1,7 @@
 package com.jcs.where.features.account.login;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -26,6 +27,10 @@ import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.utils.FeaturesUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import static com.jcs.where.utils.Constant.PARAM_ACCOUNT;
+import static com.jcs.where.utils.Constant.PARAM_COUNTRY_CODE;
+import static com.jcs.where.utils.Constant.PARAM_VERIFY_CODE;
 
 /**
  * Created by Wangsw  2021/1/28 16:43.
@@ -203,15 +208,28 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         finish();
     }
 
+
     @Override
-    public void registerSuccess() {
-        startActivity(PasswordSetActivity.class);
-        finish();
+    public void guideRegister(String account, String verifyCode) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_ACCOUNT, account);
+        bundle.putString(PARAM_VERIFY_CODE, account);
+        bundle.putString(PARAM_COUNTRY_CODE, mCountryPrefix);
+        startActivity(PasswordSetActivity.class, bundle);
     }
 
     @Override
     public void onError(ErrorResponse errorResponse) {
         super.onError(errorResponse);
         error_hint_tv.setText(errorResponse.getErrMsg());
+    }
+
+    @Override
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+        super.onEventReceived(baseEvent);
+        if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
+            // 注册成功关闭页面
+            finish();
+        }
     }
 }

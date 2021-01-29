@@ -312,6 +312,8 @@
     <string name="get_again">重新获取</string>
     <string name="count_down_format">%1$d 秒</string>
     <string name="verify_code_send_success">验证码发送成功</string>
+    <string name="set_password">设置密码</string>
+    <string name="register_success">注册成功</string>
 
 
 </resources>

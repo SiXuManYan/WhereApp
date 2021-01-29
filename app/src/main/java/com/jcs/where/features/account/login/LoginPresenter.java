@@ -79,10 +79,7 @@ public class LoginPresenter extends BaseMvpPresenter {
      * @param password     密码
      */
     public void handleLogin(boolean isVerifyMode, String prefix, String account, String verifyCode, String password) {
-        if (TextUtils.isEmpty(account)) {
-            ToastUtils.showShort(StringUtils.getString(R.string.login_phone_input));
-            return;
-        }
+
         if (FeaturesUtil.isWrongPhoneNumber(prefix, account)) {
             return;
         }
@@ -138,7 +135,7 @@ public class LoginPresenter extends BaseMvpPresenter {
 
                 // 验证码登录，返回404时是新用户，需要走注册接口
                 if (loginType == Constant.LOGIN_TYPE_VERIFY_CODE && errCode == 404) {
-                    register(account, verifyCode, password);
+                    mView.guideRegister(account, verifyCode);
                 }
 
             }
@@ -147,30 +144,7 @@ public class LoginPresenter extends BaseMvpPresenter {
     }
 
 
-    /**
-     * 注册
-     *
-     * @param account    账号
-     * @param verifyCode 验证码
-     * @param password   密码
-     */
-    private void register(String account, String verifyCode, String password) {
-        RegisterRequest build = RegisterRequest.Builder.aRegisterRequest()
-                .phone(account)
-                .verification_code(verifyCode)
-                .password(password)
-                .build();
-        requestApi(mRetrofit.register(build), new BaseMvpObserver<LoginResponse>(mView) {
-            @Override
-            protected void onSuccess(LoginResponse response) {
-                String token = response.getToken();
-                saveToken(token);
-                mView.registerSuccess();
-            }
-        });
 
-
-    }
 
 
     /**

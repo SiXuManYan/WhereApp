@@ -1,5 +1,6 @@
 package com.jcs.where.utils;
 
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.EditText;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.constant.RegexConstants;
 import com.blankj.utilcode.util.RegexUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
 
@@ -23,6 +25,10 @@ public class FeaturesUtil {
      * @return
      */
     public static boolean isWrongPhoneNumber(String prefix, String account) {
+        if (TextUtils.isEmpty(account)) {
+            ToastUtils.showShort(StringUtils.getString(R.string.login_phone_input));
+            return true;
+        }
         // 中国手机号
         if (prefix.contains("86") && !RegexUtils.isMatch(RegexConstants.REGEX_MOBILE_EXACT, account)) {
             com.blankj.utilcode.util.ToastUtils.showShort(R.string.wrong_phone_hint);

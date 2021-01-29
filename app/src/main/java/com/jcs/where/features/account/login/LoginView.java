@@ -8,5 +8,10 @@ import com.jcs.where.api.network.BaseMvpView;
 public interface LoginView extends BaseMvpView {
     void LoginSuccess();
 
-    void registerSuccess();
+    /**
+     * 引导注册
+     * @param account
+     * @param verifyCode
+     */
+    void guideRegister(String account, String verifyCode);
 }

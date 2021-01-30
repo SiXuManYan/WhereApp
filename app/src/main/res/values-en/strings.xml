@@ -318,5 +318,7 @@
 	<string name="verify_code_send_success">Code send success</string>
     <string name="set_password">Password set</string>
 	<string name="register_success">Register success</string>
+    <string name="attraction_info">Attraction Info</string>
+	<string name="tourist_notice">Tourist Notice</string>
 
 </resources>

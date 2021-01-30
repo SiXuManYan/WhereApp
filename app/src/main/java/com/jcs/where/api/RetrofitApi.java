@@ -35,6 +35,8 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.bean.CityResponse;
+import com.jcs.where.bean.TouristAttractionDetailResponse;
+import com.jcs.where.api.response.CommentResponse;
 
 import java.util.List;
 
@@ -176,7 +178,7 @@ public interface RetrofitApi {
      * @param type    评价类型：1-晒图 2-低分 3-最新
      */
     @GET("hotelapi/v2/hotel/{hotel_id}/comments")
-    Observable<JcsResponse<HotelCommentsResponse>> getHotelComments(@Path("hotel_id") int hotelId, @Query("type") int type);
+    Observable<JcsResponse<PageResponse<CommentResponse>>> getHotelComments(@Path("hotel_id") int hotelId, @Query("type") int type);
 
     /**
      * 获取酒店评论数量
@@ -412,7 +414,6 @@ public interface RetrofitApi {
      *
      * @param categoryId 机构分类
      * @param search     查询字段
-     * @return
      */
     @GET("travelapi/v2/travels")
     Observable<JcsResponse<PageResponse<TouristAttractionResponse>>> getTouristAttractionListById(
@@ -421,6 +422,19 @@ public interface RetrofitApi {
             @Query("lat") double lat,
             @Query("lng") double lng);
 
+    /**
+     * 获得旅游景点详情数据
+     * @param touristAttractionId 旅游景点id
+     */
+    @GET("travelapi/v2/travels/{travel_id}")
+    Observable<JcsResponse<TouristAttractionDetailResponse>> getTouristAttractionDetail(@Path("travel_id") int touristAttractionId);
+
+    /**
+     * 获得旅游景点评论列表
+     * @param touristAttractionId 旅游景点id
+     */
+    @GET("travelapi/v2/comments/{travel_id}")
+    Observable<JcsResponse<PageResponse<CommentResponse>>> getTouristAttractionCommentList(@Path("travel_id") int touristAttractionId);
 
     /**
      * 登录

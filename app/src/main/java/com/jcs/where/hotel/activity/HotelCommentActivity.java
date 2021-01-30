@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.hotel.adapter.HotelCommentsAdapter;
+import com.jcs.where.api.response.CommentResponse;
+import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.hotel.adapter.CommentListAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
@@ -17,8 +19,6 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.hotel.model.HotelCommentModel;
 import com.jcs.where.utils.ImagePreviewActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
     private TextView mWhereTv, mAgodaTv, mBookingTv;
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecycler;
-    private HotelCommentsAdapter mAdapter;
+    private CommentListAdapter mAdapter;
     private List<TextView> mCategoryTvs;
     private List<TextView> mTagTvs;
 
@@ -65,7 +65,7 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
         mNewestTv = findViewById(R.id.newestTv);
 
         mRecycler = findViewById(R.id.commentsRecycler);
-        mAdapter = new HotelCommentsAdapter(R.layout.item_commentlist);
+        mAdapter = new CommentListAdapter();
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setAdapter(mAdapter);
     }
@@ -119,7 +119,7 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void getCommentByType(int type) {
-        mModel.getComments(hotelId, type, new BaseObserver<HotelCommentsResponse>() {
+        mModel.getComments(hotelId, type, new BaseObserver<PageResponse<CommentResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -128,11 +128,11 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onSuccess(@NonNull HotelCommentsResponse hotelCommentsResponse) {
+            public void onSuccess(@NonNull PageResponse<CommentResponse> pageResponse) {
                 stopLoading();
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
-                List<HotelCommentsResponse.DataBean> data = hotelCommentsResponse.getData();
+                List<CommentResponse> data = pageResponse.getData();
                 mAdapter.addData(data);
                 for (int i = 0; i < data.size(); i++) {
                     Log.e("HotelCommentActivity", "----onNext---" + i + "====" + data.get(i).toString());
@@ -158,17 +158,16 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             int id = view.getId();
+            CommentResponse item = mAdapter.getData().get(position);
             if (id == R.id.fullText) {
                 Log.e("HotelCommentActivity", "----bindListener---fullText");
-                HotelCommentsResponse.DataBean bean = (HotelCommentsResponse.DataBean) adapter.getData().get(position);
-                bean.is_select = !bean.is_select;
+                item.is_select = !item.is_select;
                 mAdapter.notifyItemChanged(position);
             }
 
             if (view instanceof RoundedImageView) {
                 Intent to = new Intent(this, ImagePreviewActivity.class);
-                HotelCommentsResponse.DataBean dataBean = mAdapter.getData().get(position);
-                ArrayList<String> images = (ArrayList<String>) dataBean.getImages();
+                ArrayList<String> images = (ArrayList<String>) item.getImages();
                 to.putStringArrayListExtra(ImagePreviewActivity.IMAGES_URL_KEY, images);
                 ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "commentIcon");
 
@@ -191,7 +190,6 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
                 startActivity(to);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             }
-
         });
 
     }

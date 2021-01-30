@@ -10,16 +10,11 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.google.gson.Gson;
 import com.jcs.where.R;
-import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.bean.TravelCommentListBean;
-import com.jcs.where.manager.TokenManager;
+import com.jcs.where.api.response.CommentResponse;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 
@@ -40,7 +35,7 @@ public class TravelCommentActivity extends BaseActivity {
     private MyPtrClassicFrameLayout ptrFrame;
     private RecyclerView commentListRv;
     private int page = 1;
-    private List<TravelCommentListBean.DataBean> list;
+    private List<CommentResponse> list;
     private CommentAdapter commentAdapter;
 
     public static void goTo(Context context, int id) {
@@ -86,34 +81,34 @@ public class TravelCommentActivity extends BaseActivity {
     protected void initData() {
 
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "travelapi/v1/comment/" + 1 + "?page=" + page, null, "", TokenManager.get().getToken(TravelCommentActivity.this), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    TravelCommentListBean commentListBean = new Gson().fromJson(result, TravelCommentListBean.class);
-                    list = commentListBean.getData();
-                    if (list.size() < 10) {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
-                    } else {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
-                    }
-                    commentAdapter.setNewInstance(list);
-                    commentListRv.setAdapter(commentAdapter);
-                    ptrFrame.refreshComplete();
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ptrFrame.refreshComplete();
-                showToast(e.getMessage());
-            }
-        });
+//        HttpUtils.doHttpReqeust("GET", "travelapi/v1/comment/" + 1 + "?page=" + page, null, "", TokenManager.get().getToken(TravelCommentActivity.this), new HttpUtils.StringCallback() {
+//            @Override
+//            public void onSuccess(int code, String result) {
+//                stopLoading();
+//                if (code == 200) {
+//                    TouristAttractionCommentListResponse commentListBean = new Gson().fromJson(result, TouristAttractionCommentListResponse.class);
+//                    list = commentListBean.getData();
+//                    if (list.size() < 10) {
+//                        ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
+//                    } else {
+//                        ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
+//                    }
+//                    commentAdapter.setNewInstance(list);
+//                    commentListRv.setAdapter(commentAdapter);
+//                    ptrFrame.refreshComplete();
+//                } else {
+//                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+//                    showToast(errorBean.message);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaileure(int code, Exception e) {
+//                stopLoading();
+//                ptrFrame.refreshComplete();
+//                showToast(e.getMessage());
+//            }
+//        });
     }
 
     @Override
@@ -123,35 +118,35 @@ public class TravelCommentActivity extends BaseActivity {
 
     private void initMoreData() {
         showLoading();
-        HttpUtils.doHttpReqeust("GET", "travelapi/v1/comment/" + 1 + "?page=" + page, null, "", TokenManager.get().getToken(TravelCommentActivity.this), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    TravelCommentListBean commentListBean = new Gson().fromJson(result, TravelCommentListBean.class);
-                    if (commentListBean.getData().size() < 10) {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
-                    } else {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
-                    }
-                    list.addAll(commentListBean.getData());
-                    commentAdapter.addData(list);
-                    commentListRv.setAdapter(commentAdapter);
-                    ptrFrame.refreshComplete();
-
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                ptrFrame.refreshComplete();
-                showToast(e.getMessage());
-            }
-        });
+//        HttpUtils.doHttpReqeust("GET", "travelapi/v1/comment/" + 1 + "?page=" + page, null, "", TokenManager.get().getToken(TravelCommentActivity.this), new HttpUtils.StringCallback() {
+//            @Override
+//            public void onSuccess(int code, String result) {
+//                stopLoading();
+//                if (code == 200) {
+//                    TouristAttractionCommentListResponse commentListBean = new Gson().fromJson(result, TouristAttractionCommentListResponse.class);
+//                    if (commentListBean.getData().size() < 10) {
+//                        ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
+//                    } else {
+//                        ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
+//                    }
+//                    list.addAll(commentListBean.getData());
+//                    commentAdapter.addData(list);
+//                    commentListRv.setAdapter(commentAdapter);
+//                    ptrFrame.refreshComplete();
+//
+//                } else {
+//                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
+//                    showToast(errorBean.message);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaileure(int code, Exception e) {
+//                stopLoading();
+//                ptrFrame.refreshComplete();
+//                showToast(e.getMessage());
+//            }
+//        });
     }
 
 
@@ -165,10 +160,10 @@ public class TravelCommentActivity extends BaseActivity {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    private class CommentAdapter extends BaseQuickAdapter<TravelCommentListBean.DataBean, BaseViewHolder> {
+    private class CommentAdapter extends BaseQuickAdapter<CommentResponse, BaseViewHolder> {
 
         public CommentAdapter() {
-            super(R.layout.item_commentlist);
+            super(R.layout.item_comment_list);
         }
 
 
@@ -200,7 +195,7 @@ public class TravelCommentActivity extends BaseActivity {
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, TravelCommentListBean.DataBean data) {
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, CommentResponse data) {
             CircleImageView avaterIv = baseViewHolder.findView(R.id.circleIcon);
             if (!TextUtils.isEmpty(data.getAvatar())) {
                 GlideUtil.load(getContext(), data.getAvatar(), avaterIv);
@@ -212,38 +207,38 @@ public class TravelCommentActivity extends BaseActivity {
             TextView usercontent = baseViewHolder.findView(R.id.commentContent);
             usercontent.setText(data.getContent());
             TextView timeTv = baseViewHolder.findView(R.id.tv_time);
-            timeTv.setText(data.getCreated_at());
+            timeTv.setText(data.getCreatedAt());
             TextView fullText = baseViewHolder.findView(R.id.fullText);
             ImageView star1Iv = baseViewHolder.findView(R.id.iv_star1);
             ImageView star2Iv = baseViewHolder.findView(R.id.iv_star2);
             ImageView star3Iv = baseViewHolder.findView(R.id.iv_star3);
             ImageView star4Iv = baseViewHolder.findView(R.id.iv_star4);
             ImageView star5Iv = baseViewHolder.findView(R.id.iv_star5);
-            if (data.getStar_level() == 1) {
+            if (data.getStarLevel() == 1) {
                 star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
                 star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
                 star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
                 star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 2) {
+            } else if (data.getStarLevel() == 2) {
                 star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
                 star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
                 star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 3) {
+            } else if (data.getStarLevel() == 3) {
                 star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
                 star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 4) {
+            } else if (data.getStarLevel() == 4) {
                 star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star4Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistgreystar));
-            } else if (data.getStar_level() == 5) {
+            } else if (data.getStarLevel() == 5) {
                 star1Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star2Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
                 star3Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
@@ -251,13 +246,13 @@ public class TravelCommentActivity extends BaseActivity {
                 star5Iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_commentlistlightstar));
             }
             setContentLayout(usercontent, fullText);
-            if (data.is_select) {
-                fullText.setText(getString(R.string.put_up));
-                usercontent.setMaxLines(50);
-            } else {
-                fullText.setText(getString(R.string.full_text));
-                usercontent.setMaxLines(3);
-            }
+//            if (data.is_select) {
+//                fullText.setText(getString(R.string.put_up));
+//                usercontent.setMaxLines(50);
+//            } else {
+//                fullText.setText(getString(R.string.full_text));
+//                usercontent.setMaxLines(3);
+//            }
 
             fullText.setOnClickListener(new CommentAdapter.fullTextOnclick(usercontent, fullText, baseViewHolder.getAdapterPosition()));
 
@@ -277,17 +272,17 @@ public class TravelCommentActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                TravelCommentListBean.DataBean info = list.get(index);
-                if (info.is_select) {
-                    usercontent.setMaxLines(3);
-                    fullText.setText(getString(R.string.full_text));
-                    usercontent.invalidate();
-                } else {
-                    usercontent.setMaxLines(50);
-                    fullText.setText(getString(R.string.put_up));
-                    usercontent.invalidate();
-                }
-                info.is_select = !info.is_select;
+                CommentResponse info = list.get(index);
+//                if (info.is_select) {
+//                    usercontent.setMaxLines(3);
+//                    fullText.setText(getString(R.string.full_text));
+//                    usercontent.invalidate();
+//                } else {
+//                    usercontent.setMaxLines(50);
+//                    fullText.setText(getString(R.string.put_up));
+//                    usercontent.invalidate();
+//                }
+//                info.is_select = !info.is_select;
                 list.set(index, info);
             }
         }

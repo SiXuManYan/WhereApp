@@ -176,7 +176,7 @@
                                 android:drawableLeft="@drawable/ic_hoteldetail_navigation"
                                 android:drawablePadding="10dp"
                                 android:gravity="center"
-                                android:text="导航"
+                                android:text="@string/navigation"
                                 android:textColor="@color/grey_666666"
                                 android:textSize="12sp" />
                         </RelativeLayout>
@@ -200,7 +200,7 @@
                                 android:drawableLeft="@drawable/ic_hoteldetail_phone"
                                 android:drawablePadding="10dp"
                                 android:gravity="center"
-                                android:text="电话"
+                                android:text="@string/telephone"
                                 android:textColor="@color/grey_666666"
                                 android:textSize="12sp" />
 
@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
-                        android:text="景点介绍"
+                        android:text="@string/attraction_info"
                         android:textColor="@color/black_333333"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -237,7 +237,7 @@
                         android:layout_marginTop="14dp"
                         android:layout_marginRight="18dp"
                         android:layout_marginBottom="18dp"
-                        android:text="巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。 "
+                        android:text=""
                         android:textColor="@color/grey_666666"
                         android:textSize="13sp" />
 
@@ -255,7 +255,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
-                        android:text="游客须知"
+                        android:text="@string/tourist_notice"
                         android:textColor="@color/black_333333"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -269,7 +269,7 @@
                         android:layout_marginTop="14dp"
                         android:layout_marginRight="18dp"
                         android:layout_marginBottom="18dp"
-                        android:text="巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。巴丹群岛，又译巴坦群岛，是菲律宾最北的群岛，在菲北海峡群之中。行政上属于巴丹群岛省，北隔巴士海峡与台湾台东县兰屿乡相望，南隔巴林塘海峡与巴布延群岛(属卡加延省)相望，是菲律宾最北的领土。岛上居民与兰屿的达悟族同源。 "
+                        android:text=""
                         android:textColor="@color/grey_666666"
                         android:textSize="13sp" />
 
@@ -306,14 +306,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_comment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            />
+                            android:paddingStart="@dimen/dp_10"
+                            android:paddingEnd="@dimen/dp_10" />
 
 
                         <TextView
@@ -327,10 +328,10 @@
                             android:paddingTop="5dp"
                             android:paddingRight="7dp"
                             android:paddingBottom="5dp"
-                            android:text="全部评价"
+                            android:text="@string/all_reviews"
                             android:textColor="@color/blue_4C9EF2"
                             android:textSize="12sp"
-                            android:visibility="visible"/>
+                            android:visibility="visible" />
 
                     </LinearLayout>
 
@@ -359,50 +360,13 @@
         android:layout_height="80dp"
         android:layout_centerHorizontal="true" />
 
-    <View
-        android:id="@+id/useView"
-        android:layout_width="match_parent"
-        android:layout_height="24dp" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/useView"
-        android:background="@color/transparency"
-        android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_white"
-        app:navigationIcon="@drawable/ic_back_white"
-        app:theme="@style/AppTheme.ActionBar">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <ImageView
-                android:id="@+id/iv_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
-                android:layout_toLeftOf="@+id/iv_share"
-                android:padding="10dp"
-                android:src="@drawable/ic_hoteltransparentunlike" />
-
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_share_white" />
-
-
-        </RelativeLayout>
-
-
-    </androidx.appcompat.widget.Toolbar>
+        android:background="@color/white"
+        app:rightFirstIcon="@mipmap/ic_share_white"
+        app:rightSecondIcon="@mipmap/ic_like_white"/>
 
 
 </RelativeLayout>

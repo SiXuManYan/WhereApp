@@ -60,12 +60,22 @@
                     android:textColor="@color/white"
                     tools:text="@string/country_code_format" />
 
+                <ImageView
+                    android:id="@+id/subscript_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/country_tv"
+                    android:layout_marginStart="@dimen/dp_2"
+                    android:layout_toEndOf="@+id/country_tv"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_subscript" />
+
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/phone_aet"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toEndOf="@id/country_tv"
+                    android:layout_toEndOf="@id/subscript_iv"
                     android:background="@null"
                     android:gravity="center_vertical"
                     android:hint="@string/login_phone_input"

@@ -13,6 +13,8 @@ import android.widget.ViewSwitcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -22,7 +24,8 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.currency.WebViewActivity;
-import com.jcs.where.features.account.password.PasswordSetActivity;
+import com.jcs.where.features.account.password.PasswordResetActivity;
+import com.jcs.where.features.account.register.RegisterActivity;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -40,12 +43,12 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
 
     private TextView
-            title_tv,
             login_rule_tv,
             country_tv,
             login_type_tv,
             get_verify_tv,
-            error_hint_tv;
+            error_hint_tv,
+            forgot_password_tv;
 
     private AppCompatEditText
             phone_aet,
@@ -67,7 +70,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     private boolean mIsCipherText = true;
 
     /**
-     * 国际码
+     * 国家码
      * 默认 菲律宾+63前缀
      */
     private String mCountryPrefix = StringUtils.getStringArray(R.array.country_prefix)[0];
@@ -79,8 +82,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected void initView() {
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
+        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.blue_395668));
         login_rule_tv = findViewById(R.id.login_rule_tv);
-        title_tv = findViewById(R.id.title_tv);
         country_tv = findViewById(R.id.country_tv);
         phone_aet = findViewById(R.id.phone_aet);
         verify_code_aet = findViewById(R.id.verify_code_aet);
@@ -89,14 +93,17 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         login_type_tv = findViewById(R.id.login_type_tv);
         get_verify_tv = findViewById(R.id.get_verify_tv);
         error_hint_tv = findViewById(R.id.error_hint_tv);
+        forgot_password_tv = findViewById(R.id.forgot_password_tv);
         password_rule_iv = findViewById(R.id.password_rule_iv);
-        country_tv.setText(getString(R.string.country_code_format, "63"));
+
     }
 
     @Override
     protected void initData() {
         presenter = new LoginPresenter(this);
 
+        // 默认菲律宾前缀
+        country_tv.setText(getString(R.string.country_code_format, "63"));
         // 用户协议，隐私政策 (url 替换)
         login_rule_tv.setMovementMethod(LinkMovementMethod.getInstance());
         String defaultStr = getString(R.string.login_rule_default);
@@ -142,7 +149,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         login_type_tv.setOnClickListener(this::onLoginTypeClick);
         get_verify_tv.setOnClickListener(this::onVerifyGetClick);
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
+        forgot_password_tv.setOnClickListener(this::onForgotPasswordClick);
         findViewById(R.id.login_tv).setOnClickListener(this::onLoginClick);
+        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+
     }
 
 
@@ -150,8 +160,11 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      * 选择国家开头
      */
     private void onCountryPrefixClick(View v) {
-        mCountryPrefix = presenter.getCountryPrefix(this);
-        country_tv.setText(getString(R.string.country_code_format, mCountryPrefix));
+      FeaturesUtil.getCountryPrefix(this, countryCode -> {
+          mCountryPrefix = countryCode;
+          country_tv.setText(getString(R.string.country_code_format, countryCode));
+      });
+
     }
 
     /**
@@ -159,36 +172,44 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      */
     private void onLoginTypeClick(View view) {
         if (mIsVerifyMode) {
+
+            // 切换为密码登录
             login_mode_vs.setDisplayedChild(1);
             login_type_tv.setText(R.string.verify_login);
-            title_tv.setText(R.string.password_login);
+
+            forgot_password_tv.setVisibility(View.VISIBLE);
         } else {
+            // 切换为验证码登录
             login_mode_vs.setDisplayedChild(0);
             login_type_tv.setText(R.string.password_login);
-            title_tv.setText(R.string.verify_login);
+            forgot_password_tv.setVisibility(View.GONE);
         }
         mIsVerifyMode = !mIsVerifyMode;
     }
 
+    /**
+     * 登录
+     */
     private void onLoginClick(View view) {
 
-        String phone = phone_aet.getText().toString().trim();
+        String account = phone_aet.getText().toString().trim();
         String verifyCode = verify_code_aet.getText().toString().trim();
         String password = password_aet.getText().toString().trim();
-        presenter.handleLogin(mIsVerifyMode, mCountryPrefix, phone, verifyCode, password);
+        presenter.handleLogin(mIsVerifyMode, mCountryPrefix, account, verifyCode, password);
     }
 
 
     /**
      * 获取验证码
-     *
-     * @param view
      */
     private void onVerifyGetClick(View view) {
         String phone = phone_aet.getText().toString().trim();
         presenter.getVerifyCode(mCountryPrefix, phone, get_verify_tv);
     }
 
+    /**
+     *  切换密码显示类型
+     */
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
             // 切换至明文
@@ -198,6 +219,16 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             FeaturesUtil.editDismiss(password_aet, password_rule_iv);
         }
         mIsCipherText = !mIsCipherText;
+    }
+
+    /**
+     * 忘记密码
+     */
+    private void onForgotPasswordClick(View view) {
+        String account = phone_aet.getText().toString().trim();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_ACCOUNT, account);
+        startActivity(PasswordResetActivity.class, bundle);
     }
 
 
@@ -213,9 +244,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void guideRegister(String account, String verifyCode) {
         Bundle bundle = new Bundle();
         bundle.putString(PARAM_ACCOUNT, account);
-        bundle.putString(PARAM_VERIFY_CODE, account);
+        bundle.putString(PARAM_VERIFY_CODE, verifyCode);
         bundle.putString(PARAM_COUNTRY_CODE, mCountryPrefix);
-        startActivity(PasswordSetActivity.class, bundle);
+        startActivity(RegisterActivity.class, bundle);
     }
 
     @Override
@@ -227,9 +258,17 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     public void onEventReceived(BaseEvent<?> baseEvent) {
         super.onEventReceived(baseEvent);
-        if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
-            // 注册成功关闭页面
-            finish();
+        int code = baseEvent.code;
+        switch (code) {
+            case EventCode.EVENT_LOGIN_SUCCESS:
+                // 注册成功关闭页面
+                finish();
+                break;
+            case EventCode.EVENT_PASSWORD_RESET_SUCCESS:
+                password_aet.setText("");
+                break;
+            default:
+                break;
         }
     }
 }

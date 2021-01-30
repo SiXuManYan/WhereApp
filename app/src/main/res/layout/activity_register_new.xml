@@ -22,7 +22,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/dp_25"
-            android:paddingTop="@dimen/dp_40">
+            android:paddingTop="@dimen/dp_40"
+            android:paddingBottom="@dimen/dp_40">
 
             <TextView
                 android:id="@+id/title_tv"
@@ -31,7 +32,8 @@
                 android:layout_marginStart="@dimen/dp_15"
                 android:text="@string/set_password"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold" />
 
 
             <RelativeLayout
@@ -39,8 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_80"
-                android:paddingStart="@dimen/dp_45"
-                android:paddingEnd="@dimen/dp_45">
+                android:paddingStart="@dimen/dp_35"
+                android:paddingEnd="@dimen/dp_35">
 
                 <ImageView
                     android:id="@+id/tag_password_iv"
@@ -60,14 +62,14 @@
                     android:background="@null"
                     android:gravity="center_vertical"
                     android:hint="@string/input_password_hint"
-                    android:imeOptions="actionNext"
-                    android:inputType="textWebEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
                     android:lines="1"
                     android:maxLength="8"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white_FEFEFE"
+                    android:textColorHint="@color/grey_BFBFBF"
                     android:textSize="@dimen/sp_14" />
 
                 <ImageView
@@ -85,8 +87,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginStart="@dimen/dp_45"
-                android:layout_marginEnd="@dimen/dp_45"
+                android:layout_marginStart="@dimen/dp_35"
+                android:layout_marginEnd="@dimen/dp_35"
                 android:background="@color/grey_CCCCCC" />
 
 
@@ -94,9 +96,9 @@
                 android:id="@+id/register_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
-                android:layout_marginStart="@dimen/dp_45"
+                android:layout_marginStart="@dimen/dp_35"
                 android:layout_marginTop="85dp"
-                android:layout_marginEnd="@dimen/dp_45"
+                android:layout_marginEnd="@dimen/dp_35"
                 android:background="@drawable/shape_gradient_integral_sign_out_radius12"
                 android:gravity="center"
                 android:text="@string/login_in"

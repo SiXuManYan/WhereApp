@@ -21,6 +21,8 @@ import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.utils.ToastUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class BaseFragment extends Fragment {
 
     public CustomProgressDialog dialog;
@@ -230,7 +232,52 @@ public abstract class BaseFragment extends Fragment {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
     }
 
+    /**
+     * 延时加载
+     */
     protected void loadOnVisible() {
 
     }
+
+
+    protected final void startActivity(@NotNull Class<?> target) {
+        startActivity(new Intent(requireContext(), target));
+    }
+
+    protected final void startActivity(@NotNull Class<?> target, @NotNull Bundle bundle) {
+        startActivity((new Intent(requireContext(), target)).putExtras(bundle));
+    }
+
+
+    protected final void startActivityClearTop(@NotNull Class<?> target, @Nullable Bundle bundle) {
+        if (bundle == null) {
+            startActivity((new Intent(requireContext(), target)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        } else {
+            startActivity((new Intent(requireContext(), target)).putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        }
+
+    }
+
+    protected final void startActivityWithArgument(@NotNull Class<?> target, @NotNull String key, @NotNull Object value) {
+        Bundle bundle = new Bundle();
+        if (value instanceof String) {
+            bundle.putString(key, (String)value);
+        } else if (value instanceof Long) {
+            bundle.putLong(key, ((Number)value).longValue());
+        } else if (value instanceof Integer) {
+            bundle.putInt(key, ((Number)value).intValue());
+        }
+
+        startActivity(target, bundle);
+    }
+
+    protected final void startActivityForResult(@NotNull Class<?>  target, int requestCode, @Nullable Bundle bundle) {
+        if (bundle == null) {
+            startActivityForResult(new Intent(requireContext(), target), requestCode);
+        } else {
+            startActivityForResult((new Intent(requireContext(), target)).putExtras(bundle), requestCode);
+        }
+
+    }
+
 }

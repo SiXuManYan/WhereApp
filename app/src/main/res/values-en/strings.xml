@@ -297,18 +297,18 @@
     <string name="login_phone_input">Enter phone number</string>
     <string name="get_verify">Get verify code</string>
 	<string name="login_in">login in</string>
-	<string name="register_login">Register/Login</string>
+	<string name="register_login">Register&#160;/&#160;Login</string>
 	<string name="verify_code_hint">Enter verify code</string>
 	<string name="password_login">Password login</string>
 	<string name="verify_login">Verify login</string>
 	<string name="other_login_type">Other login methods</string>
-    <string name="login_rule">The login representative agrees to the "User Agreement" and "Privacy Policy"</string>
+    <string name="login_rule">The login representative agrees to the \n "User Agreement" and "Privacy Policy"</string>
 	<string name="login_rule_default">>The login representative agrees to the </string>
-	<string name="login_rule_keyword_0">"User Agreement"</string>
-	<string name="login_rule_default_and">and</string>
-	<string name="login_rule_keyword_1">"Privacy Policy"</string>
+	<string name="login_rule_keyword_0">\n &quot;User Agreement&quot;</string>
+	<string name="login_rule_default_and">&#160;and&#160;</string>
+	<string name="login_rule_keyword_1">&quot;Privacy Policy&quot;</string>
     <string name="input_password_hint">Enter password</string>
-    <string name="confirm">confirm</string>
+    <string name="confirm">Confirm</string>
 	<string name="philippines_63">Philippines +63</string>
 	<string name="china_86">China +86</string>
     <string name="wrong_phone_hint">Malformed phone number</string>
@@ -318,5 +318,10 @@
 	<string name="verify_code_send_success">Code send success</string>
     <string name="set_password">Password set</string>
 	<string name="register_success">Register success</string>
+	<string name="forgot_password">Forgot password</string>
+	<string name="password_reset">Password reset</string>
+    <string name="password_reset_success">Password reset success</string>
+	<string name="password_length_error_hint">The password length is wrong, please enter a password of 6~20 characters.</string>
+	<string name="password_format_error_hint">The password format is wrong, please enter a combination of letters and numbers.</string>
 
 </resources>

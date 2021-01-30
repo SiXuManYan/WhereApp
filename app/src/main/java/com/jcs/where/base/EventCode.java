@@ -16,4 +16,9 @@ public class EventCode {
      * 请求签到
      */
     public static final int EVENT_SIGN_IN_REQUEST = 1004;
+
+    /**
+     * 密码重置成功
+     */
+    public static final int EVENT_PASSWORD_RESET_SUCCESS = 1005;
 }

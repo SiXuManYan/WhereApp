@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,6 +27,9 @@ import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
 import org.jetbrains.annotations.NotNull;
+
+import kotlin.TypeCastException;
+import kotlin.jvm.internal.Intrinsics;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -282,9 +286,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected final void startActivityClearTop(@NotNull Class<?> target, @Nullable Bundle bundle) {
         if (bundle == null) {
-            startActivity((new Intent(this.getApplicationContext(), target)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            startActivity((new Intent(this, target)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         } else {
-            startActivity((new Intent(this.getApplicationContext(), target)).putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            startActivity((new Intent(this, target)).putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
 
     }
@@ -308,8 +312,52 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             startActivityForResult((new Intent(this, target)).putExtras(bundle), requestCode);
         }
+    }
+
+
+    /**
+     * 手气
+     * @param ev
+     * @return
+     */
+    public boolean dispatchTouchEvent(@NotNull MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN && getCurrentFocus() != null) {
+
+            View currentFocus = getCurrentFocus();
+
+            if (isShouldHideKeyboard(currentFocus, ev)) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(),  InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+        try {
+            return super.dispatchTouchEvent(ev);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 是否需要隐藏软键盘
+     */
+    private boolean isShouldHideKeyboard(View view, MotionEvent event) {
+
+        if (!(view instanceof EditText)) {
+            return false;
+        } else {
+            int[] outLocation = new int[]{0, 0};
+            view.getLocationInWindow(outLocation);
+            int left = outLocation[0];
+            int top = outLocation[1];
+            int bottom = top + view.getHeight();
+            int right = left + view.getWidth();
+            return event.getX() <= (float)left || event.getX() >= (float)right || event.getY() <= (float)top || event.getY() >= (float)bottom;
+        }
 
     }
+
+
 
 
 

@@ -13,10 +13,10 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
-import com.jcs.where.login.LoginActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
 import com.jcs.where.mine.activity.PersonalDataActivity;
 import com.jcs.where.mine.model.MineModel;
@@ -45,6 +45,11 @@ public class MineFragment extends BaseFragment {
     private MineModel mModel;
     private VerticalSwipeRefreshLayout mSwipeLayout;
     private TextView mToSeeBalanceTv;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_mine;
+    }
 
     @Override
     protected void initView(View view) {
@@ -86,7 +91,7 @@ public class MineFragment extends BaseFragment {
 
     private void onUserDataClicked(View view) {
         if (CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN).equals("")) {
-            LoginActivity.goTo(getContext());
+            startActivity(LoginActivity.class);
         } else {
             PersonalDataActivity.goTo(getContext());
         }
@@ -171,11 +176,6 @@ public class MineFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_mine;
     }
 
 

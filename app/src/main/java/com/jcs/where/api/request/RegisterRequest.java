@@ -2,7 +2,7 @@ package com.jcs.where.api.request;
 
 /**
  * Created by Wangsw  2021/1/29 14:34.
- * 注册
+ * 注册请求
  */
 public class RegisterRequest {
 

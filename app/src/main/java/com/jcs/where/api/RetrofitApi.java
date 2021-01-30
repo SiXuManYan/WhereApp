@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.LoginRequest;
 import com.jcs.where.api.request.RegisterRequest;
+import com.jcs.where.api.request.ResetPasswordRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.response.BannerResponse;
@@ -45,6 +46,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -425,14 +427,20 @@ public interface RetrofitApi {
     /**
      * 注册
      */
-    @PATCH("userapi/v2/register")
+    @POST("userapi/v2/register")
     Observable<JcsResponse<LoginResponse>> register(@Body RegisterRequest registerRequest);
 
     /**
      * 获取验证码
      */
-    @PATCH("userapi/v2/mobile/auth/code")
+    @POST("userapi/v2/mobile/auth/code")
     Observable<JcsResponse<JsonElement>> getVerifyCode(@Body SendCodeRequest sendCodeRequest);
+
+    /**
+     * 重置密码
+     */
+    @PUT("userapi/v2/forget")
+    Observable<JcsResponse<JsonElement>> resetPassword(@Body ResetPasswordRequest sendCodeRequest);
 
 
 }

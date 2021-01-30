@@ -7,23 +7,25 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.tabs.TabLayout;
-import com.jcs.where.R;
-import com.jcs.where.base.BaseActivity;
-import com.jcs.where.category.CategoryFragment;
-import com.jcs.where.home.fragment.HomeFragment;
-import com.jcs.where.mine.fragment.MineFragment;
-import com.jcs.where.home.fragment.OrderFragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.tabs.TabLayout;
+import com.jcs.where.R;
+import com.jcs.where.base.BaseActivity;
+import com.jcs.where.category.CategoryFragment;
+import com.jcs.where.home.fragment.HomeFragment;
+import com.jcs.where.home.fragment.OrderFragment;
+import com.jcs.where.mine.fragment.MineFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends BaseActivity {
+
     private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -38,6 +40,7 @@ public class HomeActivity extends BaseActivity {
     private List<HomeTabBean> mTabBeans;
     private final ArrayList<Fragment> frList = new ArrayList<Fragment>();
     private TabLayout mTabLayout;
+    private Long mTapTime = 0L;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +174,19 @@ public class HomeActivity extends BaseActivity {
         public HomeTabBean(String name, int iconRes) {
             this.name = name;
             this.iconRes = iconRes;
+        }
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - mTapTime > 2000) {
+            ToastUtils.showShort(getString(R.string.main_back_hint));
+            mTapTime = System.currentTimeMillis();
+        } else {
+            // 保留应用状态
+            moveTaskToBack(false);
         }
     }
 }

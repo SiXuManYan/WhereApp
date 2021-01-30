@@ -323,5 +323,6 @@
     <string name="password_reset_success">Password reset success</string>
 	<string name="password_length_error_hint">The password length is wrong, please enter a password of 6~20 characters.</string>
 	<string name="password_format_error_hint">The password format is wrong, please enter a combination of letters and numbers.</string>
+    <string name="main_back_hint">Press again to exit the application.</string>
 
 </resources>

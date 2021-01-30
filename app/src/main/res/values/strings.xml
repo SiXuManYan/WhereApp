@@ -319,6 +319,7 @@
     <string name="password_reset_success">密码修改成功</string>
     <string name="password_length_error_hint">密码长度错误，请输入6~20位字符的密码。</string>
     <string name="password_format_error_hint">密码格式错误，请输入字母+数字组合。</string>
+    <string name="main_back_hint">再按一次退出app。</string>
 
 
 </resources>

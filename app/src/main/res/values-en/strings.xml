@@ -296,8 +296,8 @@
 	<string name="about_app">About where app</string>
     <string name="login_phone_input">Enter phone number</string>
     <string name="get_verify">Get verify code</string>
-	<string name="login_in">login in</string>
-	<string name="register_login">Register&#160;/&#160;Login</string>
+	<string name="login_in">Sign in</string>
+	<string name="register_login">Register&#160;/&#160;Sign in</string>
 	<string name="verify_code_hint">Enter verify code</string>
 	<string name="password_login">Password login</string>
 	<string name="verify_login">Verify login</string>
@@ -307,7 +307,8 @@
 	<string name="login_rule_keyword_0">\n &quot;User Agreement&quot;</string>
 	<string name="login_rule_default_and">&#160;and&#160;</string>
 	<string name="login_rule_keyword_1">&quot;Privacy Policy&quot;</string>
-    <string name="input_password_hint">Enter password</string>
+    <string name="input_password_hint">6~20 digit letter combination</string>
+	<string name="input_password_hint_2">Enter the password</string>
     <string name="confirm">Confirm</string>
 	<string name="philippines_63">Philippines +63</string>
 	<string name="china_86">China +86</string>
@@ -324,5 +325,6 @@
 	<string name="password_length_error_hint">The password length is wrong, please enter a password of 6~20 characters.</string>
 	<string name="password_format_error_hint">The password format is wrong, please enter a combination of letters and numbers.</string>
     <string name="main_back_hint">Press again to exit the application.</string>
+    <string name="sign_out_hint">Are you sure to log out ？</string>
 
 </resources>

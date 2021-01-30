@@ -287,7 +287,9 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".features.account.login.LoginActivity" />
+        <activity
+            android:name=".features.account.login.LoginActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".features.account.register.RegisterActivity" />
         <activity android:name=".features.account.password.PasswordResetActivity" />
 

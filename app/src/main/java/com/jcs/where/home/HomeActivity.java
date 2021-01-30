@@ -16,10 +16,16 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.category.CategoryFragment;
 import com.jcs.where.home.fragment.HomeFragment;
 import com.jcs.where.home.fragment.OrderFragment;
 import com.jcs.where.mine.fragment.MineFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +123,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         fm = getSupportFragmentManager();
         initFragment();
         mTabLayout = findViewById(R.id.homeTabs);
@@ -189,4 +196,19 @@ public class HomeActivity extends BaseActivity {
             moveTaskToBack(false);
         }
     }
+
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+        int code = baseEvent.code;
+        switch (code) {
+            case EventCode.EVENT_SIGN_OUT:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
+
 }

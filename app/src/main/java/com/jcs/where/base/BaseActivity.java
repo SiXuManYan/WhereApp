@@ -286,9 +286,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected final void startActivityClearTop(@NotNull Class<?> target, @Nullable Bundle bundle) {
         if (bundle == null) {
-            startActivity((new Intent(this, target)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            startActivity((new Intent(this, target)).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         } else {
-            startActivity((new Intent(this, target)).putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            startActivity((new Intent(this, target)).putExtras(bundle).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
 
     }

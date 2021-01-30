@@ -21,4 +21,9 @@ public class EventCode {
      * 密码重置成功
      */
     public static final int EVENT_PASSWORD_RESET_SUCCESS = 1005;
+
+    /**
+     * 退出登录
+     */
+    public static final int EVENT_SIGN_OUT = 1006;
 }

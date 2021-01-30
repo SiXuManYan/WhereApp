@@ -5,10 +5,14 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.news.adapter.MoreRecommendVideoAdapter;
 import com.jcs.where.widget.JcsVideoPlayer;
+
+import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +51,21 @@ public class NewsVideoActivity extends BaseNewsDetailActivity {
             mVideoPlayer.startVideo();
         }
 
+        // 获取推荐新闻列表
+        mModel.getRecommendNews(new BaseObserver<List<NewsResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
 
+            @Override
+            protected void onSuccess(List<NewsResponse> response) {
+                stopLoading();
+                mMoreVideoAdapter.getData().clear();
+                mMoreVideoAdapter.addData(response);
+            }
+        });
     }
 
     @Override
@@ -70,6 +88,15 @@ public class NewsVideoActivity extends BaseNewsDetailActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_news_video;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mVideoPlayer != null) {
+            // 进入页面加载成功后自动播放
+            mVideoPlayer.startVideo();
+        }
     }
 
     /**

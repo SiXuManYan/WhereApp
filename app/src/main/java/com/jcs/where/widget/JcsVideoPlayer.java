@@ -11,6 +11,8 @@ import cn.jzvd.JzvdStd;
  * create by zyf on 2021/1/19 11:02 下午
  */
 public class JcsVideoPlayer extends JzvdStd {
+    private boolean mHasSetUp = false;
+
     public JcsVideoPlayer(Context context) {
         super(context);
         jcsInit();
@@ -21,8 +23,21 @@ public class JcsVideoPlayer extends JzvdStd {
         jcsInit();
     }
 
+    @Override
+    public void setUp(String url, String title) {
+        super.setUp(url, title);
+        mHasSetUp = true;
+    }
+
     private void jcsInit() {
 
+    }
+
+    @Override
+    public void startVideo() {
+        if (mHasSetUp) {
+            super.startVideo();
+        }
     }
 
     @Override

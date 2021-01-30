@@ -326,5 +326,7 @@
 	<string name="password_format_error_hint">The password format is wrong, please enter a combination of letters and numbers.</string>
     <string name="main_back_hint">Press again to exit the application.</string>
     <string name="sign_out_hint">Are you sure to log out ？</string>
+    <string name="attraction_info">Attraction Info</string>
+	<string name="tourist_notice">Tourist Notice</string>
 
 </resources>

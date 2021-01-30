@@ -17,6 +17,7 @@ import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.travel.TravelDetailActivity;
 import com.jcs.where.travel.adapter.TouristAttractionListAdapter;
 import com.jcs.where.travel.model.TouristAttractionListModel;
 
@@ -31,7 +32,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 /**
- * 机构列表
+ * 旅游景点列表
  * create by zyf on 2020/12/28 9:07 PM
  */
 public class TouristAttractionFragment extends BaseFragment {
@@ -201,18 +202,12 @@ public class TouristAttractionFragment extends BaseFragment {
     protected void bindListener() {
         mSwipeLayout.setOnRefreshListener(this::onSwipeRefresh);
         mRadioGroup.setOnCheckedChangeListener(this::onRadioChecked);
-        mAdapter.setOnItemClickListener(this::onMechanismItemClicked);
+        mAdapter.setOnItemClickListener(this::onTouristAttractionItemClicked);
     }
 
-    private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        int mechanismId = mAdapter.getData().get(position).getId();
-        toActivity(
-                MechanismDetailActivity.class,
-                new IntentEntry(
-                        MechanismDetailActivity.K_MECHANISM_ID,
-                        String.valueOf(mechanismId)
-                )
-        );
+    private void onTouristAttractionItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        int touristAttractionId = mAdapter.getData().get(position).getId();
+        TravelDetailActivity.goTo(getContext(), touristAttractionId);
     }
 
     /**

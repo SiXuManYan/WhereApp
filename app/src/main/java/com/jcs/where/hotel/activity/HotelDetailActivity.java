@@ -26,6 +26,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.widget.StarView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -91,6 +92,7 @@ public class HotelDetailActivity extends BaseActivity {
     private RelativeLayout hotelDetailRl, navigationRl;
     private String hotelName, hotelBreakfast;
     private ImageView star1Iv, star2Iv, star3Iv, star4Iv, star5Iv;
+    private StarView mStarView;
     private TextView timeTv;
     private HotelDetailModel mModel;
     private int mHotelId;
@@ -283,11 +285,7 @@ public class HotelDetailActivity extends BaseActivity {
             public void onClick(View view) {
             }
         });
-        star1Iv = findViewById(R.id.iv_star1);
-        star2Iv = findViewById(R.id.iv_star2);
-        star3Iv = findViewById(R.id.iv_star3);
-        star4Iv = findViewById(R.id.iv_star4);
-        star5Iv = findViewById(R.id.iv_star5);
+        mStarView = findViewById(R.id.starView);
         timeTv = findViewById(R.id.tv_time);
     }
 
@@ -461,45 +459,16 @@ public class HotelDetailActivity extends BaseActivity {
                     } else {
                         seeMoreTv.setVisibility(View.GONE);
                     }
-                    if (!TextUtils.isEmpty(hotelCommentsResponse.getData().get(0).getAvatar())) {
-                        GlideUtil.load(HotelDetailActivity.this, hotelCommentsResponse.getData().get(0).getAvatar(), commentAvaterIv);
+                    HotelCommentsResponse.DataBean dataBean = hotelCommentsResponse.getData().get(0);
+                    if (!TextUtils.isEmpty(dataBean.getAvatar())) {
+                        GlideUtil.load(HotelDetailActivity.this, dataBean.getAvatar(), commentAvaterIv);
                     } else {
                         commentAvaterIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
                     }
-                    commentNameTv.setText(hotelCommentsResponse.getData().get(0).getUsername());
-                    timeTv.setText(hotelCommentsResponse.getData().get(0).getCreated_at());
-                    if (hotelCommentsResponse.getData().get(0).getStar() == 1) {
-                        star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                        star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                        star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                        star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                    } else if (hotelCommentsResponse.getData().get(0).getStar() == 2) {
-                        star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                        star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                        star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                    } else if (hotelCommentsResponse.getData().get(0).getStar() == 3) {
-                        star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                        star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                    } else if (hotelCommentsResponse.getData().get(0).getStar() == 4) {
-                        star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistgreystar));
-                    } else if (hotelCommentsResponse.getData().get(0).getStar() == 5) {
-                        star1Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star2Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star3Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star4Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                        star5Iv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_commentlistlightstar));
-                    }
-                    commentDetailTv.setText(hotelCommentsResponse.getData().get(0).getContent());
+                    commentNameTv.setText(dataBean.getUsername());
+                    timeTv.setText(dataBean.getCreated_at());
+                    mStarView.setStartNum(dataBean.getStar());
+                    commentDetailTv.setText(dataBean.getContent());
                 }
             }
         });

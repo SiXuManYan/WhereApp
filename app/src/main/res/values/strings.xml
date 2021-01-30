@@ -322,6 +322,7 @@
     <string name="password_format_error_hint">密码格式错误，请输入字母+数字组合。</string>
     <string name="main_back_hint">再按一次退出app。</string>
     <string name="sign_out_hint">确定退出登录吗？</string>
-
+    <string name="attraction_info">景点介绍</string>
+    <string name="tourist_notice">游客须知</string>
 
 </resources>

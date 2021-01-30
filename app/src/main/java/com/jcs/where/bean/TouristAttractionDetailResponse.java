@@ -2,7 +2,7 @@ package com.jcs.where.bean;
 
 import java.util.List;
 
-public class TravelDetailBean {
+public class TouristAttractionDetailResponse {
 
     /**
      * id : 1

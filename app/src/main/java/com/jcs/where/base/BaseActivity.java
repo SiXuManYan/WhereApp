@@ -82,6 +82,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void changeStatusTextColor(boolean isDark) {
+        View decor = getWindow().getDecorView();
+        if (isDark) {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+    }
+
     protected abstract void initView();
 
     protected abstract void initData();
@@ -166,6 +175,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(getStatusBarColor()));//设置状态栏颜色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
+        }
+    }
+    protected void setStatusBar(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(color);//设置状态栏颜色
         }
     }
 

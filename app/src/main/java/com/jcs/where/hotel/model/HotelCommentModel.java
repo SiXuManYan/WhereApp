@@ -2,7 +2,9 @@ package com.jcs.where.hotel.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.response.CommentResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
+import com.jcs.where.api.response.PageResponse;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class HotelCommentModel extends BaseModel {
      * @param hotelId 酒店id
      * @param type    评价类型：1-晒图 2-低分 3-最新
      */
-    public void getComments(int hotelId, int type, BaseObserver<HotelCommentsResponse> observer) {
+    public void getComments(int hotelId, int type, BaseObserver<PageResponse<CommentResponse>> observer) {
         dealResponse(mRetrofit.getHotelComments(hotelId, type), observer);
     }
 }

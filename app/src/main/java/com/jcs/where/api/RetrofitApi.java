@@ -372,6 +372,12 @@ public interface RetrofitApi {
     Observable<JcsResponse<NewsDetailResponse>> getNewsDetail(@Path("news") String newsId);
 
     /**
+     * 新闻视频详情页-推荐新闻列表
+     */
+    @GET("newsapi/v2/news/recommends")
+    Observable<JcsResponse<List<NewsResponse>>> getRecommendNews();
+
+    /**
      * 关注新闻发布者
      */
     @POST("newsapi/v2/follows")

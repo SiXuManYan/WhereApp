@@ -31,8 +31,8 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     protected Group mToFollowGroup;
     protected View mToFollowView;
     protected NewsDetailResponse mNewsDetailResponse;
-    protected final int STATUS_UNFOLLOWED = 1;
-    protected final int STATUS_FOLLOWED = 2;
+    protected final int STATUS_UNFOLLOWED_UNCOLLECTED = 1;
+    protected final int STATUS_FOLLOWED_COLLECTED = 2;
     protected Integer mFollowStatus;
 
     @Override
@@ -80,7 +80,13 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
                 mToFollowGroup.setVisibility(View.VISIBLE);
                 NewsDetailResponse.PublisherDTO publisher = response.getPublisher();
                 mFollowStatus = response.getFollowStatus();
-                if (mFollowStatus == STATUS_FOLLOWED) {
+                // 根据收藏状态设置 JcsTitle 右侧第二个 icon
+                if (mNewsDetailResponse.getCollectStatus() == STATUS_FOLLOWED_COLLECTED){
+                    showCollected();
+                }else {
+                    showUncollected();
+                }
+                if (mFollowStatus == STATUS_FOLLOWED_COLLECTED) {
                     showFollowed();
                 } else {
                     showToFollow();
@@ -102,12 +108,51 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     @Override
     protected void bindListener() {
         mToFollowView.setOnClickListener(this::onFollowedClicked);
+        mJcsTitle.setSecondRightIvClickListener(this::onCollectClicked);
+    }
+
+    private void onCollectClicked(View view) {
+        showLoading();
+        // 如果已收藏
+        if (mNewsDetailResponse.getCollectStatus() == STATUS_FOLLOWED_COLLECTED) {
+            mModel.delCollectNews(String.valueOf(mNewsDetailResponse.getId()), new BaseObserver<SuccessResponse>() {
+                @Override
+                protected void onError(ErrorResponse errorResponse) {
+                    stopLoading();
+                    showNetError(errorResponse);
+                }
+
+                @Override
+                protected void onSuccess(SuccessResponse response) {
+                    stopLoading();
+                    mNewsDetailResponse.setCollectStatus(STATUS_UNFOLLOWED_UNCOLLECTED);
+                    showUncollected();
+                }
+            });
+        }
+        // 如果未收藏
+        if (mNewsDetailResponse.getCollectStatus() == STATUS_UNFOLLOWED_UNCOLLECTED) {
+            mModel.postCollectNews(String.valueOf(mNewsDetailResponse.getId()), new BaseObserver<SuccessResponse>() {
+                @Override
+                protected void onError(ErrorResponse errorResponse) {
+                    stopLoading();
+                    showNetError(errorResponse);
+                }
+
+                @Override
+                protected void onSuccess(SuccessResponse response) {
+                    stopLoading();
+                    mNewsDetailResponse.setCollectStatus(STATUS_FOLLOWED_COLLECTED);
+                    showCollected();
+                }
+            });
+        }
     }
 
     private void onFollowedClicked(View view) {
         Integer publisherId = mNewsDetailResponse.getPublisher().getId();
         showLoading();
-        if (mFollowStatus == STATUS_FOLLOWED) {
+        if (mFollowStatus == STATUS_FOLLOWED_COLLECTED) {
             toCancelFollow(publisherId);
         } else {
             toFollow(publisherId);
@@ -127,7 +172,7 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
             protected void onSuccess(SuccessResponse response) {
                 stopLoading();
                 showToFollow();
-                mFollowStatus = STATUS_UNFOLLOWED;
+                mFollowStatus = STATUS_UNFOLLOWED_UNCOLLECTED;
             }
         });
     }
@@ -144,10 +189,20 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
             protected void onSuccess(SuccessResponse response) {
                 stopLoading();
                 showFollowed();
-                mFollowStatus = STATUS_FOLLOWED;
+                mFollowStatus = STATUS_FOLLOWED_COLLECTED;
             }
         });
     }
+
+    protected void showCollected(){
+        mJcsTitle.setSecondRightIcon(R.drawable.ic_hotelwhitelike);
+    }
+
+    protected void showUncollected(){
+        mJcsTitle.setSecondRightIcon(getUncollectedIcon());
+    }
+
+    protected abstract int getUncollectedIcon();
 
     protected void showToFollow() {
         mToFollowTv.setText(getString(R.string.news_follow));

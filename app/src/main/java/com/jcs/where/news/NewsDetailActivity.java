@@ -1,10 +1,5 @@
 package com.jcs.where.news;
 
-import android.annotation.SuppressLint;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
 import com.jcs.where.R;
 
 /**
@@ -15,6 +10,11 @@ public class NewsDetailActivity extends BaseNewsDetailActivity {
 
     @Override
     protected void dealDiff() {
+    }
+
+    @Override
+    protected int getUncollectedIcon() {
+        return R.mipmap.ic_uncollected_black;
     }
 
     @Override

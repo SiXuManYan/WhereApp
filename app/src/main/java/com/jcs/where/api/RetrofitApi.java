@@ -10,6 +10,7 @@ import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
+import com.jcs.where.api.response.CollectedResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
@@ -374,6 +375,18 @@ public interface RetrofitApi {
     Observable<JcsResponse<NewsDetailResponse>> getNewsDetail(@Path("news") String newsId);
 
     /**
+     * 收藏新闻
+     */
+    @POST("newsapi/v2/collects")
+    Observable<JcsResponse<SuccessResponse>> postCollectNews(@Query("news_id") String newsId);
+
+    /**
+     * 收藏新闻
+     */
+    @DELETE("newsapi/v2/collects")
+    Observable<JcsResponse<SuccessResponse>> delCollectNews(@Query("news_id") String newsId);
+
+    /**
      * 新闻视频详情页-推荐新闻列表
      */
     @GET("newsapi/v2/news/recommends")
@@ -466,11 +479,12 @@ public interface RetrofitApi {
 
     /**
      * 搜索页面根据参数搜索酒店
+     *
      * @param areaId 区域id（城市id）
-     * @param input 搜索关键字
-     * @param lat 经度
-     * @param lng 纬度
-     * @param page 页码
+     * @param input  搜索关键字
+     * @param lat    经度
+     * @param lng    纬度
+     * @param page   页码
      */
     @GET("hotelapi/v2/hotels")
     Observable<JcsResponse<PageResponse<HotelResponse>>> getHotelListByInputAtSearch(
@@ -497,4 +511,18 @@ public interface RetrofitApi {
      */
     @GET("newsapi/v2/hot/searches")
     Observable<JcsResponse<List<String>>> getHotNewsListAtSearch();
+
+    /**
+     * 获得收藏页面-收藏的视频列表
+     * type=3 表示 视频
+     */
+    @GET("commonapi/v2/collects?type=3")
+    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionVideo();
+
+    /**
+     * 获得收藏页面-收藏的文章列表
+     * type=2 表示 文章
+     */
+    @GET("commonapi/v2/collects?type=2")
+    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionArticle();
 }

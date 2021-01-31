@@ -40,8 +40,18 @@ public class NewsDetailResponse {
     private String articleLink;
     @SerializedName("read_num")
     private Integer readNum;
+    /**
+     * 关注作者状态
+     * 1：未收藏
+     * 2：已收藏
+     */
     @SerializedName("follow_status")
     private Integer followStatus;
+    /**
+     * 收藏状态
+     * 1：未收藏
+     * 2：已收藏
+     */
     @SerializedName("collect_status")
     private Integer collectStatus;
     @SerializedName("created_at")

@@ -27,4 +27,12 @@ public class NewsDetailModel extends BaseModel {
     public void getRecommendNews(BaseObserver<List<NewsResponse>> observer) {
         dealResponse(mRetrofit.getRecommendNews(), observer);
     }
+
+    public void postCollectNews(String newsId, BaseObserver<SuccessResponse> observer) {
+        dealResponse(mRetrofit.postCollectNews(newsId), observer);
+    }
+
+    public void delCollectNews(String newsId, BaseObserver<SuccessResponse> observer) {
+        dealResponse(mRetrofit.delCollectNews(newsId), observer);
+    }
 }

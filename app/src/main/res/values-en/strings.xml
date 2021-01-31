@@ -141,6 +141,7 @@
 	<string name="mine_invite">invite</string>
 	<string name="mine_gift">gift</string>
 	<string name="mine_collection">collection</string>
+	<string name="mine_collection_title">Collections</string>
 	<string name="mine_address">address</string>
 	<string name="mine_manager">Account</string>
 	<string name="mine_after_sales">After-Sales</string>
@@ -328,5 +329,8 @@
     <string name="sign_out_hint">Are you sure to log out ？</string>
     <string name="attraction_info">Attraction Info</string>
 	<string name="tourist_notice">Tourist Notice</string>
+	<string name="collection_tab_same_city">City</string>
+	<string name="collection_tab_article">Article</string>
+	<string name="collection_tab_video">Video</string>
 
 </resources>

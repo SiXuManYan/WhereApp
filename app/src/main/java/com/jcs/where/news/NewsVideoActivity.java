@@ -73,6 +73,11 @@ public class NewsVideoActivity extends BaseNewsDetailActivity {
         mMoreVideoAdapter.setOnItemClickListener(this::onMoreVideoClicked);
     }
 
+    @Override
+    protected int getUncollectedIcon() {
+        return R.mipmap.ic_uncollected_white;
+    }
+
     private void onMoreVideoClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         NewsResponse item = mMoreVideoAdapter.getItem(position);
         // 跳转到播放视频的详情页面

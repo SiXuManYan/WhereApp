@@ -145,6 +145,7 @@
     <string name="mine_invite">邀请有奖</string>
     <string name="mine_gift">兑换礼品</string>
     <string name="mine_collection">我的收藏</string>
+    <string name="mine_collection_title">我的收藏</string>
     <string name="mine_address">地址管理</string>
     <string name="mine_manager">我的功能</string>
     <string name="mine_after_sales">退款/售后</string>
@@ -324,5 +325,8 @@
     <string name="sign_out_hint">确定退出登录吗？</string>
     <string name="attraction_info">景点介绍</string>
     <string name="tourist_notice">游客须知</string>
+    <string name="collection_tab_same_city">同城</string>
+    <string name="collection_tab_article">文章</string>
+    <string name="collection_tab_video">视频</string>
 
 </resources>

@@ -17,6 +17,7 @@ import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
+import com.jcs.where.mine.activity.CollectionListActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
 import com.jcs.where.mine.activity.PersonalDataActivity;
 import com.jcs.where.mine.model.MineModel;
@@ -45,6 +46,7 @@ public class MineFragment extends BaseFragment {
     private MineModel mModel;
     private VerticalSwipeRefreshLayout mSwipeLayout;
     private TextView mToSeeBalanceTv;
+    private View mLikeLayout;
 
     @Override
     protected int getLayoutId() {
@@ -72,7 +74,7 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.reviewsLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.afterSalesLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.managerAddressLayout).setOnClickListener(this::toShowComing);
-        view.findViewById(R.id.collectionLayout).setOnClickListener(this::toShowComing);
+        mLikeLayout = view.findViewById(R.id.collectionLayout);
         view.findViewById(R.id.footprintLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.inviteLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::toShowComing);
@@ -125,6 +127,11 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void bindListener() {
         mSwipeLayout.setOnRefreshListener(this::onRefreshListener);
+        mLikeLayout.setOnClickListener(this::onLikeClicked);
+    }
+
+    private void onLikeClicked(View view) {
+        toActivity(CollectionListActivity.class);
     }
 
     private void onRefreshListener() {

@@ -426,6 +426,7 @@ public interface RetrofitApi {
 
     /**
      * 获得旅游景点详情数据
+     *
      * @param touristAttractionId 旅游景点id
      */
     @GET("travelapi/v2/travels/{travel_id}")
@@ -433,6 +434,7 @@ public interface RetrofitApi {
 
     /**
      * 获得旅游景点评论列表
+     *
      * @param touristAttractionId 旅游景点id
      */
     @GET("travelapi/v2/comments/{travel_id}")
@@ -462,5 +464,37 @@ public interface RetrofitApi {
     @PUT("userapi/v2/forget")
     Observable<JcsResponse<JsonElement>> resetPassword(@Body ResetPasswordRequest sendCodeRequest);
 
+    /**
+     * 搜索页面根据参数搜索酒店
+     * @param areaId 区域id（城市id）
+     * @param input 搜索关键字
+     * @param lat 经度
+     * @param lng 纬度
+     * @param page 页码
+     */
+    @GET("hotelapi/v2/hotels")
+    Observable<JcsResponse<PageResponse<HotelResponse>>> getHotelListByInputAtSearch(
+            @Query("area_id") String areaId,
+            @Query("search_input") String input,
+            @Query("lat") double lat,
+            @Query("lng") double lng,
+            @Query("page") int page
+    );
 
+    /**
+     * 获得搜索页面-酒店的热门搜索
+     */
+    @GET("hotelapi/v2/hot/searches")
+    Observable<JcsResponse<List<String>>> getHotHotelListAtSearch();
+
+    @GET("newsapi/v2/news")
+    Observable<JcsResponse<PageResponse<NewsResponse>>> getNewsListByInputAtSearch(
+            @Query("search_input") String input
+    );
+
+    /**
+     * 获得搜索页面-新闻的热门搜索
+     */
+    @GET("newsapi/v2/hot/searches")
+    Observable<JcsResponse<List<String>>> getHotNewsListAtSearch();
 }

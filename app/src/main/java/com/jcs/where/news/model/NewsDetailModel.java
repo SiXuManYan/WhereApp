@@ -2,7 +2,6 @@ package com.jcs.where.news.model;
 
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
-import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.SuccessResponse;

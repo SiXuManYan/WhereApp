@@ -6,19 +6,18 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.jcs.where.R;
-import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
+import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.bean.HotelListBean;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.manager.TokenManager;
@@ -40,7 +39,7 @@ public class HotelListFragment extends BaseFragment {
     private RecyclerView hotelListRv;
     private int page = 1;
     private HotelListAdpater hotelListAdpater;
-    private List<HotelListBean.DataBean> list;
+    private List<HotelResponse> list;
     private String useInputText = "";
     private String mStartYear, mEndYear;
     private int mTotalDay, mRoomNum;
@@ -82,7 +81,7 @@ public class HotelListFragment extends BaseFragment {
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
-                    HotelListBean hotelListBean = new Gson().fromJson(result, HotelListBean.class);
+                    PageResponse<HotelResponse> hotelListBean = new Gson().fromJson(result, PageResponse.class);
                     list = hotelListBean.getData();
                     if (list.size() < 10) {
                         ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
@@ -127,7 +126,7 @@ public class HotelListFragment extends BaseFragment {
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
-                    HotelListBean hotelListBean = new Gson().fromJson(result, HotelListBean.class);
+                    PageResponse<HotelResponse> hotelListBean = new Gson().fromJson(result, PageResponse.class);
                     if (hotelListBean.getData().size() < 10) {
                         ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
                     } else {
@@ -239,7 +238,7 @@ public class HotelListFragment extends BaseFragment {
         return R.layout.fragment_test;
     }
 
-    private class HotelListAdpater extends BaseQuickAdapter<HotelListBean.DataBean, BaseViewHolder> {
+    private class HotelListAdpater extends BaseQuickAdapter<HotelResponse, BaseViewHolder> {
 
 
         public HotelListAdpater() {
@@ -247,7 +246,7 @@ public class HotelListFragment extends BaseFragment {
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelListBean.DataBean data) {
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelResponse data) {
 
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {

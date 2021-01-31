@@ -1,7 +1,6 @@
 package com.jcs.where.news;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;

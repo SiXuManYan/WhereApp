@@ -5,8 +5,6 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 
-import java.util.List;
-
 /**
  * create by zyf on 2021/1/18 10:01 下午
  */

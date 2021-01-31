@@ -3,13 +3,14 @@ package com.jcs.where.api.response;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.annotations.SerializedName;
 import com.jcs.where.news.view_type.NewsType;
+import com.jcs.where.search.bean.ISearchResponse;
 
 import java.util.List;
 
 /**
  * create by zyf on 2021/1/18 9:58 下午
  */
-public class NewsResponse implements MultiItemEntity {
+public class NewsResponse implements MultiItemEntity, ISearchResponse {
 
     /**
      * id : 7
@@ -168,6 +169,11 @@ public class NewsResponse implements MultiItemEntity {
                 return NewsType.VIDEO;
         }
         return 0;
+    }
+
+    @Override
+    public String getName() {
+        return title;
     }
 
     public static class PublisherDTO {

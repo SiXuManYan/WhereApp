@@ -3,7 +3,6 @@ package com.jcs.where.home.activity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.adapter.ModulesCategoryAdapter;

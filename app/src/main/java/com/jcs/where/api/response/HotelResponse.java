@@ -1,10 +1,11 @@
 package com.jcs.where.api.response;
 
+import com.jcs.where.search.bean.ISearchResponse;
 import com.jcs.where.widget.LabelView;
 
 import java.util.List;
 
-public class HotelResponse {
+public class HotelResponse implements ISearchResponse {
 
     /**
      * id : 75
@@ -31,7 +32,7 @@ public class HotelResponse {
     private double lat;
     private double lng;
     private int price;
-    private int distance;
+    private double distance;
     private int remain_room_num;
     private String facebook_link;
     private List<String> images;
@@ -101,11 +102,11 @@ public class HotelResponse {
         this.price = price;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

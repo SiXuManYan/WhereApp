@@ -3,26 +3,27 @@ package com.jcs.where.hotel.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcs.where.R;
-import com.jcs.where.utils.LocalLanguageUtil;
-import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
-import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
 import com.jcs.where.hotel.model.HotelListModel;
+import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
+import com.jcs.where.search.SearchActivity;
+import com.jcs.where.search.tag.SearchTag;
+import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.view.EnterStayInfoView;
-import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 import com.jcs.where.view.popup.PopupConstraintLayout;
+import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ public class HotelListActivity extends BaseActivity {
         // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
         mChooseDataView = findViewById(R.id.toChooseDate);
 
-        findViewById(R.id.cityTv).setOnClickListener(view -> HotelSearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), HotelSearchActivity.SearchTag.HOTEL, REQ_SEARCH));
+        findViewById(R.id.cityTv).setOnClickListener(view -> SearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), SearchTag.HOTEL, REQ_SEARCH));
         clearIv = findViewById(R.id.clearIv);
         clearIv.setVisibility(View.GONE);
         clearIv.setOnClickListener(view -> {
@@ -257,9 +258,9 @@ public class HotelListActivity extends BaseActivity {
         if (requestCode == REQ_SEARCH && data != null) {
             clearIv.setVisibility(View.VISIBLE);
             mViewPager.setCurrentItem(0);
-            cityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
+            cityTv.setText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
             cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
-            ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
+            ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
         }
     }
 }

@@ -6,8 +6,6 @@ import com.jcs.where.api.response.HotelResponse;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-
 /**
  * 酒店预订Model
  * create by zyf on 2020/12/21 9:25 PM

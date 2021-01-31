@@ -156,7 +156,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".hotel.activity.HotelSearchActivity"
+            android:name=".search.SearchActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

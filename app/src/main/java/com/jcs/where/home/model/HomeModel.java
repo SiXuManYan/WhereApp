@@ -121,7 +121,7 @@ public class HomeModel extends BaseModel {
         List<BannerResponse> bannerResponses;
         List<HomeNewsResponse> homeNewsResponses;
 
-        public HomeZipResponse(List<ModulesResponse> modulesResponses,List<HotelResponse> hotelResponses, List<BannerResponse> bannerResponses, List<HomeNewsResponse> homeNewsResponses) {
+        public HomeZipResponse(List<ModulesResponse> modulesResponses, List<HotelResponse> hotelResponses, List<BannerResponse> bannerResponses, List<HomeNewsResponse> homeNewsResponses) {
             this.modulesResponses = modulesResponses;
             this.youLikeResponses = hotelResponses;
             this.bannerResponses = bannerResponses;

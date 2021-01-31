@@ -37,20 +37,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
-import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.HotelMapListBean;
-import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.hotel.card.CardPagerAdapter;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.hotel.event.HotelEvent;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.search.SearchActivity;
+import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.view.EnterStayInfoView;
-import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 import com.jcs.where.view.popup.PopupConstraintLayout;
+import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -322,7 +324,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         mHotelListIv.setOnClickListener(v -> finish());
         mCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
         findViewById(R.id.myLocationView).setOnClickListener(view -> checkIsGooglePlayConn());
-        mCityTv.setOnClickListener(view -> HotelSearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), HotelSearchActivity.SearchTag.HOTEL, REQ_SEARCH));
+        mCityTv.setOnClickListener(view -> SearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), SearchTag.HOTEL, REQ_SEARCH));
     }
 
     public void toShowCalendarDialog() {
@@ -440,8 +442,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             clearIv.setVisibility(View.VISIBLE);
 
             mCityTv.setTextColor(getResources().getColor(R.color.grey_666666));
-            mCityTv.setText(data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH));
-            useInputText = data.getStringExtra(HotelSearchActivity.EXT_SELECT_SEARCH);
+            mCityTv.setText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
+            useInputText = data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH);
             initData();
         }
     }

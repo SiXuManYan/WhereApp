@@ -1,7 +1,5 @@
 package com.jcs.where.news.adapter;
 
-import android.view.View;
-
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -15,8 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.jzvd.JzvdStd;
 
 /**
  * author : hwd

@@ -11,11 +11,12 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.hotel.activity.HotelSearchActivity;
 import com.jcs.where.news.adapter.NewsViewPagerAdapter;
 import com.jcs.where.news.dto.FollowAndUnfollowDTO;
 import com.jcs.where.news.fragment.NewsFragment;
 import com.jcs.where.news.model.NewsAtyModel;
+import com.jcs.where.search.SearchActivity;
+import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.RequestResultCode;
 
 import org.jetbrains.annotations.NotNull;
@@ -217,7 +218,7 @@ public class NewsActivity extends BaseActivity {
      * 搜索
      */
     private void onSearchIconClicked(View view) {
-        HotelSearchActivity.goTo(this, "", HotelSearchActivity.SearchTag.NEWS, RequestResultCode.REQUEST_NEWS_TO_SEARCH);
+        SearchActivity.goTo(this, "", SearchTag.NEWS, RequestResultCode.REQUEST_NEWS_TO_SEARCH);
     }
 
     /**

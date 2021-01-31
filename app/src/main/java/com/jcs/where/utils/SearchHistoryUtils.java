@@ -4,21 +4,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.jcs.where.search.tag.SearchTag;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SearchHistoryUtils {
     private final static String PREFERENCE_NAME = "superservice_ly";
-    private final static String SEARCH_HISTORY = "linya_history";
+    private final static String SEARCH_HISTORY = "history";
+    private final static String SEARCH_HOTEL_HISTORY = "linya_history";
 
     // 保存搜索记录
-    public static void saveSearchHistory(Context context, String inputText) {
+    public static void saveSearchHistory(Context context, SearchTag searchTag, String inputText) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         if (TextUtils.isEmpty(inputText)) {
             return;
         }
-        String longHistory = sp.getString(SEARCH_HISTORY, "");  //获取之前保存的历史记录
+        String longHistory = sp.getString(searchTag.name() + "_" + SEARCH_HISTORY, "");  //获取之前保存的历史记录
         String[] tmpHistory = longHistory.split(","); //逗号截取 保存在数组中
         List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory)); //将改数组转换成ArrayList
         SharedPreferences.Editor editor = sp.edit();
@@ -50,9 +53,9 @@ public class SearchHistoryUtils {
     }
 
     //获取搜索记录
-    public static List<String> getSearchHistory(Context context) {
+    public static List<String> getSearchHistory(Context context, SearchTag searchTag) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-        String longHistory = sp.getString(SEARCH_HISTORY, "");
+        String longHistory = sp.getString(searchTag.name() + "_" + SEARCH_HISTORY, "");
         String[] tmpHistory = longHistory.split(","); //split后长度为1有一个空串对象
         List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
         if (historyList.size() == 1 && historyList.get(0).equals("")) { //如果没有搜索记录，split之后第0位是个空串的情况下

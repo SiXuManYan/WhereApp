@@ -266,16 +266,16 @@ public interface RetrofitApi {
      *
      * @param mechanismId 机构id
      */
-    @GET("generalapi/v2/collects")
-    Observable<JcsResponse<Object>> postCollectMechanism(@Query("info_id") int mechanismId);
+    @POST("generalapi/v2/collects")
+    Observable<JcsResponse<SuccessResponse>> postCollectMechanism(@Query("info_id") int mechanismId);
 
     /**
      * 取消收藏机构
      *
      * @param mechanismId 机构id
      */
-    @GET("generalapi/v2/collects")
-    Observable<JcsResponse<Object>> delCollectMechanism(@Query("info_id") int mechanismId);
+    @DELETE("generalapi/v2/collects")
+    Observable<JcsResponse<SuccessResponse>> delCollectMechanism(@Query("info_id") int mechanismId);
 
     /**
      * 获取综合服务页面的区域列表

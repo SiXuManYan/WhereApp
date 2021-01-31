@@ -195,7 +195,7 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     }
 
     protected void showCollected(){
-        mJcsTitle.setSecondRightIcon(R.drawable.ic_hotelwhitelike);
+        mJcsTitle.setSecondRightIcon(R.mipmap.ic_collected_red);
     }
 
     protected void showUncollected(){

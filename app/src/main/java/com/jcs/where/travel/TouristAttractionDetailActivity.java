@@ -8,9 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,7 +51,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.droidsonroids.gif.GifImageView;
 
-public class TravelDetailActivity extends BaseActivity {
+public class TouristAttractionDetailActivity extends BaseActivity {
 
     private static final String EXT_ID = "id";
     // 屏幕宽度
@@ -78,7 +75,7 @@ public class TravelDetailActivity extends BaseActivity {
     private int mId;
 
     public static void goTo(Context context, int id) {
-        Intent intent = new Intent(context, TravelDetailActivity.class);
+        Intent intent = new Intent(context, TouristAttractionDetailActivity.class);
         intent.putExtra(EXT_ID, id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (!(context instanceof Activity)) {
@@ -160,7 +157,7 @@ public class TravelDetailActivity extends BaseActivity {
         findViewById(R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog alertDialog2 = new AlertDialog.Builder(TravelDetailActivity.this)
+                AlertDialog alertDialog2 = new AlertDialog.Builder(TouristAttractionDetailActivity.this)
                         .setTitle(R.string.prompt)
                         .setMessage(String.format(getString(R.string.ask_call_merchant_phone), phone))
                         .setIcon(R.mipmap.ic_launcher)
@@ -183,7 +180,7 @@ public class TravelDetailActivity extends BaseActivity {
         introduceTv = findViewById(R.id.tv_introduce);
         noticeTv = findViewById(R.id.tv_notice);
         commentRv = findViewById(R.id.rv_comment);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TravelDetailActivity.this,
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TouristAttractionDetailActivity.this,
                 LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
@@ -194,7 +191,7 @@ public class TravelDetailActivity extends BaseActivity {
         mCommentAdapter = new CommentListAdapter();
         commentLl = findViewById(R.id.ll_comment);
         seeMoreTv = findViewById(R.id.tv_seemore);
-        seeMoreTv.setOnClickListener(view -> TravelCommentActivity.goTo(TravelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0)));
+        seeMoreTv.setOnClickListener(view -> TravelCommentActivity.goTo(TouristAttractionDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0)));
     }
 
     @Override
@@ -373,7 +370,7 @@ public class TravelDetailActivity extends BaseActivity {
         if (status) {
             Map<String, Integer> params = new HashMap<>();
             params.put("travel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
-            HttpUtils.doHttpintReqeust("POST", "travelapi/v1/collects", params, "", TokenManager.get().getToken(TravelDetailActivity.this), new HttpUtils.StringCallback() {
+            HttpUtils.doHttpintReqeust("POST", "travelapi/v1/collects", params, "", TokenManager.get().getToken(TouristAttractionDetailActivity.this), new HttpUtils.StringCallback() {
                 @Override
                 public void onSuccess(int code, String result) {
                     stopLoading();
@@ -393,7 +390,7 @@ public class TravelDetailActivity extends BaseActivity {
                 }
             });
         } else {
-            HttpUtils.doHttpintReqeust("DELETE", "travelapi/v1/collects/" + getIntent().getIntExtra(EXT_ID, 0), null, "", TokenManager.get().getToken(TravelDetailActivity.this), new HttpUtils.StringCallback() {
+            HttpUtils.doHttpintReqeust("DELETE", "travelapi/v1/collects/" + getIntent().getIntExtra(EXT_ID, 0), null, "", TokenManager.get().getToken(TouristAttractionDetailActivity.this), new HttpUtils.StringCallback() {
                 @Override
                 public void onSuccess(int code, String result) {
                     stopLoading();

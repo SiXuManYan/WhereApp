@@ -1,9 +1,5 @@
 package com.jcs.where.mine.activity;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
-
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;

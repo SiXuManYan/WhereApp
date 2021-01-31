@@ -62,7 +62,7 @@ import io.reactivex.annotations.NonNull;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
- * 酒店详情页
+ * 页面-酒店详情页
  */
 public class HotelDetailActivity extends BaseActivity {
 
@@ -500,7 +500,6 @@ public class HotelDetailActivity extends BaseActivity {
                 @Override
                 protected void onSuccess(Object response) {
                     stopLoading();
-                    showToast("收藏成功");
                     like = 1;
                     if (toolbarStatus == 0) {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
@@ -521,7 +520,6 @@ public class HotelDetailActivity extends BaseActivity {
                 @Override
                 protected void onSuccess(Object response) {
                     stopLoading();
-                    showToast("取消成功");
                     like = 2;
                     if (toolbarStatus == 0) {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));

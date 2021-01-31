@@ -15,9 +15,7 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.base.IntentEntry;
-import com.jcs.where.government.activity.MechanismDetailActivity;
-import com.jcs.where.travel.TravelDetailActivity;
+import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.travel.adapter.TouristAttractionListAdapter;
 import com.jcs.where.travel.model.TouristAttractionListModel;
 
@@ -207,7 +205,7 @@ public class TouristAttractionFragment extends BaseFragment {
 
     private void onTouristAttractionItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         int touristAttractionId = mAdapter.getData().get(position).getId();
-        TravelDetailActivity.goTo(getContext(), touristAttractionId);
+        TouristAttractionDetailActivity.goTo(getContext(), touristAttractionId);
     }
 
     /**

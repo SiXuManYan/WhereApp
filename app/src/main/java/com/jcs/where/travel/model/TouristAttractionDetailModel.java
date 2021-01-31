@@ -3,6 +3,7 @@ package com.jcs.where.travel.model;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 import com.jcs.where.api.response.CommentResponse;
 
@@ -16,5 +17,13 @@ public class TouristAttractionDetailModel extends BaseModel {
 
     public void getTouristAttractionCommentList(int touristAttractionId, BaseObserver<PageResponse<CommentResponse>> observer) {
         dealResponse(mRetrofit.getTouristAttractionCommentList(touristAttractionId), observer);
+    }
+
+    public void postCollectTouristAttraction(int touristAttractionId, BaseObserver<SuccessResponse> observer) {
+        dealResponse(mRetrofit.postCollectTouristAttraction(touristAttractionId), observer);
+    }
+
+    public void delCollectTouristAttraction(int touristAttractionId, BaseObserver<SuccessResponse> observer) {
+        dealResponse(mRetrofit.delCollectTouristAttraction(touristAttractionId), observer);
     }
 }

@@ -24,6 +24,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.CommentResponse;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
@@ -71,7 +72,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
     private CommentListAdapter mCommentAdapter;
     private LinearLayout commentLl;
     private TextView seeMoreTv;
-    private TouristAttractionDetailModel mMode;
+    private TouristAttractionDetailModel mModel;
     private int mId;
 
     public static void goTo(Context context, int id) {
@@ -196,10 +197,10 @@ public class TouristAttractionDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mMode = new TouristAttractionDetailModel();
+        mModel = new TouristAttractionDetailModel();
         showLoading();
         mId = getIntent().getIntExtra(EXT_ID, 0);
-        mMode.getTouristAttractionDetail(mId, new BaseObserver<TouristAttractionDetailResponse>() {
+        mModel.getTouristAttractionDetail(mId, new BaseObserver<TouristAttractionDetailResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -286,7 +287,6 @@ public class TouristAttractionDetailActivity extends BaseActivity {
             }
         });
         mJcsTitle.setSecondRightIvClickListener(view -> collection(like != 1));
-        mJcsTitle.setFirstRightIvClickListener(view -> collection(like != 1));
 //        mCommentAdapter.addChildClickViewIds(R.id.fullText, R.id.commentIcon01, R.id.commentIcon02, R.id.commentIcon03, R.id.commentIcon04);
 //        mCommentAdapter.setOnItemChildClickListener(this::onCommentItemChildClicked);
     }
@@ -329,7 +329,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
 
     private void initComment() {
         showLoading();
-        mMode.getTouristAttractionCommentList(mId, new BaseObserver<PageResponse<CommentResponse>>() {
+        mModel.getTouristAttractionCommentList(mId, new BaseObserver<PageResponse<CommentResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -368,49 +368,37 @@ public class TouristAttractionDetailActivity extends BaseActivity {
     private void collection(boolean status) {
         showLoading();
         if (status) {
-            Map<String, Integer> params = new HashMap<>();
-            params.put("travel_id", Integer.valueOf(getIntent().getIntExtra(EXT_ID, 0)));
-            HttpUtils.doHttpintReqeust("POST", "travelapi/v1/collects", params, "", TokenManager.get().getToken(TouristAttractionDetailActivity.this), new HttpUtils.StringCallback() {
+            mModel.postCollectTouristAttraction(mId, new BaseObserver<SuccessResponse>() {
                 @Override
-                public void onSuccess(int code, String result) {
+                protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
-                    if (code == 200) {
-                        like = 1;
-                        mJcsTitle.setSecondRightIcon(R.drawable.ic_hotelwhitelike);
-                    } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        showToast(errorBean.message);
-                    }
+                    showNetError(errorResponse);
                 }
 
                 @Override
-                public void onFaileure(int code, Exception e) {
+                protected void onSuccess(SuccessResponse response) {
                     stopLoading();
-                    showToast(e.getMessage());
+                    like = 1;
+                    mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);
                 }
             });
         } else {
-            HttpUtils.doHttpintReqeust("DELETE", "travelapi/v1/collects/" + getIntent().getIntExtra(EXT_ID, 0), null, "", TokenManager.get().getToken(TouristAttractionDetailActivity.this), new HttpUtils.StringCallback() {
+            mModel.delCollectTouristAttraction(mId, new BaseObserver<SuccessResponse>() {
                 @Override
-                public void onSuccess(int code, String result) {
+                protected void onError(ErrorResponse errorResponse) {
                     stopLoading();
-                    if (code == 200) {
-                        like = 2;
-                        if (toolbarStatus == 0) {
-                            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_white);
-                        } else {
-                            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black);
-                        }
-                    } else {
-                        ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                        showToast(errorBean.message);
-                    }
+                    showNetError(errorResponse);
                 }
 
                 @Override
-                public void onFaileure(int code, Exception e) {
+                protected void onSuccess(SuccessResponse response) {
                     stopLoading();
-                    showToast(e.getMessage());
+                    like = 2;
+                    if (toolbarStatus == 0) {
+                        mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_white);
+                    } else {
+                        mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black);
+                    }
                 }
             });
         }

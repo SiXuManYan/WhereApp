@@ -19,7 +19,6 @@ import com.jcs.where.widget.JcsBanner;
 
 import androidx.constraintlayout.widget.Group;
 import io.reactivex.annotations.NonNull;
-import retrofit2.Response;
 
 /**
  * 机构详情页
@@ -215,7 +214,7 @@ public class MechanismDetailActivity extends BaseActivity {
             public void onSuccess(@NonNull SuccessResponse successResponseResponse) {
                 stopLoading();
                 // 收藏成功
-                mJcsTitle.setSecondRightIcon(R.mipmap.ic_collected_red);
+                mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);
                 mMechanismDetailResponse.setCollect_status(STATUS_COLLECTED);
             }
         });

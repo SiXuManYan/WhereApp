@@ -446,6 +446,18 @@ public interface RetrofitApi {
     Observable<JcsResponse<TouristAttractionDetailResponse>> getTouristAttractionDetail(@Path("travel_id") int touristAttractionId);
 
     /**
+     * 收藏旅游景点
+     */
+    @POST("travelapi/v2/collects/{travel_id}")
+    Observable<JcsResponse<SuccessResponse>> postCollectTouristAttraction(@Path("travel_id") int travelId);
+
+    /**
+     * 取消收藏旅游景点
+     */
+    @DELETE("travelapi/v2/collects/{travel_id}")
+    Observable<JcsResponse<SuccessResponse>> delCollectTouristAttraction(@Path("travel_id") int travelId);
+
+    /**
      * 获得旅游景点评论列表
      *
      * @param touristAttractionId 旅游景点id

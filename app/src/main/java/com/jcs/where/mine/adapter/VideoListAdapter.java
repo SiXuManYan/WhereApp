@@ -14,8 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * author : hwd
- * date   : 2021/1/6-23:45
+ * create by zyf on 2021/1/31
  */
 public class VideoListAdapter extends BaseQuickAdapter<CollectedResponse, BaseViewHolder> {
 

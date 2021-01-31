@@ -1,5 +1,6 @@
 package com.jcs.where.api.response;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * create by zyf on 2021/1/31 4:39 下午
  */
-public class CollectedResponse {
+public class CollectedResponse implements MultiItemEntity {
 
     /**
      * type : 3
@@ -33,5 +34,10 @@ public class CollectedResponse {
 
     public void setNews(NewsResponse news) {
         this.news = news;
+    }
+
+    @Override
+    public int getItemType() {
+        return news.getItemType();
     }
 }

@@ -27,8 +27,7 @@ import cn.jzvd.Jzvd;
 
 /**
  * 页面-收藏视频列表
- * author : hwd
- * date   : 2021/1/6-23:19
+ * create by zyf
  */
 public class VideoListFragment extends BaseFragment {
 
@@ -120,6 +119,6 @@ public class VideoListFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragemnt_news;
+        return R.layout.fragment_collected_video_list;
     }
 }

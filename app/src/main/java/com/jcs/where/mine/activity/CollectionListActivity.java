@@ -8,6 +8,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.mine.fragment.ArticleListFragment;
 import com.jcs.where.mine.fragment.VideoListFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +52,7 @@ public class CollectionListActivity extends BaseActivity {
         };
 
         mFragmentList.add(new VideoListFragment());
-        mFragmentList.add(new VideoListFragment());
+        mFragmentList.add(new ArticleListFragment());
         mFragmentList.add(new VideoListFragment());
         mAdapter = new CollectionViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mViewPager.setAdapter(mAdapter);

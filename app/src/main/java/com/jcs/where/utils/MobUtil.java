@@ -10,9 +10,18 @@ import cn.sharesdk.framework.PlatformDb;
 
 /**
  * Created by Wangsw  2021/2/1 14:10.
+ * mob 统一处理三方登录以及分享
+ * sharesdk 文档
  *
  * @see <a href="https://www.mob.com/wiki/detailed/?wiki=ShareSDK_Others_Share_Authorize&id=undefined">ShareSdk平台分享及授权</a>
  * @see <a href="https://www.mob.com/wiki/detailed/?wiki=ShareSDK_Others_Share_Special_Configuration&id=undefined">ShareSdk facebook 分享单独配置</a>
+ * <p>
+ * Facebook
+ * @see <a href="https://www.jianshu.com/p/f6f66d2a4297">生成Facebook Key Hash</a>
+ * @see <a href="https://link.jianshu.com/?t=http://downloads.sourceforge.net/gnuwin32/openssl-0.9.8h-1-bin.zip">OpenSSL 工具下载</a>
+ * <p>
+ * Google
+ * @see <a href="https://developers.google.com/identity/sign-in/android/start-integrating">配置</a>
  */
 public class MobUtil {
 
@@ -35,17 +44,15 @@ public class MobUtil {
         if (plat == null) {
             return;
         }
-        if (!plat.isClientValid()) {
-            ToastUtils.showShort("客户端不存在");
-            return;
-        }
-        //判断指定平台是否已经存在授权状态
+
+//        if (!plat.isClientValid()) {
+//            ToastUtils.showShort("客户端不存在");
+//            return;
+//        }
+
         if (plat.isAuthValid()) {
-            String userId = plat.getDb().getUserId();
-            if (userId != null) {
-                listener.onComplete(plat.getDb());
-                return;
-            }
+            // 已授权过，重新授权
+            plat.removeAccount(true);
         }
         plat.setPlatformActionListener(new PlatformActionListener() {
 

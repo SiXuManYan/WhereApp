@@ -131,7 +131,7 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
 
     @Override
     public void bindSuccess() {
-        ToastUtils.showShort(R.string.bind_success);
+        ToastUtils.showShort(R.string.login_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         finish();
     }

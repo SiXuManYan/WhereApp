@@ -26,4 +26,9 @@ public class EventCode {
      * 退出登录
      */
     public static final int EVENT_SIGN_OUT = 1006;
+
+    /**
+     * 手机号绑定成功
+     */
+    public static final int EVENT_BIND_PHONE_SUCCESS = 1007;
 }

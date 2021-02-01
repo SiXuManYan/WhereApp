@@ -159,7 +159,7 @@
                         android:paddingTop="@dimen/dp_5"
                         android:paddingBottom="@dimen/dp_5"
                         android:text="@string/get_verify"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/grey_BFBFBF" />
 
 
                 </RelativeLayout>
@@ -308,6 +308,7 @@
                 android:paddingEnd="@dimen/dp_35">
 
                 <ImageView
+                    android:id="@+id/facebook_login_iv"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
                     android:scaleType="centerInside"

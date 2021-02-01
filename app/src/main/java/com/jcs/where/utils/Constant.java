@@ -30,6 +30,14 @@ public class Constant {
      * 国际码
      */
     public static final String PARAM_COUNTRY_CODE = "country_code";
+    public static final String PARAM_USER_NAME = "user_name";
+    public static final String PARAM_USER_ID = "user_id";
+    public static final String PARAM_USER_ICON = "user_icon";
+    /**
+     * 第三方登录类型
+     * （1：Facebook，2：google，3：Twitter）
+     */
+    public static final String PARAM_THREE_PARTY_LOGIN_TYPE = "three_party_login_type";
 
     /**
      * 验证码类型 1 登录
@@ -37,7 +45,7 @@ public class Constant {
     public static final int VERIFY_CODE_TYPE_1_LOGIN = 1;
 
     /**
-     * 验证码类型 1 注册
+     * 验证码类型 2 注册
      */
     public static final int VERIFY_CODE_TYPE_2_REGISTER = 2;
 

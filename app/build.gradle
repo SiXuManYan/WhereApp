@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: './mob.gradle'
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))

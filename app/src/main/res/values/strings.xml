@@ -328,5 +328,7 @@
     <string name="collection_tab_same_city">同城</string>
     <string name="collection_tab_article">文章</string>
     <string name="collection_tab_video">视频</string>
+    <string name="bind_phone">绑定手机</string>
+    <string name="bind_success">绑定成功</string>
 
 </resources>

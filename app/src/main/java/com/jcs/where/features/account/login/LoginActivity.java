@@ -1,6 +1,5 @@
 package com.jcs.where.features.account.login;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextPaint;
@@ -25,12 +24,17 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.features.account.bind.BindPhoneActivity;
 import com.jcs.where.features.account.password.PasswordResetActivity;
 import com.jcs.where.features.account.register.RegisterActivity;
 import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import cn.sharesdk.facebook.Facebook;
+import cn.sharesdk.framework.PlatformDb;
 
 import static com.jcs.where.utils.Constant.PARAM_ACCOUNT;
 import static com.jcs.where.utils.Constant.PARAM_COUNTRY_CODE;
@@ -152,6 +156,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         forgot_password_tv.setOnClickListener(this::onForgotPasswordClick);
         findViewById(R.id.login_tv).setOnClickListener(this::onLoginClick);
+        findViewById(R.id.facebook_login_iv).setOnClickListener(this::onFacebookLogin);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
     }
@@ -161,10 +166,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      * 选择国家开头
      */
     private void onCountryPrefixClick(View v) {
-      FeaturesUtil.getCountryPrefix(this, countryCode -> {
-          mCountryPrefix = countryCode;
-          country_tv.setText(getString(R.string.country_code_format, countryCode));
-      });
+        FeaturesUtil.getCountryPrefix(this, countryCode -> {
+            mCountryPrefix = countryCode;
+            country_tv.setText(getString(R.string.country_code_format, countryCode));
+        });
 
     }
 
@@ -199,7 +204,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         presenter.handleLogin(mIsVerifyMode, mCountryPrefix, account, verifyCode, password);
     }
 
-
     /**
      * 获取验证码
      */
@@ -209,7 +213,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
     /**
-     *  切换密码显示类型
+     * 切换密码显示类型
      */
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
@@ -262,7 +266,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         int code = baseEvent.code;
         switch (code) {
             case EventCode.EVENT_LOGIN_SUCCESS:
-                // 注册成功关闭页面
+            case EventCode.EVENT_BIND_PHONE_SUCCESS:
+                // 注册成功、三方登录绑定手机号成功关闭页面
                 finish();
                 break;
             case EventCode.EVENT_PASSWORD_RESET_SUCCESS:
@@ -271,5 +276,24 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             default:
                 break;
         }
+    }
+
+    private void onFacebookLogin(View view) {
+        presenter.threePartyAuthorize(Facebook.NAME);
+    }
+
+    @Override
+    public void guideToAccountBind(PlatformDb platformData, int loginType) {
+
+        String userName = platformData.getUserName();
+        String userId = platformData.getUserId();
+        String userIcon = platformData.getUserIcon();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.PARAM_USER_NAME, userName);
+        bundle.putString(Constant.PARAM_USER_ID, userId);
+        bundle.putString(Constant.PARAM_USER_ICON, userIcon);
+        bundle.putInt(Constant.PARAM_THREE_PARTY_LOGIN_TYPE, loginType);
+        startActivity(BindPhoneActivity.class, bundle);
     }
 }

@@ -83,6 +83,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     @Override
     public void registerSuccess() {
+        // 注册成功，回到前一页面
         ToastUtils.showShort(R.string.register_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         finish();

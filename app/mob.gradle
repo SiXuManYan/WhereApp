@@ -1,0 +1,59 @@
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "m323e22bbc612c"
+    appSecret "cd85d45317ccf5bb3f52746d8278de23"
+    ShareSDK {
+        gui false // 关闭 one key share
+        loopShare false
+        gpp true // GooglePlay专版更新  https://www.mob.com/wiki/detailed/?wiki=ShareSDK_Google&id=14
+        devInfo {
+            Facebook {
+                appKey "1374321072771239"
+                appSecret "978840473b023ee1f79e7eb55e4cab7f"
+                callbackUri "https://mob.com"
+            }
+
+            GooglePlus {
+                appId "1"
+                callbackUri "1"
+                officialVersion "default"
+                shareByAppClient true
+                enable true
+            }
+
+            /*
+            Wechat {
+                appId ""
+                appSecret ""
+                userName ""
+                path "p"
+                withShareTicket true
+                miniprogramType 2
+            }
+            QQ {
+                appId ""
+                appKey ""
+            }
+            SinaWeibo {
+                appKey ""
+                appSecret ""
+                callbackUri ""
+            }
+            WechatMoments {
+                appId ""
+                appSecret ""
+            }
+            WechatFavorite {
+                appId ""
+                appSecret ""
+            }
+            QZone {
+                appId ""
+                appKey ""
+            }
+            */
+
+        }
+    }
+}

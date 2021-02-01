@@ -2,15 +2,18 @@ package com.jcs.where.api;
 
 import com.google.gson.JsonElement;
 import com.jcs.where.api.request.HotelOrderRequest;
-import com.jcs.where.api.request.LoginRequest;
-import com.jcs.where.api.request.RegisterRequest;
-import com.jcs.where.api.request.ResetPasswordRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
+import com.jcs.where.api.request.account.BindPhoneRequest;
+import com.jcs.where.api.request.account.LoginRequest;
+import com.jcs.where.api.request.account.RegisterRequest;
+import com.jcs.where.api.request.account.ResetPasswordRequest;
+import com.jcs.where.api.request.account.ThreePartyLoginRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
 import com.jcs.where.api.response.CollectedResponse;
+import com.jcs.where.api.response.CommentResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
@@ -38,7 +41,6 @@ import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
-import com.jcs.where.api.response.CommentResponse;
 
 import java.util.List;
 
@@ -537,4 +539,19 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v2/collects?type=2")
     Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionArticle();
+
+    /**
+     * 第三方登录
+     * 404：账号不存在，需要跳转绑定手机号界面
+     */
+    @POST("userapi/v2/third/login")
+    Observable<JcsResponse<LoginResponse>> threePartyLogin(@Body ThreePartyLoginRequest request);
+
+    /**
+     * 绑定手机号
+     */
+    @PATCH("userapi/v2/bind/phone")
+    Observable<JcsResponse<LoginResponse>> bindPhone(@Body BindPhoneRequest request);
+
+
 }

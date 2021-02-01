@@ -17,11 +17,9 @@ import android.widget.TextView;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.api.RetrofitManager;
-import com.jcs.where.api.request.LoginRequest;
+import com.jcs.where.api.request.account.LoginRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.response.LoginResponse;
-import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
@@ -35,10 +33,7 @@ import com.jcs.where.utils.WorksSizeCheckUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity {

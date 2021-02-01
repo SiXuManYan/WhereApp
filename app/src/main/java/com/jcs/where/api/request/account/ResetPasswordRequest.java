@@ -1,4 +1,4 @@
-package com.jcs.where.api.request;
+package com.jcs.where.api.request.account;
 
 /**
  * Created by Wangsw  2021/1/30 11:29.

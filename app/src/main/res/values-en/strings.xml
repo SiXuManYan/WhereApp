@@ -332,5 +332,7 @@
 	<string name="collection_tab_same_city">City</string>
 	<string name="collection_tab_article">Article</string>
 	<string name="collection_tab_video">Video</string>
+    <string name="bind_phone">Bind phone</string>
+    <string name="bind_success">Bind success</string>
 
 </resources>

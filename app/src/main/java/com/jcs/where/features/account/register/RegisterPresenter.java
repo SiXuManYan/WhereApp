@@ -2,7 +2,7 @@ package com.jcs.where.features.account.register;
 
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
-import com.jcs.where.api.request.RegisterRequest;
+import com.jcs.where.api.request.account.RegisterRequest;
 import com.jcs.where.api.response.LoginResponse;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.FeaturesUtil;

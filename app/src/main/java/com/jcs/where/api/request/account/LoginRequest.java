@@ -1,4 +1,4 @@
-package com.jcs.where.api.request;
+package com.jcs.where.api.request.account;
 
 import com.google.gson.annotations.SerializedName;
 

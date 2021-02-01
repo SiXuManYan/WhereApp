@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
@@ -58,6 +60,8 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
 
     @Override
     protected void initView() {
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
+        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.blue_395668));
         phone_aet = findViewById(R.id.phone_aet);
         verify_code_aet = findViewById(R.id.verify_code_aet);
         password_aet = findViewById(R.id.password_aet);
@@ -117,19 +121,18 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
         });
     }
 
-
     private void onBindClick(View view) {
 
         String account = phone_aet.getText().toString().trim();
         String verifyCode = verify_code_aet.getText().toString().trim();
         String password = password_aet.getText().toString().trim();
-        presenter.bindPhone(mCountryPrefix, account, verifyCode, password, mUserName, mUserId, mUserIcon,mLoginType);
+        presenter.bindPhone(mCountryPrefix, account, verifyCode, password, mUserName, mUserId, mUserIcon, mLoginType);
     }
 
     @Override
     public void bindSuccess() {
         ToastUtils.showShort(R.string.bind_success);
-        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_BIND_PHONE_SUCCESS));
+        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         finish();
     }
 }

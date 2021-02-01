@@ -86,7 +86,7 @@
                     android:maxLength="11"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
-                    android:textColor="@color/black_333333"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/grey_BFBFBF"
                     android:textSize="@dimen/sp_14" />
 
@@ -131,7 +131,7 @@
                     android:maxLength="11"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
-                    android:textColor="@color/black_333333"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/grey_BFBFBF"
                     android:textSize="@dimen/sp_14" />
 
@@ -198,7 +198,7 @@
                     android:maxLength="20"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
-                    android:textColor="@color/black_333333"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/grey_BFBFBF"
                     android:textSize="@dimen/sp_14" />
 

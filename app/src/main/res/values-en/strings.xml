@@ -308,8 +308,8 @@
 	<string name="verify_login">Verify login</string>
 	<string name="other_login_type">Other login methods</string>
     <string name="login_rule">The login representative agrees to the \n "User Agreement" and "Privacy Policy"</string>
-	<string name="login_rule_default">>The login representative agrees to the </string>
-	<string name="login_rule_keyword_0">\n &quot;User Agreement&quot;</string>
+	<string name="login_rule_default">The login representative agrees to the </string>
+	<string name="login_rule_keyword_0">\n&quot;User Agreement&quot;</string>
 	<string name="login_rule_default_and">&#160;and&#160;</string>
 	<string name="login_rule_keyword_1">&quot;Privacy Policy&quot;</string>
     <string name="input_password_hint">6~20 digit letter combination</string>

@@ -33,5 +33,8 @@
     命名为：shape_red_radius_8  
     
 ## 图片
-1，.png 的图片放在对应的 mipmap 下，已有的暂不修改  
+1，.png 的图片放在对应的 mipmap 下，已有的暂不修改
+
+
+
 

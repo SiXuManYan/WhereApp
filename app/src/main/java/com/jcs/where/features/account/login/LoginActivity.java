@@ -28,6 +28,7 @@ import com.jcs.where.features.account.bind.BindPhoneActivity;
 import com.jcs.where.features.account.password.PasswordResetActivity;
 import com.jcs.where.features.account.register.RegisterActivity;
 import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.home.HomeActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -35,6 +36,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import cn.sharesdk.facebook.Facebook;
 import cn.sharesdk.framework.PlatformDb;
+import cn.sharesdk.google.GooglePlus;
 
 import static com.jcs.where.utils.Constant.PARAM_ACCOUNT;
 import static com.jcs.where.utils.Constant.PARAM_COUNTRY_CODE;
@@ -87,6 +89,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected void initView() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            boolean dismissBack = bundle.getBoolean(Constant.PARAM_DISMISS_BACK_ICON);
+            if (dismissBack) {
+                findViewById(R.id.iv_back).setVisibility(View.INVISIBLE);
+            }
+        }
+
         BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
         BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.blue_395668));
         login_rule_tv = findViewById(R.id.login_rule_tv);
@@ -106,6 +116,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     protected void initData() {
         presenter = new LoginPresenter(this);
+
 
         // 默认菲律宾前缀
         country_tv.setText(getString(R.string.country_code_format, "63"));
@@ -156,7 +167,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         forgot_password_tv.setOnClickListener(this::onForgotPasswordClick);
         findViewById(R.id.login_tv).setOnClickListener(this::onLoginClick);
-        findViewById(R.id.facebook_login_iv).setOnClickListener(this::onFacebookLogin);
+        findViewById(R.id.facebook_login_iv).setOnClickListener(this::onFacebookLoginClick);
+        findViewById(R.id.google_login_iv).setOnClickListener(this::onGoogleLoginClick);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
     }
@@ -241,6 +253,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void LoginSuccess() {
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         ToastUtils.showShort(getString(R.string.login_success));
+        startActivityClearTop(HomeActivity.class, null);
         finish();
     }
 
@@ -264,23 +277,19 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void onEventReceived(BaseEvent<?> baseEvent) {
         super.onEventReceived(baseEvent);
         int code = baseEvent.code;
-        switch (code) {
-            case EventCode.EVENT_LOGIN_SUCCESS:
-            case EventCode.EVENT_BIND_PHONE_SUCCESS:
-                // 注册成功、三方登录绑定手机号成功关闭页面
-                finish();
-                break;
-            case EventCode.EVENT_PASSWORD_RESET_SUCCESS:
-                password_aet.setText("");
-                break;
-            default:
-                break;
+        if (code == EventCode.EVENT_PASSWORD_RESET_SUCCESS) {
+            password_aet.setText("");
         }
     }
 
-    private void onFacebookLogin(View view) {
+    private void onFacebookLoginClick(View view) {
         presenter.threePartyAuthorize(Facebook.NAME);
     }
+
+    private void onGoogleLoginClick(View view) {
+        presenter.threePartyAuthorize(GooglePlus.NAME);
+    }
+
 
     @Override
     public void guideToAccountBind(PlatformDb platformData, int loginType) {

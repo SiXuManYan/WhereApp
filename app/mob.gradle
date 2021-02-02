@@ -15,7 +15,7 @@ MobSDK {
             }
 
             GooglePlus {
-                appId "1"
+                appId "953359706446-u7ss0g7jub2ojv5j48f73rkka74lve7s.apps.googleusercontent.com"
                 callbackUri "1"
                 officialVersion "default"
                 shareByAppClient true

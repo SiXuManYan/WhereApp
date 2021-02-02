@@ -31,4 +31,9 @@ public class EventCode {
      * 手机号绑定成功
      */
     public static final int EVENT_BIND_PHONE_SUCCESS = 1007;
+
+    /**
+     * 注册成功
+     */
+    public static final int EVENT_REGISTER_SUCCESS = 1008;
 }

@@ -11,6 +11,7 @@ import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 import com.jcs.where.yellow_page.model.YellowPageModel;
+import com.mob.MobSDK;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +27,7 @@ public class FlashActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        MobSDK.submitPolicyGrantResult(true,null);
     }
 
     @Override

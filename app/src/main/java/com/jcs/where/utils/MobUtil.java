@@ -1,6 +1,7 @@
 package com.jcs.where.utils;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.mob.MobSDK;
 
 import java.util.HashMap;
 
@@ -12,7 +13,7 @@ import cn.sharesdk.framework.PlatformDb;
  * Created by Wangsw  2021/2/1 14:10.
  * mob 统一处理三方登录以及分享
  * sharesdk 文档
- *
+ * @see <a href="https://www.mob.com/wiki/detailed/?wiki=ShareSDK_Android_title_zhuce&id=14">第三方平台注册流程</a>
  * @see <a href="https://www.mob.com/wiki/detailed/?wiki=ShareSDK_Others_Share_Authorize&id=undefined">ShareSdk平台分享及授权</a>
  * @see <a href="https://www.mob.com/wiki/detailed/?wiki=ShareSDK_Others_Share_Special_Configuration&id=undefined">ShareSdk facebook 分享单独配置</a>
  * <p>
@@ -44,6 +45,8 @@ public class MobUtil {
         if (plat == null) {
             return;
         }
+
+
 
 //        if (!plat.isClientValid()) {
 //            ToastUtils.showShort("客户端不存在");

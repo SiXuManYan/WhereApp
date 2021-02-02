@@ -15,6 +15,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.home.HomeActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -133,6 +134,7 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
     public void bindSuccess() {
         ToastUtils.showShort(R.string.login_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
+        startActivityClearTop(HomeActivity.class, null);
         finish();
     }
 }

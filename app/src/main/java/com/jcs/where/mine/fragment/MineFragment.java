@@ -1,6 +1,7 @@
 package com.jcs.where.mine.fragment;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -114,7 +115,13 @@ public class MineFragment extends BaseFragment {
 
 
     private void onSettingClick(View view) {
-        toActivity(SettingActivity.class);
+
+        String token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+        if (TextUtils.isEmpty(token)) {
+            startActivity(LoginActivity.class);
+        } else {
+            toActivity(SettingActivity.class);
+        }
     }
 
 

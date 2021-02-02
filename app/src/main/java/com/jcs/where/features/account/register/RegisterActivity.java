@@ -13,6 +13,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.account.login.LoginPresenter;
+import com.jcs.where.home.HomeActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -21,7 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Created by Wangsw  2021/1/29 16:53.
  * 注册页，【设置密码】
- * todo 增加规则:数字+字母 最少6位
+ *
  */
 public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> implements RegisterView {
 
@@ -83,9 +84,9 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     @Override
     public void registerSuccess() {
-        // 注册成功，回到前一页面
         ToastUtils.showShort(R.string.register_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
+        startActivityClearTop(HomeActivity.class, null);
         finish();
     }
 }

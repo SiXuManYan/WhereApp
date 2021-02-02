@@ -1,5 +1,6 @@
 package com.jcs.where.features.setting;
 
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
@@ -10,6 +11,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.SPKey;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,6 +58,9 @@ public class SettingActivity extends BaseActivity {
                 .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
                     EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
                     CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, "");
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(Constant.PARAM_DISMISS_BACK_ICON, true);
+
                     startActivityClearTop(LoginActivity.class, null);
                     finish();
                     dialogInterface.dismiss();

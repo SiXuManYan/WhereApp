@@ -315,6 +315,7 @@
                     android:src="@mipmap/ic_login_facebook" />
 
                 <ImageView
+                    android:id="@+id/google_login_iv"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
                     android:layout_marginStart="@dimen/dp_20"

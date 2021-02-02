@@ -1,7 +1,7 @@
 package com.jcs.where.utils;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.mob.MobSDK;
+import com.jcs.where.R;
 
 import java.util.HashMap;
 
@@ -45,13 +45,10 @@ public class MobUtil {
         if (plat == null) {
             return;
         }
-
-
-
-//        if (!plat.isClientValid()) {
-//            ToastUtils.showShort("客户端不存在");
-//            return;
-//        }
+        if (!plat.isClientValid()) {
+            ToastUtils.showShort(R.string.is_client_valid);
+            return;
+        }
 
         if (plat.isAuthValid()) {
             // 已授权过，重新授权
@@ -61,12 +58,12 @@ public class MobUtil {
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-                ToastUtils.showShort("授权失败");
+                ToastUtils.showShort(R.string.authorization_failed);
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
-                ToastUtils.showShort("授权取消");
+                ToastUtils.showShort(R.string.authorization_cancel);
             }
 
             @Override

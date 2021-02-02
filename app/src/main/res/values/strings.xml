@@ -334,5 +334,8 @@
     <string name="collection_tab_video">视频</string>
     <string name="bind_phone">绑定手机</string>
     <string name="bind_success">绑定成功</string>
+    <string name="is_client_valid">客户端不存在</string>
+    <string name="authorization_failed">授权失败</string>
+    <string name="authorization_cancel">授权取消</string>
 
 </resources>

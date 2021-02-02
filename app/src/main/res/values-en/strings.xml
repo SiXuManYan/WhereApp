@@ -338,5 +338,8 @@
 	<string name="collection_tab_video">Video</string>
     <string name="bind_phone">Bind phone</string>
     <string name="bind_success">Bind success</string>
+    <string name="is_client_valid">Client does not exist</string>
+	<string name="authorization_failed">Authorization failed</string>
+	<string name="authorization_cancel">Authorization cancel</string>
 
 </resources>

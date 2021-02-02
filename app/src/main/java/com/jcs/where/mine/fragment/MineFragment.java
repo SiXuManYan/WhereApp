@@ -19,6 +19,7 @@ import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
+import com.jcs.where.mine.activity.FootprintActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
 import com.jcs.where.mine.activity.PersonalDataActivity;
 import com.jcs.where.mine.model.MineModel;
@@ -76,7 +77,7 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.afterSalesLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.managerAddressLayout).setOnClickListener(this::toShowComing);
         mLikeLayout = view.findViewById(R.id.collectionLayout);
-        view.findViewById(R.id.footprintLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.footprintLayout).setOnClickListener(this::OnFootprintClicked);
         view.findViewById(R.id.inviteLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this::toShowComing);
@@ -85,6 +86,13 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
         view.findViewById(R.id.iv_setting).setOnClickListener(this::onSettingClick);
 
+    }
+
+    /**
+     * 足迹
+     */
+    private void OnFootprintClicked(View view) {
+        toActivity(FootprintActivity.class);
     }
 
 

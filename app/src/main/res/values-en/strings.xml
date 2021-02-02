@@ -341,5 +341,6 @@
     <string name="is_client_valid">Client does not exist</string>
 	<string name="authorization_failed">Authorization failed</string>
 	<string name="authorization_cancel">Authorization cancel</string>
+	<string name="mine_footprint_title">Mine Footprint</string>
 
 </resources>

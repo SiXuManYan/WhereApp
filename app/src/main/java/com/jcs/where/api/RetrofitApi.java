@@ -541,6 +541,13 @@ public interface RetrofitApi {
     Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionArticle();
 
     /**
+     * 获得收藏页面-收藏的同城信息
+     * type=2 表示 文章
+     */
+    @GET("commonapi/v2/collects?type=1")
+    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionSameCity();
+
+    /**
      * 第三方登录
      * 404：账号不存在，需要跳转绑定手机号界面
      */

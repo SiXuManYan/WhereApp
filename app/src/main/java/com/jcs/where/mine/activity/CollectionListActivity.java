@@ -5,6 +5,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.mine.fragment.ArticleListFragment;
+import com.jcs.where.mine.fragment.SameCityListFragment;
 import com.jcs.where.mine.fragment.VideoListFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +48,7 @@ public class CollectionListActivity extends BaseActivity {
                 getString(R.string.collection_tab_video)
         };
 
-        mFragmentList.add(new VideoListFragment());
+        mFragmentList.add(new SameCityListFragment());
         mFragmentList.add(new ArticleListFragment());
         mFragmentList.add(new VideoListFragment());
         mAdapter = new CollectionViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -59,6 +60,11 @@ public class CollectionListActivity extends BaseActivity {
     @Override
     protected void bindListener() {
 
+    }
+
+    @Override
+    protected boolean isStatusDark() {
+        return true;
     }
 
     @Override

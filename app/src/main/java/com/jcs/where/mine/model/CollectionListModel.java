@@ -26,4 +26,11 @@ public class CollectionListModel extends BaseModel {
         dealResponse(mRetrofit.getCollectionArticle(), observer);
     }
 
+    /**
+     * 获得收藏页面-收藏的同城列表
+     */
+    public void getCollectionSameCity(BaseObserver<PageResponse<CollectedResponse>> observer) {
+        dealResponse(mRetrofit.getCollectionSameCity(), observer);
+    }
+
 }

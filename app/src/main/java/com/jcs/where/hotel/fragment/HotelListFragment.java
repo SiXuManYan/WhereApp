@@ -6,31 +6,34 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.PageResponse;
-import com.jcs.where.utils.GlideUtil;
-import com.jcs.where.widget.calendar.JcsCalendarAdapter;
-import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -81,7 +84,14 @@ public class HotelListFragment extends BaseFragment {
             public void onSuccess(int code, String result) {
                 stopLoading();
                 if (code == 200) {
-                    PageResponse<HotelResponse> hotelListBean = new Gson().fromJson(result, PageResponse.class);
+
+
+//                  PageResponse<HotelResponse> hotelListBean = new Gson().fromJson(result, PageResponse.class);
+
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<PageResponse<HotelResponse>>() {}.getType();
+                    PageResponse<HotelResponse> hotelListBean = gson.fromJson(result, type);
+
                     list = hotelListBean.getData();
                     if (list.size() < 10) {
                         ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);

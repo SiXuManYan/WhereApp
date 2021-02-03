@@ -2,7 +2,7 @@ package com.jcs.where.utils;
 
 import android.util.Log;
 
-import java.util.Locale;
+import com.blankj.utilcode.util.SPUtils;
 
 /**
  * create by zyf on 2021/1/6 11:45 上午
@@ -60,4 +60,9 @@ public class CacheUtil {
         String language = SPUtil.getInstance().getString(SPKey.K_LANGUAGE);
         return language.equals("") ? "en" : language;
     }
+
+    public static String getToken() {
+        return SPUtils.getInstance().getString(SPKey.K_TOKEN);
+    }
+
 }

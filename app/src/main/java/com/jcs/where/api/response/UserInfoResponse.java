@@ -1,6 +1,7 @@
 package com.jcs.where.api.response;
 
 import com.google.gson.annotations.SerializedName;
+import com.jcs.where.storage.entity.UserRongyunData;
 
 /**
  * create by zyf on 2021/1/9 11:29 下午
@@ -27,19 +28,19 @@ public class UserInfoResponse {
      */
 
     @SerializedName("id")
-    private Integer id;
+    private Long id;
     @SerializedName("nickname")
     private String nickname;
     @SerializedName("phone")
     private String phone;
     @SerializedName("country_code")
-    private Integer countryCode;
+    private String countryCode;
     @SerializedName("email")
     private String email;
     @SerializedName("avatar")
     private String avatar;
     @SerializedName("balance")
-    private Integer balance;
+    private String balance;
     @SerializedName("created_at")
     private String createdAt;
     @SerializedName("name")
@@ -55,15 +56,19 @@ public class UserInfoResponse {
     @SerializedName("twitter_bind_status")
     private Integer twitterBindStatus;
     @SerializedName("integral")
-    private Integer integral;
+    private String integral = "0";
     @SerializedName("sign_status")
     private Integer signStatus;
 
-    public Integer getId() {
+    @SerializedName("rong_data")
+    public UserRongyunData rongData;
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,11 +88,11 @@ public class UserInfoResponse {
         this.phone = phone;
     }
 
-    public Integer getCountryCode() {
+    public String getCountryCode() {
         return countryCode;
     }
 
-    public void setCountryCode(Integer countryCode) {
+    public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
 
@@ -107,11 +112,11 @@ public class UserInfoResponse {
         this.avatar = avatar;
     }
 
-    public Integer getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 
@@ -171,11 +176,11 @@ public class UserInfoResponse {
         this.twitterBindStatus = twitterBindStatus;
     }
 
-    public Integer getIntegral() {
+    public String getIntegral() {
         return integral;
     }
 
-    public void setIntegral(Integer integral) {
+    public void setIntegral(String integral) {
         this.integral = integral;
     }
 

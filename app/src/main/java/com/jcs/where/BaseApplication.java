@@ -7,9 +7,10 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.blankj.utilcode.util.LanguageUtils;
+import androidx.multidex.MultiDex;
+
 import com.jcs.where.api.RetrofitManager;
-import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
@@ -17,10 +18,13 @@ import com.jcs.where.utils.SPUtil;
 
 import java.util.Locale;
 
-import androidx.multidex.MultiDex;
-
 public class BaseApplication extends Application {
 
+    public  WhereDataBase getDatabase() {
+        return database;
+    }
+
+    private  WhereDataBase database = null;
 
     @Override
     public void onCreate() {
@@ -33,6 +37,7 @@ public class BaseApplication extends Application {
 
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
+        database = WhereDataBase.get(this);
     }
 
     public void changeLanguage() {

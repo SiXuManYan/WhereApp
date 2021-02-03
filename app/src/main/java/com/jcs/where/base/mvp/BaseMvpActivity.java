@@ -1,11 +1,8 @@
 package com.jcs.where.base.mvp;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
@@ -18,9 +15,6 @@ import com.jcs.where.base.BaseEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
-
-import kotlin.jvm.internal.Intrinsics;
 
 /**
  * Created by Wangsw  2021/1/26 11:06.

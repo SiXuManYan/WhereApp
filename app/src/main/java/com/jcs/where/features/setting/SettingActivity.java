@@ -10,6 +10,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.SPKey;
@@ -41,6 +42,8 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        User user = User.getInstance();
+        String name = user.name;
 
     }
 

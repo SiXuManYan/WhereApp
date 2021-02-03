@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.Utils;
+import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -24,6 +26,8 @@ import com.jcs.where.mine.activity.LanguageActivity;
 import com.jcs.where.mine.activity.PersonalDataActivity;
 import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
+import com.jcs.where.storage.WhereDataBase;
+import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.widget.VerticalSwipeRefreshLayout;
@@ -49,6 +53,7 @@ public class MineFragment extends BaseFragment {
     private VerticalSwipeRefreshLayout mSwipeLayout;
     private TextView mToSeeBalanceTv;
     private View mLikeLayout;
+    private TextView mPointTv;
 
     @Override
     protected int getLayoutId() {
@@ -85,6 +90,7 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
         view.findViewById(R.id.iv_setting).setOnClickListener(this::onSettingClick);
+        mPointTv = view.findViewById(R.id.point_tv);
 
     }
 
@@ -170,9 +176,12 @@ public class MineFragment extends BaseFragment {
                 stopLoading();
                 mSwipeLayout.setRefreshing(false);
                 nicknameTv.setText(userInfoResponse.getNickname());
+                mPointTv.setText(userInfoResponse.getIntegral());
+                saveData(userInfoResponse);
             }
         });
     }
+
 
     @Override
     protected boolean needChangeStatusBarStatus() {
@@ -198,6 +207,32 @@ public class MineFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    private void saveData(@NotNull UserInfoResponse response) {
+        User user = User.Builder.anUser()
+                .id(response.getId())
+                .nickName(response.getNickname())
+                .phone(response.getPhone())
+                .email(response.getEmail())
+                .avatar(response.getAvatar())
+                .balance(response.getBalance())
+                .createdAt(response.getCreatedAt())
+                .name(response.getName())
+                .type(response.getType())
+                .countryCode(response.getCountryCode())
+                .merchantApplyStatus(response.getMerchantApplyStatus())
+                .faceBookBindStatus(response.getFacebookBindStatus())
+                .googleBindStatus(response.getGoogleBindStatus())
+                .twitterBindStatus(response.getTwitterBindStatus())
+                .signStatus(response.getSignStatus())
+                .integral(response.getIntegral())
+                .rongData(response.rongData).build();
+
+        BaseApplication app = (BaseApplication) Utils.getApp();
+        WhereDataBase database = app.getDatabase();
+        database.userDao().addUser(user);
+        User.update();
     }
 
 

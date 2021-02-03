@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 import com.blankj.utilcode.util.Utils;
 import com.jcs.where.BaseApplication;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.SPKey;
 
 /**
  * Created by Wangsw  2021/2/3 10:51.
@@ -59,7 +60,7 @@ public class User {
     }
 
     public static boolean isLogon() {
-        return !TextUtils.isEmpty(CacheUtil.getToken());
+        return !TextUtils.isEmpty(CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN));
     }
 
     public static String getToken() {

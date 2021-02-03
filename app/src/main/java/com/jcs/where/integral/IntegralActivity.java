@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ResourceUtils;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.jcs.where.R;
 import com.jcs.where.api.response.SignListResponse;
@@ -54,7 +55,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
     @Override
     protected void initView() {
 
-        BarUtils.setStatusBarColor(this, R.drawable.shape_gradient_integral, true);
+        findViewById(android.R.id.content).setBackground(ResourceUtils.getDrawable(R.drawable.shape_gradient_integral));
 
         mPagerVp = findViewById(R.id.pager_vp);
         mIntegralTv = findViewById(R.id.my_integral_tv);

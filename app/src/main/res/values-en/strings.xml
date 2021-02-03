@@ -120,7 +120,7 @@
 	<string name="not_provide_tel_number">No phone number</string>
 	<string name="google_map_not_installed">You have not installed Google Maps</string>
 	<string name="enterprise_yellow_page">Enterprise</string>
-	<string name="city_news">City News</string>
+	<string name="city_news">1Bataan News</string>
 	<string name="please_input_keyword">Please enter key words</string>
 	<string name="please_input_merchant_or_goods">Please enter your business / item, etc.</string>
 	<string name="title_convenience_service">Convenience services</string>
@@ -147,7 +147,7 @@
 	<string name="mine_collection">Collection</string>
 	<string name="mine_collection_title">Collections</string>
 	<string name="mine_address">Address</string>
-	<string name="mine_manager">Features</string>
+	<string name="mine_manager">Account</string>
 	<string name="mine_after_sales">After-Sales</string>
 	<string name="mine_reviews">Reviews</string>
 	<string name="mine_login_register">Login/Register</string>
@@ -343,5 +343,8 @@
 	<string name="authorization_cancel">Authorization cancel</string>
 	<string name="mine_footprint_title">Mine Footprint</string>
     <string name="get_points">Get Points</string>
+    <string name="bataan_news">1 Bataan News</string>
+    <string name="about_app_title">About Where</string>
+	<string name="version_format">Version&#160;%1$s</string>
 
 </resources>

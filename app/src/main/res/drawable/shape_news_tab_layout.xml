@@ -5,13 +5,15 @@
     <item>
         <shape>
             <!--    边框颜色    -->
-            <solid android:color="@color/grey_50959595"/>
+            <solid android:color="@color/grey_F5F5F5" />
         </shape>
     </item>
     <!--    想保留哪一边就设置哪一边边框就好了，列如只有上边框：top="1dp"    -->
-    <item android:top="1dp" android:bottom="1dp">
+    <item
+        android:bottom="1px"
+        android:top="1px">
         <shape>
-            <solid android:color="@color/white"/>
+            <solid android:color="@color/white" />
         </shape>
     </item>
 </layer-list>

@@ -4,18 +4,17 @@
     <item>
         <shape>
 
-            <solid android:color="@color/grey_50959595" />
+            <solid android:color="@color/grey_959595" />
         </shape>
     </item>
     <!-- 白色前景 -->
     <item
-        android:top="@dimen/dp_1"
-        android:bottom="@dimen/dp_1"
-        android:right="@dimen/dp_1"
-        android:left="@dimen/dp_1"
-        >
+        android:bottom="1px"
+        android:left="1px"
+        android:right="1px"
+        android:top="1px">
         <shape>
-            <solid android:color="@color/white_ddffffff" />
+            <solid android:color="@color/white" />
         </shape>
     </item>
 </layer-list>

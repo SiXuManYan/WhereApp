@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -86,6 +87,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title));
         mModel = new HomeModel();
         bannerLl = view.findViewById(R.id.ll_banner);
         mMessageLayout = view.findViewById(R.id.rl_message);

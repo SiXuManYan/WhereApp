@@ -21,6 +21,7 @@ import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
+import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
 import com.jcs.where.mine.activity.FootprintActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
@@ -73,7 +74,7 @@ public class MineFragment extends BaseFragment {
         headerIv = view.findViewById(R.id.iv_header);
         view.findViewById(R.id.toSeeBalanceTv).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.mineBalanceLayout).setOnClickListener(this::toShowComing);
-        view.findViewById(R.id.pointLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.pointLayout).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.couponLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.toSeeAllOrderTv).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.unpaidLayout).setOnClickListener(this::toShowComing);
@@ -84,7 +85,7 @@ public class MineFragment extends BaseFragment {
         mLikeLayout = view.findViewById(R.id.collectionLayout);
         view.findViewById(R.id.footprintLayout).setOnClickListener(this::OnFootprintClicked);
         view.findViewById(R.id.inviteLayout).setOnClickListener(this::onIntegralIvClicked);
-        view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::onAboutClick);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
@@ -96,6 +97,10 @@ public class MineFragment extends BaseFragment {
 
     }
 
+    private void onAboutClick(View view) {
+        startActivity(AboutActivity.class);
+    }
+
     /**
      * 足迹
      */
@@ -104,6 +109,11 @@ public class MineFragment extends BaseFragment {
     }
 
 
+    /**
+     * 积分签到
+     *
+     * @param view
+     */
     private void onIntegralIvClicked(View view) {
         if (User.isLogon()) {
             toActivity(IntegralActivity.class);

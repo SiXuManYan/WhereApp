@@ -305,9 +305,14 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".features.account.login.LoginActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".features.account.register.RegisterActivity" />
-        <activity android:name=".features.account.password.PasswordResetActivity" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.account.register.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.account.password.PasswordResetActivity"
+            android:screenOrientation="portrait" />
 
 
         <activity
@@ -322,7 +327,6 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
 
 
         <!-- comm 100  -->
@@ -348,6 +352,9 @@
 
 
         <activity android:name=".customer.ExtendChatActivity" />
+        <activity
+            android:name=".mine.activity.AboutActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -407,10 +414,14 @@
             android:name="cn.jpush.android.service.AlarmReceiver"
             android:exported="false" />
 
-        <receiver android:name=".customer.JPushReceiver" android:enabled="true" android:exported="false">
+        <receiver
+            android:name=".customer.JPushReceiver"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+
                 <category android:name="com.jcs.where" />
             </intent-filter>
         </receiver>
@@ -423,7 +434,6 @@
             android:value="dca78eb7c81e4244fb6254c0" />
 
         <!-- comm 100  -->
-
 
 
     </application>

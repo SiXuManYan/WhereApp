@@ -176,6 +176,9 @@ public class MineFragment extends BaseFragment {
     }
 
     public void updateUserInfo() {
+        if (!User.isLogon()) {
+            return;
+        }
         if (!mSwipeLayout.isRefreshing()) {
             showLoading();
         }

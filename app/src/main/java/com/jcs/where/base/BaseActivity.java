@@ -177,13 +177,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏图标和文字颜色为暗色
         }
     }
+
     protected void setStatusBar(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(color);//设置状态栏颜色
         }
     }
 
-    protected int getStatusBarColor(){
+    protected int getStatusBarColor() {
         return R.color.bg_color;
     }
 
@@ -208,7 +209,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showNetError(ErrorResponse errorResponse) {
-        ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+        if (errorResponse.getErrCode() != 401) {
+            ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+        }
     }
 
     public void showLoading(String msg) {
@@ -241,7 +244,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtils.showLong(this, msg);
     }
 
-    public void showComing(){
+    public void showComing() {
         showToast(getString(R.string.coming_soon));
     }
 
@@ -278,6 +281,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 获取屏幕宽度
+     *
      * @return
      */
     public int getScreenWidth() {
@@ -310,17 +314,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected final void startActivityWithArgument(@NotNull Class<?> target, @NotNull String key, @NotNull Object value) {
         Bundle bundle = new Bundle();
         if (value instanceof String) {
-            bundle.putString(key, (String)value);
+            bundle.putString(key, (String) value);
         } else if (value instanceof Long) {
-            bundle.putLong(key, ((Number)value).longValue());
+            bundle.putLong(key, ((Number) value).longValue());
         } else if (value instanceof Integer) {
-            bundle.putInt(key, ((Number)value).intValue());
+            bundle.putInt(key, ((Number) value).intValue());
         }
 
         startActivity(target, bundle);
     }
 
-    protected final void startActivityForResult(@NotNull Class<?>  target, int requestCode, @Nullable Bundle bundle) {
+    protected final void startActivityForResult(@NotNull Class<?> target, int requestCode, @Nullable Bundle bundle) {
         if (bundle == null) {
             startActivityForResult(new Intent(this, target), requestCode);
         } else {
@@ -331,6 +335,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 手气
+     *
      * @param ev
      * @return
      */
@@ -341,7 +346,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             if (isShouldHideKeyboard(currentFocus, ev)) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(),  InputMethodManager.HIDE_NOT_ALWAYS);
+                inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
         try {
@@ -366,13 +371,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             int top = outLocation[1];
             int bottom = top + view.getHeight();
             int right = left + view.getWidth();
-            return event.getX() <= (float)left || event.getX() >= (float)right || event.getY() <= (float)top || event.getY() >= (float)bottom;
+            return event.getX() <= (float) left || event.getX() >= (float) right || event.getY() <= (float) top || event.getY() >= (float) bottom;
         }
 
     }
-
-
-
 
 
 }

@@ -1,6 +1,9 @@
 package com.jcs.where.api;
 
+import android.content.Intent;
 import android.util.Log;
+
+import com.jcs.where.BaseApplication;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,11 +41,16 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
         int code = tJcsResponse.getCode();
         if (code == 200) {
             onSuccess(tJcsResponse.getData());
-        }else {
+        } else {
             ErrorResponse errorResponse = deployErrorResponse(String.valueOf(code));
-            if (errorResponse == null) return;
+            if (errorResponse == null){
+                errorResponse = new ErrorResponse();
+            }
             errorResponse.errMsg = tJcsResponse.getMessage();
             onError(errorResponse);
+            if (code == 401) {
+                BaseApplication.toLogin();
+            }
         }
     }
 
@@ -99,5 +107,6 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
     }
 
     protected abstract void onError(ErrorResponse errorResponse);
+
     protected abstract void onSuccess(T response);
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -15,6 +16,7 @@ import androidx.multidex.MultiDex;
 
 import com.comm100.livechat.VisitorClientInterface;
 import com.jcs.where.api.RetrofitManager;
+import com.jcs.where.login.LoginActivity;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
@@ -36,9 +38,12 @@ public class BaseApplication extends Application {
 
     public int count = 0;
 
+    private static Context mApplicationContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mApplicationContext = this;
         RetrofitManager.getManager().initRetrofit(this);
         LocationUtil.initInstance(this);
         SPUtil.initInstance(this);
@@ -166,6 +171,11 @@ public class BaseApplication extends Application {
             }
         });
 
+    }
+
+    public static void toLogin() {
+        Intent toLogin = new Intent(mApplicationContext, LoginActivity.class);
+        mApplicationContext.startActivity(toLogin);
     }
 
 }

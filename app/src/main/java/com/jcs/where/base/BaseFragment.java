@@ -225,7 +225,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showNetError(ErrorResponse errorResponse) {
-        ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+        if (errorResponse.getErrCode() != 401) {
+            ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+        }
     }
 
     protected int getPxFromDp(int dp) {
@@ -261,17 +263,17 @@ public abstract class BaseFragment extends Fragment {
     protected final void startActivityWithArgument(@NotNull Class<?> target, @NotNull String key, @NotNull Object value) {
         Bundle bundle = new Bundle();
         if (value instanceof String) {
-            bundle.putString(key, (String)value);
+            bundle.putString(key, (String) value);
         } else if (value instanceof Long) {
-            bundle.putLong(key, ((Number)value).longValue());
+            bundle.putLong(key, ((Number) value).longValue());
         } else if (value instanceof Integer) {
-            bundle.putInt(key, ((Number)value).intValue());
+            bundle.putInt(key, ((Number) value).intValue());
         }
 
         startActivity(target, bundle);
     }
 
-    protected final void startActivityForResult(@NotNull Class<?>  target, int requestCode, @Nullable Bundle bundle) {
+    protected final void startActivityForResult(@NotNull Class<?> target, int requestCode, @Nullable Bundle bundle) {
         if (bundle == null) {
             startActivityForResult(new Intent(requireContext(), target), requestCode);
         } else {

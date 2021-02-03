@@ -143,7 +143,7 @@ public class HotelListActivity extends BaseActivity {
             public void onSuccess(@NonNull List<CategoryResponse> categoryResponses) {
                 stopLoading();
                 CategoryResponse first = new CategoryResponse();
-                first.setName("全部");
+                first.setName(getString(R.string.all));
                 categoryResponses.add(0, first);
                 initTab(categoryResponses);
             }

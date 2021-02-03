@@ -2,13 +2,14 @@ package com.jcs.where.travel;
 
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseMapActivity;
-import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.travel.fragment.TouristAttractionFragment;
 import com.jcs.where.travel.model.TravelMapModel;
 import com.jcs.where.utils.Constant;
@@ -18,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
 import io.reactivex.annotations.NonNull;
 
 
@@ -115,7 +115,7 @@ public class TravelMapActivity extends BaseMapActivity {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                showNetError(errorResponse);
+//                showNetError(errorResponse);
             }
 
             @Override

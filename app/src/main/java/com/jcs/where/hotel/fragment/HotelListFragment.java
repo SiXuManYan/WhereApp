@@ -85,7 +85,6 @@ public class HotelListFragment extends BaseFragment {
                 stopLoading();
                 if (code == 200) {
 
-
 //                  PageResponse<HotelResponse> hotelListBean = new Gson().fromJson(result, PageResponse.class);
 
                     Gson gson = new Gson();

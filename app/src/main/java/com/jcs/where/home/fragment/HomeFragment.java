@@ -192,6 +192,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
+                ptrFrame.refreshComplete();
                 showNetError(errorResponse);
             }
 
@@ -199,6 +200,7 @@ public class HomeFragment extends BaseFragment {
             protected void onSuccess(HomeModel.HomeZipResponse response) {
 
                 stopLoading();
+                ptrFrame.refreshComplete();
 
                 // 金刚区
                 injectDataToModule(response.getModulesResponses());

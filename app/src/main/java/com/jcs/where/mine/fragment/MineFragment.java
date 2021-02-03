@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.Utils;
 import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
@@ -18,6 +20,7 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.SettingActivity;
+import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
@@ -124,7 +127,7 @@ public class MineFragment extends BaseFragment {
 
 
     private void onCustomerServiceClick(View view) {
-
+        startActivity(new Intent(getActivity(), ExtendChatActivity.class));
     }
 
 

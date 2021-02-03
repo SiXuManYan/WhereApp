@@ -58,7 +58,7 @@ public class HotelListActivity extends BaseActivity {
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
 
-    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, String totalDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
+    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, int totalDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
         Intent intent = new Intent(context, HotelListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN, startDateBean);

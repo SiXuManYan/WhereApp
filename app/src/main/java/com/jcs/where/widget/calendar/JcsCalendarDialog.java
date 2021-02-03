@@ -328,6 +328,14 @@ public class JcsCalendarDialog extends BaseBottomDialog {
         long dayNum = TimeUnit.DAYS.convert(temp, TimeUnit.MILLISECONDS);
         return String.format(getContext().getString(R.string.total_night), dayNum);
     }
+      public int getTotalDay2() {
+        long startTime = mStartBean.getTime();
+        long endTime = mEndBean.getTime();
+        long temp = endTime - startTime;
+          return (int) TimeUnit.DAYS.convert(temp, TimeUnit.MILLISECONDS);
+    }
+
+
 
     public interface OnDateSelectedListener {
         void onDateSelected(CalendarBean startDate, CalendarBean endDate);

@@ -94,7 +94,7 @@ public class HomeFragment extends BaseFragment {
         mSearchLayout = view.findViewById(R.id.searchLayout);
         ViewGroup.LayoutParams lp;
         lp = bannerLl.getLayoutParams();
-        lp.height = getScreenWidth() * 100 / 345;
+        lp.height = getScreenWidth() * 194 / 345;
         bannerLl.setLayoutParams(lp);
         banner3 = view.findViewById(R.id.banner3);
         ptrFrame = view.findViewById(R.id.ptr_frame);

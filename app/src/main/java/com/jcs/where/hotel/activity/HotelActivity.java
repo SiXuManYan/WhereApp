@@ -87,6 +87,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private JcsCalendarDialog mJcsCalendarDialog;
     private TextView mChooseLocationTv;
     private TextView mSearchTv;
+    private int mTotalDay = 1;
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, HotelActivity.class);
@@ -273,6 +274,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             deployDateTv(mEndDateTv, mEndWeekTv, endDate);
         }
         mTotalDayTv.setText(mJcsCalendarDialog.getTotalDay());
+        mTotalDay  = mJcsCalendarDialog.getTotalDay2();
     }
 
     public void deployDateTv(TextView dateTv, TextView weekTv, JcsCalendarAdapter.CalendarBean calendarBean) {
@@ -282,7 +284,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void onSearchTvClick(View view) {
-        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), mTotalDayTv.getText().toString(), mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra(K_CATEGORY_ID));
+
+
+
+        HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), mTotalDay, mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra(K_CATEGORY_ID));
     }
 
     public void onClearClicked(View view) {

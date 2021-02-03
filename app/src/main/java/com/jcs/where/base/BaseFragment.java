@@ -17,8 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.ToastUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -189,6 +191,19 @@ public abstract class BaseFragment extends Fragment {
 
     protected void toActivity(Class<?> clazz) {
         startActivity(new Intent(getContext(), clazz));
+    }
+
+    /**
+     * 如果用户已登录，则跳转到对应页面
+     * 否则跳转到登录页
+     * @param clazz
+     */
+    protected void toActivityIfSigned(Class<?> clazz) {
+        if (User.isLogon()) {
+            toActivity(clazz);
+        } else {
+            BaseApplication.toLogin();
+        }
     }
 
     protected void toActivity(Class<?> clazz, IntentEntry... entrys) {

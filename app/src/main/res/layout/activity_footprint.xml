@@ -11,4 +11,16 @@
         app:middleTitle="@string/mine_footprint_title"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/footprintRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,6 +72,9 @@ public class MineFragment extends BaseFragment {
         accountTv = view.findViewById(R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
         headerIv = view.findViewById(R.id.iv_header);
+        mLikeLayout = view.findViewById(R.id.collectionLayout);
+        mPointTv = view.findViewById(R.id.point_tv);
+
         view.findViewById(R.id.toSeeBalanceTv).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.mineBalanceLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.pointLayout).setOnClickListener(this::onIntegralIvClicked);
@@ -82,8 +85,7 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.reviewsLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.afterSalesLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.managerAddressLayout).setOnClickListener(this::toShowComing);
-        mLikeLayout = view.findViewById(R.id.collectionLayout);
-        view.findViewById(R.id.footprintLayout).setOnClickListener(this::OnFootprintClicked);
+        view.findViewById(R.id.footprintLayout).setOnClickListener(this::onFootprintClicked);
         view.findViewById(R.id.inviteLayout).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::onAboutClick);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this::toShowComing);
@@ -93,8 +95,6 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.setting_ll).setOnClickListener(this::onSettingClick);
         view.findViewById(R.id.integral_iv).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.message_iv).setOnClickListener(this::toShowComing);
-        mPointTv = view.findViewById(R.id.point_tv);
-
     }
 
     private void onAboutClick(View view) {
@@ -104,10 +104,9 @@ public class MineFragment extends BaseFragment {
     /**
      * 足迹
      */
-    private void OnFootprintClicked(View view) {
-        toActivity(FootprintActivity.class);
+    private void onFootprintClicked(View view) {
+        toActivityIfSigned(FootprintActivity.class);
     }
-
 
     /**
      * 积分签到
@@ -168,7 +167,7 @@ public class MineFragment extends BaseFragment {
     }
 
     private void onLikeClicked(View view) {
-        toActivity(CollectionListActivity.class);
+        toActivityIfSigned(CollectionListActivity.class);
     }
 
     private void onRefreshListener() {

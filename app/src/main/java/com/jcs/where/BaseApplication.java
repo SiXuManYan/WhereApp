@@ -16,7 +16,7 @@ import androidx.multidex.MultiDex;
 
 import com.comm100.livechat.VisitorClientInterface;
 import com.jcs.where.api.RetrofitManager;
-import com.jcs.where.login.LoginActivity;
+import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;

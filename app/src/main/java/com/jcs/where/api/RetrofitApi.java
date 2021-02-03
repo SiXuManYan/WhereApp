@@ -14,6 +14,7 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
 import com.jcs.where.api.response.CollectedResponse;
 import com.jcs.where.api.response.CommentResponse;
+import com.jcs.where.api.response.FootprintResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
@@ -560,5 +561,9 @@ public interface RetrofitApi {
     @PATCH("userapi/v2/bind/phone")
     Observable<JcsResponse<LoginResponse>> bindPhone(@Body BindPhoneRequest request);
 
-
+    /**
+     * 获得足迹列表
+     */
+    @GET("commonapi/v2/histories")
+    Observable<JcsResponse<PageResponse<FootprintResponse>>> getFootprintList();
 }

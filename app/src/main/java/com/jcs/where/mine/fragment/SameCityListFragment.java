@@ -1,5 +1,6 @@
 package com.jcs.where.mine.fragment;
 
+import android.content.Context;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,11 +12,15 @@ import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.mine.adapter.SameCityListAdapter;
-import com.jcs.where.mine.adapter.VideoListAdapter;
 import com.jcs.where.mine.model.CollectionListModel;
+import com.jcs.where.mine.view_type.SameCityType;
 import com.jcs.where.news.NewsVideoActivity;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
+import com.jcs.where.travel.TouristAttractionDetailActivity;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -98,14 +103,28 @@ public class SameCityListFragment extends BaseFragment {
     @Override
     protected void bindListener() {
         mSwipeLayout.setOnRefreshListener(this::onRefreshListener);
-        mAdapter.setOnItemClickListener(this::onNewsItemClicked);
+        mAdapter.setOnItemClickListener(this::onSameCityItemClicked);
     }
 
-    private void onNewsItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+    private void onSameCityItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         CollectedResponse collectedResponse = mAdapter.getItem(position);
-        NewsResponse item = collectedResponse.getNews();
-        // 跳转到播放视频的详情页面
-        toActivity(NewsVideoActivity.class, new IntentEntry("newsId", String.valueOf(item.getId())));
+        Integer type = collectedResponse.getType();
+        Context context = getContext();
+        if (context != null) {
+            switch (type) {
+                case SameCityType.Hotel:
+                    JcsCalendarDialog dialog = new JcsCalendarDialog();
+                    dialog.initCalendar(context);
+                    HotelDetailActivity.goTo(context, collectedResponse.getHotel().getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                    break;
+                case SameCityType.Mechanism:
+                    toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, collectedResponse.getGeneral().getId()));
+                    break;
+                case SameCityType.TouristAttraction:
+                    TouristAttractionDetailActivity.goTo(context, collectedResponse.getTravel().getId());
+                    break;
+            }
+        }
     }
 
     private void onRefreshListener() {

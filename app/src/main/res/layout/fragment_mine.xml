@@ -27,40 +27,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="124dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_minebg" />
 
+
                     <ImageView
-                        android:id="@+id/iv_setting"
+                        android:id="@+id/message_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/dp_25"
+                        android:padding="@dimen/dp_15"
                         android:scaleType="centerInside"
-                        android:paddingStart="@dimen/dp_15"
-                        android:layout_marginTop="@dimen/dp_35"
-                        android:paddingEnd="@dimen/dp_15"
-                        android:src="@drawable/ic_minesetting" />
-
-                    <ImageView
-                        android:id="@+id/iv_integral"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerInside"
-                        android:layout_marginTop="@dimen/dp_35"
-                        android:paddingStart="@dimen/dp_15"
-                        android:paddingEnd="@dimen/dp_15"
-                        android:layout_toStartOf="@id/iv_setting"
-                        android:src="@mipmap/ic_to_sign_in_white" />
+                        android:src="@mipmap/ic_mine_message" />
 
                     <RelativeLayout
                         android:id="@+id/rl_minemessage"
                         android:layout_width="match_parent"
                         android:layout_height="70.5dp"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="63dp"
+                        android:layout_marginTop="75dp"
                         android:layout_marginRight="15dp"
                         android:background="@drawable/bg_minename">
 
@@ -91,7 +81,7 @@
                                 android:gravity="center"
                                 android:text="@string/mine_login_register"
                                 android:textColor="@color/black_333333"
-                                android:textSize="15sp"
+                                android:textSize="@dimen/sp_17"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -122,10 +112,19 @@
 
                 </RelativeLayout>
 
+
+                <ImageView
+                    android:id="@+id/integral_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginBottom="@dimen/dp_4"
+                    android:src="@mipmap/ic_mine_integral" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="110dp"
-                    android:layout_marginTop="10.5dp"
                     android:background="@color/white"
                     android:orientation="vertical">
 
@@ -140,7 +139,8 @@
                             android:layout_marginLeft="15dp"
                             android:text="@string/mine_wallet"
                             android:textColor="@color/black_333333"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/toSeeBalanceTv"
@@ -153,7 +153,7 @@
                             android:drawablePadding="5.5dp"
                             android:text="@string/mine_check_accoun_balance"
                             android:textColor="@color/grey_999999"
-                            android:textSize="13sp" />
+                            android:textSize="@dimen/sp_13" />
 
 
                     </RelativeLayout>
@@ -267,7 +267,8 @@
                     android:layout_height="130dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -507,7 +508,8 @@
                         android:layout_margin="15dp"
                         android:text="@string/mine_manager"
                         android:textColor="@color/black_333333"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
 
 
                     <LinearLayout
@@ -520,13 +522,15 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
+                                android:scaleType="centerInside"
                                 android:src="@mipmap/ic_manager_address" />
 
 
@@ -534,8 +538,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_address"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />
@@ -547,22 +550,23 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_collection" />
+                                android:scaleType="centerInside"
+                                android:src="@mipmap/ic_collection" />
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_collection"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />
@@ -574,22 +578,22 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
+                                android:scaleType="centerInside"
                                 android:src="@mipmap/ic_mine_foot_print" />
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_footprint"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />
@@ -601,13 +605,15 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
+                                android:scaleType="centerInside"
                                 android:src="@mipmap/ic_invite_with_gift" />
 
 
@@ -615,15 +621,63 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
-                                android:text="@string/mine_invite"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:text="@string/get_points"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />
 
                         </LinearLayout>
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:id="@+id/setting_ll"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_27"
+                                android:layout_height="@dimen/dp_27"
+                                android:src="@mipmap/ic_mine_setting" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:text="@string/title_setting"
+                                android:textColor="@color/black_333333"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -641,7 +695,8 @@
                         android:layout_margin="15dp"
                         android:text="@string/mine_other"
                         android:textColor="@color/black_333333"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
 
 
                     <LinearLayout
@@ -654,22 +709,22 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
+                                android:scaleType="centerInside"
                                 android:src="@mipmap/ic_about_us" />
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_about_us"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />
@@ -681,22 +736,23 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_business" />
+                                android:scaleType="centerInside"
+                                android:src="@mipmap/ic_business" />
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_merchant_settled"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />
@@ -708,22 +764,24 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_language" />
+                                android:scaleType="centerInside"
+                                android:src="@mipmap/ic_language" />
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_change_language"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />
@@ -735,22 +793,24 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <ImageView
                                 android:layout_width="@dimen/dp_27"
                                 android:layout_height="@dimen/dp_27"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="5dp"
+                                android:scaleType="centerInside"
                                 android:src="@mipmap/ic_customer_service" />
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="11dp"
-                                android:layout_marginBottom="15dp"
+
+                                android:layout_marginTop="@dimen/dp_5"
+
                                 android:text="@string/mine_customer_service"
                                 android:textColor="@color/black_333333"
                                 android:textSize="13sp" />

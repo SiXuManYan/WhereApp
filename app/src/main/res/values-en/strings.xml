@@ -144,18 +144,18 @@
 	<string name="mine_merchant_settled">Merchant</string>
 	<string name="mine_invite">invite</string>
 	<string name="mine_gift">gift</string>
-	<string name="mine_collection">collection</string>
+	<string name="mine_collection">Collection</string>
 	<string name="mine_collection_title">Collections</string>
-	<string name="mine_address">address</string>
-	<string name="mine_manager">Account</string>
+	<string name="mine_address">Address</string>
+	<string name="mine_manager">Features</string>
 	<string name="mine_after_sales">After-Sales</string>
 	<string name="mine_reviews">Reviews</string>
 	<string name="mine_login_register">Login/Register</string>
 	<string name="mine_wallet">Wallet</string>
 	<string name="mine_check_accoun_balance">Check account balance</string>
-	<string name="mine_balance">balance</string>
-	<string name="mine_point">point</string>
-	<string name="mine_coupon">coupon</string>
+	<string name="mine_balance">Balance</string>
+	<string name="mine_point">Point</string>
+	<string name="mine_coupon">Coupon</string>
 	<string name="mine_order">Order</string>
 	<string name="mie_check_order">Check order</string>
 	<string name="mine_unpaid">Unpaid</string>
@@ -192,7 +192,7 @@
 	<string name="refunded">refunded</string>
 	<string name="refund_failed">Refund failed</string>
 	<string name="unpaid">Unpaid</string>
-	<string name="mine_footprint">footprint</string>
+	<string name="mine_footprint">Footprint</string>
     <string name="positioning">Positioning...</string>
 	<string name="position_failed">Position Failed</string>
 	<string name="position">Position</string>
@@ -342,5 +342,6 @@
 	<string name="authorization_failed">Authorization failed</string>
 	<string name="authorization_cancel">Authorization cancel</string>
 	<string name="mine_footprint_title">Mine Footprint</string>
+    <string name="get_points">Get Points</string>
 
 </resources>

@@ -13,7 +13,6 @@ import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
-import com.blankj.utilcode.util.LanguageUtils;
 import com.comm100.livechat.VisitorClientInterface;
 import com.jcs.where.api.RetrofitManager;
 import com.jcs.where.storage.WhereDataBase;
@@ -24,18 +23,16 @@ import com.jcs.where.utils.SPUtil;
 
 import java.util.Locale;
 
-
-
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
 public class BaseApplication extends Application {
 
-    public  WhereDataBase getDatabase() {
+    public WhereDataBase getDatabase() {
         return database;
     }
 
-    private  WhereDataBase database = null;
+    private WhereDataBase database = null;
 
     public int count = 0;
 
@@ -113,59 +110,59 @@ public class BaseApplication extends Application {
 
         JPushInterface.setDefaultPushNotificationBuilder(builder);
 
-        if(Build.VERSION.SDK_INT > 23){
+        if (Build.VERSION.SDK_INT > 23) {
             JPushInterface.setLatestNotificationNumber(this.getApplicationContext(), 1);
         }
 
         String regId = JPushInterface.getRegistrationID(this);
-        if(!regId.equals("")) {
+        if (!regId.equals("")) {
             VisitorClientInterface.setRemoteNotificationDeviceId(regId);
         }
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityStopped(Activity activity) {
-                Log.v("ChatApplication", activity + "onActivityStopped");
+                Log.v("BaseApplication", activity + "onActivityStopped");
                 count--;
                 if (count == 0) {
                     VisitorClientInterface.activeRemoteNotification();
-                    Log.v("ChatApplication", ">>>>>>>>>>>>>>>>>>>切到后台  lifecycle");
+                    Log.v("BaseApplication", ">>>>>>>>>>>>>>>>>>>切到后台  lifecycle");
                 }
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
-                Log.v("ChatApplication", activity + "onActivityStarted");
+                Log.v("BaseApplication", activity + "onActivityStarted");
                 if (count == 0) {
                     VisitorClientInterface.inactiveRemoteNotification();
-                    Log.v("ChatApplication", ">>>>>>>>>>>>>>>>>>>切到前台  lifecycle");
+                    Log.v("BaseApplication", ">>>>>>>>>>>>>>>>>>>切到前台  lifecycle");
                 }
                 count++;
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                Log.v("ChatApplication", activity + "onActivitySaveInstanceState");
+                Log.v("BaseApplication", activity + "onActivitySaveInstanceState");
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-                Log.v("ChatApplication", activity + "onActivityResumed");
+                Log.v("BaseApplication", activity + "onActivityResumed");
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-                Log.v("ChatApplication", activity + "onActivityPaused");
+                Log.v("BaseApplication", activity + "onActivityPaused");
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                Log.v("ChatApplication", activity + "onActivityDestroyed");
+                Log.v("BaseApplication", activity + "onActivityDestroyed");
             }
 
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Log.v("ChatApplication", activity + "onActivityCreated");
+                Log.v("BaseApplication", activity + "onActivityCreated");
             }
         });
 

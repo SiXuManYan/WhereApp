@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import androidx.annotation.Nullable;
-
 import com.blankj.utilcode.util.Utils;
 import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
@@ -18,9 +16,9 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.SettingActivity;
-import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
@@ -73,7 +71,6 @@ public class MineFragment extends BaseFragment {
         accountTv = view.findViewById(R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
         headerIv = view.findViewById(R.id.iv_header);
-        view.findViewById(R.id.iv_integral).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.toSeeBalanceTv).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.mineBalanceLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.pointLayout).setOnClickListener(this::toShowComing);
@@ -86,13 +83,15 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.managerAddressLayout).setOnClickListener(this::toShowComing);
         mLikeLayout = view.findViewById(R.id.collectionLayout);
         view.findViewById(R.id.footprintLayout).setOnClickListener(this::OnFootprintClicked);
-        view.findViewById(R.id.inviteLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.inviteLayout).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
-        view.findViewById(R.id.iv_setting).setOnClickListener(this::onSettingClick);
+        view.findViewById(R.id.setting_ll).setOnClickListener(this::onSettingClick);
+        view.findViewById(R.id.integral_iv).setOnClickListener(this::onIntegralIvClicked);
+        view.findViewById(R.id.message_iv).setOnClickListener(this::toShowComing);
         mPointTv = view.findViewById(R.id.point_tv);
 
     }
@@ -106,7 +105,11 @@ public class MineFragment extends BaseFragment {
 
 
     private void onIntegralIvClicked(View view) {
-        toActivity(IntegralActivity.class);
+        if (User.isLogon()) {
+            toActivity(IntegralActivity.class);
+        } else {
+            startActivity(LoginActivity.class);
+        }
     }
 
     private void onUserDataClicked(View view) {

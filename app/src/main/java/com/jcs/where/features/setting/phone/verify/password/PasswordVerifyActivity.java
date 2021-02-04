@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 
 import com.jcs.where.R;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.features.setting.phone.confirm.NewPhoneActivity;
 import com.jcs.where.utils.FeaturesUtil;
 
 /**
@@ -48,8 +49,10 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
 
     @Override
     protected void bindListener() {
-
+        password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
+        findViewById(R.id.confirm_tv).setOnClickListener(this::onConfirmClick);
     }
+
 
     /**
      * 切换密码显示类型
@@ -65,4 +68,16 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
         mOldIsCipherText = !mOldIsCipherText;
     }
 
+    private void onConfirmClick(View view) {
+        String password = password_aet.getText().toString().trim();
+
+        presenter.checkPassword(password);
+
+    }
+
+    @Override
+    public void passwordCheckPass() {
+        startActivity(NewPhoneActivity.class);
+        finish();
+    }
 }

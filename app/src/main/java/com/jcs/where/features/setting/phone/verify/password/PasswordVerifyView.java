@@ -8,4 +8,8 @@ import com.jcs.where.api.network.BaseMvpView;
 public interface PasswordVerifyView extends BaseMvpView {
 
 
+    /**
+     * 密码校验通过
+     */
+    void passwordCheckPass();
 }

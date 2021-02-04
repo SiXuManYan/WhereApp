@@ -583,4 +583,15 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> modifyPhone(@Body ModifyPhoneRequest request);
 
 
+    /**
+     * 校验密码
+     * 类型（1：手机号，2：邮箱）
+     */
+    @POST("userapi/v2/verify/password")
+    Observable<JcsResponse<JsonElement>> checkPassword(@Query("type") int type,
+                                                       @Query("password") String password,
+                                                       @Query("phone") String phone,
+                                                       @Query("email") String email);
+
+
 }

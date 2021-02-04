@@ -9,6 +9,7 @@ import com.jcs.where.api.request.account.LoginRequest;
 import com.jcs.where.api.request.account.RegisterRequest;
 import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
+import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
@@ -561,9 +562,16 @@ public interface RetrofitApi {
     @PATCH("userapi/v2/bind/phone")
     Observable<JcsResponse<LoginResponse>> bindPhone(@Body BindPhoneRequest request);
 
+
     /**
      * 获得足迹列表
      */
     @GET("commonapi/v2/histories")
     Observable<JcsResponse<PageResponse<FootprintResponse>>> getFootprintList();
+
+    /**
+     * 修改密码
+     */
+    @PATCH("userapi/v2/users/pwd")
+    Observable<JcsResponse<JsonElement>> modifyPassword(@Body ModifyPasswordRequest request);
 }

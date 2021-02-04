@@ -359,5 +359,7 @@
     <string name="next">下一步</string>
     <string name="enter_new_phone">输入新手机号</string>
     <string name="send_verify">发送验证码</string>
+    <string name="old_password_empty_hint">请输入原密码</string>
+    <string name="new_password_empty_hint">请输入新密码</string>
 
 </resources>

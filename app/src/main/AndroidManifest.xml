@@ -305,7 +305,7 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".features.account.login.LoginActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".features.account.register.RegisterActivity"

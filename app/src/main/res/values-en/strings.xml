@@ -363,5 +363,7 @@
 	<string name="next">Next</string>
 	<string name="enter_new_phone">Enter new phone</string>
 	<string name="send_verify">Send verify</string>
+	<string name="old_password_empty_hint">Please enter old password</string>
+	<string name="new_password_empty_hint">Please enter new password</string>
 
 </resources>

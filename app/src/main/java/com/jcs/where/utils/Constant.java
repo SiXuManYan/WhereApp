@@ -50,6 +50,18 @@ public class Constant {
      */
     public static final int VERIFY_CODE_TYPE_2_REGISTER = 2;
 
+
+    /**
+     * 验证码类型 3 忘记密码
+     */
+    public static final int VERIFY_CODE_TYPE_3_FORGET_PASSWORD = 3;
+
+
+    /**
+     * 验证码类型 4 更换手机号
+     */
+    public static final int VERIFY_CODE_TYPE_4_CHANGE_PHONE = 4;
+
     /**
      * 验证码登录
      */
@@ -67,4 +79,10 @@ public class Constant {
     public static final long WAIT_DELAYS = 60;
 
 
+    /**
+     * 验证页面使用类型
+     * 0 验证旧版手机号
+     * 1 验证新手机号
+     */
+    public static final String PARAM_VERIFY_USE_MODE = "param_verify_use_mode";
 }

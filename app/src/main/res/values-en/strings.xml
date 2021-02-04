@@ -365,5 +365,10 @@
 	<string name="send_verify">Send verify</string>
 	<string name="old_password_empty_hint">Please enter old password</string>
 	<string name="new_password_empty_hint">Please enter new password</string>
+    <string name="enter_verify_code">Enter SMS verification code</string>
+	<string name="verify_code_send_to_format">Verification code has been sent to %1$s</string>
+    <string name="resend_format">Resend($1%s)</string>
+	<string name="phone_reset_success">Phone reset success</string>
+	<string name="modify_phone">Modify phone</string>
 
 </resources>

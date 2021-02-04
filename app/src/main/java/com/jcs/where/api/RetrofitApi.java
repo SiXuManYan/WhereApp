@@ -10,6 +10,7 @@ import com.jcs.where.api.request.account.RegisterRequest;
 import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
+import com.jcs.where.api.request.modify.ModifyPhoneRequest;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
@@ -574,4 +575,12 @@ public interface RetrofitApi {
      */
     @PATCH("userapi/v2/users/pwd")
     Observable<JcsResponse<JsonElement>> modifyPassword(@Body ModifyPasswordRequest request);
+
+    /**
+     * 修改手机号
+     */
+    @PUT("userapi/v2/users/phone")
+    Observable<JcsResponse<JsonElement>> modifyPhone(@Body ModifyPhoneRequest request);
+
+
 }

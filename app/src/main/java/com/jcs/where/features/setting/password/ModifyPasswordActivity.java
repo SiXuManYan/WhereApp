@@ -62,6 +62,10 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
         findViewById(R.id.confirm_tv).setOnClickListener(this::onConfirmClick);
     }
 
+    @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
 
     /**
      * 切换密码显示类型
@@ -93,5 +97,6 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
         CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, "");
         startActivityClearTop(LoginActivity.class, null);
+        finish();
     }
 }

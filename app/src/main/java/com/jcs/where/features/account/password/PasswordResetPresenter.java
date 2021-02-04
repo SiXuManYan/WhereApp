@@ -85,7 +85,7 @@ public class PasswordResetPresenter extends BaseMvpPresenter {
         SendCodeRequest request = new SendCodeRequest();
         request.setPhone(account);
         request.setCountryCode(prefix);
-        request.setType(Constant.VERIFY_CODE_TYPE_1_LOGIN);
+        request.setType(Constant.VERIFY_CODE_TYPE_3_FORGET_PASSWORD);
 
         requestApi(mRetrofit.getVerifyCode(request), new BaseMvpObserver<JsonElement>(mView) {
             @Override

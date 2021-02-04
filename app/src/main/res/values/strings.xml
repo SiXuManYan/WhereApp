@@ -292,6 +292,7 @@
     <string name="message_hint">第一时间接收订单提醒、优惠促销</string>
     <string name="go_open">去开启</string>
     <string name="cache_cleaning">缓存清理(0M)</string>
+    <string name="cache_cleaning_format">缓存清理(%1$s)</string>
     <string name="feedback">意见反馈</string>
     <string name="privacy_policy">隐私政策</string>
     <string name="about_app">关于where</string>
@@ -342,5 +343,21 @@
     <string name="bataan_news">1巴新闻</string>
     <string name="about_app_title">关于Where</string>
     <string name="version_format">版本&#160;%1$s</string>
+    <string name="clear_success">清除成功</string>
+    <string name="personal_info">个人资料</string>
+    <string name="avatar">头像</string>
+    <string name="empty_nick_name_hint">昵称还是空空的</string>
+    <string name="old_password">原密码</string>
+    <string name="required_items">必填</string>
+    <string name="nick_name">昵称</string>
+    <string name="new_password">新密码</string>
+    <string name="safety_verification">安全验证</string>
+    <string name="safety_verification_hint">为了保证你的账号安全，请验证身份。验证成功后进行下一步操作</string>
+    <string name="verify_by_code">通过验证码验证</string>
+    <string name="verify_by_password">通过密码验证</string>
+    <string name="enter_password">输入密码</string>
+    <string name="next">下一步</string>
+    <string name="enter_new_phone">输入新手机号</string>
+    <string name="send_verify">发送验证码</string>
 
 </resources>

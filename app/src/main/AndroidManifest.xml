@@ -355,6 +355,11 @@
         <activity
             android:name=".mine.activity.AboutActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".features.setting.information.ModifyInfoActivity" />
+        <activity android:name=".features.setting.password.ModifyPasswordActivity" />
+        <activity android:name=".features.setting.phone.verify.password.PasswordVerifyActivity" />
+        <activity android:name=".features.setting.phone.verify.code.CodeVerifyActivity" />
+        <activity android:name=".features.setting.phone.confirm.NewPhoneActivity" />
 
         <service
             android:name="cn.jpush.android.service.PushService"

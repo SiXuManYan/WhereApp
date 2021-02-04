@@ -296,6 +296,7 @@
 	<string name="message_hint">Receive reminders the first time</string>
 	<string name="go_open">Go open</string>
 	<string name="cache_cleaning">Cache cleaning(0M)</string>
+	<string name="cache_cleaning_format">Cache cleaning(%1$s)</string>
 	<string name="feedback">Feedback</string>
 	<string name="privacy_policy">Privacy policy</string>
 	<string name="about_app">About where app</string>
@@ -346,5 +347,21 @@
     <string name="bataan_news">1 Bataan News</string>
     <string name="about_app_title">About Where</string>
 	<string name="version_format">Version&#160;%1$s</string>
+	<string name="clear_success">Clear success</string>
+    <string name="personal_info">Personal info</string>
+	<string name="avatar">Avatar</string>
+    <string name="empty_nick_name_hint">nickname is empty</string>
+    <string name="old_password">Old password</string>
+	<string name="required_items">Required items</string>
+	<string name="nick_name">Nick name</string>
+	<string name="new_password">New password</string>
+	<string name="safety_verification">Safety verification</string>
+	<string name="safety_verification_hint">In order to ensure the security of your account, please verify your identity. After successful verification, proceed to the next step.</string>
+	<string name="verify_by_code">Verify by verification code</string>
+	<string name="verify_by_password">Verify by password</string>
+    <string name="enter_password">Enter password</string>
+	<string name="next">Next</string>
+	<string name="enter_new_phone">Enter new phone</string>
+	<string name="send_verify">Send verify</string>
 
 </resources>

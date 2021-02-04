@@ -16,15 +16,21 @@
 package com.jcs.where.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.jcs.where.R;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
@@ -182,4 +188,29 @@ public abstract class PermissionUtils {
             }
         }
     }
+
+
+
+
+    @SuppressLint("CheckResult")
+    public static void permissionAny(Context context, @NonNull OnPermissionCallBack onPermissionCallBack, String... permissions) {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            onPermissionCallBack.onPermissionCallBack(true);
+        } else {
+            if (context == null) {
+                return;
+            }
+            new RxPermissions((Activity) context)
+                    .request(permissions)
+                    .subscribe(onPermissionCallBack::onPermissionCallBack);
+        }
+
+
+    }
+
+    public interface OnPermissionCallBack {
+        void onPermissionCallBack(boolean granted);
+    }
+
 }

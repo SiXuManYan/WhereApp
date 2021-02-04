@@ -67,7 +67,7 @@ public class FeaturesUtil {
             return true;
         }
 
-        if (!RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", password)){
+        if (!RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", password)) {
             ToastUtils.showShort(R.string.password_format_error_hint);
             return true;
         }
@@ -159,6 +159,9 @@ public class FeaturesUtil {
 
         void onCountryCodeSelect(String countryCode);
     }
+
+
+
 
 
 }

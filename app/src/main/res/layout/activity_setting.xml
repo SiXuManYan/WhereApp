@@ -31,6 +31,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/information_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_10"
@@ -73,6 +74,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/password_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_10"
@@ -123,6 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:background="@color/white"
+                android:visibility="gone"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15">
 
@@ -167,6 +170,7 @@
                 android:layout_marginEnd="@dimen/dp_15" />
 
             <RelativeLayout
+                android:id="@+id/phone_number_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:background="@color/white"
@@ -183,6 +187,7 @@
 
 
                 <TextView
+                    android:id="@+id/phone_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -208,8 +213,10 @@
 
 
             <RelativeLayout
+                android:id="@+id/notification_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/white"
                 android:paddingStart="@dimen/dp_15"
@@ -267,6 +274,7 @@
 
 
             <TextView
+                android:id="@+id/clear_cache_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_9"
@@ -283,6 +291,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:background="@color/white"
+                android:visibility="gone"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15">
 

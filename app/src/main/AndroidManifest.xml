@@ -360,6 +360,7 @@
         <activity android:name=".features.setting.phone.verify.password.PasswordVerifyActivity" />
         <activity android:name=".features.setting.phone.verify.code.CodeVerifyActivity" />
         <activity android:name=".features.setting.phone.confirm.NewPhoneActivity" />
+        <activity android:name=".features.setting.phone.ModifyPhoneActivity" />
 
         <service
             android:name="cn.jpush.android.service.PushService"

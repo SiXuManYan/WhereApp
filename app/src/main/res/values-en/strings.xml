@@ -370,5 +370,6 @@
     <string name="resend_format">Resend($1%s)</string>
 	<string name="phone_reset_success">Phone reset success</string>
 	<string name="modify_phone">Modify phone</string>
+    <string name="modify_password">Modify password</string>
 
 </resources>

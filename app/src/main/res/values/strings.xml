@@ -366,5 +366,6 @@
     <string name="resend_format">重新发送(%1$s)</string>
     <string name="phone_reset_success">手机号修改成功</string>
     <string name="modify_phone">修改手机</string>
+    <string name="modify_password">修改密码</string>
 
 </resources>

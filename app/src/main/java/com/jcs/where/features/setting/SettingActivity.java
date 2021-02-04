@@ -16,6 +16,7 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.features.setting.password.ModifyPasswordActivity;
+import com.jcs.where.features.setting.phone.ModifyPhoneActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
@@ -90,7 +91,7 @@ public class SettingActivity extends BaseActivity {
             startActivity(ModifyPasswordActivity.class);
         });
          findViewById(R.id.phone_number_rl).setOnClickListener(v -> {
-            startActivity(ModifyPasswordActivity.class);
+            startActivity(ModifyPhoneActivity.class);
         });
 
 

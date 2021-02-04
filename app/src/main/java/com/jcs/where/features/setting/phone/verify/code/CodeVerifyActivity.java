@@ -50,6 +50,11 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected void initData() {
         presenter = new CodeVerifyPresenter(this);
         mUseMode = getIntent().getIntExtra(Constant.PARAM_VERIFY_USE_MODE, 0);

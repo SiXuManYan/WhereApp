@@ -41,6 +41,7 @@ import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
+import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
@@ -48,13 +49,17 @@ import com.jcs.where.bean.TouristAttractionDetailResponse;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -592,6 +597,18 @@ public interface RetrofitApi {
                                                        @Query("password") String password,
                                                        @Query("phone") String phone,
                                                        @Query("email") String email);
+
+/*
+    @Multipart
+    @POST("uploadImg")
+    Observable<BaseResult<String>> upload(@Part List<MultipartBody.Part> partList);*/
+
+    /**
+     * 文件上传
+     */
+    @Multipart
+    @POST("commonapi/v2/file")
+    Observable<JcsResponse<UploadFileResponse>> uploadFile(@Part("type") RequestBody type , @Part MultipartBody.Part file);
 
 
 }

@@ -10,15 +10,7 @@ public class UpdateUserInfoRequest {
     @SerializedName("nickname")
     private String nickname;
     @SerializedName("avatar")
-    private int avatar;
-
-    public UpdateUserInfoRequest(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public UpdateUserInfoRequest(int avatar) {
-        this.avatar = avatar;
-    }
+    private String avatar;
 
     public String getNickname() {
         return nickname;
@@ -28,11 +20,11 @@ public class UpdateUserInfoRequest {
         this.nickname = nickname;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 }

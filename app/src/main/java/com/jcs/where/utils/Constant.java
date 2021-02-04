@@ -10,6 +10,11 @@ public class Constant {
     public static final double LNG = 120.5887840;
 
     /**
+     * 选取附件
+     */
+    public static final int REQUEST_MEDIA = 1001;
+
+    /**
      * 列表接口"第一页"页码
      */
     public static final int DEFAULT_FIRST_PAGE = 1;
@@ -85,4 +90,9 @@ public class Constant {
      * 1 验证新手机号
      */
     public static final String PARAM_VERIFY_USE_MODE = "param_verify_use_mode";
+
+
+    public static final int IMG = 1;
+    public static final int GIF = 2;
+    public static final int VIDEO = 3;
 }

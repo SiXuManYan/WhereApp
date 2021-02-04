@@ -371,5 +371,7 @@
 	<string name="phone_reset_success">Phone reset success</string>
 	<string name="modify_phone">Modify phone</string>
     <string name="modify_password">Modify password</string>
+    <string name="open_permission">Please open permission</string>
+    <string name="modify_none">You did not make any changes</string>
 
 </resources>

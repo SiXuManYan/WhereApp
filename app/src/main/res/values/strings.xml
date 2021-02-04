@@ -367,5 +367,7 @@
     <string name="phone_reset_success">手机号修改成功</string>
     <string name="modify_phone">修改手机</string>
     <string name="modify_password">修改密码</string>
+    <string name="open_permission">请打开权限</string>
+    <string name="modify_none">您没有做任何修改</string>
 
 </resources>

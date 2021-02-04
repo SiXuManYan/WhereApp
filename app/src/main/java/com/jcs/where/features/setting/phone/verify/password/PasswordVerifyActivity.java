@@ -70,9 +70,7 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
 
     private void onConfirmClick(View view) {
         String password = password_aet.getText().toString().trim();
-
         presenter.checkPassword(password);
-
     }
 
     @Override

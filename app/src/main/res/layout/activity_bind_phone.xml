@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/dp_25"
             android:paddingTop="@dimen/dp_40"
             android:paddingBottom="@dimen/dp_40">
 
@@ -40,8 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_80"
-                android:paddingStart="@dimen/dp_35"
-                android:paddingEnd="@dimen/dp_35">
+                android:paddingStart="@dimen/dp_45"
+                android:paddingEnd="@dimen/dp_45">
 
                 <ImageView
                     android:layout_width="@dimen/dp_30"
@@ -95,8 +94,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginStart="@dimen/dp_35"
-                android:layout_marginEnd="@dimen/dp_35"
+                android:layout_marginStart="@dimen/dp_45"
+                android:layout_marginEnd="@dimen/dp_45"
                 android:background="@color/grey_CCCCCC" />
 
 
@@ -104,8 +103,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_20"
-                android:paddingStart="@dimen/dp_35"
-                android:paddingEnd="@dimen/dp_35">
+                android:paddingStart="@dimen/dp_45"
+                android:paddingEnd="@dimen/dp_45">
 
                 <ImageView
                     android:id="@+id/tag_iv"
@@ -163,16 +162,16 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginStart="@dimen/dp_35"
-                android:layout_marginEnd="@dimen/dp_35"
+                android:layout_marginStart="@dimen/dp_45"
+                android:layout_marginEnd="@dimen/dp_45"
                 android:background="@color/grey_CCCCCC" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_20"
-                android:paddingStart="@dimen/dp_35"
-                android:paddingEnd="@dimen/dp_35">
+                android:paddingStart="@dimen/dp_45"
+                android:paddingEnd="@dimen/dp_45">
 
                 <ImageView
                     android:id="@+id/tag_password_iv"
@@ -218,8 +217,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginStart="@dimen/dp_35"
-                android:layout_marginEnd="@dimen/dp_35"
+                android:layout_marginStart="@dimen/dp_45"
+                android:layout_marginEnd="@dimen/dp_45"
                 android:background="@color/grey_CCCCCC" />
 
 
@@ -227,10 +226,10 @@
                 android:id="@+id/bind_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
-                android:layout_marginStart="@dimen/dp_35"
+                android:layout_marginStart="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_60"
-                android:layout_marginEnd="@dimen/dp_35"
-                android:background="@drawable/shape_gradient_integral_sign_out_radius12"
+                android:layout_marginEnd="@dimen/dp_45"
+                android:background="@drawable/shape_gradient_integral_sign_out_radius8"
                 android:gravity="center"
                 android:text="@string/confirm"
                 android:textColor="@color/white_FEFEFE"

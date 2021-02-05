@@ -9,8 +9,8 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="50dp"
+        android:background="@color/white"
         app:backIcon="@drawable/ic_back_black"
         app:middleTitle="@string/personal_info"
         app:middleTitleColor="@color/black_333333"
@@ -41,9 +41,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_23"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_noheader"
-            app:riv_corner_radius="4dp" />
+            android:src="@drawable/ic_noheader" />
 
 
         <TextView
@@ -91,13 +89,13 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/title_tv"
             android:background="@null"
-            android:paddingStart="@dimen/dp_10"
             android:gravity="center_vertical|end"
             android:hint="@string/empty_nick_name_hint"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:lines="1"
             android:maxLength="8"
+            android:paddingStart="@dimen/dp_10"
             android:textColor="@color/black_333333"
             android:textColorHint="@color/grey_BFBFBF"
             android:textSize="@dimen/sp_14" />

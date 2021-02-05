@@ -12,19 +12,17 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.storage.entity.User;
-import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
-import com.jcs.where.utils.SPKey;
-import com.lcodecore.tkrefreshlayout.header.progresslayout.CircleImageView;
 import com.zhihu.matisse.Matisse;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -78,9 +76,10 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
     }
 
     private void onConfirmClick(View view) {
+        User user = User.getInstance();
         mName = nickname_aet.getText().toString().trim();
 
-        if (TextUtils.isEmpty(mName) && TextUtils.isEmpty(mLink)) {
+        if ((TextUtils.isEmpty(mName) || mName.equals(user.nickName)) && TextUtils.isEmpty(mLink)) {
             ToastUtils.showShort(R.string.modify_none);
             return;
         }

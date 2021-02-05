@@ -41,6 +41,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.app.Activity.RESULT_OK;
 
 public class MineFragment extends BaseFragment {
@@ -51,7 +53,7 @@ public class MineFragment extends BaseFragment {
     private View view;
     private TextView nicknameTv, accountTv;
     private UploadFilePresenter mUploadPresenter;
-    private RoundedImageView headerIv;
+    private CircleImageView headerIv;
     private MineModel mModel;
     private VerticalSwipeRefreshLayout mSwipeLayout;
     private TextView mToSeeBalanceTv;

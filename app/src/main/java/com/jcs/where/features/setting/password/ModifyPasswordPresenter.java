@@ -31,6 +31,11 @@ public class ModifyPasswordPresenter extends BaseMvpPresenter {
             ToastUtils.showShort(R.string.new_password_empty_hint);
             return;
         }
+        if (oldPassword.equals(newPassword)) {
+            ToastUtils.showShort(R.string.password_modify_same_hint);
+            return;
+        }
+
 
         ModifyPasswordRequest request = ModifyPasswordRequest.Builder.aModifyPasswordRequest()
                 .old_password(oldPassword)
@@ -43,8 +48,6 @@ public class ModifyPasswordPresenter extends BaseMvpPresenter {
                 mView.modifyPasswordSuccess();
             }
         });
-
-
 
 
     }

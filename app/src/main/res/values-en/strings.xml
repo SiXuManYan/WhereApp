@@ -374,5 +374,6 @@
     <string name="open_permission">Please open permission</string>
     <string name="modify_none">You did not make any changes</string>
 	<string name="modify_success">Modify success</string>
+    <string name="password_modify_same_hint">The new password cannot be the same as the old password</string>
 
 </resources>

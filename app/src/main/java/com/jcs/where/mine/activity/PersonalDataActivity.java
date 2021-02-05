@@ -159,7 +159,9 @@ public class PersonalDataActivity extends BaseActivity {
 
     private void changeName(String name) {
         showLoading();
-        mModel.updateUserInfo(new UpdateUserInfoRequest(name), new BaseObserver<UserInfoResponse>() {
+        UpdateUserInfoRequest request = new UpdateUserInfoRequest();
+        request.setNickname(name);
+        mModel.updateUserInfo(request, new BaseObserver<UserInfoResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();

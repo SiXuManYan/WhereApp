@@ -8,6 +8,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
+import com.jcs.where.utils.FeaturesUtil;
 
 /**
  * Created by Wangsw  2021/2/4 14:33.
@@ -33,6 +34,10 @@ public class ModifyPasswordPresenter extends BaseMvpPresenter {
         }
         if (oldPassword.equals(newPassword)) {
             ToastUtils.showShort(R.string.password_modify_same_hint);
+            return;
+        }
+
+        if (FeaturesUtil.isWrongPasswordFormat(newPassword)) {
             return;
         }
 

@@ -94,9 +94,7 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
     @Override
     public void modifyPasswordSuccess() {
         ToastUtils.showShort(R.string.password_reset_success);
-//        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
-//        CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, "");
-//        startActivityClearTop(LoginActivity.class, null);
+        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_USER_INFO));
         finish();
     }
 }

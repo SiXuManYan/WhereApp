@@ -9,9 +9,15 @@ import androidx.appcompat.widget.AppCompatEditText;
 import com.blankj.utilcode.util.StringUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.features.setting.phone.verify.code.CodeVerifyActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by Wangsw  2021/2/4 15:24.
@@ -34,6 +40,7 @@ public class NewPhoneActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         country_tv = findViewById(R.id.country_tv);
         phone_aet = findViewById(R.id.phone_aet);
     }
@@ -44,11 +51,22 @@ public class NewPhoneActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     protected void bindListener() {
         country_tv.setOnClickListener(this::onCountryPrefixClick);
         findViewById(R.id.send_verify_tv).setOnClickListener(v -> {
             String account = phone_aet.getText().toString().trim();
-            if (FeaturesUtil.isWrongPhoneNumber(account, mCountryPrefix)) {
+            if (FeaturesUtil.isWrongPhoneNumber(mCountryPrefix, account)) {
                 return;
             }
             Bundle bundle = new Bundle();
@@ -64,6 +82,20 @@ public class NewPhoneActivity extends BaseActivity {
             mCountryPrefix = countryCode;
             country_tv.setText(getString(R.string.country_code_format, countryCode));
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+
+        int code = baseEvent.code;
+        switch (code) {
+            case EventCode.EVENT_REFRESH_USER_INFO:
+                // 手机号更改成功
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
 

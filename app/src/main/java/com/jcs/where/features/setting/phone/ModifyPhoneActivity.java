@@ -5,11 +5,16 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.jcs.where.R;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.setting.phone.verify.code.CodeVerifyActivity;
 import com.jcs.where.features.setting.phone.verify.password.PasswordVerifyActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.Constant;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by Wangsw  2021/2/4 14:49.
@@ -60,6 +65,20 @@ public class ModifyPhoneActivity extends BaseMvpActivity<ModifyPhonePresenter> i
     @Override
     protected boolean isStatusDark() {
         return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+
+        int code = baseEvent.code;
+        switch (code) {
+            case EventCode.EVENT_REFRESH_USER_INFO:
+                // 手机号更改成功
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
 

@@ -47,10 +47,10 @@
         android:orientation="horizontal"
         app:vcv_et_cursor="@drawable/et_cursor"
         app:vcv_et_cursor_visible="true"
-        app:vcv_et_inputType="numberPassword"
+        app:vcv_et_inputType="number"
         app:vcv_et_number="4"
         app:vcv_et_text_color="@color/black_333333"
-        app:vcv_et_text_size="@dimen/sp_14" />
+        app:vcv_et_text_size="@dimen/sp_6" />
 
 
     <TextView

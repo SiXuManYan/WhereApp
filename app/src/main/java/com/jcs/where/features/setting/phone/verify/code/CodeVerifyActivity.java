@@ -64,6 +64,10 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
         if (mUseMode == 1) {
             jcsTitle.setMiddleTitle(getString(R.string.modify_phone));
         }
+        getVerifyCode();
+    }
+
+    private void getVerifyCode() {
         presenter.getVerifyCode(resend_tv);
     }
 
@@ -72,9 +76,7 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
         captcha_view.setOnCodeFinishListener(new VerificationCodeView.OnCodeFinishListener() {
 
             @Override
-            public void onTextChange(View view, String content) {
-
-            }
+            public void onTextChange(View view, String content) { }
 
             @Override
             public void onComplete(View view, String content) {
@@ -97,15 +99,16 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
 
             }
         });
+        resend_tv.setOnClickListener(v -> {
+            getVerifyCode();
+        });
     }
 
 
     @Override
     public void modifyPhoneSuccess() {
         ToastUtils.showShort(R.string.phone_reset_success);
-        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
-        CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, "");
-        startActivityClearTop(LoginActivity.class, null);
+        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_USER_INFO));
         finish();
     }
 }

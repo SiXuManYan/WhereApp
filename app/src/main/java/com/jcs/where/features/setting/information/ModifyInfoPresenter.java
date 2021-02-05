@@ -1,10 +1,16 @@
 package com.jcs.where.features.setting.information;
 
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.Utils;
+import com.jcs.where.BaseApplication;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.storage.dao.UserDao;
+import com.jcs.where.storage.entity.User;
 
 import java.io.File;
 
@@ -77,6 +83,17 @@ public class ModifyInfoPresenter extends BaseMvpPresenter {
         requestApi(mRetrofit.patchUpdateUserInfo(infoRequest), new BaseMvpObserver<UserInfoResponse>(mView) {
             @Override
             protected void onSuccess(UserInfoResponse response) {
+                User user = User.getInstance();
+                if (!TextUtils.isEmpty(link)) {
+                    user.avatar = link;
+                }
+                if (!TextUtils.isEmpty(nickName)) {
+                    user.nickName = nickName;
+                }
+                BaseApplication app = (BaseApplication) Utils.getApp();
+                UserDao userDao = app.getDatabase().userDao();
+                userDao.addUser(user);
+                User.update();
                 mView.modifyInfoSuccess();
             }
         });

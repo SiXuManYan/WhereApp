@@ -340,7 +340,7 @@
     <string name="authorization_cancel">授权取消</string>
     <string name="mine_footprint_title">我的足迹</string>
     <string name="get_points">积分签到</string>
-    <string name="bataan_news">1巴新闻</string>
+    <string name="bataan_news">1巴丹新闻</string>
     <string name="about_app_title">关于Where</string>
     <string name="version_format">版本&#160;%1$s</string>
     <string name="clear_success">清除成功</string>
@@ -369,5 +369,6 @@
     <string name="modify_password">修改密码</string>
     <string name="open_permission">请打开权限</string>
     <string name="modify_none">您没有做任何修改</string>
+    <string name="modify_success">修改成功</string>
 
 </resources>

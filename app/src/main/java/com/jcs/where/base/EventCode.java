@@ -36,4 +36,9 @@ public class EventCode {
      * 注册成功
      */
     public static final int EVENT_REGISTER_SUCCESS = 1008;
+
+    /**
+     * 刷新用户信息
+     */
+    public static final int EVENT_REFRESH_USER_INFO = 1009;
 }

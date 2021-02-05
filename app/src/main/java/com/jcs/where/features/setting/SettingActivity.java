@@ -24,6 +24,8 @@ import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
@@ -43,9 +45,16 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         phone_tv = findViewById(R.id.phone_tv);
         clear_cache_tv = findViewById(R.id.clear_cache_tv);
+    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -55,11 +64,13 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        setUserInfo();
+        setCache();
+    }
+
+    private void setUserInfo() {
         User user = User.getInstance();
         phone_tv.setText(user.phone);
-
-        setCache();
-
     }
 
     private void setCache() {
@@ -90,15 +101,12 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.password_rl).setOnClickListener(v -> {
             startActivity(ModifyPasswordActivity.class);
         });
-         findViewById(R.id.phone_number_rl).setOnClickListener(v -> {
+        findViewById(R.id.phone_number_rl).setOnClickListener(v -> {
             startActivity(ModifyPhoneActivity.class);
         });
-
-
     }
 
     private void onSignOutClick(View view) {
-
         new AlertDialog.Builder(this)
                 .setTitle(R.string.prompt)
                 .setMessage(R.string.sign_out_hint)
@@ -118,7 +126,20 @@ public class SettingActivity extends BaseActivity {
                 })
                 .create().show();
 
+    }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+
+        int code = baseEvent.code;
+        switch (code) {
+            case EventCode.EVENT_REFRESH_USER_INFO:
+                setUserInfo();
+                break;
+            default:
+                break;
+        }
     }
 
 

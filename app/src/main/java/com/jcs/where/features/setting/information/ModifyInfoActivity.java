@@ -19,7 +19,7 @@ import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.lcodecore.tkrefreshlayout.header.progresslayout.CircleImageView;
 import com.zhihu.matisse.Matisse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,9 +35,8 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
 
 
     private AppCompatEditText nickname_aet;
-    private RoundedImageView avatar_riv;
+    private CircleImageView avatar_riv;
     private String mName;
-    private String mFileDirPath;
     private String mLink;
 
     @Override
@@ -65,7 +64,6 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
         String avatar = instance.avatar;
         if (!TextUtils.isEmpty(nickName)) {
             nickname_aet.setText(nickName);
-            nickname_aet.setSelection(nickName.length());
         }
         if (!TextUtils.isEmpty(avatar)) {
             GlideUtil.load(this, avatar, avatar_riv);
@@ -103,7 +101,7 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
         }
         List<String> elements = Matisse.obtainPathResult(data);
         if (!elements.isEmpty()) {
-            mFileDirPath = elements.get(0);
+            String mFileDirPath = elements.get(0);
             GlideUtil.load(this, mFileDirPath, avatar_riv);
             presenter.uploadFile(mFileDirPath, mName);
         }
@@ -116,10 +114,8 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
 
     @Override
     public void modifyInfoSuccess() {
-        ToastUtils.showShort(R.string.password_reset_success);
-        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
-        CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, "");
-        startActivityClearTop(LoginActivity.class, null);
+        ToastUtils.showShort(R.string.modify_success);
+        EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_USER_INFO));
         finish();
     }
 }

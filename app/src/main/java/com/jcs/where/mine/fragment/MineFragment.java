@@ -19,18 +19,19 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.SettingActivity;
+import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.integral.IntegralActivity;
 import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
 import com.jcs.where.mine.activity.FootprintActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
-import com.jcs.where.mine.activity.PersonalDataActivity;
 import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.widget.VerticalSwipeRefreshLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -125,7 +126,7 @@ public class MineFragment extends BaseFragment {
         if (CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN).equals("")) {
             startActivity(LoginActivity.class);
         } else {
-            PersonalDataActivity.goTo(getContext());
+            startActivity(ModifyInfoActivity.class);
         }
     }
 
@@ -195,6 +196,7 @@ public class MineFragment extends BaseFragment {
                 mSwipeLayout.setRefreshing(false);
                 nicknameTv.setText(userInfoResponse.getNickname());
                 mPointTv.setText(userInfoResponse.getIntegral());
+                GlideUtil.load(getContext(), userInfoResponse.getAvatar(), headerIv);
                 saveData(userInfoResponse);
             }
         });
@@ -215,9 +217,15 @@ public class MineFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventReceived(BaseEvent baseEvent) {
-        if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
-            updateUserInfo();
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+
+        switch (baseEvent.code) {
+            case EventCode.EVENT_LOGIN_SUCCESS:
+            case EventCode.EVENT_REFRESH_USER_INFO:
+                updateUserInfo();
+                break;
+            default:
+                break;
         }
     }
 

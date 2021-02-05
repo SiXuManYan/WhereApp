@@ -375,5 +375,6 @@
     <string name="modify_none">You did not make any changes</string>
 	<string name="modify_success">Modify success</string>
     <string name="password_modify_same_hint">The new password cannot be the same as the old password</string>
+	<string name="account_with_country_format">+%1$s&#160;%2$s</string>
 
 </resources>

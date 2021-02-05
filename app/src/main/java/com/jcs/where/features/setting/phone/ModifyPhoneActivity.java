@@ -32,9 +32,11 @@ public class ModifyPhoneActivity extends BaseMvpActivity<ModifyPhonePresenter> i
     @Override
     protected void initData() {
         presenter = new ModifyPhonePresenter(this);
-        String phone = User.getInstance().phone;
+        User user = User.getInstance();
+        String phone = user.phone;
+        String countryCode = user.countryCode;
         if (!TextUtils.isEmpty(phone)) {
-            current_phone_tv.setText(phone);
+            current_phone_tv.setText(getString(R.string.account_with_country_format, countryCode, phone));
         }
 
 
@@ -49,7 +51,7 @@ public class ModifyPhoneActivity extends BaseMvpActivity<ModifyPhonePresenter> i
         findViewById(R.id.verify_by_code_tv).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt(Constant.PARAM_VERIFY_USE_MODE, 0);
-            startActivity(CodeVerifyActivity.class,bundle);
+            startActivity(CodeVerifyActivity.class, bundle);
         });
 
     }

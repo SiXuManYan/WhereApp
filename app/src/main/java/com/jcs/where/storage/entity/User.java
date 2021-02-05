@@ -74,6 +74,7 @@ public class User {
     public static void clearAllUser() {
         BaseApplication app = (BaseApplication) Utils.getApp();
         app.getDatabase().userDao().clear();
+        instance = null;
     }
 
 

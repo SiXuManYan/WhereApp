@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.JsonElement;
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
@@ -257,4 +258,24 @@ public class LoginPresenter extends BaseMvpPresenter {
     }
 
 
+    public void getAgreement() {
+        String language = CacheUtil.getLanguageFromCache();
+        if (language.equals("auto")) {
+            language = "zh-CN";
+        }
+
+        requestApi(mRetrofit.getAgreement(language), new BaseMvpObserver<JsonElement>(mView) {
+            @Override
+            protected void onSuccess(JsonElement response) {
+
+            }
+
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                super.onError(errorResponse);
+            }
+        });
+
+
+    }
 }

@@ -598,17 +598,20 @@ public interface RetrofitApi {
                                                        @Query("phone") String phone,
                                                        @Query("email") String email);
 
-/*
-    @Multipart
-    @POST("uploadImg")
-    Observable<BaseResult<String>> upload(@Part List<MultipartBody.Part> partList);*/
-
     /**
      * 文件上传
      */
     @Multipart
     @POST("commonapi/v2/file")
-    Observable<JcsResponse<UploadFileResponse>> uploadFile(@Part("type") RequestBody type , @Part MultipartBody.Part file);
+    Observable<JcsResponse<UploadFileResponse>> uploadFile(@Part("type") RequestBody type, @Part MultipartBody.Part file);
 
+
+    /**
+     * 用户协议
+     *
+     * @param lang 语言（zh_cn或en）
+     */
+    @GET("users/agreement")
+    Observable<JcsResponse<JsonElement>> getAgreement(@Query("lang") String lang);
 
 }

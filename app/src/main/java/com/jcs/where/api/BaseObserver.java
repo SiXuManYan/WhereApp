@@ -1,6 +1,5 @@
 package com.jcs.where.api;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.jcs.where.BaseApplication;

@@ -12,6 +12,7 @@ import com.jcs.where.features.setting.phone.verify.code.CodeVerifyActivity;
 import com.jcs.where.features.setting.phone.verify.password.PasswordVerifyActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.FeaturesUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -41,7 +42,7 @@ public class ModifyPhoneActivity extends BaseMvpActivity<ModifyPhonePresenter> i
         String phone = user.phone;
         String countryCode = user.countryCode;
         if (!TextUtils.isEmpty(phone)) {
-            current_phone_tv.setText(getString(R.string.account_with_country_format, countryCode, phone));
+            current_phone_tv.setText(getString(R.string.account_with_country_format, countryCode, FeaturesUtil.getFormatPhoneNumber(phone)));
         }
 
 

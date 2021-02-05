@@ -61,6 +61,22 @@ public class FeaturesUtil {
 
 
     /**
+     * 格式化手机号，中间4位加密
+     * @param account
+     * @return
+     */
+    public static String getFormatPhoneNumber(String account) {
+        if (TextUtils.isEmpty(account) || account.length() < 10) {
+            return account;
+        }
+        int length = account.length();
+        int startCount = length - 8;
+        String s = String.valueOf(startCount);
+        return account.replaceAll("(\\d{" + s + "})\\d{4}(\\d{4})", "$1****$2");
+    }
+
+
+    /**
      * 密码格式校验
      * 6~20位 数字+字母组合
      */
@@ -167,33 +183,6 @@ public class FeaturesUtil {
 
         void onCountryCodeSelect(String countryCode);
     }
-
-
-
-/*    fun handleMediaSelect(activity: Activity, mediaType: Int, @IdRes fromViewId: Int) {
-
-        //
-        PermissionUtils.permissionAny(
-                activity, PermissionUtils.OnPermissionCallBack { granted ->
-            if (granted) {
-                Matisse.from(activity)
-                        .choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
-                    remove(MimeType.GIF)
-                    this
-                }, true)
-                        .countable(true)
-//                .originalEnable(false)
-                        .maxSelectable(1)
-                        .theme(R.style.Matisse_Dracula)
-                        .thumbnailScale(0.87f)
-                        .imageEngine(Glide4Engine())
-                        .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
-
-            } else {
-                showPermissionFailure(activity, StringUtils.getString(R.string.album_need_permission))
-            }
-        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAG)
-    }*/
 
     public static void handleMediaSelect(Activity activity, int mediaType, @IdRes int fromViewId) {
 

@@ -24,12 +24,11 @@ public class PasswordVerifyPresenter extends BaseMvpPresenter {
     }
 
     public void checkPassword(String password) {
-        if (!TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password)) {
             ToastUtils.showShort(R.string.enter_password);
             return;
         }
         String phone = User.getInstance().phone;
-
 
         requestApi(mRetrofit.checkPassword(1, password, phone, ""), new BaseMvpObserver<JsonElement>(mView) {
             @Override

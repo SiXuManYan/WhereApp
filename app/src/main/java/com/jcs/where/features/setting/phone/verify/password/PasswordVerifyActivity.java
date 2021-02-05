@@ -6,9 +6,14 @@ import android.widget.ImageView;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.jcs.where.R;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.setting.phone.confirm.NewPhoneActivity;
 import com.jcs.where.utils.FeaturesUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by Wangsw  2021/2/4 15:09.
@@ -76,6 +81,19 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
     @Override
     public void passwordCheckPass() {
         startActivity(NewPhoneActivity.class);
-        finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+
+        int code = baseEvent.code;
+        switch (code) {
+            case EventCode.EVENT_REFRESH_USER_INFO:
+                // 手机号更改成功
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 }

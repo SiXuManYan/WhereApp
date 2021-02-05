@@ -23,6 +23,7 @@ import com.jcs.where.features.setting.phone.ModifyPhoneActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
 
@@ -73,7 +74,7 @@ public class SettingActivity extends BaseActivity {
 
     private void setUserInfo() {
         User user = User.getInstance();
-        phone_tv.setText(user.phone);
+        phone_tv.setText(FeaturesUtil.getFormatPhoneNumber(user.phone));
     }
 
     private void setCache() {

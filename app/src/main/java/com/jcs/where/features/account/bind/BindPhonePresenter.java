@@ -86,7 +86,7 @@ public class BindPhonePresenter extends BaseMvpPresenter {
                 })
                 .doOnComplete(() -> {
                     countdownView.setText(defaultStr);
-                    countdownView.setEnabled(true);
+                    countdownView.setClickable(true);
                 }).subscribe();
     }
 

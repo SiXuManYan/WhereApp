@@ -10,8 +10,8 @@ import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
-import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.SendCodeRequest;
+import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -91,7 +91,7 @@ public class PasswordResetPresenter extends BaseMvpPresenter {
             @Override
             protected void onSuccess(JsonElement response) {
 
-                getVerifyTv.setEnabled(false);
+                getVerifyTv.setClickable(false);
                 countdown(getVerifyTv, StringUtils.getString(R.string.get_again));
                 ToastUtils.showShort(R.string.verify_code_send_success);
             }
@@ -99,7 +99,7 @@ public class PasswordResetPresenter extends BaseMvpPresenter {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 super.onError(errorResponse);
-                getVerifyTv.setEnabled(true);
+                getVerifyTv.setClickable(true);
 
             }
         });
@@ -121,7 +121,7 @@ public class PasswordResetPresenter extends BaseMvpPresenter {
                 })
                 .doOnComplete(() -> {
                     countdownView.setText(defaultStr);
-                    countdownView.setEnabled(true);
+                    countdownView.setClickable(true);
                 }).subscribe();
 
     }

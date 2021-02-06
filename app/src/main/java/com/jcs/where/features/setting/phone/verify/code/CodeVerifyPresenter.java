@@ -40,8 +40,6 @@ public class CodeVerifyPresenter extends BaseMvpPresenter {
      */
     public void getVerifyCode(TextView getVerifyTv) {
         User user = User.getInstance();
-
-
         SendCodeRequest request = new SendCodeRequest();
         request.setPhone(user.phone);
         request.setCountryCode(user.countryCode);
@@ -80,7 +78,7 @@ public class CodeVerifyPresenter extends BaseMvpPresenter {
                 })
                 .doOnComplete(() -> {
                     countdownView.setText(defaultStr);
-                    countdownView.setEnabled(true);
+                    countdownView.setClickable(true);
                 }).subscribe();
     }
 

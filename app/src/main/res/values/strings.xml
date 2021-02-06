@@ -372,5 +372,7 @@
     <string name="modify_success">修改成功</string>
     <string name="password_modify_same_hint">新密码不能与旧密码一致</string>
     <string name="account_with_country_format">+%1$s&#160;%2$s</string>
+    <string name="share_failed">分享失败</string>
+    <string name="share_cancel">分享取消</string>
 
 </resources>

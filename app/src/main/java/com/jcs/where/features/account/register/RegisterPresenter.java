@@ -33,6 +33,10 @@ public class RegisterPresenter extends BaseMvpPresenter {
             return;
         }
 
+        if (FeaturesUtil.isWrongPasswordFormat(password)) {
+            return;
+        }
+
         RegisterRequest build = RegisterRequest.Builder.aRegisterRequest()
                 .phone(account)
                 .verification_code(verifyCode)

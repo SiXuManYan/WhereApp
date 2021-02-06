@@ -63,7 +63,6 @@ public class IntegralPresenter extends BaseMvpPresenter {
             public void onSuccess(@NonNull JsonElement response) {
                 mView.signInSuccess();
             }
-
         });
 
     }

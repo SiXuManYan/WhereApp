@@ -9,6 +9,8 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.response.IntegralDetailResponse;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.utils.Constant;
 
@@ -75,7 +77,7 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
             return;
         }
         if (page == Constant.DEFAULT_FIRST_PAGE) {
-            mAdapter.setDiffNewData(data);
+            mAdapter.setNewInstance(data);
             loadMoreModule.checkDisableLoadMoreIfNotFullPage();
         } else {
             mAdapter.addData(data);
@@ -92,5 +94,17 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
     public void onLoadMore() {
         page++;
         presenter.getIntegralDetailList(page);
+    }
+
+
+
+    @Override
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+        if (baseEvent.code == EventCode.EVENT_SIGN_IN_CHANGE_STATUS) {
+            if (isViewCreated) {
+                page = Constant.DEFAULT_FIRST_PAGE;
+                presenter.getIntegralDetailList(page);
+            }
+        }
     }
 }

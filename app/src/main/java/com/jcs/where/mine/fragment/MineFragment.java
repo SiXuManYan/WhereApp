@@ -224,6 +224,7 @@ public class MineFragment extends BaseFragment {
         switch (baseEvent.code) {
             case EventCode.EVENT_LOGIN_SUCCESS:
             case EventCode.EVENT_REFRESH_USER_INFO:
+            case EventCode.EVENT_SIGN_IN_CHANGE_STATUS:
                 updateUserInfo();
                 break;
             default:

@@ -122,6 +122,10 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
     @Override
     protected void initData() {
         presenter = new IntegralPresenter(this);
+        initDefultData();
+    }
+
+    private void initDefultData() {
         presenter.getUserInfo();
         presenter.getSignInList();
     }
@@ -164,6 +168,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
     @Override
     public void signInSuccess() {
         changeSignStatus(true);
+        initDefultData();
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_IN_CHANGE_STATUS, true));
     }
 

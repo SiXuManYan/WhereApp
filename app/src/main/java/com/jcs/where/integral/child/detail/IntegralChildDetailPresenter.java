@@ -38,20 +38,7 @@ public class IntegralChildDetailPresenter extends BaseMvpPresenter {
                 mView.bindDetailData(data, isLastPage);
             }
 
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                if (BuildConfig.FLAVOR == "dev") {
-                    List<IntegralDetailResponse> data = new ArrayList<>();
-                    IntegralDetailResponse item = new IntegralDetailResponse();
-                    item.type = 1;
-                    item.created_at = "2021-1-27 17:02:03";
-                    item.id = 1;
-                    item.integral = 20;
-                    data.add(item);
-                    mView.bindDetailData(data, true);
-                }
 
-            }
         });
     }
 

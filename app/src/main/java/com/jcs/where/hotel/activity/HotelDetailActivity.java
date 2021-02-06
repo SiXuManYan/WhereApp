@@ -22,12 +22,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
-import com.jcs.where.utils.GlideUtil;
-import com.jcs.where.widget.StarView;
-import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelCommentsResponse;
@@ -38,12 +42,17 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
+import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.utils.MobUtil;
 import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
+import com.jcs.where.widget.StarView;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,12 +60,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import pl.droidsonroids.gif.GifImageView;
@@ -363,7 +366,8 @@ public class HotelDetailActivity extends BaseActivity {
                 shareIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, hotelDetailResponse.getName());
+//                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, hotelDetailResponse.getName());
+                        onShareClick();
                     }
                 });
                 hotelName = hotelDetailResponse.getName();
@@ -543,7 +547,7 @@ public class HotelDetailActivity extends BaseActivity {
 
             @Override
             protected void onSuccess(HotelRoomDetailResponse response) {
-                   stopLoading();
+                stopLoading();
                 new RoomDetailPopup.Builder(HotelDetailActivity.this, hotelDetailRl, roomId, response)
                         .setPriceOnClickListener(new RoomDetailPopup.SubscribeOnClickListener() {
                             @Override
@@ -711,5 +715,12 @@ public class HotelDetailActivity extends BaseActivity {
             nameTv.setText(data.getName());
         }
     }
+
+
+    private void onShareClick() {
+        String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_HOTEL, String.valueOf(mHotelId));
+        MobUtil.shareFacebookWebPage(url, this);
+    }
+
 
 }

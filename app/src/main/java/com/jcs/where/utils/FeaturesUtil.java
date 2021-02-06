@@ -22,9 +22,12 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jcs.where.R;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.utils.image.Glide4Engine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -62,6 +65,7 @@ public class FeaturesUtil {
 
     /**
      * 格式化手机号，中间4位加密
+     *
      * @param account
      * @return
      */
@@ -213,5 +217,30 @@ public class FeaturesUtil {
 
         }, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
+
+    /**
+     * 用户协议
+     */
+    public static String getUserAgreement() {
+        return String.format(Html5Url.USER_AGREEMENT_URL,  getLanguage());
+    }
+
+    /**
+     * 隐私政策
+     *
+     * @return
+     */
+    public static String getPrivacyPolicy() {
+        return String.format(Html5Url.PRIVACY_POLICY, getLanguage());
+    }
+    @NotNull
+    private static String getLanguage() {
+        String language = CacheUtil.getLanguageFromCache();
+        if (language.equals("auto")) {
+            language = "zh-CN";
+        }
+        return language;
+    }
+
 
 }

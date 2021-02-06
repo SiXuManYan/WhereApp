@@ -16,6 +16,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.features.setting.password.ModifyPasswordActivity;
@@ -108,6 +109,10 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.phone_number_rl).setOnClickListener(v -> {
             startActivity(ModifyPhoneActivity.class);
         });
+        findViewById(R.id.privacy_policy_rl).setOnClickListener(v -> {
+            WebViewActivity.goTo(this, FeaturesUtil.getPrivacyPolicy());
+        });
+
     }
 
     private void onSignOutClick(View view) {

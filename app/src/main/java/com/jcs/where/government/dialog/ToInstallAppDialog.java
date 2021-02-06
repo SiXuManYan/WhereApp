@@ -3,6 +3,7 @@ package com.jcs.where.government.dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class ToInstallAppDialog extends BaseDialog {
     private Button mCancelBtn, mEnsureBtn;
 
     private String mInstallName = "地图";
+    private String mInstallUri = "";
 
     @Override
     protected int getLayout() {
@@ -41,7 +43,7 @@ public class ToInstallAppDialog extends BaseDialog {
         mEnsureBtn = view.findViewById(R.id.ensureBtn);
 
         mInstallPrompt = view.findViewById(R.id.installPrompt);
-        mInstallPrompt.setText("是否去安装 " + mInstallPrompt + " ?");
+        mInstallPrompt.setText("是否去安装 " + mInstallName + " ?");
     }
 
     @Override
@@ -51,7 +53,13 @@ public class ToInstallAppDialog extends BaseDialog {
 
     public void setInstallName(String installName) {
         this.mInstallName = installName;
+        mInstallPrompt.setText("是否去安装 " + mInstallName + " ?");
     }
+
+    public void setInstallUrl(String uriString) {
+        mInstallUri = uriString;
+    }
+
 
     @Override
     protected void bindListener() {
@@ -61,11 +69,21 @@ public class ToInstallAppDialog extends BaseDialog {
 
     public void onEnsureClicked(View view) {
         Context context = getContext();
-        if (context != null) {
-            Uri uri = Uri
-                    .parse("market://details?id=com.google.android.apps.maps");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            context.startActivity(intent);
+        if (context == null) {
+            return;
         }
+
+        String uriStr = "";
+
+        String mapUri = "market://details?id=com.google.android.apps.maps";
+
+        if (!TextUtils.isEmpty(mInstallUri)) {
+            uriStr = mapUri;
+        } else {
+            uriStr = mInstallUri;
+        }
+        Uri uri = Uri.parse(uriStr);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(intent);
     }
 }

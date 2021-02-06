@@ -6,7 +6,7 @@
 <QZone Enable="false" />
 <Renren Enable="false" />
 <KaiXin Enable="false" />
-<Facebook ConsumerKey="1374321072771239" ConsumerSecret="978840473b023ee1f79e7eb55e4cab7f" RedirectUrl="https://mob.com" />
+<Facebook OfficialVersion="default" ShareByAppClient="true" Enable="true" ConsumerKey="1374321072771239" ConsumerSecret="978840473b023ee1f79e7eb55e4cab7f" RedirectUrl="https://mob.com" />
 <Twitter Enable="false" />
 <Evernote Enable="false" />
 <FourSquare Enable="false" />

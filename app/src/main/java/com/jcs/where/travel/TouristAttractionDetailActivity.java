@@ -15,24 +15,28 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.google.gson.Gson;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.CommentResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.hotel.adapter.CommentListAdapter;
-import com.jcs.where.manager.TokenManager;
 import com.jcs.where.travel.model.TouristAttractionDetailModel;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.ImagePreviewActivity;
+import com.jcs.where.utils.MobUtil;
 import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
@@ -41,15 +45,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import pl.droidsonroids.gif.GifImageView;
 
 public class TouristAttractionDetailActivity extends BaseActivity {
@@ -289,6 +286,11 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         mJcsTitle.setSecondRightIvClickListener(view -> collection(like != 1));
 //        mCommentAdapter.addChildClickViewIds(R.id.fullText, R.id.commentIcon01, R.id.commentIcon02, R.id.commentIcon03, R.id.commentIcon04);
 //        mCommentAdapter.setOnItemChildClickListener(this::onCommentItemChildClicked);
+
+        mJcsTitle.setFirstRightIvClickListener(v -> {
+            String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_TRAVEL, mId);
+            MobUtil.shareFacebookWebPage(url, this);
+        });
     }
 
     private void onCommentItemChildClicked(BaseQuickAdapter baseQuickAdapter, View view, int position) {

@@ -258,24 +258,5 @@ public class LoginPresenter extends BaseMvpPresenter {
     }
 
 
-    public void getAgreement() {
-        String language = CacheUtil.getLanguageFromCache();
-        if (language.equals("auto")) {
-            language = "zh-CN";
-        }
 
-        requestApi(mRetrofit.getAgreement(language), new BaseMvpObserver<JsonElement>(mView) {
-            @Override
-            protected void onSuccess(JsonElement response) {
-
-            }
-
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                super.onError(errorResponse);
-            }
-        });
-
-
-    }
 }

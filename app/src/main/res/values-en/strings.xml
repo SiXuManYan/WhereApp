@@ -340,6 +340,7 @@
     <string name="bind_phone">Bind phone</string>
     <string name="bind_success">Bind success</string>
     <string name="is_client_valid">Client does not exist</string>
+	<string name="is_client_valid_facebook">Facebook client is not installed. Whether to go to install ?</string>
 	<string name="authorization_failed">Authorization failed</string>
 	<string name="authorization_cancel">Authorization cancel</string>
 	<string name="mine_footprint_title">Mine Footprint</string>
@@ -377,6 +378,8 @@
     <string name="password_modify_same_hint">The new password cannot be the same as the old password</string>
 	<string name="account_with_country_format">+%1$s&#160;%2$s</string>
     <string name="share_failed">Sharing failed</string>
-	<string name="share_cancel">分享取消</string>
+	<string name="share_cancel">Share cancel</string>
+    <string name="share_success">Share success</string>
+	<string name="install">Install</string>
 
 </resources>

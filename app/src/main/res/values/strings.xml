@@ -336,6 +336,7 @@
     <string name="bind_phone">绑定手机</string>
     <string name="bind_success">绑定成功</string>
     <string name="is_client_valid">客户端不存在</string>
+    <string name="is_client_valid_facebook">您未安装Facebook，是否前往安装？</string>
     <string name="authorization_failed">授权失败</string>
     <string name="authorization_cancel">授权取消</string>
     <string name="mine_footprint_title">我的足迹</string>
@@ -374,5 +375,7 @@
     <string name="account_with_country_format">+%1$s&#160;%2$s</string>
     <string name="share_failed">分享失败</string>
     <string name="share_cancel">分享取消</string>
+    <string name="share_success">分享成功</string>
+    <string name="install">安装</string>
 
 </resources>

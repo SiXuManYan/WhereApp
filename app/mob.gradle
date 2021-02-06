@@ -12,6 +12,9 @@ MobSDK {
                 appKey "1374321072771239"
                 appSecret "978840473b023ee1f79e7eb55e4cab7f"
                 callbackUri "https://mob.com"
+                officialVersion "default"
+                shareByAppClient true
+                enable true
             }
 
             GooglePlus {

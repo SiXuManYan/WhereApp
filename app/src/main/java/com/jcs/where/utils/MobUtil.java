@@ -1,12 +1,18 @@
 package com.jcs.where.utils;
 
-import android.text.TextUtils;
+import android.content.Intent;
+import android.net.Uri;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
+import com.jcs.where.base.BaseActivity;
 
 import java.util.HashMap;
 
+import cn.sharesdk.facebook.Facebook;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -45,18 +51,6 @@ public class MobUtil {
     }
 
 
-    /**
-     * 分享回调，只处理成功情况
-     */
-    public interface WherePlatformShareListener {
-
-
-        /**
-         * 分享成功
-         */
-        void onShareComplete(Platform platform, int i, HashMap<String, Object> hashMap);
-    }
-
     public static void authorize(Platform plat, WherePlatformAuthorizeListener listener) {
         if (plat == null) {
             return;
@@ -94,84 +88,35 @@ public class MobUtil {
         plat.showUser(null); // 获取用户资料
     }
 
-    /**
-     * 分享文本
-     *
-     * @param platformName 平台名称 Facebook.NAME GooglePlus.NAME
-     */
-    public static void shareText(
-            String platformName,
-            String title,
-            String text,
-            WherePlatformShareListener listener) {
 
-        Platform plat = ShareSDK.getPlatform(platformName);
-        if (plat == null) {
-            return;
-        }
+    public static void shareFacebookWebPage(String webUrl, BaseActivity activity) {
+        Platform plat = ShareSDK.getPlatform(Facebook.NAME);
         if (!plat.isClientValid()) {
-            ToastUtils.showShort(R.string.is_client_valid);
+            ToastUtils.showShort(R.string.is_client_valid_facebook);
+            new AlertDialog.Builder(activity)
+                    .setTitle(R.string.prompt)
+                    .setMessage(R.string.is_client_valid_facebook)
+                    .setPositiveButton(R.string.install, (dialogInterface, i) -> {
+                        Uri uri = Uri.parse("market://details?id=com.facebook.katana");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        activity.startActivity(intent);
+                        dialogInterface.dismiss();
+                    })
+                    .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                    })
+                    .create().show();
             return;
         }
-        ShareSDK.deleteCache();
         Platform.ShareParams shareParams = new Platform.ShareParams();
-        shareParams.setTitle(title);
-        shareParams.setText(text);
-        shareParams.setShareType(Platform.SHARE_TEXT);
-        plat.setPlatformActionListener(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                listener.onShareComplete(platform, i, hashMap);
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-                ToastUtils.showShort(R.string.share_failed);
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-                ToastUtils.showShort(R.string.share_cancel);
-            }
-        });
-        plat.share(shareParams);
-    }
-
-    /**
-     * 分享网页
-     *
-     * @param platformName 平台名称 Facebook.NAME GooglePlus.NAME
-     */
-    public static void shareWebPager(
-            String platformName,
-            String title,
-            String text,
-            String imageUrl,
-            String webUrl,
-            WherePlatformShareListener listener) {
-        Platform plat = ShareSDK.getPlatform(platformName);
-        if (plat == null) {
-            return;
-        }
-        if (!plat.isClientValid()) {
-            ToastUtils.showShort(R.string.is_client_valid);
-            return;
-        }
-
-        ShareSDK.deleteCache();
-        Platform.ShareParams shareParams = new Platform.ShareParams();
-        shareParams.setTitle(title);
-        shareParams.setText(text);
-        if (!TextUtils.isEmpty(imageUrl)) {
-            shareParams.setImageUrl(imageUrl);
-        }
         shareParams.setUrl(webUrl);
         shareParams.setShareType(Platform.SHARE_WEBPAGE);
-
+        shareParams.setQuote(StringUtils.getString(R.string.app_name));
+        // shareParams.setHashtag("..."); 编辑框内可以加上默认文字
         plat.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                listener.onShareComplete(platform, i, hashMap);
+                ToastUtils.showShort(R.string.share_success);
             }
 
             @Override
@@ -186,53 +131,5 @@ public class MobUtil {
         });
         plat.share(shareParams);
     }
-
-
-    /**
-     * 分享图片
-     *
-     * @param platformName 平台名称 Facebook.NAME GooglePlus.NAME
-     */
-    public static void shareImage(
-            String platformName,
-            String title,
-            String imageUrl,
-            WherePlatformShareListener listener) {
-        Platform plat = ShareSDK.getPlatform(platformName);
-        if (plat == null) {
-            return;
-        }
-        if (!plat.isClientValid()) {
-            ToastUtils.showShort(R.string.is_client_valid);
-            return;
-        }
-
-        ShareSDK.deleteCache();
-        Platform.ShareParams shareParams = new Platform.ShareParams();
-        shareParams.setTitle(title);
-        if (!TextUtils.isEmpty(imageUrl)) {
-            shareParams.setImageUrl(imageUrl);
-        }
-        shareParams.setShareType(Platform.SHARE_IMAGE);
-
-        plat.setPlatformActionListener(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                listener.onShareComplete(platform, i, hashMap);
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-                ToastUtils.showShort(R.string.share_failed);
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-                ToastUtils.showShort(R.string.share_cancel);
-            }
-        });
-        plat.share(shareParams);
-    }
-
 
 }

@@ -9,16 +9,19 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.Group;
+
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.news.model.NewsDetailModel;
 import com.jcs.where.utils.GlideUtil;
-
-import androidx.constraintlayout.widget.Group;
+import com.jcs.where.utils.MobUtil;
+import com.jcs.where.widget.JcsTitle;
 
 /**
  * create by zyf on 2021/1/27 11:39 下午
@@ -30,10 +33,12 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     protected WebView mWebView;
     protected Group mToFollowGroup;
     protected View mToFollowView;
+    protected JcsTitle jcsTitle;
     protected NewsDetailResponse mNewsDetailResponse;
     protected final int STATUS_UNFOLLOWED_UNCOLLECTED = 1;
     protected final int STATUS_FOLLOWED_COLLECTED = 2;
     protected Integer mFollowStatus;
+    protected String mNewsId;
 
     @Override
     protected void initView() {
@@ -46,6 +51,7 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mToFollowIv = findViewById(R.id.toFollowIcon);
         mToFollowGroup = findViewById(R.id.toFollowGroup);
         mWebView = findViewById(R.id.webView);
+        jcsTitle = findViewById(R.id.jcsTitle);
         mWebView.setWebViewClient(new WebViewClient());
         deployWebView();
     }
@@ -64,9 +70,9 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new NewsDetailModel();
-        String newsId = getIntent().getStringExtra("newsId");
+        mNewsId = getIntent().getStringExtra("newsId");
         showLoading();
-        mModel.getNewsDetail(newsId, new BaseObserver<NewsDetailResponse>() {
+        mModel.getNewsDetail(mNewsId, new BaseObserver<NewsDetailResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -81,9 +87,9 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
                 NewsDetailResponse.PublisherDTO publisher = response.getPublisher();
                 mFollowStatus = response.getFollowStatus();
                 // 根据收藏状态设置 JcsTitle 右侧第二个 icon
-                if (mNewsDetailResponse.getCollectStatus() == STATUS_FOLLOWED_COLLECTED){
+                if (mNewsDetailResponse.getCollectStatus() == STATUS_FOLLOWED_COLLECTED) {
                     showCollected();
-                }else {
+                } else {
                     showUncollected();
                 }
                 if (mFollowStatus == STATUS_FOLLOWED_COLLECTED) {
@@ -109,6 +115,10 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     protected void bindListener() {
         mToFollowView.setOnClickListener(this::onFollowedClicked);
         mJcsTitle.setSecondRightIvClickListener(this::onCollectClicked);
+        mJcsTitle.setFirstRightIvClickListener(v -> {
+            String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_NEWS, mNewsId) + "&extra=news_video";
+            MobUtil.shareFacebookWebPage(url, this);
+        });
     }
 
     private void onCollectClicked(View view) {
@@ -194,11 +204,11 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         });
     }
 
-    protected void showCollected(){
+    protected void showCollected() {
         mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);
     }
 
-    protected void showUncollected(){
+    protected void showUncollected() {
         mJcsTitle.setSecondRightIcon(getUncollectedIcon());
     }
 

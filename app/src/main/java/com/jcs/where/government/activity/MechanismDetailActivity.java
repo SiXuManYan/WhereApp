@@ -5,6 +5,8 @@ import android.graphics.Paint;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.Group;
+
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -12,12 +14,13 @@ import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.government.dialog.CallPhoneDialog;
 import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.government.model.MechanismDetailModel;
+import com.jcs.where.utils.MobUtil;
 import com.jcs.where.widget.JcsBanner;
 
-import androidx.constraintlayout.widget.Group;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -126,7 +129,7 @@ public class MechanismDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        mJcsTitle.setSecondRightIvClickListener(this::onJcsFirstRightClicked);
+        mJcsTitle.setFirstRightIvClickListener(this::onJcsFirstRightClicked);
         mJcsTitle.setSecondRightIvClickListener(this::onJcsSecondRightClicked);
         mToCallView.setOnClickListener(this::onToCallClicked);
         mToNavigationView.setOnClickListener(this::onToNavigationClicked);
@@ -166,7 +169,8 @@ public class MechanismDetailActivity extends BaseActivity {
      * 对应当前页面的 分享
      */
     public void onJcsFirstRightClicked(View view) {
-
+        String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_GENERAL, mMechanismId);
+        MobUtil.shareFacebookWebPage(url, this);
     }
 
     /**

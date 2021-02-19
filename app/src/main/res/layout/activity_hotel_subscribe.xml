@@ -16,7 +16,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/useView"
         android:background="@color/transparency"
         android:minHeight="?attr/actionBarSize"
         android:navigationIcon="@drawable/ic_back_white"
@@ -467,7 +466,7 @@
             android:paddingTop="8dp"
             android:paddingRight="18.5dp"
             android:paddingBottom="8dp"
-            android:text="提交订单"
+            android:text="@string/place_order"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

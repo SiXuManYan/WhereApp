@@ -328,6 +328,12 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
+        <activity
+            android:name=".home.activity.ApplyRefundActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
 
         <!-- comm 100  -->
         <activity

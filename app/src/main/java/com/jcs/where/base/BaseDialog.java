@@ -61,7 +61,6 @@ public abstract class BaseDialog extends DialogFragment {
         //dialog.setContentView(R.layout.dialog_fragment_holder);
         dialog.setCanceledOnTouchOutside(true);
 
-        // 设置宽度为屏宽、靠近屏幕底部。
         Window window = dialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
         if (isBottom()) {

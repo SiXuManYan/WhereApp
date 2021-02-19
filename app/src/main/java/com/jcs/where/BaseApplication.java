@@ -175,6 +175,7 @@ public class BaseApplication extends Application {
 
     public static void toLogin() {
         Intent toLogin = new Intent(mApplicationContext, LoginActivity.class);
+        toLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mApplicationContext.startActivity(toLogin);
     }
 

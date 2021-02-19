@@ -254,7 +254,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="房间数"
+                android:text="@string/room_number"
                 android:textColor="@color/grey_666666"
                 android:textSize="12sp" />
 
@@ -326,7 +326,7 @@
                 android:layout_marginLeft="7.5dp"
                 android:layout_marginRight="15dp"
                 android:background="@null"
-                android:hint="请填写实际入住人姓名"
+                android:hint="@string/hint_input_user_name"
                 android:textColor="@color/black_333333"
                 android:textSize="12sp" />
 
@@ -353,7 +353,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系手机"
+                android:text="@string/phone"
                 android:textColor="@color/grey_666666"
                 android:textSize="12sp" />
 
@@ -413,7 +413,7 @@
                 android:layout_marginLeft="7.5dp"
                 android:layout_marginRight="15dp"
                 android:background="@null"
-                android:hint="用于接收短信通知"
+                android:hint="@string/hint_receive_message"
                 android:textColor="@color/black_333333"
                 android:textSize="12sp"
                 android:inputType="number|phone"

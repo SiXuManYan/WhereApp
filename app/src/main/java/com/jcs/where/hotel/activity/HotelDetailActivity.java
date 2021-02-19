@@ -569,6 +569,8 @@ public class HotelDetailActivity extends BaseActivity {
                                 subscribeBean.cancel = cancel;
                                 subscribeBean.startDate = mStartDateTv.getText().toString();
                                 subscribeBean.startWeek = mStartWeekTv.getText().toString();
+                                subscribeBean.startYMD = mStartDateBean.getShowYearMonthDayDateWithSplit();
+                                subscribeBean.endYMD = mEndDateBean.getShowYearMonthDayDateWithSplit();
                                 subscribeBean.endDate = mEndDateTv.getText().toString();
                                 subscribeBean.endWeek = mEndWeekTv.getText().toString();
                                 subscribeBean.night = mTotalDayTv.getText().toString();

@@ -33,6 +33,8 @@ public class SubscribeBean implements Parcelable {
     public String night;
     public String roomNumber;
     public float roomPrice;
+    public String startYMD;
+    public String endYMD;
 
     public SubscribeBean(Parcel in) {
         roomId = in.readInt();
@@ -53,6 +55,8 @@ public class SubscribeBean implements Parcelable {
         roomPrice = in.readFloat();
         startYear = in.readString();
         endYear = in.readString();
+        startYMD = in.readString();
+        endYMD = in.readString();
     }
 
     public SubscribeBean() {
@@ -79,6 +83,8 @@ public class SubscribeBean implements Parcelable {
         dest.writeFloat(roomPrice);
         dest.writeString(startYear);
         dest.writeString(endYear);
+        dest.writeString(startYMD);
+        dest.writeString(endYMD);
     }
 
     @Override

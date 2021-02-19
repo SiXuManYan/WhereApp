@@ -389,5 +389,9 @@
     <string name="expected_refund_time">1&#045;3个工作日</string>
     <string name="refund_back_method">原路返回</string>
     <string name="place_order">提交订单</string>
+    <string name="phone">联系手机</string>
+    <string name="room_number">房间数</string>
+    <string name="hint_receive_message">用于接收短信通知</string>
+    <string name="hint_input_user_name">请填写实际入住人姓名</string>
 
 </resources>

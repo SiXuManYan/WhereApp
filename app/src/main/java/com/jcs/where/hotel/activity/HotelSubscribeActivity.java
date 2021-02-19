@@ -200,8 +200,8 @@ public class HotelSubscribeActivity extends BaseActivity {
         request.setPrice(priceTv.getText().toString().replace(getString(R.string.price_unit), ""));
         request.setPhone(phoneEt.getText().toString());
         request.setUsername(nameEt.getText().toString());
-        request.setStart_date(subscribeBean.startYear + symbolShortLink + subscribeBean.startDate.replace(month, symbolShortLink).replace(day, ""));
-        request.setEnd_date(subscribeBean.endYear + symbolShortLink + subscribeBean.endDate.replace(month, symbolShortLink).replace(day, ""));
+        request.setStart_date(subscribeBean.startYMD);
+        request.setEnd_date(subscribeBean.endYMD);
         request.setRoom_num(roomNumTv.getText().toString());
         mModel.postHotelOrder(request, new BaseObserver<HotelOrderResponse>() {
             @Override

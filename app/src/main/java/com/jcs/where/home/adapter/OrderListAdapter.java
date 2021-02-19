@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.home.activity.ApplyRefundActivity;
-import com.jcs.where.home.dialog.CancelOrderDialog;
+import com.jcs.where.home.activity.CancelOrderActivity;
 import com.jcs.where.hotel.activity.HotelCommentActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
@@ -77,7 +77,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
      */
     private void initHotelOrderHolder(Context context) {
         mHotelOrderHolder = new HashMap<>();
-        mHotelOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), CancelOrderDialog.class, context.getString(R.string.to_pay), HotelPayActivity.class));
+        mHotelOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), CancelOrderActivity.class, context.getString(R.string.to_pay), HotelPayActivity.class));
         mHotelOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.mine_booked), context.getString(R.string.to_refund), ApplyRefundActivity.class, context.getString(R.string.to_use), HotelOrderDetailActivity.class));
         mHotelOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_reviews), context.getString(R.string.to_review), HotelCommentActivity.class, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         //TODO 评价详情页面还没有，查看评价无法跳转
@@ -167,7 +167,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         return getData().get(position).getId();
     }
 
-    public Class<?> getToLeftClass(int position) {
+    public Class<? extends AppCompatActivity> getToLeftClass(int position) {
 
         Integer orderStatus = getData().get(position).getModelData().getOrderStatus();
         OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
@@ -194,11 +194,11 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         public int orderStatus;
         public String statusText;
         public String leftText;
-        public Class<?> toLeftClazz;
+        public Class<? extends AppCompatActivity> toLeftClazz;
         public String rightText;
         public Class<? extends AppCompatActivity> toRightClazz;
 
-        public OrderStatusHolder(int orderStatus, String statusText, String leftText, Class<?> toLeftClazz, String rightText, Class<? extends AppCompatActivity> toRightClazz) {
+        public OrderStatusHolder(int orderStatus, String statusText, String leftText, Class<? extends AppCompatActivity> toLeftClazz, String rightText, Class<? extends AppCompatActivity> toRightClazz) {
             this.orderStatus = orderStatus;
             this.statusText = statusText;
             this.leftText = leftText;

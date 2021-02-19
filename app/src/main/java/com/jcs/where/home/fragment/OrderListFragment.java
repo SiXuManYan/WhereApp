@@ -107,14 +107,17 @@ public class OrderListFragment extends BaseFragment {
 
         if (id == R.id.leftToTv) {
             Log.e("OrderListFragment", "onItemChildClick: " + "left");
-            Class<?> toLeftClass = mAdapter.getToLeftClass(position);
+            Class<? extends AppCompatActivity> toLeftClass = mAdapter.getToLeftClass(position);
 
-            String typeName = toLeftClass.getComponentType().getName();
-            Log.e("OrderListFragment", "onOrderItemChildClicked: "+"typeName="+typeName);
-//            Class<? extends AppCompatActivity> toAtyClass = toLeftClass;
-//            if (toLeftClass != null) {
-//                toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
-//            }
+            if (toLeftClass != null) {
+                String simpleName = toLeftClass.getSimpleName();
+                if (simpleName.equals("CancelOrderActivity")) {
+                    // 展示取消订单的dialog
+
+                } else {
+                    toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                }
+            }
         }
     }
 

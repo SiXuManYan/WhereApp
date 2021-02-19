@@ -388,8 +388,8 @@
     <string name="apply_refund_title">Apply Refund</string>
 	<string name="prompt_order_id">Order Number</string>
 	<string name="prompt_price">Price</string>
-	<string name="prompt_refund_method">Refund Method</string>
-	<string name="prompt_expected_time">Excepted Refund Time</string>
+	<string name="prompt_refund_method">Method</string>
+	<string name="prompt_expected_time">Time</string>
 	<string name="expected_refund_time">One to three working days</string>
 	<string name="refund_back_method">Refund the same way</string>
 	<string name="place_order">Place Order</string>

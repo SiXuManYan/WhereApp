@@ -397,5 +397,6 @@
 	<string name="room_number">Room number</string>
 	<string name="hint_receive_message">receive message</string>
 	<string name="hint_input_user_name">input user name</string>
+	<string name="to_install">Do you want to install %1$s ?</string>
 
 </resources>

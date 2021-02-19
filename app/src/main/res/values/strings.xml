@@ -393,5 +393,6 @@
     <string name="room_number">房间数</string>
     <string name="hint_receive_message">用于接收短信通知</string>
     <string name="hint_input_user_name">请填写实际入住人姓名</string>
+    <string name="to_install">是否去安装 %1$s ？</string>
 
 </resources>

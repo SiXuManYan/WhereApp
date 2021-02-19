@@ -16,6 +16,7 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.decoration.MarginTopDecoration;
+import com.jcs.where.home.dialog.CancelOrderDialog;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.model.OrderModel;
 
@@ -113,7 +114,8 @@ public class OrderListFragment extends BaseFragment {
                 String simpleName = toLeftClass.getSimpleName();
                 if (simpleName.equals("CancelOrderActivity")) {
                     // 展示取消订单的dialog
-
+                    CancelOrderDialog cancelOrderDialog = new CancelOrderDialog();
+                    cancelOrderDialog.show(getChildFragmentManager());
                 } else {
                     toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
                 }

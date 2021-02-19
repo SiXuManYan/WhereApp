@@ -97,7 +97,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
     private void initDineOrderHolder(Context context) {
         mDineOrderHolder = new HashMap<>();
         mDineOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), null, context.getString(R.string.to_pay), HotelPayActivity.class));
-        mDineOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.cancelled), "", null, context.getString(R.string.to_use), HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.cancelled), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mDineOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_booked), context.getString(R.string.to_review), HotelCommentActivity.class, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mDineOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.completed), context.getString(R.string.see_review), null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mDineOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.payment_failed), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
@@ -115,7 +115,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         mTakeawayOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.unpaid), "", null, "", HotelPayActivity.class));
         mTakeawayOrderHolder.put(2, new OrderStatusHolder(2, "未接单", "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(3, new OrderStatusHolder(3, "已接单", "", HotelCommentActivity.class, "", HotelOrderDetailActivity.class));
-        mTakeawayOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.cancelled), "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.cancelled), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.completed), "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(6, new OrderStatusHolder(6, context.getString(R.string.payment_failed), "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(7, new OrderStatusHolder(7, context.getString(R.string.refunding), "", null, "", HotelOrderDetailActivity.class));
@@ -137,12 +137,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         if (orderStatusHolder != null) {
             baseViewHolder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
+            baseViewHolder.setText(R.id.rightToTv, orderStatusHolder.rightText);
             if (orderStatusHolder.leftText.equals("")) {
                 baseViewHolder.setGone(R.id.leftToTv, true);
             } else {
                 baseViewHolder.setGone(R.id.leftToTv, false);
                 baseViewHolder.setText(R.id.leftToTv, orderStatusHolder.leftText);
-                baseViewHolder.setText(R.id.rightToTv, orderStatusHolder.rightText);
             }
         }
 

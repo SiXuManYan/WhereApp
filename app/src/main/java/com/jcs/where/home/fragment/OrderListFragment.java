@@ -18,6 +18,7 @@ import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.decoration.MarginTopDecoration;
 import com.jcs.where.home.dialog.CancelOrderDialog;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
+import com.jcs.where.hotel.activity.HotelPayActivity;
 import com.jcs.where.model.OrderModel;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,7 +103,13 @@ public class OrderListFragment extends BaseFragment {
             Log.e("OrderListFragment", "onItemChildClick: " + "right");
             Class<? extends AppCompatActivity> toRightClass = mAdapter.getToRightClass(position);
             if (toRightClass != null) {
-                toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                String simpleName = toRightClass.getSimpleName();
+                Log.e("OrderListFragment", "onOrderItemChildClicked: " + simpleName);
+                if (simpleName.equals("HotelPayActivity")) {
+                    HotelPayActivity.goTo(getContext(), null);
+                } else {
+                    toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                }
             }
         }
 

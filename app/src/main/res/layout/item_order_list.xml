@@ -103,7 +103,6 @@
         android:id="@+id/rightToTv"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_22"
-        android:text="@string/to_pay"
         android:gravity="center"
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_12"

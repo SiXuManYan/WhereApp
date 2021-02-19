@@ -18,7 +18,10 @@ public class Html5Url {
      */
     public static final String PRIVACY_POLICY = BuildConfig.SERVER_HOST + "privacy/agreement?lang=%1$s";
 
-
+    /**
+     * comm100 客服聊天地址
+     */
+    public static final String COMM100_CHAT_URL = "https://vue.livelyhelp.chat/chatWindow.aspx?siteId=60001617&planId=8da6d622-e5b2-4741-bcdc-855d5d82f95a#";
     public static final String MODEL_HOTEL = "hotel";
     public static final String MODEL_NEWS = "news";
     public static final String MODEL_TRAVEL = "travel";
@@ -31,7 +34,6 @@ public class Html5Url {
      * 模块（hotel：酒店，news：新闻，travel：旅游景点，general：综合服务，restaurant：餐厅）
      */
     public static final String SHARE_FACEBOOK = BuildConfig.SERVER_HOST + "share/facebook?module=%1$s&id=%2$s&device=android";
-
 
 
 }

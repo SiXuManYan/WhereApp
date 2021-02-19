@@ -377,5 +377,8 @@
     <string name="share_cancel">分享取消</string>
     <string name="share_success">分享成功</string>
     <string name="install">安装</string>
+    <string name="message_center">消息中心</string>
+    <string name="business_conversation">商家对话</string>
+    <string name="system_notification">系统通知</string>
 
 </resources>

@@ -30,11 +30,11 @@ import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.storage.entity.User;
+import com.jcs.where.storage.entity.UserRongyunData;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.widget.VerticalSwipeRefreshLayout;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,6 +42,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -262,6 +264,45 @@ public class MineFragment extends BaseFragment {
         WhereDataBase database = app.getDatabase();
         database.userDao().addUser(user);
         User.update();
+        connectRongCloud(response.rongData);
+    }
+
+
+    private boolean alreadyConnectRongCloud = false;
+
+    /**
+     * 连接融云
+     */
+    private void connectRongCloud(UserRongyunData rongData) {
+
+        if (alreadyConnectRongCloud) {
+            return;
+        }
+
+        RongIM.connect(rongData.token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+                //消息数据库打开，可以进入到主页面
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                //连接成功
+                alreadyConnectRongCloud = true;
+            }
+
+            @Override
+            public void onError(RongIMClient.ConnectionErrorCode errorCode) {
+                if (errorCode.equals(RongIMClient.ConnectionErrorCode.RC_CONN_TOKEN_INCORRECT)) {
+                    //从 APP 服务获取新 token，并重连
+                    alreadyConnectRongCloud = false;
+                } else {
+                    //无法连接 IM 服务器，请根据相应的错误码作出对应处理
+                }
+            }
+        });
+
+
     }
 
 

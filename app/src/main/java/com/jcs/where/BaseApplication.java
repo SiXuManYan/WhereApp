@@ -17,6 +17,7 @@ import androidx.multidex.MultiDex;
 import com.comm100.livechat.VisitorClientInterface;
 import com.jcs.where.api.RetrofitManager;
 import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
@@ -27,6 +28,7 @@ import java.util.Locale;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 
 public class BaseApplication extends Application {
 
@@ -44,6 +46,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplicationContext = this;
+        database = WhereDataBase.get(this);
         RetrofitManager.getManager().initRetrofit(this);
         LocationUtil.initInstance(this);
         SPUtil.initInstance(this);
@@ -53,7 +56,7 @@ public class BaseApplication extends Application {
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
         initComm100();
-        database = WhereDataBase.get(this);
+        initRongCloud();
     }
 
 
@@ -98,8 +101,8 @@ public class BaseApplication extends Application {
      * 初始化 comm 100 客服
      */
     private void initComm100() {
-//        VisitorClientInterface.setChatUrl("https://chatserver.comm100.com/chatWindow.aspx?planId=260&siteId=223747");
-        VisitorClientInterface.setChatUrl("https://vue.livelyhelp.chat/chatWindow.aspx?siteId=60001617&planId=8da6d622-e5b2-4741-bcdc-855d5d82f95a#");
+
+        VisitorClientInterface.setChatUrl(Html5Url.COMM100_CHAT_URL);
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
@@ -127,47 +130,38 @@ public class BaseApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityStopped(Activity activity) {
-                Log.v("BaseApplication", activity + "onActivityStopped");
                 count--;
                 if (count == 0) {
                     VisitorClientInterface.activeRemoteNotification();
-                    Log.v("BaseApplication", ">>>>>>>>>>>>>>>>>>>切到后台  lifecycle");
                 }
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
-                Log.v("BaseApplication", activity + "onActivityStarted");
                 if (count == 0) {
                     VisitorClientInterface.inactiveRemoteNotification();
-                    Log.v("BaseApplication", ">>>>>>>>>>>>>>>>>>>切到前台  lifecycle");
                 }
                 count++;
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                Log.v("BaseApplication", activity + "onActivitySaveInstanceState");
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-                Log.v("BaseApplication", activity + "onActivityResumed");
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-                Log.v("BaseApplication", activity + "onActivityPaused");
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                Log.v("BaseApplication", activity + "onActivityDestroyed");
             }
 
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Log.v("BaseApplication", activity + "onActivityCreated");
             }
         });
 
@@ -177,6 +171,14 @@ public class BaseApplication extends Application {
         Intent toLogin = new Intent(mApplicationContext, LoginActivity.class);
         toLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mApplicationContext.startActivity(toLogin);
+    }
+
+
+    /**
+     * 初始化融云
+     */
+    private void initRongCloud() {
+        RongIM.init(this, BuildConfig.RONG_CLOUD_APP_KEY);
     }
 
 }

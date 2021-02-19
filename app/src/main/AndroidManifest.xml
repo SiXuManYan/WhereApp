@@ -361,6 +361,7 @@
         <activity android:name=".features.setting.phone.verify.code.CodeVerifyActivity" />
         <activity android:name=".features.setting.phone.confirm.NewPhoneActivity" />
         <activity android:name=".features.setting.phone.ModifyPhoneActivity" />
+        <activity android:name=".features.message.MessageCenterActivity" />
 
         <service
             android:name="cn.jpush.android.service.PushService"

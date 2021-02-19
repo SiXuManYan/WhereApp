@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ResourceUtils;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.jcs.where.R;
@@ -30,7 +29,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import static com.jcs.where.R.id.task_rb;
 
 /**
  * 我的积分
@@ -61,7 +59,7 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
         mIntegralTv = findViewById(R.id.my_integral_tv);
         mSignInTv = findViewById(R.id.sign_in_tv);
         mTabRg = findViewById(R.id.tab_rg);
-        mTaskRb = findViewById(task_rb);
+        mTaskRb = findViewById(R.id.task_rb);
         mDetailRb = findViewById(R.id.detail_rb);
         mSignInContainerLl = findViewById(R.id.sign_in_container_ll);
 
@@ -158,10 +156,6 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
     public void bindUserIntegral(String integral, boolean isSigned) {
         mIntegralTv.setText(integral);
         changeSignStatus(isSigned);
-
-//        new Handler(Looper.myLooper()).postDelayed(() -> {
-//
-//        }, 2000);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_IN_CHANGE_STATUS, isSigned));
     }
 
@@ -171,8 +165,6 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
         initDefultData();
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_IN_CHANGE_STATUS, true));
     }
-
-
 
 
     @Override

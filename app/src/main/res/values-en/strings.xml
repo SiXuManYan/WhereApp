@@ -381,5 +381,8 @@
 	<string name="share_cancel">Share cancel</string>
     <string name="share_success">Share success</string>
 	<string name="install">Install</string>
+    <string name="message_center">Message center</string>
+    <string name="business_conversation">Business conversation</string>
+	<string name="system_notification">System notification</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.jcs.where.home.fragment;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
@@ -17,9 +18,12 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.decoration.MarginTopDecoration;
 import com.jcs.where.home.dialog.CancelOrderDialog;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.hotel.activity.HotelPayActivity;
 import com.jcs.where.model.OrderModel;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -99,14 +103,27 @@ public class OrderListFragment extends BaseFragment {
 
     private void onOrderItemChildClicked(BaseQuickAdapter baseQuickAdapter, View view, int position) {
         int id = view.getId();
+        long orderId = mAdapter.getItemId(position);
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
         if (id == R.id.rightToTv) {
             Log.e("OrderListFragment", "onItemChildClick: " + "right");
             Class<? extends AppCompatActivity> toRightClass = mAdapter.getToRightClass(position);
+
             if (toRightClass != null) {
                 String simpleName = toRightClass.getSimpleName();
                 Log.e("OrderListFragment", "onOrderItemChildClicked: " + simpleName);
                 if (simpleName.equals("HotelPayActivity")) {
-                    HotelPayActivity.goTo(getContext(), null);
+                    HotelPayActivity.goTo(context, null);
+                } else if (simpleName.equals("HotelDetailActivity")) {
+                    JcsCalendarDialog jcsCalendarDialog = new JcsCalendarDialog();
+                    jcsCalendarDialog.initCalendar(context);
+                    JcsCalendarAdapter.CalendarBean startBean = jcsCalendarDialog.getStartBean();
+                    JcsCalendarAdapter.CalendarBean endBean = jcsCalendarDialog.getEndBean();
+                    Integer modelId = mAdapter.getData().get(position).getModelId();
+                    HotelDetailActivity.goTo(context, modelId, startBean, endBean, 1, "", "", 1);
                 } else {
                     toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
                 }

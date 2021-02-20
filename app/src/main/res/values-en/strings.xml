@@ -398,5 +398,10 @@
 	<string name="hint_receive_message">receive message</string>
 	<string name="hint_input_user_name">input user name</string>
 	<string name="to_install">Do you want to install %1$s ?</string>
+    <string name="order_number">Order Number %1$s</string>
+	<string name="order_cancel_prompt">Free cancellation before %1$s 00:00</string>
+	<string name="reserve_room_prompt">The room will be reserved for you all night</string>
+	<string name="online_payment">Online payment</string>
+	<string name="call_merchant">Call the merchant</string>
 
 </resources>

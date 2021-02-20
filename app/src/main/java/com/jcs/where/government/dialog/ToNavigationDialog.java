@@ -42,7 +42,7 @@ public class ToNavigationDialog extends BaseBottomDialog {
         mCancelBtn = view.findViewById(R.id.cancelBtn);
         mNavigationTv = view.findViewById(R.id.navigationTv);
 
-        mNavigationName  = getString(R.string.google_map);
+        mNavigationName = getString(R.string.google_map);
         mNavigationTv.setText(mNavigationName);
 
     }
@@ -50,7 +50,7 @@ public class ToNavigationDialog extends BaseBottomDialog {
     @Override
     protected void initData() {
         mInstallDialog = new ToInstallAppDialog();
-        mInstallDialog.setInstallName("地图");
+        mInstallDialog.setInstallName(mNavigationName);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ToNavigationDialog extends BaseBottomDialog {
         this.mNavigationName = navigationName;
     }
 
-    public void onNavigationClicked(View view) {
+    private void onNavigationClicked(View view) {
         Context context = getContext();
         if (context != null) {
             if (hasPackage(GOOGLE_MAP_PACKAGE_NAME)) {

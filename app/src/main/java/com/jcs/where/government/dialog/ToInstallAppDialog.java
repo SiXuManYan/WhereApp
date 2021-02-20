@@ -53,7 +53,6 @@ public class ToInstallAppDialog extends BaseDialog {
 
     public void setInstallName(String installName) {
         this.mInstallName = installName;
-        mInstallPrompt.setText(String.format(getString(R.string.to_install), mInstallName));
     }
 
     public void setInstallUrl(String uriString) {

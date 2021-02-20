@@ -56,7 +56,7 @@ public class CallPhoneDialog extends BaseBottomDialog {
         this.mPhoneNumber = phoneNumber;
     }
 
-    public void onPhoneClicked(View view) {
+    private void onPhoneClicked(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         Uri data = Uri.parse("tel:" + mPhoneNumber);
         intent.setData(data);

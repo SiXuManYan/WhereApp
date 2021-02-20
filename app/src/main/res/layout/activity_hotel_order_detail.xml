@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="25dp"
-                android:text="房间将为您整晚保留，请安心入住"
+                android:text="@string/reserve_room_prompt"
                 android:textColor="#ff333333"
                 android:textSize="16sp" />
 
@@ -63,7 +63,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:text="4月27日00:00前可致电商家免费取消"
                 android:textColor="@color/green_1A9D67"
                 android:textSize="12sp" />
 
@@ -83,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="在线付"
+                android:text="@string/online_payment"
                 android:textColor="@color/black_333333"
                 android:textSize="16sp" />
 
@@ -94,7 +93,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="299"
                 android:textColor="@color/orange_FF5B1B"
                 android:textSize="13sp" />
 
@@ -138,7 +136,6 @@
                     android:layout_marginRight="18dp"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="酒店地址酒店地址酒店地址酒店地址 North..."
                     android:textColor="@color/black_333333"
                     android:textSize="16sp" />
 
@@ -148,7 +145,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="4.5分"
                     android:textColor="@color/grey_666666"
                     android:textSize="14sp" />
 
@@ -161,7 +157,6 @@
                     android:layout_marginLeft="10dp"
                     android:drawableLeft="@drawable/ic_hotelorderlocation"
                     android:drawablePadding="4dp"
-                    android:text="酒店地址酒店地址酒店地址酒店地址酒店地址酒店地址酒店地址酒店地址"
                     android:singleLine="true"
                     android:maxLines="1"
                     android:textColor="@color/grey_999999"
@@ -182,7 +177,7 @@
                 android:paddingTop="4dp"
                 android:paddingRight="11dp"
                 android:paddingBottom="4dp"
-                android:text="导航"
+                android:text="@string/navigation"
                 android:textColor="#ff5ca6f3"
                 android:textSize="12sp" />
 
@@ -219,7 +214,6 @@
                     android:id="@+id/tv_startdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4月27日"
                     android:textColor="@color/black_333333"
                     android:textSize="14sp" />
 
@@ -236,7 +230,6 @@
                     android:id="@+id/tv_enddate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4月28日"
                     android:textColor="@color/black_333333"
                     android:textSize="14sp" />
 
@@ -246,7 +239,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="1晚"
                     android:textColor="@color/black_333333"
                     android:textSize="14sp" />
 
@@ -263,7 +255,6 @@
                     android:id="@+id/tv_bed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="大床"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 
@@ -293,7 +284,6 @@
                     android:id="@+id/tv_window"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="有窗"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 
@@ -308,7 +298,6 @@
                     android:id="@+id/tv_wifi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="免费无线"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 
@@ -323,7 +312,6 @@
                     android:id="@+id/tv_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2人入住"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 
@@ -337,7 +325,6 @@
                 android:layout_marginTop="15dp"
                 android:drawableLeft="@drawable/ic_hotelorderdetailpeople"
                 android:drawablePadding="10dp"
-                android:text="LINDA"
                 android:textColor="@color/black_333333"
                 android:textSize="14sp" />
 
@@ -351,7 +338,6 @@
                 android:layout_marginBottom="15dp"
                 android:drawableLeft="@drawable/ic_hotelorderdetailphone"
                 android:drawablePadding="10dp"
-                android:text="123****8912"
                 android:textColor="@color/black_333333"
                 android:textSize="14sp" />
 
@@ -371,6 +357,7 @@
 
 
         <TextView
+            android:id="@+id/toCallMerchantTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="90dp"
@@ -379,7 +366,7 @@
             android:gravity="center"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
-            android:text="致电商家"
+            android:text="@string/call_merchant"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

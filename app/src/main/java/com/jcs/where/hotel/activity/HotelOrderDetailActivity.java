@@ -3,17 +3,21 @@ package com.jcs.where.hotel.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.government.dialog.CallPhoneDialog;
+import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.model.OrderModel;
 import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.HashMap;
 
 import io.reactivex.annotations.NonNull;
 
@@ -25,9 +29,15 @@ public class HotelOrderDetailActivity extends BaseActivity {
     private TextView typeTv, cancelTv, priceTv, hotelNmaeTv, scoreTv, addressTv;
     private TextView roomNameTv, startDateTv, endDateTv, nightTv;
     private TextView bedTv, breakfastTv, windowTv, wifiTv, peopleTv, contactsTv, phoneTv;
+    private TextView mToCallMerchantTv,mToNavTv;
     private RoundedImageView photoIv;
     private OrderModel mModel;
     private String mOrderId;
+    private HashMap<Integer, String> mHotelOrderStatus;
+
+
+    private CallPhoneDialog mCallDialog;
+    private ToNavigationDialog mToNavigationDialog;
 
     public static void goTo(Context context, String id) {
         Intent intent = new Intent(context, HotelOrderDetailActivity.class);
@@ -38,15 +48,6 @@ public class HotelOrderDetailActivity extends BaseActivity {
         }
         context.startActivity(intent);
     }
-
-
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            View decorView = getWindow().getDecorView();
-//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-//            decorView.setSystemUiVisibility(option);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
 
     @Override
     protected void initView() {
@@ -68,12 +69,18 @@ public class HotelOrderDetailActivity extends BaseActivity {
         peopleTv = findViewById(R.id.tv_people);
         contactsTv = findViewById(R.id.tv_contacts);
         phoneTv = findViewById(R.id.tv_phone);
+        mToCallMerchantTv = findViewById(R.id.toCallMerchantTv);
+        mToNavTv = findViewById(R.id.tv_navigation);
+
+        mCallDialog = new CallPhoneDialog();
+        mToNavigationDialog = new ToNavigationDialog();
     }
 
     @Override
     protected void initData() {
         mModel = new OrderModel();
         mOrderId = getIntent().getStringExtra(EXT_ID);
+        initHotelOrderStatus();
         showLoading();
         mModel.getHotelOrderDetail(Integer.parseInt(mOrderId), new BaseObserver<HotelOrderDetailResponse>() {
             @Override
@@ -85,12 +92,12 @@ public class HotelOrderDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
                 stopLoading();
-                mJcsTitle.setMiddleTitle("订单号" + hotelOrderDetailResponse.getTrade_no());
-                typeTv.setText("已支付");
-                cancelTv.setText(hotelOrderDetailResponse.getStart_date() + "00:00前可致电商家免费取消");
-                priceTv.setText("₱" + hotelOrderDetailResponse.getPrice());
+                mJcsTitle.setMiddleTitle(String.format(getString(R.string.order_number), hotelOrderDetailResponse.getTrade_no()));
+                typeTv.setText(mHotelOrderStatus.get(hotelOrderDetailResponse.getOrder_status()));
+                cancelTv.setText(String.format(getString(R.string.order_cancel_prompt), hotelOrderDetailResponse.getStart_date()));
+                priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), hotelOrderDetailResponse.getPrice()));
                 if (hotelOrderDetailResponse.getImages() != null) {
-                    GlideUtil.load(HotelOrderDetailActivity.this,hotelOrderDetailResponse.getImages().get(0),photoIv);
+                    GlideUtil.load(HotelOrderDetailActivity.this, hotelOrderDetailResponse.getImages().get(0), photoIv);
                 } else {
                     photoIv.setImageResource(R.mipmap.ic_glide_default);
                 }
@@ -100,7 +107,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
                 roomNameTv.setText(hotelOrderDetailResponse.getRoom_name());
                 startDateTv.setText(hotelOrderDetailResponse.getStart_date());
                 endDateTv.setText(hotelOrderDetailResponse.getEnd_date());
-                nightTv.setText(hotelOrderDetailResponse.getDays() + "晚");
+                nightTv.setText(String.format(getString(R.string.total_night), hotelOrderDetailResponse.getDays()));
                 bedTv.setText(hotelOrderDetailResponse.getRoom_type());
                 if (hotelOrderDetailResponse.getBreakfast_type() == 1) {
                     breakfastTv.setText(getString(R.string.with_breakfast));
@@ -108,30 +115,55 @@ public class HotelOrderDetailActivity extends BaseActivity {
                     breakfastTv.setText(getString(R.string.no_breakfast));
                 }
                 if (hotelOrderDetailResponse.getWindow_type() == 1) {
-                    windowTv.setText("有窗");
+                    windowTv.setText(getString(R.string.with_window));
                 } else {
-                    windowTv.setText("无窗");
+                    windowTv.setText(getString(R.string.no_window));
                 }
                 if (hotelOrderDetailResponse.getWifi_type() == 1) {
-                    wifiTv.setText("免费无线");
+                    wifiTv.setText(getString(R.string.with_wifi));
                 } else {
-                    wifiTv.setText("无wifi");
+                    wifiTv.setText(getString(R.string.no_wifi));
                 }
-                peopleTv.setText(hotelOrderDetailResponse.getPeople_num() + "人入住");
+
+                peopleTv.setText(String.format(getString(R.string.stay_people_number), hotelOrderDetailResponse.getPeople_num()));
                 contactsTv.setText(hotelOrderDetailResponse.getUsername());
                 phoneTv.setText(hotelOrderDetailResponse.getPhone());
+                mCallDialog.setPhoneNumber(hotelOrderDetailResponse.getPhone());
+                mToNavigationDialog.setLatitude(hotelOrderDetailResponse.getHotel_lat());
+                mToNavigationDialog.setLongitude(hotelOrderDetailResponse.getHotel_lng());
 
             }
         });
     }
 
+    private void initHotelOrderStatus() {
+        mHotelOrderStatus = new HashMap<>();
+        mHotelOrderStatus.put(1, getString(R.string.mine_unpaid));
+        mHotelOrderStatus.put(2, getString(R.string.mine_booked));
+        mHotelOrderStatus.put(3, getString(R.string.mine_reviews));
+        mHotelOrderStatus.put(4, getString(R.string.completed));
+        mHotelOrderStatus.put(5, getString(R.string.cancelled));
+        mHotelOrderStatus.put(6, getString(R.string.refunding));
+        mHotelOrderStatus.put(7, getString(R.string.refunded));
+        mHotelOrderStatus.put(8, getString(R.string.refund_failed));
+    }
+
     @Override
     protected void bindListener() {
+        mToCallMerchantTv.setOnClickListener(this::toCallMerchant);
+        mToNavTv.setOnClickListener(this::toNavigation);
+    }
 
+    private void toNavigation(View view) {
+        mToNavigationDialog.show(getSupportFragmentManager());
+    }
+
+    private void toCallMerchant(View view) {
+        mCallDialog.show(getSupportFragmentManager());
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hotelorderdetail;
+        return R.layout.activity_hotel_order_detail;
     }
 }

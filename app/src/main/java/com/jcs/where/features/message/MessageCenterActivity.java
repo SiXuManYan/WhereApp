@@ -1,14 +1,20 @@
 package com.jcs.where.features.message;
 
-import android.graphics.Typeface;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.radiobutton.MaterialRadioButton;
+import com.blankj.utilcode.util.StringUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.features.message.conversation.BusinessConversationFragment;
+import com.jcs.where.features.message.notice.SystemNoticeFragment;
+import com.jcs.where.integral.child.detail.IntegralChildDetailFragment;
+import com.jcs.where.widget.tabs.SlidingTabLayout;
 
 /**
  * Created by Wangsw  2021/2/19 17:07.
@@ -17,11 +23,10 @@ import com.jcs.where.base.BaseActivity;
 public class MessageCenterActivity extends BaseActivity {
 
 
-    private RadioButton mTaskRb;
-    private RadioButton mDetailRb;
-    private RadioGroup mTabRg;
-    private ViewPager mPagerVp;
-
+    private ViewPager pager;
+    private SlidingTabLayout tabs_type;
+    private final String[] TAB_TITLES = {StringUtils.getString(R.string.business_conversation), StringUtils.getString(R.string.system_notification)};
+    private Uri mUri;
 
 
     @Override
@@ -30,65 +35,53 @@ public class MessageCenterActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected void initView() {
-        mPagerVp = findViewById(R.id.pager_vp);
-        mTabRg = findViewById(R.id.tab_rg);
-        mTaskRb = findViewById(R.id.task_rb);
-        mDetailRb = findViewById(R.id.detail_rb);
+        pager = findViewById(R.id.pager);
+        tabs_type = findViewById(R.id.tabs_type);
+        pager.setOffscreenPageLimit(TAB_TITLES.length);
+
+//        RongIM.getInstance().getConversationList();
     }
 
     @Override
     protected void initData() {
+        pager.setAdapter(new InnerPagerAdapter(getSupportFragmentManager(), 0));
+        tabs_type.setViewPager(pager, TAB_TITLES);
 
     }
 
     @Override
     protected void bindListener() {
-        mPagerVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+    }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
 
-            }
+    private static class InnerPagerAdapter extends FragmentPagerAdapter {
 
-            @Override
-            public void onPageSelected(int position) {
-                MaterialRadioButton child = (MaterialRadioButton) mTabRg.getChildAt(position);
-                child.setSelected(true);
+        public InnerPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
 
-                if (position == 0) {
-                    mTaskRb.setTypeface(null, Typeface.BOLD);
-                    mDetailRb.setTypeface(null, Typeface.NORMAL);
-                } else {
-                    mTaskRb.setTypeface(null, Typeface.NORMAL);
-                    mDetailRb.setTypeface(null, Typeface.BOLD);
-                }
-
-            }
-
-        });
-        mTaskRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
-            if (isCheck) {
-                mTaskRb.setTypeface(null, Typeface.BOLD);
-                mPagerVp.setCurrentItem(0);
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new BusinessConversationFragment();
             } else {
-                mTaskRb.setTypeface(null, Typeface.NORMAL);
+                return new SystemNoticeFragment();
             }
 
-        });
-        mDetailRb.setOnCheckedChangeListener((compoundButton, isCheck) -> {
-            if (isCheck) {
-                mDetailRb.setTypeface(null, Typeface.BOLD);
-                mPagerVp.setCurrentItem(1);
-            } else {
-                mDetailRb.setTypeface(null, Typeface.NORMAL);
-            }
+        }
 
-        });
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 
 

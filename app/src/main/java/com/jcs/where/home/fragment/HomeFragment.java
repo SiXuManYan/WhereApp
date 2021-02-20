@@ -14,6 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -35,6 +40,7 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
+import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
 import com.jcs.where.home.adapter.HomeYouLikeAdapter;
@@ -53,10 +59,6 @@ import com.jcs.where.yellow_page.activity.YellowPageActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import pl.droidsonroids.gif.GifImageView;
@@ -240,7 +242,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void onMessageLayoutClicked(View view) {
-        showComing();
+        startActivityAfterLogin(MessageCenterActivity.class);
     }
 
     private void onYouLickItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {

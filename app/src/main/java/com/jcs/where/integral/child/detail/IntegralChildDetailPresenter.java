@@ -38,7 +38,6 @@ public class IntegralChildDetailPresenter extends BaseMvpPresenter {
                 mView.bindDetailData(data, isLastPage);
             }
 
-
         });
     }
 

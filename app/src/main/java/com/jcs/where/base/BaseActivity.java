@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -22,7 +23,10 @@ import androidx.core.content.ContextCompat;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.LocalLanguageUtil;
+import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
@@ -329,6 +333,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             startActivityForResult(new Intent(this, target), requestCode);
         } else {
             startActivityForResult((new Intent(this, target)).putExtras(bundle), requestCode);
+        }
+    }
+
+    protected final void startActivityAfterLogin(@NotNull Class<?> target) {
+        String token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+        if (TextUtils.isEmpty(token)) {
+            startActivity(LoginActivity.class);
+        } else {
+            toActivity(target);
         }
     }
 

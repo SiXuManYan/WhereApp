@@ -455,6 +455,19 @@
         <activity
             android:name=".features.message.MessageCenterActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.message.cloud.ConversationListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="${applicationId}"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
 
     </application>
 

@@ -232,8 +232,6 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
         public int getCount() {
             return 2;
         }
-
-
     }
 
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jcs.where">
+    package="com.jcs.where"
+    tools:ignore="ProtectedPermissions">
     <!--允许程序设置内置sd卡的写权限-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
@@ -28,20 +29,19 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!-- com 100 -->
+    <!-- com 100 start -->
     <permission
         android:name="com.jcs.where.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.jcs.where.permission.JPUSH_MESSAGE" />
-
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-    <!-- com 100 -->
+    <!-- com 100 end -->
 
     <!--允许程序打开网络套接字-->
     <application
@@ -329,13 +329,12 @@
             tools:ignore="LockedOrientationActivity" />
 
 
-        <!-- comm 100  -->
+        <!-- comm 100 start -->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle">
+            android:theme="@style/MyDialogStyle" />
 
-        </activity>
 
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
@@ -352,16 +351,6 @@
 
 
         <activity android:name=".customer.ExtendChatActivity" />
-        <activity
-            android:name=".mine.activity.AboutActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".features.setting.information.ModifyInfoActivity" />
-        <activity android:name=".features.setting.password.ModifyPasswordActivity" />
-        <activity android:name=".features.setting.phone.verify.password.PasswordVerifyActivity" />
-        <activity android:name=".features.setting.phone.verify.code.CodeVerifyActivity" />
-        <activity android:name=".features.setting.phone.confirm.NewPhoneActivity" />
-        <activity android:name=".features.setting.phone.ModifyPhoneActivity" />
-        <activity android:name=".features.message.MessageCenterActivity" />
 
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -440,8 +429,32 @@
             android:name="JPUSH_APPKEY"
             android:value="dca78eb7c81e4244fb6254c0" />
 
-        <!-- comm 100  -->
+        <!-- comm 100 end -->
 
+        <activity
+            android:name=".mine.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.information.ModifyInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.password.ModifyPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.verify.password.PasswordVerifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.verify.code.CodeVerifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.confirm.NewPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.ModifyPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.message.MessageCenterActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

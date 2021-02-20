@@ -5,14 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
@@ -21,10 +19,9 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.CommentTypeBean;
 import com.jcs.where.bean.ErrorBean;
-import com.jcs.where.dialog.CommentSuccessDialog;
 import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.GlideUtil;
-import com.jcs.where.view.GridItemDecoration;
+import com.jcs.where.widget.SelectStarView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,10 +30,9 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class WriteCommentActivity extends BaseActivity implements View.OnClickListener {
+public class WriteCommentActivity extends BaseActivity {
 
 
     private static final String EXT_ID = "id";
@@ -51,6 +47,8 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
     private EditText contentEt;
     private Dialog commentSuccessDialog;
     private int typeId = -1;
+    private SelectStarView mSelectStarView;
+    private TextView mSatisfiedTv;
 
     public static void goTo(Context context, int id, String name) {
         Intent intent = new Intent(context, WriteCommentActivity.class);
@@ -65,50 +63,14 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initView() {
-        RecyclerView recyclerView = findViewById(R.id.rv_photo);
-        recyclerView.setLayoutManager(new GridLayoutManager(WriteCommentActivity.this, 4) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        });
-        recyclerView.addItemDecoration(new GridItemDecoration(WriteCommentActivity.this, 5, 0));
-        mAdapter = new PhotoAdapter(R.layout.item_picture);
-        mAdapter.addChildClickViewIds(R.id.iv_picture_delete);
-        mAdapter.addData("0");
-        recyclerView.setAdapter(mAdapter);
-        typeRv = findViewById(R.id.rv_type);
-        typeRv.setLayoutManager(new GridLayoutManager(WriteCommentActivity.this, 4) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        });
-        typeRv.addItemDecoration(new GridItemDecoration(WriteCommentActivity.this, 10, 20));
-        mCommentAdapter = new CommentAdapter();
-        starIv1 = findViewById(R.id.iv_star1);
-        starIv2 = findViewById(R.id.iv_star2);
-        starIv3 = findViewById(R.id.iv_star3);
-        starIv4 = findViewById(R.id.iv_star4);
-        starIv5 = findViewById(R.id.iv_star5);
-        starTv = findViewById(R.id.tv_star);
-        starTv.setVisibility(View.GONE);
-        hotelNameTv = findViewById(R.id.tv_hotelname);
-        hotelNameTv.setText(getIntent().getStringExtra(EXT_NAME));
-        findViewById(R.id.tv_submit).setOnClickListener(this);
-        contentEt = findViewById(R.id.et_conetnt);
-        commentSuccessDialog = new CommentSuccessDialog(WriteCommentActivity.this, R.style.dialog, new CommentSuccessDialog.OnCloseListener() {
-            @Override
-            public void onClose(Dialog dialog) {
-                dialog.dismiss();
-                finish();
-            }
+        mSelectStarView = findViewById(R.id.selectStarView);
+        mSelectStarView.setListener(this::onStarSelected);
 
-            @Override
-            public void onConfirm(Dialog dialog) {
-                dialog.dismiss();
-            }
-        });
+        mSatisfiedTv = findViewById(R.id.satisfiedTv);
+    }
+
+    private void onStarSelected(int score, String satisfaction) {
+        mSatisfiedTv.setText(satisfaction);
     }
 
     @Override
@@ -118,99 +80,11 @@ public class WriteCommentActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void bindListener() {
-        starIv1.setOnClickListener(this);
-        starIv2.setOnClickListener(this);
-        starIv3.setOnClickListener(this);
-        starIv4.setOnClickListener(this);
-        starIv5.setOnClickListener(this);
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.iv_picture_delete) {
-                mAdapter.removeAt(position);
-            }
-        });
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_writecomment;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_star1:
-                starIv1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starIv3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starIv4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starIv5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starTv.setText("一般");
-                starTv.setVisibility(View.VISIBLE);
-                star = 1;
-                break;
-            case R.id.iv_star2:
-                starIv1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starIv4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starIv5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starTv.setText("不错");
-                starTv.setVisibility(View.VISIBLE);
-                star = 2;
-                break;
-            case R.id.iv_star3:
-                starIv1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starIv5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starTv.setText("很好");
-                starTv.setVisibility(View.VISIBLE);
-                star = 3;
-                break;
-            case R.id.iv_star4:
-                starIv1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_greystar));
-                starTv.setText("非常好");
-                starTv.setVisibility(View.VISIBLE);
-                star = 4;
-                break;
-            case R.id.iv_star5:
-                starIv1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starIv5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_writecomment_lightstar));
-                starTv.setText("好极了");
-                starTv.setVisibility(View.VISIBLE);
-                star = 5;
-                break;
-            case R.id.tv_submit:
-                if (star == -1) {
-                    showToast("请选择评分");
-                    return;
-                }
-                if (TextUtils.isEmpty(contentEt.getText().toString().trim())) {
-                    showToast("请输入评论内容");
-                    return;
-                }
-                if (mAdapter.getCirclePhoto().size() == 0) {
-                    showToast("请选择需要上传的图片");
-                    return;
-                }
-//                if (typeId == -1) {
-//                    ToastUtils.showLong(WriteCommentActivity.this, "请选择出行类型");
-//                    return;
-//                }
-                showLoading();
-                //TODO 上传图片
-                break;
-            default:
-                break;
-        }
+        return R.layout.activity_write_comment;
     }
 
     private void submitComment(List<String> pathList) {

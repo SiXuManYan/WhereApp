@@ -7,6 +7,7 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.flash.model.FlashModel;
 import com.jcs.where.home.HomeActivity;
+import com.jcs.where.hotel.activity.WriteCommentActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
@@ -64,9 +65,11 @@ public class FlashActivity extends BaseActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                         toHomeActivity();
+//                        toDevActivity();
                     }
                 }
                 toHomeActivity();
+//                toDevActivity();
             }
         }).start();
     }
@@ -75,6 +78,15 @@ public class FlashActivity extends BaseActivity {
         if (isAlive) {
             runOnUiThread(() -> {
                 toActivity(HomeActivity.class);
+                finish();
+            });
+        }
+    }
+
+    private void toDevActivity() {
+        if (isAlive) {
+            runOnUiThread(() -> {
+                toActivity(WriteCommentActivity.class);
                 finish();
             });
         }

@@ -403,5 +403,11 @@
 	<string name="reserve_room_prompt">The room will be reserved for you all night</string>
 	<string name="online_payment">Online payment</string>
 	<string name="call_merchant">Call the merchant</string>
+    <string name="satisfied">Satisfied</string>
+	<string name="very_satisfied">Very Satisfied</string>
+	<string name="very_unsatisfactory">Very Unsatisfactory</string>
+	<string name="unsatisfactory">Unsatisfactory</string>
+	<string name="commonly">Commonly</string>
+    <string name="commit">Commit</string>
 
 </resources>

@@ -399,5 +399,11 @@
     <string name="reserve_room_prompt">房间将为您整晚保留，请安心入住</string>
     <string name="online_payment">在线付</string>
     <string name="call_merchant">致电商家</string>
+    <string name="satisfied">满意</string>
+    <string name="very_satisfied">非常满意</string>
+    <string name="very_unsatisfactory">非常不满意</string>
+    <string name="unsatisfactory">不满意</string>
+    <string name="commonly">一般</string>
+    <string name="commit">提交</string>
 
 </resources>

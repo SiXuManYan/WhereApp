@@ -57,6 +57,9 @@
     <declare-styleable name="StarView">
         <attr name="starNum" format="integer" />
     </declare-styleable>
+    <declare-styleable name="SelectStarView">
+        <attr name="selectStarNum" format="integer" />
+    </declare-styleable>
 
     <declare-styleable name="LabelView">
         <attr name="labelNum" format="integer" />

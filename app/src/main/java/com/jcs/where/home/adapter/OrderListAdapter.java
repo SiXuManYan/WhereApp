@@ -17,6 +17,7 @@ import com.jcs.where.hotel.activity.HotelCommentActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.hotel.activity.HotelPayActivity;
+import com.jcs.where.hotel.activity.HotelSubscribeActivity;
 import com.jcs.where.utils.GlideUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -79,12 +80,13 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         mHotelOrderHolder = new HashMap<>();
         mHotelOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), CancelOrderActivity.class, context.getString(R.string.to_pay), HotelPayActivity.class));
         mHotelOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.mine_booked), context.getString(R.string.to_refund), ApplyRefundActivity.class, context.getString(R.string.to_use), HotelOrderDetailActivity.class));
-        mHotelOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_reviews), context.getString(R.string.to_review), HotelCommentActivity.class, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_reviews), context.getString(R.string.to_review), HotelCommentActivity.class, context.getString(R.string.book_again), HotelDetailActivity.class));
         //TODO 评价详情页面还没有，查看评价无法跳转
-        mHotelOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.completed), context.getString(R.string.see_review), null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
-        mHotelOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.cancelled), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
-        mHotelOrderHolder.put(6, new OrderStatusHolder(6, context.getString(R.string.refunding), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
-        mHotelOrderHolder.put(7, new OrderStatusHolder(7, context.getString(R.string.refunded), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.completed), context.getString(R.string.see_review), null, context.getString(R.string.book_again), HotelDetailActivity.class));
+        // 已取消
+        mHotelOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.cancelled), "", null, context.getString(R.string.book_again), HotelDetailActivity.class));
+        mHotelOrderHolder.put(6, new OrderStatusHolder(6, context.getString(R.string.refunding), "", null, context.getString(R.string.book_again), HotelDetailActivity.class));
+        mHotelOrderHolder.put(7, new OrderStatusHolder(7, context.getString(R.string.refunded), "", null, context.getString(R.string.book_again), HotelDetailActivity.class));
         //TODO 退款失败未在UI图中找到对应的
         mHotelOrderHolder.put(8, new OrderStatusHolder(8, context.getString(R.string.refund_failed), context.getString(R.string.refund_failed), HotelDetailActivity.class, context.getString(R.string.refund_failed), null));
     }

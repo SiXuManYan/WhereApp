@@ -1,4 +1,4 @@
-package com.jcs.where.adapter;
+package com.jcs.where.home.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,8 @@ import com.chad.library.adapter.base.module.UpFetchModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.OrderListResponse;
+import com.jcs.where.home.activity.ApplyRefundActivity;
+import com.jcs.where.home.activity.CancelOrderActivity;
 import com.jcs.where.hotel.activity.HotelCommentActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
@@ -68,10 +70,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         mRoomPriceText = context.getString(R.string.order_room_price);
     }
 
+    /**
+     * 酒店
+     *
+     * @param context
+     */
     private void initHotelOrderHolder(Context context) {
         mHotelOrderHolder = new HashMap<>();
-        mHotelOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), null, context.getString(R.string.to_pay), HotelPayActivity.class));
-        mHotelOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.mine_booked), "", null, context.getString(R.string.to_use), HotelOrderDetailActivity.class));
+        mHotelOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), CancelOrderActivity.class, context.getString(R.string.to_pay), HotelPayActivity.class));
+        mHotelOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.mine_booked), context.getString(R.string.to_refund), ApplyRefundActivity.class, context.getString(R.string.to_use), HotelOrderDetailActivity.class));
         mHotelOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_reviews), context.getString(R.string.to_review), HotelCommentActivity.class, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         //TODO 评价详情页面还没有，查看评价无法跳转
         mHotelOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.completed), context.getString(R.string.see_review), null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
@@ -82,10 +89,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         mHotelOrderHolder.put(8, new OrderStatusHolder(8, context.getString(R.string.refund_failed), context.getString(R.string.refund_failed), HotelDetailActivity.class, context.getString(R.string.refund_failed), null));
     }
 
+    /**
+     * 餐厅
+     *
+     * @param context
+     */
     private void initDineOrderHolder(Context context) {
         mDineOrderHolder = new HashMap<>();
         mDineOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), null, context.getString(R.string.to_pay), HotelPayActivity.class));
-        mDineOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.cancelled), "", null, context.getString(R.string.to_use), HotelOrderDetailActivity.class));
+        mDineOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.cancelled), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mDineOrderHolder.put(3, new OrderStatusHolder(3, context.getString(R.string.mine_booked), context.getString(R.string.to_review), HotelCommentActivity.class, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mDineOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.completed), context.getString(R.string.see_review), null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mDineOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.payment_failed), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
@@ -95,12 +107,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         mDineOrderHolder.put(9, new OrderStatusHolder(9, context.getString(R.string.mine_reviews), context.getString(R.string.to_review), HotelDetailActivity.class, context.getString(R.string.book_again), null));
     }
 
+    /**
+     * 外卖
+     */
     private void initTakeawayOrderHolder(Context context) {
         mTakeawayOrderHolder = new HashMap<>();
         mTakeawayOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.unpaid), "", null, "", HotelPayActivity.class));
         mTakeawayOrderHolder.put(2, new OrderStatusHolder(2, "未接单", "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(3, new OrderStatusHolder(3, "已接单", "", HotelCommentActivity.class, "", HotelOrderDetailActivity.class));
-        mTakeawayOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.cancelled), "", null, "", HotelOrderDetailActivity.class));
+        mTakeawayOrderHolder.put(4, new OrderStatusHolder(4, context.getString(R.string.cancelled), "", null, context.getString(R.string.book_again), HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(5, new OrderStatusHolder(5, context.getString(R.string.completed), "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(6, new OrderStatusHolder(6, context.getString(R.string.payment_failed), "", null, "", HotelOrderDetailActivity.class));
         mTakeawayOrderHolder.put(7, new OrderStatusHolder(7, context.getString(R.string.refunding), "", null, "", HotelOrderDetailActivity.class));
@@ -122,12 +137,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         if (orderStatusHolder != null) {
             baseViewHolder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
+            baseViewHolder.setText(R.id.rightToTv, orderStatusHolder.rightText);
             if (orderStatusHolder.leftText.equals("")) {
                 baseViewHolder.setGone(R.id.leftToTv, true);
             } else {
                 baseViewHolder.setGone(R.id.leftToTv, false);
                 baseViewHolder.setText(R.id.leftToTv, orderStatusHolder.leftText);
-                baseViewHolder.setText(R.id.rightToTv, orderStatusHolder.rightText);
             }
         }
 

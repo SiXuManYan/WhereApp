@@ -65,7 +65,7 @@
     <string name="area_chain">中国 +86</string>
     <string name="area_philippines">菲律宾 +63</string>
     <string name="pay_order">支付订单</string>
-    <string name="to_pay">支付</string>
+    <string name="to_pay">立即支付</string>
     <string name="to_cancel_order">取消订单</string>
     <string name="search_my_order">搜索我的订单</string>
     <string name="check_in_time">入住时间：%1$s</string>
@@ -380,5 +380,19 @@
     <string name="message_center">消息中心</string>
     <string name="business_conversation">商家对话</string>
     <string name="system_notification">系统通知</string>
+    <string name="to_refund">申请退款</string>
+    <string name="apply_refund_title">申请退款</string>
+    <string name="prompt_order_id">订单号</string>
+    <string name="prompt_price">金额</string>
+    <string name="prompt_refund_method">退回方式</string>
+    <string name="prompt_expected_time">预计退回时间</string>
+    <string name="expected_refund_time">1&#045;3个工作日</string>
+    <string name="refund_back_method">原路返回</string>
+    <string name="place_order">提交订单</string>
+    <string name="phone">联系手机</string>
+    <string name="room_number">房间数</string>
+    <string name="hint_receive_message">用于接收短信通知</string>
+    <string name="hint_input_user_name">请填写实际入住人姓名</string>
+    <string name="to_install">是否去安装 %1$s ？</string>
 
 </resources>

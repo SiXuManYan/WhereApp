@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.jcs.where.R;
-import com.jcs.where.adapter.OrderListAdapter;
+import com.jcs.where.home.adapter.OrderListAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderListResponse;
@@ -16,10 +16,10 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.decoration.MarginTopDecoration;
+import com.jcs.where.home.dialog.CancelOrderDialog;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
+import com.jcs.where.hotel.activity.HotelPayActivity;
 import com.jcs.where.model.OrderModel;
-
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -87,27 +87,7 @@ public class OrderListFragment extends BaseFragment {
         mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
 
-        mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
-                int id = view.getId();
-                if (id == R.id.rightToTv) {
-                    Log.e("OrderListFragment", "onItemChildClick: " + "right");
-                    Class<? extends AppCompatActivity> toRightClass = mAdapter.getToRightClass(position);
-                    if (toRightClass != null) {
-                        toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
-                    }
-                }
-
-                if (id == R.id.leftToTv) {
-                    Log.e("OrderListFragment", "onItemChildClick: " + "left");
-                    Class<? extends AppCompatActivity> toLeftClass = mAdapter.getToLeftClass(position);
-                    if (toLeftClass != null) {
-                        toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
-                    }
-                }
-            }
-        });
+        mAdapter.setOnItemChildClickListener(this::onOrderItemChildClicked);
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -115,6 +95,39 @@ public class OrderListFragment extends BaseFragment {
                 HotelOrderDetailActivity.goTo(getContext(), String.valueOf(mAdapter.getItemId(position)));
             }
         });
+    }
+
+    private void onOrderItemChildClicked(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+        int id = view.getId();
+        if (id == R.id.rightToTv) {
+            Log.e("OrderListFragment", "onItemChildClick: " + "right");
+            Class<? extends AppCompatActivity> toRightClass = mAdapter.getToRightClass(position);
+            if (toRightClass != null) {
+                String simpleName = toRightClass.getSimpleName();
+                Log.e("OrderListFragment", "onOrderItemChildClicked: " + simpleName);
+                if (simpleName.equals("HotelPayActivity")) {
+                    HotelPayActivity.goTo(getContext(), null);
+                } else {
+                    toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                }
+            }
+        }
+
+        if (id == R.id.leftToTv) {
+            Log.e("OrderListFragment", "onItemChildClick: " + "left");
+            Class<? extends AppCompatActivity> toLeftClass = mAdapter.getToLeftClass(position);
+
+            if (toLeftClass != null) {
+                String simpleName = toLeftClass.getSimpleName();
+                if (simpleName.equals("CancelOrderActivity")) {
+                    // 展示取消订单的dialog
+                    CancelOrderDialog cancelOrderDialog = new CancelOrderDialog();
+                    cancelOrderDialog.show(getChildFragmentManager());
+                } else {
+                    toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                }
+            }
+        }
     }
 
     @Override
@@ -142,7 +155,7 @@ public class OrderListFragment extends BaseFragment {
                 mAdapter.getData().clear();
                 if (pageResponse.getData().size() > 0) {
                     mAdapter.addData(pageResponse.getData());
-                }else {
+                } else {
                     mAdapter.notifyDataSetChanged();
                     mAdapter.setEmptyView(R.layout.view_empty_data_brvah_mechanism);
                 }

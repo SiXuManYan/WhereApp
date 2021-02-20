@@ -384,5 +384,19 @@
     <string name="message_center">Message center</string>
     <string name="business_conversation">Business conversation</string>
 	<string name="system_notification">System notification</string>
+    <string name="to_refund">Apply Refund</string>
+    <string name="apply_refund_title">Apply Refund</string>
+	<string name="prompt_order_id">Order Number</string>
+	<string name="prompt_price">Price</string>
+	<string name="prompt_refund_method">Method</string>
+	<string name="prompt_expected_time">Time</string>
+	<string name="expected_refund_time">One to three working days</string>
+	<string name="refund_back_method">Refund the same way</string>
+	<string name="place_order">Place Order</string>
+	<string name="phone">Phone</string>
+	<string name="room_number">Room number</string>
+	<string name="hint_receive_message">receive message</string>
+	<string name="hint_input_user_name">input user name</string>
+	<string name="to_install">Do you want to install %1$s ?</string>
 
 </resources>

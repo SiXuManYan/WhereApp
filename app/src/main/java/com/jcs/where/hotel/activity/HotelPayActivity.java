@@ -56,17 +56,20 @@ public class HotelPayActivity extends BaseActivity implements View.OnClickListen
         mModel = new HotelPayModel();
         hotelOrderResponse = (HotelOrderResponse) getIntent().getSerializableExtra(EXT_PAYBEAN);
 
-        mModel.getHotelOrderDetail(hotelOrderResponse.getId(), new BaseObserver<HotelOrderDetailResponse>() {
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
+        if (hotelOrderResponse != null) {
 
-            }
+            mModel.getHotelOrderDetail(hotelOrderResponse.getId(), new BaseObserver<HotelOrderDetailResponse>() {
+                @Override
+                protected void onError(ErrorResponse errorResponse) {
 
-            @Override
-            public void onSuccess(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
-                deployOrderDetail(hotelOrderDetailResponse);
-            }
-        });
+                }
+
+                @Override
+                public void onSuccess(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
+                    deployOrderDetail(hotelOrderDetailResponse);
+                }
+            });
+        }
     }
 
     private void deployOrderDetail(HotelOrderDetailResponse hotelOrderDetailResponse) {

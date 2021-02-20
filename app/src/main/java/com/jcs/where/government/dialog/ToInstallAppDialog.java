@@ -43,7 +43,7 @@ public class ToInstallAppDialog extends BaseDialog {
         mEnsureBtn = view.findViewById(R.id.ensureBtn);
 
         mInstallPrompt = view.findViewById(R.id.installPrompt);
-        mInstallPrompt.setText("是否去安装 " + mInstallName + " ?");
+        mInstallPrompt.setText(String.format(getString(R.string.to_install), mInstallName));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ToInstallAppDialog extends BaseDialog {
 
     public void setInstallName(String installName) {
         this.mInstallName = installName;
-        mInstallPrompt.setText("是否去安装 " + mInstallName + " ?");
+        mInstallPrompt.setText(String.format(getString(R.string.to_install), mInstallName));
     }
 
     public void setInstallUrl(String uriString) {

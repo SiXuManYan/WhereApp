@@ -133,6 +133,7 @@
     <string name="coming_soon">即将上线</string>
     <string name="prompt_input_correct_phone">请输入正确手机号</string>
     <string name="login_success">登录成功</string>
+    <string name="commit_success">提交成功</string>
     <string name="error_password_length">密码长度不符</string>
     <string name="prompt_send_success">发送成功，请注意查收</string>
     <string name="hint_input_code">请输入验证码</string>
@@ -405,5 +406,7 @@
     <string name="unsatisfactory">不满意</string>
     <string name="commonly">一般</string>
     <string name="commit">提交</string>
+    <string name="hint_write_comment">分享酒店交通，餐饮，卫生设施等方面体验，对小伙伴更有帮助哦~</string>
+    <string name="comment_content_not_empty">评论内容不能为空</string>
 
 </resources>

@@ -22,8 +22,14 @@ public abstract class EmptyTextWatcher implements TextWatcher {
         String input = editable.toString();
         if (input != null && input.equals("")) {
             onEtEmpty();
+        }else {
+            onEtNotEmpty();
         }
     }
 
     protected abstract void onEtEmpty();
+    protected void onEtNotEmpty(){
+
+    }
+
 }

@@ -29,7 +29,7 @@ public class SelectStarView extends LinearLayout {
     /**
      * 评级星星数量（黄色）
      */
-    private double mStarNum = 0;
+    private int mStarNum = 0;
 
     private SelectStarListener mListener;
     private List<String> mSatisfaction;
@@ -49,7 +49,6 @@ public class SelectStarView extends LinearLayout {
 
     private void init() {
         setOrientation(HORIZONTAL);
-        Log.e("SelectStarView", "SelectStarView: " + "-----");
         addStar();
         initSatisfaction();
     }
@@ -66,7 +65,6 @@ public class SelectStarView extends LinearLayout {
     private void addStar() {
         removeAllViews();
         for (int i = 0; i < MAX_STAR_NUM; i++) {
-            Log.e("SelectStarView", "addStar: " + "-----" + i);
             ImageView star = new ImageView(getContext());
             star.setTag(i);
             star.setOnClickListener(this::onStarClicked);
@@ -94,15 +92,19 @@ public class SelectStarView extends LinearLayout {
     private void onStarClicked(View view) {
         int clicked = (int) view.getTag();
         updateStar(clicked);
-        int score = clicked + 1;
-        mListener.onStarSelect(score, mSatisfaction.get(clicked));
+        mStarNum = clicked + 1;
+        mListener.onStarSelect(mStarNum, mSatisfaction.get(clicked));
+    }
+
+    public int getScore(){
+        return mStarNum;
     }
 
     public void setListener(SelectStarListener listener) {
         this.mListener = listener;
     }
 
-    public void setStartNum(double startNum) {
+    public void setStartNum(int startNum) {
         this.mStarNum = startNum;
         addStar();
         invalidate();

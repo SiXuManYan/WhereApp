@@ -70,7 +70,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/scoreTv"/>
 
     <TextView
-        android:id="@+id/commentTv"
+        android:id="@+id/commitTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/grey_999999"

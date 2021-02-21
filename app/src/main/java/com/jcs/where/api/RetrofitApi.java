@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
+import com.jcs.where.api.request.WriteHotelCommentRequest;
 import com.jcs.where.api.request.account.BindPhoneRequest;
 import com.jcs.where.api.request.account.LoginRequest;
 import com.jcs.where.api.request.account.RegisterRequest;
@@ -183,6 +184,12 @@ public interface RetrofitApi {
      */
     @GET("hotelapi/v2/hotel/{hotel_id}/comments")
     Observable<JcsResponse<HotelCommentsResponse>> getHotelComments(@Path("hotel_id") int hotelId);
+
+    /**
+     * 上传酒店评价
+     */
+    @POST("hotelapi/v2/hotel/comment")
+    Observable<JcsResponse<SuccessResponse>> postHotelComment(@Body WriteHotelCommentRequest request);
 
     /**
      * 获取酒店评价

@@ -129,6 +129,7 @@
 	<string name="coming_soon">coming soon</string>
 	<string name="prompt_input_correct_phone">Please enter the correct phone number</string>
 	<string name="login_success">login successful</string>
+	<string name="commit_success">commit successful</string>
 	<string name="error_password_length">The password is not in conformity</string>
 	<string name="prompt_send_success">Send success, please pay attention to check</string>
 	<string name="hint_input_code">Verification code</string>
@@ -409,5 +410,7 @@
 	<string name="unsatisfactory">Unsatisfactory</string>
 	<string name="commonly">Commonly</string>
     <string name="commit">Commit</string>
+    <string name="hint_write_comment">Sharing Hotel transportation, catering, sanitation and other experiences is more helpful for small partners~</string>
+    <string name="comment_content_not_empty">Please input comment content</string>
 
 </resources>

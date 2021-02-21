@@ -64,12 +64,12 @@ public class FlashActivity extends BaseActivity {
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-//                        toHomeActivity();
-                        toDevActivity();
+                        toHomeActivity();
+//                        toDevActivity();
                     }
                 }
-//                toHomeActivity();
-                toDevActivity();
+                toHomeActivity();
+//                toDevActivity();
             }
         }).start();
     }

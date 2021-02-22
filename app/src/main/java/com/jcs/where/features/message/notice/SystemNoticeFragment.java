@@ -61,6 +61,7 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
             if (data.is_read != 1) {
                 data.is_read = 1;
                 mAdapter.notifyItemChanged(position);
+                presenter.setMessageRead(data.id);
             }
         });
     }

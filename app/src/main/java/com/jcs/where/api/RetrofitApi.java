@@ -10,6 +10,7 @@ import com.jcs.where.api.request.account.LoginRequest;
 import com.jcs.where.api.request.account.RegisterRequest;
 import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
+import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
 import com.jcs.where.api.response.BannerResponse;
@@ -628,6 +629,13 @@ public interface RetrofitApi {
      */
     @GET("messageapi/v2/getMessageList")
     Observable<JcsResponse<PageResponse<SystemMessageResponse>>> getSystemMessage(@Query("page") int page);
+
+
+    /**
+     * 修改消息状态
+     */
+    @POST("messageapi/v2/updateMessageStatus")
+    Observable<JcsResponse<JsonElement>> setMessageRead(@Body MessageStatusRequest request);
 
 
 }

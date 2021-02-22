@@ -14,6 +14,7 @@ import io.rong.imlib.model.Conversation;
  * 会话列表
  */
 public class BusinessConversationAdapter extends BaseQuickAdapter<Conversation, BaseViewHolder> implements LoadMoreModule {
+
     public BusinessConversationAdapter() {
         super(R.layout.item_message_business_conversation);
     }

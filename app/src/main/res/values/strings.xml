@@ -408,5 +408,6 @@
     <string name="commit">提交</string>
     <string name="hint_write_comment">分享酒店交通，餐饮，卫生设施等方面体验，对小伙伴更有帮助哦~</string>
     <string name="comment_content_not_empty">评论内容不能为空</string>
+    <string name="click_to_start_exploring">点击开始探索之旅&#62;&#62;&#62;</string>
 
 </resources>

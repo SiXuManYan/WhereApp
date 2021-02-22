@@ -412,5 +412,6 @@
     <string name="commit">Commit</string>
     <string name="hint_write_comment">Sharing Hotel transportation, catering, sanitation and other experiences is more helpful for small partners~</string>
     <string name="comment_content_not_empty">Please input comment content</string>
+    <string name="click_to_start_exploring">Click to start exploring&#62;&#62;&#62;</string>
 
 </resources>

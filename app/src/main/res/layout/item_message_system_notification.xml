@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,15 +11,36 @@
     android:paddingBottom="@dimen/dp_10">
 
 
-    <TextView
-        android:id="@+id/title_tv"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:gravity="center"
-        android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_14"
-        tools:text="欢迎来到where" />
+        android:layout_marginBottom="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_11"
+            android:paddingEnd="@dimen/dp_11"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_14"
+            tools:text="欢迎来到where" />
+
+
+        <ImageView
+            android:id="@+id/is_read_iv"
+            android:layout_width="@dimen/dp_11"
+            android:layout_height="@dimen/dp_11"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/shape_oval_red"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
 
 
     <TextView
@@ -46,7 +68,7 @@
         android:textColor="@color/blue_4C9EF2"
         android:textSize="@dimen/sp_14"
         android:visibility="gone"
-        tools:text="点击开始探索之旅>>>"
+        tools:text="@string/click_to_start_exploring"
         tools:visibility="visible" />
 
 

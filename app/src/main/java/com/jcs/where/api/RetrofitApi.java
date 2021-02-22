@@ -44,6 +44,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
@@ -620,5 +621,13 @@ public interface RetrofitApi {
      */
     @GET("users/agreement")
     Observable<JcsResponse<JsonElement>> getAgreement(@Query("lang") String lang);
+
+
+    /**
+     * 系统通知消息列表
+     */
+    @GET("messageapi/v2/getMessageList")
+    Observable<JcsResponse<PageResponse<SystemMessageResponse>>> getSystemMessage(@Query("page") int page);
+
 
 }

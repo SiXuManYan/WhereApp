@@ -29,6 +29,7 @@ import java.util.Locale;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class BaseApplication extends Application {
 
@@ -179,6 +180,27 @@ public class BaseApplication extends Application {
      */
     private void initRongCloud() {
         RongIM.init(this, BuildConfig.RONG_CLOUD_APP_KEY);
+        RongIM.setConnectionStatusListener(connectionStatus -> {
+        /*
+            CONN_USER_BLOCKED
+            用户被开发者后台封禁
+            CONNECTED
+            连接成功。
+            CONNECTING
+
+            DISCONNECTED
+            断开连接。
+            KICKED_OFFLINE_BY_OTHER_CLIENT
+            用户账户在其他设备登录，本机会被踢掉线。
+            NETWORK_UNAVAILABLE
+            网络不可用。
+            SERVER_INVALID
+            服务器异常或无法连接。
+            TOKEN_INCORRECT
+            Token 不正确。
+            */
+        });
+
     }
 
 }

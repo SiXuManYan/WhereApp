@@ -1,5 +1,7 @@
 package com.jcs.where.mine.activity;
 
+import android.view.WindowManager;
+
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 
@@ -10,7 +12,7 @@ import com.jcs.where.base.BaseActivity;
 public class MerchantSettledActivity extends BaseActivity {
     @Override
     protected void initView() {
-
+        defaultSoftInputHidden();
     }
 
     @Override

@@ -429,5 +429,7 @@
     <string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*</font><font color='#666666'>商家电话</font></string>
     <string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*</font><font color='#666666'>是否有实体店面</font></string>
     <string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>上传营业执照</font></string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

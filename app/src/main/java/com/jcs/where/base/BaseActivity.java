@@ -386,8 +386,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             int right = left + view.getWidth();
             return event.getX() <= (float) left || event.getX() >= (float) right || event.getY() <= (float) top || event.getY() >= (float) bottom;
         }
-
     }
 
+    /**
+     * 默认不弹出软键盘
+     */
+    protected void defaultSoftInputHidden() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }
 
 }

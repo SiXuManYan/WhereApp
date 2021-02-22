@@ -26,6 +26,7 @@ import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
 import com.jcs.where.mine.activity.FootprintActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
+import com.jcs.where.mine.activity.MerchantSettledActivity;
 import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.jcs.where.storage.WhereDataBase;
@@ -93,13 +94,17 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.footprintLayout).setOnClickListener(this::onFootprintClicked);
         view.findViewById(R.id.inviteLayout).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::onAboutClick);
-        view.findViewById(R.id.ll_settlement).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.ll_settlement).setOnClickListener(this::onMerchantSettledClicked);
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
         view.findViewById(R.id.setting_ll).setOnClickListener(this::onSettingClick);
         view.findViewById(R.id.integral_iv).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.message_iv).setOnClickListener(this::toShowComing);
+    }
+
+    private void onMerchantSettledClicked(View view) {
+        toActivityIfSigned(MerchantSettledActivity.class);
     }
 
     private void onAboutClick(View view) {

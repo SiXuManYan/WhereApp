@@ -409,5 +409,25 @@
     <string name="hint_write_comment">分享酒店交通，餐饮，卫生设施等方面体验，对小伙伴更有帮助哦~</string>
     <string name="comment_content_not_empty">评论内容不能为空</string>
     <string name="click_to_start_exploring">点击开始探索之旅&#62;&#62;&#62;</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="merchant_settled_prompt_step_1">商家信息\n填写表格</string>
+    <string name="merchant_settled_prompt_step_2">信息审核\n( 1~3天 )</string>
+    <string name="merchant_settled_prompt_step_3">教育训练\n上线运营</string>
+    <string name="merchant_settled_prompt_contact">联系人信息</string>
+    <string name="merchant_settled_prompt_name"><font color='#FF0000'>*</font><font color='#666666'>名</font></string>
+    <string name="merchant_settled_prompt_middle_name">中间名</string>
+    <string name="merchant_settled_prompt_last_name"><font color='#FF0000'>*</font><font color='#666666'>姓</font></string>
+    <string name="merchant_settled_prompt_phone"><font color='#FF0000'>*</font><font color='#666666'>联系电话</font></string>
+    <string name="merchant_settled_prompt_email"><font color='#FF0000'>*</font><font color='#666666'>电子邮箱</font></string>
+    <string name="merchant_settled_prompt_merchant">商家信息</string>
+    <string name="merchant_settled_prompt_merchant_name"><font color='#FF0000'>*</font><font color='#666666'>商家名称</font></string>
+    <string name="merchant_settled_prompt_merchant_type"><font color='#FF0000'>*</font><font color='#666666'>商家类型</font></string>
+    <string name="merchant_settled_prompt_merchant_city"><font color='#FF0000'>*</font><font color='#666666'>所在城市</font></string>
+    <string name="merchant_settled_prompt_merchant_address"><font color='#FF0000'>*</font><font color='#666666'>商家地址</font></string>
+    <string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*</font><font color='#666666'>商家电话</font></string>
+    <string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*</font><font color='#666666'>是否有实体店面</font></string>
+    <string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>上传营业执照</font></string>
 
 </resources>

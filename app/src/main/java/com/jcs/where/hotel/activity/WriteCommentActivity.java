@@ -50,6 +50,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * 页面-酒店评论
+ */
 public class WriteCommentActivity extends BaseActivity {
 
 
@@ -217,6 +220,11 @@ public class WriteCommentActivity extends BaseActivity {
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, RequestResultCode.REQUEST_WRITE_COMMENT_TO_NATIVE_PHOTOS);
         }
+    }
+
+    @Override
+    protected boolean isStatusDark() {
+        return true;
     }
 
     @Override

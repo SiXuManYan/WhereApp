@@ -413,5 +413,25 @@
     <string name="hint_write_comment">Sharing Hotel transportation, catering, sanitation and other experiences is more helpful for small partners~</string>
     <string name="comment_content_not_empty">Please input comment content</string>
     <string name="click_to_start_exploring">Click to start exploring&#62;&#62;&#62;</string>
+    <string name="_1">1</string>
+	<string name="_2">2</string>
+	<string name="_3">3</string>
+	<string name="merchant_settled_prompt_step_1">Fill form</string>
+	<string name="merchant_settled_prompt_step_2">Audit information</string>
+	<string name="merchant_settled_prompt_step_3">Education training</string>
+	<string name="merchant_settled_prompt_contact">Contact Information</string>
+	<string name="merchant_settled_prompt_name"><font color="#FF0000">*</font><font color="#666666">Name</font></string>
+	<string name="merchant_settled_prompt_middle_name">Middle Name</string>
+	<string name="merchant_settled_prompt_last_name"><font color='#FF0000'>*</font><font color='#666666'>Last Name</font></string>
+	<string name="merchant_settled_prompt_phone"><font color="#FF0000">*</font><font color="#666666">Phone Number</font></string>
+	<string name="merchant_settled_prompt_email"><font color="#FF0000">*</font><font color="#666666">Email</font></string>
+	<string name="merchant_settled_prompt_merchant">Merchant Information</string>
+	<string name="merchant_settled_prompt_merchant_name"><font color='#FF0000'>*</font><font color='#666666'>Business Name</font></string>
+	<string name="merchant_settled_prompt_merchant_type"><font color='#FF0000'>*</font><font color='#666666'>Merchant Type</font></string>
+	<string name="merchant_settled_prompt_merchant_city"><font color='#FF0000'>*</font><font color='#666666'>City</font></string>
+	<string name="merchant_settled_prompt_merchant_address"><font color='#FF0000'>*</font><font color='#666666'>Merchant Address</font></string>
+	<string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*</font><font color='#666666'>Business phone</font></string>
+	<string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*</font><font color='#666666'>Is there a physical store?</font></string>
+	<string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>Upload business license</font></string>
 
 </resources>

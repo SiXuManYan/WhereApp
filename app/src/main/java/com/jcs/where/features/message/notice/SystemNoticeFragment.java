@@ -15,6 +15,7 @@ import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.message.notice.detail.SystemMessageDetailActivity;
 import com.jcs.where.utils.Constant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
     private SwipeRefreshLayout swipe_layout;
     private RecyclerView recycler;
     private SystemMessageAdapter mAdapter;
-
+    public ArrayList<String> id = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -69,7 +70,8 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
             if (data.is_read != 1) {
                 data.is_read = 1;
                 mAdapter.notifyItemChanged(position);
-                presenter.setMessageRead(data.id);
+                id.add(data.id);
+                presenter.setMessageRead(id);
             }
         });
     }
@@ -126,4 +128,5 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
             }
         }
     }
+
 }

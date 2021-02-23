@@ -44,8 +44,6 @@ public class MessageCenterActivity extends BaseActivity {
         pager = findViewById(R.id.pager);
         tabs_type = findViewById(R.id.tabs_type);
         pager.setOffscreenPageLimit(TAB_TITLES.length);
-
-//        RongIM.getInstance().getConversationList();
     }
 
     @Override
@@ -75,14 +73,11 @@ public class MessageCenterActivity extends BaseActivity {
             } else {
                 return new SystemNoticeFragment();
             }
-
         }
-
         @Override
         public int getCount() {
             return 2;
         }
     }
-
 
 }

@@ -5,6 +5,8 @@ package com.jcs.where.api.request.message;
  */
 public class MessageStatusRequest {
 
+
     public String id = "";
+
 
 }

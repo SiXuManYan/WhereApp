@@ -1,12 +1,18 @@
 package com.jcs.where.features.message.notice;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,13 +39,31 @@ public class SystemNoticePresenter extends BaseMvpPresenter {
         });
     }
 
-    public void setMessageRead(String id) {
+    public void setMessageRead(@NotNull ArrayList<String> id) {
+
+
+        if (id.isEmpty()) {
+            return;
+        }
+
+        //  {"id":"["66"]"}
+        Gson gson = new Gson();
+        String s = gson.toJson(id);
+
         MessageStatusRequest request = new MessageStatusRequest();
-        request.id = id;
+        request.id = s;
+
+
         requestApi(mRetrofit.setMessageRead(request), new BaseMvpObserver<JsonElement>(mView) {
             @Override
             protected void onSuccess(JsonElement response) {
+                ToastUtils.showShort("sadasd");
+            }
 
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                super.onError(errorResponse);
+                ToastUtils.showShort("111111111111111111");
             }
         });
     }

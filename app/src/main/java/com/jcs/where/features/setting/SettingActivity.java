@@ -1,6 +1,5 @@
 package com.jcs.where.features.setting;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,9 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
-import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
@@ -21,6 +18,7 @@ import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.features.setting.password.ModifyPasswordActivity;
 import com.jcs.where.features.setting.phone.ModifyPhoneActivity;
+import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
@@ -111,6 +109,9 @@ public class SettingActivity extends BaseActivity {
         });
         findViewById(R.id.privacy_policy_rl).setOnClickListener(v -> {
             WebViewActivity.goTo(this, FeaturesUtil.getPrivacyPolicy());
+        });
+        findViewById(R.id.about_rl).setOnClickListener(v -> {
+            startActivity(AboutActivity.class);
         });
 
     }

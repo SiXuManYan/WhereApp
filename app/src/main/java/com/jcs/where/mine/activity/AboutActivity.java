@@ -28,6 +28,11 @@ public class AboutActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected void bindListener() {
 
     }

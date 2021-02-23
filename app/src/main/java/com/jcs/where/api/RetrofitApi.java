@@ -1,6 +1,7 @@
 package com.jcs.where.api;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
@@ -636,6 +637,12 @@ public interface RetrofitApi {
      */
     @POST("messageapi/v2/updateMessageStatus")
     Observable<JcsResponse<JsonElement>> setMessageRead(@Body MessageStatusRequest request);
+
+    /**
+     * 修改消息状态
+     */
+    @GET("messageapi/v2/count")
+    Observable<JcsResponse<JsonObject>> getUnreadMessageCount();
 
 
 }

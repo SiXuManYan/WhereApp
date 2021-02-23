@@ -43,8 +43,7 @@
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="6.5dp"
-            android:layout_marginRight="26dp"
-            android:layout_toLeftOf="@+id/rl_message"
+            android:layout_toLeftOf="@+id/message_view"
             android:layout_toRightOf="@+id/iv_homechoose"
             android:background="@drawable/bg_homesearch"
             android:orientation="horizontal">
@@ -72,34 +71,13 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_message"
-            android:layout_width="24dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="14.5dp">
-
-            <ImageView
-                android:id="@+id/messageTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_mine_message" />
-
-            <TextView
-                android:layout_width="8.5dp"
-                android:layout_height="8.5dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/bg_messagenumber"
-                android:gravity="center"
-                android:text="33"
-                android:textColor="#ffffffff"
-                android:textSize="6sp" />
-
-
-        </RelativeLayout>
+        <com.jcs.where.widget.MessageView
+            android:id="@+id/message_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15" />
 
 
     </RelativeLayout>

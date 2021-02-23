@@ -2,12 +2,14 @@ package com.jcs.where.mine.fragment;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.Utils;
+import com.google.gson.JsonObject;
 import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -18,6 +20,7 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
@@ -35,6 +38,7 @@ import com.jcs.where.storage.entity.UserRongyunData;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
+import com.jcs.where.widget.MessageView;
 import com.jcs.where.widget.VerticalSwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,6 +66,7 @@ public class MineFragment extends BaseFragment {
     private TextView mToSeeBalanceTv;
     private View mLikeLayout;
     private TextView mPointTv;
+    private MessageView message_view;
 
     @Override
     protected int getLayoutId() {
@@ -100,7 +105,12 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
         view.findViewById(R.id.setting_ll).setOnClickListener(this::onSettingClick);
         view.findViewById(R.id.integral_iv).setOnClickListener(this::onIntegralIvClicked);
-        view.findViewById(R.id.message_iv).setOnClickListener(this::toShowComing);
+        message_view = view.findViewById(R.id.message_view);
+        message_view.setOnClickListener(this::onMessageClick);
+    }
+
+    private void onMessageClick(View view) {
+        startActivity(MessageCenterActivity.class);
     }
 
     private void onMerchantSettledClicked(View view) {
@@ -168,6 +178,7 @@ public class MineFragment extends BaseFragment {
     protected void initData() {
         mModel = new MineModel();
         updateUserInfo();
+        getMessageCount();
     }
 
     @Override
@@ -182,6 +193,7 @@ public class MineFragment extends BaseFragment {
 
     private void onRefreshListener() {
         updateUserInfo();
+        getMessageCount();
     }
 
     public void updateUserInfo() {
@@ -304,6 +316,58 @@ public class MineFragment extends BaseFragment {
                 } else {
                     //无法连接 IM 服务器，请根据相应的错误码作出对应处理
                 }
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            getMessageCount();
+        }
+    }
+
+    /**
+     * 获取消息数量
+     */
+    private void getMessageCount() {
+
+        mModel.getUnreadMessageCount(new BaseObserver<JsonObject>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+
+            }
+
+            @Override
+            protected void onSuccess(JsonObject response) {
+                int apiUnreadMessageCount = 0;
+                if (response.has("count")) {
+                    apiUnreadMessageCount = response.get("count").getAsInt();
+                }
+
+
+                int finalApiUnreadMessageCount = apiUnreadMessageCount;
+                RongIMClient.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
+
+                    @Override
+                    public void onSuccess(Integer rongMessageCount) {
+
+                        if (rongMessageCount == null) {
+                            rongMessageCount = 0;
+                        }
+                        message_view.setMessageCount(finalApiUnreadMessageCount + rongMessageCount);
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                    }
+                });
+
+
             }
         });
 

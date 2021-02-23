@@ -1,8 +1,11 @@
 package com.jcs.where.home.model;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
@@ -161,4 +164,11 @@ public class HomeModel extends BaseModel {
             this.homeNewsResponses = homeNewsResponses;
         }
     }
+
+
+    public void getUnreadMessageCount( BaseObserver<JsonObject> observer ) {
+        dealResponse(mRetrofit.getUnreadMessageCount(), observer);
+    }
+
+
 }

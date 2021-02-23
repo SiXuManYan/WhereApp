@@ -42,7 +42,6 @@ public class SystemMessageAdapter extends BaseQuickAdapter<SystemMessageResponse
 
         if (data.is_read == 0) {
             is_read_iv.setVisibility(View.VISIBLE);
-
         } else {
             is_read_iv.setVisibility(View.GONE);
         }

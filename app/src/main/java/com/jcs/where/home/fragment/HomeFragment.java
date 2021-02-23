@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Outline;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -28,6 +28,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
+import com.google.gson.JsonObject;
 import com.jcs.where.R;
 import com.jcs.where.adapter.ModulesAdapter;
 import com.jcs.where.api.BaseObserver;
@@ -53,6 +54,7 @@ import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
+import com.jcs.where.widget.MessageView;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.yellow_page.activity.YellowPageActivity;
 
@@ -61,6 +63,7 @@ import java.util.List;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import io.rong.imlib.RongIMClient;
 import pl.droidsonroids.gif.GifImageView;
 
 import static android.app.Activity.RESULT_OK;
@@ -84,15 +87,19 @@ public class HomeFragment extends BaseFragment {
     private HomeModel mModel;
     private RecyclerView mModuleRecycler;
     private ModulesAdapter mModulesAdapter;
-    private RelativeLayout mMessageLayout;
     private LinearLayout mSearchLayout;
+    private MessageView message_view;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home;
+    }
 
     @Override
     protected void initView(View view) {
         BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title));
         mModel = new HomeModel();
         bannerLl = view.findViewById(R.id.ll_banner);
-        mMessageLayout = view.findViewById(R.id.rl_message);
         mSearchLayout = view.findViewById(R.id.searchLayout);
         ViewGroup.LayoutParams lp;
         lp = bannerLl.getLayoutParams();
@@ -110,6 +117,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 getInitHomeData();
+                getMessageCount();
             }
         });
         marqueeView = view.findViewById(R.id.simpleMarqueeView);
@@ -140,6 +148,7 @@ public class HomeFragment extends BaseFragment {
         };
         homeRv.setLayoutManager(linearLayoutManager);
         homeRv.setAdapter(mHomeYouLikeAdapter);
+        message_view = view.findViewById(R.id.message_view);
     }
 
     private void onModuleItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
@@ -186,6 +195,7 @@ public class HomeFragment extends BaseFragment {
 
         // 获取金刚区，猜你喜欢，banner，滚动新闻并一起返回
         getInitHomeData();
+        getMessageCount();
     }
 
     private void getInitHomeData() {
@@ -233,7 +243,7 @@ public class HomeFragment extends BaseFragment {
     protected void bindListener() {
         mModulesAdapter.setOnItemClickListener(this::onModuleItemClicked);
         mHomeYouLikeAdapter.setOnItemClickListener(this::onYouLickItemClicked);
-        mMessageLayout.setOnClickListener(this::onMessageLayoutClicked);
+        message_view.setOnClickListener(this::onMessageLayoutClicked);
         mSearchLayout.setOnClickListener(this::onSearchLayoutClicked);
     }
 
@@ -251,10 +261,7 @@ public class HomeFragment extends BaseFragment {
         HotelDetailActivity.goTo(getContext(), mHomeYouLikeAdapter.getItem(position).getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_home;
-    }
+
 
     private void initBanner(List<BannerResponse> list) {
         if (refreshBanner > 1) {
@@ -412,5 +419,59 @@ public class HomeFragment extends BaseFragment {
         //高度 dm.heightPixels
         return dm.widthPixels;
     }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            getMessageCount();
+        }
+    }
+
+    /**
+     * 获取消息数量
+     */
+    private void getMessageCount() {
+
+        mModel.getUnreadMessageCount(new BaseObserver<JsonObject>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+
+            }
+
+            @Override
+            protected void onSuccess(JsonObject response) {
+                int apiUnreadMessageCount = 0;
+                if (response.has("count")) {
+                    apiUnreadMessageCount = response.get("count").getAsInt();
+                }
+
+
+                int finalApiUnreadMessageCount = apiUnreadMessageCount;
+                RongIMClient.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
+
+                    @Override
+                    public void onSuccess(Integer rongMessageCount) {
+
+                        if (rongMessageCount == null) {
+                            rongMessageCount = 0;
+                        }
+                        message_view.setMessageCount(finalApiUnreadMessageCount + rongMessageCount);
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                    }
+                });
+
+
+            }
+        });
+
+
+    }
+
 
 }

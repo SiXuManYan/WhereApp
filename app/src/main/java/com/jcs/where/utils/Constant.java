@@ -39,6 +39,11 @@ public class Constant {
     public static final String PARAM_USER_ID = "user_id";
     public static final String PARAM_USER_ICON = "user_icon";
     public static final String PARAM_DISMISS_BACK_ICON = "dismiss_back_icon";
+    public static final String PARAM_TITLE = "param_title";
+    public static final String PARAM_CONTENT = "param_content";
+    public static final String PARAM_CREATE_DATE = "param_create_date";
+
+
     /**
      * 第三方登录类型
      * （1：Facebook，2：google，3：Twitter）

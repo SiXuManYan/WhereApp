@@ -12,6 +12,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.features.message.notice.detail.SystemMessageDetailActivity;
 import com.jcs.where.utils.Constant;
 
 import java.util.List;
@@ -53,11 +54,18 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
         mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SystemMessageResponse data = mAdapter.getData().get(position);
-            String link = data.link;
-            if (TextUtils.isEmpty(link)) {
-                return;
+
+            if (data.detail_type == 1) {
+                String link = data.link;
+                if (TextUtils.isEmpty(link)) {
+                    return;
+                }
+                WebViewActivity.goTo(getActivity(), link);
+            } else {
+                SystemMessageDetailActivity.goTo(getActivity(), data.title, data.message, data.created_at);
             }
-            WebViewActivity.goTo(getActivity(), link);
+
+            // 设置消息已读
             if (data.is_read != 1) {
                 data.is_read = 1;
                 mAdapter.notifyItemChanged(position);

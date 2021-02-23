@@ -479,6 +479,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name=".features.message.notice.detail.SystemMessageDetailActivity" />
 
     </application>
 

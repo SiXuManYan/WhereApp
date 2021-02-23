@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.JsonObject;
 import com.jcs.where.BaseApplication;
@@ -76,7 +77,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         EventBus.getDefault().register(this);
-
+        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.message_view));
         mSwipeLayout = view.findViewById(R.id.mineSwipeLayout);
 
         nicknameTv = view.findViewById(R.id.nicknameTv);

@@ -48,20 +48,6 @@ public class SystemMessageAdapter extends BaseQuickAdapter<SystemMessageResponse
 
 
 
-//
-//        holder.getView(R.id.parent_ll).setOnClickListener(v -> {
-//
-//            if (TextUtils.isEmpty(data.link)) {
-//                return;
-//            }
-//
-//            if (data.detail_type == 1) {
-//
-//            } else {
-//
-//            }
-//        });
-
 
     }
 

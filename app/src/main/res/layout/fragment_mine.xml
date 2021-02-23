@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_F5F5F5"
@@ -37,11 +38,11 @@
                     <com.jcs.where.widget.MessageView
                         android:id="@+id/message_view"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="@dimen/dp_25"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:paddingStart="@dimen/dp_15"
-                        android:paddingEnd="@dimen/dp_15" />
+                        android:paddingEnd="@dimen/dp_15"
+                        tools:layout_marginTop="@dimen/dp_35" />
 
                     <RelativeLayout
                         android:id="@+id/rl_minemessage"

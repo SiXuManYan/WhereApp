@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.jcs.where.R;
+import com.jcs.where.widget.JcsTitle;
 
 import io.rong.imkit.fragment.ConversationFragment;
 
@@ -16,10 +17,19 @@ import io.rong.imkit.fragment.ConversationFragment;
  */
 public class ConversationActivity extends FragmentActivity {
 
+    protected JcsTitle mJcsTitle;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_conversation);
+
+        String title = getIntent().getData().getQueryParameter("title");
+        mJcsTitle = findViewById(R.id.jcsTitle);
+        mJcsTitle.setBackIvClickListener(view -> finish());
+        mJcsTitle.setMiddleTitle(title);
+
 
         // 添加会话界面
         ConversationFragment conversationFragment = new ConversationFragment();

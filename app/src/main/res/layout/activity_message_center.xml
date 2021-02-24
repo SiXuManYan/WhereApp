@@ -9,6 +9,7 @@
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
         app:middleTitle="@string/message_center"
         app:middleTitleColor="@color/black_333333"
         app:showBackIv="true" />

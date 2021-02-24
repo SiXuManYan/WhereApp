@@ -53,6 +53,7 @@ public class MessageCenterActivity extends BaseActivity {
 
     }
 
+
     @Override
     protected void bindListener() {
 

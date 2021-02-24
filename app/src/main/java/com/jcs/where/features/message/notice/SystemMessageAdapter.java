@@ -26,7 +26,6 @@ public class SystemMessageAdapter extends BaseQuickAdapter<SystemMessageResponse
     protected void convert(@NotNull BaseViewHolder holder, SystemMessageResponse data) {
 
 
-        TextView link_tv = holder.getView(R.id.link_tv);
         ImageView is_read_iv = holder.getView(R.id.is_read_iv);
 
         holder.setText(R.id.title_tv, data.title);
@@ -35,9 +34,9 @@ public class SystemMessageAdapter extends BaseQuickAdapter<SystemMessageResponse
 
         // 跳转类型
         if (data.detail_type == 1) {
-            link_tv.setVisibility(View.VISIBLE);
+            holder.getView(R.id.link_tv).setVisibility(View.VISIBLE);
         } else {
-            link_tv.setVisibility(View.GONE);
+            holder.getView(R.id.link_tv).setVisibility(View.GONE);
         }
 
         if (data.is_read == 0) {

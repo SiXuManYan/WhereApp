@@ -57,13 +57,12 @@ public class SystemNoticePresenter extends BaseMvpPresenter {
         requestApi(mRetrofit.setMessageRead(request), new BaseMvpObserver<JsonElement>(mView) {
             @Override
             protected void onSuccess(JsonElement response) {
-                ToastUtils.showShort("sadasd");
+
             }
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 super.onError(errorResponse);
-                ToastUtils.showShort("111111111111111111");
             }
         });
     }

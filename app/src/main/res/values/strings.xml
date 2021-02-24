@@ -431,5 +431,7 @@
     <string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>上传营业执照</font></string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="image_message">图片</string>
+    <string name="voice_message">语音消息</string>
 
 </resources>

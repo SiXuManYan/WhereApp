@@ -50,6 +50,7 @@ import org.jetbrains.annotations.NotNull;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -111,7 +112,14 @@ public class MineFragment extends BaseFragment {
     }
 
     private void onMessageClick(View view) {
+
         startActivity(MessageCenterActivity.class);
+
+//        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+//        String targetId = "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5";
+//        String title = "111";
+//        RongIM.getInstance().startConversation(getActivity(), conversationType, targetId, title, null);
+
     }
 
     private void onMerchantSettledClicked(View view) {

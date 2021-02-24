@@ -46,6 +46,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
@@ -643,6 +644,15 @@ public interface RetrofitApi {
      */
     @GET("messageapi/v2/count")
     Observable<JcsResponse<JsonObject>> getUnreadMessageCount();
+
+    /**
+     * 获取融云用户信息
+     */
+    @GET("commonapi/v2/rong/users")
+    Observable<JcsResponse<RongCloudUserResponse>> getRongCloudUserInfo(@Query("user_id") String user_id);
+
+
+
 
 
 }

@@ -51,24 +51,17 @@ public class BusinessConversationFragment extends BaseMvpFragment<BusinessConver
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
         mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
         mAdapter.setOnItemClickListener((adapter, view1, position) -> {
-
             Conversation conversation = mAdapter.getData().get(position);
-
             Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
             String targetId = conversation.getTargetId();
             String title = conversation.getConversationTitle();
             RongIM.getInstance().startConversation(getActivity(), conversationType, targetId, title, null);
-
         });
     }
 
     @Override
     protected void initData() {
         presenter = new BusinessConversationPresenter(this);
-    }
-
-    @Override
-    protected void loadOnVisible() {
         onRefresh();
     }
 
@@ -101,7 +94,7 @@ public class BusinessConversationFragment extends BaseMvpFragment<BusinessConver
             }
             return;
         }
-        if (page == Constant.DEFAULT_FIRST_PAGE) {
+        if (page == 0) {
             mAdapter.setNewInstance(data);
             loadMoreModule.checkDisableLoadMoreIfNotFullPage();
         } else {

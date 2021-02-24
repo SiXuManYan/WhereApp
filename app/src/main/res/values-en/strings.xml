@@ -435,5 +435,7 @@
 	<string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>Upload business license</font></string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
+    <string name="image_message">Image Message</string>
+	<string name="voice_message">Voice Message</string>
 
 </resources>

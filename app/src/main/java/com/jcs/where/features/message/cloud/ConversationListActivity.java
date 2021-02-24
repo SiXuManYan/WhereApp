@@ -14,7 +14,7 @@ import io.rong.imlib.model.Conversation;
 
 /**
  * Created by Wangsw  2021/2/20 14:46.
- * 融云会话 Activity
+ * 融云会话 列表 Activity
  * @see <a href="https://www.rongcloud.cn/docs/api/android/imlib/io/rong/imlib/RongIMClient.html#getConversationList-io.rong.imlib.RongIMClient">融云API 文档</a>
  *
  */

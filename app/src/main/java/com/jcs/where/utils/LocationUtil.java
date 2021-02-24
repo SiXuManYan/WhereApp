@@ -116,6 +116,7 @@ public class LocationUtil {
             // 当没有可用的位置提供器时，弹出Toast提示用户
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
             return;
         }

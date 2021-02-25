@@ -9,13 +9,14 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.base.mvp.BaseMvpFragment;
-import com.jcs.where.utils.Constant;
 
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by Wangsw  2021/2/20 15:04.
@@ -43,6 +44,7 @@ public class BusinessConversationFragment extends BaseMvpFragment<BusinessConver
     @Override
     protected void initView(View view) {
         swipe_layout = view.findViewById(R.id.swipe_layout);
+        swipe_layout.setOnRefreshListener(this);
         recycler = view.findViewById(R.id.recycler);
         mAdapter = new BusinessConversationAdapter();
         recycler.setAdapter(mAdapter);
@@ -54,7 +56,11 @@ public class BusinessConversationFragment extends BaseMvpFragment<BusinessConver
             Conversation conversation = mAdapter.getData().get(position);
             Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
             String targetId = conversation.getTargetId();
-            String title = conversation.getConversationTitle();
+            String title = "";
+            UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+            if (userInfo != null) {
+                title = userInfo.getName();
+            }
             RongIM.getInstance().startConversation(getActivity(), conversationType, targetId, title, null);
         });
     }

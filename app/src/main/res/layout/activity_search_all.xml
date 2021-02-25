@@ -46,75 +46,13 @@
 
     </RelativeLayout>
 
-    <ViewSwitcher
-        android:id="@+id/content_switcher"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_15"
-            android:paddingBottom="@dimen/dp_10">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/history_search"
-                    android:textSize="@dimen/sp_14" />
-
-
-                <TextView
-                    android:id="@+id/clear_history_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:background="@drawable/bg_labelblue"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_5"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:text="@string/clear"
-                    android:textColor="@color/blue_4C9EF2"
-                    android:textSize="@dimen/sp_12" />
-
-            </RelativeLayout>
-
-
-            <com.zhy.view.flowlayout.TagFlowLayout
-                android:id="@+id/history_tl"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:padding="20dp"
-                zhy:max_select="1" />
-
-
-        </LinearLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:background="@color/white"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_search_all" />
-
-
-
-    </ViewSwitcher>
+        android:layout_height="400dp"
+        android:background="@color/white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_search_all" />
 
 
 </LinearLayout>

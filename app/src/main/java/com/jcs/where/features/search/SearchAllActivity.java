@@ -4,7 +4,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -17,7 +16,6 @@ import com.jcs.where.R;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.hotel.watcher.AfterInputWatcher;
-import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.List;
 
@@ -29,11 +27,8 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
 
 
     private AppCompatEditText search_aet;
-    private ViewSwitcher content_switcher;
-    private TagFlowLayout history_tl;
     private TextView
-            cancel_tv,
-            clear_history_tv;
+            cancel_tv;
     private SearchAllAdapter mAdapter;
     private RecyclerView recycler;
 
@@ -53,9 +48,7 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
         recycler = findViewById(R.id.recycler);
         search_aet = findViewById(R.id.search_aet);
         cancel_tv = findViewById(R.id.cancel_tv);
-        content_switcher = findViewById(R.id.content_switcher);
-        clear_history_tv = findViewById(R.id.clear_history_tv);
-        history_tl = findViewById(R.id.history_tl);
+
     }
 
     @Override
@@ -70,7 +63,7 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
     @Override
     protected void bindListener() {
         cancel_tv.setOnClickListener(v -> finish());
-        clear_history_tv.setOnClickListener(v -> presenter.clearSearchHistory());
+
         search_aet.addTextChangedListener(new AfterInputWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -83,10 +76,8 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
     private void handleSearch(String finalInput) {
         if (TextUtils.isEmpty(finalInput)) {
             mAdapter.setNewInstance(null);
-            content_switcher.setDisplayedChild(0);
             return;
         }
-        content_switcher.setDisplayedChild(1);
         mAdapter.keyWord = finalInput;
         presenter.search(finalInput);
     }

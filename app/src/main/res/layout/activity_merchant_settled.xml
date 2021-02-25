@@ -343,6 +343,7 @@
                 app:layout_constraintTop_toTopOf="@id/merchantNamePrompt" />
 
             <View
+                android:id="@+id/merchantNameLine"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
                 android:layout_marginStart="@dimen/dp_15"
@@ -371,6 +372,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/merchantTypePrompt" />
 
+            <View
+                android:id="@+id/toChoseTypeView"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                app:layout_constraintStart_toStartOf="@id/merchantTypePrompt"
+                app:layout_constraintEnd_toEndOf="@id/merchantTypeArrow"
+                app:layout_constraintTop_toBottomOf="@id/merchantNameLine"
+                app:layout_constraintBottom_toTopOf="@id/merchantTypeLine"/>
+
             <TextView
                 android:id="@+id/merchantTypeTv"
                 android:layout_width="@dimen/dp_0"
@@ -380,12 +390,13 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                app:layout_constraintBottom_toBottomOf="@id/merchantCityPrompt"
+                app:layout_constraintBottom_toBottomOf="@id/merchantTypePrompt"
                 app:layout_constraintEnd_toEndOf="@id/merchantTypeArrow"
-                app:layout_constraintStart_toEndOf="@id/merchantCityPrompt"
-                app:layout_constraintTop_toTopOf="@id/merchantCityPrompt" />
+                app:layout_constraintStart_toEndOf="@id/merchantTypePrompt"
+                app:layout_constraintTop_toTopOf="@id/merchantTypePrompt" />
 
             <View
+                android:id="@+id/merchantTypeLine"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
                 android:layout_marginStart="@dimen/dp_15"

@@ -2,7 +2,6 @@ package com.jcs.where.mine.fragment;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,7 +29,7 @@ import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
 import com.jcs.where.mine.activity.FootprintActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
-import com.jcs.where.mine.activity.MerchantSettledActivity;
+import com.jcs.where.mine.activity.merchant_settled.MerchantSettledActivity;
 import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.jcs.where.storage.WhereDataBase;
@@ -50,7 +49,6 @@ import org.jetbrains.annotations.NotNull;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 
 import static android.app.Activity.RESULT_OK;
 

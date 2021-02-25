@@ -1,12 +1,14 @@
-package com.jcs.where.mine.activity;
+package com.jcs.where.mine.activity.merchant_settled;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -31,6 +33,8 @@ public class MerchantSettledActivity extends BaseActivity {
 
     private RecyclerView mLicenceRecycler;
     private AddPictureAdapter mAdapter;
+    private View mToChooseTypeView;
+    private TextView mMerchantTypeTv;
 
     @Override
     protected void initView() {
@@ -39,6 +43,9 @@ public class MerchantSettledActivity extends BaseActivity {
         mAdapter = new AddPictureAdapter();
         mLicenceRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mLicenceRecycler.setAdapter(mAdapter);
+
+        mToChooseTypeView = findViewById(R.id.toChoseTypeView);
+        mMerchantTypeTv = findViewById(R.id.merchantTypeTv);
     }
 
     @Override
@@ -52,6 +59,12 @@ public class MerchantSettledActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(this::onAddPicClicked);
         mAdapter.addChildClickViewIds(R.id.delPicIv);
         mAdapter.setOnItemChildClickListener(this::onDelPicClicked);
+        mToChooseTypeView.setOnClickListener(this::onToChooseTypeView);
+    }
+
+    private void onToChooseTypeView(View view) {
+        Intent toChooseType = new Intent(this, SettledTypeActivity.class);
+        startActivityForResult(toChooseType, RequestResultCode.REQUEST_MERCHANT_SETTLED_TO_SETTLED_TYPE);
     }
 
     private void onDelPicClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
@@ -98,6 +111,13 @@ public class MerchantSettledActivity extends BaseActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                }
+                break;
+            case RequestResultCode.REQUEST_MERCHANT_SETTLED_TO_SETTLED_TYPE:
+                if (resultCode == RequestResultCode.RESULT_SETTLED_TYPE_TO_MERCHANT_SETTLED) {
+                    String typeName = data.getStringExtra("typeName");
+                    String typeId = data.getStringExtra("typeId");
+                    mMerchantTypeTv.setText(typeName);
                 }
                 break;
         }

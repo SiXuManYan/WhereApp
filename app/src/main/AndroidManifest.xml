@@ -335,7 +335,13 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".mine.activity.MerchantSettledActivity"
+            android:name=".mine.activity.merchant_settled.MerchantSettledActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".mine.activity.merchant_settled.SettledTypeActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

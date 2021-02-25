@@ -434,5 +434,6 @@
     <string name="image_message">图片</string>
     <string name="voice_message">语音消息</string>
     <string name="search_all_hint">搜索标题或关键字</string>
+    <string name="settled_type_title">入驻类型</string>
 
 </resources>

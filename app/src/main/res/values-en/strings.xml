@@ -438,4 +438,5 @@
     <string name="image_message">Image Message</string>
 	<string name="voice_message">Voice Message</string>
 	<string name="search_all_hint">Search title or keyword</string>
+    <string name="settled_type_title">Type of settlement</string>
 </resources>

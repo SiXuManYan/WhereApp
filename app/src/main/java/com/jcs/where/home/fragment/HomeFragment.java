@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Outline;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
@@ -42,6 +41,7 @@ import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
+import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
 import com.jcs.where.home.adapter.HomeYouLikeAdapter;
@@ -248,7 +248,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void onSearchLayoutClicked(View view) {
-        showComing();
+        startActivityAfterLogin(SearchAllActivity.class);
     }
 
     private void onMessageLayoutClicked(View view) {
@@ -260,7 +260,6 @@ public class HomeFragment extends BaseFragment {
         dialog.initCalendar(getContext());
         HotelDetailActivity.goTo(getContext(), mHomeYouLikeAdapter.getItem(position).getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
     }
-
 
 
     private void initBanner(List<BannerResponse> list) {

@@ -7,16 +7,19 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:paddingStart="@dimen/dp_15"
         android:paddingTop="@dimen/dp_10"
+        android:lineSpacingMultiplier="1.2"
         android:paddingEnd="@dimen/dp_15"
         android:paddingBottom="@dimen/dp_10"
         android:textColor="@color/grey_999999"
         android:textSize="13sp"
-        tools:text="大教堂" />
+        tools:text="𝒀𝒐𝒖𝒓 𝒕𝒆𝒂𝒎 𝒉𝒂𝒔 𝒓𝒆𝒄𝒍𝒂𝒊𝒎𝒆𝒅 𝒕𝒉𝒆 𝒄𝒓𝒖𝒄𝒊𝒂𝒍 𝒌𝒊𝒍𝒍  𝒀𝒐𝒖𝒓 𝒕𝒆𝒂𝒎 𝒉𝒂𝒔 𝒓𝒆𝒄𝒍𝒂𝒊𝒎𝒆𝒅 𝒕𝒉𝒆 𝒄𝒓𝒖𝒄𝒊𝒂𝒍 𝒌𝒊𝒍𝒍 𝒀𝒐𝒖𝒓 𝒕𝒆𝒂𝒎 𝒉𝒂𝒔 𝒓𝒆𝒄𝒍𝒂𝒊𝒎𝒆𝒅 𝒕𝒉𝒆 𝒄𝒓𝒖𝒄𝒊𝒂𝒍 𝒌𝒊𝒍𝒍 " />
 
     <View
         android:layout_width="match_parent"

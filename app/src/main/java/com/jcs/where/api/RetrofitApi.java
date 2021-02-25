@@ -48,6 +48,7 @@ import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
+import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
@@ -651,8 +652,11 @@ public interface RetrofitApi {
     @GET("commonapi/v2/rong/users")
     Observable<JcsResponse<RongCloudUserResponse>> getRongCloudUserInfo(@Query("user_id") String user_id);
 
-
-
+    /**
+     * 搜索接口
+     */
+    @GET("commonapi/v2/searches")
+    Observable<JcsResponse<List<SearchResultResponse>>> getSearchResult(@Query("search_input") String input);
 
 
 }

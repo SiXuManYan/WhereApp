@@ -3,9 +3,12 @@ package com.jcs.where.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,8 @@ import com.zhihu.matisse.MimeType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Wangsw  2021/1/29 11:47.
@@ -240,6 +245,48 @@ public class FeaturesUtil {
             language = "zh-CN";
         }
         return language;
+    }
+
+
+    /**
+     * @param color 关键字颜色
+     * @param text 文本
+     * @param keyword 关键字
+     * @return
+     */
+    public static SpannableString getHighLightKeyWord(int color, String text, String keyword) {
+        SpannableString s = new SpannableString(text);
+        Pattern p = Pattern.compile(keyword);
+        Matcher m = p.matcher(s);
+        while (m.find()) {
+            int start = m.start();
+            int end = m.end();
+            s.setSpan(new ForegroundColorSpan(color), start, end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return s;
+    }
+
+    /**
+     * @param color 关键字颜色
+     * @param text 文本
+     * @param keyword 多个关键字
+     * @return
+     */
+    public static SpannableString getHighLightKeyWord(int color, String text,String[] keyword) {
+        SpannableString s = new SpannableString(text);
+        for (int i = 0; i < keyword.length; i++) {
+            Pattern p = Pattern.compile(keyword[i]);
+            Matcher m = p.matcher(s);
+            while (m.find()) {
+                int start = m.start();
+                int end = m.end();
+                s.setSpan(new ForegroundColorSpan(color), start, end,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        return s;
+
     }
 
 

@@ -100,4 +100,9 @@ public class Constant {
     public static final int IMG = 1;
     public static final int GIF = 2;
     public static final int VIDEO = 3;
+
+    public static final String PR_DEFAULT = "where";
+    public static final String SP_SEARCH_HISTORY = "sp_search_history";
+
+
 }

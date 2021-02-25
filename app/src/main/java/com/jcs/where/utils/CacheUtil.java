@@ -65,4 +65,8 @@ public class CacheUtil {
         return SPUtils.getInstance().getString(SPKey.K_TOKEN);
     }
 
+    public static SPUtils getShareDefault() {
+        return SPUtils.getInstance(Constant.PR_DEFAULT);
+    }
+
 }

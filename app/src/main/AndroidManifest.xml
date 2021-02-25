@@ -496,6 +496,7 @@
         </activity>
 
         <activity android:name=".features.message.notice.detail.SystemMessageDetailActivity" />
+        <activity android:name=".features.search.SearchAllActivity" />
 
 
     </application>

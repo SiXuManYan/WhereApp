@@ -35,11 +35,12 @@ public class SearchAllPresenter extends BaseMvpPresenter {
         requestApi(mRetrofit.getSearchResult(finalInput), new BaseMvpObserver<List<SearchResultResponse>>(view) {
             @Override
             protected void onSuccess(List<SearchResultResponse> response) {
+                /*
                 if (response != null && !response.isEmpty()) {
                     // 保存搜索记录
                     saveSearchHistory(finalInput);
-
                 }
+                */
                 view.bindSearchResult(response);
             }
         });

@@ -164,6 +164,4 @@ dependencies {
     // TabLayout
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2'
 
-    // 流式布局zhy
-    implementation 'com.hyman:flowlayout-lib:1.1.2'
 }

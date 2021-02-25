@@ -10,14 +10,25 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
 import com.jcs.where.api.response.search.SearchResultResponse;
+import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.watcher.AfterInputWatcher;
+import com.jcs.where.travel.TouristAttractionDetailActivity;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import java.util.List;
+
+import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_1_HOTEL;
+import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_2_TRAVEL;
+import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_3_SERVICE;
+import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_4_RESTAURANT;
 
 /**
  * Created by Wangsw  2021/2/25 10:25.
@@ -96,6 +107,25 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
         SearchResultResponse data = mAdapter.getData().get(position);
 
+        switch (data.type) {
+            case TYPE_1_HOTEL:
+                JcsCalendarDialog dialog = new JcsCalendarDialog();
+                dialog.initCalendar(this);
+                HotelDetailActivity.goTo(this, data.id, dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                break;
+            case TYPE_2_TRAVEL:
+                TouristAttractionDetailActivity.goTo(this, data.id);
+                break;
+            case TYPE_3_SERVICE:
+                toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
+                break;
+            case TYPE_4_RESTAURANT:
+                // todo 跳转至餐厅页
+                ToastUtils.showShort(R.string.coming_soon);
+                break;
+            default:
+                break;
+        }
 
     }
 

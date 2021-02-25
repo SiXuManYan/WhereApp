@@ -6,6 +6,11 @@ package com.jcs.where.api.response.search;
  */
 public class SearchResultResponse {
 
+    public static final int TYPE_1_HOTEL = 1;
+    public static final int TYPE_2_TRAVEL = 2;
+    public static final int TYPE_3_SERVICE = 3;
+    public static final int TYPE_4_RESTAURANT = 4;
+
 
 /*    {
             "id": "ID",
@@ -14,9 +19,12 @@ public class SearchResultResponse {
             "type": "类型(1：酒店，2：旅游，3：综合服务)"
     }*/
 
-    public String id = "";
+    public int id ;
     public String name = "";
     public String created_at = "";
+    /**
+     * 类型(1：酒店，2：旅游，3：综合服务，4：餐厅)
+     */
     public int type;
 
 

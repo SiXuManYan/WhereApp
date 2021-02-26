@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.RequestResultCode;
@@ -33,8 +34,8 @@ public class MerchantSettledActivity extends BaseActivity {
 
     private RecyclerView mLicenceRecycler;
     private AddPictureAdapter mAdapter;
-    private View mToChooseTypeView;
-    private TextView mMerchantTypeTv;
+    private View mToChooseTypeView, mToChoseCityView;
+    private TextView mMerchantTypeTv, mMerchantCityTv;
 
     @Override
     protected void initView() {
@@ -45,7 +46,9 @@ public class MerchantSettledActivity extends BaseActivity {
         mLicenceRecycler.setAdapter(mAdapter);
 
         mToChooseTypeView = findViewById(R.id.toChoseTypeView);
+        mToChoseCityView = findViewById(R.id.toChoseCityView);
         mMerchantTypeTv = findViewById(R.id.merchantTypeTv);
+        mMerchantCityTv = findViewById(R.id.merchantCityTv);
     }
 
     @Override
@@ -60,6 +63,12 @@ public class MerchantSettledActivity extends BaseActivity {
         mAdapter.addChildClickViewIds(R.id.delPicIv);
         mAdapter.setOnItemChildClickListener(this::onDelPicClicked);
         mToChooseTypeView.setOnClickListener(this::onToChooseTypeView);
+        mToChoseCityView.setOnClickListener(this::onToChooseCityView);
+    }
+
+    private void onToChooseCityView(View view) {
+        Intent toChooseType = new Intent(this, CityPickerActivity.class);
+        startActivityForResult(toChooseType, RequestResultCode.REQUEST_MERCHANT_SETTLED_TO_CITY_PICKER);
     }
 
     private void onToChooseTypeView(View view) {
@@ -118,6 +127,13 @@ public class MerchantSettledActivity extends BaseActivity {
                     String typeName = data.getStringExtra("typeName");
                     String typeId = data.getStringExtra("typeId");
                     mMerchantTypeTv.setText(typeName);
+                }
+                break;
+            case RequestResultCode.REQUEST_MERCHANT_SETTLED_TO_CITY_PICKER:
+                if (resultCode == RESULT_OK) {
+                    String cityName = data.getStringExtra(CityPickerActivity.EXTRA_CITY);
+                    String cityId = data.getStringExtra(CityPickerActivity.EXTRA_CITYID);
+                    mMerchantCityTv.setText(cityName);
                 }
                 break;
         }

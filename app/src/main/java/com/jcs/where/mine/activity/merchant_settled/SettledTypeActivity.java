@@ -1,6 +1,7 @@
 package com.jcs.where.mine.activity.merchant_settled;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -8,6 +9,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MerchantTypeResponse;
 import com.jcs.where.base.BaseActivity;
@@ -48,7 +50,7 @@ public class SettledTypeActivity extends BaseActivity {
         mModel = new SettledTypeModel();
         mParentIds = new ArrayList<>();
         mParentIds.add(0);
-        getCategories(mMerchantTypeLevels[mTypeLevel - 1],mParentIds.get(mTypeLevel - 1));
+        getCategories(mMerchantTypeLevels[mTypeLevel - 1], mParentIds.get(mTypeLevel - 1));
     }
 
     private void getCategories(String typeLevel, int parentId) {
@@ -93,6 +95,7 @@ public class SettledTypeActivity extends BaseActivity {
             getCategories(mMerchantTypeLevels[mTypeLevel - 1], item.getId());
         } else {
             Intent result = new Intent();
+            Log.e("SettledTypeActivity", "onItemClicked: " + item.getId());
             result.putExtra("typeName", item.getName());
             result.putExtra("typeId", item.getId());
             setResult(RequestResultCode.RESULT_SETTLED_TYPE_TO_MERCHANT_SETTLED, result);
@@ -121,6 +124,7 @@ public class SettledTypeActivity extends BaseActivity {
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, MerchantTypeResponse typeResponse) {
             baseViewHolder.setText(R.id.settledTypeNameTv, typeResponse.getName() + "");
+            Log.e("SettledTypeAdapter", "convert: " + typeResponse.getId());
             if (typeResponse.getHasChildren() == 1) {
                 // 1 表示没有下级
                 baseViewHolder.setGone(R.id.arrowIv, true);

@@ -129,7 +129,7 @@
 	<string name="coming_soon">coming soon</string>
 	<string name="prompt_input_correct_phone">Please enter the correct phone number</string>
 	<string name="login_success">login successful</string>
-	<string name="commit_success">commit successful</string>
+	<string name="commit_success">Commit Successful</string>
 	<string name="error_password_length">The password is not in conformity</string>
 	<string name="prompt_send_success">Send success, please pay attention to check</string>
 	<string name="hint_input_code">Verification code</string>

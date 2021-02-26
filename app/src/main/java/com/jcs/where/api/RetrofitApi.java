@@ -3,6 +3,7 @@ package com.jcs.where.api;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jcs.where.api.request.HotelOrderRequest;
+import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.request.WriteHotelCommentRequest;
@@ -664,4 +665,10 @@ public interface RetrofitApi {
      */
     @GET("userapi/v2/merchant/types/{level}")
     Observable<JcsResponse<List<MerchantTypeResponse>>> getMerchantSettled(@Path("level") String level, @Query("pid") int pid);
+
+    /**
+     * 提交商家入驻信息
+     */
+    @POST("userapi/v2/merchants")
+    Observable<JcsResponse<SuccessResponse>> postMerchant(@Body MerchantSettledRequest request);
 }

@@ -309,7 +309,7 @@
     <string name="login_rule_default">登录代表同意</string>
     <string name="login_rule_keyword_0">《用户协议》</string>
     <string name="login_rule_default_and">&#160;和&#160;</string>
-    <string name="login_rule_keyword_1">隐私政策</string>
+    <string name="login_rule_keyword_1">《隐私政策》</string>
     <string name="input_password_hint">6~20位数字字母组合</string>
     <string name="input_password_hint_2">请输入密码</string>
     <string name="confirm">确定</string>

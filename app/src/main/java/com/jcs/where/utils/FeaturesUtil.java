@@ -238,11 +238,12 @@ public class FeaturesUtil {
     public static String getPrivacyPolicy() {
         return String.format(Html5Url.PRIVACY_POLICY, getLanguage());
     }
+
     @NotNull
     private static String getLanguage() {
         String language = CacheUtil.getLanguageFromCache();
-        if (language.equals("auto")) {
-            language = "zh-CN";
+        if (language.equals("auto")||language.equals("zh")) {
+            language = "zh_cn";
         }
         return language;
     }

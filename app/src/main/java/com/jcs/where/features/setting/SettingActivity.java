@@ -7,6 +7,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.jcs.where.R;
@@ -48,6 +50,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         EventBus.getDefault().register(this);
         phone_tv = findViewById(R.id.phone_tv);
         clear_cache_tv = findViewById(R.id.clear_cache_tv);

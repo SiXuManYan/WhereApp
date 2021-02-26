@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
@@ -40,6 +42,7 @@ public class NewPhoneActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         EventBus.getDefault().register(this);
         country_tv = findViewById(R.id.country_tv);
         phone_aet = findViewById(R.id.phone_aet);

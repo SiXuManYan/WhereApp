@@ -5,6 +5,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
@@ -44,6 +46,7 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
 
     @Override
     protected void initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         old_password_aet = findViewById(R.id.old_password_aet);
         new_password_aet = findViewById(R.id.new_password_aet);
         old_password_rule_iv = findViewById(R.id.old_password_rule_iv);

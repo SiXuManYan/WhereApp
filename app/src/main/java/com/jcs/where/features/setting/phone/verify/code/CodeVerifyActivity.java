@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
@@ -44,6 +46,7 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
 
     @Override
     protected void initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         captcha_view = findViewById(R.id.captcha_view);
         resend_tv = findViewById(R.id.resend_tv);
         jcsTitle = findViewById(R.id.jcsTitle);

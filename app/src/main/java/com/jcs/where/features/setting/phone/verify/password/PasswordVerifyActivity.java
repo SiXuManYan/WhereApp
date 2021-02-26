@@ -5,6 +5,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
@@ -37,6 +39,7 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
 
     @Override
     protected void initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         password_rule_iv = findViewById(R.id.password_rule_iv);
         password_aet = findViewById(R.id.password_aet);
     }

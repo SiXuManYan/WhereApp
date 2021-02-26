@@ -59,7 +59,7 @@ public class MerchantSettledRequest {
     @SerializedName("has_physical_store")
     private Integer hasPhysicalStore;
     @SerializedName("business_license")
-    private String[] businessLicense;
+    private String businessLicense;
 
     public String getFirstName() {
         return firstName;
@@ -181,11 +181,11 @@ public class MerchantSettledRequest {
         this.hasPhysicalStore = hasPhysicalStore;
     }
 
-    public String[] getBusinessLicense() {
+    public String getBusinessLicense() {
         return businessLicense;
     }
 
-    public void setBusinessLicense(String[] businessLicense) {
+    public void setBusinessLicense(String businessLicense) {
         this.businessLicense = businessLicense;
     }
 }

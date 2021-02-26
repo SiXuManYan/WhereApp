@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.GsonUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -172,7 +173,7 @@ public class MerchantSettledActivity extends BaseActivity {
                         int index = mAdapter.getData().indexOf(filePath);
                         mUploadLinks[index] = response.link;
                         if (mUploadCompleted == mToUploadCount) {
-                            mRequest.setBusinessLicense(mUploadLinks);
+                            mRequest.setBusinessLicense(GsonUtils.toJson(mUploadLinks));
                             // 都上传完了，提交评论
                             commitMerchant();
                         }
@@ -195,6 +196,7 @@ public class MerchantSettledActivity extends BaseActivity {
 
             @Override
             protected void onSuccess(SuccessResponse response) {
+                stopLoading();
                 showToast(getString(R.string.commit_success));
             }
         });

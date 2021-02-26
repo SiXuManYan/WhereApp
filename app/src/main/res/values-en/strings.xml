@@ -247,6 +247,7 @@
 	<string name="hint">Prompt</string>
 	<string name="login_expired_hint">Please login again</string>
 	<string name="login_again">Login again</string>
+	<string name="commit_again">Commit again</string>
 	<string name="request_error">Request error %1$d</string>
 	<string name="news_followed">Followed</string>
 	<string name="search_news_keyword">Search news by keywords</string>

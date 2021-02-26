@@ -249,6 +249,7 @@
     <string name="hint">提示</string>
     <string name="login_expired_hint">请重新登录</string>
     <string name="login_again">重新登录</string>
+    <string name="commit_again">重新提交</string>
     <string name="request_error">请求错误%1$d</string>
 
     <string name="day_1">1天</string>
@@ -435,5 +436,13 @@
     <string name="voice_message">语音消息</string>
     <string name="search_all_hint">搜索标题或关键字</string>
     <string name="settled_type_title">入驻类型</string>
+    <string name="merchant_verify_ing_desc">您的资料正在审核，请耐心等待。</string>
+    <string name="merchant_verify_ing_title">审核中</string>
+    <string name="merchant_verify_faild_title">审核失败</string>
+    <string name="merchant_verify_faild_desc">您的资料审核失败，我们将以电话形式通知您，请耐心等待。</string>
+
+    <string name="merchant_verify_success_desc">您的资料已审核通过，我们将以电话形式通知您，请耐心等待。</string>
+    <string name="merchant_verify_success_title">恭喜您审核通过</string>
+    <string name="merchant_verify_success_step2">审核通过</string>
 
 </resources>

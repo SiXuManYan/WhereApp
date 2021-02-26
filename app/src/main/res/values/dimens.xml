@@ -85,4 +85,6 @@
     <dimen name="dp_210">210dp</dimen>
     <dimen name="sp_6">6sp</dimen>
     <dimen name="dp_85">85dp</dimen>
+    <dimen name="dp_136">136dp</dimen>
+    <dimen name="dp_245">245dp</dimen>
 </resources>

@@ -17,6 +17,6 @@ public class SettledTypeModel extends BaseModel {
     }
 
     public void getMerchantType(String level, int pid, BaseObserver<List<MerchantTypeResponse>> observer) {
-        dealResponse(mRetrofit.getMerchantSettled(level, pid), observer);
+        dealResponse(mRetrofit.getMerchantSettledType(level, pid), observer);
     }
 }

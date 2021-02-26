@@ -33,6 +33,7 @@ import com.jcs.where.api.response.IntegralDetailResponse;
 import com.jcs.where.api.response.LoginResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.MerchantSettledInfoResponse;
 import com.jcs.where.api.response.MerchantTypeResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
@@ -664,11 +665,17 @@ public interface RetrofitApi {
      * 商家入驻的分类
      */
     @GET("userapi/v2/merchant/types/{level}")
-    Observable<JcsResponse<List<MerchantTypeResponse>>> getMerchantSettled(@Path("level") String level, @Query("pid") int pid);
+    Observable<JcsResponse<List<MerchantTypeResponse>>> getMerchantSettledType(@Path("level") String level, @Query("pid") int pid);
 
     /**
      * 提交商家入驻信息
      */
     @POST("userapi/v2/merchants")
     Observable<JcsResponse<SuccessResponse>> postMerchant(@Body MerchantSettledRequest request);
+
+    /**
+     * 获得商家入驻信息
+     */
+    @GET("userapi/v2/merchants/info")
+    Observable<JcsResponse<MerchantSettledInfoResponse>> getMerchantSettledInfo();
 }

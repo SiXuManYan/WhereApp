@@ -14,6 +14,7 @@ import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.response.MerchantSettledInfoResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
@@ -30,6 +31,7 @@ import com.jcs.where.mine.activity.CollectionListActivity;
 import com.jcs.where.mine.activity.FootprintActivity;
 import com.jcs.where.mine.activity.LanguageActivity;
 import com.jcs.where.mine.activity.merchant_settled.MerchantSettledActivity;
+import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity;
 import com.jcs.where.mine.model.MineModel;
 import com.jcs.where.presenter.UploadFilePresenter;
 import com.jcs.where.storage.WhereDataBase;
@@ -121,7 +123,25 @@ public class MineFragment extends BaseFragment {
     }
 
     private void onMerchantSettledClicked(View view) {
-        toActivityIfSigned(MerchantSettledActivity.class);
+        showLoading();
+        mModel.getMerchantSettledInfo(new BaseObserver<MerchantSettledInfoResponse>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            protected void onSuccess(MerchantSettledInfoResponse response) {
+                stopLoading();
+                if (response == null) {
+                    toActivityIfSigned(MerchantSettledActivity.class);
+                    return;
+                }
+
+                MerchantVerifyActivity.go(getContext(), response.getIsVerify());
+            }
+        });
     }
 
     private void onAboutClick(View view) {

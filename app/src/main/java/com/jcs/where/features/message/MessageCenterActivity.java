@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
@@ -41,6 +43,7 @@ public class MessageCenterActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         pager = findViewById(R.id.pager);
         tabs_type = findViewById(R.id.tabs_type);
         pager.setOffscreenPageLimit(TAB_TITLES.length);

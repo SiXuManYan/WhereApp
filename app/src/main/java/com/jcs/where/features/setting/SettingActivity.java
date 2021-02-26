@@ -41,7 +41,6 @@ import java.io.File;
 public class SettingActivity extends BaseActivity {
 
     private TextView phone_tv, clear_cache_tv;
-    private User user;
 
     @Override
     protected int getLayoutId() {

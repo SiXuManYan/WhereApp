@@ -9,6 +9,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
+import com.jcs.where.api.response.MerchantTypeResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.mine.model.merchant_settled.SettledTypeModel;
 import com.jcs.where.utils.RequestResultCode;
@@ -30,7 +31,8 @@ public class SettledTypeActivity extends BaseActivity {
     private RecyclerView mRecycler;
     private SettledTypeAdapter mAdapter;
     private int mTypeLevel = 1;
-    private List<String> mParentIds;
+    private List<Integer> mParentIds;
+    private String[] mMerchantTypeLevels = {"first", "second", "third"};
 
     @Override
     protected void initView() {
@@ -45,24 +47,12 @@ public class SettledTypeActivity extends BaseActivity {
     protected void initData() {
         mModel = new SettledTypeModel();
         mParentIds = new ArrayList<>();
-        mParentIds.add("0");
-        mModel.getCategories(mTypeLevel, mParentIds.get(mParentIds.size() - 1), new BaseObserver<List<CategoryResponse>>() {
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-                showNetError(errorResponse);
-            }
-
-            @Override
-            protected void onSuccess(List<CategoryResponse> response) {
-                mAdapter.getData().clear();
-                mAdapter.addData(response);
-            }
-        });
+        mParentIds.add(0);
+        getCategories(mMerchantTypeLevels[mTypeLevel - 1],mParentIds.get(mTypeLevel - 1));
     }
 
-    private void getCategories(int typeLevel, String parentId) {
-        mModel.getCategories(typeLevel, parentId, new BaseObserver<List<CategoryResponse>>() {
+    private void getCategories(String typeLevel, int parentId) {
+        mModel.getMerchantType(typeLevel, parentId, new BaseObserver<List<MerchantTypeResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -70,7 +60,7 @@ public class SettledTypeActivity extends BaseActivity {
             }
 
             @Override
-            protected void onSuccess(List<CategoryResponse> response) {
+            protected void onSuccess(List<MerchantTypeResponse> response) {
                 mAdapter.getData().clear();
                 mAdapter.addData(response);
             }
@@ -89,18 +79,18 @@ public class SettledTypeActivity extends BaseActivity {
         } else {
             mParentIds.remove(mParentIds.size() - 1);
             mTypeLevel--;
-            getCategories(mTypeLevel, mParentIds.get(mParentIds.size() - 1));
+            getCategories(mMerchantTypeLevels[mTypeLevel], mParentIds.get(mParentIds.size() - 1));
 
         }
     }
 
     private void onItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        CategoryResponse item = mAdapter.getItem(position);
-        if (item.getHas_children() == 2) {
+        MerchantTypeResponse item = mAdapter.getItem(position);
+        if (item.getHasChildren() == 2) {
             // 有下级，则获取下级数据
             mTypeLevel++;
             mParentIds.add(item.getId());
-            getCategories(mTypeLevel, item.getId());
+            getCategories(mMerchantTypeLevels[mTypeLevel - 1], item.getId());
         } else {
             Intent result = new Intent();
             result.putExtra("typeName", item.getName());
@@ -122,16 +112,16 @@ public class SettledTypeActivity extends BaseActivity {
         return R.layout.activity_settled_type;
     }
 
-    static class SettledTypeAdapter extends BaseQuickAdapter<CategoryResponse, BaseViewHolder> {
+    static class SettledTypeAdapter extends BaseQuickAdapter<MerchantTypeResponse, BaseViewHolder> {
 
         public SettledTypeAdapter() {
             super(R.layout.item_settled_type);
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, CategoryResponse categoryResponse) {
-            baseViewHolder.setText(R.id.settledTypeNameTv, categoryResponse.getName() + "");
-            if (categoryResponse.getHas_children() == 1) {
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, MerchantTypeResponse typeResponse) {
+            baseViewHolder.setText(R.id.settledTypeNameTv, typeResponse.getName() + "");
+            if (typeResponse.getHasChildren() == 1) {
                 // 1 表示没有下级
                 baseViewHolder.setGone(R.id.arrowIv, true);
             } else {

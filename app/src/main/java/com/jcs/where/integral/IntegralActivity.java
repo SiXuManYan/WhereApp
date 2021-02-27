@@ -234,4 +234,5 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
         }
     }
 
+
 }

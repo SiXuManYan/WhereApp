@@ -405,5 +405,13 @@ public class MineFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isViewCreated) {
+            getMessageCount();
+        }
+    }
+
 
 }

@@ -3,11 +3,13 @@ package com.jcs.where.mine.fragment;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.JsonObject;
 import com.jcs.where.BaseApplication;
@@ -78,9 +80,12 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         EventBus.getDefault().register(this);
-        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.message_view));
-        mSwipeLayout = view.findViewById(R.id.mineSwipeLayout);
+        message_view = view.findViewById(R.id.message_view);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) message_view.getLayoutParams();
+        layoutParams.topMargin = BarUtils.getStatusBarHeight() + SizeUtils.dp2px(7);
+        message_view.setLayoutParams(layoutParams);
 
+        mSwipeLayout = view.findViewById(R.id.mineSwipeLayout);
         nicknameTv = view.findViewById(R.id.nicknameTv);
         accountTv = view.findViewById(R.id.tv_account);
         mUploadPresenter = new UploadFilePresenter(getContext());
@@ -107,7 +112,6 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
         view.findViewById(R.id.setting_ll).setOnClickListener(this::onSettingClick);
         view.findViewById(R.id.integral_iv).setOnClickListener(this::onIntegralIvClicked);
-        message_view = view.findViewById(R.id.message_view);
         message_view.setOnClickListener(this::onMessageClick);
     }
 

@@ -16,7 +16,9 @@
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:paddingTop="@dimen/dp_7"
+        android:paddingBottom="@dimen/dp_7"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_cityname"

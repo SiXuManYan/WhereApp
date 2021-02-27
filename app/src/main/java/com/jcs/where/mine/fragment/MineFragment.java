@@ -223,17 +223,19 @@ public class MineFragment extends BaseFragment {
     }
 
     private void onRefreshListener() {
+        if (!mSwipeLayout.isRefreshing()) {
+            showLoading();
+        }
         updateUserInfo();
         getMessageCount();
     }
 
     public void updateUserInfo() {
         if (!User.isLogon()) {
+            mSwipeLayout.setRefreshing(false);
             return;
         }
-        if (!mSwipeLayout.isRefreshing()) {
-            showLoading();
-        }
+
         mModel.getUserInfo(new BaseObserver<UserInfoResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
@@ -365,15 +367,19 @@ public class MineFragment extends BaseFragment {
      * 获取消息数量
      */
     private void getMessageCount() {
-
+        if (!User.isLogon()) {
+            mSwipeLayout.setRefreshing(false);
+            return;
+        }
         mModel.getUnreadMessageCount(new BaseObserver<JsonObject>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-
+                mSwipeLayout.setRefreshing(false);
             }
 
             @Override
             protected void onSuccess(JsonObject response) {
+                mSwipeLayout.setRefreshing(false);
                 int apiUnreadMessageCount = 0;
                 if (response.has("count")) {
                     apiUnreadMessageCount = response.get("count").getAsInt();

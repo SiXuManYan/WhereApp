@@ -117,7 +117,7 @@ public class MineFragment extends BaseFragment {
 
     private void onMessageClick(View view) {
 
-        startActivity(MessageCenterActivity.class);
+        startActivityAfterLogin(MessageCenterActivity.class);
 
 //        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
 //        String targetId = "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5";

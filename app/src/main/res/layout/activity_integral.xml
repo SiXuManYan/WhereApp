@@ -53,6 +53,14 @@
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15">
 
+                    <ImageView
+                        android:layout_width="134dp"
+                        android:layout_height="134dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="-60dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_star" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

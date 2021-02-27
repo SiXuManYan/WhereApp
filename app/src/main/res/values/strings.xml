@@ -444,5 +444,6 @@
     <string name="merchant_verify_success_desc">您的资料已审核通过，我们将以电话形式通知您，请耐心等待。</string>
     <string name="merchant_verify_success_title">恭喜您审核通过</string>
     <string name="merchant_verify_success_step2">审核通过</string>
+    <string name="nearby">附近</string>
 
 </resources>

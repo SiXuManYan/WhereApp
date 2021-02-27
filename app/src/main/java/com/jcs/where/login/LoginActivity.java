@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 
 import androidx.core.content.ContextCompat;
 
-
+@Deprecated
 public class LoginActivity extends BaseActivity {
 
     private TextView accountTv, phoneTv;

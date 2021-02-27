@@ -149,6 +149,12 @@ public class HomeFragment extends BaseFragment {
         homeRv.setLayoutManager(linearLayoutManager);
         homeRv.setAdapter(mHomeYouLikeAdapter);
         message_view = view.findViewById(R.id.message_view);
+
+        // 更改广告view宽高比
+        ImageView ad_iv = view.findViewById(R.id.ad_iv);
+        ViewGroup.LayoutParams layoutParams = ad_iv.getLayoutParams();
+        layoutParams.height = getScreenWidth() * 131 / 345;
+        ad_iv.setLayoutParams(layoutParams);
     }
 
     private void onModuleItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {

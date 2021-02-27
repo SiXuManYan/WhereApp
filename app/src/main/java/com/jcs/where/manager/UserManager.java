@@ -1,11 +1,12 @@
 package com.jcs.where.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.jcs.where.bean.UserBean;
-import com.jcs.where.login.LoginActivity;
+import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.PreferencesUtils;
 
 public class UserManager {
@@ -38,7 +39,8 @@ public class UserManager {
     public static boolean checkLogin(Context context) {
         boolean isLogin = UserManager.get().isLogin(context);
         if (!isLogin) {
-            LoginActivity.goTo(context);
+//            LoginActivity.goTo(context);
+            context.startActivity(new Intent(context, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
         return isLogin;
     }

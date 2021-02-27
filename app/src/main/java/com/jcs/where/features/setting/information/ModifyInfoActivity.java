@@ -104,7 +104,7 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
         List<String> elements = Matisse.obtainPathResult(data);
         if (!elements.isEmpty()) {
             String mFileDirPath = elements.get(0);
-            GlideUtil.load(this, mFileDirPath, avatar_riv);
+//            GlideUtil.load(this, mFileDirPath, avatar_riv);
             presenter.uploadFile(mFileDirPath, mName);
         }
     }

@@ -41,8 +41,9 @@ public class CommentListAdapter extends BaseQuickAdapter<CommentResponse, BaseVi
         }
 
         StarView starView = baseViewHolder.findView(R.id.starView);
-        if (starView != null) {
-            starView.setStartNum(dataBean.getStarLevel());
+        Integer starLevel = dataBean.getStarLevel();
+        if (starView != null && starLevel != null) {
+            starView.setStartNum(starLevel);
         }
 
         baseViewHolder.setText(R.id.dateTv, dataBean.getCreatedAt());

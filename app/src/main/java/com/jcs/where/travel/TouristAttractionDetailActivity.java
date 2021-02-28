@@ -131,10 +131,10 @@ public class TouristAttractionDetailActivity extends BaseActivity {
                 if (like == 1) {
                     mJcsTitle.setSecondRightIcon(R.drawable.ic_hotelwhitelike);
                 } else {
-                    mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_white);
+                    mJcsTitle.setSecondRightIcon(R.drawable.ic_hoteltransparentunlike);
                 }
-                mJcsTitle.setFirstRightIcon(R.mipmap.ic_share_white);
-                mJcsTitle.setBackIcon(R.mipmap.ic_back_white);
+                mJcsTitle.setFirstRightIcon(R.drawable.ic_share_white);
+                mJcsTitle.setBackIcon(R.drawable.ic_back_white);
                 toolbarStatus = 0;
             }
             mJcsTitle.getBackground().setAlpha(alpha);

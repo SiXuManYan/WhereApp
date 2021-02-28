@@ -152,7 +152,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="费用政策"
+                        android:text="@string/cost_policy"
                         android:textColor="@color/grey_666666"
                         android:textSize="12sp" />
 
@@ -162,7 +162,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:layout_marginRight="15dp"
-                        android:text="加床:该房型不可加床"
                         android:textColor="@color/black_333333"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -176,7 +175,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="浴室"
+                        android:text="@string/bathroom"
                         android:textColor="@color/grey_666666"
                         android:textSize="12sp" />
 
@@ -186,7 +185,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:layout_marginRight="15dp"
-                        android:text="加床:该房型不可加床"
                         android:textColor="@color/black_333333"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -201,7 +199,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="便利设施"
+                        android:text="@string/amenities"
                         android:textColor="@color/grey_666666"
                         android:textSize="12sp" />
 
@@ -211,7 +209,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:layout_marginRight="15dp"
-                        android:text="加床:该房型不可加床"
                         android:textColor="@color/black_333333"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -225,7 +222,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="媒体科技"
+                        android:text="@string/media_technology"
                         android:textColor="@color/grey_666666"
                         android:textSize="12sp" />
 
@@ -235,7 +232,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:layout_marginRight="15dp"
-                        android:text="加床:该房型不可加床"
                         android:textColor="@color/black_333333"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -249,7 +245,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="食品饮品"
+                        android:text="@string/food_and_drink"
                         android:textColor="@color/grey_666666"
                         android:textSize="12sp" />
 
@@ -259,7 +255,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:layout_marginRight="15dp"
-                        android:text="加床:该房型不可加床"
                         android:textColor="@color/black_333333"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -274,7 +269,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="室外景观"
+                        android:text="@string/outdoor_landscape"
                         android:textColor="@color/grey_666666"
                         android:textSize="12sp" />
 
@@ -284,7 +279,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:layout_marginRight="15dp"
-                        android:text="加床:该房型不可加床"
                         android:textColor="@color/black_333333"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -299,7 +293,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="其他"
+                        android:text="@string/mine_other"
                         android:textColor="@color/grey_666666"
                         android:textSize="12sp" />
 
@@ -309,7 +303,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:layout_marginRight="15dp"
-                        android:text="加床:该房型不可加床"
                         android:textColor="@color/black_333333"
                         android:textSize="12sp" />
                 </RelativeLayout>

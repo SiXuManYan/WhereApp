@@ -448,4 +448,10 @@
 	<string name="merchant_verify_ing_title">Verifying</string>
 	<string name="merchant_verify_faild_title">Audit failed</string>
 	<string name="merchant_verify_ing_desc">Your information is being reviewed, please wait patiently.</string>
+	<string name="cost_policy">Cost policy</string>
+	<string name="bathroom">Bathroom</string>
+	<string name="amenities">Amenities</string>
+	<string name="media_technology">Media</string>
+	<string name="food_and_drink">Food</string>
+	<string name="outdoor_landscape">Outdoor</string>
 </resources>

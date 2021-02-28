@@ -138,17 +138,17 @@ public class RoomDetailPopup extends PopupWindow implements View.OnClickListener
         squareTv.setText(hotelRoomDetailResponse.getRoom_area());
         windowTv = (TextView) rootView.findViewById(R.id.tv_window);
         if (hotelRoomDetailResponse.getWindow_type() == 1) {
-            windowTv.setText("有");
+            windowTv.setText(R.string.yes);
         } else {
-            windowTv.setText("无");
+            windowTv.setText(R.string.no);
         }
         floorTv = (TextView) rootView.findViewById(R.id.tv_floor);
         floorTv.setText(hotelRoomDetailResponse.getFloor());
         wifiTv = (TextView) rootView.findViewById(R.id.tv_wifi);
         if (hotelRoomDetailResponse.getWifi_type() == 1) {
-            wifiTv.setText("有");
+            wifiTv.setText(R.string.yes);
         } else {
-            wifiTv.setText("无");
+            wifiTv.setText(R.string.no);
         }
         peopleTv = (TextView) rootView.findViewById(R.id.tv_people);
         peopleTv.setText(hotelRoomDetailResponse.getPeople() + "");

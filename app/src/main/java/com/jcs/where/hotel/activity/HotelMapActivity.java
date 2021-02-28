@@ -190,7 +190,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             showToast(getString(R.string.permission_none));
             findViewById(R.id.myLocationIcon).setVisibility(View.GONE);
         } else {
-            showToast(getString(R.string.permission_has));
+//            showToast(getString(R.string.permission_has));
             findViewById(R.id.myLocationIcon).setVisibility(View.VISIBLE);
             if (mGoogleApiClient == null) {
                 mGoogleApiClient = new GoogleApiClient.Builder(this)

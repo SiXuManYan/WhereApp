@@ -16,7 +16,9 @@
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:paddingTop="@dimen/dp_7"
+        android:paddingBottom="@dimen/dp_7"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_cityname"
@@ -50,11 +52,12 @@
 
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:scaleType="centerInside"
                 android:layout_gravity="center"
                 android:layout_marginLeft="14.5dp"
-                android:src="@drawable/ic_homesearch" />
+                android:src="@mipmap/ic_homesearch" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -208,13 +211,29 @@
 
                 </RelativeLayout>
 
-                <ImageView
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_160"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_15"
+                    android:elevation="@dimen/dp_0"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_15"
-                    android:src="@mipmap/ic_home_big_icon" />
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardCornerRadius="@dimen/dp_8"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
+
+                    <ImageView
+                        android:id="@+id/ad_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_160"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_home_big_icon" />
+
+                </androidx.cardview.widget.CardView>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -235,7 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
-                        android:text="@string/home_near_hotel"
+                        android:text="@string/nearby"
                         android:textColor="@color/black_333333"
                         android:textSize="18sp" />
                 </LinearLayout>

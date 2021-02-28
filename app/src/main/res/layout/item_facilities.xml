@@ -12,7 +12,7 @@
         android:src="@drawable/ic_hoteldetail_children"
         android:layout_alignTop="@+id/tv_name"
         android:layout_alignBottom="@+id/tv_name"
-        android:scaleType="center"/>
+        android:scaleType="centerInside"/>
 
     <TextView
         android:id="@+id/tv_name"

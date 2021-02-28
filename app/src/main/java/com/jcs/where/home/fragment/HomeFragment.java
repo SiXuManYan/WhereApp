@@ -3,12 +3,9 @@ package com.jcs.where.home.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Outline;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -149,6 +146,12 @@ public class HomeFragment extends BaseFragment {
         homeRv.setLayoutManager(linearLayoutManager);
         homeRv.setAdapter(mHomeYouLikeAdapter);
         message_view = view.findViewById(R.id.message_view);
+
+        // 更改广告view宽高比
+        ImageView ad_iv = view.findViewById(R.id.ad_iv);
+        ViewGroup.LayoutParams layoutParams = ad_iv.getLayoutParams();
+        layoutParams.height = getScreenWidth() * 131 / 345;
+        ad_iv.setLayoutParams(layoutParams);
     }
 
     private void onModuleItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
@@ -292,6 +295,7 @@ public class HomeFragment extends BaseFragment {
                                 .priority(Priority.HIGH) //优先级
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
                                 .transform(new GlideRoundTransform(10)); //圆角
+
                         Glide.with(context).load(url).apply(options).into(gifImageView);
                     }
                 })
@@ -317,14 +321,14 @@ public class HomeFragment extends BaseFragment {
                     }
                 })
                 .start();
-        banner3.setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                float radius = Resources.getSystem().getDisplayMetrics().density * 10;
-                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
-            }
-        });
-        banner3.setClipToOutline(true);
+//        banner3.setOutlineProvider(new ViewOutlineProvider() {
+//            @Override
+//            public void getOutline(View view, Outline outline) {
+//                float radius = Resources.getSystem().getDisplayMetrics().density * 10;
+//                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+//            }
+//        });
+//        banner3.setClipToOutline(true);
     }
 
     private void initNews(List<HomeNewsResponse> list) {
@@ -472,5 +476,11 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isViewCreated) {
+            getMessageCount();
+        }
+    }
 }

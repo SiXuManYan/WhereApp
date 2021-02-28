@@ -1,11 +1,14 @@
 package com.jcs.where.api.response;
 
+import android.text.Layout;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class CommentResponse {
     public boolean is_select = false;
+    public Boolean needFullText = null;
 
     /**
      * id : 20
@@ -19,6 +22,8 @@ public class CommentResponse {
 
     @SerializedName("id")
     private Integer id;
+    @SerializedName("star")
+    private Integer star;
     @SerializedName("star_level")
     private Integer starLevel;
     @SerializedName("created_at")
@@ -41,7 +46,18 @@ public class CommentResponse {
     }
 
     public Integer getStarLevel() {
+        if (starLevel == null){
+            starLevel = star;
+        }
         return starLevel;
+    }
+
+    public Integer getStar() {
+        return star;
+    }
+
+    public void setStar(Integer star) {
+        this.star = star;
     }
 
     public void setStarLevel(Integer starLevel) {

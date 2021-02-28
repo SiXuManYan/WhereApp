@@ -15,7 +15,6 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.features.message.conversation.BusinessConversationFragment;
 import com.jcs.where.features.message.notice.SystemNoticeFragment;
-import com.jcs.where.integral.child.detail.IntegralChildDetailFragment;
 import com.jcs.where.widget.tabs.SlidingTabLayout;
 
 /**
@@ -78,10 +77,12 @@ public class MessageCenterActivity extends BaseActivity {
                 return new SystemNoticeFragment();
             }
         }
+
         @Override
         public int getCount() {
             return 2;
         }
     }
+
 
 }

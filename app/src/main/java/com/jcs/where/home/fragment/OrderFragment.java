@@ -7,6 +7,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -15,8 +23,8 @@ import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.home.watcher.EmptyTextWatcher;
-import com.jcs.where.login.LoginActivity;
 import com.jcs.where.model.OrderModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,14 +33,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.Group;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 
 public class OrderFragment extends BaseFragment {
@@ -164,7 +164,8 @@ public class OrderFragment extends BaseFragment {
     }
 
     private void onToLoginClicked(View view) {
-        toActivity(LoginActivity.class);
+//        toActivity(LoginActivity.class);
+        startActivityAfterLogin(LoginActivity.class);
     }
 
     private OrderListFragment getCurrentOrderListFragment() {

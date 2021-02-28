@@ -229,6 +229,8 @@ public class SearchActivity extends BaseActivity {
 
     private void onClearClicked(View view) {
         SearchHistoryUtils.clear(SearchActivity.this);
+        mSearchHistoryAdapter.getData().clear();
+        mSearchHistoryAdapter.notifyDataSetChanged();
     }
 
     /**

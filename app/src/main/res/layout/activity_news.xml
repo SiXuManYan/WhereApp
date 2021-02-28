@@ -1,54 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white">
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightFirstIcon="@drawable/ic_news_search"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
         app:middleTitle="@string/city_news"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:rightFirstIcon="@drawable/ic_news_search" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_30"
-        app:tabTextAppearance="@style/TabNormalText"
-        app:tabMode="scrollable"
-        app:tabIndicatorColor="@color/blue_4C9EF2"
-        app:tabIndicatorFullWidth="false"
+        android:background="@drawable/shape_news_tab_layout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/jcsTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/shape_news_tab_layout"/>
+        app:tabIndicatorColor="@color/blue_4C9EF2"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
+        app:tabTextAppearance="@style/TabNormalText" />
 
     <View
         android:id="@+id/addTabView"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_30"
+        android:background="@drawable/shape_news_add_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tabLayout"
-        android:background="@drawable/shape_news_add_view"/>
+        app:layout_constraintTop_toTopOf="@+id/tabLayout" />
 
     <ImageView
         android:id="@+id/addIcon"
         android:layout_width="@dimen/dp_17"
         android:layout_height="@dimen/dp_17"
         android:src="@mipmap/ic_news_add_black"
-        app:layout_constraintTop_toTopOf="@id/addTabView"
         app:layout_constraintBottom_toBottomOf="@id/addTabView"
+        app:layout_constraintEnd_toEndOf="@id/addTabView"
         app:layout_constraintStart_toStartOf="@id/addTabView"
-        app:layout_constraintEnd_toEndOf="@id/addTabView"/>
+        app:layout_constraintTop_toTopOf="@id/addTabView" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

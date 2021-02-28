@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -71,6 +73,7 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         mModel = new NewsAtyModel();
         mFollowChannels = new ArrayList<>();
         mMoreChannels = new ArrayList<>();

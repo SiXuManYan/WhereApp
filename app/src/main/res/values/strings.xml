@@ -99,6 +99,8 @@
     <string name="total_night">共%1$d晚</string>
     <string name="enter_stay">入店</string>
     <string name="leave_stay">离店</string>
+    <string name="calendar_enter_stay">入店</string>
+    <string name="calendar_leave_stay">离店</string>
     <string name="date_format_month_day">MM月dd日</string>
     <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
     <string name="date_format_mm_dd">MM-dd</string>
@@ -451,5 +453,6 @@
     <string name="media_technology">媒体科技</string>
     <string name="food_and_drink">食品饮品</string>
     <string name="outdoor_landscape">室外景观</string>
+    <string name="nearby">附近</string>
 
 </resources>

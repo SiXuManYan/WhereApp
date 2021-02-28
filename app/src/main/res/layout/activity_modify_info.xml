@@ -44,15 +44,13 @@
             android:src="@drawable/ic_noheader" />
 
 
-        <TextView
-            android:layout_width="@dimen/dp_8"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="@dimen/dp_9"
+            android:layout_height="@dimen/dp_15"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text=">"
-            android:textColor="@color/grey_999999"
-            android:textSize="@dimen/sp_12"
-            android:textStyle="bold" />
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_minenext" />
 
 
     </RelativeLayout>

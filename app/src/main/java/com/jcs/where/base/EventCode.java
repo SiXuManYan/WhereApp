@@ -41,4 +41,9 @@ public class EventCode {
      * 刷新用户信息
      */
     public static final int EVENT_REFRESH_USER_INFO = 1009;
+
+    /**
+     * 刷新消息未读数量
+     */
+    public static final int EVENT_REFRESH_UNREAD_MESSAGE_COUNT = 1010;
 }

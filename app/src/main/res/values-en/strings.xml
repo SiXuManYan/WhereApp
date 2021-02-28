@@ -440,4 +440,12 @@
 	<string name="voice_message">Voice Message</string>
 	<string name="search_all_hint">Search title or keyword</string>
     <string name="settled_type_title">Type of settlement</string>
+    <string name="stay_info">Check in information</string>
+	<string name="merchant_verify_success_step2">Approved</string>
+	<string name="merchant_verify_success_title">Congratulations on your approval</string>
+	<string name="merchant_verify_success_desc">Your information has been approved, we will inform you by telephone, please wait patiently.</string>
+	<string name="merchant_verify_faild_desc">Your data audit failed, we will inform you by telephone, please wait patiently.</string>
+	<string name="merchant_verify_ing_title">Verifying</string>
+	<string name="merchant_verify_faild_title">Audit failed</string>
+	<string name="merchant_verify_ing_desc">Your information is being reviewed, please wait patiently.</string>
 </resources>

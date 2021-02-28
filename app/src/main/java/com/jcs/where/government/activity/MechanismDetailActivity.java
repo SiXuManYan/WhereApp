@@ -115,6 +115,7 @@ public class MechanismDetailActivity extends BaseActivity {
                     injectResponseToView();
 
                     // 导航
+                    mToNavigationDialog.setTargetLocation(mMechanismDetailResponse.getAddress());
                     mToNavigationDialog.setLatitude(mMechanismDetailResponse.getLat());
                     mToNavigationDialog.setLongitude(mMechanismDetailResponse.getLng());
 

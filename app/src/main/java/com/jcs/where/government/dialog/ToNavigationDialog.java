@@ -25,6 +25,7 @@ public class ToNavigationDialog extends BaseBottomDialog {
     private Double mLatitude;
     private Double mLongitude;
     private String mNavigationName;
+    private String mTargetLocation;
 
     @Override
     protected int getLayout() {
@@ -59,6 +60,10 @@ public class ToNavigationDialog extends BaseBottomDialog {
         mNavigationTv.setOnClickListener(this::onNavigationClicked);
     }
 
+    public void setTargetLocation(String mTargetLocation) {
+        this.mTargetLocation = mTargetLocation;
+    }
+
     public void setLatitude(Double latitude) {
         this.mLatitude = latitude;
     }
@@ -86,7 +91,7 @@ public class ToNavigationDialog extends BaseBottomDialog {
     private void toMap(Context context) {
         Uri gmmIntentUri = Uri.parse("google.navigation:q="
                 + mLatitude + "," + mLongitude
-                + ", + Sydney +Australia");
+                + ", + " + mNavigationName);
         Intent toMap = new Intent(Intent.ACTION_VIEW,
                 gmmIntentUri);
         toMap.setPackage("com.google.android.apps.maps");

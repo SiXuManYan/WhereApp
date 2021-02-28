@@ -129,6 +129,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
                 contactsTv.setText(hotelOrderDetailResponse.getUsername());
                 phoneTv.setText(hotelOrderDetailResponse.getPhone());
                 mCallDialog.setPhoneNumber(hotelOrderDetailResponse.getPhone());
+                mToNavigationDialog.setTargetLocation(hotelOrderDetailResponse.getHotel_addr());
                 mToNavigationDialog.setLatitude(hotelOrderDetailResponse.getHotel_lat());
                 mToNavigationDialog.setLongitude(hotelOrderDetailResponse.getHotel_lng());
 

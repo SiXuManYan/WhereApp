@@ -254,6 +254,7 @@ public class HotelDetailActivity extends BaseActivity {
                 if (alpha == 0) {
                     titleTv.setText("");
                 }
+                changeStatusTextColor();
             }
         });
         useView.getBackground().setAlpha(0);
@@ -718,6 +719,10 @@ public class HotelDetailActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected boolean isStatusDark() {
+        return toolbarStatus == 1;
+    }
 
     private void onShareClick() {
         String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_HOTEL, String.valueOf(mHotelId));

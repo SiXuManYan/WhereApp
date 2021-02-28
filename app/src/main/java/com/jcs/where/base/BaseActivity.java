@@ -77,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         changeStatusTextColor();
     }
 
-    private void changeStatusTextColor() {
+    protected void changeStatusTextColor() {
         View decor = getWindow().getDecorView();
         if (isStatusDark()) {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

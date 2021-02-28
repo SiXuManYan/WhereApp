@@ -22,6 +22,9 @@ import com.jcs.where.codepicker.OnPick;
 import com.jcs.where.home.dialog.AreaCodeListDialog;
 import com.jcs.where.hotel.model.HotelSubscribeModel;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 import androidx.appcompat.widget.Toolbar;
 import io.reactivex.annotations.NonNull;
 
@@ -116,8 +119,10 @@ public class HotelSubscribeActivity extends BaseActivity {
         roomNumTv.setText(subscribeBean.roomNumber);
         night = Integer.parseInt(subscribeBean.night.replace(getString(R.string.price_unit), "").replace(getString(R.string.total), "").replace(getString(R.string.night), ""));
         // 订单总价
-        float priceFloat = Integer.parseInt(roomNumTv.getText().toString()) * subscribeBean.roomPrice * night;
-        String priceText = String.format(getString(R.string.show_price_with_forward_unit_f), priceFloat);
+        double priceFloat = Integer.parseInt(roomNumTv.getText().toString()) * subscribeBean.roomPrice * night;
+        BigDecimal bd = new BigDecimal(priceFloat);
+        double value = bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        String priceText = String.format(getString(R.string.show_price_with_forward_unit_f), value);
         priceTv.setText(priceText);
     }
 

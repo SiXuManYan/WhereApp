@@ -21,7 +21,7 @@
     <string name="price_above_5">₱ 5k+</string>
     <string name="price_unit">₱</string>
     <string name="show_price_with_forward_unit">₱%1$d</string>
-    <string name="show_price_with_forward_unit_f">₱%1$f</string>
+    <string name="show_price_with_forward_unit_f">₱%1$.2f</string>
     <string name="prompt_star">星级</string>
     <string name="prompt_price_star">价格/星级</string>
     <string name="score_prompt">评分</string>

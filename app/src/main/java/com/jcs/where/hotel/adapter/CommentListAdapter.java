@@ -1,5 +1,6 @@
 package com.jcs.where.hotel.adapter;
 
+import android.text.Layout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,15 +48,28 @@ public class CommentListAdapter extends BaseQuickAdapter<CommentResponse, BaseVi
         baseViewHolder.setText(R.id.dateTv, dataBean.getCreatedAt());
         TextView commentContentTv = baseViewHolder.findView(R.id.commentContent);
         commentContentTv.setText(dataBean.getContent());
-        if (dataBean.is_select) {
-            baseViewHolder.setText(R.id.fullText, getContext().getString(R.string.put_up));
-
-            commentContentTv.setMaxLines(Integer.MAX_VALUE);
-            commentContentTv.setEllipsize(null);
+        if (dataBean.needFullText == null) {
+            commentContentTv.post(() -> {
+                int ellipsisCount = commentContentTv.getLayout().getEllipsisCount(2);
+                if (ellipsisCount > 0) {
+                    baseViewHolder.setGone(R.id.fullText, false);
+                    dataBean.needFullText = true;
+                    if (dataBean.is_select) {
+                        baseViewHolder.setText(R.id.fullText, getContext().getString(R.string.put_up));
+                        commentContentTv.setMaxLines(Integer.MAX_VALUE);
+                        commentContentTv.setEllipsize(null);
+                    } else {
+                        baseViewHolder.setText(R.id.fullText, getContext().getString(R.string.full_text));
+                        commentContentTv.setMaxLines(3);
+                        commentContentTv.setEllipsize(TextUtils.TruncateAt.END);
+                    }
+                } else {
+                    baseViewHolder.setGone(R.id.fullText, true);
+                    dataBean.needFullText = false;
+                }
+            });
         } else {
-            baseViewHolder.setText(R.id.fullText, getContext().getString(R.string.full_text));
-            commentContentTv.setMaxLines(3);
-            commentContentTv.setEllipsize(TextUtils.TruncateAt.END);
+            baseViewHolder.setGone(R.id.fullText, !dataBean.needFullText);
         }
         List<String> images = dataBean.getImages();
 

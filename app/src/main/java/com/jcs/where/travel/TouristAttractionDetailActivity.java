@@ -49,6 +49,9 @@ import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
 
+/**
+ * 页面-旅游景点详情页
+ */
 public class TouristAttractionDetailActivity extends BaseActivity {
 
     private static final String EXT_ID = "id";
@@ -189,7 +192,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         mCommentAdapter = new CommentListAdapter();
         commentLl = findViewById(R.id.ll_comment);
         seeMoreTv = findViewById(R.id.tv_seemore);
-        seeMoreTv.setOnClickListener(view -> TravelCommentActivity.goTo(TouristAttractionDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0)));
+//        seeMoreTv.setOnClickListener(view -> TravelCommentActivity.goTo(TouristAttractionDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0)));
     }
 
     @Override
@@ -284,8 +287,8 @@ public class TouristAttractionDetailActivity extends BaseActivity {
             }
         });
         mJcsTitle.setSecondRightIvClickListener(view -> collection(like != 1));
-//        mCommentAdapter.addChildClickViewIds(R.id.fullText, R.id.commentIcon01, R.id.commentIcon02, R.id.commentIcon03, R.id.commentIcon04);
-//        mCommentAdapter.setOnItemChildClickListener(this::onCommentItemChildClicked);
+        mCommentAdapter.addChildClickViewIds(R.id.fullText, R.id.commentIcon01, R.id.commentIcon02, R.id.commentIcon03, R.id.commentIcon04);
+        mCommentAdapter.setOnItemChildClickListener(this::onCommentItemChildClicked);
 
         mJcsTitle.setFirstRightIvClickListener(v -> {
             String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_TRAVEL, mId);
@@ -420,7 +423,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         } else {
-            showToast("您尚未安装谷歌地图或地图版本过低");
+            showToast(getString(R.string.no_install_google_map_prompt));
         }
     }
 

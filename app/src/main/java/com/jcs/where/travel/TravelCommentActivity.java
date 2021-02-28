@@ -29,6 +29,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 页面-旅游评论
+ */
 public class TravelCommentActivity extends BaseActivity {
 
     private static final String EXT_ID = "id";

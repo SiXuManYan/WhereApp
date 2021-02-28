@@ -61,6 +61,8 @@
         android:layout_height="wrap_content"
         android:text="@string/full_text"
         android:textColor="@color/blue_4C9EF2"
+        android:ellipsize="end"
+        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/commentContent" />
 

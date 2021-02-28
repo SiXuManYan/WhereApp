@@ -1,11 +1,14 @@
 package com.jcs.where.api.response;
 
+import android.text.Layout;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class CommentResponse {
     public boolean is_select = false;
+    public Boolean needFullText = null;
 
     /**
      * id : 20

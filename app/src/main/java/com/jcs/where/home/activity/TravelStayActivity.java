@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.annotations.NonNull;
 
 /**
- * 旅游住宿页面
+ * 页面-旅游住宿
  */
 public class TravelStayActivity extends BaseActivity {
     public static final String K_CATEGORY_IDS = "categoryIds";

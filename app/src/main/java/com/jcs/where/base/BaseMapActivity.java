@@ -37,6 +37,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -189,6 +190,14 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
 
         // 监听软键盘显示隐藏
         KeyboardVisibilityEvent.setEventListener(this, this::onKeyboardStatusChanged);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mPopupLayout != null) {
+            mPopupLayout.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+        }
     }
 
     protected void onDelInputClicked(View view) {

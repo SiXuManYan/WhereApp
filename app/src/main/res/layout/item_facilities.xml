@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_12"
+        android:layout_height="@dimen/dp_13"
         android:src="@drawable/ic_hoteldetail_children"
         android:layout_alignTop="@+id/tv_name"
         android:layout_alignBottom="@+id/tv_name"
@@ -18,7 +18,6 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="儿童及加床"
         android:textColor="@color/black_333333"
         android:textSize="13sp"
         android:layout_toRightOf="@+id/iv_icon"

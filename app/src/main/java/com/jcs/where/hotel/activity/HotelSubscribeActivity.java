@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -117,7 +118,12 @@ public class HotelSubscribeActivity extends BaseActivity {
             cancelTv.setText(R.string.not_cancelable);
         }
         roomNumTv.setText(subscribeBean.roomNumber);
-        night = Integer.parseInt(subscribeBean.night.replace(getString(R.string.price_unit), "").replace(getString(R.string.total), "").replace(getString(R.string.night), ""));
+        subscribeBean.night = subscribeBean.night.replace(getString(R.string.price_unit), "")
+                .replace(getString(R.string.total), "")
+                .replace(getString(R.string.night), "")
+                .trim();
+        Log.e("HotelSubscribeActivity", "initData: " + "subscribeBean.night=" + subscribeBean.night);
+//        night = Integer.parseInt(subscribeBean.night.replace(getString(R.string.price_unit), "").replace(getString(R.string.total), "").replace(getString(R.string.night), "").trim());
         // 订单总价
         double priceFloat = Integer.parseInt(roomNumTv.getText().toString()) * subscribeBean.roomPrice * night;
         BigDecimal bd = new BigDecimal(priceFloat);

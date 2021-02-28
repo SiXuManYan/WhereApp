@@ -11,7 +11,7 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_photo"
         android:layout_width="60dp"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/dp_67"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="7dp"
         android:layout_marginRight="11dp"

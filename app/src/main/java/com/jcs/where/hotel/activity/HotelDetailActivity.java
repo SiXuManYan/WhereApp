@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.widget.StarView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -77,6 +79,7 @@ public class HotelDetailActivity extends BaseActivity {
     private Toolbar toolbar;
     private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
+    private RatingBar mRatingBar;
     private RelativeLayout faceBookRl;
     private TextView faceBookTv;
     private String faceBookLink;
@@ -108,6 +111,7 @@ public class HotelDetailActivity extends BaseActivity {
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
     private int mRoomNum;
     private int mTotalDay;
+    private JcsCalendarDialog mJcsCalendarDialog;
 
     public static void goTo(Context context, int id, JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate, int totalDay, String startYear, String endYear, int roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -145,6 +149,9 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mJcsCalendarDialog = new JcsCalendarDialog();
+        mJcsCalendarDialog.initCalendar(this);
+
         toolbar = findViewById(R.id.toolbar);
         //  setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
         useView = findViewById(R.id.useView);
@@ -152,6 +159,7 @@ public class HotelDetailActivity extends BaseActivity {
         shareIv = findViewById(R.id.iv_share);
         titleTv = findViewById(R.id.titleTv);
         nameTv = findViewById(R.id.tv_name);
+        mRatingBar = findViewById(R.id.ratingBar);
         banner = findViewById(R.id.banner3);
         startTimeTv = findViewById(R.id.tv_startTime);
         starTv = findViewById(R.id.tv_star);
@@ -292,11 +300,6 @@ public class HotelDetailActivity extends BaseActivity {
         });
         hotelDetailRl = findViewById(R.id.rl_hoteldetail);
         navigationRl = findViewById(R.id.rl_navigation);
-        findViewById(R.id.ll_choosedate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
         mStarView = findViewById(R.id.starView);
         timeTv = findViewById(R.id.tv_time);
     }
@@ -371,6 +374,7 @@ public class HotelDetailActivity extends BaseActivity {
                             .start();
                 }
                 nameTv.setText(hotelDetailResponse.getName());
+                mRatingBar.setNumStars((int) hotelDetailResponse.getGrade());
 
                 shareIv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -423,10 +427,34 @@ public class HotelDetailActivity extends BaseActivity {
         });
     }
 
+    private void onChooseDate(View view) {
+        mJcsCalendarDialog.show(getSupportFragmentManager());
+    }
+
     @Override
     protected void bindListener() {
         toolbar.setNavigationOnClickListener(this::onBackIconClicked);
+        findViewById(R.id.ll_choosedate).setOnClickListener(this::onChooseDate);
+        mJcsCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
     }
+
+    public void onDateSelected(JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate) {
+        if (startDate != null) {
+            deployDateTv(mStartDateTv, mStartWeekTv, startDate);
+        }
+
+        if (endDate != null) {
+            deployDateTv(mEndDateTv, mEndWeekTv, endDate);
+        }
+        mTotalDayTv.setText(mJcsCalendarDialog.getTotalDay());
+        mTotalDay  = mJcsCalendarDialog.getTotalDay2();
+    }
+
+    public void deployDateTv(TextView dateTv, TextView weekTv, JcsCalendarAdapter.CalendarBean calendarBean) {
+        dateTv.setText(calendarBean.getShowMonthDayDate());
+        weekTv.setText(calendarBean.getShowWeekday());
+    }
+
 
     public void onBackIconClicked(View view) {
         finish();
@@ -744,7 +772,7 @@ public class HotelDetailActivity extends BaseActivity {
                     // 不相等 请求授权
                     ActivityCompat.requestPermissions(HotelDetailActivity.this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_CODE);
                     return false;
-                }else {
+                } else {
                     return true;
                 }
             } else {

@@ -1,5 +1,6 @@
 package com.jcs.where.hotel.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -24,7 +26,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,6 +73,7 @@ import pl.droidsonroids.gif.GifImageView;
  */
 public class HotelDetailActivity extends BaseActivity {
 
+    private static final int CALL_PHONE_CODE = 1000;
     private Toolbar toolbar;
     private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
@@ -166,6 +171,9 @@ public class HotelDetailActivity extends BaseActivity {
         findViewById(R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!checkPermission()) {
+                    return;
+                }
                 AlertDialog alertDialog2 = new AlertDialog.Builder(HotelDetailActivity.this)
                         .setTitle(R.string.prompt)
                         .setMessage(String.format(getString(R.string.ask_call_merchant_phone), phone))
@@ -729,5 +737,22 @@ public class HotelDetailActivity extends BaseActivity {
         MobUtil.shareFacebookWebPage(url, this);
     }
 
-
+    private boolean checkPermission() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (PermissionChecker.checkSelfPermission(HotelDetailActivity.this, Manifest.permission.CALL_PHONE) != PermissionChecker.PERMISSION_GRANTED) {
+                    // 不相等 请求授权
+                    ActivityCompat.requestPermissions(HotelDetailActivity.this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_CODE);
+                    return false;
+                }else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

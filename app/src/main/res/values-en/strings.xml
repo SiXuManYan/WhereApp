@@ -98,6 +98,8 @@
 	<string name="total_night">%1$d night</string>
 	<string name="enter_stay">Check-in</string>
 	<string name="leave_stay">Check-out</string>
+	<string name="calendar_enter_stay">In</string>
+	<string name="calendar_leave_stay">Out</string>
 	<string name="date_format_month_day">MMM&#032;d</string>
 	<string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
 	<string name="prompt_room_num">Rooms</string>

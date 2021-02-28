@@ -99,6 +99,8 @@
     <string name="total_night">共%1$d晚</string>
     <string name="enter_stay">入店</string>
     <string name="leave_stay">离店</string>
+    <string name="calendar_enter_stay">入店</string>
+    <string name="calendar_leave_stay">离店</string>
     <string name="date_format_month_day">MM月dd日</string>
     <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
     <string name="date_format_mm_dd">MM-dd</string>

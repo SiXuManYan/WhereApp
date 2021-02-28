@@ -6,16 +6,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
+import com.jcs.where.api.BaseObserver;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.PageResponse;
@@ -23,8 +22,13 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
+import com.jcs.where.hotel.model.HotelListFragModel;
 import com.jcs.where.manager.TokenManager;
+import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.utils.SPKey;
+import com.jcs.where.utils.SPUtil;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -32,8 +36,12 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -48,6 +56,9 @@ public class HotelListFragment extends BaseFragment {
     private int mTotalDay, mRoomNum;
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
+    private HotelListFragModel mModel;
+    private String mAreaId;
+    private String mHotelTypeIds;
 
     public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, JcsCalendarAdapter.CalendarBean startBean, JcsCalendarAdapter.CalendarBean endBean, int totalDay, int roomNumber) {
         Bundle args = new Bundle();
@@ -67,96 +78,28 @@ public class HotelListFragment extends BaseFragment {
     private void getdata() {
         showLoading();
         String url = null;
-        if (getArguments().getString("price") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&search_input=" + useInputText;
-        }
-        if (getArguments().getString("star") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
-        }
-        if (getArguments().getString("price") == null && getArguments().getString("star") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&search_input=" + useInputText;
-        }
-        if (getArguments().getString("price") != null && getArguments().getString("star") != null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
-        }
-        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
+        ArrayList<String> typeIds = new ArrayList<>();
+        typeIds.add(mHotelTypeIds);
+        mModel.getHotelListByInput(mAreaId, "", Constant.LAT, Constant.LNG, page, "["+mHotelTypeIds+"]", new BaseObserver<PageResponse<HotelResponse>>() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                if (code == 200) {
-
-//                  PageResponse<HotelResponse> hotelListBean = new Gson().fromJson(result, PageResponse.class);
-
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<PageResponse<HotelResponse>>() {}.getType();
-                    PageResponse<HotelResponse> hotelListBean = gson.fromJson(result, type);
-
-                    list = hotelListBean.getData();
-                    if (list.size() < 10) {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
-                    } else {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
-                    }
-                    hotelListAdpater.addData(list);
-                    hotelListRv.setAdapter(hotelListAdpater);
-                    ptrFrame.refreshComplete();
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
+                showNetError(errorResponse);
                 ptrFrame.refreshComplete();
-                showToast(e.getMessage());
             }
-        });
-    }
 
-    private void getmoredata() {
-        showLoading();
-        String url = null;
-        if (getArguments().getString("price") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&search_input=" + useInputText;
-        }
-        if (getArguments().getString("star") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
-        }
-        if (getArguments().getString("price") == null && getArguments().getString("star") == null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&search_input=" + useInputText;
-        }
-        if (getArguments().getString("price") != null && getArguments().getString("star") != null) {
-            url = "hotelapi/v1/hotels?page=" + page + "&area_id=" + getArguments().getString("cityId") + "&hotel_type_ids=[" + getArguments().getString("hotelTypeIds") + "]" + "&star_level=" + getArguments().getString("star") + "&price_range=" + getArguments().getString("price") + "&search_input=" + useInputText;
-        }
-        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(getContext()), new HttpUtils.StringCallback() {
             @Override
-            public void onSuccess(int code, String result) {
+            protected void onSuccess(PageResponse<HotelResponse> response) {
                 stopLoading();
-                if (code == 200) {
-                    PageResponse<HotelResponse> hotelListBean = new Gson().fromJson(result, PageResponse.class);
-                    if (hotelListBean.getData().size() < 10) {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
-                    } else {
-                        ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
-                    }
-                    list.addAll(hotelListBean.getData());
-                    hotelListAdpater.addData(list);
-                    hotelListRv.setAdapter(hotelListAdpater);
-                    ptrFrame.refreshComplete();
-
+                list = response.getData();
+                if (list.size() < 10) {
+                    ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
                 } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
+                    ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);
                 }
-            }
-
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
+                hotelListAdpater.addData(list);
+                hotelListRv.setAdapter(hotelListAdpater);
                 ptrFrame.refreshComplete();
-                showToast(e.getMessage());
             }
         });
     }
@@ -200,7 +143,7 @@ public class HotelListFragment extends BaseFragment {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
-                getmoredata();
+                getdata();
             }
 
             @Override
@@ -213,6 +156,7 @@ public class HotelListFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        mModel = new HotelListFragModel();
         Bundle arguments = getArguments();
         if (arguments != null) {
             mStartDateBean = (JcsCalendarAdapter.CalendarBean) arguments.getSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN);
@@ -221,6 +165,9 @@ public class HotelListFragment extends BaseFragment {
             mEndYear = arguments.getString(HotelSelectDateHelper.EXT_END_YEAR);
             mTotalDay = arguments.getInt(HotelSelectDateHelper.EXT_TOTAL_DAY);
             mRoomNum = arguments.getInt(HotelSelectDateHelper.EXT_ROOM_NUMBER);
+            mHotelTypeIds = arguments.getString("hotelTypeIds");
+            mAreaId = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID);
+
         }
 
         hotelListAdpater = new HotelListAdpater();

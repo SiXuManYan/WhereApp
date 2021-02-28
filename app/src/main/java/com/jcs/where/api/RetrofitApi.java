@@ -529,7 +529,8 @@ public interface RetrofitApi {
             @Query("search_input") String input,
             @Query("lat") double lat,
             @Query("lng") double lng,
-            @Query("page") int page
+            @Query("page") int page,
+            @Query("hotel_type_ids") String hotelTypeIds
     );
 
     /**

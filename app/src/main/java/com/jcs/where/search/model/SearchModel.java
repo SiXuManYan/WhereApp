@@ -7,6 +7,7 @@ import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.utils.Constant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class SearchModel extends BaseModel {
 
     public void getHotelListByInput(String areaId, String input,
                                     double lat, double lng, int page, BaseObserver<PageResponse<HotelResponse>> observer) {
-        dealResponse(mRetrofit.getHotelListByInputAtSearch(areaId, input, lat, lng, page), observer);
+        dealResponse(mRetrofit.getHotelListByInputAtSearch(areaId, input, lat, lng, page, ""), observer);
     }
 
     public void getNewsListByInput(String input, BaseObserver<PageResponse<NewsResponse>> observer) {

@@ -284,9 +284,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void onSearchTvClick(View view) {
-
-
-
         HotelListActivity.goTo(HotelActivity.this, mJcsCalendarDialog.getStartBean(), mJcsCalendarDialog.getEndBean(), mTotalDay, mLocationTv.getText().toString(), cityId, usePrice, useStar, Integer.parseInt(mRoomNumTv.getText().toString()), getIntent().getStringExtra(K_CATEGORY_ID));
     }
 

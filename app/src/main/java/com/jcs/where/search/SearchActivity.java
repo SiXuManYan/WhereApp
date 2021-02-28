@@ -302,6 +302,11 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_search;
     }

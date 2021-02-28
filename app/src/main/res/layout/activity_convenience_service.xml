@@ -57,7 +57,8 @@
         app:layout_constraintBottom_toBottomOf="@id/searchEtView"
         app:layout_constraintEnd_toStartOf="@id/searchIcon"
         app:layout_constraintStart_toEndOf="@id/arrowIv"
-        app:layout_constraintTop_toTopOf="@id/searchEtView" />
+        app:layout_constraintTop_toTopOf="@id/searchEtView"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/cityTv"
@@ -70,7 +71,8 @@
         android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/searchEtView"
         app:layout_constraintStart_toStartOf="@id/searchEtView"
-        app:layout_constraintTop_toTopOf="@id/searchEtView" />
+        app:layout_constraintTop_toTopOf="@id/searchEtView"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/arrowIv"
@@ -81,7 +83,8 @@
         app:layout_constraintBottom_toBottomOf="@id/searchEtView"
         app:layout_constraintStart_toEndOf="@id/cityTv"
         app:layout_constraintTop_toTopOf="@id/searchEtView"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        android:visibility="gone"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

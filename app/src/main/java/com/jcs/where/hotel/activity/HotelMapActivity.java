@@ -69,7 +69,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 /**
- * 目的地选择页面
+ * 页面-酒店地图页
  */
 public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -106,6 +106,8 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
+
+    private LatLng mMyPosition;
 
     public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, int totalDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
         Intent intent = new Intent(context, HotelMapActivity.class);
@@ -186,10 +188,10 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         });
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             showToast(getString(R.string.permission_none));
-            findViewById(R.id.myLocationGroup).setVisibility(View.GONE);
+            findViewById(R.id.myLocationIcon).setVisibility(View.GONE);
         } else {
             showToast(getString(R.string.permission_has));
-            findViewById(R.id.myLocationGroup).setVisibility(View.VISIBLE);
+            findViewById(R.id.myLocationIcon).setVisibility(View.VISIBLE);
             if (mGoogleApiClient == null) {
                 mGoogleApiClient = new GoogleApiClient.Builder(this)
                         .addConnectionCallbacks(this)
@@ -204,6 +206,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void initData() {
+        mMyPosition = ADELAIDE;
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
         mEndDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
         mTotalDay = getIntent().getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
@@ -323,7 +326,7 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         mChooseDataView.setOnClickListener(this::onChooseViewClicked);
         mHotelListIv.setOnClickListener(v -> finish());
         mCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
-        findViewById(R.id.myLocationView).setOnClickListener(view -> checkIsGooglePlayConn());
+        findViewById(R.id.myLocationIcon).setOnClickListener(view -> backMyPosition());
         mCityTv.setOnClickListener(view -> SearchActivity.goTo(HotelMapActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), SearchTag.HOTEL, REQ_SEARCH));
     }
 
@@ -532,6 +535,17 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         lng = location.getLongitude();
         clickLocation = true;
         initData();
+    }
+
+    public void backMyPosition() {
+        if (mMap != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(mMyPosition));
+        }
+    }
+
+    @Override
+    protected int getStatusBarColor() {
+        return R.color.white;
     }
 
     @Override

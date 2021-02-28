@@ -62,12 +62,21 @@ public class MapMarkerUtil {
      */
     private boolean isSingleMarker = false;
 
+    /**
+     * 我的位置
+     */
+    private LatLng mMyPosition;
+
     public MapMarkerUtil(BaseActivity context) {
         mMechanismsForMap = new ArrayList<>();
         mDescriptors = new ArrayList<>();
         mMarkersOnMap = new ArrayList<>();
         mContext = context;
         mLatLngBoundsBuilder = new LatLngBounds.Builder();
+    }
+
+    public void setMyPosition(LatLng mMyPosition) {
+        this.mMyPosition = mMyPosition;
     }
 
     public void setMap(GoogleMap map) {
@@ -318,7 +327,7 @@ public class MapMarkerUtil {
         }
     }
 
-    public int getCurrentPosition(){
+    public int getCurrentPosition() {
         return mCurrentPosition;
     }
 
@@ -365,5 +374,11 @@ public class MapMarkerUtil {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
         }
         isSingleMarker = true;
+    }
+
+    public void backMyPosition() {
+        if (mMap != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(mMyPosition));
+        }
     }
 }

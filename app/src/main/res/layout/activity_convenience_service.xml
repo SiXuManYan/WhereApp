@@ -58,6 +58,7 @@
         app:layout_constraintStart_toEndOf="@id/arrowIv"
         android:layout_marginStart="@dimen/dp_8"
         android:background="@color/grey_b7b7b7"
+        android:visibility="gone"
         />
 
     <TextView
@@ -68,6 +69,7 @@
         android:textSize="@dimen/sp_13"
         android:ellipsize="end"
         android:maxLines="1"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/searchEtView"
         android:layout_marginStart="@dimen/dp_15"
         app:layout_constraintTop_toTopOf="@id/searchEtView"
@@ -77,6 +79,7 @@
         android:id="@+id/arrowIv"
         android:layout_width="@dimen/dp_11"
         android:layout_height="@dimen/dp_6"
+        android:visibility="gone"
         android:src="@mipmap/ic_arrow_bottom_black"
         app:layout_constraintTop_toTopOf="@id/searchEtView"
         app:layout_constraintBottom_toBottomOf="@id/searchEtView"

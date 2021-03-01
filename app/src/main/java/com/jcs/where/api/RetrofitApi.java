@@ -679,4 +679,16 @@ public interface RetrofitApi {
      */
     @GET("userapi/v2/merchants/info")
     Observable<JcsResponse<MerchantSettledInfoResponse>> getMerchantSettledInfo();
+
+    /**
+     * 推荐列表
+     */
+    @GET("commonapi/v2/recommends")
+    Observable<JcsResponse<MerchantSettledInfoResponse>> getRecommends(
+            @Query("lat") String lat,
+            @Query("lng") String lng,
+            @Query("area_id") String area_id
+    );
+
+
 }

@@ -65,6 +65,7 @@ public class MerchantVerifyActivity extends BaseActivity {
                 mCommitBtn.setVisibility(View.GONE);
                 mStep2DescTv.setText(R.string.merchant_verify_success_step2);
                 mStep2To3Line.setBackgroundResource(R.color.blue_4C9EF2);
+                mStep3Prompt.setTextColor(getColor(R.color.blue_4C9EF2));
                 mStep3Prompt.setBackgroundResource(R.drawable.shape_circle_cce0f9_stroke_1_4c9ef2);
                 mStep3DescTv.setTextColor(getColor(R.color.blue_4C9EF2));
 

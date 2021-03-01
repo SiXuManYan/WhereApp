@@ -28,7 +28,7 @@ public class NewsResponse implements MultiItemEntity, ISearchResponse {
      */
 
     @SerializedName("id")
-    private Integer id;
+    private int id;
     @SerializedName("content_type")
     private Integer contentType;
     @SerializedName("title")
@@ -52,7 +52,7 @@ public class NewsResponse implements MultiItemEntity, ISearchResponse {
     @SerializedName("cover_images")
     private List<String> coverImages;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 

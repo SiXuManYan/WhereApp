@@ -5,4 +5,5 @@ package com.jcs.where.search.bean;
  */
 public interface ISearchResponse {
     String getName();
+    int getId();
 }

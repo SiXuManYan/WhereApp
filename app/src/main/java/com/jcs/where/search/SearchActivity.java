@@ -16,10 +16,12 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.watcher.AfterInputWatcher;
 import com.jcs.where.news.NewsSearchResultActivity;
 import com.jcs.where.search.adapter.HotSearchAdapter;
@@ -110,7 +112,6 @@ public class SearchActivity extends BaseActivity {
         // 根据SearchTag，设置 EditText#hint
         deployEtHint();
 
-        showLoading();
 
         MyLayoutManager layout1 = new MyLayoutManager();
         //必须，防止recyclerview高度为wrap时测量item高度0
@@ -121,6 +122,7 @@ public class SearchActivity extends BaseActivity {
         recommendSearchRv.setLayoutManager(linearLayoutManager);
         initSearchHistory();
 
+        showLoading();
         getHotSearchFromNet();
     }
 
@@ -128,6 +130,8 @@ public class SearchActivity extends BaseActivity {
      * 获得热门搜索
      * 目前搜索页面支持搜索酒店和新闻
      * 根据tag获得不同的热门搜索内容
+     *
+     * 企业黄页也是这个页面搜索
      */
     private void getHotSearchFromNet() {
         if (mSearchTag == SearchTag.HOTEL) {
@@ -163,6 +167,11 @@ public class SearchActivity extends BaseActivity {
                 }
             });
         }
+        if (mSearchTag == SearchTag.YELLOW_PAGE) {
+            stopLoading();
+        }
+
+
     }
 
     /**
@@ -174,6 +183,9 @@ public class SearchActivity extends BaseActivity {
         }
         if (mSearchTag == SearchTag.NEWS) {
             searchEt.setHint(R.string.search_news_keyword);
+        }
+        if (mSearchTag == SearchTag.YELLOW_PAGE) {
+            searchEt.setHint(R.string.search_keyword);
         }
     }
 
@@ -197,7 +209,6 @@ public class SearchActivity extends BaseActivity {
 
     private void onHotSearchItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         String item = hotSearchAdapter.getItem(position);
-        SearchHistoryUtils.saveSearchHistory(SearchActivity.this, mSearchTag, item);
         Intent intent = new Intent();
         intent.putExtra(EXT_SELECT_SEARCH, item);
         setResult(RESULT_OK, intent);
@@ -205,15 +216,12 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void onSearchHistoryItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        Intent intent = new Intent();
-        intent.putExtra(EXT_SELECT_SEARCH, mSearchHistoryAdapter.getItem(position));
-        setResult(RESULT_OK, intent);
-        finish();
+        String item = mSearchHistoryAdapter.getItem(position);
+        recommendSearch(item, item.length());
     }
 
     private void onSearchResultItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         ISearchResponse item = mSearchResultAdapter.getItem(position);
-        SearchHistoryUtils.saveSearchHistory(SearchActivity.this, mSearchTag, item.getName());
         if (mSearchTag == SearchTag.HOTEL) {
             Intent intent = new Intent();
 
@@ -224,6 +232,10 @@ public class SearchActivity extends BaseActivity {
 
         if (mSearchTag == SearchTag.NEWS) {
             toActivity(NewsSearchResultActivity.class, new IntentEntry(NewsSearchResultActivity.K_INPUT, item.getName()));
+        }
+
+        if (mSearchTag == SearchTag.YELLOW_PAGE) {
+            toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(item.getId())));
         }
     }
 
@@ -265,8 +277,31 @@ public class SearchActivity extends BaseActivity {
             if (mSearchTag == SearchTag.HOTEL) {
                 searchHotel(text);
             }
+
+            if (mSearchTag == SearchTag.YELLOW_PAGE) {
+                searchYellowPage(text);
+            }
+
+            SearchHistoryUtils.saveSearchHistory(SearchActivity.this, mSearchTag, text);
         }
 
+    }
+
+    private void searchYellowPage(String text) {
+        mModel.getMechanismList(mAreaId, text, new BaseObserver<PageResponse<MechanismResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+            }
+
+            @Override
+            protected void onSuccess(PageResponse<MechanismResponse> response) {
+                stopLoading();
+                mSearchResultAdapter.getData().clear();
+                mSearchResultAdapter.addData(response.getData());
+            }
+        });
     }
 
     private void searchNews(String text) {

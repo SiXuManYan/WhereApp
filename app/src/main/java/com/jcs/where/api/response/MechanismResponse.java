@@ -1,12 +1,14 @@
 package com.jcs.where.api.response;
 
+import com.jcs.where.search.bean.ISearchResponse;
+
 import java.util.List;
 
 /**
  * 机构信息
  * create by zyf on 2020/12/28 9:17 PM
  */
-public class MechanismResponse {
+public class MechanismResponse implements ISearchResponse {
 
     /**
      * id : 1
@@ -90,5 +92,10 @@ public class MechanismResponse {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    @Override
+    public String getName() {
+        return title;
     }
 }

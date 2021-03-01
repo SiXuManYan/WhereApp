@@ -11,6 +11,7 @@ public class RequestResultCode {
     public static final int REQUEST_MERCHANT_SETTLED_TO_NATIVE_PHOTOS = 1005;
     public static final int REQUEST_MERCHANT_SETTLED_TO_SETTLED_TYPE = 1006;
     public static final int REQUEST_MERCHANT_SETTLED_TO_CITY_PICKER = 1007;
+    public static final int REQUEST_YELLOW_PAGE_TO_SEARCH = 1008;
 
     public static final int RESULT_FOLLOW_TO_NEWS = 2001;
     public static final int RESULT_SETTLED_TYPE_TO_MERCHANT_SETTLED = 2002;

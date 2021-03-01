@@ -253,6 +253,7 @@
 	<string name="request_error">Request error %1$d</string>
 	<string name="news_followed">Followed</string>
 	<string name="search_news_keyword">Search news by keywords</string>
+	<string name="search_keyword">Search by keywords</string>
 
 	<string name="day_1">1st</string>
 	<string name="day_2">2ed</string>

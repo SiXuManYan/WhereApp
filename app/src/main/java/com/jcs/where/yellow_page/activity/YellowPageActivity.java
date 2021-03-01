@@ -2,7 +2,9 @@ package com.jcs.where.yellow_page.activity;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +21,11 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.government.adapter.MechanismListAdapter;
+import com.jcs.where.search.SearchActivity;
+import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.JsonUtil;
+import com.jcs.where.utils.RequestResultCode;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 import com.jcs.where.yellow_page.CategoryToSelectedListFragment;
@@ -47,6 +52,7 @@ public class YellowPageActivity extends BaseActivity {
     private ImageView mFirstArrowIv, mSecondArrowIv, mThirdArrowIv;
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecyclerView;
+    private TextView mSearchEt;
 
     private MechanismListAdapter mAdapter;
     private YellowPageModel mModel;
@@ -65,6 +71,8 @@ public class YellowPageActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mSearchEt = findViewById(R.id.searchEt);
+
         mFirstCateTv = findViewById(R.id.firstCateTv);
         mSecondCateTv = findViewById(R.id.secondCateTv);
         mThirdCateTv = findViewById(R.id.thirdCateTv);
@@ -244,6 +252,12 @@ public class YellowPageActivity extends BaseActivity {
         mSwipeLayout.setOnRefreshListener(this::onSwipeRefresh);
 
         mAdapter.setOnItemClickListener(this::onMechanismItemClicked);
+
+        mSearchEt.setOnClickListener(this::onSearchClicked);
+    }
+
+    private void onSearchClicked(View view) {
+        SearchActivity.goTo(this,"", SearchTag.YELLOW_PAGE, RequestResultCode.REQUEST_YELLOW_PAGE_TO_SEARCH);
     }
 
     private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {

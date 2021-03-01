@@ -43,11 +43,11 @@ public class SearchHistoryUtils {
                 sb.append(historyList.get(i) + ",");
             }
             //保存到sp
-            editor.putString(SEARCH_HISTORY, sb.toString());
+            editor.putString(SEARCH_HISTORY + SPKey.K_DELIMITER + searchTag.name(), sb.toString());
             editor.commit();
         } else {
             //之前未添加过
-            editor.putString(SEARCH_HISTORY, inputText + ",");
+            editor.putString(SEARCH_HISTORY + SPKey.K_DELIMITER + searchTag.name(), inputText + ",");
             editor.commit();
         }
     }
@@ -55,7 +55,7 @@ public class SearchHistoryUtils {
     //获取搜索记录
     public static List<String> getSearchHistory(Context context, SearchTag searchTag) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-        String longHistory = sp.getString(searchTag.name() + "_" + SEARCH_HISTORY, "");
+        String longHistory = sp.getString(SEARCH_HISTORY + SPKey.K_DELIMITER + searchTag.name(), "");
         String[] tmpHistory = longHistory.split(","); //split后长度为1有一个空串对象
         List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
         if (historyList.size() == 1 && historyList.get(0).equals("")) { //如果没有搜索记录，split之后第0位是个空串的情况下

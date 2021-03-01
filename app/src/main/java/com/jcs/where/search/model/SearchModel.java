@@ -3,6 +3,7 @@ package com.jcs.where.search.model;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.HotelResponse;
+import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.utils.Constant;
@@ -33,5 +34,16 @@ public class SearchModel extends BaseModel {
 
     public void getHotNewsList(BaseObserver<List<String>> observer) {
         dealResponse(mRetrofit.getHotNewsListAtSearch(), observer);
+    }
+
+    /**
+     * @param categoryId 分类id集合
+     * @param search     查询字段
+     */
+    public void getMechanismList(String categoryId,
+                                 String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
+
+        dealResponse(mRetrofit.getMechanismListById(categoryId, search, Constant.LAT, Constant.LNG), observer);
+
     }
 }

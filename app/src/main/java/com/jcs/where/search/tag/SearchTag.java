@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public enum SearchTag implements Serializable {
-    HOTEL("hotel"), NEWS("news");
+    HOTEL("hotel"), NEWS("news"), YELLOW_PAGE("news");;
     String name;
 
     SearchTag(String name) {

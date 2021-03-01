@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <fragment
-        android:id="@+id/newsFragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.jcs.where.news.fragment.NewsFragment" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

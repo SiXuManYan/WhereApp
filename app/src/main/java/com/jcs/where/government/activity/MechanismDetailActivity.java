@@ -21,6 +21,9 @@ import com.jcs.where.government.model.MechanismDetailModel;
 import com.jcs.where.utils.MobUtil;
 import com.jcs.where.widget.JcsBanner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -118,9 +121,13 @@ public class MechanismDetailActivity extends BaseActivity {
                     mToNavigationDialog.setTargetLocation(mMechanismDetailResponse.getAddress());
                     mToNavigationDialog.setLatitude(mMechanismDetailResponse.getLat());
                     mToNavigationDialog.setLongitude(mMechanismDetailResponse.getLng());
-
+                    List<String> images = mMechanismDetailResponse.getImages();
+                    if (images == null || images.size() == 0) {
+                        images = new ArrayList<>();
+                        images.add(JcsBanner.DEFAULT);
+                    }
                     // banner
-                    mJcsBanner.setPicData(mMechanismDetailResponse.getImages());
+                    mJcsBanner.setPicData(images);
                 }
             });
         } else {

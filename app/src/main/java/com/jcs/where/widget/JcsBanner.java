@@ -29,6 +29,7 @@ import androidx.viewpager.widget.ViewPager;
  * create by zyf on 2021/1/2 8:35 PM
  */
 public class JcsBanner extends ConstraintLayout {
+    public static final String DEFAULT = "default";
     private ViewPager mViewPager;
     private Adapter mAdapter;
     private List<String> mPicData;
@@ -98,7 +99,7 @@ public class JcsBanner extends ConstraintLayout {
     private void addDot(int size) {
         ImageView lastDot = null;
         // 只有一个图片的话不需要展示dot
-        if (size == 1){
+        if (size == 1) {
             return;
         }
         for (int i = 0; i < size; i++) {
@@ -174,7 +175,11 @@ public class JcsBanner extends ConstraintLayout {
             view.setTag(position);
             RoundedImageView photoIv = view.findViewById(R.id.iconIv);
             String picUrl = mPicData.get(position);
-            GlideUtil.load(getContext(), picUrl, photoIv);
+            if (picUrl.equals(DEFAULT)) {
+                photoIv.setImageResource(R.mipmap.ic_glide_default);
+            } else {
+                GlideUtil.load(getContext(), picUrl, photoIv);
+            }
             container.addView(view);
             return view;
         }

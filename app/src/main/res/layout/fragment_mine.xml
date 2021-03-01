@@ -150,7 +150,8 @@
                             android:drawablePadding="5.5dp"
                             android:text="@string/mine_check_accoun_balance"
                             android:textColor="@color/grey_999999"
-                            android:textSize="@dimen/sp_13" />
+                            android:textSize="@dimen/sp_13"
+                            android:visibility="invisible" />
 
 
                     </RelativeLayout>
@@ -164,35 +165,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/mineBalanceLayout"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:gravity="center_horizontal|bottom"
-                                android:paddingBottom="3.5dp"
-                                android:text="0"
-                                android:textColor="@color/blue_233F76"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:gravity="center_horizontal"
-                                android:paddingTop="3.5dp"
-                                android:text="@string/mine_balance"
-                                android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
-
-                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/pointLayout"
@@ -226,11 +198,43 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/mineBalanceLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:visibility="invisible">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal|bottom"
+                                android:paddingBottom="3.5dp"
+                                android:text="0"
+                                android:textColor="@color/blue_233F76"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:paddingTop="3.5dp"
+                                android:text="@string/mine_balance"
+                                android:textColor="@color/black_333333"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
                             android:id="@+id/couponLayout"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="invisible">
 
                             <TextView
                                 android:layout_width="match_parent"

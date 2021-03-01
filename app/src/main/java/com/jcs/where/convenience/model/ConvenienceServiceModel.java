@@ -67,11 +67,11 @@ public class ConvenienceServiceModel extends BaseModel {
      * @return 城市数据json字符串，为""表示要更新
      */
     public String needUpdateCity() {
-        return CacheUtil.needUpdateBySpKey(SPKey.K_ALL_CITIES);
+        return CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_ALL_CITIES);
     }
 
     public String needUpdateCategory(String categoryId) {
-        return CacheUtil.needUpdateBySpKey(SPKey.K_SERVICE_CATEGORIES + categoryId);
+        return CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_SERVICE_CATEGORIES + categoryId);
     }
 
     public void getInitData(String categoryIds, BaseObserver<ConvenienceServiceModel.ConvenienceServiceZipResponse> observer) {
@@ -111,7 +111,7 @@ public class ConvenienceServiceModel extends BaseModel {
     }
 
     public void saveCities(List<CityResponse> cityResponses) {
-        CacheUtil.cacheWithCurrentTime(SPKey.K_ALL_CITIES, cityResponses);
+        CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_ALL_CITIES, cityResponses);
     }
 
     public static class ConvenienceServiceZipResponse {

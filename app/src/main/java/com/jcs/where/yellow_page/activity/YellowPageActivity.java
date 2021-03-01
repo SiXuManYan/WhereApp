@@ -35,7 +35,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 /**
- * 企业黄页
+ * 页面-企业黄页
  * create by zyf on 2021/1/3 10:14 AM
  */
 public class YellowPageActivity extends BaseActivity {
@@ -104,7 +104,7 @@ public class YellowPageActivity extends BaseActivity {
 
     private void getDataFromNativeOrNet() {
         Log.e("YellowPageActivity", "getDataFromNativeOrNet: " + "");
-        String jsonStr = CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_CATEGORIES);
+        String jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES);
         if (jsonStr.equals("")) {
             // 获取网路数据
             getInitYellowPage();
@@ -153,7 +153,7 @@ public class YellowPageActivity extends BaseActivity {
 
                 // 缓存
                 if (mFirstLevelCategories.size() > 0) {
-                    CacheUtil.cacheWithCurrentTime(SPKey.K_YELLOW_PAGE_CATEGORIES, mFirstLevelCategories);
+                    CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES, mFirstLevelCategories);
                 }
                 PageResponse<MechanismResponse> mechanismPageResponse = yellowPageZipResponse.getMechanismPageResponse();
                 updateAdapter(mechanismPageResponse);

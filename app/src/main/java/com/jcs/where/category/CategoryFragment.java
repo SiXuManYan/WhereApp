@@ -248,7 +248,7 @@ public class CategoryFragment extends BaseFullFragment {
                 case TYPE_YELLOW_PAGE:
                     Log.e("CategoryFragment", "onItemClicked: " + "itemId=" + itemId);
                     // 传递企业黄页一级分类id
-                    String jsonStr = CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID);
+                    String jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID);
                     if (!jsonStr.equals("")) {
                         toTargetCategory = new Intent(getContext(), YellowPageActivity.class);
                         List<Integer> categoryIds = JsonUtil.getInstance().fromJsonToList(jsonStr, new TypeToken<List<Integer>>() {

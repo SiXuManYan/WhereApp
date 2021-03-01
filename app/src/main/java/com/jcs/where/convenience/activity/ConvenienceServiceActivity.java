@@ -224,7 +224,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
                 List<CityResponse> cities = convenienceServiceZipResponse.getCities();
                 if (cities != null) {
                     // 存储城市数据
-                    CacheUtil.cacheWithCurrentTime(SPKey.K_ALL_CITIES, cities);
+                    CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_ALL_CITIES, cities);
                 }
 
 
@@ -234,7 +234,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
                 mTabCategories.addAll(categories);
 
                 // 存储当前分类信息
-                CacheUtil.cacheWithCurrentTime(SPKey.K_SERVICE_CATEGORIES, categories);
+                CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_SERVICE_CATEGORIES, categories);
 
                 // 展示数据
                 injectTabDataToView();

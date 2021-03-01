@@ -95,7 +95,7 @@ public class HomeModel extends BaseModel {
     }
 
     public CityResponse getCurrentCity(String currentCityId) {
-        String citiesJson = CacheUtil.needUpdateBySpKey(SPKey.K_ALL_CITIES);
+        String citiesJson = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_ALL_CITIES);
 
         if (!citiesJson.isEmpty()) {
             List<CityResponse> cityList = JsonUtil.getInstance().fromJsonToList(citiesJson, new TypeToken<List<CityResponse>>() {

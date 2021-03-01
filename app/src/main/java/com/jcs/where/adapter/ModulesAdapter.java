@@ -42,9 +42,9 @@ public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHo
         GlideUtil.load(context, modulesResponse.getIcon(), baseViewHolder.getView(R.id.modules_icon));
         baseViewHolder.setText(R.id.modules_name, modulesResponse.getName());
 
-        if (modulesResponse.getId() == 2 && CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID).equals("")) {
+        if (modulesResponse.getId() == 2 && CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID).equals("")) {
             // 存储企业黄页的一级分类id
-            CacheUtil.cacheWithCurrentTime(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID, modulesResponse.getCategories());
+            CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID, modulesResponse.getCategories());
         }
 
     }

@@ -48,8 +48,8 @@ public class FlashActivity extends BaseActivity {
 
             @Override
             public void onSuccess(@NotNull List<CategoryResponse> categoryResponses) {
-                if (CacheUtil.needUpdateBySpKey(SPKey.K_YELLOW_PAGE_CATEGORIES).equals("") && categoryResponses.size() > 0) {
-                    CacheUtil.cacheWithCurrentTime(SPKey.K_YELLOW_PAGE_CATEGORIES, categoryResponses);
+                if (CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES).equals("") && categoryResponses.size() > 0) {
+                    CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES, categoryResponses);
                 }
             }
         });

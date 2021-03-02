@@ -51,6 +51,7 @@ import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
+import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
@@ -684,7 +685,7 @@ public interface RetrofitApi {
      * 推荐列表
      */
     @GET("commonapi/v2/recommends")
-    Observable<JcsResponse<MerchantSettledInfoResponse>> getRecommends(
+    Observable<JcsResponse<HomeRecommendResponse>> getRecommends(
             @Query("lat") String lat,
             @Query("lng") String lng,
             @Query("area_id") String area_id

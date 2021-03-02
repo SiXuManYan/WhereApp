@@ -84,7 +84,8 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
             @Override
             public void onPageSelected(int position) {
                 MaterialRadioButton child = (MaterialRadioButton) mTabRg.getChildAt(position);
-                child.setSelected(true);
+//                child.setSelected(true);
+                child.setChecked(true);
 
                 if (position == 0) {
                     mTaskRb.setTypeface(null, Typeface.BOLD);

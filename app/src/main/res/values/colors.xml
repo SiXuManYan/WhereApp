@@ -18,6 +18,7 @@
     <color name="blue_D7F1FD">#D7F1FD</color>
     <color name="blue_CCE0F9">#CCE0F9</color>
     <color name="blue_4C9EF2">#4C9EF2</color>
+    <color name="blue_72B9FF">#72B9FF</color>
     <color name="grey_999999">#999999</color>
     <color name="blue_9FC7F1">#9FC7F1</color>
     <color name="green_06BA1B">#06BA1B</color>
@@ -36,6 +37,7 @@
     <color name="blue_E7F0FB">#E7F0FB</color>
     <color name="orange_FF5B1B">#FF5B1B</color>
     <color name="orange_F77719">#F77719</color>
+    <color name="orange_FF6C00">#FF6C00</color>
     <color name="grey_EEEEEE">#EEEEEE</color>
     <color name="grey_B7C9DC">#B7C9DC</color>
     <color name="pink_FBA4B5">#FBA4B5</color>
@@ -61,6 +63,7 @@
     <color name="blue_395668">#395668</color>
     <color name="blue_007AFF">#007AFF</color>
     <color name="blue_9DC9F7">#9DC9F7</color>
+    <color name="yellow_FCE314">#FCE314</color>
 
 
     <!-- 页面背景色 -->

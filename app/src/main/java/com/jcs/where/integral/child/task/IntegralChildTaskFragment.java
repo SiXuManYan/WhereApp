@@ -6,18 +6,16 @@ import android.widget.TextView;
 
 import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
-import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.base.mvp.BaseMvpFragment;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by Wangsw  2021/1/22 10:06.
  * 积分任务
  */
-public class IntegralChildTaskFragment extends BaseFragment {
+public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTaskPresenter> implements IntegralChildTaskView {
 
 
     private TextView mSignInTv;
@@ -34,20 +32,13 @@ public class IntegralChildTaskFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        EventBus.getDefault().register(this);
         mSignInTv = view.findViewById(R.id.sign_in_tv);
 
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     protected void initData() {
-
+        presenter = new IntegralChildTaskPresenter(this);
     }
 
     @Override
@@ -68,18 +59,14 @@ public class IntegralChildTaskFragment extends BaseFragment {
     }
 
 
-    /**
-     * 更新签到状态
-     *
-     * @param baseEvent
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventReceived(BaseEvent<Boolean> baseEvent) {
+    @Override
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+        super.onEventReceived(baseEvent);
         if (baseEvent.code == EventCode.EVENT_SIGN_IN_CHANGE_STATUS) {
-            changeSignStatus(baseEvent.data);
+            Boolean data = (Boolean) baseEvent.data;
+            changeSignStatus(data);
         }
     }
-
 
     private void changeSignStatus(boolean isSigned) {
         if (mSignInTv.getVisibility() != View.VISIBLE) {

@@ -227,7 +227,7 @@ public class FeaturesUtil {
      * 用户协议
      */
     public static String getUserAgreement() {
-        return String.format(Html5Url.USER_AGREEMENT_URL,  getLanguage());
+        return String.format(Html5Url.USER_AGREEMENT_URL, getLanguage());
     }
 
     /**
@@ -242,7 +242,7 @@ public class FeaturesUtil {
     @NotNull
     private static String getLanguage() {
         String language = CacheUtil.getLanguageFromCache();
-        if (language.equals("auto")||language.equals("zh")) {
+        if (language.equals("auto") || language.equals("zh")) {
             language = "zh_cn";
         }
         return language;
@@ -250,8 +250,8 @@ public class FeaturesUtil {
 
 
     /**
-     * @param color 关键字颜色
-     * @param text 文本
+     * @param color   关键字颜色
+     * @param text    文本
      * @param keyword 关键字
      * @return
      */
@@ -269,12 +269,12 @@ public class FeaturesUtil {
     }
 
     /**
-     * @param color 关键字颜色
-     * @param text 文本
+     * @param color   关键字颜色
+     * @param text    文本
      * @param keyword 多个关键字
      * @return
      */
-    public static SpannableString getHighLightKeyWord(int color, String text,String[] keyword) {
+    public static SpannableString getHighLightKeyWord(int color, String text, String[] keyword) {
         SpannableString s = new SpannableString(text);
         for (int i = 0; i < keyword.length; i++) {
             Pattern p = Pattern.compile(keyword[i]);
@@ -287,7 +287,25 @@ public class FeaturesUtil {
             }
         }
         return s;
+    }
 
+    /**
+     * 根据评分返回修饰词
+     */
+    public static String getGradeRetouchString(float grade) {
+
+        String retouch = "";
+
+        if (grade >= 3 || grade < 3.5) {
+            retouch = StringUtils.getString(R.string.grade_0);
+        } else if (grade >= 3.5 || grade < 4) {
+            retouch = StringUtils.getString(R.string.grade_1);
+        } else if (grade >= 4 || grade < 4.5) {
+            retouch = StringUtils.getString(R.string.grade_2);
+        } else if (grade >= 4.5) {
+            retouch = StringUtils.getString(R.string.grade_3);
+        }
+        return retouch;
     }
 
 

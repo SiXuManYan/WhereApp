@@ -21,6 +21,7 @@
 	<string name="price_2_to_5">₱ 2–5k</string>
 	<string name="price_above_5">₱ 5k+</string>
 	<string name="price_unit">₱</string>
+	<string name="price_unit_format">₱%1$s</string>
 	<string name="show_price_with_forward_unit">₱%1$d</string>
 	<string name="show_price_with_forward_unit_f">₱%1$.2f</string>
 	<string name="prompt_star">Star Rating</string>
@@ -458,4 +459,11 @@
 	<string name="food_and_drink">Food</string>
 	<string name="outdoor_landscape">Outdoor</string>
 	<string name="nearby">Nearby</string>
+	<string name="grade_0">Good</string>
+	<string name="grade_1">Superb</string>
+	<string name="grade_2">Fabulous</string>
+	<string name="grade_3">Exceptional</string>
+	<string name="comment_count_format">%1$s comments</string>
+
+
 </resources>

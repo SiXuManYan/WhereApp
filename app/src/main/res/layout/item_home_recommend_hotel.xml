@@ -148,7 +148,6 @@
                 android:paddingTop="@dimen/dp_2"
                 android:paddingEnd="@dimen/dp_4"
                 android:paddingBottom="@dimen/dp_2"
-                android:text="@string/price_unit"
                 android:textColor="@color/blue_4C9EF2"
                 android:textSize="@dimen/sp_12"
                 tools:text="tab" />

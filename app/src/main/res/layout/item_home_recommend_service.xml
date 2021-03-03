@@ -41,9 +41,6 @@
             tools:text="James James James James James James " />
 
 
-
-
-
         <LinearLayout
             android:id="@+id/tag_ll"
             android:layout_width="match_parent"

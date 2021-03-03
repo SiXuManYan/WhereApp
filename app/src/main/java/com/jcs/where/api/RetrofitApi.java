@@ -685,7 +685,8 @@ public interface RetrofitApi {
      * 推荐列表
      */
     @GET("commonapi/v2/recommends")
-    Observable<JcsResponse<HomeRecommendResponse>> getRecommends(
+    Observable<JcsResponse<PageResponse<HomeRecommendResponse>>> getRecommends(
+            @Query("page") int page,
             @Query("lat") String lat,
             @Query("lng") String lng,
             @Query("area_id") String area_id

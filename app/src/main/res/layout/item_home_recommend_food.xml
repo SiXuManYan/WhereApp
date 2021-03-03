@@ -66,6 +66,7 @@
                 android:layout_height="@dimen/dp_10"
                 android:layout_marginStart="@dimen/dp_5"
                 android:layout_marginEnd="@dimen/dp_5"
+                app:rsv_starNum="5"
                 app:rsv_cornerRadius="@dimen/dp_2"
                 app:rsv_enableSelectRating="false"
                 app:rsv_rating="1"
@@ -73,7 +74,14 @@
                 app:rsv_starForegroundColor="@color/yellow_FCE314"
                 app:rsv_starMargin="@dimen/dp_3"
                 app:rsv_strokeColor="@color/transplant"
-                app:rsv_strokeWidth="0dp" />
+                app:rsv_strokeWidth="0dp"
+
+
+                app:rsv_onlyHalfStar="false"
+                app:rsv_starThickness="0.7"
+                app:rsv_drawStrokeForHalfStar="true"
+
+                />
 
 
             <TextView
@@ -102,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_12"
-                tools:text="<3.4km" />
+                tools:text="3.4km" />
 
             <View
                 android:layout_width="1dp"
@@ -147,6 +155,7 @@
 
 
         <LinearLayout
+            android:id="@+id/take_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

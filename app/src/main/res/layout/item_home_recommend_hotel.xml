@@ -49,12 +49,21 @@
             android:layout_marginBottom="@dimen/dp_5"
             app:rsv_cornerRadius="@dimen/dp_2"
             app:rsv_enableSelectRating="false"
-            app:rsv_rating="1"
+            app:rsv_rating="0"
+            app:rsv_drawStrokeForEmptyStar="true"
             app:rsv_starBackgroundColor="@color/grey_F5F5F5"
             app:rsv_starForegroundColor="@color/yellow_FCE314"
             app:rsv_starMargin="@dimen/dp_3"
-            app:rsv_strokeColor="@color/transplant"
-            app:rsv_strokeWidth="0dp" />
+            app:rsv_starNum="5"
+            app:rsv_strokeColor="#457DD7"
+            app:rsv_strokeWidth="0dp"
+
+            app:rsv_onlyHalfStar="false"
+            app:rsv_starThickness="0.7"
+            android:layout_marginTop="8dp"
+            app:rsv_drawStrokeForHalfStar="true"
+
+            />
 
 
         <LinearLayout
@@ -112,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_12"
-                tools:text="<3.4km" />
+                tools:text="3.4km" />
 
             <View
                 android:layout_width="1dp"
@@ -162,9 +171,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/dp_2"
-            android:text="@string/price_unit"
             android:textColor="@color/red_F93E3F"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_12"
+            tools:text="@string/price_unit" />
 
 
     </RelativeLayout>

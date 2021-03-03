@@ -13,6 +13,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.idlestar.ratingstar.RatingStarView;
 import com.jcs.where.R;
@@ -26,41 +27,35 @@ import org.jetbrains.annotations.NotNull;
  * Created by Wangsw  2021/3/2 11:39.
  * 推荐列表
  */
-public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder> {
+public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder> implements LoadMoreModule {
 
 
-    private RequestOptions options;
 
     public HomeRecommendAdapter() {
+        super();
         addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel);
         addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service);
         addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_hotel);
         addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel);
 
-        options = new RequestOptions()
-                .centerCrop()
-                .error(R.mipmap.ic_glide_default)
-                .priority(Priority.HIGH)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .transform(new RoundRadiusTransform(10, true, false, true, false));
+
     }
 
 
     @Override
     protected void convert(@NotNull BaseViewHolder holder, HomeRecommendResponse data) {
 
-        switch (holder.getItemViewType()) {
+        int itemViewType = holder.getItemViewType();
+        switch (itemViewType) {
             case HomeRecommendResponse.MODULE_TYPE_1_HOTEL:
                 bindHotelView(holder, data);
                 break;
-
             case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
                 bindServiceView(holder, data);
                 break;
-
             case HomeRecommendResponse.MODULE_TYPE_3_FOOD:
+                bindFoodView(holder, data);
                 break;
-
             case HomeRecommendResponse.MODULE_TYPE_4_TRAVEL:
                 bindTraverView(holder, data);
                 break;
@@ -70,6 +65,53 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         }
 
 
+    }
+
+    /**
+     * 美食
+     */
+    private void bindFoodView(BaseViewHolder holder, HomeRecommendResponse data) {
+
+        // 图片
+        ImageView image_iv = holder.getView(R.id.image_iv);
+        loadImage(data, image_iv);
+
+        // 标题
+        holder.setText(R.id.title_tv, data.title);
+
+        // 星级
+        RatingStarView star_view = holder.getView(R.id.star_view);
+        TextView score_tv = holder.getView(R.id.score_tv);
+
+        float grade = data.grade;
+        if (grade < 3.0) {
+            star_view.setVisibility(View.INVISIBLE);
+            score_tv.setVisibility(View.GONE);
+        } else {
+            star_view.setVisibility(View.VISIBLE);
+            score_tv.setVisibility(View.VISIBLE);
+//            star_view.setRating(grade);
+            score_tv.setText(String.valueOf(grade));
+        }
+
+        // 评论数
+        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num));
+
+        // 距离 地点
+        holder.setText(R.id.distance_tv, data.distance);
+        holder.setText(R.id.location_tv, data.area_name);
+
+        // tag
+        LinearLayout tag_ll = holder.getView(R.id.tag_ll);
+        initTag(data, tag_ll);
+
+        // 外卖
+//        LinearLayout takeaway_ll = holder.getView(R.id.take_ll);
+//        if (data.take_out_status == 2) {
+//            takeaway_ll.setVisibility(View.VISIBLE);
+//        } else {
+//            takeaway_ll.setVisibility(View.GONE);
+//        }
     }
 
     /**
@@ -134,9 +176,11 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         holder.setText(R.id.title_tv, data.title);
 
         // 星级
-        RatingStarView star_view = holder.getView(R.id.star_view);
+
         TextView score_tv = holder.getView(R.id.score_tv);
         TextView score_retouch_tv = holder.getView(R.id.score_retouch_tv);
+
+        RatingStarView star_view = holder.getView(R.id.star_view);
 
         float grade = data.grade;
         if (grade < 3.0) {
@@ -172,7 +216,15 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
      */
     private void loadImage(HomeRecommendResponse data, ImageView image_iv) {
         if (data.images.length > 0) {
-            Glide.with(getContext()).load(data.images[0]).apply(options).into(image_iv);
+
+            RequestOptions transform = new RequestOptions()
+                    .centerCrop()
+                    .error(R.mipmap.ic_glide_default)
+                    .priority(Priority.HIGH)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .transform(new RoundRadiusTransform(10, true, false, true, false));
+
+            Glide.with(getContext()).load(data.images[0]).apply(transform).into(image_iv);
         }
     }
 
@@ -180,20 +232,28 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
      * tag
      */
     private void initTag(HomeRecommendResponse data, LinearLayout tag_ll) {
+
         tag_ll.removeAllViews();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMarginEnd(SizeUtils.dp2px(2));
 
+        String[] tags = data.tags;
+        if (tags.length <= 0) {
+            return;
+        }
 
-        if (data.tags.length > 0) {
+        for (String tag : tags) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMarginEnd(SizeUtils.dp2px(2));
             TextView tv = new TextView(getContext());
             tv.setLayoutParams(params);
             tv.setPaddingRelative(SizeUtils.dp2px(4), SizeUtils.dp2px(2), SizeUtils.dp2px(4), SizeUtils.dp2px(2));
             tv.setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2));
-            tv.setTextSize(12);
-            tag_ll.setBackgroundResource(R.drawable.shape_blue_stoke_radius_1);
+            tv.setTextSize(11);
+            tv.setText(tag);
+            tv.setBackgroundResource(R.drawable.shape_blue_stoke_radius_1);
             tag_ll.addView(tv);
         }
+
+
 
 
     }

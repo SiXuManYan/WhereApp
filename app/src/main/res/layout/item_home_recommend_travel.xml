@@ -141,7 +141,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_12"
-                tools:text="<3.4km" />
+                tools:text="3.4km" />
 
         </RelativeLayout>
 

@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
@@ -14,6 +16,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -58,17 +61,20 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
 
         mAdapter = new HomeRecommendAdapter();
         mRv.setAdapter(mAdapter);
+        mRv.addItemDecoration(getItemDecoration());
         mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
         mAdapter.setHeaderView(header);
         mAdapter.setHeaderWithEmptyEnable(true);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(false);
+        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        presenter.getRecommendList(page);
     }
 
     @Override
     protected void loadOnVisible() {
-        presenter.getRecommendList(page);
+
     }
 
     @Override
@@ -135,4 +141,12 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
             }
         }
     }
+
+    private RecyclerView.ItemDecoration getItemDecoration() {
+        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(15f), 0, 0);
+        itemDecoration.setDrawHeaderFooter(false);
+        return itemDecoration;
+    }
+
+
 }

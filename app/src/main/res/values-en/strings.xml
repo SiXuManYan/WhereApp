@@ -465,6 +465,7 @@
 	<string name="grade_3">Exceptional</string>
 	<string name="comment_count_format">%1$s comments</string>
     <string name="recommend_home">Recommend</string>
+    <string name="distance_format">%1$s&#160;km</string>
 
 
 </resources>

@@ -139,4 +139,23 @@
 
     </declare-styleable>
 
+
+
+    <declare-styleable name="RatingStarView">
+        <attr format="integer|dimension" name="rsv_starMargin"/>
+        <attr format="float|dimension" name="rsv_cornerRadius"/>
+        <attr format="color|reference" name="rsv_starForegroundColor"/>
+        <attr format="color|reference" name="rsv_starBackgroundColor"/>
+        <attr format="color|reference" name="rsv_strokeColor"/>
+        <attr format="float|dimension" name="rsv_strokeWidth"/>
+        <attr format="integer" name="rsv_starNum"/>
+        <attr format="float" name="rsv_rating"/>
+        <attr format="float|fraction" name="rsv_starThickness"/>
+        <attr format="boolean" name="rsv_drawStrokeForEmptyStar"/>
+        <attr format="boolean" name="rsv_drawStrokeForFullStar"/>
+        <attr format="boolean" name="rsv_drawStrokeForHalfStar"/>
+        <attr format="boolean" name="rsv_enableSelectRating"/>
+        <attr format="boolean" name="rsv_onlyHalfStar"/>
+    </declare-styleable>
+
 </resources>

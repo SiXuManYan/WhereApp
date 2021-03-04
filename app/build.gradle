@@ -164,7 +164,4 @@ dependencies {
     // TabLayout
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2'
 
-    // 评分
-    implementation 'com.github.everhad:AndroidRatingStar:v1.0.4'
-
 }

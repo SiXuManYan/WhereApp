@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="146dp"
     android:layout_marginStart="@dimen/dp_15"
-    android:layout_marginTop="@dimen/dp_15"
     android:layout_marginEnd="@dimen/dp_15"
-    android:layout_marginBottom="@dimen/dp_15"
     android:background="@drawable/shape_white_radius_8"
     android:orientation="horizontal">
 
@@ -41,36 +39,42 @@
             android:textSize="@dimen/sp_15"
             tools:text="James James James James James James " />
 
-        <com.idlestar.ratingstar.RatingStarView
-            android:id="@+id/star_view"
+
+
+        <LinearLayout
+            android:id="@+id/star_ll"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_10"
             android:layout_below="@+id/title_tv"
-            android:layout_marginBottom="@dimen/dp_5"
-            app:rsv_cornerRadius="@dimen/dp_2"
-            app:rsv_enableSelectRating="false"
-            app:rsv_rating="0"
-            app:rsv_drawStrokeForEmptyStar="true"
-            app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-            app:rsv_starForegroundColor="@color/yellow_FCE314"
-            app:rsv_starMargin="@dimen/dp_3"
-            app:rsv_starNum="5"
-            app:rsv_strokeColor="#457DD7"
-            app:rsv_strokeWidth="0dp"
+            android:layout_height="wrap_content">
 
-            app:rsv_onlyHalfStar="false"
-            app:rsv_starThickness="0.7"
-            android:layout_marginTop="8dp"
-            app:rsv_drawStrokeForHalfStar="true"
+            <com.jcs.where.widget.ratingstar.RatingStarView
+                android:id="@+id/star_view"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_5"
+                app:rsv_cornerRadius="@dimen/dp_2"
+                app:rsv_drawStrokeForHalfStar="true"
+                app:rsv_rating="1"
+                app:rsv_enableSelectRating="false"
+                app:rsv_onlyHalfStar="false"
+                app:rsv_starBackgroundColor="@color/grey_F5F5F5"
+                app:rsv_starForegroundColor="@color/yellow_FCE314"
+                app:rsv_starMargin="@dimen/dp_3"
+                app:rsv_starNum="5"
+                app:rsv_starThickness="0.8"
+                app:rsv_strokeColor="@color/transplant"
+                app:rsv_strokeWidth="0dp"
 
-            />
+                />
+        </LinearLayout>
+
 
 
         <LinearLayout
             android:id="@+id/score_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/star_view"
+            android:layout_below="@+id/star_ll"
             android:layout_marginBottom="@dimen/dp_5"
             android:orientation="horizontal">
 

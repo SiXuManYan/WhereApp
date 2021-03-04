@@ -9,17 +9,15 @@ import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.idlestar.ratingstar.RatingStarView;
 import com.jcs.where.R;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.utils.FeaturesUtil;
-import com.jcs.where.utils.image.RoundRadiusTransform;
+import com.jcs.where.utils.image.GlideRoundedCornersTransform;
+import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,15 +28,12 @@ import org.jetbrains.annotations.NotNull;
 public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder> implements LoadMoreModule {
 
 
-
     public HomeRecommendAdapter() {
         super();
         addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel);
         addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service);
-        addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_hotel);
+        addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food);
         addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel);
-
-
     }
 
 
@@ -59,7 +54,6 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
             case HomeRecommendResponse.MODULE_TYPE_4_TRAVEL:
                 bindTraverView(holder, data);
                 break;
-
             default:
                 break;
         }
@@ -90,7 +84,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         } else {
             star_view.setVisibility(View.VISIBLE);
             score_tv.setVisibility(View.VISIBLE);
-//            star_view.setRating(grade);
+            star_view.setRating(grade);
             score_tv.setText(String.valueOf(grade));
         }
 
@@ -98,7 +92,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num));
 
         // 距离 地点
-        holder.setText(R.id.distance_tv, data.distance);
+        holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
         holder.setText(R.id.location_tv, data.area_name);
 
         // tag
@@ -106,12 +100,12 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         initTag(data, tag_ll);
 
         // 外卖
-//        LinearLayout takeaway_ll = holder.getView(R.id.take_ll);
-//        if (data.take_out_status == 2) {
-//            takeaway_ll.setVisibility(View.VISIBLE);
-//        } else {
-//            takeaway_ll.setVisibility(View.GONE);
-//        }
+        LinearLayout takeaway_ll = holder.getView(R.id.take_ll);
+        if (data.take_out_status == 2) {
+            takeaway_ll.setVisibility(View.VISIBLE);
+        } else {
+            takeaway_ll.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -136,7 +130,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
 
         // 地址
         holder.setText(R.id.address_tv, data.area_name);
-        holder.setText(R.id.food_distance_tv, data.distance);
+        holder.setText(R.id.food_distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
 
     }
 
@@ -176,15 +170,13 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         holder.setText(R.id.title_tv, data.title);
 
         // 星级
-
         TextView score_tv = holder.getView(R.id.score_tv);
         TextView score_retouch_tv = holder.getView(R.id.score_retouch_tv);
-
         RatingStarView star_view = holder.getView(R.id.star_view);
 
         float grade = data.grade;
         if (grade < 3.0) {
-            star_view.setVisibility(View.GONE);
+            star_view.setVisibility(View.INVISIBLE);
             score_tv.setVisibility(View.GONE);
             score_retouch_tv.setVisibility(View.GONE);
         } else {
@@ -199,7 +191,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num));
 
         // 距离 地点
-        holder.setText(R.id.distance_tv, data.distance);
+        holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
         holder.setText(R.id.location_tv, data.area_name);
 
         // tag
@@ -217,14 +209,10 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
     private void loadImage(HomeRecommendResponse data, ImageView image_iv) {
         if (data.images.length > 0) {
 
-            RequestOptions transform = new RequestOptions()
-                    .centerCrop()
-                    .error(R.mipmap.ic_glide_default)
-                    .priority(Priority.HIGH)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .transform(new RoundRadiusTransform(10, true, false, true, false));
+            RequestOptions options = RequestOptions.bitmapTransform(
+                    new GlideRoundedCornersTransform(10, GlideRoundedCornersTransform.CornerType.LEFT));
 
-            Glide.with(getContext()).load(data.images[0]).apply(transform).into(image_iv);
+            Glide.with(getContext()).load(data.images[0]).apply(options).into(image_iv);
         }
     }
 
@@ -253,8 +241,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
             tag_ll.addView(tv);
         }
 
-
-
-
     }
+
+
 }

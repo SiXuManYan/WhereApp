@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
@@ -50,6 +51,7 @@ import io.reactivex.annotations.NonNull;
  * create by zyf on 2021/1/28 12:07 下午
  */
 public abstract class BaseMapActivity extends BaseActivity implements OnMapReadyCallback {
+    private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
     public static final String K_CHILD_CATEGORY_ID = "childCategoryId";
     private String mChildCategoryId = "";
     private int mChildTabIndex = -1;
@@ -62,6 +64,11 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
     protected TabLayout mTabLayout;
     protected ViewPager mViewPager;
     protected MapListFragmentAdapter mViewPagerAdapter;
+
+    /**
+     * 我的位置
+     */
+    protected ImageView mMyLocationIcon;
 
     // 搜索相关
     protected EditText mSearchEt;
@@ -93,6 +100,9 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
         mViewPager = findViewById(R.id.governmentViewPager);
         mPopupLayout = findViewById(R.id.bottomPopupLayout);
 
+        // 我的位置
+        mMyLocationIcon = findViewById(R.id.myLocationIcon);
+
         // 搜索相关
         mDelInputIv = findViewById(R.id.delInputIv);
         mSearchEt = findViewById(R.id.searchEt);
@@ -112,6 +122,7 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
         mMapFragment.getMapAsync(this::onMapAsync);
         mModel = new BaseMapModel();
         mMapMarkerUtil = new MapMarkerUtil(this);
+        mMapMarkerUtil.setMyPosition(ADELAIDE);
         // 从CategoryFragment点击item跳转过来，要选择子分类的列表
         mChildCategoryId = getIntent().getStringExtra(K_CHILD_CATEGORY_ID);
         mTabCategories = new ArrayList<>();
@@ -190,6 +201,13 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
 
         // 监听软键盘显示隐藏
         KeyboardVisibilityEvent.setEventListener(this, this::onKeyboardStatusChanged);
+
+        // 点击我的位置icon
+        mMyLocationIcon.setOnClickListener(this::onMyLocationIconClicked);
+    }
+
+    private void onMyLocationIconClicked(View view) {
+        mMapMarkerUtil.backMyPosition();
     }
 
     @Override

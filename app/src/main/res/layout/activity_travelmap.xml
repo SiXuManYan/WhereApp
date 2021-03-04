@@ -100,6 +100,14 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+        <ImageView
+            android:id="@+id/myLocationIcon"
+            android:layout_width="@dimen/dp_42"
+            android:layout_height="@dimen/dp_42"
+            android:src="@mipmap/ic_my_position"
+            android:layout_above="@+id/viewpager"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_30"/>
 
         <RelativeLayout
             android:id="@+id/rl_mylocation"
@@ -107,6 +115,7 @@
             android:layout_height="50dp"
             android:layout_above="@+id/viewpager"
             android:layout_marginLeft="15dp"
+            android:visibility="gone"
             android:background="@drawable/ic_mylocationbg">
 
             <LinearLayout

@@ -80,6 +80,17 @@
         android:layout_marginBottom="@dimen/dp_80"
         />
 
+
+    <ImageView
+        android:id="@+id/myLocationIcon"
+        android:layout_width="@dimen/dp_42"
+        android:layout_height="@dimen/dp_42"
+        android:src="@mipmap/ic_my_position"
+        app:layout_constraintBottom_toTopOf="@id/viewpagerFrag"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_30"/>
+
     <com.jcs.where.view.popup.PopupConstraintLayout
         android:id="@+id/bottomPopupLayout"
         android:layout_width="match_parent"

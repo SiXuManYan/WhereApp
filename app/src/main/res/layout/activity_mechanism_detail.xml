@@ -300,16 +300,16 @@
     <View
         android:id="@+id/toCallView"
         android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/dp_50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/facebookIcon"
         android:layout_marginTop="@dimen/dp_20" />
 
     <ImageView
         android:id="@+id/telBlueIcon"
-        android:layout_width="@dimen/dp_17"
-        android:layout_height="@dimen/dp_17"
-        android:src="@drawable/ic_hoteldetail_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_phone_blue"
         app:layout_constraintEnd_toEndOf="@id/toCallView"
         app:layout_constraintStart_toStartOf="@id/toCallView"
         app:layout_constraintTop_toTopOf="@id/toCallView"
@@ -339,7 +339,7 @@
     <View
         android:id="@+id/toNavigationView"
         android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/dp_50"
         app:layout_constraintEnd_toStartOf="@id/toCallView"
         app:layout_constraintTop_toBottomOf="@id/facebookIcon"
         android:layout_marginTop="@dimen/dp_20"
@@ -347,9 +347,9 @@
 
     <ImageView
         android:id="@+id/navigationIcon"
-        android:layout_width="@dimen/dp_17"
-        android:layout_height="@dimen/dp_17"
-        android:src="@drawable/ic_hoteldetail_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_navigation_blue"
         app:layout_constraintEnd_toEndOf="@id/toNavigationView"
         app:layout_constraintStart_toStartOf="@id/toNavigationView"
         app:layout_constraintTop_toTopOf="@id/toNavigationView"

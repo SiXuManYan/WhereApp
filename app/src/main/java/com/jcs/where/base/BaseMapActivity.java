@@ -214,7 +214,7 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
     protected void onResume() {
         super.onResume();
         if (mPopupLayout != null) {
-            mPopupLayout.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+            mPopupLayout.setBackgroundColor(getColor(R.color.white));
         }
     }
 

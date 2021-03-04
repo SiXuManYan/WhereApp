@@ -38,7 +38,6 @@ public class PopupConstraintLayout extends ConstraintLayout {
 
     public void mInit(Context context) {
         mShadowView = new View(context);
-
     }
 
     private void mDeployAnimator() {

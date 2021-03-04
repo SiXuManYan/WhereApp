@@ -78,6 +78,9 @@ public class CardViewPagerFragment extends BaseFragment {
         mViewPager.setPageMargin(getPxFromDp(15));
         mViewPager.setPageTransformer(false, mPageAnimation);
         mViewPager.setOffscreenPageLimit(3);
+        if (mechanismResponses != null && mechanismResponses.size() > 1) {
+            mViewPager.setCurrentItem(1);
+        }
     }
 
     public void restore() {

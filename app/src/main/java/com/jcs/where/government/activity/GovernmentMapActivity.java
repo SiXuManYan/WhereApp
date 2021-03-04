@@ -87,7 +87,7 @@ public class GovernmentMapActivity extends BaseMapActivity {
 
     @Override
     protected String getAllCategoryId() {
-        return TYPE_GOVERNMENT;
+        return ID_GOVERNMENT;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class GovernmentMapActivity extends BaseMapActivity {
 
     @Override
     protected void getDataAtMapFromNet() {
-        mModel.getMechanismListForMap(TYPE_GOVERNMENT, Constant.LAT, Constant.LNG, new BaseObserver<List<MechanismResponse>>() {
+        mModel.getMechanismListForMap(ID_GOVERNMENT, Constant.LAT, Constant.LNG, new BaseObserver<List<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();

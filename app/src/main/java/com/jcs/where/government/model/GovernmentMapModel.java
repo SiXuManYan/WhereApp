@@ -30,7 +30,7 @@ public class GovernmentMapModel extends BaseModel {
      */
     public void getMechanismListForMapSearch(String searchInput,
                                              BaseObserver<List<MechanismResponse>> observer) {
-        getMechanismListForMap("0", 0, searchInput, Constant.LAT, Constant.LNG, observer);
+        getMechanismListForMap("1", 0, searchInput, Constant.LAT, Constant.LNG, observer);
     }
 
     /**

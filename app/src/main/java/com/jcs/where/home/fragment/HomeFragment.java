@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ColorUtils;
@@ -58,7 +59,6 @@ import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
-import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.jcs.where.widget.MessageView;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.widget.list.DividerDecoration;
@@ -77,12 +77,12 @@ import static android.app.Activity.RESULT_OK;
 /**
  * 首页
  */
-public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeView, OnLoadMoreListener, com.chad.library.adapter.base.listener.OnItemClickListener {
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeView, OnLoadMoreListener, com.chad.library.adapter.base.listener.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final int REQ_SELECT_CITY = 100;
     private View view;
     private XBanner banner3;
-    private MyPtrClassicFrameLayout ptrFrame;
+    //    private MyPtrClassicFrameLayout ptrFrame;
     private SimpleMarqueeView marqueeView;
     private RecyclerView homeRv;
     private HomeRecommendAdapter mHomeRecommendAdapter;
@@ -97,6 +97,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private MessageView message_view;
 
     private int page = Constant.DEFAULT_FIRST_PAGE;
+    private SwipeRefreshLayout swipeLayout;
 
     @Override
     protected int getLayoutId() {
@@ -117,24 +118,9 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         lp.height = getScreenWidth() * 194 / 345;
         bannerLl.setLayoutParams(lp);
         banner3 = view.findViewById(R.id.banner3);
-        ptrFrame = view.findViewById(R.id.ptr_frame);
-        ptrFrame.setMode(PtrFrameLayout.Mode.REFRESH);
-        ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
-            @Override
-            public void onLoadMoreBegin(PtrFrameLayout frame) {
+        swipeLayout = view.findViewById(R.id.swipeLayout);
+        swipeLayout.setOnRefreshListener(this);
 
-            }
-
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                getInitHomeData();
-                getMessageCount();
-
-                // 推荐
-                page = Constant.DEFAULT_FIRST_PAGE;
-                presenter.getRecommendList(page);
-            }
-        });
         marqueeView = view.findViewById(R.id.simpleMarqueeView);
         homeRv = view.findViewById(R.id.rv_home);
         cityNameTv = view.findViewById(R.id.tv_cityname);
@@ -156,7 +142,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         homeRv.addItemDecoration(getItemDecoration());
         mHomeRecommendAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
         mHomeRecommendAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
-        mHomeRecommendAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mHomeRecommendAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mHomeRecommendAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
         mHomeRecommendAdapter.setOnItemClickListener(this);
@@ -222,12 +207,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     }
 
     private void getInitHomeData() {
-        showLoading();
+//        showLoading();
         mModel.getInitHomeData(new BaseObserver<HomeModel.HomeZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                ptrFrame.refreshComplete();
+                swipeLayout.setRefreshing(false);
                 showNetError(errorResponse);
             }
 
@@ -235,7 +220,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             protected void onSuccess(HomeModel.HomeZipResponse response) {
 
                 stopLoading();
-                ptrFrame.refreshComplete();
+                swipeLayout.setRefreshing(false);
 
                 // 金刚区
                 injectDataToModule(response.getModulesResponses());
@@ -498,6 +483,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     public void bindDetailData(List<HomeRecommendResponse> data, boolean isLastPage) {
+        swipeLayout.setRefreshing(false);
         BaseLoadMoreModule loadMoreModule = mHomeRecommendAdapter.getLoadMoreModule();
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -549,5 +535,15 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getInitHomeData();
+        getMessageCount();
+
+        // 推荐
+        page = Constant.DEFAULT_FIRST_PAGE;
+        presenter.getRecommendList(page);
     }
 }

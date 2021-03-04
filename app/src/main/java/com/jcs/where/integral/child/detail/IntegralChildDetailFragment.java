@@ -49,7 +49,6 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
         mAdapter = new IntegralChildAdapter();
         mRv.setAdapter(mAdapter);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
-        mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);

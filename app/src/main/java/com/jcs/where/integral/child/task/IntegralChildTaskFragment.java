@@ -75,7 +75,6 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
         mAdapter.setHeaderView(header);
         mAdapter.setHeaderWithEmptyEnable(true);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
-        mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
         mAdapter.setOnItemClickListener(this);

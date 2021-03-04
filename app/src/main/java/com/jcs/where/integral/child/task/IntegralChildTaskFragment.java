@@ -4,18 +4,27 @@ package com.jcs.where.integral.child.task;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpFragment;
+import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
+import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.widget.list.DividerDecoration;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,7 +35,7 @@ import java.util.List;
  * Created by Wangsw  2021/1/22 10:06.
  * 积分任务
  */
-public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTaskPresenter> implements IntegralChildTaskView, OnLoadMoreListener {
+public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTaskPresenter> implements IntegralChildTaskView, OnLoadMoreListener, OnItemClickListener {
 
 
     private TextView mSignInTv;
@@ -69,6 +78,7 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
         mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        mAdapter.setOnItemClickListener(this);
         presenter.getRecommendList(page);
     }
 
@@ -149,4 +159,29 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
     }
 
 
+    @Override
+    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+        HomeRecommendResponse data = mAdapter.getData().get(position);
+        int itemViewType = mAdapter.getItemViewType(position + mAdapter.getHeaderLayoutCount());
+        switch (itemViewType) {
+            case HomeRecommendResponse.MODULE_TYPE_1_HOTEL:
+                JcsCalendarDialog dialog = new JcsCalendarDialog();
+                dialog.initCalendar(getActivity());
+                HotelDetailActivity.goTo(getActivity(), data.id, dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                break;
+            case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
+                toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
+                break;
+            case HomeRecommendResponse.MODULE_TYPE_3_FOOD:
+                ToastUtils.showShort(R.string.coming_soon);
+                break;
+            case HomeRecommendResponse.MODULE_TYPE_4_TRAVEL:
+                TouristAttractionDetailActivity.goTo(getActivity(), data.id);
+                break;
+            default:
+                break;
+        }
+
+
+    }
 }

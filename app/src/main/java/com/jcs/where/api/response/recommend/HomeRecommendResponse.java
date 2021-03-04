@@ -36,7 +36,7 @@ public class HomeRecommendResponse implements MultiItemEntity {
                 "area_name": "x89M3b",
                 "created_at": "uRRkr"
         }*/
-    public String id = "";
+    public int id = 0;
 
     /**
      * 模块类型（1：酒店，2：综合服务，3：餐厅，4：旅游景点）

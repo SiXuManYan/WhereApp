@@ -40,12 +40,11 @@
             tools:text="James James James James James James " />
 
 
-
         <LinearLayout
             android:id="@+id/star_ll"
             android:layout_width="wrap_content"
-            android:layout_below="@+id/title_tv"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_tv">
 
             <com.jcs.where.widget.ratingstar.RatingStarView
                 android:id="@+id/star_view"
@@ -54,9 +53,9 @@
                 android:layout_marginBottom="@dimen/dp_5"
                 app:rsv_cornerRadius="@dimen/dp_2"
                 app:rsv_drawStrokeForHalfStar="true"
-                app:rsv_rating="1"
                 app:rsv_enableSelectRating="false"
                 app:rsv_onlyHalfStar="false"
+                app:rsv_rating="1"
                 app:rsv_starBackgroundColor="@color/grey_F5F5F5"
                 app:rsv_starForegroundColor="@color/yellow_FCE314"
                 app:rsv_starMargin="@dimen/dp_3"
@@ -67,7 +66,6 @@
 
                 />
         </LinearLayout>
-
 
 
         <LinearLayout

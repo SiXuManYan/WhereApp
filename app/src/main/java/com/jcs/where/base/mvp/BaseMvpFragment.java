@@ -54,20 +54,6 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
             ToastUtils.showShort(errMsg);
             return;
         }
-//        if (errCode == 401) {
-//            new AlertDialog.Builder(getContext())
-//                    .setTitle(R.string.hint)
-//                    .setCancelable(false)
-//                    .setMessage(R.string.login_expired_hint)
-//                    .setPositiveButton(R.string.login_again, (dialogInterface, i) -> {
-//                        // todo 跳转至登录页
-//                    })
-//                    .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
-//                        dialogInterface.dismiss();
-//                    }).create().show();
-//            return;
-//        }
-
         if (errMsg.isEmpty()) {
             ToastUtils.showShort(getString(R.string.request_error, errCode));
         } else {

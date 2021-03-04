@@ -16,9 +16,9 @@
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingTop="@dimen/dp_7"
-        android:paddingBottom="@dimen/dp_7"
-        android:layout_height="wrap_content">
+        android:paddingBottom="@dimen/dp_7">
 
         <TextView
             android:id="@+id/tv_cityname"
@@ -54,9 +54,9 @@
             <ImageView
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
-                android:scaleType="centerInside"
                 android:layout_gravity="center"
                 android:layout_marginLeft="14.5dp"
+                android:scaleType="centerInside"
                 android:src="@mipmap/ic_homesearch" />
 
             <TextView
@@ -112,7 +112,6 @@
                     android:id="@+id/ll_banner"
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
-                    android:layout_below="@+id/rl_title"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp">
@@ -216,9 +215,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_15"
-                    android:elevation="@dimen/dp_0"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_15"
+                    android:elevation="@dimen/dp_0"
                     android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="@dimen/dp_8"
                     app:cardPreventCornerOverlap="false"
@@ -232,7 +231,6 @@
                         android:src="@mipmap/ic_home_big_icon" />
 
                 </androidx.cardview.widget.CardView>
-
 
 
                 <LinearLayout
@@ -264,7 +262,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:overScrollMode="never"
-                    android:paddingBottom="20dp" />
+                    android:paddingBottom="20dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
             </LinearLayout>

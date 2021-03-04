@@ -10,17 +10,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.gongwen.marqueen.util.OnItemClickListener;
@@ -31,28 +36,32 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
-import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.ModulesResponse;
-import com.jcs.where.base.BaseFragment;
+import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
+import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
-import com.jcs.where.home.adapter.HomeYouLikeAdapter;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.home.model.HomeModel;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
+import com.jcs.where.integral.child.task.HomeRecommendAdapter;
 import com.jcs.where.news.NewsActivity;
+import com.jcs.where.travel.TouristAttractionDetailActivity;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.GlideRoundTransform;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.view.ptr.MyPtrClassicFrameLayout;
 import com.jcs.where.widget.MessageView;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
+import com.jcs.where.widget.list.DividerDecoration;
 import com.jcs.where.yellow_page.activity.YellowPageActivity;
 
 import java.util.ArrayList;
@@ -68,7 +77,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * 首页
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeView, OnLoadMoreListener, com.chad.library.adapter.base.listener.OnItemClickListener {
 
     private static final int REQ_SELECT_CITY = 100;
     private View view;
@@ -76,7 +85,7 @@ public class HomeFragment extends BaseFragment {
     private MyPtrClassicFrameLayout ptrFrame;
     private SimpleMarqueeView marqueeView;
     private RecyclerView homeRv;
-    private HomeYouLikeAdapter mHomeYouLikeAdapter;
+    private HomeRecommendAdapter mHomeRecommendAdapter;
     private TextView cityNameTv;
     private LinearLayout bannerLl;
     private int refreshBanner = 0;
@@ -87,6 +96,8 @@ public class HomeFragment extends BaseFragment {
     private LinearLayout mSearchLayout;
     private MessageView message_view;
 
+    private int page = Constant.DEFAULT_FIRST_PAGE;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
@@ -95,9 +106,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title));
+
         mModel = new HomeModel();
+
         bannerLl = view.findViewById(R.id.ll_banner);
         mSearchLayout = view.findViewById(R.id.searchLayout);
+
         ViewGroup.LayoutParams lp;
         lp = bannerLl.getLayoutParams();
         lp.height = getScreenWidth() * 194 / 345;
@@ -115,17 +129,18 @@ public class HomeFragment extends BaseFragment {
             public void onRefreshBegin(PtrFrameLayout frame) {
                 getInitHomeData();
                 getMessageCount();
+
+                // 推荐
+                page = Constant.DEFAULT_FIRST_PAGE;
+                presenter.getRecommendList(page);
             }
         });
         marqueeView = view.findViewById(R.id.simpleMarqueeView);
         homeRv = view.findViewById(R.id.rv_home);
         cityNameTv = view.findViewById(R.id.tv_cityname);
-        cityNameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CityPickerActivity.class);
-                startActivityForResult(intent, REQ_SELECT_CITY);
-            }
+        cityNameTv.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), CityPickerActivity.class);
+            startActivityForResult(intent, REQ_SELECT_CITY);
         });
 
         mModuleRecycler = view.findViewById(R.id.moduleRecycler);
@@ -135,16 +150,18 @@ public class HomeFragment extends BaseFragment {
         mModuleRecycler.setLayoutManager(new GridLayoutManager(getContext(), 5, RecyclerView.VERTICAL, false));
         mModuleRecycler.setAdapter(mModulesAdapter);
 
-        mHomeYouLikeAdapter = new HomeYouLikeAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        homeRv.setLayoutManager(linearLayoutManager);
-        homeRv.setAdapter(mHomeYouLikeAdapter);
+        // 首页推荐
+        mHomeRecommendAdapter = new HomeRecommendAdapter();
+        homeRv.setAdapter(mHomeRecommendAdapter);
+        homeRv.addItemDecoration(getItemDecoration());
+        mHomeRecommendAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+        mHomeRecommendAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        mHomeRecommendAdapter.getLoadMoreModule().setAutoLoadMore(false);
+        mHomeRecommendAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        mHomeRecommendAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        mHomeRecommendAdapter.setOnItemClickListener(this);
+
+
         message_view = view.findViewById(R.id.message_view);
 
         // 更改广告view宽高比
@@ -182,6 +199,9 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        presenter = new HomePresenter(this);
+        presenter.getRecommendList(page);
+
         String areaId = mModel.getCurrentAreaId();
         if (areaId.equals("3")) {
             // 默认巴郎牙
@@ -220,9 +240,6 @@ public class HomeFragment extends BaseFragment {
                 // 金刚区
                 injectDataToModule(response.getModulesResponses());
 
-                // 猜你喜欢
-                injectDataToYouLike(response.getYouLikeResponses());
-
                 // banner
                 initBanner(response.getBannerResponses());
 
@@ -232,10 +249,6 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    private void injectDataToYouLike(List<HotelResponse> youLikeResponses) {
-        mHomeYouLikeAdapter.getData().clear();
-        mHomeYouLikeAdapter.addData(youLikeResponses);
-    }
 
     private void injectDataToModule(List<ModulesResponse> modulesResponses) {
         mModulesAdapter.getData().clear();
@@ -245,7 +258,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void bindListener() {
         mModulesAdapter.setOnItemClickListener(this::onModuleItemClicked);
-        mHomeYouLikeAdapter.setOnItemClickListener(this::onYouLickItemClicked);
         message_view.setOnClickListener(this::onMessageLayoutClicked);
         mSearchLayout.setOnClickListener(this::onSearchLayoutClicked);
     }
@@ -256,12 +268,6 @@ public class HomeFragment extends BaseFragment {
 
     private void onMessageLayoutClicked(View view) {
         startActivityAfterLogin(MessageCenterActivity.class);
-    }
-
-    private void onYouLickItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        JcsCalendarDialog dialog = new JcsCalendarDialog();
-        dialog.initCalendar(getContext());
-        HotelDetailActivity.goTo(getContext(), mHomeYouLikeAdapter.getItem(position).getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
     }
 
 
@@ -481,6 +487,67 @@ public class HomeFragment extends BaseFragment {
         super.onResume();
         if (isViewCreated) {
             getMessageCount();
+        }
+    }
+
+    private RecyclerView.ItemDecoration getItemDecoration() {
+        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(15f), 0, 0);
+        itemDecoration.setDrawHeaderFooter(false);
+        return itemDecoration;
+    }
+
+    @Override
+    public void bindDetailData(List<HomeRecommendResponse> data, boolean isLastPage) {
+        BaseLoadMoreModule loadMoreModule = mHomeRecommendAdapter.getLoadMoreModule();
+        if (data.isEmpty()) {
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                loadMoreModule.loadMoreComplete();
+            } else {
+                loadMoreModule.loadMoreEnd();
+            }
+            return;
+        }
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mHomeRecommendAdapter.setNewInstance(data);
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage();
+        } else {
+            mHomeRecommendAdapter.addData(data);
+            if (isLastPage) {
+                loadMoreModule.loadMoreEnd();
+            } else {
+                loadMoreModule.loadMoreComplete();
+            }
+        }
+    }
+
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        presenter.getRecommendList(page);
+    }
+
+    @Override
+    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+        HomeRecommendResponse data = mHomeRecommendAdapter.getData().get(position);
+        int itemViewType = mHomeRecommendAdapter.getItemViewType(position + mHomeRecommendAdapter.getHeaderLayoutCount());
+        switch (itemViewType) {
+            case HomeRecommendResponse.MODULE_TYPE_1_HOTEL:
+                JcsCalendarDialog dialog = new JcsCalendarDialog();
+                dialog.initCalendar(getActivity());
+                HotelDetailActivity.goTo(getActivity(), data.id, dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                break;
+            case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
+                toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
+                break;
+            case HomeRecommendResponse.MODULE_TYPE_3_FOOD:
+                ToastUtils.showShort(R.string.coming_soon);
+                break;
+            case HomeRecommendResponse.MODULE_TYPE_4_TRAVEL:
+                TouristAttractionDetailActivity.goTo(getActivity(), data.id);
+                break;
+            default:
+                break;
         }
     }
 }

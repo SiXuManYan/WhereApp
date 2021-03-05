@@ -107,4 +107,6 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
             }
         }
     }
+
+
 }

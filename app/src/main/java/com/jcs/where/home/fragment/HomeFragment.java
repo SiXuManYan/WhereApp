@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -82,7 +83,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private static final int REQ_SELECT_CITY = 100;
     private View view;
     private XBanner banner3;
-    //    private MyPtrClassicFrameLayout ptrFrame;
+
     private SimpleMarqueeView marqueeView;
     private RecyclerView homeRv;
     private HomeRecommendAdapter mHomeRecommendAdapter;
@@ -94,6 +95,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private RecyclerView mModuleRecycler;
     private ModulesAdapter mModulesAdapter;
     private LinearLayout mSearchLayout;
+    private NestedScrollView nested_scroll;
     private MessageView message_view;
 
     private int page = Constant.DEFAULT_FIRST_PAGE;
@@ -112,6 +114,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
         bannerLl = view.findViewById(R.id.ll_banner);
         mSearchLayout = view.findViewById(R.id.searchLayout);
+        nested_scroll = view.findViewById(R.id.nested_scroll);
 
         ViewGroup.LayoutParams lp;
         lp = bannerLl.getLayoutParams();
@@ -154,6 +157,22 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         ViewGroup.LayoutParams layoutParams = ad_iv.getLayoutParams();
         layoutParams.height = getScreenWidth() * 131 / 345;
         ad_iv.setLayoutParams(layoutParams);
+
+        //
+        handleScroll();
+
+    }
+
+    private void handleScroll() {
+        homeRv.setNestedScrollingEnabled(true);
+        nested_scroll.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            // 滑到的底部
+            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                mHomeRecommendAdapter.getLoadMoreModule().loadMoreToLoading();
+            }
+        });
+
+
     }
 
     private void onModuleItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
@@ -312,14 +331,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                     }
                 })
                 .start();
-//        banner3.setOutlineProvider(new ViewOutlineProvider() {
-//            @Override
-//            public void getOutline(View view, Outline outline) {
-//                float radius = Resources.getSystem().getDisplayMetrics().density * 10;
-//                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
-//            }
-//        });
-//        banner3.setClipToOutline(true);
+
     }
 
     private void initNews(List<HomeNewsResponse> list) {

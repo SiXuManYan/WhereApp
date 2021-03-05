@@ -68,8 +68,6 @@ import com.jcs.where.yellow_page.activity.YellowPageActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.srain.cube.views.ptr.PtrDefaultHandler2;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 import io.rong.imlib.RongIMClient;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -100,6 +98,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     private int page = Constant.DEFAULT_FIRST_PAGE;
     private SwipeRefreshLayout swipeLayout;
+    private LinearLayout center_banner_ll;
+    private XBanner center_banner;
 
     @Override
     protected int getLayoutId() {
@@ -152,13 +152,16 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
         message_view = view.findViewById(R.id.message_view);
 
-        // 更改广告view宽高比
-        ImageView ad_iv = view.findViewById(R.id.ad_iv);
-        ViewGroup.LayoutParams layoutParams = ad_iv.getLayoutParams();
-        layoutParams.height = getScreenWidth() * 131 / 345;
-        ad_iv.setLayoutParams(layoutParams);
 
-        //
+        // 中部 轮播图
+        center_banner_ll = view.findViewById(R.id.center_banner_ll);
+        center_banner = view.findViewById(R.id.center_banner);
+
+        ViewGroup.LayoutParams layoutParams = center_banner_ll.getLayoutParams();
+        layoutParams.height = getScreenWidth() * 131 / 345;
+        center_banner_ll.setLayoutParams(layoutParams);
+
+
         handleScroll();
 
     }
@@ -226,7 +229,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     }
 
     private void getInitHomeData() {
-//        showLoading();
         mModel.getInitHomeData(new BaseObserver<HomeModel.HomeZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
@@ -249,8 +251,60 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
                 // 滚动新闻
                 initNews(response.getHomeNewsResponses());
+
+                initCenterBanner(response.centerBanner);
+
             }
         });
+    }
+
+    private void initCenterBanner(List<BannerResponse> list) {
+
+        if (list.isEmpty()) {
+            center_banner_ll.setVisibility(View.GONE);
+            return;
+        }
+        center_banner_ll.setVisibility(View.VISIBLE);
+
+        List<String> bannerUrls = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            bannerUrls.add(list.get(i).src);
+        }
+        center_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
+                .setImageUrls(bannerUrls)
+                .setImageLoader(new AbstractUrlLoader() {
+                    @Override
+                    public void loadImages(Context context, String url, ImageView image) {
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .error(R.mipmap.ic_glide_default) //加载失败图片
+                                .priority(Priority.HIGH) //优先级
+                                .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
+                                .transform(new GlideRoundTransform(10)); //圆角
+                        Glide.with(context).load(url).apply(options).into(image);
+                    }
+
+                    @Override
+                    public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .error(R.mipmap.ic_glide_default) //加载失败图片
+                                .priority(Priority.HIGH) //优先级
+                                .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
+                                .transform(new GlideRoundTransform(10)); //圆角
+
+                        Glide.with(context).load(url).apply(options).into(gifImageView);
+                    }
+                })
+                .setTitleHeight(50)
+                .isAutoPlay(true)
+                .setDelay(5000)
+                .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
+                .setUpIndicatorSize(20, 6)
+                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+                .start();
+
+
     }
 
 
@@ -403,6 +457,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public void onDestroy() {
         super.onDestroy();
         banner3.releaseBanner();
+        center_banner.releaseBanner();
     }
 
     @Override

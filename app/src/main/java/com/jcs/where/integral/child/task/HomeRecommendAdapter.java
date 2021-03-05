@@ -93,7 +93,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
 
         // 距离 地点
         holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
-        holder.setText(R.id.location_tv, data.area_name);
+        holder.setText(R.id.location_tv, data.address);
 
         // tag
         LinearLayout tag_ll = holder.getView(R.id.tag_ll);
@@ -129,7 +129,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         initTag(data, tag_ll);
 
         // 地址
-        holder.setText(R.id.address_tv, data.area_name);
+        holder.setText(R.id.address_tv, data.address);
         holder.setText(R.id.food_distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
 
     }
@@ -154,7 +154,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         initTag(data, tag_ll);
 
         // 地址
-        holder.setText(R.id.address_tv, data.area_name);
+        holder.setText(R.id.address_tv, data.address);
     }
 
     /**
@@ -192,7 +192,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
 
         // 距离 地点
         holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
-        holder.setText(R.id.location_tv, data.area_name);
+        holder.setText(R.id.location_tv, data.address);
 
         // tag
         LinearLayout tag_ll = holder.getView(R.id.tag_ll);

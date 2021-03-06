@@ -221,29 +221,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showLoading(String msg) {
-        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-            mProgressDialog = new CustomProgressDialog(this, msg);
-            mProgressDialog.show();
-        }
+//        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+//            mProgressDialog = new CustomProgressDialog(this, msg);
+//            mProgressDialog.show();
+//        }
     }
 
     public void showLoading() {
-        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-            mProgressDialog = new CustomProgressDialog(this, "");
-            mProgressDialog.show();
-        }
+//        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+//            mProgressDialog = new CustomProgressDialog(this, "");
+//            mProgressDialog.show();
+//        }
     }
 
     public void stopLoading() {
-        try {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-                mProgressDialog = null;
-            }
-
-        } catch (Exception e) {
-
-        }
+//        try {
+//            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//                mProgressDialog.dismiss();
+//                mProgressDialog = null;
+//            }
+//
+//        } catch (Exception e) {
+//
+//        }
     }
 
     protected void showToast(String msg) {

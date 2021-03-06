@@ -167,23 +167,23 @@ public abstract class BaseFragment extends Fragment {
 
 
     public void showLoading(String msg) {
-        if (dialog != null && dialog.isShowing()) {
+/*        if (dialog != null && dialog.isShowing()) {
         } else {
             dialog = new CustomProgressDialog(getContext(), msg);
             dialog.show();
-        }
+        }*/
     }
 
     public void showLoading() {
-        if (dialog != null && dialog.isShowing()) {
+  /*      if (dialog != null && dialog.isShowing()) {
         } else {
             dialog = new CustomProgressDialog(getContext(), "");
             dialog.show();
-        }
+        }*/
     }
 
     public void stopLoading() {
-        try {
+/*        try {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
                 dialog = null;
@@ -191,7 +191,7 @@ public abstract class BaseFragment extends Fragment {
 
         } catch (Exception e) {
 
-        }
+        }*/
     }
 
     protected void toActivity(Class<?> clazz) {

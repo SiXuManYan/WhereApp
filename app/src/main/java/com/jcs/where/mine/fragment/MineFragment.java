@@ -3,6 +3,7 @@ package com.jcs.where.mine.fragment;
 import android.app.Application;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -257,7 +258,10 @@ public class MineFragment extends BaseFragment {
                 mSwipeLayout.setRefreshing(false);
                 nicknameTv.setText(userInfoResponse.getNickname());
                 mPointTv.setText(userInfoResponse.getIntegral());
-                GlideUtil.load(getContext(), userInfoResponse.getAvatar(), headerIv);
+                String avatar = userInfoResponse.getAvatar();
+                if (!TextUtils.isEmpty(avatar)) {
+                    GlideUtil.load(getContext(), avatar, headerIv);
+                }
                 saveData(userInfoResponse);
             }
         });

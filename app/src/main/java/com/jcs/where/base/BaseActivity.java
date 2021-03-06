@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -215,6 +216,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void showNetError(ErrorResponse errorResponse) {
         if (errorResponse.getErrCode() != 401) {
             ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+            Log.e("BaseActivity", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
         }
     }
 

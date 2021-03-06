@@ -422,8 +422,8 @@
 	<string name="_2">2</string>
 	<string name="_3">3</string>
 	<string name="merchant_settled_prompt_step_1">Fill form</string>
-	<string name="merchant_settled_prompt_step_2">Audit information</string>
-	<string name="merchant_settled_prompt_step_3">Education training</string>
+	<string name="merchant_settled_prompt_step_2">Audit\ninformation</string>
+	<string name="merchant_settled_prompt_step_3">Education\ntraining</string>
 	<string name="merchant_settled_prompt_contact">Contact Information</string>
 	<string name="merchant_settled_prompt_name"><font color="#FF0000">*</font><font color="#666666">Name</font></string>
 	<string name="merchant_settled_prompt_middle_name">Middle Name</string>

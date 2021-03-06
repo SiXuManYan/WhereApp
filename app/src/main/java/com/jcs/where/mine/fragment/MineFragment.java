@@ -127,25 +127,26 @@ public class MineFragment extends BaseFragment {
     }
 
     private void onMerchantSettledClicked(View view) {
-        showLoading();
-        mModel.getMerchantSettledInfo(new BaseObserver<MerchantSettledInfoResponse>() {
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-                showNetError(errorResponse);
-            }
-
-            @Override
-            protected void onSuccess(MerchantSettledInfoResponse response) {
-                stopLoading();
-                if (response == null) {
-                    toActivityIfSigned(MerchantSettledActivity.class);
-                    return;
-                }
-
-                MerchantVerifyActivity.go(getContext(), response.getIsVerify());
-            }
-        });
+        toActivityIfSigned(MerchantSettledActivity.class);
+//        showLoading();
+//        mModel.getMerchantSettledInfo(new BaseObserver<MerchantSettledInfoResponse>() {
+//            @Override
+//            protected void onError(ErrorResponse errorResponse) {
+//                stopLoading();
+//                showNetError(errorResponse);
+//            }
+//
+//            @Override
+//            protected void onSuccess(MerchantSettledInfoResponse response) {
+//                stopLoading();
+//                if (response == null) {
+//                    toActivityIfSigned(MerchantSettledActivity.class);
+//                    return;
+//                }
+//
+//                MerchantVerifyActivity.go(getContext(), response.getIsVerify());
+//            }
+//        });
     }
 
     private void onAboutClick(View view) {

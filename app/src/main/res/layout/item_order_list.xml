@@ -25,6 +25,9 @@
         app:layout_constraintBottom_toBottomOf="@id/orderIcon"
         android:textSize="@dimen/sp_14"
         android:includeFontPadding="false"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintWidth_max="@dimen/dp_180"
         android:textColor="@color/black_333333"/>
 
     <ImageView

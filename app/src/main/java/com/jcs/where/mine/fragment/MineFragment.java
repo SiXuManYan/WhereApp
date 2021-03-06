@@ -1,5 +1,6 @@
 package com.jcs.where.mine.fragment;
 
+import android.app.Application;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -128,25 +129,30 @@ public class MineFragment extends BaseFragment {
 
     private void onMerchantSettledClicked(View view) {
         toActivityIfSigned(MerchantSettledActivity.class);
-//        showLoading();
-//        mModel.getMerchantSettledInfo(new BaseObserver<MerchantSettledInfoResponse>() {
-//            @Override
-//            protected void onError(ErrorResponse errorResponse) {
-//                stopLoading();
-//                showNetError(errorResponse);
-//            }
-//
-//            @Override
-//            protected void onSuccess(MerchantSettledInfoResponse response) {
-//                stopLoading();
-//                if (response == null) {
-//                    toActivityIfSigned(MerchantSettledActivity.class);
-//                    return;
-//                }
-//
-//                MerchantVerifyActivity.go(getContext(), response.getIsVerify());
-//            }
-//        });
+        if (User.isLogon()) {
+            BaseApplication app = (BaseApplication) Utils.getApp();
+            User user = app.getDatabase().userDao().findUser();
+            if (user.merchantApplyStatus == 1) {
+                showLoading();
+                mModel.getMerchantSettledInfo(new BaseObserver<MerchantSettledInfoResponse>() {
+                    @Override
+                    protected void onError(ErrorResponse errorResponse) {
+                        stopLoading();
+                        showNetError(errorResponse);
+                    }
+
+                    @Override
+                    protected void onSuccess(MerchantSettledInfoResponse response) {
+                        stopLoading();
+                        MerchantVerifyActivity.go(getContext(), response.getIsVerify());
+                    }
+                });
+            } else {
+                toActivity(MerchantSettledActivity.class);
+            }
+        } else {
+            BaseApplication.toLogin();
+        }
     }
 
     private void onAboutClick(View view) {

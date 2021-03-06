@@ -165,7 +165,7 @@
 	<string name="mine_unpaid">Unpaid</string>
 	<string name="mine_booked">Booked</string>
 	<string name="language_title">language</string>
-    <string name="home_search_hint">Search for titles or keywords</string>
+    <string name="home_search_hint">Search titles or keywords</string>
 	<string name="home_near_hotel">Near the hotel</string>
 	<string name="mechanism_to">&#045;</string>
 	<string name="google_map">Google map</string>
@@ -442,7 +442,7 @@
 	<string name="no">No</string>
     <string name="image_message">Image Message</string>
 	<string name="voice_message">Voice Message</string>
-	<string name="search_all_hint">Search title or keyword</string>
+	<string name="search_all_hint">Search title or keywords</string>
     <string name="settled_type_title">Type of settlement</string>
     <string name="stay_info">Check in information</string>
 	<string name="merchant_verify_success_step2">Approved</string>

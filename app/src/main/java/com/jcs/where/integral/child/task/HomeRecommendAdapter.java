@@ -209,14 +209,17 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
     private void loadImage(HomeRecommendResponse data, ImageView image_iv) {
         RequestOptions options = RequestOptions.bitmapTransform(
                 new GlideRoundedCornersTransform(10, GlideRoundedCornersTransform.CornerType.LEFT))
-                .error(R.mipmap.ic_glide_default) //加载失败图片
-                .placeholder(R.mipmap.ic_glide_default);
+                .error(R.mipmap.ic_empty_gray)
+                .placeholder(R.mipmap.ic_empty_gray);
 
         String image = "";
         if (data.images.length > 0) {
            image = data.images[0];
+            Glide.with(getContext()).load(image).apply(options).into(image_iv);
+        }else {
+            Glide.with(getContext()).load(R.mipmap.ic_empty_gray).apply(options).into(image_iv);
         }
-        Glide.with(getContext()).load(image).apply(options).into(image_iv);
+
     }
 
     /**

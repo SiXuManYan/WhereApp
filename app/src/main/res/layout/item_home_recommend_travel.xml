@@ -13,14 +13,14 @@
         android:id="@+id/image_iv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="22"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="50"
         android:orientation="vertical"
         android:paddingStart="@dimen/dp_9"
         android:paddingTop="@dimen/dp_8"

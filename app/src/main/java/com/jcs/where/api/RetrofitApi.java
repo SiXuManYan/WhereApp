@@ -53,6 +53,7 @@ import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
+import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
@@ -691,6 +692,15 @@ public interface RetrofitApi {
             @Query("lng") String lng,
             @Query("area_id") String area_id
     );
+
+
+    /**
+     * app 版本检测
+     */
+    @GET("/commonapi/v2/version")
+    Observable<JcsResponse<VersionResponse>> checkAppVersion(
+            @Query("current_version") int current_version,
+            @Query("device") String device);
 
 
 }

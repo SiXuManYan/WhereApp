@@ -14,8 +14,8 @@ public class BaseMvpPresenter extends BaseModel {
 
     private BaseMvpView mBaseMvpView;
 
-    public BaseMvpPresenter(BaseMvpView baseMvpView) {
-        mBaseMvpView = baseMvpView;
+    public BaseMvpPresenter(BaseMvpView view) {
+        mBaseMvpView = view;
     }
 
 

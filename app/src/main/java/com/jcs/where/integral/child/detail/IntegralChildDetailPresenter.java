@@ -1,13 +1,10 @@
 package com.jcs.where.integral.child.detail;
 
-import com.jcs.where.BuildConfig;
-import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.IntegralDetailResponse;
 import com.jcs.where.api.response.PageResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,9 +1,11 @@
 package com.jcs.where.home.fragment;
 
+import com.jcs.where.BuildConfig;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
+import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
@@ -38,4 +40,20 @@ public class HomePresenter extends BaseMvpPresenter {
         });
     }
 
+    public void checkAppVersion() {
+        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_CODE, "Android"), new BaseMvpObserver<VersionResponse>(mView) {
+            @Override
+            protected void onSuccess(VersionResponse response) {
+
+                if (!response.status) {
+                    return;
+                }
+
+                mView.checkAppVersion(response);
+            }
+        });
+
+
+
+    }
 }

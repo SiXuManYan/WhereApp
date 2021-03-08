@@ -42,6 +42,10 @@ public class Constant {
     public static final String PARAM_TITLE = "param_title";
     public static final String PARAM_CONTENT = "param_content";
     public static final String PARAM_CREATE_DATE = "param_create_date";
+    public static final String PARAM_NEW_VERSION_CODE = "NEW_VERSION_CODE";
+    public static final String PARAM_DOWNLOAD_URL = "DOWNLOAD_URL";
+    public static final String PARAM_UPDATE_DESC = "UPDATE_DESC";
+    public static final String PARAM_IS_FORCE_INSTALL = "IS_FORCE_INSTALL";
 
 
     /**

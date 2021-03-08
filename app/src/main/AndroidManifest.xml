@@ -49,8 +49,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_app"
         android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true"
         android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_app"
         android:supportsRtl="true"
         android:theme="@style/AnimActivity"
@@ -510,6 +510,10 @@
 
         <activity android:name=".features.message.notice.detail.SystemMessageDetailActivity" />
         <activity android:name=".features.search.SearchAllActivity" />
+        <activity
+            android:name=".features.upgrade.UpgradeActivity"
+            android:theme="@style/upgrade"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
 
     </application>

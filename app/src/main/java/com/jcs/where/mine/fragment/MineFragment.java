@@ -1,9 +1,7 @@
 package com.jcs.where.mine.fragment;
 
-import android.app.Application;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

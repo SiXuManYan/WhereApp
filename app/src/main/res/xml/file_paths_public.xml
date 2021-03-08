@@ -5,4 +5,18 @@
             name="camera_photos"
             path="" />
     </paths>
+
+    <external-path
+        name="files_root"
+        path="Android/data/com.jcs.where/" />
+    <external-path
+        name="external_storage_root"
+        path="." />
+    <external-path
+        name="images"
+        path="Android/data/com.jcs.where/files/Pictures" />
+    <external-path
+        name="external_files"
+        path="." />
+
 </resources>

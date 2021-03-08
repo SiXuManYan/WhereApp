@@ -3,6 +3,7 @@ package com.jcs.where.home.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +41,14 @@ import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.HomeNewsResponse;
 import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
+import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.search.SearchAllActivity;
+import com.jcs.where.features.upgrade.UpgradeActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.home.activity.TravelStayActivity;
@@ -207,8 +210,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     @Override
     protected void initData() {
         presenter = new HomePresenter(this);
-        presenter.getRecommendList(page);
-
         String areaId = mModel.getCurrentAreaId();
         if (areaId.equals("3")) {
             // 默认巴郎牙
@@ -226,6 +227,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         // 获取金刚区，猜你喜欢，banner，滚动新闻并一起返回
         getInitHomeData();
         getMessageCount();
+        presenter.getRecommendList(page);
+        presenter.checkAppVersion();
     }
 
     private void getInitHomeData() {
@@ -612,5 +615,15 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         // 推荐
         page = Constant.DEFAULT_FIRST_PAGE;
         presenter.getRecommendList(page);
+    }
+
+    @Override
+    public void checkAppVersion(VersionResponse response) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.PARAM_NEW_VERSION_CODE,response.new_version);
+        bundle.putString(Constant.PARAM_DOWNLOAD_URL,response.download_url);
+        bundle.putString(Constant.PARAM_UPDATE_DESC,response.update_desc);
+        bundle.putBoolean(Constant.PARAM_IS_FORCE_INSTALL,response.is_force_install);
+        startActivity(UpgradeActivity.class,bundle);
     }
 }

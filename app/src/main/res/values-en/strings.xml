@@ -467,5 +467,15 @@
     <string name="recommend_home">Recommend</string>
     <string name="distance_format">%1$s&#160;km</string>
 
+	<string name="new_version_hint_01">Detect new version, authorize</string>
+	<string name="new_version_hint_02">permissions </string>
+	<string name="new_version_hint_03">then you can install</string>
+	<string name="downloadStart">Down load start</string>
+	<string name="downloading">Downloading</string>
+	<string name="downloadError">Download Error</string>
+	<string name="downloadOver">Download completed</string>
+	<string name="downloadOver_Install">download complete, click install</string>
+    <string name="new_version_found">New version found</string>
+	<string name="upgrade">Upgrade</string>
 
 </resources>

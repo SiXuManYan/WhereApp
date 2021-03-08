@@ -1,6 +1,7 @@
 package com.jcs.where.home.fragment;
 
 import com.jcs.where.BuildConfig;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.PageResponse;
@@ -50,6 +51,11 @@ public class HomePresenter extends BaseMvpPresenter {
                 }
 
                 mView.checkAppVersion(response);
+            }
+
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+
             }
         });
 

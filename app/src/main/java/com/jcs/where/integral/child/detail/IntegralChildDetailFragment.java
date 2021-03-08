@@ -5,6 +5,9 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.ResourceUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
@@ -13,6 +16,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import java.util.List;
 
@@ -47,11 +51,14 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
     protected void initData() {
         presenter = new IntegralChildDetailPresenter(this);
         mAdapter = new IntegralChildAdapter();
+        mRv.addItemDecoration(getItemDecoration());
+        mRv.setBackground(ResourceUtils.getDrawable(R.drawable.shape_white_radius_8));
         mRv.setAdapter(mAdapter);
-        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
-        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+
     }
 
     @Override
@@ -67,6 +74,7 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
 
     @Override
     public void bindDetailData(List<IntegralDetailResponse> data, boolean isLastPage) {
+
         BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -97,7 +105,6 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
     }
 
 
-
     @Override
     public void onEventReceived(BaseEvent<?> baseEvent) {
         if (baseEvent.code == EventCode.EVENT_SIGN_IN_CHANGE_STATUS) {
@@ -108,5 +115,11 @@ public class IntegralChildDetailFragment extends BaseMvpFragment<IntegralChildDe
         }
     }
 
+
+    private RecyclerView.ItemDecoration getItemDecoration() {
+        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), 1, SizeUtils.dp2px(15), SizeUtils.dp2px(15));
+        itemDecoration.setDrawHeaderFooter(false);
+        return itemDecoration;
+    }
 
 }

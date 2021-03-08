@@ -63,7 +63,7 @@ public class RetrofitManager {
                 Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
                         .header("Accept", "application/json")
                         .header("device", "android")
-                        .header("version", String.valueOf(BuildConfig.VERSION_CODE));
+                        .header("version", BuildConfig.VERSION_NAME);
                 String language = CacheUtil.getLanguageFromCache();
                 if (language.equals("auto")) {
                     language = "zh-CN";
@@ -89,11 +89,7 @@ public class RetrofitManager {
 
         Retrofit.Builder builder = new Retrofit.Builder();
         //请求链接前缀，所有接口不变的部分，字符串必须以/结尾
-        // TODO baseurl 应该放在gradle中，没时间
-        // 正式版
-//        builder.baseUrl("https://appapi.wheretech.ph/");
-        // 测试版
-//        builder.baseUrl("https://api.jcstest.com/");
+
         builder.baseUrl(BuildConfig.SERVER_HOST);
 
 

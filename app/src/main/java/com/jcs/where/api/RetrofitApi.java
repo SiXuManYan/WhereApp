@@ -699,7 +699,7 @@ public interface RetrofitApi {
      */
     @GET("/commonapi/v2/version")
     Observable<JcsResponse<VersionResponse>> checkAppVersion(
-            @Query("current_version") int current_version,
+            @Query("current_version") String current_version,
             @Query("device") String device);
 
 

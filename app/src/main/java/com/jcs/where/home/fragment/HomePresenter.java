@@ -42,7 +42,7 @@ public class HomePresenter extends BaseMvpPresenter {
     }
 
     public void checkAppVersion() {
-        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_CODE, "Android"), new BaseMvpObserver<VersionResponse>(mView) {
+        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_NAME, "Android"), new BaseMvpObserver<VersionResponse>(mView) {
             @Override
             protected void onSuccess(VersionResponse response) {
 

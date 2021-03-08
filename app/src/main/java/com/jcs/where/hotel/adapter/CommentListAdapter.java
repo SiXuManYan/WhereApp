@@ -1,6 +1,5 @@
 package com.jcs.where.hotel.adapter;
 
-import android.text.Layout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;

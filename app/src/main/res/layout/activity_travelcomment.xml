@@ -6,59 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/useView"
-        android:background="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_black"
-        app:navigationIcon="@drawable/ic_back_black"
-        app:theme="@style/AppTheme.ActionBar">
+        app:middleTitle="@string/all_reviews" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="全部评论"
-            android:textColor="@color/black_333333"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-    </androidx.appcompat.widget.Toolbar>
-
-
-    <com.jcs.where.view.ptr.MyPtrClassicFrameLayout
-        android:id="@+id/ptr_frame"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        cube_ptr:ptr_duration_to_close_either="1000"
-        cube_ptr:ptr_duration_to_close_footer="0"
-        cube_ptr:ptr_keep_header_when_refresh="true"
-        cube_ptr:ptr_pull_to_fresh="false"
-        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-        cube_ptr:ptr_resistance="1.7">
+        android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentsRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:paddingBottom="20dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_commentlist"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="20dp" />
-
-
-        </androidx.core.widget.NestedScrollView>
-    </com.jcs.where.view.ptr.MyPtrClassicFrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

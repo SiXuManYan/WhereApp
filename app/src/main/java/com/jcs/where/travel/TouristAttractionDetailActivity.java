@@ -194,7 +194,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         mCommentAdapter = new CommentListAdapter();
         commentLl = findViewById(R.id.ll_comment);
         seeMoreTv = findViewById(R.id.tv_seemore);
-//        seeMoreTv.setOnClickListener(view -> TravelCommentActivity.goTo(TouristAttractionDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0)));
+        seeMoreTv.setOnClickListener(view -> TravelCommentActivity.goTo(TouristAttractionDetailActivity.this, mId));
     }
 
     @Override

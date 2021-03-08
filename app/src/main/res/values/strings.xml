@@ -475,5 +475,6 @@
     <string name="downloadOver_Install">下载完成，点击安装</string>
     <string name="new_version_found">发现新版本</string>
     <string name="upgrade">更新</string>
+    <string name="to_write_comment">写评论</string>
 
 </resources>

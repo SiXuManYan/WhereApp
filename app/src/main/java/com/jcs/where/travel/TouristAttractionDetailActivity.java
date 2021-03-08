@@ -32,6 +32,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.hotel.activity.WriteCommentActivity;
 import com.jcs.where.hotel.adapter.CommentListAdapter;
 import com.jcs.where.travel.model.TouristAttractionDetailModel;
 import com.jcs.where.utils.GlideUtil;
@@ -66,7 +67,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
     private TextView nameTv, startTimeTv, scoreTv, commnetNumberTv, addressTv;
     private RelativeLayout navigationRl;
     private String phone;
-    private TextView introduceTv, noticeTv;
+    private TextView introduceTv, noticeTv, mToWriteCommentTv;
     private List<CommentResponse> list;
     private RecyclerView commentRv;
     private CommentListAdapter mCommentAdapter;
@@ -108,6 +109,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         // TODO 写评论
 //        shareIv.setOnClickListener(view -> TravelWriteCommentActivity.goTo(TravelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0)));
         banner = findViewById(R.id.banner3);
+        mToWriteCommentTv = findViewById(R.id.toWriteCommentTv);
         scrollView = findViewById(R.id.scrollView);
         scrollView.setScrollViewListener((scrollView, x, y, oldx, oldy) -> {
             float headHeight = banner.getMeasuredHeight() - mJcsTitle.getMeasuredHeight();
@@ -279,7 +281,6 @@ public class TouristAttractionDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        Log.e("TravelDetailActivity", "bindListener: " + "");
         mCommentAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull @NotNull BaseQuickAdapter<?, ?> adapter, @NonNull @NotNull View view, int position) {
@@ -294,6 +295,11 @@ public class TouristAttractionDetailActivity extends BaseActivity {
             String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_TRAVEL, mId);
             MobUtil.shareFacebookWebPage(url, this);
         });
+        mToWriteCommentTv.setOnClickListener(this::onToWriteCommentClicked);
+    }
+
+    private void onToWriteCommentClicked(View view) {
+        WriteCommentActivity.goTo(this, 0, mId, nameTv.getText().toString());
     }
 
     private void onCommentItemChildClicked(BaseQuickAdapter baseQuickAdapter, View view, int position) {

@@ -477,5 +477,6 @@
 	<string name="downloadOver_Install">download complete, click install</string>
     <string name="new_version_found">New version found</string>
 	<string name="upgrade">Upgrade</string>
+    <string name="to_write_comment">Write Review</string>
 
 </resources>

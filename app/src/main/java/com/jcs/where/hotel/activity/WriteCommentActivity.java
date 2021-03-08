@@ -58,7 +58,7 @@ public class WriteCommentActivity extends BaseActivity {
 
     private static final String EXT_ORDER_ID = "orderId";
     private static final String EXT_HOTEL_ID = "hotelId";
-    private static final String EXT_HOTEL_NAME = "hotelId";
+    private static final String EXT_HOTEL_NAME = "hotelName";
     private int oldPosition = -1;
     private SelectStarView mSelectStarView;
     private TextView mSatisfiedTv;
@@ -73,12 +73,14 @@ public class WriteCommentActivity extends BaseActivity {
     private int mToUploadCount = 0;
     // 接受上传图片得到的链接
     private String[] mUploadLinks;
+    private String mHotelName;
+    private int mHotelId, mOrderId;
 
     public static void goTo(Context context, int orderId, int hotelId, String name) {
         Intent intent = new Intent(context, WriteCommentActivity.class);
         intent.putExtra(EXT_ORDER_ID, orderId);
         intent.putExtra(EXT_HOTEL_ID, hotelId);
-        intent.putExtra(EXT_HOTEL_NAME, hotelId);
+        intent.putExtra(EXT_HOTEL_NAME, name);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (!(context instanceof Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -111,6 +113,13 @@ public class WriteCommentActivity extends BaseActivity {
 
         mAdapter.getData().clear();
         mAdapter.addData(ADD_PIC_ACTION);
+
+        Intent intent = getIntent();
+        mHotelId = intent.getIntExtra(EXT_HOTEL_ID, 0);
+        mOrderId = intent.getIntExtra(EXT_ORDER_ID, 0);
+        mHotelName = intent.getStringExtra(EXT_HOTEL_NAME);
+
+        mJcsTitle.setMiddleTitle(mHotelName);
     }
 
     @Override
@@ -197,6 +206,10 @@ public class WriteCommentActivity extends BaseActivity {
 
     private WriteHotelCommentRequest getRequest() {
         WriteHotelCommentRequest request = new WriteHotelCommentRequest();
+        request.setHotelId(String.valueOf(mHotelId));
+        if (mOrderId == 0) {
+            request.setOrderId(String.valueOf(mOrderId));
+        }
         if (mUploadLinks != null) {
             request.setImages(mUploadLinks);
         }

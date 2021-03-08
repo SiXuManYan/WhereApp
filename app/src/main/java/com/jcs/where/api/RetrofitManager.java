@@ -62,7 +62,8 @@ public class RetrofitManager {
                 Request original = chain.request();
                 Request.Builder requestBuilder = original.newBuilder().header("Content-Type", "application/x-www-form-urlencoded")
                         .header("Accept", "application/json")
-                        .header("device", "android");
+                        .header("device", "android")
+                        .header("version", String.valueOf(BuildConfig.VERSION_CODE));
                 String language = CacheUtil.getLanguageFromCache();
                 if (language.equals("auto")) {
                     language = "zh-CN";
@@ -72,6 +73,7 @@ public class RetrofitManager {
                 if (!jsonStr.equals("")) {
                     requestBuilder.header("Authorization", "Bearer " + jsonStr);
                 }
+
                 Request build = requestBuilder.build();
                 return chain.proceed(build);
             }
@@ -112,7 +114,7 @@ public class RetrofitManager {
      */
     public Gson buildGson() {
         return new GsonBuilder()
-                 .registerTypeAdapter(JsonElement.class, new StringConverter())
-                 .create();
+                .registerTypeAdapter(JsonElement.class, new StringConverter())
+                .create();
     }
 }

@@ -38,29 +38,29 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
+                            android:includeFontPadding="false"
                             android:maxLines="1"
                             android:singleLine="true"
-                            tools:text="Crown Royale Hotel"
                             android:textColor="@color/black_333333"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:includeFontPadding="false"/>
+                            tools:text="Crown Royale Hotel" />
 
                         <RatingBar
                             android:id="@+id/ratingBar"
+                            style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dp_16"
-                            android:stepSize="1"
                             android:layout_gravity="center_vertical"
-                            style="?android:attr/ratingBarStyleSmall"/>
+                            android:stepSize="1" />
                     </LinearLayout>
 
                     <TextView
@@ -69,9 +69,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
-                        tools:text="2017年开业"
                         android:textColor="@color/grey_666666"
-                        android:textSize="@dimen/sp_11" />
+                        android:textSize="@dimen/sp_11"
+                        tools:text="2017年开业" />
 
                     <View
                         android:layout_width="match_parent"
@@ -97,18 +97,18 @@
                             android:text="4.5"
                             android:textColor="@color/grey_666666"
                             android:textSize="16sp"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/tv_commentnumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="@dimen/dp_30"
                             android:layout_centerVertical="true"
-                            tools:text="170条点评"
+                            android:layout_marginEnd="@dimen/dp_15"
                             android:textColor="@color/blue_4C9EF2"
-                            android:textSize="@dimen/sp_11" />
+                            android:textSize="@dimen/sp_11"
+                            tools:text="170条点评" />
 
 
                     </RelativeLayout>
@@ -184,18 +184,18 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                tools:text="入住时间：14:00之后"
                                 android:textColor="@color/grey_666666"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:text="入住时间：14:00之后" />
 
                             <TextView
                                 android:id="@+id/tv_checkout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                tools:text="退房时间：12:00以前"
                                 android:textColor="@color/grey_666666"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:text="退房时间：12:00以前" />
 
                         </LinearLayout>
 
@@ -224,9 +224,9 @@
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:singleLine="true"
-                            tools:text="G/F GICC Technopark,Luzon Avenue,Freeport..."
                             android:textColor="@color/grey_666666"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="G/F GICC Technopark,Luzon Avenue,Freeport..." />
 
 
                     </LinearLayout>
@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
@@ -374,9 +374,9 @@
                             android:paddingTop="2dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="2dp"
-                            tools:text="5night"
                             android:textColor="@color/blue_4C9EF2"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="5night" />
 
                     </RelativeLayout>
 
@@ -572,7 +572,7 @@
                                         android:id="@+id/starView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="@dimen/dp_10"
-                                        android:layout_marginTop="@dimen/dp_5"/>
+                                        android:layout_marginTop="@dimen/dp_5" />
 
                                 </LinearLayout>
 
@@ -646,8 +646,22 @@
         android:layout_below="@+id/useView"
         android:background="@color/transparency"
         android:minHeight="?attr/actionBarSize"
-        android:navigationIcon="@drawable/ic_back_white"
-        app:navigationIcon="@drawable/ic_back_white">
+        app:contentInsetEnd="@dimen/dp_0"
+        app:contentInsetStart="@dimen/dp_0">
+
+
+        <ImageView
+            android:id="@+id/back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_10"
+            android:scrollbarStyle="insideInset"
+            android:src="@drawable/ic_back_white" />
+
 
         <TextView
             android:id="@+id/titleTv"
@@ -662,6 +676,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_15"
             android:padding="10dp"
             android:src="@drawable/ic_share_white" />
 

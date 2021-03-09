@@ -5,9 +5,6 @@
     <!-- 填充的颜色 -->
     <solid android:color="@color/white" />
 
-    <!-- android:radius 圆角的半径 -->
-    <corners
-        android:topLeftRadius="8dp"
-        android:topRightRadius="8dp" />
+
 
 </shape>

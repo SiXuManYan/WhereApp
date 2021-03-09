@@ -112,6 +112,7 @@ public class HotelDetailActivity extends BaseActivity {
     private int mRoomNum;
     private int mTotalDay;
     private JcsCalendarDialog mJcsCalendarDialog;
+    private ImageView back_iv;
 
     public static void goTo(Context context, int id, JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate, int totalDay, String startYear, String endYear, int roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -153,6 +154,7 @@ public class HotelDetailActivity extends BaseActivity {
         mJcsCalendarDialog.initCalendar(this);
 
         toolbar = findViewById(R.id.toolbar);
+        back_iv = findViewById(R.id.back_iv);
         //  setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
         useView = findViewById(R.id.useView);
         likeIv = findViewById(R.id.iv_like);
@@ -250,7 +252,10 @@ public class HotelDetailActivity extends BaseActivity {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhiteunlike));
                     }
                     shareIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_share_black));
-                    toolbar.setNavigationIcon(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_back_black));
+//                    toolbar.setNavigationIcon(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_back_black));
+                    back_iv.setImageResource(R.drawable.ic_back_black);
+
+
                     toolbarStatus = 1;
                 } else {
                     if (like == 1) {
@@ -259,7 +264,8 @@ public class HotelDetailActivity extends BaseActivity {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                     }
                     shareIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_share_white));
-                    toolbar.setNavigationIcon(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_back_white));
+//                    toolbar.setNavigationIcon(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_back_white));
+                    back_iv.setImageResource(R.drawable.ic_back_white);
                     toolbarStatus = 0;
                 }
                 useView.getBackground().setAlpha(alpha);
@@ -433,7 +439,8 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        toolbar.setNavigationOnClickListener(this::onBackIconClicked);
+//        toolbar.setNavigationOnClickListener(this::onBackIconClicked);
+        back_iv.setOnClickListener(this::onBackIconClicked);
         findViewById(R.id.ll_choosedate).setOnClickListener(this::onChooseDate);
         mJcsCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
     }

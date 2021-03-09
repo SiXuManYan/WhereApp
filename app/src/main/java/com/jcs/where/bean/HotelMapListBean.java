@@ -1,5 +1,7 @@
 package com.jcs.where.bean;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HotelMapListBean {
@@ -32,7 +34,11 @@ public class HotelMapListBean {
     private double distance;
     private int remain_room_num;
     private String facebook_link;
-    private List<String> images;
+    public ArrayList<String> images = new ArrayList<>();
+
+
+
+
     private List<TagsBean> tags;
 
     public int getId() {
@@ -123,13 +129,8 @@ public class HotelMapListBean {
         this.facebook_link = facebook_link;
     }
 
-    public List<String> getImages() {
-        return images;
-    }
 
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
+
 
     public List<TagsBean> getTags() {
         return tags;

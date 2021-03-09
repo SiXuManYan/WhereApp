@@ -479,4 +479,6 @@
 	<string name="upgrade">Upgrade</string>
     <string name="to_write_comment">Write Review</string>
 
+	<string name="hotel_not_exit">No current hotel found</string>
+
 </resources>

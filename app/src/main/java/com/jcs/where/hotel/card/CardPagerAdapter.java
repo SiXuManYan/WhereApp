@@ -92,10 +92,15 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         TextView nameTv = (TextView) view.findViewById(R.id.tv_name);
         nameTv.setText(bean.getName());
         RoundedImageView photoIv = (RoundedImageView) view.findViewById(R.id.iv_photo);
-        if (!TextUtils.isEmpty(bean.getImages().get(0))) {
-            GlideUtil.load(useContext, bean.getImages().get(0), photoIv);
-        } else {
-            photoIv.setImageResource(R.mipmap.ic_glide_default);
+
+
+        ArrayList<String> images = bean.images;
+        if (!images.isEmpty()) {
+            if (!TextUtils.isEmpty(images.get(0))) {
+                GlideUtil.load(useContext, images.get(0), photoIv);
+            } else {
+                photoIv.setImageResource(R.mipmap.ic_glide_default);
+            }
         }
         TextView addressTv = (TextView) view.findViewById(R.id.tv_address);
         addressTv.setText(bean.getAddress());

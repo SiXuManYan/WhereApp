@@ -1,5 +1,7 @@
 package com.jcs.where.api;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jcs.where.api.request.HotelOrderRequest;
@@ -55,6 +57,7 @@ import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
+import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
 import java.util.List;
@@ -701,6 +704,21 @@ public interface RetrofitApi {
     Observable<JcsResponse<VersionResponse>> checkAppVersion(
             @Query("current_version") String current_version,
             @Query("device") String device);
+
+
+    /**
+     * 获取酒店地图列表
+     */
+    @GET("hotelapi/v2/map/hotels")
+    Observable<JcsResponse<PageResponse<HotelMapListBean>>> getHotelMapList(
+            @Query("page") int page,
+            @Query("lat") String lat,
+            @Query("lng") String lng,
+            @Query("area_id") String area_id,
+            @Query("search_input") String search_input,
+            @Query("star_level") @Nullable String star_level,
+            @Query("price_range") @Nullable String price_range
+    );
 
 
 }

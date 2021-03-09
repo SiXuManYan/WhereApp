@@ -9,7 +9,6 @@ import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.jcs.where.BuildConfig;
-import com.jcs.where.Const;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

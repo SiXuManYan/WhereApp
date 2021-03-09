@@ -21,6 +21,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -34,18 +40,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
-import com.jcs.where.api.HttpUtils;
-import com.jcs.where.base.BaseActivity;
-import com.jcs.where.bean.ErrorBean;
+import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.HotelMapListBean;
+import com.jcs.where.hotel.activity.map.HotelMapPresenter;
+import com.jcs.where.hotel.activity.map.HotelMapView;
 import com.jcs.where.hotel.card.CardPagerAdapter;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.hotel.event.HotelEvent;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
-import com.jcs.where.manager.TokenManager;
 import com.jcs.where.search.SearchActivity;
 import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.view.EnterStayInfoView;
@@ -58,20 +61,19 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
 
 /**
  * 页面-酒店地图页
  */
-public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
+        implements
+        HotelMapView,
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
 
     private static final int REQ_SEARCH = 777;
@@ -129,7 +131,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void initView() {
-        EventBus.getDefault().register(this);
         mCalendarDialog = new JcsCalendarDialog();
         mCalendarDialog.initCalendar(this);
         mChooseDataView = findViewById(R.id.toChooseDate);
@@ -206,11 +207,14 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     protected void initData() {
+        presenter = new HotelMapPresenter(this);
+        Intent intent = getIntent();
         mMyPosition = ADELAIDE;
-        mStartDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
-        mEndDateBean = (JcsCalendarAdapter.CalendarBean) getIntent().getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
-        mTotalDay = getIntent().getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
-        mRoomNum = getIntent().getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 0);
+
+        mStartDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
+        mEndDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
+        mTotalDay = intent.getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
+        mRoomNum = intent.getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 0);
         mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
 
             @Override
@@ -227,18 +231,17 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
 
         showLoading();
         String url = null;
-        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) == null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&star_level=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) + "&search_input=" + useInputText;
-        }
-        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) == null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&price_range=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) + "&search_input=" + useInputText;
-        }
-        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) == null && getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) == null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&search_input=" + useInputText;
-        }
-        if (getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) != null && getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) != null) {
-            url = "hotelapi/v1/map/hotels?lat=" + lat + "&lng=" + lng + "&area_id=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID) + "&price_range=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE) + "&star_level=" + getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR) + "&search_input=" + useInputText;
-        }
+        String extraPrice = intent.getStringExtra(HotelSelectDateHelper.EXT_PRICE);
+        String extraStar = intent.getStringExtra(HotelSelectDateHelper.EXT_STAR);
+        String extraCityId = intent.getStringExtra(HotelSelectDateHelper.EXT_CITY_ID);
+
+//        getMapDataOld(url, extraPrice, extraStar, extraCityId);
+        presenter.getMapData(extraPrice, extraStar, extraCityId, useInputText);
+    }
+
+    @Override
+    public void getMapDataSuccess(List<HotelMapListBean> list) {
+
         if (mMap != null) {
             mMap.clear();
         }
@@ -254,72 +257,53 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
         if (views != null) {
             views.clear();
         }
-        HttpUtils.doHttpReqeust("GET", url, null, "", TokenManager.get().getToken(HotelMapActivity.this), new HttpUtils.StringCallback() {
-            @Override
-            public void onSuccess(int code, String result) {
-                stopLoading();
-                if (code == 200) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<HotelMapListBean>>() {
-                    }.getType();
-                    List<HotelMapListBean> list = gson.fromJson(result, type);
-                    // Center camera on Adelaide marker
 
-                    lastPostition = 0;
-                    lastScrollPosition = 0;
-                    if (list != null) {
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
-                        for (int i = 0; i < list.size(); i++) {
-                            View view = LayoutInflater.from(HotelMapActivity.this).inflate(R.layout.custom_marker_layout, null);
-                            TextView peiceTv = view.findViewById(R.id.tv_price);
-                            peiceTv.setText("php " + list.get(i).getPrice());
-                            views.add(view);
-                            BitmapDescriptor bitmapDescriptor = fromView(HotelMapActivity.this, view);
-                            Marker marker = mMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(
-                                            list.get(i).getLat(),
-                                            list.get(i).getLng()))
-                                    // .title("₱" + list.get(i).getPrice() + "起")
-                                    .icon(bitmapDescriptor));
-                            mMarkerRainbow.add(marker);
-                        }
+        if (list == null || list.isEmpty()) {
+            showToast(getString(R.string.hotel_not_exit));
+            return;
+        }
+        lastPostition = 0;
+        lastScrollPosition = 0;
+        // Center camera on Adelaide marker
 
-                        views.get(0).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_markselected));
-                        TextView priceTv = views.get(0).findViewById(R.id.tv_price);
-                        priceTv.setTextColor(getResources().getColor(R.color.white));
-                        ((ViewGroup) views.get(0).getParent()).removeView(views.get(0));
-                        mMarkerRainbow.get(0).setIcon(fromView(HotelMapActivity.this, views.get(0)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
+        for (int i = 0; i < list.size(); i++) {
+            View view = LayoutInflater.from(HotelMapActivity.this).inflate(R.layout.custom_marker_layout, null);
+            TextView peiceTv = view.findViewById(R.id.tv_price);
+            peiceTv.setText("php " + list.get(i).getPrice());
+            views.add(view);
+            BitmapDescriptor bitmapDescriptor = fromView(HotelMapActivity.this, view);
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(
+                            list.get(i).getLat(),
+                            list.get(i).getLng()))
+                    // .title("₱" + list.get(i).getPrice() + "起")
+                    .icon(bitmapDescriptor));
+            mMarkerRainbow.add(marker);
+        }
 
-                        for (int i = 0; i < list.size(); i++) {
-                            mCardAdapter.addCardItem(list.get(i));
-                        }
-                        mCardShadowTransformer = new ShadowTransformer(viewPager, mCardAdapter);
-                        mCardShadowTransformer.enableScaling(true);
-                        viewPager.setAdapter(mCardAdapter);
-                        viewPager.setPageTransformer(false, mCardShadowTransformer);
-                        viewPager.setOffscreenPageLimit(3);
-                        if (clickLocation == true) {
+        views.get(0).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_markselected));
+        TextView priceTv = views.get(0).findViewById(R.id.tv_price);
+        priceTv.setTextColor(getResources().getColor(R.color.white));
+        ((ViewGroup) views.get(0).getParent()).removeView(views.get(0));
+        mMarkerRainbow.get(0).setIcon(fromView(HotelMapActivity.this, views.get(0)));
 
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(lat, lng))
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
-                        }
-                    } else {
-                        showToast("未查询到该酒店");
-                    }
-                } else {
-                    ErrorBean errorBean = new Gson().fromJson(result, ErrorBean.class);
-                    showToast(errorBean.message);
-                }
-            }
+        for (int i = 0; i < list.size(); i++) {
+            mCardAdapter.addCardItem(list.get(i));
+        }
+        mCardShadowTransformer = new ShadowTransformer(viewPager, mCardAdapter);
+        mCardShadowTransformer.enableScaling(true);
+        viewPager.setAdapter(mCardAdapter);
+        viewPager.setPageTransformer(false, mCardShadowTransformer);
+        viewPager.setOffscreenPageLimit(3);
+        if (clickLocation == true) {
 
-            @Override
-            public void onFaileure(int code, Exception e) {
-                stopLoading();
-                showToast(e.getMessage());
-            }
-        });
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
+        }
     }
+
 
     @Override
     protected void bindListener() {
@@ -433,9 +417,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
             mGoogleApiClient.disconnect();
         }
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     @Override
@@ -552,4 +533,6 @@ public class HotelMapActivity extends BaseActivity implements OnMapReadyCallback
     protected boolean isStatusDark() {
         return true;
     }
+
+
 }

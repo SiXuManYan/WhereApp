@@ -368,7 +368,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="@dimen/dp_15"
                             android:background="@drawable/bg_labgrey"
                             android:paddingLeft="5dp"
                             android:paddingTop="2dp"

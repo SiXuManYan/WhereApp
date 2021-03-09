@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 
 import com.google.gson.Gson;
+import com.jcs.where.BuildConfig;
 import com.jcs.where.Const;
 
 import java.io.ByteArrayOutputStream;
@@ -48,7 +49,7 @@ public class HttpUtils {
                 HttpURLConnection connection = null;
                 OutputStream outputStream = null;
                 try {
-                    URL u = new URL(Const.API_ENDPOINT + url);
+                    URL u = new URL(BuildConfig.SERVER_HOST + url);
                     connection = (HttpURLConnection) u.openConnection();
                     // 设置输入可用
                     connection.setDoInput(true);
@@ -241,7 +242,7 @@ public class HttpUtils {
                 HttpURLConnection connection = null;
                 OutputStream outputStream = null;
                 try {
-                    URL u = new URL(Const.API_ENDPOINT + url);
+                    URL u = new URL(BuildConfig.SERVER_HOST + url);
                     connection = (HttpURLConnection) u.openConnection();
                     // 设置输入可用
                     connection.setDoInput(true);

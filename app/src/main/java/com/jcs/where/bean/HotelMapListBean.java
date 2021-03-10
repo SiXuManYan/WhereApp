@@ -25,12 +25,12 @@ public class HotelMapListBean {
 
     private int id;
     private String name;
-    private double grade;
-    private int comment_counts;
+    private float grade;
+    public int comment_counts;
     private String address;
     private double lat;
     private double lng;
-    private int price;
+    public int price;
     private double distance;
     private int remain_room_num;
     private String facebook_link;
@@ -57,11 +57,11 @@ public class HotelMapListBean {
         this.name = name;
     }
 
-    public double getGrade() {
+    public float getGrade() {
         return grade;
     }
 
-    public void setGrade(double grade) {
+    public void setGrade(float grade) {
         this.grade = grade;
     }
 

@@ -214,9 +214,9 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
 
         String image = "";
         if (data.images.length > 0) {
-           image = data.images[0];
+            image = data.images[0];
             Glide.with(getContext()).load(image).apply(options).into(image_iv);
-        }else {
+        } else {
             Glide.with(getContext()).load(R.mipmap.ic_empty_gray).apply(options).into(image_iv);
         }
 

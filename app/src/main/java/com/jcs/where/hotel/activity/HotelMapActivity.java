@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -45,7 +46,8 @@ import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.hotel.activity.map.HotelMapPresenter;
 import com.jcs.where.hotel.activity.map.HotelMapView;
-import com.jcs.where.hotel.card.CardPagerAdapter;
+import com.jcs.where.hotel.activity.map.HotelMapViewPagerAdapter;
+import com.jcs.where.hotel.activity.map.HotelMapViewPagerTransformer;
 import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.hotel.event.HotelEvent;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
@@ -57,7 +59,6 @@ import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -84,8 +85,6 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
     private final int READ_LOCATIONCODE = 11;
     private GoogleMap mMap;
     private ViewPager viewPager;
-    private CardPagerAdapter mCardAdapter;
-    private ShadowTransformer mCardShadowTransformer;
     private final int size = 10;
     private double lat = 14.6778362;
     private double lng = 120.5306459;
@@ -110,6 +109,7 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
 
     private LatLng mMyPosition;
+    private HotelMapViewPagerAdapter mPagerAdapter;
 
     public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, int totalDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
         Intent intent = new Intent(context, HotelMapActivity.class);
@@ -141,36 +141,13 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-        viewPager = findViewById(R.id.viewpager);
+
         mHotelListIv = findViewById(R.id.listIv);
-        mCardAdapter = new CardPagerAdapter(HotelMapActivity.this);
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
 
-            @Override
-            public void onPageSelected(int position) {
-                mMarkerRainbow.get(position).showInfoWindow();
-                TextView priceTv = views.get(position).findViewById(R.id.tv_price);
-                views.get(position).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_markselected));
-                priceTv.setTextColor(getResources().getColor(R.color.white));
-                ((ViewGroup) views.get(position).getParent()).removeView(views.get(position));
-                mMarkerRainbow.get(position).setIcon(fromView(HotelMapActivity.this, views.get(position)));
-                TextView price1Tv = views.get(lastScrollPosition).findViewById(R.id.tv_price);
-                views.get(lastScrollPosition).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_mark));
-                price1Tv.setTextColor(getResources().getColor(R.color.blue_4C9EF2));
-                ((ViewGroup) views.get(lastScrollPosition).getParent()).removeView(views.get(lastScrollPosition));
-                mMarkerRainbow.get(lastScrollPosition).setIcon(fromView(HotelMapActivity.this, views.get(lastScrollPosition)));
-                lastScrollPosition = position;
-            }
+        initPager();
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
 
-            }
-        });
         mStartDayTv = findViewById(R.id.startDayTv);
         mEndDayTv = findViewById(R.id.endDayTv);
         mCityTv = findViewById(R.id.cityTv);
@@ -205,6 +182,49 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
     }
 
+    private void initPager() {
+
+        viewPager = findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setClipToPadding(false);
+        viewPager.setPadding(SizeUtils.dp2px(35),0,SizeUtils.dp2px(35),0);
+
+        viewPager.setPageMargin(SizeUtils.dp2px(15));
+
+        HotelMapViewPagerTransformer transformer = new HotelMapViewPagerTransformer();
+        viewPager.setPageTransformer(false,transformer);
+
+        mPagerAdapter = new HotelMapViewPagerAdapter(this);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mMarkerRainbow.get(position).showInfoWindow();
+                TextView priceTv = views.get(position).findViewById(R.id.tv_price);
+                views.get(position).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_markselected));
+                priceTv.setTextColor(getResources().getColor(R.color.white));
+                ((ViewGroup) views.get(position).getParent()).removeView(views.get(position));
+                mMarkerRainbow.get(position).setIcon(fromView(HotelMapActivity.this, views.get(position)));
+                TextView price1Tv = views.get(lastScrollPosition).findViewById(R.id.tv_price);
+                views.get(lastScrollPosition).setBackground(ContextCompat.getDrawable(HotelMapActivity.this, R.drawable.ic_mark));
+                price1Tv.setTextColor(getResources().getColor(R.color.blue_4C9EF2));
+                ((ViewGroup) views.get(lastScrollPosition).getParent()).removeView(views.get(lastScrollPosition));
+                mMarkerRainbow.get(lastScrollPosition).setIcon(fromView(HotelMapActivity.this, views.get(lastScrollPosition)));
+                lastScrollPosition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
     @Override
     protected void initData() {
         presenter = new HotelMapPresenter(this);
@@ -235,7 +255,6 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         String extraStar = intent.getStringExtra(HotelSelectDateHelper.EXT_STAR);
         String extraCityId = intent.getStringExtra(HotelSelectDateHelper.EXT_CITY_ID);
 
-//        getMapDataOld(url, extraPrice, extraStar, extraCityId);
         presenter.getMapData(extraPrice, extraStar, extraCityId, useInputText);
     }
 
@@ -248,9 +267,7 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         if (mMarkerRainbow != null) {
             mMarkerRainbow.clear();
         }
-        if (mCardAdapter != null) {
-            mCardAdapter.clear();
-        }
+
         if (viewPager != null) {
             viewPager.removeAllViews();
         }
@@ -288,15 +305,11 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         ((ViewGroup) views.get(0).getParent()).removeView(views.get(0));
         mMarkerRainbow.get(0).setIcon(fromView(HotelMapActivity.this, views.get(0)));
 
-        for (int i = 0; i < list.size(); i++) {
-            mCardAdapter.addCardItem(list.get(i));
-        }
-        mCardShadowTransformer = new ShadowTransformer(viewPager, mCardAdapter);
-        mCardShadowTransformer.enableScaling(true);
-        viewPager.setAdapter(mCardAdapter);
-        viewPager.setPageTransformer(false, mCardShadowTransformer);
-        viewPager.setOffscreenPageLimit(3);
-        if (clickLocation == true) {
+        mPagerAdapter.setData(list);
+        viewPager.setAdapter(mPagerAdapter);
+
+
+        if (clickLocation) {
 
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))

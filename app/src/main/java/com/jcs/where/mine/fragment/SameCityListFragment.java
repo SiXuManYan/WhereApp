@@ -3,13 +3,15 @@ package com.jcs.where.mine.fragment;
 import android.content.Context;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CollectedResponse;
-import com.jcs.where.api.response.NewsResponse;
-import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
@@ -17,7 +19,6 @@ import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.mine.adapter.SameCityListAdapter;
 import com.jcs.where.mine.model.CollectionListModel;
 import com.jcs.where.mine.view_type.SameCityType;
-import com.jcs.where.news.NewsVideoActivity;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
@@ -26,9 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import cn.jzvd.Jzvd;
 
 /**
@@ -41,7 +39,6 @@ public class SameCityListFragment extends BaseFragment {
     private SwipeRefreshLayout mSwipeLayout;
     private SameCityListAdapter mAdapter;
     private CollectionListModel mModel;
-    private PageResponse<CollectedResponse> mPage;
     private boolean mIsFirst = false;
     private boolean mIsLoaded = false;
 
@@ -76,7 +73,7 @@ public class SameCityListFragment extends BaseFragment {
 
     private void getCollectionSameCityList() {
 
-        mModel.getCollectionSameCity(new BaseObserver<PageResponse<CollectedResponse>>() {
+        mModel.getCollectionSameCity(new BaseObserver<List<CollectedResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -85,14 +82,13 @@ public class SameCityListFragment extends BaseFragment {
             }
 
             @Override
-            public void onSuccess(@NotNull PageResponse<CollectedResponse> pageResponse) {
+            public void onSuccess(@NotNull List<CollectedResponse> pageResponse) {
                 stopLoading();
                 mSwipeLayout.setRefreshing(false);
-                mPage = pageResponse;
                 mAdapter.getData().clear();
-                List<CollectedResponse> data = pageResponse.getData();
-                if (data.size() > 0) {
-                    mAdapter.addData(data);
+
+                if (pageResponse.size() > 0) {
+                    mAdapter.addData(pageResponse);
                 } else {
                     mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
                 }

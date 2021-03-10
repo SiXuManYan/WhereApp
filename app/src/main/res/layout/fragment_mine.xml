@@ -124,6 +124,7 @@
                     android:id="@+id/pointLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_51"
+                    android:layout_marginTop="@dimen/dp_4"
                     android:background="@color/white"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15">

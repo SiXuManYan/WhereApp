@@ -104,7 +104,6 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.afterSalesLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.managerAddressLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.footprintLayout).setOnClickListener(this::onFootprintClicked);
-        view.findViewById(R.id.inviteLayout).setOnClickListener(this::onIntegralIvClicked);
         view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::onAboutClick);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this::onMerchantSettledClicked);
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);

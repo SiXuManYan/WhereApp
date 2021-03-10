@@ -601,41 +601,6 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/inviteLayout"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/dp_10"
-                            android:paddingBottom="@dimen/dp_10">
-
-                            <ImageView
-                                android:layout_width="@dimen/dp_27"
-                                android:layout_height="@dimen/dp_27"
-                                android:scaleType="centerInside"
-                                android:src="@mipmap/ic_invite_with_gift" />
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="@dimen/dp_5"
-                                android:text="@string/get_points"
-                                android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
 
                         <LinearLayout
                             android:id="@+id/setting_ll"
@@ -663,20 +628,7 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
                     </LinearLayout>
 
 

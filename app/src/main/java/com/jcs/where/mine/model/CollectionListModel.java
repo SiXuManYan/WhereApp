@@ -15,7 +15,7 @@ public class CollectionListModel extends BaseModel {
     /**
      * 获得收藏页面-收藏的视频列表
      */
-    public void getCollectionVideo(BaseObserver<PageResponse<CollectedResponse>> observer) {
+    public void getCollectionVideo(BaseObserver<List<CollectedResponse>> observer) {
         dealResponse(mRetrofit.getCollectionVideo(), observer);
     }
 

@@ -560,7 +560,7 @@ public interface RetrofitApi {
      * type=3 表示 视频
      */
     @GET("commonapi/v2/collects?type=3")
-    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionVideo();
+    Observable<JcsResponse<List<CollectedResponse>>> getCollectionVideo();
 
     /**
      * 获得收藏页面-收藏的文章列表

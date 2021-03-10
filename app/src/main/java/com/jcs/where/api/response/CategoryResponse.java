@@ -17,7 +17,7 @@ public class CategoryResponse extends BaseNode implements Serializable {
      * icon : https://whereoss.oss-cn-beijing.aliyuncs.com/images/igxYypaTnQuhy3U15KHBGF7SV7Sul2br6vhDoD7y.png
      */
 
-    private String id;
+    private String id = "0";
     private String name;
     /**
      * 根据业务逻辑，添加本地字段

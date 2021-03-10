@@ -80,6 +80,7 @@ public class VideoListFragment extends BaseFragment {
             @Override
             public void onSuccess(@NotNull List<CollectedResponse> pageResponse) {
                 stopLoading();
+
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
                 if (pageResponse != null && pageResponse.size() > 0) {

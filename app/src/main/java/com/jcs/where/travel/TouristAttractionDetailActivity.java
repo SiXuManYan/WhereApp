@@ -150,6 +150,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
                 mJcsTitle.setMiddleTitle("");
             }
         });
+
         mJcsTitle.getBackground().setAlpha(0);//透明
         nameTv = findViewById(R.id.tv_name);
         scoreTv = findViewById(R.id.tv_score);

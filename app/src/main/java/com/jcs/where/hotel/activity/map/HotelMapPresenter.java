@@ -7,6 +7,8 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.utils.Constant;
 
+import java.util.List;
+
 /**
  * Created by Wangsw  2021/3/9 16:24.
  */
@@ -22,12 +24,12 @@ public class HotelMapPresenter extends BaseMvpPresenter {
 
     public void getMapData(String extraPrice, String extraStar, String extraCityId, String useInputText) {
 
-        requestApi(mRetrofit.getHotelMapList(1,String.valueOf(Constant.LAT), String.valueOf(Constant.LNG),
-                extraCityId, useInputText, extraStar, extraPrice), new BaseMvpObserver<PageResponse<HotelMapListBean>>(view) {
+        requestApi(mRetrofit.getHotelMapList(String.valueOf(Constant.LAT), String.valueOf(Constant.LNG),
+                extraCityId, useInputText, extraStar, extraPrice), new BaseMvpObserver<List<HotelMapListBean>>(view) {
                     @Override
-                    protected void onSuccess(PageResponse<HotelMapListBean> response) {
+                    protected void onSuccess(List<HotelMapListBean> response) {
 
-                        view.getMapDataSuccess(response.getData());
+                        view.getMapDataSuccess(response);
                     }
 
                     @Override

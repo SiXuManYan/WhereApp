@@ -710,12 +710,11 @@ public interface RetrofitApi {
      * 获取酒店地图列表
      */
     @GET("hotelapi/v2/map/hotels")
-    Observable<JcsResponse<PageResponse<HotelMapListBean>>> getHotelMapList(
-            @Query("page") int page,
+    Observable<JcsResponse<List<HotelMapListBean>>> getHotelMapList(
             @Query("lat") String lat,
             @Query("lng") String lng,
             @Query("area_id") String area_id,
-            @Query("search_input") String search_input,
+            @Query("search_input") @Nullable String search_input,
             @Query("star_level") @Nullable String star_level,
             @Query("price_range") @Nullable String price_range
     );

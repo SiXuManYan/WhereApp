@@ -93,10 +93,7 @@ public class MineFragment extends BaseFragment {
         mLikeLayout = view.findViewById(R.id.collectionLayout);
         mPointTv = view.findViewById(R.id.point_tv);
 
-        view.findViewById(R.id.toSeeBalanceTv).setOnClickListener(this::toShowComing);
-        view.findViewById(R.id.mineBalanceLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.pointLayout).setOnClickListener(this::onIntegralIvClicked);
-        view.findViewById(R.id.couponLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.toSeeAllOrderTv).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.unpaidLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.bookedLayout).setOnClickListener(this::toShowComing);

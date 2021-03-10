@@ -90,6 +90,11 @@ public class HotelMapViewPagerAdapter extends PagerAdapter {
         // 图片
         ImageView image_iv = view.findViewById(R.id.image_iv);
 
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) image_iv.getLayoutParams();
+        layoutParams.weight = 25;
+        image_iv.setLayoutParams(layoutParams);
+
+
         loadImage(data, image_iv);
 
         // 标题

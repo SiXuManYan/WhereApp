@@ -567,7 +567,7 @@ public interface RetrofitApi {
      * type=2 表示 文章
      */
     @GET("commonapi/v2/collects?type=2")
-    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionArticle();
+    Observable<JcsResponse<List<CollectedResponse>>> getCollectionArticle();
 
     /**
      * 获得收藏页面-收藏的同城信息

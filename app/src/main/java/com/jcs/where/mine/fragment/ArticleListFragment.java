@@ -3,6 +3,10 @@ package com.jcs.where.mine.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -10,7 +14,6 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CollectedResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.NewsResponse;
-import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.mine.adapter.ArticleListAdapter;
@@ -23,9 +26,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import cn.jzvd.Jzvd;
 
 /**
@@ -43,7 +43,6 @@ public class ArticleListFragment extends BaseFragment {
     private ArticleListAdapter mAdapter;
     private NewsChannelResponse mTabResponse;
     private CollectionListModel mModel;
-    private PageResponse<CollectedResponse> mPage;
     private boolean mIsFirst = false;
     private boolean mIsLoaded = false;
     private String mInput;
@@ -102,28 +101,26 @@ public class ArticleListFragment extends BaseFragment {
     }
 
     private void getArticleList() {
-            mModel.getCollectionArticle(new BaseObserver<PageResponse<CollectedResponse>>() {
-                @Override
-                protected void onError(ErrorResponse errorResponse) {
-                    stopLoading();
-                    showNetError(errorResponse);
-                    mSwipeLayout.setRefreshing(false);
-                }
+        mModel.getCollectionArticle(new BaseObserver<List<CollectedResponse>>() {
+            @Override
+            protected void onError(ErrorResponse errorResponse) {
+                stopLoading();
+                showNetError(errorResponse);
+                mSwipeLayout.setRefreshing(false);
+            }
 
-                @Override
-                public void onSuccess(@NotNull PageResponse<CollectedResponse> pageResponse) {
-                    stopLoading();
-                    mSwipeLayout.setRefreshing(false);
-                    mPage = pageResponse;
-                    mAdapter.getData().clear();
-                    List<CollectedResponse> data = pageResponse.getData();
-                    if (data.size() > 0) {
-                        mAdapter.addData(data);
-                    } else {
-                        mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
-                    }
+            @Override
+            public void onSuccess(@NotNull List<CollectedResponse> pageResponse) {
+                stopLoading();
+                mSwipeLayout.setRefreshing(false);
+                mAdapter.getData().clear();
+                if (pageResponse != null && pageResponse.size() > 0) {
+                    mAdapter.addData(pageResponse);
+                } else {
+                    mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
                 }
-            });
+            }
+        });
 
     }
 

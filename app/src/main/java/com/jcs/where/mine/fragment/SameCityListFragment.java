@@ -87,7 +87,7 @@ public class SameCityListFragment extends BaseFragment {
                 mSwipeLayout.setRefreshing(false);
                 mAdapter.getData().clear();
 
-                if (pageResponse.size() > 0) {
+                if (pageResponse != null && pageResponse.size() > 0) {
                     mAdapter.addData(pageResponse);
                 } else {
                     mAdapter.setEmptyView(R.layout.view_empty_data_brvah);

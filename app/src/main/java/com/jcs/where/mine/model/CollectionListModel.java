@@ -23,7 +23,7 @@ public class CollectionListModel extends BaseModel {
     /**
      * 获得收藏页面-收藏的文章列表
      */
-    public void getCollectionArticle(BaseObserver<PageResponse<CollectedResponse>> observer) {
+    public void getCollectionArticle(BaseObserver<List<CollectedResponse>> observer) {
         dealResponse(mRetrofit.getCollectionArticle(), observer);
     }
 

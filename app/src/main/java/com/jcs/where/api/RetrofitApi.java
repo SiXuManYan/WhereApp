@@ -553,6 +553,12 @@ public interface RetrofitApi {
     Observable<JcsResponse<List<String>>> getHotNewsListAtSearch();
 
     /**
+     * 获得搜索页面-综合服务的热门搜索
+     */
+    @GET("generalapi/v2/hot/searches")
+    Observable<JcsResponse<List<String>>> getHotConvenienceServiceListAtSearch();
+
+    /**
      * 获得收藏页面-收藏的视频列表
      * type=3 表示 视频
      */

@@ -36,6 +36,10 @@ public class SearchModel extends BaseModel {
         dealResponse(mRetrofit.getHotNewsListAtSearch(), observer);
     }
 
+    public void getHotConvenienceServiceListAtSearch(BaseObserver<List<String>> observer) {
+        dealResponse(mRetrofit.getHotConvenienceServiceListAtSearch(), observer);
+    }
+
     /**
      * @param categoryId 分类id集合
      * @param search     查询字段

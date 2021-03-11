@@ -1,8 +1,10 @@
 package com.jcs.where.convenience.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -18,8 +20,11 @@ import com.jcs.where.convenience.adapter.CityAdapter;
 import com.jcs.where.convenience.model.ConvenienceServiceModel;
 import com.jcs.where.government.adapter.MapListFragmentAdapter;
 import com.jcs.where.government.fragment.MechanismListFragment;
+import com.jcs.where.search.SearchActivity;
+import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.JsonUtil;
+import com.jcs.where.utils.RequestResultCode;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.view.popup.PopupConstraintLayout;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
@@ -72,9 +77,13 @@ public class ConvenienceServiceActivity extends BaseActivity {
     private List<CityResponse> mCities;
     private CityResponse mCurrentCityResponse;
     private int mDefaultIndex;
+    private View mSearchView;
+    private EditText mSearchEt;
 
     @Override
     protected void initView() {
+        mSearchView = findViewById(R.id.searchEtView);
+        mSearchEt = findViewById(R.id.searchEt);
         mCityTv = findViewById(R.id.cityTv);
         mPopupLayout = findViewById(R.id.topPopupLayout);
         mPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
@@ -294,6 +303,12 @@ public class ConvenienceServiceActivity extends BaseActivity {
     protected void bindListener() {
         mCityAdapter.setOnItemClickListener(this::onCityItemClicked);
         mCityTv.setOnClickListener(this::onCityTvClicked);
+        mSearchView.setOnClickListener(this::onSearchViewClicked);
+        mSearchEt.setOnClickListener(this::onSearchViewClicked);
+    }
+
+    private void onSearchViewClicked(View view) {
+        SearchActivity.goTo(this, "", mCategoryId, SearchTag.CONVENIENCE_SERVICE, RequestResultCode.CONVENIENCE_SERVICE_TO_SEARCH);
     }
 
     private void onCityTvClicked(View view) {

@@ -21,6 +21,7 @@ import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.government.activity.ConvenienceServiceSearchActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.watcher.AfterInputWatcher;
 import com.jcs.where.news.NewsSearchResultActivity;
@@ -46,9 +47,10 @@ public class SearchActivity extends BaseActivity {
 
     public static final String EXT_SELECT_SEARCH = "select_search";
     private static final String EXT_CITY_ID = "cityId";
+    private static final String EXT_CATEGORY_ID = "categoryId";
     private static final String EXT_SEARCH_TAG = "searchTag";
     private TextView cancelTv;
-    private EditText searchEt;
+    private EditText mSearchEt;
     private View topBg;
     private RecyclerView searchHistoryRv, searchHotRv;
     private HotSearchAdapter hotSearchAdapter;
@@ -58,6 +60,7 @@ public class SearchActivity extends BaseActivity {
     private SearchTag mSearchTag;
     private String mAreaId;
     private SearchModel mModel;
+    private String mCategoryId = null;
 
     public static void goTo(Activity activity, String cityId, SearchTag searchTag, int requestCode) {
         Intent intent = new Intent(activity, SearchActivity.class);
@@ -67,10 +70,19 @@ public class SearchActivity extends BaseActivity {
         activity.startActivityForResult(intent, requestCode);
     }
 
+    public static void goTo(Activity activity, String cityId, String categoryId, SearchTag searchTag, int requestCode) {
+        Intent intent = new Intent(activity, SearchActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(EXT_CITY_ID, cityId);
+        intent.putExtra(EXT_CATEGORY_ID, categoryId);
+        intent.putExtra(EXT_SEARCH_TAG, searchTag);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
     @Override
     protected void initView() {
         cancelTv = findViewById(R.id.tv_cancel);
-        searchEt = findViewById(R.id.et_search);
+        mSearchEt = findViewById(R.id.et_search);
         topBg = findViewById(R.id.topBg);
         setMarginTopForStatusBar(topBg);
         searchHistoryRv = findViewById(R.id.rv_searchhistory1);
@@ -109,6 +121,7 @@ public class SearchActivity extends BaseActivity {
         Intent intent = getIntent();
         mSearchTag = (SearchTag) intent.getSerializableExtra(EXT_SEARCH_TAG);
         mAreaId = intent.getStringExtra(EXT_CITY_ID);
+        mCategoryId = intent.getStringExtra(EXT_CATEGORY_ID);
         // 根据SearchTag，设置 EditText#hint
         deployEtHint();
 
@@ -122,7 +135,6 @@ public class SearchActivity extends BaseActivity {
         recommendSearchRv.setLayoutManager(linearLayoutManager);
         initSearchHistory();
 
-        showLoading();
         getHotSearchFromNet();
     }
 
@@ -130,11 +142,12 @@ public class SearchActivity extends BaseActivity {
      * 获得热门搜索
      * 目前搜索页面支持搜索酒店和新闻
      * 根据tag获得不同的热门搜索内容
-     *
+     * <p>
      * 企业黄页也是这个页面搜索
      */
     private void getHotSearchFromNet() {
         if (mSearchTag == SearchTag.HOTEL) {
+            showLoading();
             mModel.getHotHotelList(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
@@ -152,6 +165,7 @@ public class SearchActivity extends BaseActivity {
         }
 
         if (mSearchTag == SearchTag.NEWS) {
+            showLoading();
             mModel.getHotNewsList(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
@@ -167,11 +181,24 @@ public class SearchActivity extends BaseActivity {
                 }
             });
         }
-        if (mSearchTag == SearchTag.YELLOW_PAGE) {
-            stopLoading();
+
+        if (mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
+            showLoading();
+            mModel.getHotConvenienceServiceListAtSearch(new BaseObserver<List<String>>() {
+                @Override
+                protected void onError(ErrorResponse errorResponse) {
+                    stopLoading();
+                    showNetError(errorResponse);
+                }
+
+                @Override
+                protected void onSuccess(List<String> response) {
+                    stopLoading();
+                    hotSearchAdapter.getData().clear();
+                    hotSearchAdapter.addData(response);
+                }
+            });
         }
-
-
     }
 
     /**
@@ -179,24 +206,29 @@ public class SearchActivity extends BaseActivity {
      */
     private void deployEtHint() {
         if (mSearchTag == SearchTag.HOTEL) {
-            searchEt.setHint(R.string.search_hotel_name);
+            mSearchEt.setHint(R.string.search_hotel_name);
         }
         if (mSearchTag == SearchTag.NEWS) {
-            searchEt.setHint(R.string.search_news_keyword);
+            mSearchEt.setHint(R.string.search_news_keyword);
         }
         if (mSearchTag == SearchTag.YELLOW_PAGE) {
-            searchEt.setHint(R.string.search_keyword);
+            mSearchEt.setHint(R.string.search_keyword);
+        }
+        if (mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
+            mSearchEt.setHint(R.string.please_input_merchant_or_goods);
         }
     }
 
     @Override
     protected void bindListener() {
         cancelTv.setOnClickListener(view -> finish());
-        searchEt.setOnEditorActionListener(this::onEditorActionClicked);
-        searchEt.addTextChangedListener(new AfterInputWatcher() {
+        mSearchEt.setOnEditorActionListener(this::onEditorActionClicked);
+        mSearchEt.addTextChangedListener(new AfterInputWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                recommendSearch(s.toString(), s.toString().length());
+                if (mSearchTag != SearchTag.CONVENIENCE_SERVICE) {
+                    recommendSearch(s.toString(), s.toString().length());
+                }
             }
         });
 
@@ -237,6 +269,10 @@ public class SearchActivity extends BaseActivity {
         if (mSearchTag == SearchTag.YELLOW_PAGE) {
             toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(item.getId())));
         }
+
+        if (mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
+            toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(item.getId())));
+        }
     }
 
     private void onClearClicked(View view) {
@@ -251,10 +287,14 @@ public class SearchActivity extends BaseActivity {
     private boolean onEditorActionClicked(TextView textView, int actionId, KeyEvent keyEvent) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             //点击搜索的时候隐藏软键盘
-            hideKeyboard(searchEt);
-            SearchHistoryUtils.saveSearchHistory(SearchActivity.this, mSearchTag, searchEt.getText().toString());
+            hideKeyboard(mSearchEt);
+            SearchHistoryUtils.saveSearchHistory(SearchActivity.this, mSearchTag, mSearchEt.getText().toString());
             initSearchHistory();
-            searchEt.clearFocus();
+            mSearchEt.clearFocus();
+
+            if (mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
+                ConvenienceServiceSearchActivity.goTo(this,mCategoryId, mSearchEt.getText().toString());
+            }
             return true;
         }
 
@@ -278,7 +318,7 @@ public class SearchActivity extends BaseActivity {
                 searchHotel(text);
             }
 
-            if (mSearchTag == SearchTag.YELLOW_PAGE) {
+            if (mSearchTag == SearchTag.YELLOW_PAGE || mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
                 searchYellowPage(text);
             }
 

@@ -103,6 +103,10 @@ public class MechanismListFragment extends BaseFragment {
             mCategoryResponse = (CategoryResponse) arguments.getSerializable(KEY_CATEGORY_RESPONSE);
             mCurrentCategoryId = String.valueOf(mCategoryResponse.getId());
         }
+
+        if (mIsFirstFragment) {
+            getNetData();
+        }
     }
 
     @Override
@@ -127,7 +131,7 @@ public class MechanismListFragment extends BaseFragment {
      * 获得当前分类下的子分类
      */
     private void getChildCategory() {
-        mModel.getChildCategories(mCategoryResponse.getType(), mCategoryResponse.getId(), new BaseObserver<List<CategoryResponse>>() {
+        mModel.getChildCategories(3, mCategoryResponse.getId(), new BaseObserver<List<CategoryResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 showNetError(errorResponse);

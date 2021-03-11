@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * create by zyf on 2021/1/11 12:06 下午
+ * @deprecated
  */
 public class HomeYouLikeAdapter extends BaseQuickAdapter<HotelResponse, BaseViewHolder> {
     private String mCommentNumPrompt;

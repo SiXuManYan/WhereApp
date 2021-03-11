@@ -32,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * create by zyf on 2020/12/11 9:11 PM
  */
 public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseViewHolder> implements UpFetchModule, LoadMoreModule {
+
     /**
      * 酒店订单状态
      */
@@ -77,6 +78,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
      * @param context
      */
     private void initHotelOrderHolder(Context context) {
+
         mHotelOrderHolder = new HashMap<>();
         mHotelOrderHolder.put(1, new OrderStatusHolder(1, context.getString(R.string.mine_unpaid), context.getString(R.string.cancel_order), CancelOrderActivity.class, context.getString(R.string.to_pay), HotelPayActivity.class));
         mHotelOrderHolder.put(2, new OrderStatusHolder(2, context.getString(R.string.mine_booked), context.getString(R.string.to_refund), ApplyRefundActivity.class, context.getString(R.string.to_use), HotelOrderDetailActivity.class));
@@ -127,24 +129,26 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder baseViewHolder, OrderListResponse orderListResponse) {
+    protected void convert(@NotNull BaseViewHolder holder, OrderListResponse orderListResponse) {
         List<String> image = orderListResponse.getImage();
-        ImageView hotelIconIv = baseViewHolder.findView(R.id.hotelIcon);
-        if (hotelIconIv != null && image != null && image.size() > 0) {
+
+        ImageView hotelIconIv = holder.getView(R.id.hotelIcon);
+        if (image != null && image.size() > 0) {
             GlideUtil.load(getContext(), image.get(0), hotelIconIv);
         }
 
-        baseViewHolder.setText(R.id.orderTitleTv, orderListResponse.getTitle());
+        holder.setText(R.id.orderTitleTv, orderListResponse.getTitle());
         Integer orderStatus = orderListResponse.getModelData().getOrderStatus();
         OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         if (orderStatusHolder != null) {
-            baseViewHolder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
-            baseViewHolder.setText(R.id.rightToTv, orderStatusHolder.rightText);
+
+            holder.setText(R.id.orderTypeTv, orderStatusHolder.statusText);
+            holder.setText(R.id.rightToTv, orderStatusHolder.rightText);
             if (orderStatusHolder.leftText.equals("")) {
-                baseViewHolder.setGone(R.id.leftToTv, true);
+                holder.setGone(R.id.leftToTv, true);
             } else {
-                baseViewHolder.setGone(R.id.leftToTv, false);
-                baseViewHolder.setText(R.id.leftToTv, orderStatusHolder.leftText);
+                holder.setGone(R.id.leftToTv, false);
+                holder.setText(R.id.leftToTv, orderStatusHolder.leftText);
             }
         }
 
@@ -152,13 +156,20 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         OrderListResponse.ModelDataDTO modelData = orderListResponse.getModelData();
         switch (orderListResponse.getOrderType()) {
             case ORDER_TYPE_HOTEL:
-                baseViewHolder.setText(R.id.hotelDescTv, modelData.getRoomNum() + mRoomText + "，" + modelData.getRoomType());
-                baseViewHolder.setText(R.id.orderDateTv, modelData.getStartDate() + "-" + modelData.getEndDate());
-                baseViewHolder.setText(R.id.priceTv, String.format(mRoomPriceText, modelData.getRoomPrice()));
+                holder.setText(R.id.hotelDescTv, modelData.getRoomNum() + mRoomText + "，" + modelData.getRoomType());
+                holder.setText(R.id.orderDateTv, modelData.getStartDate() + "-" + modelData.getEndDate());
+                holder.setText(R.id.priceTv, String.format(mRoomPriceText, modelData.getRoomPrice()));
                 break;
             case ORDER_TYPE_DINE:
+
+
                 break;
             case ORDER_TYPE_TAKEAWAY:
+
+
+                break;
+
+            default:
                 break;
         }
 

@@ -464,6 +464,7 @@
 	<string name="grade_2">Fabulous</string>
 	<string name="grade_3">Exceptional</string>
 	<string name="comment_count_format">%1$s comments</string>
+	<string name="comment_count_format2">(%1$s)</string>
     <string name="recommend_home">Recommend</string>
     <string name="distance_format">%1$s&#160;km</string>
 

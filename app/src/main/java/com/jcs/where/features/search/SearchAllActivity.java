@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -56,6 +57,7 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
     @Override
     protected void initView() {
         BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.parent_ll));
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         recycler = findViewById(R.id.recycler);
         search_aet = findViewById(R.id.search_aet);
         cancel_tv = findViewById(R.id.cancel_tv);
@@ -128,7 +130,6 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
         }
 
     }
-
 
 
 }

@@ -68,7 +68,7 @@ public class HomeRecommendResponse implements MultiItemEntity {
     public String address = "";
     public String lat = "";
     public String lng = "";
-    public String price = "";
+    public String price = "0";
 
     /**
      * 剩余房间数

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -79,7 +80,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
 
         float grade = data.grade;
         if (grade < 3.0) {
-            star_view.setVisibility(View.INVISIBLE);
+            star_view.setVisibility(View.GONE);
             score_tv.setVisibility(View.GONE);
         } else {
             star_view.setVisibility(View.VISIBLE);
@@ -89,7 +90,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         }
 
         // 评论数
-        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num));
+        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format2, data.comment_num));
 
         // 距离 地点
         holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
@@ -199,8 +200,13 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         initTag(data, tag_ll);
 
         // 价格
-        holder.setText(R.id.price_tv, StringUtils.getString(R.string.price_unit_format, data.price));
-
+        TextView price_tv = holder.getView(R.id.price_tv);
+        SpanUtils.with(price_tv)
+                .append(StringUtils.getString(R.string.price_unit))
+                .setFontSize(12, true)
+                .append(data.price)
+                .setFontSize(16, true)
+                .create();
     }
 
     /**

@@ -44,6 +44,7 @@ public class OrderListFragment extends BaseFragment {
     private OrderListAdapter mAdapter;
     private boolean isFirstLoad = true;
     private OrderModel mModel;
+    private EmptyView emptyView;
 
     public OrderListFragment(OrderType orderType) {
         this.mOrderType = orderType;
@@ -58,6 +59,9 @@ public class OrderListFragment extends BaseFragment {
     @Override
     protected void initData() {
         mModel = new OrderModel();
+        emptyView = new EmptyView(getActivity());
+        emptyView.showEmpty(R.mipmap.ic_empty_order,R.string.empty_order_list);
+
         mAdapter = new OrderListAdapter(getContext());
         mAdapter.addChildClickViewIds(R.id.rightToTv, R.id.leftToTv);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -68,9 +72,8 @@ public class OrderListFragment extends BaseFragment {
             }
         });
         mRecycler.setAdapter(mAdapter);
-        EmptyView emptyView = new EmptyView(getContext());
-        emptyView.showEmpty(R.mipmap.ic_empty_order,R.string.empty_order_list);
-        mAdapter.setEmptyView(emptyView);
+        mAdapter.setEmptyView(R.layout.view_empty);
+
     }
 
     @Override
@@ -91,8 +94,8 @@ public class OrderListFragment extends BaseFragment {
             }
         });
         //不自动加载
-        mAdapter.getLoadMoreModule().setAutoLoadMore(false);
-        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(true);
 
         mAdapter.setOnItemChildClickListener(this::onOrderItemChildClicked);
 
@@ -174,10 +177,10 @@ public class OrderListFragment extends BaseFragment {
             public void onSuccess(@NonNull PageResponse<OrderListResponse> pageResponse) {
                 mAdapter.getData().clear();
                 if (pageResponse.getData().size() > 0) {
-                    mAdapter.addData(pageResponse.getData());
+                    mAdapter.setNewInstance(pageResponse.getData());
                 } else {
                     mAdapter.notifyDataSetChanged();
-                    mAdapter.setEmptyView(R.layout.view_empty_data_brvah_mechanism);
+
                 }
                 stopRefresh();
                 mAdapter.getLoadMoreModule().loadMoreComplete();

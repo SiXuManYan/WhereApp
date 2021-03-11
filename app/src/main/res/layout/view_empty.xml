@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
-        tools:src="@mipmap/ic_empty_network_error" />
+        android:src="@mipmap/ic_empty_network_error" />
 
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_marginTop="@dimen/dp_18"
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_14"
-        tools:text="@string/empty_network_error" />
+        android:text="@string/empty_network_error" />
 
     <TextView
         android:id="@+id/empty_hint_tv"

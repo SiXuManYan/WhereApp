@@ -84,16 +84,26 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        lazyLoad();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         changeStatusTextColor();
         isViewVisible = isVisibleToUser;
 
+        lazyLoad();
+
+    }
+
+    private void lazyLoad() {
         if (!hasLoad && isViewVisible && isViewCreated) {
             hasLoad = true;
             loadOnVisible();
         }
-
     }
 
 

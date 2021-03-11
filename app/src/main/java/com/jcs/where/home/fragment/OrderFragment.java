@@ -26,6 +26,7 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.home.watcher.EmptyTextWatcher;
 import com.jcs.where.model.OrderModel;
+import com.jcs.where.utils.Constant;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -73,7 +74,7 @@ public class OrderFragment extends BaseFragment {
         mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.WaitForComment));
         mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.AfterSale));
 
-        mAdapter = new OrderAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mAdapter = new OrderAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT);
 
         deployView();
 
@@ -146,7 +147,7 @@ public class OrderFragment extends BaseFragment {
             @Override
             protected void onEtEmpty() {
                 OrderListFragment orderListFragment = getCurrentOrderListFragment();
-                orderListFragment.getOrderByType();
+                orderListFragment.getOrder("", Constant.DEFAULT_FIRST_PAGE);
             }
         });
 
@@ -157,14 +158,13 @@ public class OrderFragment extends BaseFragment {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             String input = textView.getText().toString();
             OrderListFragment orderListFragment = getCurrentOrderListFragment();
-            orderListFragment.getOrderByType(input);
+            orderListFragment.getOrder(input, Constant.DEFAULT_FIRST_PAGE);
             return true;
         }
         return false;
     }
 
     private void onToLoginClicked(View view) {
-//        toActivity(LoginActivity.class);
         startActivityAfterLogin(LoginActivity.class);
     }
 

@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -28,9 +29,11 @@ import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.hotel.activity.HotelPayActivity;
 import com.jcs.where.model.OrderModel;
-import com.jcs.where.view.empty.EmptyView;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 
@@ -46,7 +49,11 @@ public class OrderListFragment extends BaseFragment {
     private OrderListAdapter mAdapter;
     private boolean isFirstLoad = true;
     private OrderModel mModel;
-    private EmptyView emptyView;
+
+    private View emptyView;
+
+    private int page = Constant.DEFAULT_FIRST_PAGE;
+    private String searchInput = "";
 
     public OrderListFragment(OrderType orderType) {
         this.mOrderType = orderType;
@@ -56,20 +63,27 @@ public class OrderListFragment extends BaseFragment {
     protected void initView(View view) {
         mRecycler = view.findViewById(R.id.orderRecycler);
         mSwipeRefresh = view.findViewById(R.id.swipeLayout);
+
+        // empty
+        emptyView = getLayoutInflater().inflate(R.layout.view_empty, null);
+        ImageView empty_iv = emptyView.findViewById(R.id.empty_iv);
+        TextView empty_message_tv = emptyView.findViewById(R.id.empty_message_tv);
+        empty_iv.setImageResource(R.mipmap.ic_empty_order);
+        empty_message_tv.setText(R.string.empty_order_list);
+
     }
 
     @Override
     protected void initData() {
         mModel = new OrderModel();
 
-        View emptyView = getLayoutInflater().inflate(R.layout.view_empty, null);
-        ImageView empty_iv = emptyView.findViewById(R.id.empty_iv);
-        TextView empty_message_tv = emptyView.findViewById(R.id.empty_message_tv);
-        empty_iv.setImageResource(R.mipmap.ic_empty_order);
-        empty_message_tv.setText(R.string.empty_order_list);
 
         mAdapter = new OrderListAdapter(getContext());
         mAdapter.addChildClickViewIds(R.id.rightToTv, R.id.leftToTv);
+
+        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.addItemDecoration(new MarginTopDecoration() {
             @Override
@@ -78,51 +92,41 @@ public class OrderListFragment extends BaseFragment {
             }
         });
         mRecycler.setAdapter(mAdapter);
-        mAdapter.setEmptyView(emptyView);
-        mAdapter.setUseEmpty(true);
-
-        if (isFirstLoad) {
-            getOrderByType();
-            isFirstLoad = false;
-        }
 
     }
 
 
     @Override
+    protected void loadOnVisible() {
+        getOrder(searchInput, page);
+    }
+
+    @Override
     protected void bindListener() {
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getOrderByType();
-            }
+        mSwipeRefresh.setOnRefreshListener(() -> {
+            page = Constant.DEFAULT_FIRST_PAGE;
+            getOrder(searchInput, page);
         });
 
-        mAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mSwipeRefresh.setRefreshing(false);
-                mAdapter.getLoadMoreModule().setEnableLoadMore(true);
-                getOrderByType();
-            }
+        mAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
+            page++;
+            getOrder(searchInput, page);
         });
-        //不自动加载
-        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
-        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(true);
+
 
         mAdapter.setOnItemChildClickListener(this::onOrderItemChildClicked);
 
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@androidx.annotation.NonNull BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
-                HotelOrderDetailActivity.goTo(getContext(), String.valueOf(mAdapter.getItemId(position)));
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OrderListResponse data = mAdapter.getData().get(position);
+            HotelOrderDetailActivity.goTo(getContext(), String.valueOf(data.getId()));
         });
     }
 
-    private void onOrderItemChildClicked(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+    private void onOrderItemChildClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         int id = view.getId();
-        long orderId = mAdapter.getItemId(position);
+
+        OrderListResponse data = mAdapter.getData().get(position);
+
         Context context = getContext();
         if (context == null) {
             return;
@@ -144,7 +148,7 @@ public class OrderListFragment extends BaseFragment {
                     Integer modelId = mAdapter.getData().get(position).getModelId();
                     HotelDetailActivity.goTo(context, modelId, startBean, endBean, 1, "", "", 1);
                 } else {
-                    toActivity(toRightClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                    toActivity(toRightClass, new IntentEntry("id", String.valueOf(data.getId())));
                 }
             }
         }
@@ -160,35 +164,57 @@ public class OrderListFragment extends BaseFragment {
                     CancelOrderDialog cancelOrderDialog = new CancelOrderDialog();
                     cancelOrderDialog.show(getChildFragmentManager());
                 } else {
-                    toActivity(toLeftClass, new IntentEntry("id", String.valueOf(mAdapter.getItemId(position))));
+                    toActivity(toLeftClass, new IntentEntry("id", String.valueOf(data.getId())));
                 }
             }
         }
     }
 
 
-    public void getOrderByType() {
-        getOrderByType("");
-    }
+    /**
+     * 获取订单列表
+     *
+     * @param searchInput 搜索关键字，不传代表全集
+     * @param page        页码
+     */
+    public void getOrder(String searchInput, int page) {
+        this.searchInput = searchInput;
 
-    public void getOrderByType(String keyword) {
-        mModel.getOrderList(mOrderType.type, keyword, new BaseObserver<PageResponse<OrderListResponse>>() {
+        mModel.getOrderList(mOrderType.type, searchInput, page, new BaseObserver<PageResponse<OrderListResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopRefresh();
+                mAdapter.setEmptyView(emptyView);
             }
 
             @Override
-            public void onSuccess(@NonNull PageResponse<OrderListResponse> pageResponse) {
-                mAdapter.getData().clear();
-                if (pageResponse.getData().size() > 0) {
-                    mAdapter.setNewInstance(pageResponse.getData());
-                } else {
-                    mAdapter.notifyDataSetChanged();
-
-                }
+            public void onSuccess(@NonNull PageResponse<OrderListResponse> response) {
                 stopRefresh();
-                mAdapter.getLoadMoreModule().loadMoreComplete();
+                boolean isLastPage = response.getLastPage() == page;
+
+                List<OrderListResponse> data = response.getData();
+                BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+                if (data.isEmpty()) {
+                    if (page == Constant.DEFAULT_FIRST_PAGE) {
+                        loadMoreModule.loadMoreComplete();
+                        mAdapter.setEmptyView(emptyView);
+                    } else {
+                        loadMoreModule.loadMoreEnd();
+                    }
+                    return;
+                }
+                if (page == Constant.DEFAULT_FIRST_PAGE) {
+                    mAdapter.setNewInstance(data);
+                    loadMoreModule.checkDisableLoadMoreIfNotFullPage();
+                } else {
+                    mAdapter.addData(data);
+                    if (isLastPage) {
+                        loadMoreModule.loadMoreEnd();
+                    } else {
+                        loadMoreModule.loadMoreComplete();
+                    }
+                }
+
             }
         });
     }

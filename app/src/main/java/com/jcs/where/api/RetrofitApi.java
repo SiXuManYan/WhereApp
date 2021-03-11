@@ -243,7 +243,9 @@ public interface RetrofitApi {
      * 获得订单列表
      */
     @GET("commonapi/v2/orders")
-    Observable<JcsResponse<PageResponse<OrderListResponse>>> getOrderList(@Query("type") int type, @Query("search_input") String keyword);
+    Observable<JcsResponse<PageResponse<OrderListResponse>>> getOrderList(@Query("type") int type,
+                                                                          @Query("search_input") String keyword,
+                                                                          @Query("page") int page);
 
 
     @Headers("baseUrl:google/map")

@@ -481,5 +481,8 @@
     <string name="to_write_comment">Write Review</string>
 
 	<string name="hotel_not_exit">No current hotel found</string>
+    <string name="empty_network_error">Network problem</string>
+	<string name="empty_network_error_hint">Please check network settings or try again later</string>
+	<string name="empty_network_error_action">Try again</string>
 
 </resources>

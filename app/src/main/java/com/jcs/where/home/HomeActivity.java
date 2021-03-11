@@ -44,7 +44,7 @@ public class HomeActivity extends BaseActivity {
     private static final int REQUEST_PERMISSION_CODE = 1;
     FragmentManager fm;
     private List<HomeTabBean> mTabBeans;
-    private final ArrayList<Fragment> frList = new ArrayList<Fragment>();
+    private final ArrayList<Fragment> frList = new ArrayList<>();
     private TabLayout mTabLayout;
     private Long mTapTime = 0L;
 

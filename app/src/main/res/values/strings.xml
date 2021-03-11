@@ -478,5 +478,8 @@
     <string name="upgrade">更新</string>
     <string name="to_write_comment">写评论</string>
     <string name="hotel_not_exit">未查询到当前酒店</string>
+    <string name="empty_network_error">网络出问题了~</string>
+    <string name="empty_network_error_hint">请检查网络设置或稍后重试</string>
+    <string name="empty_network_error_action">再试一次</string>
 
 </resources>

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,6 @@ import com.jcs.where.travel.model.TouristAttractionDetailModel;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.ImagePreviewActivity;
 import com.jcs.where.utils.MobUtil;
-import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -61,7 +61,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
     // 屏幕高度
     public float Height;
     private XBanner banner;
-    private ObservableScrollView scrollView;
+    private NestedScrollView scrollView;
     private int like = 2;
     private int toolbarStatus = 0;
     private TextView nameTv, startTimeTv, scoreTv, commnetNumberTv, addressTv;
@@ -107,13 +107,15 @@ public class TouristAttractionDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         // TODO 写评论
-//        shareIv.setOnClickListener(view -> TravelWriteCommentActivity.goTo(TravelDetailActivity.this, getIntent().getIntExtra(EXT_ID, 0)));
         banner = findViewById(R.id.banner3);
         mToWriteCommentTv = findViewById(R.id.toWriteCommentTv);
+        commentRv = findViewById(R.id.rv_comment);
+        commentRv.setNestedScrollingEnabled(true);
         scrollView = findViewById(R.id.scrollView);
-        scrollView.setScrollViewListener((scrollView, x, y, oldx, oldy) -> {
+
+        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (scrollView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             float headHeight = banner.getMeasuredHeight() - mJcsTitle.getMeasuredHeight();
-            int alpha = (int) (((float) y / headHeight) * 255);
+            int alpha = (int) (((float) scrollY / headHeight) * 255);
             if (alpha >= 255) {
                 alpha = 255;
             }
@@ -151,6 +153,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
             }
         });
 
+
         mJcsTitle.getBackground().setAlpha(0);//透明
         nameTv = findViewById(R.id.tv_name);
         scoreTv = findViewById(R.id.tv_score);
@@ -183,7 +186,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         });
         introduceTv = findViewById(R.id.tv_introduce);
         noticeTv = findViewById(R.id.tv_notice);
-        commentRv = findViewById(R.id.rv_comment);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TouristAttractionDetailActivity.this,
                 LinearLayoutManager.VERTICAL, false) {
             @Override

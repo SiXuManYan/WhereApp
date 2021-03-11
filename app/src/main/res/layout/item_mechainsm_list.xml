@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_hoteldetail_location"
+        android:src="@mipmap/ic_location_grey"
         app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
         app:layout_constraintTop_toBottomOf="@id/mechanismTitleTv"
         android:layout_marginTop="@dimen/dp_10"/>

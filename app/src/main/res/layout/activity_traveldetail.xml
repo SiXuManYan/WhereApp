@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey_F5F5F5">
 
-    <com.jcs.where.view.ObservableScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -131,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_hoteldetail_location" />
+                            android:src="@mipmap/ic_hoteldetail_location" />
 
 
                         <TextView
@@ -287,37 +287,45 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
+                        android:paddingStart="@dimen/dp_15"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_15"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="10dp"
                             android:text="@string/customer_comments"
                             android:textColor="@color/black_333333"
                             android:textSize="14sp"
+                            android:layout_centerVertical="true"
                             android:textStyle="bold" />
+
 
 
                         <TextView
                             android:id="@+id/toWriteCommentTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
                             android:text="@string/to_write_comment"
                             android:textColor="@color/black_333333"
-                            android:textSize="12sp"
-                            android:layout_alignParentEnd="true"/>
+                            android:textSize="12sp" />
+
 
                         <ImageView
                             android:id="@+id/toWriteCommentIcon"
+                            android:layout_toStartOf="@+id/toWriteCommentTv"
                             android:layout_width="wrap_content"
+                            android:scaleType="centerInside"
+                            android:layout_marginEnd="@dimen/dp_7"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_edit_grey"
-                            android:layout_marginTop="10dp"
-                            android:layout_toStartOf="@id/toWriteCommentTv" />
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/ic_edit_grey" />
+
+
 
                     </RelativeLayout>
 
@@ -371,7 +379,7 @@
 
 
         </RelativeLayout>
-    </com.jcs.where.view.ObservableScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.jcs.where.view.RealtimeBlurView
         android:id="@+id/RealtimeBlurView"
@@ -386,7 +394,7 @@
         android:background="@color/white"
         app:backIcon="@drawable/ic_back_white"
         app:rightFirstIcon="@mipmap/ic_share_white"
-        app:rightSecondIcon="@mipmap/ic_like_white"/>
+        app:rightSecondIcon="@mipmap/ic_like_white" />
 
 
 </RelativeLayout>

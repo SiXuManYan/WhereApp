@@ -481,5 +481,6 @@
     <string name="empty_network_error">网络出问题了~</string>
     <string name="empty_network_error_hint">请检查网络设置或稍后重试</string>
     <string name="empty_network_error_action">再试一次</string>
+    <string name="empty_order_list">暂无任何订单~</string>
 
 </resources>

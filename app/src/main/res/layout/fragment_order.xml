@@ -85,8 +85,11 @@
         android:id="@+id/orderTabLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
+        app:tabIndicatorColor="@color/blue_72B9FF"
         app:tabMaxWidth="@dimen/dp_0"
+        app:tabIndicatorFullWidth="false"
         app:tabGravity="fill"
+        app:tabIndicator="@drawable/shape_blue_indicator"
         app:tabMode="scrollable"
         app:layout_constraintTop_toBottomOf="@id/topBg"/>
 

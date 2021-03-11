@@ -22,6 +22,7 @@ import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.hotel.activity.HotelPayActivity;
 import com.jcs.where.model.OrderModel;
+import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
@@ -67,7 +68,9 @@ public class OrderListFragment extends BaseFragment {
             }
         });
         mRecycler.setAdapter(mAdapter);
-
+        EmptyView emptyView = new EmptyView(getContext());
+        emptyView.showEmpty(R.mipmap.ic_empty_order,R.string.empty_order_list);
+        mAdapter.setEmptyView(emptyView);
     }
 
     @Override

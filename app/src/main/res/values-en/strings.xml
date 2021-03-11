@@ -484,5 +484,6 @@
     <string name="empty_network_error">Network problem</string>
 	<string name="empty_network_error_hint">Please check network settings or try again later</string>
 	<string name="empty_network_error_action">Try again</string>
+	<string name="empty_order_list">No orders yet ~</string>
 
 </resources>

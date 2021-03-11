@@ -3,19 +3,25 @@ package com.jcs.where.home.fragment;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.jcs.where.R;
-import com.jcs.where.home.adapter.OrderListAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.home.adapter.OrderListAdapter;
 import com.jcs.where.home.decoration.MarginTopDecoration;
 import com.jcs.where.home.dialog.CancelOrderDialog;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
@@ -26,10 +32,6 @@ import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -59,8 +61,12 @@ public class OrderListFragment extends BaseFragment {
     @Override
     protected void initData() {
         mModel = new OrderModel();
-        emptyView = new EmptyView(getActivity());
-        emptyView.showEmpty(R.mipmap.ic_empty_order,R.string.empty_order_list);
+
+        View emptyView = getLayoutInflater().inflate(R.layout.view_empty, null);
+        ImageView empty_iv = emptyView.findViewById(R.id.empty_iv);
+        TextView empty_message_tv = emptyView.findViewById(R.id.empty_message_tv);
+        empty_iv.setImageResource(R.mipmap.ic_empty_order);
+        empty_message_tv.setText(R.string.empty_order_list);
 
         mAdapter = new OrderListAdapter(getContext());
         mAdapter.addChildClickViewIds(R.id.rightToTv, R.id.leftToTv);
@@ -72,9 +78,16 @@ public class OrderListFragment extends BaseFragment {
             }
         });
         mRecycler.setAdapter(mAdapter);
-        mAdapter.setEmptyView(R.layout.view_empty);
+        mAdapter.setEmptyView(emptyView);
+        mAdapter.setUseEmpty(true);
+
+        if (isFirstLoad) {
+            getOrderByType();
+            isFirstLoad = false;
+        }
 
     }
+
 
     @Override
     protected void bindListener() {
@@ -153,14 +166,6 @@ public class OrderListFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (isFirstLoad) {
-            getOrderByType();
-            isFirstLoad = false;
-        }
-    }
 
     public void getOrderByType() {
         getOrderByType("");

@@ -48,7 +48,7 @@ public class EmptyView extends LinearLayout {
 
 
     private void initView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_empty, null, false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_empty, null);
         empty_iv = view.findViewById(R.id.empty_iv);
         empty_message_tv = view.findViewById(R.id.empty_message_tv);
         empty_hint_tv = view.findViewById(R.id.empty_hint_tv);

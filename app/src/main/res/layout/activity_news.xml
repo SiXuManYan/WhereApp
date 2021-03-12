@@ -17,7 +17,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="@dimen/dp_0"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/dp_30"
         android:background="@drawable/shape_news_tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +27,11 @@
         app:tabMode="scrollable"
         app:tabTextAppearance="@style/TabNormalText" />
 
-    <View
+    <ImageView
         android:id="@+id/addTabView"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_40"
-        android:background="@drawable/shape_news_add_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_30"
+        android:background="@mipmap/ic_tab_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tabLayout" />
 

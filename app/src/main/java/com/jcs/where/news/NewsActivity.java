@@ -3,6 +3,7 @@ package com.jcs.where.news;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -45,7 +46,7 @@ public class NewsActivity extends BaseActivity {
     private ViewPager mViewPager;
     private NewsViewPagerAdapter mNewsViewPagerAdapter;
     private NewsAtyModel mModel;
-    private View mAddTabView;
+    private ImageView mAddTabView;
     private List<NewsChannelResponse> mFollowChannels;
     private List<NewsChannelResponse> mMoreChannels;
     private List<NewsChannelResponse> mAllChannels;

@@ -487,5 +487,6 @@
 	<string name="empty_order_list">Empty</string>
 	<string name="confirm_password_hint">Please confirm your password</string>
 	<string name="password_not_same_hint">Please enter the same password twice</string>
+    <string name="travel_recommend">Popular</string>
 
 </resources>

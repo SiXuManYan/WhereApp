@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -38,6 +39,7 @@ public class MechanismListFragment extends BaseFragment {
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecycler;
     private RadioGroup mRadioGroup;
+    private HorizontalScrollView mHScrollView;
     private MechanismListAdapter mAdapter;
     private MechanismListModel mModel;
     private CategoryResponse mCategoryResponse;
@@ -87,6 +89,8 @@ public class MechanismListFragment extends BaseFragment {
         mRecycler = view.findViewById(R.id.mechanismRecycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRadioGroup = view.findViewById(R.id.mechanismRadioGroup);
+        mHScrollView = view.findViewById(R.id.radioScroll);
+        mHScrollView.setVisibility(View.GONE);
         mSearchNoneGroup = view.findViewById(R.id.searchNoneGroup);
     }
 
@@ -120,12 +124,11 @@ public class MechanismListFragment extends BaseFragment {
     public void getNetData() {
         Bundle arguments = getArguments();
         if (arguments != null && !mIsDataLoaded) {
-            getMechanismList(mCurrentCategoryId);
             getChildCategory();
+            getMechanismList(mCurrentCategoryId);
             mIsDataLoaded = true;
         }
     }
-
 
     /**
      * 获得当前分类下的子分类
@@ -143,10 +146,14 @@ public class MechanismListFragment extends BaseFragment {
                 mChildCategories.clear();
                 mChildCategories.addAll(categoryResponses);
                 int size = categoryResponses.size();
+                Log.e("MechanismListFragment", "onSuccess: " + "size=" + size);
+                Log.e("MechanismListFragment", "onSuccess: " + "mCurrentCategoryId=" + mCurrentCategoryId);
                 if (size > 0) {
+                    mHScrollView.setVisibility(View.VISIBLE);
                     for (int i = 0; i < size; i++) {
                         RadioButton temp = new RadioButton(getContext());
                         CategoryResponse categoryResponse = categoryResponses.get(i);
+                        Log.e("MechanismListFragment", "onSuccess: " + mCurrentCategoryId + "---child===" + categoryResponse.getName());
                         temp.setButtonDrawable(null);
                         temp.setBackgroundResource(R.drawable.selector_mechanism_child_radio);
                         temp.setText(categoryResponse.getName());
@@ -159,6 +166,8 @@ public class MechanismListFragment extends BaseFragment {
                         mRadioGroup.addView(temp, mRadioGroup.getChildCount());
                     }
 
+                } else {
+                    mHScrollView.setVisibility(View.GONE);
                 }
             }
         });

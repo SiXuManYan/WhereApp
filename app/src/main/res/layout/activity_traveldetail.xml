@@ -317,7 +317,7 @@
 
                         <ImageView
                             android:id="@+id/toWriteCommentIcon"
-                            android:layout_toStartOf="@+id/toWriteCommentTv"
+                            android:layout_toStartOf="@id/toWriteCommentTv"
                             android:layout_width="wrap_content"
                             android:scaleType="centerInside"
                             android:layout_marginEnd="@dimen/dp_7"

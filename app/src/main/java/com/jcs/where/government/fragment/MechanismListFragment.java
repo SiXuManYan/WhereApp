@@ -146,14 +146,11 @@ public class MechanismListFragment extends BaseFragment {
                 mChildCategories.clear();
                 mChildCategories.addAll(categoryResponses);
                 int size = categoryResponses.size();
-                Log.e("MechanismListFragment", "onSuccess: " + "size=" + size);
-                Log.e("MechanismListFragment", "onSuccess: " + "mCurrentCategoryId=" + mCurrentCategoryId);
                 if (size > 0) {
                     mHScrollView.setVisibility(View.VISIBLE);
                     for (int i = 0; i < size; i++) {
                         RadioButton temp = new RadioButton(getContext());
                         CategoryResponse categoryResponse = categoryResponses.get(i);
-                        Log.e("MechanismListFragment", "onSuccess: " + mCurrentCategoryId + "---child===" + categoryResponse.getName());
                         temp.setButtonDrawable(null);
                         temp.setBackgroundResource(R.drawable.selector_mechanism_child_radio);
                         temp.setText(categoryResponse.getName());

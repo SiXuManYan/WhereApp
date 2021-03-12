@@ -78,6 +78,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
 
     public static void goTo(Context context, int id) {
         Intent intent = new Intent(context, TouristAttractionDetailActivity.class);
+        Log.e("DetailActivity", "goTo: "+"id="+id);
         intent.putExtra(EXT_ID, id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (!(context instanceof Activity)) {
@@ -106,7 +107,6 @@ public class TouristAttractionDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        // TODO 写评论
         banner = findViewById(R.id.banner3);
         mToWriteCommentTv = findViewById(R.id.toWriteCommentTv);
         commentRv = findViewById(R.id.rv_comment);

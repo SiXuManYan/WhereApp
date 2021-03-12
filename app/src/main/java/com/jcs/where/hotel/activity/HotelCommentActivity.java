@@ -29,6 +29,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
+/**
+ * 页面-酒店评论列表页
+ */
 public class HotelCommentActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String EXT_ID = "id";

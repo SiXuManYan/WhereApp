@@ -12,7 +12,6 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.account.login.LoginPresenter;
 import com.jcs.where.home.HomeActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
@@ -22,13 +21,16 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Created by Wangsw  2021/1/29 16:53.
  * 注册页，【设置密码】
- *
  */
 public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> implements RegisterView {
 
-    private AppCompatEditText password_aet;
+    private AppCompatEditText
+            password_aet,
+            password_confirm_aet;
 
-    private ImageView password_rule_iv;
+    private ImageView
+            password_rule_iv,
+            password_confirm_rule_iv;
 
     private String
             mAccount,
@@ -40,6 +42,12 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
      */
     private boolean mIsCipherText = true;
 
+
+    /**
+     * 确认密码是否为密文
+     */
+    private boolean mIsCipherTextConfirm = true;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register_new;
@@ -50,7 +58,9 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
         BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.blue_395668));
         password_aet = findViewById(R.id.password_aet);
+        password_confirm_aet = findViewById(R.id.password_confirm_aet);
         password_rule_iv = findViewById(R.id.password_rule_iv);
+        password_confirm_rule_iv = findViewById(R.id.password_confirm_rule_iv);
     }
 
     @Override
@@ -64,14 +74,11 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     @Override
     protected void bindListener() {
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
+        password_confirm_rule_iv.setOnClickListener(this::onConfirmPasswordRuleClick);
         findViewById(R.id.register_tv).setOnClickListener(this::onRegisterClick);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
     }
 
-    private void onRegisterClick(View view) {
-        String password = password_aet.getText().toString().trim();
-        presenter.register(mAccount, mVerifyCode, password, mCountryCode);
-    }
 
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
@@ -81,6 +88,22 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         }
         mIsCipherText = !mIsCipherText;
     }
+
+    private void onConfirmPasswordRuleClick(View view) {
+        if (mIsCipherTextConfirm) {
+            FeaturesUtil.editOpen(password_confirm_aet, password_confirm_rule_iv);
+        } else {
+            FeaturesUtil.editDismiss(password_confirm_aet, password_confirm_rule_iv);
+        }
+        mIsCipherTextConfirm = !mIsCipherTextConfirm;
+    }
+
+    private void onRegisterClick(View view) {
+        String password = password_aet.getText().toString().trim();
+        String passwordConfirm = password_confirm_aet.getText().toString().trim();
+        presenter.register(mAccount, mVerifyCode, mCountryCode, password, passwordConfirm);
+    }
+
 
     @Override
     public void registerSuccess() {

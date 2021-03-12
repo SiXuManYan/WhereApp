@@ -183,7 +183,7 @@
 	<string name="main_tab_title_home">Home</string>
 	<string name="main_tab_title_category">Category</string>
 	<string name="main_tab_title_order">Order</string>
-	<string name="main_tab_title_mine">My</string>
+	<string name="main_tab_title_mine">Me</string>
 	<string name="to_login">Sign In</string>
     <string name="mine_about_us">about us</string>
     <string name="cancel_order">Cancel</string>
@@ -278,7 +278,7 @@
 	<string name="sign_in_type_3">Comment</string>
 	<string name="sign_in_type_4">Sign in</string>
 
-	<string name="empty_data_default">No data</string>
+	<string name="empty_data_default">Data Updating</string>
     <string name="item_sign_in">Sign in</string>
 	<string name="item_sign_in_content">Points for successful sign-in</string>
 	<string name="item_comment">Comment points</string>
@@ -484,6 +484,8 @@
     <string name="empty_network_error">Network problem</string>
 	<string name="empty_network_error_hint">Please check network settings or try again later</string>
 	<string name="empty_network_error_action">Try again</string>
-	<string name="empty_order_list">No orders yet ~</string>
+	<string name="empty_order_list">Empty</string>
+	<string name="confirm_password_hint">Please confirm your password</string>
+	<string name="password_not_same_hint">The two password entries are inconsistent, please re-enter</string>
 
 </resources>

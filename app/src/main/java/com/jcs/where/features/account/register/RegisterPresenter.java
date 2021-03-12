@@ -1,5 +1,9 @@
 package com.jcs.where.features.account.register;
 
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.jcs.where.R;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.request.account.RegisterRequest;
@@ -22,12 +26,11 @@ public class RegisterPresenter extends BaseMvpPresenter {
 
     /**
      * 注册
-     *
-     * @param account     账号
+     *  @param account     账号
      * @param verifyCode  验证码
      * @param countryCode 国家码
      */
-    public void register(String account, String verifyCode, String password, String countryCode) {
+    public void register(String account, String verifyCode, String countryCode, String password, String passwordConfirm) {
 
         if (FeaturesUtil.isWrongPhoneNumber(countryCode, account)) {
             return;
@@ -36,6 +39,13 @@ public class RegisterPresenter extends BaseMvpPresenter {
         if (FeaturesUtil.isWrongPasswordFormat(password)) {
             return;
         }
+
+
+        if (TextUtils.isEmpty(passwordConfirm) || !password.equals(passwordConfirm)) {
+            ToastUtils.showShort(R.string.password_not_same_hint);
+            return;
+        }
+
 
         RegisterRequest build = RegisterRequest.Builder.aRegisterRequest()
                 .phone(account)

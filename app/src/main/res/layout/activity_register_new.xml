@@ -63,6 +63,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLength="20"
+                    android:maxLines="1"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
                     android:textColor="@color/white"
@@ -71,6 +72,61 @@
 
                 <ImageView
                     android:id="@+id/password_rule_iv"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_login_eye_close" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginStart="@dimen/dp_45"
+                android:layout_marginEnd="@dimen/dp_45"
+                android:background="@color/grey_CCCCCC" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_20"
+                android:paddingStart="@dimen/dp_45"
+                android:paddingEnd="@dimen/dp_45">
+
+                <ImageView
+                    android:id="@+id/confirm_iv"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_confirm_password" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/password_confirm_aet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toStartOf="@+id/password_confirm_rule_iv"
+                    android:layout_toEndOf="@id/confirm_iv"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/confirm_password_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/grey_BFBFBF"
+                    android:textSize="@dimen/sp_14" />
+
+                <ImageView
+                    android:id="@+id/password_confirm_rule_iv"
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_alignParentEnd="true"

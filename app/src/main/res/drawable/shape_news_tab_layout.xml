@@ -10,8 +10,8 @@
     </item>
     <!--    想保留哪一边就设置哪一边边框就好了，列如只有上边框：top="1dp"    -->
     <item
-        android:bottom="1px"
-        android:top="1px">
+        android:bottom="1dp"
+        android:top="1dp">
         <shape>
             <solid android:color="@color/white" />
         </shape>

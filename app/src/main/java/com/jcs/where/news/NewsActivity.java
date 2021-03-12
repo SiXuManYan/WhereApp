@@ -111,7 +111,7 @@ public class NewsActivity extends BaseActivity {
 
                 mTabs.addAll(mFollowChannels);
                 // 添加一个占位的 tab，用于滑动效果
-                mTabs.add(new NewsChannelResponse(""));
+//                mTabs.add(new NewsChannelResponse(""));
 
                 // 根据 mTabs 的数据配制 TabLayout 和 ViewPager
                 deployTabAndViewPager();

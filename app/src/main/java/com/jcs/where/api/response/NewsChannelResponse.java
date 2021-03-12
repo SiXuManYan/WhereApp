@@ -20,7 +20,7 @@ public class NewsChannelResponse extends BaseNode implements Serializable {
      */
 
     @SerializedName("id")
-    private Integer id;
+    private int id = 0;
     @SerializedName("name")
     private String name;
     @SerializedName("follow_status")

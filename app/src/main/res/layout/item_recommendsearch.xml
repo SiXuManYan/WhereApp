@@ -14,6 +14,7 @@
         android:paddingTop="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_15"
         android:paddingBottom="@dimen/dp_10"
+
         android:textColor="@color/grey_999999"
         android:textSize="13sp"
         tools:text="大教堂" />

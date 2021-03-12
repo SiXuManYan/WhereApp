@@ -17,10 +17,12 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.base.BaseFullFragment;
+import com.jcs.where.base.IntentEntry;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
 import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.model.CategoryModel;
+import com.jcs.where.travel.TravelMapActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
@@ -34,6 +36,8 @@ import java.util.List;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.annotations.NonNull;
+
+import static com.jcs.where.base.BaseMapActivity.K_CHILD_CATEGORY_ID;
 
 
 public class CategoryFragment extends BaseFullFragment {
@@ -234,13 +238,17 @@ public class CategoryFragment extends BaseFullFragment {
                     break;
                 case TYPE_TOURISM:
                     // 旅游景点
+                    toTargetCategory = new Intent(getContext(),TravelMapActivity.class);
+                    toTargetCategory.putExtra(K_CHILD_CATEGORY_ID,itemId);
                     break;
                 case TYPE_GOVERNMENT:
                     toTargetCategory = new Intent(getContext(), GovernmentMapActivity.class);
-                    toTargetCategory.putExtra(GovernmentMapActivity.K_CHILD_CATEGORY_ID, itemId);
+                    toTargetCategory.putExtra(K_CHILD_CATEGORY_ID, itemId);
                     break;
                 case TYPE_TRAVEL:
                     // 旅游旅行
+
+
                     break;
                 case TYPE_RESTAURANT:
                     // 餐厅

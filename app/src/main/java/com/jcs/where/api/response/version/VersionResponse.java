@@ -18,17 +18,17 @@ public class VersionResponse {
     /**
      * 新版本号
      */
-    public String  new_version;
+    public String  new_version = "";
 
     /**
      * 下载url
      */
-    public String  download_url;
+    public String  download_url = "";
 
     /**
      * 更新描述
      */
-    public String  update_desc;
+    public String  update_desc = "";
 
     /**
      * 是否为强制更新（true:是，false:否）

@@ -46,9 +46,9 @@ public class HomePresenter extends BaseMvpPresenter {
             @Override
             protected void onSuccess(VersionResponse response) {
 
-                if (!response.status) {
-                    return;
-                }
+//                if (!response.status) {
+//                    return;
+//                }
 
                 mView.checkAppVersion(response);
             }

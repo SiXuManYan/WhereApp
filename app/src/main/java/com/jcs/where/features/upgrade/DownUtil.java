@@ -17,6 +17,8 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
+import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.FeaturesUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -156,6 +158,10 @@ public class DownUtil {
 
                     mBuilder.setContentText(StringUtils.getString(R.string.downloadError)).setProgress(0, 0, false);
                     mNotifyManager.notify(notifyId, mBuilder.build());
+
+                    FeaturesUtil.gotoGooglePlay(mContext);
+
+
                 } else {
                     ToastUtils.showShort(StringUtils.getString(R.string.downloadOver));
                     mBuilder.setContentText(StringUtils.getString(R.string.downloadOver)).setProgress(0, 0, false);
@@ -214,4 +220,6 @@ public class DownUtil {
         }.execute("");
 
     }
+
+
 }

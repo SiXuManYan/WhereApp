@@ -474,7 +474,7 @@
     <string name="downloadError">下载失败</string>
     <string name="downloadOver">下载完成</string>
     <string name="downloadOver_Install">下载完成，点击安装</string>
-    <string name="new_version_found">发现新版本</string>
+    <string name="new_version_found_format">发现新版本!(%1$s)</string>
     <string name="upgrade">更新</string>
     <string name="to_write_comment">写评论</string>
     <string name="hotel_not_exit">未查询到当前酒店</string>

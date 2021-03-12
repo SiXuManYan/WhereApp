@@ -3,6 +3,8 @@ package com.jcs.where.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -24,6 +26,7 @@ import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.utils.image.Glide4Engine;
@@ -308,5 +311,17 @@ public class FeaturesUtil {
         return retouch;
     }
 
+
+    public static void gotoGooglePlay(Context context) {
+        try {
+            Uri uri = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage(Constant.GOOGLE_PLAY_APP_STORE_PACKAGE_NAME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e){
+
+        }
+    }
 
 }

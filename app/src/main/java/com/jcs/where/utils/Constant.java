@@ -5,6 +5,7 @@ package com.jcs.where.utils;
  * create by zyf on 2021/1/8 10:59 上午
  */
 public class Constant {
+    public static final String GOOGLE_PLAY_APP_STORE_PACKAGE_NAME = "com.android.vending";
 
     public static final double LAT = 14.6631685;
     public static final double LNG = 120.5887840;

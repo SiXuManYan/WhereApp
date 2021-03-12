@@ -1,15 +1,15 @@
 package com.jcs.where.features.upgrade;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ColorUtils;
@@ -17,6 +17,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.PermissionUtils;
 
 /**
@@ -36,8 +37,13 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
 
 
     private AlertDialog permissionDialog;
-    private AlertDialog upgradeDialog;
+    //    private AlertDialog upgradeDialog;
     private DownUtil downUtil;
+
+    private ImageView ic_cancel;
+    private TextView title_tv;
+    private TextView message_tv;
+    private TextView upgrade_tv;
 
     @Override
     protected int getLayoutId() {
@@ -46,7 +52,10 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
 
     @Override
     protected void initView() {
-
+        ic_cancel = findViewById(R.id.ic_cancel);
+        title_tv = findViewById(R.id.title_tv);
+        message_tv = findViewById(R.id.message_tv);
+        upgrade_tv = findViewById(R.id.upgrade_tv);
     }
 
 
@@ -58,11 +67,30 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
         updateDesc = intent.getStringExtra(Constant.PARAM_UPDATE_DESC);
         isForceInstall = intent.getBooleanExtra(Constant.PARAM_IS_FORCE_INSTALL, false);
         downUtil = new DownUtil(this);
+        setData();
+    }
+
+    private void setData() {
+        String title = getString(R.string.new_version_found_format, newVersionCode);
+        title_tv.setText(title);
+        message_tv.setText(updateDesc);
+
+        if (isForceInstall) {
+            ic_cancel.setVisibility(View.GONE);
+        } else {
+            ic_cancel.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     protected void bindListener() {
+        upgrade_tv.setOnClickListener(this::onUpgradeClick);
+        ic_cancel.setOnClickListener(v -> finish());
+    }
 
+    private void onUpgradeClick(View view) {
+//        handlePermission();
+        FeaturesUtil.gotoGooglePlay(this);
     }
 
     @Override
@@ -85,15 +113,10 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
 
         PermissionUtils.permissionAny(this, granted -> {
                     if (granted) {
-                        showUpgradeDialog();
+                        downUtil.startDownload(downloadUrl, getString(R.string.app_name), R.mipmap.ic_launcher);
+                        isDownload = true;
                     } else {
-                        if (isForceInstall) {
-                            //  强制升级未授权，退出app
-                            AppUtils.exitApp();
-                        } else {
-                            // 非强制升级,引导
-                            doUninhibited();
-                        }
+                        doUninhibited();
                     }
 
                 }, Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -125,13 +148,15 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
 
     private void showUpgradeDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.new_version_found) + newVersionCode)
+/*        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.new_version_found_format, newVersionCode))
                 .setCancelable(false)
                 .setMessage(updateDesc)
                 .setPositiveButton(R.string.upgrade, (dialog, which) -> {
-                    downUtil.startDownload(downloadUrl, getString(R.string.app_name), R.mipmap.ic_launcher);
-                    isDownload = true;
+
+                    if (!isDownload) {
+                        handlePermission();
+                    }
                 });
 
         if (!isForceInstall) {
@@ -141,7 +166,7 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
             });
         }
         upgradeDialog = builder.create();
-        upgradeDialog.show();
+        upgradeDialog.show();*/
 
     }
 
@@ -152,8 +177,6 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
         if (permissionDialog != null) {
             permissionDialog.dismiss();
         }
-        if (upgradeDialog != null) {
-            upgradeDialog.dismiss();
-        }
+
     }
 }

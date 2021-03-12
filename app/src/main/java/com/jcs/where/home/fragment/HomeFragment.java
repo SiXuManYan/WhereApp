@@ -620,10 +620,16 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     @Override
     public void checkAppVersion(VersionResponse response) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.PARAM_NEW_VERSION_CODE,response.new_version);
-        bundle.putString(Constant.PARAM_DOWNLOAD_URL,response.download_url);
-        bundle.putString(Constant.PARAM_UPDATE_DESC,response.update_desc);
-        bundle.putBoolean(Constant.PARAM_IS_FORCE_INSTALL,response.is_force_install);
+//        bundle.putString(Constant.PARAM_NEW_VERSION_CODE,response.new_version);
+//        bundle.putString(Constant.PARAM_DOWNLOAD_URL,response.download_url);
+//        bundle.putString(Constant.PARAM_UPDATE_DESC,response.update_desc);
+//        bundle.putBoolean(Constant.PARAM_IS_FORCE_INSTALL,response.is_force_install);
+
+        bundle.putString(Constant.PARAM_NEW_VERSION_CODE,"1.1");
+        bundle.putString(Constant.PARAM_DOWNLOAD_URL,"https://4d57bacf7c.eachqr.com/214aeee3f253d71659c5f42cc67456bec9ecf000.apk?auth_key=1615536390-0-0-296bc02583d4e1368cc32bad2ec653dc");
+        bundle.putString(Constant.PARAM_UPDATE_DESC,"asdasojdiasojoo asjidjsaodjajsodja jiasojdoasjodjasojd asjijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj asodjasjdaiosjdojaosjdoiajsoidjoasjo ");
+        bundle.putBoolean(Constant.PARAM_IS_FORCE_INSTALL,false);
+
         startActivity(UpgradeActivity.class,bundle);
     }
 }

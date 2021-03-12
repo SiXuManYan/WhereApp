@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/transplant"
+    android:gravity="center"
+    android:orientation="vertical">
 
-</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/ic_upgrade_top" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_aircraft" />
+
+
+        <ImageView
+            android:id="@+id/ic_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="55dp"
+            android:padding="@dimen/dp_10"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_cancel" />
+
+
+    </RelativeLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-1dp"
+        android:layout_marginBottom="-1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_15"
+                tools:text="发现新版本!(0.0.1)" />
+
+            <TextView
+                android:id="@+id/message_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:maxHeight="300dp"
+                android:minHeight="60dp"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_13"
+                tools:text="sjasjjdidassaddasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdadasdasdasdasdasdsadsadasdasdasdasdasdasdasdasdasdasdijdoasojidjoasoidjasjdioajosidojaoojaossdjoais" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="290dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_upgrade_bottom" />
+
+        <TextView
+            android:id="@+id/upgrade_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_stroke_white_23"
+            android:paddingStart="@dimen/dp_40"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_40"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/upgrade"
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

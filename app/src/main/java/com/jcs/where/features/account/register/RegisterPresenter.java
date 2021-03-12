@@ -40,12 +40,10 @@ public class RegisterPresenter extends BaseMvpPresenter {
             return;
         }
 
-
         if (TextUtils.isEmpty(passwordConfirm) || !password.equals(passwordConfirm)) {
             ToastUtils.showShort(R.string.password_not_same_hint);
             return;
         }
-
 
         RegisterRequest build = RegisterRequest.Builder.aRegisterRequest()
                 .phone(account)

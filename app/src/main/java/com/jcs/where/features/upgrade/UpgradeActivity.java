@@ -1,12 +1,15 @@
 package com.jcs.where.features.upgrade;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ColorUtils;
@@ -127,7 +130,7 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
                 .setCancelable(false)
                 .setMessage(updateDesc)
                 .setPositiveButton(R.string.upgrade, (dialog, which) -> {
-                    downUtil.startDownload(downloadUrl,getString(R.string.app_name),R.mipmap.ic_launcher);
+                    downUtil.startDownload(downloadUrl, getString(R.string.app_name), R.mipmap.ic_launcher);
                     isDownload = true;
                 });
 
@@ -139,7 +142,9 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
         }
         upgradeDialog = builder.create();
         upgradeDialog.show();
+
     }
+
 
     @Override
     protected void onDestroy() {

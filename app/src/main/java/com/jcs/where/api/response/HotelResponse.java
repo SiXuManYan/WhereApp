@@ -24,7 +24,7 @@ public class HotelResponse implements ISearchResponse {
      * facebook_link : https://www.facebook.com
      */
 
-    private int id;
+    private Integer id;
     private String name;
     private double grade;
     private int comment_counts;
@@ -38,11 +38,11 @@ public class HotelResponse implements ISearchResponse {
     private List<String> images;
     private List<TagsBean> tags;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

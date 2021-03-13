@@ -1,6 +1,7 @@
 package com.jcs.where.api.response;
 
 import com.jcs.where.search.bean.ISearchResponse;
+import com.jcs.where.utils.MapMarkerUtil;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * 机构信息
  * create by zyf on 2020/12/28 9:17 PM
  */
-public class MechanismResponse implements ISearchResponse {
+public class MechanismResponse implements ISearchResponse, MapMarkerUtil.IMapData {
 
     /**
      * id : 1
@@ -21,16 +22,16 @@ public class MechanismResponse implements ISearchResponse {
      * tags : ["标签"]
      */
 
-    private int id;
+    private Integer id;
     private String title;
     private String address;
     private double lat;
     private double lng;
-    private String distance;
+    private Double distance;
     private List<String> images;
-    private List<String> tags;
+    private List<TagResponse> tags;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -54,7 +55,7 @@ public class MechanismResponse implements ISearchResponse {
         this.address = address;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
@@ -62,7 +63,7 @@ public class MechanismResponse implements ISearchResponse {
         this.lat = lat;
     }
 
-    public double getLng() {
+    public Double getLng() {
         return lng;
     }
 
@@ -70,11 +71,11 @@ public class MechanismResponse implements ISearchResponse {
         this.lng = lng;
     }
 
-    public String getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
@@ -86,11 +87,11 @@ public class MechanismResponse implements ISearchResponse {
         this.images = images;
     }
 
-    public List<String> getTags() {
+    public List<TagResponse> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<TagResponse> tags) {
         this.tags = tags;
     }
 

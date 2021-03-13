@@ -59,6 +59,7 @@ import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
+import com.jcs.where.utils.MapMarkerUtil;
 
 import java.util.List;
 
@@ -448,7 +449,7 @@ public interface RetrofitApi {
      * @return
      */
     @GET("travelapi/v2/map/travels")
-    Observable<JcsResponse<List<MechanismResponse>>> getTouristAttractionListForMap(
+    Observable<JcsResponse<List<TouristAttractionResponse>>> getTouristAttractionListForMap(
             @Query("cate_id") String categoryId,
             @Query("area_id") int areaId,
             @Query("search_input") String search,

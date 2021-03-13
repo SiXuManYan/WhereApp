@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.jcs.where.R;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.bean.MarkerBitmapDescriptors;
 
@@ -38,7 +39,7 @@ public class MapMarkerUtil {
     /**
      * 存储展示在地图上的数据
      */
-    private List<MechanismResponse> mMechanismsForMap;
+    private List<MapMarkerUtil.IMapData> mMechanismsForMap;
     /**
      * 存储展示在Map上的marker
      */
@@ -227,15 +228,15 @@ public class MapMarkerUtil {
     public void addMarkerToMap() {
         int size = mMechanismsForMap.size();
         for (int i = 0; i < size; i++) {
-            MechanismResponse mechanismResponse = mMechanismsForMap.get(i);
-            if (mechanismResponse != null) {
+            MapMarkerUtil.IMapData mapData = mMechanismsForMap.get(i);
+            if (mapData != null) {
                 // 向map上添加marker
-                LatLng latLng = new LatLng(mechanismResponse.getLat(), mechanismResponse.getLng());
+                LatLng latLng = new LatLng(mapData.getLat(), mapData.getLng());
 
                 // 将坐标点保存到 bounders 中，用于设置最佳的 map zoom
                 mLatLngBoundsBuilder.include(latLng);
                 TextView markerView = (TextView) getMarkerView();
-                markerView.setText(mechanismResponse.getTitle());
+                markerView.setText(mapData.getName());
                 MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
                 markerBitmapDescriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
                 markerBitmapDescriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
@@ -255,7 +256,7 @@ public class MapMarkerUtil {
 
                 // 在地图上绘制
                 Marker marker = mMap.addMarker(option);
-                marker.setTag(mechanismResponse);
+                marker.setTag(mapData);
 
                 // 初始化 mCurrentMarker
                 if (i == mCurrentPosition) {
@@ -291,7 +292,7 @@ public class MapMarkerUtil {
         return index;
     }
 
-    public void addAllMechanismForMap(List<MechanismResponse> mechanismResponses) {
+    public void addAllMechanismForMap(List<? extends MapMarkerUtil.IMapData> mechanismResponses) {
         mMechanismsForMap.addAll(mechanismResponses);
     }
 
@@ -349,10 +350,10 @@ public class MapMarkerUtil {
         isCleared = true;
     }
 
-    public void addTempMarker(MechanismResponse mechanismResponse) {
-        LatLng latLng = new LatLng(mechanismResponse.getLat(), mechanismResponse.getLng());
+    public void addTempMarker(MapMarkerUtil.IMapData mapData) {
+        LatLng latLng = new LatLng(mapData.getLat(), mapData.getLng());
         TextView markerView = (TextView) getMarkerView();
-        markerView.setText(mechanismResponse.getTitle());
+        markerView.setText(mapData.getName());
         MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
         markerBitmapDescriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
         markerBitmapDescriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
@@ -367,7 +368,7 @@ public class MapMarkerUtil {
 
         // 在地图上绘制
         Marker marker = mMap.addMarker(option);
-        marker.setTag(mechanismResponse);
+        marker.setTag(mapData);
 
         if (mMap != null) {
             // 将点击的 marker 展示在屏幕中心
@@ -380,5 +381,21 @@ public class MapMarkerUtil {
         if (mMap != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(mMyPosition));
         }
+    }
+
+    public interface IMapData{
+        String getName();
+
+        List<String> getImages();
+
+        Integer getId();
+
+        String getAddress();
+
+        Double getDistance();
+
+        Double getLat();
+
+        Double getLng();
     }
 }

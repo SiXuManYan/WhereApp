@@ -1,13 +1,14 @@
 package com.jcs.where.api.response;
 
 import com.google.gson.annotations.SerializedName;
+import com.jcs.where.utils.MapMarkerUtil;
 
 import java.util.List;
 
 /**
  * create by zyf on 2021/1/28 10:08 下午
  */
-public class TouristAttractionResponse {
+public class TouristAttractionResponse implements MapMarkerUtil.IMapData{
 
     /**
      * id : 101
@@ -53,6 +54,11 @@ public class TouristAttractionResponse {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public List<String> getImages() {
+        return image;
     }
 
     public void setName(String name) {
@@ -177,5 +183,21 @@ public class TouristAttractionResponse {
                 this.tagId = tagId;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "TouristAttractionResponse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", grade=" + grade +
+                ", commentsCount=" + commentsCount +
+                ", distance=" + distance +
+                ", image=" + image +
+                ", tags=" + tags +
+                '}';
     }
 }

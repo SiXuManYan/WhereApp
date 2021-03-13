@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jcs.where.R;
-import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.utils.MapMarkerUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class CardViewPagerFragment extends BaseFragment {
     private PageAnimation mPageAnimation;
     private Adapter mAdapter;
     private OnVpPageSelectedListener mPageSelectedListener;
-    private List<MechanismResponse> mMechanismResponse;
+    private List<? extends MapMarkerUtil.IMapData> mIMapData;
 
     @Override
     protected void initView(View view) {
@@ -69,16 +68,16 @@ public class CardViewPagerFragment extends BaseFragment {
         return R.layout.fragment_card_viewpager;
     }
 
-    public void bindAllData(List<MechanismResponse> mechanismResponses) {
-        mMechanismResponse = mechanismResponses;
+    public void bindAllData(List<? extends MapMarkerUtil.IMapData> mapData) {
+        mIMapData = mapData;
         mAdapter = new Adapter(getContext(), this::onPageClicked);
-        mAdapter.addAllData(mechanismResponses);
+        mAdapter.addAllData(mapData);
         mPageAnimation = new PageAnimation();
         mViewPager.setAdapter(mAdapter);
         mViewPager.setPageMargin(getPxFromDp(15));
         mViewPager.setPageTransformer(false, mPageAnimation);
         mViewPager.setOffscreenPageLimit(3);
-        if (mechanismResponses != null && mechanismResponses.size() > 1) {
+        if (mapData != null && mapData.size() > 1) {
             mViewPager.setCurrentItem(1);
         }
     }
@@ -87,7 +86,7 @@ public class CardViewPagerFragment extends BaseFragment {
         mViewPager.setAdapter(mAdapter);
     }
 
-    public void bindSingleData(MechanismResponse mechanismResponses) {
+    public void bindSingleData(MapMarkerUtil.IMapData mechanismResponses) {
         Adapter adapter = new Adapter(getContext(), this::onPageClicked);
         adapter.addCardItem(mechanismResponses);
         mViewPager.setAdapter(adapter);
@@ -110,7 +109,7 @@ public class CardViewPagerFragment extends BaseFragment {
 
     private class Adapter extends PagerAdapter {
 
-        private final List<MechanismResponse> mData;
+        private final List<MapMarkerUtil.IMapData> mData;
         private final Context mContext;
         private OnVpPageClickedListener mOnVpPageClicked;
 
@@ -120,12 +119,12 @@ public class CardViewPagerFragment extends BaseFragment {
             mOnVpPageClicked = listener;
         }
 
-        public void addAllData(List<MechanismResponse> mechanismResponses) {
+        public void addAllData(List<? extends MapMarkerUtil.IMapData> mechanismResponses) {
             mData.clear();
             mData.addAll(mechanismResponses);
         }
 
-        public void addCardItem(MechanismResponse item) {
+        public void addCardItem(MapMarkerUtil.IMapData item) {
             mData.add(item);
         }
 
@@ -159,14 +158,15 @@ public class CardViewPagerFragment extends BaseFragment {
             container.removeView((View) object);
         }
 
-        private void bind(MechanismResponse mechanismResponse, View view) {
+        private void bind(MapMarkerUtil.IMapData mechanismResponse, View view) {
             view.setOnClickListener(this::onPageClicked);
             TextView nameTv = view.findViewById(R.id.mechanismTitleTv);
-            nameTv.setText(mechanismResponse.getTitle());
+            nameTv.setText(mechanismResponse.getName());
             RoundedImageView photoIv = view.findViewById(R.id.mechanismIconIv);
             photoIv.setCornerRadius(getPxFromDp(4), 0, getPxFromDp(4), 0);
-            if (!TextUtils.isEmpty(mechanismResponse.getImages().get(0))) {
-                GlideUtil.load(mContext, mechanismResponse.getImages().get(0), photoIv);
+            List<String> images = mechanismResponse.getImages();
+            if (images != null && !TextUtils.isEmpty(images.get(0))) {
+                GlideUtil.load(mContext, images.get(0), photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_test));
             }

@@ -1,5 +1,7 @@
 package com.jcs.where.government.adapter;
 
+import android.util.Log;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -18,6 +20,7 @@ public class GovernmentSearchAdapter extends BaseQuickAdapter<MechanismResponse,
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, MechanismResponse mechanismResponse) {
+        Log.e("GovernmentSearchAdapter", "convert: " + mechanismResponse.getTitle());
         baseViewHolder.setText(R.id.searchTitleTv, mechanismResponse.getTitle());
         baseViewHolder.setGone(R.id.line, baseViewHolder.getAdapterPosition() == getItemCount() - 1);
     }

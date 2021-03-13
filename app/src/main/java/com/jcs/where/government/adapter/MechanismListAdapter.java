@@ -25,14 +25,7 @@ public class MechanismListAdapter extends BaseQuickAdapter<MechanismResponse, Ba
     protected void convert(@NotNull BaseViewHolder baseViewHolder, MechanismResponse mechanismResponse) {
         baseViewHolder.setText(R.id.mechanismTitleTv, mechanismResponse.getTitle());
         baseViewHolder.setText(R.id.mechanismAddressTv, mechanismResponse.getAddress());
-        String distanceStr = mechanismResponse.getDistance();
-        double distance = 0;
-        if (distanceStr != null && !distanceStr.isEmpty()) {
-            try {
-                distance = Double.parseDouble(distanceStr);
-            } catch (NumberFormatException e) {
-            }
-        }
+        Double distance = mechanismResponse.getDistance();
         if (distance == 0) {
             baseViewHolder.setVisible(R.id.mechanismDistanceTv, false);
         } else {

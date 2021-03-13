@@ -78,9 +78,9 @@ public class RetrofitManager {
                 return chain.proceed(build);
             }
         });
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             okBuilder.addInterceptor(loggingInterceptor);
-        }
+//        }
 //        okBuilder.addInterceptor(new BaseUrlInterceptor());
 //        okBuilder.connectTimeout(timeout, TimeUnit.MINUTES);
 //        okBuilder.readTimeout(timeout, TimeUnit.MINUTES);

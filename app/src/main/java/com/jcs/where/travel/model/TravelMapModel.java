@@ -6,7 +6,9 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismDetailResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.SearchResponse;
+import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.MapMarkerUtil;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class TravelMapModel extends BaseModel {
      * @param categoryId 分类id，当前页面展示什么子分类数据
      */
     public void getTouristAttractionListForMap(String categoryId, double lat, double lng,
-                                       BaseObserver<List<MechanismResponse>> observer) {
+                                       BaseObserver<List<TouristAttractionResponse>> observer) {
         getTouristAttractionListForMap(categoryId, 0, "", lat, lng, observer);
     }
 
@@ -36,7 +38,7 @@ public class TravelMapModel extends BaseModel {
      * 搜索某区域下的所有旅游景点
      */
     public void getTouristAttractionListForMap(String searchInput,
-                                             BaseObserver<List<MechanismResponse>> observer) {
+                                             BaseObserver<List<TouristAttractionResponse>> observer) {
         getTouristAttractionListForMap("0", 0, searchInput, Constant.LAT, Constant.LNG, observer);
     }
 
@@ -49,7 +51,7 @@ public class TravelMapModel extends BaseModel {
      * @param lng        纬度
      */
     public void getTouristAttractionListForMap(String categoryId, int areaId,
-                                               String search, double lat, double lng, BaseObserver<List<MechanismResponse>> observer) {
+                                               String search, double lat, double lng, BaseObserver<List<TouristAttractionResponse>> observer) {
 
         dealResponse(mRetrofit.getTouristAttractionListForMap(categoryId, areaId
                 , search, lat, lng

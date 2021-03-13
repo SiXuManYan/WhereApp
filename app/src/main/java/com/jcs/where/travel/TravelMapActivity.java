@@ -2,13 +2,11 @@ package com.jcs.where.travel;
 
 import android.view.View;
 
-import androidx.fragment.app.Fragment;
-
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.base.BaseMapActivity;
 import com.jcs.where.travel.fragment.TouristAttractionFragment;
 import com.jcs.where.travel.model.TravelMapModel;
@@ -19,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
 import io.reactivex.annotations.NonNull;
 
 
@@ -52,7 +51,7 @@ public class TravelMapActivity extends BaseMapActivity {
 
     @Override
     protected void getListDataByInput(String input) {
-        mModel.getTouristAttractionListForMap(input, new BaseObserver<List<MechanismResponse>>() {
+        mModel.getTouristAttractionListForMap(input, new BaseObserver<List<TouristAttractionResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -60,11 +59,11 @@ public class TravelMapActivity extends BaseMapActivity {
             }
 
             @Override
-            public void onSuccess(@NotNull List<MechanismResponse> mechanismResponses) {
+            public void onSuccess(@NotNull List<TouristAttractionResponse> mapData) {
                 stopLoading();
                 mSearchAdapter.getData().clear();
-                if (mechanismResponses.size() > 0) {
-                    mSearchAdapter.addData(mechanismResponses);
+                if (mapData.size() > 0) {
+                    mSearchAdapter.addData(mapData);
                 } else {
                     showEmptySearchAdapter();
                 }
@@ -111,7 +110,7 @@ public class TravelMapActivity extends BaseMapActivity {
 
     @Override
     protected void getDataAtMapFromNet() {
-        mModel.getTouristAttractionListForMap(TYPE_TOURIST_ATTRACTION, Constant.LAT, Constant.LNG, new BaseObserver<List<MechanismResponse>>() {
+        mModel.getTouristAttractionListForMap(TYPE_TOURIST_ATTRACTION, Constant.LAT, Constant.LNG, new BaseObserver<List<TouristAttractionResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -119,14 +118,14 @@ public class TravelMapActivity extends BaseMapActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull List<MechanismResponse> mechanismResponses) {
+            public void onSuccess(@NonNull List<TouristAttractionResponse> touristAttractionResponses) {
                 stopLoading();
                 mMapMarkerUtil.clear();
-                if (mechanismResponses.size() > 0) {
-                    mMapMarkerUtil.addAllMechanismForMap(mechanismResponses);
+                if (touristAttractionResponses.size() > 0) {
+                    mMapMarkerUtil.addAllMechanismForMap(touristAttractionResponses);
                     mMapMarkerUtil.addMarkerToMap();
 
-                    mCardFragment.bindAllData(mechanismResponses);
+                    mCardFragment.bindAllData(touristAttractionResponses);
                 }
             }
         });

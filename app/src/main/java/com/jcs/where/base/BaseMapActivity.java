@@ -21,11 +21,13 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
+import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.government.adapter.GovernmentSearchAdapter;
 import com.jcs.where.government.adapter.MapListFragmentAdapter;
 import com.jcs.where.government.fragment.CardViewPagerFragment;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.map.model.BaseMapModel;
+import com.jcs.where.travel.adapter.TouristAttractionSearchAdapter;
 import com.jcs.where.utils.EmptyWatcher;
 import com.jcs.where.utils.MapMarkerUtil;
 import com.jcs.where.utils.SPKey;
@@ -74,7 +76,7 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
     protected EditText mSearchEt;
     protected ImageView mDelInputIv;
     protected RecyclerView mSearchRecycler;
-    protected GovernmentSearchAdapter mSearchAdapter;
+    protected TouristAttractionSearchAdapter mSearchAdapter;
 
     /**
      * 机构列表分类数据，展示在TabLayout上
@@ -107,7 +109,7 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
         mDelInputIv = findViewById(R.id.delInputIv);
         mSearchEt = findViewById(R.id.searchEt);
         mSearchRecycler = findViewById(R.id.searchRecycler);
-        mSearchAdapter = new GovernmentSearchAdapter();
+        mSearchAdapter = new TouristAttractionSearchAdapter();
         mSearchRecycler.setLayoutManager(new LinearLayoutManager(this));
         mSearchRecycler.setAdapter(mSearchAdapter);
         // 绑定PopupLayout适配器
@@ -239,7 +241,7 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
     }
 
     protected void onSearchItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        MechanismResponse item = mSearchAdapter.getData().get(position);
+        MapMarkerUtil.IMapData item = mSearchAdapter.getData().get(position);
         mMapMarkerUtil.clearMap();
         mSearchRecycler.setVisibility(View.GONE);
         mMapMarkerUtil.addTempMarker(item);

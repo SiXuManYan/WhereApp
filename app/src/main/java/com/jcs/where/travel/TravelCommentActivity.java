@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -13,9 +15,13 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.hotel.adapter.CommentListAdapter;
 import com.jcs.where.travel.model.TravelCommentModel;
+import com.jcs.where.utils.ImagePreviewActivity;
+import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -57,7 +63,7 @@ public class TravelCommentActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new TravelCommentModel();
-        mTouristAttractionId = getIntent().getIntExtra(EXT_ID,0);
+        mTouristAttractionId = getIntent().getIntExtra(EXT_ID, 0);
 
         showLoading();
         getComments();
@@ -86,6 +92,44 @@ public class TravelCommentActivity extends BaseActivity {
     @Override
     protected void bindListener() {
         mSwipeLayout.setOnRefreshListener(this::onRefreshListener);
+        mAdapter.addChildClickViewIds(R.id.fullText, R.id.commentIcon01, R.id.commentIcon02, R.id.commentIcon03, R.id.commentIcon04);
+        mAdapter.setOnItemChildClickListener(this::onItemChildClicked);
+    }
+
+    private void onItemChildClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
+        int id = view.getId();
+        CommentResponse item = mAdapter.getData().get(position);
+        if (id == R.id.fullText) {
+            Log.e("HotelCommentActivity", "----bindListener---fullText");
+            item.is_select = !item.is_select;
+            mAdapter.notifyItemChanged(position);
+        }
+
+        if (view instanceof RoundedImageView) {
+            Intent to = new Intent(this, ImagePreviewActivity.class);
+            ArrayList<String> images = (ArrayList<String>) item.getImages();
+            to.putStringArrayListExtra(ImagePreviewActivity.IMAGES_URL_KEY, images);
+            ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "commentIcon");
+
+            int imgPosition = -1;
+            if (id == R.id.commentIcon01) {
+                imgPosition = 0;
+            }
+            if (id == R.id.commentIcon02) {
+                imgPosition = 1;
+            }
+            if (id == R.id.commentIcon03) {
+                imgPosition = 2;
+            }
+            if (id == R.id.commentIcon04) {
+                imgPosition = 3;
+            }
+            to.putExtra(ImagePreviewActivity.IMAGE_POSITION, imgPosition);
+
+
+            startActivity(to);
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+        }
     }
 
     private void onRefreshListener() {

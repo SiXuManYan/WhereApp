@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -19,9 +23,6 @@ import com.jcs.where.government.model.ConvenienceServiceSearchModel;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -37,6 +38,7 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
     private SwipeRefreshLayout mSwipeLayout;
     private MechanismListAdapter mAdapter;
     private String mCurrentCategoryId;
+    private String mSearchInput;
 
 
     public static void goTo(Activity activity, String categoryId, String input) {
@@ -48,9 +50,9 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        String input = getIntent().getStringExtra(K_INPUT);
+        mSearchInput = getIntent().getStringExtra(K_INPUT);
         mCurrentCategoryId = getIntent().getStringExtra(K_CATEGORY_ID);
-        mJcsTitle.setMiddleTitle(input);
+        mJcsTitle.setMiddleTitle(mSearchInput);
         mSwipeLayout = findViewById(R.id.mechanismRefresh);
 
         mRecycler = findViewById(R.id.recycler);
@@ -62,7 +64,7 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new ConvenienceServiceSearchModel();
-        getMechanismList(mCurrentCategoryId);
+        getMechanismList(mCurrentCategoryId, mSearchInput);
     }
 
     @Override
@@ -85,7 +87,7 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
 
     private void onSwipeRefresh() {
         Log.e("MechanismListFragment", "onSwipeRefresh: " + "-----");
-        getMechanismList(mCurrentCategoryId);
+        getMechanismList(mCurrentCategoryId, mSearchInput);
     }
 
     /**
@@ -93,11 +95,11 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
      *
      * @param categoryId 分类id
      */
-    private void getMechanismList(String categoryId) {
+    private void getMechanismList(String categoryId, String searchInput) {
         mSwipeLayout.setRefreshing(true);
         Log.e("MechanismListFragment", "getMechanismList: " + "id=" + categoryId);
 
-        mModel.getMechanismList(categoryId, new BaseObserver<PageResponse<MechanismResponse>>() {
+        mModel.getMechanismList(categoryId, searchInput, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);

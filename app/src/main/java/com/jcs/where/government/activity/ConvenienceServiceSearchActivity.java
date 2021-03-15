@@ -20,6 +20,7 @@ import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.adapter.MechanismListAdapter;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.ConvenienceServiceSearchModel;
+import com.jcs.where.utils.Constant;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
     private MechanismListAdapter mAdapter;
     private String mCurrentCategoryId;
     private String mSearchInput;
+    private int page = Constant.DEFAULT_FIRST_PAGE;
 
 
     public static void goTo(Activity activity, String categoryId, String input) {
@@ -59,6 +61,11 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MechanismListAdapter();
         mRecycler.setAdapter(mAdapter);
+
+        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+
     }
 
     @Override

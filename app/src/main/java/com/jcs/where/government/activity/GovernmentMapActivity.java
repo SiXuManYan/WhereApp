@@ -1,12 +1,9 @@
 package com.jcs.where.government.activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
+import androidx.fragment.app.Fragment;
+
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -16,15 +13,12 @@ import com.jcs.where.base.BaseMapActivity;
 import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.government.model.GovernmentMapModel;
 import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.MapMarkerUtil;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -47,6 +41,13 @@ public class GovernmentMapActivity extends BaseMapActivity {
         super.initData();
         mModel = new GovernmentMapModel();
         mListFragments = new ArrayList<>();
+    }
+
+    @Override
+    protected void bindListener() {
+        super.bindListener();
+        mSearchEt.requestFocus();
+        mSearchEt.setOnClickListener(v -> mPopupLayout.hideWithAnim());
     }
 
     @Override

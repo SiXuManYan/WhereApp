@@ -19,7 +19,11 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void initView() {
         TextView version_tv = (TextView) findViewById(R.id.version_tv);
-        version_tv.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME));
+        StringBuffer buffer = new StringBuffer(BuildConfig.VERSION_NAME);
+        if (BuildConfig.FLAVOR.equals("dev")) {
+            buffer.append("test");
+        }
+        version_tv.setText(getString(R.string.version_format, buffer.toString()));
     }
 
     @Override

@@ -259,30 +259,34 @@ public class ConvenienceServiceActivity extends BaseActivity {
      */
     private void injectTabDataToView() {
         mDefaultIndex = 0;
-        int size = mTabCategories.size();
-        mTabLayout.removeAllTabs();
-        for (int i = 0; i < size; i++) {
-            TabLayout.Tab tab = mTabLayout.newTab();
-            CategoryResponse categoryResponse = mTabCategories.get(i);
-            tab.setCustomView(makeTabView(categoryResponse.getName()));
-            mTabLayout.addTab(tab);
 
+        int size = mTabCategories.size();
+        for (int i = 0; i < size; i++) {
+            CategoryResponse categoryResponse = mTabCategories.get(i);
             // 0 位置对应的是全部，已经在循环外添加过了
             if (i != 0) {
                 mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse));
             }
+        }
+        mViewPagerAdapter.setListFragments(mMechanismListFragments);
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(mViewPagerAdapter.getCount());
+        mViewPagerAdapter.setTabCategories(mTabCategories);
+        mViewPagerAdapter.notifyDataSetChanged();
+        mTabLayout.setupWithViewPager(mViewPager);
+
+//        mTabLayout.removeAllTabs();
+        for (int i = 0; i < size; i++) {
+            TabLayout.Tab tab = mTabLayout.getTabAt(i);
+            CategoryResponse categoryResponse = mTabCategories.get(i);
+            tab.setCustomView(makeTabView(categoryResponse.getName()));
+//            mTabLayout.addTab(tab);
+
             if (categoryResponse.getId().equals(mChildCategoryId)) {
                 mDefaultIndex = i;
             }
         }
 
-        mViewPagerAdapter.setListFragments(mMechanismListFragments);
-        mViewPagerAdapter.setTabCategories(mTabCategories);
-
-        mViewPager.setAdapter(mViewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setOffscreenPageLimit(mViewPagerAdapter.getCount());
-        mViewPagerAdapter.notifyDataSetChanged();
         if (mDefaultIndex != 0) {
             mViewPager.setCurrentItem(mDefaultIndex);
         }

@@ -152,28 +152,29 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
                 // 0 表示要获得全部的信息，添加全部对应的ListFragment
                 addFistFragmentToList(allCategory);
                 int size = mTabCategories.size();
-                mTabLayout.removeAllTabs();
                 for (int i = 0; i < size; i++) {
-                    TabLayout.Tab tab = mTabLayout.newTab();
                     CategoryResponse categoryResponse = mTabCategories.get(i);
-                    tab.setCustomView(makeTabView(categoryResponse.getName()));
-                    mTabLayout.addTab(tab);
 
                     // 0 位置对应的是全部，已经在循环外添加过了
                     if (i != 0) {
                         addFragmentToList(categoryResponse);
                     }
-                    if (categoryResponse.getId().equals(mChildCategoryId)) {
-                        mChildTabIndex = i;
-                    }
                 }
 
                 mViewPagerAdapter.setListFragments(getListFragments());
                 mViewPagerAdapter.setTabCategories(mTabCategories);
-
                 mViewPager.setAdapter(mViewPagerAdapter);
                 mTabLayout.setupWithViewPager(mViewPager);
                 mViewPager.setOffscreenPageLimit(mTabCategories.size());
+                for (int i = 0; i < size; i++) {
+                    TabLayout.Tab tab = mTabLayout.getTabAt(i);
+                    CategoryResponse categoryResponse = mTabCategories.get(i);
+                    tab.setCustomView(makeTabView(categoryResponse.getName()));
+
+                    if (categoryResponse.getId().equals(mChildCategoryId)) {
+                        mChildTabIndex = i;
+                    }
+                }
                 if (mChildTabIndex != -1) {
                     mViewPager.setCurrentItem(mChildTabIndex);
                 }

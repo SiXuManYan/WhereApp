@@ -121,7 +121,6 @@
             app:tabIndicator="@drawable/shape_blue_indicator_25"
             app:tabIndicatorColor="@color/blue_72B9FF"
             app:tabIndicatorFullWidth="false"
-
             />
 
         <androidx.viewpager.widget.ViewPager

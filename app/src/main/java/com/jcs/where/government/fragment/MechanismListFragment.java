@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -130,10 +131,16 @@ public class MechanismListFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     /**
      * 获得当前分类下的子分类
      */
     private void getChildCategory() {
+        Log.e("MechanismListFragment", "getChildCategory: " + "mCurrentCategoryId=" + mCurrentCategoryId + "----mCategoryResponse.getId()=" + mCategoryResponse.getId());
         mModel.getChildCategories(3, mCategoryResponse.getId(), new BaseObserver<List<CategoryResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
@@ -147,8 +154,11 @@ public class MechanismListFragment extends BaseFragment {
                 mChildCategories.addAll(categoryResponses);
                 int size = categoryResponses.size();
                 if (size > 0) {
-                    mHScrollView.setVisibility(View.VISIBLE);
                     for (int i = 0; i < size; i++) {
+                        if (i == 0) {
+                            mRadioGroup.setVisibility(View.VISIBLE);
+                            mHScrollView.setVisibility(View.VISIBLE);
+                        }
                         RadioButton temp = new RadioButton(getContext());
                         CategoryResponse categoryResponse = categoryResponses.get(i);
                         temp.setButtonDrawable(null);
@@ -178,7 +188,6 @@ public class MechanismListFragment extends BaseFragment {
     private void getMechanismList(String categoryId) {
         mCurrentCategoryId = categoryId;
         mSwipeLayout.setRefreshing(true);
-        Log.e("MechanismListFragment", "getMechanismList: " + "id=" + categoryId);
 
         mModel.getMechanismList(categoryId, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
@@ -198,9 +207,6 @@ public class MechanismListFragment extends BaseFragment {
                     mRadioGroup.setVisibility(View.VISIBLE);
                 } else {
                     mAdapter.notifyDataSetChanged();
-                    if (mChildCategories.size() == 1) {
-                        mRadioGroup.setVisibility(View.GONE);
-                    }
                     mSearchNoneGroup.setVisibility(View.VISIBLE);
                 }
             }

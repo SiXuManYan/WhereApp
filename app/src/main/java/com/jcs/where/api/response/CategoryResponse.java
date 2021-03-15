@@ -90,4 +90,17 @@ public class CategoryResponse extends BaseNode implements Serializable {
     public List<BaseNode> getChildNode() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryResponse{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", parentCategory=" + parentCategory +
+                ", has_children=" + has_children +
+                ", type=" + type +
+                ", icon='" + icon + '\'' +
+                ", child_categories=" + child_categories +
+                '}';
+    }
 }

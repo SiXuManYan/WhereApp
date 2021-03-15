@@ -13,7 +13,7 @@
         android:bottom="1dp"
         android:top="1dp">
         <shape>
-            <solid android:color="@color/white" />
+            <solid android:color="@color/white_FEFEFE" />
         </shape>
     </item>
 </layer-list>

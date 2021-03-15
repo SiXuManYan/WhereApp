@@ -63,6 +63,7 @@ public class JcsTitle extends ConstraintLayout {
         mBottomLine = view.findViewById(R.id.bottomLine);
         mBackIv = view.findViewById(R.id.backIv);
         mBackIv.setImageResource(mBackIconRes);
+        mBackIv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mMiddleTitleTv = view.findViewById(R.id.middleTitle);
         mMiddleTitleTv.setText(mMiddleTitle);
         mMiddleTitleTv.setTextColor(mMiddleTitleColor);

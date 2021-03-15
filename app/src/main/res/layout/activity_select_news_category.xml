@@ -14,6 +14,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:middleTitle="" />
 
+<!--
+    <ImageView
+        android:src="@mipmap/ic_close_black"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/back_iv"
+        android:scaleType="centerInside"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+-->
+
 
     <TextView
         android:id="@+id/myChannelPrompt"

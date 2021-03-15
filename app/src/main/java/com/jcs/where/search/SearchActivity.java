@@ -130,6 +130,7 @@ public class SearchActivity extends BaseActivity {
         //必须，防止recyclerview高度为wrap时测量item高度0
         layout1.setAutoMeasureEnabled(true);
         searchHotRv.setLayoutManager(layout1);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this,
                 LinearLayoutManager.VERTICAL, false);
         recommendSearchRv.setLayoutManager(linearLayoutManager);

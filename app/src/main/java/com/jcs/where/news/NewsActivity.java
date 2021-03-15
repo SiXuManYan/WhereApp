@@ -75,7 +75,7 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white_FEFEFE));
         mModel = new NewsAtyModel();
         mFollowChannels = new ArrayList<>();
         mMoreChannels = new ArrayList<>();

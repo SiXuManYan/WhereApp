@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginBottom="@dimen/dp_5"
-        android:background="@color/white">
+        android:background="@color/white_FEFEFE">
 
 
         <LinearLayout
@@ -42,7 +42,8 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="@string/search_all_hint"
-                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:textColor="@color/black_333333"
                 android:textColorHint="@color/grey_999999"
                 android:textSize="@dimen/sp_12" />

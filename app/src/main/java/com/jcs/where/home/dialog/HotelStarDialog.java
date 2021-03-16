@@ -267,7 +267,6 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         }
 
 
-
     }
 
     public void setCallback(HotelStarCallback callback) {
@@ -294,9 +293,9 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     public static class PriceIntervalBean {
-        int start;
-        int end;
-        String priceShow;
+        public int start;
+        public int end;
+        public String priceShow;
 
         public PriceIntervalBean(int start, int end, String priceShow) {
             this.start = start;
@@ -306,8 +305,8 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     public static class StarBean {
-        String starShow;
-        int starValue;
+        public String starShow;
+        public int starValue;
 
         public StarBean(String starShow, int starValue) {
             this.starShow = starShow;
@@ -316,8 +315,8 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     public static class ScoreBean {
-        float score;
-        String scoreString;
+        public float score;
+        public String scoreString;
 
         public ScoreBean(float score, String scoreString) {
             this.score = score;

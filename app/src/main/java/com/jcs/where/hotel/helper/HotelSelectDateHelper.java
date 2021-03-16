@@ -19,5 +19,9 @@ public class HotelSelectDateHelper {
     public static final String EXT_ROOM_NUMBER = "roomNumber";
     public static final String EXT_CATEGORY_ID = "categoryId";
 
+    public static final String EXT_PRICE_START = "price_start";
+    public static final String EXT_PRICE_END = "price_end";
+    public static final String EXT_SCORE= "score";
+
 
 }

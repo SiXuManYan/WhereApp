@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -29,9 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -77,7 +78,52 @@ public class HotelListActivity extends BaseActivity {
     }
 
 
+    public static void goTo2(Context context,
+                             JcsCalendarAdapter.CalendarBean startDateBean,
+                             JcsCalendarAdapter.CalendarBean endDateBean,
+                             int totalDay,
+                             String cityName,
+                             String cityId,
+                             int startPrice,
+                             int endPrice,
+                             String star,
+                             float score,
+                             int roomNumber,
+                             String categoryId) {
+        Intent intent = new Intent(context, HotelListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+        // 开始结束日期
+        intent.putExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN, startDateBean);
+        intent.putExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN, endDateBean);
+
+        // 入住总天数
+        intent.putExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, totalDay);
+
+        // 城市
+        intent.putExtra(HotelSelectDateHelper.EXT_CITY, cityName);
+        intent.putExtra(HotelSelectDateHelper.EXT_CITY_ID, cityId);
+
+        // 价格区间
+        intent.putExtra(HotelSelectDateHelper.EXT_PRICE_START, startPrice);
+        intent.putExtra(HotelSelectDateHelper.EXT_PRICE_END, endPrice);
+
+        // 星级
+        intent.putExtra(HotelSelectDateHelper.EXT_STAR, star);
+
+        // 评分
+        intent.putExtra(HotelSelectDateHelper.EXT_SCORE, score);
+
+        // 房间总数
+        intent.putExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
+
+        //  类别 （从分类跳转）
+        intent.putExtra(HotelSelectDateHelper.EXT_CATEGORY_ID, categoryId);
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent);
+    }
 
 
     @Override
@@ -115,12 +161,7 @@ public class HotelListActivity extends BaseActivity {
             mLiveTextPromptTv.setVisibility(View.GONE);
             mLeaveTextPromptTv.setVisibility(View.GONE);
         }
-        Intent intent = getIntent();
-        mStartDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
-        mEndDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
-        mTotalDay = intent.getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
-        mRoomNum = intent.getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 1);
-        mParentCategoryId = intent.getStringExtra(HotelSelectDateHelper.EXT_CATEGORY_ID);
+        initExtra();
         startDayTv.setText(mStartDateBean.getShowMonthDayDateWithSplit());
         endDayTv.setText(mEndDateBean.getShowMonthDayDateWithSplit());
         mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
@@ -158,6 +199,16 @@ public class HotelListActivity extends BaseActivity {
                 showNetError(errorResponse);
             }
         });
+    }
+
+    private void initExtra() {
+        Intent intent = getIntent();
+        mStartDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
+        mEndDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
+        mTotalDay = intent.getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
+        mRoomNum = intent.getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 1);
+        mParentCategoryId = intent.getStringExtra(HotelSelectDateHelper.EXT_CATEGORY_ID);
+
     }
 
     @Override

@@ -71,7 +71,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private final int endGroup = -1;
     private final int startChild = -1;
     private final int endChild = -1;
-    private String cityId = "0";
+    private String mCityId = "0";
     private String usePrice = null;
     private String useStar = null;
     private String useStartYear, useEndYear;
@@ -88,6 +88,12 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private TextView mChooseLocationTv;
     private TextView mSearchTv;
     private int mTotalDay = 1;
+    private String mCategoryId = "";
+    private String mCityName;
+    private String mSelectStarValue;
+    private int mSelectStartPrice;
+    private int mSelectEndPrice;
+    private float mSelectScore;
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, HotelActivity.class);
@@ -182,6 +188,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     protected void initData() {
         mModel = new HotelModel();
         mJcsCalendarDialog.initCalendar(this);
+        mCategoryId = getIntent().getStringExtra(K_CATEGORY_ID);
         deployDateTv(mStartDateTv, mStartWeekTv, mJcsCalendarDialog.getStartBean());
         deployDateTv(mEndDateTv, mEndWeekTv, mJcsCalendarDialog.getEndBean());
         initGoogleApi();
@@ -283,8 +290,6 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-
-
     public void onClearClicked(View view) {
         mPriceAndStarTv.setText(getString(R.string.prompt_price_star));
         mPriceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
@@ -300,8 +305,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
-            mLocationTv.setText(data.getStringExtra(CityPickerActivity.EXTRA_CITY));
-            cityId = data.getStringExtra(CityPickerActivity.EXTRA_CITYID);
+            mCityName = data.getStringExtra(CityPickerActivity.EXTRA_CITY);
+            mCityId = data.getStringExtra(CityPickerActivity.EXTRA_CITYID);
+            mLocationTv.setText(mCityName);
         }
     }
 
@@ -379,7 +385,10 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void selectResult(HotelStarDialog.PriceIntervalBean mPriceBeans, HotelStarDialog.StarBean mSelectStartBean, HotelStarDialog.ScoreBean mScoreBean) {
-
+        mSelectStarValue = String.valueOf(mSelectStartBean.starValue);
+        mSelectStartPrice = mPriceBeans.start;
+        mSelectEndPrice = mPriceBeans.end;
+        mSelectScore = mScoreBean.score;
 
     }
 
@@ -389,11 +398,27 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
                 mJcsCalendarDialog.getEndBean(),
                 mTotalDay,
                 mLocationTv.getText().toString(),
-                cityId,
+                mCityId,
                 usePrice,
                 useStar,
                 Integer.parseInt(mRoomNumTv.getText().toString()),
-                getIntent().getStringExtra(K_CATEGORY_ID));
+                mCategoryId);
+
+//        HotelListActivity.goTo2(this,
+//                mJcsCalendarDialog.getStartBean(),
+//                mJcsCalendarDialog.getEndBean(),
+//                mTotalDay,
+//                mCityName,
+//                mCityId,
+//                mSelectStartPrice,
+//                mSelectEndPrice,
+//                mSelectStarValue,
+//                mSelectScore,
+//                Integer.parseInt(mRoomNumTv.getText().toString()),
+//                mCategoryId
+//        );
+
+
     }
 
     @Override

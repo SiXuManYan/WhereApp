@@ -30,7 +30,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="124dp"
+                        android:layout_height="@dimen/dp_124"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_minebg" />
 
@@ -47,10 +47,10 @@
                     <RelativeLayout
                         android:id="@+id/rl_minemessage"
                         android:layout_width="match_parent"
-                        android:layout_height="70.5dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="75dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_height="@dimen/dp_70"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_75"
+                        android:layout_marginRight="@dimen/dp_15"
                         android:background="@drawable/bg_minename">
 
                         <de.hdodenhof.circleimageview.CircleImageView
@@ -87,10 +87,10 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="账号:12345"
                                 android:textColor="@color/grey_666666"
-                                android:textSize="13sp"
-                                android:visibility="gone" />
+                                android:textSize="@dimen/sp_13"
+                                android:visibility="gone"
+                                tools:text="账号:12345" />
 
                         </LinearLayout>
 
@@ -452,7 +452,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_address"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
 
@@ -480,7 +480,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_collection"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
 
@@ -507,7 +507,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_footprint"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
 
@@ -534,7 +534,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/title_setting"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
 
@@ -590,7 +590,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_about_us"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
 
@@ -618,7 +618,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_merchant_settled"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
 
@@ -647,7 +647,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:text="@string/mine_change_language"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
 
@@ -676,7 +676,7 @@
 
                                 android:text="@string/mine_customer_service"
                                 android:textColor="@color/black_333333"
-                                android:textSize="13sp" />
+                                android:textSize="@dimen/sp_13" />
 
 
                         </LinearLayout>

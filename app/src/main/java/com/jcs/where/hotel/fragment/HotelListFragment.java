@@ -58,7 +58,7 @@ public class HotelListFragment extends BaseFragment {
 
     public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, JcsCalendarAdapter.CalendarBean startBean, JcsCalendarAdapter.CalendarBean endBean, int totalDay, int roomNumber) {
         Bundle args = new Bundle();
-        args.putString("hotelTypeIds", hotelTypeIds);
+        args.putString(Constant.PARAM_HOTEL_TYPE_IDS, hotelTypeIds);
         args.putString(HotelSelectDateHelper.EXT_CITY_ID, cityId);
         args.putString(HotelSelectDateHelper.EXT_PRICE, price);
         args.putString(HotelSelectDateHelper.EXT_STAR, star);

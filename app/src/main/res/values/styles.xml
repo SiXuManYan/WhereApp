@@ -82,6 +82,7 @@
         <item name="android:selectable">true</item>
         <item name="android:focusable">true</item>
     </style>
+
     <style name="hotel_star_star_tv" parent="hotel_star_tv">
         <item name="rightDrawableList">@drawable/selector_hotel_star_icon</item>
         <item name="rightDrawableListWidth">@dimen/dp_11</item>

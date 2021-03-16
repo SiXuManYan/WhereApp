@@ -51,6 +51,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
@@ -59,7 +60,6 @@ import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
-import com.jcs.where.utils.MapMarkerUtil;
 
 import java.util.List;
 
@@ -727,6 +727,34 @@ public interface RetrofitApi {
             @Query("search_input") @Nullable String search_input,
             @Query("star_level") @Nullable String star_level,
             @Query("price_range") @Nullable String price_range
+    );
+
+
+    /**
+     * 酒店列表
+     *
+     * @param page
+     * @param areaId       地区id
+     * @param lat          纬度
+     * @param lng          经度
+     * @param price_range  价格区间（特殊情况，900以上请传递[900,100000]）
+     * @param star_level   星级（特殊情况，二星以下请传递[1,2]）
+     * @param hotelTypeIds 住宿类型ID（多选）
+     * @param input        搜索酒店内容
+     * @param grade        酒店分数
+     */
+    @GET("hotelapi/v2/hotels")
+    Observable<JcsResponse<PageResponse<HotelListResponse>>> getHotelList(
+            @Query("page") int page,
+            @Query("lat") String lat,
+            @Query("lng") String lng,
+            @Query("area_id") @Nullable String areaId,
+            @Query("price_range") @Nullable String price_range,
+            @Query("star_level") @Nullable String star_level,
+            @Query("hotel_type_ids") @Nullable String hotelTypeIds,
+            @Query("search_input") @Nullable String input,
+            @Query("grade") @Nullable String grade
+
     );
 
 

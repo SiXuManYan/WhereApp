@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 import com.jcs.where.R;
@@ -83,6 +85,14 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     @Override
+    public void show(FragmentManager fm) {
+        super.show(fm);
+        if (mSeekBar != null) {
+            mSeekBar.setProgress(0, 0);
+        }
+    }
+
+    @Override
     protected void initData() {
         mDecimalFormat = new DecimalFormat("#0.0");
 
@@ -93,10 +103,10 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         priceTvs.add(priceAbove5);
 
         priceBeans = new HashMap<>();
-        priceBeans.put(price0To1, new PriceIntervalBean(0, 10, getString(R.string.price_0_to_1)));
-        priceBeans.put(price1To2, new PriceIntervalBean(1, 20, getString(R.string.price_1_to_2)));
-        priceBeans.put(price2To5, new PriceIntervalBean(20, 50, getString(R.string.price_2_to_5)));
-        priceBeans.put(priceAbove5, new PriceIntervalBean(50, 50, getString(R.string.price_above_5)));
+        priceBeans.put(price0To1, new PriceIntervalBean(0, 1000, getString(R.string.price_0_to_1)));
+        priceBeans.put(price1To2, new PriceIntervalBean(1000, 2000, getString(R.string.price_1_to_2)));
+        priceBeans.put(price2To5, new PriceIntervalBean(2000, 5000, getString(R.string.price_2_to_5)));
+        priceBeans.put(priceAbove5, new PriceIntervalBean(5000, 1000000, getString(R.string.price_above_5)));
 
         starTvs = new ArrayList<>();
         starTvs.add(starLessThan2);
@@ -218,6 +228,18 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     @Override
     public void onClick(View view) {
 
+        if (view instanceof Button) {
+            //点击了确定
+            StringBuilder callbackToShow = new StringBuilder(priceTv.getText().toString());
+            if (mSelectStartBean != null) {
+                callbackToShow.append("，").append(mSelectStartBean.starShow);
+            }
+            mCallback.selectPriceOrStar(callbackToShow.toString());
+            mCallback.selectResult(mPriceBeans, mSelectStartBean, mScoreBean);
+            dismiss();
+            return;
+        }
+
 
         if (view instanceof TextView) {
             unSelectByTag((TextView) view);
@@ -244,17 +266,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
             }
         }
 
-        if (view instanceof Button) {
-            //点击了确定
-            StringBuilder callbackToShow = new StringBuilder(priceTv.getText().toString());
-            if (mSelectStartBean != null) {
-                callbackToShow.append("，").append(mSelectStartBean.starShow);
-            }
-            mCallback.selectPriceOrStar(callbackToShow.toString());
-            mCallback.selectResult(mPriceBeans, mSelectStartBean, mScoreBean);
-            dismiss();
-            return;
-        }
+
 
     }
 
@@ -281,7 +293,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         priceTv.setText("");
     }
 
-   public static class PriceIntervalBean {
+    public static class PriceIntervalBean {
         int start;
         int end;
         String priceShow;
@@ -293,7 +305,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         }
     }
 
-    public  static class StarBean {
+    public static class StarBean {
         String starShow;
         int starValue;
 

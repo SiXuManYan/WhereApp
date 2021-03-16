@@ -47,6 +47,7 @@ public class Constant {
     public static final String PARAM_DOWNLOAD_URL = "DOWNLOAD_URL";
     public static final String PARAM_UPDATE_DESC = "UPDATE_DESC";
     public static final String PARAM_IS_FORCE_INSTALL = "IS_FORCE_INSTALL";
+    public static final String PARAM_HOTEL_TYPE_IDS = "hotelTypeIds";
 
 
     /**

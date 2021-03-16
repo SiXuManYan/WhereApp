@@ -76,6 +76,10 @@ public class HotelListActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+
+
+
+
     @Override
     protected void initView() {
         mCalendarDialog = new JcsCalendarDialog();

@@ -9,7 +9,6 @@ import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseBottomDialog;
-import com.jcs.where.base.BaseDialog;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -28,7 +27,14 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     private List<TextView> scoreTvs;
     private HashMap<TextView, PriceIntervalBean> priceBeans;
     private HashMap<TextView, StarBean> starBeans;
+    private HashMap<TextView, ScoreBean> scoreBeans;
+
+    /**
+     * 选中的星级
+     */
     private StarBean mSelectStartBean;
+
+
     private RangeSeekBar mSeekBar;
     private DecimalFormat mDecimalFormat;
     private HotelStarCallback mCallback;
@@ -36,6 +42,16 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     private final String TAG_PRICE = "price";
     private final String TAG_STAR = "star";
     private final String TAG_SCORE = "score";
+
+    /**
+     * 选中的评分
+     */
+    private ScoreBean mScoreBean;
+
+    /**
+     * 选中的价格区间
+     */
+    private PriceIntervalBean mPriceBeans;
 
     @Override
     protected int getLayout() {
@@ -89,16 +105,24 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         starTvs.add(star5);
 
         starBeans = new HashMap<>();
-        starBeans.put(starLessThan2, new StarBean("二星及以下"));
-        starBeans.put(star3, new StarBean("三星"));
-        starBeans.put(star4, new StarBean("四星"));
-        starBeans.put(star5, new StarBean("五星"));
+        starBeans.put(starLessThan2, new StarBean("二星及以下", 2));
+        starBeans.put(star3, new StarBean("三星", 3));
+        starBeans.put(star4, new StarBean("四星", 4));
+        starBeans.put(star5, new StarBean("五星", 5));
 
         scoreTvs = new ArrayList<>();
         scoreTvs.add(score30);
         scoreTvs.add(score35);
         scoreTvs.add(score40);
         scoreTvs.add(score45);
+
+        scoreBeans = new HashMap<>();
+        scoreBeans.put(score30, new ScoreBean(3.0f, "一般"));
+        scoreBeans.put(score35, new ScoreBean(3.5f, "满意"));
+        scoreBeans.put(score40, new ScoreBean(4.0f, "很好"));
+        scoreBeans.put(score45, new ScoreBean(4.5f, "超赞"));
+
+
     }
 
     @Override
@@ -193,16 +217,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if (view instanceof Button) {
-            //点击了确定
-            StringBuilder callbackToShow = new StringBuilder(priceTv.getText().toString());
-            if (mSelectStartBean != null) {
-                callbackToShow.append("，").append(mSelectStartBean.starShow);
-            }
-            mCallback.selectPriceOrStar(callbackToShow.toString());
-            dismiss();
-            return;
-        }
+
 
         if (view instanceof TextView) {
             unSelectByTag((TextView) view);
@@ -213,14 +228,34 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
                 //说明点击的是价格
                 priceTv.setText(priceIntervalBean.priceShow);
                 mSeekBar.setProgress(priceIntervalBean.start, priceIntervalBean.end);
+                mPriceBeans = priceIntervalBean;
             }
 
             StarBean starBean = starBeans.get(view);
             if (starBean != null) {
-                //说明点击的是星级
+                // 说明点击的是星级
                 mSelectStartBean = starBean;
             }
+
+            ScoreBean scoreBean = scoreBeans.get(view);
+            if (scoreBean != null) {
+                // 点击评分
+                mScoreBean = scoreBean;
+            }
         }
+
+        if (view instanceof Button) {
+            //点击了确定
+            StringBuilder callbackToShow = new StringBuilder(priceTv.getText().toString());
+            if (mSelectStartBean != null) {
+                callbackToShow.append("，").append(mSelectStartBean.starShow);
+            }
+            mCallback.selectPriceOrStar(callbackToShow.toString());
+            mCallback.selectResult(mPriceBeans, mSelectStartBean, mScoreBean);
+            dismiss();
+            return;
+        }
+
     }
 
     public void setCallback(HotelStarCallback callback) {
@@ -246,7 +281,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         priceTv.setText("");
     }
 
-    static class PriceIntervalBean {
+   public static class PriceIntervalBean {
         int start;
         int end;
         String priceShow;
@@ -258,16 +293,38 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         }
     }
 
-    static class StarBean {
+    public  static class StarBean {
         String starShow;
+        int starValue;
 
-        public StarBean(String starShow) {
+        public StarBean(String starShow, int starValue) {
             this.starShow = starShow;
+            this.starValue = starValue;
         }
     }
 
+    public static class ScoreBean {
+        float score;
+        String scoreString;
+
+        public ScoreBean(float score, String scoreString) {
+            this.score = score;
+            this.scoreString = scoreString;
+        }
+    }
 
     public interface HotelStarCallback {
         void selectPriceOrStar(String show);
+
+        /**
+         * 选择结果
+         *
+         * @param mPriceBeans      选中的价格区间
+         * @param mSelectStartBean 选中的星级
+         * @param mScoreBean       选中的评分
+         */
+        void selectResult(PriceIntervalBean mPriceBeans, StarBean mSelectStartBean, ScoreBean mScoreBean);
     }
+
+
 }

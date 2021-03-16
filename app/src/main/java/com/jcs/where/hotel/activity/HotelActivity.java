@@ -17,6 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.gms.common.ConnectionResult;
@@ -24,17 +32,17 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.jcs.where.R;
-import com.jcs.where.api.response.HotelResponse;
-import com.jcs.where.utils.GlideUtil;
-import com.jcs.where.utils.LocalLanguageUtil;
-import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.home.dialog.HotelStarDialog;
-import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.hotel.model.HotelModel;
+import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,14 +52,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.PermissionChecker;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 酒店预订页面
@@ -274,7 +274,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             deployDateTv(mEndDateTv, mEndWeekTv, endDate);
         }
         mTotalDayTv.setText(mJcsCalendarDialog.getTotalDay());
-        mTotalDay  = mJcsCalendarDialog.getTotalDay2();
+        mTotalDay = mJcsCalendarDialog.getTotalDay2();
     }
 
     public void deployDateTv(TextView dateTv, TextView weekTv, JcsCalendarAdapter.CalendarBean calendarBean) {
@@ -377,6 +377,11 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mPriceAndStarTv.setText(show);
         mPriceAndStarTv.setTextColor(ContextCompat.getColor(this, R.color.black_333333));
         mClearIv.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void selectResult(HotelStarDialog.PriceIntervalBean mPriceBeans, HotelStarDialog.StarBean mSelectStartBean, HotelStarDialog.ScoreBean mScoreBean) {
+
     }
 
     @Override

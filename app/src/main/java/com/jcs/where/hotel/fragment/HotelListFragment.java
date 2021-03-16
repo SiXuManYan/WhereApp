@@ -38,6 +38,9 @@ import java.util.List;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * @deprecated
+ */
 public class HotelListFragment extends BaseFragment {
     private MyPtrClassicFrameLayout ptrFrame;
     private RecyclerView hotelListRv;
@@ -68,7 +71,7 @@ public class HotelListFragment extends BaseFragment {
         return fragment;
     }
 
-    private void getdata() {
+    private void getData() {
         showLoading();
         String url = null;
         ArrayList<String> typeIds = new ArrayList<>();
@@ -110,7 +113,7 @@ public class HotelListFragment extends BaseFragment {
         }
         page = 1;
         useInputText = inputText;
-        getdata();
+        getData();
     }
 
     public void changeData(String startData, String endDate, String startWeek, String endWeek, int totalDay, String startYear, String endYear, int roomNum) {
@@ -136,13 +139,13 @@ public class HotelListFragment extends BaseFragment {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
-                getdata();
+                getData();
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 page = 1;
-                getdata();
+                getData();
             }
         });
     }
@@ -166,7 +169,7 @@ public class HotelListFragment extends BaseFragment {
         hotelListAdpater = new HotelListAdpater();
         hotelListAdpater.addChildClickViewIds(R.id.ll_hotel);
 
-        getdata();
+        getData();
     }
 
     @Override

@@ -11,7 +11,9 @@ import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseBottomDialog;
+import com.jcs.where.utils.BigDecimalUtil;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,11 +33,6 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     private HashMap<TextView, StarBean> starBeans;
     private HashMap<TextView, ScoreBean> scoreBeans;
 
-    /**
-     * 选中的星级
-     */
-    private StarBean mSelectStartBean;
-
 
     private RangeSeekBar mSeekBar;
     private DecimalFormat mDecimalFormat;
@@ -48,12 +45,18 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     /**
      * 选中的评分
      */
-    private ScoreBean mScoreBean;
+    private ScoreBean mScoreBean = new ScoreBean();
 
     /**
      * 选中的价格区间
      */
-    private PriceIntervalBean mPriceBeans;
+    private PriceIntervalBean mPriceBeans = new PriceIntervalBean();
+
+
+    /**
+     * 选中的星级
+     */
+    private StarBean mSelectStartBean = new StarBean();
 
     @Override
     protected int getLayout() {
@@ -103,10 +106,10 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         priceTvs.add(priceAbove5);
 
         priceBeans = new HashMap<>();
-        priceBeans.put(price0To1, new PriceIntervalBean(0, 1000, getString(R.string.price_0_to_1)));
-        priceBeans.put(price1To2, new PriceIntervalBean(1000, 2000, getString(R.string.price_1_to_2)));
-        priceBeans.put(price2To5, new PriceIntervalBean(2000, 5000, getString(R.string.price_2_to_5)));
-        priceBeans.put(priceAbove5, new PriceIntervalBean(5000, 1000000, getString(R.string.price_above_5)));
+        priceBeans.put(price0To1, new PriceIntervalBean(0, 10, getString(R.string.price_0_to_1), 0, 1000));
+        priceBeans.put(price1To2, new PriceIntervalBean(10, 20, getString(R.string.price_1_to_2), 1000, 2000));
+        priceBeans.put(price2To5, new PriceIntervalBean(20, 50, getString(R.string.price_2_to_5), 2000, 5000));
+        priceBeans.put(priceAbove5, new PriceIntervalBean(50, 50, getString(R.string.price_above_5), 5000, 1000000));
 
         starTvs = new ArrayList<>();
         starTvs.add(starLessThan2);
@@ -184,8 +187,17 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
                         .append("-")
                         .append(mDecimalFormat.format(rightProgress / 10))
                         .append("k");
+
                 priceTv.setText(priceShow);
                 unSelectByList(null, priceTvs);
+
+                //
+
+                float leftPrice = BigDecimalUtil.mul(leftProgress, 100).floatValue();
+                mPriceBeans.startPrice = Math.round(leftPrice);
+
+                float rightPrice = BigDecimalUtil.mul(rightProgress, 100).floatValue();
+                mPriceBeans.endPrice = Math.round(rightPrice);
             }
         });
     }
@@ -249,7 +261,9 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
                 Log.e("HotelStarDialog", "----onClick---" + priceIntervalBean.toString());
                 //说明点击的是价格
                 priceTv.setText(priceIntervalBean.priceShow);
-                mSeekBar.setProgress(priceIntervalBean.start, priceIntervalBean.end);
+                int start = priceIntervalBean.startProgress;
+                int end = priceIntervalBean.endProgress;
+                mSeekBar.setProgress(start, end);
                 mPriceBeans = priceIntervalBean;
             }
 
@@ -293,20 +307,34 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     public static class PriceIntervalBean {
-        public int start;
-        public int end;
-        public String priceShow;
 
-        public PriceIntervalBean(int start, int end, String priceShow) {
-            this.start = start;
-            this.end = end;
-            this.priceShow = priceShow;
+        public Integer startProgress;
+        public Integer endProgress;
+        public String priceShow;
+        public Integer startPrice ;
+        public Integer endPrice;
+
+        public PriceIntervalBean() {
+
         }
+
+        public PriceIntervalBean(int startProgress, int endProgress, String priceShow, int startPrice, int endPrice) {
+            this.startProgress = startProgress;
+            this.endProgress = endProgress;
+            this.priceShow = priceShow;
+            this.startPrice = startPrice;
+            this.endPrice = endPrice;
+        }
+
+
     }
 
     public static class StarBean {
         public String starShow;
-        public int starValue;
+        public Integer starValue;
+
+        public StarBean() {
+        }
 
         public StarBean(String starShow, int starValue) {
             this.starShow = starShow;
@@ -315,8 +343,11 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     public static class ScoreBean {
-        public float score;
+        public Float score;
         public String scoreString;
+
+        public ScoreBean() {
+        }
 
         public ScoreBean(float score, String scoreString) {
             this.score = score;

@@ -308,11 +308,11 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
     public static class PriceIntervalBean {
 
-        public Integer startProgress;
-        public Integer endProgress;
-        public String priceShow;
-        public Integer startPrice ;
-        public Integer endPrice;
+        public int startProgress;
+        public int endProgress;
+        public String priceShow = "";
+        public int startPrice ;
+        public int endPrice;
 
         public PriceIntervalBean() {
 
@@ -330,8 +330,8 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     public static class StarBean {
-        public String starShow;
-        public Integer starValue;
+        public String starShow = "";
+        public int starValue;
 
         public StarBean() {
         }
@@ -343,8 +343,8 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     public static class ScoreBean {
-        public Float score;
-        public String scoreString;
+        public float score;
+        public String scoreString = "";
 
         public ScoreBean() {
         }

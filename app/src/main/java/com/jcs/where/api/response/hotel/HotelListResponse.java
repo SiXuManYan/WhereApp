@@ -41,7 +41,7 @@ public class HotelListResponse {
 
     */
 
-    public String id;
+    public int id;
     public ArrayList<String> images = new ArrayList<>();
     public String name;
     public float grade;

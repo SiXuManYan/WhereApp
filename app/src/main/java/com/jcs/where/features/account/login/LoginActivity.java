@@ -120,7 +120,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
         // 默认菲律宾前缀
         country_tv.setText(getString(R.string.country_code_format, "63"));
-        // 用户协议，隐私政策 (url 替换)
+        // 用户协议，隐私政策
         login_rule_tv.setMovementMethod(LinkMovementMethod.getInstance());
         String defaultStr = getString(R.string.login_rule_default);
         String keyWord0 = getString(R.string.login_rule_keyword_0);

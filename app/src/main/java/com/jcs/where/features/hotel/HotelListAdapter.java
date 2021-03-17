@@ -94,7 +94,7 @@ public class HotelListAdapter extends BaseQuickAdapter<HotelListResponse, BaseVi
      */
     private void loadImage(HotelListResponse data, ImageView image_iv) {
         RequestOptions options = RequestOptions.bitmapTransform(
-                new GlideRoundedCornersTransform(10, GlideRoundedCornersTransform.CornerType.LEFT))
+                new GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                 .error(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray);
 

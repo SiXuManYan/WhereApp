@@ -71,12 +71,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private final int endGroup = -1;
     private final int startChild = -1;
     private final int endChild = -1;
-    private String mCityId = "0";
-    private String usePrice = null;
-    private String useStar = null;
+
     private String useStartYear, useEndYear;
     private ImageView mClearIv;
-    private String transmitPrice, transmitStar;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private LatLng lastLatLng, perthLatLng;
@@ -87,13 +84,46 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     private JcsCalendarDialog mJcsCalendarDialog;
     private TextView mChooseLocationTv;
     private TextView mSearchTv;
-    private int mTotalDay = 1;
+
+
+    /**
+     * 酒店列表获取分类
+     */
     private String mCategoryId = "";
+
+    /**
+     * 选中的城市
+     */
     private String mCityName;
-    private String mSelectStarValue;
+
+    /**
+     * 选中的城市id
+     */
+    private String mCityId = "0";
+
+    /**
+     * 星级
+     */
+    private int mSelectStarValue;
+
+    /**
+     * 价格区间开始
+     */
     private int mSelectStartPrice;
+
+    /**
+     * 价格区间，结束
+     */
     private int mSelectEndPrice;
+
+    /**
+     * 评分
+     */
     private float mSelectScore;
+    /**
+     * 入住总天数
+     */
+    private int mTotalDay = 1;
 
     public static void goTo(Context context) {
         Intent intent = new Intent(context, HotelActivity.class);
@@ -293,12 +323,13 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
     public void onClearClicked(View view) {
         mPriceAndStarTv.setText(getString(R.string.prompt_price_star));
         mPriceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
-        usePrice = null;
-        useStar = null;
-        transmitPrice = null;
-        transmitStar = null;
         mHotelStarDialog = new HotelStarDialog();
         mClearIv.setVisibility(View.GONE);
+
+        mSelectStarValue = 0;
+        mSelectStartPrice = 0;
+        mSelectEndPrice = 0;
+        mSelectScore = 0;
     }
 
     @Override
@@ -385,38 +416,26 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void selectResult(HotelStarDialog.PriceIntervalBean mPriceBeans, HotelStarDialog.StarBean mSelectStartBean, HotelStarDialog.ScoreBean mScoreBean) {
-        mSelectStarValue = String.valueOf(mSelectStartBean.starValue);
-        mSelectStartPrice = mPriceBeans.start;
-        mSelectEndPrice = mPriceBeans.end;
+        mSelectStarValue = mSelectStartBean.starValue;
+        mSelectStartPrice = mPriceBeans.startPrice;
+        mSelectEndPrice = mPriceBeans.endPrice;
         mSelectScore = mScoreBean.score;
-
     }
 
     public void onSearchTvClick(View view) {
-        HotelListActivity.goTo(HotelActivity.this,
+        HotelListActivity.goTo(this,
                 mJcsCalendarDialog.getStartBean(),
                 mJcsCalendarDialog.getEndBean(),
                 mTotalDay,
-                mLocationTv.getText().toString(),
+                mCityName,
                 mCityId,
-                usePrice,
-                useStar,
+                mSelectStartPrice,
+                mSelectEndPrice,
+                mSelectStarValue,
+                mSelectScore,
                 Integer.parseInt(mRoomNumTv.getText().toString()),
-                mCategoryId);
-
-//        HotelListActivity.goTo2(this,
-//                mJcsCalendarDialog.getStartBean(),
-//                mJcsCalendarDialog.getEndBean(),
-//                mTotalDay,
-//                mCityName,
-//                mCityId,
-//                mSelectStartPrice,
-//                mSelectEndPrice,
-//                mSelectStarValue,
-//                mSelectScore,
-//                Integer.parseInt(mRoomNumTv.getText().toString()),
-//                mCategoryId
-//        );
+                mCategoryId
+        );
 
 
     }

@@ -16,6 +16,7 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.features.hotel.HotelListChildFragment;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.model.HotelListModel;
@@ -56,40 +57,62 @@ public class HotelListActivity extends BaseActivity {
     private JcsCalendarDialog mCalendarDialog;
 
     private HotelListModel mModel;
+
+    /**
+     * 选中的开始日期
+     */
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
+
+
+    /**
+     * 选中的结束日期
+     */
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
 
-    public static void goTo(Context context, JcsCalendarAdapter.CalendarBean startDateBean, JcsCalendarAdapter.CalendarBean endDateBean, int totalDay, String city, String cityId, String price, String star, int roomNumber, String categoryId) {
-        Intent intent = new Intent(context, HotelListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN, startDateBean);
-        intent.putExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN, endDateBean);
-        intent.putExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, totalDay);
-        intent.putExtra(HotelSelectDateHelper.EXT_CITY, city);
-        intent.putExtra(HotelSelectDateHelper.EXT_CITY_ID, cityId);
-        intent.putExtra(HotelSelectDateHelper.EXT_PRICE, price);
-        intent.putExtra(HotelSelectDateHelper.EXT_STAR, star);
-        intent.putExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
-        intent.putExtra(HotelSelectDateHelper.EXT_CATEGORY_ID, categoryId);
-        if (!(context instanceof Activity)) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        context.startActivity(intent);
-    }
+    /**
+     * 选中的城市名
+     */
+    private String mCityName;
+
+    /**
+     * 选中的城市id
+     */
+    private String mCityId;
+
+    /**
+     * 价格区间，开始
+     */
+    private int mPriceStart;
+
+    /**
+     * 价格区间，结束
+     */
+    private int mPriceEnd;
+
+    /**
+     * 选中的星级
+     */
+    private int mStar;
+
+    /**
+     * 选中的评分
+     */
+    private float mScore;
 
 
-    public static void goTo2(Context context,
-                             JcsCalendarAdapter.CalendarBean startDateBean,
-                             JcsCalendarAdapter.CalendarBean endDateBean,
-                             int totalDay,
-                             String cityName,
-                             String cityId,
-                             int startPrice,
-                             int endPrice,
-                             String star,
-                             float score,
-                             int roomNumber,
-                             String categoryId) {
+    public static void goTo(Context context,
+                            JcsCalendarAdapter.CalendarBean startDateBean,
+                            JcsCalendarAdapter.CalendarBean endDateBean,
+                            int totalDay,
+                            String cityName,
+                            String cityId,
+                            int startPrice,
+                            int endPrice,
+                            int star,
+                            float score,
+                            int roomNumber,
+                            String categoryId) {
+
         Intent intent = new Intent(context, HotelListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -117,7 +140,7 @@ public class HotelListActivity extends BaseActivity {
         // 房间总数
         intent.putExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
 
-        //  类别 （从分类跳转）
+        //  类别，请求分类id
         intent.putExtra(HotelSelectDateHelper.EXT_CATEGORY_ID, categoryId);
         if (!(context instanceof Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -203,12 +226,34 @@ public class HotelListActivity extends BaseActivity {
 
     private void initExtra() {
         Intent intent = getIntent();
+        // 开始结束日期
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
         mEndDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
-        mTotalDay = intent.getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
-        mRoomNum = intent.getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 1);
-        mParentCategoryId = intent.getStringExtra(HotelSelectDateHelper.EXT_CATEGORY_ID);
 
+        // 入住总天数
+        mTotalDay = intent.getIntExtra(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
+
+        // 城市
+        mCityName = intent.getStringExtra(HotelSelectDateHelper.EXT_CITY);
+        mCityId = intent.getStringExtra(HotelSelectDateHelper.EXT_CITY_ID);
+
+
+        // 价格区间
+        mPriceStart = intent.getIntExtra(HotelSelectDateHelper.EXT_PRICE_START, 0);
+        mPriceEnd = intent.getIntExtra(HotelSelectDateHelper.EXT_PRICE_END, 0);
+
+
+        // 星级
+        mStar = intent.getIntExtra(HotelSelectDateHelper.EXT_STAR, 0);
+
+        // 评分
+        mScore = intent.getFloatExtra(HotelSelectDateHelper.EXT_SCORE, 0);
+
+        // 房间总数
+        mRoomNum = intent.getIntExtra(HotelSelectDateHelper.EXT_ROOM_NUMBER, 1);
+
+        //  类别，请求分类id
+        mParentCategoryId = intent.getStringExtra(HotelSelectDateHelper.EXT_CATEGORY_ID);
     }
 
     @Override
@@ -225,12 +270,12 @@ public class HotelListActivity extends BaseActivity {
                 mStartDateBean,
                 mEndDateBean,
                 mTotalDay,
-                intent.getStringExtra(HotelSelectDateHelper.EXT_CITY),
-                intent.getStringExtra(HotelSelectDateHelper.EXT_CITY_ID),
-                intent.getStringExtra(HotelSelectDateHelper.EXT_PRICE),
-                intent.getStringExtra(HotelSelectDateHelper.EXT_STAR),
+                mCityName,
+                mCityId,
+                mPriceEnd + "",
+                mStar + "",
                 mRoomNum,
-                intent.getStringExtra(HotelSelectDateHelper.EXT_CATEGORY_ID)
+                mParentCategoryId
         );
     }
 
@@ -244,14 +289,29 @@ public class HotelListActivity extends BaseActivity {
         mTab.setSelectedTabIndicatorHeight(0);
         fragments = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            fragments.add(HotelListFragment.newInstance(String.valueOf(list.get(i).getId()),
-                    getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID),
-                    getIntent().getStringExtra(HotelSelectDateHelper.EXT_PRICE),
-                    getIntent().getStringExtra(HotelSelectDateHelper.EXT_STAR),
+            String hotelTypeIds = String.valueOf(list.get(i).getId());
+
+//            HotelListFragment e = HotelListFragment.newInstance(hotelTypeIds,
+//                    mCityId,
+//                    mPriceEnd + "",
+//                    mStar + "",
+//                    mStartDateBean,
+//                    mEndDateBean,
+//                    mTotalDay,
+//                    mRoomNum);
+
+            HotelListChildFragment fragment = HotelListChildFragment.getInstance(hotelTypeIds,
                     mStartDateBean,
                     mEndDateBean,
                     mTotalDay,
-                    mRoomNum));
+                    mCityId,
+                    mPriceStart,
+                    mPriceEnd,
+                    mStar,
+                    mScore,
+                    mRoomNum);
+
+            fragments.add(fragment);
         }
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

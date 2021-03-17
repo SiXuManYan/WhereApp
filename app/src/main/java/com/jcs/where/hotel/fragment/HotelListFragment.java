@@ -40,6 +40,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * @deprecated
+ * @see com.jcs.where.features.hotel.HotelListChildFragment
  */
 public class HotelListFragment extends BaseFragment {
     private MyPtrClassicFrameLayout ptrFrame;
@@ -57,17 +58,17 @@ public class HotelListFragment extends BaseFragment {
     private String mHotelTypeIds;
 
     public static HotelListFragment newInstance(String hotelTypeIds, String cityId, String price, String star, JcsCalendarAdapter.CalendarBean startBean, JcsCalendarAdapter.CalendarBean endBean, int totalDay, int roomNumber) {
-        Bundle args = new Bundle();
-        args.putString(Constant.PARAM_HOTEL_TYPE_IDS, hotelTypeIds);
-        args.putString(HotelSelectDateHelper.EXT_CITY_ID, cityId);
-        args.putString(HotelSelectDateHelper.EXT_PRICE, price);
-        args.putString(HotelSelectDateHelper.EXT_STAR, star);
-        args.putInt(HotelSelectDateHelper.EXT_TOTAL_DAY, totalDay);
-        args.putInt(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
-        args.putSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN, startBean);
-        args.putSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN, endBean);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.PARAM_HOTEL_TYPE_IDS, hotelTypeIds);
+        bundle.putString(HotelSelectDateHelper.EXT_CITY_ID, cityId);
+        bundle.putString(HotelSelectDateHelper.EXT_PRICE, price);
+        bundle.putString(HotelSelectDateHelper.EXT_STAR, star);
+        bundle.putInt(HotelSelectDateHelper.EXT_TOTAL_DAY, totalDay);
+        bundle.putInt(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
+        bundle.putSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN, startBean);
+        bundle.putSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN, endBean);
         HotelListFragment fragment = new HotelListFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
         return fragment;
     }
 

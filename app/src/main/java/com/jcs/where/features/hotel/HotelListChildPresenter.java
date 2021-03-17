@@ -1,5 +1,6 @@
 package com.jcs.where.features.hotel;
 
+import com.google.gson.Gson;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.PageResponse;
@@ -15,9 +16,12 @@ public class HotelListChildPresenter extends BaseMvpPresenter {
 
     private HotelListChildView view;
 
+    private Gson gson;
+
     public HotelListChildPresenter(HotelListChildView view) {
         super(view);
         this.view = view;
+        gson = new Gson();
     }
 
     /**
@@ -25,27 +29,46 @@ public class HotelListChildPresenter extends BaseMvpPresenter {
      *
      * @param page
      * @param areaId       地区id
-     * @param price_range  价格区间（特殊情况，900以上请传递[900,100000]）
+     * @param mPriceStart  价格区间（特殊情况，900以上请传递[900,100000]）
      * @param star_level   星级（特殊情况，二星以下请传递[1,2]）
      * @param hotelTypeIds 住宿类型ID（多选）
      * @param search_input 搜索酒店内容
-     * @param grade        酒店评分
+     * @param score        酒店评分
      */
     public void getList(int page,
                         String areaId,
-                        String price_range,
-                        String star_level,
+                        int mPriceStart,
+                        int mPriceEnd,
+                        int star_level,
                         String hotelTypeIds,
                         String search_input,
-                        String grade) {
+                        float score) {
 
 
         String lat = String.valueOf(Constant.LAT);
-        String lng = String.valueOf(Constant.LAT);
-
-        requestApi(mRetrofit.getHotelList(page, lat, lng, areaId, price_range, star_level, hotelTypeIds, search_input, grade), new BaseMvpObserver<PageResponse<HotelListResponse>>(view) {
+        String lng = String.valueOf(Constant.LNG);
 
 
+        // 价格区间
+        String priceRange = "";
+        if (mPriceEnd > 0) {
+            int[] price = {mPriceStart, mPriceEnd};
+            priceRange = gson.toJson(price);
+        }
+
+        // 星级（特殊情况，二星以下请传递[1,2]）
+        String starStr = "";
+        if (star_level != 0) {
+            int[] star;
+            if (star_level <= 2) {
+                star = new int[]{1, 2};
+            } else {
+                star = new int[]{star_level};
+            }
+            starStr = gson.toJson(star);
+        }
+
+        requestApi(mRetrofit.getHotelList(page, lat, lng, areaId, priceRange, starStr, hotelTypeIds, search_input, String.valueOf(score)), new BaseMvpObserver<PageResponse<HotelListResponse>>(view) {
 
             @Override
             protected void onSuccess(PageResponse<HotelListResponse> response) {

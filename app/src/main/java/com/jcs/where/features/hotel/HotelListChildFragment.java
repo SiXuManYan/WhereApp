@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
@@ -14,9 +16,11 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.base.mvp.BaseMvpFragment;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import java.util.List;
 
@@ -28,47 +32,115 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
 
     private int page = Constant.DEFAULT_FIRST_PAGE;
 
-
     private SwipeRefreshLayout swipe_layout;
     private RecyclerView recycler;
     private HotelListAdapter mAdapter;
 
+    /**
+     * 搜索内容
+     */
     private String mSearchText = "";
+
+    /**
+     * 当前类型id
+     */
     private String mHotelTypeIds;
+
+    /**
+     * 选中的城市id
+     */
     private String mCityId;
-    private String mPrice;
-    private String mStar;
-    private String mGrade;
+
+    /**
+     * 选中的城市名
+     */
+    private String mCityName;
+
+    /**
+     * 选中的星级
+     */
+    private int mStar;
+
+    /**
+     * 入住总天数
+     */
     private int mTotalDay;
-    private int mRoomCount;
-    private JcsCalendarAdapter.CalendarBean mStartBean;
-    private JcsCalendarAdapter.CalendarBean mEndBean;
+
+
+    /**
+     * 价格区间，开始
+     */
+    private int mPriceStart;
+
+    /**
+     * 价格区间，结束
+     */
+    private int mPriceEnd;
+
+    /**
+     * 预订房间数
+     */
+    private int mRoomNum;
+
+    /**
+     * 选中的评分
+     */
+    private float mScore;
+
+    /**
+     * 选中的开始日期
+     */
+    private JcsCalendarAdapter.CalendarBean mStartDateBean;
+
+    /**
+     * 选中的结束日期
+     */
+    private JcsCalendarAdapter.CalendarBean mEndDateBean;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_refresh_list;
     }
 
-    public static HotelListChildFragment newInstance(String hotelTypeIds, String cityId, String price, String star, JcsCalendarAdapter.CalendarBean startBean, JcsCalendarAdapter.CalendarBean endBean, int totalDay, int roomNumber) {
-        Bundle args = new Bundle();
-        args.putString(Constant.PARAM_HOTEL_TYPE_IDS, hotelTypeIds);
-        args.putString(HotelSelectDateHelper.EXT_CITY_ID, cityId);
-        args.putString(HotelSelectDateHelper.EXT_PRICE, price);
-        args.putString(HotelSelectDateHelper.EXT_STAR, star);
-        args.putInt(HotelSelectDateHelper.EXT_TOTAL_DAY, totalDay);
-        args.putInt(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
-        args.putSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN, startBean);
-        args.putSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN, endBean);
-        HotelListChildFragment fragment = new HotelListChildFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
     @Override
     protected void initView(View view) {
         swipe_layout = view.findViewById(R.id.swipe_layout);
         recycler = view.findViewById(R.id.recycler);
+        recycler.addItemDecoration(getItemDecoration());
+    }
+
+
+    public static HotelListChildFragment getInstance(String mHotelTypeIds,
+
+                                                     JcsCalendarAdapter.CalendarBean startBean,
+                                                     JcsCalendarAdapter.CalendarBean endBean,
+                                                     int totalDay,
+                                                     String cityId,
+                                                     int startPrice,
+                                                     int endPrice,
+                                                     int star,
+                                                     float score,
+                                                     int roomNumber) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.PARAM_HOTEL_TYPE_IDS, mHotelTypeIds);
+        bundle.putSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN, startBean);
+        bundle.putSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN, endBean);
+        bundle.putInt(HotelSelectDateHelper.EXT_TOTAL_DAY, totalDay);
+        bundle.putString(HotelSelectDateHelper.EXT_CITY_ID, cityId);
+
+        bundle.putInt(HotelSelectDateHelper.EXT_PRICE_START, startPrice);
+        bundle.putInt(HotelSelectDateHelper.EXT_PRICE_END, endPrice);
+
+        bundle.putInt(HotelSelectDateHelper.EXT_STAR, star);
+        bundle.putFloat(HotelSelectDateHelper.EXT_SCORE, score);
+
+        bundle.putInt(HotelSelectDateHelper.EXT_ROOM_NUMBER, roomNumber);
+
+        HotelListChildFragment fragment = new HotelListChildFragment();
+        fragment.setArguments(bundle);
+
+        return fragment;
     }
 
     @Override
@@ -87,13 +159,30 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
     private void initExtra() {
         Bundle bundle = getArguments();
         mHotelTypeIds = bundle.getString(Constant.PARAM_HOTEL_TYPE_IDS);
-        mCityId = bundle.getString(HotelSelectDateHelper.EXT_CITY_ID);
-        mPrice = bundle.getString(HotelSelectDateHelper.EXT_PRICE);
-        mStar = bundle.getString(HotelSelectDateHelper.EXT_STAR);
-        mTotalDay = bundle.getInt(HotelSelectDateHelper.EXT_TOTAL_DAY);
-        mRoomCount = bundle.getInt(HotelSelectDateHelper.EXT_ROOM_NUMBER);
-        mStartBean = (JcsCalendarAdapter.CalendarBean) bundle.getSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN);
-        mEndBean = (JcsCalendarAdapter.CalendarBean) bundle.getSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN);
+
+
+        // 开始结束日期
+        mStartDateBean = (JcsCalendarAdapter.CalendarBean) bundle.getSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN);
+        mEndDateBean = (JcsCalendarAdapter.CalendarBean) bundle.getSerializable(HotelSelectDateHelper.EXT_END_DATE_BEAN);
+
+        // 入住总天数
+        mTotalDay = bundle.getInt(HotelSelectDateHelper.EXT_TOTAL_DAY, 0);
+
+        // 城市
+        mCityId = bundle.getString(HotelSelectDateHelper.EXT_CITY_ID, "");
+
+        // 价格区间
+        mPriceStart = bundle.getInt(HotelSelectDateHelper.EXT_PRICE_START, 0);
+        mPriceEnd = bundle.getInt(HotelSelectDateHelper.EXT_PRICE_END, 0);
+
+        // 星级
+        mStar = bundle.getInt(HotelSelectDateHelper.EXT_STAR);
+
+        // 评分
+        mScore = bundle.getFloat(HotelSelectDateHelper.EXT_SCORE, 0);
+
+        // 房间总数
+        mRoomNum = bundle.getInt(HotelSelectDateHelper.EXT_ROOM_NUMBER, 1);
     }
 
     @Override
@@ -123,13 +212,14 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
 
 
     private void getData() {
-        presenter.getList(page, mCityId, mPrice, mStar, mHotelTypeIds, mSearchText, mGrade);
+        presenter.getList(page, mCityId, mPriceStart, mPriceEnd, mStar, mHotelTypeIds, mSearchText, mScore);
     }
 
 
     @Override
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-
+        HotelListResponse data = mAdapter.getData().get(position);
+        HotelDetailActivity.goTo(getContext(), data.id, mStartDateBean, mEndDateBean, mTotalDay, mStartDateBean.getYear() + "", mEndDateBean.getYear() + "", mRoomNum);
     }
 
 
@@ -138,7 +228,6 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
         if (swipe_layout.isRefreshing()) {
             swipe_layout.setRefreshing(false);
         }
-
         BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -160,4 +249,11 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
             }
         }
     }
+
+    private RecyclerView.ItemDecoration getItemDecoration() {
+        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1), SizeUtils.dp2px(15), SizeUtils.dp2px(15));
+        itemDecoration.setDrawHeaderFooter(false);
+        return itemDecoration;
+    }
+
 }

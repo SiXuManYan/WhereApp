@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/dp_600"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -10,15 +10,17 @@
     <ImageView
         android:id="@+id/empty_iv"
         android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
-        android:src="@mipmap/ic_empty_network_error" />
+        android:src="@mipmap/ic_empty_earth" />
 
 
     <TextView
         android:id="@+id/empty_message_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_18"
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_14"
@@ -28,6 +30,7 @@
         android:id="@+id/empty_hint_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_8"
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_12"
@@ -40,6 +43,7 @@
         android:id="@+id/action_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/shape_blue_radius_4"
         android:paddingStart="@dimen/dp_20"

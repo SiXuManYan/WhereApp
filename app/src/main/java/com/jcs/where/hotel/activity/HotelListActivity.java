@@ -336,6 +336,10 @@ public class HotelListActivity extends BaseActivity {
         mViewPager.setOffscreenPageLimit(titles.size());
     }
 
+    /**
+     * 更改日期
+     * @param view
+     */
     public void onChooseViewClicked(View view) {
         mTopPopupLayout.showOrHide();
     }

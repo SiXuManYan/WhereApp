@@ -19,6 +19,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.list.DividerDecoration;
 
@@ -96,6 +97,7 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
      * 选中的结束日期
      */
     private JcsCalendarAdapter.CalendarBean mEndDateBean;
+    private EmptyView mEmptyView;
 
     @Override
     protected int getLayoutId() {
@@ -107,9 +109,23 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
         swipe_layout = view.findViewById(R.id.swipe_layout);
         recycler = view.findViewById(R.id.recycler);
         recycler.addItemDecoration(getItemDecoration());
+        mEmptyView = new EmptyView(getContext());
+        mEmptyView.showEmptyDefault();
     }
 
-
+    /**
+     * @param mHotelTypeIds 当前 fragment 类型id
+     * @param startBean     开始日期
+     * @param endBean       结束日期
+     * @param totalDay      入住时长 (天)
+     * @param cityId        城市id
+     * @param startPrice    价格区间(开始)
+     * @param endPrice      价格区间(结束)
+     * @param star          选中的星级
+     * @param score         选中的酒店评分
+     * @param roomNumber    预订房间总数
+     * @return
+     */
     public static HotelListChildFragment getInstance(String mHotelTypeIds,
 
                                                      JcsCalendarAdapter.CalendarBean startBean,
@@ -152,14 +168,13 @@ public class HotelListChildFragment extends BaseMvpFragment<HotelListChildPresen
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+        mAdapter.setEmptyView(mEmptyView);
         mAdapter.setOnItemClickListener(this);
     }
 
     private void initExtra() {
         Bundle bundle = getArguments();
         mHotelTypeIds = bundle.getString(Constant.PARAM_HOTEL_TYPE_IDS);
-
 
         // 开始结束日期
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) bundle.getSerializable(HotelSelectDateHelper.EXT_START_DATE_BEAN);

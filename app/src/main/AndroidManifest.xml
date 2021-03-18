@@ -71,10 +71,10 @@
         </provider>
 
         <activity
-            android:name=".flash.activity.FlashActivity"
+            android:name=".features.splash.SplashActivity"
             android:fitsSystemWindows="true"
-            android:theme="@style/LaunchTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -521,6 +521,9 @@
             android:name=".features.upgrade.UpgradeActivity"
             android:theme="@style/upgrade"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+
+
+
 
 
     </application>

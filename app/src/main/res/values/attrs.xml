@@ -158,4 +158,28 @@
         <attr format="boolean" name="rsv_onlyHalfStar"/>
     </declare-styleable>
 
+
+    <declare-styleable name="CirclePoint">
+        <attr name="size" format="dimension"/>
+        <attr name="point_unselected_color" format="color|reference"/>
+        <attr name="point_selected_color" format="color|reference"/>
+        <attr name="count" format="integer"/>
+    </declare-styleable>
+
+
+    <string-array name="splash_item_title">
+        <item>Bataan news</item>
+        <item>Tourist accommodation</item>
+        <item>Local information query</item>
+
+    </string-array>
+
+
+    <string-array name="splash_item_content">
+        <item>Focus on selected hot news</item>
+        <item>Smart recommendation for attractions and hotels</item>
+        <item>Local information query</item>
+
+    </string-array>
+
 </resources>

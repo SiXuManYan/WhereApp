@@ -53,7 +53,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_app"
         android:supportsRtl="true"
-        android:theme="@style/AnimActivity"
+        android:theme="@style/CommonActivityTheme"
         tools:replace="android:icon, android:theme">
 
         <meta-data
@@ -73,6 +73,7 @@
         <activity
             android:name=".flash.activity.FlashActivity"
             android:fitsSystemWindows="true"
+            android:theme="@style/LaunchTheme"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

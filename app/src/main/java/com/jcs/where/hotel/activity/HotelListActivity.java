@@ -350,8 +350,14 @@ public class HotelListActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 更新开始和结束日期
+     * @param startDate
+     * @param endDate
+     */
     public void onDateSelected(JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate) {
         mEnterStayInfoView.setStartAndEnd(startDate, endDate);
+
         if (startDate != null) {
             startDayTv.setText(startDate.getShowMonthDayDateWithSplit());
         }

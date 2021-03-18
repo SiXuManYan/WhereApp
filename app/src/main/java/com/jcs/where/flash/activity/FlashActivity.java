@@ -1,5 +1,8 @@
 package com.jcs.where.flash.activity;
 
+import android.graphics.Color;
+
+import com.blankj.utilcode.util.BarUtils;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -29,6 +32,15 @@ public class FlashActivity extends BaseActivity {
     @Override
     protected void initView() {
         MobSDK.submitPolicyGrantResult(true,null);
+
+
+        // 状态栏透明
+        BarUtils.setStatusBarColor(this, Color.TRANSPARENT, true);
+        BarUtils.setStatusBarLightMode(this, false);
+        BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content));
+
+        BarUtils.setNavBarVisibility(this, false);
+
     }
 
     @Override

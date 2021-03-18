@@ -1,5 +1,39 @@
 <resources>
 
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/bg_color</item>
+
+        <!-- add -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <!-- 应用内 activity 主题 -->
+    <style name="CommonActivityTheme" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+    </style>
+
+    <!--界面切换动画 （从左至右）-->
+    <style name="ActivityAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/left_fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/left_fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/right_fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/right_fade_out</item>
+    </style>
+
+    <style name="LaunchTheme" parent="AppTheme">
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:windowShowWallpaper">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+
+
     <style name="mangoAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@android:color/black</item>
@@ -109,12 +143,7 @@
         <item name="android:layout_marginEnd">@dimen/dp_7</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/bg_color</item>
-    </style>
+
 
     <style name="FullScreenTheme" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
@@ -256,5 +285,8 @@
         <!--显示区域以外是否使用黑色半透明背景-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+
+
 
 </resources>

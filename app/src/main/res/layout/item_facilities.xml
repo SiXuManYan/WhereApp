@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginBottom="11.5dp">
+    android:layout_marginBottom="11.5dp"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="@dimen/dp_12"
-        android:layout_height="@dimen/dp_13"
-        android:src="@drawable/ic_hoteldetail_children"
+        android:layout_width="@dimen/dp_14"
+        android:layout_height="@dimen/dp_14"
         android:layout_alignTop="@+id/tv_name"
         android:layout_alignBottom="@+id/tv_name"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside"
+        tools:src="@drawable/ic_hoteldetail_children" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_toEndOf="@+id/iv_icon"
         android:textColor="@color/black_333333"
-        android:textSize="13sp"
-        android:layout_toRightOf="@+id/iv_icon"
-        android:layout_marginLeft="9dp"/>
+        android:textSize="@dimen/sp_13"
+        tools:text="儿童座椅" />
 
 
 </RelativeLayout>

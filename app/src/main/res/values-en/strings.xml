@@ -73,7 +73,7 @@
 	<string name="check_out_time">Check-out time:%1$s</string>
 	<string name="child_and_bed_added">Children and extra bed:%1$s</string>
 	<string name="hotel_reservation">hotel reservation</string>
-	<string name="live">live</string>
+	<string name="live">live </string>
 	<string name="leave">from</string>
 	<string name="input_hotel_name">Please enter the name of the hotel</string>
 	<string name="current_location">Current Location</string>

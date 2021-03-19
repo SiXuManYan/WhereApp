@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -47,7 +48,7 @@ public class HotelListActivity extends BaseActivity {
     private ViewPager mViewPager;
     private TextView startDayTv, endDayTv, cityTv;
     private TextView mLiveTextPromptTv, mLeaveTextPromptTv, mCityTv;
-    private View mChooseDataView;
+//    private View mChooseDataView;
     private String mParentCategoryId;
     private int mTotalDay, mRoomNum;
     private List<Fragment> fragments;
@@ -151,6 +152,7 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.title_rl));
         mCalendarDialog = new JcsCalendarDialog();
         mCalendarDialog.initCalendar(this);
 
@@ -164,7 +166,7 @@ public class HotelListActivity extends BaseActivity {
         mLeaveTextPromptTv = findViewById(R.id.leaveTextPrompt);
         mLiveTextPromptTv = findViewById(R.id.liveTextPrompt);
         // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
-        mChooseDataView = findViewById(R.id.toChooseDate);
+//        mChooseDataView = findViewById(R.id.toChooseDate);
 
         findViewById(R.id.cityTv).setOnClickListener(view -> SearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), SearchTag.HOTEL, REQ_SEARCH));
         clearIv = findViewById(R.id.clearIv);
@@ -258,7 +260,8 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        mChooseDataView.setOnClickListener(this::onChooseViewClicked);
+        findViewById(R.id.back_iv).setOnClickListener(v -> finish());
+        findViewById(R.id.date_ll).setOnClickListener(this::onChooseViewClicked);
         mCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
         findViewById(R.id.iv_map).setOnClickListener(this::onMapClicked);
     }
@@ -374,7 +377,7 @@ public class HotelListActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hotel_list;
+        return R.layout.activity_hotel_list2;
     }
 
     @Override

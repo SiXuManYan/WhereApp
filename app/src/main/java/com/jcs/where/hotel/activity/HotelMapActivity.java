@@ -48,7 +48,6 @@ import com.jcs.where.hotel.activity.map.HotelMapPresenter;
 import com.jcs.where.hotel.activity.map.HotelMapView;
 import com.jcs.where.hotel.activity.map.HotelMapViewPagerAdapter;
 import com.jcs.where.hotel.activity.map.HotelMapViewPagerTransformer;
-import com.jcs.where.hotel.card.ShadowTransformer;
 import com.jcs.where.hotel.event.HotelEvent;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.search.SearchActivity;
@@ -100,7 +99,6 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
     private Location mLastLocation;
     private boolean mAddressRequested;
     private boolean clickLocation = false;
-    private View mChooseDataView;
     private JcsCalendarDialog mCalendarDialog;
     private PopupConstraintLayout mTopPopupLayout;
     private EnterStayInfoView mEnterStayInfoView;
@@ -133,7 +131,6 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
     protected void initView() {
         mCalendarDialog = new JcsCalendarDialog();
         mCalendarDialog.initCalendar(this);
-        mChooseDataView = findViewById(R.id.toChooseDate);
         mTopPopupLayout = findViewById(R.id.topPopupLayout);
         mEnterStayInfoView = findViewById(R.id.enterStayInfoView);
         SupportMapFragment mapFragment =
@@ -187,12 +184,12 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         viewPager = findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(2);
         viewPager.setClipToPadding(false);
-        viewPager.setPadding(SizeUtils.dp2px(35),0,SizeUtils.dp2px(35),0);
+        viewPager.setPadding(SizeUtils.dp2px(35), 0, SizeUtils.dp2px(35), 0);
 
         viewPager.setPageMargin(SizeUtils.dp2px(15));
 
         HotelMapViewPagerTransformer transformer = new HotelMapViewPagerTransformer();
-        viewPager.setPageTransformer(false,transformer);
+        viewPager.setPageTransformer(false, transformer);
 
         mPagerAdapter = new HotelMapViewPagerAdapter(this);
 
@@ -320,7 +317,8 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
     @Override
     protected void bindListener() {
-        mChooseDataView.setOnClickListener(this::onChooseViewClicked);
+        findViewById(R.id.date_ll).setOnClickListener(this::onChooseViewClicked);
+        findViewById(R.id.back_iv).setOnClickListener(v -> finish());
         mHotelListIv.setOnClickListener(v -> finish());
         mCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
         findViewById(R.id.myLocationIcon).setOnClickListener(view -> backMyPosition());
@@ -339,7 +337,7 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hotel_map;
+        return R.layout.activity_hotel_map2;
     }
 
     @Override

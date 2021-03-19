@@ -1,11 +1,11 @@
 package com.jcs.where.adapter;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -13,14 +13,8 @@ import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.SPKey;
-import com.jcs.where.utils.SPUtil;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHolder> {
 
@@ -34,13 +28,19 @@ public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHo
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder baseViewHolder, ModulesResponse modulesResponse) {
-        Context context = baseViewHolder.itemView.getContext();
-        View view = baseViewHolder.getView(R.id.moduleLayout);
-        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(mItemWidth, mItemHeight);
-        view.setLayoutParams(lp);
-        GlideUtil.load(context, modulesResponse.getIcon(), baseViewHolder.getView(R.id.modules_icon));
-        baseViewHolder.setText(R.id.modules_name, modulesResponse.getName());
+    protected void convert(@NotNull BaseViewHolder holder, ModulesResponse modulesResponse) {
+        Context context = holder.itemView.getContext();
+
+
+        LinearLayout view = holder.getView(R.id.moduleLayout);
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.width = (ScreenUtils.getScreenWidth() - SizeUtils.dp2px(20)) / 5;
+        params.height = SizeUtils.dp2px(70);
+        view.setLayoutParams(params);
+
+
+        GlideUtil.load(context, modulesResponse.getIcon(), holder.getView(R.id.modules_icon));
+        holder.setText(R.id.modules_name, modulesResponse.getName());
 
         if (modulesResponse.getId() == 2 && CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID).equals("")) {
             // 存储企业黄页的一级分类id

@@ -35,5 +35,10 @@ public class Html5Url {
      */
     public static final String SHARE_FACEBOOK = BuildConfig.SERVER_HOST + "share/facebook?module=%1$s&id=%2$s&device=android";
 
+    /**
+     * 旅游管理 URL
+     */
+    public static final String TOURISM_MANAGEMENT_URL = "https://www.beholdbataan.ph/";
+
 
 }

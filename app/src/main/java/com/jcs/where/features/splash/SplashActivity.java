@@ -84,10 +84,12 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
                     pagerVp.setVisibility(View.VISIBLE);
                     pointView.setVisibility(View.VISIBLE);
                     firstIv.setVisibility(View.GONE);
-                    CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_FIRST_OPEN, false);
+                    CacheUtil.getShareDefault().put(Constant.SP_IS_FIRST_OPEN, false);
                 } else {
                     toHome();
                 }
+
+
 
             }
         });

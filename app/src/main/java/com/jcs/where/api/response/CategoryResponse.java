@@ -29,6 +29,11 @@ public class CategoryResponse extends BaseNode implements Serializable {
     private String icon;
     private List<CategoryResponse> child_categories;
 
+    /**
+     * app 本地添加的类型，跳转网页
+     */
+    public boolean isNativeWebType = false;
+
     public String getId() {
         return id;
     }

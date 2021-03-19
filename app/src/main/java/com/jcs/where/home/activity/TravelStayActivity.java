@@ -1,7 +1,13 @@
 package com.jcs.where.home.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
@@ -15,6 +21,7 @@ import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.bean.HomeBannerBean;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
@@ -28,9 +35,6 @@ import com.stx.xhb.androidx.entity.BaseBannerInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -72,7 +76,7 @@ public class TravelStayActivity extends BaseActivity {
      */
     private void initModuleRecycler() {
         mModuleRecycler = findViewById(R.id.moduleRecycler);
-        mModulesCategoryAdapter = new ModulesCategoryAdapter(R.layout.item_home_modules);
+        mModulesCategoryAdapter = new ModulesCategoryAdapter();
         mModuleRecycler.addItemDecoration(new HomeModulesItemDecoration());
         mModuleRecycler.setLayoutManager(new GridLayoutManager(this, 5, RecyclerView.VERTICAL, false));
         mModuleRecycler.setAdapter(mModulesCategoryAdapter);
@@ -102,7 +106,7 @@ public class TravelStayActivity extends BaseActivity {
             @Override
             public void onSuccess(@NonNull List<BannerResponse> bannerResponses) {
                 mBanner.setBannerData(R.layout.banner_travel_stay, bannerResponses);
-                mBanner.loadImage((banner, model, view, position) -> GlideUtil.load(TravelStayActivity.this,((BaseBannerInfo) model).getXBannerUrl().toString(),(ImageView)view));
+                mBanner.loadImage((banner, model, view, position) -> GlideUtil.load(TravelStayActivity.this, ((BaseBannerInfo) model).getXBannerUrl().toString(), (ImageView) view));
             }
 
             @Override
@@ -116,14 +120,24 @@ public class TravelStayActivity extends BaseActivity {
     private void getCategories(int level, ArrayList<Integer> categories) {
         mModel.getCategories(level, categories, new BaseObserver<List<CategoryResponse>>() {
             @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull List<CategoryResponse> categoryResponses) {
-                mModulesCategoryAdapter.getData().clear();
-                mModulesCategoryAdapter.addData(categoryResponses);
+            public void onSuccess(@NonNull List<CategoryResponse> categoryResponses) {
+
+
+                CategoryResponse nativeData = new CategoryResponse();
+                nativeData.isNativeWebType = true;
+                categoryResponses.add(categoryResponses.size(), nativeData);
+                mModulesCategoryAdapter.setNewInstance(categoryResponses);
             }
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
+
+                CategoryResponse nativeData = new CategoryResponse();
+                nativeData.isNativeWebType = true;
+                List<CategoryResponse> categoryResponses = new ArrayList<>();
+                categoryResponses.add(categoryResponses.size(), nativeData);
+                mModulesCategoryAdapter.setNewInstance(categoryResponses);
+
             }
         });
     }
@@ -141,16 +155,24 @@ public class TravelStayActivity extends BaseActivity {
     }
 
     private void onModulesCategoryItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-    CategoryResponse item = mModulesCategoryAdapter.getItem(position);
-        String id = item.getId();
-        switch (id) {
-            case HOTEL_STAY:
-                toActivity(HotelActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
-                break;
-            default:
-                toActivity(TravelMapActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
-                break;
+        CategoryResponse item = mModulesCategoryAdapter.getItem(position);
+        if (item.isNativeWebType) {
+            Uri uri = Uri.parse(Html5Url.TOURISM_MANAGEMENT_URL);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }else {
+            String id = item.getId();
+            switch (id) {
+                case HOTEL_STAY:
+                    toActivity(HotelActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
+                    break;
+                default:
+                    toActivity(TravelMapActivity.class, new IntentEntry(HotelActivity.K_CATEGORY_ID, id));
+                    break;
+            }
         }
+
+
     }
 
     @Override

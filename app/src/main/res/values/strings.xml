@@ -485,5 +485,6 @@
     <string name="confirm_password_hint">请确认密码</string>
     <string name="password_not_same_hint">请输入两次相同密码</string>
     <string name="travel_recommend">推荐</string>
+    <string name="tourism_management">旅游管理</string>
 
 </resources>

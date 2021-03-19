@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        fullScreen(this);
+//        fullScreen(this);
         initView();
     }
 

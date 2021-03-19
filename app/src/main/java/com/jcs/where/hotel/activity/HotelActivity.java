@@ -25,6 +25,8 @@ import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.gms.common.ConnectionResult;
@@ -166,6 +168,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         mGuessYouLikeAdapter = new GuessYouLikeAdapter();
         mLocationTv = findViewById(R.id.locationTv);
         mLocationTv.setOnClickListener(this);

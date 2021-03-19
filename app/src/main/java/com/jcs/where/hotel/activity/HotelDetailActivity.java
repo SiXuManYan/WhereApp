@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -150,6 +151,7 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        BarUtils.transparentStatusBar(this);
         mJcsCalendarDialog = new JcsCalendarDialog();
         mJcsCalendarDialog.initCalendar(this);
 

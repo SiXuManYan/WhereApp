@@ -141,7 +141,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
                 mJcsTitle.setBackIcon(R.drawable.ic_back_white);
                 toolbarStatus = 0;
             }
-            mJcsTitle.getBackground().setAlpha(alpha);
+            mJcsTitle.setAlpha(alpha);
             setStatusBar(Color.argb(alpha, 255, 255, 255));
             if (alpha == 255) {
                 changeStatusTextColor(true);
@@ -154,7 +154,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         });
 
 
-        mJcsTitle.getBackground().setAlpha(0);//透明
+        mJcsTitle.setAlpha(0);//透明
         nameTv = findViewById(R.id.tv_name);
         scoreTv = findViewById(R.id.tv_score);
         commnetNumberTv = findViewById(R.id.tv_commentnumber);
@@ -440,5 +440,11 @@ public class TouristAttractionDetailActivity extends BaseActivity {
     public int dip2px(float dpValue) {
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        banner.releaseBanner();
     }
 }

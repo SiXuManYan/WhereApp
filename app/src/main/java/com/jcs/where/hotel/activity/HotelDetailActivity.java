@@ -151,7 +151,8 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        BarUtils.transparentStatusBar(this);
+//        BarUtils.transparentStatusBar(this);
+
         mJcsCalendarDialog = new JcsCalendarDialog();
         mJcsCalendarDialog.initCalendar(this);
 

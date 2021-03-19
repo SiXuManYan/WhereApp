@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -129,6 +130,7 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
     @Override
     protected void initView() {
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.title_rl));
         mCalendarDialog = new JcsCalendarDialog();
         mCalendarDialog.initCalendar(this);
         mTopPopupLayout = findViewById(R.id.topPopupLayout);

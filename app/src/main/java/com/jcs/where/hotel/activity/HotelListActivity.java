@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -21,7 +22,6 @@ import com.jcs.where.features.hotel.HotelListChildFragment;
 import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.model.HotelListModel;
-import com.jcs.where.hotel.tablayout.ColorClipTabLayout;
 import com.jcs.where.search.SearchActivity;
 import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.LocalLanguageUtil;
@@ -44,11 +44,11 @@ import io.reactivex.annotations.NonNull;
 public class HotelListActivity extends BaseActivity {
 
     private static final int REQ_SEARCH = 666;
-    private ColorClipTabLayout mTab;
+    private TabLayout mTab;
     private ViewPager mViewPager;
     private TextView startDayTv, endDayTv, cityTv;
     private TextView mLiveTextPromptTv, mLeaveTextPromptTv, mCityTv;
-//    private View mChooseDataView;
+    //    private View mChooseDataView;
     private String mParentCategoryId;
     private int mTotalDay, mRoomNum;
     private List<Fragment> fragments;
@@ -289,7 +289,7 @@ public class HotelListActivity extends BaseActivity {
             titles.add(list.get(i).getName());
         }
 
-        mTab.setSelectedTabIndicatorHeight(0);
+//        mTab.setSelectedTabIndicatorHeight(0);
         fragments = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             String hotelTypeIds = String.valueOf(list.get(i).getId());
@@ -333,14 +333,12 @@ public class HotelListActivity extends BaseActivity {
             }
         });
         mTab.setupWithViewPager(mViewPager);
-
-        mTab.setLastSelectedTabPosition(0);
-        mTab.setCurrentItem(0);
         mViewPager.setOffscreenPageLimit(titles.size());
     }
 
     /**
      * 更改日期
+     *
      * @param view
      */
     public void onChooseViewClicked(View view) {
@@ -355,6 +353,7 @@ public class HotelListActivity extends BaseActivity {
 
     /**
      * 更新开始和结束日期
+     *
      * @param startDate
      * @param endDate
      */

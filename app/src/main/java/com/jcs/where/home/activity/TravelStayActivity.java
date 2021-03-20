@@ -1,14 +1,20 @@
 package com.jcs.where.home.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.adapter.ModulesCategoryAdapter;
@@ -20,22 +26,22 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
-import com.jcs.where.bean.HomeBannerBean;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.model.TravelStayModel;
 import com.jcs.where.travel.TravelMapActivity;
-import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.utils.GlideRoundTransform;
+import com.jcs.where.view.XBanner.AbstractUrlLoader;
+import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
-import com.stx.xhb.androidx.XBanner;
-import com.stx.xhb.androidx.entity.BaseBannerInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * 页面-旅游住宿
@@ -43,7 +49,7 @@ import io.reactivex.annotations.NonNull;
 public class TravelStayActivity extends BaseActivity {
     public static final String K_CATEGORY_IDS = "categoryIds";
 
-    private XBanner mBanner;
+    private XBanner banner3;
     private RecyclerView mModuleRecycler;
     private RecyclerView mHotelRecycler;
     private ModulesCategoryAdapter mModulesCategoryAdapter;
@@ -55,7 +61,11 @@ public class TravelStayActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mBanner = findViewById(R.id.travelStayBanner);
+        banner3 = findViewById(R.id.banner3);
+        ViewGroup.LayoutParams layoutParams = banner3.getLayoutParams();
+        layoutParams.height = getScreenWidth() * 161 / 345;
+        banner3.setLayoutParams(layoutParams);
+
         initModuleRecycler();
         initHotelRecycler();
 
@@ -105,8 +115,67 @@ public class TravelStayActivity extends BaseActivity {
         mModel.getBanners(2, new BaseObserver<List<BannerResponse>>() {
             @Override
             public void onSuccess(@NonNull List<BannerResponse> bannerResponses) {
-                mBanner.setBannerData(R.layout.banner_travel_stay, bannerResponses);
-                mBanner.loadImage((banner, model, view, position) -> GlideUtil.load(TravelStayActivity.this, ((BaseBannerInfo) model).getXBannerUrl().toString(), (ImageView) view));
+
+
+                if (bannerResponses.isEmpty()) {
+                    return;
+                }
+
+                List<String> bannerUrls = new ArrayList<>();
+                for (int i = 0; i < bannerResponses.size(); i++) {
+                    bannerUrls.add(bannerResponses.get(i).src);
+                }
+
+                banner3.setBannerTypes(XBanner.CIRCLE_INDICATOR)
+                        .setImageUrls(bannerUrls)
+                        .setImageLoader(new AbstractUrlLoader() {
+                            @Override
+                            public void loadImages(Context context, String url, ImageView image) {
+                                RequestOptions options = new RequestOptions()
+                                        .centerCrop()
+                                        .error(R.mipmap.ic_glide_default) //加载失败图片
+                                        .priority(Priority.HIGH) //优先级
+                                        .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
+                                        .transform(new GlideRoundTransform(10)); //圆角
+                                Glide.with(context).load(url).apply(options).into(image);
+                            }
+
+                            @Override
+                            public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
+                                RequestOptions options = new RequestOptions()
+                                        .centerCrop()
+                                        .error(R.mipmap.ic_glide_default) //加载失败图片
+                                        .priority(Priority.HIGH) //优先级
+                                        .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存
+                                        .transform(new GlideRoundTransform(10)); //圆角
+
+                                Glide.with(context).load(url).apply(options).into(gifImageView);
+                            }
+                        })
+                        .setTitleHeight(50)
+                        .isAutoPlay(true)
+                        .setDelay(5000)
+                        .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
+                        .setUpIndicatorSize(20, 6)
+                        .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+                        .setBannerPageListener(new XBanner.BannerPageListener() {
+                            @Override
+                            public void onBannerClick(int item) {
+                            }
+
+                            @Override
+                            public void onBannerDragging(int item) {
+
+                            }
+
+                            @Override
+                            public void onBannerIdle(int item) {
+
+                            }
+                        })
+                        .start();
+
+
             }
 
             @Override
@@ -160,7 +229,7 @@ public class TravelStayActivity extends BaseActivity {
             Uri uri = Uri.parse(Html5Url.TOURISM_MANAGEMENT_URL);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
-        }else {
+        } else {
             String id = item.getId();
             switch (id) {
                 case HOTEL_STAY:
@@ -185,14 +254,13 @@ public class TravelStayActivity extends BaseActivity {
         return R.layout.activity_travel_stay;
     }
 
-    private void initBanner(List<HomeBannerBean> list) {
 
-        List<String> bannerUrls = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            bannerUrls.add(list.get(i).src);
-        }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        banner3.releaseBanner();
 
     }
+
 
 }

@@ -123,7 +123,6 @@ public class MineFragment extends BaseFragment {
     }
 
     private void onMerchantSettledClicked(View view) {
-        toActivityIfSigned(MerchantSettledActivity.class);
         if (User.isLogon()) {
             BaseApplication app = (BaseApplication) Utils.getApp();
             User user = app.getDatabase().userDao().findUser();

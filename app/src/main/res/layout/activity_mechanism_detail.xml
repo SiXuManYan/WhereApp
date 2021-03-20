@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white">
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:rightFirstIcon="@drawable/ic_share_black"
-        app:rightSecondIcon="@drawable/ic_collection"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:rightSecondIcon="@drawable/ic_collection" />
 
     <com.jcs.where.widget.JcsBanner
         android:id="@+id/jcsBanner"
@@ -23,298 +23,298 @@
         android:id="@+id/mechanismTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/government_name"
-        android:textSize="@dimen/sp_14"
-        android:textColor="@color/black_333333"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintTop_toBottomOf="@id/jcsBanner"
-        android:layout_marginTop="@dimen/dp_15"
         android:layout_marginStart="@dimen/dp_15"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginTop="@dimen/dp_15"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/government_name"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jcsBanner" />
 
     <ImageView
         android:id="@+id/timeIcon"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
-        android:src="@drawable/ic_hoteldetail_time"
-        app:layout_constraintTop_toBottomOf="@id/mechanismTitleTv"
         android:layout_marginTop="@dimen/dp_10"
-        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
+        android:src="@drawable/ic_hoteldetail_time"
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
+        app:layout_constraintTop_toBottomOf="@id/mechanismTitleTv" />
 
     <TextView
         android:id="@+id/timePrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_5"
         android:text=""
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintTop_toTopOf="@id/timeIcon"
+        android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/timeIcon"
         app:layout_constraintStart_toEndOf="@id/timeIcon"
-        android:layout_marginStart="@dimen/dp_5"/>
+        app:layout_constraintTop_toTopOf="@id/timeIcon" />
 
     <TextView
         android:id="@+id/businessWeekTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintStart_toEndOf="@id/timePrompt"
-        app:layout_constraintBaseline_toBaselineOf="@id/timePrompt" />
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBaseline_toBaselineOf="@id/timePrompt"
+        app:layout_constraintStart_toEndOf="@id/timePrompt" />
 
     <TextView
         android:id="@+id/businessTimeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_13"
+        android:layout_marginStart="@dimen/dp_20"
         android:textColor="@color/grey_666666"
-        app:layout_constraintStart_toEndOf="@id/businessWeekTv"
+        android:textSize="@dimen/sp_13"
         app:layout_constraintBaseline_toBaselineOf="@id/timePrompt"
-        android:layout_marginStart="@dimen/dp_20"/>
+        app:layout_constraintStart_toEndOf="@id/businessWeekTv" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"
-        app:layout_constraintTop_toBottomOf="@id/timeIcon"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/grey_F5F5F5"/>
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5"
+        app:layout_constraintTop_toBottomOf="@id/timeIcon" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/telGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="telIcon,telLine,telPrompt,telTv"/>
+        app:constraint_referenced_ids="telIcon,telLine,telPrompt,telTv" />
 
     <ImageView
         android:id="@+id/telIcon"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
-        android:src="@mipmap/ic_phone_black"
-        app:layout_constraintTop_toBottomOf="@id/timeIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
+        android:src="@mipmap/ic_phone_black"
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
+        app:layout_constraintTop_toBottomOf="@id/timeIcon" />
 
     <TextView
         android:id="@+id/telPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_5"
         android:text=""
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintTop_toTopOf="@id/telIcon"
+        android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/telIcon"
         app:layout_constraintStart_toEndOf="@id/telIcon"
-        android:layout_marginStart="@dimen/dp_5"/>
+        app:layout_constraintTop_toTopOf="@id/telIcon" />
 
     <TextView
         android:id="@+id/telTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintStart_toEndOf="@id/telPrompt"
-        app:layout_constraintBaseline_toBaselineOf="@id/telPrompt" />
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBaseline_toBaselineOf="@id/telPrompt"
+        app:layout_constraintStart_toEndOf="@id/telPrompt" />
 
     <View
         android:id="@+id/telLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"
-        app:layout_constraintTop_toBottomOf="@id/telIcon"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/grey_F5F5F5"/>
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5"
+        app:layout_constraintTop_toBottomOf="@id/telIcon" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/websiteGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="websiteIcon,websiteLine,websitePrompt,websiteTv"/>
+        app:constraint_referenced_ids="websiteIcon,websiteLine,websitePrompt,websiteTv" />
 
     <ImageView
         android:id="@+id/websiteIcon"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
-        android:src="@mipmap/ic_website_black"
-        app:layout_constraintTop_toBottomOf="@id/telIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
+        android:src="@mipmap/ic_website_black"
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
+        app:layout_constraintTop_toBottomOf="@id/telIcon" />
 
     <TextView
         android:id="@+id/websitePrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_5"
         android:text=""
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintTop_toTopOf="@id/websiteIcon"
+        android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/websiteIcon"
         app:layout_constraintStart_toEndOf="@id/websiteIcon"
-        android:layout_marginStart="@dimen/dp_5"/>
+        app:layout_constraintTop_toTopOf="@id/websiteIcon" />
 
     <TextView
         android:id="@+id/websiteTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_13"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/blue_4C9EF2"
-        app:layout_constraintStart_toEndOf="@id/websitePrompt"
-        app:layout_constraintBaseline_toBaselineOf="@id/websitePrompt" />
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBaseline_toBaselineOf="@id/websitePrompt"
+        app:layout_constraintStart_toEndOf="@id/websitePrompt" />
 
     <View
         android:id="@+id/websiteLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"
-        app:layout_constraintTop_toBottomOf="@id/websiteIcon"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/grey_F5F5F5"/>
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5"
+        app:layout_constraintTop_toBottomOf="@id/websiteIcon" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/emailGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="emailIcon,emailPrompt,emailTv,emailLine"/>
+        app:constraint_referenced_ids="emailIcon,emailPrompt,emailTv,emailLine" />
 
     <ImageView
         android:id="@+id/emailIcon"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
-        android:src="@mipmap/ic_email_black"
-        app:layout_constraintTop_toBottomOf="@id/websiteIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
+        android:src="@mipmap/ic_email_black"
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
+        app:layout_constraintTop_toBottomOf="@id/websiteIcon" />
 
     <TextView
         android:id="@+id/emailPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_5"
         android:text=""
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintTop_toTopOf="@id/emailIcon"
+        android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/emailIcon"
         app:layout_constraintStart_toEndOf="@id/emailIcon"
-        android:layout_marginStart="@dimen/dp_5"/>
+        app:layout_constraintTop_toTopOf="@id/emailIcon" />
 
     <TextView
         android:id="@+id/emailTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintStart_toEndOf="@id/emailPrompt"
-        app:layout_constraintBaseline_toBaselineOf="@id/emailPrompt" />
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBaseline_toBaselineOf="@id/emailPrompt"
+        app:layout_constraintStart_toEndOf="@id/emailPrompt" />
 
     <View
         android:id="@+id/emailLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"
-        app:layout_constraintTop_toBottomOf="@id/emailIcon"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/grey_F5F5F5"/>
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5"
+        app:layout_constraintTop_toBottomOf="@id/emailIcon" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/facebookGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="facebookIcon,facebookTv,facebookPrompt,faceLine"/>
+        app:constraint_referenced_ids="facebookIcon,facebookTv,facebookPrompt,faceLine" />
 
     <ImageView
         android:id="@+id/facebookIcon"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
-        android:src="@mipmap/ic_facebook_black"
-        app:layout_constraintTop_toBottomOf="@id/emailIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
+        android:src="@mipmap/ic_facebook_black"
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
+        app:layout_constraintTop_toBottomOf="@id/emailIcon" />
 
     <TextView
         android:id="@+id/facebookPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_5"
         android:text=""
-        android:textSize="@dimen/sp_13"
         android:textColor="@color/grey_666666"
-        app:layout_constraintTop_toTopOf="@id/facebookIcon"
+        android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/facebookIcon"
         app:layout_constraintStart_toEndOf="@id/facebookIcon"
-        android:layout_marginStart="@dimen/dp_5"/>
+        app:layout_constraintTop_toTopOf="@id/facebookIcon" />
 
     <TextView
         android:id="@+id/facebookTv"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_13"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textColor="@color/blue_4C9EF2"
-        app:layout_constraintStart_toEndOf="@id/facebookPrompt"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/dp_15"
-        app:layout_constraintBaseline_toBaselineOf="@id/facebookPrompt" />
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/blue_4C9EF2"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBaseline_toBaselineOf="@id/facebookPrompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/facebookPrompt" />
 
     <View
         android:id="@+id/faceLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"
-        app:layout_constraintTop_toBottomOf="@id/facebookIcon"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/grey_F5F5F5"/>
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5"
+        app:layout_constraintTop_toBottomOf="@id/facebookIcon" />
 
 
     <ImageView
         android:id="@+id/addressIcon"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_20"
-        android:src="@mipmap/ic_address_black"
-        app:layout_constraintTop_toBottomOf="@id/facebookIcon"
         android:layout_marginTop="@dimen/dp_21"
-        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"/>
+        android:src="@mipmap/ic_address_black"
+        app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
+        app:layout_constraintTop_toBottomOf="@id/facebookIcon" />
 
     <TextView
         android:id="@+id/addressTv"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_13"
-        android:textColor="@color/grey_666666"
-        android:maxLines="2"
-        android:ellipsize="end"
-        app:layout_constraintTop_toTopOf="@id/addressIcon"
-        app:layout_constraintBottom_toBottomOf="@id/addressIcon"
-        app:layout_constraintStart_toEndOf="@id/addressIcon"
-        app:layout_constraintEnd_toStartOf="@id/toNavigationView"
+        android:layout_marginStart="@dimen/dp_5"
         android:layout_marginEnd="@dimen/dp_20"
-        android:layout_marginStart="@dimen/dp_5"/>
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBottom_toBottomOf="@id/addressIcon"
+        app:layout_constraintEnd_toStartOf="@id/toNavigationView"
+        app:layout_constraintStart_toEndOf="@id/addressIcon"
+        app:layout_constraintTop_toTopOf="@id/addressIcon" />
 
     <View
         android:id="@+id/toCallView"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/facebookIcon"
-        android:layout_marginTop="@dimen/dp_20" />
+        app:layout_constraintTop_toBottomOf="@id/facebookIcon" />
 
     <ImageView
         android:id="@+id/telBlueIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_phone_blue"
+        app:layout_constraintBottom_toTopOf="@id/toCallPrompt"
         app:layout_constraintEnd_toEndOf="@id/toCallView"
         app:layout_constraintStart_toStartOf="@id/toCallView"
-        app:layout_constraintTop_toTopOf="@id/toCallView"
-        app:layout_constraintBottom_toTopOf="@id/toCallPrompt"
-        />
+        app:layout_constraintTop_toTopOf="@id/toCallView" />
 
     <TextView
         android:id="@+id/toCallPrompt"
@@ -324,37 +324,36 @@
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/toCallView"
-        app:layout_constraintStart_toStartOf="@id/toCallView"
         app:layout_constraintEnd_toEndOf="@id/toCallView"
-        app:layout_constraintTop_toBottomOf="@id/telBlueIcon"/>
+        app:layout_constraintStart_toStartOf="@id/toCallView"
+        app:layout_constraintTop_toBottomOf="@id/telBlueIcon" />
 
     <View
         android:layout_width="@dimen/dp_1"
         android:layout_height="@dimen/dp_20"
         android:background="@color/grey_CCCCCC"
+        app:layout_constraintBottom_toBottomOf="@id/toCallView"
         app:layout_constraintEnd_toStartOf="@id/toCallView"
-        app:layout_constraintTop_toTopOf="@id/toCallView"
-        app:layout_constraintBottom_toBottomOf="@id/toCallView"/>
+        app:layout_constraintTop_toTopOf="@id/toCallView" />
 
     <View
         android:id="@+id/toNavigationView"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        app:layout_constraintEnd_toStartOf="@id/toCallView"
-        app:layout_constraintTop_toBottomOf="@id/facebookIcon"
         android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_1"/>
+        android:layout_marginEnd="@dimen/dp_1"
+        app:layout_constraintEnd_toStartOf="@id/toCallView"
+        app:layout_constraintTop_toBottomOf="@id/facebookIcon" />
 
     <ImageView
         android:id="@+id/navigationIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_navigation_blue"
+        app:layout_constraintBottom_toTopOf="@id/navigationPrompt"
         app:layout_constraintEnd_toEndOf="@id/toNavigationView"
         app:layout_constraintStart_toStartOf="@id/toNavigationView"
-        app:layout_constraintTop_toTopOf="@id/toNavigationView"
-        app:layout_constraintBottom_toTopOf="@id/navigationPrompt"
-        />
+        app:layout_constraintTop_toTopOf="@id/toNavigationView" />
 
     <TextView
         android:id="@+id/navigationPrompt"
@@ -364,55 +363,54 @@
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="@id/toNavigationView"
-        app:layout_constraintStart_toStartOf="@id/toNavigationView"
         app:layout_constraintEnd_toEndOf="@id/toNavigationView"
-        app:layout_constraintTop_toBottomOf="@id/navigationIcon"/>
+        app:layout_constraintStart_toStartOf="@id/toNavigationView"
+        app:layout_constraintTop_toBottomOf="@id/navigationIcon" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/grey_F5F5F5"
-        app:layout_constraintTop_toBottomOf="@id/navigationPrompt"
-        android:layout_marginTop="@dimen/dp_10"/>
+        app:layout_constraintTop_toBottomOf="@id/navigationPrompt" />
 
     <View
         android:id="@+id/introduceView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/white"
         app:layout_constrainedHeight="true"
         app:layout_constraintHeight_min="@dimen/dp_90"
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/dp_20"
-        app:layout_constraintTop_toBottomOf="@id/navigationPrompt"/>
+        app:layout_constraintTop_toBottomOf="@id/navigationPrompt" />
 
     <TextView
         android:id="@+id/introducePrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mechanism_introduce"
-        android:textSize="@dimen/sp_13"
-        android:textColor="@color/black_333333"
-        app:layout_constraintStart_toStartOf="@id/introduceView"
-        app:layout_constraintTop_toTopOf="@id/introduceView"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_15"
-        />
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/mechanism_introduce"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintStart_toStartOf="@id/introduceView"
+        app:layout_constraintTop_toTopOf="@id/introduceView" />
 
     <TextView
         android:id="@+id/introduceTv"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/introducePrompt"
-        android:layout_marginTop="@dimen/dp_8"
-        app:layout_constraintStart_toStartOf="@id/introduceView"
-        app:layout_constraintEnd_toEndOf="@id/introduceView"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"/>
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_15"
+        app:layout_constraintEnd_toEndOf="@id/introduceView"
+        app:layout_constraintStart_toStartOf="@id/introduceView"
+        app:layout_constraintTop_toBottomOf="@id/introducePrompt" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         android:background="@color/grey_F5F5F5"
-        app:layout_constraintTop_toBottomOf="@id/introduceView"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/introduceView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

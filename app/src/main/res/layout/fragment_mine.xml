@@ -48,8 +48,9 @@
                         android:id="@+id/rl_minemessage"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_70"
+                        android:layout_below="@+id/message_view"
                         android:layout_marginLeft="@dimen/dp_15"
-                        android:layout_marginTop="@dimen/dp_75"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_15"
                         android:background="@drawable/bg_minename">
 
@@ -112,10 +113,11 @@
 
                 <ImageView
                     android:id="@+id/integral_iv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/dp_4"
+                    android:scaleType="centerCrop"
                     android:layout_marginBottom="@dimen/dp_4"
                     android:src="@mipmap/ic_mine_integral" />
 
@@ -159,6 +161,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/title_tv"
                         android:text="0"
+                        android:textStyle="bold"
                         android:textColor="@color/gold_A07D41"
                         android:textSize="@dimen/sp_20" />
 

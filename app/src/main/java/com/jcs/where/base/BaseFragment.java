@@ -257,7 +257,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void showNetError(ErrorResponse errorResponse) {
         if (errorResponse.getErrCode() != 401) {
-            ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+//            ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
             Log.e("BaseFragment", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
         }
     }

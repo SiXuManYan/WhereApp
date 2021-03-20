@@ -201,7 +201,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void showNetError(ErrorResponse errorResponse) {
         if (errorResponse.getErrCode() != 401) {
-            ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
+//            ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
             Log.e("BaseActivity", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
         }
     }

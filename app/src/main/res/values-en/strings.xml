@@ -437,7 +437,7 @@
 	<string name="merchant_settled_prompt_merchant_address"><font color='#FF0000'>*</font><font color='#666666'>Merchant Address</font></string>
 	<string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*</font><font color='#666666'>Business phone</font></string>
 	<string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*</font><font color='#666666'>Is there a physical store?</font></string>
-	<string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>Upload business license</font></string>
+	<string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>Upload business license(2 photos front&#38;back)</font></string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
     <string name="image_message">Image Message</string>

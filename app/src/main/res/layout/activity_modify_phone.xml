@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_FEFEFE"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
@@ -10,8 +11,9 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
+        app:showBottomLine="true"
         android:layout_height="50dp"
-        android:background="@color/white"
+        android:background="@color/white_FEFEFE"
         app:backIcon="@drawable/ic_back_black"
         app:middleTitle="@string/safety_verification"
         app:middleTitleColor="@color/black_333333"

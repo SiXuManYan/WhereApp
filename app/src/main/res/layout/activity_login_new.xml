@@ -195,7 +195,7 @@
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
                         android:textColor="@color/white"
-                        android:textColorHint="@color/grey_BFBFBF"
+                        android:textColorHint="@color/white"
                         android:textSize="@dimen/sp_14" />
 
                     <ImageView

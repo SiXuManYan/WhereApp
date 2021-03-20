@@ -9,86 +9,84 @@
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/commitTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp_8"
-        android:paddingEnd="@dimen/dp_8"
-        android:paddingTop="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_5"
-        app:layout_constraintTop_toTopOf="@id/jcsTitle"
-        app:layout_constraintBottom_toBottomOf="@id/jcsTitle"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_cccccc_radius_2"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/dp_15"
-        android:text="@string/commit"/>
+        android:background="@drawable/shape_cccccc_radius_2"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_8"
+        android:paddingBottom="@dimen/dp_5"
+        android:text="@string/commit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="@id/jcsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/jcsTitle" />
 
     <com.jcs.where.widget.SelectStarView
         android:id="@+id/selectStarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_17"
         app:layout_constraintStart_toEndOf="@id/scorePrompt"
-        android:layout_marginStart="@dimen/dp_10"
-        />
+        app:layout_constraintTop_toBottomOf="@id/jcsTitle" />
 
     <TextView
         android:id="@+id/scorePrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
         android:text="@string/score_prompt"
-        android:textSize="@dimen/sp_16"
         android:textColor="@color/black_333333"
-        app:layout_constraintTop_toTopOf="@id/selectStarView"
+        android:textSize="@dimen/sp_16"
         app:layout_constraintBottom_toBottomOf="@id/selectStarView"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/dp_15"
-        />
+        app:layout_constraintTop_toTopOf="@id/selectStarView" />
 
     <TextView
         android:id="@+id/satisfiedTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_35"
+        android:text="@string/satisfied"
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_14"
-        android:text="@string/satisfied"
-        app:layout_constraintTop_toTopOf="@id/selectStarView"
         app:layout_constraintBottom_toBottomOf="@id/selectStarView"
         app:layout_constraintStart_toEndOf="@id/selectStarView"
-        android:layout_marginStart="@dimen/dp_35"/>
+        app:layout_constraintTop_toTopOf="@id/selectStarView" />
 
     <EditText
         android:id="@+id/contentEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_22"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5"
+        android:gravity="top"
         android:hint="@string/hint_write_comment"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_100"
         android:textColor="@color/grey_999999"
         android:textSize="@dimen/sp_13"
-        android:background="@color/grey_F5F5F5"
-        android:paddingTop="@dimen/dp_15"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15"
-        android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"
-        android:paddingBottom="@dimen/dp_100"
-        android:gravity="top"
-        app:layout_constraintTop_toBottomOf="@id/selectStarView"
-        android:layout_marginTop="@dimen/dp_22"/>
+        app:layout_constraintTop_toBottomOf="@id/selectStarView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pictureRecycler"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_85"
-        app:layout_constraintBottom_toBottomOf="@id/contentEt"
-        app:layout_constraintStart_toStartOf="@id/contentEt"
-        android:layout_marginBottom="@dimen/dp_15"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"/>
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"
+        app:layout_constraintBottom_toBottomOf="@id/contentEt"
+        app:layout_constraintStart_toStartOf="@id/contentEt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

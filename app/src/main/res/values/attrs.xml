@@ -159,14 +159,6 @@
     </declare-styleable>
 
 
-    <declare-styleable name="CirclePoint">
-        <attr name="size" format="dimension"/>
-        <attr name="point_unselected_color" format="color|reference"/>
-        <attr name="point_selected_color" format="color|reference"/>
-        <attr name="count" format="integer"/>
-    </declare-styleable>
-
-
     <string-array name="splash_item_title">
         <item>Bataan news</item>
         <item>Tourist accommodation</item>

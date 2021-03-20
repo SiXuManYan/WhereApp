@@ -17,7 +17,7 @@ import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
-import com.jcs.where.widget.pager.CirclePoint;
+import com.jcs.where.widget.pager.IndicatorView;
 import com.mob.MobSDK;
 
 /**
@@ -28,7 +28,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     private RelativeLayout splashContainerRl;
     private ImageView firstIv;
     private ViewPager pagerVp;
-    private CirclePoint pointView;
+    private IndicatorView pointView;
 
     @Override
     protected int getLayoutId() {
@@ -90,7 +90,6 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
                 }
 
 
-
             }
         });
 
@@ -119,12 +118,12 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
         pagerVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                pointView.setonPageScrolled(position, positionOffset, positionOffsetPixels);
+
             }
 
             @Override
             public void onPageSelected(int position) {
-
+                pointView.onPageSelected(position);
             }
 
             @Override

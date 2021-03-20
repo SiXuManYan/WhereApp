@@ -22,9 +22,9 @@ public class NewsChannelResponse extends BaseNode implements Serializable {
     @SerializedName("id")
     private int id = 0;
     @SerializedName("name")
-    private String name;
+    private String name = "";
     @SerializedName("follow_status")
-    private int followStatus;
+    private int followStatus ;
 
     /**
      * 从网络拉取的都是可编辑的

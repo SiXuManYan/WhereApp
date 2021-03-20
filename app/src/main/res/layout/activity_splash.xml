@@ -20,18 +20,14 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <com.jcs.where.widget.pager.CirclePoint
+    <com.jcs.where.widget.pager.IndicatorView
         android:id="@+id/point_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:point_unselected_color="#7D79FF"
-        app:point_selected_color="#485CDA"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_50"
         android:layout_centerHorizontal="true"
         android:visibility="gone"
-        app:count="3"
-        app:size="@dimen/dp_8"
         tools:visibility="visible" />
 
 

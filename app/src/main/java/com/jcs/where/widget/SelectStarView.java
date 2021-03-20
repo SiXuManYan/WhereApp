@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.jcs.where.R;
 import com.jcs.where.utils.DimenUtil;
 
@@ -67,9 +68,10 @@ public class SelectStarView extends LinearLayout {
         for (int i = 0; i < MAX_STAR_NUM; i++) {
             ImageView star = new ImageView(getContext());
             star.setTag(i);
+            star.setScaleType(ImageView.ScaleType.CENTER_CROP);
             star.setOnClickListener(this::onStarClicked);
             star.setImageResource(R.mipmap.ic_star_yellow);
-            LinearLayout.LayoutParams lp = new LayoutParams(DimenUtil.toDp(getContext(), 25), DimenUtil.toDp(getContext(), 25));
+            LinearLayout.LayoutParams lp = new LayoutParams(SizeUtils.dp2px(26), SizeUtils.dp2px(26));
             if (i > 0) {
                 lp.leftMargin = DimenUtil.toDp(getContext(), 15);
             }

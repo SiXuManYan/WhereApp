@@ -268,4 +268,9 @@ public class HotelCommentActivity extends BaseActivity implements View.OnClickLi
         }
         return 0;
     }
+
+    @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
 }

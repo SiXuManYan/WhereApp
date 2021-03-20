@@ -58,9 +58,9 @@
                             android:id="@+id/ratingBar"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
-                            android:layout_marginStart="@dimen/dp_10"
                             android:layout_height="@dimen/dp_16"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/dp_10"
                             android:stepSize="1" />
                     </LinearLayout>
 
@@ -133,8 +133,8 @@
 
                         <ImageView
                             android:id="@+id/iv_facebook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/dp_17"
+                            android:layout_height="@dimen/dp_17"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_hoteldetail_facebook" />
 
@@ -169,8 +169,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/dp_17"
+                            android:layout_height="@dimen/dp_17"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_hoteldetail_time" />
 
@@ -211,8 +211,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/dp_17"
+                            android:layout_height="@dimen/dp_17"
                             android:layout_gravity="center_vertical"
                             android:src="@mipmap/ic_hoteldetail_location" />
 
@@ -247,17 +247,24 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="6.5dp"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_hoteldetailphone">
+                            android:background="@drawable/bg_hoteldetailphone"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/dp_7"
+                            android:paddingBottom="@dimen/dp_7">
+
+
+                            <ImageView
+                                android:id="@+id/navigation_iv"
+                                android:layout_width="@dimen/dp_20"
+                                android:layout_height="@dimen/dp_20"
+                                android:src="@mipmap/ic_hoteldetail_navigation" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="7dp"
-                                android:layout_weight="1"
-                                android:drawableLeft="@drawable/ic_hoteldetail_navigation"
-                                android:drawablePadding="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_toEndOf="@+id/navigation_iv"
                                 android:gravity="center"
                                 android:text="@string/navigation"
                                 android:textColor="@color/grey_666666"
@@ -270,19 +277,25 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6.5dp"
+                            android:paddingTop="@dimen/dp_7"
+                            android:paddingBottom="@dimen/dp_7"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:background="@drawable/bg_hoteldetailphone">
+
+                            <ImageView
+                                android:id="@+id/phone_iv"
+                                android:layout_width="@dimen/dp_20"
+                                android:layout_height="@dimen/dp_20"
+                                android:src="@mipmap/ic_hoteldetail_phone" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_marginStart="6.5dp"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="7dp"
-                                android:drawableLeft="@drawable/ic_hoteldetail_phone"
-                                android:drawablePadding="10dp"
                                 android:gravity="center"
+                                android:layout_toEndOf="@+id/phone_iv"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_centerVertical="true"
                                 android:text="@string/telephone"
                                 android:textColor="@color/grey_666666"
                                 android:textSize="12sp" />

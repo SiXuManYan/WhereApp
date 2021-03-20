@@ -85,7 +85,7 @@
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/grey_BFBFBF"
+                    android:textColorHint="@color/white"
                     android:textSize="@dimen/sp_14" />
 
             </RelativeLayout>
@@ -135,7 +135,7 @@
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
                         android:textColor="@color/white"
-                        android:textColorHint="@color/grey_BFBFBF"
+                        android:textColorHint="@color/white"
                         android:textSize="@dimen/sp_14" />
 
                     <View
@@ -158,7 +158,7 @@
                         android:paddingTop="@dimen/dp_5"
                         android:paddingBottom="@dimen/dp_5"
                         android:text="@string/get_verify"
-                        android:textColor="@color/grey_BFBFBF" />
+                        android:textColor="@color/white" />
 
 
                 </RelativeLayout>

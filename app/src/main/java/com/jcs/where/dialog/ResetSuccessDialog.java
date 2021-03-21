@@ -11,14 +11,14 @@ import com.jcs.where.R;
 
 public class ResetSuccessDialog extends Dialog implements View.OnClickListener {
 
-    private TextView sureTv;
+    private TextView mSureTv;
 
-    private final OnCloseListener listener;
+    private final OnCloseListener mListener;
     private final Context mContext;
 
     public ResetSuccessDialog(Context context, int themeResId, OnCloseListener listener) {
         super(context, themeResId);
-        this.listener = listener;
+        this.mListener = listener;
         this.mContext = context;
     }
 
@@ -32,16 +32,16 @@ public class ResetSuccessDialog extends Dialog implements View.OnClickListener {
     }
 
     protected void initView() {
-        sureTv = (TextView) findViewById(R.id.tv_sure);
-        sureTv.setOnClickListener(this);
+        mSureTv = (TextView) findViewById(R.id.tv_sure);
+        mSureTv.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_sure:
-                if (listener != null) {
-                    listener.onClose(this);
+                if (mListener != null) {
+                    mListener.onClose(this);
                 }
                 break;
         }

@@ -49,14 +49,14 @@ public class SearchActivity extends BaseActivity {
     private static final String EXT_CITY_ID = "cityId";
     private static final String EXT_CATEGORY_ID = "categoryId";
     private static final String EXT_SEARCH_TAG = "searchTag";
-    private TextView cancelTv;
+    private TextView mCancelTv;
     private EditText mSearchEt;
-    private View topBg;
-    private RecyclerView searchHistoryRv, searchHotRv;
-    private HotSearchAdapter hotSearchAdapter;
+    private View mTopBg;
+    private RecyclerView mSearchHistoryRv, mSearchHotRv;
+    private HotSearchAdapter mHotSearchAdapter;
     private SearchHistoryAdapter mSearchHistoryAdapter;
     private RecommendAdapter mSearchResultAdapter;
-    private RecyclerView recommendSearchRv;
+    private RecyclerView mRecommendSearchRv;
     private SearchTag mSearchTag;
     private String mAreaId;
     private SearchModel mModel;
@@ -81,27 +81,27 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        cancelTv = findViewById(R.id.tv_cancel);
+        mCancelTv = findViewById(R.id.tv_cancel);
         mSearchEt = findViewById(R.id.et_search);
-        topBg = findViewById(R.id.topBg);
-        setMarginTopForStatusBar(topBg);
-        searchHistoryRv = findViewById(R.id.rv_searchhistory1);
-        searchHotRv = findViewById(R.id.rv_searchhot);
-        recommendSearchRv = findViewById(R.id.rv_searchrecommend);
+        mTopBg = findViewById(R.id.topBg);
+        setMarginTopForStatusBar(mTopBg);
+        mSearchHistoryRv = findViewById(R.id.rv_searchhistory1);
+        mSearchHotRv = findViewById(R.id.rv_searchhot);
+        mRecommendSearchRv = findViewById(R.id.rv_searchrecommend);
 
         mSearchHistoryAdapter = new SearchHistoryAdapter();
         mSearchHistoryAdapter.addChildClickViewIds(R.id.rl_searchhistory);
         mSearchResultAdapter = new RecommendAdapter();
         mSearchResultAdapter.addChildClickViewIds(R.id.ll_search);
-        recommendSearchRv.setAdapter(mSearchResultAdapter);
-        hotSearchAdapter = new HotSearchAdapter();
-        hotSearchAdapter.addChildClickViewIds(R.id.rl_searchhistory);
-        searchHotRv.setAdapter(hotSearchAdapter);
+        mRecommendSearchRv.setAdapter(mSearchResultAdapter);
+        mHotSearchAdapter = new HotSearchAdapter();
+        mHotSearchAdapter.addChildClickViewIds(R.id.rl_searchhistory);
+        mSearchHotRv.setAdapter(mHotSearchAdapter);
     }
 
     private void initSearchHistory() {
-        if (searchHistoryRv != null) {
-            searchHistoryRv.removeAllViews();
+        if (mSearchHistoryRv != null) {
+            mSearchHistoryRv.removeAllViews();
         }
         if (mSearchHistoryAdapter != null) {
             mSearchHistoryAdapter.getData().clear();
@@ -110,9 +110,9 @@ public class SearchActivity extends BaseActivity {
         MyLayoutManager layout = new MyLayoutManager();
         //必须，防止recyclerview高度为wrap时测量item高度0
         layout.setAutoMeasureEnabled(true);
-        searchHistoryRv.setLayoutManager(layout);
+        mSearchHistoryRv.setLayoutManager(layout);
         mSearchHistoryAdapter.addData(SearchHistoryUtils.getSearchHistory(SearchActivity.this, mSearchTag));
-        searchHistoryRv.setAdapter(mSearchHistoryAdapter);
+        mSearchHistoryRv.setAdapter(mSearchHistoryAdapter);
     }
 
     @Override
@@ -129,11 +129,11 @@ public class SearchActivity extends BaseActivity {
         MyLayoutManager layout1 = new MyLayoutManager();
         //必须，防止recyclerview高度为wrap时测量item高度0
         layout1.setAutoMeasureEnabled(true);
-        searchHotRv.setLayoutManager(layout1);
+        mSearchHotRv.setLayoutManager(layout1);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this,
                 LinearLayoutManager.VERTICAL, false);
-        recommendSearchRv.setLayoutManager(linearLayoutManager);
+        mRecommendSearchRv.setLayoutManager(linearLayoutManager);
         initSearchHistory();
 
         getHotSearchFromNet();
@@ -159,8 +159,8 @@ public class SearchActivity extends BaseActivity {
                 @Override
                 protected void onSuccess(List<String> response) {
                     stopLoading();
-                    hotSearchAdapter.getData().clear();
-                    hotSearchAdapter.addData(response);
+                    mHotSearchAdapter.getData().clear();
+                    mHotSearchAdapter.addData(response);
                 }
             });
         }
@@ -177,8 +177,8 @@ public class SearchActivity extends BaseActivity {
                 @Override
                 protected void onSuccess(List<String> response) {
                     stopLoading();
-                    hotSearchAdapter.getData().clear();
-                    hotSearchAdapter.addData(response);
+                    mHotSearchAdapter.getData().clear();
+                    mHotSearchAdapter.addData(response);
                 }
             });
         }
@@ -195,8 +195,8 @@ public class SearchActivity extends BaseActivity {
                 @Override
                 protected void onSuccess(List<String> response) {
                     stopLoading();
-                    hotSearchAdapter.getData().clear();
-                    hotSearchAdapter.addData(response);
+                    mHotSearchAdapter.getData().clear();
+                    mHotSearchAdapter.addData(response);
                 }
             });
         }
@@ -222,7 +222,7 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        cancelTv.setOnClickListener(view -> finish());
+        mCancelTv.setOnClickListener(view -> finish());
         mSearchEt.setOnEditorActionListener(this::onEditorActionClicked);
         mSearchEt.addTextChangedListener(new AfterInputWatcher() {
             @Override
@@ -235,13 +235,13 @@ public class SearchActivity extends BaseActivity {
 
         findViewById(R.id.tv_clear).setOnClickListener(this::onClearClicked);
 
-        hotSearchAdapter.setOnItemChildClickListener(this::onHotSearchItemClicked);
+        mHotSearchAdapter.setOnItemChildClickListener(this::onHotSearchItemClicked);
         mSearchHistoryAdapter.setOnItemChildClickListener(this::onSearchHistoryItemClicked);
         mSearchResultAdapter.setOnItemChildClickListener(this::onSearchResultItemClicked);
     }
 
     private void onHotSearchItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        String item = hotSearchAdapter.getItem(position);
+        String item = mHotSearchAdapter.getItem(position);
         Intent intent = new Intent();
         intent.putExtra(EXT_SELECT_SEARCH, item);
         setResult(RESULT_OK, intent);
@@ -307,9 +307,9 @@ public class SearchActivity extends BaseActivity {
      */
     private void recommendSearch(String text, int length) {
         if (length == 0) {
-            recommendSearchRv.setVisibility(View.GONE);
+            mRecommendSearchRv.setVisibility(View.GONE);
         } else {
-            recommendSearchRv.setVisibility(View.VISIBLE);
+            mRecommendSearchRv.setVisibility(View.VISIBLE);
             mSearchResultAdapter.setInputText(text);
             if (mSearchTag == SearchTag.NEWS) {
                 searchNews(text);

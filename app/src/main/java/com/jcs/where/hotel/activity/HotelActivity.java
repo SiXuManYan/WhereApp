@@ -9,7 +9,6 @@ import android.location.Address;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -458,8 +457,9 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelResponse data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
-            if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                GlideUtil.load(getContext(), data.getImages().get(0), photoIv);
+            List<String> images = data.getImages();
+            if (images != null && !images.isEmpty()) {
+                GlideUtil.load(getContext(), images.get(0), photoIv);
             } else {
                 photoIv.setImageResource(R.mipmap.ic_glide_default);
             }

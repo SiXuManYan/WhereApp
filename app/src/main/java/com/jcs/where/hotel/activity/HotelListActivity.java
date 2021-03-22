@@ -46,13 +46,12 @@ public class HotelListActivity extends BaseActivity {
     private static final int REQ_SEARCH = 666;
     private TabLayout mTab;
     private ViewPager mViewPager;
-    private TextView startDayTv, endDayTv, cityTv;
-    private TextView mLiveTextPromptTv, mLeaveTextPromptTv, mCityTv;
-    //    private View mChooseDataView;
+    private TextView mStartDayTv, mEndDayTv, mCityTv;
+    private TextView mLiveTextPromptTv, mLeaveTextPromptTv;
     private String mParentCategoryId;
     private int mTotalDay, mRoomNum;
-    private List<Fragment> fragments;
-    private ImageView clearIv;
+    private List<Fragment> mFragmentList;
+    private ImageView mClearIv;
     private PopupConstraintLayout mTopPopupLayout;
     private EnterStayInfoView mEnterStayInfoView;
     private JcsCalendarDialog mCalendarDialog;
@@ -160,23 +159,23 @@ public class HotelListActivity extends BaseActivity {
         mEnterStayInfoView = findViewById(R.id.enterStayInfoView);
         mTab = findViewById(R.id.tab);
         mViewPager = findViewById(R.id.viewPager);
-        startDayTv = findViewById(R.id.startDayTv);
-        endDayTv = findViewById(R.id.endDayTv);
-        cityTv = findViewById(R.id.cityTv);
+        mStartDayTv = findViewById(R.id.startDayTv);
+        mEndDayTv = findViewById(R.id.endDayTv);
+        mCityTv = findViewById(R.id.cityTv);
         mLeaveTextPromptTv = findViewById(R.id.leaveTextPrompt);
         mLiveTextPromptTv = findViewById(R.id.liveTextPrompt);
-        // cityTv.setText(getIntent().getStringExtra(EXT_CITY));
-//        mChooseDataView = findViewById(R.id.toChooseDate);
 
         findViewById(R.id.cityTv).setOnClickListener(view -> SearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), SearchTag.HOTEL, REQ_SEARCH));
-        clearIv = findViewById(R.id.clearIv);
-        clearIv.setVisibility(View.GONE);
-        clearIv.setOnClickListener(view -> {
-            cityTv.setText(getString(R.string.input_hotel_name));
-            ((HotelListFragment) fragments.get(0)).setSearchText("");
-            clearIv.setVisibility(View.GONE);
-            cityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
-        });
+        mClearIv = findViewById(R.id.clearIv);
+        mClearIv.setVisibility(View.GONE);
+        mClearIv.setOnClickListener(this::onClearIvClicked);
+    }
+
+    private void onClearIvClicked(View view) {
+        mCityTv.setText(getString(R.string.input_hotel_name));
+        ((HotelListFragment) mFragmentList.get(0)).setSearchText("");
+        mClearIv.setVisibility(View.GONE);
+        mCityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
     }
 
     @Override
@@ -187,8 +186,8 @@ public class HotelListActivity extends BaseActivity {
             mLeaveTextPromptTv.setVisibility(View.GONE);
         }
         initExtra();
-        startDayTv.setText(mStartDateBean.getShowMonthDayDateWithSplit());
-        endDayTv.setText(mEndDateBean.getShowMonthDayDateWithSplit());
+        mStartDayTv.setText(mStartDateBean.getShowMonthDayDateWithSplit());
+        mEndDayTv.setText(mEndDateBean.getShowMonthDayDateWithSplit());
         mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
 
             @Override
@@ -289,19 +288,9 @@ public class HotelListActivity extends BaseActivity {
             titles.add(list.get(i).getName());
         }
 
-//        mTab.setSelectedTabIndicatorHeight(0);
-        fragments = new ArrayList<>();
+        mFragmentList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             String hotelTypeIds = String.valueOf(list.get(i).getId());
-
-//            HotelListFragment e = HotelListFragment.newInstance(hotelTypeIds,
-//                    mCityId,
-//                    mPriceEnd + "",
-//                    mStar + "",
-//                    mStartDateBean,
-//                    mEndDateBean,
-//                    mTotalDay,
-//                    mRoomNum);
 
             HotelListChildFragment fragment = HotelListChildFragment.getInstance(hotelTypeIds,
                     mStartDateBean,
@@ -314,12 +303,12 @@ public class HotelListActivity extends BaseActivity {
                     mScore,
                     mRoomNum);
 
-            fragments.add(fragment);
+            mFragmentList.add(fragment);
         }
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return fragments.get(position);
+                return mFragmentList.get(position);
             }
 
             @Override
@@ -361,11 +350,11 @@ public class HotelListActivity extends BaseActivity {
         mEnterStayInfoView.setStartAndEnd(startDate, endDate);
 
         if (startDate != null) {
-            startDayTv.setText(startDate.getShowMonthDayDateWithSplit());
+            mStartDayTv.setText(startDate.getShowMonthDayDateWithSplit());
         }
 
         if (endDate != null) {
-            endDayTv.setText(endDate.getShowMonthDayDateWithSplit());
+            mEndDayTv.setText(endDate.getShowMonthDayDateWithSplit());
         }
     }
 
@@ -383,11 +372,11 @@ public class HotelListActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_SEARCH && data != null) {
-            clearIv.setVisibility(View.VISIBLE);
+            mClearIv.setVisibility(View.VISIBLE);
             mViewPager.setCurrentItem(0);
-            cityTv.setText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
-            cityTv.setTextColor(getResources().getColor(R.color.grey_666666));
-            ((HotelListFragment) fragments.get(0)).setSearchText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
+            mCityTv.setText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
+            mCityTv.setTextColor(getResources().getColor(R.color.grey_666666));
+            ((HotelListFragment) mFragmentList.get(0)).setSearchText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
         }
     }
 }

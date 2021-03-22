@@ -514,15 +514,20 @@
 
         </activity>
 
-        <activity android:name=".features.message.notice.detail.SystemMessageDetailActivity" />
-        <activity android:name=".features.search.SearchAllActivity" />
+        <activity
+            android:name=".features.message.notice.detail.SystemMessageDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.search.SearchAllActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".features.upgrade.UpgradeActivity"
             android:theme="@style/upgrade"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-
-
+        <activity
+            android:name=".features.address.AddressActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

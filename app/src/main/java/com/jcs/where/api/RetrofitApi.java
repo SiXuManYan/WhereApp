@@ -51,6 +51,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
@@ -756,6 +757,13 @@ public interface RetrofitApi {
             @Query("grade") @Nullable String grade
 
     );
+
+
+    /**
+     * 收货地址列表
+     */
+    @GET("/commonapi/v2/addresses")
+    Observable<JcsResponse<List<AddressResponse>>> addressList();
 
 
 }

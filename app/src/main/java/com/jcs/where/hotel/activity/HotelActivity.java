@@ -457,6 +457,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelResponse data) {
             RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
+
             List<String> images = data.getImages();
             if (images != null && !images.isEmpty()) {
                 GlideUtil.load(getContext(), images.get(0), photoIv);

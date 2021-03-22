@@ -486,5 +486,16 @@
     <string name="password_not_same_hint">请输入两次相同密码</string>
     <string name="travel_recommend">推荐</string>
     <string name="tourism_management">旅游管理</string>
+    <string name="shipping_address">收货地址</string>
+    <string name="shipping_address_edit">收货地址：</string>
+    <string name="recipient_edit_hint">请填写收货人的姓名</string>
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="address_edit_hint">请填写详细地址</string>
+    <string name="recipient">联系人：</string>
+    <string name="sir">先生</string>
+    <string name="lady">女士</string>
+    <string name="contact_number">联系电话：</string>
+    <string name="address_phone_edit">请填写收货人电话号码</string>
 
 </resources>

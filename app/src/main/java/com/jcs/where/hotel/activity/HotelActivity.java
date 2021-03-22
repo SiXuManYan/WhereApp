@@ -491,7 +491,16 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
             String commentNumberText = String.format(getContext().getString(R.string.comment_num_prompt), data.getComment_counts());
             commentNumTv.setText(commentNumberText);
             TextView priceTv = baseViewHolder.findView(R.id.tv_price);
-            priceTv.setText(String.format(getContext().getString(R.string.price_above_number), data.getPrice()));
+
+            int price = data.getPrice();
+            if (price <= 0) {
+                priceTv.setVisibility(View.GONE);
+                priceTv.setText("");
+            } else {
+                priceTv.setVisibility(View.VISIBLE);
+                priceTv.setText(String.format(getContext().getString(R.string.price_above_number), price));
+            }
+
         }
     }
 }

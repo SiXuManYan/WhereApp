@@ -500,5 +500,8 @@
     <string name="lady">Lady</string>
     <string name="contact_number">Contact number：</string>
     <string name="address_phone_edit">Please fill in the recipient phone number</string>
+    <string name="edit_address">Edit address</string>
+    <string name="add_address">Add address</string>
+    <string name="confirm_delete_address">确认删除地址吗？</string>
 
 </resources>

@@ -3,7 +3,7 @@ package com.jcs.where.api.response.address;
 /**
  * Created by Wangsw  2021/3/22 13:49.
  */
-public class AddressResponse {
+public class AddressRequest {
 
 /*    {
         "id": 5,
@@ -14,7 +14,6 @@ public class AddressResponse {
     }*/
 
 
-    public String id = "";
 
     /**
      * 性别（1：先生，2：女士）

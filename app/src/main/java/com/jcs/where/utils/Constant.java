@@ -112,4 +112,10 @@ public class Constant {
     public static final String SP_IS_FIRST_OPEN = "sp_is_first_open";
 
 
+    public static final String PARAM_ADDRESS_ID = "param_address_id";
+    public static final String PARAM_ADDRESS = "param_address";
+    public static final String PARAM_RECIPIENT = "param_recipient";
+    public static final String PARAM_SEX_MAN = "param_sex_man";
+    public static final String PARAM_SEX= "param_sex";
+    public static final String PARAM_PHONE = "param_phone";
 }

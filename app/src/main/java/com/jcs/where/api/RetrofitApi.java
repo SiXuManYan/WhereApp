@@ -51,6 +51,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
@@ -762,8 +763,29 @@ public interface RetrofitApi {
     /**
      * 收货地址列表
      */
-    @GET("/commonapi/v2/addresses")
+    @GET("commonapi/v2/addresses")
     Observable<JcsResponse<List<AddressResponse>>> addressList();
 
+    /**
+     * 修改地址
+     */
+    @PATCH("commonapi/v2/addresses/{address_id}")
+    Observable<JcsResponse<JsonElement>> editAddress(
+            @Path("address_id") String address_id,
+            @Body AddressRequest body);
+
+
+    /**
+     * 添加地址
+     */
+    @POST("commonapi/v2/addresses")
+    Observable<JcsResponse<JsonElement>> addAddress(@Body AddressRequest body);
+
+
+    /**
+     * 删除
+     */
+    @DELETE("commonapi/v2/addresses/{address_id}")
+    Observable<JcsResponse<JsonElement>> deleteAddress(@Path("address_id") String address_id);
 
 }

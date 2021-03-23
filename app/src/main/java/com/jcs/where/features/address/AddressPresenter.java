@@ -22,9 +22,8 @@ public class AddressPresenter extends BaseMvpPresenter {
         requestApi(mRetrofit.addressList(), new BaseMvpObserver<List<AddressResponse>>(view) {
             @Override
             protected void onSuccess(List<AddressResponse> response) {
-                if (response!=null && !response.isEmpty()) {
+
                     view.bindList(response);
-                }
             }
         });
 

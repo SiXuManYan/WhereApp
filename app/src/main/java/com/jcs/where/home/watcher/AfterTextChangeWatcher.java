@@ -4,10 +4,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 
-/**
- * create by zyf on 2020/12/12 7:58 PM
- */
-public abstract class EmptyTextWatcher implements TextWatcher {
+
+public abstract class AfterTextChangeWatcher implements TextWatcher {
+
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -20,17 +19,9 @@ public abstract class EmptyTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        String input = editable.toString().trim();
-        if (TextUtils.isEmpty(input)) {
-            onEtEmpty();
-        }else {
-            onEtNotEmpty();
-        }
+        onAfterTextChanged(editable);
     }
 
-    protected abstract void onEtEmpty();
-    protected void onEtNotEmpty(){
-
-    }
+    protected abstract void onAfterTextChanged(Editable editable);
 
 }

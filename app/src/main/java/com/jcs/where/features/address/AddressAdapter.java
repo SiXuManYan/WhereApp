@@ -26,12 +26,19 @@ public class AddressAdapter extends BaseQuickAdapter<AddressResponse, BaseViewHo
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder holder, AddressResponse addressResponse) {
+    protected void convert(@NotNull BaseViewHolder holder, AddressResponse data) {
 
         addressTv = holder.getView(R.id.address_tv);
         nameTv = holder.getView(R.id.name_tv);
         phoneTv = holder.getView(R.id.phone_tv);
         editIv = holder.getView(R.id.edit_iv);
+
+        addressTv.setText(data.address);
+        nameTv.setText(data.contact_name);
+        phoneTv.setText(data.contact_number);
+
+
+
     }
 
 

@@ -23,6 +23,7 @@ import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.features.address.AddressActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
@@ -99,7 +100,7 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.bookedLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.reviewsLayout).setOnClickListener(this::toShowComing);
         view.findViewById(R.id.afterSalesLayout).setOnClickListener(this::toShowComing);
-        view.findViewById(R.id.managerAddressLayout).setOnClickListener(this::toShowComing);
+        view.findViewById(R.id.managerAddressLayout).setOnClickListener(v -> startActivityAfterLogin(AddressActivity.class));
         view.findViewById(R.id.footprintLayout).setOnClickListener(this::onFootprintClicked);
         view.findViewById(R.id.aboutUsLayout).setOnClickListener(this::onAboutClick);
         view.findViewById(R.id.ll_settlement).setOnClickListener(this::onMerchantSettledClicked);

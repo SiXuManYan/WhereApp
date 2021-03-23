@@ -276,9 +276,7 @@
 
         <activity
             android:name=".integral.IntegralActivity"
-            android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
@@ -527,6 +525,9 @@
 
         <activity
             android:name=".features.address.AddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.address.edit.AddressEditActivity"
             android:screenOrientation="portrait" />
 
 

@@ -10,12 +10,14 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/dp_50"
         android:background="@drawable/shape_gradient_integral"
+        app:backgroundRes="@drawable/shape_gradient_integral"
         app:backIcon="@drawable/ic_back_white"
         app:middleTitle="@string/integral"
-        app:middleTitleColor="@color/white"
+        app:middleTitleColor="@color/white_FEFEFE"
         app:showBackIv="true"
+        app:showBottomLine="false"
         tools:ignore="MissingConstraints" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -34,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="20dp"
-
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
 

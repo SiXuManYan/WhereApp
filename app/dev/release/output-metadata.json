@@ -5,7 +5,7 @@
     "kind": "Directory"
   },
   "applicationId": "com.jcs.where",
-  "variantName": "formalRelease",
+  "variantName": "devRelease",
   "elements": [
     {
       "type": "SINGLE",
@@ -14,7 +14,7 @@
       "versionCode": 4,
       "versionName": "0.1.4",
       "enabled": true,
-      "outputFile": "Where_v4_(0.1.4)_20210322.apk"
+      "outputFile": "Where_v4_(0.1.4)_20210323.apk"
     }
   ]
 }

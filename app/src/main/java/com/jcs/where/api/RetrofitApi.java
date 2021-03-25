@@ -776,16 +776,23 @@ public interface RetrofitApi {
 
 
     /**
-     * 添加地址
+     * 添加收货地址
      */
     @POST("commonapi/v2/addresses")
     Observable<JcsResponse<JsonElement>> addAddress(@Body AddressRequest body);
 
 
     /**
-     * 删除
+     * 删除收货地址
      */
     @DELETE("commonapi/v2/addresses/{address_id}")
     Observable<JcsResponse<JsonElement>> deleteAddress(@Path("address_id") String address_id);
+
+    /**
+     * 美食外卖商品列表
+     */
+    @DELETE("restaurantapi/v2/restaurants")
+    Observable<JcsResponse<JsonElement>> getGourmetList(@Path("address_id") String address_id);
+
 
 }

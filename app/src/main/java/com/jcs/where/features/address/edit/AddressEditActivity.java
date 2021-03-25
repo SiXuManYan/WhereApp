@@ -190,4 +190,5 @@ public class AddressEditActivity extends BaseMvpActivity<AddressEditPresenter> i
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_ADDRESS));
         finish();
     }
+
 }

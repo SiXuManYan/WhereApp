@@ -502,6 +502,7 @@
     <string name="address_phone_edit">Please fill in the recipient phone number</string>
     <string name="edit_address">Edit address</string>
     <string name="add_address">Add address</string>
-    <string name="confirm_delete_address">确认删除地址吗？</string>
+    <string name="confirm_delete_address">Confirm delete address？</string>
+    <string name="take_away_support">Take away &#160;&#62;</string>
 
 </resources>

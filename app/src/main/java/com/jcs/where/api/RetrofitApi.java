@@ -53,6 +53,7 @@ import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
+import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
@@ -790,9 +791,27 @@ public interface RetrofitApi {
 
     /**
      * 美食外卖商品列表
+     *
+     * @param trading_area_id 商业区ID
+     * @param per_price       人均价格
+     * @param service         商家服务（1：支持外卖）
+     * @param sort            （必要参数）排序（1：智能排序，2：好评优先，3：销量优先，4：距离优先）
+     * @param search_input    搜索内容
+     * @param lat             纬度
+     * @param lng             经度
+     * @param category_id     分类ID
+     * @see <a href=" https://where.w.eolinker.com/#/home/api_studio/inside/api/detail?apiID=4706784&groupID=1222698&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档地址</a>
      */
-    @DELETE("restaurantapi/v2/restaurants")
-    Observable<JcsResponse<JsonElement>> getGourmetList(@Path("address_id") String address_id);
+    @GET("restaurantapi/v2/restaurants")
+    Observable<JcsResponse<PageResponse<RestaurantResponse>>> getRestaurantList(
+            @Query("trading_area_id") @Nullable String trading_area_id,
+            @Query("per_price") @Nullable String per_price,
+            @Query("service") @Nullable String service,
+            @Query("sort") int sort,
+            @Query("search_input") @Nullable String search_input,
+            @Query("lat") @Nullable String lat,
+            @Query("lng") @Nullable String lng,
+            @Query("category_id") @Nullable String category_id);
 
 
 }

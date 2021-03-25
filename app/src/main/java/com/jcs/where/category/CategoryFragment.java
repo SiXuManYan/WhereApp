@@ -19,6 +19,7 @@ import com.jcs.where.api.response.ParentCategoryResponse;
 import com.jcs.where.base.BaseFullFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
+import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity;
 import com.jcs.where.government.activity.GovernmentMapActivity;
 import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.model.CategoryModel;
@@ -252,6 +253,7 @@ public class CategoryFragment extends BaseFullFragment {
                     break;
                 case TYPE_RESTAURANT:
                     // 餐厅
+                    startActivity(RestaurantListActivity.class);
                     break;
                 case TYPE_YELLOW_PAGE:
                     Log.e("CategoryFragment", "onItemClicked: " + "itemId=" + itemId);

@@ -529,7 +529,7 @@
         <activity
             android:name=".features.address.edit.AddressEditActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".features.gourmet.restaurant.list.GourmetListActivity" />
+        <activity android:name=".features.gourmet.restaurant.list.RestaurantListActivity" />
 
 
     </application>

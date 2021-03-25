@@ -500,5 +500,6 @@
     <string name="edit_address">编辑收货地址</string>
     <string name="add_address">添加收货地址</string>
     <string name="confirm_delete_address">确认删除地址吗？</string>
+    <string name="take_away_support">支持外卖&#160;&#62;</string>
 
 </resources>

@@ -92,9 +92,9 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         // 评论数
         holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format2, data.comment_num));
 
-        // 距离 地点
-        holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
-        holder.setText(R.id.location_tv, data.address);
+        // 地域 、 餐厅类型
+        holder.setText(R.id.area_name_tv, data.area_name);
+        holder.setText(R.id.restaurant_type_tv, data.restaurant_type);
 
         // tag
         LinearLayout tag_ll = holder.getView(R.id.tag_ll);

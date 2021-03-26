@@ -504,5 +504,6 @@
     <string name="add_address">Add address</string>
     <string name="confirm_delete_address">Confirm delete address？</string>
     <string name="take_away_support">Take away &#160;&#62;</string>
+    <string name="per_price_format">₱%1$s/people</string>
 
 </resources>

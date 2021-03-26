@@ -501,5 +501,6 @@
     <string name="add_address">添加收货地址</string>
     <string name="confirm_delete_address">确认删除地址吗？</string>
     <string name="take_away_support">支持外卖&#160;&#62;</string>
+    <string name="per_price_format">₱%1$s/人</string>
 
 </resources>

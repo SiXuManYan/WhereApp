@@ -46,6 +46,7 @@ import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity;
+import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.features.upgrade.UpgradeActivity;
@@ -203,6 +204,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 break;
             case 2:
                 showToast(getString(R.string.coming_soon));
+                break;
+            default:
                 break;
         }
     }
@@ -450,6 +453,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 );
                 break;
             case 9:// 餐厅列表
+                startActivity(RestaurantListActivity.class);
+                break;
             case 10:// 线上商店
                 showComing();
                 break;
@@ -620,10 +625,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     @Override
     public void checkAppVersion(VersionResponse response) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.PARAM_NEW_VERSION_CODE,response.new_version);
-        bundle.putString(Constant.PARAM_DOWNLOAD_URL,response.download_url);
-        bundle.putString(Constant.PARAM_UPDATE_DESC,response.update_desc);
-        bundle.putBoolean(Constant.PARAM_IS_FORCE_INSTALL,response.is_force_install);
-        startActivity(UpgradeActivity.class,bundle);
+        bundle.putString(Constant.PARAM_NEW_VERSION_CODE, response.new_version);
+        bundle.putString(Constant.PARAM_DOWNLOAD_URL, response.download_url);
+        bundle.putString(Constant.PARAM_UPDATE_DESC, response.update_desc);
+        bundle.putBoolean(Constant.PARAM_IS_FORCE_INSTALL, response.is_force_install);
+        startActivity(UpgradeActivity.class, bundle);
     }
 }

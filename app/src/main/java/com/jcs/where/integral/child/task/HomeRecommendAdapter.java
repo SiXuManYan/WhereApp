@@ -107,6 +107,10 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         } else {
             takeaway_ll.setVisibility(View.GONE);
         }
+
+        // 人均
+        TextView per_price_tv = holder.getView(R.id.per_price_tv);
+        per_price_tv.setText(StringUtils.getString(R.string.per_price_format, data.per_price));
     }
 
     /**

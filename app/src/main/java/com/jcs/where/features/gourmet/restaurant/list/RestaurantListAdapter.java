@@ -15,7 +15,6 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
-import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 import com.jcs.where.widget.ratingstar.RatingStarView;
 
@@ -27,7 +26,7 @@ import java.util.ArrayList;
  * Created by Wangsw  2021/3/25 14:13.
  * 餐厅列表
  */
-public class RestaurantListAdapter extends BaseQuickAdapter<RestaurantResponse ,BaseViewHolder> implements LoadMoreModule {
+public class RestaurantListAdapter extends BaseQuickAdapter<RestaurantResponse, BaseViewHolder> implements LoadMoreModule {
 
 
     public RestaurantListAdapter() {
@@ -80,6 +79,11 @@ public class RestaurantListAdapter extends BaseQuickAdapter<RestaurantResponse ,
         } else {
             takeaway_ll.setVisibility(View.GONE);
         }
+
+        // 人均
+        TextView per_price_tv = holder.getView(R.id.per_price_tv);
+        per_price_tv.setText(StringUtils.getString(R.string.per_price_format, data.per_price));
+
     }
 
     /**

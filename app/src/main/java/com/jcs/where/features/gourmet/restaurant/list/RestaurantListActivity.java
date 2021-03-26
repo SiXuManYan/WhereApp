@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
@@ -15,6 +17,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.RestaurantListRequest;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import java.util.List;
 
@@ -43,7 +46,20 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         swipe_layout = findViewById(R.id.swipe_layout);
         recycler = findViewById(R.id.recycler);
 
+        mAdapter = new RestaurantListAdapter();
+        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+        mAdapter.addChildClickViewIds(R.id.take_ll);
+        mAdapter.setOnItemChildClickListener(this);
+        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        recycler.setAdapter(mAdapter);
+        recycler.addItemDecoration(getItemDecoration());
+    }
 
+    @Override
+    protected boolean isStatusDark() {
+        return true;
     }
 
     @Override
@@ -51,20 +67,13 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         presenter = new RestaurantListPresenter(this);
         mRequest = new RestaurantListRequest();
 
-        mAdapter = new RestaurantListAdapter();
-        mAdapter.getLoadMoreModule().setAutoLoadMore(false);
-        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
-        recycler.setAdapter(mAdapter);
+
 
         onRefresh();
     }
 
     @Override
     protected void bindListener() {
-        mAdapter.addChildClickViewIds(R.id.take_ll);
-        mAdapter.setOnItemChildClickListener(this);
-        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         swipe_layout.setOnRefreshListener(this);
     }
 
@@ -113,5 +122,11 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
                 loadMoreModule.loadMoreComplete();
             }
         }
+    }
+
+    private RecyclerView.ItemDecoration getItemDecoration() {
+        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1), SizeUtils.dp2px(15), SizeUtils.dp2px(15));
+        itemDecoration.setDrawHeaderFooter(false);
+        return itemDecoration;
     }
 }

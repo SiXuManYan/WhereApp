@@ -253,7 +253,6 @@ public class CategoryFragment extends BaseFullFragment {
                     break;
                 case TYPE_RESTAURANT:
                     // 餐厅
-                    startActivity(RestaurantListActivity.class);
                     break;
                 case TYPE_YELLOW_PAGE:
                     Log.e("CategoryFragment", "onItemClicked: " + "itemId=" + itemId);

@@ -20,7 +20,7 @@
         android:id="@+id/dismiss_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:alpha="0.5"
-        tools:background="@color/blue_69AEF5" />
+        android:alpha="0.5"
+        android:background="@color/blue_69AEF5" />
 
 </LinearLayout>

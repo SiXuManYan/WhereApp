@@ -1,10 +1,14 @@
 package com.jcs.where.features.gourmet.restaurant.list;
 
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -32,8 +36,19 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
 
     private SwipeRefreshLayout swipe_layout;
     private RecyclerView recycler;
+    private LinearLayout
+            area_filter_ll,
+            food_filter_ll,
+            other_filter_ll,
+            filter_container_ll;
+    private ViewPager filter_pager;
+    private View dismiss_view;
+
+
     private RestaurantListAdapter mAdapter;
     private RestaurantListRequest mRequest;
+    private Animation mFilterShowAnimation;
+    private Animation mFilterHideAnimation;
 
 
     @Override
@@ -46,6 +61,17 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         swipe_layout = findViewById(R.id.swipe_layout);
         recycler = findViewById(R.id.recycler);
 
+        // filter
+        area_filter_ll = findViewById(R.id.area_filter_ll);
+        food_filter_ll = findViewById(R.id.food_filter_ll);
+        other_filter_ll = findViewById(R.id.other_filter_ll);
+
+        filter_container_ll = findViewById(R.id.filter_container_ll);
+        filter_pager = findViewById(R.id.filter_pager);
+        dismiss_view = findViewById(R.id.dismiss_view);
+
+
+        // list
         mAdapter = new RestaurantListAdapter();
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
@@ -55,6 +81,12 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         recycler.setAdapter(mAdapter);
         recycler.addItemDecoration(getItemDecoration());
+
+        // 动画
+        mFilterShowAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_in);
+        mFilterHideAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_out);
+
+
     }
 
     @Override
@@ -67,14 +99,16 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         presenter = new RestaurantListPresenter(this);
         mRequest = new RestaurantListRequest();
 
-
-
         onRefresh();
     }
 
     @Override
     protected void bindListener() {
         swipe_layout.setOnRefreshListener(this);
+        area_filter_ll.setOnClickListener(this::onAreaFilterClick);
+        food_filter_ll.setOnClickListener(this::onFoodFilterClick);
+        other_filter_ll.setOnClickListener(this::onOtherFilterClick);
+        dismiss_view.setOnClickListener(this::onFilterDismissClick);
     }
 
 
@@ -129,4 +163,38 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         itemDecoration.setDrawHeaderFooter(false);
         return itemDecoration;
     }
+
+
+    private void onAreaFilterClick(View view) {
+        handleFilterVisible(true);
+    }
+
+
+    private void onFoodFilterClick(View view) {
+        handleFilterVisible(true);
+    }
+
+    private void onOtherFilterClick(View view) {
+        handleFilterVisible(true);
+    }
+
+    private void onFilterDismissClick(View view) {
+        handleFilterVisible(false);
+    }
+
+    private void handleFilterVisible(boolean show) {
+        if (show) {
+            if (filter_container_ll.getVisibility() == View.GONE) {
+                filter_container_ll.startAnimation(mFilterShowAnimation);
+                filter_container_ll.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (filter_container_ll.getVisibility() == View.VISIBLE) {
+                filter_container_ll.startAnimation(mFilterHideAnimation);
+                filter_container_ll.setVisibility(View.GONE);
+            }
+        }
+    }
+
+
 }

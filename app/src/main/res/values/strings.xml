@@ -502,5 +502,8 @@
     <string name="confirm_delete_address">确认删除地址吗？</string>
     <string name="take_away_support">支持外卖&#160;&#62;</string>
     <string name="per_price_format">₱%1$s/人</string>
+    <string name="filter_city">城市</string>
+    <string name="filter_food">美食</string>
+    <string name="filter_other">筛选</string>
 
 </resources>

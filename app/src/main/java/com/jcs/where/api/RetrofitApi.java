@@ -53,6 +53,8 @@ import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
+import com.jcs.where.api.response.area.AreaResponse;
+import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
@@ -800,7 +802,7 @@ public interface RetrofitApi {
      * @param lat             纬度
      * @param lng             经度
      * @param category_id     分类ID
-     * @see <a href=" https://where.w.eolinker.com/#/home/api_studio/inside/api/detail?apiID=4706784&groupID=1222698&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档地址</a>
+     * @see <a href="https://where.w.eolinker.com/#/home/api_studio/inside/api/detail?apiID=4706784&groupID=1222698&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档地址</a>
      */
     @GET("restaurantapi/v2/restaurants")
     Observable<JcsResponse<PageResponse<RestaurantResponse>>> getRestaurantList(
@@ -813,5 +815,38 @@ public interface RetrofitApi {
             @Query("lng") @Nullable String lng,
             @Query("category_id") @Nullable String category_id);
 
+
+    /**
+     * 获取分类列表
+     * !--level 3 pid 89 type =1 --
+     * @param level 分类级别
+     * @param type  分类类型（1：只看下一级，2：所有下级）
+     * @param pid   上级ID（详细看底部参数说明）
+     *
+     *              <p>
+     *              PID参数说明：
+     *              本接口请求分为以下情况：
+     *              1、获取下级或所有子集的情况（常规）
+     *              pid为上级ID，对应形式可以为”1”或”[1]”两种形式
+     *              2、获取一批一级分类（场景：使用金刚区列表中categories字段，获取金刚区分类对应真实一级分类数据）
+     *              level必须传”1”
+     *              pid为一级分类数组，”[1, 10, 17]”的形式
+     *              <p>
+     *              特殊PID：
+     *              89->餐厅外卖
+     * @see <a href="https://where.w.eolinker.com/#/home/api_studio/inside/api/detail?apiID=4657209&groupID=1167151&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档地址</a>
+     */
+    @GET("commonapi/v2/categories")
+    Observable<JcsResponse<List<Category>>> getCategoriesList(
+            @Query("level") int level,
+            @Query("pid") int pid,
+            @Query("type") int type);
+
+
+    /**
+     * 获取商业区列表
+     */
+    @GET("restaurantapi/v2/trading/areas")
+    Observable<JcsResponse<List<AreaResponse>>> getAreasList();
 
 }

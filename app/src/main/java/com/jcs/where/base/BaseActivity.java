@@ -48,6 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.left_fade_in, R.anim.left_fade_out);
 
         if (mIsHasStatusBarColor) {
             StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorPrimary), 0);
@@ -403,4 +404,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.right_fade_in, R.anim.right_fade_out);
+    }
 }

@@ -83,8 +83,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         recycler.addItemDecoration(getItemDecoration());
 
         // 动画
-        mFilterShowAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_in);
-        mFilterHideAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_out);
+//        mFilterShowAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_in);
+//        mFilterHideAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_out);
 
 
     }
@@ -185,12 +185,12 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private void handleFilterVisible(boolean show) {
         if (show) {
             if (filter_container_ll.getVisibility() == View.GONE) {
-                filter_container_ll.startAnimation(mFilterShowAnimation);
+//                filter_container_ll.startAnimation(mFilterShowAnimation);
                 filter_container_ll.setVisibility(View.VISIBLE);
             }
         } else {
             if (filter_container_ll.getVisibility() == View.VISIBLE) {
-                filter_container_ll.startAnimation(mFilterHideAnimation);
+//                filter_container_ll.startAnimation(mFilterHideAnimation);
                 filter_container_ll.setVisibility(View.GONE);
             }
         }

@@ -3,6 +3,8 @@ package com.jcs.where.features.gourmet.restaurant.list;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private SwipeRefreshLayout swipe_layout;
     private RecyclerView recycler;
     private LinearLayout
+            category_ll,
             area_filter_ll,
             food_filter_ll,
             other_filter_ll,
@@ -49,7 +52,6 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private RestaurantListRequest mRequest;
     private Animation mFilterShowAnimation;
     private Animation mFilterHideAnimation;
-    private int mCurrentIndex = 0;
 
 
     @Override
@@ -63,6 +65,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         recycler = findViewById(R.id.recycler);
 
         // filter
+        category_ll = findViewById(R.id.category_ll);
         area_filter_ll = findViewById(R.id.area_filter_ll);
         food_filter_ll = findViewById(R.id.food_filter_ll);
         other_filter_ll = findViewById(R.id.other_filter_ll);
@@ -109,6 +112,25 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         food_filter_ll.setOnClickListener(this::onFoodFilterClick);
         other_filter_ll.setOnClickListener(this::onOtherFilterClick);
         dismiss_view.setOnClickListener(this::onFilterDismissClick);
+        filter_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < category_ll.getChildCount(); i++) {
+                    changeFilterTabStyle(position, i);
+                }
+
+            }
+        });
     }
 
 
@@ -165,41 +187,69 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     }
 
 
+    /**
+     * 区域筛选
+     */
     private void onAreaFilterClick(View view) {
         switchFilterPager(0);
     }
 
-
+    /**
+     * 美食类型筛选
+     */
     private void onFoodFilterClick(View view) {
         switchFilterPager(1);
     }
 
+    /**
+     * 其他筛选
+     */
     private void onOtherFilterClick(View view) {
         switchFilterPager(2);
     }
 
     private void onFilterDismissClick(View view) {
-        handlFilterVisible(mFilterHideAnimation, View.GONE);
+        handleFilterVisible(mFilterHideAnimation, View.GONE);
     }
 
 
     private void switchFilterPager(int index) {
-
         int currentItem = filter_pager.getCurrentItem();
-
         if (filter_container_ll.getVisibility() == View.GONE) {
-            handlFilterVisible(mFilterShowAnimation, View.VISIBLE);
+            handleFilterVisible(mFilterShowAnimation, View.VISIBLE);
+            // 切换tab状态
+            changeFilterTabStyle(currentItem, index);
         } else {
             if (currentItem == index) {
-                handlFilterVisible(mFilterHideAnimation, View.GONE);
+                handleFilterVisible(mFilterHideAnimation, View.GONE);
+                // 清空tab选中状态
+                LinearLayout childTabLL = (LinearLayout) category_ll.getChildAt(index);
+                CheckedTextView tabText = (CheckedTextView) childTabLL.getChildAt(0);
+                ImageView tabImage = (ImageView) childTabLL.getChildAt(1);
+                tabText.setChecked(false);
+                tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
+
             }
         }
         filter_pager.setCurrentItem(index, true);
     }
 
-    private void handlFilterVisible(Animation mFilterHideAnimation, int gone) {
+    private void handleFilterVisible(Animation mFilterHideAnimation, int gone) {
         filter_container_ll.startAnimation(mFilterHideAnimation);
         filter_container_ll.setVisibility(gone);
+    }
+
+    private void changeFilterTabStyle(int pagerPosition, int tabIndex) {
+        LinearLayout childTabLL = (LinearLayout) category_ll.getChildAt(tabIndex);
+        CheckedTextView tabText = (CheckedTextView) childTabLL.getChildAt(0);
+        ImageView tabImage = (ImageView) childTabLL.getChildAt(1);
+        if (pagerPosition == tabIndex) {
+            tabText.setChecked(true);
+            tabImage.setImageResource(R.mipmap.ic_arrow_filter_blue);
+        } else {
+            tabText.setChecked(false);
+            tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
+        }
     }
 
 

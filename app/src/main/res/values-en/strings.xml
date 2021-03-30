@@ -508,5 +508,14 @@
     <string name="filter_city">City</string>
     <string name="filter_food">Gourmet food</string>
     <string name="filter_other">Filter</string>
+    <string name="reset">Reset</string>
+    <string name="average_price">Average Price</string>
+    <string name="to">to</string>
+    <string name="support_takeaway">Support Takeaway</string>
+    <string name="merchant_service">Merchant Service</string>
+    <string name="smart_sorting">Smart Sorting</string>
+    <string name="praise_first">Praise First</string>
+    <string name="sales_priority">Sales Priority</string>
+    <string name="nearest_first">Nearest First</string>
 
 </resources>

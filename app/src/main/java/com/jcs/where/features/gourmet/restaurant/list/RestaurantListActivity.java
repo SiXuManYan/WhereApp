@@ -49,6 +49,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private RestaurantListRequest mRequest;
     private Animation mFilterShowAnimation;
     private Animation mFilterHideAnimation;
+    private int mCurrentIndex = 0;
 
 
     @Override
@@ -69,7 +70,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         filter_container_ll = findViewById(R.id.filter_container_ll);
         filter_pager = findViewById(R.id.filter_pager);
         dismiss_view = findViewById(R.id.dismiss_view);
-
+        filter_pager.setOffscreenPageLimit(2);
+        filter_pager.setAdapter(new RestaurantPagerAdapter(getSupportFragmentManager(), 0));
 
         // list
         mAdapter = new RestaurantListAdapter();
@@ -164,34 +166,40 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
 
 
     private void onAreaFilterClick(View view) {
-        handleFilterVisible(true);
+        switchFilterPager(0);
     }
 
 
     private void onFoodFilterClick(View view) {
-        handleFilterVisible(true);
+        switchFilterPager(1);
     }
 
     private void onOtherFilterClick(View view) {
-        handleFilterVisible(true);
+        switchFilterPager(2);
     }
 
     private void onFilterDismissClick(View view) {
-        handleFilterVisible(false);
+        handlFilterVisible(mFilterHideAnimation, View.GONE);
     }
 
-    private void handleFilterVisible(boolean show) {
-        if (show) {
-            if (filter_container_ll.getVisibility() == View.GONE) {
-//                filter_container_ll.startAnimation(mFilterShowAnimation);
-                filter_container_ll.setVisibility(View.VISIBLE);
-            }
+
+    private void switchFilterPager(int index) {
+
+        int currentItem = filter_pager.getCurrentItem();
+
+        if (filter_container_ll.getVisibility() == View.GONE) {
+            handlFilterVisible(mFilterShowAnimation, View.VISIBLE);
         } else {
-            if (filter_container_ll.getVisibility() == View.VISIBLE) {
-//                filter_container_ll.startAnimation(mFilterHideAnimation);
-                filter_container_ll.setVisibility(View.GONE);
+            if (currentItem == index) {
+                handlFilterVisible(mFilterHideAnimation, View.GONE);
             }
         }
+        filter_pager.setCurrentItem(index, true);
+    }
+
+    private void handlFilterVisible(Animation mFilterHideAnimation, int gone) {
+        filter_container_ll.startAnimation(mFilterHideAnimation);
+        filter_container_ll.setVisibility(gone);
     }
 
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.jcs.where.features.gourmet.restaurant.list.filter.area.AreaFilterFragment;
 import com.jcs.where.features.gourmet.restaurant.list.filter.food.FoodCategoryFilterFragment;
+import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment;
 
 /**
  * Created by Wangsw  2021/3/30 11:06.
@@ -22,10 +23,10 @@ public class RestaurantPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             return new AreaFilterFragment();
-        }else if (position == 1){
+        } else if (position == 1) {
             return new FoodCategoryFilterFragment();
-        }else {
-            return new FoodCategoryFilterFragment();
+        } else {
+            return new MoreFilterFragment();
         }
     }
 

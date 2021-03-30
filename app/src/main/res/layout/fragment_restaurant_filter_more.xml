@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_350"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_15">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_ll">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/average_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_12"
+                android:text="@string/average_price"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_16" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_25"
+                android:orientation="horizontal">
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/start_price_et"
+                    android:layout_width="@dimen/dp_78"
+                    android:layout_height="@dimen/dp_33"
+                    android:background="@drawable/shape_stroke_gray_4"
+                    android:digits="0123456789"
+                    android:gravity="center"
+                    android:hint="@string/price_unit"
+                    android:inputType="phone|number"
+                    android:textColor="@color/blue_72B9FF"
+                    android:textColorHint="@color/blue_72B9FF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:text="@string/to"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/end_price_et"
+                    android:layout_width="@dimen/dp_78"
+                    android:layout_height="@dimen/dp_33"
+                    android:background="@drawable/shape_stroke_gray_4"
+                    android:digits="0123456789"
+                    android:gravity="center"
+                    android:hint="@string/price_unit"
+                    android:inputType="phone|number"
+                    android:textColor="@color/blue_72B9FF"
+                    android:textColorHint="@color/blue_72B9FF" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_12"
+                android:text="@string/merchant_service"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_16" />
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_33"
+                android:layout_marginBottom="@dimen/dp_25"
+                android:background="@drawable/selector_restaurant_filter"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_78"
+                android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_12"
+                android:text="@string/support_takeaway"
+                android:textColor="@color/selector_black_blue"
+                android:textSize="@dimen/sp_14"
+                tools:checked="true" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_12"
+                android:text="@string/smart_sorting"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_16" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_33"
+                android:orientation="horizontal">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_33"
+                    android:layout_marginEnd="@dimen/dp_11"
+                    android:background="@drawable/selector_restaurant_filter"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:minWidth="@dimen/dp_78"
+                    android:paddingStart="@dimen/dp_12"
+                    android:paddingEnd="@dimen/dp_12"
+                    android:text="@string/praise_first"
+                    android:textColor="@color/selector_black_blue"
+                    android:textSize="@dimen/sp_14"
+                    tools:checked="true" />
+
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_33"
+                    android:layout_marginEnd="@dimen/dp_11"
+                    android:background="@drawable/selector_restaurant_filter"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:minWidth="@dimen/dp_78"
+                    android:paddingStart="@dimen/dp_12"
+                    android:paddingEnd="@dimen/dp_12"
+                    android:text="@string/sales_priority"
+                    android:textColor="@color/selector_black_blue"
+                    android:textSize="@dimen/sp_14" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_33"
+                    android:layout_marginEnd="@dimen/dp_11"
+                    android:background="@drawable/selector_restaurant_filter"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:minWidth="@dimen/dp_78"
+                    android:paddingStart="@dimen/dp_12"
+                    android:paddingEnd="@dimen/dp_12"
+                    android:text="@string/nearest_first"
+                    android:textColor="@color/selector_black_blue"
+                    android:textSize="@dimen/sp_14" />
+
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/dp_15"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:layout_weight="1"
+            android:background="@drawable/shape_blue_radius_4_stock"
+            android:gravity="center"
+            android:text="@string/reset"
+            android:textColor="@color/blue_72B9FF" />
+
+
+        <TextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_blue_radius_4"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

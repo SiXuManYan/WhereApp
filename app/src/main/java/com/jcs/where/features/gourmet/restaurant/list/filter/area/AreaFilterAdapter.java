@@ -1,4 +1,4 @@
-package com.jcs.where.features.gourmet.restaurant.list.filter;
+package com.jcs.where.features.gourmet.restaurant.list.filter.area;
 
 import android.view.View;
 import android.widget.ImageView;

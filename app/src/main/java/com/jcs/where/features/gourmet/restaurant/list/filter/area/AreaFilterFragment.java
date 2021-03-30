@@ -1,4 +1,4 @@
-package com.jcs.where.features.gourmet.restaurant.list.filter;
+package com.jcs.where.features.gourmet.restaurant.list.filter.area;
 
 import android.view.View;
 
@@ -6,26 +6,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcs.where.R;
 import com.jcs.where.api.response.area.AreaResponse;
-import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.view.empty.EmptyView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Wangsw  2021/3/29 15:55.
  * 餐厅商业区筛选
  */
-public class AreaFilterFragment extends BaseFragment {
+public class AreaFilterFragment extends BaseMvpFragment<AreaFilterPresenter> implements AreaFilterView {
 
 
-    private final ArrayList<AreaResponse> dataList = new ArrayList<>();
     private AreaFilterAdapter mAdapter;
     private EmptyView mEmptyView;
 
-    public AreaFilterFragment getInstance(ArrayList<AreaResponse> dataList) {
-        this.dataList.addAll(dataList);
-        return new AreaFilterFragment();
-    }
 
     private RecyclerView contentRv;
 
@@ -42,9 +38,9 @@ public class AreaFilterFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        presenter = new AreaFilterPresenter(this);
         mAdapter = new AreaFilterAdapter();
         mAdapter.setEmptyView(mEmptyView);
-        mAdapter.setNewInstance(dataList);
         contentRv.setAdapter(mAdapter);
     }
 
@@ -53,5 +49,13 @@ public class AreaFilterFragment extends BaseFragment {
 
     }
 
+    @Override
+    protected void loadOnVisible() {
+        presenter.getAreasList();
+    }
 
+    @Override
+    public void bindList(List<AreaResponse> response) {
+        mAdapter.setNewInstance(response);
+    }
 }

@@ -86,7 +86,6 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         mFilterShowAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_in);
         mFilterHideAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_out);
 
-
     }
 
     @Override
@@ -98,7 +97,6 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     protected void initData() {
         presenter = new RestaurantListPresenter(this);
         mRequest = new RestaurantListRequest();
-
         onRefresh();
     }
 
@@ -185,12 +183,12 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private void handleFilterVisible(boolean show) {
         if (show) {
             if (filter_container_ll.getVisibility() == View.GONE) {
-                filter_container_ll.startAnimation(mFilterShowAnimation);
+//                filter_container_ll.startAnimation(mFilterShowAnimation);
                 filter_container_ll.setVisibility(View.VISIBLE);
             }
         } else {
             if (filter_container_ll.getVisibility() == View.VISIBLE) {
-                filter_container_ll.startAnimation(mFilterHideAnimation);
+//                filter_container_ll.startAnimation(mFilterHideAnimation);
                 filter_container_ll.setVisibility(View.GONE);
             }
         }

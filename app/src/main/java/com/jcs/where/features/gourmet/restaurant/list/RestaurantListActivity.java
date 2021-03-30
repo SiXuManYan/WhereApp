@@ -210,18 +210,29 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
 
     private void onFilterDismissClick(View view) {
         handleFilterVisible(mFilterHideAnimation, View.GONE);
+
+        // 清空tab选中状态
+        LinearLayout childTabLL = (LinearLayout) category_ll.getChildAt(filter_pager.getCurrentItem());
+        CheckedTextView tabText = (CheckedTextView) childTabLL.getChildAt(0);
+        ImageView tabImage = (ImageView) childTabLL.getChildAt(1);
+        tabText.setChecked(false);
+        tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
     }
 
 
     private void switchFilterPager(int index) {
         int currentItem = filter_pager.getCurrentItem();
         if (filter_container_ll.getVisibility() == View.GONE) {
+
             handleFilterVisible(mFilterShowAnimation, View.VISIBLE);
             // 切换tab状态
             changeFilterTabStyle(currentItem, index);
         } else {
+
             if (currentItem == index) {
+
                 handleFilterVisible(mFilterHideAnimation, View.GONE);
+
                 // 清空tab选中状态
                 LinearLayout childTabLL = (LinearLayout) category_ll.getChildAt(index);
                 CheckedTextView tabText = (CheckedTextView) childTabLL.getChildAt(0);

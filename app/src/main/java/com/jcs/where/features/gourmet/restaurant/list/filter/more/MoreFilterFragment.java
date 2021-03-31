@@ -1,6 +1,7 @@
 package com.jcs.where.features.gourmet.restaurant.list.filter.more;
 
 import android.annotation.SuppressLint;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
@@ -10,7 +11,12 @@ import androidx.appcompat.widget.AppCompatEditText;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.jcs.where.R;
+import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 
 /**
  * Created by Wangsw  2021/3/30 14:11.
@@ -23,23 +29,9 @@ public class MoreFilterFragment extends BaseFragment {
     private RadioGroup sort_rg;
     private MaterialRadioButton praiseRb, salesRb, distanceRb;
     private TextView resetTv, confirmTv;
+    private ArrayList<String> perPriceArray = new ArrayList<>();
 
-    /**
-     * 排序规则
-     * （1：智能排序(默认)，2：好评优先，3：销量优先，4：距离优先）
-     */
-    private int sort = 1 ;
-
-    /**
-     * 人均价格 开始
-     */
-    private String perPriceStart = "";
-
-    /**
-     * 人均价格 技术
-     */
-    private String perPriceEnd = "";
-
+    private MoreFilter moreFilter;
 
     @Override
     protected int getLayoutId() {
@@ -64,7 +56,7 @@ public class MoreFilterFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
+        moreFilter = new MoreFilter();
     }
 
     @Override
@@ -80,15 +72,14 @@ public class MoreFilterFragment extends BaseFragment {
 
         switch (checkedId) {
             case R.id.praise_rb:
-
+                moreFilter.sort = 2;
                 break;
             case R.id.sales_rb:
-
+                moreFilter.sort = 3;
                 break;
             case R.id.distance_rb:
-
+                moreFilter.sort = 4;
                 break;
-
             default:
                 break;
 
@@ -103,13 +94,61 @@ public class MoreFilterFragment extends BaseFragment {
      */
     private void onResetClick(View view) {
 
+        // data
+        moreFilter.sort = 1;
+        moreFilter.per_price = null;
+        moreFilter.service = null;
+        perPriceArray.clear();
+
+        // ui
+        startPriceEt.setText("");
+        endPriceEt.setText("");
+        takeawaySupportCb.setChecked(false);
+        praiseRb.setChecked(false);
+        salesRb.setChecked(false);
+        distanceRb.setChecked(false);
+
+        EventBus.getDefault().post(new BaseEvent<>(moreFilter));
     }
 
 
     /**
-     * 重置
+     * 确认
      */
     private void onConfirmClick(View view) {
+        String startPrice = startPriceEt.getText().toString().trim();
+        String endPrice = endPriceEt.getText().toString().trim();
+
+        if (!TextUtils.isEmpty(startPrice) && !TextUtils.isEmpty(endPrice)) {
+            perPriceArray.add(startPrice);
+            perPriceArray.add(endPrice);
+            moreFilter.per_price = perPriceArray.toString();
+        }
+        if (takeawaySupportCb.isChecked()) {
+            moreFilter.service = "1";
+        } else {
+            moreFilter.service = null;
+        }
+        EventBus.getDefault().post(new BaseEvent<>(moreFilter));
+    }
+
+
+    public static class MoreFilter {
+
+        /**
+         * 人均价格
+         */
+        public String per_price;
+
+        /**
+         * 商家服务（1：支持外卖）
+         */
+        public String service;
+
+        /**
+         * （必要参数）排序（1：智能排序，2：好评优先，3：销量优先，4：距离优先）
+         */
+        public int sort = 1;
 
     }
 

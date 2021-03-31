@@ -122,7 +122,7 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
                 toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
                 break;
             case TYPE_4_RESTAURANT:
-                // todo 跳转至餐厅页S
+                // todo 跳转至餐厅页
                 ToastUtils.showShort(R.string.coming_soon);
                 break;
             default:

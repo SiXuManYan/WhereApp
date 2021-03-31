@@ -25,6 +25,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.RestaurantListRequest;
+import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.list.DividerDecoration;
 
@@ -282,15 +283,17 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
             // 美食列别筛选
             mRequest.category_id = ((Category) data).id;
 
-        }/* else if (data instanceof ) {
+
+        } else if (data instanceof MoreFilterFragment.MoreFilter) {
             // 其他筛选
+            MoreFilterFragment.MoreFilter more = (MoreFilterFragment.MoreFilter) data;
+            mRequest.per_price = more.per_price;
+            mRequest.service = more.service;
+            mRequest.sort = more.sort;
+        }
 
-
-
-
-        }*/
-
-
+        onRefresh();
+        dismiss_view.performClick();
     }
 
 

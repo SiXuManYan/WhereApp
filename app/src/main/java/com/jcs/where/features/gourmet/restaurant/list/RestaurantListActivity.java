@@ -1,18 +1,22 @@
 package com.jcs.where.features.gourmet.restaurant.list;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -53,6 +57,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
             filter_container_ll;
     private ViewPager filter_pager;
     private View dismiss_view;
+    private AppCompatEditText city_et;
 
 
     private RestaurantListAdapter mAdapter;
@@ -70,6 +75,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     protected void initView() {
         swipe_layout = findViewById(R.id.swipe_layout);
         recycler = findViewById(R.id.recycler);
+        city_et = findViewById(R.id.cityEt);
+
 
         // filter
         category_ll = findViewById(R.id.category_ll);
@@ -115,6 +122,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     @Override
     protected void bindListener() {
         swipe_layout.setOnRefreshListener(this);
+        findViewById(R.id.back_iv).setOnClickListener(v -> finish());
+        findViewById(R.id.clearIv).setOnClickListener(this::onClearSearchClick);
         area_filter_ll.setOnClickListener(this::onAreaFilterClick);
         food_filter_ll.setOnClickListener(this::onFoodFilterClick);
         other_filter_ll.setOnClickListener(this::onOtherFilterClick);
@@ -138,6 +147,27 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
 
             }
         });
+        city_et.setOnEditorActionListener((v, actionId, event) -> {
+            String searchKey = city_et.getText().toString().trim();
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                mRequest.search_input = searchKey;
+                onRefresh();
+                KeyboardUtils.hideSoftInput(city_et);
+                return true;
+            }
+
+            return false;
+        });
+
+    }
+
+    private void onClearSearchClick(View view) {
+        city_et.setText("");
+        if (!TextUtils.isEmpty(mRequest.search_input)) {
+            mRequest.search_input = null;
+            onRefresh();
+        }
     }
 
 

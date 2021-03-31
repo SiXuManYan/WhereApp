@@ -42,18 +42,22 @@
                 android:layout_marginStart="15dp"
                 android:src="@mipmap/ic_search_black" />
 
-            <TextView
-                android:id="@+id/cityTv"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/cityEt"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_10"
+                android:layout_toStartOf="@+id/clearIv"
                 android:layout_toEndOf="@+id/searchIcon"
+                android:background="@null"
                 android:gravity="center_vertical"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@string/search"
                 android:textColor="@color/grey_666666"
+                android:textColorHint="@color/grey_666666"
                 android:textSize="13sp" />
 
 
@@ -81,7 +85,8 @@
             android:paddingEnd="@dimen/dp_15"
             android:paddingBottom="@dimen/dp_10"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_hotelmap" />
+            android:src="@drawable/ic_hotelmap"
+            android:visibility="invisible" />
 
 
     </RelativeLayout>

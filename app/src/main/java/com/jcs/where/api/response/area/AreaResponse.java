@@ -6,7 +6,7 @@ package com.jcs.where.api.response.area;
  */
 public class AreaResponse {
 
-    public int id ;
+    public String id ;
     public String name ;
     public boolean nativeIsSelected = false;
 

@@ -51,4 +51,9 @@ public class EventCode {
      * 刷新地址列表
      */
     public static final int EVENT_ADDRESS = 1011;
+
+    /**
+     * 选择区域
+     */
+    public static final int EVENT_FILTER_BY_AREA = 1012;
 }

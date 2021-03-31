@@ -19,11 +19,17 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
+import com.jcs.where.api.response.area.AreaResponse;
+import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
+import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.RestaurantListRequest;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.list.DividerDecoration;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -261,6 +267,30 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
             tabText.setChecked(false);
             tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
         }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+        Object data = baseEvent.data;
+
+        if (data instanceof AreaResponse) {
+            // 区域筛选
+            mRequest.trading_area_id = ((AreaResponse) data).id;
+
+        } else if (data instanceof Category) {
+            // 美食列别筛选
+            mRequest.category_id = ((Category) data).id;
+
+        }/* else if (data instanceof ) {
+            // 其他筛选
+
+
+
+
+        }*/
+
+
     }
 
 

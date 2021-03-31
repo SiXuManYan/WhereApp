@@ -20,7 +20,6 @@
 
 
             <TextView
-                android:id="@+id/average_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_12"
@@ -84,6 +83,7 @@
 
 
             <CheckBox
+                android:id="@+id/takeaway_support_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_33"
                 android:layout_marginBottom="@dimen/dp_25"
@@ -109,11 +109,13 @@
                 android:textSize="@dimen/sp_16" />
 
             <RadioGroup
+                android:id="@+id/sort_rg"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_33"
                 android:orientation="horizontal">
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/praise_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_33"
                     android:layout_marginEnd="@dimen/dp_11"
@@ -130,6 +132,7 @@
 
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sales_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_33"
                     android:layout_marginEnd="@dimen/dp_11"
@@ -144,6 +147,7 @@
                     android:textSize="@dimen/sp_14" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/distance_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_33"
                     android:layout_marginEnd="@dimen/dp_11"
@@ -168,7 +172,6 @@
 
 
     <LinearLayout
-        android:id="@+id/bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:layout_alignParentBottom="true"
@@ -177,6 +180,7 @@
 
 
         <TextView
+            android:id="@+id/reset_tv"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/dp_15"
@@ -188,6 +192,7 @@
 
 
         <TextView
+            android:id="@+id/confirm_tv"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"

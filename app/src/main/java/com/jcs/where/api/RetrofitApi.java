@@ -55,6 +55,8 @@ import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.category.Category;
+import com.jcs.where.api.response.gourmet.dish.DishResponse;
+import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
@@ -819,6 +821,7 @@ public interface RetrofitApi {
     /**
      * 获取分类列表
      * !--level 3 pid 89 type =1 --
+     *
      * @param level 分类级别
      * @param type  分类类型（1：只看下一级，2：所有下级）
      * @param pid   上级ID（详细看底部参数说明）
@@ -848,5 +851,36 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/trading/areas")
     Observable<JcsResponse<List<AreaResponse>>> getAreasList();
+
+
+    /**
+     * 餐厅详情
+     */
+    @GET("restaurantapi/v2/restaurants/{restaurant_id}")
+    Observable<JcsResponse<List<RestaurantDetailResponse>>> getRestaurantDetail(
+            @Path("restaurant_id") int restaurant_id,
+            @Query("lat") String lat,
+            @Query("lng") String lng
+    );
+
+    /**
+     * 堂食菜品列表
+     */
+    @GET("restaurantapi/v2/eat_in_foods")
+    Observable<JcsResponse<PageResponse<DishResponse>>> getDishList(@Query("restaurant_id") int restaurant_id);
+
+
+    /**
+     * 餐厅评论列表
+     */
+    @GET("restaurantapi/v2/comments")
+    Observable<JcsResponse<PageResponse<DishResponse>>> getCommentList(
+            @Query("restaurant_id") int restaurant_id,
+            @Query("type") int type
+    );
+
+
+
+
 
 }

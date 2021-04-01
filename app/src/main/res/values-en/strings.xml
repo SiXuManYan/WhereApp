@@ -504,6 +504,7 @@
     <string name="add_address">Add address</string>
     <string name="confirm_delete_address">Confirm delete address？</string>
     <string name="take_away_support">Take away &#160;&#62;</string>
+    <string name="take_away_support2">Take away &#160;&#62;</string>
     <string name="per_price_format">₱%1$s/people</string>
     <string name="filter_city">City</string>
     <string name="filter_food">Gourmet food</string>
@@ -517,5 +518,13 @@
     <string name="praise_first">Praise First</string>
     <string name="sales_priority">Sales Priority</string>
     <string name="nearest_first">Nearest First</string>
+    <string name="dine_in_dishes">Dine-in dishes</string>
+    <string name="panic_buying">Panic buying</string>
+    <string name="sale_format">Sold%1$s</string>
+    <string name="unfold_more">Unfold More</string>
+    <string name="fold">Fold</string>
+    <string name="evaluation">Evaluation</string>
+    <string name="more_evaluation">More Evaluation</string>
+
 
 </resources>

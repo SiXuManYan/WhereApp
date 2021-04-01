@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_8">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_civ"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_14"
+            tools:src="@tools:sample/avatars" />
+
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/avatar_civ"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            tools:text="糖糖"
+            tools:visibility="visible" />
+
+
+        <com.jcs.where.widget.ratingstar.RatingStarView
+            android:id="@+id/star_rs"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_10"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:layout_toEndOf="@+id/avatar_civ"
+            app:rsv_cornerRadius="@dimen/dp_2"
+            app:rsv_drawStrokeForHalfStar="true"
+            app:rsv_enableSelectRating="false"
+            app:rsv_onlyHalfStar="false"
+            app:rsv_rating="1"
+            app:rsv_starBackgroundColor="@color/grey_F5F5F5"
+            app:rsv_starForegroundColor="@color/yellow_FCE314"
+            app:rsv_starMargin="@dimen/dp_3"
+            app:rsv_starNum="5"
+            app:rsv_starThickness="0.5"
+            app:rsv_strokeColor="@color/transplant"
+            app:rsv_strokeWidth="0dp" />
+
+
+        <TextView
+            android:id="@+id/comment_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/grey_999999"
+            android:textSize="@dimen/sp_13"
+            android:visibility="gone"
+            tools:text="2021-04-01"
+            tools:visibility="visible" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_13"
+        android:visibility="gone"
+        tools:text="餐厅服务好，味道好，环境好，值得一试，下次还去。"
+        tools:visibility="visible" />
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/image_container_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+
+    </HorizontalScrollView>
+
+
+</LinearLayout>

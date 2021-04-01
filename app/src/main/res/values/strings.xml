@@ -501,6 +501,7 @@
     <string name="add_address">添加收货地址</string>
     <string name="confirm_delete_address">确认删除地址吗？</string>
     <string name="take_away_support">支持外卖&#160;&#62;</string>
+    <string name="take_away_support2">外卖&#160;&#62;</string>
     <string name="per_price_format">₱%1$s/人</string>
     <string name="filter_city">城市</string>
     <string name="filter_food">美食</string>
@@ -514,5 +515,12 @@
     <string name="praise_first">好评优先</string>
     <string name="sales_priority">销量优先</string>
     <string name="nearest_first">距离最近</string>
+    <string name="dine_in_dishes">堂食菜品</string>
+    <string name="panic_buying">抢购</string>
+    <string name="sale_format">已售%1$s</string>
+    <string name="unfold_more">展开更多套餐</string>
+    <string name="fold">收起</string>
+    <string name="evaluation">评价</string>
+    <string name="more_evaluation">更多评价</string>
 
 </resources>

@@ -45,7 +45,8 @@
                     android:hint="@string/price_unit"
                     android:inputType="phone|number"
                     android:textColor="@color/blue_72B9FF"
-                    android:textColorHint="@color/blue_72B9FF" />
+                    android:textColorHint="@color/blue_72B9FF"
+                    android:textSize="@dimen/sp_13" />
 
 
                 <TextView
@@ -67,7 +68,8 @@
                     android:hint="@string/price_unit"
                     android:inputType="phone|number"
                     android:textColor="@color/blue_72B9FF"
-                    android:textColorHint="@color/blue_72B9FF" />
+                    android:textColorHint="@color/blue_72B9FF"
+                    android:textSize="@dimen/sp_13" />
 
 
             </LinearLayout>
@@ -96,7 +98,7 @@
                 android:paddingEnd="@dimen/dp_12"
                 android:text="@string/support_takeaway"
                 android:textColor="@color/selector_black_blue"
-                android:textSize="@dimen/sp_14"
+                android:textSize="@dimen/sp_13"
                 tools:checked="true" />
 
 
@@ -110,7 +112,7 @@
 
             <RadioGroup
                 android:id="@+id/sort_rg"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_33"
                 android:orientation="horizontal">
 
@@ -127,7 +129,7 @@
                     android:paddingEnd="@dimen/dp_12"
                     android:text="@string/praise_first"
                     android:textColor="@color/selector_black_blue"
-                    android:textSize="@dimen/sp_14"
+                    android:textSize="@dimen/sp_13"
                     tools:checked="true" />
 
 
@@ -144,7 +146,7 @@
                     android:paddingEnd="@dimen/dp_12"
                     android:text="@string/sales_priority"
                     android:textColor="@color/selector_black_blue"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_13" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/distance_rb"
@@ -153,13 +155,15 @@
                     android:layout_marginEnd="@dimen/dp_11"
                     android:background="@drawable/selector_restaurant_filter"
                     android:button="@null"
+                    android:ellipsize="end"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:minWidth="@dimen/dp_78"
                     android:paddingStart="@dimen/dp_12"
                     android:paddingEnd="@dimen/dp_12"
                     android:text="@string/nearest_first"
                     android:textColor="@color/selector_black_blue"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_13" />
 
 
             </RadioGroup>

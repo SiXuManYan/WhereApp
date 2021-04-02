@@ -283,7 +283,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     }
 
     private void handleFilterVisible(Animation mFilterHideAnimation, int gone) {
-        filter_container_ll.startAnimation(mFilterHideAnimation);
+//        filter_container_ll.startAnimation(mFilterHideAnimation);
         filter_container_ll.setVisibility(gone);
     }
 
@@ -299,7 +299,6 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
             tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
         }
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventReceived(BaseEvent<?> baseEvent) {

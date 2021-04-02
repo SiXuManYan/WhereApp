@@ -523,4 +523,29 @@
     <string name="evaluation">评价</string>
     <string name="more_evaluation">更多评价</string>
 
+
+    <string name="use_agreement_content_0">尊敬的用户，感谢您信任并使用Where，我们依据相关法律制定了</string>
+    <string name="use_agreement_content_1">&#160;《用户协议》</string>
+    <string name="use_agreement_content_2">&#160;和&#160;</string>
+    <string name="use_agreement_content_3">《隐私政策》&#160;</string>
+
+    <string name="use_agreement_content_4">请在您点击同意之前，仔细阅读并充分理解相关条款。点击同意按钮代表您已同意前述协议及以下约定。\n\n
+1. 在仅浏览时，为保障服务所需，我们会申请系统权限收集设备信息、日志信息，用于信息推送。并申请存储权限，用于浏览过程中缓存相关文件以及维护应用内版本升级。\n\n
+2. 为了基于您所在位置向你推荐内容、展示信息，我们可能会向您申请位置权限。\n\n
+3. 为帮助您在APP中拨打投诉电话或其他咨询热线，我们可能会申请拨打电话权限。该权限不会收集隐私信息，且仅在你使用前述功能时使用。\n\n</string>
+    <string name="use_agreement_content_5">4. 为了实现第三方登录以及信息分享功能，我们在使用了第三方 MobTech 的[ShareSdk]产品，此产品的隐私策略条款，请参阅：</string>
+    <string name="use_agreement_content_6">https://www.mob.com/about/policy。\n\n</string>
+    <string name="use_agreement_content_7">5. 上述权限以及摄像头、GPS、相机、相册、麦克风，存储空间、等敏感权限均不会默认或强制开启收集信息，只有经过明示授权才会为实现功能或服务时使用，您均可以拒绝且不影响你继续使用Where。</string>
+
+    <string name="agree_and_continue">同意并继续</string>
+    <string name="disagree">不同意</string>
+    <string name="tips_0">个人信息保护指引</string>
+
+    <!-- 拒绝用户协议 -->
+    <string name="tips_1">温馨提示</string>
+    <string name="disagree_privacy_policy_message">需要您同意《个人信息保护指引》后我们才能继续为您提供服务</string>
+    <string name="goto_agree">去同意</string>
+    <string name="not_yet">暂不</string>
+
+
 </resources>

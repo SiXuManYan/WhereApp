@@ -1,20 +1,34 @@
 package com.jcs.where.features.splash;
 
 import android.graphics.Color;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.SpanUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.home.HomeActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
 import com.jcs.where.widget.pager.IndicatorView;
@@ -79,21 +93,125 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                boolean isFirstOpen = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_FIRST_OPEN, true);
-                if (isFirstOpen) {
-                    pagerVp.setVisibility(View.VISIBLE);
-                    pointView.setVisibility(View.VISIBLE);
-                    firstIv.setVisibility(View.GONE);
-                    CacheUtil.getShareDefault().put(Constant.SP_IS_FIRST_OPEN, false);
-                } else {
-                    toHome();
-                }
+                initUserAgreement();
 
 
             }
         });
 
         splashContainerRl.startAnimation(animation);
+    }
+
+    private void initUserAgreement() {
+
+        SpanUtils spanUtils = new SpanUtils();
+        SpannableStringBuilder builder = spanUtils.append(getString(R.string.use_agreement_content_0))
+                .append(getString(R.string.use_agreement_content_1))
+                .setClickSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View widget) {
+                        WebViewActivity.goTo(SplashActivity.this, FeaturesUtil.getUserAgreement());
+                    }
+
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        ds.setColor(getColor(R.color.blue_4C9EF2));
+                        ds.setUnderlineText(true);
+                    }
+                })
+                .append(getString(R.string.use_agreement_content_2))
+                .append(getString(R.string.use_agreement_content_3))
+                .setClickSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View widget) {
+                        WebViewActivity.goTo(SplashActivity.this, FeaturesUtil.getPrivacyPolicy());
+                    }
+
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        ds.setColor(getColor(R.color.blue_4C9EF2));
+                        ds.setUnderlineText(true);
+                    }
+                })
+                .append(getString(R.string.use_agreement_content_4))
+                .append(getString(R.string.use_agreement_content_5))
+                .append(getString(R.string.use_agreement_content_6))
+                .setClickSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View widget) {
+                        WebViewActivity.goTo(SplashActivity.this, "https://www.mob.com/about/policy");
+                    }
+
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        ds.setColor(getColor(R.color.blue_4C9EF2));
+                        ds.setUnderlineText(true);
+                    }
+                })
+                .append(getString(R.string.use_agreement_content_7))
+                .create();
+
+
+        boolean isAgreeUserAgreement = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_AGREE_USER_AGREEMENT, false);
+        if (isAgreeUserAgreement) {
+            afterAnimation();
+        } else {
+
+            AlertDialog alertDialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.tips_0)
+                    .setCancelable(false)
+                    .setMessage(builder)
+                    .setPositiveButton(R.string.agree_and_continue, (dialog, which) -> {
+                        afterAnimation();
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton(R.string.disagree, (dialog, which) -> {
+                        handleDisagree();
+                        dialog.dismiss();
+                    })
+                    .create();
+            alertDialog.show();
+
+
+            // 富文本可点击
+            TextView message = alertDialog.findViewById(android.R.id.message);
+            if (message != null) {
+                message.setMovementMethod(LinkMovementMethod.getInstance());
+                message.setLineSpacing(0f,1.2f);
+            }
+        }
+
+    }
+
+    private void handleDisagree() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.tips_1)
+                .setCancelable(false)
+                .setMessage(getString(R.string.disagree_privacy_policy_message))
+                .setPositiveButton(getString(R.string.goto_agree), (dialog, which) -> {
+                    initUserAgreement();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(getString(R.string.not_yet), (dialog, which) -> {
+                    dialog.dismiss();
+                    AppUtils.exitApp();
+                })
+                .create()
+                .show();
+    }
+
+    private void afterAnimation() {
+        CacheUtil.getShareDefault().put(Constant.SP_IS_AGREE_USER_AGREEMENT, true);
+        MobSDK.submitPolicyGrantResult(true, null);
+        boolean isFirstOpen = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_FIRST_OPEN, true);
+        if (isFirstOpen) {
+            pagerVp.setVisibility(View.VISIBLE);
+            pointView.setVisibility(View.VISIBLE);
+            firstIv.setVisibility(View.GONE);
+            CacheUtil.getShareDefault().put(Constant.SP_IS_FIRST_OPEN, false);
+        } else {
+            toHome();
+        }
     }
 
     private void toHome() {
@@ -114,7 +232,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     protected void bindListener() {
-        MobSDK.submitPolicyGrantResult(true, null);
+
         pagerVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

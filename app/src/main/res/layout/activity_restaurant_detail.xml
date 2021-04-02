@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,15 +7,6 @@
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
-    <com.jcs.where.widget.JcsTitle
-        android:id="@+id/jcsTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:rightFirstIcon="@drawable/ic_share_black"
-        app:rightSecondIcon="@drawable/ic_collection"
-        app:showBottomLine="true" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -26,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_100">
+            android:paddingTop="@dimen/dp_50"
+            android:paddingBottom="@dimen/dp_50">
 
 
             <ImageView
@@ -248,7 +240,7 @@
                 android:background="@color/grey_F5F5F5" />
 
             <com.jcs.where.view.CommentView
-                android:id="@+id/comment_v"
+                android:id="@+id/comment_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -259,4 +251,23 @@
     </androidx.core.widget.NestedScrollView>
 
 
-</LinearLayout>
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rightFirstIcon="@drawable/ic_share_black"
+        app:rightSecondIcon="@drawable/ic_collection"
+        app:showBottomLine="true" />
+
+    <ImageView
+        android:id="@+id/shopping_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:alpha="0.9"
+        android:src="@mipmap/ic_shopping_cart" />
+
+
+</RelativeLayout>

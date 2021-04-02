@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply from: './mob.gradle'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
@@ -12,8 +16,8 @@ android {
         applicationId "com.jcs.where"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 4
-        versionName "0.1.4"
+        versionCode 5
+        versionName "0.1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"
@@ -80,6 +84,7 @@ android {
 
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -143,6 +148,8 @@ dependencies {
     def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 
     // comm 100
     implementation files('libs/jpush-android-3.1.3.jar')
@@ -163,5 +170,8 @@ dependencies {
 
     // TabLayout
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2'
+
+    // kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }

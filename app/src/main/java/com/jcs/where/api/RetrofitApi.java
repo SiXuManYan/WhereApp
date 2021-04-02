@@ -857,8 +857,8 @@ public interface RetrofitApi {
      * 餐厅详情
      */
     @GET("restaurantapi/v2/restaurants/{restaurant_id}")
-    Observable<JcsResponse<List<RestaurantDetailResponse>>> getRestaurantDetail(
-            @Path("restaurant_id") int restaurant_id,
+    Observable<JcsResponse<RestaurantDetailResponse>> getRestaurantDetail(
+            @Path("restaurant_id") String restaurant_id,
             @Query("lat") String lat,
             @Query("lng") String lng
     );

@@ -545,6 +545,7 @@
     <string name="disagree_privacy_policy_message">You need to agree to the &quot;Guidelines for the Protection of Personal Information&quot; before we can continue to provide services to you</string>
     <string name="goto_agree">To agree</string>
     <string name="not_yet">Not yet</string>
+    <string name="time_format">%1$s-%2$s</string>
 
 
 </resources>

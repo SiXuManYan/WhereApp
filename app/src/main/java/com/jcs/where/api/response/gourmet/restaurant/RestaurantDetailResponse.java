@@ -1,5 +1,7 @@
 package com.jcs.where.api.response.gourmet.restaurant;
 
+import java.util.ArrayList;
+
 /**
  * Created by Wangsw  2021/4/1 11:15.
  * 餐厅详情
@@ -34,11 +36,11 @@ public class RestaurantDetailResponse {
     public String id = "";
     public String uuid = "";
     public String title = "";
-    public String images = "";
+    public ArrayList<String> images = new ArrayList<>();
     public String video = "";
     public String video_image = "";
     public float grade ;
-    public int comment_num ;
+    public String comment_num ;
     public String per_price = "";
     public String address = "";
     public String start_time = "";
@@ -48,7 +50,7 @@ public class RestaurantDetailResponse {
     public String distance = "";
     public String tel = "";
     public String collect_status = "";
-    public String take_out_status = "";
+    public int take_out_status ;
     public String mer_uuid = "";
     public String mer_name = "";
     public int im_status ;

@@ -546,6 +546,7 @@
     <string name="disagree_privacy_policy_message">需要您同意《个人信息保护指引》后我们才能继续为您提供服务</string>
     <string name="goto_agree">去同意</string>
     <string name="not_yet">暂不</string>
+    <string name="time_format">%1$s-%2$s</string>
 
 
 </resources>

@@ -21,6 +21,7 @@ public class Constant {
     public static final int DEFAULT_FIRST_PAGE = 1;
 
     public static final String PARAM_POSITION = "position";
+    public static final String PARAM_ID = "param_id";
 
     /**
      * 账号

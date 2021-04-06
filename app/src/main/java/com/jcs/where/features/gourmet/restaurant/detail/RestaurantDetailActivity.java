@@ -68,6 +68,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         presenter = new RestaurantDetailPresenter(this);
         mRestaurantId = getIntent().getStringExtra(Constant.PARAM_ID);
         presenter.getDetail(mRestaurantId);
+        presenter.getDishList(mRestaurantId);
 
     }
 

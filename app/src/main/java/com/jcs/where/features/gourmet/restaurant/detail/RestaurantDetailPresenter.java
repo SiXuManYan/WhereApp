@@ -2,6 +2,8 @@ package com.jcs.where.features.gourmet.restaurant.detail;
 
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
+import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.utils.Constant;
 
@@ -28,6 +30,20 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
             }
         });
 
+
+    }
+
+    /**
+     * 堂食菜品列表
+     */
+    public void getDishList(int page, String restaurantId) {
+
+        requestApi(mRetrofit.getDishList(page, restaurantId), new BaseMvpObserver<PageResponse<DishResponse>>(view) {
+            @Override
+            protected void onSuccess(PageResponse<DishResponse> response) {
+
+            }
+        });
 
     }
 }

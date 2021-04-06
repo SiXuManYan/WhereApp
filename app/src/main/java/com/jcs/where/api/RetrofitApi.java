@@ -808,6 +808,7 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/restaurants")
     Observable<JcsResponse<PageResponse<RestaurantResponse>>> getRestaurantList(
+            @Query("page") int page,
             @Query("trading_area_id") @Nullable String trading_area_id,
             @Query("per_price") @Nullable String per_price,
             @Query("service") @Nullable String service,
@@ -867,7 +868,10 @@ public interface RetrofitApi {
      * 堂食菜品列表
      */
     @GET("restaurantapi/v2/eat_in_foods")
-    Observable<JcsResponse<PageResponse<DishResponse>>> getDishList(@Query("restaurant_id") int restaurant_id);
+    Observable<JcsResponse<PageResponse<DishResponse>>> getDishList(
+            @Query("page") int page,
+            @Query("restaurant_id") String restaurant_id
+    );
 
 
     /**

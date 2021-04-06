@@ -20,9 +20,8 @@ public class RestaurantListPresenter extends BaseMvpPresenter {
 
 
     public void getList(int page, RestaurantListRequest request) {
-
-
         requestApi(mRetrofit.getRestaurantList(
+                page,
                 request.trading_area_id,
                 request.per_price,
                 request.service,

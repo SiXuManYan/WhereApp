@@ -876,11 +876,13 @@ public interface RetrofitApi {
 
     /**
      * 餐厅评论列表
+     * @param type 列表类型（0：全部，1：有图，2：好评，3：差评）
      */
     @GET("restaurantapi/v2/comments")
-    Observable<JcsResponse<PageResponse<DishResponse>>> getCommentList(
-            @Query("restaurant_id") int restaurant_id,
-            @Query("type") int type
+    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getCommentList(
+            @Query("page") int page,
+            @Query("type") int type,
+            @Query("restaurant_id") String restaurant_id
     );
 
 

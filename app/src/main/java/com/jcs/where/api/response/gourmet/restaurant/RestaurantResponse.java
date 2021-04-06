@@ -26,7 +26,7 @@ public class RestaurantResponse {
     }*/
 
 
-    public int id ;
+    public String id ;
     public ArrayList<String> images = new ArrayList<>();
 
     public String title = "";

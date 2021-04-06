@@ -4,14 +4,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
+import com.jcs.where.api.response.gourmet.comment.CommentResponse;
+import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.GlideUtil;
+import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 import com.jcs.where.view.CommentView;
 import com.jcs.where.view.DishView;
 import com.jcs.where.widget.ratingstar.RatingStarView;
+
+import java.util.List;
 
 
 /**
@@ -31,9 +38,11 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     private TextView distance_tv;
     private TextView time_tv;
     private TextView support_takeaway_tv;
-    private DishView dishView;
-    private CommentView commentView;
+    private DishView dish_view;
+    private CommentView comment_view;
     private ImageView shopping_cart, navigation_iv, chat_iv;
+    private View dish_split_v;
+
     private String mRestaurantId;
 
 
@@ -55,34 +64,47 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         distance_tv = findViewById(R.id.distance_tv);
         time_tv = findViewById(R.id.time_tv);
         support_takeaway_tv = findViewById(R.id.support_takeaway_tv);
-        dishView = findViewById(R.id.dish_view);
-        commentView = findViewById(R.id.comment_view);
+        dish_view = findViewById(R.id.dish_view);
+        comment_view = findViewById(R.id.comment_view);
         shopping_cart = findViewById(R.id.shopping_cart);
         navigation_iv = findViewById(R.id.navigation_iv);
         chat_iv = findViewById(R.id.chat_iv);
+        dish_split_v = findViewById(R.id.dish_split_v);
 
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected void initData() {
-        presenter = new RestaurantDetailPresenter(this);
         mRestaurantId = getIntent().getStringExtra(Constant.PARAM_ID);
+        presenter = new RestaurantDetailPresenter(this);
         presenter.getDetail(mRestaurantId);
         presenter.getDishList(mRestaurantId);
+        presenter.getCommentList(mRestaurantId);
 
     }
 
     @Override
     protected void bindListener() {
-
+        shopping_cart.setOnClickListener(this::onShoppingCartClick);
     }
+
 
 
     @Override
     public void bindData(RestaurantDetailResponse data) {
         if (data.images != null && !data.images.isEmpty()) {
-            GlideUtil.load(this, data.images.get(0), image_iv);
+            RequestOptions options = RequestOptions.bitmapTransform(
+                    new GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
+                    .error(R.mipmap.ic_empty_gray)
+                    .placeholder(R.mipmap.ic_empty_gray);
+            Glide.with(this).load( data.images.get(0)).apply(options).into(image_iv);
         }
+        mJcsTitle.setMiddleTitle(data.title);
         name_tv.setText(data.title);
 
         score_tv.setText(String.valueOf(data.grade));
@@ -101,7 +123,24 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         } else {
             chat_iv.setVisibility(View.GONE);
         }
+    }
 
+    @Override
+    public void bindDishData(List<DishResponse> data) {
+        dish_view.setData(data);
+        dish_view.setVisibility(View.VISIBLE);
+        dish_split_v.setVisibility(View.VISIBLE);
+        shopping_cart.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void bindCommentData(List<CommentResponse> data) {
+        comment_view.setData(data);
+        comment_view.setVisibility(View.VISIBLE);
+    }
+
+    private void onShoppingCartClick(View view) {
 
     }
+
 }

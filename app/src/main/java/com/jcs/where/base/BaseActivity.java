@@ -21,8 +21,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ColorUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
@@ -34,9 +32,6 @@ import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
 import org.jetbrains.annotations.NotNull;
-
-import kotlin.TypeCastException;
-import kotlin.jvm.internal.Intrinsics;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -114,6 +109,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
     }
+
     protected void changeStatusTextColor() {
         View decor = getWindow().getDecorView();
         if (isStatusDark()) {
@@ -180,7 +176,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return result;
     }
-
 
 
     protected void setStatusBar() {
@@ -350,7 +345,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(token)) {
             startActivity(LoginActivity.class);
         } else {
-            toActivity(target);
+            startActivity(target);
+        }
+    }
+
+    protected final void startActivityAfterLogin(@NotNull Class<?> target,  Bundle bundle) {
+        String token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+        if (TextUtils.isEmpty(token)) {
+            startActivity(LoginActivity.class);
+        } else {
+            startActivity(target, bundle);
         }
     }
 

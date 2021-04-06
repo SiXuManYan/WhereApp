@@ -3,9 +3,12 @@ package com.jcs.where.features.gourmet.restaurant.detail;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.api.response.gourmet.comment.CommentResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.utils.Constant;
+
+import java.util.List;
 
 /**
  * Created by Wangsw  2021/4/1 10:28.
@@ -36,14 +39,34 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
     /**
      * 堂食菜品列表
      */
-    public void getDishList(int page, String restaurantId) {
+    public void getDishList(String restaurantId) {
 
-        requestApi(mRetrofit.getDishList(page, restaurantId), new BaseMvpObserver<PageResponse<DishResponse>>(view) {
+
+        requestApi(mRetrofit.getDishList(1, restaurantId), new BaseMvpObserver<PageResponse<DishResponse>>(view) {
             @Override
             protected void onSuccess(PageResponse<DishResponse> response) {
+                List<DishResponse> data = response.getData();
+                if (data!=null && !data.isEmpty()) {
+                    view.bindDishData(data);
+                }
 
             }
         });
 
+    }
+
+    /**
+     * 菜品列表
+     */
+    public void getCommentList(String restaurantId) {
+        requestApi(mRetrofit.getCommentList(1,0,restaurantId), new BaseMvpObserver<PageResponse<CommentResponse>>(view) {
+            @Override
+            protected void onSuccess(PageResponse<CommentResponse> response) {
+                List<CommentResponse> data = response.getData();
+                if (data!=null && !data.isEmpty()) {
+                    view.bindCommentData(data);
+                }
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.restaurant.list;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,6 +21,7 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
@@ -29,6 +31,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.RestaurantListRequest;
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
 import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.list.DividerDecoration;
@@ -38,11 +41,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import static com.jcs.where.utils.Constant.PARAM_ID;
+
 /**
  * Created by Wangsw  2021/3/24 13:56.
  * 餐厅列表
  */
-public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresenter> implements RestaurantListView, OnLoadMoreListener, OnItemChildClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresenter> implements RestaurantListView, OnLoadMoreListener, OnItemChildClickListener, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
 
     private int page = Constant.DEFAULT_FIRST_PAGE;
@@ -97,6 +102,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
         mAdapter.addChildClickViewIds(R.id.take_ll);
         mAdapter.setOnItemChildClickListener(this);
+        mAdapter.setOnItemClickListener(this);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         recycler.setAdapter(mAdapter);
         recycler.addItemDecoration(getItemDecoration());
@@ -187,6 +193,15 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     @Override
     public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
 
+    }
+
+
+    @Override
+    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+        RestaurantResponse data = mAdapter.getData().get(position);
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_ID, data.id);
+        startActivityAfterLogin(RestaurantDetailActivity.class, bundle);
     }
 
     @Override

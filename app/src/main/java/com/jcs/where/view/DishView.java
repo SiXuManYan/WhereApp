@@ -18,7 +18,7 @@ import com.jcs.where.R;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Wangsw  2021/4/1 14:03.
@@ -71,7 +71,7 @@ public class DishView extends LinearLayout {
     }
 
 
-    public void setData(ArrayList<DishResponse> list) {
+    public void setData(List<DishResponse> list) {
         if (list.isEmpty()) {
             return;
         }

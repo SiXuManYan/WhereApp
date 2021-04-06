@@ -20,6 +20,7 @@ import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,7 +65,7 @@ public class CommentView extends LinearLayout {
     }
 
 
-    public void setData(ArrayList<CommentResponse> list) {
+    public void setData(List<CommentResponse> list) {
         if (list == null || list.isEmpty()) {
             return;
         }

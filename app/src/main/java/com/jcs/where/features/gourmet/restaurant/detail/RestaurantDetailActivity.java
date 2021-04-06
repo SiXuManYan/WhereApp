@@ -12,7 +12,6 @@ import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 import com.jcs.where.view.CommentView;
 import com.jcs.where.view.DishView;
@@ -94,7 +93,6 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     }
 
 
-
     @Override
     public void bindData(RestaurantDetailResponse data) {
         if (data.images != null && !data.images.isEmpty()) {
@@ -102,7 +100,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
                     new GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                     .error(R.mipmap.ic_empty_gray)
                     .placeholder(R.mipmap.ic_empty_gray);
-            Glide.with(this).load( data.images.get(0)).apply(options).into(image_iv);
+            Glide.with(this).load(data.images.get(0)).apply(options).into(image_iv);
         }
         mJcsTitle.setMiddleTitle(data.title);
         name_tv.setText(data.title);
@@ -123,6 +121,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         } else {
             chat_iv.setVisibility(View.GONE);
         }
+        distance_tv.setText(getString(R.string.distance_format, data.distance));
     }
 
     @Override

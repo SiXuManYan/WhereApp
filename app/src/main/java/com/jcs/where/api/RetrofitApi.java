@@ -55,6 +55,7 @@ import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.category.Category;
+import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
@@ -876,6 +877,7 @@ public interface RetrofitApi {
 
     /**
      * 餐厅评论列表
+     *
      * @param type 列表类型（0：全部，1：有图，2：好评，3：差评）
      */
     @GET("restaurantapi/v2/comments")
@@ -886,7 +888,13 @@ public interface RetrofitApi {
     );
 
 
-
+    /**
+     * 堂食菜品详情
+     */
+    @GET("restaurantapi/v2/eat_in_foods/{eat_in_food_id}")
+    Observable<JcsResponse<DishDetailResponse>> getDishDetail(
+            @Path("eat_in_food_id") String eat_in_food_id
+    );
 
 
 }

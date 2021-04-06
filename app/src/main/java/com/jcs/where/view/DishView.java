@@ -1,6 +1,7 @@
 package com.jcs.where.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
+import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 
 import java.util.List;
@@ -67,7 +70,6 @@ public class DishView extends LinearLayout {
         unfold_rl = view.findViewById(R.id.unfold_rl);
         unfold_tv = view.findViewById(R.id.unfold_tv);
         unfold_rl.setOnClickListener(this::unFoldClick);
-
     }
 
 
@@ -75,7 +77,6 @@ public class DishView extends LinearLayout {
         if (list.isEmpty()) {
             return;
         }
-
 
         container_ll.removeAllViews();
 
@@ -114,6 +115,14 @@ public class DishView extends LinearLayout {
         salesTv.setText(StringUtils.getString(R.string.sale_format, data.sale_num));
         nowPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.price));
         oldPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.original_price));
+
+        buyTv.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SetMealActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Constant.PARAM_ID ,data.id);
+            getContext().startActivity(intent);
+        });
+
     }
 
     private void unFoldClick(View view) {

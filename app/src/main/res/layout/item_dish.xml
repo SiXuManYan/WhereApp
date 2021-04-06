@@ -25,9 +25,7 @@
         android:includeFontPadding="false"
         android:text="@string/dine_in_dishes"
         android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_14"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:textSize="@dimen/sp_14" />
 
     <TextView
         android:id="@+id/sales_tv"
@@ -39,9 +37,7 @@
         android:includeFontPadding="false"
         android:textColor="@color/grey_999999"
         android:textSize="@dimen/sp_13"
-        android:visibility="gone"
-        tools:text="已售1234"
-        tools:visibility="visible" />
+        tools:text="已售1234" />
 
 
     <TextView
@@ -53,9 +49,7 @@
         android:includeFontPadding="false"
         android:textColor="@color/orange_FF5B1B"
         android:textSize="@dimen/sp_16"
-        android:visibility="gone"
-        tools:text="$1000.00"
-        tools:visibility="visible" />
+        tools:text="$1000.00" />
 
     <TextView
         android:id="@+id/old_price_tv"
@@ -67,9 +61,7 @@
         android:includeFontPadding="false"
         android:textColor="@color/grey_999999"
         android:textSize="@dimen/sp_13"
-        android:visibility="gone"
-        tools:text="$1000.00"
-        tools:visibility="visible" />
+        tools:text="$1000.00" />
 
 
     <TextView
@@ -86,9 +78,7 @@
         android:paddingBottom="@dimen/dp_4"
         android:text="@string/panic_buying"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_13"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:textSize="@dimen/sp_13" />
 
 
 </RelativeLayout>

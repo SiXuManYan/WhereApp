@@ -546,6 +546,11 @@
     <string name="goto_agree">To agree</string>
     <string name="not_yet">Not yet</string>
     <string name="time_format">%1$s-%2$s</string>
+    <string name="package_detail">Package Detail</string>
+    <string name="set_meal">Set Meal</string>
+    <string name="rules_of_use">Rules Of Use</string>
+    <string name="add_shopping">Buy After</string>
+    <string name="buy_now">Buy Now</string>
 
 
 </resources>

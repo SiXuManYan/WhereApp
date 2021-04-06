@@ -547,6 +547,11 @@
     <string name="goto_agree">去同意</string>
     <string name="not_yet">暂不</string>
     <string name="time_format">%1$s-%2$s</string>
+    <string name="package_detail">套餐详情</string>
+    <string name="set_meal">到店吃套餐</string>
+    <string name="rules_of_use">使用规则</string>
+    <string name="add_shopping">加入购物车</string>
+    <string name="buy_now">立即购买</string>
 
 
 </resources>

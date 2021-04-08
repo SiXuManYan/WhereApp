@@ -6,6 +6,9 @@ buildscript {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+
+        // Mob Maven地址
+        maven {url "http://mvn.mob.com/android"}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'

@@ -1,5 +1,7 @@
 package com.jcs.where.features.gourmet.cart
 
+import android.os.Handler
+import android.os.Looper
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,7 +57,11 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
             childAdapter.data.forEach {
                 it.nativeIsSelect = isChecked
             }
-            childAdapter.notifyDataSetChanged()
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                childAdapter.notifyDataSetChanged()
+            }, 50)
+
+
         }
         childAdapter.checkedChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
 

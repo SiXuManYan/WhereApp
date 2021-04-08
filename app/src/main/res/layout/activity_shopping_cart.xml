@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/grey_F5F5F5"
     android:orientation="vertical">
 
 
     <RelativeLayout
+        android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_marginBottom="@dimen/dp_1"
@@ -72,16 +74,23 @@
     </RelativeLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/dp_51"
-        android:paddingBottom="@dimen/dp_50"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_above="@+id/bottom_rl"
+        android:layout_below="@+id/title_rl">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <RelativeLayout
+        android:id="@+id/bottom_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_alignParentBottom="true"

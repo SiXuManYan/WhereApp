@@ -24,6 +24,7 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.address.AddressActivity;
+import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
@@ -167,11 +168,14 @@ public class MineFragment extends BaseFragment {
      * @param view
      */
     private void onIntegralIvClicked(View view) {
-        if (User.isLogon()) {
-            toActivity(IntegralActivity.class);
-        } else {
-            startActivity(LoginActivity.class);
-        }
+//        if (User.isLogon()) {
+//            toActivity(IntegralActivity.class);
+//        } else {
+//            startActivity(LoginActivity.class);
+//        }
+
+        startActivity(ShoppingCartActivity.class);
+
     }
 
     private void onUserDataClicked(View view) {

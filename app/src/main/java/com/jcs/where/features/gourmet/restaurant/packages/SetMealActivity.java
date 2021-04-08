@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 
@@ -73,7 +74,6 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
     }
 
 
-
     @Override
     public void bindData(DishDetailResponse data) {
 
@@ -92,7 +92,7 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
                 .setStrikethrough().create();
         old_price_tv.setText(builder);
         old_price2_tv.setText(builder);
-        sales_tv.setText(getString(R.string.sale_format,data.sale_num));
+        sales_tv.setText(getString(R.string.sale_format, data.sale_num));
         set_meal_content_tv.setText(data.meals);
         rule_tv.setText(data.rule);
 
@@ -108,7 +108,7 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
     }
 
     private void onShoppingCartClick(View view) {
-
+        startActivityAfterLogin(ShoppingCartActivity.class);
     }
 
 }

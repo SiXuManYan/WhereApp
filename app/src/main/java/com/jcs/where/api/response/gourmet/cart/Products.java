@@ -8,4 +8,6 @@ public class Products {
     public int cart_id;
     public int good_num;
     public GoodData good_data;
+    public boolean nativeIsSelect = false;
+
 }

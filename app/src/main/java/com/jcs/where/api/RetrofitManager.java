@@ -64,6 +64,7 @@ public class RetrofitManager {
                         .header("Accept", "application/json")
                         .header("device", "android")
                         .header("version", BuildConfig.VERSION_NAME);
+
                 String language = CacheUtil.getLanguageFromCache();
                 if (language.equals("auto")) {
                     language = "zh-CN";

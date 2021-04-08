@@ -3,6 +3,7 @@ package com.jcs.where.widget
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -10,33 +11,42 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.cart.Products
 
 /**
  * Created by Wangsw  2021/4/8 10:41.
  */
-class NumberView(context: Context) : LinearLayout(context) {
+class NumberView: LinearLayout {
 
     private lateinit var cut_iv: ImageView
     private lateinit var add_iv: ImageView
     private lateinit var value_tv: TextView
-    var currentValue = 1
-    private var dataId = 0
+    private lateinit var products: Products
 
     var valueChangeListener: OnValueChangerListener? = null
 
-    init {
+
+    constructor(context: Context) : super(context) {
         initView()
     }
 
-    fun setValue(value: Int) {
-        currentValue = value
-        value_tv.text = value.toString()
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        initView()
     }
 
-    fun setDataId(id: Int) {
-        dataId = id
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initView()
     }
 
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        initView()
+    }
+
+    fun setData(products: Products) {
+        this.products = products
+        value_tv.text = products.good_num.toString()
+    }
 
     private fun initView() {
 
@@ -46,22 +56,30 @@ class NumberView(context: Context) : LinearLayout(context) {
         value_tv = view.findViewById(R.id.value_tv)
 
         cut_iv.setOnClickListener {
-            if (currentValue > 1) {
-                currentValue--
-                value_tv.text = currentValue.toString()
+            var goodNum = products.good_num
+
+            if (goodNum > 1) {
+                goodNum -= 1
+                value_tv.text = goodNum.toString()
+                products.good_num = goodNum
             } else {
                 ToastUtils.showShort("不能再减少了")
             }
-            valueChangeListener?.onCutClick(dataId);
+            valueChangeListener?.onCutClick(products.cart_id);
             cut_iv.isClickable = false
             Handler(Looper.myLooper()!!).postDelayed({
                 cut_iv.isClickable = true
             }, 500)
         }
         add_iv.setOnClickListener {
-            currentValue++
-            value_tv.text = currentValue.toString()
-            valueChangeListener?.onAddClick(dataId)
+
+            var goodNum = products.good_num
+
+            goodNum += 1
+            value_tv.text = goodNum.toString()
+            products.good_num = goodNum
+
+            valueChangeListener?.onAddClick(products.cart_id)
 
             Handler(Looper.myLooper()!!).postDelayed({
                 add_iv.isClickable = true

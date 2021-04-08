@@ -11,7 +11,7 @@ public class ShoppingCartResponse {
 
     public String restaurant_id = "";
     public String restaurant_name = "";
-    public ArrayList<Products>  products = new ArrayList<>();
-
+    public ArrayList<Products> products = new ArrayList<>();
+    public boolean nativeIsSelect = false;
 
 }

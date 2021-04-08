@@ -532,6 +532,7 @@
         <activity android:name=".features.gourmet.restaurant.list.RestaurantListActivity" />
         <activity android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity" />
         <activity android:name=".features.gourmet.restaurant.packages.SetMealActivity" />
+        <activity android:name=".features.gourmet.cart.ShoppingCartActivity" />
 
 
     </application>

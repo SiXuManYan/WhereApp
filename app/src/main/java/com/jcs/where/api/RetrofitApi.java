@@ -902,7 +902,7 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/carts")
     Observable<JcsResponse<PageResponse<ShoppingCartResponse>>> getShoppingCartList(
-            @Path("eat_in_food_id") String eat_in_food_id
+            @Query("page") int page
     );
 
 

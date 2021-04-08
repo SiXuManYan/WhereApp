@@ -14,5 +14,4 @@ public class ShoppingCartResponse {
     public ArrayList<Products>  products = new ArrayList<>();
 
 
-
 }

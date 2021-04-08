@@ -130,6 +130,8 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         dish_view.setVisibility(View.VISIBLE);
         dish_split_v.setVisibility(View.VISIBLE);
         shopping_cart.setVisibility(View.VISIBLE);
+
+
     }
 
     @Override

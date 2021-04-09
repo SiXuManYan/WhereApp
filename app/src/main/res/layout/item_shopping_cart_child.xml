@@ -2,17 +2,21 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/child_container_rl"
     android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_81"
     android:layout_marginTop="@dimen/dp_10"
-    android:layout_marginBottom="@dimen/dp_10"
-    android:layout_height="@dimen/dp_81">
+    android:layout_marginBottom="@dimen/dp_10">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/good_cb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ImageView
+        android:id="@+id/good_checked_iv"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical" />
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_un_checked" />
+
 
     <ImageView
         android:id="@+id/image_iv"
@@ -20,7 +24,7 @@
         android:layout_height="@dimen/dp_81"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_8"
-        android:layout_toEndOf="@+id/good_cb"
+        android:layout_toEndOf="@+id/good_checked_iv"
         tools:src="@tools:sample/avatars" />
 
 

@@ -1,9 +1,7 @@
 package com.jcs.where.features.gourmet.cart
 
-import android.os.Handler
-import android.os.Looper
-import android.widget.CompoundButton
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
@@ -11,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
@@ -32,7 +29,11 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
     /**
      * 选中状态监听
      */
-    var checkedChangeListener: CompoundButton.OnCheckedChangeListener? = null
+    var checkedChangeListener: OnChildContainerClick? = null
+
+    interface OnChildContainerClick {
+        fun onClick(isChecked: Boolean)
+    }
 
 
     override fun convert(holder: BaseViewHolder, products: Products) {
@@ -44,7 +45,8 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
                 .placeholder(R.mipmap.ic_empty_gray)
 
 
-        val good_cb = holder.getView<MaterialCheckBox>(R.id.good_cb)
+        val child_container_rl = holder.getView<RelativeLayout>(R.id.child_container_rl)
+        val good_checked_iv = holder.getView<ImageView>(R.id.good_checked_iv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val good_name = holder.getView<TextView>(R.id.good_name)
         val now_price_tv = holder.getView<TextView>(R.id.now_price_tv)
@@ -66,15 +68,25 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
         val oldBuilder = SpanUtils().append(oldPrice).setStrikethrough().create()
         old_price_tv.text = oldBuilder
 
-        good_cb.isChecked = products.nativeIsSelect
-        good_cb.setOnCheckedChangeListener { buttonView, isChecked ->
+        if (products.nativeIsSelect) {
+            good_checked_iv.setImageResource(R.mipmap.ic_checked_orange)
+        } else {
+            good_checked_iv.setImageResource(R.mipmap.ic_un_checked)
+        }
 
-            products.nativeIsSelect = isChecked
+        good_checked_iv.setOnClickListener {
+            val currentIsSelect = products.nativeIsSelect
+            products.nativeIsSelect = !currentIsSelect
 
-            checkedChangeListener?.onCheckedChanged(buttonView, isChecked)
-
+            if (products.nativeIsSelect) {
+                good_checked_iv.setImageResource(R.mipmap.ic_checked_orange)
+            } else {
+                good_checked_iv.setImageResource(R.mipmap.ic_un_checked)
+            }
+            checkedChangeListener?.onClick(products.nativeIsSelect)
 
         }
+
 
     }
 }

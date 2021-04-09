@@ -2,13 +2,13 @@ package com.jcs.where.features.gourmet.cart
 
 import android.os.Handler
 import android.os.Looper
-import android.widget.CompoundButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.widget.NumberView
@@ -19,12 +19,6 @@ import com.jcs.where.widget.NumberView
 class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolder>(R.layout.item_shopping_cart), LoadMoreModule {
 
 
-    private lateinit var restaurant_cb: MaterialCheckBox
-    private lateinit var content_rv: RecyclerView
-
-
-    private lateinit var childAdapter: ShoppingCartChildAdapter
-
     /**
      * 数量改变监听
      */
@@ -33,8 +27,10 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
 
     override fun convert(holder: BaseViewHolder, data: ShoppingCartResponse) {
 
-        restaurant_cb = holder.getView(R.id.restaurant_cb)
-        content_rv = holder.getView(R.id.content_rv)
+        val name_iv = holder.getView<ImageView>(R.id.name_iv)
+        val name_tv = holder.getView<TextView>(R.id.name_tv)
+
+        val content_rv = holder.getView<RecyclerView>(R.id.content_rv)
 
 
         // 内容
@@ -43,19 +39,42 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                 return false
             }
         }
-        if (content_rv.adapter == null) {
-            childAdapter = ShoppingCartChildAdapter()
-            childAdapter.setNewInstance(data.products)
-            content_rv.adapter = childAdapter
-            childAdapter.numberChangeListener = numberChangeListener
+
+        if (content_rv.adapter != null) {
+            return
         }
 
+
+        val childAdapter = ShoppingCartChildAdapter()
+        childAdapter.setNewInstance(data.products)
+        content_rv.adapter = childAdapter
+        childAdapter.numberChangeListener = numberChangeListener
+
         // 标题
-        restaurant_cb.text = data.restaurant_name
-        restaurant_cb.isChecked = data.nativeIsSelect
-        restaurant_cb.setOnCheckedChangeListener { buttonView, isChecked ->
+        name_tv.text = data.restaurant_name
+
+        if (data.nativeIsSelect) {
+            name_iv.setImageResource(R.mipmap.ic_checked_orange)
+        } else {
+            name_iv.setImageResource(R.mipmap.ic_un_checked)
+        }
+
+
+
+        name_iv.setOnClickListener {
+
+            val currentIsSelect = data.nativeIsSelect
+
+            data.nativeIsSelect = !currentIsSelect
+            if (data.nativeIsSelect) {
+                name_iv.setImageResource(R.mipmap.ic_checked_orange)
+            } else {
+                name_iv.setImageResource(R.mipmap.ic_un_checked)
+            }
+
+
             childAdapter.data.forEach {
-                it.nativeIsSelect = isChecked
+                it.nativeIsSelect = data.nativeIsSelect
             }
             Handler(Looper.getMainLooper()).postDelayed(Runnable {
                 childAdapter.notifyDataSetChanged()
@@ -63,22 +82,38 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
 
 
         }
-        childAdapter.checkedChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
 
+        childAdapter.checkedChangeListener = object : ShoppingCartChildAdapter.OnChildContainerClick {
+            override fun onClick(isChecked: Boolean) {
 
-            val result = ArrayList<Boolean>()
+                val result = ArrayList<Boolean>()
 
-            childAdapter.data.forEach {
-                result.add(it.nativeIsSelect)
+                childAdapter.data.forEach {
+                    result.add(it.nativeIsSelect)
+                }
+
+                if (isChecked) {
+                    // 选中
+                    val finals = !result.contains(false)
+                    if (finals) {
+                        name_iv.setImageResource(R.mipmap.ic_checked_orange)
+                    } else {
+                        name_iv.setImageResource(R.mipmap.ic_un_checked)
+                    }
+
+                    data.nativeIsSelect = finals
+
+                } else {
+                    val finals = !result.contains(true)
+                    if (finals) {
+                        name_iv.setImageResource(R.mipmap.ic_checked_orange)
+                    } else {
+                        name_iv.setImageResource(R.mipmap.ic_un_checked)
+                    }
+                    data.nativeIsSelect = finals
+                }
+
             }
-
-            if (isChecked) {
-                // 选中
-                restaurant_cb.isChecked = !result.contains(false)
-            } else {
-                restaurant_cb.isChecked = !result.contains(true)
-            }
-
 
         }
 

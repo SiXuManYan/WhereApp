@@ -32,6 +32,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             setEmptyView(R.layout.view_empty_data_brvah_default)
             loadMoreModule.setOnLoadMoreListener(this@ShoppingCartActivity)
         }
+
         recycler_view.adapter = mAdapter
         recycler_view.addItemDecoration(getItemDecoration())
     }

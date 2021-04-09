@@ -10,6 +10,7 @@
 
 
     <LinearLayout
+        android:id="@+id/title_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -38,6 +39,11 @@
             tools:text="商家店铺名字" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grey_F5F5F5" />
 
 
     <androidx.recyclerview.widget.RecyclerView

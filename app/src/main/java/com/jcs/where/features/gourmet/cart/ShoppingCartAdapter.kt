@@ -3,9 +3,11 @@ package com.jcs.where.features.gourmet.cart
 import android.os.Handler
 import android.os.Looper
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -27,10 +29,17 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
 
     override fun convert(holder: BaseViewHolder, data: ShoppingCartResponse) {
 
+        val title_ll = holder.getView<LinearLayout>(R.id.title_ll)
         val name_iv = holder.getView<ImageView>(R.id.name_iv)
         val name_tv = holder.getView<TextView>(R.id.name_tv)
-
         val content_rv = holder.getView<RecyclerView>(R.id.content_rv)
+
+        if (holder.adapterPosition == 0) {
+            val layoutParams = title_ll.layoutParams as LinearLayout.LayoutParams
+            layoutParams.topMargin = SizeUtils.dp2px(10f)
+            title_ll.layoutParams = layoutParams
+        }
+
 
 
         // 内容
@@ -93,24 +102,22 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                 }
 
                 if (isChecked) {
-                    // 选中
+                    // 选中事件
                     val finals = !result.contains(false)
                     if (finals) {
+                        // 全部选中
                         name_iv.setImageResource(R.mipmap.ic_checked_orange)
                     } else {
+                        // 部分选中
                         name_iv.setImageResource(R.mipmap.ic_un_checked)
                     }
 
                     data.nativeIsSelect = finals
 
                 } else {
-                    val finals = !result.contains(true)
-                    if (finals) {
-                        name_iv.setImageResource(R.mipmap.ic_checked_orange)
-                    } else {
-                        name_iv.setImageResource(R.mipmap.ic_un_checked)
-                    }
-                    data.nativeIsSelect = finals
+                    // 取消选中事件
+                    name_iv.setImageResource(R.mipmap.ic_un_checked)
+                    data.nativeIsSelect = false
                 }
 
             }

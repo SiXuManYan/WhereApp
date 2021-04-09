@@ -71,8 +71,8 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
     }
 
     private fun getItemDecoration(): ItemDecoration {
-        val itemDecoration = DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1f), SizeUtils.dp2px(15f), SizeUtils.dp2px(15f))
-        itemDecoration.setDrawHeaderFooter(false)
+        val itemDecoration = DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(10f), SizeUtils.dp2px(15f), SizeUtils.dp2px(15f))
+        itemDecoration.setDrawHeaderFooter(true)
         return itemDecoration
     }
 

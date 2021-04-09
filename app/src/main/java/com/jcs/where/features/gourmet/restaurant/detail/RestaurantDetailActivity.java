@@ -90,6 +90,8 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     @Override
     protected void bindListener() {
         shopping_cart.setOnClickListener(this::onShoppingCartClick);
+        navigation_iv.setOnClickListener(v -> showComing());
+        chat_iv.setOnClickListener(v -> showComing());
     }
 
 
@@ -141,7 +143,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     }
 
     private void onShoppingCartClick(View view) {
-
+        showComing();
     }
 
 }

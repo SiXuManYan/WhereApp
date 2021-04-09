@@ -60,6 +60,11 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
     }
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected void initData() {
         mEatInFoodId = getIntent().getStringExtra(Constant.PARAM_ID);
         presenter = new SetMealPresenter(this);
@@ -100,15 +105,16 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
 
 
     private void onBuyNowClick(View view) {
-
+        showComing();
     }
 
     private void onBuyAfterClick(View view) {
-
+        showComing();
     }
 
     private void onShoppingCartClick(View view) {
-        startActivityAfterLogin(ShoppingCartActivity.class);
+//        startActivityAfterLogin(ShoppingCartActivity.class);
+        showComing();
     }
 
 }

@@ -81,7 +81,7 @@ public class DishView extends LinearLayout {
         container_ll.removeAllViews();
 
         for (DishResponse data : list) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_dish, this);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_dish, null);
             setItemData(data, view);
             container_ll.addView(view);
         }

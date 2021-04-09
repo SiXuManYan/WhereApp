@@ -253,7 +253,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showComing() {
-        showToast(getString(R.string.coming_soon));
+        com.blankj.utilcode.util.ToastUtils.showShort(getString(R.string.coming_soon));
     }
 
     protected int getPxFromDp(int dp) {

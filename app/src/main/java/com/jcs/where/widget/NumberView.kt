@@ -65,7 +65,8 @@ class NumberView: LinearLayout {
             } else {
                 ToastUtils.showShort("不能再减少了")
             }
-            valueChangeListener?.onCutClick(products.cart_id);
+            valueChangeListener?.onNumberChange(products.cart_id , false )
+
             cut_iv.isClickable = false
             Handler(Looper.myLooper()!!).postDelayed({
                 cut_iv.isClickable = true
@@ -79,7 +80,7 @@ class NumberView: LinearLayout {
             value_tv.text = goodNum.toString()
             products.good_num = goodNum
 
-            valueChangeListener?.onAddClick(products.cart_id)
+            valueChangeListener?.onNumberChange(products.cart_id , true )
 
             Handler(Looper.myLooper()!!).postDelayed({
                 add_iv.isClickable = true
@@ -88,13 +89,16 @@ class NumberView: LinearLayout {
     }
 
     /**
-     * 数值发生改变
+     * 购物车数值发生改变
      */
     public interface OnValueChangerListener {
-        fun onCutClick(dataId: Int)
 
-        fun onAddClick(dataId: Int)
-
+        /**
+         * 购物车数值发生改变
+         * @param cartId 购物车id
+         * @param isAdd 是否增加
+         */
+        fun onNumberChange(cartId: Int, isAdd: Boolean)
     }
 
 }

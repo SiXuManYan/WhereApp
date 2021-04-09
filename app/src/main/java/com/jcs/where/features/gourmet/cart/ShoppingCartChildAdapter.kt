@@ -54,7 +54,6 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
         val number_view = holder.getView<NumberView>(R.id.number_view).apply {
             setData(products)
             valueChangeListener = numberChangeListener
-            holder.adapterPosition;
         }
 
         val goodData = products.good_data

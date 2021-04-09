@@ -1,9 +1,15 @@
 package com.jcs.where.features.gourmet.cart
 
+import android.widget.TextView
+import com.blankj.utilcode.util.StringUtils
+import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
+import com.jcs.where.utils.BigDecimalUtil
+import kotlinx.android.synthetic.main.activity_shopping_cart.*
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/4/7 14:47.
@@ -21,6 +27,25 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
                 view.bindList(toMutableList, isLastPage)
             }
         })
+    }
+
+     fun handlePrice(adapter: ShoppingCartAdapter, total_price_tv: TextView): BigDecimal {
+
+        var totalPrice: BigDecimal = BigDecimal.ZERO
+        adapter.data.forEachIndexed { _, data ->
+            data.products.forEach {
+                if (it.nativeIsSelect) {
+                    val price = it.good_data.price
+                    val goodNum = it.good_num
+                    val currentItemPrice = BigDecimalUtil.mul(price, BigDecimal(goodNum))
+                    totalPrice = BigDecimalUtil.add(currentItemPrice, totalPrice)
+                }
+            }
+        }
+
+         total_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalPrice.stripTrailingZeros().toPlainString())
+        return totalPrice
+
     }
 
 

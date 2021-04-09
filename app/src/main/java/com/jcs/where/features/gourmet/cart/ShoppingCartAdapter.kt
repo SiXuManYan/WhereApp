@@ -13,7 +13,9 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
+import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.widget.NumberView
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/4/7 16:34.
@@ -26,11 +28,15 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
      */
     var numberChangeListener: NumberView.OnValueChangerListener? = null
 
+    lateinit var mChildAdapter: ShoppingCartChildAdapter
+    lateinit var m_name_iv: ImageView
+
 
     override fun convert(holder: BaseViewHolder, data: ShoppingCartResponse) {
 
         val title_ll = holder.getView<LinearLayout>(R.id.title_ll)
         val name_iv = holder.getView<ImageView>(R.id.name_iv)
+        m_name_iv = name_iv
         val name_tv = holder.getView<TextView>(R.id.name_tv)
         val content_rv = holder.getView<RecyclerView>(R.id.content_rv)
 
@@ -39,7 +45,6 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
             layoutParams.topMargin = SizeUtils.dp2px(10f)
             title_ll.layoutParams = layoutParams
         }
-
 
 
         // 内容
@@ -52,9 +57,8 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
         if (content_rv.adapter != null) {
             return
         }
-
-
         val childAdapter = ShoppingCartChildAdapter()
+        mChildAdapter = childAdapter
         childAdapter.setNewInstance(data.products)
         content_rv.adapter = childAdapter
         childAdapter.numberChangeListener = numberChangeListener
@@ -68,8 +72,6 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
             name_iv.setImageResource(R.mipmap.ic_un_checked)
         }
 
-
-
         name_iv.setOnClickListener {
 
             val currentIsSelect = data.nativeIsSelect
@@ -79,8 +81,8 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                 name_iv.setImageResource(R.mipmap.ic_checked_orange)
             } else {
                 name_iv.setImageResource(R.mipmap.ic_un_checked)
-            }
 
+            }
 
             childAdapter.data.forEach {
                 it.nativeIsSelect = data.nativeIsSelect
@@ -120,12 +122,14 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                     data.nativeIsSelect = false
                 }
 
-            }
 
+            }
         }
 
-
     }
+
+
+
 
 
 }

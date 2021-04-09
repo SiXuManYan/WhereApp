@@ -22,7 +22,10 @@ import java.math.BigDecimal
  * Created by Wangsw  2021/4/7 14:49.
  * 购物车
  */
-class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingCartView, OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, NumberView.OnValueChangerListener {
+class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingCartView,
+        OnLoadMoreListener,
+        SwipeRefreshLayout.OnRefreshListener,
+        NumberView.OnValueChangerListener, ShoppingCartAdapter.OnUserSelectListener {
 
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: ShoppingCartAdapter
@@ -39,6 +42,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             setEmptyView(R.layout.view_empty_data_brvah_default)
             loadMoreModule.setOnLoadMoreListener(this@ShoppingCartActivity)
             numberChangeListener = this@ShoppingCartActivity
+            onUserSelectListener = this@ShoppingCartActivity
         }
 
         recycler_view.adapter = mAdapter
@@ -84,7 +88,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
 
         select_all_cb.setOnCheckedChangeListener { _, isChecked ->
-            mAdapter.m_name_iv.performClick()
+            mAdapter.m_select_all_iv.performClick()
 
             if (isChecked) {
                 select_all_cb.isEnabled = false
@@ -161,5 +165,12 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     }
 
+    override fun onTitleSelectClick() {
+       presenter.handlePrice(mAdapter,total_price_tv)
+    }
+
+    override fun onChildSelectClick() {
+        presenter.handlePrice(mAdapter,total_price_tv)
+    }
 
 }

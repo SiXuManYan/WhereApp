@@ -22,7 +22,7 @@
 
 
         <ImageView
-            android:id="@+id/name_iv"
+            android:id="@+id/select_all_iv"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:scaleType="centerInside"

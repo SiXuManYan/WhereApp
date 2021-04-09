@@ -10,12 +10,10 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.NumberView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_shopping_cart.*
-import kotlinx.android.synthetic.main.activity_upgrade.*
 import java.math.BigDecimal
 
 /**
@@ -25,11 +23,13 @@ import java.math.BigDecimal
 class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingCartView,
         OnLoadMoreListener,
         SwipeRefreshLayout.OnRefreshListener,
-        NumberView.OnValueChangerListener, ShoppingCartAdapter.OnUserSelectListener {
+        NumberView.OnValueChangerListener,
+        ShoppingCartAdapter.OnUserSelectListener {
 
-    private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: ShoppingCartAdapter
+    private var page = Constant.DEFAULT_FIRST_PAGE
     private var isEditMode = false
+    private var isSelectAll = false
 
     override fun getLayoutId() = R.layout.activity_shopping_cart
 
@@ -87,39 +87,33 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
         }
 
 
-        select_all_cb.setOnCheckedChangeListener { _, isChecked ->
+        select_all_ll.setOnClickListener {
             mAdapter.m_select_all_iv.performClick()
 
-            if (isChecked) {
-                select_all_cb.isEnabled = false
+            isSelectAll = !isSelectAll
+
+            if (isSelectAll) {
+                select_all_ll.isClickable = false
                 // 计算价格
                 Handler(Looper.getMainLooper()).postDelayed({
-                    select_all_cb.isEnabled = true
+                    select_all_ll.isClickable = true
                     presenter.handlePrice(mAdapter, total_price_tv)
                 }, 55)
+
             } else {
                 totalPrice = BigDecimal.ZERO
                 total_price_tv.text = getString(R.string.price_unit_format, totalPrice.stripTrailingZeros().toPlainString())
             }
-        }
 
+        }
     }
 
-
-    private fun handlePrice2(): BigDecimal {
-
-        var totalPrice: BigDecimal = BigDecimal.ZERO
-        mAdapter.data.forEachIndexed { _, data ->
-            data.products.forEach {
-                if (it.nativeIsSelect) {
-                    val price = it.good_data.price
-                    val goodNum = it.good_num
-                    val currentItemPrice = BigDecimalUtil.mul(price, BigDecimal(goodNum))
-                    totalPrice = BigDecimalUtil.add(currentItemPrice, totalPrice)
-                }
-            }
+    private fun changeSelectImage(selected: Boolean) {
+        if (selected) {
+            all_iv.setImageResource(R.mipmap.ic_checked_orange)
+        } else {
+            all_iv.setImageResource(R.mipmap.ic_un_checked)
         }
-        return totalPrice
 
     }
 
@@ -165,12 +159,28 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     }
 
-    override fun onTitleSelectClick() {
-       presenter.handlePrice(mAdapter,total_price_tv)
+    override fun onTitleSelectClick(isSelected: Boolean) {
+        presenter.handlePrice(mAdapter, total_price_tv)
+
+        isSelectAll = if (isSelected) {
+            presenter.checkSelectAll(mAdapter)
+        } else {
+            false
+        }
+        changeSelectImage(isSelectAll)
     }
 
-    override fun onChildSelectClick() {
-        presenter.handlePrice(mAdapter,total_price_tv)
+
+    override fun onChildSelectClick(isSelected: Boolean) {
+        presenter.handlePrice(mAdapter, total_price_tv)
+
+        if (isSelected) {
+            isSelectAll = true
+            presenter.checkSelectAll(mAdapter)
+        } else {
+            isSelectAll = false
+        }
+        changeSelectImage(isSelectAll)
     }
 
 }

@@ -8,7 +8,6 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.utils.BigDecimalUtil
-import kotlinx.android.synthetic.main.activity_shopping_cart.*
 import java.math.BigDecimal
 
 /**
@@ -29,7 +28,10 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
         })
     }
 
-     fun handlePrice(adapter: ShoppingCartAdapter, total_price_tv: TextView): BigDecimal {
+    /**
+     * 处理价格
+     */
+    fun handlePrice(adapter: ShoppingCartAdapter, total_price_tv: TextView): BigDecimal {
 
         var totalPrice: BigDecimal = BigDecimal.ZERO
         adapter.data.forEachIndexed { _, data ->
@@ -43,9 +45,24 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
             }
         }
 
-         total_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalPrice.stripTrailingZeros().toPlainString())
+        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalPrice.stripTrailingZeros().toPlainString())
         return totalPrice
 
+    }
+
+    /**
+     * 是否全部选中
+     */
+    fun checkSelectAll(adapter: ShoppingCartAdapter): Boolean {
+        val result = ArrayList<Boolean>()
+        result.clear()
+        adapter.data.forEach { data ->
+            result.add(data.nativeIsSelect)
+            data.products.forEach {
+                result.add(it.nativeIsSelect)
+            }
+        }
+        return !result.contains(false)
     }
 
 

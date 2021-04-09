@@ -18,7 +18,6 @@ import com.jcs.where.widget.NumberView
  */
 class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolder>(R.layout.item_shopping_cart), LoadMoreModule {
 
-
     /**
      * 商品数量改变监听
      */
@@ -40,12 +39,12 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
         /**
          * 标题选择监听
          */
-        fun onTitleSelectClick()
+        fun onTitleSelectClick(isSelected: Boolean)
 
         /**
          * 子view选中
          */
-        fun onChildSelectClick()
+        fun onChildSelectClick(isSelected: Boolean)
     }
 
     override fun convert(holder: BaseViewHolder, data: ShoppingCartResponse) {
@@ -119,7 +118,7 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                 }
             }
 
-            onUserSelectListener?.onTitleSelectClick()
+            onUserSelectListener?.onTitleSelectClick(data.nativeIsSelect)
 
         }
 
@@ -152,9 +151,8 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                     data.nativeIsSelect = false
                 }
 
-                onUserSelectListener?.onChildSelectClick()
+                onUserSelectListener?.onChildSelectClick(data.nativeIsSelect)
             }
-
 
 
         }

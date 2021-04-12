@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.JsonObject;
 import com.jcs.where.BaseApplication;
+import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -24,6 +25,7 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.address.AddressActivity;
+import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
@@ -167,13 +169,13 @@ public class MineFragment extends BaseFragment {
      * @param view
      */
     private void onIntegralIvClicked(View view) {
-        if (User.isLogon()) {
-            toActivity(IntegralActivity.class);
-        } else {
-            startActivity(LoginActivity.class);
-        }
 
-//        startActivity(ShoppingCartActivity.class);
+
+        if (BuildConfig.FLAVOR == "dev" || BuildConfig.DEBUG) {
+            startActivity(ShoppingCartActivity.class);
+        } else {
+            startActivityAfterLogin(IntegralActivity.class);
+        }
     }
 
     private void onUserDataClicked(View view) {

@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -19,6 +20,7 @@ import java.math.BigDecimal
 /**
  * Created by Wangsw  2021/4/7 14:49.
  * 购物车
+ *
  */
 class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingCartView,
         OnLoadMoreListener,
@@ -34,7 +36,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
     override fun getLayoutId() = R.layout.activity_shopping_cart
 
     override fun initView() {
-
+        BarUtils.setStatusBarColor(this, getColor(R.color.white))
         mAdapter = ShoppingCartAdapter()
         mAdapter.apply {
             loadMoreModule.isAutoLoadMore = true
@@ -159,6 +161,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     }
 
+    // todo 传入当前adapter坐标，for循环改变nativeSelect ，
     override fun onTitleSelectClick(isSelected: Boolean) {
         presenter.handlePrice(mAdapter, total_price_tv)
 

@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jcs.where"
     tools:ignore="ProtectedPermissions">
-    <!--允许程序设置内置sd卡的写权限-->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <!--允许程序获取网络状态-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!--允许程序访问WiFi网络信息-->
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--允许程序读写手机状态和身份-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -18,16 +16,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- com 100 start -->
     <permission
@@ -42,6 +33,31 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <!-- com 100 end -->
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="com.jcs.where.permission.JPUSH_MESSAGE"
+        android:required="false" />
+    <uses-feature
+        android:name="android.permission.RECEIVE_USER_PRESENT"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.permission.WAKE_LOCK"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.permission.WRITE_SETTINGS"
+        android:required="false" />
+    <uses-feature
+        android:name="android.permission.VIBRATE"
+        android:required="false" />
+    <uses-feature
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        android:required="false" />
+
 
     <!--允许程序打开网络套接字-->
     <application

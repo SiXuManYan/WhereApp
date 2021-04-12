@@ -27,6 +27,10 @@ public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHo
         this.mItemHeight = height;
     }
 
+    public ModulesAdapter() {
+        super(R.layout.item_home_modules);
+    }
+
     @Override
     protected void convert(@NotNull BaseViewHolder holder, ModulesResponse modulesResponse) {
         Context context = holder.itemView.getContext();

@@ -669,7 +669,7 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> setMessageRead(@Body MessageStatusRequest request);
 
     /**
-     * 修改消息状态
+     * 获取未读消息数量
      */
     @GET("messageapi/v2/count")
     Observable<JcsResponse<JsonObject>> getUnreadMessageCount();

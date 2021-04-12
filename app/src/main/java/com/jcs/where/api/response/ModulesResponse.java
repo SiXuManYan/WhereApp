@@ -17,6 +17,15 @@ public class ModulesResponse {
     private int dev_status;
     private List<Integer> categories;
 
+    /**
+     * 1：政府机构->带地图的综合服务页面
+     * 2：企业黄页->三级联动筛选的综合服务页面
+     * 3：旅游住宿->旅游住宿二级页
+     * 4：便民服务、教育机构、健康&医疗、家政服务->横向二级联动筛选的综合服务页面
+     * 5：金融服务->横向二级联动筛选的综合服务页面（注：分类需获取到Finance分类下的三级分类）
+     * 6：餐饮美食->餐厅列表
+     * 7：线上商店->Comming soon
+     */
     public int getId() {
         return id;
     }
@@ -41,6 +50,11 @@ public class ModulesResponse {
         this.icon = icon;
     }
 
+    /**
+     * 1：已上线 2：开发中
+     *
+     * @return
+     */
     public int getDev_status() {
         return dev_status;
     }

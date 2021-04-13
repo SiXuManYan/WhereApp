@@ -29,12 +29,19 @@ import org.jetbrains.annotations.NotNull;
 public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder> implements LoadMoreModule {
 
 
-    public HomeRecommendAdapter() {
+    public HomeRecommendAdapter(boolean newType) {
         super();
-        addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel);
-        addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service);
-        addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food);
-        addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel);
+        if (newType) {
+            addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel_2);
+            addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service_2);
+            addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food_2);
+            addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel_2);
+        } else {
+            addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel);
+            addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service);
+            addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food);
+            addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel);
+        }
     }
 
 
@@ -251,11 +258,12 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
             params.setMarginEnd(SizeUtils.dp2px(2));
             TextView tv = new TextView(getContext());
             tv.setLayoutParams(params);
-            tv.setPaddingRelative(SizeUtils.dp2px(4), SizeUtils.dp2px(2), SizeUtils.dp2px(4), SizeUtils.dp2px(2));
+            tv.setPaddingRelative(SizeUtils.dp2px(4), SizeUtils.dp2px(1), SizeUtils.dp2px(4), SizeUtils.dp2px(1));
             tv.setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2));
             tv.setTextSize(11);
             tv.setText(tag);
             tv.setBackgroundResource(R.drawable.shape_blue_stoke_radius_1);
+            tv.setSingleLine(true);
             tag_ll.addView(tv);
         }
 

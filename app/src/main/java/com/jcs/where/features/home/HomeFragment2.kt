@@ -186,10 +186,10 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     /** 推荐列表 */
     private fun initRecommend() {
         swipeLayout.setOnRefreshListener(this)
-        mHomeRecommendAdapter = HomeRecommendAdapter()
+        mHomeRecommendAdapter = HomeRecommendAdapter(true)
         rv_home.apply {
             adapter = mHomeRecommendAdapter
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1f), SizeUtils.dp2px(128f), 0).apply {
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1f), SizeUtils.dp2px(128f), SizeUtils.dp2px(15f)).apply {
                 setDrawHeaderFooter(false)
             })
             layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {

@@ -144,7 +144,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         mModuleRecycler.setAdapter(mModulesAdapter);
 
         // 首页推荐
-        mHomeRecommendAdapter = new HomeRecommendAdapter();
+        mHomeRecommendAdapter = new HomeRecommendAdapter(false);
         homeRv.setAdapter(mHomeRecommendAdapter);
         homeRv.addItemDecoration(getItemDecoration());
         mHomeRecommendAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);

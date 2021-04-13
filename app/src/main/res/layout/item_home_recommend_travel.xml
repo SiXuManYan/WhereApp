@@ -13,6 +13,7 @@
         android:id="@+id/image_iv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dp_9"
         android:layout_weight="22"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
@@ -21,11 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="50"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/dp_9"
-        android:paddingTop="@dimen/dp_8"
-        android:paddingEnd="@dimen/dp_9"
-        android:paddingBottom="@dimen/dp_8">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/title_tv"
@@ -44,8 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_tv"
-            android:gravity="center_vertical"
             android:layout_marginBottom="@dimen/dp_5"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -102,7 +99,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tag_ll"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_F5F5F5">
+    android:background="@color/white">
 
     <ImageView
         android:layout_width="match_parent"
@@ -105,8 +105,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp">
 
                     <com.jcs.where.view.XBanner.XBanner
                         android:id="@+id/top_banner"
@@ -122,12 +122,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_17"
+                    android:layout_marginBottom="@dimen/dp_17"
                     android:overScrollMode="never"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:itemCount="2" />
+                    tools:itemCount="2"
+                    tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/grey_F5F5F5" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -167,6 +172,10 @@
                     android:layout_height="wrap_content"
                     tools:layout_height="@dimen/dp_100" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/grey_F5F5F5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -198,8 +207,8 @@
                     android:layout_height="match_parent"
                     android:overScrollMode="never"
                     android:paddingBottom="20dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="1"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_home_recommend_hotel" />
             </LinearLayout>
 

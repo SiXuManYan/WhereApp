@@ -6,7 +6,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.BarUtils
@@ -21,11 +23,13 @@ import com.jcs.where.R
 import com.jcs.where.adapter.ModulesAdapter
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
+import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
+import com.jcs.where.features.upgrade.UpgradeActivity
 import com.jcs.where.government.activity.GovernmentMapActivity
 import com.jcs.where.government.activity.MechanismDetailActivity
 import com.jcs.where.home.activity.TravelStayActivity
@@ -48,7 +52,7 @@ import java.util.*
 
 /**
  * Created by Wangsw  2021/4/12 13:53.
- *
+ * 首页
  */
 class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefreshLayout.OnRefreshListener {
 
@@ -58,7 +62,10 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     /** 选择城市 */
     private val REQ_SELECT_CITY = 100
 
+    /** 功能区(金刚区) */
     private lateinit var mModulesAdapter: ModulesAdapter
+
+    /** 首页推荐 */
     private lateinit var mHomeRecommendAdapter: HomeRecommendAdapter
 
     override fun getLayoutId() = R.layout.fragment_home2
@@ -67,60 +74,57 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title))
         initBanner()
         initPlate()
+        initNews()
         initRecommend()
-
+        initScroll()
     }
 
-    /** 推荐列表 */
-    private fun initRecommend() {
-        swipeLayout.setOnRefreshListener(this)
-        mHomeRecommendAdapter = HomeRecommendAdapter()
-        rv_home.apply {
-            adapter = mHomeRecommendAdapter
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(15f), 0, 0).apply {
-                setDrawHeaderFooter(false)
-            })
+    private fun initCity() {
+        val currentAreaId = presenter.getCurrentAreaId()
+        if (currentAreaId == "3") {
+            // 默认巴郎牙
+            city_tv.text = getString(R.string.default_city_name)
+            return
         }
-        val emptyView = EmptyView(context).apply {
-            showEmptyDefault()
+        val currentCity = presenter.getCurrentCity(currentAreaId)
+        if (currentCity == null) {
+            city_tv.text = getString(R.string.default_city_name)
+        } else {
+            city_tv.text = currentCity.name
         }
-        mHomeRecommendAdapter.apply {
-            setEmptyView(emptyView)
-            loadMoreModule.isAutoLoadMore = true
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-            loadMoreModule.setOnLoadMoreListener {
-                page++
-                presenter.getRecommendList(page)
-            }
-            setOnItemClickListener { adapter, view, position ->
-                val data = mHomeRecommendAdapter.data[position]
-                val itemViewType = mHomeRecommendAdapter.getItemViewType(position + mHomeRecommendAdapter.headerLayoutCount)
-                when (itemViewType) {
-                    HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
-                        val dialog = JcsCalendarDialog().apply {
-                            initCalendar(context)
-                        }
-                        HotelDetailActivity.goTo(activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
-                    }
-                    HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
-                        startActivity(MechanismDetailActivity::class.java, Bundle().apply {
-                            putString(MechanismDetailActivity.K_MECHANISM_ID, data.id.toString())
-                        })
-                    }
-                    HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
-                        showComing()
-                    }
-                    HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
-                        TouristAttractionDetailActivity.goTo(activity, data.id)
-                    }
-                    else -> {
-                    }
-                }
-
-            }
-        }
+    }
 
 
+    /** 轮播图 */
+    private fun initBanner() {
+        val bannerParams = ll_banner.layoutParams.apply {
+            height = ScreenUtils.getScreenWidth() * 194 / 345
+        }
+        ll_banner.layoutParams = bannerParams
+
+        val options = RequestOptions()
+                .centerCrop()
+                .error(R.mipmap.ic_glide_default)
+                .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .transform(GlideRoundTransform(4))
+
+        top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
+                .setTitleHeight(50)
+                .isAutoPlay(true)
+                .setDelay(5000)
+                .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
+                .setUpIndicatorSize(20, 6)
+                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+                .setImageLoader(object : AbstractUrlLoader() {
+                    override fun loadImages(context: Context, url: String, image: ImageView) {
+                        Glide.with(context).load(url).apply(options).into(image)
+                    }
+
+                    override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
+                        Glide.with(context).load(url).apply(options).into(gifImageView)
+                    }
+                })
     }
 
     /** 金刚区相关 */
@@ -128,7 +132,11 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         mModulesAdapter = ModulesAdapter()
         moduleRecycler.apply {
             addItemDecoration(HomeModulesItemDecoration())
-            layoutManager = GridLayoutManager(context, 5, RecyclerView.VERTICAL, false)
+            layoutManager = object : GridLayoutManager(context, 5, RecyclerView.VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
             adapter = mModulesAdapter
         }
         // 点击
@@ -166,44 +174,90 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         }
     }
 
-    /** 轮播图 */
-    private fun initBanner() {
-        val bannerParams = ll_banner.layoutParams.apply {
-            height = ScreenUtils.getScreenWidth() * 194 / 345
-        }
-        ll_banner.layoutParams = bannerParams
 
-        val options = RequestOptions()
-                .centerCrop()
-                .error(R.mipmap.ic_glide_default)
-                .priority(Priority.HIGH)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .transform(GlideRoundTransform(10))
+    /**
+     * 新闻相关
+     */
+    private fun initNews() {
 
-        top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                .setImageLoader(object : AbstractUrlLoader() {
-                    override fun loadImages(context: Context, url: String, image: ImageView) {
-                        Glide.with(context).load(url).apply(options).into(image)
-                    }
-
-                    override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
-                        Glide.with(context).load(url).apply(options).into(gifImageView)
-                    }
-                })
-                .setTitleHeight(50)
-                .isAutoPlay(true)
-                .setDelay(5000)
-                .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
-                .setUpIndicatorSize(20, 6)
-                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
     }
+
+
+    /** 推荐列表 */
+    private fun initRecommend() {
+        swipeLayout.setOnRefreshListener(this)
+        mHomeRecommendAdapter = HomeRecommendAdapter()
+        rv_home.apply {
+            adapter = mHomeRecommendAdapter
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1f), SizeUtils.dp2px(128f), 0).apply {
+                setDrawHeaderFooter(false)
+            })
+            layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
+        }
+        val emptyView = EmptyView(context).apply {
+            showEmptyDefault()
+        }
+        mHomeRecommendAdapter.apply {
+            setEmptyView(emptyView)
+            loadMoreModule.isAutoLoadMore = true
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+            loadMoreModule.setOnLoadMoreListener {
+                page++
+                presenter.getRecommendList(page)
+            }
+            setOnItemClickListener { _, _, position ->
+                val data = mHomeRecommendAdapter.data[position]
+                val itemViewType = mHomeRecommendAdapter.getItemViewType(position + mHomeRecommendAdapter.headerLayoutCount)
+                when (itemViewType) {
+                    HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
+                        val dialog = JcsCalendarDialog().apply {
+                            initCalendar(context)
+                        }
+                        HotelDetailActivity.goTo(activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                    }
+                    HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
+                        startActivity(MechanismDetailActivity::class.java, Bundle().apply {
+                            putString(MechanismDetailActivity.K_MECHANISM_ID, data.id.toString())
+                        })
+                    }
+                    HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
+                        showComing()
+                    }
+                    HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
+                        TouristAttractionDetailActivity.goTo(activity, data.id)
+                    }
+                    else -> {
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    private fun initScroll() {
+        moduleRecycler.isNestedScrollingEnabled = true
+        rv_home.isNestedScrollingEnabled = true
+        nested_scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ -> // 滑到的底部
+            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                mHomeRecommendAdapter.loadMoreModule.loadMoreToLoading()
+            }
+        })
+    }
+
 
     override fun initData() {
         presenter = HomePresenter2(this)
+        initCity()
         presenter.getMessageCount()
-        presenter.getTopBanner(top_banner)
+        presenter.getTopBanner()
         presenter.getPlateData()
         presenter.getRecommendList(page)
+        presenter.checkAppVersion()
     }
 
     override fun bindListener() {
@@ -242,12 +296,34 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         // 推荐
         page = Constant.DEFAULT_FIRST_PAGE
         presenter.getRecommendList(page)
+        //
+        presenter.getMessageCount()
+        presenter.getTopBanner()
+        presenter.getPlateData()
     }
 
-    override fun bindDetailData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean) {
+    override fun bindRecommendData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean) {
         swipeLayout.isRefreshing = false
-
-
+        val loadMoreModule = mHomeRecommendAdapter.loadMoreModule
+        if (data.isEmpty()) {
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                loadMoreModule.loadMoreComplete()
+            } else {
+                loadMoreModule.loadMoreEnd()
+            }
+            return
+        }
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mHomeRecommendAdapter.setNewInstance(data)
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
+        } else {
+            mHomeRecommendAdapter.addData(data)
+            if (lastPage) {
+                loadMoreModule.loadMoreEnd()
+            } else {
+                loadMoreModule.loadMoreComplete()
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -255,9 +331,16 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         if (resultCode != Activity.RESULT_OK || data == null) {
             return
         }
-        if (requestCode == REQ_SELECT_CITY) {
-            city_tv.text = data.getStringExtra(CityPickerActivity.EXTRA_CITY)
+
+        when (resultCode) {
+            REQ_SELECT_CITY -> {
+                // 选择城市
+                city_tv.text = data.getStringExtra(CityPickerActivity.EXTRA_CITY)
+            }
+            else -> {
+            }
         }
+
     }
 
     override fun setMessageCount(i: Int) = message_view.setMessageCount(i)
@@ -269,6 +352,16 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     override fun bindPlateData(toMutableList: MutableList<ModulesResponse>) {
         mModulesAdapter.setNewInstance(toMutableList)
+    }
+
+    override fun checkAppVersion(response: VersionResponse) {
+        val bundle = Bundle().apply {
+            putString(Constant.PARAM_NEW_VERSION_CODE, response.new_version)
+            putString(Constant.PARAM_DOWNLOAD_URL, response.download_url)
+            putString(Constant.PARAM_UPDATE_DESC, response.update_desc)
+            putBoolean(Constant.PARAM_IS_FORCE_INSTALL, response.is_force_install)
+        }
+        startActivity(UpgradeActivity::class.java, bundle)
     }
 
 }

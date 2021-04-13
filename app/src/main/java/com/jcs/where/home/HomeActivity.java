@@ -19,6 +19,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.category.CategoryFragment;
+import com.jcs.where.features.home.HomeFragment2;
 import com.jcs.where.home.fragment.HomeFragment;
 import com.jcs.where.home.fragment.OrderFragment;
 import com.jcs.where.mine.fragment.MineFragment;
@@ -105,7 +106,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initFragment() {
-        frList.add(new HomeFragment());
+        frList.add(new HomeFragment2());
         frList.add(new CategoryFragment());
         frList.add(new OrderFragment());
         frList.add(new MineFragment());

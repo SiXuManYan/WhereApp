@@ -42,6 +42,9 @@ import com.jcs.where.home.decoration.HomeModulesItemDecoration
 import com.jcs.where.hotel.activity.CityPickerActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.integral.child.task.HomeRecommendAdapter
+import com.jcs.where.news.NewsActivity
+import com.jcs.where.news.NewsDetailActivity
+import com.jcs.where.news.NewsVideoActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideRoundTransform
@@ -63,8 +66,8 @@ import java.util.*
  */
 class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefreshLayout.OnRefreshListener {
 
-
-    private var page = Constant.DEFAULT_FIRST_PAGE
+    /** 推荐列表请求 */
+    private var recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
 
     /** 选择城市 */
     private val REQ_SELECT_CITY = 100
@@ -199,16 +202,29 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
      */
     private fun initNews() {
 
-        mNewsAdapter = HomeNewsAdapter()
-
+        mNewsAdapter = HomeNewsAdapter().apply {
+            setOnItemClickListener { _, _, position ->
+                val child = data[position]
+                when (child.content_type) {
+                    1 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {
+                        putString(Constant.PARAM_NEWS_ID, child.id.toString())
+                    })
+                    2 -> startActivity(NewsVideoActivity::class.java, Bundle().apply {
+                        putString(Constant.PARAM_NEWS_ID, child.id.toString())
+                    })
+                    else -> {
+                    }
+                }
+            }
+        }
         news_rv.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mNewsAdapter
         }
-
         val pagerSnapHelper = PagerSnapHelper()
         pagerSnapHelper.attachToRecyclerView(news_rv)
 
+        // tab
         tabs_type.setOnTabSelectListener(object : OnTabSelectListener {
 
             override fun onTabSelect(position: Int) {
@@ -222,9 +238,12 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             }
 
             override fun onTabReselect(position: Int) = Unit
-
         })
 
+        // 更多新闻
+        more_news_iv.setOnClickListener {
+            startActivity(NewsActivity::class.java)
+        }
 
     }
 
@@ -252,8 +271,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {
-                page++
-                presenter.getRecommendList(page)
+                recommedRequestPage++
+                presenter.getRecommendList(recommedRequestPage)
             }
             setOnItemClickListener { _, _, position ->
                 val data = mHomeRecommendAdapter.data[position]
@@ -304,7 +323,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         presenter.getTopBanner()
         presenter.getPlateData()
         presenter.getNewsList()
-        presenter.getRecommendList(page)
+        presenter.getRecommendList(recommedRequestPage)
         presenter.checkAppVersion()
     }
 
@@ -344,8 +363,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     override fun onRefresh() {
 
         // 推荐
-        page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getRecommendList(page)
+        recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
+        presenter.getRecommendList(recommedRequestPage)
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
@@ -356,14 +375,14 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         swipeLayout.isRefreshing = false
         val loadMoreModule = mHomeRecommendAdapter.loadMoreModule
         if (data.isEmpty()) {
-            if (page == Constant.DEFAULT_FIRST_PAGE) {
+            if (recommedRequestPage == Constant.DEFAULT_FIRST_PAGE) {
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()
             }
             return
         }
-        if (page == Constant.DEFAULT_FIRST_PAGE) {
+        if (recommedRequestPage == Constant.DEFAULT_FIRST_PAGE) {
             mHomeRecommendAdapter.setNewInstance(data)
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()
         } else {
@@ -408,8 +427,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     override fun bindNewsData(newsData: List<HomeNewsResponse>?) {
         scrollPosition = 0
-
-
         if (newsData.isNullOrEmpty()) {
             news_rl.visibility = View.GONE
             news_rv.visibility = View.GONE
@@ -433,20 +450,21 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         // adapter
         mNewsAdapter.setNewInstance(newsData[0].news_list)
 
-        if (mNewsAdapter.data.size > 1) {
-            startScroll()
-        }
 
+        startScroll()
     }
 
     private fun startScroll() {
-
+        if (mNewsAdapter.data.size <= 1) {
+            return
+        }
         rxTimer.interval(3000) {
             scrollPosition++
             if (scrollPosition <= mNewsAdapter.data.size - 1) {
                 news_rv.smoothScrollToPosition(scrollPosition)
             } else {
-                rxTimer.cancel()
+                scrollPosition = 0
+                news_rv.scrollToPosition(0)
             }
         }
     }

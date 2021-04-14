@@ -905,5 +905,11 @@ public interface RetrofitApi {
             @Query("page") int page
     );
 
+    /**
+     * 首页新闻接口
+     */
+    @GET("newsapi/v2/news/index")
+    Observable<JcsResponse<List<com.jcs.where.api.response.home.HomeNewsResponse>>> getHomeNewsList();
+
 
 }

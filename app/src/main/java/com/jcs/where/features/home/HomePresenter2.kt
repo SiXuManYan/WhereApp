@@ -9,6 +9,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.PageResponse
+import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.bean.CityResponse
@@ -146,6 +147,19 @@ class HomePresenter2(val view: HomeView2) : BaseMvpPresenter(view) {
             }
 
             override fun onError(errorResponse: ErrorResponse?) = Unit
+        })
+
+    }
+
+    /**
+     * 新闻列表
+     */
+    fun getNewsList() {
+        requestApi(mRetrofit.homeNewsList, object : BaseMvpObserver<List<HomeNewsResponse>>(view) {
+            override fun onSuccess(response: List<HomeNewsResponse>?) {
+                view.bindNewsData(response)
+
+            }
         })
 
     }

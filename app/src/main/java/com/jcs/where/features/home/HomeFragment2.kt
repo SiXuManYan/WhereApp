@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.BarUtils
@@ -19,9 +20,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.flyco.tablayout.listener.CustomTabEntity
+import com.flyco.tablayout.listener.OnTabSelectListener
 import com.jcs.where.R
 import com.jcs.where.adapter.ModulesAdapter
 import com.jcs.where.api.response.ModulesResponse
+import com.jcs.where.api.response.home.HomeNewsResponse
+import com.jcs.where.api.response.home.TabEntity
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.mvp.BaseMvpFragment
@@ -50,9 +55,11 @@ import kotlinx.android.synthetic.main.fragment_home2.*
 import pl.droidsonroids.gif.GifImageView
 import java.util.*
 
+
 /**
  * Created by Wangsw  2021/4/12 13:53.
  * 首页
+ *
  */
 class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefreshLayout.OnRefreshListener {
 
@@ -67,6 +74,18 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     /** 首页推荐 */
     private lateinit var mHomeRecommendAdapter: HomeRecommendAdapter
+
+    /** 首页新闻 */
+    private lateinit var mNewsAdapter: HomeNewsAdapter
+
+    private lateinit var rxTimer: RxTimer
+
+    /** 新闻 tab 数据 */
+    private val mNewsTabDataList: ArrayList<CustomTabEntity> = ArrayList()
+
+    /** 新闻列表数据 */
+    private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
+
 
     override fun getLayoutId() = R.layout.fragment_home2
 
@@ -180,6 +199,33 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
      */
     private fun initNews() {
 
+        mNewsAdapter = HomeNewsAdapter()
+
+        news_rv.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = mNewsAdapter
+        }
+
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(news_rv)
+
+        tabs_type.setOnTabSelectListener(object : OnTabSelectListener {
+
+            override fun onTabSelect(position: Int) {
+                if (mNewsAdapterDataList.isNotEmpty()) {
+                    rxTimer.cancel()
+                    scrollPosition = 0
+                    news_rv.scrollToPosition(0)
+                    mNewsAdapter.setNewInstance(mNewsAdapterDataList[position].news_list)
+                    startScroll()
+                }
+            }
+
+            override fun onTabReselect(position: Int) = Unit
+
+        })
+
+
     }
 
 
@@ -252,10 +298,12 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     override fun initData() {
         presenter = HomePresenter2(this)
+        rxTimer = RxTimer()
         initCity()
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
+        presenter.getNewsList()
         presenter.getRecommendList(page)
         presenter.checkAppVersion()
     }
@@ -287,8 +335,10 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     }
 
     override fun onDestroy() {
+        rxTimer.cancel()
         super.onDestroy()
         top_banner.releaseBanner()
+
     }
 
     override fun onRefresh() {
@@ -296,10 +346,10 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         // 推荐
         page = Constant.DEFAULT_FIRST_PAGE
         presenter.getRecommendList(page)
-        //
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
+        presenter.getNewsList()
     }
 
     override fun bindRecommendData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean) {
@@ -352,6 +402,53 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     override fun bindPlateData(toMutableList: MutableList<ModulesResponse>) {
         mModulesAdapter.setNewInstance(toMutableList)
+    }
+
+    var scrollPosition = 0
+
+    override fun bindNewsData(newsData: List<HomeNewsResponse>?) {
+        scrollPosition = 0
+
+
+        if (newsData.isNullOrEmpty()) {
+            news_rl.visibility = View.GONE
+            news_rv.visibility = View.GONE
+            news_split_v.visibility = View.GONE
+            return
+        }
+        news_rl.visibility = View.VISIBLE
+        news_rv.visibility = View.VISIBLE
+        news_split_v.visibility = View.VISIBLE
+
+        mNewsTabDataList.clear()
+        mNewsAdapterDataList.clear()
+        mNewsAdapterDataList.addAll(newsData)
+
+        // title
+        newsData.forEach {
+            mNewsTabDataList.add(TabEntity(it.category_name, 0, 0))
+        }
+        tabs_type.setTabData(mNewsTabDataList)
+
+        // adapter
+        mNewsAdapter.setNewInstance(newsData[0].news_list)
+
+        if (mNewsAdapter.data.size > 1) {
+            startScroll()
+        }
+
+    }
+
+    private fun startScroll() {
+
+        rxTimer.interval(3000) {
+            scrollPosition++
+            if (scrollPosition <= mNewsAdapter.data.size - 1) {
+                news_rv.smoothScrollToPosition(scrollPosition)
+            } else {
+                rxTimer.cancel()
+            }
+        }
     }
 
     override fun checkAppVersion(response: VersionResponse) {

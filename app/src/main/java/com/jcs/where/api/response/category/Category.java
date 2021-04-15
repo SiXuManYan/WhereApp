@@ -33,13 +33,15 @@ public class Category {
     /**
      * 子集
      */
-    private List<Category> child_categories = new ArrayList<>();
+    public List<Category> child_categories = new ArrayList<>();
 
     /**
      * 本地字段，判断是否选中
      */
     public boolean nativeIsSelected = false;
 
+    public boolean follow_status ;
+    public boolean is_default ;
 
 }
 

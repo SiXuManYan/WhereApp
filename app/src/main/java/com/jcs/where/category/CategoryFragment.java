@@ -89,6 +89,7 @@ public class CategoryFragment extends BaseFullFragment {
 
         mTabLayout = view.findViewById(R.id.categoryTabLayout);
         mRecycler = view.findViewById(R.id.categoryGroupRecycler);
+//        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         mRecycler.setLayoutManager(layoutManager);
     }
@@ -260,6 +261,7 @@ public class CategoryFragment extends BaseFullFragment {
                     String jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID);
                     if (!jsonStr.equals("")) {
                         toTargetCategory = new Intent(getContext(), YellowPageActivity.class);
+
                         List<Integer> categoryIds = JsonUtil.getInstance().fromJsonToList(jsonStr, new TypeToken<List<Integer>>() {
                         }.getType());
                         ArrayList<Integer> categories = (ArrayList<Integer>) categoryIds;

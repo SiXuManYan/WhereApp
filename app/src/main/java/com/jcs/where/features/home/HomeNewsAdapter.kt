@@ -32,9 +32,10 @@ class HomeNewsAdapter : BaseQuickAdapter<NewsList, BaseViewHolder>(R.layout.item
         val publisher_tv = holder.getView<TextView>(R.id.publisher_tv)
         val time_tv = holder.getView<TextView>(R.id.time_tv)
 
-        image_iv.layoutParams.apply {
+        val apply = image_iv.layoutParams.apply {
             height = newHeight
         }
+        image_iv.layoutParams = apply
 
         // 图片
         val options = RequestOptions.bitmapTransform(GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))

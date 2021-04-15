@@ -561,7 +561,7 @@
     <string name="water_utilities">Water\nUtilities</string>
     <string name="electric_utilities">Electric\nUtilities</string>
     <string name="internet_billing">Internet\nBilling</string>
-    <string name="Pay_Bills">支付帐单</string>
+    <string name="Pay_Bills">帐单付费</string>
 
 
 </resources>

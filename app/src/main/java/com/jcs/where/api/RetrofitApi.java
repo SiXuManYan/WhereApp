@@ -70,6 +70,7 @@ import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -911,5 +912,9 @@ public interface RetrofitApi {
     @GET("newsapi/v2/news/index")
     Observable<JcsResponse<List<com.jcs.where.api.response.home.HomeNewsResponse>>> getHomeNewsList();
 
-
+    /**
+     * 获得CategoryFragment页面展示的一级二级分类数据
+     */
+    @GET("commonapi/v2/categories/list")
+    Observable<JcsResponse<ArrayList<Category>>> getCategoryList();
 }

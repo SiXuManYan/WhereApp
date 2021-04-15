@@ -356,8 +356,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     override fun onDestroy() {
         rxTimer.cancel()
         super.onDestroy()
-        top_banner.releaseBanner()
-
+        top_banner?.releaseBanner()
     }
 
     override fun onRefresh() {

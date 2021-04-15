@@ -25,13 +25,8 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
     override fun initView(view: View?) {
         view?.let {
-            val container = it.findViewById<View>(android.R.id.content)
-            container?.setBackgroundColor(ColorUtils.getColor(R.color.blue_4C9EF2))
-
-
             BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_rl))
         }
-
 
         mAdapter = CategoryAdapter()
         recycler_view.apply {

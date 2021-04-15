@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * create by zyf on 2020/12/14 9:55 PM
  */
+@Deprecated
 public class CategoryGroupAdapter extends BaseNodeAdapter {
     public static final int ITEM_TYPE_GROUP = 0;
     public static final int ITEM_TYPE_CATEGORY = 1;

@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * create by zyf on 2020/12/14 8:35 PM
  */
+@Deprecated
 public class CategoryModel extends BaseModel {
 
     /**

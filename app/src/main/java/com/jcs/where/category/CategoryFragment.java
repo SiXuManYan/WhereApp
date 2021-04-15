@@ -40,7 +40,7 @@ import io.reactivex.annotations.NonNull;
 
 import static com.jcs.where.base.BaseMapActivity.K_CHILD_CATEGORY_ID;
 
-
+@Deprecated
 public class CategoryFragment extends BaseFullFragment {
 
     private JcsTitle mJcsTitle;

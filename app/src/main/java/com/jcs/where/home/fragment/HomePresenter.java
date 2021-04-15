@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by Wangsw  2021/3/4 16:55.
+ * @deprecated
  */
 public class HomePresenter extends BaseMvpPresenter {
 

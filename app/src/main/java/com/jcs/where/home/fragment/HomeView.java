@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by Wangsw  2021/3/4 16:56.
+ * @deprecated
  */
 public interface HomeView extends BaseMvpView {
     void bindDetailData(List<HomeRecommendResponse> data, boolean isLastPage);

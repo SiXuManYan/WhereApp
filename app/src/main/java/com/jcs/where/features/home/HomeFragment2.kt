@@ -31,6 +31,7 @@ import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
+import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
@@ -181,7 +182,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                             putIntegerArrayList(TravelStayActivity.K_CATEGORY_IDS, data.categories as (ArrayList<Int>))
                         })
                     }
-                    4, 5, 6, 7, 8 -> {
+                    4, 5, 6, 7 -> {
                         val convenienceCategoryId = data.categories.toString()
                         val name = data.name
                         startActivity(ConvenienceServiceActivity::class.java, Bundle().apply {
@@ -189,6 +190,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                             putString(ConvenienceServiceActivity.K_SERVICE_NAME, name)
                         })
                     }
+                    8 -> startActivity(PayBillsActivity::class.java)
                     9 -> startActivity(RestaurantListActivity::class.java)
                     else -> showComing()
                 }

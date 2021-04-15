@@ -557,6 +557,11 @@
     <string name="total_cart">合计：</string>
     <string name="settlement">结算</string>
     <string name="edit">编辑</string>
+    <string name="prepaid_reload">Prepaid\nReload</string>
+    <string name="water_utilities">Water\nUtilities</string>
+    <string name="electric_utilities">Electric\nUtilities</string>
+    <string name="internet_billing">Internet\nBilling</string>
+    <string name="Pay_Bills">支付帐单</string>
 
 
 </resources>

@@ -556,6 +556,11 @@
     <string name="total_cart">Total Cart：</string>
     <string name="settlement">Settlement</string>
     <string name="edit">Edit</string>
+    <string name="prepaid_reload">Prepaid\nReload</string>
+    <string name="water_utilities">Water\nUtilities</string>
+    <string name="electric_utilities">Electric\nUtilities</string>
+    <string name="internet_billing">Internet\nBilling</string>
+    <string name="Pay_Bills">Pay Bills</string>
 
 
 </resources>

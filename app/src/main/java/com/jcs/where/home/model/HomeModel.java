@@ -22,6 +22,9 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function5;
 
+/**
+ * @deprecated
+ */
 public class HomeModel extends BaseModel {
 
     public void getInitHomeData(BaseObserver<HomeZipResponse> observer) {

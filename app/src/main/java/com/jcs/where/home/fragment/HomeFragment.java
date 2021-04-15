@@ -79,7 +79,10 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * 首页
+ *
+ * @see com.jcs.where.features.home.HomeFragment2
  */
+@Deprecated
 public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeView, OnLoadMoreListener, com.chad.library.adapter.base.listener.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final int REQ_SELECT_CITY = 100;

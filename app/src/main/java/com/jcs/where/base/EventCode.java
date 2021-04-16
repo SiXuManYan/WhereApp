@@ -56,4 +56,9 @@ public class EventCode {
      * 选择区域
      */
     public static final int EVENT_FILTER_BY_AREA = 1012;
+
+    /**
+     * 新增关注分类
+     */
+    public static final int EVENT_ADD_NEW_CATEGORY = 1013;
 }

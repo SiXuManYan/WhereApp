@@ -74,17 +74,28 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
         newWidth = (ScreenUtils.getScreenWidth() / 4.5).toInt()
     }
 
+    private var showAddButton = false
+
+    public fun showAddCategoryButton(show: Boolean) {
+        showAddButton = show
+    }
 
     override fun convert(holder: BaseViewHolder, item: Category) {
         val title_tv = holder.getView<TextView>(R.id.title_tv)
         val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
+        val add_tv = holder.getView<TextView>(R.id.add_tv)
+        if (showAddButton) {
+            add_tv.visibility = View.VISIBLE
+        } else {
+            add_tv.visibility = View.GONE
+        }
+
 
         // title
         title_tv.text = item.name
 
         // child
         bindChild(child_container_ll, item)
-
     }
 
     private fun bindChild(child_container_ll: LinearLayout, parent: Category) {
@@ -100,8 +111,6 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
             val child_parent_ll = childView.findViewById<LinearLayout>(R.id.child_parent_ll)
             val image_iv = childView.findViewById<ImageView>(R.id.image_iv)
             val content_tv = childView.findViewById<TextView>(R.id.content_tv)
-
-
 
             GlideUtil.load(context, it.icon, image_iv)
             content_tv.text = it.name
@@ -119,23 +128,23 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
                     TYPE_SERVICE -> {
                         startActivity(ConvenienceServiceActivity::class.java, Bundle().apply {
                             putString(ConvenienceServiceActivity.K_SERVICE_NAME, parent.name)
-                            putString(ConvenienceServiceActivity.K_CATEGORIES, parent.id)
-                            putString(ConvenienceServiceActivity.K_CHILD_CATEGORY_ID, it.id)
+                            putString(ConvenienceServiceActivity.K_CATEGORIES, parent.id.toString())
+                            putString(ConvenienceServiceActivity.K_CHILD_CATEGORY_ID, it.id.toString())
                         })
                     }
                     TYPE_HOTEL -> {
                         startActivity(HotelActivity::class.java, Bundle().apply {
-                            putString(HotelActivity.K_CATEGORY_ID, it.id)
+                            putString(HotelActivity.K_CATEGORY_ID, it.id.toString())
                         })
                     }
                     TYPE_TOURISM -> {
                         startActivity(TravelMapActivity::class.java, Bundle().apply {
-                            putString(BaseMapActivity.K_CHILD_CATEGORY_ID, it.id)
+                            putString(BaseMapActivity.K_CHILD_CATEGORY_ID, it.id.toString())
                         })
                     }
                     TYPE_GOVERNMENT -> {
                         startActivity(GovernmentMapActivity::class.java, Bundle().apply {
-                            putString(BaseMapActivity.K_CHILD_CATEGORY_ID, it.id)
+                            putString(BaseMapActivity.K_CHILD_CATEGORY_ID, it.id.toString())
                         })
                     }
 
@@ -152,7 +161,7 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
                             val categories = categoryIds as ArrayList<Int>
                             startActivity(YellowPageActivity::class.java, Bundle().apply {
                                 putIntegerArrayList(YellowPageActivity.K_CATEGORIES, categories)
-                                putString(YellowPageActivity.K_DEFAULT_CHILD_CATEGORY_ID, it.id)
+                                putString(YellowPageActivity.K_DEFAULT_CHILD_CATEGORY_ID, it.id.toString())
                             })
                         }
                     }

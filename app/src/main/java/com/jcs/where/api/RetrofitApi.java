@@ -55,6 +55,7 @@ import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.category.Category;
+import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
@@ -67,6 +68,7 @@ import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
+import com.jcs.where.bean.FollowCategoryRequest;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
@@ -917,4 +919,23 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v2/categories/list")
     Observable<JcsResponse<ArrayList<Category>>> getCategoryList();
+
+    /**
+     * 获得可编辑分类列表
+     */
+    @GET("commonapi/v2/categories/follow/list")
+    Observable<JcsResponse<UserCategory>> getEditableCategory(
+            @Query("device_id") String device_id
+    );
+
+
+    /**
+     * 获得可编辑分类列表
+     */
+    @POST("commonapi/v2/categories/follow/list")
+    Observable<JcsResponse<JsonElement>> followCategory(
+            @Body FollowCategoryRequest followCategory
+    );
+
+
 }

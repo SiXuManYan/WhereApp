@@ -562,6 +562,10 @@
     <string name="electric_utilities">Electric\nUtilities</string>
     <string name="internet_billing">Internet\nBilling</string>
     <string name="Pay_Bills">帐单付费</string>
+    <string name="finish_edit_category">完成</string>
+    <string name="selected_category">已选择分类</string>
+    <string name="unselected_category">未选择分类</string>
+    <string name="add_text">+</string>
 
 
 </resources>

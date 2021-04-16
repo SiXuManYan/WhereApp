@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Category {
 
-    public String id;
+    public int id = 0;
     /**
      * 分类名称
      */

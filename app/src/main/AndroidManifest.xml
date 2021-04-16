@@ -545,11 +545,24 @@
         <activity
             android:name=".features.address.edit.AddressEditActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".features.gourmet.restaurant.list.RestaurantListActivity" />
-        <activity android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity" />
-        <activity android:name=".features.gourmet.restaurant.packages.SetMealActivity" />
-        <activity android:name=".features.gourmet.cart.ShoppingCartActivity" />
-        <activity android:name=".features.bills.PayBillsActivity" />
+        <activity
+            android:name=".features.gourmet.restaurant.list.RestaurantListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.restaurant.packages.SetMealActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.cart.ShoppingCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.bills.PayBillsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.category.edit.CategoryEditActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

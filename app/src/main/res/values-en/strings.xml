@@ -561,6 +561,10 @@
     <string name="electric_utilities">Electric\nUtilities</string>
     <string name="internet_billing">Internet\nBilling</string>
     <string name="Pay_Bills">Pay Bills</string>
+    <string name="finish_edit_category">Finished</string>
+    <string name="selected_category">Selected Category</string>
+    <string name="unselected_category">Unselected Category</string>
+    <string name="add_text">+</string>
 
 
 </resources>

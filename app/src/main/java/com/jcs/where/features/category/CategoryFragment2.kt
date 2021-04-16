@@ -6,7 +6,10 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.category.edit.CategoryEditActivity
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_category_2.*
@@ -50,12 +53,29 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
     override fun bindListener() {
         more_category_iv.setOnClickListener {
-            showComing()
+            startActivity(CategoryEditActivity::class.java)
         }
     }
 
     override fun bindData(response: ArrayList<Category>) {
         mAdapter.setNewInstance(response)
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+        when (baseEvent.code) {
+            EventCode.EVENT_ADD_NEW_CATEGORY -> {
+                val arrayList = baseEvent.data as ArrayList<Category>
+                mAdapter.addData(arrayList)
+            }
+            else -> {
+            }
+        }
+
+
     }
 
 

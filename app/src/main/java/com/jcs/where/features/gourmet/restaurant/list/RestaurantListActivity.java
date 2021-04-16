@@ -325,7 +325,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
 
         } else if (data instanceof Category) {
             // 美食列别筛选
-            mRequest.category_id = ((Category) data).id;
+            mRequest.category_id = String.valueOf(((Category) data).id);
 
 
         } else if (data instanceof MoreFilterFragment.MoreFilter) {

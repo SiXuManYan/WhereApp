@@ -13,7 +13,6 @@ import com.jcs.where.features.category.edit.CategoryEditActivity
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_category_2.*
-import java.util.*
 
 /**
  * Created by Wangsw  2021/4/15 15:12.
@@ -69,7 +68,25 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
         when (baseEvent.code) {
             EventCode.EVENT_ADD_NEW_CATEGORY -> {
                 val arrayList = baseEvent.data as ArrayList<Category>
-                mAdapter.addData(arrayList)
+                val result = ArrayList<Category>()
+                arrayList.forEach {
+                    if (!mAdapter.data.contains(it)) {
+                        result.add(it)
+                    }
+                }
+                if (result.isNotEmpty()) {
+                    mAdapter.addData(result)
+                }
+            }
+
+            EventCode.EVENT_CUT_NEW_CATEGORY -> {
+                val arrayList = baseEvent.data as ArrayList<Category>
+                arrayList.forEach {
+                    if (mAdapter.data.contains(it)) {
+                        mAdapter.remove(it)
+                    }
+                }
+
             }
             else -> {
             }

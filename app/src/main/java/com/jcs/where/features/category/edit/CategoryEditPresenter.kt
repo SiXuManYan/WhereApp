@@ -35,7 +35,7 @@ class CategoryEditPresenter(private var view: CategoryEditView) : BaseMvpPresent
     /**
      * 关注分类
      */
-    fun followCategory(newFollow: ArrayList<Category>) {
+    fun followCategory(newFollow: MutableList<Category>) {
 
         val ids = ArrayList<Int>()
 

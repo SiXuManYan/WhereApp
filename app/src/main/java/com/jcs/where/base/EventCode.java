@@ -61,4 +61,9 @@ public class EventCode {
      * 新增关注分类
      */
     public static final int EVENT_ADD_NEW_CATEGORY = 1013;
+
+    /**
+     * 删除分类
+     */
+    public static final int EVENT_CUT_NEW_CATEGORY = 1014;
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.ViewSwitcher
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -71,23 +72,31 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
     private val TYPE_YELLOW_PAGE = 6
 
     init {
-        newWidth = (ScreenUtils.getScreenWidth() / 4.5).toInt()
+        newWidth = (ScreenUtils.getScreenWidth() / 3.5).toInt()
     }
 
-    private var showAddButton = false
+    private var showEdit = false
 
-    public fun showAddCategoryButton(show: Boolean) {
-        showAddButton = show
+    public fun showEditButton(show: Boolean) {
+        showEdit = show
     }
 
     override fun convert(holder: BaseViewHolder, item: Category) {
         val title_tv = holder.getView<TextView>(R.id.title_tv)
         val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
-        val add_tv = holder.getView<TextView>(R.id.add_tv)
-        if (showAddButton) {
-            add_tv.visibility = View.VISIBLE
+        val edit_sw = holder.getView<ViewSwitcher>(R.id.edit_sw)
+
+        if (showEdit && !item.is_default) {
+            edit_sw.visibility = View.VISIBLE
+
+            if (item.follow_status) {
+                edit_sw.displayedChild = 1
+            } else {
+                edit_sw.displayedChild = 0
+            }
+
         } else {
-            add_tv.visibility = View.GONE
+            edit_sw.visibility = View.GONE
         }
 
 

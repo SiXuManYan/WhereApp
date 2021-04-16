@@ -25,40 +25,67 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
     private lateinit var mUnSelectedAdapter: CategoryAdapter
 
     /**
-     * 用户在此页面新关注的分类
+     * 用户在此页面新增的关注的分类
      */
-    var newFollowCategory = ArrayList<Category>()
+    var newAddCategory = ArrayList<Category>()
+
+    /**
+     * 用户在此页面删除的分类
+     */
+    var newCutCategory = ArrayList<Category>()
 
 
     override fun getLayoutId() = R.layout.activity_category_edit
 
 
     override fun initView() {
+
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.blue_4C9EF2))
 
         mSelectedAdapter = CategoryAdapter().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
                 showEmptyDefault()
             })
-            showAddCategoryButton(false)
+            showEditButton(true)
+            addChildClickViewIds(R.id.cut_iv)
+
+            setOnItemChildClickListener { _, _, position ->
+                VibrateUtils.vibrate(20)
+                val category = this.data[position]
+
+                category.follow_status = false
+
+                // 本地存储
+                newAddCategory.remove(category)
+                newCutCategory.add(category)
+
+                // 未关注列表增加这条数据
+                mUnSelectedAdapter.addData(category)
+
+                this.removeAt(position)
+            }
+
         }
         mUnSelectedAdapter = CategoryAdapter().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
                 showEmptyDefault()
             })
-            showAddCategoryButton(true)
-            addChildClickViewIds(R.id.add_tv)
+            showEditButton(true)
+            addChildClickViewIds(R.id.add_iv)
+
             setOnItemChildClickListener { _, _, position ->
                 VibrateUtils.vibrate(20)
-                val category = this.data[position]
 
-                // 存储关注的分类
-                newFollowCategory.add(category)
+                val category = this.data[position]
+                category.follow_status = true
+
+                // 本地存储
+                newAddCategory.add(category)
+                newCutCategory.remove(category)
 
                 // 已关注列表增加这条数据
                 mSelectedAdapter.addData(category)
 
-                // 未关注列表移除这条
                 this.removeAt(position)
             }
         }
@@ -102,11 +129,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
         }
         finish_tv.setOnClickListener {
             VibrateUtils.vibrate(20)
-            if (newFollowCategory.isNotEmpty()) {
-                presenter.followCategory(newFollowCategory)
-            } else {
-                finish()
-            }
+            presenter.followCategory(mSelectedAdapter.data)
         }
     }
 
@@ -124,12 +147,15 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
 
     override fun followSuccess() {
         ToastUtils.showShort("Successful operation")
-        EventBus.getDefault().post(BaseEvent<ArrayList<Category>>(EventCode.EVENT_ADD_NEW_CATEGORY, newFollowCategory))
+
+        if (newAddCategory.isNotEmpty()) {
+            EventBus.getDefault().post(BaseEvent<ArrayList<Category>>(EventCode.EVENT_ADD_NEW_CATEGORY, newAddCategory))
+        }
+        if (newCutCategory.isNotEmpty()) {
+            EventBus.getDefault().post(BaseEvent<ArrayList<Category>>(EventCode.EVENT_CUT_NEW_CATEGORY, newCutCategory))
+        }
         finish()
     }
-
-
-
 
 
 }

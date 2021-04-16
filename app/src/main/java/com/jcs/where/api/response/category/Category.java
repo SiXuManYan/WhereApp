@@ -2,6 +2,7 @@ package com.jcs.where.api.response.category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Wangsw  2021/3/29 10:49.
@@ -43,6 +44,18 @@ public class Category {
     public boolean follow_status ;
     public boolean is_default ;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
 
 

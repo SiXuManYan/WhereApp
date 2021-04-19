@@ -1,8 +1,5 @@
 package com.jcs.where.features.gourmet.cart
 
-import android.widget.TextView
-import com.blankj.utilcode.util.StringUtils
-import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.PageResponse
@@ -31,7 +28,7 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
     /**
      * 处理价格
      */
-    fun handlePrice(adapter: ShoppingCartAdapter, total_price_tv: TextView): BigDecimal {
+    fun handlePrice(adapter: ShoppingCartAdapter): BigDecimal {
 
         var totalPrice: BigDecimal = BigDecimal.ZERO
         adapter.data.forEachIndexed { _, data ->
@@ -45,7 +42,6 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
             }
         }
 
-        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalPrice.stripTrailingZeros().toPlainString())
         return totalPrice
 
     }
@@ -63,6 +59,21 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
             }
         }
         return !result.contains(false)
+    }
+
+    /**
+     * 处理全选和非全选
+     */
+    fun handleSelectAll(adapter: ShoppingCartAdapter, select: Boolean) {
+
+        adapter.data.forEach {
+            it.nativeIsSelect = select
+            it.products.forEach { child ->
+                child.nativeIsSelect = select
+            }
+        }
+        adapter.notifyDataSetChanged()
+
     }
 
 

@@ -1,12 +1,11 @@
 package com.jcs.where.features.gourmet.cart
 
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
@@ -89,24 +88,21 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
         }
 
 
-        select_all_ll.setOnClickListener {
-            mAdapter.m_select_all_iv.performClick()
-
+        select_all_ll.setOnClickListener { _ ->
             isSelectAll = !isSelectAll
 
             if (isSelectAll) {
-                select_all_ll.isClickable = false
-                // 计算价格
-                Handler(Looper.getMainLooper()).postDelayed({
-                    select_all_ll.isClickable = true
-                    presenter.handlePrice(mAdapter, total_price_tv)
-                }, 55)
 
+                presenter.handleSelectAll(mAdapter, true)
+                val handlePrice = presenter.handlePrice(mAdapter)
+                total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
             } else {
+                presenter.handleSelectAll(mAdapter, false)
                 totalPrice = BigDecimal.ZERO
                 total_price_tv.text = getString(R.string.price_unit_format, totalPrice.stripTrailingZeros().toPlainString())
             }
 
+            changeSelectImage(isSelectAll)
         }
     }
 
@@ -159,11 +155,15 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     override fun onNumberChange(cartId: Int, isAdd: Boolean) {
 
+
     }
 
     // todo 传入当前adapter坐标，for循环改变nativeSelect ，
     override fun onTitleSelectClick(isSelected: Boolean) {
-        presenter.handlePrice(mAdapter, total_price_tv)
+        val handlePrice = presenter.handlePrice(mAdapter)
+        val toPlainString = handlePrice.stripTrailingZeros().toPlainString()
+//        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, toPlainString)
+        total_price_tv.text = toPlainString
 
         isSelectAll = if (isSelected) {
             presenter.checkSelectAll(mAdapter)
@@ -175,7 +175,8 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
 
     override fun onChildSelectClick(isSelected: Boolean) {
-        presenter.handlePrice(mAdapter, total_price_tv)
+        val handlePrice = presenter.handlePrice(mAdapter)
+        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
 
         if (isSelected) {
             isSelectAll = true

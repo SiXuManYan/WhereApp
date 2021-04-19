@@ -70,24 +70,22 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
             }
         }
 
-        if (content_rv.adapter != null) {
-            return
-        }
-        val childAdapter = ShoppingCartChildAdapter()
-        mChildAdapter = childAdapter
-        childAdapter.setNewInstance(data.products)
-        content_rv.adapter = childAdapter
-        childAdapter.numberChangeListener = numberChangeListener
-
         // 标题
         name_tv.text = data.restaurant_name
-
 
         if (data.nativeIsSelect) {
             select_all_iv.setImageResource(R.mipmap.ic_checked_orange)
         } else {
             select_all_iv.setImageResource(R.mipmap.ic_un_checked)
         }
+
+        if (content_rv.adapter == null) {
+            val childAdapter = ShoppingCartChildAdapter()
+            mChildAdapter = childAdapter
+        }
+        mChildAdapter.setNewInstance(data.products)
+        content_rv.adapter = mChildAdapter
+        mChildAdapter.numberChangeListener = numberChangeListener
 
         // 选中全部，取消全部
         select_all_iv.setOnClickListener {
@@ -111,10 +109,10 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
 
             */
 
-            childAdapter.data.forEachIndexed { index, products ->
+            mChildAdapter.data.forEachIndexed { index, products ->
                 if (products.nativeIsSelect != data.nativeIsSelect) {
                     products.nativeIsSelect = data.nativeIsSelect
-                    childAdapter.notifyItemChanged(index)
+                    mChildAdapter.notifyItemChanged(index)
                 }
             }
 
@@ -123,12 +121,12 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
         }
 
         // 子view 选中监听
-        childAdapter.checkedChangeListener = object : ShoppingCartChildAdapter.OnChildContainerClick {
+        mChildAdapter.checkedChangeListener = object : ShoppingCartChildAdapter.OnChildContainerClick {
             override fun onClick(isChecked: Boolean) {
 
                 val result = ArrayList<Boolean>()
 
-                childAdapter.data.forEach {
+                mChildAdapter.data.forEach {
                     result.add(it.nativeIsSelect)
                 }
 

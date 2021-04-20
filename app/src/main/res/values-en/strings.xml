@@ -567,6 +567,7 @@
     <string name="add_text">+</string>
     <string name="successful_operation">Successful Operation</string>
     <string name="confirm_delete_hint">Confirm delete？</string>
+    <string name="order_submit">Order Submit</string>
 
 
 </resources>

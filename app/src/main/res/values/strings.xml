@@ -568,6 +568,7 @@
     <string name="add_text">+</string>
     <string name="successful_operation">操作成功</string>
     <string name="confirm_delete_hint">确认删除吗？</string>
+    <string name="order_submit">提交订单</string>
 
 
 </resources>

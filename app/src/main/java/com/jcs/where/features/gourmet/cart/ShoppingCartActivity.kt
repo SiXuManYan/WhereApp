@@ -1,6 +1,7 @@
 package com.jcs.where.features.gourmet.cart
 
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
@@ -8,6 +9,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.utils.Constant
@@ -87,7 +89,6 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             total_price_tv.visibility = View.VISIBLE
         }
 
-
         select_all_ll.setOnClickListener { _ ->
             isSelectAll = !isSelectAll
 
@@ -104,6 +105,56 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
             changeSelectImage(isSelectAll)
         }
+
+
+        val delete = ArrayList<Int>()
+        val deleteItem = ArrayList<Products>()
+        val deleteParent = ArrayList<ShoppingCartResponse>()
+        delete_tv.setOnClickListener {
+            delete.clear()
+            deleteItem.clear()
+            deleteParent.clear()
+
+            AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setTitle(R.string.hint)
+                    .setMessage(getString(R.string.confirm_delete_hint))
+                    .setPositiveButton(R.string.confirm) { _, _ ->
+
+                        mAdapter.data.forEach {
+                            it.products.forEach { child ->
+                                if (child.nativeIsSelect) {
+                                    delete.add(child.cart_id)
+                                    deleteItem.add(child)
+                                }
+                            }
+                        }
+
+                        if (deleteItem.isNotEmpty()) {
+                            // 删除子 view
+                            deleteItem.forEach {
+                                mAdapter.mChildAdapter.remove(it)
+                            }
+                            //　检查删除全部
+                            mAdapter.data.forEach {
+                                if (it.products.isEmpty()) {
+                                    deleteParent.add(it)
+                                }
+                            }
+                            deleteParent.forEach {
+                                mAdapter.remove(it)
+                            }
+                            getNowPrice()
+                        }
+                        presenter.deleteCart(delete)
+                    }
+                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                        dialog?.dismiss()
+                    }
+                    .create()
+                    .show()
+        }
+
     }
 
     private fun changeSelectImage(selected: Boolean) {
@@ -155,15 +206,16 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     override fun onNumberChange(cartId: Int, isAdd: Boolean) {
 
+        // 重新计算价格
+        getNowPrice()
+
+        //
+        presenter.changeCartNumber(cartId, isAdd)
 
     }
 
-    // todo 传入当前adapter坐标，for循环改变nativeSelect ，
     override fun onTitleSelectClick(isSelected: Boolean) {
-        val handlePrice = presenter.handlePrice(mAdapter)
-        val toPlainString = handlePrice.stripTrailingZeros().toPlainString()
-//        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, toPlainString)
-        total_price_tv.text = toPlainString
+        getNowPrice()
 
         isSelectAll = if (isSelected) {
             presenter.checkSelectAll(mAdapter)
@@ -173,10 +225,15 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
         changeSelectImage(isSelectAll)
     }
 
+    private fun getNowPrice() {
+        val handlePrice = presenter.handlePrice(mAdapter)
+        val toPlainString = handlePrice.stripTrailingZeros().toPlainString()
+        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, toPlainString)
+    }
+
 
     override fun onChildSelectClick(isSelected: Boolean) {
-        val handlePrice = presenter.handlePrice(mAdapter)
-        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
+        getNowPrice()
 
         if (isSelected) {
             isSelectAll = true

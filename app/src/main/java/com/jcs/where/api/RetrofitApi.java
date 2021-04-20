@@ -937,5 +937,20 @@ public interface RetrofitApi {
             @Body FollowCategoryRequest followCategory
     );
 
+    /**
+     * 修改购物车商品数量
+     */
+    @PATCH("restaurantapi/v2/carts/numbers")
+    Observable<JcsResponse<JsonElement>> changeCartNumber(
+            @Query("cart_id") int cart_id,
+            @Query("number") int number
+    );
+
+    /**
+     * 修改购物车商品数量
+     */
+    @DELETE("restaurantapi/v2/carts")
+    Observable<JcsResponse<JsonElement>> deleteCart(@Body String cart_id);
+
 
 }

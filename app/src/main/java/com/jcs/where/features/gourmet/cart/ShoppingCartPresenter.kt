@@ -1,5 +1,10 @@
 package com.jcs.where.features.gourmet.cart
 
+import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.JsonElement
+import com.google.gson.internal.`$Gson$Preconditions`
+import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.PageResponse
@@ -74,6 +79,38 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
         }
         adapter.notifyDataSetChanged()
 
+    }
+
+    /**
+     * 修改购物车商品数量
+     */
+    fun changeCartNumber(cartId: Int, add: Boolean) {
+        val number = if (add) {
+            1
+        } else {
+            -1
+        }
+        requestApi(mRetrofit.changeCartNumber(cartId, number), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+
+        })
+    }
+
+
+    /**
+     * 删除购物车
+     */
+    fun deleteCart(delete: ArrayList<Int>) {
+        if (delete.isEmpty()) {
+            return
+        }
+        requestApi(mRetrofit.deleteCart(delete.toString()),object :BaseMvpObserver<JsonElement>(view){
+            override fun onSuccess(response: JsonElement?) {
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+        })
     }
 
 

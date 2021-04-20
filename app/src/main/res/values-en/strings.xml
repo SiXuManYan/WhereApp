@@ -565,6 +565,8 @@
     <string name="selected_category">Selected Category</string>
     <string name="unselected_category">Unselected Category</string>
     <string name="add_text">+</string>
+    <string name="successful_operation">Successful Operation</string>
+    <string name="confirm_delete_hint">Confirm delete？</string>
 
 
 </resources>

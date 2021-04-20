@@ -37,12 +37,12 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
      */
     interface OnUserSelectListener {
         /**
-         * 标题选择监听
+         * 选中了item的标题
          */
         fun onTitleSelectClick(isSelected: Boolean)
 
         /**
-         * 子view选中
+         * 子选中了item内具体的某一项
          */
         fun onChildSelectClick(isSelected: Boolean)
     }

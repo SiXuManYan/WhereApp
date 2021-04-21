@@ -563,6 +563,7 @@
         <activity
             android:name=".features.category.edit.CategoryEditActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".features.gourmet.order.OrderSubmitActivity" />
 
 
     </application>

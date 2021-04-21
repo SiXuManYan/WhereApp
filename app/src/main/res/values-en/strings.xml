@@ -568,6 +568,8 @@
     <string name="successful_operation">Successful Operation</string>
     <string name="confirm_delete_hint">Confirm delete？</string>
     <string name="order_submit">Order Submit</string>
+    <string name="total_simple">Total</string>
+    <string name="pieces_format">Total&#160;%1$d&#160;pieces</string>
 
 
 </resources>

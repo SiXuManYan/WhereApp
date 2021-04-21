@@ -50,6 +50,8 @@ public class Constant {
     public static final String PARAM_IS_FORCE_INSTALL = "IS_FORCE_INSTALL";
     public static final String PARAM_HOTEL_TYPE_IDS = "hotelTypeIds";
     public static final String PARAM_NEWS_ID = "newsId";
+    public static final String PARAM_DATA = "param_data";
+    public static final String PARAM_TOTAL_PRICE = "param_total_price";
 
 
     /**

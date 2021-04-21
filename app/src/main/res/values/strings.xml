@@ -569,6 +569,8 @@
     <string name="successful_operation">操作成功</string>
     <string name="confirm_delete_hint">确认删除吗？</string>
     <string name="order_submit">提交订单</string>
+    <string name="total_simple">小计</string>
+    <string name="pieces_format">共&#160;%1$d&#160;件</string>
 
 
 </resources>

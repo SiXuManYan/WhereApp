@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.cart
 
+import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -12,7 +13,9 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_shopping_cart.*
@@ -38,11 +41,15 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, getColor(R.color.white))
-        mAdapter = ShoppingCartAdapter()
-        mAdapter.apply {
+
+        val emptyView = EmptyView(this).apply {
+            showEmptyDefault()
+        }
+
+        mAdapter = ShoppingCartAdapter().apply {
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-            setEmptyView(R.layout.view_empty_data_brvah_default)
+            setEmptyView(emptyView)
             loadMoreModule.setOnLoadMoreListener(this@ShoppingCartActivity)
             numberChangeListener = this@ShoppingCartActivity
             onUserSelectListener = this@ShoppingCartActivity
@@ -89,7 +96,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             total_price_tv.visibility = View.VISIBLE
         }
 
-        select_all_ll.setOnClickListener { _ ->
+        select_all_ll.setOnClickListener {
             isSelectAll = !isSelectAll
 
             if (isSelectAll) {
@@ -106,7 +113,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             changeSelectImage(isSelectAll)
         }
 
-
+        // 删除
         val delete = ArrayList<Int>()
         val deleteItem = ArrayList<Products>()
         val deleteParent = ArrayList<ShoppingCartResponse>()
@@ -153,6 +160,21 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
                     }
                     .create()
                     .show()
+        }
+
+        // 提交订单
+        buy_after_tv.setOnClickListener {
+            if (mAdapter.data.isEmpty()) {
+                return@setOnClickListener
+            }
+            val totalPrice = presenter.handlePrice(mAdapter)
+
+            startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
+
+                putSerializable(Constant.PARAM_DATA , ArrayList<ShoppingCartResponse>(mAdapter.data))
+
+                putString(Constant.PARAM_TOTAL_PRICE , totalPrice.toPlainString())
+            })
         }
 
     }

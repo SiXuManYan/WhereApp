@@ -577,5 +577,12 @@
     <string name="total_simple">Total</string>
     <string name="pieces_format">Total&#160;%1$d&#160;pieces</string>
 
+    <string name="where_app_introduction">Where is a city wide life app developed by Cloudtech, integrating local information, including government, businesses, schools and various institutions, so as to make the information accurate and public, and to make the local life service online in Bataan, so as to make the people and tourists more convenient</string>
+    <string name="office_address">Office address</string>
+    <string name="office_address_detail">G/F GICC TECHNOPARK, PHASE 3, LUZON AVENUE, FREEPORT AREA BATAAN MARIVELES, BATAAN</string>
+    <string name="quick_links">Quick Links</string>
+    <string name="office_address_home_page_1">Website homepage：</string>
+    <string name="office_address_home_page_2">https://wte.where.ph/#to-home</string>
+
 
 </resources>

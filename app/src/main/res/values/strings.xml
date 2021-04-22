@@ -579,6 +579,12 @@
     <string name="order_submit">提交订单</string>
     <string name="total_simple">小计</string>
     <string name="pieces_format">共&#160;%1$d&#160;件</string>
+    <string name="where_app_introduction">Where是由Cloudtech开发的一种城市范围的生活应用程序，集成了包括政府，企业，学校和各种机构在内的本地信息，以使信息准确和公开，并使巴丹的本地生活服务在线进行，从而 使人们和游客更加方便</string>
+    <string name="office_address">办公地址</string>
+    <string name="office_address_detail">G/F GICC TECHNOPARK, PHASE 3, LUZON AVENUE, FREEPORT AREA BATAAN MARIVELES, BATAAN</string>
+    <string name="quick_links">官方网站</string>
+    <string name="office_address_home_page_1">网站首页：</string>
+    <string name="office_address_home_page_2">https://wte.where.ph/#to-home</string>
 
 
 </resources>

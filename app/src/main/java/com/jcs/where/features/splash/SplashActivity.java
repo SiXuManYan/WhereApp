@@ -6,7 +6,6 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -19,8 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ScreenUtils;
-import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.mvp.BaseMvpActivity;
@@ -148,6 +145,34 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
                         ds.setUnderlineText(true);
                     }
                 })
+                .append(getString(R.string.use_agreement_content_8))
+                .append(getString(R.string.use_agreement_content_9))
+                .setClickSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View widget) {
+                        WebViewActivity.goTo(SplashActivity.this, "https://www.comm100.com/platform/security/");
+                    }
+
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        ds.setColor(getColor(R.color.blue_4C9EF2));
+                        ds.setUnderlineText(true);
+                    }
+                })
+                .append(getString(R.string.use_agreement_content_10))
+                .append(getString(R.string.use_agreement_content_11))
+                .setClickSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View widget) {
+                        WebViewActivity.goTo(SplashActivity.this, "https://www.jiguang.cn/license/privacy");
+                    }
+
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        ds.setColor(getColor(R.color.blue_4C9EF2));
+                        ds.setUnderlineText(true);
+                    }
+                })
                 .append(getString(R.string.use_agreement_content_7))
                 .create();
 
@@ -177,7 +202,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
             TextView message = alertDialog.findViewById(android.R.id.message);
             if (message != null) {
                 message.setMovementMethod(LinkMovementMethod.getInstance());
-                message.setLineSpacing(0f,1.2f);
+                message.setLineSpacing(0f, 1.2f);
             }
         }
 

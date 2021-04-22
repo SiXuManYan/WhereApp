@@ -536,11 +536,17 @@
 3. In order to help you call complaints or other consultation hotlines in the APP, we may apply for the call permission. This permission does not collect private information and is only used when you use the aforementioned functions.\n\n</string>
     <string name="use_agreement_content_5">4. In order to realize the third-party login and information sharing functions, we are using the third-party MobTech [ShareSdk] product. For the privacy policy terms of this product, please refer to:</string>
     <string name="use_agreement_content_6">https://www.mob.com/about/policy。\n\n</string>
-    <string name="use_agreement_content_7">5. The above permissions and sensitive permissions such as cameras, GPS, cameras, albums, microphones, storage space, etc. will not be enabled by default or forcibly to collect information. Only express authorization will be used for the realization of functions or services. You can refuse and Does not affect your continued use of Where.</string>
+    <string name="use_agreement_content_8" >5. In order to better help you solve the problems that may occur during use, we use a third-party Comm100 [Comm100 Live Chat] product. For the privacy policy of this product, please refer to:</string>
+    <string name="use_agreement_content_9" >https://www.comm100.com/platform/security \n\n</string>
+    <string name="use_agreement_content_10" >6. In order to realize the push function, we have introduced the [JPush] product of the third-party Jiguang SDK. For the privacy policy of this product, please refer to:</string>
+    <string name="use_agreement_content_11" >https://www.jiguang.cn/license/privacy \n\n</string>
+
+
+    <string name="use_agreement_content_7">7. The above permissions and sensitive permissions such as cameras, GPS, cameras, albums, microphones, storage space, etc. will not be enabled by default or forcibly to collect information. Only express authorization will be used for the realization of functions or services. You can refuse and Does not affect your continued use of Where.</string>
 
     <string name="agree_and_continue">Agree and continue</string>
     <string name="disagree">Disagree</string>
-    <string name="tips_0">Personal Information Protection Guidelines</string>
+    <string name="tips_0">Personal Information Protection Guidelines Update</string>
     <string name="tips_1">Tips</string>
     <string name="disagree_privacy_policy_message">You need to agree to the &quot;Guidelines for the Protection of Personal Information&quot; before we can continue to provide services to you</string>
     <string name="goto_agree">To agree</string>

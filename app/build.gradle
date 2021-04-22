@@ -21,6 +21,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "dca78eb7c81e4244fb6254c0",
+                JPUSH_CHANNEL: "default_developer",
+        ]
+
     }
 
     signingConfigs {
@@ -152,8 +159,8 @@ dependencies {
 
 
     // comm 100
-    implementation files('libs/jpush-android-3.1.3.jar')
-    implementation files('libs/jcore-android-1.2.1.jar')
+    implementation files('libs/jpush-android-4.0.6-google_play.jar')
+    implementation files('libs/jcore-android-2.7.6-google_play.jar')
     implementation(name: 'visitor-client-v1.0', ext:'aar')
 
     // 知乎相册选择器

@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.*
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
@@ -168,12 +165,17 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
                 return@setOnClickListener
             }
             val totalPrice = presenter.handlePrice(mAdapter)
+            if (totalPrice.compareTo(BigDecimal.ZERO) < 1) {
+                ToastUtils.showShort(getString(R.string.please_select_a_product))
+                return@setOnClickListener
+            }
+
 
             startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
 
-                putSerializable(Constant.PARAM_DATA , ArrayList<ShoppingCartResponse>(mAdapter.data))
+                putSerializable(Constant.PARAM_DATA, ArrayList<ShoppingCartResponse>(mAdapter.data))
 
-                putString(Constant.PARAM_TOTAL_PRICE , totalPrice.toPlainString())
+                putString(Constant.PARAM_TOTAL_PRICE, totalPrice.toPlainString())
             })
         }
 

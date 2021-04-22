@@ -115,7 +115,7 @@
             android:layout_height="@dimen/dp_35"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/shape_gradient_orange_un_enable"
+            android:background="@drawable/shape_gradient_orange"
             android:gravity="center"
             android:text="@string/settlement"
             android:textColor="@color/white"

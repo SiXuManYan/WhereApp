@@ -70,6 +70,7 @@ import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
 import com.jcs.where.bean.HotelMapListBean;
+import com.jcs.where.bean.OrderSubmitRequest;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
 import java.util.ArrayList;
@@ -952,5 +953,13 @@ public interface RetrofitApi {
     @DELETE("restaurantapi/v2/carts")
     Observable<JcsResponse<JsonElement>> deleteCart(@Body String cart_id);
 
+
+    /**
+     * 下单接口
+     */
+    @POST("restaurantapi/v2/eat_in/orders")
+    Observable<JcsResponse<JsonElement>> orderSubmit(
+            @Body OrderSubmitRequest request
+    );
 
 }

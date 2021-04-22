@@ -39,8 +39,10 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
         recycler_view.addItemDecoration(DividerDecoration(
                 ColorUtils.getColor(R.color.colorPrimary),
                 SizeUtils.dp2px(10f), 0, 0).apply { setDrawHeaderFooter(false) })
+    }
 
-
+    override fun initData() {
+        presenter = OrderSubmitPresenter(this)
         val data = intent.getSerializableExtra(Constant.PARAM_DATA) as ArrayList<ShoppingCartResponse>
         mTotalPrice = intent.getStringExtra(Constant.PARAM_TOTAL_PRICE)!!
         mData.addAll(data)
@@ -52,15 +54,18 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
             }
         }
         mAdapter.setNewInstance(dataList)
-
-    }
-
-    override fun initData() {
-        presenter = OrderSubmitPresenter(this)
+        total_price_tv.text = getString(R.string.price_unit_format, mTotalPrice)
     }
 
     override fun bindListener() {
+        buy_after_tv.setOnClickListener {
 
+            if (mData.isEmpty()) {
+                return@setOnClickListener
+            }
+
+
+        }
     }
 
 

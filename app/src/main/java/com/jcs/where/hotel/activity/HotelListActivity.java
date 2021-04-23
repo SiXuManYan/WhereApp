@@ -50,7 +50,7 @@ public class HotelListActivity extends BaseActivity {
     private TextView mLiveTextPromptTv, mLeaveTextPromptTv;
     private String mParentCategoryId;
     private int mTotalDay, mRoomNum;
-    private List<Fragment> mFragmentList;
+    private List<HotelListChildFragment> mFragmentList;
     private ImageView mClearIv;
     private PopupConstraintLayout mTopPopupLayout;
     private EnterStayInfoView mEnterStayInfoView;
@@ -173,7 +173,7 @@ public class HotelListActivity extends BaseActivity {
 
     private void onClearIvClicked(View view) {
         mCityTv.setText(getString(R.string.input_hotel_name));
-        ((HotelListFragment) mFragmentList.get(0)).setSearchText("");
+//        ((HotelListChildFragment) mFragmentList.get(0)).setSearchText("");
         mClearIv.setVisibility(View.GONE);
         mCityTv.setTextColor(getResources().getColor(R.color.grey_b7b7b7));
     }
@@ -376,7 +376,8 @@ public class HotelListActivity extends BaseActivity {
             mViewPager.setCurrentItem(0);
             mCityTv.setText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
             mCityTv.setTextColor(getResources().getColor(R.color.grey_666666));
-            ((HotelListFragment) mFragmentList.get(0)).setSearchText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
+
+//            ((HotelListFragment) mFragmentList.get(0)).setSearchText(data.getStringExtra(SearchActivity.EXT_SELECT_SEARCH));
         }
     }
 }

@@ -36,5 +36,10 @@
       <option name="name" value="maven2" />
       <option name="url" value="https://dl.bintray.com/rongcloud/maven" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="MobSDK" />
+      <option name="name" value="MobSDK" />
+      <option name="url" value="https://mvn.mob.com/android" />
+    </remote-repository>
   </component>
 </project>

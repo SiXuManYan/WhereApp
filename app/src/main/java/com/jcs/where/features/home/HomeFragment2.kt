@@ -461,10 +461,10 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         rxTimer.interval(3000) {
             scrollPosition++
             if (scrollPosition <= mNewsAdapter.data.size - 1) {
-                news_rv.smoothScrollToPosition(scrollPosition)
+                news_rv?.smoothScrollToPosition(scrollPosition)
             } else {
                 scrollPosition = 0
-                news_rv.scrollToPosition(0)
+                news_rv?.scrollToPosition(0)
             }
         }
     }

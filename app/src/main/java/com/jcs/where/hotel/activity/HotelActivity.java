@@ -326,6 +326,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         mPriceAndStarTv.setText(getString(R.string.prompt_price_star));
         mPriceAndStarTv.setTextColor(ContextCompat.getColor(HotelActivity.this, R.color.grey_999999));
         mHotelStarDialog = new HotelStarDialog();
+        mHotelStarDialog.setCallback(this);
         mClearIv.setVisibility(View.GONE);
 
         mSelectStarValue = 0;

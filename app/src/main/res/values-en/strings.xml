@@ -587,6 +587,8 @@
     <string name="pay_order_title">Pay Order</string>
     <string name="alipay">Alipay</string>
     <string name="paypal">Paypal</string>
+    <string name="back_button">Back</string>
+    <string name="look_order">Check Order</string>
 
 
 </resources>

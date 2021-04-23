@@ -3,6 +3,7 @@ package com.jcs.where.api.response;
 import com.jcs.where.search.bean.ISearchResponse;
 import com.jcs.where.utils.MapMarkerUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class MechanismResponse implements ISearchResponse, MapMarkerUtil.IMapDat
     private double lng;
     private Double distance;
     private List<String> images;
-    private List<TagResponse> tags;
+    public List<String> tags = new ArrayList();
 
     public Integer getId() {
         return id;
@@ -87,13 +88,8 @@ public class MechanismResponse implements ISearchResponse, MapMarkerUtil.IMapDat
         this.images = images;
     }
 
-    public List<TagResponse> getTags() {
-        return tags;
-    }
 
-    public void setTags(List<TagResponse> tags) {
-        this.tags = tags;
-    }
+
 
     @Override
     public String getName() {

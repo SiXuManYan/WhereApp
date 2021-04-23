@@ -17,6 +17,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.base.BaseMapActivity
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
+import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.government.activity.GovernmentMapActivity
 import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.travel.TravelMapActivity
@@ -158,10 +159,11 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
                     }
 
                     TYPE_TRAVEL -> {
+
                     }
                     TYPE_RESTAURANT -> {
+                        startActivity(RestaurantListActivity::class.java,null)
                     }
-
                     TYPE_YELLOW_PAGE -> {
                         // 传递企业黄页一级分类id
                         val jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID)
@@ -186,8 +188,11 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
     }
 
 
-    private fun startActivity(target: Class<*>, bundle: Bundle) {
-        context.startActivity(Intent(context, target).putExtras(bundle).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    private fun startActivity(target: Class<*>, bundle: Bundle?) {
+        bundle?.let {
+            context.startActivity(Intent(context, target).putExtras(it).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+
     }
 
 }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_F5F5F5"
+    android:orientation="vertical">
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:backIcon="@drawable/ic_back_black"
+        app:middleTitle="查看券码"
+        app:middleTitleColor="@color/black_333333"
+        app:showBackIv="true"
+        app:showBottomLine="true" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15">
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_25"
+                android:textStyle="bold"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_19"
+                tools:text="商家名字" />
+
+
+            <TextView
+                android:id="@+id/total_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_333333"
+                android:layout_marginTop="@dimen/dp_15"
+                android:textSize="@dimen/sp_16"
+                tools:text="套餐名字" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_14"
+                tools:text="有效期至：2020-10-10 23:59" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_14"
+                android:text="券码" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_16"
+                android:text="1234 3456 4566 33" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_cv"
+                android:layout_width="@dimen/dp_315"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="@dimen/dp_194"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/dp_8"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_133"
+                    android:layout_gravity="center"
+                    tools:src="@tools:sample/avatars"
+                    android:layout_height="@dimen/dp_133"/>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

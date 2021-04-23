@@ -169,8 +169,6 @@ public class MineFragment extends BaseFragment {
      * @param view
      */
     private void onIntegralIvClicked(View view) {
-
-
         if (BuildConfig.FLAVOR == "dev" || BuildConfig.DEBUG) {
             startActivity(ShoppingCartActivity.class);
         } else {

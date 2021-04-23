@@ -10,7 +10,7 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:backIcon="@drawable/ic_back_black"
         app:middleTitle="@string/pay_order_title"
@@ -42,6 +42,7 @@
 
 
             <TextView
+                android:id="@+id/total_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -77,16 +78,15 @@
                     android:src="@mipmap/ic_alipay" />
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/dp_37"
                     android:textColor="@color/grey_666666"
-                    android:layout_centerVertical="true"
                     android:textSize="@dimen/sp_13"
-                    tools:text="支付宝" />
+                    android:text="@string/alipay" />
 
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
@@ -117,12 +117,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/dp_37"
                     android:textColor="@color/grey_666666"
-                    android:layout_centerVertical="true"
                     android:textSize="@dimen/sp_13"
-                    tools:text="Paypal" />
+                    android:text="@string/paypal" />
 
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
@@ -134,19 +134,18 @@
             </RelativeLayout>
 
 
-
-
             <TextView
+                android:id="@+id/pay_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_30"
                 android:background="@drawable/shape_gradient_integral_sign_out"
                 android:gravity="center"
-                tools:text="$100"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_18" />
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                tools:text="$100" />
 
         </LinearLayout>
 

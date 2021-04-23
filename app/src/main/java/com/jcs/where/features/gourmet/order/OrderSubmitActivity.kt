@@ -1,13 +1,16 @@
 package com.jcs.where.features.gourmet.order
 
 import android.graphics.Color
+import android.os.Bundle
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
+import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.pay.PayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -50,7 +53,10 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
         val dataList: ArrayList<Products> = ArrayList()
         mData.forEach {
             it.products.forEach { child ->
-                dataList.add(child)
+                if (child.nativeIsSelect) {
+                    dataList.add(child)
+                }
+
             }
         }
         mAdapter.setNewInstance(dataList)
@@ -60,12 +66,21 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
     override fun bindListener() {
         buy_after_tv.setOnClickListener {
 
-            if (mData.isEmpty()) {
+            if (mAdapter.data.isEmpty()) {
                 return@setOnClickListener
             }
+            val phone = phone_et.text.toString().trim()
 
-
+            presenter.submitOrder(mAdapter.data, phone)
         }
+    }
+
+    override fun bindData(response: List<OrderResponse>) {
+
+        startActivityAfterLogin(PayActivity::class.java, Bundle().apply {
+            putParcelableArrayList(Constant.PARAM_DATA, ArrayList(response))
+            putString(Constant.PARAM_TOTAL_PRICE, mTotalPrice)
+        })
     }
 
 

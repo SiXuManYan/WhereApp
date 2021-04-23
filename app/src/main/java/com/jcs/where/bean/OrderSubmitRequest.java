@@ -7,6 +7,4 @@ public class OrderSubmitRequest {
 
     public String goods = "";
     public String phone = "";
-
-
 }

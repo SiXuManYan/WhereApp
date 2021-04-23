@@ -585,6 +585,8 @@
     <string name="office_address_home_page_2">https://wte.where.ph/#to-home</string>
     <string name="please_select_a_product">Please select a product</string>
     <string name="pay_order_title">Pay Order</string>
+    <string name="alipay">Alipay</string>
+    <string name="paypal">Paypal</string>
 
 
 </resources>

@@ -59,6 +59,7 @@ import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
+import com.jcs.where.api.response.gourmet.order.OrderResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
@@ -958,7 +959,7 @@ public interface RetrofitApi {
      * 下单接口
      */
     @POST("restaurantapi/v2/eat_in/orders")
-    Observable<JcsResponse<JsonElement>> orderSubmit(
+    Observable<JcsResponse<List<OrderResponse>>> orderSubmit(
             @Body OrderSubmitRequest request
     );
 

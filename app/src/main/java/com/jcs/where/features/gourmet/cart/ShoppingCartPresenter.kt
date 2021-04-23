@@ -3,7 +3,6 @@ package com.jcs.where.features.gourmet.cart
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonElement
-import com.google.gson.internal.`$Gson$Preconditions`
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -106,7 +105,7 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
         if (delete.isEmpty()) {
             return
         }
-        requestApi(mRetrofit.deleteCart(delete.toString()),object :BaseMvpObserver<JsonElement>(view){
+        requestApi(mRetrofit.deleteCart(delete.toString()), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
             }

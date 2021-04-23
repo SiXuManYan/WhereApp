@@ -281,10 +281,9 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 val itemViewType = mHomeRecommendAdapter.getItemViewType(position + mHomeRecommendAdapter.headerLayoutCount)
                 when (itemViewType) {
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
-                        val dialog = JcsCalendarDialog().apply {
-                            initCalendar(context)
-                        }
-                        HotelDetailActivity.goTo(activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                        val dialog = JcsCalendarDialog()
+                        dialog  .initCalendar(this@HomeFragment2.activity)
+                        HotelDetailActivity.goTo(this@HomeFragment2.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
                         startActivity(MechanismDetailActivity::class.java, Bundle().apply {
@@ -295,7 +294,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                         showComing()
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
-                        TouristAttractionDetailActivity.goTo(activity, data.id)
+                        TouristAttractionDetailActivity.goTo(this@HomeFragment2.activity, data.id)
                     }
                     else -> {
                     }

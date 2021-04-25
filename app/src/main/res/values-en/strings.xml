@@ -589,6 +589,8 @@
     <string name="paypal">Paypal</string>
     <string name="back_button">Back</string>
     <string name="look_order">Check Order</string>
+    <string name="dishes">Dishes</string>
+    <string name="nothing_selected">Nothing Selected</string>
 
 
 </resources>

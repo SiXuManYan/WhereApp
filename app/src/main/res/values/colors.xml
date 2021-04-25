@@ -67,6 +67,7 @@
     <color name="gold_A07D41">#A07D41</color>
     <color name="purple_7C78FF">#7C78FF</color>
     <color name="gray_E9E9E9">#E9E9E9</color>
+    <color name="red_FF5555">#FF5555</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

@@ -1,10 +1,12 @@
 package com.jcs.where.features.gourmet.restaurant.packages;
 
+import android.graphics.Color;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -44,7 +46,7 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
 
     @Override
     protected void initView() {
-
+        BarUtils.setStatusBarColor(this, Color.WHITE);
         name_tv = findViewById(R.id.name_tv);
         image_iv = findViewById(R.id.image_iv);
         now_price_tv = findViewById(R.id.now_price_tv);

@@ -591,6 +591,8 @@
     <string name="paypal">Paypal</string>
     <string name="back_button">返回</string>
     <string name="look_order">查看订单</string>
+    <string name="dishes">菜品</string>
+    <string name="nothing_selected">未选购商品</string>
 
 
 </resources>

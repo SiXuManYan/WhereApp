@@ -20,6 +20,7 @@
 
 
             <ImageView
+                android:id="@+id/image_iv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_180"
                 android:scaleType="centerCrop"
@@ -44,6 +45,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/restaurant_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black_333333"
@@ -65,6 +67,7 @@
 
 
                         <TextView
+                            android:id="@+id/time_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dp_5"
@@ -72,7 +75,7 @@
                             android:text="@string/temp_zero"
                             android:textColor="@color/grey_666666"
                             android:textSize="@dimen/sp_13"
-                            tools:text="最可爱" />
+                            tools:text="@string/delivery_time_format" />
 
                     </LinearLayout>
 
@@ -111,9 +114,10 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dish_rv"
+                tools:listitem="@layout/item_dishes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:itemCount="3" />
+                tools:itemCount="1" />
 
 
             <RelativeLayout
@@ -207,7 +211,7 @@
             android:textSize="@dimen/sp_17" />
 
         <ImageView
-            android:id="@+id/iv_share"
+            android:id="@+id/shareIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -219,7 +223,7 @@
             android:src="@mipmap/ic_share_white2" />
 
         <ImageView
-            android:id="@+id/iv_like"
+            android:id="@+id/likeIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -316,7 +320,7 @@
                 android:layout_height="@dimen/dp_35"
                 android:background="@drawable/shape_gradient_orange_un_enable"
                 android:gravity="center"
-                tools:text="$200起送"
+                tools:text="@string/spread_format"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />
 

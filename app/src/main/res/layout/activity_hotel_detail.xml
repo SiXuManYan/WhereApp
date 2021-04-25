@@ -97,8 +97,7 @@
                             android:drawablePadding="2.5dp"
                             android:text="4.5"
                             android:textColor="@color/grey_666666"
-                            android:textSize="16sp"
-                            android:visibility="gone" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_commentnumber"

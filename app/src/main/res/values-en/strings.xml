@@ -591,6 +591,8 @@
     <string name="look_order">Check Order</string>
     <string name="dishes">Dishes</string>
     <string name="nothing_selected">Nothing Selected</string>
+    <string name="delivery_time_format">Delivery about %1$d minutes</string>
+    <string name="spread_format">%1$s Send</string>
 
 
 </resources>

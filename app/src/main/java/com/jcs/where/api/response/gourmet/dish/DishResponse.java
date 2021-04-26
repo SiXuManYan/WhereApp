@@ -1,5 +1,8 @@
 package com.jcs.where.api.response.gourmet.dish;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
 /**
  * Created by Wangsw  2021/4/1 15:07.
  * 堂食菜品列表
@@ -19,8 +22,20 @@ public class DishResponse {
     public String id = "";
     public String title = "";
     public String image = "";
+
+    /** 销量 */
     public String sale_num = "";
-    public String price = "";
-    public String original_price = "";
+    public BigDecimal price = BigDecimal.ZERO;
+    public BigDecimal original_price = BigDecimal.ZERO;
+
+    // 外卖额外
+    public ArrayList<String> tags = new ArrayList<>();
+
+    /**
+     * 用户选中的数量
+     */
+    public int nativeSelectCount = 0 ;
+
+
 
 }

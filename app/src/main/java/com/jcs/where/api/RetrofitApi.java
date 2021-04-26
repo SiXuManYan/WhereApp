@@ -973,5 +973,14 @@ public interface RetrofitApi {
             @Path("restaurant_id") String restaurant_id
     );
 
+    /**
+     * 外卖详情
+     */
+    @GET("restaurantapi/v2/take_out/goods")
+    Observable<JcsResponse<PageResponse<DishResponse>>> takeawayGoodList(
+            @Query("page") int page ,
+            @Query("restaurant_id") String restaurant_id
+    );
+
 
 }

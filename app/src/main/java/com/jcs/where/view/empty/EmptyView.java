@@ -48,7 +48,7 @@ public class EmptyView extends LinearLayout {
 
 
     private void initView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_empty, this,true);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_empty, this, true);
         empty_iv = view.findViewById(R.id.empty_iv);
         empty_message_tv = view.findViewById(R.id.empty_message_tv);
         empty_hint_tv = view.findViewById(R.id.empty_hint_tv);
@@ -101,7 +101,6 @@ public class EmptyView extends LinearLayout {
 
     /**
      * 设置空布局
-     *
      */
     public void showEmptyDefault() {
         setEmptyImage(R.mipmap.ic_empty_earth);

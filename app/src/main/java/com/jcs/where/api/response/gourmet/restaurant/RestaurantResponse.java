@@ -26,22 +26,22 @@ public class RestaurantResponse {
     }*/
 
 
-    public String id ;
+    public String id = "0";
     public ArrayList<String> images = new ArrayList<>();
 
     public String title = "";
-    public float grade ;
+    public float grade;
 
-    public int comment_num ;
+    public int comment_num;
 
-    public BigDecimal per_price ;
-    public float distance ;
-    public String type ;
-    public String trading_area ;
+    public BigDecimal per_price;
+    public float distance;
+    public String type;
+    public String trading_area;
 
     public ArrayList<String> tags = new ArrayList<>();
-    public int take_out_status ;
-    public String lat ;
-    public String lng ;
+    public int take_out_status;
+    public String lat;
+    public String lng;
 
 }

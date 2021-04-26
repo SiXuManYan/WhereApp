@@ -33,6 +33,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.RestaurantListRequest;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
 import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment;
+import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.list.DividerDecoration;
 
@@ -192,7 +193,11 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
 
     @Override
     public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+        RestaurantResponse data = mAdapter.getData().get(position);
 
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_ID, data.id);
+        startActivity(TakeawayActivity.class, bundle);
     }
 
 

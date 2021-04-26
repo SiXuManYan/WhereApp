@@ -113,13 +113,13 @@ public class DishView extends LinearLayout {
         Glide.with(getContext()).load(data.image).apply(options).into(dishIv);
         dishNameTv.setText(data.title);
         salesTv.setText(StringUtils.getString(R.string.sale_format, data.sale_num));
-        nowPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.price));
-        oldPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.original_price));
+        nowPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.price.toPlainString()));
+        oldPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.original_price.toPlainString()));
 
         buyTv.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), SetMealActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Constant.PARAM_ID ,data.id);
+            intent.putExtra(Constant.PARAM_ID, data.id);
             getContext().startActivity(intent);
         });
 

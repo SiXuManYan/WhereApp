@@ -593,6 +593,9 @@
     <string name="nothing_selected">Nothing Selected</string>
     <string name="delivery_time_format">Delivery about %1$d minutes</string>
     <string name="spread_format">%1$s Send</string>
+    <string name="free_delivery">Free Delivery</string>
+    <string name="delivery_price_format">Delivery Price %1$s</string>
+    <string name="to_settle">To settle</string>
 
 
 </resources>

@@ -595,6 +595,9 @@
     <string name="nothing_selected">未选购商品</string>
     <string name="delivery_time_format">配送约%1$d分钟</string>
     <string name="spread_format">%1$s起送</string>
+    <string name="free_delivery">免配送费</string>
+    <string name="delivery_price_format">另需%1$s配送费</string>
+    <string name="to_settle">去结算</string>
 
 
 </resources>

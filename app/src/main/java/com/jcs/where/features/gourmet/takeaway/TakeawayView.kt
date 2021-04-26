@@ -1,6 +1,7 @@
 package com.jcs.where.features.gourmet.takeaway
 
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 
 /**
@@ -9,4 +10,5 @@ import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
  */
 interface TakeawayView :BaseMvpView {
     fun bindData(data: TakeawayDetailResponse)
+    fun bindDishList(list: MutableList<DishResponse>)
 }

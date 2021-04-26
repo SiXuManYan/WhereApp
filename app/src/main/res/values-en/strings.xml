@@ -595,7 +595,9 @@
     <string name="spread_format">%1$s Send</string>
     <string name="free_delivery">Free Delivery</string>
     <string name="delivery_price_format">Delivery Price %1$s</string>
-    <string name="to_settle">To settle</string>
+    <string name="to_settle">To Settle</string>
+    <string name="packaging_fee">Packaging Fee</string>
+    <string name="clear_shopping_cart">clear Shopping Cart</string>
 
 
 </resources>

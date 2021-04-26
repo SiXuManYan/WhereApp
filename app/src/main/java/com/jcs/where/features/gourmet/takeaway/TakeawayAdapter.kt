@@ -32,8 +32,10 @@ class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.
 
         /**
          * 用户选中数量更新，重新计算金额和购物车数量
+         * @param goodNum 更新后的数量
+         * @param id 菜品id
          */
-        fun selectCountChange()
+        fun selectCountChange(goodNum: Int, id: Int)
 
     }
 
@@ -69,7 +71,7 @@ class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.
         number_view.valueChangeListener = object : NumberView2.OnValueChangeListener {
             override fun onNumberChange(goodNum: Int) {
                 item.nativeSelectCount = goodNum
-                onSelectCountChange?.selectCountChange()
+                onSelectCountChange?.selectCountChange(goodNum , item.id)
             }
         }
 

@@ -17,6 +17,7 @@ import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_take_away.*
+import kotlinx.android.synthetic.main.layout_take_away_shopping_cart.*
 import java.math.BigDecimal
 
 /**
@@ -29,6 +30,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     /** 餐厅id */
     private lateinit var restaurant_id: String
     private lateinit var mDishAdapter: TakeawayAdapter
+    private lateinit var mCartAdapter: TakeawayAdapter
 
     /** 是否收藏 */
     private var like = 1
@@ -37,7 +39,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     override fun getLayoutId() = R.layout.activity_take_away
 
-    override fun isStatusDark() = ( toolbarStatus == 1)
+    override fun isStatusDark() = (toolbarStatus == 1)
 
     override fun initView() {
 
@@ -58,9 +60,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             setEmptyView(EmptyView(this@TakeawayActivity).apply {
                 showEmptyDefault()
             })
-
             onSelectCountChange = this@TakeawayActivity
         }
+
 
         // 菜品列表
         dish_rv.apply {
@@ -76,6 +78,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         }
 
 
+        // 评论列表
         comment_rv.apply {
             isNestedScrollingEnabled = true
             layoutManager = object : LinearLayoutManager(this@TakeawayActivity, VERTICAL, false) {
@@ -85,6 +88,37 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             }
             addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(10f), 0, 0).apply { setDrawHeaderFooter(true) })
         }
+
+        // 购物车列表
+        mCartAdapter = TakeawayAdapter().apply {
+            setEmptyView(EmptyView(this@TakeawayActivity).apply {
+                showEmptyDefault()
+            })
+            onSelectCountChange = object : TakeawayAdapter.OnSelectCountChange {
+
+                override fun selectCountChange(goodNum: Int, id: Int) {
+
+                    // 更新菜品列表数量
+                    mDishAdapter.data.forEachIndexed { index, dishResponse ->
+                        if (dishResponse.id == id) {
+                            dishResponse.nativeSelectCount = goodNum
+                            mDishAdapter.notifyItemChanged(index)
+                        }
+
+                    }
+                    // 更新
+                    handleBottom()
+                }
+            }
+        }
+
+        shopping_cart_tv.apply {
+            layoutManager = LinearLayoutManager(this@TakeawayActivity, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(10f),
+                    0, 0).apply { setDrawHeaderFooter(true) })
+            adapter = mCartAdapter
+        }
+
     }
 
     private fun initScroll() {
@@ -138,12 +172,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     }
 
     override fun initData() {
-
-
         presenter = TakeawayPresenter(this)
         presenter.getDetailData(restaurant_id)
         presenter.getDishList(restaurant_id)
-
     }
 
     override fun bindListener() {
@@ -169,8 +200,20 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         }
 
         cart_iv.setOnClickListener {
-            // 上弹出购物车
 
+            val selectedList = presenter.getSelectedList(mDishAdapter)
+            mCartAdapter.setNewInstance(selectedList)
+
+            if (cart_ll.visibility != View.VISIBLE) {
+                cart_ll.visibility = View.VISIBLE
+            } else {
+                cart_ll.visibility = View.GONE
+            }
+
+        }
+
+        close_cart_v.setOnClickListener {
+            cart_ll.visibility = View.GONE
         }
 
         settlement_tv.setOnClickListener {
@@ -179,6 +222,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                 ToastUtils.showShort(R.string.nothing_selected)
                 return@setOnClickListener
             }
+            // todo 结算
             showComing()
         }
 
@@ -200,26 +244,44 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             delivery_fee_tv.text = getString(R.string.free_delivery)
         }
 
+        // 包装费
+        packaging_fee_tv.text = getString(R.string.price_unit_format, data.delivery_cost.toPlainString())
+
+
     }
 
     override fun bindDishList(list: MutableList<DishResponse>) {
         mDishAdapter.setNewInstance(list)
     }
 
-    override fun selectCountChange() {
+    override fun selectCountChange(goodNum: Int, id: Int) {
 
+        handleBottom()
+    }
+
+    /**
+     * 购物车数量、总价、是否能结算
+     */
+    private fun handleBottom() {
         val totalPrice = presenter.handlePrice(mDishAdapter)
         val totalCount = presenter.getTotalSelectCount(mDishAdapter)
 
+        // 总价
         total_price_tv.text = getString(R.string.price_unit_format, totalPrice)
+
+        // 购物车数量
         if (totalCount > 0) {
             count_tv.visibility = View.VISIBLE
             count_tv.text = totalCount.toString()
             cart_iv.setImageResource(R.mipmap.ic_cart_blue)
+            settlement_tv.setBackgroundResource(R.drawable.shape_gradient_orange)
         } else {
             count_tv.visibility = View.GONE
             cart_iv.setImageResource(R.mipmap.ic_cart_gray)
+            settlement_tv.setBackgroundResource(R.drawable.shape_gradient_orange_un_enable)
+
         }
+
     }
 
 }

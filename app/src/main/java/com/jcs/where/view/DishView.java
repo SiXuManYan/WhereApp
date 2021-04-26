@@ -119,7 +119,7 @@ public class DishView extends LinearLayout {
         buyTv.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), SetMealActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Constant.PARAM_ID, data.id);
+            intent.putExtra(Constant.PARAM_ID, String.valueOf(data.id));
             getContext().startActivity(intent);
         });
 

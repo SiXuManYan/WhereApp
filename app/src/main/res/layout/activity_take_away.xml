@@ -101,8 +101,8 @@
                 android:layout_height="@dimen/dp_40"
                 android:layout_marginTop="@dimen/dp_15"
                 android:background="@color/white"
-                android:gravity="center_vertical"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:lineSpacingMultiplier="1.2"
                 android:maxLines="2"
                 android:paddingStart="@dimen/dp_15"
@@ -233,8 +233,22 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- 购物车 -->
+    <include
+        layout="@layout/layout_take_away_shopping_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_v" />
+
+    <View
+        android:id="@+id/bottom_v"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/bottom_rl"
+        android:background="@color/grey_F5F5F5" />
 
     <RelativeLayout
+        android:id="@+id/bottom_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_alignParentBottom="true"
@@ -271,12 +285,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_toEndOf="@+id/cart_iv"
-            android:textStyle="bold"
             android:layout_marginStart="@dimen/dp_10"
+            android:layout_toEndOf="@+id/cart_iv"
             android:includeFontPadding="false"
             android:textColor="@color/orange_FF5B1B"
             android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
             tools:text="$100.00" />
 
         <TextView
@@ -289,7 +303,6 @@
             android:textSize="@dimen/sp_10"
             tools:text="@string/free_delivery" />
 
-
         <TextView
             android:id="@+id/settlement_tv"
             android:layout_width="@dimen/dp_100"
@@ -298,10 +311,9 @@
             android:layout_centerVertical="true"
             android:background="@drawable/shape_gradient_orange_un_enable"
             android:gravity="center"
+            android:text="@string/to_settle"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_16"
-            android:text="@string/to_settle" />
-
+            android:textSize="@dimen/sp_16" />
 
     </RelativeLayout>
 

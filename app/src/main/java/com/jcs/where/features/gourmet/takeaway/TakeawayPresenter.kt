@@ -75,5 +75,19 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
         return totalCount
     }
 
+    fun getSelectedList(adapter: TakeawayAdapter): ArrayList<DishResponse> {
+
+        val list = ArrayList<DishResponse>()
+
+        adapter.data.forEach {
+            if (it.nativeSelectCount > 0) {
+                list.add(it)
+            }
+        }
+        return list
+
+    }
+
+
 
 }

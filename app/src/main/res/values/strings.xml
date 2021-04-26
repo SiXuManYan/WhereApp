@@ -598,6 +598,8 @@
     <string name="free_delivery">免配送费</string>
     <string name="delivery_price_format">另需%1$s配送费</string>
     <string name="to_settle">去结算</string>
+    <string name="packaging_fee">包装费</string>
+    <string name="clear_shopping_cart">清空购物车</string>
 
 
 </resources>

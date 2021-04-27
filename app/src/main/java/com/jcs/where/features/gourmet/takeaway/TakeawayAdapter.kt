@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.dish.DishResponse
+import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.NumberView2
 
@@ -20,7 +21,7 @@ import com.jcs.where.widget.NumberView2
  * Created by Wangsw  2021/4/25 14:33.
  * 外卖菜品列表
  */
-class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.item_dishes) {
+class TakeawayAdapter : BaseQuickAdapter<DishTakeawayResponse, BaseViewHolder>(R.layout.item_dishes) {
 
 
     var onSelectCountChange: OnSelectCountChange? = null
@@ -39,7 +40,7 @@ class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.
 
     }
 
-    override fun convert(holder: BaseViewHolder, item: DishResponse) {
+    override fun convert(holder: BaseViewHolder, item: DishTakeawayResponse) {
 
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val good_name_tv = holder.getView<TextView>(R.id.good_name_tv)
@@ -78,7 +79,7 @@ class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.
     }
 
 
-    private fun initTag(data: DishResponse, tag_ll: LinearLayout) {
+    private fun initTag(data: DishTakeawayResponse, tag_ll: LinearLayout) {
         tag_ll.removeAllViews()
         val tags = data.tags
         if (tags.size <= 0) {

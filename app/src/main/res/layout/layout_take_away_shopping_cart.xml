@@ -70,7 +70,7 @@
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/shopping_cart_tv"
+            android:id="@+id/shopping_cart_rv"
             tools:itemCount="3"
             tools:listitem="@layout/item_dishes"
             android:layout_width="match_parent"

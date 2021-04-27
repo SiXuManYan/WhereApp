@@ -38,7 +38,7 @@ class TakeawayDetailResponse {
     var delivery_cost: BigDecimal = BigDecimal.ZERO
 
     /** 包装费 */
-    var packing_charges = 0
+    var packing_charges: BigDecimal = BigDecimal.ZERO
 
     var tel: String = ""
 

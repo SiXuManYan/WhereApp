@@ -1,13 +1,14 @@
 package com.jcs.where.api.response.gourmet.dish;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
  * Created by Wangsw  2021/4/1 15:07.
- * 堂食菜品列表
+ * 外卖堂食菜品列表
  */
-public class DishResponse {
+public class DishTakeawayResponse implements Serializable {
 
 /*    {
         "id": 1,
@@ -32,7 +33,7 @@ public class DishResponse {
     public ArrayList<String> tags = new ArrayList<>();
 
     /**
-     * 用户选中的数量（外卖额外）
+     * 用户选中的数量
      */
     public int nativeSelectCount = 0 ;
 

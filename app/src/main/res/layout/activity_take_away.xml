@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="800dp">
+            android:paddingBottom="100dp">
 
 
             <ImageView
@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black_333333"
                         android:textSize="@dimen/sp_16"
-                        tools:text="糖糖" />
+                        tools:text="糖糖最可爱" />
 
 
                     <LinearLayout

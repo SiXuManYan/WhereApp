@@ -3,7 +3,7 @@ package com.jcs.where.features.gourmet.takeaway
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.PageResponse
-import com.jcs.where.api.response.gourmet.dish.DishResponse
+import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.utils.BigDecimalUtil
 import java.math.BigDecimal
@@ -37,8 +37,8 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
      */
     fun getDishList(restaurantId: String) {
 
-        requestApi(mRetrofit.takeawayGoodList(1, restaurantId), object : BaseMvpObserver<PageResponse<DishResponse>>(view) {
-            override fun onSuccess(response: PageResponse<DishResponse>?) {
+        requestApi(mRetrofit.takeawayGoodList(1, restaurantId), object : BaseMvpObserver<PageResponse<DishTakeawayResponse>>(view) {
+            override fun onSuccess(response: PageResponse<DishTakeawayResponse>?) {
                 if (response == null || response.data.isEmpty()) {
                     return
                 }
@@ -75,9 +75,9 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
         return totalCount
     }
 
-    fun getSelectedList(adapter: TakeawayAdapter): ArrayList<DishResponse> {
+    fun getSelectedList(adapter: TakeawayAdapter): ArrayList<DishTakeawayResponse> {
 
-        val list = ArrayList<DishResponse>()
+        val list = ArrayList<DishTakeawayResponse>()
 
         adapter.data.forEach {
             if (it.nativeSelectCount > 0) {
@@ -87,7 +87,6 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
         return list
 
     }
-
 
 
 }

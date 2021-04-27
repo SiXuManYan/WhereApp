@@ -45,7 +45,7 @@ public class AddressEditActivity extends BaseMvpActivity<AddressEditPresenter> i
     private String mAddressId;
 
     /**
-     * 是否是修改密码
+     * 是否是修改
      */
     private boolean isChange;
 

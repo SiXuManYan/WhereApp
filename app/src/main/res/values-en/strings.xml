@@ -592,12 +592,22 @@
     <string name="dishes">Dishes</string>
     <string name="nothing_selected">Nothing Selected</string>
     <string name="delivery_time_format">Delivery about %1$d minutes</string>
+    <string name="delivery_time_format2">Delivered around about %1$s</string>
     <string name="spread_format">%1$s Send</string>
     <string name="free_delivery">Free Delivery</string>
     <string name="delivery_price_format">Delivery Price %1$s</string>
     <string name="to_settle">To Settle</string>
     <string name="packaging_fee">Packaging Fee</string>
     <string name="clear_shopping_cart">clear Shopping Cart</string>
+    <string name="choose_shipping_address">Choose Shipping Address</string>
+    <string name="send_out_now">Send Out Now</string>
+    <string name="delivery_fee">Delivery Fee</string>
+    <string name="actual_payment">Actual Payment</string>
+    <string name="remarks">Remarks</string>
+    <string name="remarks_input">Remarks Input</string>
+    <string name="count_format">x%1$d</string>
+    <string name="new_shipping_address">Add New Shipping Address</string>
+    <string name="recipient_format">%1$s(%2$s)%3$s</string>
 
 
 </resources>

@@ -3,20 +3,23 @@ package com.jcs.where.features.gourmet.takeaway
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
-import com.jcs.where.api.response.gourmet.dish.DishResponse
+import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_take_away.*
+import kotlinx.android.synthetic.main.item_search.*
 import kotlinx.android.synthetic.main.layout_take_away_shopping_cart.*
 import java.math.BigDecimal
 
@@ -29,6 +32,16 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     /** 餐厅id */
     private lateinit var restaurant_id: String
+
+    /** 包装费 */
+    private  var packing_charges = "0"
+
+    /** 配送费 */
+    private  var delivery_cost = "0"
+
+    /** 商家名称 */
+    private  var restaurant_name = ""
+
     private lateinit var mDishAdapter: TakeawayAdapter
     private lateinit var mCartAdapter: TakeawayAdapter
 
@@ -104,7 +117,6 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                             dishResponse.nativeSelectCount = goodNum
                             mDishAdapter.notifyItemChanged(index)
                         }
-
                     }
                     // 更新
                     handleBottom()
@@ -112,7 +124,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             }
         }
 
-        shopping_cart_tv.apply {
+        shopping_cart_rv.apply {
             layoutManager = LinearLayoutManager(this@TakeawayActivity, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(10f),
                     0, 0).apply { setDrawHeaderFooter(true) })
@@ -164,10 +176,10 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     }
 
     private fun setLikeImage() {
-        if (like == 1) {
+        if (like == 2) {
             likeIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hotelwhitelike))
         } else {
-            likeIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hotelwhiteunlike))
+            likeIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hoteltransparentunlike))
         }
     }
 
@@ -209,7 +221,6 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             } else {
                 cart_ll.visibility = View.GONE
             }
-
         }
 
         close_cart_v.setOnClickListener {
@@ -222,8 +233,18 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                 ToastUtils.showShort(R.string.nothing_selected)
                 return@setOnClickListener
             }
-            // todo 结算
-            showComing()
+            val totalPrice = presenter.handlePrice(mDishAdapter).toPlainString()
+            val selectedList = presenter.getSelectedList(mDishAdapter)
+
+            startActivityAfterLogin(OrderSubmitTakeawayActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_ID, restaurant_id)
+                putString(Constant.PARAM_PACKING_CHARGES, packing_charges)
+                putString(Constant.PARAM_DELIVERY_COST, delivery_cost)
+                putString(Constant.PARAM_DELIVERY_COST, delivery_cost)
+                putString(Constant.PARAM_NAME, restaurant_name)
+                putString(Constant.PARAM_TOTAL_PRICE, totalPrice)
+                putSerializable(Constant.PARAM_DATA, selectedList)
+            })
         }
 
     }
@@ -232,8 +253,11 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         GlideUtil.load(this, data.take_out_image, image_iv)
         like = data.collect_status
         businessPhone = data.tel
+        like = data.collect_status
         setLikeImage()
-        restaurant_tv.text = data.restaurant_name
+        val restaurantName = data.restaurant_name
+        restaurant_name = restaurantName
+        restaurant_tv.text = restaurantName
         time_tv.text = getString(R.string.delivery_time_format, data.delivery_time)
 
         // 配送费
@@ -243,21 +267,21 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         } else {
             delivery_fee_tv.text = getString(R.string.free_delivery)
         }
+        delivery_cost = deliveryCost.toPlainString()
 
         // 包装费
-        packaging_fee_tv.text = getString(R.string.price_unit_format, data.delivery_cost.toPlainString())
+        val toPlainString = data.packing_charges.toPlainString()
+        packaging_fee_tv.text = getString(R.string.price_unit_format, toPlainString)
+        packing_charges = toPlainString
 
 
     }
 
-    override fun bindDishList(list: MutableList<DishResponse>) {
+    override fun bindDishList(list: MutableList<DishTakeawayResponse>) {
         mDishAdapter.setNewInstance(list)
     }
 
-    override fun selectCountChange(goodNum: Int, id: Int) {
-
-        handleBottom()
-    }
+    override fun selectCountChange(goodNum: Int, id: Int) = handleBottom()
 
     /**
      * 购物车数量、总价、是否能结算

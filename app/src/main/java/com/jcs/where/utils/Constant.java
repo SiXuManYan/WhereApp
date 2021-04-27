@@ -53,6 +53,17 @@ public class Constant {
     public static final String PARAM_NEWS_ID = "newsId";
     public static final String PARAM_DATA = "param_data";
     public static final String PARAM_TOTAL_PRICE = "param_total_price";
+    public static final String PARAM_NAME = "param_name";
+
+    /**
+     * 包装费
+     */
+    public static final String PARAM_PACKING_CHARGES = "param_packing_charges";
+
+    /**
+     * 配送费
+     */
+    public static final String PARAM_DELIVERY_COST = "param_delivery_cost";
 
 
     /**

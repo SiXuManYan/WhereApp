@@ -59,6 +59,7 @@ import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
+import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse;
 import com.jcs.where.api.response.gourmet.order.OrderResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
@@ -73,6 +74,7 @@ import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
 import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.bean.OrderSubmitRequest;
+import com.jcs.where.bean.OrderSubmitTakeawayRequest;
 import com.jcs.where.bean.TouristAttractionDetailResponse;
 
 import java.util.ArrayList;
@@ -957,7 +959,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 下单接口
+     * 美食下单接口
      */
     @POST("restaurantapi/v2/eat_in/orders")
     Observable<JcsResponse<List<OrderResponse>>> orderSubmit(
@@ -977,10 +979,19 @@ public interface RetrofitApi {
      * 外卖详情
      */
     @GET("restaurantapi/v2/take_out/goods")
-    Observable<JcsResponse<PageResponse<DishResponse>>> takeawayGoodList(
+    Observable<JcsResponse<PageResponse<DishTakeawayResponse>>> takeawayGoodList(
             @Query("page") int page ,
             @Query("restaurant_id") String restaurant_id
     );
 
+
+
+    /**
+     * 外卖下单接口
+     */
+    @POST("restaurantapi/v2/take_out/orders")
+    Observable<JcsResponse<List<OrderResponse>>> takeawayOrderSubmit(
+            @Body OrderSubmitTakeawayRequest request
+    );
 
 }

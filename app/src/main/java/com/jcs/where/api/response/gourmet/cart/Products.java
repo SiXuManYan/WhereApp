@@ -12,7 +12,7 @@ public class Products implements Serializable {
 
     public int cart_id;
     public int good_num;
-    public GoodData good_data;
+    public GoodData good_data = new GoodData();
     public boolean nativeIsSelect = false;
 
 

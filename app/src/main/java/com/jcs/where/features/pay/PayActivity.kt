@@ -37,12 +37,6 @@ class PayActivity : BaseMvpActivity<PayPresenter>(), PayView {
             showComing()
         }
     }
-/*
 
-
-
-
-
- */
 
 }

@@ -128,7 +128,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
     @Override
     public void bindDishData(List<DishResponse> data) {
-        dish_view.setData(data);
+        dish_view.setData(data, mRestaurantId) ;
         dish_view.setVisibility(View.VISIBLE);
         dish_split_v.setVisibility(View.VISIBLE);
         shopping_cart.setVisibility(View.VISIBLE);

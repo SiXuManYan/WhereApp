@@ -10,13 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
+import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.bean.OrderSubmitChildRequest
+import com.jcs.where.bean.OrderSubmitTakeawayRequest
 import com.jcs.where.features.address.AddressAdapter
 import com.jcs.where.features.address.edit.AddressEditActivity
 import com.jcs.where.utils.Constant
@@ -33,7 +38,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
 
     /** 餐厅id */
-    private var restaurant_id: String = "0"
+    private var mRestaurantId: String = "0"
 
     /** 包装费 */
     private var packing_charges: String = "0"
@@ -53,13 +58,14 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     var addressDialog: BottomSheetDialog? = null
     var timeDialog: BottomSheetDialog? = null
 
+    /** 收货地址 */
     var mSelectAddressData: AddressResponse? = null
 
     /** 配送时间类型（1：立即配送，2：选定时间） */
-    private var delivery_time_type = 0
+    private var mDeliveryTimeType = 0
 
     /** 配送时间 */
-    private var delivery_time = ""
+    private var mDeliveryTime = ""
 
 
     private lateinit var mAdapter: OrderSubmitTakeawayAdapter
@@ -76,7 +82,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         BarUtils.setStatusBarColor(this, Color.WHITE)
         // extra
         val bundle = intent.extras ?: return
-        restaurant_id = bundle.getString(Constant.PARAM_ID, "0")
+        mRestaurantId = bundle.getString(Constant.PARAM_ID, "0")
         packing_charges = bundle.getString(Constant.PARAM_PACKING_CHARGES, "0")
         delivery_cost = bundle.getString(Constant.PARAM_DELIVERY_COST, "0")
         total_price = bundle.getString(Constant.PARAM_TOTAL_PRICE, "0")
@@ -152,16 +158,13 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
             setOnItemClickListener { adapter, view, position ->
                 val time = mTimeAdapter.data[position]
 
-                delivery_time_type = if (position == 0) {
+                mDeliveryTimeType = if (position == 0) {
                     1
                 } else {
                     2
                 }
-                delivery_time = time
-
-
-
-                delivery_time_tv.text = getString(R.string.delivery_time_format2,  TimeUtil.getFormatTimeHM(time))
+                mDeliveryTime = time
+                delivery_time_tv.text = getString(R.string.delivery_time_format2, TimeUtil.getFormatTimeHM(time))
                 timeDialog?.dismiss()
             }
 
@@ -173,7 +176,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         mAdapter.setNewInstance(dish_list)
         presenter = OrderSubmitTakeawayPresenter(this)
         presenter.getAddress()
-        presenter.getTimeList(restaurant_id)
+        presenter.getTimeList(mRestaurantId)
 
     }
 
@@ -187,6 +190,40 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
         time_tv.setOnClickListener {
             showTime()
+        }
+
+        buy_after_tv.setOnClickListener {
+            if (mSelectAddressData == null) {
+                ToastUtils.showShort(R.string.choose_shipping_address)
+                return@setOnClickListener
+            }
+            if (mDeliveryTime.isEmpty()) {
+                ToastUtils.showShort(getString(R.string.please_select_delivery_time))
+                return@setOnClickListener
+            }
+
+            val goodIds = ArrayList<OrderSubmitChildRequest>()
+
+            mAdapter.data.forEach {
+                val apply = OrderSubmitChildRequest().apply {
+                    good_id = it.id
+                    good_num = it.nativeSelectCount
+                }
+                goodIds.add(apply)
+            }
+
+            val apply = OrderSubmitTakeawayRequest().apply {
+                goods = Gson().toJson(goodIds)
+                address_id = mSelectAddressData!!.id
+                restaurant_id = mRestaurantId
+                delivery_time_type = mDeliveryTimeType
+                delivery_time = mDeliveryTime
+                remark = remarks_et.text.toString().trim()
+            }
+
+            presenter.submitOrder(apply)
+
+
         }
 
     }
@@ -257,5 +294,10 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         timeDialog.show()
     }
 
+    override fun submitSuccess(response: OrderResponse?) {
+        ToastUtils.showShort("submit success")
+
+
+    }
 
 }

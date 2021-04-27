@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  */
 public class GoodData implements Serializable {
 
-    public int id;
+    public int id = 0;
     public String title = "";
     public String image = "";
     public BigDecimal price = BigDecimal.ZERO;

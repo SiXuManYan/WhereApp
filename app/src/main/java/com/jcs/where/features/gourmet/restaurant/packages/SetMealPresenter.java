@@ -1,7 +1,10 @@
 package com.jcs.where.features.gourmet.restaurant.packages;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.JsonElement;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
+import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 
 /**
@@ -24,4 +27,16 @@ public class SetMealPresenter extends BaseMvpPresenter {
             }
         });
     }
+
+    public void addCart(AddCartRequest request){
+
+        requestApi(mRetrofit.addCartNumber(request), new BaseMvpObserver<JsonElement>(view) {
+            @Override
+            protected void onSuccess(JsonElement response) {
+                ToastUtils.showShort("add success");
+            }
+        });
+
+    }
+
 }

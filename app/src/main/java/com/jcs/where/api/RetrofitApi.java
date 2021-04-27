@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.request.SendCodeRequest;
@@ -991,7 +992,7 @@ public interface RetrofitApi {
      * 外卖下单接口
      */
     @POST("restaurantapi/v2/take_out/orders")
-    Observable<JcsResponse<List<OrderResponse>>> takeawayOrderSubmit(
+    Observable<JcsResponse<OrderResponse>> takeawayOrderSubmit(
             @Body OrderSubmitTakeawayRequest request
     );
 
@@ -1004,5 +1005,13 @@ public interface RetrofitApi {
             @Query("restaurant_id") String restaurant_id
     );
 
+
+    /**
+     * 加入购物车商品数量
+     */
+    @POST("restaurantapi/v2/carts")
+    Observable<JcsResponse<JsonElement>> addCartNumber(
+            @Body AddCartRequest request
+    );
 
 }

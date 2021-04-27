@@ -1,6 +1,7 @@
 package com.jcs.where.features.gourmet.restaurant.packages;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,11 +12,17 @@ import com.blankj.utilcode.util.SpanUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
+import com.jcs.where.api.request.AddCartRequest;
+import com.jcs.where.api.response.gourmet.cart.Products;
+import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
+import com.jcs.where.features.gourmet.order.OrderSubmitActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
+
+import java.util.ArrayList;
 
 /**
  * Created by Wangsw  2021/4/6 14:38.
@@ -37,6 +44,8 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
     private TextView buy_now_tv;
 
     private String mEatInFoodId;
+    private String mRestaurantId;
+    private DishDetailResponse mData;
 
 
     @Override
@@ -69,6 +78,7 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
     @Override
     protected void initData() {
         mEatInFoodId = getIntent().getStringExtra(Constant.PARAM_ID);
+        mRestaurantId = getIntent().getStringExtra(Constant.PARAM_RESTAURANT_ID);
         presenter = new SetMealPresenter(this);
         presenter.getDetail(mEatInFoodId);
     }
@@ -91,8 +101,8 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
         Glide.with(this).load(data.image).apply(options).into(image_iv);
 
         name_tv.setText(data.title);
-        now_price_tv.setText(getString(R.string.price_unit_format, data.price));
-        now_price2_tv.setText(getString(R.string.price_unit_format, data.price));
+        now_price_tv.setText(getString(R.string.price_unit_format, data.price.toPlainString()));
+        now_price2_tv.setText(getString(R.string.price_unit_format, data.price.toPlainString()));
 
         String oldPrice = getString(R.string.price_unit_format, data.original_price);
         SpannableStringBuilder builder = new SpanUtils().append(oldPrice)
@@ -102,21 +112,55 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
         sales_tv.setText(getString(R.string.sale_format, data.sale_num));
         set_meal_content_tv.setText(data.meals);
         rule_tv.setText(data.rule);
+        mData = data;
 
     }
 
 
     private void onBuyNowClick(View view) {
-        showComing();
+//        Bundle().apply {
+//
+//            putSerializable(Constant.PARAM_DATA, ArrayList<ShoppingCartResponse>(mAdapter.data))
+//
+//            putString(Constant.PARAM_TOTAL_PRICE, totalPrice.toPlainString())
+//        }
+
+
+        Products products = new Products();
+        products.good_data.id = mData.id;
+        products.good_data.image = mData.image;
+        products.good_data.price = mData.price;
+        products.good_data.original_price = mData.original_price;
+
+        products.good_num = 1;
+        products.nativeIsSelect = true;
+
+        ShoppingCartResponse response = new ShoppingCartResponse();
+        response.restaurant_id = mRestaurantId;
+        response.nativeIsSelect = true;
+        response.restaurant_name = mData.title;
+        response.products.add(products);
+
+        ArrayList<ShoppingCartResponse> value = new ArrayList<>();
+        value.add(response);
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable(Constant.PARAM_DATA, value);
+        bundle.putString(Constant.PARAM_TOTAL_PRICE, mData.price.toPlainString());
+
+        startActivityAfterLogin(OrderSubmitActivity.class, bundle);
+
     }
 
     private void onBuyAfterClick(View view) {
-        showComing();
+        AddCartRequest request = new AddCartRequest();
+        request.good_id = String.valueOf(mData.id);
+        request.good_num = 1;
+        presenter.addCart(request);
     }
 
     private void onShoppingCartClick(View view) {
-//        startActivityAfterLogin(ShoppingCartActivity.class);
-        showComing();
+        startActivityAfterLogin(ShoppingCartActivity.class);
     }
 
 }

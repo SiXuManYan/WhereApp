@@ -63,7 +63,7 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
         val nowPrice: String = StringUtils.getString(R.string.price_unit_format, goodData.price)
         now_price_tv.text = nowPrice
 
-        val oldPrice: String = StringUtils.getString(R.string.price_unit_format, goodData.original_price)
+        val oldPrice: String = StringUtils.getString(R.string.price_unit_format, goodData.original_price.toPlainString())
         val oldBuilder = SpanUtils().append(oldPrice).setStrikethrough().create()
         old_price_tv.text = oldBuilder
 

@@ -39,6 +39,7 @@ public class DishView extends LinearLayout {
      * 是否展开
      */
     private boolean isUnfold = false;
+    private String mRestaurantId;
 
     public DishView(Context context) {
         super(context);
@@ -73,7 +74,8 @@ public class DishView extends LinearLayout {
     }
 
 
-    public void setData(List<DishResponse> list) {
+    public void setData(List<DishResponse> list, String restaurantId) {
+        mRestaurantId = restaurantId;
         if (list.isEmpty()) {
             return;
         }
@@ -120,6 +122,7 @@ public class DishView extends LinearLayout {
             Intent intent = new Intent(getContext(), SetMealActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Constant.PARAM_ID, String.valueOf(data.id));
+            intent.putExtra(Constant.PARAM_RESTAURANT_ID, mRestaurantId);
             getContext().startActivity(intent);
         });
 

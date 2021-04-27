@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/choose_shipping_address"
+            android:text="@string/choose_estimated_delivery_time"
             android:textColor="@color/black_333333"
             android:textSize="@dimen/sp_14" />
 
@@ -44,17 +44,9 @@
         android:layout_marginBottom="@dimen/dp_10"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="1"
-        tools:listitem="@layout/item_address" />
+        tools:listitem="@layout/item_address_time" />
 
-    <TextView
-        android:id="@+id/add_new_address_tv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:background="@drawable/shape_solid_gray_4"
-        android:gravity="center"
-        android:text="@string/new_shipping_address"
-        android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_14" />
+
 
 
 </LinearLayout>

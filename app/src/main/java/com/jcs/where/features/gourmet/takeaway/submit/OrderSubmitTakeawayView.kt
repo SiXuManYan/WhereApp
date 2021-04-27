@@ -2,6 +2,7 @@ package com.jcs.where.features.gourmet.takeaway.submit
 
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.address.AddressResponse
+import java.util.ArrayList
 
 /**
  * Created by Wangsw  2021/4/26 17:54.
@@ -9,4 +10,5 @@ import com.jcs.where.api.response.address.AddressResponse
  */
 interface OrderSubmitTakeawayView :BaseMvpView{
     fun bindAddress(toMutableList: MutableList<AddressResponse>)
+    fun bindTime(otherTimes: ArrayList<String>)
 }

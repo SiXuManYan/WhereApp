@@ -20,6 +20,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressAdapter
 import com.jcs.where.features.address.edit.AddressEditActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.time.TimeUtil
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_order_submit_takeaway.*
@@ -50,11 +51,21 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     private lateinit var dish_list: ArrayList<DishTakeawayResponse>
 
     var addressDialog: BottomSheetDialog? = null
+    var timeDialog: BottomSheetDialog? = null
+
     var mSelectAddressData: AddressResponse? = null
+
+    /** 配送时间类型（1：立即配送，2：选定时间） */
+    private var delivery_time_type = 0
+
+    /** 配送时间 */
+    private var delivery_time = ""
+
 
     private lateinit var mAdapter: OrderSubmitTakeawayAdapter
 
     private lateinit var mAddressAdapter: AddressAdapter
+    private lateinit var mTimeAdapter: TimeAdapter
 
     override fun getLayoutId() = R.layout.activity_order_submit_takeaway
 
@@ -102,6 +113,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
             adapter = mAdapter
         }
 
+        // 收货地址
         mAddressAdapter = AddressAdapter().apply {
             addChildClickViewIds(R.id.edit_iv)
 
@@ -134,19 +146,47 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
                 }
             }
         }
+
+        // 送达时间
+        mTimeAdapter = TimeAdapter().apply {
+            setOnItemClickListener { adapter, view, position ->
+                val time = mTimeAdapter.data[position]
+
+                delivery_time_type = if (position == 0) {
+                    1
+                } else {
+                    2
+                }
+                delivery_time = time
+
+
+
+                delivery_time_tv.text = getString(R.string.delivery_time_format2,  TimeUtil.getFormatTimeHM(time))
+                timeDialog?.dismiss()
+            }
+
+        }
+
     }
 
     override fun initData() {
         mAdapter.setNewInstance(dish_list)
         presenter = OrderSubmitTakeawayPresenter(this)
         presenter.getAddress()
+        presenter.getTimeList(restaurant_id)
 
     }
 
     override fun bindListener() {
         select_address_tv.setOnClickListener {
             showAddress()
+        }
+        address_rl.setOnClickListener {
+            showAddress()
+        }
 
+        time_tv.setOnClickListener {
+            showTime()
         }
 
     }
@@ -154,6 +194,13 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
     override fun bindAddress(toMutableList: MutableList<AddressResponse>) {
         mAddressAdapter.setNewInstance(toMutableList)
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent.code == EventCode.EVENT_ADDRESS) {
+            presenter.getAddress()
+        }
     }
 
 
@@ -184,11 +231,31 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         addressDialog.show()
     }
 
-    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_ADDRESS) {
-            presenter.getAddress()
-        }
+    override fun bindTime(otherTimes: java.util.ArrayList<String>) {
+        mTimeAdapter.setNewInstance(otherTimes)
     }
+
+
+    private fun showTime() {
+        val timeDialog = BottomSheetDialog(this)
+        this.timeDialog = timeDialog
+        val view = LayoutInflater.from(this).inflate(R.layout.layout_select_time, null)
+        timeDialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recycler_view.adapter = mTimeAdapter
+
+        view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
+            timeDialog.dismiss()
+        }
+        timeDialog.show()
+    }
+
 
 }

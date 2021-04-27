@@ -592,7 +592,7 @@
     <string name="dishes">Dishes</string>
     <string name="nothing_selected">Nothing Selected</string>
     <string name="delivery_time_format">Delivery about %1$d minutes</string>
-    <string name="delivery_time_format2">Delivered around about %1$s</string>
+    <string name="delivery_time_format2">Delivered about %1$s</string>
     <string name="spread_format">%1$s Send</string>
     <string name="free_delivery">Free Delivery</string>
     <string name="delivery_price_format">Delivery Price %1$s</string>
@@ -608,6 +608,9 @@
     <string name="count_format">x%1$d</string>
     <string name="new_shipping_address">Add New Shipping Address</string>
     <string name="recipient_format">%1$s(%2$s)%3$s</string>
+    <string name="choose_estimated_delivery_time">Choose Estimated Delivery Time</string>
+    <string name="peso_time_format">%1$s&#160;(₱%2$sPeso)</string>
+    <string name="send_out_time">Send Out Time</string>
 
 
 </resources>

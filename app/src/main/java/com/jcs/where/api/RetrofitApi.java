@@ -57,6 +57,7 @@ import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
+import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse;
@@ -993,5 +994,15 @@ public interface RetrofitApi {
     Observable<JcsResponse<List<OrderResponse>>> takeawayOrderSubmit(
             @Body OrderSubmitTakeawayRequest request
     );
+
+
+    /**
+     * 外卖送达时间
+     */
+    @GET("restaurantapi/v2/take_out/delivery/times")
+    Observable<JcsResponse<DeliveryTime>> timeList(
+            @Query("restaurant_id") String restaurant_id
+    );
+
 
 }

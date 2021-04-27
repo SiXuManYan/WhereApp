@@ -610,5 +610,8 @@
     <string name="count_format">x%1$d</string>
     <string name="new_shipping_address">新增收货地址</string>
     <string name="recipient_format">%1$s(%2$s)%3$s</string>
+    <string name="choose_estimated_delivery_time">选择预计送达时间</string>
+    <string name="peso_time_format">%1$s&#160;(₱%2$s配送费)</string>
+    <string name="send_out_time">送达时间</string>
 
 </resources>

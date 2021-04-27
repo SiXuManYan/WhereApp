@@ -105,9 +105,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         mAddressAdapter = AddressAdapter().apply {
             addChildClickViewIds(R.id.edit_iv)
 
-
             setOnItemClickListener { adapter, view, position ->
-
                 val selectData = mAddressAdapter.data[position]
                 mSelectAddressData = selectData
                 select_address_tv.visibility = ViewGroup.GONE
@@ -119,8 +117,8 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
                 } else {
                     getString(R.string.lady)
                 }
-
                 name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
+                addressDialog?.dismiss()
             }
             setOnItemChildClickListener { _, view, position ->
                 val data: AddressResponse = mAddressAdapter.data[position]

@@ -84,16 +84,17 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/dp_37"
+                    android:text="@string/alipay"
                     android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13"
-                    android:text="@string/alipay" />
+                    android:textSize="@dimen/sp_13" />
 
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -120,16 +121,17 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/dp_37"
+                    android:text="@string/paypal"
                     android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13"
-                    android:text="@string/paypal" />
+                    android:textSize="@dimen/sp_13" />
 
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

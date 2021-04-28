@@ -22,6 +22,7 @@ import com.jcs.where.utils.FastBlur;
  * 只是实现不同
  * created by lyd 2018/09/04
  */
+@Deprecated
 public class RealtimeBlurView extends View {
 
     private static final String TAG = "RealtimeBlurView2";

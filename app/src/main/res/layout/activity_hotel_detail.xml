@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     android:background="@color/grey_F5F5F5">
 
-    <com.jcs.where.view.ObservableScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <com.jcs.where.view.XBanner.XBanner
@@ -23,504 +24,420 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="233dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_hoteldetailone"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_hoteldetailone"
-                    android:orientation="vertical">
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/black_333333"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="Crown Royale Hotel" />
+
+
+                    <com.jcs.where.widget.ratingstar.RatingStarView
+                        android:id="@+id/star_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_10"
+                        app:rsv_cornerRadius="@dimen/dp_2"
+                        app:rsv_drawStrokeForHalfStar="true"
+                        app:rsv_enableSelectRating="false"
+                        app:rsv_onlyHalfStar="false"
+                        app:rsv_rating="0"
+                        app:rsv_starBackgroundColor="@color/grey_F5F5F5"
+                        app:rsv_starForegroundColor="@color/yellow_FCE314"
+                        app:rsv_starMargin="@dimen/dp_3"
+                        app:rsv_starNum="5"
+                        app:rsv_starThickness="0.5"
+                        app:rsv_strokeColor="@color/transplant"
+                        app:rsv_strokeWidth="0dp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_startTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="@dimen/sp_11"
+                    tools:text="2017年开业" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="11dp"
+                    android:background="@color/grey_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp">
+
+                    <TextView
+                        android:id="@+id/tv_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_star_yellow"
+                        android:drawablePadding="2.5dp"
+                        android:text="4.5"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_commentnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_15"
+                        android:textColor="@color/blue_4C9EF2"
+                        android:textSize="@dimen/sp_11"
+                        tools:text="170条点评" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="11dp"
+                    android:background="@color/grey_F5F5F5" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageView
+                        android:id="@+id/iv_facebook"
+                        android:layout_width="@dimen/dp_17"
+                        android:layout_height="@dimen/dp_17"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_hoteldetail_facebook" />
+
+                    <TextView
+                        android:id="@+id/tv_facebookadress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@+id/iv_facebook"
+                        android:text="@string/facebook_website"
+                        android:textColor="@color/blue_4C9EF2"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/faceline"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="11dp"
+                    android:background="@color/grey_F5F5F5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_17"
+                        android:layout_height="@dimen/dp_17"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_hoteldetail_time" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center_vertical"
+                        android:layout_marginStart="10dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tv_name"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_checkin"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:includeFontPadding="false"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:textColor="@color/black_333333"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            tools:text="Crown Royale Hotel" />
+                            android:layout_weight="1"
+                            android:textColor="@color/grey_666666"
+                            android:textSize="12sp"
+                            tools:text="入住时间：14:00之后" />
 
-
-
-                        <com.jcs.where.widget.ratingstar.RatingStarView
-                            android:id="@+id/star_view"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_height="@dimen/dp_16"
-                            android:layout_marginStart="@dimen/dp_10"
-                            app:rsv_cornerRadius="@dimen/dp_2"
-                            app:rsv_drawStrokeForHalfStar="true"
-                            app:rsv_enableSelectRating="false"
-                            app:rsv_onlyHalfStar="false"
-                            app:rsv_rating="0"
-                            app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-                            app:rsv_starForegroundColor="@color/yellow_FCE314"
-                            app:rsv_starMargin="@dimen/dp_3"
-                            app:rsv_starNum="5"
-                            app:rsv_starThickness="0.5"
-                            app:rsv_strokeColor="@color/transplant"
-                            app:rsv_strokeWidth="0dp" />
-
+                        <TextView
+                            android:id="@+id/tv_checkout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/grey_666666"
+                            android:textSize="12sp"
+                            tools:text="退房时间：12:00以前" />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_startTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/grey_666666"
-                        android:textSize="@dimen/sp_11"
-                        tools:text="2017年开业" />
+                </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginStart="11dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="11dp"
-                        android:background="@color/grey_F5F5F5" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_17"
+                        android:layout_height="@dimen/dp_17"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/ic_hoteldetail_location" />
+
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="12sp"
+                        tools:text="G/F GICC Technopark,Luzon Avenue,Freeport..." />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:id="@+id/rl_navigation"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="15dp">
+                        android:layout_marginRight="6.5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_hoteldetailphone"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dp_7"
+                        android:paddingBottom="@dimen/dp_7">
+
+
+                        <ImageView
+                            android:id="@+id/navigation_iv"
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/ic_hoteldetail_navigation" />
 
                         <TextView
-                            android:id="@+id/tv_star"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/ic_star_yellow"
-                            android:drawablePadding="2.5dp"
-                            android:text="4.5"
-                            android:textColor="@color/grey_666666"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tv_commentnumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/dp_15"
-                            android:textColor="@color/blue_4C9EF2"
-                            android:textSize="@dimen/sp_11"
-                            tools:text="170条点评" />
-
-
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_toEndOf="@+id/navigation_iv"
+                            android:gravity="center"
+                            android:text="@string/navigation"
+                            android:textColor="@color/grey_666666"
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginStart="11dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="11dp"
-                        android:background="@color/grey_F5F5F5" />
-
                     <RelativeLayout
-                        android:id="@+id/rl_facebook"
-                        android:layout_width="match_parent"
+                        android:id="@+id/rl_phone"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="15dp">
+                        android:layout_marginStart="6.5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_hoteldetailphone"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dp_7"
+                        android:paddingBottom="@dimen/dp_7">
 
                         <ImageView
-                            android:id="@+id/iv_facebook"
-                            android:layout_width="@dimen/dp_17"
-                            android:layout_height="@dimen/dp_17"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_hoteldetail_facebook" />
+                            android:id="@+id/phone_iv"
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/ic_hoteldetail_phone" />
 
                         <TextView
-                            android:id="@+id/tv_facebookadress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_toRightOf="@+id/iv_facebook"
-                            android:text="@string/facebook_website"
-                            android:textColor="@color/blue_4C9EF2"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_toEndOf="@+id/phone_iv"
+                            android:gravity="center"
+                            android:text="@string/telephone"
+                            android:textColor="@color/grey_666666"
                             android:textSize="12sp" />
 
                     </RelativeLayout>
 
-
-                    <View
-                        android:id="@+id/faceline"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginStart="11dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="11dp"
-                        android:background="@color/grey_F5F5F5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/dp_17"
-                            android:layout_height="@dimen/dp_17"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_hoteldetail_time" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tv_checkin"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/grey_666666"
-                                android:textSize="12sp"
-                                tools:text="入住时间：14:00之后" />
-
-                            <TextView
-                                android:id="@+id/tv_checkout"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/grey_666666"
-                                android:textSize="12sp"
-                                tools:text="退房时间：12:00以前" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/dp_17"
-                            android:layout_height="@dimen/dp_17"
-                            android:layout_gravity="center_vertical"
-                            android:src="@mipmap/ic_hoteldetail_location" />
-
-
-                        <TextView
-                            android:id="@+id/tv_address"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:textColor="@color/grey_666666"
-                            android:textSize="12sp"
-                            tools:text="G/F GICC Technopark,Luzon Avenue,Freeport..." />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:id="@+id/rl_navigation"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="6.5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_hoteldetailphone"
-                            android:gravity="center"
-                            android:paddingTop="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_7">
-
-
-                            <ImageView
-                                android:id="@+id/navigation_iv"
-                                android:layout_width="@dimen/dp_20"
-                                android:layout_height="@dimen/dp_20"
-                                android:scaleType="centerInside"
-                                android:src="@mipmap/ic_hoteldetail_navigation" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="@dimen/dp_10"
-                                android:layout_toEndOf="@+id/navigation_iv"
-                                android:gravity="center"
-                                android:text="@string/navigation"
-                                android:textColor="@color/grey_666666"
-                                android:textSize="12sp" />
-                        </RelativeLayout>
-
-
-                        <RelativeLayout
-                            android:id="@+id/rl_phone"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6.5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_hoteldetailphone"
-                            android:gravity="center"
-                            android:paddingTop="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_7">
-
-                            <ImageView
-                                android:id="@+id/phone_iv"
-                                android:layout_width="@dimen/dp_20"
-                                android:scaleType="centerInside"
-                                android:layout_height="@dimen/dp_20"
-                                android:src="@mipmap/ic_hoteldetail_phone" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="@dimen/dp_10"
-                                android:layout_toEndOf="@+id/phone_iv"
-                                android:gravity="center"
-                                android:text="@string/telephone"
-                                android:textColor="@color/grey_666666"
-                                android:textSize="12sp" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_choosedate"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_choosedate"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/startDayTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:textColor="@color/blue_4C9EF2"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/startWeekTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="6dp"
+                    android:textColor="@color/blue_4C9EF2"
+                    android:textSize="@dimen/sp_11" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3.5dp"
+                    android:text="@string/enter_stay"
+                    android:textColor="@color/grey_999999"
+                    android:textSize="@dimen/sp_11" />
+
+                <TextView
+                    android:id="@+id/endDayTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/blue_4C9EF2"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/endWeekTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="6dp"
+                    android:textColor="@color/blue_4C9EF2"
+                    android:textSize="@dimen/sp_11" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3.5dp"
+                    android:text="@string/leave_stay"
+                    android:textColor="@color/grey_999999"
+                    android:textSize="@dimen/sp_11" />
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+
+                    <TextView
+                        android:id="@+id/totalDayTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:background="@drawable/bg_labgrey"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/blue_4C9EF2"
+                        android:textSize="12sp"
+                        tools:text="5night" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:text="@string/policy_prompt"
+                    android:textColor="@color/black_333333"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/startDayTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:textColor="@color/blue_4C9EF2"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/startWeekTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="6dp"
-                        android:textColor="@color/blue_4C9EF2"
-                        android:textSize="@dimen/sp_11" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="3.5dp"
-                        android:text="@string/enter_stay"
-                        android:textColor="@color/grey_999999"
-                        android:textSize="@dimen/sp_11" />
-
-                    <TextView
-                        android:id="@+id/endDayTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="20dp"
-                        android:textColor="@color/blue_4C9EF2"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/endWeekTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="6dp"
-                        android:textColor="@color/blue_4C9EF2"
-                        android:textSize="@dimen/sp_11" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="3.5dp"
-                        android:text="@string/leave_stay"
-                        android:textColor="@color/grey_999999"
-                        android:textSize="@dimen/sp_11" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical">
-
-
-                        <TextView
-                            android:id="@+id/totalDayTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="@dimen/dp_15"
-                            android:background="@drawable/bg_labgrey"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="2dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="2dp"
-                            android:textColor="@color/blue_4C9EF2"
-                            android:textSize="12sp"
-                            tools:text="5night" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_room"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/policy_prompt"
-                        android:textColor="@color/black_333333"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tv_policystarttime"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="入住时间：14:00之后"
-                                android:textColor="@color/black_333333"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/tv_policyendtime"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="退房时间：12:00以前"
-                                android:textColor="@color/black_333333"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_policychildren"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="儿童及加床"
-                        android:textColor="@color/black_333333"
-                        android:textSize="13sp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/amenities_prompt"
-                        android:textColor="@color/black_333333"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_facilities"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/white" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/ll_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -528,113 +445,21 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_policystarttime"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/customer_comments"
+                            android:layout_weight="1"
+                            android:text="入住时间：14:00之后"
                             android:textColor="@color/black_333333"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/iv_commentavatar"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_marginStart="15dp"
-                                android:src="@drawable/ic_test" />
-
-                            <RelativeLayout
-                                android:id="@+id/ll_username"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignTop="@+id/iv_commentavatar"
-                                android:layout_alignBottom="@+id/iv_commentavatar"
-                                android:layout_marginStart="10dp"
-                                android:layout_toEndOf="@+id/iv_commentavatar"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:orientation="vertical">
-
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-
-
-                                        <TextView
-                                            android:id="@+id/username"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textColor="@color/black_333333"
-                                            android:textSize="@dimen/sp_13"
-                                            tools:text="DavidWang" />
-
-                                        <TextView
-                                            android:id="@+id/tv_time"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_alignParentEnd="true"
-                                            android:layout_marginEnd="@dimen/dp_15"
-                                            android:textColor="@color/grey_999999"
-                                            android:textSize="12sp"
-                                            tools:text="2020-8-8" />
-
-                                    </RelativeLayout>
-
-                                    <com.jcs.where.widget.StarView
-                                        android:id="@+id/starView"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/dp_10"
-                                        android:layout_marginTop="@dimen/dp_5" />
-
-                                </LinearLayout>
-
-
-                            </RelativeLayout>
-
-                        </RelativeLayout>
+                            android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_commentdetail"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_policyendtime"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="7dp"
-                            android:textColor="@color/grey_666666"
-                            android:textSize="12sp"
-                            tools:text="酒店的位置很好找，周边购物吃饭都非常方便。" />
-
-                        <TextView
-                            android:id="@+id/tv_seemore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="12.5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/bg_allcomment"
-                            android:paddingLeft="7dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="7dp"
-                            android:paddingBottom="5dp"
-                            android:text="@string/all_reviews"
-                            android:textColor="@color/blue_4C9EF2"
+                            android:layout_weight="1"
+                            android:text="退房时间：12:00以前"
+                            android:textColor="@color/black_333333"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -642,27 +467,189 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_policychildren"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/no_more"
-                    android:textColor="@color/grey_999999"
-                    android:textSize="12sp" />
+                    android:text="儿童及加床"
+                    android:textColor="@color/black_333333"
+                    android:textSize="13sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/amenities_prompt"
+                    android:textColor="@color/black_333333"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_facilities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white" />
 
 
             </LinearLayout>
 
 
-        </RelativeLayout>
-    </com.jcs.where.view.ObservableScrollView>
+            <LinearLayout
+                android:id="@+id/ll_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-    <com.jcs.where.view.RealtimeBlurView
-        android:id="@+id/RealtimeBlurView"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/customer_comments"
+                        android:textColor="@color/black_333333"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_commentavatar"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="15dp"
+                            android:src="@drawable/ic_test" />
+
+                        <RelativeLayout
+                            android:id="@+id/ll_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/iv_commentavatar"
+                            android:layout_alignBottom="@+id/iv_commentavatar"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/iv_commentavatar"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+
+                                    <TextView
+                                        android:id="@+id/username"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/black_333333"
+                                        android:textSize="@dimen/sp_13"
+                                        tools:text="DavidWang" />
+
+                                    <TextView
+                                        android:id="@+id/tv_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginEnd="@dimen/dp_15"
+                                        android:textColor="@color/grey_999999"
+                                        android:textSize="12sp"
+                                        tools:text="2020-8-8" />
+
+                                </RelativeLayout>
+
+                                <com.jcs.where.widget.StarView
+                                    android:id="@+id/starView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_5" />
+
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_commentdetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="7dp"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="12sp"
+                        tools:text="酒店的位置很好找，周边购物吃饭都非常方便。" />
+
+                    <TextView
+                        android:id="@+id/tv_seemore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="12.5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_allcomment"
+                        android:paddingLeft="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="7dp"
+                        android:paddingBottom="5dp"
+                        android:text="@string/all_reviews"
+                        android:textColor="@color/blue_4C9EF2"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/no_more"
+                android:textColor="@color/grey_999999"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <View
         android:id="@+id/useView"

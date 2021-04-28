@@ -30,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -93,7 +94,7 @@ public class HotelDetailActivity extends BaseActivity {
     private RoomAdapter roomAdapter;
     private FacilitiesAdapter facilitiesAdapter;
     private TextView policyStartTimeTv, policyEndTimeTv, policyChildrenTv;
-    private ObservableScrollView scrollView;
+    private NestedScrollView scrollView;
     private View useView;
     private LinearLayout commentLl;
     private CircleImageView commentAvaterIv;
@@ -225,6 +226,7 @@ public class HotelDetailActivity extends BaseActivity {
         };
         roomAdapter = new RoomAdapter();
         roomRv.setLayoutManager(linearLayoutManager);
+        roomRv.setNestedScrollingEnabled(true);
         facilitiesRv = findViewById(R.id.rv_facilities);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HotelDetailActivity.this, 2) {
             @Override
@@ -233,6 +235,7 @@ public class HotelDetailActivity extends BaseActivity {
             }
         };
         facilitiesRv.setLayoutManager(gridLayoutManager);
+        facilitiesRv.setNestedScrollingEnabled(true);
         facilitiesAdapter = new FacilitiesAdapter();
         policyStartTimeTv = findViewById(R.id.tv_policystarttime);
         policyEndTimeTv = findViewById(R.id.tv_policyendtime);
@@ -240,9 +243,9 @@ public class HotelDetailActivity extends BaseActivity {
         scrollView = findViewById(R.id.scrollView);
         useView.setBackgroundColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(getResources().getColor(R.color.white));
-        scrollView.setScrollViewListener(new ObservableScrollView.OnScrollChangeListener() {
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+            public void onScrollChange(NestedScrollView scrollView, int x, int y, int oldx, int oldy) {
                 float headHeight = banner.getMeasuredHeight() - toolbar.getMeasuredHeight();
                 int alpha = (int) (((float) y / headHeight) * 255);
                 if (alpha >= 255) {
@@ -283,8 +286,11 @@ public class HotelDetailActivity extends BaseActivity {
                     titleTv.setText("");
                 }
                 changeStatusTextColor();
+
             }
         });
+
+
         useView.getBackground().setAlpha(0);
         toolbar.getBackground().setAlpha(0);//透明
         commentLl = findViewById(R.id.ll_comment);

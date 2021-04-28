@@ -39,6 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
@@ -54,14 +55,28 @@
                             android:textStyle="bold"
                             tools:text="Crown Royale Hotel" />
 
-                        <RatingBar
-                            android:id="@+id/ratingBar"
-                            style="?android:attr/ratingBarStyleSmall"
+
+
+                        <com.jcs.where.widget.ratingstar.RatingStarView
+                            android:id="@+id/star_view"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_16"
                             android:layout_gravity="center_vertical"
+                            android:layout_height="@dimen/dp_16"
                             android:layout_marginStart="@dimen/dp_10"
-                            android:stepSize="1" />
+                            app:rsv_cornerRadius="@dimen/dp_2"
+                            app:rsv_drawStrokeForHalfStar="true"
+                            app:rsv_enableSelectRating="false"
+                            app:rsv_onlyHalfStar="false"
+                            app:rsv_rating="0"
+                            app:rsv_starBackgroundColor="@color/grey_F5F5F5"
+                            app:rsv_starForegroundColor="@color/yellow_FCE314"
+                            app:rsv_starMargin="@dimen/dp_3"
+                            app:rsv_starNum="5"
+                            app:rsv_starThickness="0.5"
+                            app:rsv_strokeColor="@color/transplant"
+                            app:rsv_strokeWidth="0dp" />
+
+
                     </LinearLayout>
 
                     <TextView
@@ -256,6 +271,7 @@
                                 android:id="@+id/navigation_iv"
                                 android:layout_width="@dimen/dp_20"
                                 android:layout_height="@dimen/dp_20"
+                                android:scaleType="centerInside"
                                 android:src="@mipmap/ic_hoteldetail_navigation" />
 
                             <TextView
@@ -285,6 +301,7 @@
                             <ImageView
                                 android:id="@+id/phone_iv"
                                 android:layout_width="@dimen/dp_20"
+                                android:scaleType="centerInside"
                                 android:layout_height="@dimen/dp_20"
                                 android:src="@mipmap/ic_hoteldetail_phone" />
 

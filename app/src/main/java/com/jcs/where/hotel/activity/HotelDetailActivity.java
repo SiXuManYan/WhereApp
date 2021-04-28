@@ -60,6 +60,7 @@ import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.widget.StarView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
+import com.jcs.where.widget.ratingstar.RatingStarView;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -80,7 +81,7 @@ public class HotelDetailActivity extends BaseActivity {
     private Toolbar toolbar;
     private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
-    private RatingBar mRatingBar;
+//    private RatingBar mRatingBar;
     private RelativeLayout faceBookRl;
     private TextView faceBookTv;
     private String faceBookLink;
@@ -114,6 +115,7 @@ public class HotelDetailActivity extends BaseActivity {
     private int mTotalDay;
     private JcsCalendarDialog mJcsCalendarDialog;
     private ImageView back_iv;
+    private RatingStarView star_view;
 
     public static void goTo(Context context, int id, JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate, int totalDay, String startYear, String endYear, int roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -164,7 +166,8 @@ public class HotelDetailActivity extends BaseActivity {
         shareIv = findViewById(R.id.iv_share);
         titleTv = findViewById(R.id.titleTv);
         nameTv = findViewById(R.id.tv_name);
-        mRatingBar = findViewById(R.id.ratingBar);
+        star_view = findViewById(R.id.star_view);
+
         banner = findViewById(R.id.banner3);
         startTimeTv = findViewById(R.id.tv_startTime);
         starTv = findViewById(R.id.tv_star);
@@ -383,14 +386,11 @@ public class HotelDetailActivity extends BaseActivity {
                             .start();
                 }
                 nameTv.setText(hotelDetailResponse.getName());
-                mRatingBar.setNumStars((int) hotelDetailResponse.getGrade());
+                star_view.setRating((float) hotelDetailResponse.getGrade());
 
-                shareIv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                shareIv.setOnClickListener(view -> {
 //                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, hotelDetailResponse.getName());
-                        onShareClick();
-                    }
+                    onShareClick();
                 });
                 hotelName = hotelDetailResponse.getName();
                 hotelBreakfast = hotelDetailResponse.getPolicy().getBreadfast();

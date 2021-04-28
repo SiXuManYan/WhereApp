@@ -363,6 +363,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     override fun onRefresh() {
 
         // 推荐
+        swipeLayout.isRefreshing = true
         recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
         presenter.getRecommendList(recommedRequestPage)
         presenter.getMessageCount()
@@ -401,10 +402,11 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             return
         }
 
-        when (resultCode) {
+        when (requestCode) {
             REQ_SELECT_CITY -> {
                 // 选择城市
                 city_tv.text = data.getStringExtra(CityPickerActivity.EXTRA_CITY)
+                onRefresh()
             }
             else -> {
             }

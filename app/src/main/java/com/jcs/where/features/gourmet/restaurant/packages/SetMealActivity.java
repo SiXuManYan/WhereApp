@@ -45,6 +45,7 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
 
     private String mEatInFoodId;
     private String mRestaurantId;
+    private String mRestaurantName;
     private DishDetailResponse mData;
 
 
@@ -79,6 +80,7 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
     protected void initData() {
         mEatInFoodId = getIntent().getStringExtra(Constant.PARAM_ID);
         mRestaurantId = getIntent().getStringExtra(Constant.PARAM_RESTAURANT_ID);
+        mRestaurantName = getIntent().getStringExtra(Constant.PARAM_RESTAURANT_NAME);
         presenter = new SetMealPresenter(this);
         presenter.getDetail(mEatInFoodId);
     }
@@ -118,16 +120,10 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
 
 
     private void onBuyNowClick(View view) {
-//        Bundle().apply {
-//
-//            putSerializable(Constant.PARAM_DATA, ArrayList<ShoppingCartResponse>(mAdapter.data))
-//
-//            putString(Constant.PARAM_TOTAL_PRICE, totalPrice.toPlainString())
-//        }
-
 
         Products products = new Products();
         products.good_data.id = mData.id;
+        products.good_data.title = mData.title;
         products.good_data.image = mData.image;
         products.good_data.price = mData.price;
         products.good_data.original_price = mData.original_price;
@@ -138,7 +134,7 @@ public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implement
         ShoppingCartResponse response = new ShoppingCartResponse();
         response.restaurant_id = mRestaurantId;
         response.nativeIsSelect = true;
-        response.restaurant_name = mData.title;
+        response.restaurant_name = mRestaurantName;
         response.products.add(products);
 
         ArrayList<ShoppingCartResponse> value = new ArrayList<>();

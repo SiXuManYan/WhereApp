@@ -11,10 +11,10 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 7,
-      "versionName": "0.1.7",
+      "versionCode": 8,
+      "versionName": "0.1.8_b",
       "enabled": true,
-      "outputFile": "Where_v7_(0.1.7)_20210425.apk"
+      "outputFile": "Where_v8_(0.1.8_b)_20210427.apk"
     }
   ]
 }

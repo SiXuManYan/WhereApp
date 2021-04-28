@@ -32,6 +32,7 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
+
         val emptyView = EmptyView(this).apply {
             showEmptyDefault()
         }
@@ -46,6 +47,7 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
 
     override fun initData() {
         presenter = OrderSubmitPresenter(this)
+
         val data = intent.getSerializableExtra(Constant.PARAM_DATA) as ArrayList<ShoppingCartResponse>
         mTotalPrice = intent.getStringExtra(Constant.PARAM_TOTAL_PRICE)!!
         mData.addAll(data)
@@ -81,6 +83,7 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
             putParcelableArrayList(Constant.PARAM_DATA, ArrayList(response))
             putString(Constant.PARAM_TOTAL_PRICE, mTotalPrice)
         })
+        finish()
     }
 
 

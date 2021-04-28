@@ -1,5 +1,7 @@
 package com.jcs.where.features.pay
 
+import android.graphics.Color
+import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -18,6 +20,7 @@ class PayActivity : BaseMvpActivity<PayPresenter>(), PayView {
     override fun getLayoutId() = R.layout.activity_pay
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this,Color.WHITE)
         orders = intent.getParcelableArrayListExtra<OrderResponse>(Constant.PARAM_DATA)!!
         totalPrice = intent.getStringExtra(Constant.PARAM_TOTAL_PRICE)!!
 

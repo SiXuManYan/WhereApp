@@ -42,7 +42,15 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     private ImageView shopping_cart, navigation_iv, chat_iv;
     private View dish_split_v;
 
+    /**
+     * 餐厅id
+     */
     private String mRestaurantId;
+
+    /**
+     * 餐厅名称
+     */
+    private String mRestaurantName;
 
 
     @Override
@@ -104,8 +112,9 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
                     .placeholder(R.mipmap.ic_empty_gray);
             Glide.with(this).load(data.images.get(0)).apply(options).into(image_iv);
         }
-        mJcsTitle.setMiddleTitle(data.title);
-        name_tv.setText(data.title);
+        mRestaurantName = data.title;
+        mJcsTitle.setMiddleTitle(mRestaurantName);
+        name_tv.setText(mRestaurantName);
 
         score_tv.setText(String.valueOf(data.grade));
         star_view.setRating(data.grade);
@@ -128,7 +137,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
     @Override
     public void bindDishData(List<DishResponse> data) {
-        dish_view.setData(data, mRestaurantId) ;
+        dish_view.setData(data, mRestaurantId ,mRestaurantName) ;
         dish_view.setVisibility(View.VISIBLE);
         dish_split_v.setVisibility(View.VISIBLE);
         shopping_cart.setVisibility(View.VISIBLE);

@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ColorUtils;
 import com.jcs.where.R;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.IdRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class JcsTitle extends ConstraintLayout {
@@ -104,6 +107,11 @@ public class JcsTitle extends ConstraintLayout {
             mTitleLayout.setBackgroundResource(mBackgroundRes);
         }
     }
+
+    public void setBackGround(@ColorRes int color){
+        mTitleLayout.setBackgroundColor(ColorUtils.getColor(color));
+    }
+
 
     public void setBackIvClickListener(View.OnClickListener listener) {
         mBackIv.setOnClickListener(listener);

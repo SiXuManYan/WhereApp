@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/grey_F5F5F5">
 
     <View
@@ -17,10 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        app:middleTitle="订单号"
-        app:middleTitleColor="@color/white"
+        android:background="@color/transplant"
         app:backIcon="@drawable/ic_back_white"
-        />
+        app:middleTitle="订单号"
+        app:middleTitleColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -123,9 +123,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/iv_photo"
                 android:layout_alignBottom="@+id/iv_photo"
+                android:layout_toLeftOf="@+id/tv_navigation"
                 android:layout_toRightOf="@+id/iv_photo"
-                android:orientation="vertical"
-                android:layout_toLeftOf="@+id/tv_navigation">
+                android:orientation="vertical">
 
 
                 <TextView
@@ -157,8 +157,8 @@
                     android:layout_marginLeft="10dp"
                     android:drawableLeft="@drawable/ic_hotelorderlocation"
                     android:drawablePadding="4dp"
-                    android:singleLine="true"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="@color/grey_999999"
                     android:textSize="12sp" />
 
@@ -199,9 +199,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                tools:text="商务房（不含早） "
                 android:textColor="@color/black_333333"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:text="商务房（不含早） " />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -269,9 +269,9 @@
                     android:id="@+id/tv_breakfast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="不含早"
                     android:textColor="@color/grey_999999"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="不含早" />
 
                 <View
                     android:layout_width="0.5dp"

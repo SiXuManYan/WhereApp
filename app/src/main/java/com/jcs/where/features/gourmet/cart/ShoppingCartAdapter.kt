@@ -79,10 +79,10 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
             select_all_iv.setImageResource(R.mipmap.ic_un_checked)
         }
 
-        if (content_rv.adapter == null) {
+//        if (content_rv.adapter == null) {
             val childAdapter = ShoppingCartChildAdapter()
             mChildAdapter = childAdapter
-        }
+//        }
         mChildAdapter.setNewInstance(data.products)
         content_rv.adapter = mChildAdapter
         mChildAdapter.numberChangeListener = numberChangeListener

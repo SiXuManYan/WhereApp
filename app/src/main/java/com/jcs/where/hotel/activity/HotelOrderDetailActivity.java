@@ -74,6 +74,7 @@ public class HotelOrderDetailActivity extends BaseActivity {
 
         mCallDialog = new CallPhoneDialog();
         mToNavigationDialog = new ToNavigationDialog();
+        mJcsTitle.setBackGround(R.color.transplant);
     }
 
     @Override

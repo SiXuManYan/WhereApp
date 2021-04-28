@@ -12,6 +12,7 @@ import com.jcs.where.api.response.gourmet.comment.CommentResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
@@ -160,7 +161,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     }
 
     private void onShoppingCartClick(View view) {
-        showComing();
+        startActivityAfterLogin(ShoppingCartActivity.class);
     }
 
 }

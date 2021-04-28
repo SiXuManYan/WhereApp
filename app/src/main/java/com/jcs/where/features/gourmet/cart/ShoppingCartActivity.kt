@@ -209,6 +209,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
+                mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()

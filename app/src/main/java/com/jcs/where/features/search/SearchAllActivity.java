@@ -69,7 +69,6 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
         presenter = new SearchAllPresenter(this);
         mAdapter = new SearchAllAdapter();
         recycler.setAdapter(mAdapter);
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
         mAdapter.setOnItemClickListener(this);
     }
 

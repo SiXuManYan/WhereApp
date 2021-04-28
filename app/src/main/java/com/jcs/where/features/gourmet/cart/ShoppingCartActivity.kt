@@ -3,6 +3,7 @@ package com.jcs.where.features.gourmet.cart
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.*
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -97,7 +98,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             isSelectAll = !isSelectAll
 
             if (isSelectAll) {
-
+                VibrateUtils.vibrate(10)
                 presenter.handleSelectAll(mAdapter, true)
                 val handlePrice = presenter.handlePrice(mAdapter)
                 total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
@@ -132,23 +133,6 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
                                     deleteItem.add(child)
                                 }
                             }
-                        }
-
-                        if (deleteItem.isNotEmpty()) {
-                            // 删除子 view
-                            deleteItem.forEach {
-                                mAdapter.mChildAdapter.remove(it)
-                            }
-                            //　检查删除全部
-                            mAdapter.data.forEach {
-                                if (it.products.isEmpty()) {
-                                    deleteParent.add(it)
-                                }
-                            }
-                            deleteParent.forEach {
-                                mAdapter.remove(it)
-                            }
-                            getNowPrice()
                         }
                         presenter.deleteCart(delete)
                     }
@@ -227,6 +211,8 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
                 loadMoreModule.loadMoreComplete()
             }
         }
+        getNowPrice()
+
     }
 
     override fun onNumberChange(cartId: Int, isAdd: Boolean) {
@@ -267,6 +253,10 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             isSelectAll = false
         }
         changeSelectImage(isSelectAll)
+    }
+
+    override fun deleteSuccess() {
+        onRefresh()
     }
 
 }

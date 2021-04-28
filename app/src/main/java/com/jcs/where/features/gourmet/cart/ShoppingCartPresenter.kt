@@ -2,10 +2,12 @@ package com.jcs.where.features.gourmet.cart
 
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.request.CartDeleteRequest
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.utils.BigDecimalUtil
@@ -105,8 +107,14 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
         if (delete.isEmpty()) {
             return
         }
-        requestApi(mRetrofit.deleteCart(delete.toString()), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement?) {
+        val toJson = Gson().toJson(delete)
+        val apply = CartDeleteRequest().apply {
+            cart_id = toJson
+        }
+
+        requestApi(mRetrofit.deleteCart(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.deleteSuccess()
                 ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
             }
         })

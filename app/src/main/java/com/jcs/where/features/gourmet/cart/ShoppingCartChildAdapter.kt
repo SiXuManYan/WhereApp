@@ -5,6 +5,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.VibrateUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -44,7 +45,6 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
                 .error(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray)
 
-
         val child_container_rl = holder.getView<RelativeLayout>(R.id.child_container_rl)
         val good_checked_iv = holder.getView<ImageView>(R.id.good_checked_iv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
@@ -78,6 +78,7 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
             products.nativeIsSelect = !currentIsSelect
 
             if (products.nativeIsSelect) {
+                VibrateUtils.vibrate(10)
                 good_checked_iv.setImageResource(R.mipmap.ic_checked_orange)
             } else {
                 good_checked_iv.setImageResource(R.mipmap.ic_un_checked)

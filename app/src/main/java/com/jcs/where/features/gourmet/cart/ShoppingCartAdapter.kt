@@ -1,11 +1,14 @@
 package com.jcs.where.features.gourmet.cart
 
+import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.VibrateUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -18,6 +21,8 @@ import com.jcs.where.widget.NumberView
  */
 class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolder>(R.layout.item_shopping_cart), LoadMoreModule {
 
+      var holder: BaseViewHolder? = null
+
     /**
      * 商品数量改变监听
      */
@@ -29,6 +34,8 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
     var onUserSelectListener: OnUserSelectListener? = null
 
     lateinit var mChildAdapter: ShoppingCartChildAdapter
+
+
     lateinit var m_select_all_iv: ImageView
 
 
@@ -49,6 +56,7 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
 
     override fun convert(holder: BaseViewHolder, data: ShoppingCartResponse) {
 
+        this.holder = holder;
         val title_ll = holder.getView<LinearLayout>(R.id.title_ll)
         val select_all_iv = holder.getView<ImageView>(R.id.select_all_iv)
         m_select_all_iv = select_all_iv
@@ -79,13 +87,13 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
             select_all_iv.setImageResource(R.mipmap.ic_un_checked)
         }
 
-//        if (content_rv.adapter == null) {
-            val childAdapter = ShoppingCartChildAdapter()
-            mChildAdapter = childAdapter
-//        }
-        mChildAdapter.setNewInstance(data.products)
-        content_rv.adapter = mChildAdapter
-        mChildAdapter.numberChangeListener = numberChangeListener
+        val childAdapter = ShoppingCartChildAdapter()
+        mChildAdapter = childAdapter
+
+
+        childAdapter.setNewInstance(data.products)
+        content_rv.adapter = childAdapter
+        childAdapter.numberChangeListener = numberChangeListener
 
         // 选中全部，取消全部
         select_all_iv.setOnClickListener {
@@ -94,12 +102,12 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
 
             data.nativeIsSelect = !currentIsSelect
             if (data.nativeIsSelect) {
+                VibrateUtils.vibrate(10)
                 select_all_iv.setImageResource(R.mipmap.ic_checked_orange)
             } else {
                 select_all_iv.setImageResource(R.mipmap.ic_un_checked)
             }
 
-            /*
             childAdapter.data.forEach {
                 it.nativeIsSelect = data.nativeIsSelect
             }
@@ -107,26 +115,19 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                 childAdapter.notifyDataSetChanged()
             }, 50)
 
-            */
 
-            mChildAdapter.data.forEachIndexed { index, products ->
-                if (products.nativeIsSelect != data.nativeIsSelect) {
-                    products.nativeIsSelect = data.nativeIsSelect
-                    mChildAdapter.notifyItemChanged(index)
-                }
-            }
 
             onUserSelectListener?.onTitleSelectClick(data.nativeIsSelect)
 
         }
 
         // 子view 选中监听
-        mChildAdapter.checkedChangeListener = object : ShoppingCartChildAdapter.OnChildContainerClick {
+        childAdapter.checkedChangeListener = object : ShoppingCartChildAdapter.OnChildContainerClick {
             override fun onClick(isChecked: Boolean) {
 
                 val result = ArrayList<Boolean>()
 
-                mChildAdapter.data.forEach {
+                childAdapter.data.forEach {
                     result.add(it.nativeIsSelect)
                 }
 

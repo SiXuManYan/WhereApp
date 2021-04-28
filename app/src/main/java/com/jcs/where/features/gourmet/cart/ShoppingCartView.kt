@@ -9,7 +9,7 @@ import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
  */
 interface ShoppingCartView : BaseMvpView {
     fun bindList(data: MutableList<ShoppingCartResponse>, lastPage: Boolean)
-
+    fun deleteSuccess()
 
 
 }

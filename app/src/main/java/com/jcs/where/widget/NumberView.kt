@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.VibrateUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
 
@@ -57,23 +58,23 @@ class NumberView: LinearLayout {
 
         cut_iv.setOnClickListener {
             var goodNum = products.good_num
-
             if (goodNum > 1) {
+                VibrateUtils.vibrate(10)
                 goodNum -= 1
                 value_tv.text = goodNum.toString()
                 products.good_num = goodNum
+                valueChangeListener?.onNumberChange(products.cart_id , false )
+                cut_iv.isClickable = false
+                Handler(Looper.myLooper()!!).postDelayed({
+                    cut_iv.isClickable = true
+                }, 500)
             } else {
-                ToastUtils.showShort("不能再减少了")
+               // 小于0
             }
-            valueChangeListener?.onNumberChange(products.cart_id , false )
 
-            cut_iv.isClickable = false
-            Handler(Looper.myLooper()!!).postDelayed({
-                cut_iv.isClickable = true
-            }, 500)
         }
         add_iv.setOnClickListener {
-
+            VibrateUtils.vibrate(10)
             var goodNum = products.good_num
 
             goodNum += 1
@@ -82,6 +83,7 @@ class NumberView: LinearLayout {
 
             valueChangeListener?.onNumberChange(products.cart_id , true )
 
+            add_iv.isClickable = false
             Handler(Looper.myLooper()!!).postDelayed({
                 add_iv.isClickable = true
             }, 500)

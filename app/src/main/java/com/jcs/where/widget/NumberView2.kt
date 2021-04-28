@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.blankj.utilcode.util.VibrateUtils
 import com.jcs.where.R
 
 /**
@@ -65,6 +66,8 @@ class NumberView2 : LinearLayout {
                 cut_iv.visibility = View.VISIBLE
                 value_tv.visibility = View.VISIBLE
             }
+            VibrateUtils.vibrate(10)
+
             value_tv.text = goodNum.toString()
             valueChangeListener?.onNumberChange(goodNum)
             cut_iv.isClickable = false
@@ -77,10 +80,11 @@ class NumberView2 : LinearLayout {
             goodNum += 1
             cut_iv.visibility = View.VISIBLE
             value_tv.visibility = View.VISIBLE
-
+            VibrateUtils.vibrate(10)
             value_tv.text = goodNum.toString()
-
             valueChangeListener?.onNumberChange(goodNum)
+            add_iv.isClickable = false
+
             Handler(Looper.myLooper()!!).postDelayed({
                 add_iv.isClickable = true
             }, 500)

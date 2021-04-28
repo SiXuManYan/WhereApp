@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jcs.where.api.request.AddCartRequest;
+import com.jcs.where.api.request.CartDeleteRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.request.SendCodeRequest;
@@ -88,6 +89,7 @@ import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
@@ -954,10 +956,11 @@ public interface RetrofitApi {
     );
 
     /**
-     * 修改购物车商品数量
+     * 删除购物车
      */
-    @DELETE("restaurantapi/v2/carts")
-    Observable<JcsResponse<JsonElement>> deleteCart(@Body String cart_id);
+//    @DELETE("restaurantapi/v2/carts")
+    @HTTP(method = "DELETE", path = "restaurantapi/v2/carts", hasBody = true)
+    Observable<JcsResponse<JsonElement>> deleteCart(@Body CartDeleteRequest cart_id);
 
 
     /**
@@ -982,10 +985,9 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/take_out/goods")
     Observable<JcsResponse<PageResponse<DishTakeawayResponse>>> takeawayGoodList(
-            @Query("page") int page ,
+            @Query("page") int page,
             @Query("restaurant_id") String restaurant_id
     );
-
 
 
     /**

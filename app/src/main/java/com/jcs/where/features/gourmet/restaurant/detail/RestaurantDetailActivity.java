@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.restaurant.detail;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.jcs.where.api.response.gourmet.comment.CommentResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 import com.jcs.where.view.CommentView;
@@ -18,6 +20,8 @@ import com.jcs.where.view.DishView;
 import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import java.util.List;
+
+import static com.jcs.where.utils.Constant.PARAM_ID;
 
 
 /**
@@ -100,6 +104,11 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         shopping_cart.setOnClickListener(this::onShoppingCartClick);
         navigation_iv.setOnClickListener(v -> showComing());
         chat_iv.setOnClickListener(v -> showComing());
+        support_takeaway_tv.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(PARAM_ID, mRestaurantId);
+            startActivity(TakeawayActivity.class, bundle);
+        });
     }
 
 
@@ -112,6 +121,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
                     .placeholder(R.mipmap.ic_empty_gray);
             Glide.with(this).load(data.images.get(0)).apply(options).into(image_iv);
         }
+
         mRestaurantName = data.title;
         mJcsTitle.setMiddleTitle(mRestaurantName);
         name_tv.setText(mRestaurantName);
@@ -137,12 +147,10 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
     @Override
     public void bindDishData(List<DishResponse> data) {
-        dish_view.setData(data, mRestaurantId ,mRestaurantName) ;
+        dish_view.setData(data, mRestaurantId, mRestaurantName);
         dish_view.setVisibility(View.VISIBLE);
         dish_split_v.setVisibility(View.VISIBLE);
         shopping_cart.setVisibility(View.VISIBLE);
-
-
     }
 
     @Override

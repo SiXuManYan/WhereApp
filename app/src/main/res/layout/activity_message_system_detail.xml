@@ -10,10 +10,11 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="wrap_content"
         app:middleTitle="@string/message_center"
         app:middleTitleColor="@color/black_333333"
-        app:showBackIv="true" />
+        app:showBackIv="true"
+        app:showBottomLine="true" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

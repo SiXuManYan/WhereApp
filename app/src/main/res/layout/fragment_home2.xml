@@ -236,7 +236,7 @@
                     android:paddingBottom="20dp"
                     tools:itemCount="1"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_home_recommend_hotel" />
+                    tools:listitem="@layout/item_home_recommend_hotel_2" />
             </LinearLayout>
 
 

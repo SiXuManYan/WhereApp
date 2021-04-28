@@ -18,8 +18,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
 import com.jcs.where.bean.HotelMapListBean;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
+import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import java.util.ArrayList;
@@ -86,6 +88,13 @@ public class HotelMapViewPagerAdapter extends PagerAdapter {
      * 酒店推荐
      */
     private void bindHotelView(View view, HotelMapListBean data) {
+
+        LinearLayout parent_ll = view.findViewById(R.id.parent_ll);
+        parent_ll.setOnClickListener(v -> {
+            JcsCalendarDialog dialog = new JcsCalendarDialog();
+            dialog.initCalendar(context);
+            HotelDetailActivity.goTo(context, data.getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+        });
 
         // 图片
         ImageView image_iv = view.findViewById(R.id.image_iv);

@@ -206,7 +206,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         RestaurantResponse data = mAdapter.getData().get(position);
         Bundle bundle = new Bundle();
         bundle.putString(PARAM_ID, data.id);
-        startActivityAfterLogin(RestaurantDetailActivity.class, bundle);
+        startActivity(RestaurantDetailActivity.class, bundle);
     }
 
     @Override

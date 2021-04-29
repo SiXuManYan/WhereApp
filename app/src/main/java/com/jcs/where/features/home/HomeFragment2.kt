@@ -32,6 +32,7 @@ import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
 import com.jcs.where.features.bills.PayBillsActivity
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
@@ -291,7 +292,9 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
-                        showComing()
+                        startActivity(RestaurantDetailActivity::class.java,Bundle().apply {
+                            putString(Constant.PARAM_ID , data.id.toString())
+                        })
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
                         TouristAttractionDetailActivity.goTo(this@HomeFragment2.activity, data.id)

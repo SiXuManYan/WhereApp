@@ -280,9 +280,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_80"
         android:alpha="0.9"
-        android:src="@mipmap/ic_shopping_cart"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:src="@mipmap/ic_shopping_cart" />
 
 
 </RelativeLayout>

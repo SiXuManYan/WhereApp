@@ -120,27 +120,29 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             deleteItem.clear()
             deleteParent.clear()
 
-            AlertDialog.Builder(this)
-                    .setCancelable(false)
-                    .setTitle(R.string.hint)
-                    .setMessage(getString(R.string.confirm_delete_hint))
-                    .setPositiveButton(R.string.confirm) { _, _ ->
+            mAdapter.data.forEach {
+                it.products.forEach { child ->
+                    if (child.nativeIsSelect) {
+                        delete.add(child.cart_id)
+                        deleteItem.add(child)
+                    }
+                }
+            }
 
-                        mAdapter.data.forEach {
-                            it.products.forEach { child ->
-                                if (child.nativeIsSelect) {
-                                    delete.add(child.cart_id)
-                                    deleteItem.add(child)
-                                }
-                            }
+            if (deleteItem.isNotEmpty()) {
+                AlertDialog.Builder(this)
+                        .setCancelable(false)
+                        .setTitle(R.string.hint)
+                        .setMessage(getString(R.string.confirm_delete_hint))
+                        .setPositiveButton(R.string.confirm) { _, _ ->
+                            presenter.deleteCart(delete)
                         }
-                        presenter.deleteCart(delete)
-                    }
-                    .setNegativeButton(R.string.cancel) { dialog, _ ->
-                        dialog?.dismiss()
-                    }
-                    .create()
-                    .show()
+                        .setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog?.dismiss()
+                        }
+                        .create()
+                        .show()
+            }
         }
 
         // 提交订单

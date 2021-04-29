@@ -130,7 +130,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         score_tv.setText(String.valueOf(data.grade));
         star_view.setRating(data.grade);
         comment_count_tv.setText(getString(R.string.parentheses_contain_string, data.comment_num));
-        per_price_tv.setText(getString(R.string.price_unit_format, data.per_price));
+        per_price_tv.setText(getString(R.string.per_price_format, data.per_price));
         address_tv.setText(data.address);
         time_tv.setText(getString(R.string.time_format, data.start_time, data.end_time));
         if (data.take_out_status == 2) {

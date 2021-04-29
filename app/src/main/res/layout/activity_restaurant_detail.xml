@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         app:rightFirstIcon="@drawable/ic_share_black"
-        app:rightSecondIcon="@drawable/ic_collection"
+        app:rightSecondIcon="@mipmap/ic_like_black2"
         app:showBottomLine="true" />
 
 
@@ -129,7 +129,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="@dimen/dp_5"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/ic_address_black" />
+                    android:src="@mipmap/ic_address_2" />
 
                 <TextView
                     android:id="@+id/address_tv"
@@ -171,7 +171,7 @@
                     android:layout_width="@dimen/dp_17"
                     android:layout_height="@dimen/dp_17"
                     android:layout_marginEnd="@dimen/dp_5"
-                    android:src="@drawable/ic_hoteldetail_time" />
+                    android:src="@mipmap/ic_clock_2" />
 
                 <TextView
                     android:id="@+id/time_tv"

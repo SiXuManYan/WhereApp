@@ -52,7 +52,7 @@
                 android:layout_toEndOf="@+id/searchIcon"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:hint="@string/search"
+                android:hint="@string/search_keyword"
                 android:imeOptions="actionSearch"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -119,7 +119,7 @@
             android:paddingEnd="@dimen/dp_0">
 
             <CheckedTextView
-                android:id="@+id/firstCateTv"
+                android:id="@+id/area_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -148,7 +148,7 @@
             android:orientation="horizontal">
 
             <CheckedTextView
-                android:id="@+id/secondCateTv"
+                android:id="@+id/food_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -178,7 +178,7 @@
             android:paddingEnd="@dimen/dp_15">
 
             <CheckedTextView
-                android:id="@+id/thirdCateTv"
+                android:id="@+id/other_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_4"

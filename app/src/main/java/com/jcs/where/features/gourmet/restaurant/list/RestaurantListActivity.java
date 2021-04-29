@@ -70,6 +70,9 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private RestaurantListRequest mRequest;
     private Animation mFilterShowAnimation;
     private Animation mFilterHideAnimation;
+    private CheckedTextView area_tv;
+    private CheckedTextView food_tv;
+    private CheckedTextView other_tv;
 
 
     @Override
@@ -89,6 +92,9 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         area_filter_ll = findViewById(R.id.area_filter_ll);
         food_filter_ll = findViewById(R.id.food_filter_ll);
         other_filter_ll = findViewById(R.id.other_filter_ll);
+        area_tv = findViewById(R.id.area_tv);
+        food_tv = findViewById(R.id.food_tv);
+        other_tv = findViewById(R.id.other_tv);
 
         filter_container_ll = findViewById(R.id.filter_container_ll);
         filter_pager = findViewById(R.id.filter_pager);
@@ -327,12 +333,17 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         if (data instanceof AreaResponse) {
             // 区域筛选
             mRequest.trading_area_id = ((AreaResponse) data).id;
-
+            String name = ((AreaResponse) data).name;
+            if (!TextUtils.isEmpty(name)) {
+                area_tv.setText(name);
+            }
         } else if (data instanceof Category) {
             // 美食列别筛选
             mRequest.category_id = String.valueOf(((Category) data).id);
-
-
+            String name = ((Category) data).name;
+            if (!TextUtils.isEmpty(name)) {
+                food_tv.setText(name);
+            }
         } else if (data instanceof MoreFilterFragment.MoreFilter) {
             // 其他筛选
             MoreFilterFragment.MoreFilter more = (MoreFilterFragment.MoreFilter) data;

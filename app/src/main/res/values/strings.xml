@@ -293,12 +293,12 @@
     <string name="modify">修改</string>
     <string name="account_binding_management">账号绑定管理</string>
     <string name="binding_unbinding">绑定/解绑</string>
-    <string name="modify_mobile_phone_number">修改手机号码</string>
+    <string name="modify_mobile_phone_number">修改手机</string>
     <string name="notification">消息通知</string>
     <string name="message_hint">第一时间接收订单提醒、优惠促销</string>
     <string name="go_open">去开启</string>
-    <string name="cache_cleaning">缓存清理(0M)</string>
-    <string name="cache_cleaning_format">缓存清理(%1$s)</string>
+    <string name="cache_cleaning">清理缓存(0M)</string>
+    <string name="cache_cleaning_format">清理缓存(%1$s)</string>
     <string name="feedback">意见反馈</string>
     <string name="privacy_policy">隐私政策</string>
     <string name="about_app">关于where</string>
@@ -464,6 +464,7 @@
     <string name="comment_count_format2">(%1$s)</string>
     <string name="recommend_home">推荐</string>
     <string name="distance_format">%1$s&#160;km</string>
+    <string name="distance_format_2">&#60;&#160;%1$s&#160;km</string>
 
 
     <string name="new_version_hint_01">检测新版本，授权</string>
@@ -517,7 +518,7 @@
     <string name="nearest_first">距离最近</string>
     <string name="dine_in_dishes">堂食菜品</string>
     <string name="panic_buying">抢购</string>
-    <string name="sale_format">已售%1$s</string>
+    <string name="sale_format">已售&#160;%1$s</string>
     <string name="unfold_more">展开更多套餐</string>
     <string name="fold">收起</string>
     <string name="evaluation">评价</string>

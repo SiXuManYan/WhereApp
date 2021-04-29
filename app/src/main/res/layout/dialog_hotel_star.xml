@@ -42,9 +42,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_15"
         android:layout_marginEnd="@dimen/dp_15"
         app:layout_constraintTop_toBottomOf="@id/pricePrompt"
+        app:rsb_gravity="bottom"
         app:rsb_indicator_drawable="@drawable/seek_bar_indicator"
         app:rsb_indicator_height="@dimen/dp_22"
         app:rsb_indicator_padding_bottom="@dimen/dp_3"
@@ -61,6 +61,7 @@
     <TextView
         android:id="@+id/price0To1"
         style="@style/hotel_star_tv"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_10"
         android:text="@string/price_0_to_1"
         app:layout_constraintEnd_toStartOf="@id/price1To2"

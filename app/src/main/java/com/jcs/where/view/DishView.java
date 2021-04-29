@@ -2,6 +2,7 @@ package com.jcs.where.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -118,7 +120,10 @@ public class DishView extends LinearLayout {
         dishNameTv.setText(data.title);
         salesTv.setText(StringUtils.getString(R.string.sale_format, data.sale_num));
         nowPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.price.toPlainString()));
-        oldPriceTv.setText(StringUtils.getString(R.string.price_unit_format, data.original_price.toPlainString()));
+
+        String oldPrice = StringUtils.getString(R.string.price_unit_format, data.original_price.toPlainString());
+        SpannableStringBuilder builder = new SpanUtils().append(oldPrice).setStrikethrough().create();
+        oldPriceTv.setText(builder);
 
         buyTv.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), SetMealActivity.class);
@@ -128,7 +133,6 @@ public class DishView extends LinearLayout {
             intent.putExtra(Constant.PARAM_RESTAURANT_NAME, mRestaurantName);
             getContext().startActivity(intent);
         });
-
     }
 
     private void unFoldClick(View view) {

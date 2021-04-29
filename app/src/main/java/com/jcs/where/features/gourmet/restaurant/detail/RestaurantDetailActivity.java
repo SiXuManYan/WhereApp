@@ -143,7 +143,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         } else {
             chat_iv.setVisibility(View.GONE);
         }
-        distance_tv.setText(getString(R.string.distance_format, data.distance));
+        distance_tv.setText(getString(R.string.distance_format_2, data.distance));
     }
 
     @Override

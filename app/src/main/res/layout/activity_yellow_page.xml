@@ -68,6 +68,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/all"
+                tools:text="asdadsadsadasdsad"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14" />
 
@@ -83,12 +84,10 @@
 
 
         <LinearLayout
-
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-
             android:orientation="horizontal">
 
             <TextView
@@ -98,6 +97,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/all"
+                tools:text="asdsadsadasdsadaasd"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14"
                 app:layout_constraintBaseline_toBaselineOf="@id/firstCateTv"
@@ -135,6 +135,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/all"
+                tools:text="asdasdasdassadadadasdasd"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14" />
 

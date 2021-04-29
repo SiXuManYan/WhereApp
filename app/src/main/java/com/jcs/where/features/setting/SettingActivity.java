@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
@@ -53,6 +54,8 @@ public class SettingActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         phone_tv = findViewById(R.id.phone_tv);
         clear_cache_tv = findViewById(R.id.clear_cache_tv);
+        TextView version_name_tv = findViewById(R.id.version_name_tv);
+        version_name_tv.setText(BuildConfig.VERSION_NAME);
     }
 
 

@@ -612,6 +612,7 @@
     <string name="peso_time_format">%1$s&#160;(₱%2$sPeso)</string>
     <string name="send_out_time">Send Out Time</string>
     <string name="please_select_delivery_time">Please select delivery time</string>
+    <string name="full">Full</string>
 
 
 </resources>

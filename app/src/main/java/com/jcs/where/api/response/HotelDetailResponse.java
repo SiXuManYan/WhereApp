@@ -156,8 +156,8 @@ public class HotelDetailResponse {
          */
 
         private String children;
-        private String check_in_time;
-        private String check_out_time;
+        private String check_in_time = "";
+        private String check_out_time = "";
         private String pet;
         private String hint;
         private String payment;

@@ -513,6 +513,8 @@
                 android:id="@+id/ll_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical">

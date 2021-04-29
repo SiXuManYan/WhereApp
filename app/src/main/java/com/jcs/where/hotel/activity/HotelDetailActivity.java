@@ -227,6 +227,7 @@ public class HotelDetailActivity extends BaseActivity {
         roomAdapter = new RoomAdapter();
         roomRv.setLayoutManager(linearLayoutManager);
         roomRv.setNestedScrollingEnabled(true);
+        roomRv.setAdapter(roomAdapter);
         facilitiesRv = findViewById(R.id.rv_facilities);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HotelDetailActivity.this, 2) {
             @Override
@@ -414,14 +415,18 @@ public class HotelDetailActivity extends BaseActivity {
                     faceLine.setVisibility(View.VISIBLE);
                     faceBookLink = hotelDetailResponse.getFacebook_link();
                 }
-                checkInTv.setText(String.format(getString(R.string.check_in_time), hotelDetailResponse.getPolicy().getCheck_in_time().substring(0, 5)));
-                checkOutTv.setText(String.format(getString(R.string.check_out_time), hotelDetailResponse.getPolicy().getCheck_out_time().substring(0, 5)));
+                String check_in_time = hotelDetailResponse.getPolicy().getCheck_in_time();
+                String check_out_time = hotelDetailResponse.getPolicy().getCheck_out_time();
+
+                checkInTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
+
+                checkOutTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
                 addressTv.setText(hotelDetailResponse.getAddress());
                 phone = hotelDetailResponse.getTel();
                 facilitiesAdapter.addData(hotelDetailResponse.getFacilities());
                 facilitiesRv.setAdapter(facilitiesAdapter);
-                policyStartTimeTv.setText(String.format(getString(R.string.check_in_time), hotelDetailResponse.getPolicy().getCheck_in_time()));
-                policyEndTimeTv.setText(String.format(getString(R.string.check_out_time), hotelDetailResponse.getPolicy().getCheck_out_time()));
+                policyStartTimeTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
+                policyEndTimeTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
 
                 policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), hotelDetailResponse.getPolicy().getChildren()));
                 if (hotelDetailResponse.getCollect_status() == 1) {
@@ -490,8 +495,7 @@ public class HotelDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(@NonNull List<HotelRoomListResponse> hotelRoomListRespons) {
                 stopLoading();
-                roomAdapter.addData(hotelRoomListRespons);
-                roomRv.setAdapter(roomAdapter);
+                roomAdapter.setNewInstance(hotelRoomListRespons);
             }
         });
     }
@@ -661,16 +665,17 @@ public class HotelDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelRoomListResponse data) {
-            RoundedImageView photoIv = baseViewHolder.findView(R.id.iv_photo);
+        protected void convert(@NotNull BaseViewHolder holder, HotelRoomListResponse data) {
+            RoundedImageView photoIv = holder.getView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 GlideUtil.load(getContext(), data.getImages().get(0), photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }
-            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
+            TextView nameTv = holder.getView(R.id.tv_name);
+
             nameTv.setText(data.getName());
-            TextView typeTv = baseViewHolder.findView(R.id.tv_hotelType);
+            TextView typeTv = holder.getView(R.id.tv_hotelType);
             String breakfast = null;
             if (data.getBreakfast_type() == 1) {
                 breakfast = getString(R.string.with_breakfast);
@@ -685,11 +690,11 @@ public class HotelDetailActivity extends BaseActivity {
             m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(data.getRoom_area());
             spannableStringBuilder.append(m2);
-            TextView roomAreaTv = baseViewHolder.findView(R.id.tv_roomarea);
+            TextView roomAreaTv = holder.getView(R.id.tv_roomarea);
             roomAreaTv.setText(spannableStringBuilder);
-            TextView priceTv = baseViewHolder.findView(R.id.tv_price);
+            TextView priceTv = holder.getView(R.id.tv_price);
             priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), data.getPrice()));
-            RecyclerView tagRv = baseViewHolder.findView(R.id.rv_tag);
+            RecyclerView tagRv = holder.getView(R.id.rv_tag);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                     LinearLayoutManager.HORIZONTAL, false) {
                 @Override
@@ -701,10 +706,10 @@ public class HotelDetailActivity extends BaseActivity {
             tagRv.setLayoutManager(linearLayoutManager);
 //            tagAdapter.addData(data.getTags());
 //            tagRv.setAdapter(tagAdapter);
-            TextView subscribeTv = baseViewHolder.findView(R.id.tv_subscribe);
-            LinearLayout tagLl = baseViewHolder.findView(R.id.ll_tag);
+            TextView subscribeTv = holder.getView(R.id.tv_subscribe);
+            LinearLayout tagLl = holder.getView(R.id.ll_tag);
             if (data.getRemain_room_num() == 0) {
-                subscribeTv.setText("已客满");
+                subscribeTv.setText(R.string.full);
                 subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_noroom));
                 subscribeTv.setTextColor(getResources().getColor(R.color.grey_999999));
                 subscribeTv.setEnabled(false);
@@ -722,18 +727,12 @@ public class HotelDetailActivity extends BaseActivity {
                 tagLl.setVisibility(View.VISIBLE);
                 priceTv.setTextColor(getResources().getColor(R.color.orange_FF5B1B));
             }
-            baseViewHolder.findView(R.id.tv_subscribe).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    initRoomDetail(data.getId(), data.getBreakfast_type());
-                }
-            });
-            baseViewHolder.findView(R.id.rl_room).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    initRoomDetail(data.getId(), data.getBreakfast_type());
-                }
-            });
+            holder.getView(R.id.tv_subscribe).setOnClickListener(view ->
+                    initRoomDetail(data.getId(), data.getBreakfast_type())
+            );
+            holder.getView(R.id.rl_room).setOnClickListener(view ->
+                    initRoomDetail(data.getId(), data.getBreakfast_type())
+            );
 
         }
     }
@@ -746,7 +745,7 @@ public class HotelDetailActivity extends BaseActivity {
 
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, RoomListBean.TagsBean tagsBean) {
-            TextView tagTv = baseViewHolder.findView(R.id.tv_tag);
+            TextView tagTv = baseViewHolder.getView(R.id.tv_tag);
             tagTv.setText(tagsBean.getZh_cn_name());
         }
     }
@@ -760,13 +759,13 @@ public class HotelDetailActivity extends BaseActivity {
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelDetailResponse.FacilitiesBean data) {
 
-            ImageView iconIv = baseViewHolder.findView(R.id.iv_icon);
+            ImageView iconIv = baseViewHolder.getView(R.id.iv_icon);
             if (!TextUtils.isEmpty(data.getIcon())) {
                 GlideUtil.load(getContext(), data.getIcon(), iconIv);
             } else {
                 iconIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_test));
             }
-            TextView nameTv = baseViewHolder.findView(R.id.tv_name);
+            TextView nameTv = baseViewHolder.getView(R.id.tv_name);
             nameTv.setText(data.getName());
         }
     }

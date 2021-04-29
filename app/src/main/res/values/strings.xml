@@ -614,5 +614,6 @@
     <string name="peso_time_format">%1$s&#160;(₱%2$s配送费)</string>
     <string name="send_out_time">送达时间</string>
     <string name="please_select_delivery_time">请选择送达时间</string>
+    <string name="full">已客满</string>
 
 </resources>

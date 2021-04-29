@@ -453,7 +453,6 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-//        toolbar.setNavigationOnClickListener(this::onBackIconClicked);
         back_iv.setOnClickListener(this::onBackIconClicked);
         findViewById(R.id.ll_choosedate).setOnClickListener(this::onChooseDate);
         mJcsCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
@@ -712,7 +711,6 @@ public class HotelDetailActivity extends BaseActivity {
                 subscribeTv.setText(R.string.full);
                 subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_noroom));
                 subscribeTv.setTextColor(getResources().getColor(R.color.grey_999999));
-                subscribeTv.setEnabled(false);
                 tagLl.setVisibility(View.GONE);
                 priceTv.setTextColor(getResources().getColor(R.color.grey_999999));
                 ColorMatrix matrix = new ColorMatrix();
@@ -723,16 +721,14 @@ public class HotelDetailActivity extends BaseActivity {
                 subscribeTv.setText(getString(R.string.subscribe_prompt));
                 subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_roomsubscribe));
                 subscribeTv.setTextColor(getResources().getColor(R.color.white));
-                subscribeTv.setEnabled(true);
                 tagLl.setVisibility(View.VISIBLE);
                 priceTv.setTextColor(getResources().getColor(R.color.orange_FF5B1B));
+                holder.getView(R.id.rl_room).setOnClickListener(view ->
+                        initRoomDetail(data.getId(), data.getBreakfast_type())
+                );
             }
-            holder.getView(R.id.tv_subscribe).setOnClickListener(view ->
-                    initRoomDetail(data.getId(), data.getBreakfast_type())
-            );
-            holder.getView(R.id.rl_room).setOnClickListener(view ->
-                    initRoomDetail(data.getId(), data.getBreakfast_type())
-            );
+
+
 
         }
     }

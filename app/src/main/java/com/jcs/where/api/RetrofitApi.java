@@ -606,7 +606,7 @@ public interface RetrofitApi {
      * (没有分页)
      */
     @GET("commonapi/v2/collects?type=1")
-    Observable<JcsResponse<List<CollectedResponse>>> getCollectionSameCity();
+    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionSameCity(@Query("page") int page);
 
     /**
      * 第三方登录

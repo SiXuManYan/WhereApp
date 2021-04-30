@@ -30,8 +30,8 @@ public class CollectionListModel extends BaseModel {
     /**
      * 获得收藏页面-收藏的同城列表
      */
-    public void getCollectionSameCity(BaseObserver<List<CollectedResponse>> observer) {
-        dealResponse(mRetrofit.getCollectionSameCity(), observer);
+    public void getCollectionSameCity(int page, BaseObserver<PageResponse<CollectedResponse>> observer) {
+        dealResponse(mRetrofit.getCollectionSameCity(page), observer);
     }
 
 }

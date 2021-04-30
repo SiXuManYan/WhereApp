@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.CollectedResponse;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * create by zyf on 2021/1/31
  */
-public class SameCityListAdapter extends BaseMultiItemQuickAdapter<CollectedResponse, BaseViewHolder> {
+public class SameCityListAdapter extends BaseMultiItemQuickAdapter<CollectedResponse, BaseViewHolder> implements LoadMoreModule {
 
     public SameCityListAdapter() {
         addItemType(SameCityType.Hotel, R.layout.item_hotellist);

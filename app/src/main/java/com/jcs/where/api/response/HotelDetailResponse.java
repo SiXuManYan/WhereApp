@@ -30,7 +30,7 @@ public class HotelDetailResponse {
     private String tel;
     private double grade;
     private int comment_counts;
-    private PolicyBean policy;
+//    private PolicyBean policy;
     private int collect_status;
     private String facebook_link;
     private List<String> images;
@@ -108,13 +108,13 @@ public class HotelDetailResponse {
         this.comment_counts = comment_counts;
     }
 
-    public PolicyBean getPolicy() {
-        return policy;
-    }
+//    public PolicyBean getPolicy() {
+//        return policy;
+//    }
 
-    public void setPolicy(PolicyBean policy) {
-        this.policy = policy;
-    }
+//    public void setPolicy(PolicyBean policy) {
+//        this.policy = policy;
+//    }
 
     public int getCollect_status() {
         return collect_status;

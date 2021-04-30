@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,7 +34,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.BarUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -55,7 +53,6 @@ import com.jcs.where.hotel.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MobUtil;
-import com.jcs.where.view.ObservableScrollView;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
 import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.widget.StarView;
@@ -82,7 +79,7 @@ public class HotelDetailActivity extends BaseActivity {
     private Toolbar toolbar;
     private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
-//    private RatingBar mRatingBar;
+    //    private RatingBar mRatingBar;
     private RelativeLayout faceBookRl;
     private TextView faceBookTv;
     private String faceBookLink;
@@ -400,7 +397,8 @@ public class HotelDetailActivity extends BaseActivity {
                     onShareClick();
                 });
                 hotelName = hotelDetailResponse.getName();
-                hotelBreakfast = hotelDetailResponse.getPolicy().getBreadfast();
+//                hotelBreakfast = hotelDetailResponse.getPolicy().getBreadfast();
+                hotelBreakfast = "";
 
                 String startText = String.format(getString(R.string.open_time), hotelDetailResponse.getStart_business_time());
                 startTimeTv.setText(startText);
@@ -415,8 +413,11 @@ public class HotelDetailActivity extends BaseActivity {
                     faceLine.setVisibility(View.VISIBLE);
                     faceBookLink = hotelDetailResponse.getFacebook_link();
                 }
-                String check_in_time = hotelDetailResponse.getPolicy().getCheck_in_time();
-                String check_out_time = hotelDetailResponse.getPolicy().getCheck_out_time();
+//                String check_in_time = hotelDetailResponse.getPolicy().getCheck_in_time();
+//                String check_out_time = hotelDetailResponse.getPolicy().getCheck_out_time();
+
+                String check_in_time = "";
+                String check_out_time = "";
 
                 checkInTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
 
@@ -428,7 +429,8 @@ public class HotelDetailActivity extends BaseActivity {
                 policyStartTimeTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
                 policyEndTimeTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
 
-                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), hotelDetailResponse.getPolicy().getChildren()));
+//                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), hotelDetailResponse.getPolicy().getChildren()));
+                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), ""));
                 if (hotelDetailResponse.getCollect_status() == 1) {
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                 } else {
@@ -467,7 +469,7 @@ public class HotelDetailActivity extends BaseActivity {
             deployDateTv(mEndDateTv, mEndWeekTv, endDate);
         }
         mTotalDayTv.setText(mJcsCalendarDialog.getTotalDay());
-        mTotalDay  = mJcsCalendarDialog.getTotalDay2();
+        mTotalDay = mJcsCalendarDialog.getTotalDay2();
     }
 
     public void deployDateTv(TextView dateTv, TextView weekTv, JcsCalendarAdapter.CalendarBean calendarBean) {
@@ -727,7 +729,6 @@ public class HotelDetailActivity extends BaseActivity {
                         initRoomDetail(data.getId(), data.getBreakfast_type())
                 );
             }
-
 
 
         }

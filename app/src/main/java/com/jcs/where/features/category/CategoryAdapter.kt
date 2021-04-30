@@ -189,9 +189,12 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
 
 
     private fun startActivity(target: Class<*>, bundle: Bundle?) {
-        bundle?.let {
-            context.startActivity(Intent(context, target).putExtras(it).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        if (bundle != null) {
+            context.startActivity(Intent(context, target).putExtras(bundle).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }else{
+            context.startActivity(Intent(context, target).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
+
 
     }
 

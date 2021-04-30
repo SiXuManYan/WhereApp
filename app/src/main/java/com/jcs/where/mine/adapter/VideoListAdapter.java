@@ -1,6 +1,7 @@
 package com.jcs.where.mine.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.CollectedResponse;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * create by zyf on 2021/1/31
  */
-public class VideoListAdapter extends BaseQuickAdapter<CollectedResponse, BaseViewHolder> {
+public class VideoListAdapter extends BaseQuickAdapter<CollectedResponse, BaseViewHolder> implements LoadMoreModule {
 
     public VideoListAdapter() {
         super(R.layout.item_news_more_video);

@@ -15,16 +15,16 @@ public class CollectionListModel extends BaseModel {
     /**
      * 获得收藏页面-收藏的视频列表
      */
-    public void getCollectionVideo(BaseObserver<List<CollectedResponse>> observer) {
-        dealResponse(mRetrofit.getCollectionVideo(), observer);
+    public void getCollectionVideo(int page, BaseObserver<PageResponse<CollectedResponse>> observer) {
+        dealResponse(mRetrofit.getCollectionVideo(page), observer);
     }
 
 
     /**
      * 获得收藏页面-收藏的文章列表
      */
-    public void getCollectionArticle(BaseObserver<List<CollectedResponse>> observer) {
-        dealResponse(mRetrofit.getCollectionArticle(), observer);
+    public void getCollectionArticle(int page, BaseObserver<PageResponse<CollectedResponse>> observer) {
+        dealResponse(mRetrofit.getCollectionArticle(page), observer);
     }
 
     /**

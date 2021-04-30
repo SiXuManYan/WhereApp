@@ -2,6 +2,7 @@ package com.jcs.where.mine.adapter;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.CollectedResponse;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * create by zyf on 2021/1/31 7:46 下午
  */
-public class ArticleListAdapter  extends BaseMultiItemQuickAdapter<CollectedResponse, BaseViewHolder> {
+public class ArticleListAdapter  extends BaseMultiItemQuickAdapter<CollectedResponse, BaseViewHolder> implements LoadMoreModule {
     private List<Integer> mImageResIds;
 
     public ArticleListAdapter() {

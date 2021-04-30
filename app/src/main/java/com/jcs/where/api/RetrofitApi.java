@@ -591,14 +591,14 @@ public interface RetrofitApi {
      * type=3 表示 视频
      */
     @GET("commonapi/v2/collects?type=3")
-    Observable<JcsResponse<List<CollectedResponse>>> getCollectionVideo();
+    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionVideo(@Query("page") int page);
 
     /**
      * 获得收藏页面-收藏的文章列表
      * type=2 表示 文章
      */
     @GET("commonapi/v2/collects?type=2")
-    Observable<JcsResponse<List<CollectedResponse>>> getCollectionArticle();
+    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionArticle(@Query("page") int page);
 
     /**
      * 获得收藏页面-收藏的同城信息

@@ -25,8 +25,10 @@ import com.jcs.where.mine.view_type.SameCityType;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
@@ -53,8 +55,10 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
         mSwipeLayout = view.findViewById(R.id.swipeLayout);
         mRecyclerView = view.findViewById(R.id.sameCityRecycler);
 
+        EmptyView emptyView = new EmptyView(getActivity());
+        emptyView.showEmptyDefault();
         mAdapter = new SameCityListAdapter();
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+        mAdapter.setEmptyView(emptyView);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
@@ -94,10 +98,11 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
 
             @Override
             protected void onSuccess(PageResponse<CollectedResponse> response) {
+                mSwipeLayout.setRefreshing(false);
                 boolean isLastPage = response.getLastPage() == page;
                 List<CollectedResponse> data = response.getData();
 
-                List<CollectedResponse> newData = response.getData();
+                List<CollectedResponse> newData = new ArrayList<>();
                 for (int i = 0; i < data.size(); i++) {
 
                     Integer type = data.get(i).getType();
@@ -110,7 +115,7 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
 
 
                 BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
-                if (data.isEmpty()) {
+                if (newData.isEmpty()) {
                     if (page == Constant.DEFAULT_FIRST_PAGE) {
                         loadMoreModule.loadMoreComplete();
                     } else {

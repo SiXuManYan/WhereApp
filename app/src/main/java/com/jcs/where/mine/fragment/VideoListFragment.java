@@ -7,20 +7,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CollectedResponse;
 import com.jcs.where.api.response.NewsResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.mine.adapter.VideoListAdapter;
 import com.jcs.where.mine.model.CollectionListModel;
 import com.jcs.where.news.NewsVideoActivity;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
+import com.jcs.where.utils.Constant;
+import com.jcs.where.view.empty.EmptyView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
@@ -29,20 +35,27 @@ import cn.jzvd.Jzvd;
  * 页面-收藏视频列表
  * create by zyf
  */
-public class VideoListFragment extends BaseFragment {
+public class VideoListFragment extends BaseFragment implements OnLoadMoreListener {
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeLayout;
     private VideoListAdapter mAdapter;
     private CollectionListModel mModel;
     private boolean mIsFirst = false;
+    private int page = Constant.DEFAULT_FIRST_PAGE;
     private boolean mIsLoaded = false;
 
     @Override
     protected void initView(View view) {
         mSwipeLayout = view.findViewById(R.id.swipeLayout);
         mRecyclerView = view.findViewById(R.id.newsRecycler);
+        EmptyView emptyView = new EmptyView(getActivity());
+        emptyView.showEmptyDefault();
         mAdapter = new VideoListAdapter();
+        mAdapter.setEmptyView(emptyView);
+        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
         mRecyclerView.addItemDecoration(new NewsListItemDecoration());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -52,7 +65,7 @@ public class VideoListFragment extends BaseFragment {
     protected void initData() {
         mModel = new CollectionListModel();
         if (mIsFirst && !mIsLoaded) {
-            getCollectedVideoList();
+            getCollectedVideoList(page);
             mIsLoaded = true;
         }
     }
@@ -62,14 +75,14 @@ public class VideoListFragment extends BaseFragment {
         super.onResume();
         if (!mIsFirst && !mIsLoaded) {
             showLoading();
-            getCollectedVideoList();
+            getCollectedVideoList(page);
             mIsLoaded = true;
         }
     }
 
-    private void getCollectedVideoList() {
+    private void getCollectedVideoList(int page) {
 
-        mModel.getCollectionVideo(new BaseObserver<List<CollectedResponse>>() {
+        mModel.getCollectionVideo(page , new BaseObserver<PageResponse<CollectedResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -78,16 +91,51 @@ public class VideoListFragment extends BaseFragment {
             }
 
             @Override
-            public void onSuccess(@NotNull List<CollectedResponse> pageResponse) {
+            public void onSuccess(@NotNull PageResponse<CollectedResponse> response) {
                 stopLoading();
 
                 mSwipeLayout.setRefreshing(false);
-                mAdapter.getData().clear();
-                if (pageResponse != null && pageResponse.size() > 0) {
-                    mAdapter.addData(pageResponse);
-                } else {
-                    mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+
+
+                // ##
+
+                boolean isLastPage = response.getLastPage() == page;
+                List<CollectedResponse> data = response.getData();
+
+//                List<CollectedResponse> newData = new ArrayList<>();
+//                for (int i = 0; i < data.size(); i++) {
+//
+//                    Integer type = data.get(i).getType();
+//
+//                    // 只处理现有的三种类型
+//                    if (type == 1 || type == 2 || type == 11) {
+//                        newData.add(data.get(i));
+//                    }
+//                }
+
+
+                BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+                if (data.isEmpty()) {
+                    if (page == Constant.DEFAULT_FIRST_PAGE) {
+                        loadMoreModule.loadMoreComplete();
+                    } else {
+                        loadMoreModule.loadMoreEnd();
+                    }
+                    return;
                 }
+                if (page == Constant.DEFAULT_FIRST_PAGE) {
+                    mAdapter.setNewInstance(data);
+                    loadMoreModule.checkDisableLoadMoreIfNotFullPage();
+                } else {
+                    mAdapter.addData(data);
+                    if (isLastPage) {
+                        loadMoreModule.loadMoreEnd();
+                    } else {
+                        loadMoreModule.loadMoreComplete();
+                    }
+                }
+
+
             }
         });
     }
@@ -106,7 +154,8 @@ public class VideoListFragment extends BaseFragment {
     }
 
     private void onRefreshListener() {
-        getCollectedVideoList();
+        page = Constant.DEFAULT_FIRST_PAGE;
+        getCollectedVideoList(page);
     }
 
     @Override
@@ -118,5 +167,11 @@ public class VideoListFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_collected_video_list;
+    }
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        getCollectedVideoList(page);
     }
 }

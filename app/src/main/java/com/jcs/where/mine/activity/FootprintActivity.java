@@ -1,6 +1,11 @@
 package com.jcs.where.mine.activity;
 
+import android.os.Bundle;
 import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
@@ -10,6 +15,7 @@ import com.jcs.where.api.response.FootprintResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.mine.adapter.FootprintListAdapter;
@@ -20,9 +26,7 @@ import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import static com.jcs.where.utils.Constant.PARAM_ID;
 
 /**
  * 页面-足迹
@@ -86,9 +90,9 @@ public class FootprintActivity extends BaseActivity {
     }
 
     private void onItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        FootprintResponse footprintResponse = mAdapter.getData().get(position);
-        Integer type = footprintResponse.getType();
-        FootprintResponse.ModuleDataDTO dto = footprintResponse.getModuleData();
+        FootprintResponse data = mAdapter.getData().get(position);
+        Integer type = data.getType();
+        FootprintResponse.ModuleDataDTO dto = data.getModuleData();
         Integer dtoId = dto.getId();
         switch (type) {
             case FootprintType.Hotel:
@@ -103,6 +107,11 @@ public class FootprintActivity extends BaseActivity {
                 toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(dtoId)));
                 break;
             case FootprintType.Restaurant:
+                String id = String.valueOf(data.getModuleData().getId());
+                Bundle bundle = new Bundle();
+                bundle.putString(PARAM_ID, id);
+                startActivity(RestaurantDetailActivity.class, bundle);
+
                 break;
         }
     }

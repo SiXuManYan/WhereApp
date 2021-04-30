@@ -4,17 +4,18 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -24,7 +25,6 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
-import com.jcs.where.home.watcher.EmptyTextWatcher;
 import com.jcs.where.model.OrderModel;
 import com.jcs.where.utils.Constant;
 
@@ -42,24 +42,26 @@ public class OrderFragment extends BaseFragment {
     private OrderAdapter mAdapter;
     private View mTopBg;
     private OrderModel mModel;
-    private EditText mSearchEt;
+    //    private EditText mSearchEt;
     private TextView mToLogin;
+    private RelativeLayout toLogin_rl;
 
     private List<OrderListFragment> mOrderListFragments;
     private String[] mTabTitles;
-    private Group mDataGroup, mNoDataGroup;
+//    private Group mDataGroup, mNoDataGroup;
 
     @Override
     protected void initView(View view) {
+        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_tv));
+//        BarUtils.setStatusBarColor(getActivity(), ColorUtils.getColor(R.color.blue_5A9DFE));
+
+
         EventBus.getDefault().register(this);
         mTopBg = view.findViewById(R.id.topBg);
-        setMargins(mTopBg, 0, getStatusBarHeight(), 0, 0, R.color.blue_5A9DFE);
         mViewPager = view.findViewById(R.id.viewpager);
         mTabLayout = view.findViewById(R.id.orderTabLayout);
-        mSearchEt = view.findViewById(R.id.searchEt);
         mToLogin = view.findViewById(R.id.toLoginTv);
-        mDataGroup = view.findViewById(R.id.dataGroup);
-        mNoDataGroup = view.findViewById(R.id.noDataGroup);
+        toLogin_rl = view.findViewById(R.id.toLogin_rl);
     }
 
 
@@ -86,8 +88,11 @@ public class OrderFragment extends BaseFragment {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 if (errorResponse.getErrCode() == 401) {
-                    mNoDataGroup.setVisibility(View.VISIBLE);
-                    mDataGroup.setVisibility(View.GONE);
+                    toLogin_rl.setVisibility(View.VISIBLE);
+
+                    mViewPager.setVisibility(View.GONE);
+                    mTabLayout.setVisibility(View.GONE);
+
                 } else {
                     showNetError(errorResponse);
                 }
@@ -95,8 +100,9 @@ public class OrderFragment extends BaseFragment {
 
             @Override
             public void onSuccess(@NonNull OrderNumResponse orderNumResponse) {
-                mNoDataGroup.setVisibility(View.GONE);
-                mDataGroup.setVisibility(View.VISIBLE);
+                toLogin_rl.setVisibility(View.GONE);
+                mViewPager.setVisibility(View.VISIBLE);
+                mTabLayout.setVisibility(View.VISIBLE);
 
                 StringBuilder stringBuilder = new StringBuilder();
                 mTabTitles[0] = mTabTitles[0] + getTabTitleSuffix(stringBuilder, orderNumResponse.getAll());
@@ -141,15 +147,7 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
-        mSearchEt.setOnEditorActionListener(this::onSearchActionClicked);
 
-        mSearchEt.addTextChangedListener(new EmptyTextWatcher() {
-            @Override
-            protected void onEtEmpty() {
-                OrderListFragment orderListFragment = getCurrentOrderListFragment();
-                orderListFragment.getOrder("", Constant.DEFAULT_FIRST_PAGE);
-            }
-        });
 
         mToLogin.setOnClickListener(this::onToLoginClicked);
     }

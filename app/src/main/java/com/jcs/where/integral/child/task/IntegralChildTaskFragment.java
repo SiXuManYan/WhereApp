@@ -1,6 +1,7 @@
 package com.jcs.where.integral.child.task;
 
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.SizeUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
@@ -20,6 +20,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpFragment;
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.travel.TouristAttractionDetailActivity;
@@ -30,6 +31,8 @@ import com.jcs.where.widget.list.DividerDecoration;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+
+import static com.jcs.where.utils.Constant.PARAM_ID;
 
 /**
  * Created by Wangsw  2021/1/22 10:06.
@@ -172,7 +175,9 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
                 toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
                 break;
             case HomeRecommendResponse.MODULE_TYPE_3_FOOD:
-                ToastUtils.showShort(R.string.coming_soon);
+                Bundle bundle = new Bundle();
+                bundle.putString(PARAM_ID, String.valueOf(data.id));
+                startActivity(RestaurantDetailActivity.class, bundle);
                 break;
             case HomeRecommendResponse.MODULE_TYPE_4_TRAVEL:
                 TouristAttractionDetailActivity.goTo(getActivity(), data.id);

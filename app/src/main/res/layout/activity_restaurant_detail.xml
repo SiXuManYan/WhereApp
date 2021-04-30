@@ -228,8 +228,7 @@
                         android:layout_width="@dimen/dp_22"
                         android:layout_height="@dimen/dp_22"
                         android:layout_marginStart="@dimen/dp_15"
-                        android:scaleType="centerInside"
-                        android:src="@mipmap/ic_chat" />
+                        android:src="@mipmap/ic_hoteldetail_phone" />
 
 
                 </LinearLayout>

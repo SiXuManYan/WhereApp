@@ -617,5 +617,7 @@
     <string name="please_select_delivery_time">请选择送达时间</string>
     <string name="full">已客满</string>
     <string name="no_contact_information">暂无联系方式</string>
+    <string name="no_messages">暂无通知</string>
+    <string name="no_attention">暂无关注</string>
 
 </resources>

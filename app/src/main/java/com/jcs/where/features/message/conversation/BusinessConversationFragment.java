@@ -51,7 +51,7 @@ public class BusinessConversationFragment extends BaseMvpFragment<BusinessConver
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default2);
         mAdapter.setOnItemClickListener((adapter, view1, position) -> {
             Conversation conversation = mAdapter.getData().get(position);
             Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;

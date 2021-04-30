@@ -615,6 +615,8 @@
     <string name="please_select_delivery_time">Please select delivery time</string>
     <string name="full">Full</string>
     <string name="no_contact_information">No contact information</string>
+    <string name="no_messages">No Messages</string>
+    <string name="no_attention">No Attention</string>
 
 
 </resources>

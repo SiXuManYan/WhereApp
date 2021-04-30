@@ -121,7 +121,7 @@ public class NewsFragment extends BaseFragment {
                     if (data.size() > 0) {
                         mAdapter.addData(data);
                     } else {
-                        mAdapter.setEmptyView(R.layout.view_empty_data_brvah);
+                        mAdapter.setEmptyView(R.layout.view_empty_data_brvah2);
                     }
                 }
             });

@@ -67,8 +67,8 @@ public class SelectNewsChannelActivity extends BaseActivity {
         Serializable follows = intent.getSerializableExtra(K_NEWS_FOLLOW_CHANNEL);
         if (follows instanceof List) {
             mFollowChannel = (List<NewsChannelResponse>) follows;
-            // 将在新闻列表页，用于占位TabLayout的最后一个对象移除
-            mFollowChannel.remove(mFollowChannel.size() - 1);
+//            // 将在新闻列表页，用于占位TabLayout的最后一个对象移除
+//            mFollowChannel.remove(mFollowChannel.size() - 1);
         }
 
         Serializable mores = intent.getSerializableExtra(K_NEWS_MORE_CHANNEL);
@@ -93,6 +93,12 @@ public class SelectNewsChannelActivity extends BaseActivity {
         mFollowAdapter.setOnItemChildClickListener(this::onFollowDelClicked);
         mFollowAdapter.setOnItemClickListener(this::onFollowClicked);
         mMoreAdapter.setOnItemClickListener(this::onMoreChannelClicked);
+        findViewById(R.id.back_iv).setOnClickListener(v -> {
+
+            doFinish(1);
+
+
+        });
     }
 
     /**
@@ -103,21 +109,25 @@ public class SelectNewsChannelActivity extends BaseActivity {
      */
     private void onFollowClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         if (!mIsEditing) {
-            FollowAndUnfollowDTO dto = new FollowAndUnfollowDTO();
-            // 新闻页 TabLayout 要展示的所有频道标签数据
-            dto.followed = mFollowAdapter.getData();
-
-            // 未关注的数据要取消关注
-            dto.more = mMoreAdapter.getData();
-
-            // 新闻页要展示哪个频道的新闻
-            dto.showPosition = position;
-
-            Intent result = new Intent();
-            result.putExtra("dto", dto);
-            setResult(RequestResultCode.RESULT_FOLLOW_TO_NEWS, result);
-            finish();
+            doFinish(position);
         }
+    }
+
+    private void doFinish(int position) {
+        FollowAndUnfollowDTO dto = new FollowAndUnfollowDTO();
+        // 新闻页 TabLayout 要展示的所有频道标签数据
+        dto.followed = mFollowAdapter.getData();
+
+        // 未关注的数据要取消关注
+        dto.more = mMoreAdapter.getData();
+
+        // 新闻页要展示哪个频道的新闻
+        dto.showPosition = position;
+
+        Intent result = new Intent();
+        result.putExtra("dto", dto);
+        setResult(RequestResultCode.RESULT_FOLLOW_TO_NEWS, result);
+        finish();
     }
 
     /**

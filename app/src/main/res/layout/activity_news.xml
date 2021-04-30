@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_FEFEFE">
+    android:background="@color/white_FEFEFE"
+    android:orientation="vertical">
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white_FEFEFE"
-        app:layout_constraintTop_toTopOf="parent"
         app:middleTitle="@string/city_news"
         app:rightFirstIcon="@drawable/ic_news_search" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="@dimen/dp_30"
-        android:background="@drawable/shape_news_tab_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
-        app:tabIndicatorColor="@color/blue_4C9EF2"
-        app:tabIndicatorFullWidth="false"
-        app:tabMode="scrollable"
-        app:tabTextAppearance="@style/TabNormalText" />
 
-    <ImageView
-        android:id="@+id/addTabView"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_30"
-        android:background="@mipmap/ic_tab_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tabLayout" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/addIcon"
-        android:layout_width="@dimen/dp_17"
-        android:layout_height="@dimen/dp_17"
-        android:src="@mipmap/ic_news_add_black"
-        app:layout_constraintBottom_toBottomOf="@id/addTabView"
-        app:layout_constraintEnd_toEndOf="@id/addTabView"
-        app:layout_constraintStart_toStartOf="@id/addTabView"
-        app:layout_constraintTop_toTopOf="@id/addTabView" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_toStartOf="@+id/addTabView"
+            android:background="@drawable/shape_news_tab_layout"
+            app:tabIndicatorColor="@color/blue_4C9EF2"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabNormalText" />
+
+
+        <ImageView
+            android:id="@+id/addTabView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentEnd="true"
+            android:background="@mipmap/ic_tab_bg" />
+
+        <ImageView
+            android:id="@+id/addIcon"
+            android:layout_width="@dimen/dp_17"
+            android:layout_height="@dimen/dp_17"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_17"
+            android:src="@mipmap/ic_news_add_black" />
+
+    </RelativeLayout>
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0"
+        android:layout_height="match_parent"
         android:background="@color/white_FEFEFE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

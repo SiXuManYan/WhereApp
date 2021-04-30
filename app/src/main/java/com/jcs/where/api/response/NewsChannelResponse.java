@@ -23,6 +23,10 @@ public class NewsChannelResponse extends BaseNode implements Serializable {
     private int id = 0;
     @SerializedName("name")
     private String name = "";
+
+    /**
+     * （1：已关注）（2：未关注）
+     */
     @SerializedName("follow_status")
     private int followStatus ;
 

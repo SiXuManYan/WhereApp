@@ -36,6 +36,7 @@ public class NewsAtyModel extends BaseModel {
 
     public void updateFollow(String postChannelIds, String delChannelIds, BaseObserver<UpdateFollowZipResponse> observer) {
         Log.e("NewsAtyModel", "updateFollow: " + "");
+
         Observable<JcsResponse<Object>> post = mRetrofit.postFollowChannels(postChannelIds);
         Observable<JcsResponse<Object>> del = mRetrofit.delFollowChannels(delChannelIds);
         Observable<JcsResponse<UpdateFollowZipResponse>> zip = Observable.zip(post, del, (objectJcsResponse, objectJcsResponse2) -> {

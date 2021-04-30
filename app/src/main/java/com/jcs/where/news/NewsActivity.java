@@ -44,7 +44,7 @@ public class NewsActivity extends BaseActivity {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private NewsViewPagerAdapter mNewsViewPagerAdapter;
+    private NewsViewPagerAdapter mPagerAdapter;
     private NewsAtyModel mModel;
     private ImageView mAddTabView;
     private List<NewsChannelResponse> mFollowChannels;
@@ -91,8 +91,10 @@ public class NewsActivity extends BaseActivity {
             @Override
             public void onSuccess(@NotNull List<NewsChannelResponse> newsChannelResponses) {
                 mAllChannels = newsChannelResponses;
+
                 // 拆分出已经关注的和未关注的新闻频道
                 getFollowedAndMoreChannels();
+
                 // 本地添加关注频道
                 NewsChannelResponse follow = new NewsChannelResponse();
                 follow.setName(getString(R.string.news_follow));
@@ -111,8 +113,6 @@ public class NewsActivity extends BaseActivity {
                 mTabs.add(recommend);
 
                 mTabs.addAll(mFollowChannels);
-                // 添加一个占位的 tab，用于滑动效果
-//                mTabs.add(new NewsChannelResponse(""));
 
                 // 根据 mTabs 的数据配制 TabLayout 和 ViewPager
                 deployTabAndViewPager();
@@ -126,21 +126,17 @@ public class NewsActivity extends BaseActivity {
     private void deployTabAndViewPager() {
 
         for (int i = 0; i < mTabs.size(); i++) {
-            NewsChannelResponse newsChannelResponse = mTabs.get(i);
-            mTabLayout.addTab(mTabLayout.newTab().setText(newsChannelResponse.getName()));
-            mNewsFragments.add(NewsFragment.newInstance(newsChannelResponse, i == mFirstVisibleTabPosition));
+            NewsChannelResponse response = mTabs.get(i);
+            mTabLayout.addTab(mTabLayout.newTab().setText(response.getName()));
+            mNewsFragments.add(NewsFragment.newInstance(response, i == mFirstVisibleTabPosition));
         }
 
-        mNewsViewPagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(),
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mNewsViewPagerAdapter.setNewsFragments(mNewsFragments);
-        mNewsViewPagerAdapter.setTabCategories(mTabs);
-        mViewPager.setAdapter(mNewsViewPagerAdapter);
+        mPagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mPagerAdapter.setNewsFragments(mNewsFragments);
+        mPagerAdapter.setTabCategories(mTabs);
+        mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setOffscreenPageLimit(mNewsViewPagerAdapter.getCount());
-
-        // 设置最后一个占位的 tab 不可点击
-        notClickLastTab();
+        mViewPager.setOffscreenPageLimit(mPagerAdapter.getCount());
 
         if (mFirstVisibleTabPosition != 0) {
             mViewPager.setCurrentItem(mFirstVisibleTabPosition);
@@ -199,20 +195,6 @@ public class NewsActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 设置占位的tab不可点击
-     */
-    private void notClickLastTab() {
-        LinearLayout tabStrip = (LinearLayout) mTabLayout.getChildAt(0);
-        int childCount = tabStrip.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View tabView = tabStrip.getChildAt(i);
-            if (tabView != null && i == childCount - 1) {
-                tabView.setClickable(false);
-            }
-        }
-    }
-
     @Override
     protected void bindListener() {
         mAddTabView.setOnClickListener(this::onAddTabClicked);
@@ -231,10 +213,11 @@ public class NewsActivity extends BaseActivity {
      */
     private void onAddTabClicked(View view) {
         Intent to = new Intent(this, SelectNewsChannelActivity.class);
+
         to.putExtra(SelectNewsChannelActivity.K_NEWS_FOLLOW_CHANNEL, (Serializable) mTabs);
         to.putExtra(SelectNewsChannelActivity.K_NEWS_MORE_CHANNEL, (Serializable) mMoreChannels);
 
-        startActivityForResult(to, RequestResultCode.REQUEST_NEWS_TO_FOLLOW);
+        startActivityForResult(to, RequestResultCode.RESULT_FOLLOW_TO_NEWS);
     }
 
     @Override
@@ -251,7 +234,7 @@ public class NewsActivity extends BaseActivity {
                     mFollowChannels = new ArrayList<>(followed.subList(2, followed.size()));
                     mMoreChannels = dto.more;
                     // 添加一个占位的 tab，用于滑动效果
-                    mTabs.add(new NewsChannelResponse(""));
+//                    mTabs.add(new NewsChannelResponse(""));
                     mFirstVisibleTabPosition = dto.showPosition;
 
                     // 更新关注和非关注频道

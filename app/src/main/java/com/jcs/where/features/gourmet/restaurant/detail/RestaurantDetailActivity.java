@@ -201,6 +201,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         } else {
             mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);
         }
+        mPhone = data.tel;
     }
 
     @Override

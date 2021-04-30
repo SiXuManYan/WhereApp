@@ -1,5 +1,6 @@
 package com.jcs.where.features.search;
 
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,9 +16,11 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
+import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpActivity;
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.watcher.AfterInputWatcher;
@@ -30,6 +33,7 @@ import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_1_HOTE
 import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_2_TRAVEL;
 import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_3_SERVICE;
 import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_4_RESTAURANT;
+import static com.jcs.where.utils.Constant.PARAM_ID;
 
 /**
  * Created by Wangsw  2021/2/25 10:25.
@@ -121,8 +125,9 @@ public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> imple
                 toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
                 break;
             case TYPE_4_RESTAURANT:
-                // todo 跳转至餐厅页
-                ToastUtils.showShort(R.string.coming_soon);
+                Bundle bundle = new Bundle();
+                bundle.putString(PARAM_ID, String.valueOf(data.id));
+                startActivity(RestaurantDetailActivity.class, bundle);
                 break;
             default:
                 break;

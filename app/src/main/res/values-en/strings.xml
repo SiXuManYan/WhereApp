@@ -421,23 +421,23 @@
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>
-    <string name="merchant_settled_prompt_step_1">Fill form</string>
-    <string name="merchant_settled_prompt_step_2">Audit\ninformation</string>
-    <string name="merchant_settled_prompt_step_3">Education\ntraining</string>
+    <string name="merchant_settled_prompt_step_1">Merchant\nApplication Form</string>
+    <string name="merchant_settled_prompt_step_2">Verification period\n(1~3 days)</string>
+    <string name="merchant_settled_prompt_step_3">Training Online\n operation</string>
     <string name="merchant_settled_prompt_contact">Contact Information</string>
-    <string name="merchant_settled_prompt_name"><font color="#FF0000">*</font><font color="#666666">Name</font></string>
+    <string name="merchant_settled_prompt_name"><font color="#FF0000">*</font><font color="#666666">First Name</font></string>
     <string name="merchant_settled_prompt_middle_name">Middle Name</string>
     <string name="merchant_settled_prompt_last_name"><font color='#FF0000'>*</font><font color='#666666'>Last Name</font></string>
-    <string name="merchant_settled_prompt_phone"><font color="#FF0000">*</font><font color="#666666">Phone Number</font></string>
-    <string name="merchant_settled_prompt_email"><font color="#FF0000">*</font><font color="#666666">Email</font></string>
+    <string name="merchant_settled_prompt_phone"><font color="#FF0000">*</font><font color="#666666">Contact Number</font></string>
+    <string name="merchant_settled_prompt_email"><font color="#FF0000">*</font><font color="#666666">Email Address</font></string>
     <string name="merchant_settled_prompt_merchant">Merchant Information</string>
-    <string name="merchant_settled_prompt_merchant_name"><font color='#FF0000'>*</font><font color='#666666'>Business Name</font></string>
-    <string name="merchant_settled_prompt_merchant_type"><font color='#FF0000'>*</font><font color='#666666'>Merchant Type</font></string>
-    <string name="merchant_settled_prompt_merchant_city"><font color='#FF0000'>*</font><font color='#666666'>City</font></string>
-    <string name="merchant_settled_prompt_merchant_address"><font color='#FF0000'>*</font><font color='#666666'>Merchant Address</font></string>
-    <string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*</font><font color='#666666'>Business phone</font></string>
-    <string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*</font><font color='#666666'>Is there a physical store?</font></string>
-    <string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>Upload business license(2 photos front&#38;back)</font></string>
+    <string name="merchant_settled_prompt_merchant_name"><font color='#FF0000'>*</font><font color='#666666'>Merchant Name</font></string>
+    <string name="merchant_settled_prompt_merchant_type"><font color='#FF0000'>*</font><font color='#666666'>Merchant Classification</font></string>
+    <string name="merchant_settled_prompt_merchant_city"><font color='#FF0000'>*</font><font color='#666666'>Location</font></string>
+    <string name="merchant_settled_prompt_merchant_address"><font color='#FF0000'>*</font><font color='#666666'>Address</font></string>
+    <string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*</font><font color='#666666'>Contact Number</font></string>
+    <string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*</font><font color='#666666'>Physical Store</font></string>
+    <string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>Upload Business Permit(2 photos front&#38;back)</font></string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="image_message">Image Message</string>

@@ -42,6 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="2"
                 android:gravity="center"
                 android:text="@string/merchant_settled_prompt_step_1"
                 android:textColor="@color/blue_4C9EF2"

@@ -92,7 +92,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="@dimen/dp_35"
         app:layout_constraintTop_toBottomOf="@id/searchEtView"
         app:tabGravity="fill"
         app:tabIndicator="@drawable/shape_blue_indicator"

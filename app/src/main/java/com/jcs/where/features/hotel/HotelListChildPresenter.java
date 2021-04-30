@@ -5,7 +5,6 @@ import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
-import com.jcs.where.utils.Constant;
 
 import java.util.List;
 
@@ -44,10 +43,8 @@ public class HotelListChildPresenter extends BaseMvpPresenter {
                         String search_input,
                         float score) {
 
-
-        String lat = String.valueOf(Constant.LAT);
-        String lng = String.valueOf(Constant.LNG);
-
+        String lat = "0";
+        String lng = "0";
 
         // 价格区间
         String priceRange = "";

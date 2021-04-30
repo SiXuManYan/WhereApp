@@ -49,7 +49,10 @@ public class RestaurantDetailResponse {
     public String lng = "";
     public String distance = "";
     public String tel = "";
-    public String collect_status = "";
+    /**
+     * 收藏状态（1：未收藏，2：已收藏）
+     */
+    public int collect_status = 0;
     public int take_out_status ;
     public String mer_uuid = "";
     public String mer_name = "";

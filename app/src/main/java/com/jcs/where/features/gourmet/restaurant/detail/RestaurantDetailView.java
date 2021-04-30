@@ -16,4 +16,8 @@ public interface RestaurantDetailView extends BaseMvpView {
     void bindDishData(List<DishResponse> data);
 
     void bindCommentData(List<CommentResponse> data);
+
+    void collectionSuccess();
+
+    void unCollectionSuccess();
 }

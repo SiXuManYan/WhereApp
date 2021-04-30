@@ -1,10 +1,17 @@
 package com.jcs.where.features.gourmet.restaurant.detail;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
@@ -14,12 +21,15 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
+import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.MobUtil;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 import com.jcs.where.view.CommentView;
 import com.jcs.where.view.DishView;
 import com.jcs.where.widget.ratingstar.RatingStarView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.jcs.where.utils.Constant.PARAM_ID;
@@ -56,6 +66,14 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
      * 餐厅名称
      */
     private String mRestaurantName;
+    private String mLat = "";
+    private String mLng = "";
+
+    /**
+     * 收藏状态（1：未收藏，2：已收藏）
+     */
+    private int collect_status = 0;
+    private CharSequence mPhone = "";
 
 
     @Override
@@ -103,13 +121,44 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     @Override
     protected void bindListener() {
         shopping_cart.setOnClickListener(this::onShoppingCartClick);
-        navigation_iv.setOnClickListener(v -> showComing());
-        chat_iv.setOnClickListener(v -> showComing());
+
+        chat_iv.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(mPhone)) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + mPhone);
+                intent.setData(data);
+                startActivity(intent);
+            } else {
+                ToastUtils.showShort(R.string.no_contact_information);
+            }
+        });
         support_takeaway_tv.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString(PARAM_ID, mRestaurantId);
             startActivity(TakeawayActivity.class, bundle);
         });
+
+        navigation_iv.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(mLat) && !TextUtils.isEmpty(mLng)) {
+                startNaviGoogle(mLat, mLng);
+            }
+        });
+        mJcsTitle.setSecondRightIvClickListener(v -> {
+            if (collect_status == 1) {
+                presenter.collection(mRestaurantId);
+            } else {
+                presenter.unCllection(mRestaurantId);
+            }
+
+        });
+        mJcsTitle.setFirstRightIvClickListener(v -> {
+
+            String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_RESTAURANT, mRestaurantId);
+            MobUtil.shareFacebookWebPage(url, RestaurantDetailActivity.this);
+
+        });
+
+
     }
 
 
@@ -144,6 +193,14 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             chat_iv.setVisibility(View.GONE);
         }
         distance_tv.setText(getString(R.string.distance_format_2, data.distance));
+        mLat = data.lat;
+        mLng = data.lng;
+        collect_status = data.collect_status;
+        if (collect_status == 1) {
+            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2);
+        } else {
+            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);
+        }
     }
 
     @Override
@@ -163,4 +220,44 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         startActivityAfterLogin(ShoppingCartActivity.class);
     }
 
+    public void startNaviGoogle(String lat, String lng) {
+        if (isAvilible(this, "com.google.android.apps.maps")) {
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        } else {
+            showToast(getString(R.string.no_install_google_map_prompt));
+        }
+    }
+
+    public static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
+    }
+
+    @Override
+    public void collectionSuccess() {
+        collect_status = 2;
+        mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);
+    }
+
+    @Override
+    public void unCollectionSuccess() {
+        collect_status = 1;
+        mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2);
+    }
 }

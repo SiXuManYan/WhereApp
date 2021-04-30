@@ -340,7 +340,7 @@
     <string name="sign_out_hint">Are you sure to log out ？</string>
     <string name="attraction_info">Attraction Info</string>
     <string name="tourist_notice">Tourist Notice</string>
-    <string name="collection_tab_same_city">City</string>
+    <string name="collection_tab_same_city">Agency/MERT</string>
     <string name="collection_tab_article">Article</string>
     <string name="collection_tab_video">Video</string>
     <string name="bind_phone">Bind phone</string>
@@ -426,7 +426,7 @@
     <string name="merchant_settled_prompt_step_3">Training Online\n operation</string>
     <string name="merchant_settled_prompt_contact">Contact Information</string>
     <string name="merchant_settled_prompt_name"><font color="#FF0000">*</font><font color="#666666">First Name</font></string>
-    <string name="merchant_settled_prompt_middle_name">Middle Name</string>
+    <string name="merchant_settled_prompt_middle_name"> Middle Name</string>
     <string name="merchant_settled_prompt_last_name"><font color='#FF0000'>*</font><font color='#666666'>Last Name</font></string>
     <string name="merchant_settled_prompt_phone"><font color="#FF0000">*</font><font color="#666666">Contact Number</font></string>
     <string name="merchant_settled_prompt_email"><font color="#FF0000">*</font><font color="#666666">Email Address</font></string>
@@ -614,6 +614,7 @@
     <string name="send_out_time">Send Out Time</string>
     <string name="please_select_delivery_time">Please select delivery time</string>
     <string name="full">Full</string>
+    <string name="no_contact_information">No contact information</string>
 
 
 </resources>

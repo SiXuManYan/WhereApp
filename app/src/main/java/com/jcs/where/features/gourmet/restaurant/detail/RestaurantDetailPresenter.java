@@ -1,7 +1,10 @@
 package com.jcs.where.features.gourmet.restaurant.detail;
 
+import com.google.gson.JsonElement;
+import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
+import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.gourmet.comment.CommentResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
@@ -9,6 +12,8 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.utils.Constant;
 
 import java.util.List;
+
+import retrofit2.http.PUT;
 
 /**
  * Created by Wangsw  2021/4/1 10:28.
@@ -69,4 +74,34 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
             }
         });
     }
+
+    public void collection(String restaurantId){
+
+        CollectionRestaurantRequest request = new CollectionRestaurantRequest();
+        request.restaurant_id = restaurantId;
+
+        requestApi(mRetrofit.collectsRestaurant(request), new BaseMvpObserver<JsonElement>(view) {
+            @Override
+            protected void onSuccess(JsonElement response) {
+                view.collectionSuccess();
+            }
+        });
+
+    }
+
+
+    public void unCllection(String restaurantId){
+
+        CollectionRestaurantRequest request = new CollectionRestaurantRequest();
+        request.restaurant_id = restaurantId;
+
+        requestApi(mRetrofit.unCollectsRestaurant(request), new BaseMvpObserver<JsonElement>(view) {
+            @Override
+            protected void onSuccess(JsonElement response) {
+                view.unCollectionSuccess();
+            }
+        });
+
+    }
+
 }

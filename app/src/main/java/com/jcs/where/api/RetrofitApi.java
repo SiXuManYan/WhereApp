@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
+import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.request.SendCodeRequest;
@@ -767,8 +768,8 @@ public interface RetrofitApi {
     @GET("hotelapi/v2/hotels")
     Observable<JcsResponse<PageResponse<HotelListResponse>>> getHotelList(
             @Query("page") int page,
-            @Query("lat") String lat,
-            @Query("lng") String lng,
+            @Query("lat") @Nullable String lat,
+            @Query("lng") @Nullable String lng,
             @Query("area_id") @Nullable String areaId,
             @Query("price_range") @Nullable String price_range,
             @Query("star_level") @Nullable String star_level,
@@ -1015,5 +1016,23 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> addCartNumber(
             @Body AddCartRequest request
     );
+
+
+    /**
+     * 收藏餐厅
+     */
+    @POST("restaurantapi/v2/collects")
+    Observable<JcsResponse<JsonElement>> collectsRestaurant(
+            @Body CollectionRestaurantRequest request
+    );
+
+    /**
+     * 收藏餐厅
+     */
+    @HTTP(method = "DELETE", path = "restaurantapi/v2/collects", hasBody = true)
+    Observable<JcsResponse<JsonElement>> unCollectsRestaurant(
+            @Body CollectionRestaurantRequest request
+    );
+
 
 }

@@ -449,18 +449,18 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="入住时间：14:00之后"
                             android:textColor="@color/black_333333"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="入住时间：14:00之后" />
 
                         <TextView
                             android:id="@+id/tv_policyendtime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="退房时间：12:00以前"
                             android:textColor="@color/black_333333"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="退房时间：12:00以前" />
 
                     </LinearLayout>
 
@@ -473,9 +473,9 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="儿童及加床"
                     android:textColor="@color/black_333333"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    tools:text="儿童及加床" />
 
 
             </LinearLayout>
@@ -513,11 +513,11 @@
                 android:id="@+id/ll_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"

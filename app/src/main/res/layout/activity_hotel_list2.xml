@@ -186,14 +186,14 @@
         android:labelFor="@+id/tab"
         android:overScrollMode="never" />
 
-    <com.jcs.where.view.popup.PopupConstraintLayout
-        android:id="@+id/topPopupLayout"
+    <LinearLayout
+        android:id="@+id/pop_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_120"
+        android:layout_height="match_parent"
         android:layout_below="@+id/title_rl"
-        android:background="@color/white_FEFEFE"
+        android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <com.jcs.where.view.EnterStayInfoView
             android:id="@+id/enterStayInfoView"
@@ -201,7 +201,16 @@
             android:layout_height="@dimen/dp_120"
             android:background="@color/white_FEFEFE" />
 
-    </com.jcs.where.view.popup.PopupConstraintLayout>
+
+        <View
+            android:id="@+id/dismiss_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:background="@color/grey_666666" />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

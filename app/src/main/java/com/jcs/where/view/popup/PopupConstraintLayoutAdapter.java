@@ -5,23 +5,35 @@ package com.jcs.where.view.popup;
  */
 public abstract class PopupConstraintLayoutAdapter {
     public abstract int getMaxHeight();
-    public int getMinHeight(){
+
+    public int getMinHeight() {
         return 1;
     }
-    public boolean showShadow(){
+
+    public boolean showShadow() {
         return true;
     }
+
     public boolean clickOutSideClose() {
         return true;
     }
-    public boolean isGoneAfterBottom(){return true;}
+
+    public boolean isGoneAfterBottom() {
+        return true;
+    }
+
     public long getDuration() {
         return 500;
     }
-    public void onHideCompleted(){}
 
-    public void onShowCompleted() {}
+    public void onHideCompleted() {
+    }
 
-    public boolean enableAnim(){return true;}
+    public void onShowCompleted() {
+    }
+
+    public boolean enableAnim() {
+        return true;
+    }
 
 }

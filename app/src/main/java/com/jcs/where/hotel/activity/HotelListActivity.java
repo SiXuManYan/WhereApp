@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -19,15 +20,12 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.features.hotel.HotelListChildFragment;
-import com.jcs.where.hotel.fragment.HotelListFragment;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.model.HotelListModel;
 import com.jcs.where.search.SearchActivity;
 import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.view.EnterStayInfoView;
-import com.jcs.where.view.popup.PopupConstraintLayout;
-import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
@@ -52,7 +50,6 @@ public class HotelListActivity extends BaseActivity {
     private int mTotalDay, mRoomNum;
     private List<HotelListChildFragment> mFragmentList;
     private ImageView mClearIv;
-    private PopupConstraintLayout mTopPopupLayout;
     private EnterStayInfoView mEnterStayInfoView;
     private JcsCalendarDialog mCalendarDialog;
 
@@ -98,6 +95,8 @@ public class HotelListActivity extends BaseActivity {
      * 选中的评分
      */
     private float mScore;
+    private LinearLayout pop_ll;
+    private View dismiss_view;
 
 
     public static void goTo(Context context,
@@ -155,7 +154,6 @@ public class HotelListActivity extends BaseActivity {
         mCalendarDialog = new JcsCalendarDialog();
         mCalendarDialog.initCalendar(this);
 
-        mTopPopupLayout = findViewById(R.id.topPopupLayout);
         mEnterStayInfoView = findViewById(R.id.enterStayInfoView);
         mTab = findViewById(R.id.tab);
         mViewPager = findViewById(R.id.viewPager);
@@ -164,6 +162,12 @@ public class HotelListActivity extends BaseActivity {
         mCityTv = findViewById(R.id.cityTv);
         mLeaveTextPromptTv = findViewById(R.id.leaveTextPrompt);
         mLiveTextPromptTv = findViewById(R.id.liveTextPrompt);
+
+        pop_ll = findViewById(R.id.pop_ll);
+        findViewById(R.id.dismiss_view).setOnClickListener(v -> {
+            pop_ll.setVisibility(View.GONE);
+
+        });
 
         findViewById(R.id.cityTv).setOnClickListener(view -> SearchActivity.goTo(HotelListActivity.this, getIntent().getStringExtra(HotelSelectDateHelper.EXT_CITY_ID), SearchTag.HOTEL, REQ_SEARCH));
         mClearIv = findViewById(R.id.clearIv);
@@ -188,18 +192,7 @@ public class HotelListActivity extends BaseActivity {
         initExtra();
         mStartDayTv.setText(mStartDateBean.getShowMonthDayDateWithSplit());
         mEndDayTv.setText(mEndDateBean.getShowMonthDayDateWithSplit());
-        mTopPopupLayout.setAdapter(new PopupConstraintLayoutAdapter() {
 
-            @Override
-            public boolean showShadow() {
-                return true;
-            }
-
-            @Override
-            public int getMaxHeight() {
-                return getPxFromDp(120);
-            }
-        });
 
         mEnterStayInfoView.bindEnterStayInfoAdapter(this::toShowCalendarDialog);
         mEnterStayInfoView.setStartAndEnd(mStartDateBean, mEndDateBean);
@@ -331,7 +324,14 @@ public class HotelListActivity extends BaseActivity {
      * @param view
      */
     public void onChooseViewClicked(View view) {
-        mTopPopupLayout.showOrHide();
+
+        if (pop_ll.getVisibility()!= View.VISIBLE) {
+            pop_ll.setVisibility(View.VISIBLE);
+        }else {
+            pop_ll.setVisibility(View.GONE);
+        }
+
+
     }
 
     public void toShowCalendarDialog() {

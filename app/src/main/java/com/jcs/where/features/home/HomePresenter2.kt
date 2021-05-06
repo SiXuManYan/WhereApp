@@ -82,11 +82,13 @@ class HomePresenter2(val view: HomeView2) : BaseMvpPresenter(view) {
                 val finalApiUnreadMessageCount = apiUnreadMessageCount
                 RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
                     override fun onSuccess(rongMessageCount: Int?) {
-                        var rongMessageCount = rongMessageCount
+
                         if (rongMessageCount == null) {
-                            rongMessageCount = 0
+                            view.setMessageCount(finalApiUnreadMessageCount)
+                        } else {
+                            view.setMessageCount(finalApiUnreadMessageCount + rongMessageCount)
                         }
-                        view.setMessageCount(finalApiUnreadMessageCount + rongMessageCount)
+
                     }
 
                     override fun onError(errorCode: RongIMClient.ErrorCode) {

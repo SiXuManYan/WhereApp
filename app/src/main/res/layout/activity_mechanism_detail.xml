@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:rightFirstIcon="@drawable/ic_share_black"
-        app:rightSecondIcon="@drawable/ic_collection" />
+        app:rightSecondIcon="@mipmap/ic_uncollected_black" />
 
     <com.jcs.where.widget.JcsBanner
         android:id="@+id/jcsBanner"
@@ -38,7 +38,7 @@
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:src="@drawable/ic_hoteldetail_time"
+        android:src="@mipmap/ic_hoteldetail_time"
         app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"
         app:layout_constraintTop_toBottomOf="@id/mechanismTitleTv" />
 
@@ -92,6 +92,7 @@
         android:id="@+id/telIcon"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
+        android:scaleType="centerInside"
         android:layout_marginTop="@dimen/dp_21"
         android:src="@mipmap/ic_phone_black"
         app:layout_constraintStart_toStartOf="@id/mechanismTitleTv"

@@ -22,7 +22,7 @@
         android:layout_marginEnd="@dimen/dp_60"
         android:layout_marginBottom="@dimen/dp_7"
         android:background="@drawable/shape_eeeeee_radius_15"
-        android:hint="@string/prompt_input_government_name"
+        android:hint="@string/prompt_input_government_name_2"
         android:paddingStart="@dimen/dp_50"
         android:paddingEnd="@dimen/dp_0"
         android:textColor="@color/grey_b7b7b7"

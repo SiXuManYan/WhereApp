@@ -21,10 +21,7 @@ import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.government.activity.GovernmentMapActivity
 import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.travel.TravelMapActivity
-import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.GlideUtil
-import com.jcs.where.utils.JsonUtil
-import com.jcs.where.utils.SPKey
+import com.jcs.where.utils.*
 import com.jcs.where.yellow_page.activity.YellowPageActivity
 import java.util.*
 
@@ -162,7 +159,10 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
 
                     }
                     TYPE_RESTAURANT -> {
-                        startActivity(RestaurantListActivity::class.java,null)
+                        startActivity(RestaurantListActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_PID, it.id)
+                            putString(Constant.PARAM_PID_NAME, it.name)
+                        })
                     }
                     TYPE_YELLOW_PAGE -> {
                         // 传递企业黄页一级分类id
@@ -191,7 +191,7 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
     private fun startActivity(target: Class<*>, bundle: Bundle?) {
         if (bundle != null) {
             context.startActivity(Intent(context, target).putExtras(bundle).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        }else{
+        } else {
             context.startActivity(Intent(context, target).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
 

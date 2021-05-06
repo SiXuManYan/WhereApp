@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
-import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.base.BaseEvent;
-import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.view.empty.EmptyView;
 
@@ -30,10 +28,10 @@ public class FoodCategoryFilterFragment extends BaseMvpFragment<FoodCategoryFilt
     private final ArrayList<Category> dataList = new ArrayList<>();
     private EmptyView mEmptyView;
     private FoodCategoryFilterAdapter mAdapter;
-
-
-
     private RecyclerView contentRv;
+    public int pid = 0;
+    public String pidName = "";
+
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +52,6 @@ public class FoodCategoryFilterFragment extends BaseMvpFragment<FoodCategoryFilt
         mAdapter.setNewInstance(dataList);
         mAdapter.setOnItemClickListener(this);
         contentRv.setAdapter(mAdapter);
-
     }
 
     @Override
@@ -64,7 +61,7 @@ public class FoodCategoryFilterFragment extends BaseMvpFragment<FoodCategoryFilt
 
     @Override
     protected void loadOnVisible() {
-        presenter.getCategoriesList();
+        presenter.getCategoriesList(pid, pidName);
     }
 
     @Override

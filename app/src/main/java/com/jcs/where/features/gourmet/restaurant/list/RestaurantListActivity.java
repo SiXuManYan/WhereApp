@@ -73,6 +73,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private CheckedTextView area_tv;
     private CheckedTextView food_tv;
     private CheckedTextView other_tv;
+    private int pid;
+    private String pidName;
 
 
     @Override
@@ -82,6 +84,9 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
 
     @Override
     protected void initView() {
+        Bundle bundle = getIntent().getExtras();
+        pid = bundle.getInt(Constant.PARAM_PID, 89);
+        pidName = bundle.getString(Constant.PARAM_PID_NAME, "");
         swipe_layout = findViewById(R.id.swipe_layout);
         recycler = findViewById(R.id.recycler);
         city_et = findViewById(R.id.cityEt);
@@ -100,7 +105,11 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         filter_pager = findViewById(R.id.filter_pager);
         dismiss_view = findViewById(R.id.dismiss_view);
         filter_pager.setOffscreenPageLimit(2);
-        filter_pager.setAdapter(new RestaurantPagerAdapter(getSupportFragmentManager(), 0));
+        RestaurantPagerAdapter adapter = new RestaurantPagerAdapter(getSupportFragmentManager(), 0);
+        adapter.pid = pid;
+        adapter.pidName = pidName;
+
+        filter_pager.setAdapter(adapter);
 
         // list
         mAdapter = new RestaurantListAdapter();
@@ -117,6 +126,9 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         // 动画
         mFilterShowAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_in);
         mFilterHideAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_out);
+
+        // 默认
+        food_tv.setText(pidName);
 
     }
 
@@ -339,7 +351,13 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
             }
         } else if (data instanceof Category) {
             // 美食列别筛选
-            mRequest.category_id = String.valueOf(((Category) data).id);
+            int id = ((Category) data).id;
+            if (id == 0) {
+                mRequest.category_id = null;
+            } else {
+                mRequest.category_id = String.valueOf(id);
+            }
+
             String name = ((Category) data).name;
             if (!TextUtils.isEmpty(name)) {
                 food_tv.setText(name);

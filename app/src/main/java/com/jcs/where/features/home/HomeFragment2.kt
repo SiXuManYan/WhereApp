@@ -192,7 +192,14 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                         })
                     }
                     8 -> startActivity(PayBillsActivity::class.java)
-                    9 -> startActivity(RestaurantListActivity::class.java)
+                    9 -> {
+
+                        startActivity(RestaurantListActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_PID, 89)
+                            putString(Constant.PARAM_PID_NAME, getString(R.string.filter_food))
+                        })
+
+                    }
                     else -> showComing()
                 }
             }
@@ -292,8 +299,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
-                        startActivity(RestaurantDetailActivity::class.java,Bundle().apply {
-                            putString(Constant.PARAM_ID , data.id.toString())
+                        startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
+                            putString(Constant.PARAM_ID, data.id.toString())
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {

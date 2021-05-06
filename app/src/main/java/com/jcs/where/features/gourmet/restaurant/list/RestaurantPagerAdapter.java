@@ -14,6 +14,9 @@ import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFrag
  */
 public class RestaurantPagerAdapter extends FragmentStatePagerAdapter {
 
+    public int pid = 0;
+    public String pidName = "";
+
     public RestaurantPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
@@ -24,7 +27,10 @@ public class RestaurantPagerAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return new AreaFilterFragment();
         } else if (position == 1) {
-            return new FoodCategoryFilterFragment();
+            FoodCategoryFilterFragment fragment = new FoodCategoryFilterFragment();
+            fragment.pid = pid;
+            fragment.pidName = pidName;
+            return fragment;
         } else {
             return new MoreFilterFragment();
         }

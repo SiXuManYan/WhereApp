@@ -1,6 +1,7 @@
 package com.jcs.where.news.adapter;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.response.NewsResponse;
@@ -18,7 +19,7 @@ import java.util.List;
  * author : hwd
  * date   : 2021/1/6-23:45
  */
-public class NewsFragmentAdapter extends BaseMultiItemQuickAdapter<NewsResponse, BaseViewHolder> {
+public class NewsFragmentAdapter extends BaseMultiItemQuickAdapter<NewsResponse, BaseViewHolder> implements LoadMoreModule {
     private List<Integer> mImageResIds;
 
     public NewsFragmentAdapter() {

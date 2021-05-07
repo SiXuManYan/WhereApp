@@ -28,6 +28,7 @@ import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.view.EnterStayInfoView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
+import com.jcs.where.widget.tabs.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ import io.reactivex.annotations.NonNull;
 public class HotelListActivity extends BaseActivity {
 
     private static final int REQ_SEARCH = 666;
-    private TabLayout mTab;
+    private SlidingTabLayout mTab;
     private ViewPager mViewPager;
     private TextView mStartDayTv, mEndDayTv, mCityTv;
     private TextView mLiveTextPromptTv, mLeaveTextPromptTv;
@@ -314,7 +315,7 @@ public class HotelListActivity extends BaseActivity {
                 return titles.get(position);
             }
         });
-        mTab.setupWithViewPager(mViewPager);
+        mTab.setViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(titles.size());
     }
 
@@ -325,9 +326,9 @@ public class HotelListActivity extends BaseActivity {
      */
     public void onChooseViewClicked(View view) {
 
-        if (pop_ll.getVisibility()!= View.VISIBLE) {
+        if (pop_ll.getVisibility() != View.VISIBLE) {
             pop_ll.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             pop_ll.setVisibility(View.GONE);
         }
 

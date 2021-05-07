@@ -390,7 +390,9 @@ public interface RetrofitApi {
      * @param channelId 频道id
      */
     @GET("newsapi/v2/news")
-    Observable<JcsResponse<PageResponse<NewsResponse>>> getNews(@Query("channel_id") int channelId, @Query("search_input") String input);
+    Observable<JcsResponse<PageResponse<NewsResponse>>> getNews(@Query("channel_id") @Nullable  Integer channelId,
+                                                                @Query("search_input") @Nullable String input,
+                                                                @Query("page") int page);
 
     /**
      * 获取积分明细列表

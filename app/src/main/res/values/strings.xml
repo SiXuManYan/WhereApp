@@ -620,5 +620,14 @@
     <string name="no_contact_information">暂无联系方式</string>
     <string name="no_messages">暂无通知</string>
     <string name="no_attention">暂无关注</string>
+    <string name="star_text_format">%1$s&#160;%2$s</string>
+    <string name="less_2_stat">&#8804;2星</string>
+    <string name="star_3">3星</string>
+    <string name="star_4">4星</string>
+    <string name="star_5">5星</string>
+    <string name="score_3_0_hint">3.0分</string>
+    <string name="score_3_5_hint">3.5分</string>
+    <string name="score_4_0_hint">4.0分</string>
+    <string name="score_4_5_hint">4.5分</string>
 
 </resources>

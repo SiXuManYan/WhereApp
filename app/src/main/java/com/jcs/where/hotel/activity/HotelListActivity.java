@@ -186,10 +186,10 @@ public class HotelListActivity extends BaseActivity {
     @Override
     protected void initData() {
         Locale languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this);
-        if (!languageLocale.getLanguage().equals("zh")) {
-            mLiveTextPromptTv.setVisibility(View.GONE);
-            mLeaveTextPromptTv.setVisibility(View.GONE);
-        }
+//        if (!languageLocale.getLanguage().equals("zh")) {
+//            mLiveTextPromptTv.setVisibility(View.GONE);
+//            mLeaveTextPromptTv.setVisibility(View.GONE);
+//        }
         initExtra();
         mStartDayTv.setText(mStartDateBean.getShowMonthDayDateWithSplit());
         mEndDayTv.setText(mEndDateBean.getShowMonthDayDateWithSplit());

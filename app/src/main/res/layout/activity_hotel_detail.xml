@@ -103,11 +103,10 @@
                         android:id="@+id/tv_star"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/ic_star_yellow"
                         android:drawablePadding="2.5dp"
-                        android:text="4.5"
-                        android:textColor="@color/grey_666666"
-                        android:textSize="16sp" />
+                        tools:text="4.5"
+                        android:textColor="@color/blue_4C9EF2"
+                        android:textSize="@dimen/sp_14" />
 
                     <TextView
                         android:id="@+id/tv_commentnumber"

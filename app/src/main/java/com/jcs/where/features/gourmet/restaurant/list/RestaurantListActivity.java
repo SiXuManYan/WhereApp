@@ -1,7 +1,9 @@
 package com.jcs.where.features.gourmet.restaurant.list;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -75,6 +77,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private CheckedTextView other_tv;
     private int pid;
     private String pidName;
+    private ImageView clearIv;
 
 
     @Override
@@ -148,7 +151,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     protected void bindListener() {
         swipe_layout.setOnRefreshListener(this);
         findViewById(R.id.back_iv).setOnClickListener(v -> finish());
-        findViewById(R.id.clearIv).setOnClickListener(this::onClearSearchClick);
+        clearIv = findViewById(R.id.clearIv);
+        clearIv.setOnClickListener(this::onClearSearchClick);
         area_filter_ll.setOnClickListener(this::onAreaFilterClick);
         food_filter_ll.setOnClickListener(this::onFoodFilterClick);
         other_filter_ll.setOnClickListener(this::onOtherFilterClick);
@@ -181,8 +185,28 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
                 KeyboardUtils.hideSoftInput(city_et);
                 return true;
             }
-
             return false;
+        });
+        city_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+                    clearIv.setVisibility(View.GONE);
+                } else {
+                    clearIv.setVisibility(View.VISIBLE);
+                }
+            }
         });
 
     }

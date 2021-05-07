@@ -7,20 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.jcs.where.R;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.base.IntentEntry;
-import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MapMarkerUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 /**
  * 地图页面下半部分装载 ViewPager 的 Fragment
@@ -98,7 +97,7 @@ public class CardViewPagerFragment extends BaseFragment {
 
     public void onPageClicked(int position) {
         int mechanismId = mAdapter.mData.get(position).getId();
-        toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(mechanismId)));
+        TouristAttractionDetailActivity.goTo(getContext(), mechanismId);
     }
 
     public void selectPosition(int selectPosition) {

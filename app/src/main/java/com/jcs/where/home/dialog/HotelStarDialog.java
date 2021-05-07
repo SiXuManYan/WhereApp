@@ -118,10 +118,10 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         starTvs.add(star5);
 
         starBeans = new HashMap<>();
-        starBeans.put(starLessThan2, new StarBean("二星及以下", 2));
-        starBeans.put(star3, new StarBean("三星", 3));
-        starBeans.put(star4, new StarBean("四星", 4));
-        starBeans.put(star5, new StarBean("五星", 5));
+        starBeans.put(starLessThan2, new StarBean(getString(R.string.less_2_stat), 2));
+        starBeans.put(star3, new StarBean(getString(R.string.star_3), 3));
+        starBeans.put(star4, new StarBean(getString(R.string.star_4), 4));
+        starBeans.put(star5, new StarBean(getString(R.string.star_5), 5));
 
         scoreTvs = new ArrayList<>();
         scoreTvs.add(score30);
@@ -130,10 +130,10 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         scoreTvs.add(score45);
 
         scoreBeans = new HashMap<>();
-        scoreBeans.put(score30, new ScoreBean(3.0f, "一般"));
-        scoreBeans.put(score35, new ScoreBean(3.5f, "满意"));
-        scoreBeans.put(score40, new ScoreBean(4.0f, "很好"));
-        scoreBeans.put(score45, new ScoreBean(4.5f, "超赞"));
+        scoreBeans.put(score30, new ScoreBean(3.0f, getString(R.string.score_3_0_hint)));
+        scoreBeans.put(score35, new ScoreBean(3.5f, getString(R.string.score_3_5_hint)));
+        scoreBeans.put(score40, new ScoreBean(4.0f, getString(R.string.score_4_0_hint)));
+        scoreBeans.put(score45, new ScoreBean(4.5f, getString(R.string.score_4_5_hint)));
 
 
     }

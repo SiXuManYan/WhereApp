@@ -51,6 +51,7 @@ import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
+import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MobUtil;
 import com.jcs.where.view.XBanner.AbstractUrlLoader;
@@ -390,7 +391,8 @@ public class HotelDetailActivity extends BaseActivity {
                             .start();
                 }
                 nameTv.setText(hotelDetailResponse.getName());
-                star_view.setRating((float) hotelDetailResponse.getGrade());
+                double grade = hotelDetailResponse.getGrade();
+                star_view.setRating((float) grade);
 
                 shareIv.setOnClickListener(view -> {
 //                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, hotelDetailResponse.getName());
@@ -402,7 +404,8 @@ public class HotelDetailActivity extends BaseActivity {
 
                 String startText = String.format(getString(R.string.open_time), hotelDetailResponse.getStart_business_time());
                 startTimeTv.setText(startText);
-                starTv.setText(String.valueOf(hotelDetailResponse.getGrade()));
+                starTv.setText(getString(R.string.star_text_format, String.valueOf(grade), FeaturesUtil.getGradeRetouchString((float) grade)));
+
                 String commentNumberText = String.format(getString(R.string.comment_num_prompt), hotelDetailResponse.getComment_counts());
                 commnetNumberTv.setText(commentNumberText);
                 if (TextUtils.isEmpty(hotelDetailResponse.getFacebook_link())) {

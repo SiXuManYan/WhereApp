@@ -25,16 +25,16 @@
     <string name="show_price_with_forward_unit">₱%1$d</string>
     <string name="show_price_with_forward_unit_f">₱%1$.2f</string>
     <string name="prompt_star">Star Rating</string>
-    <string name="prompt_price_star">Price/Star Rating</string>
-    <string name="score_prompt">score</string>
-    <string name="start_less_than_2"><![CDATA[<2]]></string>
+    <string name="prompt_price_star">Price/Star/Score</string>
+    <string name="score_prompt">Score</string>
+    <string name="start_less_than_2">&#8804;2</string>
     <string name="digital_3">3</string>
     <string name="digital_4">4</string>
     <string name="digital_5">5</string>
-    <string name="score_3_0">3.0 \ n General</string>
-    <string name="score_3_5">3.5 \ N satisfied</string>
-    <string name="score_4_0">4.0 \ n is very good</string>
-    <string name="score_4_5">4.5 \ n awesome</string>
+    <string name="score_3_0">3.0 \n Good</string>
+    <string name="score_3_5">3.5 \n Fabulous</string>
+    <string name="score_4_0">4.0 \n Superb</string>
+    <string name="score_4_5">4.5 \n Exceptional</string>
     <string name="ensure">Confirm</string>
     <string name="select_date">Dates</string>
     <string name="calendar_sunday">Sun</string>
@@ -166,7 +166,7 @@
     <string name="mine_unpaid">Unpaid</string>
     <string name="mine_booked">Booked</string>
     <string name="language_title">language</string>
-    <string name="home_search_hint">Search keywords</string>
+    <string name="home_search_hint">Search title or keywords</string>
     <string name="home_near_hotel">Near the hotel</string>
     <string name="mechanism_to">&#045;</string>
     <string name="google_map">Google map</string>
@@ -618,6 +618,14 @@
     <string name="no_contact_information">No contact information</string>
     <string name="no_messages">No Messages</string>
     <string name="no_attention">No Attention</string>
-
+    <string name="star_text_format">%1$s&#160;%2$s</string>
+    <string name="less_2_stat">&#8804;2star</string>
+    <string name="star_3">3star</string>
+    <string name="star_4">4star</string>
+    <string name="star_5">5star</string>
+    <string name="score_3_0_hint">3.0score</string>
+    <string name="score_3_5_hint">3.5score</string>
+    <string name="score_4_0_hint">4.0score</string>
+    <string name="score_4_5_hint">4.5score</string>
 
 </resources>

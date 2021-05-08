@@ -94,7 +94,7 @@
     <string name="day">day</string>
     <string name="symbol_short_link">-</string>
     <string name="total">Total</string>
-    <string name="night">late</string>
+    <string name="night">night</string>
     <string name="slash_night">&#047;late</string>
     <string name="total_night">%1$d night</string>
     <string name="enter_stay">Check-in</string>

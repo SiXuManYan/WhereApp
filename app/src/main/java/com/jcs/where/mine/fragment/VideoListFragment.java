@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
@@ -20,13 +22,12 @@ import com.jcs.where.base.IntentEntry;
 import com.jcs.where.mine.adapter.VideoListAdapter;
 import com.jcs.where.mine.model.CollectionListModel;
 import com.jcs.where.news.NewsVideoActivity;
-import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
@@ -56,9 +57,15 @@ public class VideoListFragment extends BaseFragment implements OnLoadMoreListene
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mRecyclerView.addItemDecoration(new NewsListItemDecoration());
+        mRecyclerView.addItemDecoration(getItemDecoration());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private RecyclerView.ItemDecoration getItemDecoration() {
+        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1), SizeUtils.dp2px(15), SizeUtils.dp2px(15));
+        itemDecoration.setDrawHeaderFooter(false);
+        return itemDecoration;
     }
 
     @Override
@@ -82,7 +89,7 @@ public class VideoListFragment extends BaseFragment implements OnLoadMoreListene
 
     private void getCollectedVideoList(int page) {
 
-        mModel.getCollectionVideo(page , new BaseObserver<PageResponse<CollectedResponse>>() {
+        mModel.getCollectionVideo(page, new BaseObserver<PageResponse<CollectedResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();

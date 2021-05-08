@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
@@ -26,6 +28,7 @@ import com.jcs.where.news.fragment.NewsFragment;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -91,9 +94,16 @@ public class ArticleListFragment extends BaseFragment implements OnLoadMoreListe
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mRecyclerView.addItemDecoration(new NewsListItemDecoration());
+        mRecyclerView.addItemDecoration( getItemDecoration());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+
+    private RecyclerView.ItemDecoration getItemDecoration() {
+        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1), SizeUtils.dp2px(15), SizeUtils.dp2px(15));
+        itemDecoration.setDrawHeaderFooter(false);
+        return itemDecoration;
     }
 
     @Override

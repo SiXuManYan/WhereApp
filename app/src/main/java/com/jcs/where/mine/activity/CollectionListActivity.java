@@ -1,5 +1,12 @@
 package com.jcs.where.mine.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
@@ -12,13 +19,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 /**
  * 页面-收藏列表
@@ -96,4 +96,6 @@ public class CollectionListActivity extends BaseActivity {
             return mFragmentList.size();
         }
     }
+
+
 }

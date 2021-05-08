@@ -65,6 +65,7 @@ import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse;
 import com.jcs.where.api.response.gourmet.order.OrderResponse;
+import com.jcs.where.api.response.gourmet.qr.QrResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
@@ -1034,6 +1035,15 @@ public interface RetrofitApi {
     @HTTP(method = "DELETE", path = "restaurantapi/v2/collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> unCollectsRestaurant(
             @Body CollectionRestaurantRequest request
+    );
+
+
+    /**
+     * 券码详情
+     */
+    @POST("restaurantapi/v2/eat_in/coupon/{order_id}")
+    Observable<JcsResponse<QrResponse>> getQrDetail(
+            @Path("order_id") String order_id
     );
 
 

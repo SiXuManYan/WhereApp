@@ -629,5 +629,7 @@
     <string name="score_3_5_hint">3.5分</string>
     <string name="score_4_0_hint">4.0分</string>
     <string name="score_4_5_hint">4.5分</string>
+    <string name="coupon_code">券码</string>
+    <string name="expire_date">有效期至：%1$s</string>
 
 </resources>

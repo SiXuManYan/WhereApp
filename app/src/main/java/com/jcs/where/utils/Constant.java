@@ -27,6 +27,7 @@ public class Constant {
     public static final String PARAM_RESTAURANT_ID = "param_restaurant_id";
     public static final String PARAM_RESTAURANT_NAME = "param_restaurant_name";
     public static final String PARAM_NUMBER = "param_number";
+    public static final String PARAM_ORDER_ID = "param_order_id";
 
     /**
      * 账号

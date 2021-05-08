@@ -627,5 +627,7 @@
     <string name="score_3_5_hint">3.5score</string>
     <string name="score_4_0_hint">4.0score</string>
     <string name="score_4_5_hint">4.5score</string>
+    <string name="coupon_code">Coupon code</string>
+    <string name="expire_date">expire_date：%1$s</string>
 
 </resources>

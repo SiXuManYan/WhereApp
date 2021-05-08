@@ -3,6 +3,7 @@ package com.jcs.where.mine.fragment;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,6 +73,7 @@ public class MineFragment extends BaseFragment {
     private View mLikeLayout;
     private TextView mPointTv;
     private MessageView message_view;
+    private ImageView setting_iv;
 
     @Override
     protected int getLayoutId() {
@@ -82,9 +84,16 @@ public class MineFragment extends BaseFragment {
     protected void initView(View view) {
         EventBus.getDefault().register(this);
         message_view = view.findViewById(R.id.message_view);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) message_view.getLayoutParams();
+        setting_iv = view.findViewById(R.id.setting_iv);
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) message_view.getLayoutParams();
+        params.topMargin = BarUtils.getStatusBarHeight() + SizeUtils.dp2px(7);
+        message_view.setLayoutParams(params);
+
+         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) setting_iv.getLayoutParams();
         layoutParams.topMargin = BarUtils.getStatusBarHeight() + SizeUtils.dp2px(7);
-        message_view.setLayoutParams(layoutParams);
+        setting_iv.setLayoutParams(layoutParams);
+
 
         mSwipeLayout = view.findViewById(R.id.mineSwipeLayout);
         nicknameTv = view.findViewById(R.id.nicknameTv);
@@ -107,8 +116,9 @@ public class MineFragment extends BaseFragment {
         view.findViewById(R.id.rl_minemessage).setOnClickListener(this::onUserDataClicked);
         view.findViewById(R.id.ll_changelangue).setOnClickListener(this::onChangeLanguageClicked);
         view.findViewById(R.id.customer_service_ll).setOnClickListener(this::onCustomerServiceClick);
-        view.findViewById(R.id.setting_ll).setOnClickListener(this::onSettingClick);
         view.findViewById(R.id.integral_iv).setOnClickListener(this::onIntegralIvClicked);
+
+        setting_iv.setOnClickListener(this::onSettingClick);
         message_view.setOnClickListener(this::onMessageClick);
     }
 

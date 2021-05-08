@@ -17,7 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
-import com.jcs.where.adapter.ModulesCategoryAdapter;
+import com.jcs.where.adapter.ModulesCategoryAdapter2;
 import com.jcs.where.adapter.TravelStayHotelAdapter;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -26,6 +26,7 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.HotelActivity;
@@ -52,7 +53,7 @@ public class TravelStayActivity extends BaseActivity {
     private XBanner banner3;
     private RecyclerView mModuleRecycler;
     private RecyclerView mHotelRecycler;
-    private ModulesCategoryAdapter mModulesCategoryAdapter;
+    private ModulesCategoryAdapter2 mModulesCategoryAdapter;
     private TravelStayHotelAdapter mTravelStayHotelAdapter;
 
     private TravelStayModel mModel;
@@ -86,7 +87,7 @@ public class TravelStayActivity extends BaseActivity {
      */
     private void initModuleRecycler() {
         mModuleRecycler = findViewById(R.id.moduleRecycler);
-        mModulesCategoryAdapter = new ModulesCategoryAdapter();
+        mModulesCategoryAdapter = new ModulesCategoryAdapter2();
         mModuleRecycler.addItemDecoration(new HomeModulesItemDecoration());
         mModuleRecycler.setLayoutManager(new GridLayoutManager(this, 5, RecyclerView.VERTICAL, false));
         mModuleRecycler.setAdapter(mModulesCategoryAdapter);
@@ -226,9 +227,12 @@ public class TravelStayActivity extends BaseActivity {
     private void onModulesCategoryItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         CategoryResponse item = mModulesCategoryAdapter.getItem(position);
         if (item.isNativeWebType) {
-            Uri uri = Uri.parse(Html5Url.TOURISM_MANAGEMENT_URL);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
+//            Uri uri = Uri.parse(Html5Url.TOURISM_MANAGEMENT_URL);
+//            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//            startActivity(intent);
+
+            WebViewActivity.goTo(this,Html5Url.TOURISM_MANAGEMENT_URL);
+
         } else {
             String id = item.getId();
             switch (id) {

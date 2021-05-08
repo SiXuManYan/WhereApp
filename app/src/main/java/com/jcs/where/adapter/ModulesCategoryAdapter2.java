@@ -15,15 +15,12 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.utils.GlideUtil;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class ModulesCategoryAdapter extends BaseQuickAdapter<CategoryResponse, BaseViewHolder> {
+public class ModulesCategoryAdapter2 extends BaseQuickAdapter<CategoryResponse, BaseViewHolder> {
 
 
-    public ModulesCategoryAdapter() {
-        super(R.layout.item_home_modules);
+    public ModulesCategoryAdapter2() {
+        super(R.layout.item_home_modules_2);
     }
 
     @Override
@@ -31,11 +28,11 @@ public class ModulesCategoryAdapter extends BaseQuickAdapter<CategoryResponse, B
         ImageView modules_icon = holder.getView(R.id.modules_icon);
         TextView modules_name = holder.getView(R.id.modules_name);
 
-        LinearLayout view = holder.getView(R.id.moduleLayout);
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        params.width = ScreenUtils.getScreenWidth() / 5 ;
+//        LinearLayout view = holder.getView(R.id.moduleLayout);
+//        ViewGroup.LayoutParams params = view.getLayoutParams();
+//        params.width = ScreenUtils.getScreenWidth() / 5 ;
 //        params.height = SizeUtils.dp2px(70);
-        view.setLayoutParams(params);
+//        view.setLayoutParams(params);
 
 
         if (data.isNativeWebType) {

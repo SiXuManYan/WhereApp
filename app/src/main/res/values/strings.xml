@@ -565,6 +565,7 @@
     <string name="shopping_cart">购物车</string>
     <string name="select_all">全选</string>
     <string name="total_cart">合计：</string>
+    <string name="total_cart_2">合计：</string>
     <string name="settlement">结算</string>
     <string name="edit">编辑</string>
     <string name="prepaid_reload">Prepaid\nReload</string>
@@ -631,5 +632,14 @@
     <string name="score_4_5_hint">4.5分</string>
     <string name="coupon_code">券码</string>
     <string name="expire_date">有效期至：%1$s</string>
+    <string name="title_order_detail">订单详情</string>
+    <string name="quantity_format">数量：%1$d</string>
+    <string name="coupon_qr">电子券码</string>
+    <string name="order_info">订单信息</string>
+    <string name="trade_no_format">订单号：%1$s</string>
+    <string name="phone_format">手机号：%1$s</string>
+    <string name="valid_period_format">有效期：%1$s至%2$s</string>
+    <string name="pay_time_format">付款时间：%1$s</string>
+    <string name="coupon_expire_format">%1$s 到期</string>
 
 </resources>

@@ -626,6 +626,7 @@
         <activity android:name=".features.qr.QRActivity" />
         <activity android:name=".features.gourmet.takeaway.TakeawayActivity" />
         <activity android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity" />
+        <activity android:name=".features.gourmet.order.detail.FoodOrderDetailActivity" />
 
 
     </application>

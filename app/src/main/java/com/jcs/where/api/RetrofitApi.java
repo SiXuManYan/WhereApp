@@ -64,6 +64,7 @@ import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse;
+import com.jcs.where.api.response.gourmet.order.FoodOrderDetail;
 import com.jcs.where.api.response.gourmet.order.OrderResponse;
 import com.jcs.where.api.response.gourmet.qr.QrResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
@@ -391,7 +392,7 @@ public interface RetrofitApi {
      * @param channelId 频道id
      */
     @GET("newsapi/v2/news")
-    Observable<JcsResponse<PageResponse<NewsResponse>>> getNews(@Query("channel_id") @Nullable  Integer channelId,
+    Observable<JcsResponse<PageResponse<NewsResponse>>> getNews(@Query("channel_id") @Nullable Integer channelId,
                                                                 @Query("search_input") @Nullable String input,
                                                                 @Query("page") int page);
 
@@ -1043,6 +1044,15 @@ public interface RetrofitApi {
      */
     @POST("restaurantapi/v2/eat_in/coupon/{order_id}")
     Observable<JcsResponse<QrResponse>> getQrDetail(
+            @Path("order_id") String order_id
+    );
+
+
+    /**
+     * 美食订单详情
+     */
+    @POST("restaurantapi/v2/eat_in/orders/{order_id}")
+    Observable<JcsResponse<FoodOrderDetail>> getFoodOrderDetail(
             @Path("order_id") String order_id
     );
 

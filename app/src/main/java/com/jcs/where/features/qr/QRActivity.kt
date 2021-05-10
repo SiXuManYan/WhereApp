@@ -30,6 +30,7 @@ class QRActivity : BaseMvpActivity<QRPresenter>(), QRView {
 
     override fun initData() {
         presenter = QRPresenter(this);
+        presenter.getQrDetail(orderId)
     }
 
     override fun bindListener() {

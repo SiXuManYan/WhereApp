@@ -67,7 +67,7 @@
     <string name="area_philippines">Philippines +63</string>
     <string name="pay_order">Pay orders</string>
     <string name="to_pay">Pay</string>
-    <string name="to_cancel_order">cancel order</string>
+    <string name="to_cancel_order">Cancel Order</string>
     <string name="search_my_order">Search my order</string>
     <string name="check_in_time">Check-in time:%1$s</string>
     <string name="check_out_time">Check-out time:%1$s</string>
@@ -562,6 +562,7 @@
     <string name="shopping_cart">Shopping Cart</string>
     <string name="select_all">Select All</string>
     <string name="total_cart">Total Cart：</string>
+    <string name="total_cart_2">Total ：</string>
     <string name="settlement">Settlement</string>
     <string name="edit">Edit</string>
     <string name="prepaid_reload">Prepaid\nReload</string>
@@ -629,5 +630,14 @@
     <string name="score_4_5_hint">4.5score</string>
     <string name="coupon_code">Coupon code</string>
     <string name="expire_date">expire_date：%1$s</string>
+    <string name="title_order_detail">订单详情</string>
+    <string name="quantity_format">Quantity：%1$d</string>
+    <string name="coupon_qr">Coupon Qr</string>
+    <string name="order_info">Order Info</string>
+    <string name="trade_no_format">Trade no：%1s</string>
+    <string name="phone_format">Phone：%1$s</string>
+    <string name="valid_period_format">Valid Period：%1$s to %2$s</string>
+    <string name="pay_time_format">Pay Time：%1$s</string>
+    <string name="coupon_expire_format">%1$s maturity</string>
 
 </resources>

@@ -115,6 +115,11 @@ public class Constant {
      */
     public static final long WAIT_DELAYS = 60;
 
+    /**
+     * 支付等待时间
+     */
+    public static final long WAIT_DELAYS_PAY = 60 * 30;
+
 
     /**
      * 验证页面使用类型

@@ -69,6 +69,10 @@
     <color name="gray_E9E9E9">#E9E9E9</color>
     <color name="red_FF5555">#FF5555</color>
     <color name="orange_FE6B09">#FE6B09</color>
+    <color name="orange_FD6431">#FD6431</color>
+    <color name="orange_EF4814">#EF4814</color>
+    <color name="black_4E5366">#4E5366</color>
+    <color name="black_1D1E21">#1D1E21</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

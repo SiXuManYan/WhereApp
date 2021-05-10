@@ -14,6 +14,6 @@ data class QrResponse(
         /** 券码号 */
         var coupon_no: String = "",
         /** 券码二维码 */
-        var coupon_qr_code: String = "",
+        var coupon_qr_code: String = ""
 
-        )
+)

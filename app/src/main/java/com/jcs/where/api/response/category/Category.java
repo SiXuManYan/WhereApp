@@ -19,7 +19,7 @@ public class Category {
     /**
      * 是否有下级（1：没有，2：有）
      */
-    public int has_children;
+    public int has_children = 1;
 
     /**
      * 分类类型（0：综合服务，1：酒店，2：旅游景点，3：政府，4：旅游行业，5：餐厅，6：企业黄页）

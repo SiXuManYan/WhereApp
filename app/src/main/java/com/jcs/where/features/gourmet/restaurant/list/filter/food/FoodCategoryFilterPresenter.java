@@ -35,12 +35,12 @@ public class FoodCategoryFilterPresenter extends BaseMvpPresenter {
                     return;
                 }
                 Category category = new Category();
-                category.id = 0;
-                category.name = pidName ;
+                category.id = pid;
+                category.name = pidName;
                 category.has_children = 1;
                 category.nativeIsSelected = true;
                 ArrayList<Category> categories = new ArrayList<>(response);
-                categories.add(0,category);
+                categories.add(0, category);
                 view.bindList(categories);
             }
         });

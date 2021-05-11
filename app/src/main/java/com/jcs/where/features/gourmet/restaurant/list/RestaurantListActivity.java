@@ -43,6 +43,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.jcs.where.utils.Constant.PARAM_ID;
 
@@ -75,8 +76,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private CheckedTextView area_tv;
     private CheckedTextView food_tv;
     private CheckedTextView other_tv;
-    private int pid;
-    private String pidName;
+    private int mPid;
     private ImageView clearIv;
 
 
@@ -88,8 +88,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     @Override
     protected void initView() {
         Bundle bundle = getIntent().getExtras();
-        pid = bundle.getInt(Constant.PARAM_PID, 89);
-        pidName = bundle.getString(Constant.PARAM_PID_NAME, "");
+        mPid = bundle.getInt(Constant.PARAM_PID, 89);
+        String mPidName = bundle.getString(Constant.PARAM_PID_NAME, "");
         swipe_layout = findViewById(R.id.swipe_layout);
         recycler = findViewById(R.id.recycler);
         city_et = findViewById(R.id.cityEt);
@@ -109,8 +109,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         dismiss_view = findViewById(R.id.dismiss_view);
         filter_pager.setOffscreenPageLimit(2);
         RestaurantPagerAdapter adapter = new RestaurantPagerAdapter(getSupportFragmentManager(), 0);
-        adapter.pid = pid;
-        adapter.pidName = pidName;
+        adapter.pid = mPid;
+        adapter.pidName = mPidName;
 
         filter_pager.setAdapter(adapter);
 
@@ -131,7 +131,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         mFilterHideAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_out);
 
         // 默认
-        food_tv.setText(pidName);
+        food_tv.setText(mPidName);
 
     }
 
@@ -144,6 +144,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     protected void initData() {
         presenter = new RestaurantListPresenter(this);
         mRequest = new RestaurantListRequest();
+        mRequest.category_id = String.valueOf(mPid);
         onRefresh();
     }
 

@@ -23,6 +23,7 @@ import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.travel.TravelMapActivity
 import com.jcs.where.utils.*
 import com.jcs.where.yellow_page.activity.YellowPageActivity
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 /**

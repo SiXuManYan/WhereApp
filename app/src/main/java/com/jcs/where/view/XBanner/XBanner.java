@@ -1000,7 +1000,6 @@ public class XBanner extends RelativeLayout {
             mIndicatorContainer.removeAllViews();
         }
 
-
         mHandler.removeCallbacks(mRunnable);
         mRunnable = null;
 
@@ -1010,16 +1009,21 @@ public class XBanner extends RelativeLayout {
             GifDownloader.releaseDownloader();
         }
 
-        mAdapter.releaseAdapter();
-        mAdapter = null;
+        if (mAdapter != null) {
+            mAdapter.releaseAdapter();
+            mAdapter = null;
+        }
 
         mBannerPageListner = null;
         mImageLoader = null;
 
 
-        mViewPager.setAdapter(null);
-        mViewPager.removeOnPageChangeListener(mOnPageChangeListener);
-        mViewPager = null;
+        if (mViewPager != null) {
+            mViewPager.setAdapter(null);
+            mViewPager.removeOnPageChangeListener(mOnPageChangeListener);
+            mViewPager = null;
+        }
+
 
         // mCircleProgress=null;
         mTextProgress = null;

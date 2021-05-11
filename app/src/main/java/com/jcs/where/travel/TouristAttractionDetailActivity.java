@@ -78,7 +78,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
 
     public static void goTo(Context context, int id) {
         Intent intent = new Intent(context, TouristAttractionDetailActivity.class);
-        Log.e("DetailActivity", "goTo: "+"id="+id);
+        Log.e("DetailActivity", "goTo: " + "id=" + id);
         intent.putExtra(EXT_ID, id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (!(context instanceof Activity)) {
@@ -112,6 +112,42 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         commentRv = findViewById(R.id.rv_comment);
         commentRv.setNestedScrollingEnabled(true);
         scrollView = findViewById(R.id.scrollView);
+
+        banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
+                .setImageLoader(new AbstractUrlLoader() {
+                    @Override
+                    public void loadImages(Context context, String url, ImageView image) {
+                        GlideUtil.load(context, url, image);
+                    }
+
+                    @Override
+                    public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
+                        GlideUtil.loadGif(context, url, gifImageView);
+                    }
+                })
+                .setTitleHeight(50)
+                .isAutoPlay(true)
+                .setDelay(5000)
+                .setUpIndicators(R.drawable.ic_roomselected, R.drawable.ic_roomunselected)
+                .setUpIndicatorSize(20, 6)
+                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+                .setBannerPageListener(new XBanner.BannerPageListener() {
+                    @Override
+                    public void onBannerClick(int item) {
+
+                    }
+
+                    @Override
+                    public void onBannerDragging(int item) {
+
+                    }
+
+                    @Override
+                    public void onBannerIdle(int item) {
+
+                    }
+                });
+
 
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (scrollView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             float headHeight = banner.getMeasuredHeight() - mJcsTitle.getMeasuredHeight();
@@ -217,44 +253,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
             protected void onSuccess(TouristAttractionDetailResponse response) {
                 stopLoading();
                 if (response.getImages() != null) {
-                    banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                            .setImageUrls(response.getImages())
-                            .setImageLoader(new AbstractUrlLoader() {
-                                @Override
-                                public void loadImages(Context context, String url, ImageView image) {
-                                    GlideUtil.load(context, url, image);
-                                }
-
-                                @Override
-                                public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-                                    GlideUtil.loadGif(context, url, gifImageView);
-                                }
-                            })
-                            .setTitleHeight(50)
-                            .isAutoPlay(true)
-                            .setDelay(5000)
-                            .setUpIndicators(R.drawable.ic_roomselected, R.drawable.ic_roomunselected)
-                            .setUpIndicatorSize(20, 6)
-                            .setIndicatorGravity(XBanner.INDICATOR_CENTER)
-                            .setBannerPageListener(new XBanner.BannerPageListener() {
-                                @Override
-                                public void onBannerClick(int item) {
-
-                                }
-
-                                @Override
-                                public void onBannerDragging(int item) {
-
-                                }
-
-                                @Override
-                                public void onBannerIdle(int item) {
-
-                                }
-                            })
-                            .start();
-                } else {
-
+                    banner.setImageUrls(response.getImages()).start();
                 }
                 nameTv.setText(response.getName());
                 scoreTv.setText(response.getGrade() + "");

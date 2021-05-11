@@ -2,6 +2,7 @@ package com.jcs.where.features.gourmet.order.detail
 
 import android.widget.TextView
 import com.blankj.utilcode.util.StringUtils
+import com.google.gson.JsonElement
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -16,7 +17,6 @@ import java.util.concurrent.TimeUnit
  *
  */
 class FoodOrderDetailPresenter(val view: FoodOrderDetailView) : BaseMvpPresenter(view) {
-
 
 
     fun getDetail(orderId: String) {
@@ -36,7 +36,7 @@ class FoodOrderDetailPresenter(val view: FoodOrderDetailView) : BaseMvpPresenter
      * @param countdownView 倒计时显示的view
      * @param defaultStr    默认显示的文字
      */
-     fun countdown(countdownView: TextView, defaultStr: String) {
+    fun countdown(countdownView: TextView, defaultStr: String) {
         Flowable.intervalRange(0, Constant.WAIT_DELAYS_PAY, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { aLong: Long ->
@@ -45,6 +45,19 @@ class FoodOrderDetailPresenter(val view: FoodOrderDetailView) : BaseMvpPresenter
                 }
                 .doOnComplete {
                     countdownView.text = defaultStr
+                    view.countdownEnd()
                 }.subscribe()
+    }
+
+    /**
+     * 取消订单
+     */
+    fun cancelOrder(orderId: String) {
+        requestApi(mRetrofit.cancelFoodOrder(orderId), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+             view.cancelSuccess()
+            }
+
+        })
     }
 }

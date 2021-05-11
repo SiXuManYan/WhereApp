@@ -641,5 +641,11 @@
     <string name="valid_period_format">有效期：%1$s至%2$s</string>
     <string name="pay_time_format">付款时间：%1$s</string>
     <string name="coupon_expire_format">%1$s 到期</string>
+    <string name="cancel_order_confirm">取消订单吗？</string>
+    <string name="delivery_information">配送信息</string>
+    <string name="delivery_time">配送时间</string>
+    <string name="delivery_address">配送地址</string>
+    <string name="order_number_title">订单编号</string>
+    <string name="pay_time">下单时间</string>
 
 </resources>

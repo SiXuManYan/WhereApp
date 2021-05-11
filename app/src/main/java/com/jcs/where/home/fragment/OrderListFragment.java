@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.OrderListResponse;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.home.adapter.OrderListAdapter;
 import com.jcs.where.home.decoration.MarginTopDecoration;
@@ -33,6 +33,10 @@ import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -41,7 +45,7 @@ import io.reactivex.annotations.NonNull;
  * 首页订单列表展示列表的Fragment
  * create by zyf on 2020/12/10 10:30 PM
  */
-public class OrderListFragment extends BaseFragment {
+public class OrderListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final OrderType mOrderType;
     private SwipeRefreshLayout mSwipeRefresh;
@@ -61,6 +65,7 @@ public class OrderListFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         mRecycler = view.findViewById(R.id.orderRecycler);
         mSwipeRefresh = view.findViewById(R.id.swipeLayout);
 
@@ -103,10 +108,9 @@ public class OrderListFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
-        mSwipeRefresh.setOnRefreshListener(() -> {
-            page = Constant.DEFAULT_FIRST_PAGE;
-            getOrder(searchInput, page);
-        });
+
+
+        mSwipeRefresh.setOnRefreshListener(this);
 
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
             page++;
@@ -230,6 +234,12 @@ public class OrderListFragment extends BaseFragment {
         return R.layout.fragment_order_list;
     }
 
+    @Override
+    public void onRefresh() {
+        page = Constant.DEFAULT_FIRST_PAGE;
+        getOrder(searchInput, page);
+    }
+
     enum OrderType {
         All(0), WaitForPay(1), WaitForUse(2), WaitForComment(3), AfterSale(4);
         int type;
@@ -238,4 +248,23 @@ public class OrderListFragment extends BaseFragment {
             this.type = type;
         }
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<String> baseEvent) {
+
+        if (baseEvent.code == EventCode.EVENT_REFRESH_ORDER_LIST) {
+            onRefresh();
+        }
+
+    }
+
+
 }

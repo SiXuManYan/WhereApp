@@ -1,12 +1,16 @@
 package com.jcs.where.features.gourmet.order.detail
 
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.pay.PayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_order_detail_food.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/5/10 9:47.
@@ -33,7 +37,31 @@ class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), Foo
         presenter.getDetail(orderId)
     }
 
-    override fun bindListener() = Unit
+    override fun bindListener() {
+
+        back_iv.setOnClickListener {
+            finish()
+        }
+
+        pay_tv.setOnClickListener {
+            startActivity(PayActivity::class.java)
+        }
+
+        cancel_tv.setOnClickListener {
+            AlertDialog.Builder(this)
+                    .setTitle(R.string.prompt)
+                    .setMessage(R.string.cancel_order_confirm)
+                    .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                        presenter.cancelOrder(orderId)
+                        dialogInterface.dismiss()
+                    }
+                    .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                    .create().show()
+
+
+        }
+
+    }
 
     override fun bindDetail(it: FoodOrderDetail) {
 
@@ -47,6 +75,12 @@ class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), Foo
         state_tv.text = orderData.status.toString()
         count_tv.text = getString(R.string.quantity_format, goodData.good_num)
         total_price_tv.text = getString(R.string.price_unit_format, goodData.price.toPlainString())
+        chat_iv.visibility = if (restaurantDate.im_status == 1) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+
 
         // 券码
         if (orderData.status == 3) {
@@ -74,8 +108,14 @@ class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), Foo
         } else {
             bottom_ll.visibility = View.GONE
         }
+    }
 
+    override fun cancelSuccess() {
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+    }
 
+    override fun countdownEnd() {
+        pay_tv.setBackgroundResource(R.drawable.shape_gradient_orange_un_enable)
     }
 
 

@@ -65,7 +65,6 @@ data class RestaurantData(
         /** IM聊天开启状态（1：开启，2：关闭） */
         var im_status: Int = 0
 
-
 )
 
 data class GoodData(
@@ -84,7 +83,6 @@ data class GoodData(
 
         /** 订单总价格 */
         var price: BigDecimal = BigDecimal.ZERO
-
 
 )
 

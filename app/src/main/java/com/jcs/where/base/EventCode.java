@@ -66,4 +66,13 @@ public class EventCode {
      * 删除分类
      */
     public static final int EVENT_CUT_NEW_CATEGORY = 1014;
+
+
+    /**
+     * 刷新订单列表
+     */
+    public static final int EVENT_REFRESH_ORDER_LIST = 1015;
+
+
+
 }

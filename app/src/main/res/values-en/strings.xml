@@ -630,7 +630,7 @@
     <string name="score_4_5_hint">4.5score</string>
     <string name="coupon_code">Coupon code</string>
     <string name="expire_date">expire_date：%1$s</string>
-    <string name="title_order_detail">订单详情</string>
+    <string name="title_order_detail">Order Detail</string>
     <string name="quantity_format">Quantity：%1$d</string>
     <string name="coupon_qr">Coupon Qr</string>
     <string name="order_info">Order Info</string>
@@ -639,5 +639,11 @@
     <string name="valid_period_format">Valid Period：%1$s to %2$s</string>
     <string name="pay_time_format">Pay Time：%1$s</string>
     <string name="coupon_expire_format">%1$s maturity</string>
+    <string name="cancel_order_confirm">Cancel order ?</string>
+    <string name="delivery_information">Delivery Info</string>
+    <string name="delivery_time">Delivery Time</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="order_number_title">Order number</string>
+    <string name="pay_time">Pay Time</string>
 
 </resources>

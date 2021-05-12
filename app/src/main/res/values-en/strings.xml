@@ -653,6 +653,7 @@
     <string name="total_price_format">Total Price:₱%1$s</string>
     <string name="coupon_code_view">View Coupon</string>
     <string name="buy_again">Buy Again</string>
+    <string name="missed_orders">Pending order</string>
 
 
 </resources>

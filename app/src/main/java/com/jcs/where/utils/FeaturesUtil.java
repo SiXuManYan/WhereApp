@@ -436,4 +436,58 @@ public class FeaturesUtil {
         textView.setText(text);
     }
 
+    /**
+     * 获取外卖订单状态
+     * 外卖： 订单状态（1：待支付，2：未接单，3：已接单，4：已取消，5：已完成，6：支付失败，7：退款中，8：已退款，9：退款失败，10：待评价）
+     */
+    public static void bindTakeawayOrderStatus(int status, @NotNull TextView textView) {
+        String text = "";
+        textView.setTextColor(ColorUtils.getColor(R.color.black_333333));
+        switch (status) {
+            case 1:
+                // 待支付
+                text = StringUtils.getString(R.string.mine_unpaid);
+                break;
+            case 2:
+                // 未接单
+                text = StringUtils.getString(R.string.missed_orders);
+                break;
+            case 3:
+                // 已接单
+                text = StringUtils.getString(R.string.mine_booked);
+                break;
+            case 4:
+            // 已取消
+                text = StringUtils.getString(R.string.cancelled);
+                break;
+            case 5:
+             // 已完成
+                text = StringUtils.getString(R.string.completed);
+                break;
+            case 6:
+            // 支付失败
+                text = StringUtils.getString(R.string.payment_failed);
+                break;
+            case 7:
+              // 退款中
+                text = StringUtils.getString(R.string.refunding);
+                break;
+            case 8:
+              // 已退款
+                text = StringUtils.getString(R.string.refunded);
+                break;
+            case 9:
+              // 退款失败
+                text = StringUtils.getString(R.string.refund_failed);
+                break;
+            case 10:
+                // 待评价
+                text = StringUtils.getString(R.string.mine_reviews);
+                break;
+            default:
+                break;
+        }
+        textView.setText(text);
+    }
+
 }

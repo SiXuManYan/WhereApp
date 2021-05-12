@@ -15,6 +15,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.OrderListResponse
 import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
+import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.home.activity.ApplyRefundActivity
 import com.jcs.where.hotel.activity.HotelCommentActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
@@ -35,7 +36,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     init {
         addItemType(OrderListResponse.ORDER_TYPE_HOTEL_1, R.layout.item_order_list_hotel)
         addItemType(OrderListResponse.ORDER_TYPE_DINE_2, R.layout.item_order_list_food)
-        addItemType(OrderListResponse.ORDER_TYPE_TAKEAWAY_3, R.layout.item_home_recommend_hotel_2)
+        addItemType(OrderListResponse.ORDER_TYPE_TAKEAWAY_3, R.layout.item_order_list_takeaway)
     }
 
 
@@ -50,7 +51,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
                 bindFoodItem(holder, item)
             }
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
-
+                bindTakeawayItem(holder, item)
             }
             else -> {
             }
@@ -271,7 +272,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
                 }
 
             }
-            5,6,7,8->{
+            5, 6, 7, 8 -> {
                 left_tv.visibility = View.GONE
                 right_tv.visibility = View.GONE
             }
@@ -299,6 +300,66 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
                 right_tv.visibility = View.GONE
             }
         }
+    }
+
+
+    /**
+     * 外卖
+     */
+    private fun bindTakeawayItem(holder: BaseViewHolder, item: OrderListResponse) {
+
+        val modelData = item.model_data
+
+        // 标题
+        holder.setText(R.id.name_tv, item.title)
+
+        // 状态
+        val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
+        FeaturesUtil.bindTakeawayOrderStatus(modelData.order_status, order_status_tv)
+
+        // 内容
+        val first_tv = holder.getView<TextView>(R.id.first_tv)
+        val third_tv = holder.getView<TextView>(R.id.third_tv)
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+
+        val options = RequestOptions.bitmapTransform(
+                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.LEFT))
+                .error(R.mipmap.ic_empty_gray)
+                .placeholder(R.mipmap.ic_empty_gray)
+        Glide.with(context).load(modelData.food_image).apply(options).into(image_iv)
+
+        first_tv.text = modelData.good_names
+        third_tv.text = StringUtils.getString(R.string.total_price_format, modelData.room_price.toPlainString())
+
+        // 底部
+        val left_tv = holder.getView<TextView>(R.id.left_tv)
+        val right_tv = holder.getView<TextView>(R.id.right_tv)
+
+        when (modelData.order_status) {
+            5 -> {
+                left_tv.visibility = View.GONE
+                right_tv.visibility = View.VISIBLE
+                left_tv.text = StringUtils.getString(R.string.to_review)
+                right_tv.text = StringUtils.getString(R.string.to_pay)
+                left_tv.setOnClickListener {
+                    // 评价
+
+                }
+                right_tv.setOnClickListener {
+                    // 再来一单
+                    startActivity(TakeawayActivity::class.java, Bundle().apply {
+                        putString(Constant.PARAM_ID, item.model_id.toString())
+                    })
+                }
+            }
+            else -> {
+                left_tv.visibility = View.GONE
+                right_tv.visibility = View.GONE
+            }
+
+        }
+
+
     }
 
     private fun startActivity(target: Class<*>, bundle: Bundle?) {

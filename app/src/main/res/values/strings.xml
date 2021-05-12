@@ -655,6 +655,7 @@
     <string name="total_price_format">总价:₱%1$s</string>
     <string name="coupon_code_view">查看券码</string>
     <string name="buy_again">再来一单</string>
+    <string name="missed_orders">商家待接单</string>
 
 
 </resources>

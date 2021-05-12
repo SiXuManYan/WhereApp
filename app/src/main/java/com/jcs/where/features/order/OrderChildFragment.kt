@@ -3,8 +3,6 @@ package com.jcs.where.features.order
 import android.os.Bundle
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -14,13 +12,12 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
-import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailActivity
 import com.jcs.where.home.adapter.OrderListAdapter2
+import com.jcs.where.home.decoration.MarginTopDecoration
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
-import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_order_child.*
 
 /**
@@ -69,8 +66,9 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         }
         recycler_view.apply {
             adapter = mAdapter
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(10f), 0, 0).apply {
-                setDrawHeaderFooter(true)
+            addItemDecoration(object : MarginTopDecoration() {
+                override fun getMarginTop(): Int = 10
+
             })
 
         }
@@ -152,7 +150,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
                 })
             }
 
-            OrderListResponse.ORDER_TYPE_TAKEAWAY_3->{
+            OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
                 startActivity(TakeawayOrderDetailActivity::class.java, Bundle().apply {
                     putString(Constant.PARAM_ORDER_ID, data.id.toString())
                 })

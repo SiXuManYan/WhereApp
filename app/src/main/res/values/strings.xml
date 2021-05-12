@@ -656,6 +656,7 @@
     <string name="coupon_code_view">查看券码</string>
     <string name="buy_again">再来一单</string>
     <string name="missed_orders">商家待接单</string>
+    <string name="delivery_now">立即配送</string>
 
 
 </resources>

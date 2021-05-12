@@ -1052,7 +1052,7 @@ public interface RetrofitApi {
     /**
      * 美食订单详情
      */
-    @POST("restaurantapi/v2/eat_in/orders/{order_id}")
+    @GET("restaurantapi/v2/eat_in/orders/{order_id}")
     Observable<JcsResponse<FoodOrderDetail>> getFoodOrderDetail(
             @Path("order_id") String order_id
     );
@@ -1067,9 +1067,9 @@ public interface RetrofitApi {
 
 
     /**
-     * 美食订单详情
+     * 外卖订单详情
      */
-    @POST("restaurantapi/v2/eat_in/orders/{order_id}")
+    @GET("restaurantapi/v2/take_out/orders/{order_id}")
     Observable<JcsResponse<TakeawayOrderDetail>> getTakeawayOrderDetail(
             @Path("order_id") String order_id
     );

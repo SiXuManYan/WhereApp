@@ -1,13 +1,16 @@
 package com.jcs.where.features.gourmet.order.detail
 
+import android.graphics.Color
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.pay.PayActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_order_detail_food.*
 import org.greenrobot.eventbus.EventBus
@@ -23,7 +26,10 @@ class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), Foo
 
     override fun getLayoutId() = R.layout.activity_order_detail_food
 
+    override fun isStatusDark() = true
+
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         val bundle = intent.extras
         if (bundle == null) {
             finish()
@@ -72,7 +78,8 @@ class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), Foo
         GlideUtil.load(this, goodData.good_image, image_iv)
         restaurant_name_tv.text = restaurantDate.mer_name
         good_name_tv.text = restaurantDate.name
-        state_tv.text = orderData.status.toString()
+        FeaturesUtil.bindFoodOrderStatus(orderData.status,state_tv)
+
         count_tv.text = getString(R.string.quantity_format, goodData.good_num)
         total_price_tv.text = getString(R.string.price_unit_format, goodData.price.toPlainString())
         chat_iv.visibility = if (restaurantDate.im_status == 1) {

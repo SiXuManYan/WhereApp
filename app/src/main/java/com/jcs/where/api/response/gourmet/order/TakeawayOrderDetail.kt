@@ -20,8 +20,8 @@ data class TakeawayOrderData(
         var delivery_time: String,
         var address: TakeawayAddress,
         var trade_no: String,
-        var delivery_cost: Int,
-        var packing_charges: Int,
+        var delivery_cost: BigDecimal =BigDecimal.ZERO,
+        var packing_charges: BigDecimal =BigDecimal.ZERO,
         var price: BigDecimal = BigDecimal.ZERO,
         var status: Int
 )

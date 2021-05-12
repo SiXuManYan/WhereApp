@@ -270,7 +270,7 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v2/orders")
     Observable<JcsResponse<PageResponse<OrderListResponse>>> getOrderList(@Query("type") int type,
-                                                                          @Query("search_input") String keyword,
+                                                                          @Query("search_input") @Nullable String keyword,
                                                                           @Query("page") int page);
 
 

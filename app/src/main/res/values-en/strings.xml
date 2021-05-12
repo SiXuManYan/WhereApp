@@ -645,5 +645,14 @@
     <string name="delivery_address">Delivery address</string>
     <string name="order_number_title">Order number</string>
     <string name="pay_time">Pay Time</string>
+    <string name="merchant_cancelled">Merchant cancelled</string>
+    <string name="wait_confirmed">Wait Confirmed</string>
+    <string name="hotel_content_format">%1$d room，%2$s</string>
+    <string name="hotel_date_format">%1$s&#160;to&#160;%2$s</string>
+    <string name="hotel_price_format">Price：₱%1$s</string>
+    <string name="total_price_format">Total Price:₱%1$s</string>
+    <string name="coupon_code_view">View Coupon</string>
+    <string name="buy_again">Buy Again</string>
+
 
 </resources>

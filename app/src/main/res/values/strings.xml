@@ -198,7 +198,7 @@
     <string name="refunding">退款中</string>
     <string name="refunded">已退款</string>
     <string name="refund_failed">退款失败</string>
-    <string name="unpaid">代付款</string>
+    <string name="unpaid">待付款</string>
     <string name="mine_footprint">我的足迹</string>
     <string name="positioning">正在定位…</string>
     <string name="position_failed">定位失败</string>
@@ -647,5 +647,14 @@
     <string name="delivery_address">配送地址</string>
     <string name="order_number_title">订单编号</string>
     <string name="pay_time">下单时间</string>
+    <string name="merchant_cancelled">商家已取消</string>
+    <string name="wait_confirmed">待确认</string>
+    <string name="hotel_content_format">%1$d&#160;room，%2$s</string>
+    <string name="hotel_date_format">%1$s&#160;至&#160;%2$s</string>
+    <string name="hotel_price_format">房价:₱%1$s</string>
+    <string name="total_price_format">总价:₱%1$s</string>
+    <string name="coupon_code_view">查看券码</string>
+    <string name="buy_again">再来一单</string>
+
 
 </resources>

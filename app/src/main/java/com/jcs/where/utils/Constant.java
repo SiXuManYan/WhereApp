@@ -22,6 +22,7 @@ public class Constant {
 
     public static final String PARAM_POSITION = "position";
     public static final String PARAM_ID = "param_id";
+    public static final String PARAM_ID_2 = "id";
     public static final String PARAM_PID = "param_pid";
     public static final String PARAM_PID_NAME = "param_pid_name";
     public static final String PARAM_RESTAURANT_ID = "param_restaurant_id";

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.module.UpFetchModule;
@@ -17,7 +16,6 @@ import com.jcs.where.hotel.activity.HotelCommentActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity;
 import com.jcs.where.hotel.activity.HotelPayActivity;
-import com.jcs.where.hotel.activity.HotelSubscribeActivity;
 import com.jcs.where.utils.GlideUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -60,11 +58,13 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
      */
     private final int ORDER_TYPE_TAKEAWAY = 3;
 
+
     private String mRoomText;
     private String mRoomPriceText;
 
     public OrderListAdapter(Context context) {
         super(R.layout.item_order_list);
+
         initHotelOrderHolder(context);
         initDineOrderHolder(context);
         initTakeawayOrderHolder(context);
@@ -130,15 +130,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
 
     @Override
     protected void convert(@NotNull BaseViewHolder holder, OrderListResponse orderListResponse) {
-        List<String> image = orderListResponse.getImage();
+        List<String> image = orderListResponse.image;
 
         ImageView hotelIconIv = holder.getView(R.id.hotelIcon);
         if (image != null && image.size() > 0) {
             GlideUtil.load(getContext(), image.get(0), hotelIconIv);
         }
 
-        holder.setText(R.id.orderTitleTv, orderListResponse.getTitle());
-        Integer orderStatus = orderListResponse.getModelData().getOrderStatus();
+        holder.setText(R.id.orderTitleTv, orderListResponse.title);
+        Integer orderStatus = orderListResponse.model_data.order_status;
         OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         if (orderStatusHolder != null) {
 
@@ -153,12 +153,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
         }
 
         //model 中存储的是酒店、餐饮-堂食、餐饮-外卖的数据
-        OrderListResponse.ModelDataDTO modelData = orderListResponse.getModelData();
-        switch (orderListResponse.getOrderType()) {
+        OrderListResponse.ModelDataDTO modelData = orderListResponse.model_data;
+        switch (orderListResponse.order_type) {
             case ORDER_TYPE_HOTEL:
-                holder.setText(R.id.hotelDescTv, modelData.getRoomNum() + mRoomText + "，" + modelData.getRoomType());
-                holder.setText(R.id.orderDateTv, modelData.getStartDate() + "-" + modelData.getEndDate());
-                holder.setText(R.id.priceTv, String.format(mRoomPriceText, modelData.getRoomPrice()));
+                holder.setText(R.id.hotelDescTv, modelData.room_num + mRoomText + "，" + modelData.room_type);
+                holder.setText(R.id.orderDateTv, modelData.start_date + "-" + modelData.end_date);
+                holder.setText(R.id.priceTv, String.format(mRoomPriceText, modelData.room_price.toPlainString()));
                 break;
             case ORDER_TYPE_DINE:
 
@@ -177,12 +177,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
 
     @Override
     public long getItemId(int position) {
-        return getData().get(position).getId();
+        return getData().get(position).id;
     }
 
     public Class<? extends AppCompatActivity> getToLeftClass(int position) {
 
-        Integer orderStatus = getData().get(position).getModelData().getOrderStatus();
+        Integer orderStatus = getData().get(position).model_data.order_status;
         OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         Log.e("OrderListAdapter", "getToLeftClass: " + orderStatus);
         if (orderStatusHolder != null) {
@@ -193,7 +193,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListResponse, BaseVi
     }
 
     public Class<? extends AppCompatActivity> getToRightClass(int position) {
-        Integer orderStatus = getData().get(position).getModelData().getOrderStatus();
+        Integer orderStatus = getData().get(position).model_data.order_status;
         OrderStatusHolder orderStatusHolder = mHotelOrderHolder.get(orderStatus);
         Log.e("OrderListAdapter", "getToRightClass: " + orderStatus);
         if (orderStatusHolder != null) {

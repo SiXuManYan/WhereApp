@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ColorUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
@@ -25,6 +24,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.features.order.OrderChildFragment;
 import com.jcs.where.model.OrderModel;
 import com.jcs.where.utils.Constant;
 
@@ -46,14 +46,13 @@ public class OrderFragment extends BaseFragment {
     private TextView mToLogin;
     private RelativeLayout toLogin_rl;
 
-    private List<OrderListFragment> mOrderListFragments;
+    private List<OrderChildFragment> mOrderListFragments;
     private String[] mTabTitles;
 //    private Group mDataGroup, mNoDataGroup;
 
     @Override
     protected void initView(View view) {
         BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_tv));
-//        BarUtils.setStatusBarColor(getActivity(), ColorUtils.getColor(R.color.blue_5A9DFE));
 
 
         EventBus.getDefault().register(this);
@@ -70,11 +69,11 @@ public class OrderFragment extends BaseFragment {
         mTabTitles = new String[]{getString(R.string.all), getString(R.string.mine_unpaid), getString(R.string.mine_booked), getString(R.string.mine_reviews), getString(R.string.mine_after_sales)};
         mModel = new OrderModel();
         mOrderListFragments = new ArrayList<>();
-        mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.All));
-        mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.WaitForPay));
-        mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.WaitForUse));
-        mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.WaitForComment));
-        mOrderListFragments.add(new OrderListFragment(OrderListFragment.OrderType.AfterSale));
+        mOrderListFragments.add(OrderChildFragment.getInstance(0));
+        mOrderListFragments.add(OrderChildFragment.getInstance(1));
+        mOrderListFragments.add(OrderChildFragment.getInstance(2));
+        mOrderListFragments.add(OrderChildFragment.getInstance(3));
+        mOrderListFragments.add(OrderChildFragment.getInstance(4));
 
         mAdapter = new OrderAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT);
 
@@ -152,21 +151,11 @@ public class OrderFragment extends BaseFragment {
         mToLogin.setOnClickListener(this::onToLoginClicked);
     }
 
-    private boolean onSearchActionClicked(TextView textView, int actionId, KeyEvent keyEvent) {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            String input = textView.getText().toString();
-            OrderListFragment orderListFragment = getCurrentOrderListFragment();
-            orderListFragment.getOrder(input, Constant.DEFAULT_FIRST_PAGE);
-            return true;
-        }
-        return false;
-    }
-
     private void onToLoginClicked(View view) {
         startActivityAfterLogin(LoginActivity.class);
     }
 
-    private OrderListFragment getCurrentOrderListFragment() {
+    private OrderChildFragment getCurrentOrderListFragment() {
         int currentItem = mViewPager.getCurrentItem();
         return mOrderListFragments.get(currentItem);
     }

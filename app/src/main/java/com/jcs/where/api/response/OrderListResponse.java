@@ -1,189 +1,148 @@
 package com.jcs.where.api.response;
 
-import com.google.gson.annotations.SerializedName;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * create by zyf on 2020/12/11 7:57 PM
  */
-public class OrderListResponse {
+public class OrderListResponse implements MultiItemEntity {
 
     /**
-     * id : 227
-     * order_type : 1
-     * trade_no : 18202012081804475429
-     * model_id : 19
-     * title : Blick Inc Hotel
-     * image : ["https://whereoss.oss-accelerate.aliyuncs.com/hotels/531665e3a379a2b576.jpg"]
-     * created_at : 2020-12-08 18:04:47
-     * price : 324
-     * model_data : {"order_status":5,"room_num":1,"room_type":"单人床","start_date":"12月08日","end_date":"12月09日","room_price":324}
+     * 订单类型：酒店订单
      */
+    public static final int ORDER_TYPE_HOTEL_1 = 1;
 
-    @SerializedName("id")
-    private Integer id;
-    @SerializedName("order_type")
-    private Integer orderType;
-    @SerializedName("trade_no")
-    private String tradeNo;
-    @SerializedName("model_id")
-    private Integer modelId;
-    @SerializedName("title")
-    private String title;
-    @SerializedName("created_at")
-    private String createdAt;
-    @SerializedName("price")
-    private Integer price;
-    @SerializedName("model_data")
-    private ModelDataDTO modelData;
-    @SerializedName("image")
-    private List<String> image;
+    /**
+     * 订单类型：餐饮-堂食
+     */
+    public static final int ORDER_TYPE_DINE_2 = 2;
 
-    public Integer getId() {
-        return id;
+    /**
+     * 订单类型：餐饮-外卖
+     */
+    public static final int ORDER_TYPE_TAKEAWAY_3 = 3;
+
+
+    /**
+     * 订单ID
+     */
+    public int id = 0;
+
+    /**
+     * 订单类型（1：酒店订单，2：餐厅-堂食菜品，3：餐厅-外卖订单）
+     */
+    public Integer order_type = 0;
+
+    /**
+     * 订单号
+     */
+    public String trade_no;
+
+    /**
+     * 模块ID,如酒店模块，则为hotel_id
+     */
+    public Integer model_id;
+
+    /**
+     * 订单标题
+     */
+    public String title;
+
+    /**
+     * 创建时间
+     */
+    public String created_at;
+
+    /**
+     * 订单价格
+     */
+    public Integer price;
+
+    /**
+     * 模块数据
+     */
+    public ModelDataDTO model_data;
+
+    /**
+     * 订单图片
+     */
+    public List<String> image = new ArrayList<>();
+
+    @Override
+    public int getItemType() {
+        return order_type;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(Integer orderType) {
-        this.orderType = orderType;
-    }
-
-    public String getTradeNo() {
-        return tradeNo;
-    }
-
-    public void setTradeNo(String tradeNo) {
-        this.tradeNo = tradeNo;
-    }
-
-    public Integer getModelId() {
-        return modelId;
-    }
-
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public ModelDataDTO getModelData() {
-        return modelData;
-    }
-
-    public void setModelData(ModelDataDTO modelData) {
-        this.modelData = modelData;
-    }
-
-    public List<String> getImage() {
-        return image;
-    }
-
-    public void setImage(List<String> image) {
-        this.image = image;
-    }
 
     /**
      * 模式类型（酒店、餐饮-堂食、餐饮-外卖）
      */
     public static class ModelDataDTO {
+
+        // 所用模块的公共参数
         /**
-         * order_status : 5
-         * room_num : 1
-         * room_type : 单人床
-         * start_date : 12月08日
-         * end_date : 12月09日
-         * room_price : 324
+         * 酒店：
+         * 订单状态（1：待付款，2：待使用，3：待评价，4：已完成，5：已取消，6：退款中，7：退款成功，8：退款失败，9：商家已取消，10：待确认）
+         * <p>
+         * 美食：
+         * 订单状态（1：待付款，2：已取消，3：待使用，4：已完成，5：支付失败，6：退款中，7：已退款，8：退款失败，9：待评价）
+         * <p>
+         * 外卖：
+         * 订单状态（1：待支付，2：未接单，3：已接单，4：已取消，5：已完成，6：支付失败，7：退款中，8：已退款，9：退款失败，10：待评价）
          */
+        public int order_status;
 
-        @SerializedName("order_status")
-        private Integer orderStatus;
-        @SerializedName("room_num")
-        private Integer roomNum;
-        @SerializedName("room_type")
-        private String roomType;
-        @SerializedName("start_date")
-        private String startDate;
-        @SerializedName("end_date")
-        private String endDate;
-        @SerializedName("room_price")
-        private Integer roomPrice;
 
-        public Integer getOrderStatus() {
-            return orderStatus;
-        }
+        // ### 酒店 ####
 
-        public void setOrderStatus(Integer orderStatus) {
-            this.orderStatus = orderStatus;
-        }
+        /**
+         * 房间数量
+         */
+        public int room_num;
+        /**
+         * 房间类型
+         */
+        public String room_type;
 
-        public Integer getRoomNum() {
-            return roomNum;
-        }
+        /**
+         * 入住日期
+         */
+        public String start_date;
 
-        public void setRoomNum(Integer roomNum) {
-            this.roomNum = roomNum;
-        }
+        /**
+         * 离店日期
+         */
+        public String end_date;
 
-        public String getRoomType() {
-            return roomType;
-        }
+        /**
+         * 房间价格
+         */
+        public BigDecimal room_price = BigDecimal.ZERO;
 
-        public void setRoomType(String roomType) {
-            this.roomType = roomType;
-        }
+        // ###　美食　###
 
-        public String getStartDate() {
-            return startDate;
-        }
+        /**
+         * 食物图片
+         */
+        public String food_image = "";
 
-        public void setStartDate(String startDate) {
-            this.startDate = startDate;
-        }
+        /**
+         * 食物名称
+         */
+        public String food_name = "";
 
-        public String getEndDate() {
-            return endDate;
-        }
+        /**
+         * 商品数量
+         */
+        public int good_num;
 
-        public void setEndDate(String endDate) {
-            this.endDate = endDate;
-        }
+        // ### 外卖  ###
+        public String good_names = "";
 
-        public Integer getRoomPrice() {
-            return roomPrice;
-        }
 
-        public void setRoomPrice(Integer roomPrice) {
-            this.roomPrice = roomPrice;
-        }
     }
 }

@@ -122,7 +122,7 @@ public class OrderListFragment extends BaseFragment implements SwipeRefreshLayou
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             OrderListResponse data = mAdapter.getData().get(position);
-            HotelOrderDetailActivity.goTo(getContext(), String.valueOf(data.getId()));
+            HotelOrderDetailActivity.goTo(getContext(), String.valueOf(data.id));
         });
     }
 
@@ -136,12 +136,10 @@ public class OrderListFragment extends BaseFragment implements SwipeRefreshLayou
             return;
         }
         if (id == R.id.rightToTv) {
-            Log.e("OrderListFragment", "onItemChildClick: " + "right");
             Class<? extends AppCompatActivity> toRightClass = mAdapter.getToRightClass(position);
 
             if (toRightClass != null) {
                 String simpleName = toRightClass.getSimpleName();
-                Log.e("OrderListFragment", "onOrderItemChildClicked: " + simpleName);
                 if (simpleName.equals("HotelPayActivity")) {
                     HotelPayActivity.goTo(context, null);
                 } else if (simpleName.equals("HotelDetailActivity")) {
@@ -149,10 +147,10 @@ public class OrderListFragment extends BaseFragment implements SwipeRefreshLayou
                     jcsCalendarDialog.initCalendar(context);
                     JcsCalendarAdapter.CalendarBean startBean = jcsCalendarDialog.getStartBean();
                     JcsCalendarAdapter.CalendarBean endBean = jcsCalendarDialog.getEndBean();
-                    Integer modelId = mAdapter.getData().get(position).getModelId();
+                    Integer modelId = mAdapter.getData().get(position).model_id;
                     HotelDetailActivity.goTo(context, modelId, startBean, endBean, 1, "", "", 1);
                 } else {
-                    toActivity(toRightClass, new IntentEntry("id", String.valueOf(data.getId())));
+                    toActivity(toRightClass, new IntentEntry("id", String.valueOf(data.id)));
                 }
             }
         }
@@ -168,7 +166,7 @@ public class OrderListFragment extends BaseFragment implements SwipeRefreshLayou
                     CancelOrderDialog cancelOrderDialog = new CancelOrderDialog();
                     cancelOrderDialog.show(getChildFragmentManager());
                 } else {
-                    toActivity(toLeftClass, new IntentEntry("id", String.valueOf(data.getId())));
+                    toActivity(toLeftClass, new IntentEntry("id", String.valueOf(data.id)));
                 }
             }
         }

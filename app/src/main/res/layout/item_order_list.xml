@@ -12,7 +12,7 @@
         android:layout_height="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_15"
         android:layout_marginTop="@dimen/dp_15"
-        android:src="@drawable/order_icon"
+        android:src="@mipmap/order_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

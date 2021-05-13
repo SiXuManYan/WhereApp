@@ -18,6 +18,8 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_take_away.*
 import kotlinx.android.synthetic.main.item_search.*
 import kotlinx.android.synthetic.main.layout_take_away_shopping_cart.*
@@ -34,21 +36,26 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     private lateinit var restaurant_id: String
 
     /** 包装费 */
-    private  var packing_charges = "0"
+    private var packing_charges = "0"
 
     /** 配送费 */
-    private  var delivery_cost = "0"
+    private var delivery_cost = "0"
 
     /** 商家名称 */
-    private  var restaurant_name = ""
+    private var restaurant_name = ""
 
     private lateinit var mDishAdapter: TakeawayAdapter
     private lateinit var mCartAdapter: TakeawayAdapter
 
     /** 是否收藏 */
     private var like = 1
+
+    /** IM聊天开启状态（1：开启，2：关闭） */
+    private var im_status = 0
     private var toolbarStatus = 0
     private var businessPhone = ""
+    private var mer_uuid = ""
+    private var mer_name = ""
 
     override fun getLayoutId() = R.layout.activity_take_away
 
@@ -202,13 +209,19 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         }
 
         service_iv.setOnClickListener {
-            if (businessPhone.isNotBlank()) {
-                val data = Uri.parse("tel:$businessPhone")
-                val intent = Intent(Intent.ACTION_DIAL).apply {
-                    this.data = data
+
+            if (im_status == 1 && mer_uuid.isNotBlank()) {
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mer_uuid, restaurant_name, null)
+            } else {
+                if (businessPhone.isNotBlank()) {
+                    val data = Uri.parse("tel:$businessPhone")
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        this.data = data
+                    }
+                    startActivity(intent)
                 }
-                startActivity(intent)
             }
+
         }
 
         cart_iv.setOnClickListener {
@@ -253,6 +266,8 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         GlideUtil.load(this, data.take_out_image, image_iv)
         like = data.collect_status
         businessPhone = data.tel
+        mer_uuid = data.mer_uuid
+        mer_name = data.mer_name
         like = data.collect_status
         setLikeImage()
         val restaurantName = data.restaurant_name
@@ -274,7 +289,8 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         packaging_fee_tv.text = getString(R.string.price_unit_format, toPlainString)
         packing_charges = toPlainString
 
-
+        // 聊天
+        im_status = data.im_status
     }
 
     override fun bindDishList(list: MutableList<DishTakeawayResponse>) {

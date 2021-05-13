@@ -175,7 +175,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
         chat_iv.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(mMerUuid)) {
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mMerUuid, mMerName, null);
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mMerUuid, mRestaurantName, null);
             }
         });
     }

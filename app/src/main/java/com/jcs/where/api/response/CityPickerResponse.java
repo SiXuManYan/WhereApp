@@ -10,15 +10,15 @@ import java.util.List;
 public class CityPickerResponse {
 
     @SerializedName("lists")
-    private List<ListsDTO> lists;
+    private List<Lists> lists;
     @SerializedName("hots")
     private List<?> hots;
 
-    public List<ListsDTO> getLists() {
+    public List<Lists> getLists() {
         return lists;
     }
 
-    public void setLists(List<ListsDTO> lists) {
+    public void setLists(List<Lists> lists) {
         this.lists = lists;
     }
 
@@ -30,7 +30,7 @@ public class CityPickerResponse {
         this.hots = hots;
     }
 
-    public static class ListsDTO {
+    public static class Lists {
         /**
          * letter : A
          * areas : [{"id":"1","name":"阿布凯","lat":14.7128091,"lng":120.4933624}]
@@ -39,7 +39,7 @@ public class CityPickerResponse {
         @SerializedName("letter")
         private String letter;
         @SerializedName("areas")
-        private List<AreasDTO> areas;
+        private List<Areas> areas;
 
         public String getLetter() {
             return letter;
@@ -49,15 +49,15 @@ public class CityPickerResponse {
             this.letter = letter;
         }
 
-        public List<AreasDTO> getAreas() {
+        public List<Areas> getAreas() {
             return areas;
         }
 
-        public void setAreas(List<AreasDTO> areas) {
+        public void setAreas(List<Areas> areas) {
             this.areas = areas;
         }
 
-        public static class AreasDTO {
+        public static class Areas {
             /**
              * id : 1
              * name : 阿布凯

@@ -139,6 +139,8 @@ public class Constant {
     public static final String SP_IS_FIRST_OPEN = "sp_is_first_open";
     public static final String SP_IS_AGREE_USER_AGREEMENT = "sp_is_agree_user_agreement_20210422";
     public static final String SP_DEVICE_ID = "sp_device_id";
+    public static final String SP_LATITUDE = "sp_latitude";
+    public static final String SP_LONGITUDE = "sp_longitude";
 
 
 

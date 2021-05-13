@@ -1,38 +1,44 @@
-package com.jcs.where.api.network;
+package com.jcs.where.api.network
 
-import com.jcs.where.api.BaseModel;
-import com.jcs.where.api.JcsResponse;
-
-import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
+import com.blankj.utilcode.util.LogUtils
+import com.jcs.where.api.BaseModel
+import com.jcs.where.api.JcsResponse
+import com.jcs.where.base.event.RxBus
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
 
 /**
  * Created by Wangsw  2021/1/26 11:31.
  */
-public class BaseMvpPresenter extends BaseModel {
+open class BaseMvpPresenter(private var mBaseMvpView: BaseMvpView?) : BaseModel() {
 
-
-    private BaseMvpView mBaseMvpView;
-
-    public BaseMvpPresenter(BaseMvpView view) {
-        mBaseMvpView = view;
+    protected fun <T> requestApi(observable: Observable<JcsResponse<T>>, observer: BaseMvpObserver<T>) {
+        dealResponse(observable, observer)
     }
 
-
-    protected <T> void requestApi(Observable<JcsResponse<T>> observable, BaseMvpObserver<T> observer) {
-        dealResponse(observable, observer);
-    }
-
-    public void detachView() {
-        mBaseMvpView = null;
-
+    fun detachView() {
+        mBaseMvpView = null
         if (mObserver != null) {
-            CompositeDisposable compositeDisposable = mObserver.getCompositeDisposable();
-            if (compositeDisposable != null) {
-                compositeDisposable.clear();
-            }
+            val compositeDisposable = mObserver.compositeDisposable
+            compositeDisposable?.clear()
         }
-
     }
+
+    /**
+     * 添加RxBus 订阅
+     */
+    fun <T> addRxBusSubscribe(eventType: Class<T>, consumer: Consumer<T>) {
+
+        val compositeDisposable = mObserver.compositeDisposable
+
+        compositeDisposable?.add(
+                RxBus.toFlowable(eventType).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(consumer, Consumer {
+                            LogUtils.d(it)
+                        })
+        )
+    }
+
 
 }

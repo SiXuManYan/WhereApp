@@ -19,4 +19,9 @@ public abstract class BaseMvpObserver<T> extends BaseObserver<T> {
     protected void onError(ErrorResponse errorResponse) {
         view.onError(errorResponse);
     }
+
+
+
+
+
 }

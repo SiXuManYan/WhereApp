@@ -1,8 +1,12 @@
 package com.jcs.where.features.home
 
+import android.location.Address
+import android.widget.TextView
+import com.blankj.utilcode.util.StringUtils
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.jcs.where.BuildConfig
+import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -164,6 +168,40 @@ class HomePresenter2(val view: HomeView2) : BaseMvpPresenter(view) {
             }
         })
 
+    }
+
+    fun initDefaultCity(cityTv: TextView) {
+        val currentAreaId = getCurrentAreaId()
+        if (currentAreaId == "3") {
+            // 默认巴郎牙
+            cityTv.text = StringUtils.getString(R.string.default_city_name)
+            return
+        }
+        val currentCity = getCurrentCity(currentAreaId)
+        if (currentCity == null) {
+            cityTv.text = StringUtils.getString(R.string.default_city_name)
+        } else {
+            cityTv.text = currentCity.name
+        }
+    }
+
+    fun initCity(cityTv: TextView) {
+
+        LocationUtil.getInstance().addressCallback = object : LocationUtil.AddressCallback {
+            override fun onGetAddress(address: Address) {
+                val countryName = address.countryName //国家
+                val adminArea = address.adminArea //省
+                val locality = address.locality //市
+                val subLocality = address.subLocality //区
+                val featureName = address.featureName //街道
+                cityTv.text = locality
+            }
+
+            override fun onGetLocation(lat: Double, lng: Double) {
+                CacheUtil.getShareDefault().put(Constant.SP_LATITUDE, lat.toFloat())
+                CacheUtil.getShareDefault().put(Constant.SP_LONGITUDE, lng.toFloat())
+            }
+        }
     }
 
 

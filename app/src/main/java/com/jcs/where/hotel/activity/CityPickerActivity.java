@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +24,11 @@ import com.jcs.where.api.HttpUtils;
 import com.jcs.where.api.response.CityPickerResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.CustomProgressDialog;
-import com.jcs.where.bean.AreaBean;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.ErrorBean;
 import com.jcs.where.bean.GoogleMapBean;
 import com.jcs.where.bean.LocateState;
 import com.jcs.where.hotel.model.CityPickerModel;
-import com.jcs.where.manager.TokenManager;
 import com.jcs.where.utils.PinyinUtils;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
@@ -43,7 +38,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -71,21 +65,17 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
     private boolean mAddressRequested;
     private CityPickerModel mModel;
 
+    @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
     public static void goTo(Activity activity, int requestCode) {
         Intent intent = new Intent(activity, CityPickerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivityForResult(intent, requestCode);
     }
 
-
-//    public static void goTo(Context context) {
-//        Intent intent = new Intent(context, CityPickerActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        if (!(context instanceof Activity)) {
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        }
-//        context.startActivity(intent);
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +88,6 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
                     .build();
         }
         mGoogleApiClient.connect();
-        setStatusBar();
         initView();
         initData();
         checkIsGooglePlayConn();
@@ -136,16 +125,18 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
             }
 
             @Override
-            public void onSuccess(@NotNull CityPickerResponse cityPickerResponse) {
+            public void onSuccess(@NotNull CityPickerResponse response) {
                 stopLoading();
                 HashSet<CityResponse> cityResponses = new HashSet<>();
-                List<CityPickerResponse.ListsDTO> lists = cityPickerResponse.getLists();
+
+                List<CityPickerResponse.Lists> lists = response.getLists();
                 int listSize = lists.size();
                 for (int i = 0; i < listSize; i++) {
-                    List<CityPickerResponse.ListsDTO.AreasDTO> areas = lists.get(i).getAreas();
+                    List<CityPickerResponse.Lists.Areas> areas = lists.get(i).getAreas();
                     int areaSize = areas.size();
                     for (int j = 0; j < areaSize; j++) {
-                        CityPickerResponse.ListsDTO.AreasDTO areasDTO = areas.get(j);
+                        CityPickerResponse.Lists.Areas areasDTO = areas.get(j);
+
                         String name = areasDTO.getName().replace("　", "");
                         cityResponses.add(new CityResponse(areasDTO.getId(), name, PinyinUtils.getPinYin(name), false));
                     }
@@ -209,7 +200,6 @@ public class CityPickerActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void checkIsGooglePlayConn() {
-        Log.i("MapsActivity", "checkIsGooglePlayConn-->" + mGoogleApiClient.isConnected());
         if (mGoogleApiClient.isConnected() && mLastLocation != null) {
             initArea(mLastLocation.getLatitude() + "", mLastLocation.getLongitude() + "");
         }

@@ -1,6 +1,5 @@
 package com.jcs.where.home;
 
-import android.Manifest;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,46 +12,72 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
-import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
-import com.jcs.where.category.CategoryFragment;
+import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.category.CategoryFragment2;
 import com.jcs.where.features.home.HomeFragment2;
-import com.jcs.where.home.fragment.HomeFragment;
 import com.jcs.where.home.fragment.OrderFragment;
 import com.jcs.where.mine.fragment.MineFragment;
+import com.jcs.where.utils.PermissionUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseMvpActivity<MainPresenter> implements MainView {
 
-    private static final String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CALL_PHONE,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.ACCESS_WIFI_STATE};
     private static final int REQUEST_PERMISSION_CODE = 1;
     FragmentManager fm;
     private List<HomeTabBean> mTabBeans;
     private final ArrayList<Fragment> frList = new ArrayList<>();
     private TabLayout mTabLayout;
     private Long mTapTime = 0L;
+//    private FusedLocationProviderClient fusedLocationClient;
+//    private LocationRequest locationRequest;
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    protected void initView() {
+        fm = getSupportFragmentManager();
+        initFragment();
+        mTabLayout = findViewById(R.id.homeTabs);
+        initTabLayout();
+        initLocation();
+    }
+
+    private void initLocation() {
+//
+//        PermissionUtils.permissionAny(this,);
+//
+//
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        locationRequest = new LocationRequest();
+//        locationRequest.setInterval(1000 * 30);
+//        locationRequest.setFastestInterval(1000*10);
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
 
     @Override
     protected void bindListener() {
-
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -82,10 +107,6 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void initData() {
-
-    }
 
     private View makeTabView(HomeTabBean homeTabBean) {
         View tabView = LayoutInflater.from(this).inflate(R.layout.tab_home_activity, null);
@@ -96,15 +117,6 @@ public class HomeActivity extends BaseActivity {
         return tabView;
     }
 
-    @Override
-    protected void initView() {
-        EventBus.getDefault().register(this);
-        fm = getSupportFragmentManager();
-        initFragment();
-        mTabLayout = findViewById(R.id.homeTabs);
-
-        initTabLayout();
-    }
 
     private void initFragment() {
         frList.add(new HomeFragment2());
@@ -135,11 +147,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_home;
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION_CODE) {
@@ -160,7 +167,6 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - mTapTime > 2000) {
@@ -173,16 +179,11 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventReceived(BaseEvent<?> baseEvent) {
         int code = baseEvent.code;
-        switch (code) {
-            case EventCode.EVENT_SIGN_OUT:
-                finish();
-                break;
-            default:
-                break;
+        if (code == EventCode.EVENT_SIGN_OUT) {
+            finish();
         }
     }
 

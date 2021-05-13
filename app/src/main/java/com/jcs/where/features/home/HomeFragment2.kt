@@ -1,5 +1,6 @@
 package com.jcs.where.features.home
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -50,6 +51,7 @@ import com.jcs.where.news.NewsVideoActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideRoundTransform
+import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import com.jcs.where.view.empty.EmptyView
@@ -96,27 +98,26 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     override fun initView(view: View) {
         BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title))
+
         initBanner()
         initPlate()
         initNews()
         initRecommend()
         initScroll()
+
     }
 
     private fun initCity() {
-        val currentAreaId = presenter.getCurrentAreaId()
-        if (currentAreaId == "3") {
-            // 默认巴郎牙
-            city_tv.text = getString(R.string.default_city_name)
-            return
-        }
-        val currentCity = presenter.getCurrentCity(currentAreaId)
-        if (currentCity == null) {
-            city_tv.text = getString(R.string.default_city_name)
-        } else {
-            city_tv.text = currentCity.name
-        }
+        PermissionUtils.permissionAny(activity, {
+            if (it) {
+                presenter.initCity(city_tv)
+            } else {
+                presenter.initDefaultCity(city_tv)
+            }
+        }, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     }
+
+
 
 
     /** 轮播图 */
@@ -328,8 +329,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     override fun initData() {
         presenter = HomePresenter2(this)
-        rxTimer = RxTimer()
         initCity()
+        rxTimer = RxTimer()
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()

@@ -43,4 +43,5 @@ public final class SPKey {
      * 综合服务页面的分类存储key，使用时需要在后面拼接分类idid
      */
     public static final String K_SERVICE_CATEGORIES = "k_service_categories_";
+
 }

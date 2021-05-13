@@ -45,7 +45,7 @@ public class CityListAdapter extends BaseAdapter {
             mCities = new ArrayList<>();
         }
         mCities.add(0, new CityResponse("-1", "定位", "0"));
-        //   mCities.add(1, new City("-1", "热门", "1"));
+
         int size = mCities.size();
         letterIndexes = new HashMap<>();
         sections = new String[size];
@@ -122,19 +122,16 @@ public class CityListAdapter extends BaseAdapter {
                         state.setText(R.string.position);
                         break;
                 }
-                container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (locateState == LocateState.FAILED) {
-                            //重新定位
-                            if (onCityClickListener != null) {
-                                onCityClickListener.onLocateClick();
-                            }
-                        } else if (locateState == LocateState.SUCCESS) {
-                            //返回定位城市
-                            if (onCityClickListener != null) {
-                                onCityClickListener.onCityClick(locatedCity, locatedCityId);
-                            }
+                container.setOnClickListener(v -> {
+                    if (locateState == LocateState.FAILED) {
+                        //重新定位
+                        if (onCityClickListener != null) {
+                            onCityClickListener.onLocateClick();
+                        }
+                    } else if (locateState == LocateState.SUCCESS) {
+                        //返回定位城市
+                        if (onCityClickListener != null) {
+                            onCityClickListener.onCityClick(locatedCity, locatedCityId);
                         }
                     }
                 });

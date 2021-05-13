@@ -90,7 +90,7 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
     }
 
 
-    public void unCllection(String restaurantId){
+    public void unCollection(String restaurantId){
 
         CollectionRestaurantRequest request = new CollectionRestaurantRequest();
         request.restaurant_id = restaurantId;

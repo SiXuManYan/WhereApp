@@ -1,7 +1,9 @@
 package com.jcs.where.features.gourmet.takeaway
 
+import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.request.CollectionRestaurantRequest
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
@@ -85,6 +87,31 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
             }
         }
         return list
+
+    }
+
+    fun collection(restaurantId: String) {
+        val request = CollectionRestaurantRequest().apply {
+            this.restaurant_id = restaurantId
+        }
+        requestApi(mRetrofit.collectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                view.collectionSuccess()
+            }
+        })
+
+    }
+
+    fun unCollection(restaurantId: String) {
+        val request = CollectionRestaurantRequest().apply {
+            this.restaurant_id = restaurantId
+        }
+        requestApi(mRetrofit.unCollectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                view.unCollectionSuccess()
+            }
+
+        })
 
     }
 

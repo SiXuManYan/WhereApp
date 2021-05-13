@@ -14,8 +14,10 @@ import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
+import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
+import com.jcs.where.utils.MobUtil
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import io.rong.imkit.RongIM
@@ -48,7 +50,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     private lateinit var mCartAdapter: TakeawayAdapter
 
     /** 是否收藏 */
-    private var like = 1
+    private var collect_status = 1
 
     /** IM聊天开启状态（1：开启，2：关闭） */
     private var im_status = 0
@@ -183,7 +185,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     }
 
     private fun setLikeImage() {
-        if (like == 2) {
+        if (collect_status == 2) {
             likeIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hotelwhitelike))
         } else {
             likeIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hoteltransparentunlike))
@@ -202,10 +204,16 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         }
 
         shareIv.setOnClickListener {
-
+            val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_RESTAURANT, restaurant_id)
+            MobUtil.shareFacebookWebPage(url, this@TakeawayActivity)
         }
-        likeIv.setOnClickListener {
 
+        likeIv.setOnClickListener {
+            if (collect_status == 1) {
+                presenter.collection(restaurant_id)
+            } else {
+                presenter.unCollection(restaurant_id)
+            }
         }
 
         service_iv.setOnClickListener {
@@ -264,11 +272,10 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     override fun bindData(data: TakeawayDetailResponse) {
         GlideUtil.load(this, data.take_out_image, image_iv)
-        like = data.collect_status
+        collect_status = data.collect_status
         businessPhone = data.tel
         mer_uuid = data.mer_uuid
         mer_name = data.mer_name
-        like = data.collect_status
         setLikeImage()
         val restaurantName = data.restaurant_name
         restaurant_name = restaurantName
@@ -291,6 +298,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
         // 聊天
         im_status = data.im_status
+
+
+
     }
 
     override fun bindDishList(list: MutableList<DishTakeawayResponse>) {
@@ -324,4 +334,13 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     }
 
+    override fun collectionSuccess() {
+        collect_status = 2
+        setLikeImage()
+    }
+
+    override fun unCollectionSuccess() {
+        collect_status = 1
+        setLikeImage()
+    }
 }

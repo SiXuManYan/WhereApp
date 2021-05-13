@@ -12,4 +12,6 @@ import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 interface TakeawayView :BaseMvpView {
     fun bindData(data: TakeawayDetailResponse)
     fun bindDishList(list: MutableList<DishTakeawayResponse>)
+    fun collectionSuccess()
+    fun unCollectionSuccess()
 }

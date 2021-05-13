@@ -163,7 +163,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             if (collect_status == 1) {
                 presenter.collection(mRestaurantId);
             } else {
-                presenter.unCllection(mRestaurantId);
+                presenter.unCollection(mRestaurantId);
             }
 
         });

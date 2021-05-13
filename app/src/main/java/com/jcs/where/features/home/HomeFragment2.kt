@@ -104,7 +104,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         initNews()
         initRecommend()
         initScroll()
-
     }
 
     private fun initCity() {
@@ -337,6 +336,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         presenter.getNewsList()
         presenter.getRecommendList(recommedRequestPage)
         presenter.checkAppVersion()
+        presenter.connectRongCloud()
     }
 
     override fun bindListener() {

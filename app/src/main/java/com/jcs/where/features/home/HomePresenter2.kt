@@ -19,6 +19,7 @@ import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.bean.CityResponse
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.*
+import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 import java.util.*
 
@@ -202,6 +203,33 @@ class HomePresenter2(val view: HomeView2) : BaseMvpPresenter(view) {
                 CacheUtil.getShareDefault().put(Constant.SP_LONGITUDE, lng.toFloat())
             }
         }
+    }
+
+    /**
+     * 连接融云
+     */
+    fun connectRongCloud() {
+
+        if (!User.isLogon()) {
+            return
+        }
+
+        val user = User.getInstance()
+        user.rongData
+
+        RongIM.connect(user.rongData.token,object :RongIMClient.ConnectCallback(){
+
+
+            override fun onError(p0: RongIMClient.ConnectionErrorCode?) = Unit
+
+            override fun onDatabaseOpened(p0: RongIMClient.DatabaseOpenStatus?) = Unit
+
+            override fun onSuccess(p0: String?) = Unit
+
+        })
+
+
+
     }
 
 

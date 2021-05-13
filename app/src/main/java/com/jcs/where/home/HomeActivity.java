@@ -55,20 +55,9 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
         initFragment();
         mTabLayout = findViewById(R.id.homeTabs);
         initTabLayout();
-        initLocation();
     }
 
-    private void initLocation() {
-//
-//        PermissionUtils.permissionAny(this,);
-//
-//
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-//        locationRequest = new LocationRequest();
-//        locationRequest.setInterval(1000 * 30);
-//        locationRequest.setFastestInterval(1000*10);
-//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
+
 
     @Override
     protected void initData() {

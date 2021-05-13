@@ -56,6 +56,10 @@ public class RestaurantDetailResponse {
     public int take_out_status ;
     public String mer_uuid = "";
     public String mer_name = "";
+
+    /**
+     * 	IM聊天开启状态（1：开启，2：关闭）
+     */
     public int im_status ;
 
 

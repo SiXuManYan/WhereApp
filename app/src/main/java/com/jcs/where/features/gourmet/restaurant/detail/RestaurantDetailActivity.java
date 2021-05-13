@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -31,6 +32,9 @@ import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 import static com.jcs.where.utils.Constant.PARAM_ID;
 
@@ -54,8 +58,9 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     private TextView support_takeaway_tv;
     private DishView dish_view;
     private CommentView comment_view;
-    private ImageView shopping_cart, navigation_iv, chat_iv;
+    private ImageView shopping_cart, navigation_iv, chat_iv, tel_iv;
     private View dish_split_v;
+    private ViewSwitcher contact_sw;
 
     /**
      * 餐厅id
@@ -74,6 +79,16 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
      */
     private int collect_status = 0;
     private CharSequence mPhone = "";
+
+    /**
+     * 商家融云id
+     */
+    private String mMerUuid;
+
+    /**
+     * 商家融云聊天名字
+     */
+    private String mMerName;
 
 
     @Override
@@ -99,7 +114,9 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         shopping_cart = findViewById(R.id.shopping_cart);
         navigation_iv = findViewById(R.id.navigation_iv);
         chat_iv = findViewById(R.id.chat_iv);
+        tel_iv = findViewById(R.id.tel_iv);
         dish_split_v = findViewById(R.id.dish_split_v);
+        contact_sw = findViewById(R.id.contact_sw);
 
     }
 
@@ -115,14 +132,12 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         presenter.getDetail(mRestaurantId);
         presenter.getDishList(mRestaurantId);
         presenter.getCommentList(mRestaurantId);
-
     }
 
     @Override
     protected void bindListener() {
         shopping_cart.setOnClickListener(this::onShoppingCartClick);
-
-        chat_iv.setOnClickListener(v -> {
+        tel_iv.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(mPhone)) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + mPhone);
@@ -143,6 +158,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
                 startNaviGoogle(mLat, mLng);
             }
         });
+
         mJcsTitle.setSecondRightIvClickListener(v -> {
             if (collect_status == 1) {
                 presenter.collection(mRestaurantId);
@@ -151,14 +167,17 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             }
 
         });
-        mJcsTitle.setFirstRightIvClickListener(v -> {
 
+        mJcsTitle.setFirstRightIvClickListener(v -> {
             String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_RESTAURANT, mRestaurantId);
             MobUtil.shareFacebookWebPage(url, RestaurantDetailActivity.this);
-
         });
 
-
+        chat_iv.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(mMerUuid)) {
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mMerUuid, mMerName, null);
+            }
+        });
     }
 
 
@@ -188,9 +207,9 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             support_takeaway_tv.setVisibility(View.GONE);
         }
         if (data.im_status == 1) {
-            chat_iv.setVisibility(View.VISIBLE);
+            contact_sw.setDisplayedChild(0);
         } else {
-            chat_iv.setVisibility(View.GONE);
+            contact_sw.setDisplayedChild(1);
         }
         distance_tv.setText(getString(R.string.distance_format_2, data.distance));
         mLat = data.lat;
@@ -202,6 +221,8 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);
         }
         mPhone = data.tel;
+        mMerUuid = data.mer_uuid;
+        mMerName = data.mer_name;
     }
 
     @Override

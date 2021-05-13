@@ -98,7 +98,7 @@ public class HotelDetailActivity extends BaseActivity {
     private CircleImageView commentAvaterIv;
     private TextView commentNameTv, commentDetailTv, seeMoreTv;
     private ImageView likeIv, shareIv;
-    private TextView titleTv;
+    private TextView titleTv, desc_tv, view_all_desc_tv;
     private int like = 2;
     private int toolbarStatus = 0;
     private RelativeLayout hotelDetailRl, navigationRl;
@@ -157,6 +157,8 @@ public class HotelDetailActivity extends BaseActivity {
         mJcsCalendarDialog = new JcsCalendarDialog();
         mJcsCalendarDialog.initCalendar(this);
 
+        desc_tv = findViewById(R.id.desc_tv);
+        view_all_desc_tv = findViewById(R.id.view_all_desc_tv);
         toolbar = findViewById(R.id.toolbar);
         back_iv = findViewById(R.id.back_iv);
         //  setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
@@ -348,11 +350,11 @@ public class HotelDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull HotelDetailResponse hotelDetailResponse) {
+            public void onSuccess(@NonNull HotelDetailResponse response) {
                 stopLoading();
-                if (hotelDetailResponse.getImages() != null) {
+                if (response.getImages() != null) {
                     banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                            .setImageUrls(hotelDetailResponse.getImages())
+                            .setImageUrls(response.getImages())
                             .setImageLoader(new AbstractUrlLoader() {
                                 @Override
                                 public void loadImages(Context context, String url, ImageView image) {
@@ -390,34 +392,34 @@ public class HotelDetailActivity extends BaseActivity {
                             })
                             .start();
                 }
-                nameTv.setText(hotelDetailResponse.getName());
-                double grade = hotelDetailResponse.getGrade();
+                nameTv.setText(response.getName());
+                double grade = response.getGrade();
                 star_view.setRating((float) grade);
 
                 shareIv.setOnClickListener(view -> {
-//                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, hotelDetailResponse.getName());
+//                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, response.getName());
                     onShareClick();
                 });
-                hotelName = hotelDetailResponse.getName();
-//                hotelBreakfast = hotelDetailResponse.getPolicy().getBreadfast();
+                hotelName = response.getName();
+//                hotelBreakfast = response.getPolicy().getBreadfast();
                 hotelBreakfast = "";
 
-                String startText = String.format(getString(R.string.open_time), hotelDetailResponse.getStart_business_time());
+                String startText = String.format(getString(R.string.open_time), response.getStart_business_time());
                 startTimeTv.setText(startText);
                 starTv.setText(getString(R.string.star_text_format, String.valueOf(grade), FeaturesUtil.getGradeRetouchString((float) grade)));
 
-                String commentNumberText = String.format(getString(R.string.comment_num_prompt), hotelDetailResponse.getComment_counts());
+                String commentNumberText = String.format(getString(R.string.comment_num_prompt), response.getComment_counts());
                 commnetNumberTv.setText(commentNumberText);
-                if (TextUtils.isEmpty(hotelDetailResponse.getFacebook_link())) {
+                if (TextUtils.isEmpty(response.getFacebook_link())) {
                     faceBookRl.setVisibility(View.GONE);
                     faceLine.setVisibility(View.GONE);
                 } else {
                     faceBookRl.setVisibility(View.VISIBLE);
                     faceLine.setVisibility(View.VISIBLE);
-                    faceBookLink = hotelDetailResponse.getFacebook_link();
+                    faceBookLink = response.getFacebook_link();
                 }
-//                String check_in_time = hotelDetailResponse.getPolicy().getCheck_in_time();
-//                String check_out_time = hotelDetailResponse.getPolicy().getCheck_out_time();
+//                String check_in_time = response.getPolicy().getCheck_in_time();
+//                String check_out_time = response.getPolicy().getCheck_out_time();
 
                 String check_in_time = "";
                 String check_out_time = "";
@@ -425,21 +427,21 @@ public class HotelDetailActivity extends BaseActivity {
                 checkInTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
 
                 checkOutTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
-                addressTv.setText(hotelDetailResponse.getAddress());
-                phone = hotelDetailResponse.getTel();
-                facilitiesAdapter.addData(hotelDetailResponse.getFacilities());
+                addressTv.setText(response.getAddress());
+                phone = response.getTel();
+                facilitiesAdapter.addData(response.getFacilities());
                 facilitiesRv.setAdapter(facilitiesAdapter);
                 policyStartTimeTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
                 policyEndTimeTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
 
-//                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), hotelDetailResponse.getPolicy().getChildren()));
+//                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), response.getPolicy().getChildren()));
                 policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), ""));
-                if (hotelDetailResponse.getCollect_status() == 1) {
+                if (response.getCollect_status() == 1) {
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                 } else {
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                 }
-                like = hotelDetailResponse.getCollect_status();
+                like = response.getCollect_status();
                 navigationRl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -448,6 +450,12 @@ public class HotelDetailActivity extends BaseActivity {
                 });
                 initRoomList();
                 initCommentList();
+                String desc = response.desc;
+                if (TextUtils.isEmpty(desc)) {
+                    desc_tv.setText(R.string.empty_hotel_desc);
+                } else {
+                    desc_tv.setText(desc);
+                }
             }
         });
     }
@@ -461,6 +469,14 @@ public class HotelDetailActivity extends BaseActivity {
         back_iv.setOnClickListener(this::onBackIconClicked);
         findViewById(R.id.ll_choosedate).setOnClickListener(this::onChooseDate);
         mJcsCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
+        view_all_desc_tv.setOnClickListener(v -> {
+
+            if (desc_tv.getMaxLines() == 3) {
+                desc_tv.setMaxLines(100);
+            } else {
+                desc_tv.setMaxLines(3);
+            }
+        });
     }
 
     public void onDateSelected(JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate) {

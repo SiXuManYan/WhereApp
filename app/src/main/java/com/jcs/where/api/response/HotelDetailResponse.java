@@ -33,6 +33,7 @@ public class HotelDetailResponse {
 //    private PolicyBean policy;
     private int collect_status;
     private String facebook_link;
+    public String desc;
     private List<String> images;
     private List<FacilitiesBean> facilities;
 

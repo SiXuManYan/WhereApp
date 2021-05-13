@@ -300,7 +300,6 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         im_status = data.im_status
 
 
-
     }
 
     override fun bindDishList(list: MutableList<DishTakeawayResponse>) {

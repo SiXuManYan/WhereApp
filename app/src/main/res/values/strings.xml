@@ -658,8 +658,11 @@
     <string name="missed_orders">商家待接单</string>
     <string name="delivery_now">立即配送</string>
     <string name="chat">Chat</string>
-    <string name="service_hotline">Customer service hotline</string>
+    <string name="service_hotline">客户服务热线</string>
     <string name="call_hotline">呼叫</string>
+    <string name="hotel_desc">酒店描述</string>
+    <string name="view_all_desc">查看全部</string>
+    <string name="empty_hotel_desc">暂无酒店描述</string>
 
 
 </resources>

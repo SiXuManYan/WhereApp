@@ -658,6 +658,9 @@
     <string name="chat">Chat</string>
     <string name="service_hotline">Customer service hotline</string>
     <string name="call_hotline">Call</string>
+    <string name="hotel_desc">Hotel Description</string>
+    <string name="view_all_desc">View all</string>
+    <string name="empty_hotel_desc">No Description</string>
 
 
 </resources>

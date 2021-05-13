@@ -655,6 +655,9 @@
     <string name="buy_again">Buy Again</string>
     <string name="missed_orders">Pending order</string>
     <string name="delivery_now">Delivery now</string>
+    <string name="chat">Chat</string>
+    <string name="service_hotline">Customer service hotline</string>
+    <string name="call_hotline">Call</string>
 
 
 </resources>

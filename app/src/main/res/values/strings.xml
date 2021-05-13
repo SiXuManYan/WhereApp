@@ -657,6 +657,9 @@
     <string name="buy_again">再来一单</string>
     <string name="missed_orders">商家待接单</string>
     <string name="delivery_now">立即配送</string>
+    <string name="chat">Chat</string>
+    <string name="service_hotline">Customer service hotline</string>
+    <string name="call_hotline">呼叫</string>
 
 
 </resources>

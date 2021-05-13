@@ -270,7 +270,7 @@
                     android:background="@color/white"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_15"
-                    tools:text="@string/delivery_time" />
+                    android:text="@string/delivery_time" />
 
 
                 <TextView
@@ -304,7 +304,7 @@
                     android:background="@color/white"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_15"
-                    tools:text="@string/delivery_address" />
+                    android:text="@string/delivery_address" />
 
 
                 <TextView
@@ -364,7 +364,7 @@
                     android:background="@color/white"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_15"
-                    tools:text="@string/order_number_title" />
+                    android:text="@string/order_number_title" />
 
 
                 <TextView
@@ -397,7 +397,7 @@
                     android:background="@color/white"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_15"
-                    tools:text="@string/pay_time" />
+                    android:text="@string/pay_time" />
 
 
                 <TextView

@@ -62,7 +62,7 @@ data class TakeawayGoodData(
         var good_num: Int,
 
         /** 商品名称 */
-        var name: String,
+        var good_name: String,
 
         /** 商品图片 */
         var good_image: String,

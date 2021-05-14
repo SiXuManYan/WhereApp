@@ -80,7 +80,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
 
         if (item.image.isNotEmpty()) {
             val options = RequestOptions.bitmapTransform(
-                    GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.LEFT))
+                    GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                     .error(R.mipmap.ic_empty_gray)
                     .placeholder(R.mipmap.ic_empty_gray)
             Glide.with(context).load(item.image[0]).apply(options).into(image_iv)
@@ -200,7 +200,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
 
         val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.LEFT))
+                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                 .error(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray)
         Glide.with(context).load(modelData.food_image).apply(options).into(image_iv)
@@ -323,7 +323,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
 
         val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.LEFT))
+                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                 .error(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray)
         Glide.with(context).load(modelData.food_image).apply(options).into(image_iv)

@@ -68,7 +68,6 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             adapter = mAdapter
             addItemDecoration(object : MarginTopDecoration() {
                 override fun getMarginTop(): Int = 10
-
             })
 
         }

@@ -4,12 +4,18 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.widget.list.DividerDecoration
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_order_detail_takeaway.*
 
 /**
@@ -20,6 +26,9 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
 
     private var orderId = "";
     private var contactNumber = "";
+    private var merUuid = "";
+    private var restaurantName = "";
+    private lateinit var mAdapter : TakeawayGoodDataAdapter
 
     override fun getLayoutId() = R.layout.activity_order_detail_takeaway
 
@@ -33,6 +42,18 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
             return
         }
         orderId = bundle.getString(Constant.PARAM_ORDER_ID, "")
+
+        mAdapter = TakeawayGoodDataAdapter()
+        good_rv.apply {
+           adapter = mAdapter
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(10f), 0, 0).apply {
+                setDrawHeaderFooter(false)
+            })
+            layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
+                override fun canScrollVertically(): Boolean = false
+            }
+            isNestedScrollingEnabled = true
+        }
     }
 
     override fun initData() {
@@ -53,28 +74,36 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
             }
             startActivity(intent)
         }
+
+        chat_iv.setOnClickListener {
+            if (merUuid.isBlank()) {
+                return@setOnClickListener
+            }
+            RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, merUuid, restaurantName, null)
+        }
+
     }
 
     override fun bindDetail(it: TakeawayOrderDetail) {
         val goodData = it.good_data
-        val restaurantDate = it.restaurant_date
+        val restaurantData = it.restaurant_date
         val orderData = it.order_data
+        merUuid = restaurantData.mer_uuid
+        restaurantName = restaurantData.name
 
          contactNumber = orderData.address.contact_number
 
-        chat_iv.visibility = if (restaurantDate.im_status == 1) {
+        chat_iv.visibility = if (restaurantData.im_status == 1) {
             View.VISIBLE
         } else {
             View.GONE
         }
 
-
-
-        FeaturesUtil.bindTakeawayOrderStatus(orderData.status,status_tv)
-        restaurant_name_tv.text = restaurantDate.mer_name
-        packing_charges_tv.text = getString(R.string.price_unit_format,orderData.packing_charges.toPlainString())
-        delivery_cost_tv.text = getString(R.string.price_unit_format,orderData.delivery_cost.toPlainString())
-        total_price_tv.text = getString(R.string.price_unit_format,orderData.price.toPlainString())
+        FeaturesUtil.bindTakeawayOrderStatus(orderData.status, status_tv)
+        restaurant_name_tv.text = restaurantData.name
+        packing_charges_tv.text = getString(R.string.price_unit_format, orderData.packing_charges.toPlainString())
+        delivery_cost_tv.text = getString(R.string.price_unit_format, orderData.delivery_cost.toPlainString())
+        total_price_tv.text = getString(R.string.price_unit_format, orderData.price.toPlainString())
         delivery_time_tv.text = if (orderData.delivery_time_type ==1) {
             getString(R.string.delivery_now)
         }else{
@@ -83,9 +112,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         address_tv.text = orderData.address.address
         order_number_tv.text = orderData.trade_no
         pay_time_tv.text = orderData.trade_no
-
-
-
+        mAdapter.setNewInstance(goodData)
     }
 
 

@@ -55,7 +55,7 @@ class FoodOrderDetailPresenter(val view: FoodOrderDetailView) : BaseMvpPresenter
     fun cancelOrder(orderId: String) {
         requestApi(mRetrofit.cancelFoodOrder(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
-             view.cancelSuccess()
+                view.cancelSuccess()
             }
 
         })

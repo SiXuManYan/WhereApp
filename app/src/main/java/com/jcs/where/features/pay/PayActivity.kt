@@ -14,21 +14,21 @@ import kotlinx.android.synthetic.main.activity_pay.*
  */
 class PayActivity : BaseMvpActivity<PayPresenter>(), PayView {
 
-    private  var totalPrice: String = ""
-    private  var orders: ArrayList<OrderResponse> = ArrayList()
+    private var totalPrice: String = ""
+    private var orders: ArrayList<OrderResponse> = ArrayList()
 
     override fun getLayoutId() = R.layout.activity_pay
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this,Color.WHITE)
+        BarUtils.setStatusBarColor(this, Color.WHITE)
 
 
         intent.getParcelableArrayListExtra<OrderResponse>(Constant.PARAM_DATA)?.let {
-            orders .addAll(it)
+            orders.addAll(it)
         }
-         intent.getStringExtra(Constant.PARAM_TOTAL_PRICE)?.let {
-             totalPrice = it
-         }
+        intent.getStringExtra(Constant.PARAM_TOTAL_PRICE)?.let {
+            totalPrice = it
+        }
 
         val price = getString(R.string.price_unit_format, totalPrice)
         total_tv.text = price

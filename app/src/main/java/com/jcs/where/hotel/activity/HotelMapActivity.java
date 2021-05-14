@@ -29,7 +29,6 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -79,22 +78,15 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
 
     private static final int REQ_SEARCH = 777;
-    private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
-    private final List<View> views = new ArrayList<View>();
-    private final int READ_CODE = 10;
-    private final int READ_LOCATIONCODE = 11;
+    private final List<Marker> mMarkerRainbow = new ArrayList<>();
+    private final List<View> views = new ArrayList<>();
     private GoogleMap mMap;
     private ViewPager viewPager;
-    private final int size = 10;
-    //    private double lat = 14.6778362;
-//    private double lng = 120.5306459;
     private TextView mStartDayTv, mEndDayTv, mCityTv;
-    private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek;
     private int mTotalDay, mRoomNum;
     private int lastPostition = 0;
     private int lastScrollPosition = 0;
     private ImageView clearIv, mHotelListIv;
-    private FusedLocationProviderClient fusedLocationClient;
     private String useInputText = "";
     private GoogleApiClient mGoogleApiClient;
     private boolean clickLocation = false;

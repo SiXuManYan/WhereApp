@@ -814,7 +814,7 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> deleteAddress(@Path("address_id") String address_id);
 
     /**
-     * 美食外卖商品列表
+     * 美食商品列表
      *
      * @param trading_area_id 商业区ID
      * @param per_price       人均价格
@@ -1074,5 +1074,21 @@ public interface RetrofitApi {
             @Path("order_id") String order_id
     );
 
+
+    /**
+     * 美食地图商品列表
+     *
+     * @param search_input    搜索内容
+     * @param lat             纬度
+     * @param lng             经度
+     * @param category_id     分类ID
+     */
+    @GET("restaurantapi/v2/restaurants")
+    Observable<JcsResponse<PageResponse<RestaurantResponse>>> getRestaurantMapList(
+            @Query("page") int page,
+            @Query("search_input") @Nullable String search_input,
+            @Query("lat") @Nullable String lat,
+            @Query("lng") @Nullable String lng,
+            @Query("category_id") @Nullable String category_id);
 
 }

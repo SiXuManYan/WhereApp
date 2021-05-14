@@ -32,7 +32,6 @@ import com.jcs.where.widget.calendar.JcsCalendarDialog
 class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewHolder>(), LoadMoreModule {
 
 
-
     init {
         addItemType(OrderListResponse.ORDER_TYPE_HOTEL_1, R.layout.item_order_list_hotel)
         addItemType(OrderListResponse.ORDER_TYPE_DINE_2, R.layout.item_order_list_food)

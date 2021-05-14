@@ -3,6 +3,7 @@ package com.jcs.where.hotel.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.dialog.CallPhoneDialog;
 import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.model.OrderModel;
+import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -91,48 +93,50 @@ public class HotelOrderDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull HotelOrderDetailResponse hotelOrderDetailResponse) {
+            public void onSuccess(@NonNull HotelOrderDetailResponse response) {
                 stopLoading();
-                mJcsTitle.setMiddleTitle(String.format(getString(R.string.order_number), hotelOrderDetailResponse.getTrade_no()));
-                typeTv.setText(mHotelOrderStatus.get(hotelOrderDetailResponse.getOrder_status()));
-                cancelTv.setText(String.format(getString(R.string.order_cancel_prompt), hotelOrderDetailResponse.getStart_date()));
-                priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), hotelOrderDetailResponse.getPrice()));
-                if (hotelOrderDetailResponse.getImages() != null) {
-                    GlideUtil.load(HotelOrderDetailActivity.this, hotelOrderDetailResponse.getImages().get(0), photoIv);
+                mJcsTitle.setMiddleTitle(String.format(getString(R.string.order_number), response.getTrade_no()));
+                FeaturesUtil.bindHotelOrderStatus(response.getOrder_status(),typeTv);
+                typeTv.setTextColor(getColor(R.color.white_FEFEFE));
+
+                cancelTv.setText(String.format(getString(R.string.order_cancel_prompt), response.getStart_date()));
+                priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), response.getPrice()));
+                if (response.getImages() != null) {
+                    GlideUtil.load(HotelOrderDetailActivity.this, response.getImages().get(0), photoIv);
                 } else {
                     photoIv.setImageResource(R.mipmap.ic_glide_default);
                 }
-                hotelNmaeTv.setText(hotelOrderDetailResponse.getHotel_name());
-                scoreTv.setText(String.valueOf(hotelOrderDetailResponse.getGrade()));
-                addressTv.setText(hotelOrderDetailResponse.getHotel_addr());
-                roomNameTv.setText(hotelOrderDetailResponse.getRoom_name());
-                startDateTv.setText(hotelOrderDetailResponse.getStart_date());
-                endDateTv.setText(hotelOrderDetailResponse.getEnd_date());
-                nightTv.setText(String.format(getString(R.string.total_night), hotelOrderDetailResponse.getDays()));
-                bedTv.setText(hotelOrderDetailResponse.getRoom_type());
-                if (hotelOrderDetailResponse.getBreakfast_type() == 1) {
+                hotelNmaeTv.setText(response.getHotel_name());
+                scoreTv.setText(String.valueOf(response.getGrade()));
+                addressTv.setText(response.getHotel_addr());
+                roomNameTv.setText(response.getRoom_name());
+                startDateTv.setText(response.getStart_date());
+                endDateTv.setText(response.getEnd_date());
+                nightTv.setText(String.format(getString(R.string.total_night), response.getDays()));
+                bedTv.setText(response.getRoom_type());
+                if (response.getBreakfast_type() == 1) {
                     breakfastTv.setText(getString(R.string.with_breakfast));
                 } else {
                     breakfastTv.setText(getString(R.string.no_breakfast));
                 }
-                if (hotelOrderDetailResponse.getWindow_type() == 1) {
+                if (response.getWindow_type() == 1) {
                     windowTv.setText(getString(R.string.with_window));
                 } else {
                     windowTv.setText(getString(R.string.no_window));
                 }
-                if (hotelOrderDetailResponse.getWifi_type() == 1) {
+                if (response.getWifi_type() == 1) {
                     wifiTv.setText(getString(R.string.with_wifi));
                 } else {
                     wifiTv.setText(getString(R.string.no_wifi));
                 }
 
-                peopleTv.setText(String.format(getString(R.string.stay_people_number), hotelOrderDetailResponse.getPeople_num()));
-                contactsTv.setText(hotelOrderDetailResponse.getUsername());
-                phoneTv.setText(hotelOrderDetailResponse.getPhone());
-                mCallDialog.setPhoneNumber(hotelOrderDetailResponse.getPhone());
-                mToNavigationDialog.setTargetLocation(hotelOrderDetailResponse.getHotel_addr());
-                mToNavigationDialog.setLatitude(hotelOrderDetailResponse.getHotel_lat());
-                mToNavigationDialog.setLongitude(hotelOrderDetailResponse.getHotel_lng());
+                peopleTv.setText(String.format(getString(R.string.stay_people_number), response.getPeople_num()));
+                contactsTv.setText(response.getUsername());
+                phoneTv.setText(response.getPhone());
+                mCallDialog.setPhoneNumber(response.getPhone());
+                mToNavigationDialog.setTargetLocation(response.getHotel_addr());
+                mToNavigationDialog.setLatitude(response.getHotel_lat());
+                mToNavigationDialog.setLongitude(response.getHotel_lng());
 
             }
         });

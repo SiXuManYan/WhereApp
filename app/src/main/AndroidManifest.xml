@@ -628,6 +628,7 @@
         <activity android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity" />
         <activity android:name=".features.gourmet.order.detail.FoodOrderDetailActivity" />
         <activity android:name=".features.gourmet.takeaway.order.TakeawayOrderDetailActivity" />
+        <activity android:name=".features.gourmet.restaurant.map.RestaurantMapActivity" />
 
 
     </application>

@@ -116,6 +116,7 @@ public class MoreFilterFragment extends BaseFragment {
      * 确认
      */
     private void onConfirmClick(View view) {
+        perPriceArray.clear();
         String startPrice = startPriceEt.getText().toString().trim();
         String endPrice = endPriceEt.getText().toString().trim();
 

@@ -37,6 +37,7 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment;
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.list.DividerDecoration;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -115,10 +116,12 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         filter_pager.setAdapter(adapter);
 
         // list
+        EmptyView emptyView = new EmptyView(this);
+        emptyView.showEmptyDefault();
         mAdapter = new RestaurantListAdapter();
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
+        mAdapter.setEmptyView(emptyView);
         mAdapter.addChildClickViewIds(R.id.take_ll);
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnItemClickListener(this);
@@ -261,6 +264,7 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
+                mAdapter.setNewInstance(null);
                 loadMoreModule.loadMoreComplete();
             } else {
                 loadMoreModule.loadMoreEnd();
@@ -394,7 +398,6 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
             mRequest.service = more.service;
             mRequest.sort = more.sort;
         }
-
         onRefresh();
         dismiss_view.performClick();
     }

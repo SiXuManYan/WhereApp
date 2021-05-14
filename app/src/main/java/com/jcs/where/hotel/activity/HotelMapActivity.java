@@ -6,8 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Geocoder;
-import android.location.Location;
+import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -19,7 +18,6 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +51,9 @@ import com.jcs.where.hotel.event.HotelEvent;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.search.SearchActivity;
 import com.jcs.where.search.tag.SearchTag;
+import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.LocationUtil;
+import com.jcs.where.utils.PermissionUtils;
 import com.jcs.where.view.EnterStayInfoView;
 import com.jcs.where.view.popup.PopupConstraintLayout;
 import com.jcs.where.view.popup.PopupConstraintLayoutAdapter;
@@ -78,7 +79,6 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
 
     private static final int REQ_SEARCH = 777;
-    private static final LatLng ADELAIDE = new LatLng(14.6778362, 120.5306459);
     private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
     private final List<View> views = new ArrayList<View>();
     private final int READ_CODE = 10;
@@ -86,8 +86,8 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
     private GoogleMap mMap;
     private ViewPager viewPager;
     private final int size = 10;
-    private double lat = 14.6778362;
-    private double lng = 120.5306459;
+    //    private double lat = 14.6778362;
+//    private double lng = 120.5306459;
     private TextView mStartDayTv, mEndDayTv, mCityTv;
     private String mStartYear, mStartDate, mStartWeek, mEndYear, mEndData, mEndWeek;
     private int mTotalDay, mRoomNum;
@@ -97,8 +97,6 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
     private FusedLocationProviderClient fusedLocationClient;
     private String useInputText = "";
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
-    private boolean mAddressRequested;
     private boolean clickLocation = false;
     private JcsCalendarDialog mCalendarDialog;
     private PopupConstraintLayout mTopPopupLayout;
@@ -215,6 +213,10 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
                 ((ViewGroup) views.get(lastScrollPosition).getParent()).removeView(views.get(lastScrollPosition));
                 mMarkerRainbow.get(lastScrollPosition).setIcon(fromView(HotelMapActivity.this, views.get(lastScrollPosition)));
                 lastScrollPosition = position;
+
+                LatLng position1 = mMarkerRainbow.get(position).getPosition();
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position1, 10f));
+
             }
 
             @Override
@@ -228,7 +230,9 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
     protected void initData() {
         presenter = new HotelMapPresenter(this);
         Intent intent = getIntent();
-        mMyPosition = ADELAIDE;
+
+
+        mMyPosition = CacheUtil.getMyCacheLocation();
 
         mStartDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_START_DATE_BEAN);
         mEndDateBean = (JcsCalendarAdapter.CalendarBean) intent.getSerializableExtra(HotelSelectDateHelper.EXT_END_DATE_BEAN);
@@ -282,7 +286,7 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         lastScrollPosition = 0;
         // Center camera on Adelaide marker
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 10f));
         for (int i = 0; i < list.size(); i++) {
             View view = LayoutInflater.from(HotelMapActivity.this).inflate(R.layout.custom_marker_layout, null);
             TextView peiceTv = view.findViewById(R.id.tv_price);
@@ -308,12 +312,9 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         viewPager.setAdapter(mPagerAdapter);
 
 
-        if (clickLocation) {
-
-            mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(lat, lng))
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
-        }
+        mMap.addMarker(new MarkerOptions()
+                .position(mMyPosition)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)));
     }
 
 
@@ -488,30 +489,31 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         }
     }
 
-    private void checkIsGooglePlayConn() {
-        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
-            initArea(mLastLocation);
-        }
-        mAddressRequested = true;
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(HotelMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, READ_LOCATIONCODE);
-            ActivityCompat.requestPermissions(HotelMapActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, READ_CODE);
-            return;
-        }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            if (!Geocoder.isPresent()) {
-                Toast.makeText(this, "No geocoder available", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (mAddressRequested) {
-                initArea(mLastLocation);
-            }
-        }
+
+        PermissionUtils.permissionAny(this, granted -> {
+                    if (granted) {
+
+                        LocationUtil.getInstance().setAddressCallback(new LocationUtil.AddressCallback() {
+                            @Override
+                            public void onGetAddress(Address address) {
+
+                            }
+
+                            @Override
+                            public void onGetLocation(double lat, double lng) {
+
+                            }
+                        });
+
+                    }
+
+
+                }, Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
     }
 
     @Override
@@ -524,12 +526,6 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
     }
 
-    private void initArea(Location location) {
-        lat = location.getLatitude();
-        lng = location.getLongitude();
-        clickLocation = true;
-        initData();
-    }
 
     public void backMyPosition() {
         if (mMap != null) {

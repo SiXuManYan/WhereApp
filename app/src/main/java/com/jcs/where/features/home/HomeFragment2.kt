@@ -25,6 +25,7 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.jcs.where.R
 import com.jcs.where.adapter.ModulesAdapter
+import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.home.TabEntity
@@ -32,6 +33,7 @@ import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
+import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
@@ -117,8 +119,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     }
 
 
-
-
     /** 轮播图 */
     private fun initBanner() {
         val bannerParams = ll_banner.layoutParams.apply {
@@ -138,7 +138,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 .isAutoPlay(true)
                 .setDelay(5000)
                 .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
-                .setUpIndicatorSize(20, 6)
+                .setUpIndicatorSize(6, 6)
                 .setIndicatorGravity(XBanner.INDICATOR_CENTER)
                 .setImageLoader(object : AbstractUrlLoader() {
                     override fun loadImages(context: Context, url: String, image: ImageView) {
@@ -427,8 +427,60 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
     override fun setMessageCount(i: Int) = message_view.setMessageCount(i)
 
-    override fun bindTopBannerData(bannerUrls: ArrayList<String>) {
+    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {
+
         top_banner.setImageUrls(bannerUrls)
+        top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
+
+
+            override fun onBannerDragging(item: Int) = Unit
+
+            override fun onBannerIdle(item: Int) = Unit
+
+            override fun onBannerClick(item: Int) {
+                val data = response[item]
+                if (data.redirect_type == 0) {
+                    return
+                }
+                if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
+                    WebViewActivity.goTo(this@HomeFragment2.activity, data.h5_link)
+                    return
+                }
+
+                if (data.redirect_type == 2) {
+
+                    when (data.target_type) {
+                        1 -> {
+                            val dialog = JcsCalendarDialog()
+                            dialog.initCalendar(this@HomeFragment2.activity)
+                            HotelDetailActivity.goTo(this@HomeFragment2.activity, data.target_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                        }
+                        2 -> {
+                            TouristAttractionDetailActivity.goTo(this@HomeFragment2.activity, data.target_id)
+                        }
+                        3 -> {
+                            startActivity(NewsDetailActivity::class.java, Bundle().apply {
+                                putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
+                            })
+                        }
+                        4 -> {
+                            startActivity(MechanismDetailActivity::class.java, Bundle().apply {
+                                putString(MechanismDetailActivity.K_MECHANISM_ID, data.target_id.toString())
+                            })
+                        }
+                        5 -> {
+                            startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
+                                putString(Constant.PARAM_ID, data.target_id.toString())
+                            })
+                        }
+                    }
+                    return
+                }
+            }
+
+        })
+
+
         top_banner.start()
     }
 

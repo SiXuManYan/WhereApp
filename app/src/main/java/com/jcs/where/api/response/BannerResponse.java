@@ -4,28 +4,30 @@ import com.stx.xhb.androidx.entity.BaseBannerInfo;
 
 public class BannerResponse implements BaseBannerInfo {
     public int id;
+
     public String src;
 
-    public BannerResponse(int id, String src) {
-        this.id = id;
-        this.src = src;
-    }
+    /**
+     * 	重定向类型（0:不处理，1:h5，2:详情页）
+     */
+    public int redirect_type;
 
-    public int getId() {
-        return id;
-    }
+    /**
+     * 模块类型（1:酒店，2:旅游，3:新闻，4:综合服务，5:餐厅
+     */
+    public int target_type;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    /**
+     * 模块ID
+     */
+    public int target_id;
 
-    public String getSrc() {
-        return src;
-    }
+    public String h5_link;
 
-    public void setSrc(String src) {
-        this.src = src;
-    }
+
+
+
+
 
     @Override
     public Object getXBannerUrl() {
@@ -34,6 +36,6 @@ public class BannerResponse implements BaseBannerInfo {
 
     @Override
     public String getXBannerTitle() {
-        return null;
+        return "";
     }
 }

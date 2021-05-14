@@ -115,15 +115,15 @@ class HomePresenter2(val view: HomeView2) : BaseMvpPresenter(view) {
     fun getTopBanner() {
         requestApi(mRetrofit.getBanners(1), object : BaseMvpObserver<List<BannerResponse>>(view) {
             override fun onSuccess(response: List<BannerResponse>?) {
-
                 if (response == null || response.isEmpty()) {
                     return
                 }
+
                 val bannerUrls: ArrayList<String> = ArrayList()
                 response.forEach {
                     bannerUrls.add(it.src)
                 }
-                view.bindTopBannerData(bannerUrls)
+                view.bindTopBannerData(bannerUrls,response)
             }
         })
     }

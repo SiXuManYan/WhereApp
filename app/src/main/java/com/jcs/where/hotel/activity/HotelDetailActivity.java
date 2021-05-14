@@ -686,6 +686,10 @@ public class HotelDetailActivity extends BaseActivity {
 
         @Override
         protected void convert(@NotNull BaseViewHolder holder, HotelRoomListResponse data) {
+
+            TextView surplus_tv = holder.getView(R.id.surplus_tv);
+            surplus_tv.setText(getString(R.string.surplus_format, data.remain_room_num));
+
             RoundedImageView photoIv = holder.getView(R.id.iv_photo);
             if (!TextUtils.isEmpty(data.getImages().get(0))) {
                 GlideUtil.load(getContext(), data.getImages().get(0), photoIv);

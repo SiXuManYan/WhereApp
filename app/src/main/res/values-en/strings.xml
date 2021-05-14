@@ -661,6 +661,7 @@
     <string name="hotel_desc">Hotel Description</string>
     <string name="view_all_desc">View all</string>
     <string name="empty_hotel_desc">No Description</string>
+    <string name="surplus_format">Inventory:%1$d</string>
 
 
 </resources>

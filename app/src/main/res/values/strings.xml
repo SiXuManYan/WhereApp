@@ -663,6 +663,7 @@
     <string name="hotel_desc">酒店描述</string>
     <string name="view_all_desc">查看全部</string>
     <string name="empty_hotel_desc">暂无酒店描述</string>
+    <string name="surplus_format">剩余房间：%1$d</string>
 
 
 </resources>

@@ -27,7 +27,7 @@ public class HotelRoomListResponse {
     private int breakfast_type;
     private String room_area;
     private String room_num;
-    private int remain_room_num;
+    public int remain_room_num;
     private int price;
     private String is_cancel;
 

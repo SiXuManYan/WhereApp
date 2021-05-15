@@ -1,6 +1,7 @@
 package com.jcs.where.adapter;
 
 import android.content.Context;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -27,6 +28,9 @@ public class TravelStayHotelAdapter extends BaseQuickAdapter<HotelResponse, Base
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelResponse hotelResponse) {
+
+        TextView scoreTv = baseViewHolder.findView(R.id.scoreTv);
+        scoreTv.setText(hotelResponse.getGrade() + "");
 
         Context context = baseViewHolder.itemView.getContext();
         List<String> images = hotelResponse.getImages();

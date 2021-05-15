@@ -1083,9 +1083,8 @@ public interface RetrofitApi {
      * @param lng             经度
      * @param category_id     分类ID
      */
-    @GET("restaurantapi/v2/restaurants")
-    Observable<JcsResponse<PageResponse<RestaurantResponse>>> getRestaurantMapList(
-            @Query("page") int page,
+    @GET("restaurantapi/v2/map/restaurants")
+    Observable<JcsResponse<ArrayList<RestaurantResponse>>> getRestaurantMapList(
             @Query("search_input") @Nullable String search_input,
             @Query("lat") @Nullable String lat,
             @Query("lng") @Nullable String lng,

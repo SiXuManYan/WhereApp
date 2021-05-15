@@ -41,7 +41,7 @@ public class RestaurantResponse {
 
     public ArrayList<String> tags = new ArrayList<>();
     public int take_out_status;
-    public String lat;
-    public String lng;
+    public double lat;
+    public double lng;
 
 }

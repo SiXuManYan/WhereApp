@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -102,7 +103,7 @@
         android:layout_below="@+id/title_rl" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"
         android:layout_alignParentBottom="true"
@@ -115,7 +116,7 @@
         android:id="@+id/myLocationIcon"
         android:layout_width="@dimen/dp_42"
         android:layout_height="@dimen/dp_42"
-        android:layout_above="@+id/viewpager"
+        android:layout_above="@+id/viewPager"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_30"

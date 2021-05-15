@@ -22,6 +22,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ColorUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jcs.where.R;
@@ -190,7 +191,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         });
 
 
-        mJcsTitle.setAlpha(0);//透明
+        mJcsTitle.setBackGround(R.color.transplant);//透明
         nameTv = findViewById(R.id.tv_name);
         scoreTv = findViewById(R.id.tv_score);
         commnetNumberTv = findViewById(R.id.tv_commentnumber);

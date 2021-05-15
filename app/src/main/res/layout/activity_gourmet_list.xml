@@ -87,7 +87,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:scaleType="centerInside"
             android:src="@drawable/ic_hotelmap"
-            android:visibility="invisible" />
+          />
 
 
     </RelativeLayout>

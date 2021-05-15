@@ -35,6 +35,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.RestaurantListRequest;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
 import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment;
+import com.jcs.where.features.gourmet.restaurant.map.RestaurantMapActivity;
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
@@ -210,6 +211,14 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
                 } else {
                     clearIv.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        findViewById(R.id.iv_map).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(RestaurantMapActivity.class);
             }
         });
 

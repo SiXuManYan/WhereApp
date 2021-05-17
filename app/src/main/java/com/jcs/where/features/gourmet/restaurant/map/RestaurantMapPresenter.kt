@@ -4,6 +4,7 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
 import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
 import java.util.*
 
 /**
@@ -17,10 +18,13 @@ class RestaurantMapPresenter(val view: RestaurantMapView) : BaseMvpPresenter(vie
         val location = CacheUtil.getMyCacheLocation()
 
 
+        val testLat = Constant.LAT.toString()
+        val testLng = Constant.LNG.toString()
+
         requestApi(mRetrofit.getRestaurantMapList(
-                "",
-                location.latitude.toString(),
-                location.longitude.toString(),
+                null,
+                testLat,
+                testLng,
                 category_id), object : BaseMvpObserver<ArrayList<RestaurantResponse>>(view) {
 
             override fun onSuccess(response: ArrayList<RestaurantResponse>) {

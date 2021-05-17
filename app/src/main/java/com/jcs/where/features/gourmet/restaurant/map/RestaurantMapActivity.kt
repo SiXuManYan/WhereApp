@@ -14,10 +14,9 @@ import android.view.ViewGroup
 import android.view.animation.BounceInterpolator
 import android.view.animation.Interpolator
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
-import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -42,7 +41,11 @@ import java.util.*
  * Created by Wangsw  2021/5/14 15:18.
  *
  */
-class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), RestaurantMapView, OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), RestaurantMapView,
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks {
 
     private var mCategoryId: String = ""
     private var mMap: GoogleMap? = null
@@ -57,32 +60,17 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
 
     override fun getLayoutId() = R.layout.activity_restaurant_map
 
+    override fun isStatusDark() = true
+
     override fun initView() {
         intent.getStringExtra(Constant.PARAM_ID)?.let {
             mCategoryId = it
         }
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this)
-        }
+        mapFragment.getMapAsync(this)
 
         initPager()
-
-
-//        if (PermissionUtils.isGranted(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-//            showToast(getString(R.string.permission_none))
-//            myLocationIcon.visibility = View.GONE
-//        } else {
-//            myLocationIcon.visibility = View.VISIBLE
-//
-//            mGoogleApiClient = GoogleApiClient.Builder(this)
-//                    .addConnectionCallbacks(this)
-//                    .addOnConnectionFailedListener(this)
-//                    .addApi(LocationServices.API)
-//                    .build();
-//            mGoogleApiClient?.connect()
-//
-//        }
 
         myLocationIcon.visibility = View.VISIBLE
 
@@ -92,8 +80,6 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient?.connect()
-
-
     }
 
     private fun initPager() {
@@ -105,7 +91,7 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
         val transformer = HotelMapViewPagerTransformer()
         viewPager.setPageTransformer(false, transformer)
 
-        val mPagerAdapter = RestaurantMapAdapter(this)
+        mPagerAdapter = RestaurantMapAdapter(this)
         viewPager.adapter = mPagerAdapter
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
@@ -115,20 +101,26 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
 
             override fun onPageSelected(position: Int) {
                 mMarkerRainbow[position].showInfoWindow()
-                val priceTv: TextView = views.get(position).findViewById<TextView>(R.id.tv_price)
-                views.get(position).setBackground(ContextCompat.getDrawable(this@RestaurantMapActivity, R.drawable.ic_markselected))
-                priceTv.setTextColor(resources.getColor(R.color.white))
-                (views.get(position).getParent() as ViewGroup).removeView(views.get(position))
-                mMarkerRainbow[position].setIcon(fromView(this@RestaurantMapActivity, views.get(position)))
-                val price1Tv: TextView = views.get(lastScrollPosition).findViewById<TextView>(R.id.tv_price)
-                views.get(lastScrollPosition).setBackground(ContextCompat.getDrawable(this@RestaurantMapActivity, R.drawable.ic_mark))
-                price1Tv.setTextColor(resources.getColor(R.color.blue_4C9EF2))
-                (views.get(lastScrollPosition).getParent() as ViewGroup).removeView(views.get(lastScrollPosition))
-                mMarkerRainbow[lastScrollPosition].setIcon(fromView(this@RestaurantMapActivity, views.get(lastScrollPosition)))
+
+
+                // 选中
+                val view = views[position]
+                val makerIv = view.findViewById<ImageView>(R.id.maker_iv)
+                makerIv.setImageResource(R.mipmap.ic_food_maker_selected)
+                (view.parent as ViewGroup).removeView(view)
+                mMarkerRainbow[position].setIcon(fromView(this@RestaurantMapActivity, view))
+
+                // 未选中
+                val lastView = views[lastScrollPosition]
+                val lastMakerIv = lastView.findViewById<ImageView>(R.id.maker_iv)
+                lastMakerIv.setImageResource(R.mipmap.ic_food_maker)
+                (lastView.parent as ViewGroup).removeView(lastView)
+
+                mMarkerRainbow[lastScrollPosition].setIcon(fromView(this@RestaurantMapActivity, lastView))
                 lastScrollPosition = position
 
                 val position1 = mMarkerRainbow[position].position
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(position1, 10f))
+                mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(position1, 15f))
             }
 
 
@@ -203,19 +195,11 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
 
     override fun bindList(list: ArrayList<RestaurantResponse>) {
 
-        if (mMap != null) {
-            mMap!!.clear()
-        }
-        if (mMarkerRainbow != null) {
-            mMarkerRainbow.clear()
-        }
+        mMap?.clear()
+        mMarkerRainbow.clear()
 
-        if (viewPager != null) {
-            viewPager.removeAllViews()
-        }
-        if (views != null) {
-            views.clear()
-        }
+        viewPager?.removeAllViews()
+        views.clear()
 
         if (list.isEmpty()) {
             return
@@ -225,34 +209,38 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
         lastScrollPosition = 0
 
         // Center camera on Adelaide marker
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 10f))
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 15f))
 
         for (i in list.indices) {
-            val view = LayoutInflater.from(this@RestaurantMapActivity).inflate(R.layout.custom_marker_layout, null)
-            val peiceTv = view.findViewById<TextView>(R.id.tv_price)
-            peiceTv.text = "php " + list[i].title
+            val view = LayoutInflater.from(this@RestaurantMapActivity).inflate(R.layout.custom_marker_layout_2, null)
             views.add(view)
             val bitmapDescriptor = fromView(this@RestaurantMapActivity, view)
-            val marker = mMap!!.addMarker(MarkerOptions()
-                    .position(LatLng(
-                            list[i].lat,
-                            list[i].lng)) // .title("₱" + list.get(i).getPrice() + "起")
-                    .icon(bitmapDescriptor))
-            mMarkerRainbow.add(marker)
+
+            mMap?.let {
+                val marker = it.addMarker(MarkerOptions()
+                        .position(LatLng(
+                                list[i].lat,
+                                list[i].lng)) // .title("₱" + list.get(i).getPrice() + "起")
+                        .icon(bitmapDescriptor))
+                mMarkerRainbow.add(marker)
+            }
+
+
         }
 
 
-        views[0].background = ContextCompat.getDrawable(this@RestaurantMapActivity, R.drawable.ic_markselected)
-        val priceTv = views[0].findViewById<TextView>(R.id.tv_price)
-        priceTv.setTextColor(resources.getColor(R.color.white))
-        (views[0].parent as ViewGroup).removeView(views[0])
-        mMarkerRainbow[0].setIcon(fromView(this@RestaurantMapActivity, views[0]))
+        val view = views[0]
+        val makerIv = view.findViewById<ImageView>(R.id.maker_iv)
+        makerIv.setImageResource(R.mipmap.ic_food_maker_selected)
+
+        (view.parent as ViewGroup).removeView(view)
+        mMarkerRainbow[0].setIcon(fromView(this@RestaurantMapActivity, view))
 
         mPagerAdapter.setData(list)
         viewPager.adapter = mPagerAdapter
 
 
-        mMap!!.addMarker(MarkerOptions()
+        mMap?.addMarker(MarkerOptions()
                 .position(mMyPosition!!)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marklocation)))
 
@@ -261,9 +249,8 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
-        if (mMap == null) {
-            return
-        }
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 15f))
+
 
         mMap?.let {
             it.uiSettings.isMapToolbarEnabled = false
@@ -272,6 +259,11 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
+
+        if (marker == null) {
+            return false
+        }
+
         val handler = Handler(Looper.getMainLooper())
         val start = SystemClock.uptimeMillis()
         val duration: Long = 1500
@@ -290,21 +282,28 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
         })
 
 
-        if (marker!!.id == mMarkerRainbow.get(lastPostition).getId()) {
+        if (marker!!.id == mMarkerRainbow[lastPostition].id) {
+
         } else {
             for (i in mMarkerRainbow.indices) {
-                if (marker!!.id == mMarkerRainbow.get(i).getId()) {
-                    viewPager.setCurrentItem(i)
-                    val priceTv: TextView = views.get(i).findViewById<TextView>(R.id.tv_price)
-                    views.get(i).setBackground(ContextCompat.getDrawable(this, R.drawable.ic_markselected))
-                    priceTv.setTextColor(resources.getColor(R.color.white))
-                    (views.get(i).getParent() as ViewGroup).removeView(views.get(i))
-                    marker!!.setIcon(fromView(this@RestaurantMapActivity, views.get(i)))
-                    val price1Tv: TextView = views.get(lastPostition).findViewById<TextView>(R.id.tv_price)
-                    views.get(lastPostition).setBackground(ContextCompat.getDrawable(this, R.drawable.ic_mark))
-                    price1Tv.setTextColor(resources.getColor(R.color.blue_4C9EF2))
-                    (views.get(lastPostition).getParent() as ViewGroup).removeView(views.get(lastPostition))
-                    mMarkerRainbow.get(lastPostition).setIcon(fromView(this@RestaurantMapActivity, views.get(lastPostition)))
+                if (marker.id == mMarkerRainbow.get(i).getId()) {
+                    viewPager.currentItem = i
+
+
+                    // 选中
+                    val view = views[i]
+                    val makerIv = view.findViewById<ImageView>(R.id.maker_iv)
+
+                    makerIv.setImageResource(R.mipmap.ic_food_maker_selected)
+                    (view.parent as ViewGroup).removeView(view)
+                    marker!!.setIcon(fromView(this@RestaurantMapActivity, view))
+
+                    // 未选中
+                    val lastView = views[lastPostition]
+                    val lastMaker = lastView.findViewById<ImageView>(R.id.maker_iv)
+                    lastMaker.setImageResource(R.mipmap.ic_food_maker)
+                    (lastView.parent as ViewGroup).removeView(lastView)
+                    mMarkerRainbow[lastPostition].setIcon(fromView(this@RestaurantMapActivity, lastView))
                     lastPostition = i
                 }
             }
@@ -337,9 +336,7 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
     override fun onConnectionSuspended(p0: Int) = Unit
 
     fun backMyPosition() {
-        if (mMap != null) {
-            mMap!!.moveCamera(CameraUpdateFactory.newLatLng(mMyPosition))
-        }
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 15f))
     }
 
     override fun onDestroy() {

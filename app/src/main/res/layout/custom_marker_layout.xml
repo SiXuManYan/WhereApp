@@ -8,9 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="php 299"
         android:textColor="@color/blue_4C9EF2"
-        android:textSize="11sp"
+        android:textSize="@dimen/sp_11"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
 

@@ -156,7 +156,8 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
                 initData();
             }
         });
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             showToast(getString(R.string.permission_none));
             findViewById(R.id.myLocationIcon).setVisibility(View.GONE);
         } else {
@@ -210,7 +211,7 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
                 lastScrollPosition = position;
 
                 LatLng position1 = mMarkerRainbow.get(position).getPosition();
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position1, 10f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position1, 15f));
 
             }
 
@@ -281,7 +282,7 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
         lastScrollPosition = 0;
         // Center camera on Adelaide marker
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 10f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 15f));
         for (int i = 0; i < list.size(); i++) {
             View view = LayoutInflater.from(HotelMapActivity.this).inflate(R.layout.custom_marker_layout, null);
             TextView peiceTv = view.findViewById(R.id.tv_price);
@@ -524,7 +525,9 @@ public class HotelMapActivity extends BaseMvpActivity<HotelMapPresenter>
 
     public void backMyPosition() {
         if (mMap != null) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(mMyPosition));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition,15f));
+
+
         }
     }
 

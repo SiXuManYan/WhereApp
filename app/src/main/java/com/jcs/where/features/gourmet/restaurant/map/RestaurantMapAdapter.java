@@ -96,18 +96,24 @@ public class RestaurantMapAdapter extends PagerAdapter {
         });
 
 
+        name_tv.setText(data.title);
+
+
         // 星级
 
         float grade = data.grade;
-        if (grade < 3.0) {
-            star_view.setVisibility(View.GONE);
-            score_tv.setVisibility(View.GONE);
-        } else {
-            star_view.setVisibility(View.VISIBLE);
-            score_tv.setVisibility(View.VISIBLE);
-            star_view.setRating(grade);
-            score_tv.setText(String.valueOf(grade));
-        }
+//        if (grade < 3.0) {
+//            star_view.setVisibility(View.GONE);
+//            score_tv.setVisibility(View.GONE);
+//        } else {
+//            star_view.setVisibility(View.VISIBLE);
+//            score_tv.setVisibility(View.VISIBLE);
+//            star_view.setRating(grade);
+//            score_tv.setText(String.valueOf(grade));
+//        }
+
+        star_view.setRating(grade);
+        score_tv.setText(String.valueOf(grade));
 
         // 评论数
         comment_count_tv.setText(StringUtils.getString(R.string.comment_count_format2, data.comment_num));

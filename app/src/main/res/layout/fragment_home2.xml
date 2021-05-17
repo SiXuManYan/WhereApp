@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:alpha="0.9"
+                        android:alpha="0.99"
                         android:background="@color/white"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingTop="@dimen/dp_15"

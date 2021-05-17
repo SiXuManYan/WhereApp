@@ -30,6 +30,11 @@ android {
 
     }
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+
     signingConfigs {
         debug { storeFile file("../keystore/debug.keystore") }
         release {
@@ -74,11 +79,15 @@ android {
         dev {
             buildConfigField "String", "SERVER_HOST", SERVER_HOST_TEST
             buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_DEVELOP
+            buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
+            buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
         }
 
         formal {
             buildConfigField "String", "SERVER_HOST", SERVER_HOST_RELEASE
             buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_RELEASE
+            buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
+            buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
         }
 
     }

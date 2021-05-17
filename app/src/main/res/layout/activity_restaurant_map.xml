@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -25,37 +26,53 @@
 
 
         <RelativeLayout
+            android:id="@+id/search_ll"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_30"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/listIv"
             android:layout_toEndOf="@+id/back_iv"
-            android:background="@drawable/shape_eeeeee_radius_15">
+            android:background="@drawable/bg_search"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15">
+
+            <ImageView
+                android:id="@+id/close_search_iv"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_homesearch" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/search_aet"
+                android:layout_toEndOf="@+id/close_search_iv"
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/search_all_hint"
+                android:layout_toStartOf="@+id/clearIv"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:textColor="@color/black_333333"
+                android:textColorHint="@color/grey_999999"
+                android:textSize="@dimen/sp_12" />
 
 
             <ImageView
-                android:id="@+id/searchIcon"
+                android:id="@+id/clearIv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:layout_toEndOf="@+id/line_v"
-                android:src="@mipmap/ic_search_black" />
-
-            <TextView
-                android:id="@+id/cityTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_toEndOf="@+id/searchIcon"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/search_hotel"
-                android:textColor="@color/grey_666666"
-                android:textSize="13sp" />
-
+                android:padding="5dp"
+                android:visibility="gone"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_clear_search" />
 
         </RelativeLayout>
 
@@ -123,5 +140,16 @@
         android:scaleType="centerInside"
         android:src="@mipmap/ic_my_position" />
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        tools:visibility="v"
+        android:layout_height="@dimen/dp_300"
+        android:layout_below="@+id/title_rl"
+        android:background="@color/white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_search_all" />
 
 </RelativeLayout>

@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.text.Editable
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +20,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.SizeUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
@@ -28,8 +32,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
+import com.jcs.where.api.response.search.SearchResultResponse
+import com.jcs.where.api.response.search.SearchResultResponse.TYPE_4_RESTAURANT
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.search.SearchAllAdapter
 import com.jcs.where.hotel.activity.map.HotelMapViewPagerTransformer
+import com.jcs.where.hotel.watcher.AfterInputWatcher
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
@@ -45,7 +53,7 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
         OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.ConnectionCallbacks, OnItemClickListener {
 
     private var mCategoryId: String = ""
     private var mMap: GoogleMap? = null
@@ -56,6 +64,8 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
     private var lastScrollPosition = 0
     private var mGoogleApiClient: GoogleApiClient? = null
     private var mMyPosition: LatLng? = null
+
+    private lateinit var mAdapter: SearchAllAdapter
 
 
     override fun getLayoutId() = R.layout.activity_restaurant_map
@@ -80,11 +90,16 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient?.connect()
+
+        mAdapter = SearchAllAdapter()
+        mAdapter.setOnItemClickListener(this)
+        recycler.adapter = mAdapter
+
     }
 
     private fun initPager() {
-        viewPager.setOffscreenPageLimit(2)
-        viewPager.setClipToPadding(false)
+        viewPager.offscreenPageLimit = 2
+        viewPager.clipToPadding = false
         viewPager.setPadding(SizeUtils.dp2px(35f), 0, SizeUtils.dp2px(35f), 0)
         viewPager.pageMargin = SizeUtils.dp2px(15f)
 
@@ -176,24 +191,69 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
 
     override fun initData() {
         presenter = RestaurantMapPresenter(this)
-        presenter.getList(mCategoryId)
-
+        presenter.getList(mCategoryId, null)
         mMyPosition = CacheUtil.getMyCacheLocation()
-
-
     }
 
     override fun bindListener() {
 
+        myLocationIcon.setOnClickListener {
+            backMyPosition()
+        }
+
         back_iv.setOnClickListener {
             finish()
         }
+
         listIv.setOnClickListener {
             finish()
         }
+
+        close_search_iv.setOnClickListener {
+            recycler.visibility = View.GONE
+        }
+
+        clearIv.setOnClickListener {
+            search_aet.setText("")
+            clearIv.visibility = View.GONE
+            presenter.getList(mCategoryId, null)
+        }
+
+        search_aet.setOnClickListener {
+            recycler.visibility = View.VISIBLE
+        }
+
+        search_aet.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                recycler.visibility = View.VISIBLE
+            }else{
+                recycler.visibility = View.GONE
+            }
+
+        }
+
+        search_aet.addTextChangedListener(object : AfterInputWatcher() {
+            override fun afterTextChanged(s: Editable) {
+                val finalInput = s.toString().trim()
+                handleSearch(finalInput)
+            }
+
+        })
+
     }
 
-    override fun bindList(list: ArrayList<RestaurantResponse>) {
+    private fun handleSearch(finalInput: String) {
+        if (TextUtils.isEmpty(finalInput)) {
+            mAdapter.setNewInstance(null)
+            clearIv.visibility = View.GONE
+            return
+        }
+        clearIv.visibility = View.VISIBLE
+        mAdapter.keyWord = finalInput
+        presenter.search(finalInput)
+    }
+
+    override fun bindList(response: ArrayList<RestaurantResponse>) {
 
         mMap?.clear()
         mMarkerRainbow.clear()
@@ -201,7 +261,7 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
         viewPager?.removeAllViews()
         views.clear()
 
-        if (list.isEmpty()) {
+        if (response.isEmpty()) {
             return
         }
 
@@ -211,7 +271,7 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
         // Center camera on Adelaide marker
         mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyPosition, 15f))
 
-        for (i in list.indices) {
+        for (i in response.indices) {
             val view = LayoutInflater.from(this@RestaurantMapActivity).inflate(R.layout.custom_marker_layout_2, null)
             views.add(view)
             val bitmapDescriptor = fromView(this@RestaurantMapActivity, view)
@@ -219,8 +279,8 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
             mMap?.let {
                 val marker = it.addMarker(MarkerOptions()
                         .position(LatLng(
-                                list[i].lat,
-                                list[i].lng)) // .title("₱" + list.get(i).getPrice() + "起")
+                                response[i].lat,
+                                response[i].lng)) // .title("₱" + list.get(i).getPrice() + "起")
                         .icon(bitmapDescriptor))
                 mMarkerRainbow.add(marker)
             }
@@ -236,7 +296,7 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
         (view.parent as ViewGroup).removeView(view)
         mMarkerRainbow[0].setIcon(fromView(this@RestaurantMapActivity, view))
 
-        mPagerAdapter.setData(list)
+        mPagerAdapter.setData(response)
         viewPager.adapter = mPagerAdapter
 
 
@@ -344,6 +404,24 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
             mGoogleApiClient!!.disconnect()
         }
         super.onDestroy()
+    }
+
+    override fun bindSearchResult(response: ArrayList<SearchResultResponse>) {
+        if (response.isEmpty()) {
+            mAdapter.setNewInstance(null)
+            return
+        }
+        mAdapter.setNewInstance(response)
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+
+        if (data.type != TYPE_4_RESTAURANT) {
+            return
+        }
+        recycler.visibility = View.GONE
+        presenter.getList(mCategoryId, data.name)
     }
 
 

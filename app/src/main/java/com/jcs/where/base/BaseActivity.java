@@ -128,13 +128,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected abstract int getLayoutId();
+
     protected abstract void initView();
 
     protected abstract void initData();
 
     protected abstract void bindListener();
-
-    protected abstract int getLayoutId();
 
     protected boolean hasJcsBack() {
         return true;

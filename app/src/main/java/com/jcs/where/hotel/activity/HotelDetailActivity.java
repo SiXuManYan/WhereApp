@@ -80,7 +80,6 @@ public class HotelDetailActivity extends BaseActivity {
     private Toolbar toolbar;
     private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
-    //    private RatingBar mRatingBar;
     private RelativeLayout faceBookRl;
     private TextView faceBookTv;
     private String faceBookLink;

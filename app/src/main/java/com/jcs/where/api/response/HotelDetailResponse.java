@@ -37,6 +37,16 @@ public class HotelDetailResponse {
     private List<String> images;
     private List<FacilitiesBean> facilities;
 
+    /**
+     * 视频链接
+     */
+    public String video = "";
+
+    /**
+     * 视频地址
+     */
+    public String video_image = "";
+
     public int getId() {
         return id;
     }

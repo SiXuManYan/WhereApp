@@ -32,6 +32,7 @@ import androidx.core.content.PermissionChecker;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -48,19 +49,21 @@ import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.hotel.activity.detail.DetailMediaAdapter;
+import com.jcs.where.hotel.activity.detail.MediaData;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MobUtil;
-import com.jcs.where.view.XBanner.AbstractUrlLoader;
-import com.jcs.where.view.XBanner.XBanner;
 import com.jcs.where.widget.StarView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
+import com.jcs.where.widget.pager.IndicatorView2;
 import com.jcs.where.widget.ratingstar.RatingStarView;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -69,7 +72,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
-import pl.droidsonroids.gif.GifImageView;
 
 /**
  * 页面-酒店详情页
@@ -78,7 +80,7 @@ public class HotelDetailActivity extends BaseActivity {
 
     private static final int CALL_PHONE_CODE = 1000;
     private Toolbar toolbar;
-    private XBanner banner;
+    //    private XBanner banner;
     private TextView nameTv, startTimeTv, starTv, commnetNumberTv;
     private RelativeLayout faceBookRl;
     private TextView faceBookTv;
@@ -114,6 +116,9 @@ public class HotelDetailActivity extends BaseActivity {
     private JcsCalendarDialog mJcsCalendarDialog;
     private ImageView back_iv;
     private RatingStarView star_view;
+    private RecyclerView media_rv;
+    private IndicatorView2 point_view;
+    private DetailMediaAdapter mMediaAdapter;
 
     public static void goTo(Context context, int id, JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate, int totalDay, String startYear, String endYear, int roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -152,6 +157,7 @@ public class HotelDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
 //        BarUtils.transparentStatusBar(this);
+        initMedia();
 
         mJcsCalendarDialog = new JcsCalendarDialog();
         mJcsCalendarDialog.initCalendar(this);
@@ -168,7 +174,6 @@ public class HotelDetailActivity extends BaseActivity {
         nameTv = findViewById(R.id.tv_name);
         star_view = findViewById(R.id.star_view);
 
-        banner = findViewById(R.id.banner3);
         startTimeTv = findViewById(R.id.tv_startTime);
         starTv = findViewById(R.id.tv_star);
         commnetNumberTv = findViewById(R.id.tv_commentnumber);
@@ -246,7 +251,7 @@ public class HotelDetailActivity extends BaseActivity {
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView scrollView, int x, int y, int oldx, int oldy) {
-                float headHeight = banner.getMeasuredHeight() - toolbar.getMeasuredHeight();
+                float headHeight = media_rv.getMeasuredHeight() - toolbar.getMeasuredHeight();
                 int alpha = (int) (((float) y / headHeight) * 255);
                 if (alpha >= 255) {
                     alpha = 255;
@@ -310,16 +315,91 @@ public class HotelDetailActivity extends BaseActivity {
                 HotelCommentActivity.goTo(HotelDetailActivity.this, mHotelId);
             }
         });
-        likeIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                collection(like != 1);
-            }
-        });
+        likeIv.setOnClickListener(view -> collection(like != 1));
         hotelDetailRl = findViewById(R.id.rl_hoteldetail);
         navigationRl = findViewById(R.id.rl_navigation);
         mStarView = findViewById(R.id.starView);
         timeTv = findViewById(R.id.tv_time);
+
+
+    }
+
+    private void initMedia() {
+        mMediaAdapter = new DetailMediaAdapter();
+        media_rv = findViewById(R.id.media_rv);
+        point_view = findViewById(R.id.point_view);
+
+
+        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+        pagerSnapHelper.attachToRecyclerView(media_rv);
+
+        media_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        media_rv.setAdapter(mMediaAdapter);
+        media_rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+
+                    int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
+
+                    //大于0说明有播放
+                    if (GSYVideoManager.instance().getPlayPosition() >= 0) {
+                        //当前播放的位置
+                        int position = GSYVideoManager.instance().getPlayPosition();
+
+                        // 对应的播放列表TAG
+                        if (GSYVideoManager.instance().getPlayTag().equals(DetailMediaAdapter.TAG) && (position < firstItemPosition || position > lastItemPosition)) {
+                            if (GSYVideoManager.isFullState(HotelDetailActivity.this)) {
+                                return;
+                            }
+                            //如果滑出去了上面和下面就是否
+                            GSYVideoManager.releaseAllVideos();
+                            mMediaAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        point_view.onPageSelected(firstItemPosition);
+                    }
+
+
+                }
+
+            }
+
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GSYVideoManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GSYVideoManager.releaseAllVideos();
     }
 
     @Override
@@ -351,46 +431,27 @@ public class HotelDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(@NonNull HotelDetailResponse response) {
                 stopLoading();
-                if (response.getImages() != null) {
-                    banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                            .setImageUrls(response.getImages())
-                            .setImageLoader(new AbstractUrlLoader() {
-                                @Override
-                                public void loadImages(Context context, String url, ImageView image) {
-                                    GlideUtil.load(context, url, image);
 
-                                }
+                ArrayList<MediaData> mediaList = new ArrayList<>();
 
-                                @Override
-                                public void loadGifs(Context context, String url, GifImageView gifImageView, ImageView.ScaleType scaleType) {
-                                    GlideUtil.loadGif(context, url, gifImageView);
-
-                                }
-                            })
-                            .setTitleHeight(50)
-                            .isAutoPlay(true)
-                            .setDelay(5000)
-                            .setUpIndicators(R.drawable.ic_roomselected, R.drawable.ic_roomunselected)
-                            .setUpIndicatorSize(20, 6)
-                            .setIndicatorGravity(XBanner.INDICATOR_CENTER)
-                            .setBannerPageListener(new XBanner.BannerPageListener() {
-                                @Override
-                                public void onBannerClick(int item) {
-
-                                }
-
-                                @Override
-                                public void onBannerDragging(int item) {
-
-                                }
-
-                                @Override
-                                public void onBannerIdle(int item) {
-
-                                }
-                            })
-                            .start();
+                if (!TextUtils.isEmpty(response.video)) {
+                    MediaData media = new MediaData();
+                    media.setType(MediaData.VIDEO);
+                    media.setCover(response.video_image);
+                    media.setSrc(response.video);
+                    mediaList.add(media);
                 }
+                for (String image : response.getImages()) {
+
+                    MediaData media = new MediaData();
+                    media.setType(MediaData.IMAGE);
+                    media.setCover(image);
+                    media.setSrc(image);
+                    mediaList.add(media);
+                }
+                mMediaAdapter.setNewInstance(mediaList);
+                point_view.setPointCount(mediaList.size());
+
                 nameTv.setText(response.getName());
                 double grade = response.getGrade();
                 star_view.setRating((float) grade);

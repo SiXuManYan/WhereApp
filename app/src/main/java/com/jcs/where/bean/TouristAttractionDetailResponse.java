@@ -36,6 +36,16 @@ public class TouristAttractionDetailResponse {
     private String phone;
     private List<String> images;
 
+    /**
+     * 视频链接
+     */
+    public String video = "";
+
+    /**
+     * 视频地址
+     */
+    public String video_image = "";
+
     public int getId() {
         return id;
     }

@@ -642,11 +642,7 @@ public class HotelDetailActivity extends BaseActivity {
                 protected void onSuccess(Object response) {
                     stopLoading();
                     like = 1;
-                    if (toolbarStatus == 0) {
-                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
-                    } else {
-                        likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
-                    }
+                    likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                 }
             });
         } else {

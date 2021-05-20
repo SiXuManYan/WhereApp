@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -23,12 +27,17 @@ import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.hotel.activity.HotelDetailActivity;
+import com.jcs.where.hotel.activity.detail.DetailMediaAdapter;
+import com.jcs.where.hotel.activity.detail.MediaData;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.MobUtil;
 import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 import com.jcs.where.view.CommentView;
 import com.jcs.where.view.DishView;
+import com.jcs.where.widget.pager.IndicatorView2;
 import com.jcs.where.widget.ratingstar.RatingStarView;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +70,10 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     private ImageView shopping_cart, navigation_iv, chat_iv, tel_iv;
     private View dish_split_v;
     private ViewSwitcher contact_sw;
+
+    private RecyclerView media_rv;
+    private IndicatorView2 point_view;
+    private DetailMediaAdapter mMediaAdapter;
 
     /**
      * 餐厅id
@@ -117,6 +130,58 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         tel_iv = findViewById(R.id.tel_iv);
         dish_split_v = findViewById(R.id.dish_split_v);
         contact_sw = findViewById(R.id.contact_sw);
+        initMedia();
+
+    }
+
+    private void initMedia() {
+        mMediaAdapter = new DetailMediaAdapter();
+        media_rv = findViewById(R.id.media_rv);
+        point_view = findViewById(R.id.point_view);
+        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+        pagerSnapHelper.attachToRecyclerView(media_rv);
+
+        media_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        media_rv.setAdapter(mMediaAdapter);
+        media_rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+
+                    int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
+
+                    //大于0说明有播放
+                    if (GSYVideoManager.instance().getPlayPosition() >= 0) {
+                        //当前播放的位置
+                        int position = GSYVideoManager.instance().getPlayPosition();
+
+                        // 对应的播放列表TAG
+                        if (GSYVideoManager.instance().getPlayTag().equals(DetailMediaAdapter.TAG) && (position < firstItemPosition || position > lastItemPosition)) {
+                            if (GSYVideoManager.isFullState(RestaurantDetailActivity.this)) {
+                                return;
+                            }
+                            //如果滑出去了上面和下面就是否
+                            GSYVideoManager.releaseAllVideos();
+                            mMediaAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        point_view.onPageSelected(firstItemPosition);
+                    }
+
+
+                }
+
+            }
+
+        });
 
     }
 
@@ -133,6 +198,33 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         presenter.getDishList(mRestaurantId);
         presenter.getCommentList(mRestaurantId);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GSYVideoManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GSYVideoManager.releaseAllVideos();
+    }
+
 
     @Override
     protected void bindListener() {
@@ -183,13 +275,27 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
     @Override
     public void bindData(RestaurantDetailResponse data) {
-        if (data.images != null && !data.images.isEmpty()) {
-            RequestOptions options = RequestOptions.bitmapTransform(
-                    new GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                    .error(R.mipmap.ic_empty_gray)
-                    .placeholder(R.mipmap.ic_empty_gray);
-            Glide.with(this).load(data.images.get(0)).apply(options).into(image_iv);
+
+
+        ArrayList<MediaData> mediaList = new ArrayList<>();
+
+        if (!TextUtils.isEmpty(data.video)) {
+            MediaData media = new MediaData();
+            media.setType(MediaData.VIDEO);
+            media.setCover(data.video_image);
+            media.setSrc(data.video);
+            mediaList.add(media);
         }
+        for (String image : data.images) {
+
+            MediaData media = new MediaData();
+            media.setType(MediaData.IMAGE);
+            media.setCover(image);
+            media.setSrc(image);
+            mediaList.add(media);
+        }
+        mMediaAdapter.setNewInstance(mediaList);
+        point_view.setPointCount(mediaList.size());
 
         mRestaurantName = data.title;
         mJcsTitle.setMiddleTitle(mRestaurantName);

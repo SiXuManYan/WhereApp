@@ -985,6 +985,13 @@ public class XBanner extends RelativeLayout {
         return true;
     }
 
+    public void pause() {
+
+        if (mRunnable != null) {
+            mHandler.removeCallbacks(mRunnable);
+        }
+    }
+
     //release banner here
     public void releaseBanner() {
 

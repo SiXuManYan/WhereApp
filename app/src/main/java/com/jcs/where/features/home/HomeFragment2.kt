@@ -239,7 +239,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
             override fun onTabSelect(position: Int) {
                 if (mNewsAdapterDataList.isNotEmpty()) {
-                    rxTimer.cancel()
+
                     scrollPosition = 0
                     news_rv.scrollToPosition(0)
                     mNewsAdapter.setNewInstance(mNewsAdapterDataList[position].news_list)
@@ -355,24 +355,32 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         super.onResume()
         if (isViewCreated) {
             presenter.getMessageCount()
+            startScroll()
+            top_banner.pause()
         }
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if (!hidden) {
+        if (hidden) {
+            rxTimer.cancel()
+            top_banner.pause()
+        }else{
+            startScroll()
+            top_banner.start()
             presenter.getMessageCount()
         }
     }
 
     override fun onDestroy() {
         rxTimer.cancel()
-        super.onDestroy()
         top_banner?.releaseBanner()
+        super.onDestroy()
     }
 
     override fun onRefresh() {
-
+        rxTimer.cancel()
+        top_banner.pause()
         // 推荐
         swipeLayout.isRefreshing = true
         recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
@@ -381,6 +389,12 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         presenter.getTopBanner()
         presenter.getPlateData()
         presenter.getNewsList()
+    }
+
+    override fun onPause() {
+        rxTimer.cancel()
+        top_banner.pause()
+        super.onPause()
     }
 
     override fun bindRecommendData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean) {
@@ -520,6 +534,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     }
 
     private fun startScroll() {
+        rxTimer.cancel()
         if (mNewsAdapter.data.size <= 1) {
             return
         }

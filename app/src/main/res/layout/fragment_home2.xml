@@ -162,7 +162,7 @@
                             app:tl_tab_space_equal="false"
                             app:tl_textBold="BOTH"
                             app:tl_textSelectColor="@color/black_333333"
-                            app:tl_textUnselectColor="@color/grey_666666"
+                            app:tl_textUnselectColor="@color/grey_999999"
                             app:tl_textsize="@dimen/sp_16"
                             app:tl_underline_color="@color/transplant"
                             app:tl_underline_height="1px" />

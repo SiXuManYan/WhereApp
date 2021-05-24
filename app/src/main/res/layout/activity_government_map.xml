@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
     android:background="@color/white"
+    android:focusable="true"
     android:focusableInTouchMode="true">
 
     <com.jcs.where.widget.JcsTitle
@@ -22,14 +22,14 @@
         android:layout_marginEnd="@dimen/dp_60"
         android:layout_marginBottom="@dimen/dp_7"
         android:background="@drawable/shape_eeeeee_radius_15"
-        android:hint="@string/prompt_input_government_name_2"
+        android:hint="@string/prompt_input_government_name_3"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
         android:paddingStart="@dimen/dp_50"
         android:paddingEnd="@dimen/dp_0"
         android:textColor="@color/grey_b7b7b7"
         android:textColorHint="@color/grey_b7b7b7"
         android:textSize="@dimen/sp_13"
-        android:inputType="text"
-        android:imeOptions="actionSearch"
         app:layout_constraintBottom_toBottomOf="@id/jcsTitle"
         app:layout_constraintTop_toTopOf="@id/jcsTitle" />
 
@@ -46,51 +46,50 @@
         android:id="@+id/delInputIv"
         android:layout_width="@dimen/dp_23"
         android:layout_height="@dimen/dp_23"
+        android:layout_marginEnd="@dimen/dp_15"
         android:padding="@dimen/dp_5"
         android:src="@mipmap/ic_del_circle_black"
-        app:layout_constraintTop_toTopOf="@id/searchEt"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/searchEt"
         app:layout_constraintEnd_toEndOf="@id/searchEt"
-        android:layout_marginEnd="@dimen/dp_15"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@id/searchEt" />
 
     <fragment
         android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
+        android:layout_marginBottom="@dimen/dp_55"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/dp_55"/>
+        app:layout_constraintTop_toBottomOf="@id/jcsTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecycler"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_265"
-        app:layout_constraintTop_toBottomOf="@id/jcsTitle"
+        android:background="@color/white"
         android:overScrollMode="never"
         android:visibility="gone"
-        android:background="@color/white" />
+        app:layout_constraintTop_toBottomOf="@id/jcsTitle" />
 
     <fragment
         android:id="@+id/viewpagerFrag"
+        android:name="com.jcs.where.government.fragment.CardViewPagerFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_90"
-        android:name="com.jcs.where.government.fragment.CardViewPagerFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="@dimen/dp_80"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
     <ImageView
         android:id="@+id/myLocationIcon"
         android:layout_width="@dimen/dp_42"
         android:layout_height="@dimen/dp_42"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_30"
         android:src="@mipmap/ic_my_position"
         app:layout_constraintBottom_toTopOf="@id/viewpagerFrag"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_30"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.jcs.where.view.popup.PopupConstraintLayout
         android:id="@+id/bottomPopupLayout"
@@ -104,8 +103,8 @@
             android:layout_width="@dimen/dp_35"
             android:layout_height="@dimen/dp_35"
             android:paddingStart="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_5"
             android:paddingTop="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_10"
             android:src="@mipmap/ic_big_arrow_top"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,21 +115,20 @@
             android:id="@+id/governmentTabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_25"
-            app:tabMode="scrollable"
             app:layout_constraintTop_toBottomOf="@id/topArrowIv"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/shape_blue_indicator_25"
             app:tabIndicatorColor="@color/blue_72B9FF"
             app:tabIndicatorFullWidth="false"
-            />
+            app:tabMode="scrollable" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/governmentViewPager"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:overScrollMode="never"
-            app:layout_constraintTop_toBottomOf="@id/governmentTabs"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/governmentTabs" />
     </com.jcs.where.view.popup.PopupConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

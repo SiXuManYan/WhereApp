@@ -24,12 +24,27 @@ public class YellowPageModel extends BaseModel {
      * @param categoryId 分类id集合
      * @param search     查询字段
      */
-    public void getMechanismList(String categoryId,
-                                 String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
+    public void getMechanismList(String categoryId, String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
 
         dealResponse(mRetrofit.getMechanismListById(categoryId, search, Constant.LAT, Constant.LNG), observer);
 
     }
+
+
+    /**
+     * @param categoryId 分类id集合
+     * @param search     查询字段
+     */
+    public void getMechanismList2(
+            int page,
+            String categoryId,
+            String search,
+            BaseObserver<PageResponse<MechanismResponse>> observer) {
+
+        dealResponse(mRetrofit.getMechanismListById2(page, categoryId, search, Constant.LAT, Constant.LNG), observer);
+
+    }
+
 
     /**
      * 根据一个分类id集合，获得对应的分类数据
@@ -52,7 +67,7 @@ public class YellowPageModel extends BaseModel {
     public void getInitData(String categoryIds, BaseObserver<YellowPageZipResponse> observer) {
 
         // 获取机构列表
-        Observable<JcsResponse<PageResponse<MechanismResponse>>> mechanismListByIdObservable = mRetrofit.getMechanismListById(categoryIds, "", Constant.LAT, Constant.LNG);
+        Observable<JcsResponse<PageResponse<MechanismResponse>>> mechanismListByIdObservable = mRetrofit.getMechanismListById2(1, categoryIds, "", Constant.LAT, Constant.LNG);
         // 获取一级分类
         Observable<JcsResponse<List<CategoryResponse>>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
         Observable<JcsResponse<YellowPageZipResponse>> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<JcsResponse<PageResponse<MechanismResponse>>, JcsResponse<List<CategoryResponse>>, JcsResponse<YellowPageZipResponse>>() {

@@ -53,7 +53,7 @@
         android:layout_marginBottom="@dimen/dp_30"
         android:background="@drawable/shape_white_radius_8"
         android:gravity="center"
-        android:text="@string/confirm"
+        android:text="@string/cancel"
         android:textColor="@color/blue_007AFF"
         android:textSize="@dimen/sp_16" />
 

@@ -2,19 +2,23 @@ package com.jcs.where.yellow_page.activity;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.gson.reflect.TypeToken;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
@@ -24,26 +28,23 @@ import com.jcs.where.government.adapter.MechanismListAdapter;
 import com.jcs.where.search.SearchActivity;
 import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.RequestResultCode;
 import com.jcs.where.utils.SPKey;
-import com.jcs.where.utils.SPUtil;
+import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.yellow_page.CategoryToSelectedListFragment;
 import com.jcs.where.yellow_page.model.YellowPageModel;
 
 import java.util.List;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.annotations.NonNull;
 
 /**
  * 页面-企业黄页
  * create by zyf on 2021/1/3 10:14 AM
  */
-public class YellowPageActivity extends BaseActivity {
+public class YellowPageActivity extends BaseActivity implements OnLoadMoreListener {
     public static final String K_ID = "id";
     public static final String K_CATEGORIES = "categories";
     public static final String K_DEFAULT_CHILD_CATEGORY_ID = "defaultChildCategoryId";
@@ -87,7 +88,20 @@ public class YellowPageActivity extends BaseActivity {
         mSwipeLayout = findViewById(R.id.swipeLayout);
         mRecyclerView = findViewById(R.id.yellowPageRecycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        EmptyView emptyView = new EmptyView(this);
+        emptyView.showEmptyDefault();
+
+        // adapter
         mAdapter = new MechanismListAdapter();
+        mAdapter.setEmptyView(emptyView);
+        BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+        loadMoreModule.setAutoLoadMore(true);
+        loadMoreModule.setEnableLoadMoreIfNotFullPage(true);
+        loadMoreModule.setOnLoadMoreListener(this);
+
+
         mRecyclerView.setAdapter(mAdapter);
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -107,11 +121,10 @@ public class YellowPageActivity extends BaseActivity {
         initCategories();
 
         // 从本地或网络获取数据
-        getDataFromNativeOrNet();
+        getData();
     }
 
-    private void getDataFromNativeOrNet() {
-        Log.e("YellowPageActivity", "getDataFromNativeOrNet: " + "");
+    private void getData() {
         String jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES);
         if (jsonStr.equals("")) {
             // 获取网路数据
@@ -122,11 +135,11 @@ public class YellowPageActivity extends BaseActivity {
             // 将分类数据注入分类选中Fragment中
             injectToSelectFragment();
             if (mDefaultChildCategoryId == null) {
-                getMechanismDataFromNet(mCategories.toString(), "");
+                getMechanismDataFromNet(page, mCategories.toString(), "");
             } else {
                 // 根据选中的分类，设置 mFirstCateTv  mSecondCateTv mThirdCateTv 的状态
                 toChangeLevelTitleStatus();
-                getMechanismDataFromNet(mDefaultChildCategoryId, "");
+                getMechanismDataFromNet(page, mDefaultChildCategoryId, "");
             }
         }
     }
@@ -214,8 +227,8 @@ public class YellowPageActivity extends BaseActivity {
         mToSelectedListFragment.setDefaultChildCategoryId(mDefaultChildCategoryId);
     }
 
-    private void getMechanismDataFromNet(String categoryId, String search) {
-        mModel.getMechanismList(categoryId, search, new BaseObserver<PageResponse<MechanismResponse>>() {
+    private void getMechanismDataFromNet(int page, String categoryId, String search) {
+        mModel.getMechanismList2(page, categoryId, search, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
@@ -225,20 +238,37 @@ public class YellowPageActivity extends BaseActivity {
             @Override
             public void onSuccess(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
                 mSwipeLayout.setRefreshing(false);
-                mAdapter.getData().clear();
                 updateAdapter(mechanismPageResponse);
             }
         });
     }
 
-    private void updateAdapter(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
-        List<MechanismResponse> data = mechanismPageResponse.getData();
-        if (data != null && data.size() > 0) {
-            mAdapter.addData(data);
-        } else {
-            mAdapter.notifyDataSetChanged();
-            mAdapter.setEmptyView(R.layout.view_empty_data_brvah_mechanism);
+    private void updateAdapter(@NonNull PageResponse<MechanismResponse> response) {
+        List<MechanismResponse> data = response.getData();
+        BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+        boolean lastPage = response.getLastPage() == page;
+
+        if (data.isEmpty()) {
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                loadMoreModule.loadMoreComplete();
+            } else {
+                loadMoreModule.loadMoreEnd();
+            }
+            return;
         }
+
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mAdapter.setNewInstance(data);
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage();
+        } else {
+            mAdapter.addData(data);
+            if (lastPage) {
+                loadMoreModule.loadMoreEnd();
+            } else {
+                loadMoreModule.loadMoreComplete();
+            }
+        }
+
     }
 
     private void initCategories() {
@@ -257,7 +287,7 @@ public class YellowPageActivity extends BaseActivity {
     }
 
     private void onSearchClicked(View view) {
-        SearchActivity.goTo(this,"", SearchTag.YELLOW_PAGE, RequestResultCode.REQUEST_YELLOW_PAGE_TO_SEARCH);
+        SearchActivity.goTo(this, "", SearchTag.YELLOW_PAGE, RequestResultCode.REQUEST_YELLOW_PAGE_TO_SEARCH);
     }
 
     private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
@@ -265,14 +295,22 @@ public class YellowPageActivity extends BaseActivity {
         toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(mechanismResponse.getId())));
     }
 
+    private int page = Constant.DEFAULT_FIRST_PAGE;
+
     private void onSwipeRefresh() {
+        page = Constant.DEFAULT_FIRST_PAGE;
+
+        loadData();
+    }
+
+    private void loadData() {
         if (mToSelectedListFragment.isNoLevel()) {
             // 获得全部数据
-            getMechanismDataFromNet(mFirstLevelCategories.toString(), "");
+            getMechanismDataFromNet(page, mFirstLevelCategories.toString(), "");
         } else {
             // 根据当前分类id刷新数据
             String id = mToSelectedListFragment.getCurrentCategoryId();
-            getMechanismDataFromNet(id, "");
+            getMechanismDataFromNet(page, id, "");
         }
     }
 
@@ -421,7 +459,8 @@ public class YellowPageActivity extends BaseActivity {
         if (tempArrowIv != null) {
             tempArrowIv.setImageResource(R.mipmap.ic_arrow_bottom_black);
         }
-        getMechanismDataFromNet(mToSelectedListFragment.getCurrentCategoryId(), "");
+        page = Constant.DEFAULT_FIRST_PAGE;
+        getMechanismDataFromNet(page, mToSelectedListFragment.getCurrentCategoryId(), "");
     }
 
     private void showCategoryListFragment() {
@@ -446,4 +485,9 @@ public class YellowPageActivity extends BaseActivity {
         return R.layout.activity_yellow_page;
     }
 
+    @Override
+    public void onLoadMore() {
+        page++;
+        loadData();
+    }
 }

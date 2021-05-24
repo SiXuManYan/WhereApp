@@ -113,6 +113,7 @@
     <string name="permission_has">有权限</string>
     <string name="prompt_input_government_name">输入机构名称</string>
     <string name="prompt_input_government_name_2">搜索景点</string>
+    <string name="prompt_input_government_name_3">搜索政府机构</string>
     <string name="all">全部</string>
     <string name="title_select_city">城市选择</string>
     <string name="government_name">政府名字</string>
@@ -671,5 +672,6 @@
     <string name="splash_content_0">通过Where查看最新消息</string>
     <string name="splash_content_1">关注实时热点</string>
     <string name="splash_content_2">智能推荐景点和酒店</string>
+    <string name="login_title_password">密码登录</string>
 
 </resources>

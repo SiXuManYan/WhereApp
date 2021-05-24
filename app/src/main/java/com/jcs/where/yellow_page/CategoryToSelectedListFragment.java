@@ -90,8 +90,7 @@ public class CategoryToSelectedListFragment extends BaseFragment {
     }
 
     public void setData(List<CategoryResponse> categoryList, int level) {
-        mAdapter.getData().clear();
-        mAdapter.addData(categoryList);
+        mAdapter.setNewInstance(categoryList);
         mLevel = level;
     }
 

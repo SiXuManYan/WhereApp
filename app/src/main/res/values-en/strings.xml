@@ -108,6 +108,7 @@
     <string name="permission_has">Have permission</string>
     <string name="prompt_input_government_name">Enter a name</string>
     <string name="prompt_input_government_name_2">Monuments</string>
+    <string name="prompt_input_government_name_3">Police Office</string>
     <string name="all">All</string>
     <string name="title_select_city">Select City</string>
     <string name="government_name">Government name</string>
@@ -308,20 +309,20 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="about_app">About WHERE</string>
     <string name="login_phone_input">Mobile number</string>
-    <string name="get_verify">Get verify code</string>
+    <string name="get_verify">Get VerifyCode</string>
     <string name="login_in">Sign in</string>
-    <string name="register_login">Sign in&#160;/&#160;Create Account</string>
+    <string name="register_login">Sign In&#160;/&#160;Create Account</string>
     <string name="verify_code_hint">Verification code</string>
     <string name="password_login">Sign in with password</string>
-    <string name="verify_login">Verify login</string>
+    <string name="verify_login">Sign in with Verification</string>
     <string name="other_login_type">More options</string>
     <string name="login_rule">The login representative agrees to the \n "User Agreement" and "Privacy Policy"</string>
     <string name="login_rule_default">The login representative agrees to the </string>
     <string name="login_rule_keyword_0">\n&#34;User Agreement&#34;</string>
-    <string name="login_rule_default_and">&#160;and&#160;</string>
+    <string name="login_rule_default_and">&#160;and the &#160;</string>
     <string name="login_rule_keyword_1">&#34;Privacy Policy&#34;</string>
     <string name="input_password_hint">6~20 digit letter combination</string>
-    <string name="input_password_hint_2">Enter the password</string>
+    <string name="input_password_hint_2">Please enter the password</string>
     <string name="confirm">Confirm</string>
     <string name="philippines_63">Philippines +63</string>
     <string name="china_86">China +86</string>
@@ -669,6 +670,7 @@
     <string name="splash_content_0">Use where to check information</string>
     <string name="splash_content_1">Focus on selected hot</string>
     <string name="splash_content_2">Smart recommendation for attractions and hotels</string>
+    <string name="login_title_password">Sign in with password</string>
 
 
 </resources>

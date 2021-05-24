@@ -34,7 +34,7 @@
         android:focusable="true"
         android:focusableInTouchMode="false"
         android:gravity="center_vertical"
-        android:hint="@string/please_input_merchant_or_goods"
+        android:hint="@string/home_search_hint"
         android:inputType="text"
         android:textColorHint="@color/grey_b7b7b7"
         android:textSize="@dimen/sp_13"

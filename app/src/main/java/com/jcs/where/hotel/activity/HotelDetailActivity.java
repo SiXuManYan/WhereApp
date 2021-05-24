@@ -285,7 +285,8 @@ public class HotelDetailActivity extends BaseActivity {
                 useView.getBackground().setAlpha(alpha);
                 toolbar.getBackground().setAlpha(alpha);
                 if (alpha == 255) {
-                    titleTv.setText(nameTv.getText().toString());
+//                    titleTv.setText(nameTv.getText().toString());
+                    titleTv.setText("");
                 }
                 if (alpha == 0) {
                     titleTv.setText("");

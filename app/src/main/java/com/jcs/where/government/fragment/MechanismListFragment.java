@@ -21,6 +21,7 @@ import com.jcs.where.base.IntentEntry;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.government.adapter.MechanismListAdapter;
 import com.jcs.where.government.model.MechanismListModel;
+import com.jcs.where.view.empty.EmptyView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +99,13 @@ public class MechanismListFragment extends BaseFragment {
     @Override
     protected void initData() {
         mModel = new MechanismListModel();
+
+        EmptyView emptyView = new EmptyView(getActivity());
+        emptyView.showEmptyDefault();
+
+
         mAdapter = new MechanismListAdapter();
+        mAdapter.setEmptyView(emptyView);
         mRecycler.setAdapter(mAdapter);
         mChildCategories = new ArrayList<>();
 
@@ -199,14 +206,13 @@ public class MechanismListFragment extends BaseFragment {
             @Override
             public void onSuccess(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
                 mSwipeLayout.setRefreshing(false);
-                mAdapter.getData().clear();
                 List<MechanismResponse> data = mechanismPageResponse.getData();
                 if (data != null && data.size() > 0) {
-                    mAdapter.addData(data);
+                    mAdapter.setNewInstance(data);
                     mSearchNoneGroup.setVisibility(View.GONE);
                     mRadioGroup.setVisibility(View.VISIBLE);
                 } else {
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.setNewInstance(null);
                     mSearchNoneGroup.setVisibility(View.VISIBLE);
                 }
             }

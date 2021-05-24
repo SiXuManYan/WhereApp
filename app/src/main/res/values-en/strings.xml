@@ -490,7 +490,7 @@
     <string name="confirm_password_hint">Please confirm your password</string>
     <string name="password_not_same_hint">Please enter the same password twice</string>
     <string name="travel_recommend">Popular</string>
-    <string name="tourism_management">Tourism management</string>
+    <string name="tourism_management">Tourism sector</string>
     <string name="shipping_address">Shipping address</string>
     <string name="shipping_address_edit">Shipping address：</string>
     <string name="add">Add</string>

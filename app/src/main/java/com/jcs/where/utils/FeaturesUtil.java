@@ -302,11 +302,11 @@ public class FeaturesUtil {
 
         String retouch = "";
 
-        if (grade >= 3 || grade < 3.5) {
+        if (grade >= 3 && grade < 3.5) {
             retouch = StringUtils.getString(R.string.grade_0);
-        } else if (grade >= 3.5 || grade < 4) {
+        } else if (grade >= 3.5 && grade < 4) {
             retouch = StringUtils.getString(R.string.grade_1);
-        } else if (grade >= 4 || grade < 4.5) {
+        } else if (grade >= 4 && grade < 4.5) {
             retouch = StringUtils.getString(R.string.grade_2);
         } else if (grade >= 4.5) {
             retouch = StringUtils.getString(R.string.grade_3);

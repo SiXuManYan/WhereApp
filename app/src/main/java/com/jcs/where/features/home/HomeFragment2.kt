@@ -344,7 +344,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             startActivityForResult(CityPickerActivity::class.java, REQ_SELECT_CITY, null)
         }
         search_ll.setOnClickListener {
-            startActivityAfterLogin(SearchAllActivity::class.java)
+            startActivity(SearchAllActivity::class.java)
         }
         message_view.setOnClickListener {
             startActivityAfterLogin(MessageCenterActivity::class.java)

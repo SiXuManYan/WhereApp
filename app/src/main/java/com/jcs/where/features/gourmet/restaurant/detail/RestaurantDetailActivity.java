@@ -317,7 +317,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         } else {
             contact_sw.setDisplayedChild(1);
         }
-        distance_tv.setText(getString(R.string.distance_format_2, data.distance));
+        distance_tv.setText(getString(R.string.distance_format, data.distance));
         mLat = data.lat;
         mLng = data.lng;
         collect_status = data.collect_status;

@@ -1,5 +1,6 @@
 package com.jcs.where.integral.child.task;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -179,7 +180,14 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         loadImage(data, image_iv);
 
         // 标题
-        holder.setText(R.id.title_tv, data.title);
+        TextView title_tv = holder.getView(R.id.title_tv);
+        title_tv.setText(data.title);
+        if (!TextUtils.isEmpty(data.facebook_link)) {
+            title_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_facebook, 0);
+        } else {
+            title_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+        }
+
 
         // 星级
         TextView score_tv = holder.getView(R.id.score_tv);

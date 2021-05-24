@@ -464,8 +464,7 @@
     <string name="comment_count_format">%1$s条评论</string>
     <string name="comment_count_format2">(%1$s)</string>
     <string name="recommend_home">推荐</string>
-    <string name="distance_format">%1$s&#160;km</string>
-    <string name="distance_format_2">&#60;&#160;%1$s&#160;km</string>
+    <string name="distance_format">&#60;&#160;%1$s&#160;km</string>
 
 
     <string name="new_version_hint_01">检测新版本，授权</string>

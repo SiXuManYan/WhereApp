@@ -9,6 +9,9 @@ buildscript {
 
         // Mob Maven地址
         maven {url "http://mvn.mob.com/android"}
+
+        // banner maven
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'

@@ -663,5 +663,13 @@
     <string name="empty_hotel_desc">No Description</string>
     <string name="surplus_format">Inventory:%1$d</string>
 
+    <string name="splash_title_0">Local information query</string>
+    <string name="splash_title_1">Bataan news</string>
+    <string name="splash_title_2">Tourist accommodation</string>
+
+    <string name="splash_content_0">Use where to check information</string>
+    <string name="splash_content_1">Focus on selected hot</string>
+    <string name="splash_content_2">Smart recommendation for attractions and hotels</string>
+
 
 </resources>

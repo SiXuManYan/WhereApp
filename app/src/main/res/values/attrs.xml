@@ -160,18 +160,16 @@
 
 
     <string-array name="splash_item_title">
-        <item>Bataan news</item>
-        <item>Tourist accommodation</item>
-        <item>Local information query</item>
-
+        <item>@string/splash_title_0</item>
+        <item>@string/splash_title_1</item>
+        <item>@string/splash_title_2</item>
     </string-array>
 
 
     <string-array name="splash_item_content">
-        <item>Focus on selected hot news</item>
-        <item>Smart recommendation for attractions and hotels</item>
-        <item>Local information query</item>
-
+        <item>@string/splash_content_0</item>
+        <item>@string/splash_content_1</item>
+        <item>@string/splash_content_2</item>
     </string-array>
 
 </resources>

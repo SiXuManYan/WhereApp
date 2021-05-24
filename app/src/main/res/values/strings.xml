@@ -665,5 +665,12 @@
     <string name="empty_hotel_desc">暂无酒店描述</string>
     <string name="surplus_format">剩余房间：%1$d</string>
 
+    <string name="splash_title_0">本地信息查询</string>
+    <string name="splash_title_1">巴丹新闻</string>
+    <string name="splash_title_2">旅游住宿</string>
+
+    <string name="splash_content_0">通过Where查看最新消息</string>
+    <string name="splash_content_1">关注实时热点</string>
+    <string name="splash_content_2">智能推荐景点和酒店</string>
 
 </resources>

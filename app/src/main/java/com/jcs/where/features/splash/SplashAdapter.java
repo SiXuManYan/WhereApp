@@ -64,17 +64,18 @@ public class SplashAdapter extends PagerAdapter {
         contentTv.setText(content[position]);
         switch (position) {
             case 0:
-                bgIv.setImageResource(R.mipmap.ic_splash_bg_00);
+                bgIv.setImageResource(R.mipmap.ic_splash_bg_02);
                 startTv.setVisibility(View.GONE);
                 break;
             case 1:
-                bgIv.setImageResource(R.mipmap.ic_splash_bg_01);
+                bgIv.setImageResource(R.mipmap.ic_splash_bg_00);
                 startTv.setVisibility(View.GONE);
                 break;
             case 2:
-                bgIv.setImageResource(R.mipmap.ic_splash_bg_02);
+                bgIv.setImageResource(R.mipmap.ic_splash_bg_01);
                 startTv.setVisibility(View.VISIBLE);
                 break;
+
         }
 
         if (onStartClickListener != null) {

@@ -1,7 +1,6 @@
 package com.jcs.where.adapter;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,20 +11,19 @@ import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.widget.LabelView;
 import com.jcs.where.widget.StarView;
+import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TravelStayHotelAdapter extends BaseQuickAdapter<HotelResponse, BaseViewHolder> {
-    public TravelStayHotelAdapter(int layoutResId, @Nullable List<HotelResponse> data) {
-        super(layoutResId, data);
-    }
 
-    public TravelStayHotelAdapter(int layoutResId) {
-        super(layoutResId);
+
+
+    public TravelStayHotelAdapter() {
+        super(R.layout.item_travel_stay_hotel);
     }
 
     @Override
@@ -46,8 +44,8 @@ public class TravelStayHotelAdapter extends BaseQuickAdapter<HotelResponse, Base
         String commentNumberText = String.format(getContext().getString(R.string.comment_num_prompt), hotelResponse.getComment_counts());
         holder.setText(R.id.commitTv, commentNumberText);
 
-        StarView startView = holder.findView(R.id.starView);
-        startView.setStartNum(hotelResponse.getGrade());
+        RatingStarView startView = holder.findView(R.id.starView);
+        startView.setRating(hotelResponse.star_level);
         LabelView labelView = holder.findView(R.id.labelView);
         List<LabelView.LabelNameInterface> labels = new ArrayList<>();
         List<HotelResponse.TagsBean> tags = hotelResponse.getTags();

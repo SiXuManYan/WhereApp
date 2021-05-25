@@ -34,6 +34,7 @@ public class HotelResponse implements ISearchResponse {
     private int price;
     private double distance;
     private int remain_room_num;
+    public float star_level = 1;
     private String facebook_link;
     private List<String> images;
     private List<TagsBean> tags;

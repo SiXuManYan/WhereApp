@@ -130,7 +130,7 @@ public class TravelStayActivity extends BaseActivity {
      */
     private void initHotelRecycler() {
         mHotelRecycler = findViewById(R.id.hotelRecycler);
-        mTravelStayHotelAdapter = new TravelStayHotelAdapter(R.layout.item_travel_stay_hotel);
+        mTravelStayHotelAdapter = new TravelStayHotelAdapter();
         mHotelRecycler.setLayoutManager(new LinearLayoutManager(this));
         mHotelRecycler.setAdapter(mTravelStayHotelAdapter);
     }

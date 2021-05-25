@@ -99,7 +99,7 @@ public class HotelDetailActivity extends BaseActivity {
     private CircleImageView commentAvaterIv;
     private TextView commentNameTv, commentDetailTv, seeMoreTv;
     private ImageView likeIv, shareIv;
-    private TextView titleTv, desc_tv, view_all_desc_tv;
+    private TextView titleTv, desc_tv, view_all_desc_tv, view_all_amenities_tv;
     private int like = 2;
     private int toolbarStatus = 0;
     private RelativeLayout hotelDetailRl, navigationRl;
@@ -156,13 +156,14 @@ public class HotelDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-//        BarUtils.transparentStatusBar(this);
+
         initMedia();
 
         mJcsCalendarDialog = new JcsCalendarDialog();
         mJcsCalendarDialog.initCalendar(this);
 
         desc_tv = findViewById(R.id.desc_tv);
+        view_all_amenities_tv = findViewById(R.id.view_all_amenities_tv);
         view_all_desc_tv = findViewById(R.id.view_all_desc_tv);
         toolbar = findViewById(R.id.toolbar);
         back_iv = findViewById(R.id.back_iv);
@@ -232,6 +233,8 @@ public class HotelDetailActivity extends BaseActivity {
         roomRv.setLayoutManager(linearLayoutManager);
         roomRv.setNestedScrollingEnabled(true);
         roomRv.setAdapter(roomAdapter);
+
+
         facilitiesRv = findViewById(R.id.rv_facilities);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HotelDetailActivity.this, 2) {
             @Override
@@ -242,6 +245,9 @@ public class HotelDetailActivity extends BaseActivity {
         facilitiesRv.setLayoutManager(gridLayoutManager);
         facilitiesRv.setNestedScrollingEnabled(true);
         facilitiesAdapter = new FacilitiesAdapter();
+        facilitiesRv.setAdapter(facilitiesAdapter);
+
+
         policyStartTimeTv = findViewById(R.id.tv_policystarttime);
         policyEndTimeTv = findViewById(R.id.tv_policyendtime);
         policyChildrenTv = findViewById(R.id.tv_policychildren);
@@ -499,8 +505,18 @@ public class HotelDetailActivity extends BaseActivity {
 
                 addressTv.setText(data.getAddress());
                 phone = data.getTel();
-                facilitiesAdapter.addData(data.getFacilities());
-                facilitiesRv.setAdapter(facilitiesAdapter);
+                facilitiesAdapter.setNewInstance(data.getFacilities());
+
+
+                for (int i = 0; i < facilitiesAdapter.getData().size(); i++) {
+                    if (i > 5) {
+                        View view = facilitiesAdapter.getViewByPosition(i, R.id.facilities_rl);
+                        if (view != null) {
+                            view.setVisibility(View.GONE);
+                        }
+
+                    }
+                }
 
 
                 if (data.getCollect_status() == 1) {
@@ -537,11 +553,28 @@ public class HotelDetailActivity extends BaseActivity {
         findViewById(R.id.ll_choosedate).setOnClickListener(this::onChooseDate);
         mJcsCalendarDialog.setOnDateSelectedListener(this::onDateSelected);
         view_all_desc_tv.setOnClickListener(v -> {
-
             if (desc_tv.getMaxLines() == 3) {
                 desc_tv.setMaxLines(100);
             } else {
                 desc_tv.setMaxLines(3);
+            }
+        });
+
+        view_all_amenities_tv.setOnClickListener(v -> {
+
+
+            for (int i = 0; i < facilitiesAdapter.getData().size(); i++) {
+                if (i > 5) {
+                    View view = facilitiesAdapter.getViewByPosition(i, R.id.facilities_rl);
+                    if (view != null) {
+                        if (view.getVisibility() == View.GONE) {
+                            view.setVisibility(View.VISIBLE);
+                        } else {
+                            view.setVisibility(View.GONE);
+                        }
+                    }
+
+                }
             }
         });
     }
@@ -840,16 +873,26 @@ public class HotelDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelDetailResponse.FacilitiesBean data) {
+        protected void convert(@NotNull BaseViewHolder holder, HotelDetailResponse.FacilitiesBean data) {
 
-            ImageView iconIv = baseViewHolder.getView(R.id.iv_icon);
+
+            RelativeLayout facilities_rl = holder.getView(R.id.facilities_rl);
+            ImageView iconIv = holder.getView(R.id.iv_icon);
             if (!TextUtils.isEmpty(data.getIcon())) {
                 GlideUtil.load(getContext(), data.getIcon(), iconIv);
             } else {
                 iconIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_test));
             }
-            TextView nameTv = baseViewHolder.getView(R.id.tv_name);
+            TextView nameTv = holder.getView(R.id.tv_name);
             nameTv.setText(data.getName());
+
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition > 5) {
+                facilities_rl.setVisibility(View.GONE);
+            } else {
+                facilities_rl.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 

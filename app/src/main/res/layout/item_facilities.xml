@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:id="@+id/facilities_rl"
     android:layout_marginBottom="11.5dp"
     android:orientation="horizontal">
 

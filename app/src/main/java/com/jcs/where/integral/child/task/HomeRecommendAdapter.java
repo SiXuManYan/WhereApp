@@ -194,6 +194,9 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         TextView score_retouch_tv = holder.getView(R.id.score_retouch_tv);
         RatingStarView star_view = holder.getView(R.id.star_view);
 
+        float starLevel = FeaturesUtil.getSafeStarLevel(data.star_level);
+        star_view.setRating(starLevel);
+
         float grade = data.grade;
         if (grade < 3.0) {
             star_view.setVisibility(View.INVISIBLE);
@@ -202,7 +205,6 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         } else {
             star_view.setVisibility(View.VISIBLE);
             score_tv.setVisibility(View.VISIBLE);
-            star_view.setRating(grade);
             score_tv.setText(String.valueOf(grade));
             score_retouch_tv.setText(FeaturesUtil.getGradeRetouchString(grade));
         }

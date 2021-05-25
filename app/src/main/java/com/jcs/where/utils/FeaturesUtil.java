@@ -490,4 +490,15 @@ public class FeaturesUtil {
         textView.setText(text);
     }
 
+    public static float getSafeStarLevel(String levelStr){
+        float level = 0f;
+        if (!TextUtils.isEmpty(levelStr)) {
+            try {
+                level =   Float.parseFloat(levelStr) ;
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return level;
+    }
+
 }

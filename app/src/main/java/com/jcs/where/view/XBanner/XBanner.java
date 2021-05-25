@@ -519,6 +519,8 @@ public class XBanner extends RelativeLayout {
     }
 
     private void showIndicators() {
+        mIndicatorContainer.removeAllViews();
+        mIndicators.clear();
 
         if (mBannerType == NUM_INDICATOR || mBannerType == NUM_INDICATOR_TITLE) {
             mNumIndicator = createNumIndicator();

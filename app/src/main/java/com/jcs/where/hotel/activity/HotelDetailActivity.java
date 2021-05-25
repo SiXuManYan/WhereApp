@@ -115,10 +115,10 @@ public class HotelDetailActivity extends BaseActivity {
     private int mTotalDay;
     private JcsCalendarDialog mJcsCalendarDialog;
     private ImageView back_iv;
-    private RatingStarView star_view;
     private RecyclerView media_rv;
     private IndicatorView2 point_view;
     private DetailMediaAdapter mMediaAdapter;
+    private RatingStarView star_view;
 
     public static void goTo(Context context, int id, JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate, int totalDay, String startYear, String endYear, int roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -430,19 +430,19 @@ public class HotelDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull HotelDetailResponse response) {
+            public void onSuccess(@NonNull HotelDetailResponse data) {
                 stopLoading();
 
                 ArrayList<MediaData> mediaList = new ArrayList<>();
 
-                if (!TextUtils.isEmpty(response.video)) {
+                if (!TextUtils.isEmpty(data.video)) {
                     MediaData media = new MediaData();
                     media.setType(MediaData.VIDEO);
-                    media.setCover(response.video_image);
-                    media.setSrc(response.video);
+                    media.setCover(data.video_image);
+                    media.setSrc(data.video);
                     mediaList.add(media);
                 }
-                for (String image : response.getImages()) {
+                for (String image : data.getImages()) {
 
                     MediaData media = new MediaData();
                     media.setType(MediaData.IMAGE);
@@ -453,56 +453,62 @@ public class HotelDetailActivity extends BaseActivity {
                 mMediaAdapter.setNewInstance(mediaList);
                 point_view.setPointCount(mediaList.size());
 
-                nameTv.setText(response.getName());
-                double grade = response.getGrade();
-                star_view.setRating((float) grade);
+                nameTv.setText(data.getName());
+                double grade = data.getGrade();
+
+
+                star_view.setRating(data.star_level);
 
                 shareIv.setOnClickListener(view -> {
-//                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, response.getName());
+//                        WriteCommentActivity.goTo(HotelDetailActivity.this, mHotelId, data.getName());
                     onShareClick();
                 });
-                hotelName = response.getName();
-//                hotelBreakfast = response.getPolicy().getBreadfast();
+                hotelName = data.getName();
+//                hotelBreakfast = data.getPolicy().getBreadfast();
                 hotelBreakfast = "";
 
-                String startText = String.format(getString(R.string.open_time), response.getStart_business_time());
+                String startText = String.format(getString(R.string.open_time), data.getStart_business_time());
                 startTimeTv.setText(startText);
                 starTv.setText(getString(R.string.star_text_format, String.valueOf(grade), FeaturesUtil.getGradeRetouchString((float) grade)));
 
-                String commentNumberText = String.format(getString(R.string.comment_num_prompt), response.getComment_counts());
+                String commentNumberText = String.format(getString(R.string.comment_num_prompt), data.getComment_counts());
                 commnetNumberTv.setText(commentNumberText);
-                if (TextUtils.isEmpty(response.getFacebook_link())) {
+                if (TextUtils.isEmpty(data.getFacebook_link())) {
                     faceBookRl.setVisibility(View.GONE);
                     faceLine.setVisibility(View.GONE);
                 } else {
                     faceBookRl.setVisibility(View.VISIBLE);
                     faceLine.setVisibility(View.VISIBLE);
-                    faceBookLink = response.getFacebook_link();
+                    faceBookLink = data.getFacebook_link();
                 }
-//                String check_in_time = response.getPolicy().getCheck_in_time();
-//                String check_out_time = response.getPolicy().getCheck_out_time();
 
-                String check_in_time = "";
-                String check_out_time = "";
+                try {
+                    // 返回数据某些情况会类型不匹配
+                    String check_in_time = data.policy.check_in_time;
+                    String check_out_time = data.policy.check_out_time;
 
-                checkInTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
+                    checkInTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
+                    checkOutTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
+                    policyStartTimeTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
+                    policyEndTimeTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
+                    policyChildrenTv.setText(data.policy.children);
 
-                checkOutTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
-                addressTv.setText(response.getAddress());
-                phone = response.getTel();
-                facilitiesAdapter.addData(response.getFacilities());
+                } catch (Exception ignored) {
+
+                }
+
+                addressTv.setText(data.getAddress());
+                phone = data.getTel();
+                facilitiesAdapter.addData(data.getFacilities());
                 facilitiesRv.setAdapter(facilitiesAdapter);
-                policyStartTimeTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
-                policyEndTimeTv.setText(String.format(getString(R.string.check_out_time), check_out_time));
 
-//                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), response.getPolicy().getChildren()));
-                policyChildrenTv.setText(String.format(getString(R.string.child_and_bed_added), ""));
-                if (response.getCollect_status() == 1) {
+
+                if (data.getCollect_status() == 1) {
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                 } else {
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hoteltransparentunlike));
                 }
-                like = response.getCollect_status();
+                like = data.getCollect_status();
                 navigationRl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -511,7 +517,7 @@ public class HotelDetailActivity extends BaseActivity {
                 });
                 initRoomList();
                 initCommentList();
-                String desc = response.desc;
+                String desc = data.desc;
                 if (TextUtils.isEmpty(desc)) {
                     desc_tv.setText(R.string.empty_hotel_desc);
                 } else {

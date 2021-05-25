@@ -4,22 +4,7 @@ import java.util.List;
 
 public class HotelDetailResponse {
 
-    /**
-     * id : 1
-     * images : ["https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png","https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png","https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png","https://whereoss.oss-cn-beijing.aliyuncs.com/images/2rB2zJ1XA9Q1mkId19DbmIhI4MkuCwnQepTeK6PT.png"]
-     * name : Crown Royale Hotel
-     * start_business_time : 2010-01-01
-     * address : Capitol Dr, City of Balanga, 2100 Bataan
-     * lat : 14.676989
-     * lng : 120.535781
-     * tel : +63472371961
-     * grade : 1
-     * comment_counts : 3
-     * facilities : [{"name":"名字1","icon":"https://whereoss.oss-cn-beijing.aliyuncs.com/images/G6l2jEFmujhKcVlXHzqff82HXN9Oi93dqhJyjhVw.png","pivot":{"hotel_id":1,"hotel_facility_id":1}},{"name":"名字2","icon":"https://whereoss.oss-cn-beijing.aliyuncs.com/images/G6l2jEFmujhKcVlXHzqff82HXN9Oi93dqhJyjhVw.png","pivot":{"hotel_id":1,"hotel_facility_id":2}},{"name":"名字3","icon":"https://whereoss.oss-cn-beijing.aliyuncs.com/images/G6l2jEFmujhKcVlXHzqff82HXN9Oi93dqhJyjhVw.png","pivot":{"hotel_id":1,"hotel_facility_id":3}},{"name":"名字4","icon":"https://whereoss.oss-cn-beijing.aliyuncs.com/images/G6l2jEFmujhKcVlXHzqff82HXN9Oi93dqhJyjhVw.png","pivot":{"hotel_id":1,"hotel_facility_id":4}},{"name":"名字5","icon":"https://whereoss.oss-cn-beijing.aliyuncs.com/images/G6l2jEFmujhKcVlXHzqff82HXN9Oi93dqhJyjhVw.png","pivot":{"hotel_id":1,"hotel_facility_id":5}},{"name":"名字6","icon":"https://whereoss.oss-cn-beijing.aliyuncs.com/images/G6l2jEFmujhKcVlXHzqff82HXN9Oi93dqhJyjhVw.png","pivot":{"hotel_id":1,"hotel_facility_id":6}}]
-     * policy : {"children":"可以","check_in_time":"14:00:00","check_out_time":"12:00::00"}
-     * collect_status : 2
-     * facebook_link : https://facebook.com
-     */
+
 
     private int id;
     private String name;
@@ -30,7 +15,7 @@ public class HotelDetailResponse {
     private String tel;
     private double grade;
     private int comment_counts;
-//    private PolicyBean policy;
+    public PolicyBean policy;
     private int collect_status;
     private String facebook_link;
     public String desc;
@@ -46,6 +31,11 @@ public class HotelDetailResponse {
      * 视频地址
      */
     public String video_image = "";
+
+    /**
+     * 酒店星级
+     */
+    public float star_level ;
 
     public int getId() {
         return id;
@@ -166,78 +156,15 @@ public class HotelDetailResponse {
          * check_out_time : 12:00::00
          */
 
-        private String children;
-        private String check_in_time = "";
-        private String check_out_time = "";
-        private String pet;
-        private String hint;
-        private String payment;
-        private String breadfast;
-        private String service_desc;
+        public String children = "";
+        public String check_in_time = "";
+        public String check_out_time = "";
+        public String pet;
+        public String hint;
+        public String payment;
+        public String breadfast;
+        public String service_desc;
 
-        public String getChildren() {
-            return children;
-        }
-
-        public void setChildren(String children) {
-            this.children = children;
-        }
-
-        public String getCheck_in_time() {
-            return check_in_time;
-        }
-
-        public void setCheck_in_time(String check_in_time) {
-            this.check_in_time = check_in_time;
-        }
-
-        public String getCheck_out_time() {
-            return check_out_time;
-        }
-
-        public void setCheck_out_time(String check_out_time) {
-            this.check_out_time = check_out_time;
-        }
-
-        public String getPet() {
-            return pet;
-        }
-
-        public void setPet(String pet) {
-            this.pet = pet;
-        }
-
-        public String getHint() {
-            return hint;
-        }
-
-        public void setHint(String hint) {
-            this.hint = hint;
-        }
-
-        public String getBreadfast() {
-            return breadfast;
-        }
-
-        public void setBreadfast(String breadfast) {
-            this.breadfast = breadfast;
-        }
-
-        public String getService_desc() {
-            return service_desc;
-        }
-
-        public void setService_desc(String service_desc) {
-            this.service_desc = service_desc;
-        }
-
-        public String getPayment() {
-            return payment;
-        }
-
-        public void setPayment(String payment) {
-            this.payment = payment;
-        }
     }
 
     public static class FacilitiesBean {

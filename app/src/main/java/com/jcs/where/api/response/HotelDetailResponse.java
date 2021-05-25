@@ -12,12 +12,19 @@ public class HotelDetailResponse {
     private String address;
     private double lat;
     private double lng;
-    private String tel;
+    public String tel;
     private double grade;
     private int comment_counts;
     public PolicyBean policy;
     private int collect_status;
+
+    /**
+     * IM聊天开启状态（1：开启，2：关闭
+     */
+    public int im_status;
     private String facebook_link;
+
+
     public String desc;
     private List<String> images;
     private List<FacilitiesBean> facilities;
@@ -36,6 +43,10 @@ public class HotelDetailResponse {
      * 酒店星级
      */
     public float star_level ;
+
+
+    public String uuid = "";
+    public String mer_name = "";
 
     public int getId() {
         return id;

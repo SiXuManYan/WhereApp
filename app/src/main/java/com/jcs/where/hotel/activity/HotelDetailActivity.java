@@ -3,7 +3,6 @@ package com.jcs.where.hotel.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -72,6 +70,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 页面-酒店详情页
@@ -119,6 +119,15 @@ public class HotelDetailActivity extends BaseActivity {
     private IndicatorView2 point_view;
     private DetailMediaAdapter mMediaAdapter;
     private RatingStarView star_view;
+    private ImageView phone_iv;
+    private TextView phone_tv;
+    private RelativeLayout rl_phone;
+    //
+
+    private String mer_name;
+    private String tel;
+    private int im_status;
+    private String uuid;
 
     public static void goTo(Context context, int id, JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate, int totalDay, String startYear, String endYear, int roomNumber) {
         Intent intent = new Intent(context, HotelDetailActivity.class);
@@ -162,6 +171,10 @@ public class HotelDetailActivity extends BaseActivity {
         mJcsCalendarDialog = new JcsCalendarDialog();
         mJcsCalendarDialog.initCalendar(this);
 
+        phone_iv = findViewById(R.id.phone_iv);
+        phone_tv = findViewById(R.id.phone_tv);
+        rl_phone = findViewById(R.id.rl_phone);
+
         desc_tv = findViewById(R.id.desc_tv);
         view_all_amenities_tv = findViewById(R.id.view_all_amenities_tv);
         view_all_desc_tv = findViewById(R.id.view_all_desc_tv);
@@ -190,32 +203,6 @@ public class HotelDetailActivity extends BaseActivity {
         checkInTv = findViewById(R.id.tv_checkin);
         checkOutTv = findViewById(R.id.tv_checkout);
         addressTv = findViewById(R.id.tv_address);
-        findViewById(R.id.rl_phone).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!checkPermission()) {
-                    return;
-                }
-                AlertDialog alertDialog2 = new AlertDialog.Builder(HotelDetailActivity.this)
-                        .setTitle(R.string.prompt)
-                        .setMessage(String.format(getString(R.string.ask_call_merchant_phone), phone))
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setPositiveButton(R.string.ensure, new DialogInterface.OnClickListener() {//添加"Yes"按钮
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                callPhone();
-                            }
-                        })
-
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加取消
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
-                        .create();
-                alertDialog2.show();
-            }
-        });
         mStartDateTv = findViewById(R.id.startDayTv);
         mStartWeekTv = findViewById(R.id.startWeekTv);
         mEndDateTv = findViewById(R.id.endDayTv);
@@ -429,6 +416,8 @@ public class HotelDetailActivity extends BaseActivity {
         showLoading();
         //获取酒店详情
         mModel.getHotelDetail(mHotelId, new BaseObserver<HotelDetailResponse>() {
+
+
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -507,18 +496,6 @@ public class HotelDetailActivity extends BaseActivity {
                 phone = data.getTel();
                 facilitiesAdapter.setNewInstance(data.getFacilities());
 
-
-                for (int i = 0; i < facilitiesAdapter.getData().size(); i++) {
-                    if (i > 5) {
-                        View view = facilitiesAdapter.getViewByPosition(i, R.id.facilities_rl);
-                        if (view != null) {
-                            view.setVisibility(View.GONE);
-                        }
-
-                    }
-                }
-
-
                 if (data.getCollect_status() == 1) {
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                 } else {
@@ -539,6 +516,22 @@ public class HotelDetailActivity extends BaseActivity {
                 } else {
                     desc_tv.setText(desc);
                 }
+
+
+                // im
+                im_status = data.im_status;
+                mer_name = data.mer_name;
+                tel = data.tel;
+                uuid = data.uuid;
+
+                if (im_status == 1) {
+                    phone_iv.setImageResource(R.mipmap.ic_chat);
+                    phone_tv.setText(R.string.chat);
+                } else {
+                    phone_iv.setImageResource(R.mipmap.ic_phone_blue);
+                    phone_tv.setText(R.string.telephone);
+                }
+
             }
         });
     }
@@ -577,6 +570,21 @@ public class HotelDetailActivity extends BaseActivity {
                 }
             }
         });
+
+        rl_phone.setOnClickListener(v -> {
+            if (im_status == 1) {
+                if (!TextUtils.isEmpty(uuid)) {
+                    RongIM.getInstance().startConversation(HotelDetailActivity.this, Conversation.ConversationType.PRIVATE, uuid, mer_name, null);
+                }
+            } else {
+                Uri data = Uri.parse("tel:" + phone);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(data);
+                startActivity(intent);
+            }
+
+        });
+
     }
 
     public void onDateSelected(JcsCalendarAdapter.CalendarBean startDate, JcsCalendarAdapter.CalendarBean endDate) {
@@ -660,12 +668,6 @@ public class HotelDetailActivity extends BaseActivity {
         return R.layout.activity_hotel_detail;
     }
 
-    public void callPhone() {
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        Uri data = Uri.parse("tel:" + phone);
-        intent.setData(data);
-        startActivity(intent);
-    }
 
     private void collection(boolean status) {
         showLoading();

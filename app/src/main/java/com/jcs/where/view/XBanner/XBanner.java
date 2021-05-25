@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.IntDef;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.jcs.where.R;
 
 import java.lang.annotation.Retention;
@@ -63,7 +64,7 @@ public class XBanner extends RelativeLayout {
     public int delayTime = 3000;
     public int titleTextSize = 16;
     public int sizeNumIndicator = 12;
-    public int indicatorMargin = 5;
+    public int indicatorMargin = 3;
     public int titleHeight = 100;
     public int titleMarginStart = 20;
     public int widthIndicatorCube = 40;
@@ -304,10 +305,13 @@ public class XBanner extends RelativeLayout {
      * @param index the index of the Image
      */
     private ImageView newIndicator(int index) {
+
         ImageView indicator = new ImageView(mContext);
         LinearLayout.LayoutParams params;
 
-        params = new LinearLayout.LayoutParams(mIndicatorWidth, mIndicatorHeight);
+        params = new LinearLayout.LayoutParams(SizeUtils.dp2px(mIndicatorWidth), SizeUtils.dp2px(mIndicatorHeight));
+
+
         if (mIndicatorSet) {
             indicator.setImageResource(index == 0 ? mIndicatorSelected : mIndicatorUnselected);
         } else if (mBannerType == CIRCLE_INDICATOR_TITLE || mBannerType == CIRCLE_INDICATOR) {
@@ -320,8 +324,8 @@ public class XBanner extends RelativeLayout {
             params.height = heightIndicatorCube;
             params.width = widthIndicatorCube;
         }
-        params.leftMargin = indicatorMargin;
-        params.rightMargin = indicatorMargin;
+        params.leftMargin = SizeUtils.dp2px(indicatorMargin);
+        params.rightMargin = SizeUtils.dp2px(indicatorMargin);
         indicator.setLayoutParams(params);
         return indicator;
     }
@@ -528,10 +532,8 @@ public class XBanner extends RelativeLayout {
         } else {
             applyIndicatorGravity();
             mIndicators.addAll(createIndicators());
-            //applyIndicatorGravity();
             for (int i = 0; i < mIndicators.size(); i++) {
-//                TODO 轮播图下面的 dot 视图
-//                mIndicatorContainer.addView(mIndicators.get(i));
+                mIndicatorContainer.addView(mIndicators.get(i));
             }
         }
 
@@ -795,7 +797,7 @@ public class XBanner extends RelativeLayout {
         }
     }
 
-    private void startPlayIfNeeded() {
+    public void startPlayIfNeeded() {
         if (mImageCount > 1 && mIsAutoPlay) {
             startPlay();
         }

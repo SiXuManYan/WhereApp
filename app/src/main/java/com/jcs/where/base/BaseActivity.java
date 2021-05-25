@@ -287,18 +287,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.attachBaseContext(LocalLanguageUtil.getInstance().setLocal(newBase));
     }
 
-    /**
-     * 获取屏幕宽度
-     *
-     * @return
-     */
-    public int getScreenWidth() {
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        //宽度 dm.widthPixels
-        //高度 dm.heightPixels
-        return dm.widthPixels;
-    }
+
 
 
     protected final void startActivity(@NotNull Class<?> target) {

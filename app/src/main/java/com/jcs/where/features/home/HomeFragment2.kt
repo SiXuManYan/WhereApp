@@ -356,7 +356,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         if (isViewCreated) {
             presenter.getMessageCount()
             startScroll()
-            top_banner.pause()
+            top_banner.startPlayIfNeeded()
         }
     }
 
@@ -453,6 +453,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
             override fun onBannerClick(item: Int) {
                 val data = response[item]
+
+
                 if (data.redirect_type == 0) {
                     return
                 }
@@ -492,10 +494,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 }
             }
 
-        })
+        }).start()
 
-
-        top_banner.start()
     }
 
     override fun bindPlateData(toMutableList: MutableList<ModulesResponse>) {

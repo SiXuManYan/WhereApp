@@ -28,12 +28,6 @@ public class ModulesCategoryAdapter2 extends BaseQuickAdapter<CategoryResponse, 
         ImageView modules_icon = holder.getView(R.id.modules_icon);
         TextView modules_name = holder.getView(R.id.modules_name);
 
-//        LinearLayout view = holder.getView(R.id.moduleLayout);
-//        ViewGroup.LayoutParams params = view.getLayoutParams();
-//        params.width = ScreenUtils.getScreenWidth() / 5 ;
-//        params.height = SizeUtils.dp2px(70);
-//        view.setLayoutParams(params);
-
 
         if (data.isNativeWebType) {
             modules_icon.setImageResource(R.mipmap.ic_tourism_sector);

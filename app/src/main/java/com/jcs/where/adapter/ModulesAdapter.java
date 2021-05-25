@@ -18,14 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHolder> {
 
-    private int mItemWidth = 0;
-    private int mItemHeight = 0;
 
-    public ModulesAdapter(int itemWidth, int height) {
-        super(R.layout.item_home_modules);
-        this.mItemWidth = itemWidth;
-        this.mItemHeight = height;
-    }
 
     public ModulesAdapter() {
         super(R.layout.item_home_modules);

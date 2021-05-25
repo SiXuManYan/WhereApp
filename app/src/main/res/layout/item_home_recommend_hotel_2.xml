@@ -125,7 +125,7 @@
                 android:includeFontPadding="false"
                 android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_12"
-                tools:text="3.4km" />
+                tools:text="@string/distance_format" />
 
             <View
                 android:layout_width="1dp"

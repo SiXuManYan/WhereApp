@@ -141,7 +141,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
         mModuleRecycler = view.findViewById(R.id.moduleRecycler);
         int recyclerWidth = getScreenWidth() - getPxFromDp(30);
-        mModulesAdapter = new ModulesAdapter(recyclerWidth / 5, getPxFromDp(70));
+        mModulesAdapter = new ModulesAdapter();
         mModuleRecycler.addItemDecoration(new HomeModulesItemDecoration());
         mModuleRecycler.setLayoutManager(new GridLayoutManager(getContext(), 5, RecyclerView.VERTICAL, false));
         mModuleRecycler.setAdapter(mModulesAdapter);

@@ -15,14 +15,14 @@
 
     <TextView
         android:id="@+id/modules_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5"
         android:ellipsize="end"
         android:gravity="center"
-        android:maxLines="2"
+        android:singleLine="true"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/sp_13"
-        tools:text="@string/tourism_management" />
+        tools:text="asdsdadasdasdasdas" />
 
 </LinearLayout>

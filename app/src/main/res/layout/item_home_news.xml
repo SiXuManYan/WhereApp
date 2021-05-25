@@ -23,18 +23,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:lineSpacingMultiplier="1.2"
+        android:includeFontPadding="false"
+        android:lineSpacingMultiplier="1.1"
         android:maxLines="2"
-        android:minHeight="@dimen/dp_33"
+        android:minHeight="@dimen/dp_45"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/sp_16"
-        tools:text="Bataan,planong bur C" />
+        tools:text="Bataataan,planonur CBataasdsaar C" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_9">
+        android:layout_marginTop="@dimen/dp_5">
 
 
         <TextView

@@ -12,7 +12,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,19 +19,14 @@ import java.util.List;
  * date   : 2021/1/6-23:45
  */
 public class NewsFragmentAdapter extends BaseMultiItemQuickAdapter<NewsResponse, BaseViewHolder> implements LoadMoreModule {
-    private List<Integer> mImageResIds;
 
     public NewsFragmentAdapter() {
-        // 绑定 layout 对应的 type
+
         addItemType(NewsType.TEXT, R.layout.item_news_normal_text);
         addItemType(NewsType.SINGLE_IMAGE, R.layout.item_news_single_image);
         addItemType(NewsType.THREE_IMAGE, R.layout.item_news_three_image);
         addItemType(NewsType.VIDEO, R.layout.item_news_video);
 
-        mImageResIds = new ArrayList<>();
-        mImageResIds.add(R.id.newsIconFirstIv);
-        mImageResIds.add(R.id.newsIconSecondIv);
-        mImageResIds.add(R.id.newsIconThirdIv);
     }
 
     @Override
@@ -62,14 +56,29 @@ public class NewsFragmentAdapter extends BaseMultiItemQuickAdapter<NewsResponse,
                     baseViewHolder.setText(R.id.newsVideoDurationTv, newsResponse.getVideoTime());
                 }
                 break;
+            default:
+                break;
         }
     }
 
-    public void dealThreeImages(List<String> images, BaseViewHolder baseViewHolder) {
+    public void dealThreeImages(List<String> images, BaseViewHolder holder) {
+
+        RoundedImageView first = holder.getView(R.id.newsIconFirstIv);
+        RoundedImageView second = holder.getView(R.id.newsIconSecondIv);
+        RoundedImageView third = holder.getView(R.id.newsIconThirdIv);
+
         int size = images.size();
+
         for (int i = 0; i < size; i++) {
-            RoundedImageView riv = baseViewHolder.findView(mImageResIds.get(i));
-            GlideUtil.load(getContext(), images.get(i), riv);
+            if (i == 0) {
+                GlideUtil.load(getContext(), images.get(i), first);
+            }
+            if (i == 1) {
+                GlideUtil.load(getContext(), images.get(i), second);
+            }
+            if (i == 2) {
+                GlideUtil.load(getContext(), images.get(i), third);
+            }
         }
     }
 }

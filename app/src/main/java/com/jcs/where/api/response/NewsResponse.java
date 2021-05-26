@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.jcs.where.news.view_type.NewsType;
 import com.jcs.where.search.bean.ISearchResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public class NewsResponse implements MultiItemEntity, ISearchResponse {
     @SerializedName("created_at")
     private String createdAt;
     @SerializedName("cover_images")
-    private List<String> coverImages;
+    private List<String> coverImages = new ArrayList<>();
 
     public Integer getId() {
         return id;

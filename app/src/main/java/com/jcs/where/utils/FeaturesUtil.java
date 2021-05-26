@@ -457,27 +457,27 @@ public class FeaturesUtil {
                 text = StringUtils.getString(R.string.mine_booked);
                 break;
             case 4:
-            // 已取消
+                // 已取消
                 text = StringUtils.getString(R.string.cancelled);
                 break;
             case 5:
-             // 已完成
+                // 已完成
                 text = StringUtils.getString(R.string.completed);
                 break;
             case 6:
-            // 支付失败
+                // 支付失败
                 text = StringUtils.getString(R.string.payment_failed);
                 break;
             case 7:
-              // 退款中
+                // 退款中
                 text = StringUtils.getString(R.string.refunding);
                 break;
             case 8:
-              // 已退款
+                // 已退款
                 text = StringUtils.getString(R.string.refunded);
                 break;
             case 9:
-              // 退款失败
+                // 退款失败
                 text = StringUtils.getString(R.string.refund_failed);
                 break;
             case 10:
@@ -490,11 +490,11 @@ public class FeaturesUtil {
         textView.setText(text);
     }
 
-    public static float getSafeStarLevel(String levelStr){
+    public static float getSafeStarLevel(String levelStr) {
         float level = 0f;
         if (!TextUtils.isEmpty(levelStr)) {
             try {
-                level =   Float.parseFloat(levelStr) ;
+                level = Float.parseFloat(levelStr);
             } catch (NumberFormatException ignored) {
             }
         }

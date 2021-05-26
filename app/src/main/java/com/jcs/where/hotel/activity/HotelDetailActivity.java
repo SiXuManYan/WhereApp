@@ -43,7 +43,6 @@ import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.bean.RoomListBean;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.frams.common.Html5Url;
@@ -789,33 +788,33 @@ public class HotelDetailActivity extends BaseActivity {
             surplus_tv.setText(getString(R.string.surplus_format, data.remain_room_num));
 
             RoundedImageView photoIv = holder.getView(R.id.iv_photo);
-            if (!TextUtils.isEmpty(data.getImages().get(0))) {
-                GlideUtil.load(getContext(), data.getImages().get(0), photoIv);
+            if (!TextUtils.isEmpty(data.images.get(0))) {
+                GlideUtil.load(getContext(), data.images.get(0), photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }
             TextView nameTv = holder.getView(R.id.tv_name);
 
-            nameTv.setText(data.getName());
+            nameTv.setText(data.name);
             TextView typeTv = holder.getView(R.id.tv_hotelType);
             String breakfast = null;
-            if (data.getBreakfast_type() == 1) {
+            if (data.breakfast_type == 1) {
                 breakfast = getString(R.string.with_breakfast);
             } else {
                 breakfast = getString(R.string.no_breakfast);
             }
-            String typeText = data.getHotel_room_type() + "  " + breakfast + "  ";
+            String typeText = data.hotel_room_type + "  " + breakfast + "  ";
             typeTv.setText(typeText);
 
             SpannableString m2 = new SpannableString("m2");
             m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
             m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(data.getRoom_area());
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(data.room_area);
             spannableStringBuilder.append(m2);
             TextView roomAreaTv = holder.getView(R.id.tv_roomarea);
             roomAreaTv.setText(spannableStringBuilder);
             TextView priceTv = holder.getView(R.id.tv_price);
-            priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), data.getPrice()));
+            priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), data.price));
             RecyclerView tagRv = holder.getView(R.id.rv_tag);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                     LinearLayoutManager.HORIZONTAL, false) {
@@ -825,12 +824,19 @@ public class HotelDetailActivity extends BaseActivity {
                 }
             };
             tagAdapter = new TagAdapter();
+
+
             tagRv.setLayoutManager(linearLayoutManager);
-//            tagAdapter.addData(data.getTags());
-//            tagRv.setAdapter(tagAdapter);
+
+            tagAdapter.addData(data.tags);
+
+
+            tagRv.setAdapter(tagAdapter);
+
+
             TextView subscribeTv = holder.getView(R.id.tv_subscribe);
             LinearLayout tagLl = holder.getView(R.id.ll_tag);
-            if (data.getRemain_room_num() == 0) {
+            if (data.remain_room_num == 0) {
                 subscribeTv.setText(R.string.full);
                 subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_noroom));
                 subscribeTv.setTextColor(getResources().getColor(R.color.grey_999999));
@@ -847,7 +853,7 @@ public class HotelDetailActivity extends BaseActivity {
                 tagLl.setVisibility(View.VISIBLE);
                 priceTv.setTextColor(getResources().getColor(R.color.orange_FF5B1B));
                 holder.getView(R.id.rl_room).setOnClickListener(view ->
-                        initRoomDetail(data.getId(), data.getBreakfast_type())
+                        initRoomDetail(data.id, data.breakfast_type)
                 );
             }
 
@@ -855,16 +861,17 @@ public class HotelDetailActivity extends BaseActivity {
         }
     }
 
-    private static class TagAdapter extends BaseQuickAdapter<RoomListBean.TagsBean, BaseViewHolder> {
+
+    private static class TagAdapter extends BaseQuickAdapter<HotelRoomListResponse.TagsBean, BaseViewHolder> {
 
         public TagAdapter() {
             super(R.layout.item_roomtag);
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder baseViewHolder, RoomListBean.TagsBean tagsBean) {
+        protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelRoomListResponse.TagsBean tagsBean) {
             TextView tagTv = baseViewHolder.getView(R.id.tv_tag);
-            tagTv.setText(tagsBean.getZh_cn_name());
+            tagTv.setText(tagsBean.zh_cn_name);
         }
     }
 

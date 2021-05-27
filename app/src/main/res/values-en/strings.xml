@@ -671,6 +671,10 @@
     <string name="splash_content_1">Focus on selected hot</string>
     <string name="splash_content_2">Smart recommendation for attractions and hotels</string>
     <string name="login_title_password">Sign in with password</string>
+    <string name="comment">Comment</string>
+    <string name="picture">Picture</string>
+    <string name="high_option">High option</string>
+    <string name="bad_reviews">Bad reviews</string>
 
 
 </resources>

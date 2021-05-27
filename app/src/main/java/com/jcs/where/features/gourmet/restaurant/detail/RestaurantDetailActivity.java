@@ -23,7 +23,8 @@ import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
-import com.jcs.where.features.gourmet.comment.RestaurantCommentAdapter;
+import com.jcs.where.features.gourmet.comment.FoodCommentActivity;
+import com.jcs.where.features.gourmet.comment.FoodCommentAdapter;
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter;
@@ -51,7 +52,6 @@ import static com.jcs.where.utils.Constant.PARAM_ID;
 public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPresenter> implements RestaurantDetailView {
 
 
-    private ImageView image_iv;
     private TextView name_tv;
     private TextView score_tv;
     private RatingStarView star_view;
@@ -70,7 +70,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     private RecyclerView comment_rv;
     private IndicatorView2 point_view;
     private DetailMediaAdapter mMediaAdapter;
-    private RestaurantCommentAdapter mCommentAdapter;
+    private FoodCommentAdapter mCommentAdapter;
 
     /**
      * 餐厅id
@@ -109,7 +109,6 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     @Override
     protected void initView() {
 
-        image_iv = findViewById(R.id.image_iv);
         name_tv = findViewById(R.id.name_tv);
         score_tv = findViewById(R.id.score_tv);
         star_view = findViewById(R.id.star_view);
@@ -187,7 +186,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
     private void initComment() {
 
-        mCommentAdapter = new RestaurantCommentAdapter();
+        mCommentAdapter = new FoodCommentAdapter();
         LinearLayoutManager manager = new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
@@ -285,6 +284,12 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             if (!TextUtils.isEmpty(mMerUuid)) {
                 RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mMerUuid, mRestaurantName, null);
             }
+        });
+
+        findViewById(R.id.more_comment_tv).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(PARAM_ID, mRestaurantId);
+            startActivity(FoodCommentActivity.class, bundle);
         });
     }
 

@@ -14,7 +14,8 @@ import com.jcs.where.api.response.gourmet.comment.CommentResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.gourmet.comment.RestaurantCommentAdapter
+import com.jcs.where.features.gourmet.comment.FoodCommentActivity
+import com.jcs.where.features.gourmet.comment.FoodCommentAdapter
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.Constant
@@ -50,7 +51,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     private lateinit var mDishAdapter: TakeawayAdapter
     private lateinit var mCartAdapter: TakeawayAdapter
-    private lateinit var mCommentAdapter: RestaurantCommentAdapter
+    private lateinit var mCommentAdapter: FoodCommentAdapter
 
 
     /** 是否收藏 */
@@ -104,7 +105,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
 
         // 评论列表
-        mCommentAdapter = RestaurantCommentAdapter()
+        mCommentAdapter = FoodCommentAdapter()
 
 
         comment_rv.apply {
@@ -275,6 +276,12 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             })
         }
 
+        more_comment_tv.setOnClickListener {
+
+            startActivity(FoodCommentActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_ID, restaurant_id)
+            })
+        }
     }
 
     override fun bindData(data: TakeawayDetailResponse) {

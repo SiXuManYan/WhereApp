@@ -673,5 +673,9 @@
     <string name="splash_content_1">关注实时热点</string>
     <string name="splash_content_2">智能推荐景点和酒店</string>
     <string name="login_title_password">密码登录</string>
+    <string name="comment">评论</string>
+    <string name="picture">有图</string>
+    <string name="high_option">好评</string>
+    <string name="bad_reviews">差评</string>
 
 </resources>

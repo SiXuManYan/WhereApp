@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.comment.CommentResponse
@@ -19,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView
  * Created by Wangsw  2021/5/27 10:38.
  * 餐厅评论列表
  */
-class RestaurantCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.layout.item_comment) {
+class FoodCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.layout.item_comment), LoadMoreModule {
 
 
     override fun convert(holder: BaseViewHolder, item: CommentResponse) {

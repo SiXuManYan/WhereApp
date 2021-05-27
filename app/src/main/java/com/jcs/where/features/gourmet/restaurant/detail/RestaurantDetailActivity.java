@@ -17,23 +17,19 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
 import com.jcs.where.api.response.gourmet.comment.CommentResponse;
 import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
+import com.jcs.where.features.gourmet.comment.RestaurantCommentAdapter;
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
 import com.jcs.where.frams.common.Html5Url;
-import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter;
 import com.jcs.where.hotel.activity.detail.MediaData;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.MobUtil;
-import com.jcs.where.utils.image.GlideRoundedCornersTransform;
-import com.jcs.where.view.CommentView;
 import com.jcs.where.view.DishView;
 import com.jcs.where.widget.pager.IndicatorView2;
 import com.jcs.where.widget.ratingstar.RatingStarView;
@@ -66,14 +62,15 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     private TextView time_tv;
     private TextView support_takeaway_tv;
     private DishView dish_view;
-    private CommentView comment_view;
     private ImageView shopping_cart, navigation_iv, chat_iv, tel_iv;
     private View dish_split_v;
     private ViewSwitcher contact_sw;
 
     private RecyclerView media_rv;
+    private RecyclerView comment_rv;
     private IndicatorView2 point_view;
     private DetailMediaAdapter mMediaAdapter;
+    private RestaurantCommentAdapter mCommentAdapter;
 
     /**
      * 餐厅id
@@ -123,7 +120,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         time_tv = findViewById(R.id.time_tv);
         support_takeaway_tv = findViewById(R.id.support_takeaway_tv);
         dish_view = findViewById(R.id.dish_view);
-        comment_view = findViewById(R.id.comment_view);
+        comment_rv = findViewById(R.id.comment_rv);
         shopping_cart = findViewById(R.id.shopping_cart);
         navigation_iv = findViewById(R.id.navigation_iv);
         chat_iv = findViewById(R.id.chat_iv);
@@ -131,8 +128,10 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         dish_split_v = findViewById(R.id.dish_split_v);
         contact_sw = findViewById(R.id.contact_sw);
         initMedia();
+        initComment();
 
     }
+
 
     private void initMedia() {
         mMediaAdapter = new DetailMediaAdapter();
@@ -182,6 +181,23 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             }
 
         });
+
+    }
+
+
+    private void initComment() {
+
+        mCommentAdapter = new RestaurantCommentAdapter();
+        LinearLayoutManager manager = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        comment_rv.setLayoutManager(manager);
+        comment_rv.setAdapter(mCommentAdapter);
+        comment_rv.setNestedScrollingEnabled(true);
+
 
     }
 
@@ -340,8 +356,13 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
     @Override
     public void bindCommentData(List<CommentResponse> data) {
-        comment_view.setData(data);
-        comment_view.setVisibility(View.VISIBLE);
+        mCommentAdapter.setNewInstance(null);
+        for (int i = 0; i < data.size(); i++) {
+            if (i <= 1) {
+                mCommentAdapter.addData(data.get(i));
+            }
+        }
+
     }
 
     private void onShoppingCartClick(View view) {

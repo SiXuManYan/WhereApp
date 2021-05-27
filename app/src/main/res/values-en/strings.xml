@@ -146,7 +146,7 @@
     <string name="show_create_time">Create time%1$s</string>
     <string name="nickname_change_success">Nickname modification success</string>
     <string name="avatar_change_success">Avatar revision success</string>
-    <string name="mine_change_language">language</string>
+    <string name="mine_change_language">Language</string>
     <string name="mine_merchant_settled">Merchant</string>
     <string name="mine_invite">invite</string>
     <string name="mine_gift">gift</string>
@@ -187,7 +187,7 @@
     <string name="main_tab_title_order">Order</string>
     <string name="main_tab_title_mine">Me</string>
     <string name="to_login">Sign In</string>
-    <string name="mine_about_us">about us</string>
+    <string name="mine_about_us">About us</string>
     <string name="cancel_order">Cancel</string>
     <string name="book_again">Book again</string>
     <string name="to_use">To use</string>
@@ -255,8 +255,8 @@
     <string name="commit_again">Commit again</string>
     <string name="request_error">Request error %1$d</string>
     <string name="news_followed">Followed</string>
-    <string name="search_news_keyword">Search news by keywords</string>
-    <string name="search_keyword">Search by keywords</string>
+    <string name="search_news_keyword">Search news by keyword</string>
+    <string name="search_keyword">Search by keyword</string>
 
     <string name="day_1">1st</string>
     <string name="day_2">2ed</string>
@@ -292,7 +292,7 @@
     <string name="news_more_recommend">More recommend</string>
     <string name="mine_customer_service">Service</string>
     <string name="title_setting">Settings</string>
-    <string name="sign_out">Sign out</string>
+    <string name="sign_out">Sign Out</string>
     <string name="personal_information">My Account</string>
     <string name="modify_information">Edit</string>
     <string name="login_password">Login password</string>
@@ -357,7 +357,7 @@
     <string name="about_app_title">About Where</string>
     <string name="version_format">Version&#160;%1$s</string>
     <string name="clear_success">Clear success</string>
-    <string name="personal_info">Personal info</string>
+    <string name="personal_info">My Profile</string>
     <string name="avatar">Profile Photo</string>
     <string name="empty_nick_name_hint">nickname is empty</string>
     <string name="old_password">Old password</string>
@@ -444,7 +444,7 @@
     <string name="no">No</string>
     <string name="image_message">Image Message</string>
     <string name="voice_message">Voice Message</string>
-    <string name="search_all_hint">Search title or keywords</string>
+    <string name="search_all_hint">Search title or keyword</string>
     <string name="settled_type_title">Type of settlement</string>
     <string name="stay_info">Check in information</string>
     <string name="merchant_verify_success_step2">Approved</string>
@@ -491,7 +491,7 @@
     <string name="password_not_same_hint">Please enter the same password twice</string>
     <string name="travel_recommend">Popular</string>
     <string name="tourism_management">Tourism sector</string>
-    <string name="shipping_address">Shipping address</string>
+    <string name="shipping_address">Shipping Address</string>
     <string name="shipping_address_edit">Shipping address：</string>
     <string name="add">Add</string>
     <string name="delete">Delete</string>
@@ -538,10 +538,10 @@
 3. In order to help you call complaints or other consultation hotlines in the APP, we may apply for the call permission. This permission does not collect private information and is only used when you use the aforementioned functions.\n\n</string>
     <string name="use_agreement_content_5">4. In order to realize the third-party login and information sharing functions, we are using the third-party MobTech [ShareSdk] product. For the privacy policy terms of this product, please refer to:</string>
     <string name="use_agreement_content_6">https://www.mob.com/about/policy。\n\n</string>
-    <string name="use_agreement_content_8" >5. In order to better help you solve the problems that may occur during use, we use a third-party Comm100 [Comm100 Live Chat] product. For the privacy policy of this product, please refer to:</string>
-    <string name="use_agreement_content_9" >https://www.comm100.com/platform/security \n\n</string>
-    <string name="use_agreement_content_10" >6. In order to realize the push function, we have introduced the [JPush] product of the third-party Jiguang SDK. For the privacy policy of this product, please refer to:</string>
-    <string name="use_agreement_content_11" >https://www.jiguang.cn/license/privacy \n\n</string>
+    <string name="use_agreement_content_8">5. In order to better help you solve the problems that may occur during use, we use a third-party Comm100 [Comm100 Live Chat] product. For the privacy policy of this product, please refer to:</string>
+    <string name="use_agreement_content_9">https://www.comm100.com/platform/security \n\n</string>
+    <string name="use_agreement_content_10">6. In order to realize the push function, we have introduced the [JPush] product of the third-party Jiguang SDK. For the privacy policy of this product, please refer to:</string>
+    <string name="use_agreement_content_11">https://www.jiguang.cn/license/privacy \n\n</string>
 
 
     <string name="use_agreement_content_7">7. The above permissions and sensitive permissions such as cameras, GPS, cameras, albums, microphones, storage space, etc. will not be enabled by default or forcibly to collect information. Only express authorization will be used for the realization of functions or services. You can refuse and Does not affect your continued use of Where.</string>

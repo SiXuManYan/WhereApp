@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:visibility="gone"
-    tools:visibility="visible"
+    tools:visibility="gone"
     tools:showIn="@layout/activity_take_away">
 
 

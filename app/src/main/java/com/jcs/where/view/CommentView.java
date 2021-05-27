@@ -79,6 +79,7 @@ public class CommentView extends LinearLayout {
             TextView commentTimeTv = view.findViewById(R.id.comment_time_tv);
             TextView contentTv = view.findViewById(R.id.content_tv);
             LinearLayout imageContainerLl = view.findViewById(R.id.image_container_ll);
+
             GlideUtil.load(getContext(), data.avatar, avatarCiv);
             nameTv.setText(data.username);
             starRs.setRating(data.star);

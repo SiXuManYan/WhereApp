@@ -1,7 +1,6 @@
 package com.jcs.where.features.gourmet.restaurant.detail;
 
 import com.google.gson.JsonElement;
-import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
@@ -12,8 +11,6 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.utils.Constant;
 
 import java.util.List;
-
-import retrofit2.http.PUT;
 
 /**
  * Created by Wangsw  2021/4/1 10:28.
@@ -51,7 +48,7 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
             @Override
             protected void onSuccess(PageResponse<DishResponse> response) {
                 List<DishResponse> data = response.getData();
-                if (data!=null && !data.isEmpty()) {
+                if (data != null && !data.isEmpty()) {
                     view.bindDishData(data);
                 }
 
@@ -64,18 +61,18 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
      * 菜品列表
      */
     public void getCommentList(String restaurantId) {
-        requestApi(mRetrofit.getCommentList(1,0,restaurantId), new BaseMvpObserver<PageResponse<CommentResponse>>(view) {
+        requestApi(mRetrofit.getCommentList(1, 0, restaurantId), new BaseMvpObserver<PageResponse<CommentResponse>>(view) {
             @Override
             protected void onSuccess(PageResponse<CommentResponse> response) {
                 List<CommentResponse> data = response.getData();
-                if (data!=null && !data.isEmpty()) {
+                if (data != null && !data.isEmpty()) {
                     view.bindCommentData(data);
                 }
             }
         });
     }
 
-    public void collection(String restaurantId){
+    public void collection(String restaurantId) {
 
         CollectionRestaurantRequest request = new CollectionRestaurantRequest();
         request.restaurant_id = restaurantId;
@@ -90,7 +87,7 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
     }
 
 
-    public void unCollection(String restaurantId){
+    public void unCollection(String restaurantId) {
 
         CollectionRestaurantRequest request = new CollectionRestaurantRequest();
         request.restaurant_id = restaurantId;

@@ -58,7 +58,7 @@ public class RestaurantDetailPresenter extends BaseMvpPresenter {
     }
 
     /**
-     * 菜品列表
+     * 评论列表
      */
     public void getCommentList(String restaurantId) {
         requestApi(mRetrofit.getCommentList(1, 0, restaurantId), new BaseMvpObserver<PageResponse<CommentResponse>>(view) {

@@ -5,6 +5,7 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.request.CollectionRestaurantRequest
 import com.jcs.where.api.response.PageResponse
+import com.jcs.where.api.response.gourmet.comment.CommentResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.utils.BigDecimalUtil
@@ -113,6 +114,20 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
 
         })
 
+    }
+
+    /**
+     * 评论列表
+     */
+    fun getCommentList(restaurantId: String) {
+        requestApi(mRetrofit.getCommentList(1, 0, restaurantId), object : BaseMvpObserver<PageResponse<CommentResponse>>(view) {
+            override fun onSuccess(response: PageResponse<CommentResponse>) {
+                val data = response.data
+                if (!data.isNullOrEmpty()) {
+                    view.bindCommentData(data)
+                }
+            }
+        })
     }
 
 

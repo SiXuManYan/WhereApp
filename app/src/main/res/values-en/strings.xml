@@ -601,7 +601,7 @@
     <string name="delivery_price_format">Delivery Price %1$s</string>
     <string name="to_settle">To Settle</string>
     <string name="packaging_fee">Packaging Fee</string>
-    <string name="clear_shopping_cart">clear Shopping Cart</string>
+    <string name="clear_shopping_cart">Clear Shopping Cart</string>
     <string name="choose_shipping_address">Choose Shipping Address</string>
     <string name="send_out_now">Send Out Now</string>
     <string name="delivery_fee">Delivery Fee</string>

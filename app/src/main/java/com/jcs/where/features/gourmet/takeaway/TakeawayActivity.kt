@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.comment.CommentResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.gourmet.comment.RestaurantCommentAdapter
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.Constant
@@ -48,6 +50,8 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     private lateinit var mDishAdapter: TakeawayAdapter
     private lateinit var mCartAdapter: TakeawayAdapter
+    private lateinit var mCommentAdapter: RestaurantCommentAdapter
+
 
     /** 是否收藏 */
     private var collect_status = 1
@@ -78,6 +82,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     private fun initRecyclerView() {
 
 
+        // 菜品列表
         mDishAdapter = TakeawayAdapter().apply {
             setEmptyView(EmptyView(this@TakeawayActivity).apply {
                 showEmptyDefault()
@@ -85,8 +90,6 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             onSelectCountChange = this@TakeawayActivity
         }
 
-
-        // 菜品列表
         dish_rv.apply {
             isNestedScrollingEnabled = true
             layoutManager = object : LinearLayoutManager(this@TakeawayActivity, VERTICAL, false) {
@@ -101,6 +104,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
 
         // 评论列表
+        mCommentAdapter = RestaurantCommentAdapter()
+
+
         comment_rv.apply {
             isNestedScrollingEnabled = true
             layoutManager = object : LinearLayoutManager(this@TakeawayActivity, VERTICAL, false) {
@@ -108,7 +114,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                     return false
                 }
             }
-            addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(10f), 0, 0).apply { setDrawHeaderFooter(true) })
+            adapter = mCommentAdapter
         }
 
         // 购物车列表
@@ -196,6 +202,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         presenter = TakeawayPresenter(this)
         presenter.getDetailData(restaurant_id)
         presenter.getDishList(restaurant_id)
+        presenter.getCommentList(restaurant_id)
     }
 
     override fun bindListener() {
@@ -341,5 +348,14 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     override fun unCollectionSuccess() {
         collect_status = 1
         setLikeImage()
+    }
+
+    override fun bindCommentData(data: List<CommentResponse>) {
+        mCommentAdapter.setNewInstance(null)
+        for (i in data.indices) {
+            if (i <= 1) {
+                mCommentAdapter.addData(data[i])
+            }
+        }
     }
 }

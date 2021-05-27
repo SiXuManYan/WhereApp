@@ -302,11 +302,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:layout_toStartOf="@+id/arrow_iv"
+                    android:ellipsize="end"
                     android:text="@string/more_evaluation"
                     android:textColor="@color/grey_666666"
                     android:textSize="@dimen/sp_12" />
+
+                <ImageView
+                    android:id="@+id/arrow_iv"
+                    android:layout_width="@dimen/dp_4"
+                    android:layout_height="@dimen/dp_6"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_arrow_gray" />
 
             </RelativeLayout>
 

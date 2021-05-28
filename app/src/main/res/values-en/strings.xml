@@ -505,8 +505,8 @@
     <string name="edit_address">Edit address</string>
     <string name="add_address">Add address</string>
     <string name="confirm_delete_address">Confirm delete address？</string>
-    <string name="take_away_support">Take away &#160;&#62;</string>
-    <string name="take_away_support2">Take away &#160;&#62;</string>
+    <string name="take_away_support">Support Takeaway&#160;&#62;</string>
+    <string name="take_away_support2">Takeaway &#160;&#62;</string>
     <string name="per_price_format">₱%1$s/Person</string>
     <string name="filter_city">All City</string>
     <string name="filter_food">All Food</string>

@@ -1,9 +1,12 @@
 package com.jcs.where.features.gourmet.restaurant.list.filter.area;
 
+import com.blankj.utilcode.util.StringUtils;
+import com.jcs.where.R;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.area.AreaResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,9 +25,14 @@ public class AreaFilterPresenter extends BaseMvpPresenter {
         requestApi(mRetrofit.getAreasList(), new BaseMvpObserver<List<AreaResponse>>(view) {
             @Override
             protected void onSuccess(List<AreaResponse> response) {
-                if (response != null && !response.isEmpty()) {
-                    view.bindList(response);
-                }
+                // 添加默认的区域
+                AreaResponse area = new AreaResponse();
+                area.id = null;
+                area.name = StringUtils.getString(R.string.filter_city);
+                area.nativeIsSelected = true;
+                ArrayList<AreaResponse> list = new ArrayList<>(response);
+                list.add(0, area);
+                view.bindList(list);
             }
         });
 

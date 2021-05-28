@@ -193,7 +193,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                     }
                     8 -> startActivity(PayBillsActivity::class.java)
                     9 -> {
-
                         startActivity(RestaurantListActivity::class.java, Bundle().apply {
                             putInt(Constant.PARAM_PID, 89)
                             putString(Constant.PARAM_PID_NAME, getString(R.string.filter_food))

@@ -32,14 +32,20 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
                 initVideo(holder, item)
             }
             MediaData.IMAGE -> {
-                initImage(holder,item)
+                initImage(holder, item)
             }
         }
 
     }
 
     private fun initImage(holder: BaseViewHolder, item: MediaData) {
+//        val options = RequestOptions.bitmapTransform(
+//                GlideRoundedCornersTransform(8, GlideRoundedCornersTransform.CornerType.LEFT))
+//                .error(R.mipmap.ic_empty_gray)
+//                .placeholder(R.mipmap.ic_empty_gray)
+//
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
+
         Glide.with(context).load(item.cover).into(image_iv)
     }
 
@@ -63,7 +69,12 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
         video_gsy.isAutoFullWithSize = false
         video_gsy.isReleaseWhenLossAudio = false
 
-
+        // 增加圆角
+//        video_gsy.outlineProvider = object : ViewOutlineProvider() {
+//            override fun getOutline(view: View, outline: Outline) {
+//                outline.setRoundRect(0, 0, view.width, view.height, 8f)
+//            }
+//        }
 
 
     }

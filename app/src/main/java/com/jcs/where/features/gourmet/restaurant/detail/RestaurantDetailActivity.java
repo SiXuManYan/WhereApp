@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Outline;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewOutlineProvider;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
 import com.jcs.where.api.response.gourmet.comment.CommentResponse;
@@ -65,6 +69,7 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
     private ImageView shopping_cart, navigation_iv, chat_iv, tel_iv;
     private View dish_split_v;
     private ViewSwitcher contact_sw;
+    private FrameLayout media_fl;
 
     private RecyclerView media_rv;
     private RecyclerView comment_rv;
@@ -126,6 +131,8 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
         tel_iv = findViewById(R.id.tel_iv);
         dish_split_v = findViewById(R.id.dish_split_v);
         contact_sw = findViewById(R.id.contact_sw);
+        media_fl = findViewById(R.id.media_fl);
+
         initMedia();
         initComment();
 
@@ -181,6 +188,13 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
 
         });
 
+        media_fl.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), SizeUtils.dp2px(8f));
+            }
+        });
+        media_fl.setClipToOutline(true);
     }
 
 

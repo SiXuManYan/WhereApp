@@ -76,6 +76,7 @@ import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
+import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
@@ -1094,10 +1095,10 @@ public interface RetrofitApi {
     /**
      * 美食地图商品列表
      *
-     * @param search_input    搜索内容
-     * @param lat             纬度
-     * @param lng             经度
-     * @param category_id     分类ID
+     * @param search_input 搜索内容
+     * @param lat          纬度
+     * @param lng          经度
+     * @param category_id  分类ID
      */
     @GET("restaurantapi/v2/map/restaurants")
     Observable<JcsResponse<ArrayList<RestaurantResponse>>> getRestaurantMapList(
@@ -1105,5 +1106,18 @@ public interface RetrofitApi {
             @Query("lat") @Nullable String lat,
             @Query("lng") @Nullable String lng,
             @Query("category_id") @Nullable String category_id);
+
+    /**
+     * 商城推荐
+     */
+    @GET("generalapi/v2/estore/recommends")
+    Observable<JcsResponse<ArrayList<StoreRecommend>>> getStoreRecommends();
+
+    /**
+     * 商城一级分类
+     */
+    @GET("generalapi/v2/categories/first")
+    Observable<JcsResponse<ArrayList<Category>>> getStoreCategoryFirst();
+
 
 }

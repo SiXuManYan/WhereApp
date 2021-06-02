@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
+import com.jcs.where.utils.image.GlideRoundedCornersTransform;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -15,17 +16,31 @@ import java.text.DecimalFormat;
  * create by zyf on 2021/1/14 11:25 下午
  */
 public class GlideUtil {
-   private static RequestOptions options = new RequestOptions()
+    private static RequestOptions options = new RequestOptions()
             .placeholder(R.mipmap.ic_glide_default)//图片加载出来前，显示的图片
             .fallback(R.mipmap.ic_glide_default) //url为空的时候,显示的图片
             .error(R.mipmap.ic_glide_default);
 
+
     public static void load(Context context, String iconUrl, ImageView target) {
         Glide.with(context).load(iconUrl).apply(options).into(target);
     }
+
     public static void loadGif(Context context, String iconUrl, ImageView target) {
         Glide.with(context).asGif().load(iconUrl).apply(options).into(target);
     }
+
+
+    public static void load(Context context, String url, ImageView imageView, int radius, GlideRoundedCornersTransform.CornerType cornerType) {
+
+        RequestOptions options = RequestOptions.bitmapTransform(new GlideRoundedCornersTransform(radius, cornerType))
+                .error(R.mipmap.ic_empty_gray)
+                .fallback(R.mipmap.ic_glide_default)
+                .placeholder(R.mipmap.ic_empty_gray);
+
+        Glide.with(context).load(url).apply(options).into(imageView);
+    }
+
 
     public static long getDirSize(File dir) {
         if (dir == null) {
@@ -72,19 +87,19 @@ public class GlideUtil {
     /**
      * 清理图片磁盘缓存
      */
-    public static void clearImageDiskCache(final Context context){
-        try{
-            if(Looper.myLooper() == Looper.getMainLooper()){
+    public static void clearImageDiskCache(final Context context) {
+        try {
+            if (Looper.myLooper() == Looper.getMainLooper()) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Glide.get(context).clearDiskCache();
                     }
                 }).start();
-            }else{
+            } else {
                 Glide.get(context).clearDiskCache();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -92,12 +107,12 @@ public class GlideUtil {
     /**
      * 清除图片内存缓存
      */
-    public static void clearImageMemoryCache(final Context context){
-        try{
-            if(Looper.myLooper() == Looper.getMainLooper()){
+    public static void clearImageMemoryCache(final Context context) {
+        try {
+            if (Looper.myLooper() == Looper.getMainLooper()) {
                 Glide.get(context).clearMemory();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
+import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.adapter.ModulesAdapter
 import com.jcs.where.api.response.BannerResponse
@@ -39,6 +40,7 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
+import com.jcs.where.features.store.list.StoreRecommendActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
 import com.jcs.where.government.activity.GovernmentMapActivity
 import com.jcs.where.government.activity.MechanismDetailActivity
@@ -160,12 +162,20 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 override fun canScrollVertically(): Boolean {
                     return false
                 }
+
             }
             adapter = mModulesAdapter
         }
         // 点击
         mModulesAdapter.setOnItemClickListener { _, _, position ->
             val data = mModulesAdapter.data[position]
+
+            if (BuildConfig.FLAVOR == "dev") {
+                if (data.id == 10) {
+                    startActivity(StoreRecommendActivity::class.java)
+                }
+            }
+
             if (data.dev_status == 2) {
                 showComing()
                 return@setOnItemClickListener
@@ -197,11 +207,13 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                             putInt(Constant.PARAM_PID, 89)
                             putString(Constant.PARAM_PID_NAME, getString(R.string.filter_food))
                         })
-
                     }
+
                     else -> showComing()
                 }
             }
+
+
         }
     }
 
@@ -364,7 +376,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         if (hidden) {
             rxTimer.cancel()
             top_banner.pause()
-        }else{
+        } else {
             startScroll()
             top_banner.start()
             presenter.getMessageCount()

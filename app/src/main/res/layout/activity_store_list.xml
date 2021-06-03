@@ -80,10 +80,9 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <LinearLayout
-                android:layout_marginTop="@dimen/dp_15"
-                android:layout_marginBottom="@dimen/dp_15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
@@ -91,54 +90,58 @@
                     android:id="@+id/banner_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:background="@color/grey_d8d8d8" />
+                    android:background="@color/white" />
 
 
                 <com.jcs.where.widget.pager.IndicatorView2
                     android:id="@+id/point_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15" />
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_15" />
 
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="@dimen/dp_40">
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center">
+
                 <View
-                    android:background="@color/grey_979797"
                     android:layout_width="@dimen/dp_42"
-                    android:layout_height="@dimen/dp_1"/>
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/grey_979797" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_15"
                     android:layout_marginEnd="@dimen/dp_15"
-                    android:textColor="@color/black_333333"
                     android:text="@string/recommended_stores"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/black_333333"
+                    android:textStyle="bold" />
 
 
                 <View
-                    android:background="@color/grey_979797"
                     android:layout_width="@dimen/dp_42"
-                    android:layout_height="@dimen/dp_1"/>
-                
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/grey_979797" />
+
             </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/content_rv"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
             android:layout_width="match_parent"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_store_recommend"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_store_recommend" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

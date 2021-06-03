@@ -47,6 +47,7 @@ class StoreRecommendAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R
                 setPaddingRelative(SizeUtils.dp2px(5f), SizeUtils.dp2px(4f), SizeUtils.dp2px(5f), SizeUtils.dp2px(4f));
                 setTextColor(ColorUtils.getColor(R.color.orange_FF5B1B))
                 textSize = 11f
+                text = it
             }
             tag_ll.addView(textView)
         }

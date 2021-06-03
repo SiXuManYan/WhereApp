@@ -15,8 +15,6 @@ class StoreRecommendPresenter(val view: StoreRecommendView) : BaseMvpPresenter(v
     fun getBanner() {
         requestApi(mRetrofit.storeCategoryFirst, object : BaseMvpObserver<ArrayList<Category>>(view) {
             override fun onSuccess(response: ArrayList<Category>) {
-
-
                 view.bindBanner(response)
             }
         })

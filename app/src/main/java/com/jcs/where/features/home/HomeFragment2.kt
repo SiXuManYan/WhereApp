@@ -4,8 +4,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Outline
 import android.os.Bundle
 import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.ImageView
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -128,6 +130,15 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         }
         ll_banner.layoutParams = bannerParams
 
+        ll_banner.outlineProvider = object : ViewOutlineProvider(){
+            override fun getOutline(view: View, outline: Outline?) {
+                outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
+            }
+        }
+        ll_banner.clipToOutline = true
+
+
+
         val options = RequestOptions()
                 .centerCrop()
                 .error(R.mipmap.ic_glide_default)
@@ -166,6 +177,14 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             }
             adapter = mModulesAdapter
         }
+
+        moduleRecycler.outlineProvider = object : ViewOutlineProvider(){
+            override fun getOutline(view: View, outline: Outline?) {
+                outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
+            }
+        }
+        moduleRecycler.clipToOutline = true
+
         // 点击
         mModulesAdapter.setOnItemClickListener { _, _, position ->
             val data = mModulesAdapter.data[position]
@@ -222,6 +241,15 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
      * 新闻相关
      */
     private fun initNews() {
+
+
+        news_container_ll.outlineProvider = object : ViewOutlineProvider(){
+            override fun getOutline(view: View, outline: Outline?) {
+                outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
+            }
+        }
+        news_container_ll.clipToOutline = true
+
 
         mNewsAdapter = HomeNewsAdapter().apply {
             setOnItemClickListener { _, _, position ->

@@ -31,7 +31,7 @@ public class ModulesAdapter extends BaseQuickAdapter<ModulesResponse, BaseViewHo
 
         LinearLayout view = holder.getView(R.id.moduleLayout);
         ViewGroup.LayoutParams params = view.getLayoutParams();
-        params.width = (ScreenUtils.getScreenWidth() - SizeUtils.dp2px(20)) / 5;
+        params.width = (ScreenUtils.getScreenWidth() - SizeUtils.dp2px(30)) / 5;
         params.height = SizeUtils.dp2px(70);
         view.setLayoutParams(params);
 

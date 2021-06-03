@@ -1,11 +1,13 @@
 package com.jcs.where.features.store.list
 
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
-import com.jcs.where.api.response.category.Category
+import com.jcs.where.api.response.category.StoryBannerCategory
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.widget.list.DividerDecoration
@@ -36,15 +38,32 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
 
     private fun initBanner() {
         mBannerAdapter = StoreBannerAdapter()
-        val manager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
+        val manager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         banner_rv.apply {
             layoutManager = manager
             adapter = mBannerAdapter
         }
 
-        val helper = GridPagerSnapHelper(2, 4)
+        val helper = PagerSnapHelper()
         helper.attachToRecyclerView(banner_rv)
 
+        point_view.apply {
+            selectedDrawableResId = R.drawable.shape_point_selected
+            commonDrawableResId =  R.drawable.shape_point_selected_9999
+        }
+
+        banner_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                val layoutManager = recyclerView.layoutManager
+                if (layoutManager is LinearLayoutManager) {
+                    val firstItemPosition: Int = layoutManager.findFirstVisibleItemPosition()
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        point_view.onPageSelected(firstItemPosition)
+                    }
+                }
+            }
+        })
     }
 
     private fun initContent() {
@@ -75,9 +94,12 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
 
     }
 
-    override fun bindBanner(response: ArrayList<Category>) =
-            mBannerAdapter.setNewInstance(response)
 
     override fun bindRecommend(response: ArrayList<StoreRecommend>) =
             mAdapter.setNewInstance(response)
+
+    override fun bindBannerData(result: ArrayList<StoryBannerCategory>) {
+        mBannerAdapter.setNewInstance(result)
+        point_view.setPointCount(result.size)
+    }
 }

@@ -19,6 +19,9 @@ public class IndicatorView2 extends LinearLayout {
 
     private LinearLayout container_ll;
 
+    public int selectedDrawableResId = R.drawable.shape_point_selected_9999;
+    public int commonDrawableResId = R.drawable.shape_point_normal_ffffff;
+
     public IndicatorView2(Context context) {
         super(context);
         initView();
@@ -50,9 +53,9 @@ public class IndicatorView2 extends LinearLayout {
             imageView.setLayoutParams(params);
 
             if (i == 0) {
-                imageView.setImageResource(R.drawable.shape_point_selected_9999);
+                imageView.setImageResource(selectedDrawableResId);
             } else {
-                imageView.setImageResource(R.drawable.shape_point_normal_ffffff);
+                imageView.setImageResource(commonDrawableResId);
             }
             container_ll.addView(imageView);
 
@@ -71,9 +74,9 @@ public class IndicatorView2 extends LinearLayout {
         for (int i = 0; i < childCount; i++) {
             ImageView child = (ImageView) container_ll.getChildAt(i);
             if (position == i) {
-                child.setImageResource(R.drawable.shape_point_selected_9999);
+                child.setImageResource(selectedDrawableResId);
             } else {
-                child.setImageResource(R.drawable.shape_point_normal_ffffff);
+                child.setImageResource(commonDrawableResId);
             }
 
         }

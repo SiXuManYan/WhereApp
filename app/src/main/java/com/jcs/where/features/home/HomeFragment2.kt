@@ -57,6 +57,7 @@ import com.jcs.where.news.NewsVideoActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideRoundTransform
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
@@ -137,15 +138,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         }
         ll_banner.clipToOutline = true
 
-
-
-        val options = RequestOptions()
-                .centerCrop()
-                .error(R.mipmap.ic_glide_default)
-                .priority(Priority.HIGH)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .transform(GlideRoundTransform(4))
-
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
                 .setTitleHeight(50)
                 .isAutoPlay(true)
@@ -155,11 +147,11 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 .setIndicatorGravity(XBanner.INDICATOR_CENTER)
                 .setImageLoader(object : AbstractUrlLoader() {
                     override fun loadImages(context: Context, url: String, image: ImageView) {
-                        Glide.with(context).load(url).apply(options).into(image)
+                        GlideUtil.load(context,url,image)
                     }
 
                     override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
-                        Glide.with(context).load(url).apply(options).into(gifImageView)
+                        GlideUtil.load(context,url,gifImageView)
                     }
                 })
     }

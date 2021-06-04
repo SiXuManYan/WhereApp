@@ -25,13 +25,13 @@ data class OrderData(
         var phone: String,
 
         /** 有效期开始时间 */
-        var start_date: String,
+        var start_date: String = "",
 
         /** 有效期结束时间 */
-        var end_date: String,
+        var end_date: String = "",
 
         /** 订单创建时间 */
-        var created_at: String,
+        var created_at: String = "",
 
         /** 订单状态（1：待付款，2：已取消，3：待使用，4 已完成 ， 5支付失败 ， 6退款中，7已退款，8退款失败，9待评价*/
         var status: Int,

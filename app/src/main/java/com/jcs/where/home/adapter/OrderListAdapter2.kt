@@ -204,6 +204,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
                 .placeholder(R.mipmap.ic_empty_gray)
         Glide.with(context).load(modelData.food_image).apply(options).into(image_iv)
 
+
         first_tv.text = modelData.food_name
         second_tv.text = StringUtils.getString(R.string.quantity_format, modelData.good_num)
         third_tv.text = StringUtils.getString(R.string.total_price_format, modelData.room_price.toPlainString())
@@ -321,11 +322,13 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
         val third_tv = holder.getView<TextView>(R.id.third_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
 
-        val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray)
-        Glide.with(context).load(modelData.food_image).apply(options).into(image_iv)
+        if (item.image.isNotEmpty()) {
+            val options = RequestOptions.bitmapTransform(
+                    GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
+                    .error(R.mipmap.ic_empty_gray)
+                    .placeholder(R.mipmap.ic_empty_gray)
+            Glide.with(context).load(item.image[0]).apply(options).into(image_iv)
+        }
 
         first_tv.text = modelData.good_names
         third_tv.text = StringUtils.getString(R.string.total_price_format, modelData.room_price.toPlainString())

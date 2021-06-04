@@ -107,4 +107,13 @@ public class EmptyView extends LinearLayout {
         setEmptyMessage(R.string.empty_data_default);
     }
 
+    public void showEmptyNothing() {
+        empty_iv.setImageAlpha(0);
+        empty_message_tv.setVisibility(View.GONE);
+        empty_hint_tv.setVisibility(View.GONE);
+        action_tv.setVisibility(View.GONE);
+
+    }
+
+
 }

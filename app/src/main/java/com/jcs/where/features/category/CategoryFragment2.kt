@@ -22,6 +22,8 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
 
     private lateinit var mAdapter: CategoryAdapter
+    private lateinit var emptyView: EmptyView
+
 
     override fun getLayoutId() = R.layout.fragment_category_2
 
@@ -37,12 +39,11 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
                 setDrawHeaderFooter(false)
             })
         }
-        val emptyView = EmptyView(context).apply {
-            showEmptyDefault()
+
+        emptyView = EmptyView(context).apply {
+            showEmptyNothing()
         }
-        mAdapter.apply {
-            setEmptyView(emptyView)
-        }
+
     }
 
     override fun initData() {

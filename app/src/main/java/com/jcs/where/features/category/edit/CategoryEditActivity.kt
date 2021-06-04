@@ -44,7 +44,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
 
         mSelectedAdapter = CategoryAdapter().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
-                showEmptyDefault()
+                showEmptyNothing()
             })
             showEditButton(true)
             addChildClickViewIds(R.id.cut_iv)
@@ -68,7 +68,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
         }
         mUnSelectedAdapter = CategoryAdapter().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
-                showEmptyDefault()
+                showEmptyNothing()
             })
             showEditButton(true)
             addChildClickViewIds(R.id.add_iv)

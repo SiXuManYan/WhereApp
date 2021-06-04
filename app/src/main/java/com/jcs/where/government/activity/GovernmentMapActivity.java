@@ -36,6 +36,8 @@ public class GovernmentMapActivity extends BaseMapActivity {
      */
     protected List<MechanismListFragment> mListFragments;
 
+
+
     @Override
     protected void initData() {
         super.initData();

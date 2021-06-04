@@ -9,8 +9,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_ll">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -96,7 +95,7 @@
                 android:minWidth="@dimen/dp_78"
                 android:paddingStart="@dimen/dp_12"
                 android:paddingEnd="@dimen/dp_12"
-                android:text="@string/support_takeaway"
+                android:text="@string/support_delivery"
                 android:textColor="@color/selector_black_blue"
                 android:textSize="@dimen/sp_13"
                 tools:checked="true" />
@@ -206,8 +205,6 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

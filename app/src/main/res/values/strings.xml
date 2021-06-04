@@ -678,5 +678,6 @@
     <string name="high_option">好评</string>
     <string name="bad_reviews">差评</string>
     <string name="recommended_stores">推荐店铺</string>
+    <string name="support_delivery">支持外卖</string>
 
 </resources>

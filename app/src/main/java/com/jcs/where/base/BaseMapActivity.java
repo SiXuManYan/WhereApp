@@ -186,6 +186,7 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
     @Override
     protected void bindListener() {
         mTopArrowIv.setOnClickListener(this::onTopArrowClick);
+        mTopArrowIv.performClick();
         mCardFragment.bindPageSelectedListener(this::onVpPageSelected);
         mSearchAdapter.setOnItemClickListener(this::onSearchItemClicked);
         mSearchEt.setOnEditorActionListener(this::onSearchActionClicked);

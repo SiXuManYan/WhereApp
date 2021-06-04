@@ -9,6 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,12 +29,8 @@ import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.api.response.MechanismResponse;
-import com.jcs.where.api.response.TouristAttractionResponse;
-import com.jcs.where.government.adapter.GovernmentSearchAdapter;
 import com.jcs.where.government.adapter.MapListFragmentAdapter;
 import com.jcs.where.government.fragment.CardViewPagerFragment;
-import com.jcs.where.government.fragment.MechanismListFragment;
 import com.jcs.where.map.model.BaseMapModel;
 import com.jcs.where.travel.adapter.TouristAttractionSearchAdapter;
 import com.jcs.where.utils.EmptyWatcher;
@@ -40,13 +45,6 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -427,12 +425,12 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
 
             @Override
             public int getMinHeight() {
-                return getPxFromDp(55);
+                return SizeUtils.dp2px(55);
             }
 
             @Override
             public int getMaxHeight() {
-                return getPxFromDp(583);
+                return ScreenUtils.getScreenHeight() / 2;
             }
         });
     }

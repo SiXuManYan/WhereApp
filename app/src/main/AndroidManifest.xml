@@ -607,6 +607,8 @@
         <activity android:name=".features.gourmet.restaurant.map.RestaurantMapActivity" />
         <activity android:name=".features.gourmet.comment.FoodCommentActivity" />
         <activity android:name=".features.store.list.StoreRecommendActivity" />
+        <activity android:name=".features.store.search.history.SearchHistoryActivity" />
+        <activity android:name=".features.store.search.StoreSearchActivity" />
 
 
     </application>

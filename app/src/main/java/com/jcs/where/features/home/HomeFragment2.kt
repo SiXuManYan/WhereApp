@@ -181,11 +181,11 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         mModulesAdapter.setOnItemClickListener { _, _, position ->
             val data = mModulesAdapter.data[position]
 
-//            if (BuildConfig.FLAVOR == "dev") {
-//                if (data.id == 10) {
-//                    startActivity(StoreRecommendActivity::class.java)
-//                }
-//            }
+            if (BuildConfig.FLAVOR == "dev") {
+                if (data.id == 10) {
+                    startActivity(StoreRecommendActivity::class.java)
+                }
+            }
 
             if (data.dev_status == 2) {
                 showComing()

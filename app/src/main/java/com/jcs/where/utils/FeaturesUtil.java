@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import com.blankj.utilcode.constant.RegexConstants;
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.RegexUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -37,6 +38,8 @@ import com.zhihu.matisse.MimeType;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -500,5 +503,34 @@ public class FeaturesUtil {
         }
         return level;
     }
+
+    public static void saveHistory(String input) {
+
+        SPUtils shareDefault = CacheUtil.getShareDefault();
+
+        String history = shareDefault.getString(SPKey.K_SEARCH_HISTORY, "");
+
+        shareDefault.put(SPKey.K_SEARCH_HISTORY, history + input + ",");
+    }
+
+    public static ArrayList<String> getSearchHistory() {
+
+        SPUtils shareDefault = CacheUtil.getShareDefault();
+        String history = shareDefault.getString(SPKey.K_SEARCH_HISTORY, "");
+
+        ArrayList<String> strings = new ArrayList<>();
+
+        if (history.contains(",")) {
+
+            String[] split = history.split(",");
+            strings.addAll(Arrays.asList(split));
+        }
+        return strings;
+    }
+
+    public static void clearSearchHistory() {
+        CacheUtil.getShareDefault().put(SPKey.K_SEARCH_HISTORY, "");
+    }
+
 
 }

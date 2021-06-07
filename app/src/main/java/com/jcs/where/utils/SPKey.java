@@ -44,4 +44,6 @@ public final class SPKey {
      */
     public static final String K_SERVICE_CATEGORIES = "k_service_categories_";
 
+    public static final String K_SEARCH_HISTORY = "k_search_history";
+
 }

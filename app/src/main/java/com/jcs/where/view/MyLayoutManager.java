@@ -11,6 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyLayoutManager extends RecyclerView.LayoutManager {
 
     @Override
+    public boolean isAutoMeasureEnabled() {
+        return true;
+    }
+
+    @Override
     public RecyclerView.LayoutParams generateDefaultLayoutParams() {
         return new RecyclerView.LayoutParams(
                 RecyclerView.LayoutParams.MATCH_PARENT,

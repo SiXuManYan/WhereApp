@@ -69,7 +69,9 @@ class SearchHistoryActivity : BaseActivity() {
         clear_history_tv.setOnClickListener {
             mAdapter.setNewInstance(null)
             FeaturesUtil.clearSearchHistory()
-
+        }
+        cancel_tv.setOnClickListener {
+            finish()
         }
     }
 }

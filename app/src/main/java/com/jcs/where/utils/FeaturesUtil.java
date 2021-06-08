@@ -532,5 +532,10 @@ public class FeaturesUtil {
         CacheUtil.getShareDefault().put(SPKey.K_SEARCH_HISTORY, "");
     }
 
+    public static String getNoWrapString(String old){
+
+        return old.replaceAll("\n", " ");
+    }
+
 
 }

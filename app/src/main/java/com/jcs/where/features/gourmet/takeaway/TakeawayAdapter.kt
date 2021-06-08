@@ -61,9 +61,9 @@ class TakeawayAdapter : BaseQuickAdapter<DishTakeawayResponse, BaseViewHolder>(R
         sales_tv.text = StringUtils.getString(R.string.sale_format, item.sale_num)
         initTag(item, tag_ll)
 
-        now_price_tv.text = StringUtils.getString(R.string.price_unit_format, item.price)
+        now_price_tv.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
 
-        val oldPrice = StringUtils.getString(R.string.price_unit_format, item.original_price)
+        val oldPrice = StringUtils.getString(R.string.price_unit_format, item.original_price.toPlainString())
         val builder = SpanUtils().append(oldPrice).setStrikethrough().create()
         old_price_tv.text = builder
 

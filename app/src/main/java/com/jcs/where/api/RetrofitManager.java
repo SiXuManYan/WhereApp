@@ -53,8 +53,14 @@ public class RetrofitManager {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
-        // 四秒请求超时
-        okBuilder.callTimeout(10, TimeUnit.SECONDS);
+
+        // 连接超时
+        okBuilder.connectTimeout(30,TimeUnit.SECONDS);
+        okBuilder.readTimeout(30,TimeUnit.SECONDS);
+        okBuilder.writeTimeout(30,TimeUnit.SECONDS);
+
+        // 请求超时
+        okBuilder.callTimeout(30, TimeUnit.SECONDS);
         // 添加请求头
         okBuilder.addInterceptor(new Interceptor() {
             @Override

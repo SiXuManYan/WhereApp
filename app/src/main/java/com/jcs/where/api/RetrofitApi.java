@@ -1120,4 +1120,24 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<Category>>> getStoreCategoryFirst();
 
 
+    /**
+     * 商城搜索
+     *
+     * @param cate_id       分类ID（数据类型为‘1’或‘[1,2,3]’）
+     * @param search_input  搜索内容
+     * @param delivery_type 商家服务/配送方式（1:自提，2:商家配送)
+     * @param sort_type     排序方式(1:距离优先，2:好评优先）
+     */
+    @GET("generalapi/v2/shops")
+    Observable<JcsResponse<PageResponse<StoreRecommend>>> getStoreList(
+            @Query("page") int page,
+            @Query("lat") Float lat,
+            @Query("lng") Float lng,
+            @Query("cate_id") @Nullable String cate_id,
+            @Query("search_input") @Nullable String search_input,
+            @Query("delivery_type") @Nullable String delivery_type,
+            @Query("sort_type") @Nullable String sort_type
+    );
+
+
 }

@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.search.history
+package com.jcs.where.features.store.history
 
 import android.os.Bundle
 import android.view.KeyEvent

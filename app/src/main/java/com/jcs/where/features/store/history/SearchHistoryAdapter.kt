@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.search.history
+package com.jcs.where.features.store.history
 
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter

@@ -10,7 +10,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.category.StoryBannerCategory
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.store.search.history.SearchHistoryActivity
+import com.jcs.where.features.store.history.SearchHistoryActivity
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_list.*
 import java.util.*

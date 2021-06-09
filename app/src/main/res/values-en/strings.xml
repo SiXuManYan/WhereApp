@@ -677,6 +677,8 @@
     <string name="bad_reviews">Bad reviews</string>
     <string name="recommended_stores">Recommended stores</string>
     <string name="support_delivery">Support Delivery</string>
+    <string name="classification">classification</string>
+    <string name="screen">screen</string>
 
 
 </resources>

@@ -19,10 +19,6 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.jcs.where.BuildConfig
@@ -42,7 +38,7 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
-import com.jcs.where.features.store.list.StoreRecommendActivity
+import com.jcs.where.features.store.recommend.StoreRecommendActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
 import com.jcs.where.government.activity.GovernmentMapActivity
 import com.jcs.where.government.activity.MechanismDetailActivity
@@ -56,7 +52,6 @@ import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
-import com.jcs.where.utils.GlideRoundTransform
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.view.XBanner.AbstractUrlLoader

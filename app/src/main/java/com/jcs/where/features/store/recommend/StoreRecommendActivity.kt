@@ -1,16 +1,22 @@
-package com.jcs.where.features.store.list
+package com.jcs.where.features.store.recommend
 
+import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.category.StoryBannerCategory
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.filter.StoreFilterActivity
 import com.jcs.where.features.store.history.SearchHistoryActivity
+import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_list.*
 import java.util.*
@@ -19,7 +25,7 @@ import java.util.*
  * Created by Wangsw  2021/6/1 10:33.
  * estore 商城
  */
-class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), StoreRecommendView {
+class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), StoreRecommendView, OnItemClickListener {
 
     private lateinit var mBannerAdapter: StoreBannerAdapter
     private lateinit var mAdapter: StoreRecommendAdapter
@@ -69,7 +75,7 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
 
     private fun initContent() {
         mAdapter = StoreRecommendAdapter()
-
+        mAdapter.setOnItemClickListener(this@StoreRecommendActivity)
         val gridLayoutManager = GridLayoutManager(this, 2)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0).apply {
             setDrawHeaderFooter(false)
@@ -107,4 +113,14 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
         mBannerAdapter.setNewInstance(result)
         point_view.setPointCount(result.size)
     }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val store = mAdapter.data[position]
+        val pid = store.id
+        startActivity(StoreFilterActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_PID, pid)
+        })
+    }
+
+
 }

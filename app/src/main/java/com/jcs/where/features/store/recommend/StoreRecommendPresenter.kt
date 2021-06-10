@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.list
+package com.jcs.where.features.store.recommend
 
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter

@@ -1,7 +1,6 @@
-package com.jcs.where.features.store.list
+package com.jcs.where.features.store.recommend
 
 import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
 import com.jcs.where.api.response.store.StoreRecommend
 import java.util.ArrayList

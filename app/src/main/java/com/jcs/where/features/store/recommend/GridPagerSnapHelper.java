@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.list;
+package com.jcs.where.features.store.recommend;
 
 import android.graphics.PointF;
 import android.util.DisplayMetrics;

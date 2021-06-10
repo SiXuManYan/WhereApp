@@ -79,6 +79,7 @@
     <color name="grey_979797">#979797</color>
     <color name="orange_FFA27E">#FFA27E</color>
     <color name="white_DCE0F3">#DCE0F3</color>
+    <color name="blue_D9ECFF">#D9ECFF</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

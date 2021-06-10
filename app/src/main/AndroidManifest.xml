@@ -606,7 +606,7 @@
         <activity android:name=".features.gourmet.takeaway.order.TakeawayOrderDetailActivity" />
         <activity android:name=".features.gourmet.restaurant.map.RestaurantMapActivity" />
         <activity android:name=".features.gourmet.comment.FoodCommentActivity" />
-        <activity android:name=".features.store.list.StoreRecommendActivity" />
+        <activity android:name=".features.store.recommend.StoreRecommendActivity" />
         <activity android:name=".features.store.history.SearchHistoryActivity" />
         <activity android:name=".features.store.search.StoreSearchActivity" />
 

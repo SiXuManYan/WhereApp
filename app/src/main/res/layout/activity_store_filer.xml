@@ -89,7 +89,7 @@
 
 
         <LinearLayout
-            android:id="@+id/area_filter_ll"
+            android:id="@+id/classification_ll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -120,7 +120,7 @@
 
 
         <LinearLayout
-            android:id="@+id/food_filter_ll"
+            android:id="@+id/screen_ll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

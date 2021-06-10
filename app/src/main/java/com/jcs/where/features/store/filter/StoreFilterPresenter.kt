@@ -7,4 +7,8 @@ import com.jcs.where.api.network.BaseMvpPresenter
  *
  */
 class StoreFilterPresenter (val view: StoreFilterView) : BaseMvpPresenter(view)  {
+
+
+
+
 }

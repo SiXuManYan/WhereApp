@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.list
+package com.jcs.where.features.store.recommend
 
 import android.widget.ImageView
 import android.widget.LinearLayout

@@ -681,5 +681,11 @@
     <string name="support_delivery">支持外卖</string>
     <string name="classification">classification</string>
     <string name="screen">screen</string>
+    <string name="business_services">Business services</string>
+    <string name="self_extraction">Self Extraction</string>
+    <string name="express">express</string>
+    <string name="intelligent_sorting">Intelligent sorting</string>
+    <string name="distance_first">distance from near to far</string>
+    <string name="comment_first">favourable comment</string>
 
 </resources>

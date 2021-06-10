@@ -1140,4 +1140,10 @@ public interface RetrofitApi {
     );
 
 
+    /**
+     * 商城二三级级分类
+     */
+    @GET("generalapi/v2/categories/first")
+    Observable<JcsResponse<ArrayList<Category>>> getStoreCategoryNext(@Query("pid") int pid);
+
 }

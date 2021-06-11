@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/third_category"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_store_third_category"
     android:ellipsize="end"
-    android:checked="false"
     android:maxLines="1"
     android:paddingStart="@dimen/dp_10"
     android:paddingTop="@dimen/dp_6"
@@ -12,5 +12,5 @@
     android:paddingBottom="@dimen/dp_6"
     android:text="@string/classification"
     android:textColor="@color/selector_grey_blue"
-    android:textSize="@dimen/sp_13" />
+    android:textSize="@dimen/sp_12" />
 

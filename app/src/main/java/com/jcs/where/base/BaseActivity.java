@@ -349,7 +349,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     /**
-     * 手气
+     * 收起
      *
      * @param ev
      * @return

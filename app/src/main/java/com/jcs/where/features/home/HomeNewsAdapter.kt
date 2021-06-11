@@ -54,7 +54,5 @@ class HomeNewsAdapter : BaseQuickAdapter<NewsList, BaseViewHolder>(R.layout.item
         time_tv.text = data.created_at
     }
 
-    override fun getDefItemCount(): Int {
-        return super.getDefItemCount()
-    }
+
 }

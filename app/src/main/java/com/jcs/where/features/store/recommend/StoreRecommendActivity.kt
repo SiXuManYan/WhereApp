@@ -115,11 +115,7 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val store = mAdapter.data[position]
-        val pid = store.id
-        startActivity(StoreFilterActivity::class.java, Bundle().apply {
-            putInt(Constant.PARAM_PID, pid)
-        })
+
     }
 
 

@@ -1121,7 +1121,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 商城搜索
+     * 商城列表
      *
      * @param cate_id       分类ID（数据类型为‘1’或‘[1,2,3]’）
      * @param search_input  搜索内容
@@ -1135,15 +1135,17 @@ public interface RetrofitApi {
             @Query("lng") Float lng,
             @Query("cate_id") @Nullable String cate_id,
             @Query("search_input") @Nullable String search_input,
-            @Query("delivery_type") @Nullable String delivery_type,
-            @Query("sort_type") @Nullable String sort_type
+            @Query("delivery_type") @Nullable Integer delivery_type,
+            @Query("sort_type") @Nullable Integer sort_type
     );
 
 
     /**
      * 商城二三级级分类
      */
-    @GET("generalapi/v2/categories/first")
+    @GET("generalapi/v2/categories/second_third")
     Observable<JcsResponse<ArrayList<Category>>> getStoreCategoryNext(@Query("pid") int pid);
+
+
 
 }

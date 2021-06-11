@@ -2,6 +2,7 @@ package com.jcs.where.features.store.filter.classification
 
 import android.graphics.Typeface
 import android.widget.CheckedTextView
+import com.blankj.utilcode.util.ColorUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
@@ -19,10 +20,12 @@ class SecondCategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layou
 
         second_category_ctv.apply {
             text = item.name
-            typeface = if (item.nativeIsSelected) {
-                Typeface.defaultFromStyle(Typeface.BOLD)
+            if (item.nativeIsSelected) {
+                typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+                setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2))
             } else {
-                Typeface.defaultFromStyle(Typeface.NORMAL)
+                typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
+                setTextColor(ColorUtils.getColor(R.color.black_333333))
             }
         }
 

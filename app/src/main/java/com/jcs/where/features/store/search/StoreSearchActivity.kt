@@ -66,7 +66,6 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
     }
 
     override fun bindData(data: MutableList<StoreRecommend>, lastPage: Boolean) {
-//        swipeLayout.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {

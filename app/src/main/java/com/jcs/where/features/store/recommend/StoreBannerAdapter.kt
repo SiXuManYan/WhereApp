@@ -1,5 +1,6 @@
 package com.jcs.where.features.store.recommend
 
+import android.content.Intent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -8,6 +9,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
+import com.jcs.where.features.store.filter.StoreFilterActivity
+import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 
 /**
@@ -41,5 +44,16 @@ class StoreBannerAdapter : BaseQuickAdapter<StoryBannerCategory, BaseViewHolder>
 
         GlideUtil.load(context, category.icon, image_iv)
         content_tv.text = category.name
+
+        child.setOnClickListener {
+
+            context.startActivity(Intent(context, StoreFilterActivity::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(Constant.PARAM_PID, category.id))
+        }
+
+
     }
+
+
 }

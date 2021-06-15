@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightFirstIcon="@drawable/ic_share_black"
+        app:rightSecondIcon="@mipmap/ic_like_black2"
+        app:showBottomLine="true" />
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/parent_cl"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_206"
+                    android:background="@color/white">
+
+                    <com.jcs.where.view.XBanner.XBanner
+                        android:id="@+id/top_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:background="@color/grey_b7b7b7" />
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_56"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/nav_tv"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/sp_17"
+                        android:textStyle="bold"
+                        tools:text="D’amore and sons" />
+
+
+                    <TextView
+                        android:id="@+id/nav_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_toStartOf="@+id/split_v"
+                        android:text="@string/telephone"
+                        android:textColor="@color/grey_999999"
+                        android:textSize="@dimen/sp_9"
+                        android:textStyle="bold"
+                        app:drawableTopCompat="@mipmap/ic_store_nav" />
+
+
+                    <View
+                        android:id="@+id/split_v"
+                        android:layout_width="@dimen/dp_1"
+                        android:layout_height="@dimen/dp_28"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_15"
+                        android:layout_toStartOf="@+id/phone_tv"
+                        android:background="@color/grey_F5F5F5" />
+
+                    <TextView
+                        android:id="@+id/phone_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/telephone"
+                        android:textColor="@color/grey_999999"
+                        android:textSize="@dimen/sp_9"
+                        android:textStyle="bold"
+                        app:drawableTopCompat="@mipmap/ic_store_phone_blue" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+
+                    <ImageView
+                        android:id="@+id/time_iv"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_store_clock" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/time_iv"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/business_hour"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13" />
+
+
+                    <TextView
+                        android:id="@+id/time_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13"
+                        tools:text="09:00-17:00 Monday to Friday" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_5">
+
+                    <ImageView
+                        android:id="@+id/address_iv"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:src="@mipmap/ic_store_clock" />
+
+
+                    <TextView
+                        android:id="@+id/address_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/address_iv"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/sp_13"
+                        tools:text="77 Roosevelt square Northwest" />
+
+                    <TextView
+                        android:id="@+id/address_detail_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/address_tv"
+                        android:layout_toEndOf="@+id/address_iv"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13"
+                        tools:text="Walking distance from entrance b2-2 of Xi'an Road
+Station of Metro Line 1 / 2" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+                <!---->
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+                    <ImageView
+                        android:id="@+id/phone_iv"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_store_phone" />
+
+                    <TextView
+                        android:id="@+id/extension_number_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/phone_iv"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/extension_number"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13" />
+
+
+                    <TextView
+                        android:id="@+id/phone_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13"
+                        tools:text="0411-010010000" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+
+
+                <!---->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+                    <ImageView
+                        android:id="@+id/web_iv"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_store_website" />
+
+                    <TextView
+                        android:id="@+id/web_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/web_iv"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/website"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13" />
+
+
+                    <TextView
+                        android:id="@+id/web_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13"
+                        tools:text="https://huaban.com/pins/1471115051/" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+
+                <!---->
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+                    <ImageView
+                        android:id="@+id/email_iv"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_store_email" />
+
+                    <TextView
+                        android:id="@+id/email_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/email_iv"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/email"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13" />
+
+
+                    <TextView
+                        android:id="@+id/email_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13"
+                        tools:text="tangtang@tangtang.com" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+                    <ImageView
+                        android:id="@+id/facebook_iv"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_store_facebook" />
+
+                    <TextView
+                        android:id="@+id/facebook_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/facebook_iv"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/facebook"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13" />
+
+
+                    <TextView
+                        android:id="@+id/facebook_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_13"
+                        tools:text="www.facebook.com" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+
+
+                <TextView
+                    android:id="@+id/fold_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center"
+                    android:text="@string/look_more"
+                    android:textColor="@color/grey_999999" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_6"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
+
+
+            </LinearLayout>
+
+
+            <com.jcs.where.widget.tabs.SlidingTabLayout
+                android:id="@+id/tabs_type"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:background="@color/white"
+                app:tl_indicator_color="@color/blue_4C9EF2"
+                app:tl_indicator_corner_radius="1.5dp"
+                app:tl_indicator_width="@dimen/dp_25"
+                app:tl_tab_space_equal="true"
+                app:tl_textSelectColor="@color/blue_4C9EF2"
+                app:tl_textUnselectColor="@color/black_333333"
+                app:tl_textsize="@dimen/sp_14"
+                app:tl_underline_color="@color/grey_F5F5F5"
+                app:tl_underline_height="1px" />
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
+

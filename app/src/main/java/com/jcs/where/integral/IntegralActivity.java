@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * 我的积分
+ * 我的积分(签到)
  */
 public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> implements IntegralView {
 

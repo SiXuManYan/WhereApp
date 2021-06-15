@@ -687,5 +687,6 @@
     <string name="intelligent_sorting">Intelligent sorting</string>
     <string name="distance_first">distance from near to far</string>
     <string name="comment_first">favourable comment</string>
+    <string name="look_more">查看更多</string>
 
 </resources>

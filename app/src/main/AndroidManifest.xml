@@ -610,6 +610,7 @@
         <activity android:name=".features.store.history.SearchHistoryActivity" />
         <activity android:name=".features.store.search.StoreSearchActivity" />
         <activity android:name=".features.store.filter.StoreFilterActivity" />
+        <activity android:name=".features.store.detail.StoreDetailActivity" />
 
 
     </application>

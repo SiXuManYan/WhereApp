@@ -76,6 +76,7 @@ import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
+import com.jcs.where.api.response.store.StoreDetail;
 import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
@@ -1146,6 +1147,12 @@ public interface RetrofitApi {
     @GET("generalapi/v2/categories/second_third")
     Observable<JcsResponse<ArrayList<Category>>> getStoreCategoryNext(@Query("pid") int pid);
 
+
+    /**
+     * 商城二三级级分类
+     */
+    @GET("generalapi/v2/shops/{shop_id}")
+    Observable<JcsResponse<StoreDetail>> getStoreDetail(@Path("shop_id") int shop_id);
 
 
 }

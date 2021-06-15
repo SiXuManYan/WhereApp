@@ -208,21 +208,11 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
         val currentItem = filter_pager.currentItem
 
         if (filter_container_ll.visibility == View.GONE) {
-
             handleFilterVisible(View.VISIBLE)
             changeFilterTabStyle(currentItem, index)
-
         } else {
             if (currentItem == index) {
-
                 handleFilterVisible(View.GONE)
-                // 清空tab选中状态
-                val childTabLL = category_ll.getChildAt(index) as LinearLayout
-                val tabText = childTabLL.getChildAt(0) as CheckedTextView
-                val tabImage = childTabLL.getChildAt(1) as ImageView
-                tabText.isChecked = false
-                tabText.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
-                tabImage.setImageResource(R.mipmap.ic_store_down)
             }
         }
 
@@ -232,6 +222,19 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
 
     private fun handleFilterVisible(visibility: Int) {
         filter_container_ll.visibility = visibility
+
+        if (visibility == View.GONE) {
+
+            for (index in 0 until category_ll.childCount) {
+                // 清空tab选中状态
+                val childTabLL = category_ll.getChildAt(index) as LinearLayout
+                val tabText = childTabLL.getChildAt(0) as CheckedTextView
+                val tabImage = childTabLL.getChildAt(1) as ImageView
+                tabText.isChecked = false
+                tabText.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+                tabImage.setImageResource(R.mipmap.ic_store_down)
+            }
+        }
     }
 
     /**

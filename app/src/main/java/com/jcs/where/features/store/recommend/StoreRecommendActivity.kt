@@ -14,7 +14,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.category.StoryBannerCategory
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.store.filter.StoreFilterActivity
+import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.history.SearchHistoryActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -115,6 +115,10 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+        startActivity(StoreDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, data.id)
+        })
 
     }
 

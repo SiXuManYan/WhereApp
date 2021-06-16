@@ -51,7 +51,7 @@ data class StoreDetail(
         var mer_name:  String = "",
         var tel:  String = "",
         var lat:  Float = 0f,
-        var lng:  Float = 0f,
+        var lng:  Float = 0f
 
 
 

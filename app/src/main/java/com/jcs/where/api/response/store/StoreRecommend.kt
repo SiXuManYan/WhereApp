@@ -24,7 +24,7 @@ data class StoreRecommend(
          */
         var delivery_type: Int,
 
-        var goods: ArrayList<StoreGood> = ArrayList()
+        var goods: ArrayList<StoreGoods> = ArrayList()
 
 )
 

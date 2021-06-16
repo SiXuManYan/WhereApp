@@ -692,5 +692,6 @@
 
     <string name="mechanism_to_format">%1$s-%2$s&#160;%3$s&#160;至&#160;%4$s </string>
     <string name="good">商品</string>
+    <string name="snap_up">抢购</string>
 
 </resources>

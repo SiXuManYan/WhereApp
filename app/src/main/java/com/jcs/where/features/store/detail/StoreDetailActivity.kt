@@ -15,6 +15,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentFragment
+import com.jcs.where.features.store.detail.good.StoreGoodFragment
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
@@ -155,9 +156,10 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         override fun getItem(position: Int): Fragment {
             if (position == 0) {
-                return FoodCommentFragment.newInstance(shop_id.toString(), position)
+                return FoodCommentFragment.newInstance(shop_id.toString())
+            }else{
+                return StoreGoodFragment.newInstance(shop_id.toString())
             }
-            return FoodCommentFragment.newInstance(shop_id.toString(), position)
 
         }
 

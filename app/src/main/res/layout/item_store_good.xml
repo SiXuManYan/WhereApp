@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/child_container_rl"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_75"
+    android:background="@color/white"
+    android:padding="@dimen/dp_10"
+    tools:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/image_iv"
+        android:layout_width="@dimen/dp_55"
+        android:layout_height="@dimen/dp_55"
+        android:layout_marginEnd="@dimen/dp_8"
+        tools:src="@tools:sample/avatars" />
+
+
+    <TextView
+        android:id="@+id/good_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/image_iv"
+        android:includeFontPadding="false"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_13"
+        tools:text="商品名称" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toEndOf="@+id/image_iv"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/now_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/orange_FF5B1B"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold"
+            tools:text="$1000.00" />
+
+        <TextView
+            android:id="@+id/old_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:includeFontPadding="false"
+            android:textColor="@color/grey_999999"
+            android:textSize="@dimen/sp_11"
+            tools:text="$1000.00" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/image_iv"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/delivery_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:background="@drawable/shape_orange_radius_1"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/dp_3"
+            android:paddingTop="@dimen/dp_1"
+            android:paddingEnd="@dimen/dp_3"
+            android:paddingBottom="@dimen/dp_1"
+            android:textColor="@color/orange_FF5B1B"
+            android:textSize="@dimen/sp_9"
+            android:textStyle="bold"
+            tools:text="express" />
+
+        <TextView
+            android:id="@+id/sold_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/grey_999999"
+            android:textSize="@dimen/sp_11"
+            tools:text="Sold12345" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/settlement_tv"
+        android:layout_width="@dimen/dp_64"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/shape_gradient_orange"
+        android:gravity="center"
+        android:text="@string/snap_up"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_12" />
+
+
+</RelativeLayout>

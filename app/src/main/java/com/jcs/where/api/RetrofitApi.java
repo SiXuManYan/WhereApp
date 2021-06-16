@@ -1166,4 +1166,15 @@ public interface RetrofitApi {
     );
 
 
+    /**
+     * 商城评论列表
+     *
+     */
+    @GET("generalapi/v2/comments")
+    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getStoreGoodList(
+            @Query("page") int page,
+            @Query("shop_id") String shop_id
+    );
+
+
 }

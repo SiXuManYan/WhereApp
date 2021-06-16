@@ -175,6 +175,7 @@
     <string name="home_search_hint">搜索标题或关键字</string>
     <string name="home_near_hotel">附近酒店</string>
     <string name="mechanism_to">至</string>
+
     <string name="google_map">Google 地图</string>
     <string name="hotel_title">旅游住宿</string>
     <string name="search">查询</string>
@@ -688,5 +689,7 @@
     <string name="distance_first">distance from near to far</string>
     <string name="comment_first">favourable comment</string>
     <string name="look_more">查看更多</string>
+
+    <string name="mechanism_to_format">%1$s-%2$s&#160;%3$s&#160;至&#160;%4$s </string>
 
 </resources>

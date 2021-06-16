@@ -382,7 +382,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         if (isViewCreated) {
             presenter.getMessageCount()
             startScroll()
-            top_banner.startPlayIfNeeded()
         }
     }
 

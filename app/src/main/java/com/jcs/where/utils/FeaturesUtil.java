@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -40,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -532,9 +535,39 @@ public class FeaturesUtil {
         CacheUtil.getShareDefault().put(SPKey.K_SEARCH_HISTORY, "");
     }
 
-    public static String getNoWrapString(String old){
+    public static String getNoWrapString(String old) {
 
         return old.replaceAll("\n", " ");
+    }
+
+
+    public static  void startNaviGoogle(Context context, Float lat, Float lng) {
+        if (isAvilible(context, "com.google.android.apps.maps")) {
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            context.startActivity(mapIntent);
+        } else {
+            ToastUtils.showShort(R.string.no_install_google_map_prompt);
+        }
+    }
+
+    public static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
     }
 
 

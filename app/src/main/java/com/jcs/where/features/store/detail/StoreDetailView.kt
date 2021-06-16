@@ -8,5 +8,5 @@ import com.jcs.where.api.response.store.StoreDetail
  *
  */
 interface StoreDetailView :BaseMvpView {
-    fun bindDetail(response: StoreDetail)
+    fun bindDetail(data: StoreDetail)
 }

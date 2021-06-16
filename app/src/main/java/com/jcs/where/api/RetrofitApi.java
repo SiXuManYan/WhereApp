@@ -1155,4 +1155,15 @@ public interface RetrofitApi {
     Observable<JcsResponse<StoreDetail>> getStoreDetail(@Path("shop_id") int shop_id);
 
 
+    /**
+     * 商城评论列表
+     *
+     */
+    @GET("generalapi/v2/comments")
+    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getStoreCommentList(
+            @Query("page") int page,
+            @Query("shop_id") String shop_id
+    );
+
+
 }

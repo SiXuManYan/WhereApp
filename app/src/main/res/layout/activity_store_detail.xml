@@ -465,16 +465,16 @@
                 app:tl_textUnselectColor="@color/black_333333"
                 app:tl_textsize="@dimen/sp_14"
                 app:tl_underline_color="@color/grey_F5F5F5"
-                app:tl_underline_height="1px" />
+                app:tl_underline_height="1px"/>
 
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager_vp"
+            android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

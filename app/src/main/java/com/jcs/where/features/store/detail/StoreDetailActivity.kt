@@ -6,11 +6,15 @@ import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.gourmet.comment.FoodCommentFragment
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
@@ -27,7 +31,12 @@ import pl.droidsonroids.gif.GifImageView
  */
 class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetailView {
 
-    var id: Int = 0
+    var shop_id: Int = 0
+
+
+    val TAB_TITLES =
+            arrayOf(StringUtils.getString(R.string.good),
+                    StringUtils.getString(R.string.comment))
 
     override fun getLayoutId() = R.layout.activity_store_detail
 
@@ -55,6 +64,10 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
                     }
                 })
 
+
+        pager.offscreenPageLimit = TAB_TITLES.size
+        pager.adapter = InnerPagerAdapter(supportFragmentManager, 0)
+        tabs_type.setViewPager(pager)
     }
 
     override fun onResume() {
@@ -78,10 +91,10 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
             finish()
             return
         }
-        id = bundle.getInt(Constant.PARAM_ID, 0)
+        shop_id = bundle.getInt(Constant.PARAM_ID, 0)
 
         presenter = StoreDetailPresenter(this)
-        presenter.getDetail(id)
+        presenter.getDetail(shop_id)
     }
 
     override fun bindListener() {
@@ -131,5 +144,23 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         web_value_tv.text = data.web_site
         email_value_tv.text = data.email
         facebook_value_tv.text = data.facebook
+    }
+
+
+    private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
+
+
+        override fun getPageTitle(position: Int): CharSequence? = TAB_TITLES[position]
+
+
+        override fun getItem(position: Int): Fragment {
+            if (position == 0) {
+                return FoodCommentFragment.newInstance(shop_id.toString(), position)
+            }
+            return FoodCommentFragment.newInstance(shop_id.toString(), position)
+
+        }
+
+        override fun getCount(): Int = TAB_TITLES.size
     }
 }

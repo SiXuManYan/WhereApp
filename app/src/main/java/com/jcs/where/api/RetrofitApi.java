@@ -77,6 +77,7 @@ import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.StoreDetail;
+import com.jcs.where.api.response.store.StoreGoods;
 import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
@@ -1167,11 +1168,11 @@ public interface RetrofitApi {
 
 
     /**
-     * 商城评论列表
+     * 商城商品列表
      *
      */
     @GET("generalapi/v2/comments")
-    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getStoreGoodList(
+    Observable<JcsResponse<PageResponse<StoreGoods>>> getStoreGoodList(
             @Query("page") int page,
             @Query("shop_id") String shop_id
     );

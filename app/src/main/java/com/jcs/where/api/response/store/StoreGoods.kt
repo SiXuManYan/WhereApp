@@ -12,6 +12,10 @@ data class StoreGoods (
         var id: Int,
         var sale_num: Int,
         var inventory: Int,
+
+        /**
+         * 配送类型（1:自提，2:商家配送，3:两者都有）
+         */
         var delivery_type: Int,
         var price:BigDecimal = BigDecimal.ZERO,
         var original_price:BigDecimal = BigDecimal.ZERO,

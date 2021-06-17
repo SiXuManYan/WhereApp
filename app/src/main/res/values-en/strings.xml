@@ -689,5 +689,6 @@
     <string name="mechanism_to_format">%1$s-%2$s&#160;%3$s&#160;to&#160;%4$s </string>
     <string name="good">goods</string>
     <string name="snap_up">Snap up</string>
+    <string name="sold_format">Sold %1$d</string>
 
 </resources>

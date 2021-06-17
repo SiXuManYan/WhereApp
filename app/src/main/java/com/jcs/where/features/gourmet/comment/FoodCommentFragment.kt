@@ -48,7 +48,7 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
             return fragment
         }
 
-         /**
+        /**
          * 美食评论
          * @param shop_id 商家ID
          */
@@ -77,7 +77,7 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
         if (shop_id.isNotEmpty()) {
             swipe_layout.isEnabled = false
         }
-         emptyView = EmptyView(context).apply {
+        emptyView = EmptyView(context).apply {
             showEmptyNothing()
         }
         mAdapter = FoodCommentAdapter().apply {

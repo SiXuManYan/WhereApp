@@ -2,6 +2,7 @@ package com.jcs.where.features.store.filter
 
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Bundle
 import android.view.View
 import android.widget.CheckedTextView
 import android.widget.ImageView
@@ -17,6 +18,7 @@ import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.filter.screen.ScreenFilterFragment
 import com.jcs.where.features.store.search.StoreSearchAdapter
 import com.jcs.where.utils.Constant
@@ -282,7 +284,10 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
+        val data = mAdapter.data[position]
+        startActivity(StoreDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, data.id)
+        })
     }
 
     override fun onLoadMore() {

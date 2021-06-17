@@ -1171,7 +1171,7 @@ public interface RetrofitApi {
      * 商城商品列表
      *
      */
-    @GET("generalapi/v2/comments")
+    @GET("generalapi/v2/goods")
     Observable<JcsResponse<PageResponse<StoreGoods>>> getStoreGoodList(
             @Query("page") int page,
             @Query("shop_id") String shop_id

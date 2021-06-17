@@ -694,5 +694,6 @@
     <string name="good">商品</string>
     <string name="snap_up">抢购</string>
     <string name="sold_format">销量 %1d</string>
+    <string name="collapse_details">收起详情</string>
 
 </resources>

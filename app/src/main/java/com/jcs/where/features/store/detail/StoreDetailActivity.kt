@@ -39,7 +39,10 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
             arrayOf(StringUtils.getString(R.string.good),
                     StringUtils.getString(R.string.comment))
 
+
     override fun getLayoutId() = R.layout.activity_store_detail
+
+    override fun isStatusDark() = true
 
     override fun initView() {
 
@@ -102,8 +105,12 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         fold_ll.setOnClickListener {
             if (hide_ll.visibility != View.VISIBLE) {
                 hide_ll.visibility = View.VISIBLE
+                fold_tv.text = getString(R.string.collapse_details)
+                fold_iv.rotation = 180f
             } else {
                 hide_ll.visibility = View.GONE
+                fold_tv.text = getString(R.string.look_more)
+                fold_iv.rotation = 0f
             }
         }
     }
@@ -145,6 +152,8 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         web_value_tv.text = data.web_site
         email_value_tv.text = data.email
         facebook_value_tv.text = data.facebook
+
+        address_tv.text = data.address
     }
 
 
@@ -156,11 +165,11 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         override fun getItem(position: Int): Fragment {
             if (position == 0) {
-                return FoodCommentFragment.newInstance(shop_id.toString())
-            }else{
                 return StoreGoodFragment.newInstance(shop_id.toString())
-            }
 
+            } else {
+                return FoodCommentFragment.newInstance(shop_id.toString())
+            }
         }
 
         override fun getCount(): Int = TAB_TITLES.size

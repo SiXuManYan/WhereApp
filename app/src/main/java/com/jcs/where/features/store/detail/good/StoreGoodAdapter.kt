@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreGoods
@@ -17,7 +18,7 @@ import com.jcs.where.utils.image.GlideRoundedCornersTransform
  * Created by Wangsw  2021/6/16 16:14.
  *
  */
-class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.item_store_good) {
+class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.item_store_good), LoadMoreModule {
 
 
     override fun convert(holder: BaseViewHolder, item: StoreGoods) {
@@ -37,7 +38,12 @@ class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.i
                 GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                 .error(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray)
-        Glide.with(context).load(item.images).apply(options).into(image_iv);
+
+
+        if (item.images.isNotEmpty()) {
+            Glide.with(context).load(item.images[0]).apply(options).into(image_iv);
+        }
+
 
         good_name_tv.text = item.title
 
@@ -62,7 +68,7 @@ class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.i
             }
         }
 
-        sold_tv.text = StringUtils.getString(R.string.sold_format ,item.sale_num)
+        sold_tv.text = StringUtils.getString(R.string.sold_format, item.sale_num)
 
 
     }

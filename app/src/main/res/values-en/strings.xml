@@ -690,5 +690,6 @@
     <string name="good">goods</string>
     <string name="snap_up">Snap up</string>
     <string name="sold_format">Sold %1$d</string>
+    <string name="collapse_details">Collapse Details</string>
 
 </resources>

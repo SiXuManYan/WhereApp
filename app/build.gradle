@@ -169,7 +169,7 @@ dependencies {
 
     // comm 100
     implementation files('libs/jpush-android-4.0.6-google_play.jar')
-    implementation files('libs/jcore-android-2.7.6-google_play.jar')
+    implementation files('libs/jcore-android-2.8.2-google_play.jar')
     implementation(name: 'visitor-client-v1.0', ext:'aar')
 
     // 知乎相册选择器

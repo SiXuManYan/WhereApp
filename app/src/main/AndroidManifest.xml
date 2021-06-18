@@ -366,7 +366,7 @@
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="true"
-            android:theme="@style/MyDialogStyle" >
+            android:theme="@style/MyDialogStyle">
 
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -424,18 +424,6 @@
             android:exported="false"
             android:process=":pushcore" />
 
-        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
-        <!-- 若不启用该功能可删除该组件，或把 enabled 设置成 false ；App 不会被其他 App 拉起，但会拉起其他的 App。 -->
-        <service
-            android:name="cn.jpush.android.service.DaemonService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.DaemonService" />
-
-                <category android:name="${JPUSH_PKGNAME}" />
-            </intent-filter>
-        </service>
 
         <!-- since 3.1.0 Required SDK 核心功能 -->
         <provider
@@ -448,7 +436,7 @@
             android:name="cn.jpush.android.service.JNotifyActivity"
             android:exported="true"
             android:taskAffinity="jpush.custom"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.JNotifyActivity" />
 
@@ -471,13 +459,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <!-- Optional -->
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
@@ -595,18 +576,36 @@
         <activity
             android:name=".features.category.edit.CategoryEditActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".features.gourmet.order.OrderSubmitActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".features.pay.PayActivity" />
-        <activity android:name=".features.qr.QRActivity" />
-        <activity android:name=".features.gourmet.takeaway.TakeawayActivity" />
-        <activity android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity" />
-        <activity android:name=".features.gourmet.order.detail.FoodOrderDetailActivity" />
-        <activity android:name=".features.gourmet.takeaway.order.TakeawayOrderDetailActivity" />
-        <activity android:name=".features.gourmet.restaurant.map.RestaurantMapActivity" />
-        <activity android:name=".features.gourmet.comment.FoodCommentActivity" />
-        <activity android:name=".features.store.list.StoreRecommendActivity" />
+        <activity
+            android:name=".features.gourmet.order.OrderSubmitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.pay.PayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.qr.QRActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.takeaway.TakeawayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.order.detail.FoodOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.takeaway.order.TakeawayOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.restaurant.map.RestaurantMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.comment.FoodCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.store.list.StoreRecommendActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

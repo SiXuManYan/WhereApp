@@ -77,6 +77,7 @@ import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.StoreDetail;
+import com.jcs.where.api.response.store.StoreGoodDetail;
 import com.jcs.where.api.response.store.StoreGoods;
 import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.version.VersionResponse;
@@ -1175,6 +1176,16 @@ public interface RetrofitApi {
     Observable<JcsResponse<PageResponse<StoreGoods>>> getStoreGoodList(
             @Query("page") int page,
             @Query("shop_id") String shop_id
+    );
+
+
+    /**
+     * 商城商品列表
+     *
+     */
+    @GET("generalapi/v2/goods/{good_id}")
+    Observable<JcsResponse<StoreGoodDetail>> getStoreGoodDetail(
+            @Query("good_id") int shop_id
     );
 
 

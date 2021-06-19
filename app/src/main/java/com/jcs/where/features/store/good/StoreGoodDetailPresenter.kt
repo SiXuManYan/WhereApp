@@ -14,7 +14,7 @@ class StoreGoodDetailPresenter(private var view: StoreGoodDetailView) : BaseMvpP
     fun getData(goodId: Int) {
         requestApi(mRetrofit.getStoreGoodDetail(goodId), object : BaseMvpObserver<StoreGoodDetail>(view) {
             override fun onSuccess(response: StoreGoodDetail) {
-                view.bingData(response)
+                view.bindData(response)
             }
         })
     }

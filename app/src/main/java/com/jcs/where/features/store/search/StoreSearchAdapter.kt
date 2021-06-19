@@ -1,5 +1,8 @@
 package com.jcs.where.features.store.search
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -14,6 +17,8 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreRecommend
+import com.jcs.where.features.store.good.StoreGoodDetailActivity
+import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
@@ -115,6 +120,17 @@ class StoreSearchAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.la
             val builder = SpanUtils().append(oldPrice).setStrikethrough().create()
             old_price_tv.text = builder
 
+
+            val goodId = it.id
+            child.setOnClickListener {
+
+                val intent = Intent(context, StoreGoodDetailActivity::class.java).setFlags(FLAG_ACTIVITY_NEW_TASK)
+                intent.putExtras(Bundle().apply {
+                    putInt(Constant.PARAM_ID, goodId)
+                })
+                context.startActivity(intent)
+
+            }
 
         }
 

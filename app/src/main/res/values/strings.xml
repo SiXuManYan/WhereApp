@@ -682,9 +682,9 @@
     <string name="support_delivery">支持外卖</string>
     <string name="classification">classification</string>
     <string name="screen">screen</string>
-    <string name="business_services">Business services</string>
-    <string name="self_extraction">Self Extraction</string>
-    <string name="express">express</string>
+    <string name="business_services">商家服务</string>
+    <string name="self_extraction">自取</string>
+    <string name="express">快递配送</string>
     <string name="intelligent_sorting">Intelligent sorting</string>
     <string name="distance_first">distance from near to far</string>
     <string name="comment_first">favourable comment</string>
@@ -696,5 +696,8 @@
     <string name="sold_format">销量 %1d</string>
     <string name="collapse_details">收起详情</string>
     <string name="product_details">商品详情</string>
+    <string name="number">数量</string>
+    <string name="stock_format">库存%1$d</string>
+    <string name="delivery_method_none">请选择配送方式</string>
 
 </resources>

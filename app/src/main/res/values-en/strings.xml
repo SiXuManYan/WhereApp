@@ -692,5 +692,8 @@
     <string name="sold_format">Sold %1$d</string>
     <string name="collapse_details">Collapse Details</string>
     <string name="product_details">Product details</string>
+    <string name="number">number</string>
+    <string name="stock_format">stock%1$d</string>
+    <string name="delivery_method_none">Please choose a delivery method</string>
 
 </resources>

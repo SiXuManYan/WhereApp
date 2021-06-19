@@ -1,13 +1,17 @@
 package com.jcs.where.features.store.search
 
+import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_search_store.*
@@ -30,6 +34,7 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
     override fun isStatusDark() = true
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.getStringExtra(Constant.PARAM_TITLE)?.let {
             title = it
             search_aet.text = it
@@ -39,6 +44,7 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
         }
         mAdapter = StoreSearchAdapter().apply {
             setEmptyView(emptyView)
+            addChildClickViewIds(R.id.parent_rl)
             setOnItemChildClickListener(this@StoreSearchActivity)
         }
 
@@ -95,7 +101,17 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
 
+        when (view.id) {
+            R.id.parent_rl -> {
+                startActivity(StoreDetailActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, data.id)
+                })
+            }
+            else -> {
+            }
+        }
     }
 
 

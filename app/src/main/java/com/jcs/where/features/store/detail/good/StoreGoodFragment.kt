@@ -2,10 +2,13 @@ package com.jcs.where.features.store.detail.good
 
 import android.os.Bundle
 import android.view.View
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreGoods
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.store.good.StoreGoodDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.fragment_refresh_list_no_refresh.*
@@ -14,9 +17,7 @@ import kotlinx.android.synthetic.main.fragment_refresh_list_no_refresh.*
  * Created by Wangsw  2021/6/16 15:27.
  * 商城 商品列表
  */
-class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, OnLoadMoreListener {
-
-
+class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, OnLoadMoreListener, OnItemClickListener {
 
 
     /** 商家id */
@@ -24,7 +25,7 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
 
     private var page = Constant.DEFAULT_FIRST_PAGE
 
-    private  lateinit var mAdapter: StoreGoodAdapter
+    private lateinit var mAdapter: StoreGoodAdapter
     private lateinit var emptyView: EmptyView
 
 
@@ -61,6 +62,7 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener(this@StoreGoodFragment)
             setEmptyView(emptyView)
+            setOnItemClickListener(this@StoreGoodFragment)
         }
         recycler.adapter = mAdapter
 
@@ -81,7 +83,7 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
     }
 
     override fun loadOnVisible() {
-        presenter.getGood( shop_id,page)
+        presenter.getGood(shop_id, page)
     }
 
     override fun bindData(data: MutableList<StoreGoods>, lastPage: Boolean) {
@@ -107,6 +109,14 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
                 loadMoreModule.loadMoreComplete()
             }
         }
+    }
+
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+        startActivity(StoreGoodDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, data.id)
+        })
     }
 
 }

@@ -1,9 +1,11 @@
 package com.jcs.where.features.store.history
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.features.store.search.StoreSearchActivity
@@ -26,6 +28,7 @@ class SearchHistoryActivity : BaseActivity() {
     override fun isStatusDark() = true
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         mAdapter = SearchHistoryAdapter().apply {
             setOnItemClickListener { _, _, position ->
                 val s = mAdapter.data[position]

@@ -7,11 +7,15 @@ import android.view.View
 import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
@@ -20,9 +24,11 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.filter.screen.ScreenFilterFragment
-import com.jcs.where.features.store.search.StoreSearchAdapter
+import com.jcs.where.features.store.history.SearchHistoryActivity
+import com.jcs.where.features.store.recommend.StoreRecommendAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_filer.*
 import kotlinx.android.synthetic.main.layout_filter_store.*
 
@@ -30,10 +36,10 @@ import kotlinx.android.synthetic.main.layout_filter_store.*
  * Created by Wangsw  2021/6/9 10:24.
  * 商城筛选
  */
-class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilterView, OnItemChildClickListener, OnLoadMoreListener {
+class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilterView, OnLoadMoreListener, OnItemClickListener {
 
 
-    private lateinit var mAdapter: StoreSearchAdapter
+    private lateinit var mAdapter: StoreRecommendAdapter
     private lateinit var thirdCategoryAdapter: ThirdCategoryAdapter
     private lateinit var emptyView: EmptyView
 
@@ -140,10 +146,15 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
             showEmptyNothing()
         }
 
+        val gridLayoutManager = GridLayoutManager(this, 2)
+        val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0).apply {
+            setDrawHeaderFooter(false)
+        }
 
-        mAdapter = StoreSearchAdapter().apply {
+
+        mAdapter = StoreRecommendAdapter().apply {
             setEmptyView(emptyView)
-            setOnItemChildClickListener(this@StoreFilterActivity)
+            setOnItemClickListener(this@StoreFilterActivity)
         }
 
         mAdapter.loadMoreModule.apply {
@@ -154,7 +165,8 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
         }
         recycler_view.apply {
             adapter = mAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = gridLayoutManager
+            addItemDecoration(decoration)
         }
 
 
@@ -167,8 +179,9 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
     }
 
     override fun bindListener() {
-
-
+        title_rl.setOnClickListener {
+            startActivity(SearchHistoryActivity::class.java)
+        }
     }
 
     /**
@@ -283,16 +296,17 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
         }
     }
 
-    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val data = mAdapter.data[position]
-        startActivity(StoreDetailActivity::class.java, Bundle().apply {
-            putInt(Constant.PARAM_ID, data.id)
-        })
-    }
 
     override fun onLoadMore() {
         page++
         presenter.getData(page, cateIds, moreFilter)
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+        startActivity(StoreDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, data.id)
+        })
     }
 
 }

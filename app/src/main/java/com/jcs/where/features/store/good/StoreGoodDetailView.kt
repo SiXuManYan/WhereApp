@@ -8,5 +8,5 @@ import com.jcs.where.api.response.store.StoreGoodDetail
  *
  */
 interface StoreGoodDetailView :BaseMvpView {
-    fun bingData(response: StoreGoodDetail)
+    fun bindData(response: StoreGoodDetail)
 }

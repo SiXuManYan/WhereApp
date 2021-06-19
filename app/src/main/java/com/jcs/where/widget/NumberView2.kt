@@ -21,6 +21,10 @@ class NumberView2 : LinearLayout {
     private lateinit var add_iv: ImageView
     private lateinit var value_tv: TextView
     var goodNum = 0
+    var MIN_GOOD_NUM = 0
+
+
+    var alwaysEnableCut = false
 
 
     var valueChangeListener: OnValueChangeListener? = null
@@ -57,11 +61,13 @@ class NumberView2 : LinearLayout {
 
         cut_iv.setOnClickListener {
             goodNum -= 1
+            if (goodNum <= MIN_GOOD_NUM) {
+                goodNum = MIN_GOOD_NUM
 
-            if (goodNum <= 0) {
-                goodNum = 0
-                cut_iv.visibility = View.INVISIBLE
-                value_tv.visibility = View.INVISIBLE
+                if (!alwaysEnableCut) {
+                    cut_iv.visibility = View.INVISIBLE
+                    value_tv.visibility = View.INVISIBLE
+                }
             } else {
                 cut_iv.visibility = View.VISIBLE
                 value_tv.visibility = View.VISIBLE
@@ -108,6 +114,12 @@ class NumberView2 : LinearLayout {
             value_tv.visibility = View.INVISIBLE
         }
         value_tv.text = goodNum.toString()
+    }
+
+
+    fun alwaysEnableCut(tag: Boolean) {
+        alwaysEnableCut = tag
+        cut_iv.visibility = View.VISIBLE
     }
 
 

@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreRecommend
@@ -16,7 +17,7 @@ import com.jcs.where.utils.image.GlideRoundedCornersTransform
  * Created by Wangsw  2021/6/1 16:09.
  *
  */
-class StoreRecommendAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.layout.item_store_recommend) {
+class StoreRecommendAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.layout.item_store_recommend), LoadMoreModule {
 
 
     override fun convert(holder: BaseViewHolder, item: StoreRecommend) {

@@ -6,15 +6,7 @@ import java.math.BigDecimal
  * Created by Wangsw  2021/6/18 17:44.
  *
  */
-data class StoreGoodDetail(
-
-/*{
-    "delivery_times": "1 day",
-    "take_times": "all day",
-    "delivery_type": 2,
-    "inventory": 52
-}*/
-
+data class StoreGoodDetail (
 
         var id: Int,
         var title: String,

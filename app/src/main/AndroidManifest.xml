@@ -611,6 +611,7 @@
         <activity android:name=".features.store.filter.StoreFilterActivity" />
         <activity android:name=".features.store.detail.StoreDetailActivity" />
         <activity android:name=".features.store.good.StoreGoodDetailActivity" />
+        <activity android:name=".features.store.order.StoreOrderCommitActivity" />
 
     </application>
 

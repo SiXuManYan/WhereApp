@@ -39,20 +39,22 @@ data class StoreDetail(
 
         var week_start: Int,
         var week_end: Int,
-        var start_time:  String = "",
-        var end_time:  String = "",
-        var address:  String = "",
-        var abstract:  String = "",
-        var extension_tel:  String = "",
-        var web_site:  String = "",
-        var email:  String = "",
-        var facebook:  String = "",
-        var mer_uuid:  String = "",
-        var mer_name:  String = "",
-        var tel:  String = "",
-        var lat:  Float = 0f,
-        var lng:  Float = 0f
+        var start_time: String = "",
+        var end_time: String = "",
+        var address: String = "",
+        var abstract: String = "",
+        var extension_tel: String = "",
+        var web_site: String = "",
+        var email: String = "",
+        var facebook: String = "",
+        var mer_uuid: String = "",
+        var mer_name: String = "",
+        var tel: String = "",
+        var lat: Float = 0f,
+        var lng: Float = 0f,
 
-
-
-        )
+        /**
+         * 配送费
+         */
+        var delivery_fee: Float = 0f
+)

@@ -11,6 +11,7 @@ data class StoreGoods (
 
         var id: Int,
         var sale_num: Int,
+
         var inventory: Int,
 
         /**

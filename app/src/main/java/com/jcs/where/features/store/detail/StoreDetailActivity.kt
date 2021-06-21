@@ -33,6 +33,12 @@ import pl.droidsonroids.gif.GifImageView
 class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetailView {
 
     var shop_id: Int = 0
+    var shop_name: String = ""
+
+    /**
+     * 配送费
+     */
+    var delivery_fee: Float = 0f
 
 
     val TAB_TITLES =
@@ -119,6 +125,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         top_banner.setImageUrls(data.images).start()
         title_tv.text = data.title
+        shop_name = data.title
 
         nav_tv.setOnClickListener {
             if (data.lat != 0f && data.lng != 0f) {
@@ -152,8 +159,8 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         web_value_tv.text = data.web_site
         email_value_tv.text = data.email
         facebook_value_tv.text = data.facebook
-
         address_tv.text = data.address
+        delivery_fee = data.delivery_fee
     }
 
 
@@ -164,11 +171,10 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
 
         override fun getItem(position: Int): Fragment {
-            if (position == 0) {
-                return StoreGoodFragment.newInstance(shop_id.toString())
-
+            return if (position == 0) {
+                StoreGoodFragment.newInstance(shop_id, delivery_fee,shop_name)
             } else {
-                return FoodCommentFragment.newInstance(shop_id.toString())
+                FoodCommentFragment.newInstance(shop_id.toString())
             }
         }
 

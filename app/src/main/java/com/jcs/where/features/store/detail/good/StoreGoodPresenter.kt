@@ -11,7 +11,7 @@ import com.jcs.where.api.response.store.StoreGoods
  */
 class StoreGoodPresenter(private var view: StoreGoodView) : BaseMvpPresenter(view) {
 
-    fun getGood(shop_id: String, page: Int) {
+    fun getGood(shop_id: Int, page: Int) {
         requestApi(mRetrofit.getStoreGoodList(page, shop_id), object : BaseMvpObserver<PageResponse<StoreGoods>>(view) {
             override fun onSuccess(response: PageResponse<StoreGoods>) {
                 val isLastPage = response.lastPage == page

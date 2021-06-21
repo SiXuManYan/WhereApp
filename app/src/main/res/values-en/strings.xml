@@ -695,5 +695,8 @@
     <string name="number">number</string>
     <string name="stock_format">stock%1$d</string>
     <string name="delivery_method_none">Please choose a delivery method</string>
+    <string name="phone_number">phone number</string>
+    <string name="store_phone_hint">Please input mobile phone number</string>
+    <string name="consignee_info">Consignee information</string>
 
 </resources>

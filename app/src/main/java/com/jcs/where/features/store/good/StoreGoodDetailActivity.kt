@@ -1,6 +1,7 @@
 package com.jcs.where.features.store.good
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import com.blankj.utilcode.util.ScreenUtils
@@ -9,14 +10,19 @@ import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreGoodDetail
+import com.jcs.where.api.response.store.StoreGoodsCommit
+import com.jcs.where.api.response.store.StoreOrderCommitList
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import kotlinx.android.synthetic.main.activity_store_good_detail.*
 import kotlinx.android.synthetic.main.layout_store_good_detail_cart.*
+import kotlinx.android.synthetic.main.vp_item_image.*
 import pl.droidsonroids.gif.GifImageView
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/6/18 14:23.
@@ -25,6 +31,7 @@ import pl.droidsonroids.gif.GifImageView
 class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), StoreGoodDetailView {
 
     var good_id: Int = 0
+    var shop_id: Int = 0
 
     var isBuyNow = false
 
@@ -38,6 +45,24 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
      */
     var take_times = ""
 
+    /**
+     * 配送费
+     */
+    var delivery_fee: Float = 0f
+
+    /**
+     * 商家名称
+     */
+    var shop_name = ""
+
+    /**
+     * 商品图片
+     */
+    var good_image = ""
+    var good_name = ""
+
+    var now_price: BigDecimal = BigDecimal.ZERO
+
 
     override fun getLayoutId() = R.layout.activity_store_good_detail
 
@@ -49,7 +74,9 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
             return
         }
         good_id = bundle.getInt(Constant.PARAM_ID, 0)
-
+        delivery_fee = bundle.getFloat(Constant.PARAM_DELIVERY_FEE, 0f)
+        shop_name = bundle.getString(Constant.PARAM_SHOP_NAME, "")
+        shop_id = bundle.getInt(Constant.PARAM_SHOP_ID)
 
         val bannerParams = ll_banner.layoutParams.apply {
             height = ScreenUtils.getScreenWidth() * 206 / 375
@@ -129,7 +156,46 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
             if (!express_rb.isChecked && !self_rb.isChecked) {
                 ToastUtils.showShort(R.string.delivery_method_none)
                 return@setOnClickListener
+
             }
+
+            val deliveryType = if (express_rb.isChecked) {
+                2
+            } else {
+                1
+            }
+
+            if (express_rb.isChecked) {
+                if (isBuyNow) {
+                    val goodInfo = StoreGoodsCommit().apply {
+                        good_id = this@StoreGoodDetailActivity.good_id
+                        good_num = number_view.goodNum
+                        delivery_type = deliveryType
+                        price = now_price
+                        image = good_image
+                        goodName = good_name
+                    }
+
+
+                    val apply = StoreOrderCommitList().apply {
+                        shop_id = this@StoreGoodDetailActivity.shop_id
+                        shop_title = this@StoreGoodDetailActivity.shop_name
+                        delivery_type = deliveryType
+                        goods.add(goodInfo)
+
+                    }
+
+                    startActivity(StoreOrderCommitActivity::class.java, Bundle().apply {
+                        putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, apply)
+                    })
+                }
+
+
+
+
+            }
+
+
         }
 
 
@@ -137,10 +203,16 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
 
 
     override fun bindData(data: StoreGoodDetail) {
-        top_banner.setImageUrls(data.images).start()
-        title_tv.text = data.title
+        val images = data.images
+        if (images.isNotEmpty()) {
+            top_banner.setImageUrls(images).start()
+            good_image = images[0]
+        }
 
-        now_price_tv.text = StringUtils.getString(R.string.price_unit_format, data.price.toPlainString())
+        title_tv.text = data.title
+        good_name = data.title
+        now_price = data.price
+        now_price_tv.text = StringUtils.getString(R.string.price_unit_format, now_price.toPlainString())
         val oldPrice = StringUtils.getString(R.string.price_unit_format, data.original_price.toPlainString())
         val builder = SpanUtils().append(oldPrice).setStrikethrough().create()
         old_price_tv.text = builder
@@ -162,6 +234,6 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
 
         delivery_times = data.delivery_times
         take_times = data.take_times
-        stock_tv.text = getString(R.string.stock_format ,data.inventory)
+        stock_tv.text = getString(R.string.stock_format, data.inventory)
     }
 }

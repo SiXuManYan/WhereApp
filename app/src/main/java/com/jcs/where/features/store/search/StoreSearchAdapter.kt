@@ -122,15 +122,15 @@ class StoreSearchAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.la
 
 
             val goodId = it.id
-            child.setOnClickListener {
-
-                val intent = Intent(context, StoreGoodDetailActivity::class.java).setFlags(FLAG_ACTIVITY_NEW_TASK)
-                intent.putExtras(Bundle().apply {
-                    putInt(Constant.PARAM_ID, goodId)
-                })
-                context.startActivity(intent)
-
-            }
+//            child.setOnClickListener {
+//
+//                val intent = Intent(context, StoreGoodDetailActivity::class.java).setFlags(FLAG_ACTIVITY_NEW_TASK)
+//                intent.putExtras(Bundle().apply {
+//                    putInt(Constant.PARAM_ID, goodId)
+//                })
+//                context.startActivity(intent)
+//
+//            }
 
         }
 

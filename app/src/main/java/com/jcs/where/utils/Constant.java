@@ -22,7 +22,6 @@ public class Constant {
 
     public static final String PARAM_POSITION = "position";
     public static final String PARAM_ID = "param_id";
-    public static final String PARAM_SHOP_ID = "param_shop_id";
     public static final String PARAM_TYPE = "param_type";
     public static final String PARAM_ID_2 = "id";
     public static final String PARAM_PID = "param_pid";
@@ -31,6 +30,17 @@ public class Constant {
     public static final String PARAM_RESTAURANT_NAME = "param_restaurant_name";
     public static final String PARAM_NUMBER = "param_number";
     public static final String PARAM_ORDER_ID = "param_order_id";
+    public static final String PARAM_SHOP_ID = "param_shop_id";
+    public static final String PARAM_SHOP_NAME = "param_shop_name";
+    public static final String PARAM_SHOP_IMAGE = "param_shop_image";
+    public static final String PARAM_DELIVERY_TYPE = "param_delivery_type";
+    public static final String PARAM_DELIVERY_FEE = "param_delivery_fee";
+    public static final String PARAM_GOOD_ID = "param_good_id";
+    public static final String PARAM_GOOD_NUMBER = "param_good_number";
+    public static final String PARAM_PRICE = "PARAM_PRICE";
+    public static final String PARAM_GOOD_NAME = "param_good_name";
+    public static final String PARAM_GOOD_IMAGE = "param_good_image";
+    public static final String PARAM_ORDER_COMMIT_DATA = "param_order_commit_data";
 
     /**
      * 账号

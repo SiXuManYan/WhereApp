@@ -21,7 +21,12 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
 
 
     /** 商家id */
-    private var shop_id: String = ""
+    private var shop_id: Int = 0
+
+    /** 配送费 */
+    private var delivery_fee: Float = 0f
+
+    private var shop_name: String = ""
 
     private var page = Constant.DEFAULT_FIRST_PAGE
 
@@ -35,10 +40,12 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
          * 美食评论
          * @param shop_id 商家ID
          */
-        fun newInstance(shop_id: String): StoreGoodFragment {
+        fun newInstance(shop_id: Int, delivery_fee: Float, shop_name: String): StoreGoodFragment {
             val fragment = StoreGoodFragment()
             val bundle = Bundle().apply {
-                putString(Constant.PARAM_SHOP_ID, shop_id)
+                putInt(Constant.PARAM_SHOP_ID, shop_id)
+                putFloat(Constant.PARAM_DELIVERY_FEE, delivery_fee)
+                putString(Constant.PARAM_SHOP_NAME, shop_name)
             }
             fragment.arguments = bundle
             return fragment
@@ -51,7 +58,9 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
     override fun initView(view: View) {
 
         arguments?.let {
-            shop_id = it.getString(Constant.PARAM_SHOP_ID, "")
+            shop_id = it.getInt(Constant.PARAM_SHOP_ID)
+            delivery_fee = it.getFloat(Constant.PARAM_DELIVERY_FEE)
+            shop_name = it.getString(Constant.PARAM_SHOP_NAME, "")
         }
 
         emptyView = EmptyView(context).apply {
@@ -116,6 +125,10 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
         val data = mAdapter.data[position]
         startActivity(StoreGoodDetailActivity::class.java, Bundle().apply {
             putInt(Constant.PARAM_ID, data.id)
+            putInt(Constant.PARAM_SHOP_ID, shop_id)
+            putFloat(Constant.PARAM_DELIVERY_FEE, delivery_fee)
+            putString(Constant.PARAM_SHOP_NAME, shop_name)
+
         })
     }
 

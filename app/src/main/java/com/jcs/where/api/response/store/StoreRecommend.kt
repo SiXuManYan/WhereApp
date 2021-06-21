@@ -28,25 +28,4 @@ data class StoreRecommend(
 
 )
 
-data class StoreGood(
-
-        var id: Int,
-
-        /** 销量 */
-        var sale_num: Int,
-
-        /** 库存 */
-        var inventory: Int,
-
-        var title: String,
-        var images: ArrayList<String> = ArrayList(),
-        var price: BigDecimal = BigDecimal.ZERO,
-        var original_price: BigDecimal = BigDecimal.ZERO,
-
-        /**
-         * 配送方式（1:自提，2:商家配送，3:两者都有）
-         */
-        var delivery_type: Int
-
-)
 

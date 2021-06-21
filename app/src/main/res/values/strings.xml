@@ -699,5 +699,8 @@
     <string name="number">数量</string>
     <string name="stock_format">库存%1$d</string>
     <string name="delivery_method_none">请选择配送方式</string>
+    <string name="phone_number">手机号码</string>
+    <string name="store_phone_hint">请输入手机号码</string>
+    <string name="consignee_info">收件人信息</string>
 
 </resources>

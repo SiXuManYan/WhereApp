@@ -1175,7 +1175,7 @@ public interface RetrofitApi {
     @GET("generalapi/v2/goods")
     Observable<JcsResponse<PageResponse<StoreGoods>>> getStoreGoodList(
             @Query("page") int page,
-            @Query("shop_id") String shop_id
+            @Query("shop_id") int shop_id
     );
 
 

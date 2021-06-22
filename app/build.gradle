@@ -16,8 +16,8 @@ android {
         applicationId "com.jcs.where"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 12
-        versionName "0.1.12"
+        versionCode 13
+        versionName "0.1.13"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"
@@ -168,7 +168,8 @@ dependencies {
 
 
     // comm 100
-    implementation files('libs/jpush-android-4.0.6-google_play.jar')
+//    implementation files('libs/jpush-android-4.0.6-google_play.jar')
+    implementation files('libs/jpush-android-3.7.0-google_play.jar')
     implementation files('libs/jcore-android-2.8.2-google_play.jar')
     implementation(name: 'visitor-client-v1.0', ext:'aar')
 

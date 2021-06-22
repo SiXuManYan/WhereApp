@@ -122,7 +122,6 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         // 收货地址
         mAddressAdapter = AddressAdapter().apply {
             addChildClickViewIds(R.id.edit_iv)
-
             setOnItemClickListener { adapter, view, position ->
                 val selectData = mAddressAdapter.data[position]
                 mSelectAddressData = selectData

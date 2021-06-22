@@ -1189,4 +1189,15 @@ public interface RetrofitApi {
     );
 
 
+
+    /**
+     * 商城商品列表
+     *
+     */
+    @POST("generalapi/v2/bank_card/pay")
+    Observable<JcsResponse<StoreGoodDetail>> storeOrderCommit(
+            @Path("good_id") int good_id
+    );
+
+
 }

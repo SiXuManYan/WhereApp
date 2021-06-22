@@ -1,6 +1,8 @@
 package com.jcs.where.features.store.order
 
+import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.utils.BigDecimalUtil
 import java.math.BigDecimal
 
@@ -26,5 +28,16 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView):BaseMvpP
         }
         return totalPrice
     }
+
+    fun getAddress() {
+        requestApi(mRetrofit.addressList(), object : BaseMvpObserver<List<AddressResponse>>(view) {
+            override fun onSuccess(response: List<AddressResponse>) {
+
+                view.bindAddress(response.toMutableList())
+            }
+
+        })
+    }
+
 
 }

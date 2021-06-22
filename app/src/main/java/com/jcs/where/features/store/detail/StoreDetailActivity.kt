@@ -12,7 +12,9 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
+import com.jcs.where.api.request.StoreShopRequest
 import com.jcs.where.api.response.store.StoreDetail
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentFragment
 import com.jcs.where.features.store.detail.good.StoreGoodFragment
@@ -24,6 +26,7 @@ import com.jcs.where.view.XBanner.XBanner
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_detail.*
+import org.greenrobot.eventbus.EventBus
 import pl.droidsonroids.gif.GifImageView
 
 /**
@@ -161,6 +164,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         facebook_value_tv.text = data.facebook
         address_tv.text = data.address
         delivery_fee = data.delivery_fee
+        EventBus.getDefault().post(BaseEvent<StoreShopRequest>(StoreShopRequest(shop_name, delivery_fee)))
     }
 
 
@@ -172,7 +176,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         override fun getItem(position: Int): Fragment {
             return if (position == 0) {
-                StoreGoodFragment.newInstance(shop_id, delivery_fee,shop_name)
+                StoreGoodFragment.newInstance(shop_id)
             } else {
                 FoodCommentFragment.newInstance(shop_id.toString())
             }

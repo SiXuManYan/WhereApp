@@ -7,7 +7,7 @@ import java.math.BigDecimal
  * Created by Wangsw  2021/6/21 14:42.
  *
  */
-class StoreOrderCommitList : Serializable {
+class StoreOrderCommitData : Serializable {
 
     var shop_id: Int = 0
 
@@ -22,6 +22,8 @@ class StoreOrderCommitList : Serializable {
     var goods: ArrayList<StoreGoodsCommit> = ArrayList()
 
     var shop_title: String = ""
+
+    var delivery_fee:Float = 0f
 
 }
 

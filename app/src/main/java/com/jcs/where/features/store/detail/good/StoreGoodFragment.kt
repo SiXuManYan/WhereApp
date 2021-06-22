@@ -6,7 +6,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
+import com.jcs.where.api.request.StoreShopRequest
 import com.jcs.where.api.response.store.StoreGoods
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.store.good.StoreGoodDetailActivity
 import com.jcs.where.utils.Constant
@@ -40,12 +42,12 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
          * 美食评论
          * @param shop_id 商家ID
          */
-        fun newInstance(shop_id: Int, delivery_fee: Float, shop_name: String): StoreGoodFragment {
+        fun newInstance(shop_id: Int): StoreGoodFragment {
             val fragment = StoreGoodFragment()
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_SHOP_ID, shop_id)
-                putFloat(Constant.PARAM_DELIVERY_FEE, delivery_fee)
-                putString(Constant.PARAM_SHOP_NAME, shop_name)
+//                putFloat(Constant.PARAM_DELIVERY_FEE, delivery_fee)
+//                putString(Constant.PARAM_SHOP_NAME, shop_name)
             }
             fragment.arguments = bundle
             return fragment
@@ -128,8 +130,17 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
             putInt(Constant.PARAM_SHOP_ID, shop_id)
             putFloat(Constant.PARAM_DELIVERY_FEE, delivery_fee)
             putString(Constant.PARAM_SHOP_NAME, shop_name)
-
         })
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        val data = baseEvent.data
+        if (data is StoreShopRequest) {
+            delivery_fee = data.delivery_fee
+            shop_name = data.shop_name
+        }
+
     }
 
 }

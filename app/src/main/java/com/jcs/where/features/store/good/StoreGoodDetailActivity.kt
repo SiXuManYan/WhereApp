@@ -11,9 +11,10 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreGoodDetail
 import com.jcs.where.api.response.store.StoreGoodsCommit
-import com.jcs.where.api.response.store.StoreOrderCommitList
+import com.jcs.where.api.response.store.StoreOrderCommitData
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
+import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
@@ -165,34 +166,31 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
                 1
             }
 
-            if (express_rb.isChecked) {
-                if (isBuyNow) {
-                    val goodInfo = StoreGoodsCommit().apply {
-                        good_id = this@StoreGoodDetailActivity.good_id
-                        good_num = number_view.goodNum
-                        delivery_type = deliveryType
-                        price = now_price
-                        image = good_image
-                        goodName = good_name
-                    }
+            val goodNum = number_view.goodNum
+            val finalPrice = BigDecimalUtil.mul(now_price, BigDecimal(goodNum))
 
-
-                    val apply = StoreOrderCommitList().apply {
-                        shop_id = this@StoreGoodDetailActivity.shop_id
-                        shop_title = this@StoreGoodDetailActivity.shop_name
-                        delivery_type = deliveryType
-                        goods.add(goodInfo)
-
-                    }
-
-                    startActivity(StoreOrderCommitActivity::class.java, Bundle().apply {
-                        putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, apply)
-                    })
+            if (isBuyNow) {
+                val goodInfo = StoreGoodsCommit().apply {
+                    good_id = this@StoreGoodDetailActivity.good_id
+                    delivery_type = deliveryType
+                    image = good_image
+                    goodName = good_name
+                    good_num = goodNum
+                    price = finalPrice
                 }
 
+                val apply = StoreOrderCommitData().apply {
+                    shop_id = this@StoreGoodDetailActivity.shop_id
+                    shop_title = this@StoreGoodDetailActivity.shop_name
+                    delivery_type = deliveryType
+                    delivery_fee = this@StoreGoodDetailActivity.delivery_fee
+                    goods.add(goodInfo)
 
+                }
 
-
+                startActivity(StoreOrderCommitActivity::class.java, Bundle().apply {
+                    putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, apply)
+                })
             }
 
 

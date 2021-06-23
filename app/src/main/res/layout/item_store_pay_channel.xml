@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_62"
+    android:background="@drawable/shape_white_radius_4"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dp_15"
+    android:paddingEnd="@dimen/dp_15">
+
+
+    <CheckedTextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        tools:text="@tools:sample/full_names" />
+
+    <ImageView
+        android:id="@+id/selected_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_pay_checked" />
+
+</RelativeLayout>

@@ -702,5 +702,6 @@
     <string name="phone_number">手机号码</string>
     <string name="store_phone_hint">请输入手机号码</string>
     <string name="consignee_info">收件人信息</string>
+    <string name="payment_amount">支付金额</string>
 
 </resources>

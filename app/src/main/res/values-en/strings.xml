@@ -698,5 +698,6 @@
     <string name="phone_number">phone number</string>
     <string name="store_phone_hint">Please input mobile phone number</string>
     <string name="consignee_info">Consignee information</string>
+    <string name="payment_amount">Payment amount</string>
 
 </resources>

@@ -77,10 +77,10 @@ import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
+import com.jcs.where.api.response.store.PayChannel;
 import com.jcs.where.api.response.store.StoreDetail;
 import com.jcs.where.api.response.store.StoreGoodDetail;
 import com.jcs.where.api.response.store.StoreGoods;
-import com.jcs.where.api.response.store.StoreOrderCommitData;
 import com.jcs.where.api.response.store.StoreOrderInfoResponse;
 import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.version.VersionResponse;
@@ -1162,7 +1162,6 @@ public interface RetrofitApi {
 
     /**
      * 商城评论列表
-     *
      */
     @GET("generalapi/v2/comments")
     Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getStoreCommentList(
@@ -1173,7 +1172,6 @@ public interface RetrofitApi {
 
     /**
      * 商城商品列表
-     *
      */
     @GET("generalapi/v2/goods")
     Observable<JcsResponse<PageResponse<StoreGoods>>> getStoreGoodList(
@@ -1184,7 +1182,6 @@ public interface RetrofitApi {
 
     /**
      * 商城商品列表
-     *
      */
     @GET("generalapi/v2/goods/{good_id}")
     Observable<JcsResponse<StoreGoodDetail>> getStoreGoodDetail(
@@ -1192,16 +1189,19 @@ public interface RetrofitApi {
     );
 
 
-
     /**
      * 商城商品列表
-     *
      */
     @POST("generalapi/v2/orders")
     Observable<JcsResponse<StoreOrderInfoResponse>> storeOrderCommit(
             @Body StoreOrderCommit request
-
     );
 
+
+    /**
+     * 商城商品列表
+     */
+    @GET("commonapi/v2/cards")
+    Observable<JcsResponse<ArrayList<PayChannel>>> getPayChannel();
 
 }

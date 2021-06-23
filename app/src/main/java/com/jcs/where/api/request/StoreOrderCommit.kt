@@ -7,9 +7,11 @@ package com.jcs.where.api.request
 class StoreOrderCommit {
 
     var delivery_type: Int = 0
-    var address_id: Int = 0
+    var address_id: String? = null
     var tel: String? = null
-    var goods: ArrayList<StoreOrderCommitShop> = ArrayList()
+
+//    var goods: ArrayList<StoreOrderCommitShop> = ArrayList()
+    var goods: String = ""
 
 }
 

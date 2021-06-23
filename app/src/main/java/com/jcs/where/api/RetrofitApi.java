@@ -10,6 +10,7 @@ import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.request.SendCodeRequest;
+import com.jcs.where.api.request.StoreOrderCommit;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.request.WriteHotelCommentRequest;
 import com.jcs.where.api.request.account.BindPhoneRequest;
@@ -79,6 +80,8 @@ import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.StoreDetail;
 import com.jcs.where.api.response.store.StoreGoodDetail;
 import com.jcs.where.api.response.store.StoreGoods;
+import com.jcs.where.api.response.store.StoreOrderCommitData;
+import com.jcs.where.api.response.store.StoreOrderInfoResponse;
 import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
@@ -1194,9 +1197,10 @@ public interface RetrofitApi {
      * 商城商品列表
      *
      */
-    @POST("generalapi/v2/bank_card/pay")
-    Observable<JcsResponse<StoreGoodDetail>> storeOrderCommit(
-            @Path("good_id") int good_id
+    @POST("generalapi/v2/orders")
+    Observable<JcsResponse<StoreOrderInfoResponse>> storeOrderCommit(
+            @Body StoreOrderCommit request
+
     );
 
 

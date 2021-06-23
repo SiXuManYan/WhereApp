@@ -2,16 +2,19 @@ package com.jcs.where.features.store.order
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.store.StoreOrderCommitData
+import com.jcs.where.api.response.store.StoreOrderInfoResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressAdapter
 import com.jcs.where.features.address.edit.AddressEditActivity
@@ -31,7 +34,7 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
     private var addressDialog: BottomSheetDialog? = null
 
-    private var data: StoreOrderCommitData? = null
+    private lateinit var data: StoreOrderCommitData
 
     /** 收货地址 */
     var mSelectAddressData: AddressResponse? = null
@@ -50,10 +53,12 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
             data = it.getSerializable(Constant.PARAM_ORDER_COMMIT_DATA) as StoreOrderCommitData
         }
 
+        initContent()
+
         initAddress()
+    }
 
-
-
+    private fun initContent() {
         mAdapter = StoreOrderCommitAdapter()
         content_rv.apply {
             adapter = mAdapter
@@ -62,10 +67,17 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
                             SizeUtils.dp2px(10f), 0, 0).apply { setDrawHeaderFooter(false) }
             )
         }
+        mAdapter.addData(data)
 
-        data?.let {
-            mAdapter.addData(it)
+        if (data.delivery_type == 1) {
+            delivery_value_tv.text = getString(R.string.self_extraction)
+            phone_rl.visibility = View.VISIBLE
+        } else {
+            delivery_value_tv.text = getString(R.string.express)
+            address_rl.visibility = View.VISIBLE
         }
+
+
     }
 
     private fun initAddress() {
@@ -112,13 +124,6 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
     }
 
 
-    override fun bindListener() {
-        address_rl.setOnClickListener {
-            showAddress()
-        }
-    }
-
-
     private fun showAddress() {
         val addressDialog = BottomSheetDialog(this)
         this.addressDialog = addressDialog
@@ -128,7 +133,7 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
             val parent = view.parent as ViewGroup
             parent.setBackgroundResource(android.R.color.transparent)
         } catch (e: Exception) {
-            e.printStackTrace()
+
         }
 
         val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
@@ -150,5 +155,33 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
     override fun bindAddress(toMutableList: MutableList<AddressResponse>) {
         mAddressAdapter.setNewInstance(toMutableList)
     }
+
+    override fun bindListener() {
+        address_rl.setOnClickListener {
+            showAddress()
+        }
+
+        submit_tv.setOnClickListener {
+
+            val phone = phone_aet.text.toString().trim()
+
+            if (data.delivery_type == 1 && phone.isEmpty()) {
+                ToastUtils.showShort("请填写手机号")
+                return@setOnClickListener
+            }
+
+            if (data.delivery_type == 2 && mSelectAddressData == null) {
+                ToastUtils.showShort(R.string.address_edit_hint)
+                return@setOnClickListener
+            }
+            presenter.orderCommit(data, mSelectAddressData!!.id, phone)
+
+        }
+    }
+
+    override fun commitSuccess(response: StoreOrderInfoResponse) {
+
+    }
+
 
 }

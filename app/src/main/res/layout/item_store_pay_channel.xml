@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/ic_pay_checked" />
+        android:src="@mipmap/ic_pay_checked"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </RelativeLayout>

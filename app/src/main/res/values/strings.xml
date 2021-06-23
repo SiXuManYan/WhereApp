@@ -703,5 +703,15 @@
     <string name="store_phone_hint">请输入手机号码</string>
     <string name="consignee_info">收件人信息</string>
     <string name="payment_amount">支付金额</string>
+    <string name="select_pay_way">选择支付渠道</string>
+    <string name="pay_info">支付信息</string>
+    <string name="payment_description">·支付方式说明</string>
+    <string name="payment_description_detail">1、请复制where收款账户，去该支付平台转账。\n2、输入正确支付金额，支付成功后，返回此页面；点击我已付款，并填写转账信息。</string>
+    <string name="payment_description_back">返回此页面：点击我的订单&#62;去付款>选择支付方式&#62;点击下一步</string>
+    <string name="payment_platform">支付平台</string>
+    <string name="payment_name">where收款名称</string>
+    <string name="copy_and_transfer">复制后去转账</string>
+    <string name="payment_account_number">where收款账号</string>
+    <string name="already_paid">我已付款</string>
 
 </resources>

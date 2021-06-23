@@ -18,6 +18,7 @@ import com.jcs.where.api.response.store.StoreOrderInfoResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressAdapter
 import com.jcs.where.features.address.edit.AddressEditActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_order_commit.*
@@ -181,6 +182,20 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
     override fun commitSuccess(response: StoreOrderInfoResponse) {
 
+
+        val orderIds = ArrayList<Int>()
+        response.orders.forEach {
+            orderIds.add(it.id)
+        }
+
+
+
+        startActivity(StorePayActivity::class.java, Bundle().apply {
+
+            putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())
+            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+
+        })
     }
 
 

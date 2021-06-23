@@ -613,6 +613,7 @@
         <activity android:name=".features.store.good.StoreGoodDetailActivity" />
         <activity android:name=".features.store.order.StoreOrderCommitActivity" />
         <activity android:name=".features.store.pay.StorePayActivity" />
+        <activity android:name=".features.store.pay.info.PayInfoActivity" />
 
     </application>
 

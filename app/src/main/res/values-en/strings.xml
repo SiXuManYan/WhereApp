@@ -699,5 +699,15 @@
     <string name="store_phone_hint">Please input mobile phone number</string>
     <string name="consignee_info">Consignee information</string>
     <string name="payment_amount">Payment amount</string>
+    <string name="select_pay_way">Please selected pay way </string>
+    <string name="pay_info">Pay Info</string>
+    <string name="payment_description">·Payment method description</string>
+    <string name="payment_description_detail">1. Please copy the where receiving account and transfer to the payment platform.\n2. Enter the correct payment amount. After the payment is successful, return to this page; click I have paid and fill in the transfer information.</string>
+    <string name="payment_description_back">Return to this page: click on my order&#62; go to payment&#62; choose payment method> click next</string>
+    <string name="payment_platform">payment platform</string>
+    <string name="payment_name">Payment name</string>
+    <string name="copy_and_transfer">Copy and transfer</string>
+    <string name="payment_account_number">Payment account number</string>
+    <string name="already_paid">I have paid</string>
 
 </resources>

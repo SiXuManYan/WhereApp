@@ -147,7 +147,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold"
-                tools:text="@string/pay_order" />
+                android:text="@string/pay_order" />
 
         </LinearLayout>
 

@@ -8,15 +8,29 @@ import java.math.BigDecimal
  */
 class StoreOrderInfoResponse {
 
-    var orders:ArrayList<StoreOrders> = ArrayList()
+    /**
+     * 订单信息
+     */
+    var orders: ArrayList<StoreOrders> = ArrayList()
 
-    var total_price : BigDecimal = BigDecimal.ZERO
+    /**
+     * 总价
+     */
+    var total_price: BigDecimal = BigDecimal.ZERO
 
 }
 
 
 class StoreOrders {
+
+    /**
+     * 订单id
+     */
     var id = 0
+
+    /**
+     * 	订单号
+     */
     var trade_no = ""
 
 }

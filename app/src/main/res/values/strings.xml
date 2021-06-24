@@ -710,8 +710,13 @@
     <string name="payment_description_back">返回此页面：点击我的订单&#62;去付款>选择支付方式&#62;点击下一步</string>
     <string name="payment_platform">支付平台</string>
     <string name="payment_name">where收款名称</string>
+    <string name="payment_name_2">付款名称</string>
     <string name="copy_and_transfer">复制后去转账</string>
     <string name="payment_account_number">where收款账号</string>
+    <string name="payment_account_number_2">付款账号</string>
     <string name="already_paid">我已付款</string>
+    <string name="store_pay_verify_hint">转账成功后，请输入您的付款账户和付款户头</string>
+    <string name="please_enter">请输入</string>
+    <string name="determine">确定</string>
 
 </resources>

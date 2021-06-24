@@ -275,7 +275,7 @@
 
 
             <TextView
-                android:id="@+id/pay_tv"
+                android:id="@+id/paid_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginStart="@dimen/dp_15"

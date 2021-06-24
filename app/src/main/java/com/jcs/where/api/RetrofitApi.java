@@ -21,6 +21,7 @@ import com.jcs.where.api.request.account.ThreePartyLoginRequest;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.store.UpLoadPayAccountInfo;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
@@ -1190,7 +1191,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 商城商品列表
+     * 提交订单
      */
     @POST("generalapi/v2/orders")
     Observable<JcsResponse<StoreOrderInfoResponse>> storeOrderCommit(
@@ -1199,9 +1200,18 @@ public interface RetrofitApi {
 
 
     /**
-     * 商城商品列表
+     * 支付渠道
      */
     @GET("commonapi/v2/cards")
     Observable<JcsResponse<ArrayList<PayChannel>>> getPayChannel();
+
+
+    /**
+     * 银行卡转账支付（上传支付信息）
+     */
+    @POST("generalapi/v2/bank_card/pay")
+    Observable<JcsResponse<JsonElement>> upLoadPayAccountInfo(
+            @Body UpLoadPayAccountInfo request
+    );
 
 }

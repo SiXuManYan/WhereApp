@@ -1,5 +1,6 @@
 package com.jcs.where.features.store.pay
 
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
@@ -9,6 +10,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.pay.info.PayInfoActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_pay.*
@@ -88,6 +90,12 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                 ToastUtils.showShort(getString(R.string.select_pay_way))
                 return@setOnClickListener
             }
+
+            startActivityAfterLogin(PayInfoActivity::class.java, Bundle().apply {
+                putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
+                putSerializable(Constant.PARAM_DATA, selectedChannel)
+                putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+            })
         }
     }
 

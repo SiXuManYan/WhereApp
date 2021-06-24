@@ -706,8 +706,13 @@
     <string name="payment_description_back">Return to this page: click on my order&#62; go to payment&#62; choose payment method> click next</string>
     <string name="payment_platform">payment platform</string>
     <string name="payment_name">Payment name</string>
+    <string name="payment_name_2">Payment name</string>
     <string name="copy_and_transfer">Copy and transfer</string>
     <string name="payment_account_number">Payment account number</string>
+    <string name="payment_account_number_2">Payment account number</string>
     <string name="already_paid">I have paid</string>
+    <string name="store_pay_verify_hint">After successful transfer, please enter your payment account and payment account</string>
+    <string name="please_enter">please enter</string>
+    <string name="determine">Determine</string>
 
 </resources>

@@ -1,24 +1,29 @@
 package com.jcs.where.api.response.store
 
+import java.io.Serializable
+
 /**
  * Created by Wangsw  2021/6/23 15:23.
  * 支付渠道
  */
-class PayChannel {
+class PayChannel : Serializable {
 
-    var  id = 0
-    var  title = ""
+    /**
+     * 银行卡id
+     */
+    var id = 0
+    var title = ""
 
     /**
      * 	收款户头
      */
-    var  card_account = ""
+    var card_account = ""
 
 
     /**
      * 收款账户
      */
-    var  card_number = ""
+    var card_number = ""
 
 
     var nativeSelected = false

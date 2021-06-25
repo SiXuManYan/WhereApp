@@ -28,6 +28,12 @@ public class OrderListResponse implements MultiItemEntity {
 
 
     /**
+     * 订单类型：estore
+     */
+    public static final int ORDER_STORE_4 = 4;
+
+
+    /**
      * 订单ID
      */
     public int id = 0;

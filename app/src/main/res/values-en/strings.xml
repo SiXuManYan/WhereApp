@@ -714,5 +714,6 @@
     <string name="store_pay_verify_hint">After successful transfer, please enter your payment account and payment account</string>
     <string name="please_enter">please enter</string>
     <string name="determine">Determine</string>
+    <string name="store_pay_success">The payment is successful and t he platform is under review</string>
 
 </resources>

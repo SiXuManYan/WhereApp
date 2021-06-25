@@ -718,5 +718,6 @@
     <string name="store_pay_verify_hint">转账成功后，请输入您的付款账户和付款户头</string>
     <string name="please_enter">请输入</string>
     <string name="determine">确定</string>
+    <string name="store_pay_success">支付成功，平台审核支付中</string>
 
 </resources>

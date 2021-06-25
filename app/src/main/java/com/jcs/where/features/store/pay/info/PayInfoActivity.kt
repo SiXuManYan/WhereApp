@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.pay.result.StorePayResultActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_pay_info.*
 
@@ -90,8 +91,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
 
     override fun paySuccess() {
-
-
+        startActivityAfterLogin(StorePayResultActivity::class.java)
     }
 
 

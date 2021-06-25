@@ -2,6 +2,56 @@ package com.jcs.where.api.response.order
 
 import java.math.BigDecimal
 
+
+open class OrderModelData {
+
+
+    /** 订单状态（1：待付款，2：待使用，3：待评价，4：已完成，5：已取消，6：退款中，7：退款成功，8：退款失败，9：商家已取消，10：待确认） */
+    var order_status = 0
+
+    /** 房间数量 */
+    var room_num = 0
+
+    /** 房间类型 */
+    var room_type = ""
+
+    /** 入住日期 */
+    var start_date = ""
+
+    /** 离店日期 */
+    var end_date = ""
+
+    /** 房间价格 */
+    var room_price: BigDecimal = BigDecimal.ZERO
+
+    // ################
+
+    /** 食物图片 */
+    var food_image = ""
+
+    /** 食物名称 */
+    var food_name = ""
+
+    /**  商品数量 */
+    var good_num = 0
+
+
+    // ################
+
+    /** 商品名称 */
+    var good_names = ""
+
+    // ################
+
+
+    /** 配送方式（1:自提，2:商家配送） */
+    var delivery_type = 0
+
+    /** 商城商品信息 */
+    var goods: ArrayList<OrderStoreGoods> = ArrayList()
+
+}
+
 /**
  * Created by Wangsw  2021/6/25 14:28.
  *  酒店订单
@@ -82,7 +132,7 @@ class OrderStore {
  */
 class OrderStoreGoods {
 
-    var good_image = ""
+    var good_image: ArrayList<String> = ArrayList()
     var good_title = ""
     var good_num = 0
 }

@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
-import com.jcs.where.api.response.order.*
+import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
@@ -36,6 +36,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
         addItemType(OrderListResponse.ORDER_TYPE_HOTEL_1, R.layout.item_order_list_hotel)
         addItemType(OrderListResponse.ORDER_TYPE_DINE_2, R.layout.item_order_list_food)
         addItemType(OrderListResponse.ORDER_TYPE_TAKEAWAY_3, R.layout.item_order_list_takeaway)
+        addItemType(OrderListResponse.ORDER_TYPE_STORE_4, R.layout.item_order_list_store)
     }
 
 
@@ -52,7 +53,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
                 bindTakeawayItem(holder, item)
             }
-            OrderListResponse.ORDER_STORE_4 -> {
+            OrderListResponse.ORDER_TYPE_STORE_4 -> {
                 bindStoreItem(holder, item)
             }
             else -> {
@@ -65,8 +66,10 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     /** 酒店 */
     private fun bindHotelItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        val modelData = item.model_data as OrderHotel
-
+        val modelData = item.model_data
+        if (modelData == null) {
+            return
+        }
         // 标题
         holder.setText(R.id.name_tv, item.title)
 
@@ -146,6 +149,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
                 }
             }
             4, 5, 6, 7 -> {
+
                 left_tv.visibility = View.GONE
                 right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.book_again)
@@ -184,7 +188,10 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     /** 美食 */
     private fun bindFoodItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        val modelData = item.model_data as OrderFood
+        val modelData = item.model_data
+        if (modelData == null) {
+            return
+        }
 
         // 标题
         holder.setText(R.id.name_tv, item.title)
@@ -307,7 +314,10 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     /** 外卖 */
     private fun bindTakeawayItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        val modelData = item.model_data as OrderTakeOut
+        val modelData = item.model_data
+        if (modelData == null) {
+            return
+        }
 
         // 标题
         holder.setText(R.id.name_tv, item.title)
@@ -367,7 +377,11 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     /** 商城 */
     private fun bindStoreItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        val modelData = item.model_data as OrderStore
+        val modelData = item.model_data
+        if (modelData == null) {
+            return
+        }
+
         val goods = modelData.goods
 
 
@@ -391,8 +405,10 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
                 .placeholder(R.mipmap.ic_empty_gray)
 
 
-        if (goods.isNotEmpty()) {
-            Glide.with(context).load(goods[0].good_image).apply(options).into(image_iv)
+        if (goods.isNotEmpty()   ) {
+            if (goods[0].good_image.isNotEmpty()) {
+                Glide.with(context).load(goods[0].good_image[0]).apply(options).into(image_iv)
+            }
             first_tv.text = goods[0].good_title
         }
         second_tv.text = StringUtils.getString(R.string.quantity_format, goods.size)

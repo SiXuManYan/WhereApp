@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
  * create by zyf on 2021/1/27 10:39 下午
  */
 public class StringConverter implements JsonSerializer<String>, JsonDeserializer<String> {
+
     public JsonElement serialize(String src, Type typeOfSrc, JsonSerializationContext context) {
         if (src == null) {
             return new JsonPrimitive("");

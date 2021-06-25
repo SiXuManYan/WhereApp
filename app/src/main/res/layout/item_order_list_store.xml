@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_161"
@@ -23,7 +22,7 @@
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_5"
-            android:src="@mipmap/ic_order_food" />
+            android:src="@mipmap/ic_order_store" />
 
 
         <LinearLayout
@@ -45,7 +44,7 @@
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold"
-                tools:text="水煮鱼水煮鱼" />
+                tools:text="三只松鼠" />
 
 
             <ImageView
@@ -109,7 +108,7 @@
             android:maxLines="1"
             android:textColor="@color/grey_666666"
             android:textSize="@dimen/sp_12"
-            tools:text="商务房" />
+            tools:text="2-3人夏日清爽套餐" />
 
         <TextView
             android:id="@+id/second_tv"
@@ -120,7 +119,7 @@
             android:maxLines="1"
             android:textColor="@color/grey_666666"
             android:textSize="@dimen/sp_12"
-            tools:text="04-27 至 04-28" />
+            tools:text="数量：1" />
 
         <TextView
             android:id="@+id/third_tv"
@@ -131,7 +130,7 @@
             android:maxLines="1"
             android:textColor="@color/black_333333"
             android:textSize="@dimen/sp_12"
-            tools:text="房价： 1299" />
+            tools:text="总价：1078" />
     </RelativeLayout>
 
 
@@ -142,7 +141,7 @@
         android:gravity="end"
         android:orientation="horizontal">
 
-
+        <!-- 修改申请， -->
         <TextView
             android:id="@+id/left_tv"
             android:layout_width="wrap_content"
@@ -156,10 +155,11 @@
             android:paddingBottom="@dimen/dp_4"
             android:textSize="@dimen/sp_13"
             android:visibility="gone"
-            tools:text="@string/to_cancel_order"
+            android:text="@string/modify_application"
             tools:visibility="visible" />
 
 
+        <!-- 去付款、评价、取消申请 -->
         <TextView
             android:id="@+id/right_tv"
             android:layout_width="wrap_content"

@@ -715,5 +715,18 @@
     <string name="please_enter">please enter</string>
     <string name="determine">Determine</string>
     <string name="store_pay_success">The payment is successful and t he platform is under review</string>
+    <string name="modify_application">Modify Application</string>
+    <string name="payment_under_review">Payment under review</string>
+    <string name="wait_ship">Wait ship</string>
+    <string name="wait_received">Wait received</string>
+    <string name="order_cancel">Order cancel</string>
+    <string name="trading_closed">Trading closed</string>
+    <string name="refund_successfully">Refund successfully</string>
+    <string name="refund_under_review">Refund under review</string>
+    <string name="merchant_pending_receipt">Merchant pending receipt</string>
+    <string name="merchant_refuses_to_return">Merchant refuses to return</string>
+    <string name="successful_transaction">Successful transaction</string>
+    <string name="to_pay_2">To pay</string>
+    <string name="cancel_application">Cancel application</string>
 
 </resources>

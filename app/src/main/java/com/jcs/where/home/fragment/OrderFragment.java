@@ -1,9 +1,7 @@
 package com.jcs.where.home.fragment;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +24,6 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.order.OrderChildFragment;
 import com.jcs.where.model.OrderModel;
-import com.jcs.where.utils.Constant;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

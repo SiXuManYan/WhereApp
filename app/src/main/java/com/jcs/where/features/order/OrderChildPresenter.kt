@@ -2,7 +2,7 @@ package com.jcs.where.features.order
 
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
-import com.jcs.where.api.response.OrderListResponse
+import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.api.response.PageResponse
 
 /**

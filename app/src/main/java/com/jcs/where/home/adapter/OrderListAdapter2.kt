@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
-import com.jcs.where.api.response.OrderListResponse
+import com.jcs.where.api.response.order.*
 import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
@@ -52,6 +52,9 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
                 bindTakeawayItem(holder, item)
             }
+            OrderListResponse.ORDER_STORE_4 -> {
+                bindStoreItem(holder, item)
+            }
             else -> {
             }
         }
@@ -62,7 +65,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     /** 酒店 */
     private fun bindHotelItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        val modelData = item.model_data
+        val modelData = item.model_data as OrderHotel
 
         // 标题
         holder.setText(R.id.name_tv, item.title)
@@ -178,12 +181,10 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     }
 
 
-    /**
-     * 美食
-     */
+    /** 美食 */
     private fun bindFoodItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        val modelData = item.model_data
+        val modelData = item.model_data as OrderFood
 
         // 标题
         holder.setText(R.id.name_tv, item.title)
@@ -207,7 +208,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
 
         first_tv.text = modelData.food_name
         second_tv.text = StringUtils.getString(R.string.quantity_format, modelData.good_num)
-        third_tv.text = StringUtils.getString(R.string.total_price_format, modelData.room_price.toPlainString())
+        third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部
         val left_tv = holder.getView<TextView>(R.id.left_tv)
@@ -303,12 +304,10 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
     }
 
 
-    /**
-     * 外卖
-     */
+    /** 外卖 */
     private fun bindTakeawayItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        val modelData = item.model_data
+        val modelData = item.model_data as OrderTakeOut
 
         // 标题
         holder.setText(R.id.name_tv, item.title)
@@ -331,7 +330,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
         }
 
         first_tv.text = modelData.good_names
-        third_tv.text = StringUtils.getString(R.string.total_price_format, modelData.room_price.toPlainString())
+        third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部
         val left_tv = holder.getView<TextView>(R.id.left_tv)
@@ -363,6 +362,73 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
 
 
     }
+
+
+    /** 商城 */
+    private fun bindStoreItem(holder: BaseViewHolder, item: OrderListResponse) {
+
+        val modelData = item.model_data as OrderStore
+        val goods = modelData.goods
+
+
+        // 标题
+        holder.setText(R.id.name_tv, item.title)
+
+        // 状态
+        val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
+        FeaturesUtil.bindStoreOrderStatus(modelData.order_status, modelData.delivery_type, order_status_tv)
+
+        // 内容
+        val first_tv = holder.getView<TextView>(R.id.first_tv)
+        val second_tv = holder.getView<TextView>(R.id.second_tv)
+        val third_tv = holder.getView<TextView>(R.id.third_tv)
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+
+
+        val options = RequestOptions.bitmapTransform(
+                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
+                .error(R.mipmap.ic_empty_gray)
+                .placeholder(R.mipmap.ic_empty_gray)
+
+
+        if (goods.isNotEmpty()) {
+            Glide.with(context).load(goods[0].good_image).apply(options).into(image_iv)
+            first_tv.text = goods[0].good_title
+        }
+        second_tv.text = StringUtils.getString(R.string.quantity_format, goods.size)
+        third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
+
+        // 底部
+        val left_tv = holder.getView<TextView>(R.id.left_tv)
+        val right_tv = holder.getView<TextView>(R.id.right_tv)
+
+
+
+        when (modelData.order_status) {
+            1 -> {
+                right_tv.text = context.getString(R.string.to_pay_2)
+                right_tv.visibility = View.VISIBLE
+            }
+            5 -> {
+                right_tv.text = context.getString(R.string.evaluation)
+                right_tv.visibility = View.VISIBLE
+            }
+            12 -> {
+                left_tv.text = context.getString(R.string.modify_application)
+                left_tv.visibility = View.VISIBLE
+                right_tv.text = context.getString(R.string.cancel_application)
+                right_tv.visibility = View.VISIBLE
+            }
+            else -> {
+                left_tv.visibility = View.GONE
+                right_tv.visibility = View.GONE
+
+            }
+
+
+        }
+    }
+
 
     private fun startActivity(target: Class<*>, bundle: Bundle?) {
         if (bundle != null) {

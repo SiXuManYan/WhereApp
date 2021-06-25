@@ -1,4 +1,4 @@
-package com.jcs.where.api.response;
+package com.jcs.where.api.response.order;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -66,12 +66,13 @@ public class OrderListResponse implements MultiItemEntity {
     /**
      * 订单价格
      */
-    public Integer price;
+    public BigDecimal price = BigDecimal.ZERO;
 
     /**
      * 模块数据
      */
-    public ModelDataDTO model_data;
+//    public ModelDataDTO model_data;
+    public Object model_data;
 
     /**
      * 订单图片

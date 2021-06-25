@@ -496,6 +496,78 @@ public class FeaturesUtil {
         textView.setText(text);
     }
 
+
+    /**
+     * 获取商城订单状态
+     *
+     * @param status        自提时：（1：待付款，2：支付审核中，           4：待使用，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货），
+     *                      配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货）
+     * @param delivery_type 配送方式（1:自提，2:商家配送）
+     */
+    public static void bindStoreOrderStatus(int status, int delivery_type, @NotNull TextView textView) {
+        String text = "";
+        int textColor = ColorUtils.getColor(R.color.black_333333);
+        switch (status) {
+            case 1:
+                text = StringUtils.getString(R.string.mine_unpaid);
+                textColor = ColorUtils.getColor(R.color.orange_FD6431);
+                break;
+            case 2:
+                text = StringUtils.getString(R.string.payment_under_review);
+                break;
+            case 3:
+                if (delivery_type == 1) {
+                    text = "";
+                } else {
+                    text = StringUtils.getString(R.string.wait_ship);
+                }
+                break;
+            case 4:
+                if (delivery_type == 1) {
+                    text = StringUtils.getString(R.string.mine_booked);
+                } else {
+                    text = StringUtils.getString(R.string.wait_received);
+                }
+                break;
+            case 5:
+                text = StringUtils.getString(R.string.successful_transaction );
+                textColor = ColorUtils.getColor(R.color.orange_FD6431);
+                break;
+            case 6:
+                text = StringUtils.getString(R.string.order_cancel);
+                break;
+            case 7:
+                text = StringUtils.getString(R.string.trading_closed);
+                break;
+            case 8:
+                text = StringUtils.getString(R.string.refunding);
+
+                break;
+            case 9:
+                text = StringUtils.getString(R.string.refund_successfully);
+                break;
+            case 10:
+                // 退款审核中
+                text = StringUtils.getString(R.string.refund_under_review);
+                break;
+
+            case 11:
+                // 商家待收货
+                text = StringUtils.getString(R.string.merchant_pending_receipt);
+                break;
+            case 12:
+                // 商家拒绝退货
+                text = StringUtils.getString(R.string.merchant_refuses_to_return);
+                textColor = ColorUtils.getColor(R.color.orange_FD6431);
+                break;
+            default:
+                break;
+        }
+        textView.setText(text);
+        textView.setTextColor(textColor);
+    }
+
+
     public static float getSafeStarLevel(String levelStr) {
         float level = 0f;
         if (!TextUtils.isEmpty(levelStr)) {
@@ -541,7 +613,7 @@ public class FeaturesUtil {
     }
 
 
-    public static  void startNaviGoogle(Context context, Float lat, Float lng) {
+    public static void startNaviGoogle(Context context, Float lat, Float lng) {
         if (isAvilible(context, "com.google.android.apps.maps")) {
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

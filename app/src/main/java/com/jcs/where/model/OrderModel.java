@@ -3,7 +3,7 @@ package com.jcs.where.model;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.HotelOrderDetailResponse;
-import com.jcs.where.api.response.OrderListResponse;
+import com.jcs.where.api.response.order.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
 

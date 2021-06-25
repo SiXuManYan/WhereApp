@@ -46,7 +46,7 @@ import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.NewsResponse;
-import com.jcs.where.api.response.OrderListResponse;
+import com.jcs.where.api.response.order.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;

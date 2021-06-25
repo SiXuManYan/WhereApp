@@ -68,6 +68,7 @@
     <string name="area_philippines">菲律宾 +63</string>
     <string name="pay_order">支付订单</string>
     <string name="to_pay">立即支付</string>
+    <string name="to_pay_2">去付款</string>
     <string name="to_cancel_order">取消订单</string>
     <string name="search_my_order">搜索我的订单</string>
     <string name="check_in_time">入住时间：%1$s</string>
@@ -719,5 +720,17 @@
     <string name="please_enter">请输入</string>
     <string name="determine">确定</string>
     <string name="store_pay_success">支付成功，平台审核支付中</string>
+    <string name="modify_application">修改申请</string>
+    <string name="payment_under_review">支付审核中</string>
+    <string name="wait_ship">待发货</string>
+    <string name="wait_received">待收货</string>
+    <string name="order_cancel">订单取消</string>
+    <string name="trading_closed">交易关闭</string>
+    <string name="refund_successfully">退款成功</string>
+    <string name="refund_under_review">退款审核中</string>
+    <string name="merchant_pending_receipt">商家待收货</string>
+    <string name="merchant_refuses_to_return">商家拒绝退货</string>
+    <string name="successful_transaction">交易成功</string>
+    <string name="cancel_application">取消申请</string>
 
 </resources>

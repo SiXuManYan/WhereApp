@@ -728,5 +728,8 @@
     <string name="successful_transaction">Successful transaction</string>
     <string name="to_pay_2">To pay</string>
     <string name="cancel_application">Cancel application</string>
+    <string name="payment_method">Payment method</string>
+    <string name="payment_account_format">Payment account：%1$s</string>
+    <string name="payment_name_format">Payment name：%1$s</string>
 
 </resources>

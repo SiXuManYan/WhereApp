@@ -615,6 +615,7 @@
         <activity android:name=".features.store.pay.StorePayActivity" />
         <activity android:name=".features.store.pay.info.PayInfoActivity" />
         <activity android:name=".features.store.pay.result.StorePayResultActivity" />
+        <activity android:name=".features.store.order.detail.StoreOrderDetailActivity" />
 
     </application>
 

@@ -46,7 +46,6 @@ import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.NewsResponse;
-import com.jcs.where.api.response.order.OrderListResponse;
 import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
@@ -76,6 +75,8 @@ import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
+import com.jcs.where.api.response.order.OrderListResponse;
+import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.PayChannel;
@@ -1213,5 +1214,14 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> upLoadPayAccountInfo(
             @Body UpLoadPayAccountInfo request
     );
+
+    /**
+     * 商城订单详情
+     */
+    @GET("generalapi/v2/orders/{order_id}")
+    Observable<JcsResponse<StoreOrderDetail>> getStoreOrderDetail(
+            @Path("order_id") int order_id
+    );
+
 
 }

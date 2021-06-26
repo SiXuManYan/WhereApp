@@ -24,7 +24,7 @@ open class OrderModelData {
     /** 房间价格 */
     var room_price: BigDecimal = BigDecimal.ZERO
 
-    // ################
+    // ######## 美食 ########
 
     /** 食物图片 */
     var food_image = ""
@@ -36,12 +36,12 @@ open class OrderModelData {
     var good_num = 0
 
 
-    // ################
+    // ####### 外卖 #########
 
     /** 商品名称 */
     var good_names = ""
 
-    // ################
+    // ######### 商城 #######
 
 
     /** 配送方式（1:自提，2:商家配送） */
@@ -131,6 +131,13 @@ class OrderStore {
  * 商城商品信息
  */
 class OrderStoreGoods {
+
+    /** 商品id */
+    var id  = 0
+
+    /** 商品名称 */
+    var title  = ""
+
 
     var good_image: ArrayList<String> = ArrayList()
     var good_title = ""

@@ -732,5 +732,8 @@
     <string name="merchant_refuses_to_return">商家拒绝退货</string>
     <string name="successful_transaction">交易成功</string>
     <string name="cancel_application">取消申请</string>
+    <string name="payment_method">支付方式</string>
+    <string name="payment_name_format">付款账户：%1$s</string>
+    <string name="payment_account_format">付款户口：%1$s</string>
 
 </resources>

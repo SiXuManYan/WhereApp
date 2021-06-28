@@ -732,4 +732,31 @@
     <string name="payment_account_format">Payment account：%1$s</string>
     <string name="payment_name_format">Payment name：%1$s</string>
 
+    <!-- 商城订单状态 -->
+    <string name="store_status_1">Unpaid</string>
+    <string name="store_status_2">Confirming</string>
+    <string name="store_status_3_a">To Be Delivered</string>
+    <string name="store_status_3_b">Unaccalimed</string>
+    <string name="store_status_4">Receiving</string>
+    <string name="store_status_5">Successful</string>
+    <string name="store_status_6">Trading closed</string>
+    <string name="store_status_7">Canceled</string>
+    <string name="store_status_8">Merchant confirming</string>
+    <string name="store_status_9">Merchant Receiving</string>
+    <string name="store_status_10">Refuses to Return</string>
+    <string name="store_status_11">Refunding</string>
+    <string name="store_status_12">Refund successfully</string>
+
+
+    <!-- 状态描述文字 -->
+    <string name="store_status_desc_8">You have successfully initiated a return request, please wait patiently for the merchant’s review.</string>
+    <string name="store_status_desc_9">The merchant has agreed to the return application, please contact the merchant for return.</string>
+    <string name="store_status_desc_10">The merchant rejected your return application, please contact customer service or modify the return application.</string>
+    <string name="store_status_desc_11">The platform is refunding, please wait patiently for the refund.</string>
+    <string name="store_status_desc_12">It has been refunded, please check it carefully.</string>
+
+    <string name="recipient_information">Recipient information</string>
+    <string name="apply_return">Apply return</string>
+    <string name="after_sale_details">After-sale Details</string>
+
 </resources>

@@ -23,11 +23,11 @@ class StoreOrderDetail {
     var remark = ""
 
     /** 是否支持退货 */
-    var is_cancel = false
+    var is_cancel = 0
 
     /**
      * 订单状态，
-     * 自提时：（1：待付款，2：支付审核中，           4：待使用，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货），
+     * 自提时：（1：待付款，2：支付审核中，           4：待自提，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货），
      * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货） */
     var order_status = 0
 
@@ -59,6 +59,14 @@ class StoreOrderDetail {
     /** 商家信息 */
     var shop: StoreOrderShop? = null
 
+    /** 支付渠道 */
+    var pay_channel = ""
+
+    /** 支付银行户头 */
+    var bank_card_account = ""
+
+    /** 支付银行账号 */
+    var bank_card_number = ""
 
 
 }
@@ -77,7 +85,7 @@ class StoreOrderAddress {
 /**
  * 	商家信息
  */
-class StoreOrderShop{
+class StoreOrderShop {
 
     var id = 0
     var title = ""

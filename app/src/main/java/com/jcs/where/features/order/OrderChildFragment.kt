@@ -13,6 +13,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailActivity
+import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
 import com.jcs.where.home.adapter.OrderListAdapter2
 import com.jcs.where.home.decoration.MarginTopDecoration
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity
@@ -152,6 +153,12 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
                 startActivity(TakeawayOrderDetailActivity::class.java, Bundle().apply {
                     putString(Constant.PARAM_ORDER_ID, data.id.toString())
+                })
+            }
+
+            OrderListResponse.ORDER_TYPE_STORE_4 -> {
+                startActivity(StoreOrderDetailActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }
             else -> {

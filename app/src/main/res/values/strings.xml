@@ -736,4 +736,30 @@
     <string name="payment_name_format">付款账户：%1$s</string>
     <string name="payment_account_format">付款户口：%1$s</string>
 
+    <!-- 商城订单状态 a外卖 b自提-->
+    <string name="store_status_1">待付款</string>
+    <string name="store_status_2">支付审核中</string>
+    <string name="store_status_3_a">待发货</string>
+    <string name="store_status_3_b">待自提</string>
+    <string name="store_status_4">待收货</string>
+    <string name="store_status_5">交易成功</string>
+    <string name="store_status_6">交易关闭</string>
+    <string name="store_status_7">交易取消</string>
+    <string name="store_status_8">商家审核中</string>
+    <string name="store_status_9">商家待收货</string>
+    <string name="store_status_10">商家拒绝退货</string>
+    <string name="store_status_11">退款中</string>
+    <string name="store_status_12">退款成功</string>
+
+    <!-- 状态描述文字 -->
+    <string name="store_status_desc_8">您已成功发起退货申请，请耐心等待商家审核。</string>
+    <string name="store_status_desc_9">商家已同意退货申请，请您联系商家，进行退货。</string>
+    <string name="store_status_desc_10">商家拒绝了您的退货申请，请您联系客服或修改退货申请。</string>
+    <string name="store_status_desc_11">平台正在退款中，请耐心等待退款。</string>
+    <string name="store_status_desc_12">已退款，请您注意查收。</string>
+    <string name="recipient_information">收货人信息</string>
+    <string name="apply_return">申请退货</string>
+    <string name="after_sale_details">查看售后详情</string>
+
+
 </resources>

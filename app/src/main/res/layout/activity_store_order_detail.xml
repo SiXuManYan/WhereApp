@@ -25,8 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dp_60"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_100">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -100,6 +100,7 @@
 
 
                 <TextView
+                    android:id="@+id/order_number_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -133,6 +134,7 @@
 
 
                 <TextView
+                    android:id="@+id/created_date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -166,6 +168,7 @@
 
 
                 <TextView
+                    android:id="@+id/delivery_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -190,6 +193,7 @@
                 android:paddingEnd="@dimen/dp_15">
 
                 <TextView
+                    android:id="@+id/service_second_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -199,6 +203,7 @@
 
 
                 <TextView
+                    android:id="@+id/service_second_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -208,84 +213,153 @@
                     tools:text="1111111111" />
 
             </RelativeLayout>
+            <!-- 收货人信息 -->
 
-            <View
+            <LinearLayout
+                android:id="@+id/recipient_info_ll"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10"
-                android:background="@color/grey_F5F5F5" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/payment_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:text="@string/recipient_information"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_14" />
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/address_tv"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_14"
-                    tools:text="刷我地卡" />
+                    android:gravity="center_vertical"
+                    android:lineSpacingMultiplier="1.2"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="@tools:sample/cities" />
 
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/grey_F5F5F5" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                android:text="@string/pay_info"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14" />
+                <TextView
+                    android:id="@+id/recipient_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="@string/payment_account_format" />
+            </LinearLayout>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_12"
-                tools:text="@string/payment_name_format" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_12"
-                tools:text="@string/payment_account_format" />
+            <!---->
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_16"
                 android:background="@color/grey_F5F5F5" />
+
+
+            <!-- 支付信息 -->
+
+            <LinearLayout
+                android:id="@+id/pay_container_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/payment_method"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/sp_14" />
+
+
+                    <TextView
+                        android:id="@+id/pay_way_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/sp_14"
+                        tools:text="刷我地卡" />
+
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/grey_F5F5F5" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:text="@string/pay_info"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14" />
+
+
+                <TextView
+                    android:id="@+id/payment_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="@string/payment_name_format" />
+
+                <TextView
+                    android:id="@+id/payment_account_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="@string/payment_account_format" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:background="@color/grey_F5F5F5" />
+
+
+            </LinearLayout>
+
+            <!-- 支付信息 -->
 
 
             <TextView
@@ -299,12 +373,97 @@
                 tools:text="商家名称" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/good_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:itemCount="2"
+                tools:itemCount="1"
                 tools:listitem="@layout/layout_child_store_commit" />
+
+
+            <RelativeLayout
+                android:id="@+id/delivery_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="@string/delivery_fee"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14" />
+
+
+                <TextView
+                    android:id="@+id/delivery_price_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="$10" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/grey_F5F5F5" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/remark_rl"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:minHeight="@dimen/dp_48"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/remarks_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="@string/remarks"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14" />
+
+
+                <TextView
+                    android:id="@+id/remarks_value_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_toEndOf="@+id/remarks_tv"
+                    android:lineSpacingMultiplier="1.2"
+                    tools:text="麻烦尽快发货麻烦尽快发货麻烦尽快发货麻烦尽麻烦尽快发货麻烦尽快发货麻烦尽快发货麻烦尽快发货麻烦尽快发货快发货麻烦尽快发货"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="@dimen/sp_14" />
+
+
+            </RelativeLayout>
 
 
         </LinearLayout>
@@ -313,26 +472,31 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/white"
+        android:id="@+id/bottom_container_rl"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:paddingStart="@dimen/dp_15"
         android:paddingTop="@dimen/dp_7"
         android:paddingEnd="@dimen/dp_15"
-        android:paddingBottom="@dimen/dp_7">
+        android:paddingBottom="@dimen/dp_7"
+        android:visibility="gone"
+        tools:visibility="visible">
 
 
         <TextView
+            android:id="@+id/left_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
             android:layout_toStartOf="@id/right_tv"
             android:background="@drawable/stock_gray_radius_8"
             android:gravity="center"
             android:minWidth="@dimen/dp_98"
             android:paddingStart="@dimen/dp_17"
             android:paddingTop="@dimen/dp_8"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:paddingEnd="@dimen/dp_17"
             android:paddingBottom="@dimen/dp_8"
             tools:text="申请退货" />
@@ -341,12 +505,15 @@
         <TextView
             android:id="@+id/right_tv"
             android:layout_width="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:background="@drawable/shape_gradient_orange_8"
             android:gravity="center"
             android:minWidth="@dimen/dp_98"
             android:paddingStart="@dimen/dp_17"
+            android:layout_marginStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_17"
             android:paddingBottom="@dimen/dp_8"

@@ -133,13 +133,14 @@ class OrderStore {
 class OrderStoreGoods {
 
     /** 商品id */
-    var id  = 0
+    var id = 0
 
     /** 商品名称 */
-    var title  = ""
+    var title = ""
 
 
     var good_image: ArrayList<String> = ArrayList()
     var good_title = ""
     var good_num = 0
+    var price: BigDecimal = BigDecimal.ZERO
 }

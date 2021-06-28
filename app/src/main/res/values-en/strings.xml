@@ -758,5 +758,6 @@
     <string name="recipient_information">Recipient information</string>
     <string name="apply_return">Apply return</string>
     <string name="after_sale_details">After-sale Details</string>
+    <string name="payment_record">Payment Record</string>
 
 </resources>

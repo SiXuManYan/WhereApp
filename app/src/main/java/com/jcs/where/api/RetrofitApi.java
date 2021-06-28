@@ -73,6 +73,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
+import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
@@ -1222,6 +1223,13 @@ public interface RetrofitApi {
     Observable<JcsResponse<StoreOrderDetail>> getStoreOrderDetail(
             @Path("order_id") int order_id
     );
+
+
+    /**
+     * 水电缴费记录
+     */
+    @GET("generalapi/v2/pay_bills/orders")
+    Observable<JcsResponse<PageResponse<PaymentRecord>>> getPaymentRecord();
 
 
 }

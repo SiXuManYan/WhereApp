@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.activity_pay_bills.*
 
 /**
  * Created by Wangsw  2021/4/15 14:12.
- *
+ * 水电缴费
  */
 class PayBillsActivity : BaseActivity() {
 

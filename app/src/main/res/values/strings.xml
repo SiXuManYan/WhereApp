@@ -760,6 +760,7 @@
     <string name="recipient_information">收货人信息</string>
     <string name="apply_return">申请退货</string>
     <string name="after_sale_details">查看售后详情</string>
+    <string name="payment_record">缴费记录</string>
 
 
 </resources>

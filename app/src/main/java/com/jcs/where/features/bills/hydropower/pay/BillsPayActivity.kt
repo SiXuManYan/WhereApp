@@ -1,0 +1,102 @@
+package com.jcs.where.features.bills.hydropower.pay
+
+import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.jcs.where.R
+import com.jcs.where.api.request.bills.BillsOrderCommit
+import com.jcs.where.api.response.store.PayChannel
+import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.pay.StorePayAdapter
+import com.jcs.where.features.store.pay.info.PayInfoActivity
+import com.jcs.where.utils.Constant
+import com.jcs.where.widget.list.DividerDecoration
+import kotlinx.android.synthetic.main.activity_store_pay_bills.*
+
+/**
+ * Created by Wangsw  2021/6/29 16:40.
+ *  水电支付
+ */
+class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnItemClickListener {
+
+
+    private lateinit var mAdapter: StorePayAdapter
+    private var billsOrderCommit: BillsOrderCommit? = null
+    private var selectedChannel: PayChannel? = null
+    private var type = 0
+    private var totalPrice: Double = 0.0
+
+    override fun getLayoutId() = R.layout.activity_store_pay_bills
+
+
+    override fun initView() {
+
+        intent.extras?.let {
+            billsOrderCommit = it.getSerializable(Constant.PARAM_DATA) as BillsOrderCommit
+            type = it.getInt(Constant.PARAM_TYPE)
+        }
+        initPayChannel()
+
+    }
+
+
+    private fun initPayChannel() {
+        mAdapter = StorePayAdapter()
+        mAdapter.setOnItemClickListener(this@BillsPayActivity)
+
+        pay_channel_rv.apply {
+            adapter = mAdapter
+            isNestedScrollingEnabled = true
+            layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
+            addItemDecoration(DividerDecoration(getColor(R.color.colorPrimary), SizeUtils.dp2px(20f),
+                    0, 0).apply { setDrawHeaderFooter(false) })
+        }
+    }
+
+    override fun initData() {
+        presenter = BillsPayPresenter(this)
+        presenter.getPayChannel()
+    }
+
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        mAdapter.data.forEachIndexed { index, payChannel ->
+            if (index == position) {
+                payChannel.nativeSelected = true
+                selectedChannel = payChannel
+            } else {
+                payChannel.nativeSelected = false
+            }
+        }
+        mAdapter.notifyDataSetChanged()
+    }
+
+    override fun bindData(response: ArrayList<PayChannel>) {
+        mAdapter.setNewInstance(response)
+    }
+
+
+    override fun bindListener() {
+        pay_tv.setOnClickListener {
+            if (selectedChannel == null) {
+                ToastUtils.showShort(getString(R.string.select_pay_way))
+                return@setOnClickListener
+            }
+
+            startActivityAfterLogin(PayInfoActivity::class.java, Bundle().apply {
+                putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
+                putSerializable(Constant.PARAM_DATA, selectedChannel)
+//                putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+            })
+        }
+    }
+
+}

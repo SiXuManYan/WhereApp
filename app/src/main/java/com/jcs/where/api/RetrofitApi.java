@@ -18,6 +18,7 @@ import com.jcs.where.api.request.account.LoginRequest;
 import com.jcs.where.api.request.account.RegisterRequest;
 import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
+import com.jcs.where.api.request.bills.BillsOrderCommit;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
@@ -58,6 +59,7 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
+import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
@@ -1229,7 +1231,16 @@ public interface RetrofitApi {
      * 水电缴费记录
      */
     @GET("generalapi/v2/pay_bills/orders")
-    Observable<JcsResponse<PageResponse<PaymentRecord>>> getPaymentRecord();
+    Observable<JcsResponse<PageResponse<PaymentRecord>>> getPaymentRecord(@Query("page") int page);
+
+
+    /**
+     * 水电统一下单
+     */
+    @POST("generalapi/v2/pay_bills/orders")
+    Observable<JcsResponse<BillsOrderInfo>> billsCommitOrder(
+            @Body BillsOrderCommit request
+    );
 
 
 }

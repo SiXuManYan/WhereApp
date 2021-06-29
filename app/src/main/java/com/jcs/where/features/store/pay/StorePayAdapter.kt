@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.PayChannel
+import com.jcs.where.features.bills.hydropower.pay.BillsPayActivity
 
 /**
  * Created by Wangsw  2021/6/23 15:31.
@@ -26,4 +27,6 @@ class StorePayAdapter : BaseQuickAdapter<PayChannel, BaseViewHolder>(R.layout.it
         }
 
     }
+
+
 }

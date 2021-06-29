@@ -616,6 +616,9 @@
         <activity android:name=".features.store.pay.info.PayInfoActivity" />
         <activity android:name=".features.store.pay.result.StorePayResultActivity" />
         <activity android:name=".features.store.order.detail.StoreOrderDetailActivity" />
+        <activity android:name=".features.bills.hydropower.record.PaymentRecordActivity" />
+        <activity android:name=".features.bills.hydropower.edit.PaymentEditActivity" />
+        <activity android:name=".features.bills.hydropower.pay.BillsPayActivity" />
 
     </application>
 

@@ -759,5 +759,33 @@
     <string name="apply_return">Apply return</string>
     <string name="after_sale_details">After-sale Details</string>
     <string name="payment_record">Payment Record</string>
+    <string name="order_status">Order Status</string>
+    <string name="account_number">Account Number</string>
+    <string name="order_time">Order Time</string>
+
+    <!-- 水电缴费状态 -->
+    <string name="bills_status_1">Confirming</string>
+    <string name="bills_status_2">Paying</string>
+    <string name="bills_status_3">Successful payment</string>
+    <string name="bills_status_4">Trading closed</string>
+    <string name="bills_status_5">Refunding</string>
+    <string name="bills_status_6">Refund successfully</string>
+    <string name="payment_details">Payment details</string>
+    <string name="enter_hint">Enter</string>
+    <string name="bills_account_name">Account Name</string>
+    <string name="bills_present_address">Present Address</string>
+    <string name="bills_contact_no">Contact No</string>
+    <string name="bills_amount_due">Amount Due</string>
+    <string name="bills_payment_method">Payment method</string>
+    <string name="bills_biller">Biller</string>
+    <string name="bills_account_number">Account Number</string>
+    <string name="bills_soa_invoice_no">SOA/Invoice No</string>
+    <string name="bills_date">Date</string>
+    <string name="bills_due_date">Due Date</string>
+    <string name="bills_statement_date">Statement Date</string>
+    <string name="bills_select">Select</string>
+
+    <string name="birthday_format">%1$d-%2$d-%3$d</string>
+
 
 </resources>

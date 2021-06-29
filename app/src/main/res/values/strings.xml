@@ -761,6 +761,38 @@
     <string name="apply_return">申请退货</string>
     <string name="after_sale_details">查看售后详情</string>
     <string name="payment_record">缴费记录</string>
+    <string name="order_status">订单状态</string>
+    <string name="account_number">账号</string>
+    <string name="order_time">订单时间</string>
+
+    <!-- 水电缴费状态 -->
+    <string name="bills_status_1">支付审核中</string>
+    <string name="bills_status_2">缴费中</string>
+    <string name="bills_status_3">缴费成功</string>
+    <string name="bills_status_4">订单关闭</string>
+    <string name="bills_status_5">退款中</string>
+    <string name="bills_status_6">退款成功</string>
+
+
+
+    <!-- 账单表单 -->
+    <string name="payment_details">账单详情</string>
+    <string name="enter_hint">请输入</string>
+
+    <string name="bills_account_name">账户名称</string>
+    <string name="bills_present_address">现住址</string>
+    <string name="bills_contact_no">联系方式</string>
+    <string name="bills_amount_due">应付金额</string>
+    <string name="bills_payment_method">支付方式</string>
+    <string name="bills_biller">账单人</string>
+    <string name="bills_account_number">账户号码</string>
+    <string name="bills_soa_invoice_no">发票号码</string>
+    <string name="bills_date">日期</string>
+    <string name="bills_due_date">截止日期</string>
+    <string name="bills_statement_date">报表日期</string>
+    <string name="bills_select">请选择</string>
+
+    <string name="birthday_format">%1$d-%2$d-%3$d</string>
 
 
 </resources>

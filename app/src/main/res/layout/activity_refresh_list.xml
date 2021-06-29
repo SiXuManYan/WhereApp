@@ -11,8 +11,6 @@
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightFirstIcon="@drawable/ic_share_black"
-        app:rightSecondIcon="@mipmap/ic_like_black2"
         app:showBottomLine="true" />
 
 

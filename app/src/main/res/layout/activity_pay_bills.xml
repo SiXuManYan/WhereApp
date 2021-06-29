@@ -9,6 +9,7 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
+        app:rightFirstIcon="@mipmap/ic_bills_record"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:middleTitle="@string/Pay_Bills"

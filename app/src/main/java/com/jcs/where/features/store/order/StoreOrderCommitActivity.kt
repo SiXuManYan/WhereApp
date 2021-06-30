@@ -167,7 +167,7 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
             val phone = phone_aet.text.toString().trim()
 
             if (data.delivery_type == 1 && phone.isEmpty()) {
-                ToastUtils.showShort("请填写手机号")
+                ToastUtils.showShort(getString(R.string.input_phone_empty_hint))
                 return@setOnClickListener
             }
 
@@ -175,7 +175,7 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
                 ToastUtils.showShort(R.string.address_edit_hint)
                 return@setOnClickListener
             }
-            presenter.orderCommit(data, mSelectAddressData!!.id, phone)
+            presenter.orderCommit(data, mSelectAddressData?.id, phone)
 
         }
     }

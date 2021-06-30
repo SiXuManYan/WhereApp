@@ -45,7 +45,7 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView) : BaseMv
         })
     }
 
-    fun orderCommit(data: StoreOrderCommitData, addressId: String, phone: String) {
+    fun orderCommit(data: StoreOrderCommitData, addressId: String?, phone: String) {
 
 
         // 商品

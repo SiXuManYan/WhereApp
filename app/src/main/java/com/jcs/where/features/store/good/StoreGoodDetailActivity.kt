@@ -191,6 +191,8 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
                 startActivityAfterLogin(StoreOrderCommitActivity::class.java, Bundle().apply {
                     putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, apply)
                 })
+            } else {
+                showComing()
             }
 
 

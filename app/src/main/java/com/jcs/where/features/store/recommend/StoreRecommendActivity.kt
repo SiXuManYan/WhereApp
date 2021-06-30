@@ -103,6 +103,9 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
         search_ll.setOnClickListener {
             startActivity(SearchHistoryActivity::class.java)
         }
+        cart_iv.setOnClickListener {
+            showComing()
+        }
     }
 
 

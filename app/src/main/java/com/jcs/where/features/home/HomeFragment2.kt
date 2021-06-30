@@ -176,12 +176,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         mModulesAdapter.setOnItemClickListener { _, _, position ->
             val data = mModulesAdapter.data[position]
 
-            if (BuildConfig.FLAVOR == "dev") {
-                if (data.id == 10) {
-                    startActivity(StoreRecommendActivity::class.java)
-                }
-            }
-
             if (data.dev_status == 2) {
                 showComing()
                 return@setOnItemClickListener
@@ -213,6 +207,9 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                             putInt(Constant.PARAM_PID, 89)
                             putString(Constant.PARAM_PID_NAME, getString(R.string.filter_food))
                         })
+                    }
+                    10->{
+                        startActivity(StoreRecommendActivity::class.java)
                     }
 
                     else -> showComing()

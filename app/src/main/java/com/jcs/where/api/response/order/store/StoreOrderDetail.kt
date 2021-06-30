@@ -53,7 +53,7 @@ class StoreOrderDetail {
 
 
     /** 地址信息（配送时） */
-    var address: StoreOrderAddress? = null
+    var address: ArrayList<StoreOrderAddress> = ArrayList()
 
     /** 商家信息 */
     var shop: StoreOrderShop? = null

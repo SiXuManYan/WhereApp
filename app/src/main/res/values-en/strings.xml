@@ -789,6 +789,7 @@
     <string name="water_fee">Water fee</string>
     <string name="electricity_free">Electricity free</string>
     <string name="copy_successfully">Copy successfully</string>
+    <string name="input_phone_empty_hint">Please fill in your phone number</string>
 
 
 </resources>

@@ -796,6 +796,7 @@
     <string name="water_fee">水费</string>
     <string name="electricity_free">电费</string>
     <string name="copy_successfully">复制成功</string>
+    <string name="input_phone_empty_hint">请填写手机号</string>
 
 
 </resources>

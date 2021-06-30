@@ -80,7 +80,9 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             service_second_title_tv.text = getString(R.string.delivery_time)
             service_second_value_tv.text = data.delivery_times
             recipient_info_ll.visibility = View.VISIBLE
-            data.address?.let {
+            if (data.address.isNotEmpty()) {
+                val it = data.address[0]
+
                 address_tv.text = it.address
                 recipient_tv.text = getString(R.string.star_text_format, it.contact_name, it.contact_number)
             }

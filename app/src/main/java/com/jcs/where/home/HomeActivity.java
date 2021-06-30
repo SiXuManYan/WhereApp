@@ -29,6 +29,7 @@ import com.jcs.where.mine.fragment.MineFragment;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.PermissionUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -72,6 +73,7 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
         if (bundle!=null) {
             int tabIndex = bundle.getInt(Constant.PARAM_TAB, 0);
             mTabLayout.selectTab(mTabLayout.getTabAt(tabIndex));
+            EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST);
         }
 
     }

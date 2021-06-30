@@ -20,7 +20,7 @@ class PayBillsActivity : BaseActivity() {
     override fun isStatusDark() = true
 
     override fun initView() {
-        showComing()
+
     }
 
     override fun initData() {

@@ -13,25 +13,8 @@ interface PaymentEditView : BaseMvpView {
 }
 
 class PaymentEditPresenter(private var view: PaymentEditView) : BaseMvpPresenter(view) {
-    fun commitOrder(type: Int, accountName: String, presentAddress: String, contactNo: String, amount: String, billerName: String,
-                    accountNumber: String, soainvoiceNo: String, dateStr: String, dueDate: String, inputDate: String) {
-        BillsOrderCommit().apply {
-            bill_type = type
-            account_name = accountName
-            account_number = accountNumber
-            present_address = presentAddress
-            contact_no = contactNo
-            biller = billerName
-            amount_due = amount
-            invoice_no = soainvoiceNo
-            date = dateStr
-            due_date = dueDate
-            statement_date = inputDate
 
 
-        }
-
-    }
 
 
 }

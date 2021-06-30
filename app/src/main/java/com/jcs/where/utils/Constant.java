@@ -163,4 +163,13 @@ public class Constant {
     public static final String PARAM_SEX_MAN = "param_sex_man";
     public static final String PARAM_SEX= "param_sex";
     public static final String PARAM_PHONE = "param_phone";
+
+
+
+    public static final int PAY_INFO_ESTORE = 0;
+    public static final int PAY_INFO_ESTORE_BILLS = 1;
+
+
+
 }
+

@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_store_pay_info.*
 /**
  * Created by Wangsw  2021/6/23 17:11.
  *  支付信息
+ *  商城支付。水电支付
  */
 class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
@@ -23,6 +24,8 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
     private var selectedChannel: PayChannel? = null
     private var orderIds = java.util.ArrayList<Int>()
     private var addressDialog: BottomSheetDialog? = null
+    private var useType = 0
+
 
     override fun getLayoutId() = R.layout.activity_store_pay_info
 
@@ -31,16 +34,14 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
         intent.extras?.let {
             totalPrice = it.getDouble(Constant.PARAM_TOTAL_PRICE, 0.0)
             selectedChannel = it.getSerializable(Constant.PARAM_DATA) as PayChannel
+
             val ids = it.getIntegerArrayList(Constant.PARAM_ORDER_IDS)
             if (!ids.isNullOrEmpty()) {
                 orderIds.addAll(ids)
             }
+            useType = it.getInt(Constant.PARAM_TYPE)
         }
-    }
 
-    override fun initData() {
-
-        presenter = PayInfoPresenter(this)
         amount_tv.text = getString(R.string.price_unit_format, totalPrice.toString())
         selectedChannel?.let {
             payment_platform_tv.text = it.title
@@ -49,10 +50,15 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
         }
     }
 
+    override fun initData() {
+
+        presenter = PayInfoPresenter(this)
+
+    }
+
     override fun bindListener() {
         paid_tv.setOnClickListener {
-
-
+            showVerifyDialog()
         }
     }
 
@@ -82,7 +88,12 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
                 return@setOnClickListener
             }
 
-            presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+            if (useType == 0) {
+                presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+            } else {
+                presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+            }
+
 
         }
         addressDialog.show()
@@ -92,6 +103,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
     override fun paySuccess() {
         startActivityAfterLogin(StorePayResultActivity::class.java)
+        finish()
     }
 
 

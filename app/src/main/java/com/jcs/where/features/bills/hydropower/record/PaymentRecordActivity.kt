@@ -1,7 +1,10 @@
 package com.jcs.where.features.bills.hydropower.record
 
+import android.graphics.Color
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -28,7 +31,9 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
     override fun isStatusDark(): Boolean = true
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         mJcsTitle.setMiddleTitle(getString(R.string.payment_record))
+        container_ll.setBackgroundColor(ColorUtils.getColor(R.color.grey_F5F5F5))
 
         swipe_layout.setOnRefreshListener(this@PaymentRecordActivity)
 
@@ -49,10 +54,12 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
         }
 
 
+
     }
 
     override fun initData() {
         presenter = PaymentRecordPresenter(this)
+        onRefresh()
     }
 
     override fun bindListener() {

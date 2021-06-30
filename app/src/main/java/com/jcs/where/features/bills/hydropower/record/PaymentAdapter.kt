@@ -17,6 +17,7 @@ class PaymentAdapter : BaseQuickAdapter<PaymentRecord, BaseViewHolder>(R.layout.
     override fun convert(holder: BaseViewHolder, item: PaymentRecord) {
 
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        val title_tv = holder.getView<TextView>(R.id.title_tv)
         val price_tv = holder.getView<TextView>(R.id.price_tv)
         val status_tv = holder.getView<TextView>(R.id.status_tv)
         val account_number_tv = holder.getView<TextView>(R.id.account_number_tv)
@@ -24,8 +25,10 @@ class PaymentAdapter : BaseQuickAdapter<PaymentRecord, BaseViewHolder>(R.layout.
 
         if (item.bill_type == 1) {
             image_iv.setImageResource(R.mipmap.ic_bills_record_water)
+            title_tv.text = context.getString(R.string.water_fee)
         } else {
             image_iv.setImageResource(R.mipmap.ic_bills_record_electricity)
+            title_tv.text = context.getString(R.string.electricity_free)
         }
 
         price_tv.text = context.getString(R.string.price_unit_format, item.price.toPlainString())

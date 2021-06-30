@@ -1,16 +1,15 @@
-package com.jcs.where.api.request.store
+package com.jcs.where.api.request.bills
 
 /**
  * Created by Wangsw  2021/6/24 15:12.
- *  银行卡转账支付（上传支付信息）
+ *  水电银行卡转账支付（上传支付信息）
  */
-class UpLoadPayAccountInfo {
+class UpLoadBillsPayAccountInfo {
 
     /**
      * 订单id
-     * 参数示例：[1,2]
      */
-    var order_ids = ""
+    var order_id = 0
 
     /**
      * 	转账户头

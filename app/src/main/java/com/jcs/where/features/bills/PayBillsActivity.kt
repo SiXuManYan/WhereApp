@@ -1,9 +1,11 @@
 package com.jcs.where.features.bills
 
+import android.os.Bundle
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.features.bills.hydropower.edit.PaymentEditActivity
 import com.jcs.where.features.bills.hydropower.record.PaymentRecordActivity
+import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_pay_bills.*
 
 /**
@@ -30,7 +32,9 @@ class PayBillsActivity : BaseActivity() {
             showComing()
         }
         water_ll.setOnClickListener {
-            startActivity(PaymentEditActivity::class.java)
+            startActivityAfterLogin(PaymentEditActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 1)
+            })
         }
 
         electric_ll.setOnClickListener {
@@ -41,7 +45,9 @@ class PayBillsActivity : BaseActivity() {
             showComing()
         }
         mJcsTitle.setFirstRightIvClickListener {
-            startActivity(PaymentRecordActivity::class.java)
+            startActivityAfterLogin(PaymentRecordActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 2)
+            })
         }
 
     }

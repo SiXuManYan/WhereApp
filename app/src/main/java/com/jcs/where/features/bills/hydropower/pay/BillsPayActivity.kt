@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.request.bills.BillsOrderCommit
+import com.jcs.where.api.response.bills.BillsOrderInfo
 import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.pay.StorePayAdapter
@@ -27,7 +28,6 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
     private lateinit var mAdapter: StorePayAdapter
     private var billsOrderCommit: BillsOrderCommit? = null
     private var selectedChannel: PayChannel? = null
-    private var type = 0
     private var totalPrice: Double = 0.0
 
     override fun getLayoutId() = R.layout.activity_store_pay_bills
@@ -37,10 +37,8 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
 
         intent.extras?.let {
             billsOrderCommit = it.getSerializable(Constant.PARAM_DATA) as BillsOrderCommit
-            type = it.getInt(Constant.PARAM_TYPE)
         }
         initPayChannel()
-
     }
 
 
@@ -79,24 +77,39 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
         mAdapter.notifyDataSetChanged()
     }
 
-    override fun bindData(response: ArrayList<PayChannel>) {
+    override fun bindChannelData(response: ArrayList<PayChannel>) {
         mAdapter.setNewInstance(response)
     }
 
 
     override fun bindListener() {
         pay_tv.setOnClickListener {
+
             if (selectedChannel == null) {
                 ToastUtils.showShort(getString(R.string.select_pay_way))
                 return@setOnClickListener
             }
 
-            startActivityAfterLogin(PayInfoActivity::class.java, Bundle().apply {
-                putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
-                putSerializable(Constant.PARAM_DATA, selectedChannel)
-//                putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-            })
+            billsOrderCommit?.let {
+                presenter.commitOrder(it)
+            }
+
         }
+    }
+
+    override fun commitOrderSuccess(response: BillsOrderInfo) {
+
+        val ids = ArrayList<Int>().apply {
+            add(response.order_id)
+        }
+
+        startActivityAfterLogin(PayInfoActivity::class.java, Bundle().apply {
+            putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
+            putSerializable(Constant.PARAM_DATA, selectedChannel)
+            putIntegerArrayList(Constant.PARAM_ORDER_IDS, ids)
+            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE_BILLS)
+        })
+        finish()
     }
 
 }

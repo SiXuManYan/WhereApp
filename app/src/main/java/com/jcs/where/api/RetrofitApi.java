@@ -19,6 +19,7 @@ import com.jcs.where.api.request.account.RegisterRequest;
 import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
 import com.jcs.where.api.request.bills.BillsOrderCommit;
+import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
@@ -1241,6 +1242,16 @@ public interface RetrofitApi {
     Observable<JcsResponse<BillsOrderInfo>> billsCommitOrder(
             @Body BillsOrderCommit request
     );
+
+
+    /**
+     * 水电银行卡转账支付（上传支付信息）
+     */
+    @POST("generalapi/v2/pay_bills/bank_card/pay")
+    Observable<JcsResponse<JsonElement>> upLoadBillsPayAccountInfo(
+            @Body UpLoadBillsPayAccountInfo request
+    );
+
 
 
 }

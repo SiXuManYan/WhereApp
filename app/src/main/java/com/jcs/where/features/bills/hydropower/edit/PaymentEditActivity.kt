@@ -18,7 +18,7 @@ import java.util.*
 class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEditView {
 
     /**
-     * 账单日期
+     * 	账单类型（1-水费，2-电费）
      */
     private var billType = 0
 
@@ -29,6 +29,9 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
 
     override fun initView() {
 
+        intent.extras?.let {
+            billType = it.getInt(Constant.PARAM_TYPE)
+        }
     }
 
     override fun initData() {
@@ -61,9 +64,6 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             val dueDate = due_date_tv.text.toString().trim()
             val inputDate = input_date_tv.text.toString().trim()
 
-//            presenter.commitOrder(bill_type,account_name, present_address,contact_no, amount, biller, account_number, soa_invoice_no, date, due_date, input_date)
-
-
             val apply = BillsOrderCommit().apply {
                 bill_type = billType
                 account_name = accountName
@@ -77,7 +77,6 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
                 due_date = dueDate
                 statement_date = inputDate
             }
-
 
             startActivity(BillsPayActivity::class.java, Bundle().apply {
                 putSerializable(Constant.PARAM_DATA, apply)

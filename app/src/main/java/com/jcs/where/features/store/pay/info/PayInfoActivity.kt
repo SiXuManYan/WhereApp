@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import com.blankj.utilcode.util.ClipboardUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.store.PayChannel
@@ -26,6 +28,8 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
     private var addressDialog: BottomSheetDialog? = null
     private var useType = 0
 
+
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_store_pay_info
 
@@ -57,8 +61,17 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
     }
 
     override fun bindListener() {
+
         paid_tv.setOnClickListener {
             showVerifyDialog()
+        }
+        copy_iv.setOnClickListener {
+            ClipboardUtils.copyText(payment_name_tv.text.toString().trim())
+            ToastUtils.showShort(getString(R.string.copy_successfully))
+        }
+        copy2_iv.setOnClickListener {
+            ClipboardUtils.copyText(payment_account_number_tv.text.toString().trim())
+            ToastUtils.showShort(getString(R.string.copy_successfully))
         }
     }
 
@@ -88,9 +101,11 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
                 return@setOnClickListener
             }
 
-            if (useType == 0) {
+            if (useType == Constant.PAY_INFO_ESTORE) {
                 presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
-            } else {
+            }
+
+            if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
                 presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
             }
 

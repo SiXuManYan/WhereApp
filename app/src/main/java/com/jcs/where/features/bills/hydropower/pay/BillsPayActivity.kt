@@ -32,6 +32,7 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
 
     override fun getLayoutId() = R.layout.activity_store_pay_bills
 
+    override fun isStatusDark() = true
 
     override fun initView() {
 
@@ -89,8 +90,12 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
                 ToastUtils.showShort(getString(R.string.select_pay_way))
                 return@setOnClickListener
             }
+            val totalAmount = amount_et.text.toString().trim()
+
+
 
             billsOrderCommit?.let {
+                it.total_amount = totalAmount
                 presenter.commitOrder(it)
             }
 

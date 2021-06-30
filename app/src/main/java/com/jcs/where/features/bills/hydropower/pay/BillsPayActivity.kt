@@ -92,7 +92,11 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
             }
             val totalAmount = amount_et.text.toString().trim()
 
-
+            totalPrice = try {
+                totalAmount.toDouble()
+            } catch (e: Exception) {
+                0.0
+            }
 
             billsOrderCommit?.let {
                 it.total_amount = totalAmount

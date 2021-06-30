@@ -9,10 +9,10 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        app:rightFirstIcon="@mipmap/ic_bills_record"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:middleTitle="@string/Pay_Bills"
+        app:rightFirstIcon="@mipmap/ic_bills_record"
         app:showBottomLine="true" />
 
     <ImageView
@@ -35,7 +35,7 @@
             android:id="@+id/prepaid_ll"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -60,7 +60,7 @@
             android:id="@+id/water_ll"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -85,7 +85,7 @@
             android:id="@+id/electric_ll"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -110,7 +110,7 @@
             android:id="@+id/internet_ll"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -130,11 +130,6 @@
                 android:textSize="@dimen/sp_13" />
 
         </LinearLayout>
-
-        <View
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_80"
-            android:layout_weight="1" />
 
 
     </LinearLayout>

@@ -74,5 +74,10 @@ public class EventCode {
     public static final int EVENT_REFRESH_ORDER_LIST = 1015;
 
 
+    /**
+     * 水电支付成功
+     */
+    public static final int EVENT_BILLS_PAY_SUCCESS = 1016;
+
 
 }

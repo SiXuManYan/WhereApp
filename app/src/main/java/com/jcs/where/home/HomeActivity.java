@@ -1,5 +1,6 @@
 package com.jcs.where.home;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.jcs.where.features.category.CategoryFragment2;
 import com.jcs.where.features.home.HomeFragment2;
 import com.jcs.where.home.fragment.OrderFragment;
 import com.jcs.where.mine.fragment.MineFragment;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.PermissionUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -55,6 +57,13 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
         initFragment();
         mTabLayout = findViewById(R.id.homeTabs);
         initTabLayout();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle!=null) {
+            int tabIndex = bundle.getInt(Constant.PARAM_TAB, 0);
+            mTabLayout.selectTab(mTabLayout.getTabAt(tabIndex));
+        }
+
     }
 
 

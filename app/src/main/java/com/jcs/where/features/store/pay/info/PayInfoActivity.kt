@@ -1,5 +1,6 @@
 package com.jcs.where.features.store.pay.info
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -26,6 +27,11 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
     private var selectedChannel: PayChannel? = null
     private var orderIds = java.util.ArrayList<Int>()
     private var addressDialog: BottomSheetDialog? = null
+
+    /**
+     * 0 商城订单
+     * 1 水电订单
+     */
     private var useType = 0
 
 
@@ -106,7 +112,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
             }
 
             if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
-                presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+                presenter.upLoadBillsPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
             }
 
 
@@ -117,7 +123,16 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
 
     override fun paySuccess() {
-        startActivityAfterLogin(StorePayResultActivity::class.java)
+        startActivityAfterLogin(StorePayResultActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_TYPE,useType)
+        })
+
+//
+//        if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
+//            EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+//
+//        }
+
         finish()
     }
 

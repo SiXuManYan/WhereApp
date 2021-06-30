@@ -18,8 +18,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/jcsTitle"
         android:layout_above="@+id/next_tv"
+        android:layout_below="@+id/jcsTitle"
         android:background="@color/grey_F5F5F5">
 
 
@@ -171,7 +171,8 @@
                     android:maxLines="1"
                     android:textColor="@color/black_333333"
                     android:textColorHint="@color/grey_B5B5B5"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -263,10 +264,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_41"
                 android:background="@null"
+                android:digits="0123456789"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_hint"
-                android:digits="0123456789"
                 android:inputType="number"
                 android:maxLines="1"
                 android:paddingStart="@dimen/dp_15"

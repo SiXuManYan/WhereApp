@@ -76,7 +76,8 @@
                         android:maxLines="1"
                         android:textColor="@color/black_333333"
                         android:textColorHint="@color/grey_B5B5B5"
-                        android:textSize="@dimen/sp_27" />
+                        android:textSize="@dimen/sp_27"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -117,10 +118,10 @@
                 android:layout_marginBottom="@dimen/dp_30"
                 android:background="@drawable/shape_gradient_integral_sign_out"
                 android:gravity="center"
+                android:text="@string/pay_order"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18"
-                android:textStyle="bold"
-                android:text="@string/pay_order" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 

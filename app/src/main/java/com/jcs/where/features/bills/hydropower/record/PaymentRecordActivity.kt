@@ -87,6 +87,7 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
         if (toMutableList.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
+                emptyView.showEmptyDefault()
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()

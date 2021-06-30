@@ -39,7 +39,7 @@ class PayInfoPresenter(private var view: PayInfoView) : BaseMvpPresenter(view) {
 
     fun upLoadBillsPayAccountInfo(orderIds: ArrayList<Int>, accountName: String, accountNumber: String, id: Int) {
 
-        if (orderIds.isNotEmpty()) {
+        if (orderIds.isEmpty()) {
             return
         }
 

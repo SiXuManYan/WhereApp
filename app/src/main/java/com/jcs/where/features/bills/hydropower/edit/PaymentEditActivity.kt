@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.TextView
 import com.jcs.where.R
 import com.jcs.where.api.request.bills.BillsOrderCommit
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.hydropower.pay.BillsPayActivity
 import com.jcs.where.utils.Constant
@@ -98,5 +100,13 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
         }, mYear, mMonth, mDay)
         datePickerDialog.show()
     }
+
+
+/*    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+
+        if (baseEvent.code == EventCode.EVENT_BILLS_PAY_SUCCESS) {
+            finish()
+        }
+    }*/
 
 }

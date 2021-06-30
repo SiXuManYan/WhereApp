@@ -38,7 +38,9 @@ class PayBillsActivity : BaseActivity() {
         }
 
         electric_ll.setOnClickListener {
-            showComing()
+            startActivityAfterLogin(PaymentEditActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 2)
+            })
         }
 
         internet_ll.setOnClickListener {

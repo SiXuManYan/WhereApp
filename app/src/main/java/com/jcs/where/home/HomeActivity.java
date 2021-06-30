@@ -1,5 +1,6 @@
 package com.jcs.where.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,15 +59,22 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
         mTabLayout = findViewById(R.id.homeTabs);
         initTabLayout();
 
-        Bundle bundle = getIntent().getExtras();
+
+
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        Bundle bundle = intent.getExtras();
         if (bundle!=null) {
             int tabIndex = bundle.getInt(Constant.PARAM_TAB, 0);
             mTabLayout.selectTab(mTabLayout.getTabAt(tabIndex));
         }
 
     }
-
-
 
     @Override
     protected void initData() {

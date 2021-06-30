@@ -1,6 +1,5 @@
 package com.jcs.where.api.response.order.store
 
-import com.jcs.where.api.response.order.OrderStoreGoods
 import java.math.BigDecimal
 
 /**
@@ -29,7 +28,7 @@ class StoreOrderDetail {
      * 订单状态，
      * 自提时：（1：待付款，2：支付审核中，           4：待自提，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货），
      * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货） */
-    var order_status = 0
+    var status = 0
 
     /** 订单总额 */
     var price = BigDecimal.ZERO
@@ -89,6 +88,23 @@ class StoreOrderShop {
 
     var id = 0
     var title = ""
-    var images = ""
-    var goods: ArrayList<OrderStoreGoods> = ArrayList()
+    var images: ArrayList<String> = ArrayList()
+    var goods: ArrayList<StoreOrderShopGoods> = ArrayList()
+}
+
+
+class StoreOrderShopGoods {
+
+
+    /** 商品id */
+    var id = 0
+
+    /** 商品名称 */
+    var title = ""
+
+
+    var images: ArrayList<String> = ArrayList()
+    var good_num = 0
+    var price: BigDecimal = BigDecimal.ZERO
+
 }

@@ -2,7 +2,9 @@ package com.jcs.where.api.response.order
 
 import java.math.BigDecimal
 
-
+/**
+ * 订单列表
+ */
 open class OrderModelData {
 
 

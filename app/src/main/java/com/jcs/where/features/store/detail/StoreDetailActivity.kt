@@ -77,7 +77,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
                     }
                 })
 
-
+        pager.setNoScroll(true)
         pager.offscreenPageLimit = TAB_TITLES.size
         pager.adapter = InnerPagerAdapter(supportFragmentManager, 0)
         tabs_type.setViewPager(pager)

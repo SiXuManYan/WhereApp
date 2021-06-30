@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -29,6 +30,10 @@ class StoreOrderDetailPresenter(private var view: StoreOrderDetailView) : BaseMv
         requestApi(mRetrofit.getStoreOrderDetail(orderId), object : BaseMvpObserver<StoreOrderDetail>(view) {
             override fun onSuccess(response: StoreOrderDetail) {
                 view.bindData(response)
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                super.onError(errorResponse)
             }
         })
     }

@@ -20,6 +20,8 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
     private lateinit var mAdapter: StoreOrderDetailAdapter
 
+    override fun isStatusDark() = true
+
     override fun getLayoutId() = R.layout.activity_store_order_detail
 
     override fun initView() {
@@ -56,10 +58,11 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
 
     override fun bindData(data: StoreOrderDetail) {
-        status_tv.text = presenter.getStatusText(data.delivery_type, data.order_status)
-        status_desc_tv.text = presenter.getStatusDescText(status_desc_tv, data.order_status)
+        status_tv.text = presenter.getStatusText(data.delivery_type, data.status)
+        status_desc_tv.text = presenter.getStatusDescText(status_desc_tv, data.status)
         order_number_tv.text = data.trade_no
         created_date_tv.text = data.created_at
+        price_tv.text = getString(R.string.price_unit_format, data.price.toPlainString())
 
 
         // 商家服务
@@ -91,7 +94,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
         }
 
         // 支付信息
-        if (data.order_status != 1) {
+        if (data.status != 1) {
             pay_way_tv.text = data.pay_channel
             payment_name_tv.text = getString(R.string.payment_name_format, data.bank_card_account)
             payment_account_tv.text = getString(R.string.payment_account_format, data.bank_card_number)
@@ -103,10 +106,11 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
         // 商品信息
         data.shop?.let {
             mAdapter.setNewInstance(it.goods)
+            business_name_tv.text = it.title
         }
 
         // 底部
-        when (data.order_status) {
+        when (data.status) {
             1 -> {
                 bottom_container_rl.visibility = View.VISIBLE
                 left_tv.visibility = View.VISIBLE
@@ -170,7 +174,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
 
             }
-            8, 9 ,10-> {
+            8, 9, 10 -> {
                 bottom_container_rl.visibility = View.VISIBLE
                 left_tv.visibility = View.VISIBLE
                 left_tv.text = getString(R.string.after_sale_details)

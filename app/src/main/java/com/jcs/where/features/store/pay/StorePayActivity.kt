@@ -27,6 +27,9 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
 
     private lateinit var mAdapter: StorePayAdapter
 
+
+    override fun isStatusDark() = true
+
     override fun getLayoutId() = R.layout.activity_store_pay
 
     override fun initView() {

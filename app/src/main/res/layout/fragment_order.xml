@@ -49,7 +49,7 @@
         android:layout_height="@dimen/dp_44"
         android:layout_below="@+id/title_tv"
         android:background="@color/white"
-        app:tabGravity="fill"
+        app:tabGravity="center"
         app:tabIndicator="@drawable/shape_blue_indicator"
         app:tabIndicatorColor="@color/blue_72B9FF"
         app:tabIndicatorFullWidth="false"

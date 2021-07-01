@@ -1,5 +1,7 @@
 package com.jcs.where.api.response.order.store
 
+import android.os.Parcel
+import android.os.Parcelable
 import java.math.BigDecimal
 
 /**
@@ -53,7 +55,7 @@ class StoreOrderDetail {
 
 
     /** 地址信息（配送时） */
-    var address: ArrayList<StoreOrderAddress> = ArrayList()
+    var address: StoreOrderAddress? = null
 
     /** 商家信息 */
     var shop: StoreOrderShop? = null
@@ -93,18 +95,51 @@ class StoreOrderShop {
 }
 
 
-class StoreOrderShopGoods {
+class StoreOrderShopGoods() : Parcelable {
 
 
     /** 商品id */
     var id = 0
 
     /** 商品名称 */
-    var title = ""
+    var title: String? = ""
 
 
     var images: ArrayList<String> = ArrayList()
     var good_num = 0
-    var price: BigDecimal = BigDecimal.ZERO
+    var price: Double = 0.0
+
+    constructor(parcel: Parcel) : this() {
+        id = parcel.readInt()
+        title = parcel.readString()
+        good_num = parcel.readInt()
+        price = parcel.readDouble()
+        //
+        images = parcel.readSerializable() as ArrayList<String>
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(title)
+        parcel.writeInt(good_num)
+        parcel.writeDouble(price)
+        //
+        parcel.writeSerializable(images)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<StoreOrderShopGoods> {
+        override fun createFromParcel(parcel: Parcel): StoreOrderShopGoods {
+            return StoreOrderShopGoods(parcel)
+        }
+
+        override fun newArray(size: Int): Array<StoreOrderShopGoods?> {
+            return arrayOfNulls(size)
+        }
+    }
+
 
 }

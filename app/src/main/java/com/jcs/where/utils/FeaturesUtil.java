@@ -205,7 +205,7 @@ public class FeaturesUtil {
         void onCountryCodeSelect(String countryCode);
     }
 
-    public static void handleMediaSelect(Activity activity, int mediaType, @IdRes int fromViewId) {
+    public static void handleMediaSelect(Activity activity, int mediaType, int max) {
 
         PermissionUtils.permissionAny(activity, granted -> {
 
@@ -221,7 +221,7 @@ public class FeaturesUtil {
                 Matisse.from(activity)
                         .choose(mimeTypes)
                         .countable(true)
-                        .maxSelectable(1)
+                        .maxSelectable(max)
                         .theme(R.style.Matisse_Dracula)
                         .thumbnailScale(0.87f)
                         .imageEngine(new Glide4Engine())

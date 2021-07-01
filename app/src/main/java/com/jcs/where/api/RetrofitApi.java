@@ -23,6 +23,7 @@ import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.store.StoreRefundRequest;
 import com.jcs.where.api.request.store.UpLoadPayAccountInfo;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
@@ -56,6 +57,7 @@ import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UploadFileResponse;
+import com.jcs.where.api.response.UploadFileResponse2;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
@@ -99,6 +101,7 @@ import com.jcs.where.bean.TouristAttractionDetailResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -113,6 +116,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -694,6 +698,13 @@ public interface RetrofitApi {
 
 
     /**
+     * 多文件上传
+     */
+    @Multipart
+    @POST("commonapi/v2/file")
+    Observable<JcsResponse<UploadFileResponse2>> uploadMultiImages(@Part("type") RequestBody type, @PartMap Map<String, RequestBody> maps);
+
+    /**
      * 用户协议
      *
      * @param lang 语言（zh_cn或en）
@@ -1250,6 +1261,15 @@ public interface RetrofitApi {
     @POST("generalapi/v2/pay_bills/bank_card/pay")
     Observable<JcsResponse<JsonElement>> upLoadBillsPayAccountInfo(
             @Body UpLoadBillsPayAccountInfo request
+    );
+
+
+    /**
+     * 商城申请退款/退货
+     */
+    @POST("generalapi/v2/order/refunds")
+    Observable<JcsResponse<JsonElement>> storeRefund(
+            @Body StoreRefundRequest request
     );
 
 

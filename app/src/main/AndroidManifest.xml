@@ -619,6 +619,7 @@
         <activity android:name=".features.bills.hydropower.record.PaymentRecordActivity" />
         <activity android:name=".features.bills.hydropower.edit.PaymentEditActivity" />
         <activity android:name=".features.bills.hydropower.pay.BillsPayActivity" />
+        <activity android:name=".features.store.refund.StoreRefundActivity" />
 
     </application>
 

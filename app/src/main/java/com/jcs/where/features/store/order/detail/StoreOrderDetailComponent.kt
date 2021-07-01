@@ -1,6 +1,5 @@
 package com.jcs.where.features.store.order.detail
 
-import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
@@ -46,13 +45,13 @@ class StoreOrderDetailPresenter(private var view: StoreOrderDetailView) : BaseMv
                 StringUtils.getString(R.string.store_status_1)
             }
             2 -> {
-                StringUtils.getString(R.string.store_status_1)
+                StringUtils.getString(R.string.store_status_2)
             }
             3 -> {
                 if (deliveryType == 2) {
                     StringUtils.getString(R.string.store_status_2)
                 } else {
-                    StringUtils.getString(R.string.store_status_1)
+                    ""
                 }
             }
             4 -> {

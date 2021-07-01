@@ -2,7 +2,6 @@ package com.jcs.where.features.setting.information;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -92,7 +91,7 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
     }
 
     private void onAvatarLayoutClick(View view) {
-        FeaturesUtil.handleMediaSelect(this, Constant.IMG, view.getId());
+        FeaturesUtil.handleMediaSelect(this, Constant.IMG,1);
     }
 
     @Override

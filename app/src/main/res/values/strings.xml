@@ -798,5 +798,19 @@
     <string name="copy_successfully">复制成功</string>
     <string name="input_phone_empty_hint">请填写手机号</string>
 
+    <!--退货-->
+    <string name="title_store_refund">退款/退货申请</string>
+    <string name="after_sales_merchandise">售后商品</string>
+    <string name="after_sale_information">售后信息</string>
+    <string name="refund_amount">退款金额</string>
+    <string name="refund_delivery_fee_hint">如有配送费用，该退款金额已经扣除配送费用</string>
+    <string name="reasons_for_after_sales">售后原因</string>
+    <string name="problem_description">问题描述（必填）</string>
+    <string name="refund_reason_input_hint">请输入问题描述</string>
+    <string name="upload_image">上传图片</string>
+    <string name="submit_application">提交申请</string>
+    <string name="refund_image_hint">凭证（最多5张）</string>
+    <string name="application_success">申请成功</string>
+
 
 </resources>

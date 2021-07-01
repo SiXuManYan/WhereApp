@@ -44,7 +44,7 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
         mAdapter = PaymentAdapter().apply {
             setEmptyView(emptyView)
             loadMoreModule.isAutoLoadMore = true
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener(this@PaymentRecordActivity)
             setOnItemClickListener(this@PaymentRecordActivity)
         }

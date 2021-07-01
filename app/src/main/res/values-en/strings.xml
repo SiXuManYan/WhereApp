@@ -790,6 +790,18 @@
     <string name="electricity_free">Electricity free</string>
     <string name="copy_successfully">Copy successfully</string>
     <string name="input_phone_empty_hint">Please fill in your phone number</string>
+    <string name="title_store_refund">Refund/return application</string>
+    <string name="after_sales_merchandise">After-sales merchandise</string>
+    <string name="after_sale_information">After-sale information</string>
+    <string name="refund_amount">Refund amount</string>
+    <string name="refund_delivery_fee_hint">If there is a delivery fee, the refund amount has been deducted from the delivery fee</string>
+    <string name="reasons_for_after_sales">Reasons for after-sales</string>
+    <string name="problem_description">Problem Description</string>
+    <string name="refund_reason_input_hint">Please enter a problem description</string>
+    <string name="upload_image">upload image</string>
+    <string name="submit_application">submit application</string>
+    <string name="refund_image_hint">Vouchers (up to 5)</string>
+    <string name="application_success">application success</string>
 
 
 </resources>

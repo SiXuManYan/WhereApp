@@ -51,28 +51,7 @@ public class ModifyInfoPresenter extends BaseMvpPresenter {
             }
 
         });
-/*
 
-        mRetrofit.uploadFile(description, body)
-                .flatMap(new Function<JcsResponse<UploadFileResponse>, ObservableSource<?>>() {
-                    @Override
-                    public ObservableSource<?> apply(@NonNull JcsResponse<UploadFileResponse> response) throws Exception {
-
-                        String link = response.getData().link;
-
-                        UpdateUserInfoRequest infoRequest = new UpdateUserInfoRequest();
-                        infoRequest.setNickname(nickName);
-                        infoRequest.setAvatar(link);
-                        return mRetrofit.patchUpdateUserInfo(infoRequest);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseMvpObserver<JsonElement>(mView){
-
-                } );
-
-*/
 
     }
 

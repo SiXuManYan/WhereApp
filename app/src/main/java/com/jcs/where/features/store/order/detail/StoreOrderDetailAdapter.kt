@@ -27,6 +27,6 @@ class StoreOrderDetailAdapter :BaseQuickAdapter<StoreOrderShopGoods,BaseViewHold
 
         good_name_tv.text = item.title
         good_count_tv.text = context.getString(R.string.count_format,item.good_num)
-        price_tv.text = context.getString(R.string.price_unit_format,item.price)
+        price_tv.text = context.getString(R.string.price_unit_format,item.price.toString())
     }
 }

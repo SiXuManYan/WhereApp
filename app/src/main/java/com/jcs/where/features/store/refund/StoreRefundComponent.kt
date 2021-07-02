@@ -1,6 +1,6 @@
 package com.jcs.where.features.store.refund
 
-import com.google.gson.Gson
+import com.blankj.utilcode.util.RegexUtils
 import com.google.gson.JsonElement
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -29,6 +29,11 @@ interface StoreRefundView : BaseMvpView {
      * 修改售后申请成功
      */
     fun modifyApplicationSuccess()
+
+    /**
+     * 图片上传成功
+     */
+    fun upLoadImageSuccess(link: java.util.ArrayList<String>, orderId: Int, desc: String)
 
 }
 
@@ -79,10 +84,13 @@ class StoreRefundPresenter(private var view: StoreRefundView) : BaseMvpPresenter
 
         val map: HashMap<String, RequestBody> = HashMap()
         imageUrls.forEach {
-            val file = File(it)
-            val requestFile = RequestBody.create(MediaType.parse("image/jpg"), file)
-            // 多图上传的key 由 file改成　file[]
-            map["file[]\"; filename=\"" + file.name] = requestFile;
+            if (!RegexUtils.isURL(it)) {
+                // 只上传相册
+                val file = File(it)
+                val requestFile = RequestBody.create(MediaType.parse("image/jpg"), file)
+                // 多图上传的key 由 file改成　file[]
+                map["file[]\"; filename=\"" + file.name] = requestFile;
+            }
         }
 
         val type = "2"
@@ -90,9 +98,10 @@ class StoreRefundPresenter(private var view: StoreRefundView) : BaseMvpPresenter
 
         requestApi(mRetrofit.uploadMultiImages(description, map), object : BaseMvpObserver<UploadFileResponse2>(view) {
             override fun onSuccess(response: UploadFileResponse2) {
-                val link = response.link
-                val descImages = Gson().toJson(link)
-                storeRefund(orderId, desc, descImages)
+//                val link = response.link
+//                val descImages = Gson().toJson(link)
+//                storeRefund(orderId, desc, descImages)
+                view.upLoadImageSuccess(response.link, orderId , desc)
             }
 
             override fun onError(errorResponse: ErrorResponse?) {
@@ -100,8 +109,21 @@ class StoreRefundPresenter(private var view: StoreRefundView) : BaseMvpPresenter
             }
 
         })
+    }
 
 
+    /**
+     * 获取所有已经上传过的图片
+     */
+    fun getAllAlreadyUploadImage(mImageAdapter: StoreRefundAdapter):java.util.ArrayList<String>{
+
+        val link = java.util.ArrayList<String>()
+        mImageAdapter.data.forEach {
+            if (RegexUtils.isURL(it)) {
+                link.add(it)
+            }
+        }
+        return link
     }
 
 }

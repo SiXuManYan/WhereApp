@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderShopGoods
 import com.jcs.where.base.EventCode
@@ -103,7 +104,10 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
         if (isChange) {
             intent.extras?.let {
                 val selectImage = it.getStringArrayList(Constant.PARAM_SELECT_IMAGE)
-                mImageAdapter.setNewInstance(selectImage)
+                if (!selectImage.isNullOrEmpty()) {
+                    mImageAdapter.setNewInstance(selectImage)
+                }
+
             }
 
         }
@@ -136,8 +140,7 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
             }
 
             if (isChange) {
-
-                presenter.storeRefund(orderId, desc)
+                presenter.upLoadImage(ArrayList(mImageAdapter.data), orderId, desc)
 
             } else {
                 if (mImageAdapter.data.isNotEmpty()) {
@@ -164,6 +167,8 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
 
     override fun applicationSuccess() {
         ToastUtils.showShort(R.string.application_success)
+        // 回到商城订单详情，刷新
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         finish()
     }
 
@@ -172,6 +177,20 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
         // 回到商城订单详情，刷新
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         finish()
+    }
+
+    override fun upLoadImageSuccess(link: ArrayList<String>, orderId: Int, desc: String) {
+        if (isChange) {
+
+            val allAlreadyUploadImage = presenter.getAllAlreadyUploadImage(mImageAdapter)
+            allAlreadyUploadImage.addAll(link)
+
+            val descImages = Gson().toJson(allAlreadyUploadImage)
+            presenter.modifyRefundAgain(orderId, desc, descImages)
+        } else {
+            val descImages = Gson().toJson(link)
+            presenter.storeRefund(orderId, desc, descImages)
+        }
     }
 
 }

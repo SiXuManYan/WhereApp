@@ -35,12 +35,14 @@
 
 
             <LinearLayout
+                android:id="@+id/address_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dp_10"
                 android:background="@drawable/shape_white_radius_8"
                 android:orientation="vertical"
-              >
+                android:paddingBottom="@dimen/dp_10"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -48,47 +50,47 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
-                    android:text="商家退货信息"
+                    android:text="@string/merchant_return_info"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_14"
                     android:textStyle="bold" />
 
 
                 <TextView
+                    android:id="@+id/contact_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
-                    android:text="联系人：xxx"
+                    android:text="@string/contact_name_format"
                     android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_12"
-                   />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
+                    android:id="@+id/contact_number_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/dp_5"
+                    android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
-                    android:text="联系电话：xxx"
+                    android:text="@string/contact_number_format"
                     android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_12"
-                 />
+                    android:textSize="@dimen/sp_12" />
 
 
                 <TextView
+                    android:id="@+id/contact_address_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/dp_5"
+                    android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
-                    android:text="联系地址：xxxxxxxxxxxxxxxx"
+                    android:text="@string/contact_address_format"
                     android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_12"
-               />
+                    android:textSize="@dimen/sp_12" />
 
 
             </LinearLayout>
@@ -162,6 +164,7 @@
 
 
                     <TextView
+                        android:id="@+id/refund_price_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_47"
                         android:gravity="center_vertical"
@@ -211,6 +214,7 @@
 
 
                     <TextView
+                        android:id="@+id/cancel_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_47"
                         android:layout_alignParentEnd="true"
@@ -248,6 +252,7 @@
 
 
                     <TextView
+                        android:id="@+id/trade_no_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_47"
                         android:layout_alignParentEnd="true"
@@ -299,9 +304,6 @@
                     android:background="@color/grey_F5F5F5" />
 
 
-
-
-
                 <TextView
                     android:id="@+id/desc_tv"
                     android:layout_width="match_parent"
@@ -310,29 +312,23 @@
                     android:layout_marginEnd="@dimen/dp_15"
                     android:background="@drawable/stock_gray_radius_2_f5f5f5"
                     android:gravity="top"
-                    tools:text="sdasdasdaadsd"
                     android:lineSpacingMultiplier="1.2"
-                    android:minHeight="@dimen/dp_70"
                     android:padding="@dimen/dp_5"
                     android:textColor="@color/grey_666666"
-                    android:textColorHint="@color/grey_666666"
-                    android:textSize="@dimen/sp_12" />
-
-
+                    android:textSize="@dimen/sp_12"
+                    tools:text="sdasdasdaadsdsdasdasdaadsd" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/image_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_height="wrap_content"
                     tools:itemCount="1"
                     tools:layout_height="@dimen/dp_59"
                     tools:listitem="@layout/item_refund_image" />
-
-
 
 
             </LinearLayout>
@@ -344,20 +340,55 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <TextView
-        android:id="@+id/refund_tv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+    <RelativeLayout
+        android:id="@+id/bottom_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_15"
-        android:layout_marginBottom="@dimen/dp_30"
-        android:background="@drawable/shape_gradient_integral_sign_out"
-        android:gravity="center"
-        android:text="@string/submit_application"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_16"
-        android:textStyle="bold" />
+        android:background="@color/white"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_7"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_7"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+
+        <TextView
+            android:id="@+id/change_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/cancel_tv"
+            android:background="@drawable/stock_gray_radius_8"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_98"
+            android:paddingStart="@dimen/dp_17"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_17"
+            android:paddingBottom="@dimen/dp_8"
+            android:text="@string/modify_application"
+            android:textSize="@dimen/sp_14" />
+
+
+        <TextView
+            android:id="@+id/cancel_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@drawable/shape_gradient_orange_8"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_98"
+            android:paddingStart="@dimen/dp_17"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_17"
+            android:paddingBottom="@dimen/dp_8"
+            android:text="@string/cancel_application"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

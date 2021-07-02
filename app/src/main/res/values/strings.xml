@@ -811,6 +811,11 @@
     <string name="submit_application">提交申请</string>
     <string name="refund_image_hint">凭证（最多5张）</string>
     <string name="application_success">申请成功</string>
+    <string name="contact_name_format">联系人：%1$s</string>
+    <string name="contact_number_format">联系电话：%1$s</string>
+    <string name="contact_address_format">联系地址：%1$s</string>
+    <string name="merchant_return_info">商家退货信息</string>
+    <string name="refund_cancel_request_success">退货申请取消成功</string>
 
 
 </resources>

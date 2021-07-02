@@ -74,6 +74,9 @@ public class Constant {
     public static final String PARAM_DATA = "param_data";
     public static final String PARAM_TOTAL_PRICE = "param_total_price";
     public static final String PARAM_NAME = "param_name";
+    public static final String PARAM_BOOLEAN = "param_boolean";
+    public static final String PARAM_DESCRIPTION = "param_description";
+    public static final String PARAM_SELECT_IMAGE = "param_select_image";
 
     /**
      * 包装费

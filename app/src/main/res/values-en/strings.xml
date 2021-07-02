@@ -802,6 +802,11 @@
     <string name="submit_application">submit application</string>
     <string name="refund_image_hint">Vouchers (up to 5)</string>
     <string name="application_success">application success</string>
+    <string name="contact_name_format">Contact：%1$s</string>
+    <string name="contact_number_format">Contact number：%1$s</string>
+    <string name="contact_address_format">Contact address：%1$s</string>
+    <string name="merchant_return_info">Merchant return information</string>
+    <string name="refund_cancel_request_success">The return request is cancelled successfully</string>
 
 
 </resources>

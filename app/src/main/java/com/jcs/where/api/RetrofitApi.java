@@ -23,6 +23,7 @@ import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.store.StoreRefundModifyRequest;
 import com.jcs.where.api.request.store.StoreRefundRequest;
 import com.jcs.where.api.request.store.UpLoadPayAccountInfo;
 import com.jcs.where.api.response.BannerResponse;
@@ -82,6 +83,7 @@ import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
+import com.jcs.where.api.response.order.store.RefundDetail;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
@@ -1272,6 +1274,32 @@ public interface RetrofitApi {
             @Body StoreRefundRequest request
     );
 
+    /**
+     * 商城申请退款/退货详情
+     */
+    @GET("generalapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<RefundDetail>> storeRefundDetail(
+            @Path("order_id") int order_id
+    );
+
+    /**
+     * 商城  取消 申请退款/退货详情
+     */
+    @DELETE("generalapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<JsonElement>> cancelStoreRefund(
+            @Path("order_id") int order_id
+    );
+
+
+
+    /**
+     * 商城  修改申请退款/退货
+     */
+    @PATCH("generalapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<JsonElement>> storeRefundmodify(
+            @Path("order_id") int order_id,
+            @Body StoreRefundModifyRequest request
+    );
 
 
 }

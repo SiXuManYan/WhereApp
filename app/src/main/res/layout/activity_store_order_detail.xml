@@ -498,6 +498,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_17"
             android:paddingBottom="@dimen/dp_8"
+            android:textSize="@dimen/sp_14"
             android:visibility="gone"
             tools:text="申请退货"
             tools:visibility="visible" />
@@ -515,6 +516,7 @@
             android:paddingStart="@dimen/dp_17"
             android:paddingTop="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_17"
+            android:textSize="@dimen/sp_14"
             android:paddingBottom="@dimen/dp_8"
             android:textColor="@color/white"
             android:visibility="gone"

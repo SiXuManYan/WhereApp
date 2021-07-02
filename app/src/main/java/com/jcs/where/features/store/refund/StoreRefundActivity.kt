@@ -7,12 +7,14 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderShopGoods
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_store_refund.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/7/1 10:27.
@@ -23,6 +25,17 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
 
     private var orderId = 0
     private var totalPrice = 0.0
+
+
+    /**
+     * 是否是修改申请内容
+     */
+    private var isChange = false
+
+    /**
+     * 申请售后原因
+     */
+    private var cancelReason = ""
 
     private lateinit var mAdapter: StoreOrderDetailAdapter
     private lateinit var mImageAdapter: StoreRefundAdapter
@@ -41,9 +54,12 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
             mAdapter.setNewInstance(goodData)
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
             totalPrice = it.getDouble(Constant.PARAM_TOTAL_PRICE)
+            isChange = it.getBoolean(Constant.PARAM_BOOLEAN, false)
+            cancelReason = it.getString(Constant.PARAM_DESCRIPTION, "")
         }
 
 
+        // 商品
         good_rv.apply {
             isNestedScrollingEnabled = true
             layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
@@ -64,14 +80,32 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
                     else -> {
                     }
                 }
-
-
             }
 
         }
+
         image_rv.apply {
             adapter = mImageAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        handleFromChange()
+    }
+
+    /**
+     * 处理修改申请
+     */
+    private fun handleFromChange() {
+
+        if (cancelReason.isNotEmpty()) {
+            desc_tv.setText(cancelReason)
+        }
+        if (isChange) {
+            intent.extras?.let {
+                val selectImage = it.getStringArrayList(Constant.PARAM_SELECT_IMAGE)
+                mImageAdapter.setNewInstance(selectImage)
+            }
+
         }
 
 
@@ -101,11 +135,18 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
                 return@setOnClickListener
             }
 
-            if (mImageAdapter.data.isNotEmpty()) {
-                presenter.upLoadImage(ArrayList(mImageAdapter.data),orderId , desc)
-            }else{
-                presenter.storeRefund(orderId , desc)
+            if (isChange) {
+
+                presenter.storeRefund(orderId, desc)
+
+            } else {
+                if (mImageAdapter.data.isNotEmpty()) {
+                    presenter.upLoadImage(ArrayList(mImageAdapter.data), orderId, desc)
+                } else {
+                    presenter.storeRefund(orderId, desc)
+                }
             }
+
         }
 
     }
@@ -123,6 +164,14 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
 
     override fun applicationSuccess() {
         ToastUtils.showShort(R.string.application_success)
+        finish()
+    }
+
+    override fun modifyApplicationSuccess() {
+        ToastUtils.showShort(R.string.modify_success)
+        // 回到商城订单详情，刷新
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        finish()
     }
 
 }

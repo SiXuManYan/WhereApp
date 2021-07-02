@@ -5,8 +5,11 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderDetail
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundActivity
+import com.jcs.where.features.store.refund.detail.StoreRefundDetailActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_order_detail.*
@@ -186,35 +189,15 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
 
             }
-            8, 9, 10 -> {
+            8, 9, 10 ,11,12 -> {
                 bottom_container_rl.visibility = View.VISIBLE
                 left_tv.visibility = View.VISIBLE
                 left_tv.text = getString(R.string.after_sale_details)
                 left_tv.setOnClickListener {
                     // 查看售后详情
-                    showComing()
+                    viewRefundDetail()
                 }
                 right_tv.visibility = View.GONE
-
-            }
-
-
-            12 -> {
-                bottom_container_rl.visibility = View.VISIBLE
-
-                left_tv.visibility = View.VISIBLE
-                left_tv.text = getString(R.string.modify_application)
-                left_tv.setOnClickListener {
-                    // 修改退货申请
-                    showComing()
-                }
-                right_tv.visibility = View.VISIBLE
-                right_tv.text = getString(R.string.cancel_application)
-                right_tv.setOnClickListener {
-                    // 取消退货申请
-                    showComing()
-                }
-
 
             }
             else -> {
@@ -225,6 +208,10 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
     }
 
+
+    /**
+     * 申请售后
+     */
     private fun doRefund() {
 
         startActivity(StoreRefundActivity::class.java, Bundle().apply {
@@ -233,6 +220,32 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
         })
 
+    }
+
+
+    /**
+     * 查看售后详情
+     */
+    private fun viewRefundDetail() {
+        startActivity(StoreRefundDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ORDER_ID, orderId)
+        })
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+
+        when (baseEvent.code) {
+            EVENT_REFRESH_ORDER_LIST  -> {
+                presenter.getOrderDetail(orderId)
+            }
+            else -> {
+
+            }
+        }
     }
 
 

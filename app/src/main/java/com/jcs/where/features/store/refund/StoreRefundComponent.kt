@@ -6,6 +6,7 @@ import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.store.StoreRefundModifyRequest
 import com.jcs.where.api.request.store.StoreRefundRequest
 import com.jcs.where.api.response.UploadFileResponse2
 import okhttp3.MediaType
@@ -23,6 +24,11 @@ interface StoreRefundView : BaseMvpView {
      * 售后申请成功
      */
     fun applicationSuccess()
+
+    /**
+     * 修改售后申请成功
+     */
+    fun modifyApplicationSuccess()
 
 }
 
@@ -42,6 +48,24 @@ class StoreRefundPresenter(private var view: StoreRefundView) : BaseMvpPresenter
         requestApi(mRetrofit.storeRefund(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 view.applicationSuccess()
+            }
+
+        })
+    }
+
+    /**
+     * 修改申请售后
+     */
+    fun modifyRefundAgain(order_Id: Int, description: String, descImages: String? = null) {
+
+        val apply = StoreRefundModifyRequest().apply {
+            desc = description
+            images = descImages
+        }
+
+        requestApi(mRetrofit.storeRefundmodify(order_Id, apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                view.modifyApplicationSuccess()
             }
 
         })

@@ -30,6 +30,10 @@ public class GlideUtil {
         Glide.with(context).asGif().load(iconUrl).apply(options).into(target);
     }
 
+    public static void load(Context context, String url, ImageView imageView, int radius) {
+        load(context, url, imageView, radius, GlideRoundedCornersTransform.CornerType.ALL);
+    }
+
 
     public static void load(Context context, String url, ImageView imageView, int radius, GlideRoundedCornersTransform.CornerType cornerType) {
 

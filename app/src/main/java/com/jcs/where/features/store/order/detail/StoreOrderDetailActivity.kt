@@ -10,7 +10,6 @@ import com.jcs.where.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundActivity
 import com.jcs.where.features.store.refund.detail.StoreRefundDetailActivity
-import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_order_detail.*
 
@@ -135,9 +134,6 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 right_tv.setOnClickListener {
                     // 去付款
                     showComing()
-                    if (User.getInstance().phone == "17640339671") {
-                        doRefund()
-                    }
                 }
             }
             3 -> {

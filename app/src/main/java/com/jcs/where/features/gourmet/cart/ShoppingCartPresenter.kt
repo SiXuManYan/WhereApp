@@ -53,7 +53,7 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
     }
 
     /**
-     * 是否全部选中
+     * 顶级是否全部选中
      */
     fun checkSelectAll(adapter: ShoppingCartAdapter): Boolean {
         val result = ArrayList<Boolean>()

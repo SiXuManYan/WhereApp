@@ -49,7 +49,7 @@ class NumberView2 : LinearLayout {
 
     public interface OnValueChangeListener {
 
-        fun onNumberChange(goodNum: Int)
+        fun onNumberChange(goodNum: Int, isAdd: Boolean)
     }
 
     private fun initView() {
@@ -71,11 +71,13 @@ class NumberView2 : LinearLayout {
             } else {
                 cut_iv.visibility = View.VISIBLE
                 value_tv.visibility = View.VISIBLE
+
+
             }
             VibrateUtils.vibrate(10)
 
             value_tv.text = goodNum.toString()
-            valueChangeListener?.onNumberChange(goodNum)
+            valueChangeListener?.onNumberChange(goodNum , false)
             cut_iv.isClickable = false
             Handler(Looper.myLooper()!!).postDelayed({
                 cut_iv.isClickable = true
@@ -88,7 +90,7 @@ class NumberView2 : LinearLayout {
             value_tv.visibility = View.VISIBLE
             VibrateUtils.vibrate(10)
             value_tv.text = goodNum.toString()
-            valueChangeListener?.onNumberChange(goodNum)
+            valueChangeListener?.onNumberChange(goodNum , true)
             add_iv.isClickable = false
 
             Handler(Looper.myLooper()!!).postDelayed({
@@ -117,10 +119,15 @@ class NumberView2 : LinearLayout {
     }
 
 
+    /**
+     * 展示删除
+     */
     fun alwaysEnableCut(tag: Boolean) {
         alwaysEnableCut = tag
         cut_iv.visibility = View.VISIBLE
     }
+
+
 
 
 }

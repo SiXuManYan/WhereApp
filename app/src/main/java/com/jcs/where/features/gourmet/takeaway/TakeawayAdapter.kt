@@ -12,7 +12,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
-import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.NumberView2
@@ -70,7 +69,7 @@ class TakeawayAdapter : BaseQuickAdapter<DishTakeawayResponse, BaseViewHolder>(R
         // 商品数量
         number_view.updateNumber(item.nativeSelectCount)
         number_view.valueChangeListener = object : NumberView2.OnValueChangeListener {
-            override fun onNumberChange(goodNum: Int) {
+            override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                 item.nativeSelectCount = goodNum
                 onSelectCountChange?.selectCountChange(goodNum , item.id)
             }

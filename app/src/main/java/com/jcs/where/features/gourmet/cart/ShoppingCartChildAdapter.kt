@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.cart
 
+import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -46,7 +47,7 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
                 .placeholder(R.mipmap.ic_empty_gray)
 
         val child_container_rl = holder.getView<RelativeLayout>(R.id.child_container_rl)
-        val good_checked_iv = holder.getView<ImageView>(R.id.good_checked_iv)
+        val good_checked_iv = holder.getView<CheckedTextView>(R.id.good_checked_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val good_name = holder.getView<TextView>(R.id.good_name)
         val now_price_tv = holder.getView<TextView>(R.id.now_price_tv)
@@ -67,11 +68,7 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
         val oldBuilder = SpanUtils().append(oldPrice).setStrikethrough().create()
         old_price_tv.text = oldBuilder
 
-        if (products.nativeIsSelect) {
-            good_checked_iv.setImageResource(R.mipmap.ic_checked_orange)
-        } else {
-            good_checked_iv.setImageResource(R.mipmap.ic_un_checked)
-        }
+        good_checked_iv.isChecked = products.nativeIsSelect
 
         good_checked_iv.setOnClickListener {
             val currentIsSelect = products.nativeIsSelect
@@ -79,10 +76,8 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
 
             if (products.nativeIsSelect) {
                 VibrateUtils.vibrate(10)
-                good_checked_iv.setImageResource(R.mipmap.ic_checked_orange)
-            } else {
-                good_checked_iv.setImageResource(R.mipmap.ic_un_checked)
             }
+            good_checked_iv.isChecked = products.nativeIsSelect
             checkedChangeListener?.onClick(products.nativeIsSelect)
 
         }

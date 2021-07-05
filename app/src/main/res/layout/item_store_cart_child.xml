@@ -70,7 +70,7 @@
 
     </LinearLayout>
 
-    <com.jcs.where.widget.NumberView
+    <com.jcs.where.widget.NumberView2
         android:id="@+id/number_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

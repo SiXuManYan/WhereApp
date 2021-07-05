@@ -155,7 +155,6 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                     bottom_container_rl.visibility = View.GONE
                 }
             }
-
             4 -> {
                 if (data.delivery_type == 1) {
                     bottom_container_rl.visibility = View.VISIBLE
@@ -189,20 +188,24 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
 
             }
-            8, 9, 10 ,11,12 -> {
-                bottom_container_rl.visibility = View.VISIBLE
-                left_tv.visibility = View.VISIBLE
-                left_tv.text = getString(R.string.after_sale_details)
-                left_tv.setOnClickListener {
-                    // 查看售后详情
-                    viewRefundDetail()
-                }
-                right_tv.visibility = View.GONE
-
-            }
+//            8, 9, 10, 11, 12 -> { }
             else -> {
                 bottom_container_rl.visibility = View.GONE
             }
+        }
+
+//         查看售后详情
+        if (data.aftersale_status == 2) {
+            bottom_container_rl.visibility = View.VISIBLE
+            left_tv.visibility = View.VISIBLE
+            left_tv.text = getString(R.string.after_sale_details)
+            left_tv.setOnClickListener {
+                // 查看售后详情
+                viewRefundDetail()
+            }
+            right_tv.visibility = View.GONE
+        } else {
+            bottom_container_rl.visibility = View.GONE
         }
 
 
@@ -239,7 +242,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
         }
 
         when (baseEvent.code) {
-            EVENT_REFRESH_ORDER_LIST  -> {
+            EVENT_REFRESH_ORDER_LIST -> {
                 presenter.getOrderDetail(orderId)
             }
             else -> {

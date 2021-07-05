@@ -21,17 +21,16 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/jcsTitle"
-        android:paddingBottom="@dimen/dp_200">
+        android:layout_below="@+id/jcsTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_200"
             android:paddingTop="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_15"
-            android:paddingBottom="@dimen/dp_200">
+            android:paddingEnd="@dimen/dp_15">
 
 
             <LinearLayout
@@ -326,7 +325,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
-                    tools:itemCount="1"
+                    tools:itemCount="5"
                     tools:layout_height="@dimen/dp_59"
                     tools:listitem="@layout/item_refund_image" />
 

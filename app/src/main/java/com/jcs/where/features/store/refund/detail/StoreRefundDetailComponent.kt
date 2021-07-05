@@ -25,9 +25,13 @@ class StoreRefundDetailPresenter(private var view: StoreRefundDetailView) : Base
 
     fun getDetail(orderId: Int) {
 
-        requestApi(mRetrofit.storeRefundDetail(orderId),object :BaseMvpObserver<RefundDetail>(view){
+        requestApi(mRetrofit.storeRefundDetail(orderId), object : BaseMvpObserver<RefundDetail>(view) {
             override fun onSuccess(response: RefundDetail) {
-              view.bindDetail(response)
+                view.bindDetail(response)
+            }
+
+            override fun onError(e: Throwable) {
+                super.onError(e)
             }
 
         })
@@ -36,9 +40,9 @@ class StoreRefundDetailPresenter(private var view: StoreRefundDetailView) : Base
     /**
      * 取消申请售后
      */
-    fun cancelApplication(orderId: Int){
+    fun cancelApplication(orderId: Int) {
 
-        requestApi(mRetrofit.cancelStoreRefund(orderId),object :BaseMvpObserver<JsonElement>(view){
+        requestApi(mRetrofit.cancelStoreRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.cancelSuccess()
             }
@@ -46,7 +50,6 @@ class StoreRefundDetailPresenter(private var view: StoreRefundDetailView) : Base
         })
 
     }
-
 
 
 }

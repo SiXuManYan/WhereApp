@@ -68,7 +68,7 @@ class StoreRefundPresenter(private var view: StoreRefundView) : BaseMvpPresenter
             images = descImages
         }
 
-        requestApi(mRetrofit.storeRefundmodify(order_Id, apply), object : BaseMvpObserver<JsonElement>(view) {
+        requestApi(mRetrofit.storeRefundModify(order_Id, apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 view.modifyApplicationSuccess()
             }

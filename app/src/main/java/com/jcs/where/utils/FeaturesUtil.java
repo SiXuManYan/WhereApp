@@ -524,40 +524,38 @@ public class FeaturesUtil {
                 break;
             case 4:
                 if (delivery_type == 1) {
-                    text = StringUtils.getString(R.string.mine_booked);
+                    text = StringUtils.getString(R.string.store_status_4_1);
                 } else {
-                    text = StringUtils.getString(R.string.wait_received);
+                    text = StringUtils.getString(R.string.store_status_4_2);
                 }
                 break;
             case 5:
-                text = StringUtils.getString(R.string.successful_transaction );
+                text = StringUtils.getString(R.string.store_status_5 );
                 textColor = ColorUtils.getColor(R.color.orange_FD6431);
                 break;
             case 6:
-                text = StringUtils.getString(R.string.order_cancel);
+                text = StringUtils.getString(R.string.store_status_6);
                 break;
             case 7:
-                text = StringUtils.getString(R.string.trading_closed);
+                text = StringUtils.getString(R.string.store_status_7);
                 break;
             case 8:
-                text = StringUtils.getString(R.string.refunding);
-
+                text = StringUtils.getString(R.string.store_status_8);
                 break;
             case 9:
-                text = StringUtils.getString(R.string.refund_successfully);
+                text = StringUtils.getString(R.string.store_status_9);
                 break;
             case 10:
-                // 退款审核中
-                text = StringUtils.getString(R.string.refund_under_review);
+                text = StringUtils.getString(R.string.store_status_10);
                 break;
 
             case 11:
                 // 商家待收货
-                text = StringUtils.getString(R.string.merchant_pending_receipt);
+                text = StringUtils.getString(R.string.store_status_11);
                 break;
             case 12:
                 // 商家拒绝退货
-                text = StringUtils.getString(R.string.merchant_refuses_to_return);
+                text = StringUtils.getString(R.string.store_status_12);
                 textColor = ColorUtils.getColor(R.color.orange_FD6431);
                 break;
             default:

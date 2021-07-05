@@ -69,6 +69,8 @@ class StoreOrderDetail {
     /** 支付银行账号 */
     var bank_card_number = ""
 
+    /** 售后状态（1-未售后，2-已售后） */
+    var aftersale_status = 0
 
 }
 

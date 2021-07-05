@@ -1,8 +1,10 @@
 package com.jcs.where.features.store.refund.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.RefundDetail
@@ -31,11 +33,14 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
 
     override fun getLayoutId() = R.layout.activity_store_refund_detail
 
+    override fun isStatusDark() = true
+
     override fun initView() {
+
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
         }
-
 
         // 商品信息
         mAdapter = StoreOrderDetailAdapter()

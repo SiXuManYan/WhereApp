@@ -736,20 +736,22 @@
     <string name="payment_name_format">付款账户：%1$s</string>
     <string name="payment_account_format">付款户口：%1$s</string>
 
-    <!-- 商城订单状态 a外卖 b自提-->
+    <!-- 商城订单状态 a配送 b自提-->
     <string name="store_status_1">待付款</string>
     <string name="store_status_2">支付审核中</string>
-    <string name="store_status_3_a">待发货</string>
-    <string name="store_status_3_b">待自提</string>
-    <string name="store_status_4">待收货</string>
+    <string name="store_status_3">待发货</string>
+
+    <!-- 4 自提时：待使用 ，配送时：待收货 -->
+    <string name="store_status_4_1">待使用</string>
+    <string name="store_status_4_2">待收货</string>
     <string name="store_status_5">交易成功</string>
-    <string name="store_status_6">交易关闭</string>
-    <string name="store_status_7">交易取消</string>
-    <string name="store_status_8">商家审核中</string>
-    <string name="store_status_9">商家待收货</string>
-    <string name="store_status_10">商家拒绝退货</string>
-    <string name="store_status_11">退款中</string>
-    <string name="store_status_12">退款成功</string>
+    <string name="store_status_6">订单取消(未支付)</string>
+    <string name="store_status_7">交易关闭</string>
+    <string name="store_status_8">退款中</string>
+    <string name="store_status_9">退款成功</string>
+    <string name="store_status_10">退款审核中(商家)</string>
+    <string name="store_status_11">商家待收货</string>
+    <string name="store_status_12">商家拒绝退货</string>
 
     <!-- 状态描述文字 -->
     <string name="store_status_desc_8">您已成功发起退货申请，请耐心等待商家审核。</string>
@@ -816,6 +818,8 @@
     <string name="contact_address_format">联系地址：%1$s</string>
     <string name="merchant_return_info">商家退货信息</string>
     <string name="refund_cancel_request_success">退货申请取消成功</string>
+    <string name="take_carts">自提商品</string>
+    <string name="delivery_carts">配送商品</string>
 
 
 </resources>

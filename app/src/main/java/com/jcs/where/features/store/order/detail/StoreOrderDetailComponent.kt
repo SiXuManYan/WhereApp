@@ -37,6 +37,16 @@ class StoreOrderDetailPresenter(private var view: StoreOrderDetailView) : BaseMv
         })
     }
 
+
+    /**
+     * 订单状态，
+     *
+     * 订单状态，
+     * 自提时：（1：待付款，2：支付审核中，           4：待使用，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货），
+     * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货）
+     *
+     * */
+
     fun getStatusText(deliveryType: Int, orderStatus: Int): String {
 
 
@@ -49,13 +59,17 @@ class StoreOrderDetailPresenter(private var view: StoreOrderDetailView) : BaseMv
             }
             3 -> {
                 if (deliveryType == 2) {
-                    StringUtils.getString(R.string.store_status_2)
+                    StringUtils.getString(R.string.store_status_3)
                 } else {
                     ""
                 }
             }
             4 -> {
-                StringUtils.getString(R.string.store_status_4)
+                if (deliveryType == 2) {
+                    StringUtils.getString(R.string.store_status_4_2)
+                } else {
+                    StringUtils.getString(R.string.store_status_4_1)
+                }
             }
             5 -> {
                 StringUtils.getString(R.string.store_status_5)

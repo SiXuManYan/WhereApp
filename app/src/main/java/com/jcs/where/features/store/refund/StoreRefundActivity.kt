@@ -181,7 +181,6 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
 
     override fun upLoadImageSuccess(link: ArrayList<String>, orderId: Int, desc: String) {
         if (isChange) {
-
             val allAlreadyUploadImage = presenter.getAllAlreadyUploadImage(mImageAdapter)
             allAlreadyUploadImage.addAll(link)
 

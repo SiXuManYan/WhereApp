@@ -735,17 +735,17 @@
     <!-- 商城订单状态 -->
     <string name="store_status_1">Unpaid</string>
     <string name="store_status_2">Confirming</string>
-    <string name="store_status_3_a">To Be Delivered</string>
-    <string name="store_status_3_b">Unaccalimed</string>
-    <string name="store_status_4">Receiving</string>
+    <string name="store_status_3">To Be Delivered</string>
+    <string name="store_status_4_1">To be used</string>
+    <string name="store_status_4_2">To be received</string>
     <string name="store_status_5">Successful</string>
-    <string name="store_status_6">Trading closed</string>
-    <string name="store_status_7">Canceled</string>
-    <string name="store_status_8">Merchant confirming</string>
-    <string name="store_status_9">Merchant Receiving</string>
-    <string name="store_status_10">Refuses to Return</string>
-    <string name="store_status_11">Refunding</string>
-    <string name="store_status_12">Refund successfully</string>
+    <string name="store_status_6">Cancel the order (unpaid)</string>
+    <string name="store_status_7">Trading closed</string>
+    <string name="store_status_8">Refunding</string>
+    <string name="store_status_9">Refund successfully</string>
+    <string name="store_status_10">Refund under review (merchant)</string>
+    <string name="store_status_11">Merchant pending receipt</string>
+    <string name="store_status_12">Merchant refuses to return</string>
 
 
     <!-- 状态描述文字 -->
@@ -807,6 +807,8 @@
     <string name="contact_address_format">Contact address：%1$s</string>
     <string name="merchant_return_info">Merchant return information</string>
     <string name="refund_cancel_request_success">The return request is cancelled successfully</string>
+    <string name="take_carts">Take carts</string>
+    <string name="delivery_carts">Delivery carts</string>
 
 
 </resources>

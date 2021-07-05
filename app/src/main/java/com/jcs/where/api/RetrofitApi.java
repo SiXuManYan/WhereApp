@@ -93,6 +93,7 @@ import com.jcs.where.api.response.store.StoreGoodDetail;
 import com.jcs.where.api.response.store.StoreGoods;
 import com.jcs.where.api.response.store.StoreOrderInfoResponse;
 import com.jcs.where.api.response.store.StoreRecommend;
+import com.jcs.where.api.response.store.cart.StoreCartResponse;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
@@ -1275,31 +1276,39 @@ public interface RetrofitApi {
     );
 
     /**
-     * 商城申请退款/退货详情
+     * 商城退货详情
      */
     @GET("generalapi/v2/order/refunds/{orderId}")
     Observable<JcsResponse<RefundDetail>> storeRefundDetail(
-            @Path("order_id") int order_id
+            @Path("orderId") int orderId
     );
 
     /**
-     * 商城  取消 申请退款/退货详情
+     * 商城  取消 申请退款
      */
     @DELETE("generalapi/v2/order/refunds/{orderId}")
     Observable<JcsResponse<JsonElement>> cancelStoreRefund(
-            @Path("order_id") int order_id
+            @Path("orderId") int orderId
     );
 
 
 
     /**
-     * 商城  修改申请退款/退货
+     * 商城  修改申请退款
      */
     @PATCH("generalapi/v2/order/refunds/{orderId}")
-    Observable<JcsResponse<JsonElement>> storeRefundmodify(
-            @Path("order_id") int order_id,
+    Observable<JcsResponse<JsonElement>> storeRefundModify(
+            @Path("orderId") int orderId,
             @Body StoreRefundModifyRequest request
     );
+
+
+
+    /**
+     * 商城购物车
+     */
+    @GET("generalapi/v2/carts")
+    Observable<JcsResponse<StoreCartResponse>> getStoreCart();
 
 
 }

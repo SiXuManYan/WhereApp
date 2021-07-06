@@ -160,8 +160,8 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
                         good_id = goodData.id
                         delivery_type = listType + 1
 
-                        if (goodData.image.isNotEmpty()) {
-                            image = goodData.image[0]
+                        if (goodData.images.isNotEmpty()) {
+                            image = goodData.images[0]
                         }
                         goodName = goodData.title
                         good_num = good.good_num

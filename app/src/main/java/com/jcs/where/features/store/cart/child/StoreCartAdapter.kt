@@ -6,8 +6,6 @@ import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -94,8 +92,8 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
 
         val goodData = it.good_data
 
-        if (goodData.image.isNotEmpty()) {
-            GlideUtil.load(context, goodData.image[0], image_iv, 4)
+        if (goodData.images.isNotEmpty()) {
+            GlideUtil.load(context, goodData.images[0], image_iv, 4)
             good_name.text = goodData.title
         }
 

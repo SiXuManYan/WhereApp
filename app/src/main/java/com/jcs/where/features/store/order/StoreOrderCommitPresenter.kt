@@ -24,10 +24,13 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView) : BaseMv
      */
     fun handlePrice(adapter: StoreOrderCommitAdapter): BigDecimal {
         var totalPrice: BigDecimal = BigDecimal.ZERO
+
         adapter.data.forEach {
             var goodTotal: BigDecimal = BigDecimal.ZERO
+
             it.goods.forEach { good ->
-                goodTotal = BigDecimalUtil.add(good.price, goodTotal)
+                val mul = BigDecimalUtil.mul(good.price, BigDecimal(good.good_num))
+                goodTotal = BigDecimalUtil.add(mul, goodTotal)
             }
             val currentItemPrice = BigDecimalUtil.add(goodTotal, BigDecimal(it.delivery_fee.toDouble()))
             totalPrice = BigDecimalUtil.add(currentItemPrice, totalPrice)
@@ -51,7 +54,7 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView) : BaseMv
         // 商品
         val commitGoodList: ArrayList<StoreOrderCommitShop> = ArrayList()
 
-        data.forEach { parent->
+        data.forEach { parent ->
 
             parent.goods.forEach {
 
@@ -67,7 +70,6 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView) : BaseMv
             }
 
         }
-
 
 
         // 提交

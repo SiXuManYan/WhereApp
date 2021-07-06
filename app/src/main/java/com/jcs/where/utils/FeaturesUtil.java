@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.constant.RegexConstants;
@@ -509,17 +508,17 @@ public class FeaturesUtil {
         int textColor = ColorUtils.getColor(R.color.black_333333);
         switch (status) {
             case 1:
-                text = StringUtils.getString(R.string.mine_unpaid);
+                text = StringUtils.getString(R.string.store_status_1);
                 textColor = ColorUtils.getColor(R.color.orange_FD6431);
                 break;
             case 2:
-                text = StringUtils.getString(R.string.payment_under_review);
+                text = StringUtils.getString(R.string.store_status_2);
                 break;
             case 3:
                 if (delivery_type == 1) {
                     text = "";
                 } else {
-                    text = StringUtils.getString(R.string.wait_ship);
+                    text = StringUtils.getString(R.string.store_status_3);
                 }
                 break;
             case 4:
@@ -530,7 +529,7 @@ public class FeaturesUtil {
                 }
                 break;
             case 5:
-                text = StringUtils.getString(R.string.store_status_5 );
+                text = StringUtils.getString(R.string.store_status_5);
                 textColor = ColorUtils.getColor(R.color.orange_FD6431);
                 break;
             case 6:
@@ -564,8 +563,6 @@ public class FeaturesUtil {
         textView.setText(text);
         textView.setTextColor(textColor);
     }
-
-
 
 
     public static float getSafeStarLevel(String levelStr) {

@@ -32,7 +32,7 @@ class StoreGoodsCommit : Serializable {
 
     var good_id: Int = 0
 
-    var good_num: Int = 0
+    var good_num: Int = 1
 
 
     /**

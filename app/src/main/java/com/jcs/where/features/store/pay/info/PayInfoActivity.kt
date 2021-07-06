@@ -11,10 +11,13 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.store.PayChannel
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.pay.result.StorePayResultActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_pay_info.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/6/23 17:11.
@@ -66,8 +69,13 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
     }
 
+    override fun onBackPressed() = Unit
+
     override fun bindListener() {
 
+        mJcsTitle.setBackIvClickListener {
+
+        }
         paid_tv.setOnClickListener {
             showVerifyDialog()
         }
@@ -124,15 +132,16 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
     override fun paySuccess() {
         startActivityAfterLogin(StorePayResultActivity::class.java, Bundle().apply {
-            putInt(Constant.PARAM_TYPE,useType)
+            putInt(Constant.PARAM_TYPE, useType)
         })
 
-//
+
 //        if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
 //            EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
-//
 //        }
 
+        // 支付成功
+        EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }
 

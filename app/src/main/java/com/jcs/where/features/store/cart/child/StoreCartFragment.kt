@@ -142,23 +142,23 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
 
             val selectedData = presenter.getSelectedData(mAdapter)
 
-            val appList : ArrayList<StoreOrderCommitData> = ArrayList()
+            val appList: ArrayList<StoreOrderCommitData> = ArrayList()
             selectedData.forEach {
 
                 // shop
                 val shop = StoreOrderCommitData().apply {
                     shop_id = it.shop_id
                     shop_title = it.shop_name
-                    delivery_type = listType+1
+                    delivery_type = listType + 1
                     delivery_fee = it.delivery_fee.toFloat()
                 }
 
                 // shop $good
-                it.goods.forEach { good->
+                it.goods.forEach { good ->
                     val goodData = good.good_data
                     val goodInfo = StoreGoodsCommit().apply {
                         good_id = goodData.id
-                        delivery_type =  listType+1
+                        delivery_type = listType + 1
                         image = goodData.image
                         goodName = goodData.title
                         good_num = good.good_num
@@ -224,17 +224,26 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
     override fun deleteSuccess() = onRefresh()
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_STORE_CART_HANDLE) {
-            isEditMode = baseEvent.data as Boolean
-            if (isEditMode) {
-                bottom_vs.displayedChild = 1
-                total_price_tv.visibility = View.GONE
-            } else {
-                bottom_vs.displayedChild = 0
-                total_price_tv.visibility = View.VISIBLE
+
+        when (baseEvent.code) {
+
+            EventCode.EVENT_STORE_CART_HANDLE -> {
+                isEditMode = baseEvent.data as Boolean
+                if (isEditMode) {
+                    bottom_vs.displayedChild = 1
+                    total_price_tv.visibility = View.GONE
+                } else {
+                    bottom_vs.displayedChild = 0
+                    total_price_tv.visibility = View.VISIBLE
+                }
+            }
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+                // 支付成功，手动调用接口删除
+            presenter.deleteCart(mAdapter)
             }
 
+            else -> {
+            }
         }
 
 

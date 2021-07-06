@@ -3,6 +3,8 @@ package com.jcs.where.features.store.pay
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -33,6 +35,7 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
     override fun getLayoutId() = R.layout.activity_store_pay
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
         intent.extras?.let {
             totalPrice = it.getDouble(Constant.PARAM_TOTAL_PRICE, 0.0)
             val ids = it.getIntegerArrayList(Constant.PARAM_ORDER_IDS)

@@ -83,8 +83,6 @@ class StoreCartPresenter(private var view: StoreCartView) : BaseMvpPresenter(vie
 
     fun getSelectedCount(adapter: StoreCartAdapter): Int {
         var count = 0
-
-
         adapter.data.forEach {
 
             it.goods.forEach { child ->
@@ -94,6 +92,30 @@ class StoreCartPresenter(private var view: StoreCartView) : BaseMvpPresenter(vie
             }
         }
         return count
+    }
+
+    fun getSelectedData(adapter: StoreCartAdapter): ArrayList<StoreCartGroup> {
+
+        var selectData: ArrayList<StoreCartGroup> = ArrayList()
+
+        adapter.data.forEach {
+
+            it.goods.forEach { child ->
+                if (child.nativeIsSelect) {
+
+                    val group = StoreCartGroup().apply {
+                        shop_id = it.shop_id
+                        shop_name = it.shop_name
+                        delivery_fee = it.delivery_fee
+                        nativeIsSelect = true
+                        goods.add(child)
+                    }
+                    selectData.add(group)
+
+                }
+            }
+        }
+        return selectData
     }
 
 

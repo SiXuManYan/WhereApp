@@ -45,35 +45,40 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView) : BaseMv
         })
     }
 
-    fun orderCommit(data: StoreOrderCommitData, addressId: String?, phone: String) {
+    fun orderCommit(data: ArrayList<StoreOrderCommitData>, addressId: String?, phone: String) {
 
 
         // 商品
         val commitGoodList: ArrayList<StoreOrderCommitShop> = ArrayList()
 
-        data.goods.forEach {
+        data.forEach { parent->
 
-            val commitGoodChild = StoreOrderCommitShop().apply {
-                shop_id = data.shop_id
-                remark = data.remark
-                goods.add(StoreOrderCommitGood().apply {
-                    good_id = it.good_id
-                    good_num = it.good_num
-                })
+            parent.goods.forEach {
+
+                val commitGoodChild = StoreOrderCommitShop().apply {
+                    shop_id = parent.shop_id
+                    remark = parent.remark
+                    goods.add(StoreOrderCommitGood().apply {
+                        good_id = it.good_id
+                        good_num = it.good_num
+                    })
+                }
+                commitGoodList.add(commitGoodChild)
             }
-            commitGoodList.add(commitGoodChild)
+
         }
 
 
-        // 其他
-        val apply = StoreOrderCommit().apply {
-            delivery_type = data.delivery_type
 
-            if (data.delivery_type == 1) {
+        // 提交
+        val apply = StoreOrderCommit().apply {
+            delivery_type = data[0].delivery_type
+
+            if (delivery_type == 1) {
                 tel = phone
             }
 
-            if (data.delivery_type == 2) {
+            if (delivery_type == 2) {
                 address_id = addressId
             }
             goods = Gson().toJson(commitGoodList)

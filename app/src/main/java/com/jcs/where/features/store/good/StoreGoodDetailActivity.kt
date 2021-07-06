@@ -188,15 +188,16 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
 
                 }
 
+                val appList : ArrayList<StoreOrderCommitData> = ArrayList()
+                appList.add(apply)
+
                 startActivityAfterLogin(StoreOrderCommitActivity::class.java, Bundle().apply {
-                    putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, apply)
+                    putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, appList)
                 })
                 cart_ll.visibility = View.GONE
                 number_view.updateNumber(1)
             } else {
                 presenter.addCart(good_id,goodNum,deliveryType)
-
-
             }
 
 

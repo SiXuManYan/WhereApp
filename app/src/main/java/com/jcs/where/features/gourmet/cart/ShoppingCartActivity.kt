@@ -158,6 +158,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             }
 
 
+            // todo 判断选中数据，而不是全部
             startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
 
                 putSerializable(Constant.PARAM_DATA, ArrayList<ShoppingCartResponse>(mAdapter.data))

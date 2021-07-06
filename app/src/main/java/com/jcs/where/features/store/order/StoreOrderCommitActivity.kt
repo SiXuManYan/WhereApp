@@ -35,7 +35,7 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
     private var addressDialog: BottomSheetDialog? = null
 
-    private lateinit var data: StoreOrderCommitData
+    private var data: ArrayList<StoreOrderCommitData> = ArrayList()
 
     /** 收货地址 */
     var mSelectAddressData: AddressResponse? = null
@@ -51,7 +51,9 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
         val bundle = intent.extras
         bundle?.let {
-            data = it.getSerializable(Constant.PARAM_ORDER_COMMIT_DATA) as StoreOrderCommitData
+            data = it.getSerializable(Constant.PARAM_ORDER_COMMIT_DATA) as ArrayList<StoreOrderCommitData>
+
+
         }
 
         initContent()
@@ -68,14 +70,15 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
                             SizeUtils.dp2px(10f), 0, 0).apply { setDrawHeaderFooter(false) }
             )
         }
-        mAdapter.addData(data)
-
-        if (data.delivery_type == 1) {
-            delivery_value_tv.text = getString(R.string.self_extraction)
-            phone_rl.visibility = View.VISIBLE
-        } else {
-            delivery_value_tv.text = getString(R.string.express)
-            address_rl.visibility = View.VISIBLE
+        if (data.isNotEmpty()) {
+            mAdapter.setNewInstance(data)
+            if (data[0].delivery_type == 1) {
+                delivery_value_tv.text = getString(R.string.self_extraction)
+                phone_rl.visibility = View.VISIBLE
+            } else {
+                delivery_value_tv.text = getString(R.string.express)
+                address_rl.visibility = View.VISIBLE
+            }
         }
 
 
@@ -164,18 +167,22 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
         submit_tv.setOnClickListener {
 
-            val phone = phone_aet.text.toString().trim()
+            if (data.isNotEmpty()) {
+                val phone = phone_aet.text.toString().trim()
 
-            if (data.delivery_type == 1 && phone.isEmpty()) {
-                ToastUtils.showShort(getString(R.string.input_phone_empty_hint))
-                return@setOnClickListener
+                if (data[0].delivery_type == 1 && phone.isEmpty()) {
+                    ToastUtils.showShort(getString(R.string.input_phone_empty_hint))
+                    return@setOnClickListener
+                }
+
+                if (data[0].delivery_type == 2 && mSelectAddressData == null) {
+                    ToastUtils.showShort(R.string.address_edit_hint)
+                    return@setOnClickListener
+                }
+                presenter.orderCommit(data, mSelectAddressData?.id, phone)
+
             }
 
-            if (data.delivery_type == 2 && mSelectAddressData == null) {
-                ToastUtils.showShort(R.string.address_edit_hint)
-                return@setOnClickListener
-            }
-            presenter.orderCommit(data, mSelectAddressData?.id, phone)
 
         }
     }

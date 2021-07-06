@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.StringUtils
-import com.blankj.utilcode.util.VibrateUtils
+import com.blankj.utilcode.util.*
 import com.jcs.where.R
+import com.jcs.where.api.response.store.StoreGoodsCommit
+import com.jcs.where.api.response.store.StoreOrderCommitData
 import com.jcs.where.api.response.store.cart.StoreCartGroup
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -28,7 +28,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
         StoreCartValueChangeListener, OnChildSelectClick, OnGroupSelectClick {
 
     /**
-     *  列表类型（0：自提，1：外卖）
+     *  列表类型（0：自提，1：商家配送）
      */
     private var listType = 0
 
@@ -136,9 +136,42 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
 
             val selectedCount = presenter.getSelectedCount(mAdapter)
             if (selectedCount <= 0) {
+                ToastUtils.showShort(R.string.please_select_a_product)
                 return@setOnClickListener
             }
 
+            val selectedData = presenter.getSelectedData(mAdapter)
+
+            val appList : ArrayList<StoreOrderCommitData> = ArrayList()
+            selectedData.forEach {
+
+                // shop
+                val shop = StoreOrderCommitData().apply {
+                    shop_id = it.shop_id
+                    shop_title = it.shop_name
+                    delivery_type = listType+1
+                    delivery_fee = it.delivery_fee.toFloat()
+                }
+
+                // shop $good
+                it.goods.forEach { good->
+                    val goodData = good.good_data
+                    val goodInfo = StoreGoodsCommit().apply {
+                        good_id = goodData.id
+                        delivery_type =  listType+1
+                        image = goodData.image
+                        goodName = goodData.title
+                        good_num = good.good_num
+                        price = goodData.price
+                    }
+                    shop.goods.add(goodInfo)
+                }
+                appList.add(shop)
+            }
+
+            startActivityAfterLogin(StoreOrderCommitActivity::class.java, Bundle().apply {
+                putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, appList)
+            })
 
         }
 

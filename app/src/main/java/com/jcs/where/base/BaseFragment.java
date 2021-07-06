@@ -291,6 +291,16 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    protected final void startActivityAfterLogin(@NotNull Class<?> target,  Bundle bundle) {
+        String token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+        if (TextUtils.isEmpty(token)) {
+            startActivity(LoginActivity.class);
+        } else {
+            startActivity(target, bundle);
+        }
+    }
+
+
     protected final void startActivityClearTop(@NotNull Class<?> target, @Nullable Bundle bundle) {
         if (bundle == null) {
             startActivity((new Intent(requireContext(), target)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));

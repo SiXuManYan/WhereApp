@@ -93,8 +93,12 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
 
 
         val goodData = it.good_data
-        GlideUtil.load(context, goodData.image, image_iv, 4)
-        good_name.text = goodData.title
+
+        if (goodData.image.isNotEmpty()) {
+            GlideUtil.load(context, goodData.image[0], image_iv, 4)
+            good_name.text = goodData.title
+        }
+
 
         val nowPrice: String = StringUtils.getString(R.string.price_unit_format, goodData.price)
         now_price_tv.text = nowPrice

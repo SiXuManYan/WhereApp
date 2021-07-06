@@ -55,7 +55,7 @@ class StoreCart {
     /** 商品ID */
     var id = 0
     var title = ""
-    var image = ""
+    var image: ArrayList<String> = ArrayList()
 
     /** 商品价格 */
     var price: BigDecimal = BigDecimal.ZERO
@@ -64,7 +64,7 @@ class StoreCart {
     var original_price: BigDecimal = BigDecimal.ZERO
 
     /** 商品库存（""：不受库存数量限制，"0":库存为空） */
-    var inventory  = ""
+    var inventory = ""
 
 
 }

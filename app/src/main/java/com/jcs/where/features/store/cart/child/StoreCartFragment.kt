@@ -159,7 +159,10 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
                     val goodInfo = StoreGoodsCommit().apply {
                         good_id = goodData.id
                         delivery_type = listType + 1
-                        image = goodData.image
+
+                        if (goodData.image.isNotEmpty()) {
+                            image = goodData.image[0]
+                        }
                         goodName = goodData.title
                         good_num = good.good_num
                         price = goodData.price
@@ -239,7 +242,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
             }
             EventCode.EVENT_REFRESH_ORDER_LIST -> {
                 // 支付成功，手动调用接口删除
-            presenter.deleteCart(mAdapter)
+                presenter.deleteCart(mAdapter)
             }
 
             else -> {

@@ -9,4 +9,5 @@ import com.jcs.where.api.response.store.StoreGoodDetail
  */
 interface StoreGoodDetailView :BaseMvpView {
     fun bindData(response: StoreGoodDetail)
+    fun addSuccess()
 }

@@ -820,6 +820,8 @@
     <string name="refund_cancel_request_success">退货申请取消成功</string>
     <string name="take_carts">自提商品</string>
     <string name="delivery_carts">配送商品</string>
+    <string name="total_format">合计：共%1$d件</string>
+    <string name="total_default">合计：共0件</string>
 
 
 </resources>

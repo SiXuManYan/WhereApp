@@ -92,7 +92,7 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
 
     override fun bindDetail(data: RefundDetail) {
 
-        if (data.status == 11) {
+        if (data.status == 11 ) {
             data.shop?.let {
                 address_ll.visibility = View.VISIBLE
                 contact_name_tv.text = getString(R.string.contact_name_format, it.contact_name)

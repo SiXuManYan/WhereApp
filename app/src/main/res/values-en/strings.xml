@@ -809,6 +809,8 @@
     <string name="refund_cancel_request_success">The return request is cancelled successfully</string>
     <string name="take_carts">Take carts</string>
     <string name="delivery_carts">Delivery carts</string>
+    <string name="total_format">Total：%1$d item</string>
+    <string name="total_default">Total：0 item</string>
 
 
 </resources>

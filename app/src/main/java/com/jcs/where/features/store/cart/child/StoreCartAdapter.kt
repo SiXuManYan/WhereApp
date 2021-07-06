@@ -6,6 +6,8 @@ import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -41,8 +43,10 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
 
     override fun convert(holder: BaseViewHolder, item: StoreCartGroup) {
 
+        val store_cart_ll = holder.getView<LinearLayout>(R.id.store_cart_ll)
         val select_all_tv = holder.getView<CheckedTextView>(R.id.select_all_tv)
         val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
+
 
         select_all_tv.apply {
             text = item.shop_name
@@ -164,7 +168,7 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
 interface StoreCartValueChangeListener {
 
     /**
-     * 数量改变,重新计算价格，调用更改购物车数量接口
+     * 数量改变,重新总计算价格，调用更改购物车数量接口
      * @param cartId 购物车id
      * @param add 是否是添加
      */
@@ -184,7 +188,7 @@ interface OnChildSelectClick {
     /**
      * child 选中状态改变，重新计算总价格，判断顶级全选
      */
-    fun onChildSelected(isChecked: Boolean)
+    fun onChildSelected(checked: Boolean)
 }
 
 /**

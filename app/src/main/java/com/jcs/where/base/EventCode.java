@@ -79,5 +79,10 @@ public class EventCode {
      */
     public static final int EVENT_BILLS_PAY_SUCCESS = 1016;
 
+    /**
+     * 商城购物车
+     */
+    public static final int EVENT_STORE_CART_HANDLE = 1017;
+
 
 }

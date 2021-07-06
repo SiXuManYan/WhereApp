@@ -191,8 +191,12 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
                 startActivityAfterLogin(StoreOrderCommitActivity::class.java, Bundle().apply {
                     putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, apply)
                 })
+                cart_ll.visibility = View.GONE
+                number_view.updateNumber(1)
             } else {
-                showComing()
+                presenter.addCart(good_id,goodNum,deliveryType)
+
+
             }
 
 
@@ -235,5 +239,11 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
         delivery_times = data.delivery_times
         take_times = data.take_times
         stock_tv.text = getString(R.string.stock_format, data.inventory)
+    }
+
+
+    override fun addSuccess() {
+        cart_ll.visibility = View.GONE
+        number_view.updateNumber(1)
     }
 }

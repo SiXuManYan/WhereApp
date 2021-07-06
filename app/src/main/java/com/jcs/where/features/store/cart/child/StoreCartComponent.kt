@@ -1,9 +1,16 @@
 package com.jcs.where.features.store.cart.child
 
+import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
+import com.google.gson.JsonElement
+import com.jcs.where.R
+import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.CartDeleteRequest
+import com.jcs.where.api.response.store.cart.StoreCartGroup
+import com.jcs.where.api.response.store.cart.StoreCartResponse
 import com.jcs.where.utils.BigDecimalUtil
 import java.math.BigDecimal
 
@@ -13,6 +20,9 @@ import java.math.BigDecimal
  */
 
 interface StoreCartView : BaseMvpView {
+
+    fun deleteSuccess()
+    fun bindList(deliveryCarts: ArrayList<StoreCartGroup>)
 
 }
 
@@ -71,6 +81,22 @@ class StoreCartPresenter(private var view: StoreCartView) : BaseMvpPresenter(vie
 
     }
 
+    fun getSelectedCount(adapter: StoreCartAdapter): Int {
+        var count = 0
+
+
+        adapter.data.forEach {
+
+            it.goods.forEach { child ->
+                if (child.nativeIsSelect) {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+
+
     /**
      * 修改购物车商品数量
      */
@@ -80,19 +106,30 @@ class StoreCartPresenter(private var view: StoreCartView) : BaseMvpPresenter(vie
         } else {
             -1
         }
-//        requestApi(mRetrofit.changeCartNumber(cartId, number), object : BaseMvpObserver<JsonElement>(view) {
-//            override fun onSuccess(response: JsonElement?) {
-//                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
-//            }
-//
-//        })
+        requestApi(mRetrofit.changeStoreCartNumber(cartId, number), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+
+        })
     }
 
 
     /**
      * 删除购物车
      */
-    fun deleteCart(delete: ArrayList<Int>) {
+    fun deleteCart(adapter: StoreCartAdapter) {
+        if (adapter.data.isEmpty()) {
+            return
+        }
+        val delete = ArrayList<Int>()
+        adapter.data.forEach {
+            it.goods.forEach { child ->
+                if (child.nativeIsSelect) {
+                    delete.add(child.cart_id)
+                }
+            }
+        }
         if (delete.isEmpty()) {
             return
         }
@@ -101,14 +138,51 @@ class StoreCartPresenter(private var view: StoreCartView) : BaseMvpPresenter(vie
             cart_id = toJson
         }
 
-//        requestApi(mRetrofit.deleteCart(apply), object : BaseMvpObserver<JsonElement>(view) {
-//            override fun onSuccess(response: JsonElement) {
-//                view.deleteSuccess()
-//                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
-//            }
-//        })
+        requestApi(mRetrofit.deleteStoreCart(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.deleteSuccess()
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+        })
     }
 
+
+    /**
+     * 清空购物车
+     * clearStoreCart
+     */
+    fun clearStoreCart() {
+        requestApi(mRetrofit.clearStoreCart(), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+        })
+    }
+
+
+    /**
+     * 购物车列表
+     *  @param listType 列表类型（0：自提，1：外卖）
+     */
+    fun getStoreCart(listType: Int) {
+        requestApi(mRetrofit.storeCart, object : BaseMvpObserver<StoreCartResponse>(view) {
+            override fun onSuccess(response: StoreCartResponse) {
+
+                val deliveryCarts = response.delivery_carts
+                val takeCarts = response.take_carts
+
+                if (listType == 0) {
+                    view.bindList(deliveryCarts)
+                }
+
+                if (listType == 1) {
+                    view.bindList(takeCarts)
+                }
+
+
+            }
+        })
+    }
 
 
 }

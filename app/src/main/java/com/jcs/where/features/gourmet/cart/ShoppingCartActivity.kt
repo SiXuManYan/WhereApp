@@ -152,6 +152,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             }
             val totalPrice = presenter.handlePrice(mAdapter)
             if (totalPrice.compareTo(BigDecimal.ZERO) < 1) {
+                // TODO 未考虑特价。判断是否有选中，而不是价格为0
                 ToastUtils.showShort(getString(R.string.please_select_a_product))
                 return@setOnClickListener
             }

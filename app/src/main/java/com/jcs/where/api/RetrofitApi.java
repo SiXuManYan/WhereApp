@@ -23,6 +23,7 @@ import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.store.StoreAddCart;
 import com.jcs.where.api.request.store.StoreRefundModifyRequest;
 import com.jcs.where.api.request.store.StoreRefundRequest;
 import com.jcs.where.api.request.store.UpLoadPayAccountInfo;
@@ -1292,7 +1293,6 @@ public interface RetrofitApi {
     );
 
 
-
     /**
      * 商城  修改申请退款
      */
@@ -1303,12 +1303,42 @@ public interface RetrofitApi {
     );
 
 
-
     /**
      * 商城购物车
      */
     @GET("generalapi/v2/carts")
     Observable<JcsResponse<StoreCartResponse>> getStoreCart();
+
+
+    /**
+     * 修改商城购物车商品数量
+     */
+    @PATCH("generalapi/v2/carts/numbers")
+    Observable<JcsResponse<JsonElement>> changeStoreCartNumber(
+            @Query("cart_id") int cart_id,
+            @Query("number") int number
+    );
+
+
+    /**
+     * 删除购物车
+     */
+    @HTTP(method = "DELETE", path = "generalapi/v2/carts", hasBody = true)
+    Observable<JcsResponse<JsonElement>> deleteStoreCart(@Body CartDeleteRequest cart_id);
+
+
+    /**
+     * 清空商城购物车
+     */
+    @DELETE("generalapi/v2/carts/clears")
+    Observable<JcsResponse<JsonElement>> clearStoreCart();
+
+
+    /**
+     * 商城添加商城购物车
+     */
+    @POST("generalapi/v2/carts")
+    Observable<JcsResponse<JsonElement>> addToStoreCart(@Body StoreAddCart request);
 
 
 }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/store_cart_ll"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dp_15"
     android:layout_marginEnd="@dimen/dp_15"

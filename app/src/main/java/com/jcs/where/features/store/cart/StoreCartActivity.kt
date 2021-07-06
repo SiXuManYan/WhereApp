@@ -5,10 +5,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
-import com.jcs.where.features.gourmet.comment.FoodCommentFragment
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
+import com.jcs.where.features.store.cart.child.StoreCartFragment
 import kotlinx.android.synthetic.main.activity_store_cart.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/7/5 10:30.
@@ -16,11 +20,7 @@ import kotlinx.android.synthetic.main.activity_store_cart.*
  */
 class StoreCartActivity : BaseActivity() {
 
-    val TAB_TITLES =
-            arrayOf(
-                    getString(R.string.take_carts),
-                    getString(R.string.delivery_carts)
-            )
+    val titles = arrayOf(StringUtils.getString(R.string.take_carts), StringUtils.getString(R.string.delivery_carts))
 
     override fun getLayoutId() = R.layout.activity_store_cart
 
@@ -28,30 +28,48 @@ class StoreCartActivity : BaseActivity() {
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
-        pager.offscreenPageLimit = TAB_TITLES.size
-        pager.adapter = InnerPagerAdapter(supportFragmentManager, 0)
+        pager.offscreenPageLimit = titles.size
+        pager.adapter = StorePagerAdapter(supportFragmentManager, 0)
         tabs_type.setViewPager(pager)
     }
 
-    override fun initData() {
-
-    }
+    override fun initData() = Unit
 
     override fun bindListener() {
+        back_iv.setOnClickListener {
+            finish()
+        }
+
+        edit_tv.setOnClickListener {
+            right_vs.displayedChild = 1
+            EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_STORE_CART_HANDLE, true))
+
+        }
+
+        cancel_tv.setOnClickListener {
+            right_vs.displayedChild = 0
+            EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_STORE_CART_HANDLE, false))
+
+        }
+
 
     }
 
-    private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
+    private inner class StorePagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
 
-        override fun getPageTitle(position: Int): CharSequence? = TAB_TITLES[position]
+        override fun getPageTitle(position: Int): CharSequence = titles[position]
+        override fun getItem(position: Int): Fragment {
+            return if (position == 0) {
+                StoreCartFragment.newInstance(0)
+            }else{
+                StoreCartFragment.newInstance(1)
+            }
+
+        }
 
 
-        override fun getItem(position: Int): Fragment =
-                FoodCommentFragment.newInstance("", position)
-
-
-        override fun getCount(): Int = TAB_TITLES.size
+        override fun getCount(): Int = 2
     }
 
 }

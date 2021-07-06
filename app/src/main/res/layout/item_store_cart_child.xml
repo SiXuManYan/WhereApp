@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/child_container_rl"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_81"
-    android:layout_marginTop="@dimen/dp_10"
-    android:layout_marginBottom="@dimen/dp_10"
+    android:layout_height="@dimen/dp_101"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_10"
     tools:background="@color/white">
 
 

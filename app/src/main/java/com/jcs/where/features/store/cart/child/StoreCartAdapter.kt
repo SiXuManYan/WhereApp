@@ -62,7 +62,7 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
             select_all_tv.isChecked = item.nativeIsSelect
 
             item.goods.forEachIndexed { index, storeCartItem ->
-                storeCartItem.nativeIsSelect = true
+                storeCartItem.nativeIsSelect = item.nativeIsSelect
                 val good_checked_tv = child_container_ll.getChildAt(index).findViewById<CheckedTextView>(R.id.good_checked_tv)
                 good_checked_tv.isChecked = item.nativeIsSelect
                 onGroupSelectClick?.onGroupSelected(item.nativeIsSelect)

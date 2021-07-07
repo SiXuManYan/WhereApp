@@ -2,6 +2,7 @@ package com.jcs.where.features.store.order.detail
 
 import android.widget.TextView
 import com.blankj.utilcode.util.StringUtils
+import com.google.gson.JsonElement
 import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -15,6 +16,11 @@ import com.jcs.where.api.response.order.store.StoreOrderDetail
  */
 interface StoreOrderDetailView : BaseMvpView {
     fun bindData(response: StoreOrderDetail)
+
+    /**
+     * 订单取消成功
+     */
+    fun orderCancelSuccess()
 }
 
 
@@ -120,7 +126,19 @@ class StoreOrderDetailPresenter(private var view: StoreOrderDetailView) : BaseMv
         }
 
         return text
+    }
+
+    fun cancelStoreOrder(orderId:Int){
+
+        requestApi(mRetrofit.cancelStoreOrder(orderId), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.orderCancelSuccess()
+            }
+
+
+        })
 
 
     }
+
 }

@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderDetail
 import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
@@ -19,6 +20,7 @@ import com.jcs.where.utils.Constant
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_order_detail.*
+import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
 
 
@@ -105,8 +107,8 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             }
 
             // 商品备注
-            delivery_rl.visibility = View.GONE
-            remark_rl.visibility = View.GONE
+            delivery_rl.visibility = View.VISIBLE
+            remark_rl.visibility = View.VISIBLE
             delivery_price_tv.text = getString(R.string.price_unit_format, data.delivery_fee.toPlainString())
             remarks_value_tv.text = data.remark
 
@@ -153,7 +155,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 left_tv.text = getString(R.string.to_cancel_order)
                 left_tv.setOnClickListener {
                     // 取消订单
-                    showComing()
+                    cancelOrder()
                 }
 
                 right_tv.visibility = View.VISIBLE
@@ -235,6 +237,10 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
     }
 
+    private fun cancelOrder() {
+
+    }
+
     private fun handlePay(orderId: Int, price: BigDecimal) {
         val orderIds = ArrayList<Int>()
         orderIds.add(orderId)
@@ -282,6 +288,11 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
             }
         }
+    }
+
+    override fun orderCancelSuccess() {
+        EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_REFRESH_ORDER_LIST))
+        finish()
     }
 
 

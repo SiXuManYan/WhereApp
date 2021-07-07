@@ -1341,4 +1341,11 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> addToStoreCart(@Body StoreAddCart request);
 
 
+    /**
+     * 取消订单
+     */
+    @DELETE("generalapi/v2/orders/{order_id}")
+    Observable<JcsResponse<JsonElement>> cancelStoreOrder(@Path("order_id") int order_id);
+
+
 }

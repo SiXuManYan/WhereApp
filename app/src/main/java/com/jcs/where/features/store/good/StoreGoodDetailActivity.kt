@@ -13,7 +13,9 @@ import com.jcs.where.api.response.store.StoreGoodDetail
 import com.jcs.where.api.response.store.StoreGoodsCommit
 import com.jcs.where.api.response.store.StoreOrderCommitData
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -132,11 +134,19 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
 
     override fun bindListener() {
         buy_after_tv.setOnClickListener {
+            if (User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             cart_ll.visibility = View.VISIBLE
             handle_tv.text = buy_after_tv.text
             isBuyNow = false
         }
         buy_now_tv.setOnClickListener {
+            if (User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             cart_ll.visibility = View.VISIBLE
             handle_tv.text = buy_now_tv.text
             isBuyNow = true

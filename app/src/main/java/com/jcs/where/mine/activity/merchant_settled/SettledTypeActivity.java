@@ -95,7 +95,6 @@ public class SettledTypeActivity extends BaseActivity {
             getCategories(mMerchantTypeLevels[mTypeLevel - 1], item.getId());
         } else {
             Intent result = new Intent();
-            Log.e("SettledTypeActivity", "onItemClicked: " + item.getId());
             result.putExtra("typeName", item.getName());
             result.putExtra("typeId", item.getId());
             setResult(RequestResultCode.RESULT_SETTLED_TYPE_TO_MERCHANT_SETTLED, result);

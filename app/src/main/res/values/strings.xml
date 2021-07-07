@@ -826,6 +826,7 @@
     <string name="continue_to_pay">继续支付</string>
     <string name="give_up">放弃</string>
     <string name="merchant">商家</string>
+    <string name="connect_service">联系客服</string>
 
 
 </resources>

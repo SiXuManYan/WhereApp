@@ -2,8 +2,10 @@ package com.jcs.where.home.adapter
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
@@ -13,23 +15,27 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.home.activity.ApplyRefundActivity
 import com.jcs.where.hotel.activity.HotelCommentActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity
 import com.jcs.where.hotel.activity.HotelPayActivity
+import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 
 /**
  * Created by Wangsw  2021/5/12 10:00.
  */
-class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewHolder>(), LoadMoreModule {
+open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewHolder>(), LoadMoreModule {
 
 
     init {
@@ -399,6 +405,7 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
 
 
+
         val options = RequestOptions.bitmapTransform(
                 GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                 .error(R.mipmap.ic_empty_gray)
@@ -417,27 +424,40 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
         // 底部
         val left_tv = holder.getView<TextView>(R.id.left_tv)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
-
+        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
 
 
         when (modelData.order_status) {
             1 -> {
                 right_tv.text = context.getString(R.string.to_pay_2)
                 right_tv.visibility = View.VISIBLE
+                bottom_ll.visibility = View.VISIBLE
+
+                right_tv.setOnClickListener {
+                    val orderIds = ArrayList<Int>()
+                    orderIds.add(item.id)
+                    startActivity(StorePayActivity::class.java, Bundle().apply {
+                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                    })
+                }
             }
             5 -> {
                 right_tv.text = context.getString(R.string.evaluation)
-                right_tv.visibility = View.VISIBLE
+                right_tv.visibility = View.GONE
+                bottom_ll.visibility = View.VISIBLE
             }
             12 -> {
                 left_tv.text = context.getString(R.string.modify_application)
-                left_tv.visibility = View.VISIBLE
+                left_tv.visibility = View.GONE
                 right_tv.text = context.getString(R.string.cancel_application)
-                right_tv.visibility = View.VISIBLE
+                right_tv.visibility = View.GONE
+                bottom_ll.visibility = View.GONE
             }
             else -> {
                 left_tv.visibility = View.GONE
                 right_tv.visibility = View.GONE
+                bottom_ll.visibility = View.GONE
 
             }
 
@@ -451,6 +471,16 @@ class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewH
             context.startActivity(Intent(context, target).putExtras(bundle).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         } else {
             context.startActivity(Intent(context, target).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+    }
+
+
+    private fun startActivityAfterLogin(target: Class<*>, bundle: Bundle?) {
+        val token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN)
+        if (TextUtils.isEmpty(token)) {
+            startActivity(LoginActivity::class.java,null)
+        } else {
+            startActivity(target, bundle)
         }
     }
 

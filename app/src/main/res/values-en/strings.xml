@@ -815,6 +815,7 @@
     <string name="continue_to_pay">Continue to pay</string>
     <string name="give_up">Give up</string>
     <string name="merchant">Merchant</string>
+    <string name="connect_service">Contact Customer Service</string>
 
 
 </resources>

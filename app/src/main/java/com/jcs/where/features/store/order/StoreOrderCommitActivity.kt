@@ -189,13 +189,10 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
     override fun commitSuccess(response: StoreOrderInfoResponse) {
 
-
         val orderIds = ArrayList<Int>()
         response.orders.forEach {
             orderIds.add(it.id)
         }
-
-
 
         startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
             putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())

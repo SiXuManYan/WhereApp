@@ -94,6 +94,14 @@ class StoreOrderShop {
     var title = ""
     var images: ArrayList<String> = ArrayList()
     var goods: ArrayList<StoreOrderShopGoods> = ArrayList()
+    var mer_uuid = ""
+    var mer_name = ""
+
+    /**
+     * IM聊天开启状态（1：开启，2：关闭）
+     */
+    var im_status = 0
+
 }
 
 

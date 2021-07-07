@@ -1,17 +1,25 @@
 package com.jcs.where.features.store.order.detail
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.features.store.refund.StoreRefundActivity
 import com.jcs.where.features.store.refund.detail.StoreRefundDetailActivity
 import com.jcs.where.utils.Constant
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_order_detail.*
+import java.math.BigDecimal
 
 
 /**
@@ -32,7 +40,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
     override fun getLayoutId() = R.layout.activity_store_order_detail
 
     override fun initView() {
-
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
         }
@@ -56,9 +64,11 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
     }
 
     override fun bindListener() {
-
-        mJcsTitle.setFirstRightIvClickListener {
-
+        back_iv.setOnClickListener {
+            finish()
+        }
+        service_ll.setOnClickListener {
+            startActivityAfterLogin(ExtendChatActivity::class.java)
         }
 
     }
@@ -112,10 +122,27 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             pay_container_ll.visibility = View.GONE
         }
 
+        if (data.status == 12) {
+            service_ll.visibility = View.VISIBLE
+        } else {
+            service_ll.visibility = View.GONE
+        }
+
         // 商品信息
         data.shop?.let {
             mAdapter.setNewInstance(it.goods)
             business_name_tv.text = it.title
+
+            if (it.im_status == 1 && !TextUtils.isEmpty(it.mer_uuid)) {
+                im_iv.visibility = View.VISIBLE
+                im_iv.setOnClickListener { _ ->
+                    RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, it.mer_uuid, it.mer_name, null)
+                }
+
+            } else {
+                im_iv.visibility = View.GONE
+            }
+
         }
 
         // 底部
@@ -133,7 +160,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 right_tv.text = getString(R.string.to_pay_2)
                 right_tv.setOnClickListener {
                     // 去付款
-                    showComing()
+                    handlePay(data.id, data.price)
                 }
             }
             3 -> {
@@ -206,8 +233,15 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
         }
 
 
+    }
 
-
+    private fun handlePay(orderId: Int, price: BigDecimal) {
+        val orderIds = ArrayList<Int>()
+        orderIds.add(orderId)
+        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+            putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
+            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+        })
     }
 
 

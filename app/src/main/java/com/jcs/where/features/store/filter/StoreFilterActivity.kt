@@ -22,6 +22,7 @@ import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.cart.StoreCartActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.filter.screen.ScreenFilterFragment
 import com.jcs.where.features.store.history.SearchHistoryActivity
@@ -136,6 +137,10 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
         }
         dismiss_view.setOnClickListener {
             handleFilterVisible(View.GONE)
+        }
+
+        cart_iv.setOnClickListener {
+            startActivityAfterLogin(StoreCartActivity::class.java)
         }
 
 

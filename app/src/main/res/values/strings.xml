@@ -828,5 +828,11 @@
     <string name="merchant">商家</string>
     <string name="connect_service">联系客服</string>
 
+    <string name="conditions_privacy">By Submit up, you agree to our Terms and Conditions and Privacy Policy</string>
+
+    <string name="conditions_privacy_0">By Submit up, you agree to our </string>
+    <string name="conditions_privacy_1">&#160;Terms and Conditions&#160;</string>
+    <string name="conditions_privacy_2">and</string>
+    <string name="conditions_privacy_3">&#160;Privacy Policy</string>
 
 </resources>

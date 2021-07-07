@@ -14,7 +14,6 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
@@ -206,7 +205,9 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
                 }
 
                 val list = data.child_categories.apply {
-                    add(0, default)
+                    if (!contains(default)) {
+                        add(0, default)
+                    }
                 }
 
                 thirdCategoryAdapter.setNewInstance(list)

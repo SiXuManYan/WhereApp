@@ -88,12 +88,13 @@
 
 
                 <TextView
+                    android:id="@+id/rule_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/dp_15"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="By Submit up, you agree to our terms and Conditions and Privacy Poligy"
+                    android:text="@string/conditions_privacy"
                     android:textColor="@color/grey_666666"
                     android:textSize="@dimen/sp_11" />
 

@@ -19,6 +19,11 @@ public class Html5Url {
     public static final String PRIVACY_POLICY = BuildConfig.SERVER_HOST + "privacy/agreement?lang=%1$s";
 
     /**
+     * 条款和条件
+     */
+    public static final String CONDITION_AGREEMENT = BuildConfig.SERVER_HOST + "term_condition/agreement?lang=%1$s";
+
+    /**
      * comm100 客服聊天地址
      */
     public static final String COMM100_CHAT_URL = "https://vue.livelyhelp.chat/chatWindow.aspx?siteId=60001617&planId=8da6d622-e5b2-4741-bcdc-855d5d82f95a#";

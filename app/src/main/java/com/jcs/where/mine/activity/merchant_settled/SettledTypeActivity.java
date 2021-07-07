@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.api.request.MerchantSettledRequest;
-import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MerchantTypeResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.mine.model.merchant_settled.SettledTypeModel;
@@ -20,9 +21,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 页面-入驻类型
@@ -92,7 +90,19 @@ public class SettledTypeActivity extends BaseActivity {
             // 有下级，则获取下级数据
             mTypeLevel++;
             mParentIds.add(item.getId());
-            getCategories(mMerchantTypeLevels[mTypeLevel - 1], item.getId());
+
+            if (mTypeLevel - 1 < mMerchantTypeLevels.length) {
+                getCategories(mMerchantTypeLevels[mTypeLevel - 1], item.getId());
+            } else {
+                Intent result = new Intent();
+                result.putExtra("typeName", item.getName());
+                result.putExtra("typeId", item.getId());
+                setResult(RequestResultCode.RESULT_SETTLED_TYPE_TO_MERCHANT_SETTLED, result);
+
+                // 没有下级，则选中此分类
+                finish();
+            }
+
         } else {
             Intent result = new Intent();
             result.putExtra("typeName", item.getName());

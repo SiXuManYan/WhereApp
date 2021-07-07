@@ -1,10 +1,13 @@
 package com.jcs.where.features.bills.hydropower.pay
 
 import android.os.Bundle
+import android.text.TextPaint
+import android.text.style.ClickableSpan
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
@@ -13,9 +16,11 @@ import com.jcs.where.api.request.bills.BillsOrderCommit
 import com.jcs.where.api.response.bills.BillsOrderInfo
 import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.store.pay.StorePayAdapter
 import com.jcs.where.features.store.pay.info.PayInfoActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_pay_bills.*
 
@@ -62,6 +67,39 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
             addItemDecoration(DividerDecoration(getColor(R.color.colorPrimary), SizeUtils.dp2px(20f),
                     0, 0).apply { setDrawHeaderFooter(false) })
         }
+
+        val string0 = getString(R.string.conditions_privacy_0)
+        val string1 = getString(R.string.conditions_privacy_1)
+        val string2 = getString(R.string.conditions_privacy_2)
+        val string3 = getString(R.string.conditions_privacy_3)
+
+        SpanUtils.with(rule_tv).append(string0)
+                .append(string1)
+                .setClickSpan(object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        WebViewActivity.goTo(this@BillsPayActivity, FeaturesUtil.getConditionAgreement());
+                    }
+
+                    override fun updateDrawState(ds: TextPaint) {
+                        ds.color = getColor(R.color.blue_69AEF5);
+                        ds.isUnderlineText = true
+                    }
+
+                })
+                .append(string2)
+                .append(string3)
+                .setClickSpan(object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+
+                        WebViewActivity.goTo(this@BillsPayActivity, FeaturesUtil.getPrivacyPolicy());
+                    }
+
+                    override fun updateDrawState(ds: TextPaint) {
+                        ds.color = getColor(R.color.blue_69AEF5);
+                        ds.isUnderlineText = true
+                    }
+
+                }).create()
     }
 
     override fun initData() {

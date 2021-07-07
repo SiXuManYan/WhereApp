@@ -1,14 +1,11 @@
 package com.jcs.where.features.store.filter
 
 import com.google.gson.Gson
-import com.jcs.where.BuildConfig
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.features.store.filter.screen.ScreenFilterFragment
-import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.Constant
 
 /**
  * Created by Wangsw  2021/6/9 10:25.
@@ -24,21 +21,22 @@ class StoreFilterPresenter(val view: StoreFilterView) : BaseMvpPresenter(view) {
      */
     fun getData(page: Int, cateIds: ArrayList<Int>, moreFilter: ScreenFilterFragment.ScreenMoreFilter?) {
 
-        val lat: Float?
-        val lng: Float?
+        val lat: Float? = null
+        val lng: Float? = null
 
-        if (BuildConfig.FLAVOR == "dev") {
+/*        if (BuildConfig.FLAVOR == "dev") {
             lat = null
             lng = null
         } else {
             lat = CacheUtil.getShareDefault().getFloat(Constant.SP_LATITUDE, Constant.LAT.toFloat())
             lng = CacheUtil.getShareDefault().getFloat(Constant.SP_LONGITUDE, Constant.LAT.toFloat())
-        }
+        }*/
+
 
         var cate_id: String? = null
 
         if (cateIds.isNotEmpty()) {
-            cate_id =   Gson().toJson(cateIds)
+            cate_id = Gson().toJson(cateIds)
         }
         requestApi(mRetrofit.getStoreList(
                 page,

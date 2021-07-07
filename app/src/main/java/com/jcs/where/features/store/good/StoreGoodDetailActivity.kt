@@ -134,7 +134,7 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
 
     override fun bindListener() {
         buy_after_tv.setOnClickListener {
-            if (User.isLogon()) {
+            if (!User.isLogon()) {
                 startActivity(LoginActivity::class.java)
                 return@setOnClickListener
             }
@@ -143,7 +143,7 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
             isBuyNow = false
         }
         buy_now_tv.setOnClickListener {
-            if (User.isLogon()) {
+            if (!User.isLogon()) {
                 startActivity(LoginActivity::class.java)
                 return@setOnClickListener
             }
@@ -198,7 +198,7 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
 
                 }
 
-                val appList : ArrayList<StoreOrderCommitData> = ArrayList()
+                val appList: ArrayList<StoreOrderCommitData> = ArrayList()
                 appList.add(apply)
 
                 startActivityAfterLogin(StoreOrderCommitActivity::class.java, Bundle().apply {
@@ -207,7 +207,7 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
                 cart_ll.visibility = View.GONE
                 number_view.updateNumber(1)
             } else {
-                presenter.addCart(good_id,goodNum,deliveryType)
+                presenter.addCart(good_id, goodNum, deliveryType)
             }
 
 

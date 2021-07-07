@@ -250,6 +250,17 @@ public class FeaturesUtil {
         return String.format(Html5Url.PRIVACY_POLICY, getLanguage());
     }
 
+
+    /**
+     * 条款和条件
+     *
+     * @return
+     */
+    public static String getConditionAgreement() {
+        return String.format(Html5Url.CONDITION_AGREEMENT, getLanguage());
+    }
+
+
     @NotNull
     private static String getLanguage() {
         String language = CacheUtil.getLanguageFromCache();

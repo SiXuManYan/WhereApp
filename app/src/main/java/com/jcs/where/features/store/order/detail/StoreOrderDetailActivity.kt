@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
@@ -155,7 +156,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 left_tv.text = getString(R.string.to_cancel_order)
                 left_tv.setOnClickListener {
                     // 取消订单
-                    cancelOrder()
+                    cancelOrder(data.id)
                 }
 
                 right_tv.visibility = View.VISIBLE
@@ -237,7 +238,19 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
     }
 
-    private fun cancelOrder() {
+    private fun cancelOrder(orderId: Int) {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.prompt)
+                .setMessage(R.string.cancel_order_confirm)
+                .setCancelable(false)
+                .setPositiveButton(R.string.confirm) { dialogInterface, i ->
+                    presenter.cancelStoreOrder(orderId)
+                    dialogInterface.dismiss()
+                }
+                .setNegativeButton(R.string.cancel) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+                .create().show()
 
     }
 

@@ -749,11 +749,12 @@
 
 
     <!-- 状态描述文字 -->
-    <string name="store_status_desc_8">You have successfully initiated a return request, please wait patiently for the merchant’s review.</string>
-    <string name="store_status_desc_9">The merchant has agreed to the return application, please contact the merchant for return.</string>
-    <string name="store_status_desc_10">The merchant rejected your return application, please contact customer service or modify the return application.</string>
-    <string name="store_status_desc_11">The platform is refunding, please wait patiently for the refund.</string>
-    <string name="store_status_desc_12">It has been refunded, please check it carefully.</string>
+    <string name="store_status_desc_7">The transaction is closed and the platform has not received your payment.</string>
+    <string name="store_status_desc_8">The platform is refunding, please wait patiently for the refund.</string>
+    <string name="store_status_desc_9">It has been refunded, please check it carefully.	</string>
+    <string name="store_status_desc_10">You have successfully initiated a return request, please wait patiently for the merchant’s review.</string>
+    <string name="store_status_desc_11">The merchant has agreed to the return application, please contact the merchant for return.</string>
+    <string name="store_status_desc_12">The merchant rejected your return application, please contact customer service or modify the return application.</string>
 
     <string name="recipient_information">Recipient information</string>
     <string name="apply_return">Apply return</string>

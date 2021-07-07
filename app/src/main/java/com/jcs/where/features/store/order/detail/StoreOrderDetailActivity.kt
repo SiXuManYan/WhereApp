@@ -79,7 +79,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
     override fun bindData(data: StoreOrderDetail) {
         status_tv.text = presenter.getStatusText(data.delivery_type, data.status)
-        status_desc_tv.text = presenter.getStatusDescText(status_desc_tv, data.status)
+        presenter.getStatusDescText(status_desc_tv, data.status)
         order_number_tv.text = data.trade_no
         created_date_tv.text = data.created_at
         val price = data.price

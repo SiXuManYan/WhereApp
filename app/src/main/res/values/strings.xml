@@ -754,11 +754,12 @@
     <string name="store_status_12">商家拒绝退货</string>
 
     <!-- 状态描述文字 -->
-    <string name="store_status_desc_8">您已成功发起退货申请，请耐心等待商家审核。</string>
-    <string name="store_status_desc_9">商家已同意退货申请，请您联系商家，进行退货。</string>
-    <string name="store_status_desc_10">商家拒绝了您的退货申请，请您联系客服或修改退货申请。</string>
-    <string name="store_status_desc_11">平台正在退款中，请耐心等待退款。</string>
-    <string name="store_status_desc_12">已退款，请您注意查收。</string>
+    <string name="store_status_desc_7">交易关闭，平台未收到您的付款。</string>
+    <string name="store_status_desc_8">平台正在退款中，请耐心等待退款。</string>
+    <string name="store_status_desc_9">已退款，请您注意查收。</string>
+    <string name="store_status_desc_10">您已成功发起退货申请，请耐心等待商家审核。</string>
+    <string name="store_status_desc_11">商家已同意退货申请，请您联系商家，进行退货。</string>
+    <string name="store_status_desc_12">商家拒绝了您的退货申请，请您联系客服或修改退货申请。</string>
     <string name="recipient_information">收货人信息</string>
     <string name="apply_return">申请退货</string>
     <string name="after_sale_details">查看售后详情</string>

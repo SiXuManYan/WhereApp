@@ -92,7 +92,7 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
 
     override fun bindDetail(data: RefundDetail) {
 
-        if (data.status == 11 ) {
+        if (data.status == 11) {
             data.shop?.let {
                 address_ll.visibility = View.VISIBLE
                 contact_name_tv.text = getString(R.string.contact_name_format, it.contact_name)
@@ -106,8 +106,6 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
             bottom_rl.visibility = View.VISIBLE
         }
 
-
-
         mAdapter.setNewInstance(data.goods)
         val refundPrice = data.refund_price
         totalPrice = refundPrice.toDouble()
@@ -119,6 +117,7 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
         val cancelReason = data.cancel_reason
         desc_tv.text = cancelReason
         cancel_reason = cancelReason
+        mImageAdapter.setNewInstance(data.cancel_images)
 
     }
 

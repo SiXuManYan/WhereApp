@@ -31,6 +31,10 @@ data class StoreDetail(
 
         var id: Int,
         var collect_status: Int,
+
+        /**
+         * 	IM聊天开启状态（1：开启，2：关闭）
+         */
         var im_status: Int,
 
         var uuid: String = "",

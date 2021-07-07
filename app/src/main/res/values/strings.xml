@@ -825,6 +825,7 @@
     <string name="give_up_payment_hint">确定放弃支付？</string>
     <string name="continue_to_pay">继续支付</string>
     <string name="give_up">放弃</string>
+    <string name="merchant">商家</string>
 
 
 </resources>

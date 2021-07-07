@@ -814,6 +814,7 @@
     <string name="give_up_payment_hint">Are you sure to give up payment?</string>
     <string name="continue_to_pay">Continue to pay</string>
     <string name="give_up">Give up</string>
+    <string name="merchant">Merchant</string>
 
 
 </resources>

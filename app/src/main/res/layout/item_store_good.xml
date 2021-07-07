@@ -46,7 +46,6 @@
             android:includeFontPadding="false"
             android:textColor="@color/orange_FF5B1B"
             android:textSize="@dimen/sp_14"
-            android:textStyle="bold"
             tools:text="$1000.00" />
 
         <TextView
@@ -85,7 +84,6 @@
             android:paddingBottom="@dimen/dp_1"
             android:textColor="@color/blue_4C9EF2"
             android:textSize="@dimen/sp_9"
-            android:textStyle="bold"
             android:text="@string/self_extraction" />
 
 
@@ -104,7 +102,6 @@
             android:paddingBottom="@dimen/dp_1"
             android:textColor="@color/orange_FF5B1B"
             android:textSize="@dimen/sp_9"
-            android:textStyle="bold"
             android:text="@string/express" />
 
 

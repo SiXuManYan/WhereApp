@@ -136,14 +136,14 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
             }
         }
 
-        if (data.im_status == 1) {
+        if (data.im_status == 1 && !TextUtils.isEmpty(data.mer_uuid)) {
+            phone_tv.text = getString(R.string.merchant)
             phone_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.mipmap.ic_store_service, 0, 0)
             phone_tv.setOnClickListener {
-                if (!TextUtils.isEmpty(data.mer_uuid)) {
-                    RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, null)
-                }
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, null)
             }
         } else {
+            phone_tv.text = getString(R.string.telephone)
             phone_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.mipmap.ic_store_phone_blue, 0, 0)
             phone_tv.setOnClickListener {
                 val tel = data.tel

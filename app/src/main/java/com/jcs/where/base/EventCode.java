@@ -84,5 +84,10 @@ public class EventCode {
      */
     public static final int EVENT_STORE_CART_HANDLE = 1017;
 
+    /**
+     * 立即购买
+     */
+    public static final int EVENT_BUY = 1018;
+
 
 }

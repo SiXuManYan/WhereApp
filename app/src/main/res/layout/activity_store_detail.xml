@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-<!--
+    <!--
 
-  app:rightFirstIcon="@drawable/ic_share_black"
-        app:rightSecondIcon="@mipmap/ic_like_black2"
--->
+      app:rightFirstIcon="@drawable/ic_share_black"
+            app:rightSecondIcon="@mipmap/ic_like_black2"
+    -->
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:showBottomLine="true" />
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/parent_cl"
         android:layout_width="match_parent"
-
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/jcsTitle">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
@@ -437,9 +436,9 @@
                     <ImageView
                         android:id="@+id/fold_iv"
                         android:layout_width="wrap_content"
-                        android:src="@mipmap/ic_store_down_2"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_5"
-                        android:layout_height="wrap_content" />
+                        android:src="@mipmap/ic_store_down_2" />
 
                 </LinearLayout>
 
@@ -462,12 +461,12 @@
                 app:tl_indicator_corner_radius="1.5dp"
                 app:tl_indicator_width="@dimen/dp_25"
                 app:tl_tab_space_equal="true"
+                app:tl_textBold="SELECT"
                 app:tl_textSelectColor="@color/black_333333"
                 app:tl_textUnselectColor="@color/grey_666666"
                 app:tl_textsize="@dimen/sp_14"
-                app:tl_textBold="SELECT"
                 app:tl_underline_color="@color/grey_F5F5F5"
-                app:tl_underline_height="1px"/>
+                app:tl_underline_height="1px" />
 
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -481,5 +480,9 @@
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</LinearLayout>
+
+
+    <include layout="@layout/layout_store_good_detail_cart" />
+
+</RelativeLayout>
 

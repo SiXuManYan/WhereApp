@@ -100,20 +100,24 @@ class StoreCartPresenter(private var view: StoreCartView) : BaseMvpPresenter(vie
 
         adapter.data.forEach {
 
+
+            val group = StoreCartGroup().apply {
+                shop_id = it.shop_id
+                shop_name = it.shop_name
+                delivery_fee = it.delivery_fee
+                nativeIsSelect = true
+            }
+
             it.goods.forEach { child ->
                 if (child.nativeIsSelect) {
-
-                    val group = StoreCartGroup().apply {
-                        shop_id = it.shop_id
-                        shop_name = it.shop_name
-                        delivery_fee = it.delivery_fee
-                        nativeIsSelect = true
-                        goods.add(child)
-                    }
-                    selectData.add(group)
-
+                    group.goods.add(child)
                 }
             }
+
+            if (group.goods.isNotEmpty()) {
+                selectData.add(group)
+            }
+
         }
         return selectData
     }

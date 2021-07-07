@@ -60,5 +60,9 @@ data class StoreDetail(
         /**
          * 配送费
          */
-        var delivery_fee: Float = 0f
+        var delivery_fee: Float = 0f,
+        var delivery_times: String = "",
+        var take_times: String = ""
+
+
 )

@@ -9,11 +9,15 @@ import com.jcs.where.R
 import com.jcs.where.api.request.StoreShopRequest
 import com.jcs.where.api.response.store.StoreGoods
 import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.store.good.StoreGoodDetailActivity
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.fragment_refresh_list_no_refresh.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/6/16 15:27.
@@ -74,6 +78,17 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
             loadMoreModule.setOnLoadMoreListener(this@StoreGoodFragment)
             setEmptyView(emptyView)
             setOnItemClickListener(this@StoreGoodFragment)
+            addChildClickViewIds(R.id.buy_tv)
+            setOnItemChildClickListener { adapter, view, position ->
+
+                if (!User.isLogon()) {
+                    startActivity(LoginActivity::class.java)
+                    return@setOnItemChildClickListener
+                }
+
+                val storeGoods = mAdapter.data[position]
+                EventBus.getDefault().post(BaseEvent(storeGoods))
+            }
         }
         recycler.adapter = mAdapter
 

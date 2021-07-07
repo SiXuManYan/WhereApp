@@ -56,18 +56,18 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView) : BaseMv
 
         data.forEach { parent ->
 
-            parent.goods.forEach {
-
-                val commitGoodChild = StoreOrderCommitShop().apply {
-                    shop_id = parent.shop_id
-                    remark = parent.remark
-                    goods.add(StoreOrderCommitGood().apply {
-                        good_id = it.good_id
-                        good_num = it.good_num
-                    })
-                }
-                commitGoodList.add(commitGoodChild)
+            val shop = StoreOrderCommitShop().apply {
+                shop_id = parent.shop_id
+                remark = parent.remark
             }
+
+            parent.goods.forEach {
+                shop.goods.add(StoreOrderCommitGood().apply {
+                    good_id = it.good_id
+                    good_num = it.good_num
+                })
+            }
+            commitGoodList.add(shop)
 
         }
 

@@ -811,6 +811,9 @@
     <string name="delivery_carts">Delivery carts</string>
     <string name="total_format">Total：%1$d item</string>
     <string name="total_default">Total：0 item</string>
+    <string name="give_up_payment_hint">Are you sure to give up payment?</string>
+    <string name="continue_to_pay">Continue to pay</string>
+    <string name="give_up">Give up</string>
 
 
 </resources>

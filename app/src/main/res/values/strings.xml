@@ -822,6 +822,9 @@
     <string name="delivery_carts">配送商品</string>
     <string name="total_format">合计：共%1$d件</string>
     <string name="total_default">合计：共0件</string>
+    <string name="give_up_payment_hint">确定放弃支付？</string>
+    <string name="continue_to_pay">继续支付</string>
+    <string name="give_up">放弃</string>
 
 
 </resources>

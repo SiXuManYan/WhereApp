@@ -194,11 +194,11 @@ class StoreCartPresenter(private var view: StoreCartView) : BaseMvpPresenter(vie
                 val takeCarts = response.take_carts
 
                 if (listType == 0) {
-                    view.bindList(deliveryCarts)
+                    view.bindList(takeCarts)
                 }
 
                 if (listType == 1) {
-                    view.bindList(takeCarts)
+                    view.bindList(deliveryCarts)
                 }
 
 

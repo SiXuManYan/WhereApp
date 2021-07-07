@@ -225,6 +225,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mToFollowTv.setText(getString(R.string.news_followed));
         mToFollowTv.setTextColor(getColor(R.color.blue_489b58));
         mToFollowIv.setImageResource(R.mipmap.ic_right_checked_blue);
-        mToFollowView.setBackgroundResource(R.drawable.shape_white_radius_4_stroke_5a9dfe_1);
+        mToFollowView.setBackgroundResource(R.drawable.shape_white_radius_4_stroke_blue_1);
     }
 }

@@ -60,7 +60,7 @@
                         android:layout_marginEnd="@dimen/dp_10"
                         android:text="@string/price_unit"
                         android:textColor="@color/black_333333"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_27"
                         android:textStyle="bold" />
 
 
@@ -101,11 +101,20 @@
             </LinearLayout>
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_47"
+                android:gravity="center_vertical"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/bills_payment_method"
+                android:textColor="@color/grey_b7b7b7"
+                android:textSize="@dimen/sp_12" />
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pay_channel_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_40"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_store_pay_channel" />
 

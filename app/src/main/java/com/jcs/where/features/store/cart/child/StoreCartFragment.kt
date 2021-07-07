@@ -42,7 +42,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
 
         /**
          * 美食评论
-         * @param listType  列表类型（0：自提，1：外卖）
+         * @param listType  列表类型（0：自提，1：商家配送）
          */
         fun newInstance(listType: Int): StoreCartFragment {
             val fragment = StoreCartFragment()

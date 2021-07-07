@@ -2,6 +2,7 @@ package com.jcs.where.features.bills.hydropower.pay
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -41,6 +42,9 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
         }
         initPayChannel()
     }
+
+
+    override fun onBackPressed() = onBackClick()
 
 
     private fun initPayChannel() {
@@ -104,6 +108,10 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
             }
 
         }
+
+        mJcsTitle.setBackIvClickListener {
+            onBackClick()
+        }
     }
 
     override fun commitOrderSuccess(response: BillsOrderInfo) {
@@ -120,5 +128,22 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
         })
         finish()
     }
+
+
+    private fun onBackClick() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.prompt)
+                .setMessage(R.string.give_up_payment_hint)
+                .setCancelable(false)
+                .setPositiveButton(R.string.continue_to_pay) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+                .setNegativeButton(R.string.give_up) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                    finish()
+                }
+                .create().show()
+    }
+
 
 }

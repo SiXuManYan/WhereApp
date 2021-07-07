@@ -2,6 +2,7 @@ package com.jcs.where.features.store.pay
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
@@ -33,6 +34,8 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_store_pay
+
+    override fun onBackPressed() = onBackClick()
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
@@ -104,6 +107,26 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                 putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
             })
         }
+
+        mJcsTitle.setBackIvClickListener {
+            onBackClick()
+        }
+    }
+
+
+    private fun onBackClick() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.prompt)
+                .setMessage(R.string.give_up_payment_hint)
+                .setCancelable(false)
+                .setPositiveButton(R.string.continue_to_pay) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+                .setNegativeButton(R.string.give_up) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                    finish()
+                }
+                .create().show()
     }
 
 }

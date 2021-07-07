@@ -184,25 +184,28 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
 
             }
-//            8, 9, 10, 11, 12 -> { }
+            8, 9, 10, 11, 12 -> {
+                //  查看售后详情
+                if (data.aftersale_status == 2) {
+                    bottom_container_rl.visibility = View.VISIBLE
+                    left_tv.visibility = View.VISIBLE
+                    left_tv.text = getString(R.string.after_sale_details)
+                    left_tv.setOnClickListener {
+                        // 查看售后详情
+                        viewRefundDetail()
+                    }
+                    right_tv.visibility = View.GONE
+                } else {
+                    bottom_container_rl.visibility = View.GONE
+                }
+
+            }
             else -> {
                 bottom_container_rl.visibility = View.GONE
             }
         }
 
-//         查看售后详情
-        if (data.aftersale_status == 2) {
-            bottom_container_rl.visibility = View.VISIBLE
-            left_tv.visibility = View.VISIBLE
-            left_tv.text = getString(R.string.after_sale_details)
-            left_tv.setOnClickListener {
-                // 查看售后详情
-                viewRefundDetail()
-            }
-            right_tv.visibility = View.GONE
-        } else {
-            bottom_container_rl.visibility = View.GONE
-        }
+
 
 
     }

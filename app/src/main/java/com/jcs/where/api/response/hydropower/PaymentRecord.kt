@@ -28,7 +28,7 @@ class PaymentRecord {
     /**
      * 账户
      */
-    var account_number = ""
+    var trade_no = ""
 
 
     var created_at = ""

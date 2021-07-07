@@ -69,13 +69,10 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
     }
 
-    override fun onBackPressed() = Unit
+
 
     override fun bindListener() {
 
-        mJcsTitle.setBackIvClickListener {
-
-        }
         paid_tv.setOnClickListener {
             showVerifyDialog()
         }

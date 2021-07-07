@@ -2,14 +2,16 @@ package com.jcs.where.features.bills.hydropower.edit
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.TextView
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.request.bills.BillsOrderCommit
-import com.jcs.where.base.BaseEvent
-import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.hydropower.pay.BillsPayActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.product.ProductUtils
 import kotlinx.android.synthetic.main.activity_payment_edit.*
 import java.util.*
 
@@ -52,6 +54,37 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             selectDate(input_date_tv)
         }
 
+
+        val watcher = object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable?) {
+
+
+                if (!ProductUtils.checkEditEmpty(account_name_et, present_address_et, contact_no_et, amount_et, biller_et, account_number_et, soa_invoice_no_et)) {
+                    next_tv.isEnabled = false
+                    next_tv.alpha = 0.7f
+                } else {
+                    next_tv.isEnabled = true
+                    next_tv.alpha = 1f
+                }
+
+
+            }
+
+        }
+
+        account_name_et.addTextChangedListener(watcher)
+        present_address_et.addTextChangedListener(watcher)
+        contact_no_et.addTextChangedListener(watcher)
+        amount_et.addTextChangedListener(watcher)
+        biller_et.addTextChangedListener(watcher)
+        account_number_et.addTextChangedListener(watcher)
+        soa_invoice_no_et.addTextChangedListener(watcher)
+
         next_tv.setOnClickListener {
 
             val accountName = account_name_et.text.toString().trim()
@@ -65,6 +98,19 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             val dateStr = date_tv.text.toString().trim()
             val dueDate = due_date_tv.text.toString().trim()
             val inputDate = input_date_tv.text.toString().trim()
+
+            if (dateStr.isEmpty()) {
+                ToastUtils.showShort(R.string.select_date)
+                return@setOnClickListener
+            }
+            if (dueDate.isEmpty()) {
+                ToastUtils.showShort(R.string.select_date)
+                return@setOnClickListener
+            }
+            if (inputDate.isEmpty()) {
+                ToastUtils.showShort(R.string.select_date)
+                return@setOnClickListener
+            }
 
             val apply = BillsOrderCommit().apply {
                 bill_type = billType
@@ -108,5 +154,6 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             finish()
         }
     }*/
+
 
 }

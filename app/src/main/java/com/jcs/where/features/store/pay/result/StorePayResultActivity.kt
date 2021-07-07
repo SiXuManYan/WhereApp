@@ -37,7 +37,15 @@ class StorePayResultActivity : BaseActivity() {
 
     override fun initData() = Unit
 
+    override fun onBackPressed() = Unit
+
     override fun bindListener() {
+
+
+        mJcsTitle.setBackIvClickListener {
+
+        }
+
         check_order_tv.setOnClickListener {
 
             if (useType == Constant.PAY_INFO_ESTORE) {

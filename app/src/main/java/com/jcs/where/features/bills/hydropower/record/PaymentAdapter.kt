@@ -33,7 +33,7 @@ class PaymentAdapter : BaseQuickAdapter<PaymentRecord, BaseViewHolder>(R.layout.
 
         price_tv.text = context.getString(R.string.price_unit_format, item.price.toPlainString())
         status_tv.text = getStatusText(item.order_status)
-        account_number_tv.text = item.account_number
+        account_number_tv.text = item.trade_no
         date_tv.text = item.created_at
     }
 

@@ -46,7 +46,6 @@
             android:layout_centerVertical="true"
             android:textColor="@color/black_333333"
             android:textSize="@dimen/sp_14"
-            android:textStyle="bold"
             tools:text="$1000.00" />
 
 

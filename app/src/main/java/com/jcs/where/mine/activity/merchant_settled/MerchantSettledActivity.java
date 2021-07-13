@@ -12,8 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -23,6 +25,8 @@ import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.mine.model.merchant_settled.MerchantSettledModel;
+import com.jcs.where.storage.dao.UserDao;
+import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.RequestResultCode;
 
@@ -185,19 +189,26 @@ public class MerchantSettledActivity extends BaseActivity {
     }
 
     private void commitMerchant() {
-        Log.e("MerchantSettledActivity", "commitMerchant: " + "----");
         mModel.postMerchant(mRequest, new BaseObserver<SuccessResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
-                Log.e("MerchantSettledActivity", "onError: " + errorResponse.getErrMsg());
                 showNetError(errorResponse);
             }
 
             @Override
             protected void onSuccess(SuccessResponse response) {
                 stopLoading();
+                User user = User.getInstance();
+                user.merchantApplyStatus = 1 ;
+
+                BaseApplication app = (BaseApplication) Utils.getApp();
+                UserDao userDao = app.getDatabase().userDao();
+                userDao.addUser(user);
+                User.update();
+
                 showToast(getString(R.string.commit_success));
+                finish();
             }
         });
     }

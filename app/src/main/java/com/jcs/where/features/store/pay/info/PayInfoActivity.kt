@@ -1,7 +1,10 @@
 package com.jcs.where.features.store.pay.info
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -70,7 +73,6 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
     }
 
 
-
     override fun bindListener() {
 
         paid_tv.setOnClickListener {
@@ -103,6 +105,46 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
         val name_aet = view.findViewById<AppCompatEditText>(R.id.name_aet)
         val account_aet = view.findViewById<AppCompatEditText>(R.id.account_aet)
+
+        val clear_name_iv = view.findViewById<ImageView>(R.id.clear_name_iv)
+        val clear_account_iv = view.findViewById<ImageView>(R.id.clear_account_iv)
+
+        name_aet.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable) {
+                val result = s.toString().trim()
+
+                if (result.isEmpty()) {
+                    clear_name_iv.visibility = View.VISIBLE
+                }
+            }
+        })
+        account_aet.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable) {
+                val result = s.toString().trim()
+
+                if (result.isEmpty()) {
+                    clear_account_iv.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        clear_name_iv.setOnClickListener {
+            name_aet.setText("")
+        }
+
+        clear_account_iv.setOnClickListener {
+            name_aet.setText("")
+        }
+
+
         view.findViewById<TextView>(R.id.add_new_address_tv).setOnClickListener {
 
             val accountName = name_aet.text.toString().trim()

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_white_radius_8_top"
@@ -45,22 +46,39 @@
         android:textSize="@dimen/sp_13" />
 
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/name_aet"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/shape_grey_radius_24"
-        android:hint="@string/please_enter"
-        android:imeOptions="actionNext"
-        android:inputType="textPersonName"
-        android:maxLines="1"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15"
-        android:textColor="@color/black_333333"
-        android:textColorHint="@color/grey_999999"
-        android:textSize="@dimen/sp_14" />
+        android:layout_marginTop="@dimen/dp_10">
 
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/name_aet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_grey_radius_24"
+            android:hint="@string/please_enter"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:textColor="@color/black_333333"
+            android:textColorHint="@color/grey_999999"
+            android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:id="@+id/clear_name_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:padding="@dimen/dp_5"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_store_clear"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
 
 
     <TextView
@@ -72,28 +90,47 @@
         android:textSize="@dimen/sp_13" />
 
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/account_aet"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/shape_grey_radius_24"
-        android:hint="@string/please_enter"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:digits="0123456789"
-        android:maxLines="1"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15"
-        android:textColor="@color/black_333333"
-        android:textColorHint="@color/grey_999999"
-        android:textSize="@dimen/sp_14" />
+        android:layout_marginTop="@dimen/dp_10">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/account_aet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_grey_radius_24"
+            android:digits="0123456789"
+            android:hint="@string/please_enter"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:textColor="@color/black_333333"
+            android:textColorHint="@color/grey_999999"
+            android:textSize="@dimen/sp_14" />
+
+
+        <ImageView
+            android:id="@+id/clear_account_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:padding="@dimen/dp_5"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_store_clear"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/add_new_address_tv"
-        android:layout_marginTop="@dimen/dp_50"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_50"
         android:background="@drawable/shape_gradient_integral_sign_out"
         android:gravity="center"
         android:text="@string/determine"

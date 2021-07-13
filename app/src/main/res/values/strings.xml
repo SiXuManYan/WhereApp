@@ -835,5 +835,6 @@
     <string name="conditions_privacy_1">&#160;Terms and Conditions&#160;</string>
     <string name="conditions_privacy_2">and</string>
     <string name="conditions_privacy_3">&#160;Privacy Policy</string>
+    <string name="payment_amount_empty">请输入支付金额</string>
 
 </resources>

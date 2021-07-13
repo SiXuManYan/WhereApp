@@ -129,10 +129,15 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
         pay_tv.setOnClickListener {
 
             if (selectedChannel == null) {
-                ToastUtils.showShort(getString(R.string.select_pay_way))
+                ToastUtils.showShort(R.string.select_pay_way)
                 return@setOnClickListener
             }
             val totalAmount = amount_et.text.toString().trim()
+
+            if (totalAmount.isEmpty()) {
+                ToastUtils.showShort(R.string.payment_amount_empty)
+                return@setOnClickListener
+            }
 
             totalPrice = try {
                 totalAmount.toDouble()

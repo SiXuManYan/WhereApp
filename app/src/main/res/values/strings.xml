@@ -836,5 +836,21 @@
     <string name="conditions_privacy_2">and</string>
     <string name="conditions_privacy_3">&#160;Privacy Policy</string>
     <string name="payment_amount_empty">请输入支付金额</string>
+    <string name="post_comment">发表评价</string>
+    <string name="experience_satisfaction">服务体验满意度</string>
+    <string name="text_evaluation">文字评价</string>
+    <string name="evaluating_store_hint">评价商品，可以帮助更多想买的人</string>
+
+    <string name="test_hint">Can you give me my left hand
+To lead you to the other side of the road?
+I will be like before
+Look at the cars going back and forth
+Our distance frowned between our brows
+Quickly restored to the appearance of a passerby
+The more polite I am, the more afraid
+Gentleman must let go</string>
+    <string name="add_review">添加评价</string>
+    <string name="max_image_6">最多6张</string>
+
 
 </resources>

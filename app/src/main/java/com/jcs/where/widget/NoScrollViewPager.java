@@ -1,4 +1,4 @@
-package com.jcs.where.features.store;
+package com.jcs.where.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -824,6 +824,20 @@
     <string name="conditions_privacy_2">and</string>
     <string name="conditions_privacy_3">&#160;Privacy Policy</string>
     <string name="payment_amount_empty">Input payment amount</string>
+    <string name="post_comment">Post comment</string>
+    <string name="experience_satisfaction">Experience satisfaction</string>
+    <string name="text_evaluation">Text evaluation</string>
+    <string name="evaluating_store_hint">Evaluating products can help more people who want to buy</string>
+    <string name="test_hint">Can you give me my left hand
+To lead you to the other side of the road?
+I will be like before
+Look at the cars going back and forth
+Our distance frowned between our brows
+Quickly restored to the appearance of a passerby
+The more polite I am, the more afraid
+Gentleman must let go</string>
+    <string name="add_review">Add review</string>
+    <string name="max_image_6">Up to 6 iamges</string>
 
 
 </resources>

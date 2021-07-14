@@ -59,15 +59,8 @@ class StoreCartActivity : BaseActivity() {
 
 
         override fun getPageTitle(position: Int): CharSequence = titles[position]
-        override fun getItem(position: Int): Fragment {
-            return if (position == 0) {
-                StoreCartFragment.newInstance(0)
-            }else{
-                StoreCartFragment.newInstance(1)
-            }
 
-        }
-
+        override fun getItem(position: Int): Fragment = StoreCartFragment.newInstance(position)
 
         override fun getCount(): Int = 2
     }

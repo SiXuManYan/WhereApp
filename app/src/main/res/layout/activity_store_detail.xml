@@ -471,7 +471,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.jcs.where.features.store.NoScrollViewPager
+        <com.jcs.where.widget.NoScrollViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -836,8 +836,12 @@ Our distance frowned between our brows
 Quickly restored to the appearance of a passerby
 The more polite I am, the more afraid
 Gentleman must let go</string>
+
     <string name="add_review">Add review</string>
     <string name="max_image_6">Up to 6 iamges</string>
+    <string name="view_evaluation">View evaluation</string>
+    <string name="comment_detail">Comment detail</string>
+    <string name="merchant_reply">Merchant reply</string>
 
 
 </resources>

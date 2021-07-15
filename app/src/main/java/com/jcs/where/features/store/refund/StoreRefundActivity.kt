@@ -130,7 +130,6 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
             }
             val max = 5 - size
             FeaturesUtil.handleMediaSelect(this, Constant.IMG, max)
-
         }
         refund_tv.setOnClickListener {
             val desc = desc_tv.text.toString().trim()

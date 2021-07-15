@@ -19,6 +19,8 @@ import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
+import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
+import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.home.activity.ApplyRefundActivity
 import com.jcs.where.hotel.activity.HotelCommentActivity
@@ -405,14 +407,13 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
 
 
-
         val options = RequestOptions.bitmapTransform(
                 GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
                 .error(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray)
 
 
-        if (goods.isNotEmpty()   ) {
+        if (goods.isNotEmpty()) {
             if (goods[0].good_image.isNotEmpty()) {
                 Glide.with(context).load(goods[0].good_image[0]).apply(options).into(image_iv)
             }
@@ -443,9 +444,36 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                 }
             }
             5 -> {
-                right_tv.text = context.getString(R.string.evaluation)
-                right_tv.visibility = View.GONE
-                bottom_ll.visibility = View.VISIBLE
+
+                val commentStatus = modelData.comment_status
+                if (commentStatus == 3) {
+                    right_tv.visibility = View.GONE
+                    bottom_ll.visibility = View.GONE
+                } else {
+
+                    right_tv.visibility = View.VISIBLE
+                    bottom_ll.visibility = View.VISIBLE
+
+                    if (commentStatus == 1) {
+                        right_tv.text = context.getString(R.string.evaluation)
+                        right_tv.setOnClickListener {
+                            // 去评价
+                            startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
+                                putInt(Constant.PARAM_ORDER_ID, item.id)
+                            })
+                        }
+                    }
+
+                    if (commentStatus == 2) {
+                        right_tv.text = context.getString(R.string.view_evaluation)
+                        right_tv.setOnClickListener {
+                            // 查看评价
+                            startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
+                                putInt(Constant.PARAM_ORDER_ID, item.id)
+                            })
+                        }
+                    }
+                }
             }
             12 -> {
                 left_tv.text = context.getString(R.string.modify_application)
@@ -478,7 +506,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
     private fun startActivityAfterLogin(target: Class<*>, bundle: Bundle?) {
         val token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN)
         if (TextUtils.isEmpty(token)) {
-            startActivity(LoginActivity::class.java,null)
+            startActivity(LoginActivity::class.java, null)
         } else {
             startActivity(target, bundle)
         }

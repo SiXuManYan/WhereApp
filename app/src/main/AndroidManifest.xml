@@ -622,6 +622,8 @@
         <activity android:name=".features.store.refund.StoreRefundActivity" />
         <activity android:name=".features.store.refund.detail.StoreRefundDetailActivity" />
         <activity android:name=".features.store.cart.StoreCartActivity" />
+        <activity android:name=".features.store.comment.post.StoreCommentPostActivity" />
+        <activity android:name=".features.store.comment.detail.StoreCommentDetailActivity" />
 
     </application>
 

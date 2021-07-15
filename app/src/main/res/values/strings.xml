@@ -851,6 +851,9 @@ The more polite I am, the more afraid
 Gentleman must let go</string>
     <string name="add_review">添加评价</string>
     <string name="max_image_6">最多6张</string>
+    <string name="view_evaluation">查看评价</string>
+    <string name="comment_detail">评价详情</string>
+    <string name="merchant_reply">商家回复</string>
 
 
 </resources>

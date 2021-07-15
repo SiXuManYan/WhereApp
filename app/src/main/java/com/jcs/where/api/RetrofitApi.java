@@ -24,6 +24,7 @@ import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
 import com.jcs.where.api.request.store.StoreAddCart;
+import com.jcs.where.api.request.store.StoreCommitComment;
 import com.jcs.where.api.request.store.StoreRefundModifyRequest;
 import com.jcs.where.api.request.store.StoreRefundRequest;
 import com.jcs.where.api.request.store.UpLoadPayAccountInfo;
@@ -95,6 +96,7 @@ import com.jcs.where.api.response.store.StoreGoods;
 import com.jcs.where.api.response.store.StoreOrderInfoResponse;
 import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.store.cart.StoreCartResponse;
+import com.jcs.where.api.response.store.comment.StoreCommentDetail;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
@@ -1346,6 +1348,20 @@ public interface RetrofitApi {
      */
     @DELETE("generalapi/v2/orders/{order_id}")
     Observable<JcsResponse<JsonElement>> cancelStoreOrder(@Path("order_id") int order_id);
+
+
+    /**
+     * 商城提交评价
+     */
+    @POST("generalapi/v2/comments")
+    Observable<JcsResponse<JsonElement>> commitStoreComment(@Body StoreCommitComment request);
+
+
+    /**
+     * 商城评价详情
+     */
+    @GET("generalapi/v2/comments/{order_id}")
+    Observable<JcsResponse<StoreCommentDetail>> storeCommentDetail(@Path("orderId") int orderId);
 
 
 }

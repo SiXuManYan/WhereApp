@@ -72,6 +72,9 @@ class StoreOrderDetail {
     /** 售后状态（1-未售后，2-已售后） */
     var aftersale_status = 0
 
+    /** 评论状态（1-未评论，2-已评论，3-已超时） */
+    var comment_status = 0
+
 }
 
 /**

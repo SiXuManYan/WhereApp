@@ -52,6 +52,10 @@ open class OrderModelData {
     /** 商城商品信息 */
     var goods: ArrayList<OrderStoreGoods> = ArrayList()
 
+
+    /** 评论状态（1-未评论，2-已评论，3-已超时） */
+    var comment_status = 0
+
 }
 
 /**

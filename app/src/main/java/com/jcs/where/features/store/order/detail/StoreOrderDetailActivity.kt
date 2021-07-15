@@ -14,6 +14,8 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
+import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.features.store.refund.StoreRefundActivity
 import com.jcs.where.features.store.refund.detail.StoreRefundDetailActivity
@@ -141,7 +143,6 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 im_iv.setOnClickListener { _ ->
                     RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, it.mer_uuid, it.mer_name, null)
                 }
-
             } else {
                 im_iv.visibility = View.GONE
             }
@@ -167,7 +168,6 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 }
             }
             3 -> {
-
                 if (data.delivery_type == 2) {
                     bottom_container_rl.visibility = View.VISIBLE
                     left_tv.visibility = View.VISIBLE
@@ -204,14 +204,32 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                     // 申请退货
                     doRefund()
                 }
+                val commentStatus = data.comment_status
+                if (commentStatus == 3) {
+                    right_tv.visibility = View.GONE
+                } else {
 
-                right_tv.visibility = View.VISIBLE
-                right_tv.text = getString(R.string.evaluation)
-                right_tv.setOnClickListener {
-                    // 评价
-                    showComing()
+                    right_tv.visibility = View.VISIBLE
+
+                    if (commentStatus == 1) {
+                        right_tv.text = getString(R.string.evaluation)
+                        right_tv.setOnClickListener {
+                            // 去评价
+                            startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
+                                putInt(Constant.PARAM_ORDER_ID, orderId)
+                            })
+                        }
+                    }
+
+                    if (commentStatus == 2) {
+                        right_tv.text = getString(R.string.view_evaluation)
+                        right_tv.setOnClickListener {
+                            startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
+                                putInt(Constant.PARAM_ORDER_ID, orderId)
+                            })
+                        }
+                    }
                 }
-
 
             }
             8, 9, 10, 11, 12 -> {

@@ -443,7 +443,14 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                     })
                 }
             }
-            5 -> {
+            4 -> {
+
+                val shopName = item.title
+                var shopImage = ""
+                if (item.image.isNotEmpty()) {
+                    shopImage = item.image[0]
+                }
+
 
                 val commentStatus = modelData.comment_status
                 if (commentStatus == 3) {
@@ -460,6 +467,8 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                             // 去评价
                             startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
                                 putInt(Constant.PARAM_ORDER_ID, item.id)
+                                putString(Constant.PARAM_SHOP_NAME,shopName)
+                                putString(Constant.PARAM_SHOP_IMAGE, shopImage)
                             })
                         }
                     }

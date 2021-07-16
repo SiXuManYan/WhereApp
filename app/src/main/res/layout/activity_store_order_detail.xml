@@ -560,42 +560,50 @@
         tools:visibility="visible">
 
 
-        <TextView
-            android:id="@+id/left_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/right_tv"
-            android:background="@drawable/stock_gray_radius_8"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_98"
-            android:paddingStart="@dimen/dp_17"
-            android:paddingTop="@dimen/dp_8"
-            android:paddingEnd="@dimen/dp_17"
-            android:paddingBottom="@dimen/dp_8"
-            android:textSize="@dimen/sp_14"
-            android:visibility="gone"
-            tools:text="申请退货"
-            tools:visibility="visible" />
-
-
-        <TextView
-            android:id="@+id/right_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/dp_10"
-            android:background="@drawable/shape_gradient_orange_8"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_98"
-            android:paddingStart="@dimen/dp_17"
-            android:paddingTop="@dimen/dp_8"
-            android:paddingEnd="@dimen/dp_17"
-            android:paddingBottom="@dimen/dp_8"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"
-            android:visibility="gone"
-            tools:text="评价"
-            tools:visibility="visible" />
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/left_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stock_gray_radius_8"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_98"
+                android:paddingStart="@dimen/dp_17"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_17"
+                android:paddingBottom="@dimen/dp_8"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone"
+                tools:text="申请退货"
+                tools:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/right_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/shape_gradient_orange_8"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_98"
+                android:paddingStart="@dimen/dp_17"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_17"
+                android:paddingBottom="@dimen/dp_8"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone"
+                tools:text="评价"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+
 
 
     </RelativeLayout>

@@ -20,10 +20,16 @@ import kotlinx.android.synthetic.main.activity_store_comment_post.*
 class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), StoreCommentPostView {
 
     private var orderId = 0
+    private var name = ""
+    private var image = ""
 
     private lateinit var mImageAdapter: StoreRefundAdapter
 
     override fun getLayoutId() = R.layout.activity_store_comment_post
+
+    override fun isStatusDark(): Boolean {
+        return true
+    }
 
     override fun initView() {
 
@@ -31,6 +37,8 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
 
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
+            name = it.getString(Constant.PARAM_SHOP_NAME, "")
+            image = it.getString(Constant.PARAM_SHOP_IMAGE,"")
         }
 
         // 相册
@@ -82,9 +90,9 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
             if (mImageAdapter.data.isNotEmpty()) {
 
 
-                presenter.upLoadImage(orderId ,rating,content,ArrayList(mImageAdapter.data))
+                presenter.upLoadImage(orderId, rating, content, ArrayList(mImageAdapter.data))
             } else {
-                presenter.commitStoreComment(orderId ,rating,content,null)
+                presenter.commitStoreComment(orderId, rating, content, null)
             }
         }
     }

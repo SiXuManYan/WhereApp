@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
+import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderDetail
 import com.jcs.where.base.BaseEvent
@@ -133,9 +134,13 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             service_ll.visibility = View.GONE
         }
 
+        var shopName = ""
+        var shopImage = ""
+
         // 商品信息
         data.shop?.let {
             mAdapter.setNewInstance(it.goods)
+            shopName = it.title
             business_name_tv.text = it.title
 
             if (it.im_status == 1 && !TextUtils.isEmpty(it.mer_uuid)) {
@@ -145,6 +150,10 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 }
             } else {
                 im_iv.visibility = View.GONE
+            }
+
+            if (it.images.isNotEmpty()) {
+                shopImage = it.images[0]
             }
 
         }
@@ -217,6 +226,8 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                             // 去评价
                             startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
                                 putInt(Constant.PARAM_ORDER_ID, orderId)
+                                putString(Constant.PARAM_SHOP_NAME, shopName)
+                                putString(Constant.PARAM_SHOP_IMAGE, shopImage)
                             })
                         }
                     }
@@ -250,6 +261,22 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             }
             else -> {
                 bottom_container_rl.visibility = View.GONE
+            }
+        }
+
+        if (BuildConfig.FLAVOR == "dev") {
+            if (data.status == 9) {
+                bottom_container_rl.visibility = View.VISIBLE
+                left_tv.visibility = View.VISIBLE
+                left_tv.text = getString(R.string.after_sale_details)
+                left_tv.setOnClickListener {
+                    // 测试评价
+
+                    startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ORDER_ID, orderId)
+                    })
+                }
+                right_tv.visibility = View.GONE
             }
         }
 

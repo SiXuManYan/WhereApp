@@ -207,7 +207,6 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
                     delivery_type = deliveryType
                     delivery_fee = this@StoreDetailActivity.delivery_fee
                     goods.add(goodInfo)
-
                 }
 
                 val appList: ArrayList<StoreOrderCommitData> = ArrayList()

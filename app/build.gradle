@@ -207,4 +207,6 @@ dependencies {
     // 流式布局zhy
     implementation 'com.hyman:flowlayout-lib:1.1.2'
 
+    implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1-x'
+
 }

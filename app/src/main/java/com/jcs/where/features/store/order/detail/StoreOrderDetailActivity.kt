@@ -118,7 +118,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
         }
 
         // 支付信息
-        if (data.status != 1) {
+        if (data.status != 1 && data.status != 6) {
             pay_way_tv.text = data.pay_channel
             payment_name_tv.text = getString(R.string.payment_name_format, data.bank_card_account)
             payment_account_tv.text = getString(R.string.payment_account_format, data.bank_card_number)

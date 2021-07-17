@@ -856,6 +856,8 @@ Gentleman must let go</string>
     <string name="merchant_reply">商家回复</string>
     <string name="comment_default">评价&#160;0</string>
     <string name="comment_format">评价&#160;%1$d</string>
+    <string name="has_image">有图</string>
+    <string name="newest">最新</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.detail.comment
+package com.jcs.where.features.store.detail.comment.chiild
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,10 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.comment.CommentResponse
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.store.detail.comment.StoreCommentActivity
+import com.jcs.where.features.store.detail.comment.StoreCommentAdapter
+import com.jcs.where.features.store.detail.comment.StoreCommentPresenter
+import com.jcs.where.features.store.detail.comment.StoreCommentView
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
@@ -16,11 +20,11 @@ import kotlinx.android.synthetic.main.fragment_refresh_list.*
  * Created by Wangsw  2021/7/16 15:24.
  *
  */
-class StoreCommentFragment : BaseMvpFragment<StoreCommentPresenter>(), StoreCommentView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
+class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), StoreCommentView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
 
 
     /** 商家id */
-    private var shop_id: String = ""
+    private var shop_id =  0
 
     /**
      * 是否展示全部
@@ -46,10 +50,10 @@ class StoreCommentFragment : BaseMvpFragment<StoreCommentPresenter>(), StoreComm
          * @param showAll 是否展示全部
          * @param listType 类型（1-全部，2-最新，3-有图）
          */
-        fun newInstance(shop_id: String, showAll: Boolean? = true, listType: Int? = 1): StoreCommentFragment {
-            val fragment = StoreCommentFragment()
+        fun newInstance(shop_id: Int, showAll: Boolean? = true, listType: Int? = 1): StoreCommentChildFragment {
+            val fragment = StoreCommentChildFragment()
             val bundle = Bundle().apply {
-                putString(Constant.PARAM_SHOP_ID, shop_id)
+                putInt(Constant.PARAM_SHOP_ID, shop_id)
                 showAll?.let {
                     putBoolean(Constant.PARAM_ACCOUNT, it)
                 }
@@ -68,7 +72,7 @@ class StoreCommentFragment : BaseMvpFragment<StoreCommentPresenter>(), StoreComm
 
     override fun initView(view: View) {
         arguments?.let {
-            shop_id = it.getString(Constant.PARAM_SHOP_ID, "")
+            shop_id = it.getInt(Constant.PARAM_SHOP_ID, 0)
             showAll = it.getBoolean(Constant.PARAM_ACCOUNT, true)
             listType = it.getInt(Constant.PARAM_ACCOUNT, 1)
         }
@@ -86,13 +90,18 @@ class StoreCommentFragment : BaseMvpFragment<StoreCommentPresenter>(), StoreComm
 
         headerView = LayoutInflater.from(context).inflate(R.layout.layout_store_comment_header, null)
         val footerView = LayoutInflater.from(context).inflate(R.layout.layout_store_comment_footer, null)
-        headerView?.setOnClickListener {
-            // 详情页
-        }
 
         footerView.setOnClickListener {
             // 详情页
+            startActivity(StoreCommentActivity::class.java,Bundle().apply {
+                putInt(Constant.PARAM_SHOP_ID, shop_id)
+            })
         }
+
+        headerView?.setOnClickListener {
+            footerView.performClick()
+        }
+
 
         mAdapter = StoreCommentAdapter().apply {
 
@@ -101,7 +110,7 @@ class StoreCommentFragment : BaseMvpFragment<StoreCommentPresenter>(), StoreComm
             if (showAll) {
                 loadMoreModule.isAutoLoadMore = true
                 loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-                loadMoreModule.setOnLoadMoreListener(this@StoreCommentFragment)
+                loadMoreModule.setOnLoadMoreListener(this@StoreCommentChildFragment)
             } else {
                 setHeaderView(headerView!!)
                 setFooterView(footerView)

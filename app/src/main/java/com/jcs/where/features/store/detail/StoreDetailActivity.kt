@@ -21,8 +21,7 @@ import com.jcs.where.api.response.store.StoreGoodsCommit
 import com.jcs.where.api.response.store.StoreOrderCommitData
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.gourmet.comment.FoodCommentFragment
-import com.jcs.where.features.store.detail.comment.StoreCommentFragment
+import com.jcs.where.features.store.detail.comment.chiild.StoreCommentChildFragment
 import com.jcs.where.features.store.detail.good.StoreGoodFragment
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.utils.BigDecimalUtil
@@ -284,7 +283,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
             return if (position == 0) {
                 StoreGoodFragment.newInstance(shop_id)
             } else {
-                StoreCommentFragment.newInstance(shop_id.toString(),false)
+                StoreCommentChildFragment.newInstance(shop_id,false)
             }
         }
 

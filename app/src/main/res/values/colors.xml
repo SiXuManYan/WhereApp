@@ -84,6 +84,7 @@
     <color name="blue_EDF5FD">#EDF5FD</color>
     <color name="grey_B5B5B5">#B5B5B5</color>
     <color name="yellow_FEBA32">#FEBA32</color>
+    <color name="blue_007EFF">#007EFF</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

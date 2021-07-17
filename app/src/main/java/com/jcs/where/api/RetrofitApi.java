@@ -1183,14 +1183,7 @@ public interface RetrofitApi {
     Observable<JcsResponse<StoreDetail>> getStoreDetail(@Path("shop_id") int shop_id);
 
 
-    /**
-     * 商城评论列表
-     */
-    @GET("generalapi/v2/comments")
-    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getStoreCommentList(
-            @Query("page") int page,
-            @Query("shop_id") String shop_id
-    );
+
 
 
     /**
@@ -1363,5 +1356,18 @@ public interface RetrofitApi {
     @GET("generalapi/v2/comments/{order_id}")
     Observable<JcsResponse<StoreCommentDetail>> storeCommentDetail(@Path("orderId") int orderId);
 
+
+    /**
+     * 商城评论列表
+     * @param type 类型（1-全部，2-最新，3-有图）
+     */
+    @GET("generalapi/v2/comments")
+    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getStoreCommentList(
+            @Query("page") int page,
+            @Query("shop_id") String shop_id,
+            @Query("type") int type
+
+
+    );
 
 }

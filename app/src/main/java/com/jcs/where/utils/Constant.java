@@ -48,6 +48,7 @@ public class Constant {
      * 账号
      */
     public static final String PARAM_ACCOUNT = "account";
+    public static final String PARAM_COUNT = "count";
 
     /**
      * 验证码

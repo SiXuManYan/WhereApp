@@ -29,6 +29,11 @@ public class CommentResponse {
     public String avatar = "";
     public float star ;
 
+    /**
+     * 商家回复
+     */
+    public String merchant_review  = "";
+
 
 
 }

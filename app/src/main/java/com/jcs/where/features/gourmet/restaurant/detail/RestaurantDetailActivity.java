@@ -286,7 +286,6 @@ public class RestaurantDetailActivity extends BaseMvpActivity<RestaurantDetailPr
             } else {
                 presenter.unCollection(mRestaurantId);
             }
-
         });
 
         mJcsTitle.setFirstRightIvClickListener(v -> {

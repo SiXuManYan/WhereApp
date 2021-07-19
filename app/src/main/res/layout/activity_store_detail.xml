@@ -8,13 +8,14 @@
     android:orientation="vertical">
     <!--
 
-      app:rightFirstIcon="@drawable/ic_share_black"
-            app:rightSecondIcon="@mipmap/ic_like_black2"
+
     -->
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
+        app:rightFirstIcon="@drawable/ic_share_black"
+        app:rightSecondIcon="@mipmap/ic_like_black2"
         android:layout_height="wrap_content"
         app:showBottomLine="true" />
 

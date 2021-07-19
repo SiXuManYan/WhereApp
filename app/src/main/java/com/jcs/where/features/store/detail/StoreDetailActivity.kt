@@ -77,6 +77,11 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
     var good_image = ""
     var good_name = ""
 
+    /**
+     * 收藏状态（1：未收藏，2：已收藏）
+     */
+    private var collect_status = 0
+
     override fun getLayoutId() = R.layout.activity_store_detail
 
     override fun isStatusDark() = true
@@ -222,6 +227,13 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         }
 
+        mJcsTitle.setSecondRightIvClickListener { v: View? ->
+            if (collect_status == 1) {
+                presenter.collection(shop_id , mJcsTitle)
+            } else {
+                presenter.unCollection(shop_id,mJcsTitle)
+            }
+        }
 
     }
 
@@ -269,6 +281,13 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         delivery_times = data.delivery_times
         take_times = data.take_times
+
+        collect_status = data.collect_status
+        if (collect_status == 1) {
+            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2)
+        } else {
+            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red)
+        }
 
     }
 

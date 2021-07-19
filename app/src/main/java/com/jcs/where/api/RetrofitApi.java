@@ -1366,8 +1366,25 @@ public interface RetrofitApi {
             @Query("page") int page,
             @Query("shop_id") String shop_id,
             @Query("type") int type
+    );
 
 
+
+
+    /**
+     * 商城收藏
+     */
+    @POST("generalapi/v2/estore/collects")
+    Observable<JcsResponse<JsonElement>> storeCollects(
+            @Body int shop_id
+    );
+
+    /**
+     * 商城收藏
+     */
+    @HTTP(method = "DELETE", path = "generalapi/v2/estore/collects", hasBody = true)
+    Observable<JcsResponse<JsonElement>> StoreCancelCollects(
+            @Body int shop_id
     );
 
 }

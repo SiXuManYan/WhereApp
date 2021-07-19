@@ -32,6 +32,7 @@ public class Html5Url {
     public static final String MODEL_TRAVEL = "travel";
     public static final String MODEL_GENERAL = "general";
     public static final String MODEL_RESTAURANT = "restaurant";
+    public static final String MODEL_E_STORE = "eStore";
 
 
     /**

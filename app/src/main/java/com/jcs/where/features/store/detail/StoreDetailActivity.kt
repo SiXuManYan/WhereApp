@@ -24,10 +24,8 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.detail.comment.chiild.StoreCommentChildFragment
 import com.jcs.where.features.store.detail.good.StoreGoodFragment
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
-import com.jcs.where.utils.BigDecimalUtil
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.FeaturesUtil
-import com.jcs.where.utils.GlideUtil
+import com.jcs.where.frams.common.Html5Url
+import com.jcs.where.utils.*
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import io.rong.imkit.RongIM
@@ -227,12 +225,17 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         }
 
-        mJcsTitle.setSecondRightIvClickListener { v: View? ->
+        mJcsTitle.setSecondRightIvClickListener {
             if (collect_status == 1) {
                 presenter.collection(shop_id , mJcsTitle)
             } else {
                 presenter.unCollection(shop_id,mJcsTitle)
             }
+        }
+
+        mJcsTitle.setFirstRightIvClickListener {
+            val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_E_STORE, shop_id)
+            MobUtil.shareFacebookWebPage(url, this@StoreDetailActivity)
         }
 
     }

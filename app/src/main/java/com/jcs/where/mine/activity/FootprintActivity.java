@@ -16,12 +16,14 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
+import com.jcs.where.features.store.detail.StoreDetailActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.mine.adapter.FootprintListAdapter;
 import com.jcs.where.mine.model.FootprintModel;
 import com.jcs.where.mine.view_type.FootprintType;
 import com.jcs.where.travel.TouristAttractionDetailActivity;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import java.util.List;
@@ -57,6 +59,7 @@ public class FootprintActivity extends BaseActivity {
 
     private void getDataFromNet() {
         mModel.getFootprintList(new BaseObserver<PageResponse<FootprintResponse>>() {
+
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -111,8 +114,16 @@ public class FootprintActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(PARAM_ID, id);
                 startActivity(RestaurantDetailActivity.class, bundle);
-
                 break;
+            case FootprintType.E_STORE:
+                int shopId = data.getModuleData().getId();
+                Bundle b = new Bundle();
+                b.putInt(Constant.PARAM_ID, shopId);
+                startActivity(StoreDetailActivity.class, b);
+                break;
+            default:
+                break;
+
         }
     }
 

@@ -21,4 +21,9 @@ public class FootprintType {
      */
     public static final int Restaurant = 5;
 
+    /**
+     * 商城
+     */
+    public static final int E_STORE = 6;
+
 }

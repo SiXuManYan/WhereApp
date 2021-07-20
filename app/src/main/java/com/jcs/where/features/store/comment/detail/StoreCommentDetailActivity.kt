@@ -23,6 +23,8 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
 
     override fun getLayoutId() = R.layout.activity_store_comment_detail
 
+    override fun isStatusDark() = true
+
     override fun initView() {
 
         intent.extras?.let {
@@ -57,10 +59,21 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
 
     override fun bingDetail(response: StoreCommentDetail) {
 
-        GlideUtil.load(this, response.shop_images, image_iv)
+        if (response.shop_images.isNotEmpty()) {
+            GlideUtil.load(this, response.shop_images[0], image_iv)
+        }
+
         name_tv.text = response.shop_title
         star_view.rating = response.star
-        content_tv.text = response.content
+
+        val content = response.content
+        if (content.isBlank()) {
+            comment_text_ll.visibility = View.GONE
+        } else {
+            comment_text_ll.visibility = View.VISIBLE
+            content_tv.text = content
+        }
+
 
         val merchantReview = response.merchant_review
         if (merchantReview.isNotEmpty()) {
@@ -70,6 +83,13 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
             merchant_rely_ll.visibility = View.GONE
         }
 
+        val list = response.images
+        if (list.isNotEmpty()) {
+            comment_image_ll.visibility = View.VISIBLE
+            mImageAdapter.setNewInstance(list)
+        } else {
+            comment_image_ll.visibility = View.GONE
+        }
 
     }
 }

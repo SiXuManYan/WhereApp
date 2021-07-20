@@ -12,7 +12,7 @@ import com.jcs.where.api.response.gourmet.comment.CommentResponse
  */
 
 interface StoreCommentView : BaseMvpView {
-    fun bindCommentData(data: MutableList<CommentResponse>, isLastPage: Boolean)
+    fun bindCommentData(data: MutableList<CommentResponse>, isLastPage: Boolean, total: Int)
 }
 
 
@@ -30,9 +30,9 @@ class StoreCommentPresenter(private var view: StoreCommentView) : BaseMvpPresent
 
 
                 if (!showAll && data.size > 2) {
-                    view.bindCommentData(data.subList(0, 2).toMutableList(), isLastPage)
+                    view.bindCommentData(data.subList(0, 2).toMutableList(), isLastPage,response.total)
                 } else {
-                    view.bindCommentData(data.toMutableList(), isLastPage)
+                    view.bindCommentData(data.toMutableList(), isLastPage,response.total)
                 }
 
             }

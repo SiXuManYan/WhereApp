@@ -28,6 +28,8 @@ class StoreCommentActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_store_comment
 
+    override fun isStatusDark() = true
+
     override fun initView() {
 
         val bundle = intent.extras
@@ -35,7 +37,7 @@ class StoreCommentActivity : BaseActivity() {
             finish()
             return
         }
-        shop_id = bundle.getInt(Constant.PARAM_ID, 0)
+        shop_id = bundle.getInt(Constant.PARAM_SHOP_ID, 0)
 
 
         pager.setNoScroll(true)
@@ -44,9 +46,7 @@ class StoreCommentActivity : BaseActivity() {
 
     }
 
-    override fun initData() {
-
-    }
+    override fun initData() = Unit
 
     override fun bindListener() {
 
@@ -80,7 +80,7 @@ class StoreCommentActivity : BaseActivity() {
 
 
         override fun getItem(position: Int): Fragment =
-                StoreCommentChildFragment.newInstance(shop_id, false, position + 1)
+                StoreCommentChildFragment.newInstance(shop_id, true, position + 1)
 
         override fun getCount(): Int = TAB_TITLES.size
     }

@@ -3,6 +3,7 @@ package com.jcs.where.features.store.detail.comment.chiild
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
@@ -18,13 +19,13 @@ import kotlinx.android.synthetic.main.fragment_refresh_list.*
 
 /**
  * Created by Wangsw  2021/7/16 15:24.
- *
+ * 商城评论
  */
 class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), StoreCommentView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
 
 
     /** 商家id */
-    private var shop_id =  0
+    private var shop_id = 0
 
     /**
      * 是否展示全部
@@ -81,6 +82,8 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
         // list
         if (showAll) {
             swipe_layout.setOnRefreshListener(this)
+        }else{
+            swipe_layout.isEnabled = false
         }
 
         emptyView = EmptyView(context).apply {
@@ -93,7 +96,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
 
         footerView.setOnClickListener {
             // 详情页
-            startActivity(StoreCommentActivity::class.java,Bundle().apply {
+            startActivity(StoreCommentActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_SHOP_ID, shop_id)
             })
         }
@@ -115,11 +118,12 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
                 setHeaderView(headerView!!)
                 setFooterView(footerView)
             }
-
             setEmptyView(emptyView)
         }
 
-        recycler.adapter = mAdapter
+        recycler.apply {
+            adapter = mAdapter
+        }
 
     }
 
@@ -147,7 +151,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
     }
 
 
-    override fun bindCommentData(data: MutableList<CommentResponse>, isLastPage: Boolean) {
+    override fun bindCommentData(data: MutableList<CommentResponse>, isLastPage: Boolean, total: Int) {
         if (swipe_layout.isRefreshing) {
             swipe_layout.isRefreshing = false
         }
@@ -173,6 +177,10 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
                 loadMoreModule.loadMoreComplete()
             }
         }
+
+        val header_count_tv = headerView?.findViewById<TextView>(R.id.header_count_tv)
+        header_count_tv?.text = getString(R.string.comment_format, total)
+
     }
 
 }

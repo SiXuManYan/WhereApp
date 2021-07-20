@@ -263,24 +263,6 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 bottom_container_rl.visibility = View.GONE
             }
         }
-
-        if (BuildConfig.FLAVOR == "dev") {
-            if (data.status == 9) {
-                bottom_container_rl.visibility = View.VISIBLE
-                left_tv.visibility = View.VISIBLE
-                left_tv.text = getString(R.string.after_sale_details)
-                left_tv.setOnClickListener {
-                    // 测试评价
-
-                    startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_ORDER_ID, orderId)
-                    })
-                }
-                right_tv.visibility = View.GONE
-            }
-        }
-
-
     }
 
     private fun cancelOrder(orderId: Int) {

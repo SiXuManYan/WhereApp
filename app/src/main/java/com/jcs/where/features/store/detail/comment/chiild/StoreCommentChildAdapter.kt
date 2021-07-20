@@ -30,7 +30,7 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
         val name_tv = holder.getView<TextView>(R.id.name_tv)
         val star_rs = holder.getView<RatingStarView>(R.id.star_rs)
         val comment_time_tv = holder.getView<TextView>(R.id.comment_time_tv)
-        val content_tv = holder.getView<ExpandableTextView>(R.id.content_tv)
+        val content_tv = holder.getView<ExpandableTextView>(R.id.content_etv)
         val image_rv = holder.getView<RecyclerView>(R.id.image_rv)
         val merchant_ll = holder.getView<LinearLayout>(R.id.merchant_ll)
         val merchant_reply_tv = holder.getView<TextView>(R.id.merchant_reply_tv)
@@ -53,9 +53,9 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
                     return false
                 }
             }
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(15f), 0, 0).apply {
-                setDrawHeaderFooter(false)
-            })
+//            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(15f), 0, 0).apply {
+//                setDrawHeaderFooter(false)
+//            })
             adapter = imageAdapter
         }
 

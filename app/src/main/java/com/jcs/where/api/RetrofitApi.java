@@ -1183,9 +1183,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<StoreDetail>> getStoreDetail(@Path("shop_id") int shop_id);
 
 
-
-
-
     /**
      * 商城商品列表
      */
@@ -1354,11 +1351,12 @@ public interface RetrofitApi {
      * 商城评价详情
      */
     @GET("generalapi/v2/comments/{order_id}")
-    Observable<JcsResponse<StoreCommentDetail>> storeCommentDetail(@Path("orderId") int orderId);
+    Observable<JcsResponse<StoreCommentDetail>> storeCommentDetail(@Path("order_id") int order_id);
 
 
     /**
      * 商城评论列表
+     *
      * @param type 类型（1-全部，2-最新，3-有图）
      */
     @GET("generalapi/v2/comments")
@@ -1367,8 +1365,6 @@ public interface RetrofitApi {
             @Query("shop_id") String shop_id,
             @Query("type") int type
     );
-
-
 
 
     /**
@@ -1386,5 +1382,13 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> StoreCancelCollects(
             @Body int shop_id
     );
+
+
+    /**
+     * 水电订单详情
+     */
+    @GET("generalapi/v2/pay_bills/orders/{order_id}")
+    Observable<JcsResponse<StoreCommentDetail>> billOrderDetail(@Path("orderId") int orderId);
+
 
 }

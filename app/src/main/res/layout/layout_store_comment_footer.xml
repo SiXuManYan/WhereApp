@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_10"
     android:orientation="horizontal">
 
 
@@ -12,7 +14,7 @@
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
         android:paddingTop="@dimen/dp_6"
-        android:background="@drawable/shape_blue_radius_12"
+        android:background="@drawable/shape_blue_stoke_radius_12"
         android:paddingBottom="@dimen/dp_6"
         android:text="@string/view_all_desc"
         android:textColor="@color/blue_4C9EF2"

@@ -1,6 +1,7 @@
 package com.jcs.where.features.bills.hydropower.record
 
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.BarUtils
@@ -11,6 +12,7 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.hydropower.PaymentRecord
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.hydropower.detail.BillsDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_refresh_list.*
@@ -52,7 +54,6 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
         recycler.apply {
             adapter = mAdapter
         }
-
 
 
     }
@@ -109,5 +110,9 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
 
+        val data = mAdapter.data[position]
+        startActivity(BillsDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ORDER_ID, data.id)
+        })
     }
 }

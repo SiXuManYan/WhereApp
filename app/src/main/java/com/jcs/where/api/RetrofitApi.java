@@ -85,6 +85,7 @@ import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
+import com.jcs.where.api.response.order.bill.BillOrderDetails;
 import com.jcs.where.api.response.order.store.RefundDetail;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
@@ -1388,7 +1389,7 @@ public interface RetrofitApi {
      * 水电订单详情
      */
     @GET("generalapi/v2/pay_bills/orders/{order_id}")
-    Observable<JcsResponse<StoreCommentDetail>> billOrderDetail(@Path("orderId") int orderId);
+    Observable<JcsResponse<BillOrderDetails>> billOrderDetail(@Path("order_id") int order_id);
 
 
 }

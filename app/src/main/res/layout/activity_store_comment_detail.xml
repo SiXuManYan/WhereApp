@@ -116,8 +116,11 @@
 
 
             <LinearLayout
+                android:id="@+id/comment_text_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginEnd="@dimen/dp_15"
@@ -152,10 +155,13 @@
 
 
             <LinearLayout
+                android:id="@+id/comment_image_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_10"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_marginEnd="@dimen/dp_15"
                 android:background="@drawable/shape_white_radius_4"
                 android:orientation="vertical"

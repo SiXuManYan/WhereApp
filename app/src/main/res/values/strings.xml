@@ -854,10 +854,17 @@ Gentleman must let go</string>
     <string name="view_evaluation">查看评价</string>
     <string name="comment_detail">评价详情</string>
     <string name="merchant_reply">商家回复</string>
-    <string name="comment_default">评价&#160;0</string>
-    <string name="comment_format">评价&#160;%1$d</string>
+    <string name="comment_default">评价&#160;&#160;0</string>
+    <string name="comment_format">评价&#160;&#160;%1$d</string>
     <string name="has_image">有图</string>
     <string name="newest">最新</string>
+    <string name="bills_payment">Bills Payment</string>
+    <string name="bill_status_1">支付审核中</string>
+    <string name="bill_status_2">缴费中</string>
+    <string name="bill_status_3">缴费成功</string>
+    <string name="bill_status_4">交易关闭</string>
+    <string name="bill_status_5">退款中</string>
+    <string name="bill_status_6">退款成功</string>
 
 
 </resources>

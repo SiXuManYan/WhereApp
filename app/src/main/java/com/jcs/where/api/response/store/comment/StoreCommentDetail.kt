@@ -12,7 +12,7 @@ class StoreCommentDetail {
     var content = ""
     var merchant_review = ""
     var shop_title = ""
-    var shop_images = ""
+    var shop_images  :ArrayList<String> = ArrayList()
 
     var images :ArrayList<String> = ArrayList()
 

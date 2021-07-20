@@ -839,14 +839,22 @@ Gentleman must let go</string>
 
     <string name="add_review">Add review</string>
     <string name="max_image_6">Up to 6 iamges</string>
-    <string name="view_evaluation">View evaluation</string>
+    <string name="view_evaluation">View comment</string>
     <string name="comment_detail">Comment detail</string>
     <string name="merchant_reply">Merchant reply</string>
-    <string name="comment_default">Comment&#160;0</string>
-    <string name="comment_format">Comment&#160;%1$d</string>
+    <string name="comment_default">Comment&#160;&#160;0</string>
+    <string name="comment_format">Comment&#160;&#160;%1$d</string>
     <string name="has_image">Has image</string>
     <string name="newest">Newest</string>
+    <string name="bills_payment">Bills Payment</string>
 
+
+    <string name="bill_status_1">Confirming</string>
+    <string name="bill_status_2">Paying</string>
+    <string name="bill_status_3">Successful</string>
+    <string name="bill_status_4">Closed</string>
+    <string name="bill_status_5">Refunding</string>
+    <string name="bill_status_6">Refund successfully</string>
 
 
 </resources>

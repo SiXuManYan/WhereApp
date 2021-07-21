@@ -164,7 +164,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                 right_tv.setOnClickListener {
                     // 再次预定
                     val dialog = JcsCalendarDialog().apply {
-                        initCalendar(context)
+                        initCalendar(this@OrderListAdapter2.context)
                     }
                     HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                 }

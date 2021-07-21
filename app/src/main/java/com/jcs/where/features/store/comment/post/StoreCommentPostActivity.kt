@@ -32,9 +32,7 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
     }
 
     override fun initView() {
-
         BarUtils.setStatusBarColor(this, Color.WHITE)
-
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
             name = it.getString(Constant.PARAM_SHOP_NAME, "")

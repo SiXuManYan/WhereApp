@@ -1,7 +1,9 @@
 package com.jcs.where.features.store.comment.detail
 
+import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.store.comment.StoreCommentDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -26,7 +28,7 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
     override fun isStatusDark() = true
 
     override fun initView() {
-
+        BarUtils.setStatusBarColor(this,Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
         }

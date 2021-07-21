@@ -443,14 +443,13 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                     })
                 }
             }
-            4 -> {
+            5 -> {
 
                 val shopName = item.title
                 var shopImage = ""
                 if (item.image.isNotEmpty()) {
                     shopImage = item.image[0]
                 }
-
 
                 val commentStatus = modelData.comment_status
                 if (commentStatus == 3) {

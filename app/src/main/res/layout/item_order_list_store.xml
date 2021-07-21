@@ -148,6 +148,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="horizontal">
 
         <!-- 修改申请， -->

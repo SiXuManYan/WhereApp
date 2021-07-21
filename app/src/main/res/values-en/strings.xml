@@ -847,8 +847,7 @@ Gentleman must let go</string>
     <string name="merchant_reply">Merchant reply</string>
     <string name="comment_default">Comment&#160;&#160;0</string>
     <string name="comment_format">Comment&#160;&#160;%1$d</string>
-    <string name="has_image">Has image</string>
-    <string name="newest">Newest</string>
+
     <string name="bills_payment">Bills Payment</string>
 
 
@@ -860,5 +859,12 @@ Gentleman must let go</string>
     <string name="bill_status_6">Refund successfully</string>
     <string name="refund_image_max_6">upper limit at 6</string>
 
+    <string name="all_format">All(%1$d)</string>
+    <string name="has_image_format">Has image(%1$d)</string>
+    <string name="newest_format">Newest(%1$d)</string>
+
+    <string name="all_default">All</string>
+    <string name="has_image_default">Has image</string>
+    <string name="newest_default">Newest</string>
 
 </resources>

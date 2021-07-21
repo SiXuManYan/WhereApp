@@ -98,6 +98,7 @@ import com.jcs.where.api.response.store.StoreGoods;
 import com.jcs.where.api.response.store.StoreOrderInfoResponse;
 import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.store.cart.StoreCartResponse;
+import com.jcs.where.api.response.store.comment.StoreCommentCount;
 import com.jcs.where.api.response.store.comment.StoreCommentDetail;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
@@ -1391,6 +1392,16 @@ public interface RetrofitApi {
      */
     @GET("generalapi/v2/pay_bills/orders/{order_id}")
     Observable<JcsResponse<BillOrderDetails>> billOrderDetail(@Path("order_id") int order_id);
+
+
+
+    /**
+     * 商城评价列表数量
+     */
+    @GET("generalapi/v2/comments/numbers/{shop_id}")
+    Observable<JcsResponse<StoreCommentCount>> getStoreCommentCount(@Path("shop_id") int shop_id);
+
+
 
 
 }

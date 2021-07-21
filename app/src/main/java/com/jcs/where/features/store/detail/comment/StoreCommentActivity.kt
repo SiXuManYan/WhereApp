@@ -7,7 +7,8 @@ import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.StringUtils
 import com.google.android.material.radiobutton.MaterialRadioButton
 import com.jcs.where.R
-import com.jcs.where.base.BaseActivity
+import com.jcs.where.api.response.store.comment.StoreCommentCount
+import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.detail.comment.chiild.StoreCommentChildFragment
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_comment.*
@@ -16,14 +17,14 @@ import kotlinx.android.synthetic.main.activity_store_comment.*
  * Created by Wangsw  2021/7/17 15:54.
  * 全部评价
  */
-class StoreCommentActivity : BaseActivity() {
+class StoreCommentActivity : BaseMvpActivity<StoreCommentListPresenter>(), StoreCommentListView {
 
     var shop_id: Int = 0
 
     val TAB_TITLES =
             arrayOf(StringUtils.getString(R.string.all),
-                    StringUtils.getString(R.string.has_image),
-                    StringUtils.getString(R.string.newest)
+                    StringUtils.getString(R.string.has_image_format),
+                    StringUtils.getString(R.string.newest_format)
             )
 
     override fun getLayoutId() = R.layout.activity_store_comment
@@ -39,14 +40,15 @@ class StoreCommentActivity : BaseActivity() {
         }
         shop_id = bundle.getInt(Constant.PARAM_SHOP_ID, 0)
 
-
-//        pager.setNoScroll(true)
+        pager.setNoScroll(true)
         pager.offscreenPageLimit = TAB_TITLES.size
         pager.adapter = InnerPagerAdapter(supportFragmentManager, 0)
-
     }
 
-    override fun initData() = Unit
+    override fun initData() {
+        presenter = StoreCommentListPresenter(this)
+        presenter.getCount(shop_id)
+    }
 
     override fun bindListener() {
 
@@ -83,6 +85,12 @@ class StoreCommentActivity : BaseActivity() {
                 StoreCommentChildFragment.newInstance(shop_id, true, position + 1)
 
         override fun getCount(): Int = TAB_TITLES.size
+    }
+
+    override fun bindCount(response: StoreCommentCount) {
+        all_rb.text = getString(R.string.all_format , response.all)
+        image_rb.text = getString(R.string.has_image_format , response.image)
+        newest_rb.text = getString(R.string.newest_format , response.newest)
     }
 
 }

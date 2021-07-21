@@ -866,5 +866,10 @@ Gentleman must let go</string>
     <string name="all_default">All</string>
     <string name="has_image_default">Has image</string>
     <string name="newest_default">Newest</string>
+    <string name="comment_rating_1">very bad</string>
+    <string name="comment_rating_2">not satisfied</string>
+    <string name="comment_rating_3">fair</string>
+    <string name="comment_rating_4">satisfied</string>
+    <string name="comment_rating_5">very good</string>
 
 </resources>

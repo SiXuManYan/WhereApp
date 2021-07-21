@@ -9,6 +9,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.store.comment.StoreCommentDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundAdapter
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_store_comment_detail.*
@@ -70,7 +71,8 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
         }
 
         name_tv.text = response.shop_title
-        star_view.rating = response.star
+        val rating = response.star
+        star_view.rating = rating
 
         val content = response.content
         if (content.isBlank()) {
@@ -96,6 +98,7 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
         } else {
             comment_image_ll.visibility = View.GONE
         }
+        comment_value_tv.text = BusinessUtils.getCommentRatingText(rating.toInt())
 
     }
 }

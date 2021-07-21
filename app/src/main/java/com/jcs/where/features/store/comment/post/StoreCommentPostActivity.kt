@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundAdapter
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.zhihu.matisse.Matisse
@@ -36,7 +37,7 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
             name = it.getString(Constant.PARAM_SHOP_NAME, "")
-            image = it.getString(Constant.PARAM_SHOP_IMAGE,"")
+            image = it.getString(Constant.PARAM_SHOP_IMAGE, "")
         }
 
         // 相册
@@ -81,16 +82,16 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
             val rating = star_view.rating.toInt()
             val content = content_et.text.toString().trim()
 
-
-
-
             if (mImageAdapter.data.isNotEmpty()) {
-
-
                 presenter.upLoadImage(orderId, rating, content, ArrayList(mImageAdapter.data))
             } else {
                 presenter.commitStoreComment(orderId, rating, content, null)
             }
+        }
+
+        star_view.setOnClickListener {
+            val rating = star_view.rating.toInt()
+            comment_value_tv.text = BusinessUtils.getCommentRatingText(rating)
         }
     }
 

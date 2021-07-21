@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.detail.comment
+package com.jcs.where.features.store.detail.comment.chiild
 
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter

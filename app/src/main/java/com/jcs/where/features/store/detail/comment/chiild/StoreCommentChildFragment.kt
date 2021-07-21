@@ -10,9 +10,6 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.comment.CommentResponse
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.store.detail.comment.StoreCommentActivity
-import com.jcs.where.features.store.detail.comment.StoreCommentAdapter
-import com.jcs.where.features.store.detail.comment.StoreCommentPresenter
-import com.jcs.where.features.store.detail.comment.StoreCommentView
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.fragment_refresh_list.*

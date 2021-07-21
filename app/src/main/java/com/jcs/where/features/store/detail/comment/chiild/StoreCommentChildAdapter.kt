@@ -1,4 +1,4 @@
-package com.jcs.where.features.store.detail.comment
+package com.jcs.where.features.store.detail.comment.chiild
 
 import android.view.View
 import android.widget.ImageView
@@ -38,6 +38,7 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
         val image_rv = holder.getView<RecyclerView>(R.id.image_rv)
         val merchant_ll = holder.getView<LinearLayout>(R.id.merchant_ll)
         val merchant_reply_tv = holder.getView<TextView>(R.id.merchant_reply_tv)
+        val merchant_iv = holder.getView<ImageView>(R.id.merchant_iv)
 
         GlideUtil.load(context, item.avatar, avatar_civ)
         name_tv.text = item.username
@@ -72,9 +73,11 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
 
         if (item.merchant_review.isNotEmpty()) {
             merchant_ll.visibility = View.VISIBLE
+            merchant_iv.visibility = View.VISIBLE
             merchant_reply_tv.text = item.merchant_review
         } else {
             merchant_ll.visibility = View.GONE
+            merchant_iv.visibility = View.GONE
         }
 
 

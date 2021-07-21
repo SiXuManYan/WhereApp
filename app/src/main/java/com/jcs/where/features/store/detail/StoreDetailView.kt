@@ -9,4 +9,5 @@ import com.jcs.where.api.response.store.StoreDetail
  */
 interface StoreDetailView :BaseMvpView {
     fun bindDetail(data: StoreDetail)
+    fun changeCollection(b: Boolean)
 }

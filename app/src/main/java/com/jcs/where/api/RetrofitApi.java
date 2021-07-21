@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
+import com.jcs.where.api.request.CollectionRequest;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.MerchantSettledRequest;
@@ -1373,7 +1374,7 @@ public interface RetrofitApi {
      */
     @POST("generalapi/v2/estore/collects")
     Observable<JcsResponse<JsonElement>> storeCollects(
-            @Body int shop_id
+            @Body CollectionRequest request
     );
 
     /**
@@ -1381,7 +1382,7 @@ public interface RetrofitApi {
      */
     @HTTP(method = "DELETE", path = "generalapi/v2/estore/collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> StoreCancelCollects(
-            @Body int shop_id
+            @Body CollectionRequest request
     );
 
 

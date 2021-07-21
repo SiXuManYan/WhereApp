@@ -227,9 +227,9 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         mJcsTitle.setSecondRightIvClickListener {
             if (collect_status == 1) {
-                presenter.collection(shop_id , mJcsTitle)
+                presenter.collection(shop_id)
             } else {
-                presenter.unCollection(shop_id,mJcsTitle)
+                presenter.unCollection(shop_id)
             }
         }
 
@@ -346,4 +346,16 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         }
 
     }
+
+    override fun changeCollection(isCollection: Boolean) {
+
+        if (isCollection) {
+            collect_status = 2
+            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red)
+        }else{
+            collect_status = 1
+            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2)
+        }
+    }
+
 }

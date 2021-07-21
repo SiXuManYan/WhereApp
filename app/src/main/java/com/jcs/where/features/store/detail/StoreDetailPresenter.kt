@@ -1,11 +1,10 @@
 package com.jcs.where.features.store.detail
 
 import com.google.gson.JsonElement
-import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.request.CollectionRequest
 import com.jcs.where.api.response.store.StoreDetail
-import com.jcs.where.widget.JcsTitle
 
 /**
  * Created by Wangsw  2021/6/15 10:32.
@@ -24,18 +23,27 @@ class StoreDetailPresenter(val view: StoreDetailView) : BaseMvpPresenter(view) {
         })
     }
 
-    fun collection(shopId: Int, mJcsTitle: JcsTitle) {
-        requestApi(mRetrofit.storeCollects(shopId), object : BaseMvpObserver<JsonElement>(view) {
+    fun collection(shopId: Int) {
+
+        val apply = CollectionRequest().apply {
+            shop_id = shopId
+        }
+
+        requestApi(mRetrofit.storeCollects(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
-                mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red)
+                view.changeCollection(true)
             }
         })
     }
 
-    fun unCollection(shopId: Int, mJcsTitle: JcsTitle) {
-        requestApi(mRetrofit.StoreCancelCollects(shopId), object : BaseMvpObserver<JsonElement>(view) {
+    fun unCollection(shopId: Int) {
+        val apply = CollectionRequest().apply {
+            shop_id = shopId
+        }
+
+        requestApi(mRetrofit.StoreCancelCollects(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
-                mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2)
+                view.changeCollection(false)
             }
         })
 

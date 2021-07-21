@@ -11,6 +11,7 @@ import com.jcs.where.features.store.refund.StoreRefundAdapter
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.utils.GlideUtil
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_store_comment_post.*
 
@@ -62,7 +63,8 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
 
     override fun initData() {
         presenter = StoreCommentPostPresenter(this)
-
+        GlideUtil.load(this,image,image_iv,5)
+        name_tv.text = name
     }
 
     override fun bindListener() {

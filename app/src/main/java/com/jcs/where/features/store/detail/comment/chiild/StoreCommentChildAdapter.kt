@@ -49,6 +49,7 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
         // image
 
         val imageAdapter = StoreCommentImageAdapter()
+        imageAdapter.singleLineImage = singleLineImage
         imageAdapter.setNewInstance(item.images)
 
         val grid = object : GridLayoutManager(context, 3, RecyclerView.VERTICAL, false) {
@@ -87,9 +88,20 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
 
 class StoreCommentImageAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_comment_store_image) {
 
+    var singleLineImage = false
+
     override fun convert(holder: BaseViewHolder, item: String) {
         val child_iv = holder.getView<ImageView>(R.id.child_iv)
+
+        if (singleLineImage) {
+            val layoutParams = child_iv.layoutParams as RecyclerView.LayoutParams
+            layoutParams.width = SizeUtils.dp2px(124f)
+            child_iv.layoutParams = layoutParams
+        }
         GlideUtil.load(context, item, child_iv, 5)
+
+
+
     }
 
 }

@@ -110,7 +110,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_25"
-        android:layout_marginTop="@dimen/dp_10"
         android:scaleType="centerInside"
         android:src="@mipmap/ic_store_comment_tag"
         android:visibility="gone"

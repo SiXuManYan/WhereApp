@@ -461,7 +461,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                     bottom_ll.visibility = View.VISIBLE
 
                     if (commentStatus == 1) {
-                        right_tv.text = context.getString(R.string.evaluation)
+                        right_tv.text = context.getString(R.string.evaluation_go)
                         right_tv.setOnClickListener {
                             // 去评价
                             startActivity(StoreCommentPostActivity::class.java, Bundle().apply {

@@ -69,11 +69,11 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
 
         select_iv.setOnClickListener {
             val size = mImageAdapter.data.size
-            if (size == 5) {
-                ToastUtils.showShort(R.string.refund_image_hint)
+            if (size == 6) {
+                ToastUtils.showShort(R.string.refund_image_max_6)
                 return@setOnClickListener
             }
-            val max = 5 - size
+            val max = 6 - size
             FeaturesUtil.handleMediaSelect(this, Constant.IMG, max)
         }
 

@@ -417,6 +417,7 @@
     <string name="unsatisfactory">Unsatisfactory</string>
     <string name="commonly">Commonly</string>
     <string name="commit">Commit</string>
+    <string name="commit_comment">Submit</string>
     <string name="hint_write_comment">Sharing Hotel transportation, catering, sanitation and other experiences is more helpful for small partners~</string>
     <string name="comment_content_not_empty">Please input comment content</string>
     <string name="click_to_start_exploring">Click to start exploring&#62;&#62;&#62;</string>
@@ -526,6 +527,7 @@
     <string name="unfold_more">Unfold More</string>
     <string name="fold">Fold</string>
     <string name="evaluation">Evaluation</string>
+    <string name="evaluation_go">To Comment</string>
     <string name="more_evaluation">More Evaluation</string>
     <string name="use_agreement_content_0">Dear users, thank you for trusting and using Where, we have formulated</string>
     <string name="use_agreement_content_1">&#160;&#34;User Agreement&#34;</string>
@@ -825,8 +827,8 @@
     <string name="conditions_privacy_3">&#160;Privacy Policy</string>
     <string name="payment_amount_empty">Input payment amount</string>
     <string name="post_comment">Post comment</string>
-    <string name="experience_satisfaction">Experience satisfaction</string>
-    <string name="text_evaluation">Text evaluation</string>
+    <string name="experience_satisfaction">Service experience satisfaction</string>
+    <string name="text_evaluation">Comment</string>
     <string name="evaluating_store_hint">Evaluating products can help more people who want to buy</string>
     <string name="test_hint">Can you give me my left hand
 To lead you to the other side of the road?
@@ -838,6 +840,7 @@ The more polite I am, the more afraid
 Gentleman must let go</string>
 
     <string name="add_review">Add review</string>
+    <string name="add_image">Pictures</string>
     <string name="max_image_6">Up to 6 iamges</string>
     <string name="view_evaluation">View comment</string>
     <string name="comment_detail">Comment detail</string>
@@ -855,6 +858,7 @@ Gentleman must let go</string>
     <string name="bill_status_4">Closed</string>
     <string name="bill_status_5">Refunding</string>
     <string name="bill_status_6">Refund successfully</string>
+    <string name="refund_image_max_6">upper limit at 6</string>
 
 
 </resources>

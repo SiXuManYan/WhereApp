@@ -415,6 +415,7 @@
     <string name="unsatisfactory">不满意</string>
     <string name="commonly">一般</string>
     <string name="commit">提交</string>
+    <string name="commit_comment">提交</string>
     <string name="hint_write_comment">分享酒店交通，餐饮，卫生设施等方面体验，对小伙伴更有帮助哦~</string>
     <string name="comment_content_not_empty">评论内容不能为空</string>
     <string name="click_to_start_exploring">点击开始探索之旅&#62;&#62;&#62;</string>
@@ -525,6 +526,7 @@
     <string name="unfold_more">展开更多套餐</string>
     <string name="fold">收起</string>
     <string name="evaluation">评价</string>
+    <string name="evaluation_go">去评价</string>
     <string name="more_evaluation">更多评价</string>
 
 
@@ -850,6 +852,7 @@ Quickly restored to the appearance of a passerby
 The more polite I am, the more afraid
 Gentleman must let go</string>
     <string name="add_review">添加评价</string>
+    <string name="add_image">添加图片</string>
     <string name="max_image_6">最多6张</string>
     <string name="view_evaluation">查看评价</string>
     <string name="comment_detail">评价详情</string>
@@ -865,6 +868,7 @@ Gentleman must let go</string>
     <string name="bill_status_4">交易关闭</string>
     <string name="bill_status_5">退款中</string>
     <string name="bill_status_6">退款成功</string>
+    <string name="refund_image_max_6">最多6张</string>
 
 
 </resources>

@@ -217,7 +217,7 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:text="@string/add_review"
+                    android:text="@string/add_image"
                     android:textColor="@color/grey_666666"
                     android:textSize="@dimen/sp_14" />
 
@@ -251,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:textSize="@dimen/sp_11"
-                    android:text="@string/max_image_6" />
+                    android:text="@string/refund_image_max_6" />
 
 
             </LinearLayout>

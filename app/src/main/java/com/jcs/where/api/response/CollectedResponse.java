@@ -2,6 +2,7 @@ package com.jcs.where.api.response;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.annotations.SerializedName;
+import com.jcs.where.api.response.collection.StoreCollectionResponse;
 import com.jcs.where.mine.view_type.SameCityType;
 
 /**
@@ -26,6 +27,8 @@ public class CollectedResponse implements MultiItemEntity {
     private RestaurantResponse restaurant;
     @SerializedName("general")
     private GeneralResponse general;
+
+    public StoreCollectionResponse estore;
 
     public Integer getType() {
         return type;
@@ -94,6 +97,9 @@ public class CollectedResponse implements MultiItemEntity {
         }
         if (general != null) {
             return SameCityType.Mechanism;
+        }
+        if (estore != null) {
+            return SameCityType.Store;
         }
         return 0;
     }

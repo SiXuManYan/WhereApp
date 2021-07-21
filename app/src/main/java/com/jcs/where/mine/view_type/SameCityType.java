@@ -16,4 +16,10 @@ public class SameCityType {
      * 综合机构
      */
     public static final int Mechanism = 11;
+
+
+    /**
+     * eStore
+     */
+    public static final int Store = 13;
 }

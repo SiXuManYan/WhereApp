@@ -20,6 +20,7 @@ import com.jcs.where.api.response.store.StoreGoods
 import com.jcs.where.api.response.store.StoreGoodsCommit
 import com.jcs.where.api.response.store.StoreOrderCommitData
 import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.detail.comment.chiild.StoreCommentChildFragment
 import com.jcs.where.features.store.detail.good.StoreGoodFragment
@@ -146,7 +147,6 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
             return
         }
         shop_id = bundle.getInt(Constant.PARAM_ID, 0)
-
         presenter = StoreDetailPresenter(this)
         presenter.getDetail(shop_id)
     }
@@ -305,7 +305,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
             return if (position == 0) {
                 StoreGoodFragment.newInstance(shop_id)
             } else {
-                StoreCommentChildFragment.newInstance(shop_id,false)
+                StoreCommentChildFragment.newInstance(shop_id, false)
             }
         }
 
@@ -352,10 +352,11 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         if (isCollection) {
             collect_status = 2
             mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red)
-        }else{
+        } else {
             collect_status = 1
             mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2)
         }
+        EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_COLLECTION))
     }
 
 }

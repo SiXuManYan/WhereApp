@@ -1,6 +1,7 @@
 package com.jcs.where.mine.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,19 +18,25 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CollectedResponse;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.features.store.detail.StoreDetailActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.mine.adapter.SameCityListAdapter;
 import com.jcs.where.mine.model.CollectionListModel;
 import com.jcs.where.mine.view_type.SameCityType;
-import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.widget.list.DividerDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +62,7 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         mSwipeLayout = view.findViewById(R.id.swipeLayout);
         mRecyclerView = view.findViewById(R.id.sameCityRecycler);
 
@@ -64,7 +72,7 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
         mAdapter.setEmptyView(emptyView);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
-        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+//        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(getItemDecoration());
@@ -95,6 +103,12 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void getCollectionSameCityList(int page) {
 
         mModel.getCollectionSameCity(page, new BaseObserver<PageResponse<CollectedResponse>>() {
@@ -117,7 +131,7 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
                     Integer type = data.get(i).getType();
 
                     // 只处理现有的三种类型
-                    if (type == 1 || type == 2 || type == 11) {
+                    if (type == 1 || type == 2 || type == 11 || type == 13) {
                         newData.add(data.get(i));
                     }
                 }
@@ -150,32 +164,40 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
 
     @Override
     protected void bindListener() {
-        mSwipeLayout.setOnRefreshListener(this::onRefreshListener);
+        mSwipeLayout.setOnRefreshListener(this::onRefresh);
         mAdapter.setOnItemClickListener(this::onSameCityItemClicked);
     }
 
     private void onSameCityItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        CollectedResponse collectedResponse = mAdapter.getItem(position);
-        Integer type = collectedResponse.getType();
+        CollectedResponse response = mAdapter.getItem(position);
+        Integer type = response.getType();
         Context context = getContext();
         if (context != null) {
             switch (type) {
                 case SameCityType.Hotel:
                     JcsCalendarDialog dialog = new JcsCalendarDialog();
                     dialog.initCalendar(context);
-                    HotelDetailActivity.goTo(context, collectedResponse.getHotel().getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                    HotelDetailActivity.goTo(context, response.getHotel().getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
                     break;
                 case SameCityType.Mechanism:
-                    toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, collectedResponse.getGeneral().getId()));
+                    toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, response.getGeneral().getId()));
                     break;
                 case SameCityType.TouristAttraction:
-                    TouristAttractionDetailActivity.goTo(context, collectedResponse.getTravel().getId());
+                    TouristAttractionDetailActivity.goTo(context, response.getTravel().getId());
                     break;
+                case SameCityType.Store:
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constant.PARAM_ID, response.estore.getId());
+                    startActivity(StoreDetailActivity.class, bundle);
+                    break;
+                default:
+                    break;
+
             }
         }
     }
 
-    private void onRefreshListener() {
+    private void onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE;
         getCollectionSameCityList(page);
     }
@@ -196,4 +218,13 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
         page++;
         getCollectionSameCityList(page);
     }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+        if (baseEvent.code == EventCode.EVENT_REFRESH_COLLECTION) {
+            onRefresh();
+        }
+    }
+
 }

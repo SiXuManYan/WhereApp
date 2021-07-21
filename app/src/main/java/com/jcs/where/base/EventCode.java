@@ -89,5 +89,10 @@ public class EventCode {
      */
     public static final int EVENT_BUY = 1018;
 
+    /**
+     * 刷新收藏
+     */
+    public static final int EVENT_REFRESH_COLLECTION = 1019;
+
 
 }

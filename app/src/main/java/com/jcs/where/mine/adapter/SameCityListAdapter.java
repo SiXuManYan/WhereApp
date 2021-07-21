@@ -1,15 +1,14 @@
 package com.jcs.where.mine.adapter;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -18,12 +17,14 @@ import com.jcs.where.api.response.CollectedResponse;
 import com.jcs.where.api.response.GeneralResponse;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
+import com.jcs.where.api.response.collection.StoreCollectionResponse;
 import com.jcs.where.mine.view_type.SameCityType;
 import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,22 +36,39 @@ public class SameCityListAdapter extends BaseMultiItemQuickAdapter<CollectedResp
         addItemType(SameCityType.Hotel, R.layout.item_hotellist);
         addItemType(SameCityType.TouristAttraction, R.layout.item_mechainsm_list);
         addItemType(SameCityType.Mechanism, R.layout.item_mechainsm_list);
+        addItemType(SameCityType.Store, R.layout.item_mechainsm_list);
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder baseViewHolder, CollectedResponse collectedResponse) {
-        Integer type = collectedResponse.getType();
-        Log.e("SameCityListAdapter", "convert: " + "type=" + type);
+    protected void convert(@NotNull BaseViewHolder holder, CollectedResponse response) {
+        Integer type = response.getType();
         switch (type) {
             case SameCityType.Hotel:
-                dealHotel(baseViewHolder, collectedResponse);
+                dealHotel(holder, response);
                 break;
             case SameCityType.TouristAttraction:
-                dealTouristAttraction(baseViewHolder, collectedResponse);
+                dealTouristAttraction(holder, response);
                 break;
             case SameCityType.Mechanism:
-                dealMechanism(baseViewHolder, collectedResponse);
+                dealMechanism(holder, response);
                 break;
+            case SameCityType.Store:
+                setStoreItem(holder, response);
+                break;
+            default:
+
+                break;
+        }
+    }
+
+    private void setStoreItem(BaseViewHolder holder, CollectedResponse response) {
+        StoreCollectionResponse data = response.estore;
+        holder.setText(R.id.mechanismTitleTv, data.getName());
+        holder.setText(R.id.mechanismAddressTv, data.getAddress());
+        ImageView iv = holder.findView(R.id.mechanismIconIv);
+        ArrayList<String> images = data.getImages();
+        if (!images.isEmpty() && iv != null) {
+            GlideUtil.load(getContext(), images.get(0), iv);
         }
     }
 
@@ -83,8 +101,8 @@ public class SameCityListAdapter extends BaseMultiItemQuickAdapter<CollectedResp
         if (photoIv != null) {
 
             ViewGroup.LayoutParams layoutParams = photoIv.getLayoutParams();
-            layoutParams.height = getDp(70);
-            layoutParams.width = getDp(70);
+            layoutParams.height = SizeUtils.dp2px(70);
+            layoutParams.width = SizeUtils.dp2px(70);
             photoIv.setLayoutParams(layoutParams);
 
             if (!TextUtils.isEmpty(hotel.getImages().get(0))) {
@@ -126,10 +144,5 @@ public class SameCityListAdapter extends BaseMultiItemQuickAdapter<CollectedResp
         if (priceTv != null) {
             priceTv.setVisibility(View.GONE);
         }
-    }
-
-    protected int getDp(int height) {
-        Context context = getContext();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.getResources().getDisplayMetrics());
     }
 }

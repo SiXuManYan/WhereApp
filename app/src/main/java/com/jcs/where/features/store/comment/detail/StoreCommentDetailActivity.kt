@@ -3,6 +3,7 @@ package com.jcs.where.features.store.comment.detail
 import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.store.comment.StoreCommentDetail
@@ -28,7 +29,7 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
     override fun isStatusDark() = true
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this,Color.WHITE)
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
         }
@@ -41,8 +42,11 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
 
         image_rv.apply {
             adapter = mImageAdapter
-            layoutManager = GridLayoutManager(this@StoreCommentDetailActivity, 4)
-
+            layoutManager = object : GridLayoutManager(this@StoreCommentDetailActivity, 4, RecyclerView.VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
 //            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0).apply {
 //                setDrawHeaderFooter(false)
 //            })

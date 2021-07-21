@@ -62,7 +62,6 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
     override fun initData() {
         presenter = StoreCommentPostPresenter(this)
 
-
     }
 
     override fun bindListener() {

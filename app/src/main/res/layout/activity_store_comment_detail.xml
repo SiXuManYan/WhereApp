@@ -131,7 +131,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_7"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -170,7 +169,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_7"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -209,7 +207,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_7"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"

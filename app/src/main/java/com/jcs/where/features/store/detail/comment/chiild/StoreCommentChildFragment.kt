@@ -82,7 +82,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
         // list
         if (showAll) {
             swipe_layout.setOnRefreshListener(this)
-        }else{
+        } else {
             swipe_layout.isEnabled = false
         }
 
@@ -107,7 +107,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
 
 
         mAdapter = StoreCommentAdapter().apply {
-
+            singleLineImage = !showAll
             footerWithEmptyEnable = true
             headerWithEmptyEnable = true
             if (showAll) {

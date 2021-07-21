@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -24,6 +25,9 @@ import de.hdodenhof.circleimageview.CircleImageView
  *
  */
 class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.layout.item_comment_store), LoadMoreModule {
+
+
+    var singleLineImage = false
 
     override fun convert(holder: BaseViewHolder, item: CommentResponse) {
         val avatar_civ = holder.getView<CircleImageView>(R.id.avatar_civ)
@@ -46,23 +50,30 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
         val imageAdapter = StoreCommentImageAdapter()
         imageAdapter.setNewInstance(item.images)
 
-        image_rv.apply {
-
-            layoutManager = object : GridLayoutManager(context, 3, RecyclerView.VERTICAL, false) {
-                override fun canScrollVertically(): Boolean {
-                    return false
-                }
+        val grid = object : GridLayoutManager(context, 3, RecyclerView.VERTICAL, false) {
+            override fun canScrollVertically(): Boolean {
+                return false
             }
-//            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(15f), 0, 0).apply {
-//                setDrawHeaderFooter(false)
-//            })
+        }
+
+        val liner = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+        image_rv.apply {
+            layoutManager = if (singleLineImage) {
+                liner
+            } else {
+                grid
+            }
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(15f), 0, 0).apply {
+                setDrawHeaderFooter(false)
+            })
             adapter = imageAdapter
         }
 
         if (item.merchant_review.isNotEmpty()) {
             merchant_ll.visibility = View.VISIBLE
             merchant_reply_tv.text = item.merchant_review
-        }else{
+        } else {
             merchant_ll.visibility = View.GONE
         }
 

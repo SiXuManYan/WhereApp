@@ -11,7 +11,8 @@ object BusinessUtils {
 
 
     fun getCommentRatingText(rating: Int): String = when (rating) {
-        1 -> StringUtils.getString(R.string.comment_rating_1)
+
+        0, 1 -> StringUtils.getString(R.string.comment_rating_1)
         2 -> StringUtils.getString(R.string.comment_rating_2)
         3 -> StringUtils.getString(R.string.comment_rating_3)
         4 -> StringUtils.getString(R.string.comment_rating_4)

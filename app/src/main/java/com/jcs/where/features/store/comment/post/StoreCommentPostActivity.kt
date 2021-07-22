@@ -12,6 +12,7 @@ import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
+import com.jcs.where.widget.ratingstar.OnChangeRatingByClickListener
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_store_comment_post.*
 
@@ -91,10 +92,14 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
             }
         }
 
-        star_view.setOnClickListener {
-            val rating = star_view.rating.toInt()
-            comment_value_tv.text = BusinessUtils.getCommentRatingText(rating)
+
+        star_view.onChangeRatingByClickListener = object : OnChangeRatingByClickListener{
+            override fun clickRatingResult(rating: Int) {
+                comment_value_tv.text = BusinessUtils.getCommentRatingText(rating)
+            }
+
         }
+
     }
 
 

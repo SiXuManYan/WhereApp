@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 import com.jcs.where.R;
 
 import java.util.ArrayList;
@@ -67,6 +66,7 @@ public class RatingStarView extends View implements View.OnClickListener {
     private float clickedX, clickedY;
     private Paint paint;
     private OnClickListener mOuterOnClickListener;
+    public OnChangeRatingByClickListener onChangeRatingByClickListener;
 
     public RatingStarView(Context context) {
         super(context);
@@ -481,6 +481,10 @@ public class RatingStarView extends View implements View.OnClickListener {
                 } else {
                     setRating(i);
                 }
+                if (onChangeRatingByClickListener != null) {
+                    onChangeRatingByClickListener.clickRatingResult(i);
+                }
+
                 break;
             }
 

@@ -58,7 +58,11 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
             }
         }
 
-        val liner = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        val liner =  object :  LinearLayoutManager(context, RecyclerView.HORIZONTAL, false){
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
 
         image_rv.apply {
             layoutManager = if (singleLineImage) {

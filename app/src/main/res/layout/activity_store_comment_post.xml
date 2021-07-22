@@ -152,7 +152,7 @@
                     android:maxLines="1"
                     android:textColor="@color/yellow_FEBA32"
                     android:textSize="@dimen/sp_14"
-                    tools:text="满意" />
+                    android:text="@string/comment_rating_5" />
 
 
             </RelativeLayout>

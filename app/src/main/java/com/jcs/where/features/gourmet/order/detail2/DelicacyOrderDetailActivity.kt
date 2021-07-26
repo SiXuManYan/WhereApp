@@ -3,6 +3,7 @@ package com.jcs.where.features.gourmet.order.detail2
 import android.graphics.Color
 import com.blankj.utilcode.util.BarUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.utils.Constant
@@ -41,6 +42,10 @@ class DelicacyOrderDetailActivity :BaseMvpActivity<DelicacyOrderDetailPresenter>
             startActivity(ExtendChatActivity::class.java)
         }
 
+    }
+
+    override fun bindDetail(it: FoodOrderDetail) {
+        TODO("Not yet implemented")
     }
 
 }

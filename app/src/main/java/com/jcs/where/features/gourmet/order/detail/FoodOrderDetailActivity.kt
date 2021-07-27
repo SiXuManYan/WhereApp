@@ -24,10 +24,10 @@ import org.greenrobot.eventbus.EventBus
  */
 class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), FoodOrderDetailView {
 
-    private var orderId = "";
-    private var merUuid = "";
-    private var restaurantName = "";
-    private var totalPrice = "";
+    private var orderId = ""
+    private var merUuid = ""
+    private var restaurantName = ""
+    private var totalPrice = ""
 
     override fun getLayoutId() = R.layout.activity_order_detail_food
 

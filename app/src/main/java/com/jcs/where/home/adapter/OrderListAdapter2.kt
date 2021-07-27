@@ -16,7 +16,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
-import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
+import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
@@ -238,13 +238,13 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                 right_tv.text = StringUtils.getString(R.string.to_pay)
                 left_tv.setOnClickListener {
                     // 取消订单
-                    startActivity(FoodOrderDetailActivity::class.java, Bundle().apply {
+                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
                         putString(Constant.PARAM_ORDER_ID, item.id.toString())
                     })
                 }
                 right_tv.setOnClickListener {
                     // 立即支付
-                    startActivity(FoodOrderDetailActivity::class.java, Bundle().apply {
+                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
                         putString(Constant.PARAM_ORDER_ID, item.id.toString())
                     })
                 }
@@ -263,13 +263,13 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                 right_tv.text = StringUtils.getString(R.string.coupon_code_view)
                 left_tv.setOnClickListener {
                     // 申请退款
-                    startActivity(FoodOrderDetailActivity::class.java, Bundle().apply {
+                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
                         putString(Constant.PARAM_ORDER_ID, item.id.toString())
                     })
                 }
                 right_tv.setOnClickListener {
                     // 查看券码
-                    startActivity(FoodOrderDetailActivity::class.java, Bundle().apply {
+                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
                         putString(Constant.PARAM_ORDER_ID, item.id.toString())
                     })
                 }

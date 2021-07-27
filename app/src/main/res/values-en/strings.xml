@@ -873,4 +873,7 @@ Gentleman must let go</string>
     <string name="comment_rating_5">very good</string>
     <string name="message_merchant">Message merchant</string>
 
+    <string name="valid_period">Valid Period</string>
+    <string name="valid_period_format2">%1$s&#160;To&#160;%2$s</string>
+
 </resources>

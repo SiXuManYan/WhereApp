@@ -626,6 +626,7 @@
         <activity android:name=".features.store.comment.detail.StoreCommentDetailActivity" />
         <activity android:name=".features.store.detail.comment.StoreCommentActivity" />
         <activity android:name=".features.bills.hydropower.detail.BillsDetailActivity" />
+        <activity android:name=".features.gourmet.order.detail2.DelicacyOrderDetailActivity" />
 
     </application>
 

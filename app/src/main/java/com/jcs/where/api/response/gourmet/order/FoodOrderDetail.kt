@@ -9,7 +9,8 @@ import java.math.BigDecimal
 data class FoodOrderDetail(
         var order_data: OrderData,
         var restaurant_date: RestaurantData,
-        var good_data: GoodData
+        var good_data: GoodData,
+        var payment_channel: PaymentData
 
 )
 
@@ -63,7 +64,9 @@ data class RestaurantData(
         var mer_name: String,
 
         /** IM聊天开启状态（1：开启，2：关闭） */
-        var im_status: Int = 0
+        var im_status: Int = 0,
+
+        var tel:String = ""
 
 )
 
@@ -84,5 +87,11 @@ data class GoodData(
         /** 订单总价格 */
         var price: BigDecimal = BigDecimal.ZERO
 
+)
+
+data class PaymentData(
+        var payment_channel: String = "",
+        var bank_card_account: String = "",
+        var bank_card_number: String = ""
 )
 

@@ -11,7 +11,7 @@ import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.gourmet.order.detail.FoodOrderDetailActivity
+import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
 import com.jcs.where.home.adapter.OrderListAdapter2
@@ -145,7 +145,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
                 HotelOrderDetailActivity.goTo(context, data.id.toString())
             }
             OrderListResponse.ORDER_TYPE_DINE_2 -> {
-                startActivity(FoodOrderDetailActivity::class.java, Bundle().apply {
+                startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
                     putString(Constant.PARAM_ORDER_ID, data.id.toString())
                 })
             }

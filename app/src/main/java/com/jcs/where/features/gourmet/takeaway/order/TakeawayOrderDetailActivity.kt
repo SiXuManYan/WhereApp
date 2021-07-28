@@ -28,7 +28,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
     private var contactNumber = "";
     private var merUuid = "";
     private var restaurantName = "";
-    private lateinit var mAdapter : TakeawayGoodDataAdapter
+    private lateinit var mAdapter: TakeawayGoodDataAdapter
 
     override fun getLayoutId() = R.layout.activity_order_detail_takeaway
 
@@ -45,7 +45,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
 
         mAdapter = TakeawayGoodDataAdapter()
         good_rv.apply {
-           adapter = mAdapter
+            adapter = mAdapter
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(10f), 0, 0).apply {
                 setDrawHeaderFooter(false)
             })
@@ -91,7 +91,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         merUuid = restaurantData.mer_uuid
         restaurantName = restaurantData.name
 
-         contactNumber = orderData.address.contact_number
+        contactNumber = orderData.address.contact_number
 
         chat_iv.visibility = if (restaurantData.im_status == 1) {
             View.VISIBLE
@@ -104,14 +104,14 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         packing_charges_tv.text = getString(R.string.price_unit_format, orderData.packing_charges.toPlainString())
         delivery_cost_tv.text = getString(R.string.price_unit_format, orderData.delivery_cost.toPlainString())
         total_price_tv.text = getString(R.string.price_unit_format, orderData.price.toPlainString())
-        delivery_time_tv.text = if (orderData.delivery_time_type ==1) {
+        delivery_time_tv.text = if (orderData.delivery_time_type == 1) {
             getString(R.string.delivery_now)
-        }else{
+        } else {
             orderData.delivery_time
         }
         address_tv.text = orderData.address.address
         order_number_tv.text = orderData.trade_no
-        pay_time_tv.text = orderData.trade_no
+        pay_time_tv.text = orderData.created_at
         mAdapter.setNewInstance(goodData)
     }
 

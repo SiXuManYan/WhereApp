@@ -9,7 +9,8 @@ import java.math.BigDecimal
 data class TakeawayOrderDetail(
         var order_data: TakeawayOrderData,
         var restaurant_data: TakeawayRestaurantData,
-        var good_data: ArrayList<TakeawayGoodData> = ArrayList()
+        var good_data: ArrayList<TakeawayGoodData> = ArrayList(),
+        var payment_channel: PaymentData
 )
 
 
@@ -18,8 +19,10 @@ data class TakeawayOrderData(
         var id: Int,
         var delivery_time_type: Int,
         var delivery_time: String,
+        var remark: String,
         var address: TakeawayAddress,
         var trade_no: String,
+        var created_at: String,
         var delivery_cost: BigDecimal =BigDecimal.ZERO,
         var packing_charges: BigDecimal =BigDecimal.ZERO,
         var price: BigDecimal = BigDecimal.ZERO,

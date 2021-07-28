@@ -8,7 +8,7 @@ import java.math.BigDecimal
  */
 data class FoodOrderDetail(
         var order_data: OrderData,
-        var restaurant_date: RestaurantData,
+        var restaurant_data: RestaurantData,
         var good_data: GoodData,
         var payment_channel: PaymentData
 
@@ -34,7 +34,7 @@ data class OrderData(
         /** 订单创建时间 */
         var created_at: String = "",
 
-        /** 订单状态（1：待付款，2：已取消，3：待使用，4 已完成 ， 5支付失败 ， 6退款中，7已退款，8退款失败，9待评价*/
+        /** 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功）*/
         var status: Int,
 
         /** 券码号 */
@@ -44,7 +44,10 @@ data class OrderData(
         var coupon_expire: String,
 
         /** 券码二维码 */
-        var coupon_qr_code: String
+        var coupon_qr_code: String,
+
+        /** 评论状态（1：未评论，2：已评论） */
+        var comment_status :Int = 0
 
 )
 

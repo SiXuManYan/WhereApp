@@ -86,7 +86,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
 
     override fun bindDetail(it: TakeawayOrderDetail) {
         val goodData = it.good_data
-        val restaurantData = it.restaurant_date
+        val restaurantData = it.restaurant_data
         val orderData = it.order_data
         merUuid = restaurantData.mer_uuid
         restaurantName = restaurantData.name

@@ -735,19 +735,20 @@
     <string name="payment_name_format">Payment name：%1$s</string>
 
     <!-- 商城订单状态 -->
-    <string name="store_status_1">Unpaid</string>
+    <string name="store_status_1">To pay</string>
     <string name="store_status_2">Confirming</string>
-    <string name="store_status_3">To Be Delivered</string>
-    <string name="store_status_4_1">To be used</string>
-    <string name="store_status_4_2">To be received</string>
+    <string name="store_status_3">To Ship</string>
+    <string name="store_status_4_1">To take</string>
+    <string name="store_status_4_2">To Receive</string>
     <string name="store_status_5">Successful</string>
-    <string name="store_status_6">Cancel the order (unpaid)</string>
-    <string name="store_status_7">Trading closed</string>
+    <string name="store_status_6">Canceled</string>
+    <string name="store_status_7">Closed</string>
     <string name="store_status_8">Refunding</string>
-    <string name="store_status_9">Refund successfully</string>
-    <string name="store_status_10">Refund under review (merchant)</string>
-    <string name="store_status_11">Merchant pending receipt</string>
-    <string name="store_status_12">Merchant refuses to return</string>
+    <string name="store_status_9">Refunded</string>
+    <string name="store_status_10">Shops confirming</string>
+    <string name="store_status_11">Shops To Receive</string>
+    <string name="store_status_12">Refuses to Return</string>
+    <string name="status_to_use">To use</string>
 
 
     <!-- 状态描述文字 -->

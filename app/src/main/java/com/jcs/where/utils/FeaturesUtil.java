@@ -400,12 +400,12 @@ public class FeaturesUtil {
      */
     public static void bindFoodOrderStatus(int status, @NotNull TextView textView) {
         String text = "";
-        textView.setTextColor(ColorUtils.getColor(R.color.black_333333));
+//        textView.setTextColor(ColorUtils.getColor(R.color.black_333333));
         switch (status) {
             case 1:
                 // 待付款
                 text = StringUtils.getString(R.string.mine_unpaid);
-                textView.setTextColor(ColorUtils.getColor(R.color.orange_EF4814));
+//                textView.setTextColor(ColorUtils.getColor(R.color.orange_EF4814));
                 break;
             case 2:
                 // 已取消
@@ -415,7 +415,7 @@ public class FeaturesUtil {
             case 3:
                 // 待使用
                 text = StringUtils.getString(R.string.mine_booked);
-                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
+//                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
                 break;
             case 4:
                 // 已完成
@@ -428,7 +428,7 @@ public class FeaturesUtil {
             case 6:
                 // 退款中
                 text = StringUtils.getString(R.string.refunding);
-                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
+//                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
                 break;
             case 7:
                 // 已退款
@@ -437,12 +437,12 @@ public class FeaturesUtil {
             case 8:
                 // 退款失败
                 text = StringUtils.getString(R.string.refund_failed);
-                textView.setTextColor(ColorUtils.getColor(R.color.orange_EF4814));
+//                textView.setTextColor(ColorUtils.getColor(R.color.orange_EF4814));
                 break;
             case 9:
                 // 待评价
                 text = StringUtils.getString(R.string.mine_reviews);
-                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
+//                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
                 break;
 
 

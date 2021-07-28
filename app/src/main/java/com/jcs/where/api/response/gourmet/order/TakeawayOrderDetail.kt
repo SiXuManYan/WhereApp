@@ -8,7 +8,7 @@ import java.math.BigDecimal
  */
 data class TakeawayOrderDetail(
         var order_data: TakeawayOrderData,
-        var restaurant_date: TakeawayRestaurantData,
+        var restaurant_data: TakeawayRestaurantData,
         var good_data: ArrayList<TakeawayGoodData> = ArrayList()
 )
 

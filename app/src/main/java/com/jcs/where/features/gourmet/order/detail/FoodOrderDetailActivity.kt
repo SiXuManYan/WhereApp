@@ -9,6 +9,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.pay.PayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
@@ -21,7 +22,9 @@ import org.greenrobot.eventbus.EventBus
 /**
  * Created by Wangsw  2021/5/10 9:47.
  *  美食订单详情
+ *
  */
+@Deprecated(message = "已被新版本取代" ,replaceWith = ReplaceWith("DelicacyOrderDetailActivity"))
 class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), FoodOrderDetailView {
 
     private var orderId = ""
@@ -84,7 +87,7 @@ class FoodOrderDetailActivity : BaseMvpActivity<FoodOrderDetailPresenter>(), Foo
     override fun bindDetail(it: FoodOrderDetail) {
 
         val goodData = it.good_data
-        val restaurantData = it.restaurant_date
+        val restaurantData = it.restaurant_data
         val orderData = it.order_data
 
         merUuid = restaurantData.mer_uuid

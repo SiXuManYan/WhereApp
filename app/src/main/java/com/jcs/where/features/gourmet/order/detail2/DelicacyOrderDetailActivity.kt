@@ -14,8 +14,8 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.features.pay.PayActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
-import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
@@ -44,6 +44,8 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         }
         orderId = bundle.getString(Constant.PARAM_ORDER_ID, "")
     }
+
+    override fun isStatusDark() = true
 
     override fun initData() {
         presenter = DelicacyOrderDetailPresenter(this)
@@ -76,7 +78,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
     override fun bindDetail(it: FoodOrderDetail) {
 
         val goodData = it.good_data
-        val restaurantData = it.restaurant_date
+        val restaurantData = it.restaurant_data
         val orderData = it.order_data
         val paymentChannel = it.payment_channel
 
@@ -84,7 +86,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         restaurantName = restaurantData.name
         tel = restaurantData.tel
 
-        FeaturesUtil.bindFoodOrderStatus(orderData.status, status_tv)
+        BusinessUtils.getDelicacyOrderStatusText(orderData.status)
         val price = goodData.price
 
         price_tv.text = getString(R.string.price_unit_format, price.toPlainString())
@@ -116,7 +118,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         good_price_tv.text = getString(R.string.price_unit_format, price.toPlainString())
 
 
-
+        // 处理底部
         when (orderData.status) {
             1 -> {
                 bottom_container_rl.visibility = View.VISIBLE
@@ -149,7 +151,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     })
                 }
             }
-            3 -> {
+            5 -> {
                 bottom_container_rl.visibility = View.VISIBLE
                 left_tv.apply {
                     text = getString(R.string.to_refund)
@@ -170,23 +172,53 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                             .create().show()
                 }
             }
-            4 -> {
-                bottom_container_rl.visibility = View.VISIBLE
-                bottom_container_rl.visibility = View.VISIBLE
-                left_tv.apply {
+            6 -> {
 
-                    visibility = View.GONE
+                if (orderData.comment_status == 1) {
+                    bottom_container_rl.visibility = View.VISIBLE
+                    left_tv.apply {
+
+                        visibility = View.GONE
+                    }
+                    right_tv.apply {
+                        visibility = View.VISIBLE
+                        text = getString(R.string.evaluation)
+                    }
+                    right_tv.setOnClickListener {
+                        // 评价
+                    }
+                } else {
+                    bottom_container_rl.visibility = View.GONE
                 }
-                right_tv.apply {
-                    visibility = View.VISIBLE
-                    text = getString(R.string.evaluation)
-                }
-                right_tv.setOnClickListener {
-                    // 评价
-                }
+
             }
             else -> {
                 bottom_container_rl.visibility = View.GONE
+            }
+        }
+
+        // 处理状态描述文案
+        when (orderData.status) {
+            4 -> {
+                status_desc_tv.apply {
+                    visibility = View.VISIBLE
+                    text = getString(R.string.store_status_desc_7)
+                }
+            }
+            7 -> {
+                status_desc_tv.apply {
+                    visibility = View.VISIBLE
+                    text = getString(R.string.store_status_desc_8)
+                }
+            }
+            8 -> {
+                status_desc_tv.apply {
+                    visibility = View.VISIBLE
+                    text = getString(R.string.store_status_desc_9)
+                }
+            }
+            else -> {
+                status_desc_tv.visibility = View.GONE
             }
         }
 

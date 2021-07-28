@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -27,10 +29,7 @@ import com.jcs.where.hotel.activity.HotelCommentActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity
 import com.jcs.where.hotel.activity.HotelPayActivity
-import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.FeaturesUtil
-import com.jcs.where.utils.SPKey
+import com.jcs.where.utils.*
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 
@@ -206,8 +205,12 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
 
         // 状态
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
-        FeaturesUtil.bindFoodOrderStatus(modelData.order_status, order_status_tv)
 
+        val status = modelData.order_status
+        if (status ==1){
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_EF4814))
+        }
+        order_status_tv.text =  BusinessUtils.getDelicacyOrderStatusText(status)
         // 内容
         val first_tv = holder.getView<TextView>(R.id.first_tv)
         val second_tv = holder.getView<TextView>(R.id.second_tv)
@@ -229,7 +232,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         val left_tv = holder.getView<TextView>(R.id.left_tv)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
-        when (modelData.order_status) {
+        when (status) {
             1 -> {
                 // 1：待付款
                 left_tv.visibility = View.VISIBLE

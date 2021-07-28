@@ -24,7 +24,6 @@ object BusinessUtils {
      * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功）
      */
     fun getDelicacyOrderStatusText(status: Int) = when (status) {
-
         1 -> {
             StringUtils.getString(R.string.store_status_1)
         }

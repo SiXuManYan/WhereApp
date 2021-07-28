@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.features.pay.PayActivity
@@ -18,6 +20,7 @@ import com.jcs.where.utils.GlideUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_delicacy_order_detail.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/7/23 15:59.
@@ -94,9 +97,17 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         } else {
             View.GONE
         }
-        pay_way_tv.text = paymentChannel.payment_channel
-        payment_name_tv.text = paymentChannel.bank_card_account
-        payment_account_tv.text = paymentChannel.bank_card_number
+
+        if (orderData.status != 1 && orderData.status != 2) {
+            payment_ll.visibility = View.VISIBLE
+            pay_way_tv.text = paymentChannel.payment_channel
+            payment_name_tv.text = paymentChannel.bank_card_account
+            payment_account_tv.text = paymentChannel.bank_card_number
+        } else {
+            payment_ll.visibility = View.GONE
+        }
+
+
         business_name_tv.text = restaurantData.mer_name
 
         GlideUtil.load(this, goodData.good_image, image_iv, 4)
@@ -138,7 +149,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     })
                 }
             }
-            3->{
+            3 -> {
                 bottom_container_rl.visibility = View.VISIBLE
                 left_tv.apply {
                     text = getString(R.string.to_refund)
@@ -148,7 +159,15 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     visibility = View.GONE
                 }
                 left_tv.setOnClickListener {
-                    // 申请退款
+                    AlertDialog.Builder(this)
+                            .setTitle(R.string.prompt)
+                            .setMessage(R.string.delicacy_return_hint)
+                            .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                                presenter.refundOrder(orderId)
+                                dialogInterface.dismiss()
+                            }
+                            .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                            .create().show()
                 }
             }
             4 -> {
@@ -175,7 +194,15 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
     }
 
     override fun cancelSuccess() {
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        presenter.getDetail(orderId)
 
+    }
+
+    override fun refundSuccess() {
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        ToastUtils.showShort(getString(R.string.refund_commit_toast))
+        presenter.getDetail(orderId)
     }
 
 }

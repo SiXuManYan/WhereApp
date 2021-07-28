@@ -884,5 +884,7 @@ Gentleman must let go</string>
     <string name="comment_rating_4">满意</string>
     <string name="comment_rating_5">非常满意</string>
     <string name="message_merchant">联系商家</string>
+    <string name="delicacy_return_hint">确定要退款吗？</string>
+    <string name="refund_commit_toast">退款申请提交成功</string>
 
 </resources>

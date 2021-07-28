@@ -5,6 +5,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.gourmet.dish.DeliveryTime
 import com.jcs.where.api.response.gourmet.order.OrderResponse
+import com.jcs.where.api.response.gourmet.order.TakeawayOrderSubmitData
 import com.jcs.where.bean.OrderSubmitTakeawayRequest
 
 /**
@@ -37,8 +38,8 @@ class OrderSubmitTakeawayPresenter(val view: OrderSubmitTakeawayView) : BaseMvpP
     }
 
     fun submitOrder(apply: OrderSubmitTakeawayRequest) {
-        requestApi(mRetrofit.takeawayOrderSubmit(apply), object : BaseMvpObserver<OrderResponse>(view) {
-            override fun onSuccess(response: OrderResponse?) {
+        requestApi(mRetrofit.takeawayOrderSubmit(apply), object : BaseMvpObserver<TakeawayOrderSubmitData>(view) {
+            override fun onSuccess(response: TakeawayOrderSubmitData) {
                 view.submitSuccess(response)
             }
 

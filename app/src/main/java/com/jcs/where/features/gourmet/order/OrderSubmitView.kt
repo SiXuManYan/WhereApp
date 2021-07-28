@@ -1,6 +1,7 @@
 package com.jcs.where.features.gourmet.order
 
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData
 import com.jcs.where.api.response.gourmet.order.OrderResponse
 
 /**
@@ -8,5 +9,5 @@ import com.jcs.where.api.response.gourmet.order.OrderResponse
  *
  */
 interface OrderSubmitView :BaseMvpView {
-    fun bindData(response: List<OrderResponse>)
+    fun bindData(response: FoodOrderSubmitData)
 }

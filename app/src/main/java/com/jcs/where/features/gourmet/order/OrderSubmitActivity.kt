@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
+import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData
 import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.pay.PayActivity
@@ -77,10 +78,9 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
         }
     }
 
-    override fun bindData(response: List<OrderResponse>) {
-
+    override fun bindData(response: FoodOrderSubmitData) {
         startActivityAfterLogin(PayActivity::class.java, Bundle().apply {
-            putParcelableArrayList(Constant.PARAM_DATA, ArrayList(response))
+            putParcelableArrayList(Constant.PARAM_DATA, ArrayList(response.orders))
             putString(Constant.PARAM_TOTAL_PRICE, mTotalPrice)
         })
         finish()

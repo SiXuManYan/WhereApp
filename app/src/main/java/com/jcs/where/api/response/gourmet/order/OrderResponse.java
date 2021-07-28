@@ -19,6 +19,9 @@ public class OrderResponse implements Parcelable {
      */
     public String trade_no = "";
 
+    public OrderResponse() {
+    }
+
     protected OrderResponse(Parcel in) {
         id = in.readInt();
         trade_no = in.readString();

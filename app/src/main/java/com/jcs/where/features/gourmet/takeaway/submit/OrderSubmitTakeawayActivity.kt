@@ -17,6 +17,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.order.OrderResponse
+import com.jcs.where.api.response.gourmet.order.TakeawayOrderSubmitData
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -293,10 +294,9 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         timeDialog.show()
     }
 
-    override fun submitSuccess(response: OrderResponse?) {
+    override fun submitSuccess(response: TakeawayOrderSubmitData?) {
         ToastUtils.showShort("submit success")
-
-
+        finish()
     }
 
 }

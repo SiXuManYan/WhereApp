@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.gourmet.cart.Products
+import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData
 import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.bean.OrderSubmitChildRequest
 import com.jcs.where.bean.OrderSubmitRequest
@@ -37,10 +38,10 @@ class OrderSubmitPresenter(val view: OrderSubmitView) : BaseMvpPresenter(view) {
             phone = phoneStr
         }
 
-        requestApi(mRetrofit.orderSubmit(request), object : BaseMvpObserver<List<OrderResponse>>(view) {
+        requestApi(mRetrofit.orderSubmit(request), object : BaseMvpObserver<FoodOrderSubmitData>(view) {
 
 
-            override fun onSuccess(response: List<OrderResponse>) {
+            override fun onSuccess(response: FoodOrderSubmitData) {
                 view.bindData(response)
             }
         })

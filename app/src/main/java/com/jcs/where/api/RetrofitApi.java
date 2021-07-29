@@ -1224,12 +1224,17 @@ public interface RetrofitApi {
 
 
     /**
-     * 银行卡转账支付（上传支付信息）
+     * 商城银行卡转账支付（上传支付信息）
      */
     @POST("generalapi/v2/bank_card/pay")
     Observable<JcsResponse<JsonElement>> upLoadPayAccountInfo(
             @Body UpLoadPayAccountInfo request
     );
+
+
+
+
+
 
     /**
      * 商城订单详情
@@ -1422,6 +1427,24 @@ public interface RetrofitApi {
      */
     @DELETE("restaurantapi/v2/take_out/orders/refund/{order_id}")
     Observable<JcsResponse<JsonElement>> takeawayOrderRefund(@Path("order_id") String order_id);
+
+
+    /**
+     * 美食-商城银行卡转账支付（上传支付信息）
+     */
+    @POST("restaurantapi/v2/eat_in/bank_card/pay")
+    Observable<JcsResponse<JsonElement>> upLoadFoodPayAccountInfo(
+            @Body UpLoadPayAccountInfo request
+    );
+
+    /**
+     * 外卖-转账支付（上传支付信息）
+     */
+    @POST("restaurantapi/v2/take_out/bank_card/pay")
+    Observable<JcsResponse<JsonElement>> upLoadTakeawayPayAccountInfo(
+            @Body UpLoadBillsPayAccountInfo request
+    );
+
 
 
 }

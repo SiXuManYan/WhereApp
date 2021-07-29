@@ -9,9 +9,8 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData
-import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.pay.PayActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_order_submit.*
 
 /**
  * Created by Wangsw  2021/4/20 16:54.
- *  提交订单
+ * 美食提交订单
  */
 class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmitView {
 
@@ -78,12 +77,30 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
         }
     }
 
-    override fun bindData(response: FoodOrderSubmitData) {
+    override fun summitSuccess(response: FoodOrderSubmitData) {
+
+        /*
         startActivityAfterLogin(PayActivity::class.java, Bundle().apply {
             putParcelableArrayList(Constant.PARAM_DATA, ArrayList(response.orders))
             putString(Constant.PARAM_TOTAL_PRICE, mTotalPrice)
         })
+        */
+
+
+        val orderIds = ArrayList<Int>()
+        response.orders.forEach {
+            orderIds.add(it.id)
+        }
+
+        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+            putDouble(Constant.PARAM_TOTAL_PRICE, mTotalPrice.toDouble())
+            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
+        })
+
         finish()
+
+
     }
 
 

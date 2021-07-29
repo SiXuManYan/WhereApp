@@ -37,6 +37,8 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
     /**
      * 0 商城订单
      * 1 水电订单
+     * 2 美食
+     * 3 外卖
      */
     private var useType = 0
 
@@ -154,12 +156,22 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
                 return@setOnClickListener
             }
 
-            if (useType == Constant.PAY_INFO_ESTORE) {
-                presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
-            }
 
-            if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
-                presenter.upLoadBillsPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+            when (useType) {
+                Constant.PAY_INFO_ESTORE -> {
+                    presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+                }
+                Constant.PAY_INFO_ESTORE_BILLS -> {
+                    presenter.upLoadBillsPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+                }
+                Constant.PAY_INFO_FOOD -> {
+                    presenter.upLoadFoodPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+                }
+                Constant.PAY_INFO_TAKEAWAY -> {
+                    presenter.upLoadTakeawayPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+                }
+                else -> {
+                }
             }
 
 
@@ -173,12 +185,6 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
         startActivityAfterLogin(StorePayResultActivity::class.java, Bundle().apply {
             putInt(Constant.PARAM_TYPE, useType)
         })
-
-
-//        if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
-//            EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
-//        }
-
         // 支付成功
         EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()

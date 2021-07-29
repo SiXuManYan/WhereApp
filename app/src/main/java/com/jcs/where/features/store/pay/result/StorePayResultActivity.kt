@@ -17,6 +17,8 @@ class StorePayResultActivity : BaseActivity() {
     /**
      * 0 商城订单
      * 1 水电订单
+     * 3 美食
+     * 4 外卖
      */
     private var useType = 0
 
@@ -53,7 +55,6 @@ class StorePayResultActivity : BaseActivity() {
                     putInt(Constant.PARAM_TAB, 2)
                 })
             }
-
             if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
                 startActivityClearTop(PaymentRecordActivity::class.java, null)
             }

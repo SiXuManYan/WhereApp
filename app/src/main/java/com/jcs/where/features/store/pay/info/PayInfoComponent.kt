@@ -37,6 +37,9 @@ class PayInfoPresenter(private var view: PayInfoView) : BaseMvpPresenter(view) {
     }
 
 
+    /**
+     * 水电支付
+     */
     fun upLoadBillsPayAccountInfo(orderIds: ArrayList<Int>, accountName: String, accountNumber: String, id: Int) {
 
         if (orderIds.isEmpty()) {
@@ -50,6 +53,49 @@ class PayInfoPresenter(private var view: PayInfoView) : BaseMvpPresenter(view) {
             card_id = id
         }
         requestApi(mRetrofit.upLoadBillsPayAccountInfo(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.paySuccess()
+            }
+        })
+
+    }
+
+
+    /**
+     * 美食支付
+     */
+    fun upLoadFoodPayAccountInfo(orderIds: ArrayList<Int>, accountName: String, accountNumber: String, id: Int) {
+
+        val apply = UpLoadPayAccountInfo().apply {
+            order_ids = Gson().toJson(orderIds)
+            bank_card_account = accountName
+            bank_card_number = accountNumber
+            card_id = id
+        }
+        requestApi(mRetrofit.upLoadFoodPayAccountInfo(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.paySuccess()
+            }
+        })
+
+    }
+
+    /**
+     * 外卖支付
+     */
+    fun upLoadTakeawayPayAccountInfo(orderIds: ArrayList<Int>, accountName: String, accountNumber: String, id: Int) {
+
+        if (orderIds.isEmpty()) {
+            return
+        }
+
+        val apply = UpLoadBillsPayAccountInfo().apply {
+            order_id =  orderIds[0]
+            bank_card_account = accountName
+            bank_card_number = accountNumber
+            card_id = id
+        }
+        requestApi(mRetrofit.upLoadTakeawayPayAccountInfo(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.paySuccess()
             }

@@ -287,6 +287,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
         startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
             putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
         })
     }
 

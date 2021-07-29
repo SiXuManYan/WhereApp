@@ -173,6 +173,8 @@ public class Constant {
 
     public static final int PAY_INFO_ESTORE = 0;
     public static final int PAY_INFO_ESTORE_BILLS = 1;
+    public static final int PAY_INFO_FOOD = 2;
+    public static final int PAY_INFO_TAKEAWAY = 3;
 
 
 

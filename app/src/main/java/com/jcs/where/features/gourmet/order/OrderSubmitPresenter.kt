@@ -5,7 +5,6 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData
-import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.bean.OrderSubmitChildRequest
 import com.jcs.where.bean.OrderSubmitRequest
 import com.jcs.where.utils.FeaturesUtil
@@ -42,7 +41,7 @@ class OrderSubmitPresenter(val view: OrderSubmitView) : BaseMvpPresenter(view) {
 
 
             override fun onSuccess(response: FoodOrderSubmitData) {
-                view.bindData(response)
+                view.summitSuccess(response)
             }
         })
 

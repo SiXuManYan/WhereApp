@@ -47,6 +47,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
      * 3.待评价
      * 4.退款售后
      */
+
     public var orderType: Int = 0
 
 

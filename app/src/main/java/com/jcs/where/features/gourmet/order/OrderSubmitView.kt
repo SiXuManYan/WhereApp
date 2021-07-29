@@ -9,5 +9,5 @@ import com.jcs.where.api.response.gourmet.order.OrderResponse
  *
  */
 interface OrderSubmitView :BaseMvpView {
-    fun bindData(response: FoodOrderSubmitData)
+    fun summitSuccess(response: FoodOrderSubmitData)
 }

@@ -25,6 +25,7 @@ import com.jcs.where.bean.OrderSubmitChildRequest
 import com.jcs.where.bean.OrderSubmitTakeawayRequest
 import com.jcs.where.features.address.AddressAdapter
 import com.jcs.where.features.address.edit.AddressEditActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.time.TimeUtil
 import com.jcs.where.view.empty.EmptyView
@@ -294,8 +295,17 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         timeDialog.show()
     }
 
-    override fun submitSuccess(response: TakeawayOrderSubmitData?) {
-        ToastUtils.showShort("submit success")
+    override fun submitSuccess(response: TakeawayOrderSubmitData) {
+
+        val orderIds = ArrayList<Int>()
+        orderIds.add(response.order.id)
+
+        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+            putDouble(Constant.PARAM_TOTAL_PRICE, total_price.toDouble())
+            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
+        })
+
         finish()
     }
 

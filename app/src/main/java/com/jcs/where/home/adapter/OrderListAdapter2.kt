@@ -445,6 +445,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                     startActivity(StorePayActivity::class.java, Bundle().apply {
                         putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
                         putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
                     })
                 }
             }

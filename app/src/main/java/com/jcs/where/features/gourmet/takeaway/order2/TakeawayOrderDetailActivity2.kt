@@ -16,7 +16,7 @@ import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayGoodDataAdapter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailPresenter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailView
-import com.jcs.where.features.pay.PayActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -167,9 +167,16 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
 
                 }
                 right_tv.setOnClickListener {
-                    startActivity(PayActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_TOTAL_PRICE, price.toPlainString())
+
+
+                    val orderIds = ArrayList<Int>()
+                    orderIds.add(orderId.toInt())
+                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                        putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
+                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
                     })
+
                 }
             }
             5 -> {
@@ -240,7 +247,6 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                 status_desc_tv.visibility = View.GONE
             }
         }
-
 
 
     }

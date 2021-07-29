@@ -13,7 +13,7 @@ import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
-import com.jcs.where.features.pay.PayActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -86,7 +86,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         restaurantName = restaurantData.name
         tel = restaurantData.tel
 
-        status_tv.text =  BusinessUtils.getDelicacyOrderStatusText(orderData.status)
+        status_tv.text = BusinessUtils.getDelicacyOrderStatusText(orderData.status)
         val price = goodData.price
 
         price_tv.text = getString(R.string.price_unit_format, price.toPlainString())
@@ -146,9 +146,16 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                 }
 
                 right_tv.setOnClickListener {
-                    startActivity(PayActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_TOTAL_PRICE, price.toPlainString())
+
+                    val orderIds = ArrayList<Int>()
+                    orderIds.add(orderData.id)
+                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                        putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
+                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
                     })
+
+
                 }
             }
             5 -> {

@@ -24,6 +24,17 @@ import kotlinx.android.synthetic.main.activity_store_pay.*
  */
 class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnItemClickListener {
 
+
+    /**
+     * 0 商城订单
+     * 1 水电订单
+     * 2 美食
+     * 3 外卖
+     */
+    private var useType = 0
+
+
+
     private var totalPrice: Double = 0.0
     private var orderIds = java.util.ArrayList<Int>()
     private var selectedChannel: PayChannel? = null
@@ -45,6 +56,7 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
             if (!ids.isNullOrEmpty()) {
                 orderIds.addAll(ids)
             }
+            useType = it.getInt(Constant.PARAM_TYPE)
         }
 
         initPayChannel()

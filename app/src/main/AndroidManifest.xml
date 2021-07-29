@@ -579,9 +579,7 @@
         <activity
             android:name=".features.gourmet.order.OrderSubmitActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".features.pay.PayActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".features.qr.QRActivity"
             android:screenOrientation="portrait" />
@@ -590,9 +588,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".features.gourmet.order.detail.FoodOrderDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".features.gourmet.takeaway.order.TakeawayOrderDetailActivity"

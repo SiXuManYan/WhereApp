@@ -104,12 +104,21 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:ellipsize="end"
-            android:lineSpacingMultiplier="1.1"
-            android:maxLines="2"
+            android:maxLines="1"
             android:textColor="@color/grey_666666"
             android:textSize="@dimen/sp_12"
-            tools:text="双皮奶、牛奶、商品名、商品名、商品名、商品名、商品名、商品名、商品名、商品名..." />
+            tools:text="商务房" />
 
+        <TextView
+            android:id="@+id/second_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/grey_666666"
+            android:textSize="@dimen/sp_12"
+            tools:text="04-27 至 04-28" />
 
         <TextView
             android:id="@+id/third_tv"
@@ -120,7 +129,7 @@
             android:maxLines="1"
             android:textColor="@color/black_333333"
             android:textSize="@dimen/sp_12"
-            tools:text="总价： 1299" />
+            tools:text="房价： 1299" />
     </RelativeLayout>
 
 

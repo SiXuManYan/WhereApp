@@ -339,6 +339,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
 
         // 内容
         val first_tv = holder.getView<TextView>(R.id.first_tv)
+        val second_tv = holder.getView<TextView>(R.id.second_tv)
         val third_tv = holder.getView<TextView>(R.id.third_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
 
@@ -350,7 +351,8 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
             Glide.with(context).load(item.image[0]).apply(options).into(image_iv)
         }
 
-        first_tv.text = modelData.good_names
+        first_tv.text = modelData.food_name
+        second_tv.text = StringUtils.getString(R.string.quantity_format, modelData.good_num)
         third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部

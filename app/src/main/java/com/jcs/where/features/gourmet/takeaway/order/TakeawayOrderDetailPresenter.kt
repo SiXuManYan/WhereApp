@@ -32,6 +32,19 @@ class TakeawayOrderDetailPresenter (val view: TakeawayOrderDetailView) : BaseMvp
             override fun onSuccess(response: JsonElement?) {
                 view.cancelSuccess()
             }
+        })
+    }
+
+
+
+    /**
+     * 申请退款
+     */
+    fun refundOrder(orderId: String) {
+        requestApi(mRetrofit.takeawayOrderRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                view.refundSuccess()
+            }
 
         })
     }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
 import com.jcs.where.base.EventCode
@@ -118,7 +119,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         val address = orderData.address
         contactNumber = address.contact_number
         address_tv.text = address.address
-        contact_name_tv.text = getString(R.string.star_text_format, address.contact_name ,address.contact_number)
+        contact_name_tv.text = getString(R.string.star_text_format, address.contact_name, address.contact_number)
 
 
         if (orderData.status != 1 && orderData.status != 2) {
@@ -246,6 +247,11 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         presenter.getDetail(orderId)
     }
 
+    override fun refundSuccess() {
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        ToastUtils.showShort(getString(R.string.refund_commit_toast))
+        presenter.getDetail(orderId)
+    }
 
 
 }

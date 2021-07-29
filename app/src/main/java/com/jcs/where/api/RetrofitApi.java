@@ -1406,10 +1406,16 @@ public interface RetrofitApi {
 
 
     /**
-     * 美食餐厅退款
+     * 美食-餐厅退款
      */
     @DELETE("restaurantapi/v2/eat_in/orders/refund/{order_id}")
     Observable<JcsResponse<JsonElement>> delicacyOrderRefund(@Path("order_id") String order_id);
+
+    /**
+     * 美食-外卖取消订单
+     */
+    @DELETE("restaurantapi/v2/take_out/orders/{order_id}")
+    Observable<JcsResponse<JsonElement>> takeawayOrderCancel(@Path("order_id") String order_id);
 
 
 }

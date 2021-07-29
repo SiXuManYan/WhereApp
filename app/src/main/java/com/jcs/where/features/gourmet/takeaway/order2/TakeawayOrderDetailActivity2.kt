@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayGoodDataAdapter
@@ -24,6 +25,7 @@ import com.jcs.where.widget.list.DividerDecoration
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_takeaway_order_detail_2.*
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -101,10 +103,8 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         restaurantName = restaurantData.name
 
 
-
-
         //
-        status_tv.text = BusinessUtils.getDelicacyOrderStatusText(orderData.status)
+        status_tv.text = BusinessUtils.getTakeawayStatusText(orderData.status)
 
         price_tv.text = getString(R.string.price_unit_format, orderData.price.toPlainString())
         order_number_tv.text = orderData.trade_no
@@ -137,7 +137,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
 
         mAdapter.setNewInstance(goodData)
 
-
+        val price = orderData.price
         // 处理底部
         when (orderData.status) {
             1 -> {
@@ -150,24 +150,21 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                     text = getString(R.string.to_pay_2)
                     visibility = View.VISIBLE
                 }
-
                 left_tv.setOnClickListener {
-
                     AlertDialog.Builder(this)
                             .setTitle(R.string.prompt)
                             .setMessage(R.string.cancel_order_confirm)
                             .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-//                                presenter.cancelOrder(orderId)
+                                presenter.cancelOrder(orderId)
                                 dialogInterface.dismiss()
                             }
                             .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
                             .create().show()
 
                 }
-
                 right_tv.setOnClickListener {
                     startActivity(PayActivity::class.java, Bundle().apply {
-//                        putString(Constant.PARAM_TOTAL_PRICE, price.toPlainString())
+                        putString(Constant.PARAM_TOTAL_PRICE, price.toPlainString())
                     })
                 }
             }
@@ -185,7 +182,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                             .setTitle(R.string.prompt)
                             .setMessage(R.string.delicacy_return_hint)
                             .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-//                                presenter.refundOrder(orderId)
+                                presenter.refundOrder(orderId)
                                 dialogInterface.dismiss()
                             }
                             .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
@@ -242,7 +239,13 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
             }
         }
 
-
     }
+
+    override fun cancelSuccess() {
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        presenter.getDetail(orderId)
+    }
+
+
 
 }

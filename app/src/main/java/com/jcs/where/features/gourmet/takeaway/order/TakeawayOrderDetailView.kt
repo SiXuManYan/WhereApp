@@ -9,4 +9,5 @@ import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
  */
 interface TakeawayOrderDetailView :BaseMvpView {
     fun bindDetail(it: TakeawayOrderDetail)
+    fun cancelSuccess()
 }

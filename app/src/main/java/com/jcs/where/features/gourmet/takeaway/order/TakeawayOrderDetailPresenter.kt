@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.takeaway.order
 
+import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
@@ -20,8 +21,19 @@ class TakeawayOrderDetailPresenter (val view: TakeawayOrderDetailView) : BaseMvp
                 }
             }
         })
+    }
 
 
+    /**
+     * 取消订单
+     */
+    fun cancelOrder(orderId: String) {
+        requestApi(mRetrofit.takeawayOrderCancel(orderId), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                view.cancelSuccess()
+            }
+
+        })
     }
 
 

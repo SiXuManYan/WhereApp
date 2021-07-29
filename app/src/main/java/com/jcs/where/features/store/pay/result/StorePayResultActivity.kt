@@ -50,7 +50,7 @@ class StorePayResultActivity : BaseActivity() {
 
         check_order_tv.setOnClickListener {
 
-            if (useType == Constant.PAY_INFO_ESTORE) {
+            if (useType == Constant.PAY_INFO_ESTORE || useType == Constant.PAY_INFO_FOOD || useType == Constant.PAY_INFO_TAKEAWAY) {
                 startActivityClearTop(HomeActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_TAB, 2)
                 })

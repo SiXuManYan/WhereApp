@@ -116,8 +116,9 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                 putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
                 putSerializable(Constant.PARAM_DATA, selectedChannel)
                 putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
+                putInt(Constant.PARAM_TYPE, useType)
             })
+            finish()
         }
 
         mJcsTitle.setBackIvClickListener {

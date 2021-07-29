@@ -190,8 +190,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                             .create().show()
                 }
             }
-/*            6 -> {
-
+/*            8 -> {
                 if (orderData.comment_status == 1) {
                     bottom_container_rl.visibility = View.VISIBLE
                     left_tv.apply {
@@ -208,7 +207,6 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                 } else {
                     bottom_container_rl.visibility = View.GONE
                 }
-
             }*/
             else -> {
                 bottom_container_rl.visibility = View.GONE
@@ -223,13 +221,13 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                     text = getString(R.string.store_status_desc_7)
                 }
             }
-            7 -> {
+            9 -> {
                 status_desc_tv.apply {
                     visibility = View.VISIBLE
                     text = getString(R.string.store_status_desc_8)
                 }
             }
-            8 -> {
+            10 -> {
                 status_desc_tv.apply {
                     visibility = View.VISIBLE
                     text = getString(R.string.store_status_desc_9)

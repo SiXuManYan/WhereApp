@@ -12,7 +12,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
-import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailActivity
+import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
 import com.jcs.where.home.adapter.OrderListAdapter2
 import com.jcs.where.home.decoration.MarginTopDecoration
@@ -151,7 +151,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             }
 
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
-                startActivity(TakeawayOrderDetailActivity::class.java, Bundle().apply {
+                startActivity(TakeawayOrderDetailActivity2::class.java, Bundle().apply {
                     putString(Constant.PARAM_ORDER_ID, data.id.toString())
                 })
             }

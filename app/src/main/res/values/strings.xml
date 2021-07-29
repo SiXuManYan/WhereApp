@@ -625,7 +625,7 @@
     <string name="no_contact_information">暂无联系方式</string>
     <string name="no_messages">暂无通知</string>
     <string name="no_attention">暂无关注</string>
-    <string name="star_text_format">%1$s&#160;%2$s</string>
+    <string name="star_text_format">%1$s%2$s</string>
     <string name="less_2_stat">&#8804;2星</string>
     <string name="star_3">3星</string>
     <string name="star_4">4星</string>
@@ -890,6 +890,9 @@ Gentleman must let go</string>
 
     <string name="status_pending">待接单</string>
     <string name="status_pended">已接单</string>
+    <string name="address_name_format">%1$s&#160;%2$s</string>
+
+
 
 
 

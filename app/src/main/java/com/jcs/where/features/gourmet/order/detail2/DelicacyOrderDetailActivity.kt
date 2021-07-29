@@ -101,16 +101,16 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         }
 
         if (orderData.status != 1 && orderData.status != 2) {
-            payment_ll.visibility = View.VISIBLE
+            pay_container_ll.visibility = View.VISIBLE
             pay_way_tv.text = paymentChannel.payment_channel
             payment_name_tv.text = paymentChannel.bank_card_account
             payment_account_tv.text = paymentChannel.bank_card_number
         } else {
-            payment_ll.visibility = View.GONE
+            pay_container_ll.visibility = View.GONE
         }
 
 
-        business_name_tv.text = restaurantData.mer_name
+        business_name_tv.text = restaurantData.name
 
         GlideUtil.load(this, goodData.good_image, image_iv, 4)
         good_name_tv.text = goodData.name

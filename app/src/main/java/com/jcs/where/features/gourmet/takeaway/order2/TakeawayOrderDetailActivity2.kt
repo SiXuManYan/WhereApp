@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
 import com.jcs.where.base.EventCode
@@ -54,6 +51,8 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
             finish()
             return
         }
+        orderId = bundle.getString(Constant.PARAM_ORDER_ID, "")
+
         mAdapter = TakeawayGoodDataAdapter()
         good_rv.apply {
             adapter = mAdapter
@@ -102,6 +101,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         val paymentChannel = it.payment_channel
         merUuid = restaurantData.mer_uuid
         restaurantName = restaurantData.name
+        tel = restaurantData.tel
 
 
         //
@@ -110,6 +110,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         price_tv.text = getString(R.string.price_unit_format, orderData.price.toPlainString())
         order_number_tv.text = orderData.trade_no
         created_date_tv.text = orderData.created_at
+
         delivery_time_tv.text = if (orderData.delivery_time_type == 1) {
             getString(R.string.delivery_now)
         } else {
@@ -118,20 +119,22 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
 
         val address = orderData.address
         contactNumber = address.contact_number
+        val contactName = address.contact_name
         address_tv.text = address.address
-        contact_name_tv.text = getString(R.string.star_text_format, address.contact_name, address.contact_number)
+        contact_name_tv.text = getString(R.string.address_name_format, contactName, contactNumber)
 
 
         if (orderData.status != 1 && orderData.status != 2) {
-            payment_ll.visibility = View.VISIBLE
+            payment_container_ll.visibility = View.VISIBLE
             pay_way_tv.text = paymentChannel.payment_channel
             payment_name_tv.text = paymentChannel.bank_card_account
             payment_account_tv.text = paymentChannel.bank_card_number
         } else {
-            payment_ll.visibility = View.GONE
+            payment_container_ll.visibility = View.GONE
+
         }
 
-        business_name_tv.text = restaurantData.mer_name
+        business_name_tv.text = restaurantName
         packaging_fee_tv.text = getString(R.string.price_unit_format, orderData.packing_charges.toPlainString())
         delivery_fee_tv.text = getString(R.string.price_unit_format, orderData.delivery_cost.toPlainString())
         remarks_tv.text = orderData.remark
@@ -237,6 +240,8 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                 status_desc_tv.visibility = View.GONE
             }
         }
+
+
 
     }
 

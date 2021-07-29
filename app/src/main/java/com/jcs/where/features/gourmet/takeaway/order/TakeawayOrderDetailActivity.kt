@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_order_detail_takeaway.*
  * Created by Wangsw  2021/5/11 14:53.
  * 外卖订单详情
  */
+@Deprecated(message = "已被新版本取代" ,replaceWith = ReplaceWith("TakeawayOrderDetailActivity2"))
 class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter>(), TakeawayOrderDetailView {
 
     private var orderId = "";
@@ -113,6 +114,14 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         order_number_tv.text = orderData.trade_no
         pay_time_tv.text = orderData.created_at
         mAdapter.setNewInstance(goodData)
+    }
+
+    override fun cancelSuccess() {
+
+    }
+
+    override fun refundSuccess() {
+
     }
 
 

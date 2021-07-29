@@ -621,7 +621,7 @@
     <string name="no_contact_information">No contact information</string>
     <string name="no_messages">No Messages</string>
     <string name="no_attention">No Attention</string>
-    <string name="star_text_format">%1$s&#160;%2$s</string>
+    <string name="star_text_format">%1$s%2$s</string>
     <string name="less_2_stat">&#8804;2star</string>
     <string name="star_3">3star</string>
     <string name="star_4">4star</string>
@@ -881,5 +881,5 @@ Gentleman must let go</string>
 
     <string name="status_pending">Pending</string>
     <string name="status_pended">Pended</string>
-
+    <string name="address_name_format">%1$s&#160;%2$s</string>
 </resources>

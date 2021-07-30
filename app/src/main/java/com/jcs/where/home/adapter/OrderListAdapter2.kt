@@ -18,6 +18,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
+import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
@@ -213,6 +214,12 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         val second_tv = holder.getView<TextView>(R.id.second_tv)
         val third_tv = holder.getView<TextView>(R.id.third_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        val name_ll = holder.getView<LinearLayout>(R.id.name_ll)
+        name_ll.setOnClickListener {
+            startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_ORDER_ID, item.id.toString())
+            })
+        }
 
         val options = RequestOptions.bitmapTransform(
                 GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
@@ -283,6 +290,12 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         val second_tv = holder.getView<TextView>(R.id.second_tv)
         val third_tv = holder.getView<TextView>(R.id.third_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        val name_ll = holder.getView<LinearLayout>(R.id.name_ll)
+        name_ll.setOnClickListener {
+            startActivity(TakeawayOrderDetailActivity2::class.java, Bundle().apply {
+                putString(Constant.PARAM_ORDER_ID, item.id.toString())
+            })
+        }
 
         if (item.image.isNotEmpty()) {
             val options = RequestOptions.bitmapTransform(

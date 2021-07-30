@@ -130,7 +130,7 @@
         android:id="@+id/add_new_address_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/shape_gradient_integral_sign_out"
         android:gravity="center"
         android:text="@string/determine"

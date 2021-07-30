@@ -137,10 +137,13 @@
 
 
     <LinearLayout
+        android:id="@+id/bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
 
 
         <TextView
@@ -157,9 +160,7 @@
             android:paddingBottom="@dimen/dp_4"
             android:textColor="@color/orange_FD6431"
             android:textSize="@dimen/sp_13"
-            android:visibility="gone"
-            tools:text="@string/buy_again"
-            tools:visibility="visible" />
+            tools:text="@string/buy_again" />
 
 
     </LinearLayout>

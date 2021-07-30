@@ -92,7 +92,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
 
     private fun showVerifyDialog() {
-        val addressDialog = BottomSheetDialog(this)
+        val addressDialog = BottomSheetDialog(this, R.style.bottom_sheet_edit)
         this.addressDialog = addressDialog
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_verify_paid, null)
         addressDialog.setContentView(view)

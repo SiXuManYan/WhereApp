@@ -162,9 +162,7 @@
             android:paddingBottom="@dimen/dp_4"
             android:textColor="@color/orange_FD6431"
             android:textSize="@dimen/sp_13"
-            android:visibility="gone"
-            tools:text="@string/to_pay"
-            tools:visibility="visible" />
+            tools:text="@string/to_pay" />
 
 
     </LinearLayout>

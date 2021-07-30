@@ -18,8 +18,6 @@ import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
-import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
@@ -228,94 +226,38 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部
-        val left_tv = holder.getView<TextView>(R.id.left_tv)
+        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
         when (status) {
             1 -> {
                 // 1：待付款
-                left_tv.visibility = View.VISIBLE
-                right_tv.visibility = View.VISIBLE
-                left_tv.text = StringUtils.getString(R.string.cancel_order)
-                right_tv.text = StringUtils.getString(R.string.to_pay)
-                left_tv.setOnClickListener {
-                    // 取消订单
-                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ORDER_ID, item.id.toString())
-                    })
-                }
+                bottom_ll.visibility = View.VISIBLE
+                right_tv.text = StringUtils.getString(R.string.to_pay_2)
+
                 right_tv.setOnClickListener {
                     // 立即支付
-                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ORDER_ID, item.id.toString())
+                    val orderIds = ArrayList<Int>()
+                    orderIds.add(item.id)
+                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
                     })
                 }
             }
-            2 -> {
-                // 2：已取消
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.GONE
 
-            }
-            3 -> {
-                // 3：待使用
-                left_tv.visibility = View.VISIBLE
-                right_tv.visibility = View.VISIBLE
-                left_tv.text = StringUtils.getString(R.string.to_refund)
-                right_tv.text = StringUtils.getString(R.string.coupon_code_view)
-                left_tv.setOnClickListener {
-                    // 申请退款
-                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ORDER_ID, item.id.toString())
-                    })
-                }
+            6 -> {
+                // 交易成功待评价
+                bottom_ll.visibility = View.GONE
+
+                right_tv.text = StringUtils.getString(R.string.evaluation)
                 right_tv.setOnClickListener {
-                    // 查看券码
-                    startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ORDER_ID, item.id.toString())
-                    })
-                }
-            }
-
-            4 -> {
-                // 已完成
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.VISIBLE
-                right_tv.text = StringUtils.getString(R.string.buy_again)
-                right_tv.setOnClickListener {
-                    // 再来一单
-                    startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ID, item.model_id.toString())
-                    })
-                }
-
-            }
-            5, 6, 7, 8 -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.GONE
-            }
-
-
-            9 -> {
-                // 待评价
-                left_tv.visibility = View.VISIBLE
-                right_tv.visibility = View.VISIBLE
-                left_tv.text = StringUtils.getString(R.string.evaluation)
-                right_tv.text = StringUtils.getString(R.string.buy_again)
-                left_tv.setOnClickListener {
                     // 评价
-
-                }
-                right_tv.setOnClickListener {
-                    // 再来一单
-                    startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ID, item.model_id.toString())
-                    })
                 }
             }
             else -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.GONE
+                bottom_ll.visibility = View.GONE
             }
         }
     }
@@ -334,7 +276,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
 
         // 状态
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
-        order_status_tv.text =  BusinessUtils.getTakeawayStatusText(modelData.order_status)
+        order_status_tv.text = BusinessUtils.getTakeawayStatusText(modelData.order_status)
 
         // 内容
         val first_tv = holder.getView<TextView>(R.id.first_tv)
@@ -355,29 +297,38 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部
-        val left_tv = holder.getView<TextView>(R.id.left_tv)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
+        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
 
         when (modelData.order_status) {
-            5 -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.VISIBLE
-                left_tv.text = StringUtils.getString(R.string.to_review)
-                right_tv.text = StringUtils.getString(R.string.to_pay)
-                left_tv.setOnClickListener {
-                    // 评价
 
-                }
+            1 -> {
+                bottom_ll.visibility = View.VISIBLE
+                right_tv.text = StringUtils.getString(R.string.to_pay_2)
+
                 right_tv.setOnClickListener {
-                    // 再来一单
-                    startActivity(TakeawayActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ID, item.model_id.toString())
+                    // 立即支付
+                    val orderIds = ArrayList<Int>()
+                    orderIds.add(item.id)
+                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
                     })
                 }
             }
+
+            8 -> {
+                // 交易成功。待评价
+                bottom_ll.visibility = View.GONE
+                right_tv.text = StringUtils.getString(R.string.to_review)
+                right_tv.setOnClickListener {
+
+
+                }
+            }
             else -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.GONE
+                bottom_ll.visibility = View.GONE
             }
 
         }

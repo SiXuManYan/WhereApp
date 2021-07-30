@@ -91,6 +91,7 @@ import com.jcs.where.api.response.order.OrderListResponse;
 import com.jcs.where.api.response.order.bill.BillOrderDetails;
 import com.jcs.where.api.response.order.store.RefundDetail;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
+import com.jcs.where.api.response.order.tab.OrderTabResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.PayChannel;
@@ -1444,6 +1445,15 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> upLoadTakeawayPayAccountInfo(
             @Body UpLoadBillsPayAccountInfo request
     );
+
+
+    /**
+     * 商城评价列表数量
+     */
+    @GET("commonapi/v2/orders/filters")
+    Observable<JcsResponse<ArrayList<OrderTabResponse>>> getOrderTabs();
+
+
 
 
 

@@ -10,7 +10,7 @@ data class FoodOrderDetail(
         var order_data: OrderData,
         var restaurant_data: RestaurantData,
         var good_data: GoodData,
-        var payment_channel: PaymentData
+        var payment_data: PaymentData
 
 )
 

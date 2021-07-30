@@ -10,7 +10,6 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
-import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
@@ -81,7 +80,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         val goodData = it.good_data
         val restaurantData = it.restaurant_data
         val orderData = it.order_data
-        val paymentChannel = it.payment_channel
+        val paymentChannel = it.payment_data
 
         merUuid = restaurantData.mer_uuid
         restaurantName = restaurantData.name

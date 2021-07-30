@@ -14,9 +14,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.tabs.TabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
@@ -24,10 +21,9 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.category.CategoryFragment2;
 import com.jcs.where.features.home.HomeFragment2;
-import com.jcs.where.home.fragment.OrderFragment;
+import com.jcs.where.features.order.parent.OrderFragment;
 import com.jcs.where.mine.fragment.MineFragment;
 import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.PermissionUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,7 +57,6 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
         initTabLayout();
 
 
-
     }
 
 
@@ -70,7 +65,7 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
         super.onNewIntent(intent);
 
         Bundle bundle = intent.getExtras();
-        if (bundle!=null) {
+        if (bundle != null) {
             int tabIndex = bundle.getInt(Constant.PARAM_TAB, 0);
             mTabLayout.selectTab(mTabLayout.getTabAt(tabIndex));
             EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST);

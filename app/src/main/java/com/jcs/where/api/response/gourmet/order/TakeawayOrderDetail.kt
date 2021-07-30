@@ -10,7 +10,7 @@ data class TakeawayOrderDetail(
         var order_data: TakeawayOrderData,
         var restaurant_data: TakeawayRestaurantData,
         var good_data: ArrayList<TakeawayGoodData> = ArrayList(),
-        var payment_channel: PaymentData
+        var payment_data: PaymentData
 )
 
 

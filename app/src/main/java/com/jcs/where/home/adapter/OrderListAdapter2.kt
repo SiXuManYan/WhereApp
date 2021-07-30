@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -207,10 +206,10 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
 
         val status = modelData.order_status
-        if (status ==1){
+        if (status == 1) {
             order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_EF4814))
         }
-        order_status_tv.text =  BusinessUtils.getDelicacyOrderStatusText(status)
+        order_status_tv.text = BusinessUtils.getDelicacyOrderStatusText(status)
         // 内容
         val first_tv = holder.getView<TextView>(R.id.first_tv)
         val second_tv = holder.getView<TextView>(R.id.second_tv)
@@ -335,7 +334,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
 
         // 状态
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
-        FeaturesUtil.bindTakeawayOrderStatus(modelData.order_status, order_status_tv)
+        order_status_tv.text =  BusinessUtils.getTakeawayStatusText(modelData.order_status)
 
         // 内容
         val first_tv = holder.getView<TextView>(R.id.first_tv)
@@ -472,7 +471,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                             // 去评价
                             startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
                                 putInt(Constant.PARAM_ORDER_ID, item.id)
-                                putString(Constant.PARAM_SHOP_NAME,shopName)
+                                putString(Constant.PARAM_SHOP_NAME, shopName)
                                 putString(Constant.PARAM_SHOP_IMAGE, shopImage)
                             })
                         }

@@ -98,7 +98,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         val goodData = it.good_data
         val restaurantData = it.restaurant_data
         val orderData = it.order_data
-        val paymentChannel = it.payment_channel
+        val paymentChannel = it.payment_data
         merUuid = restaurantData.mer_uuid
         restaurantName = restaurantData.name
         tel = restaurantData.tel
@@ -124,7 +124,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         contact_name_tv.text = getString(R.string.address_name_format, contactName, contactNumber)
 
 
-        if (orderData.status != 1 && orderData.status != 2) {
+        if (orderData.status != 1) {
             payment_container_ll.visibility = View.VISIBLE
             pay_way_tv.text = paymentChannel.payment_channel
             payment_name_tv.text = paymentChannel.bank_card_account

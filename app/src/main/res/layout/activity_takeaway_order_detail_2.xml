@@ -430,7 +430,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
+                        android:layout_height="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_16"
                         android:background="@color/grey_F5F5F5" />
 

@@ -15,6 +15,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.government.dialog.CallPhoneDialog;
 import com.jcs.where.government.dialog.ToNavigationDialog;
 import com.jcs.where.model.OrderModel;
+import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -96,7 +97,10 @@ public class HotelOrderDetailActivity extends BaseActivity {
             public void onSuccess(@NonNull HotelOrderDetailResponse response) {
                 stopLoading();
                 mJcsTitle.setMiddleTitle(String.format(getString(R.string.order_number), response.getTrade_no()));
-                FeaturesUtil.bindHotelOrderStatus(response.getOrder_status(),typeTv);
+
+                typeTv.setText(BusinessUtils.INSTANCE.getHotelStatusText(response.getOrder_status()));
+
+
                 typeTv.setTextColor(getColor(R.color.white_FEFEFE));
 
                 cancelTv.setText(String.format(getString(R.string.order_cancel_prompt), response.getStart_date()));

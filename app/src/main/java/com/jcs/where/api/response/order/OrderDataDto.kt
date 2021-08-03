@@ -25,6 +25,10 @@ open class OrderModelData {
     /** 房间价格 */
     var room_price: BigDecimal = BigDecimal.ZERO
 
+    /** 房间名称 */
+    var room_name: String = ""
+
+
     // ######## 美食 ########
 
     /** 食物图片 */
@@ -80,6 +84,9 @@ class OrderHotel {
 
     /** 房间价格 */
     var room_price: BigDecimal = BigDecimal.ZERO
+
+    /** 房间名称 */
+    var room_name: String = ""
 
 }
 

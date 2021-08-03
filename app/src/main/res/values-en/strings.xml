@@ -677,6 +677,9 @@
     <string name="store_status_11">Shops To Receive</string>
     <string name="store_status_12">Refuses to Return</string>
     <string name="status_to_use">To use</string>
+    <string name="status_shops_confirming">Shops Confirming</string>
+
+
 
 
     <!-- 状态描述文字 -->

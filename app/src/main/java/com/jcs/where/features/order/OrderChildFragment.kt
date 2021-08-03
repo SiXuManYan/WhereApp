@@ -14,7 +14,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
-import com.jcs.where.home.adapter.OrderListAdapter2
+import com.jcs.where.home.adapter.OrderListAdapter
 import com.jcs.where.home.decoration.MarginTopDecoration
 import com.jcs.where.hotel.activity.HotelOrderDetailActivity
 import com.jcs.where.utils.Constant
@@ -36,7 +36,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         }
     }
 
-    private lateinit var mAdapter: OrderListAdapter2
+    private lateinit var mAdapter: OrderListAdapter
 
     private var page = Constant.DEFAULT_FIRST_PAGE
 
@@ -59,7 +59,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         val emptyView = EmptyView(context).apply {
             showEmptyDefault()
         }
-        mAdapter = OrderListAdapter2().apply {
+        mAdapter = OrderListAdapter().apply {
             setEmptyView(emptyView)
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false

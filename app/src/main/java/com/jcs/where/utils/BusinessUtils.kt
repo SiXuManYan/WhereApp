@@ -5,7 +5,7 @@ import com.jcs.where.R
 
 /**
  * Created by Wangsw  2021/7/21 17:10.
- *
+ * 业务逻辑统一处理
  */
 object BusinessUtils {
 
@@ -48,9 +48,29 @@ object BusinessUtils {
         6 -> StringUtils.getString(R.string.status_pended)
         7 -> StringUtils.getString(R.string.store_status_4_2)
         8 -> StringUtils.getString(R.string.store_status_5)
-        9-> StringUtils.getString(R.string.store_status_8)
-        10-> StringUtils.getString(R.string.store_status_9)
+        9 -> StringUtils.getString(R.string.store_status_8)
+        10 -> StringUtils.getString(R.string.store_status_9)
         else -> ""
     }
+
+
+    /**
+     * 酒店订单状态文案
+     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功）
+     *
+     */
+    fun getHotelStatusText(status: Int): String = when (status) {
+        1 -> StringUtils.getString(R.string.store_status_1)
+        2 -> StringUtils.getString(R.string.store_status_2)
+        3 -> StringUtils.getString(R.string.status_shops_confirming)
+        4 -> StringUtils.getString(R.string.status_to_use)
+        5 -> StringUtils.getString(R.string.store_status_5)
+        6 -> StringUtils.getString(R.string.store_status_6)
+        7 -> StringUtils.getString(R.string.store_status_7)
+        8 -> StringUtils.getString(R.string.store_status_8)
+        9 -> StringUtils.getString(R.string.store_status_9)
+        else -> ""
+    }
+
 
 }

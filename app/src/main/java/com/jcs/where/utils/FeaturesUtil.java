@@ -344,54 +344,7 @@ public class FeaturesUtil {
     }
 
 
-    /**
-     * 获取酒店订单状态
-     * 订单状态（1：待付款，2：待使用，3：待评价，4：已完成，5：已取消，6：退款中，7：退款成功，8：退款失败，9：商家已取消，10：待确认）
-     */
-    public static void bindHotelOrderStatus(int status, TextView textView) {
-        String text = "";
-        textView.setTextColor(ColorUtils.getColor(R.color.black_333333));
-        switch (status) {
-            case 1:
-                text = StringUtils.getString(R.string.mine_unpaid);
-                textView.setTextColor(ColorUtils.getColor(R.color.orange_EF4814));
-                break;
-            case 2:
-                text = StringUtils.getString(R.string.mine_booked);
-                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
-                break;
-            case 3:
-                text = StringUtils.getString(R.string.mine_reviews);
-                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
-                break;
-            case 4:
-                text = StringUtils.getString(R.string.completed);
-                break;
-            case 5:
-                text = StringUtils.getString(R.string.cancelled);
-                break;
-            case 6:
-                text = StringUtils.getString(R.string.refunding);
-                textView.setTextColor(ColorUtils.getColor(R.color.yellow_FEAF26));
-                break;
-            case 7:
-                text = StringUtils.getString(R.string.refunded);
-                break;
-            case 8:
-                text = StringUtils.getString(R.string.refund_failed);
-                textView.setTextColor(ColorUtils.getColor(R.color.orange_EF4814));
-                break;
-            case 9:
-                text = StringUtils.getString(R.string.merchant_cancelled);
-                break;
-            case 10:
-                text = StringUtils.getString(R.string.wait_confirmed);
-                break;
-            default:
-                break;
-        }
-        textView.setText(text);
-    }
+
 
 
     /**

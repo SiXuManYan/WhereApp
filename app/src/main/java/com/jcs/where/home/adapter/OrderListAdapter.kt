@@ -17,9 +17,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
-import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -36,7 +34,7 @@ import com.jcs.where.widget.calendar.JcsCalendarDialog
 /**
  * Created by Wangsw  2021/5/12 10:00.
  */
-open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewHolder>(), LoadMoreModule {
+open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseViewHolder>(), LoadMoreModule {
 
 
     init {
@@ -82,7 +80,12 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
 
         // 状态
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
-        FeaturesUtil.bindHotelOrderStatus(modelData.order_status, order_status_tv)
+
+        val status = modelData.order_status
+        order_status_tv.text = BusinessUtils.getHotelStatusText(status)
+        if (status == 1 || status == 5) {
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_EF4814))
+        }
 
         // 内容
         val first_tv = holder.getView<TextView>(R.id.first_tv)
@@ -97,7 +100,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                     .placeholder(R.mipmap.ic_empty_gray)
             Glide.with(context).load(item.image[0]).apply(options).into(image_iv)
         }
-        first_tv.text = StringUtils.getString(R.string.hotel_content_format, modelData.room_num, modelData.room_type)
+        first_tv.text = modelData.room_name
         second_tv.text = StringUtils.getString(R.string.hotel_date_format, modelData.start_date, modelData.end_date)
         third_tv.text = StringUtils.getString(R.string.hotel_price_format, modelData.room_price.toPlainString())
 
@@ -106,7 +109,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
 
-        when (modelData.order_status) {
+        when (status) {
             1 -> {
                 left_tv.visibility = View.VISIBLE
                 right_tv.visibility = View.VISIBLE
@@ -163,7 +166,7 @@ open class OrderListAdapter2 : BaseMultiItemQuickAdapter<OrderListResponse, Base
                 right_tv.setOnClickListener {
                     // 再次预定
                     val dialog = JcsCalendarDialog().apply {
-                        initCalendar(this@OrderListAdapter2.context)
+                        initCalendar(this@OrderListAdapter.context)
                     }
                     HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                 }

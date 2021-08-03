@@ -97,8 +97,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_55"
-            android:layout_below="@+id/split_v"
-            android:layout_toEndOf="@+id/image_iv"
             android:orientation="vertical">
 
             <TextView

@@ -21,12 +21,10 @@
         tools:ignore="MissingConstraints" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/parent_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">

@@ -21,13 +21,11 @@
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/parent_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/jcsTitle">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -232,7 +230,6 @@
                             android:src="@mipmap/ic_store_phone" />
 
                         <TextView
-                            android:id="@+id/extension_number_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -282,7 +279,6 @@
                             android:src="@mipmap/ic_store_website" />
 
                         <TextView
-                            android:id="@+id/web_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -332,7 +328,6 @@
                             android:src="@mipmap/ic_store_email" />
 
                         <TextView
-                            android:id="@+id/email_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -382,7 +377,6 @@
                             android:src="@mipmap/ic_store_facebook" />
 
                         <TextView
-                            android:id="@+id/facebook_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"

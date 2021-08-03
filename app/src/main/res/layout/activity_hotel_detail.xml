@@ -629,7 +629,6 @@
                             android:src="@drawable/ic_test" />
 
                         <RelativeLayout
-                            android:id="@+id/ll_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@+id/iv_commentavatar"

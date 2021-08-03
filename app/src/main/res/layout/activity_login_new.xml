@@ -287,7 +287,6 @@
 
 
             <TextView
-                android:id="@+id/other_login_type_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_45"

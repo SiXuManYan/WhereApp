@@ -79,7 +79,6 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_cv"
                 android:layout_width="@dimen/dp_315"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_20"

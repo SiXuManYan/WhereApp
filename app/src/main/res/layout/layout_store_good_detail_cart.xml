@@ -103,7 +103,6 @@
 
 
         <RelativeLayout
-            android:id="@+id/number_rl"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:layout_below="@+id/time_v">

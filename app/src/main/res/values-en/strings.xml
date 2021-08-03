@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Where</string>
-    <string name="home">Homepage</string>
-    <string name="category">classification</string>
-    <string name="order">Order</string>
-    <string name="mine">mine</string>
 
-    <string name="rule_password">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`¬!"£$%^*()~=#{}[];':,./?/*-_+&#060;&#062;&#064;&#038;</string>
     <!--<string name="maps_api_key">AIzaSyCDraLDHx2io0NePlvh5fyR87718XEHe2Q</string>-->
     <string name="maps_api_key">AIzaSyDK-oIzSIMe0a-PEV8R2SYtMoQK2E8CwQA</string>
     <!--	<string name="maps_api_id">559147655288-ugkgp9fg2cf4h3u9icerjapfrn8ndu57.apps.googleuserContent.com</string>-->
 
-    <string name="maps_api_id">953359706446-u7ss0g7jub2ojv5j48f73rkka74lve7s.apps.googleusercontent.com</string>
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
     <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings > Apps > \'Google Maps API Demos\'.</string>
     <string name="permission_required_toast">Location permission is required for this demo.</string>
@@ -68,16 +62,13 @@
     <string name="pay_order">Pay orders</string>
     <string name="to_pay">Pay</string>
     <string name="to_cancel_order">Cancel Order</string>
-    <string name="search_my_order">Search my order</string>
     <string name="check_in_time">Check-in time:%1$s</string>
     <string name="check_out_time">Check-out time:%1$s</string>
-    <string name="child_and_bed_added">Children and extra bed:%1$s</string>
     <string name="hotel_reservation">hotel reservation</string>
     <string name="live">live </string>
     <string name="leave">from</string>
     <string name="input_hotel_name">Please enter the name of the hotel</string>
     <string name="current_location">Current Location</string>
-    <string name="my_location">my position</string>
     <string name="parentheses_contain_string">(%1$s)</string>
     <string name="stay_people_number">%1$d</string>
     <string name="with_wifi">WiFi</string>
@@ -95,7 +86,6 @@
     <string name="symbol_short_link">-</string>
     <string name="total">Total</string>
     <string name="night">night</string>
-    <string name="slash_night">&#047;late</string>
     <string name="total_night">%1$d night</string>
     <string name="enter_stay">Check-in</string>
     <string name="leave_stay">Check-out</string>
@@ -105,9 +95,6 @@
     <string name="date_format_yyyy_mm_dd">yyyy-MM-dd</string>
     <string name="prompt_room_num">Rooms</string>
     <string name="permission_none">No permission</string>
-    <string name="permission_has">Have permission</string>
-    <string name="prompt_input_government_name">Enter a name</string>
-    <string name="prompt_input_government_name_2">Monuments</string>
     <string name="prompt_input_government_name_3">Police Office</string>
     <string name="all">All</string>
     <string name="title_select_city">Select City</string>
@@ -126,30 +113,16 @@
     <string name="google_map_not_installed">You have not installed Google Maps</string>
     <string name="enterprise_yellow_page">Enterprise</string>
     <string name="city_news">1Bataan News</string>
-    <string name="please_input_keyword">Please enter key words</string>
     <string name="please_input_merchant_or_goods">Please enter your business / item, etc.</string>
     <string name="title_convenience_service">Convenience services</string>
     <string name="default_city_name">Balanga</string>
     <string name="search_none">No search related content ~</string>
     <string name="coming_soon">coming soon</string>
-    <string name="prompt_input_correct_phone">Please enter the correct phone number</string>
     <string name="login_success">login successful</string>
     <string name="commit_success">Commit Successful</string>
-    <string name="error_password_length">The password is not in conformity</string>
-    <string name="prompt_send_success">Send success, please pay attention to check</string>
-    <string name="hint_input_code">Verification code</string>
     <string name="hint_input_phone_number">Mobile Number</string>
-    <string name="hint_input_password">Password</string>
-    <string name="login_account">Account login</string>
-    <string name="login_phone">login by phone</string>
-    <string name="personal_data">personal information</string>
-    <string name="show_create_time">Create time%1$s</string>
-    <string name="nickname_change_success">Nickname modification success</string>
-    <string name="avatar_change_success">Avatar revision success</string>
     <string name="mine_change_language">Language</string>
     <string name="mine_merchant_settled">Merchant</string>
-    <string name="mine_invite">invite</string>
-    <string name="mine_gift">gift</string>
     <string name="mine_collection">Collection</string>
     <string name="mine_collection_title">Collections</string>
     <string name="mine_address">Address</string>
@@ -157,26 +130,19 @@
     <string name="mine_after_sales">After-Sales</string>
     <string name="mine_reviews">Reviews</string>
     <string name="mine_login_register">Login/Register</string>
-    <string name="mine_wallet">Wallet</string>
-    <string name="mine_check_accoun_balance">Check account balance</string>
-    <string name="mine_balance">Balance</string>
     <string name="mine_point">Point</string>
-    <string name="mine_coupon">Coupon</string>
     <string name="mine_order">Order</string>
     <string name="mie_check_order">Check order</string>
     <string name="mine_unpaid">Unpaid</string>
     <string name="mine_booked">Booked</string>
     <string name="language_title">language</string>
     <string name="home_search_hint">Search title or keyword</string>
-    <string name="home_near_hotel">Near the hotel</string>
     <string name="mechanism_to">&#045;</string>
     <string name="google_map">Google map</string>
     <string name="hotel_title">Tourism</string>
     <string name="search">Search</string>
     <string name="guess_you_like">Guess You Might Like</string>
     <string name="search_hotel">Search Hotel</string>
-    <string name="prompt_room">room</string>
-    <string name="order_room_price">Price：₱%1$d</string>
     <string name="cancelled">Cancelled</string>
     <string name="completed">Completed</string>
     <string name="comment_num_prompt">%1$d reviews</string>
@@ -192,23 +158,15 @@
     <string name="book_again">Book again</string>
     <string name="to_use">To use</string>
     <string name="to_review">To review</string>
-    <string name="see_review">See review</string>
     <string name="payment_failed">Payment failed</string>
     <string name="refunding">refunding</string>
     <string name="refunded">refunded</string>
     <string name="refund_failed">Refund failed</string>
-    <string name="unpaid">Unpaid</string>
     <string name="mine_footprint">Footprint</string>
     <string name="positioning">Positioning...</string>
     <string name="position_failed">Position Failed</string>
     <string name="position">Position</string>
-    <string name="get_v_code">Verify</string>
-    <string name="login_by_facebook">login by facebook</string>
-    <string name="login_by_email">login by email</string>
-    <string name="to_register">Register</string>
-    <string name="other_login_method">More options</string>
     <string name="loading">Loading</string>
-    <string name="default_area_code">+63</string>
     <string name="facebook_website">Facebook Link</string>
     <string name="close_page_prompt">Are you sure you want to close this page?</string>
     <string name="prompt">Prompt</string>
@@ -250,8 +208,6 @@
     <string name="points_task">Points task</string>
     <string name="points_details">Points details</string>
     <string name="hint">Prompt</string>
-    <string name="login_expired_hint">Please login again</string>
-    <string name="login_again">Login again</string>
     <string name="commit_again">Commit again</string>
     <string name="request_error">Request error %1$d</string>
     <string name="news_followed">Followed</string>
@@ -346,14 +302,11 @@
     <string name="collection_tab_article">Article</string>
     <string name="collection_tab_video">Video</string>
     <string name="bind_phone">Bind phone</string>
-    <string name="bind_success">Bind success</string>
     <string name="is_client_valid">Client does not exist</string>
     <string name="is_client_valid_facebook">Facebook client is not installed. Whether to go to install ?</string>
     <string name="authorization_failed">Authorization failed</string>
     <string name="authorization_cancel">Authorization cancel</string>
     <string name="mine_footprint_title">Footprint</string>
-    <string name="get_points">Get Points</string>
-    <string name="bataan_news">1 Bataan News</string>
     <string name="about_app_title">About Where</string>
     <string name="version_format">Version&#160;%1$s</string>
     <string name="clear_success">Clear success</string>
@@ -417,7 +370,6 @@
     <string name="unsatisfactory">Unsatisfactory</string>
     <string name="commonly">Commonly</string>
     <string name="commit">Commit</string>
-    <string name="commit_comment">Submit</string>
     <string name="hint_write_comment">Sharing Hotel transportation, catering, sanitation and other experiences is more helpful for small partners~</string>
     <string name="comment_content_not_empty">Please input comment content</string>
     <string name="click_to_start_exploring">Click to start exploring&#62;&#62;&#62;</string>
@@ -487,7 +439,6 @@
     <string name="empty_network_error">Network problem</string>
     <string name="empty_network_error_hint">Please check network settings or try again later</string>
     <string name="empty_network_error_action">Try again</string>
-    <string name="empty_order_list">Empty</string>
     <string name="confirm_password_hint">Please confirm your password</string>
     <string name="password_not_same_hint">Please enter the same password twice</string>
     <string name="travel_recommend">Popular</string>
@@ -515,7 +466,6 @@
     <string name="reset">Reset</string>
     <string name="average_price">Average Price</string>
     <string name="to">to</string>
-    <string name="support_takeaway">Support Takeaway</string>
     <string name="merchant_service">Merchant Service</string>
     <string name="smart_sorting">Smart Sorting</string>
     <string name="praise_first">Rating</string>
@@ -575,7 +525,6 @@
     <string name="finish_edit_category">Finished</string>
     <string name="selected_category">Selected Category</string>
     <string name="unselected_category">Unselected Category</string>
-    <string name="add_text">+</string>
     <string name="successful_operation">Successful Operation</string>
     <string name="confirm_delete_hint">Confirm delete？</string>
     <string name="order_submit">Order Submit</string>
@@ -590,15 +539,11 @@
     <string name="office_address_home_page_2">https://wte.where.ph/#to-home</string>
     <string name="please_select_a_product">Please select a product</string>
     <string name="pay_order_title">Pay Order</string>
-    <string name="alipay">Alipay</string>
-    <string name="paypal">Paypal</string>
-    <string name="back_button">Back</string>
     <string name="look_order">Check Order</string>
     <string name="dishes">Dishes</string>
     <string name="nothing_selected">Nothing Selected</string>
     <string name="delivery_time_format">Delivery about %1$d minutes</string>
     <string name="delivery_time_format2">Delivered about %1$s</string>
-    <string name="spread_format">%1$s Send</string>
     <string name="free_delivery">Free Delivery</string>
     <string name="delivery_price_format">Delivery Price %1$s</string>
     <string name="to_settle">To Settle</string>
@@ -634,13 +579,7 @@
     <string name="expire_date">expire_date：%1$s</string>
     <string name="title_order_detail">Order Detail</string>
     <string name="quantity_format">Quantity：%1$d</string>
-    <string name="coupon_qr">Coupon Qr</string>
     <string name="order_info">Order Info</string>
-    <string name="trade_no_format">Trade no：%1s</string>
-    <string name="phone_format">Phone：%1$s</string>
-    <string name="valid_period_format">Valid Period：%1$s to %2$s</string>
-    <string name="pay_time_format">Pay Time：%1$s</string>
-    <string name="coupon_expire_format">%1$s maturity</string>
     <string name="cancel_order_confirm">Cancel order ?</string>
     <string name="delivery_information">Delivery Info</string>
     <string name="delivery_time">Delivery Time</string>
@@ -653,7 +592,6 @@
     <string name="hotel_date_format">%1$s&#160;to&#160;%2$s</string>
     <string name="hotel_price_format">Price：₱%1$s</string>
     <string name="total_price_format">Total Price:₱%1$s</string>
-    <string name="coupon_code_view">View Coupon</string>
     <string name="buy_again">Buy Again</string>
     <string name="missed_orders">Pending order</string>
     <string name="delivery_now">Delivery now</string>
@@ -718,16 +656,6 @@
     <string name="determine">Determine</string>
     <string name="store_pay_success">The payment is successful and t he platform is under review</string>
     <string name="modify_application">Modify Application</string>
-    <string name="payment_under_review">Payment under review</string>
-    <string name="wait_ship">Wait ship</string>
-    <string name="wait_received">Wait received</string>
-    <string name="order_cancel">Order cancel</string>
-    <string name="trading_closed">Trading closed</string>
-    <string name="refund_successfully">Refund successfully</string>
-    <string name="refund_under_review">Refund under review</string>
-    <string name="merchant_pending_receipt">Merchant pending receipt</string>
-    <string name="merchant_refuses_to_return">Merchant refuses to return</string>
-    <string name="successful_transaction">Successful transaction</string>
     <string name="to_pay_2">To pay</string>
     <string name="cancel_application">Cancel application</string>
     <string name="payment_method">Payment method</string>
@@ -840,9 +768,7 @@ Quickly restored to the appearance of a passerby
 The more polite I am, the more afraid
 Gentleman must let go</string>
 
-    <string name="add_review">Add review</string>
     <string name="add_image">Pictures</string>
-    <string name="max_image_6">Up to 6 iamges</string>
     <string name="view_evaluation">View comment</string>
     <string name="comment_detail">Comment detail</string>
     <string name="merchant_reply">Merchant reply</string>

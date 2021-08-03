@@ -67,7 +67,6 @@
                 app:layout_constraintTop_toBottomOf="@id/moduleRecycler">
 
                 <View
-                    android:id="@+id/view"
                     android:layout_width="3dp"
                     android:layout_height="21dp"
                     android:background="@drawable/bg_homenearbytitle" />

@@ -387,7 +387,6 @@
                     android:background="@color/grey_F5F5F5" />
 
                 <LinearLayout
-                    android:id="@+id/payment_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

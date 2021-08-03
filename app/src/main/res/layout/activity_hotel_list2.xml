@@ -43,7 +43,6 @@
                 android:paddingEnd="@dimen/dp_0">
 
                 <LinearLayout
-                    android:id="@+id/from_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">

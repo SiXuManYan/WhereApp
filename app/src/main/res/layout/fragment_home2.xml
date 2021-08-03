@@ -150,7 +150,6 @@
 
 
                         <HorizontalScrollView
-                            android:id="@+id/tab_scroll"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
@@ -222,7 +221,6 @@
                     android:orientation="horizontal">
 
                     <View
-                        android:id="@+id/view"
                         android:layout_width="3dp"
                         android:layout_height="21dp"
                         android:background="@drawable/bg_homenearbytitle" />

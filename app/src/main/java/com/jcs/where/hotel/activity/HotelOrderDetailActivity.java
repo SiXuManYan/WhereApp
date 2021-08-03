@@ -24,6 +24,9 @@ import java.util.HashMap;
 
 import io.reactivex.annotations.NonNull;
 
+/**
+ * @deprecated
+ */
 public class HotelOrderDetailActivity extends BaseActivity {
 
 

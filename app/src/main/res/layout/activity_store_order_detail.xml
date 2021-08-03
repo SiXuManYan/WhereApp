@@ -576,6 +576,7 @@
                 android:paddingStart="@dimen/dp_17"
                 android:paddingTop="@dimen/dp_8"
                 android:paddingEnd="@dimen/dp_17"
+                android:textColor="@color/black_333333"
                 android:paddingBottom="@dimen/dp_8"
                 android:textSize="@dimen/sp_14"
                 android:visibility="gone"

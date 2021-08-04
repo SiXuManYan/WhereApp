@@ -127,8 +127,8 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         if (orderData.status != 1) {
             payment_container_ll.visibility = View.VISIBLE
             pay_way_tv.text = paymentChannel.payment_channel
-            payment_name_tv.text = paymentChannel.bank_card_account
-            payment_account_tv.text = paymentChannel.bank_card_number
+            payment_name_tv.text = getString(R.string.payment_name_format, paymentChannel.bank_card_account)
+            payment_account_tv.text = getString(R.string.payment_account_format, paymentChannel.bank_card_account)
         } else {
             payment_container_ll.visibility = View.GONE
 

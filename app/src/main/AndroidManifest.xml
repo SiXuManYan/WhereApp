@@ -623,6 +623,7 @@
         <activity android:name=".features.bills.hydropower.detail.BillsDetailActivity" />
         <activity android:name=".features.gourmet.order.detail2.DelicacyOrderDetailActivity" />
         <activity android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2" />
+        <activity android:name=".features.hotel.order.OrderDetailActivity2" />
 
     </application>
 

@@ -824,6 +824,7 @@ Gentleman must let go</string>
     <string name="call_business">致电商家</string>
     <string name="contact_merchant">联系商家</string>
     <string name="resident">入住人</string>
+    <string name="room_type_format">%1$s，%2$d间</string>
 
 
 </resources>

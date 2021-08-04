@@ -47,7 +47,7 @@ data class OrderData(
         var coupon_qr_code: String,
 
         /** 评论状态（1：未评论，2：已评论） */
-        var comment_status :Int = 0
+        var comment_status: Int = 0
 
 )
 
@@ -69,7 +69,7 @@ data class RestaurantData(
         /** IM聊天开启状态（1：开启，2：关闭） */
         var im_status: Int = 0,
 
-        var tel:String = ""
+        var tel: String = ""
 
 )
 
@@ -93,8 +93,13 @@ data class GoodData(
 )
 
 data class PaymentData(
+        /** 支付渠道 */
         var payment_channel: String = "",
+
+        /** 支付银行户头 */
         var bank_card_account: String = "",
+
+        /** 支付银行卡号 */
         var bank_card_number: String = ""
 )
 

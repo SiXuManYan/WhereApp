@@ -811,4 +811,10 @@ Gentleman must let go</string>
     <string name="status_pending">Pending</string>
     <string name="status_pended">Pended</string>
     <string name="address_name_format">%1$s&#160;%2$s</string>
+    <string name="map_navigation">Map navigation</string>
+    <string name="call_business">Call merchant</string>
+    <string name="contact_merchant">Contact merchant</string>
+    <string name="resident">Resident</string>
+
+
 </resources>

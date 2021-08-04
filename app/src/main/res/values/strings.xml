@@ -820,9 +820,10 @@ Gentleman must let go</string>
     <string name="status_pending">待接单</string>
     <string name="status_pended">已接单</string>
     <string name="address_name_format">%1$s&#160;%2$s</string>
-
-
-
+    <string name="map_navigation">地图导航</string>
+    <string name="call_business">致电商家</string>
+    <string name="contact_merchant">联系商家</string>
+    <string name="resident">入住人</string>
 
 
 </resources>

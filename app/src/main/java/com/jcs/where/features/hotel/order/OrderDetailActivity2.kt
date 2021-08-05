@@ -1,5 +1,7 @@
 package com.jcs.where.features.hotel.order
 
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -9,7 +11,10 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_order_detail.*
 import org.greenrobot.eventbus.EventBus
 
@@ -21,6 +26,11 @@ import org.greenrobot.eventbus.EventBus
 class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetailView {
 
     var order_id = 0
+    var lat = 0f
+    var lng = 0f
+    var contactNumber = ""
+    private var merUuid = "";
+    private var merName = "";
 
 
     override fun getLayoutId() = R.layout.activity_order_detail
@@ -44,8 +54,26 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
     }
 
     override fun bindListener() {
-        back_iv.setOnClickListener {
-            finish()
+
+        nav_ll.setOnClickListener {
+            FeaturesUtil.startNaviGoogle(this, lat, lng)
+        }
+
+        call_ll.setOnClickListener {
+            if (contactNumber.isBlank()) {
+                return@setOnClickListener
+            }
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$contactNumber")
+            }
+            startActivity(intent)
+        }
+
+        chat_ll.setOnClickListener {
+            if (merUuid.isBlank()) {
+                return@setOnClickListener
+            }
+            RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, merUuid, merName, null)
         }
     }
 
@@ -55,6 +83,20 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
         val hotelData = response.hotel_data!!
         val roomData = response.room_data!!
         val status = order_data.order_status
+
+        lat = hotelData.lat
+        lng = hotelData.lng
+        contactNumber = hotelData.tel
+        merUuid = hotelData.mer_uuid
+        merName = hotelData.mer_name
+
+        if (hotelData.im_status == 1) {
+            chat_v.visibility = View.VISIBLE
+            chat_ll.visibility = View.VISIBLE
+        } else {
+            chat_v.visibility = View.GONE
+            chat_ll.visibility = View.GONE
+        }
 
         status_tv.text = BusinessUtils.getHotelStatusText(status)
         amount_tv.text = getString(R.string.price_unit_format, order_data.price.toPlainString())

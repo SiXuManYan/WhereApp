@@ -144,7 +144,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         when (viewType) {
             OrderListResponse.ORDER_TYPE_HOTEL_1 -> {
                 startActivity(OrderDetailActivity2::class.java, Bundle().apply {
-                    putString(Constant.PARAM_ORDER_ID, data.id.toString())
+                    putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }
             OrderListResponse.ORDER_TYPE_DINE_2 -> {

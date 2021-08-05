@@ -26,7 +26,6 @@ import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.home.activity.ApplyRefundActivity
 import com.jcs.where.hotel.activity.HotelCommentActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
-import com.jcs.where.hotel.activity.HotelPayActivity
 import com.jcs.where.utils.*
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.calendar.JcsCalendarDialog
@@ -108,19 +107,22 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val left_tv = holder.getView<TextView>(R.id.left_tv)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
-
         when (status) {
             1 -> {
-                left_tv.visibility = View.VISIBLE
+                left_tv.visibility = View.GONE
                 right_tv.visibility = View.VISIBLE
-                left_tv.text = StringUtils.getString(R.string.cancel_order)
                 right_tv.text = StringUtils.getString(R.string.to_pay)
-                left_tv.setOnClickListener {
-                    // todo 展示取消订单 dialog
-                }
+
                 right_tv.setOnClickListener {
+
                     // 立即支付
-                    HotelPayActivity.goTo(context, null)
+                    val orderIds = ArrayList<Int>()
+                    orderIds.add(item.id)
+                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
+                    })
                 }
             }
             2 -> {
@@ -180,7 +182,6 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.text = StringUtils.getString(R.string.refund_failed)
                 right_tv.setOnClickListener {
                     // 申请退款
-
                     startActivity(OrderDetailActivity2::class.java, Bundle().apply {
                         putInt(Constant.PARAM_ORDER_ID, item.id)
                     })

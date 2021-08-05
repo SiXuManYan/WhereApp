@@ -824,7 +824,24 @@ Gentleman must let go</string>
     <string name="call_business">致电商家</string>
     <string name="contact_merchant">联系商家</string>
     <string name="resident">入住人</string>
-    <string name="room_type_format">%1$s，%2$d间</string>
+
+    <string name="room_name_format">%1$s，%2$d间</string>
+    <string name="room_type_format">·&#160;%1$s</string>
+    <string name="room_content_format">·&#160;%1$s&#160;|&#160;%2$s&#160;</string>
+    <string name="room_time_format">%1$s-%2$s&#160;|&#160;%3$d Night</string>
+    <string name="breakfast_support">含早</string>
+    <string name="breakfast_un_support">不含早</string>
+    <string name="free_wifi">免费WIFI</string>
+    <string name="charged_wifi">收费WIFI</string>
+    <string name="hotel_order_status_1">请尽快进行支付</string>
+    <string name="hotel_order_status_6">可通过where再次预订</string>
+    <string name="hotel_order_status_3">商家确认订单后，房间将为您保留</string>
+    <string name="hotel_order_status_4">房间将为您保留，请安心入住。如有特殊情况，请及时联系商家。</string>
+    <string name="hotel_order_status_5">感谢您使用where预定酒店，期待再次光临</string>
+    <string name="refund_commit_success">退款申请提交成功</string>
+
+
+    strin
 
 
 </resources>

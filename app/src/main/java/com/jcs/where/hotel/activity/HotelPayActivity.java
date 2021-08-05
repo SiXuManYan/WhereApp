@@ -129,7 +129,7 @@ public class HotelPayActivity extends BaseActivity implements View.OnClickListen
             case R.id.tv_pay:
                 showToast("支付成功");
                 finish();
-                HotelOrderDetailActivity.goTo(HotelPayActivity.this, String.valueOf(mOrderDetail.getId()));
+//                HotelOrderDetailActivity.goTo(HotelPayActivity.this, String.valueOf(mOrderDetail.getId()));
                 break;
         }
     }

@@ -18,6 +18,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
+import com.jcs.where.features.hotel.order.OrderDetailActivity2
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -25,7 +26,6 @@ import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.home.activity.ApplyRefundActivity
 import com.jcs.where.hotel.activity.HotelCommentActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
-import com.jcs.where.hotel.activity.HotelOrderDetailActivity
 import com.jcs.where.hotel.activity.HotelPayActivity
 import com.jcs.where.utils.*
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
@@ -136,7 +136,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
                 right_tv.setOnClickListener {
                     // 去使用
-                    HotelOrderDetailActivity.goTo(context, item.id.toString())
+                    startActivity(OrderDetailActivity2::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ORDER_ID, item.id)
+                    })
                 }
             }
             3 -> {
@@ -178,7 +180,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.text = StringUtils.getString(R.string.refund_failed)
                 right_tv.setOnClickListener {
                     // 申请退款
-                    HotelOrderDetailActivity.goTo(context, item.id.toString())
+
+                    startActivity(OrderDetailActivity2::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ORDER_ID, item.id)
+                    })
                 }
 
             }

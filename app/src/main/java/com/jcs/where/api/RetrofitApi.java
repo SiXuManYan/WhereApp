@@ -76,7 +76,6 @@ import com.jcs.where.api.response.gourmet.dish.DishResponse;
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse;
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail;
 import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData;
-import com.jcs.where.api.response.gourmet.order.OrderResponse;
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail;
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderSubmitData;
 import com.jcs.where.api.response.gourmet.qr.QrResponse;
@@ -84,6 +83,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
 import com.jcs.where.api.response.hotel.HotelListResponse;
+import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
@@ -1234,10 +1234,6 @@ public interface RetrofitApi {
     );
 
 
-
-
-
-
     /**
      * 商城订单详情
      */
@@ -1403,13 +1399,11 @@ public interface RetrofitApi {
     Observable<JcsResponse<BillOrderDetails>> billOrderDetail(@Path("order_id") int order_id);
 
 
-
     /**
      * 商城评价列表数量
      */
     @GET("generalapi/v2/comments/numbers/{shop_id}")
     Observable<JcsResponse<StoreCommentCount>> getStoreCommentCount(@Path("shop_id") int shop_id);
-
 
 
     /**
@@ -1461,6 +1455,24 @@ public interface RetrofitApi {
     @GET("hotelapi/v2/orders/{order_id}")
     Observable<JcsResponse<HotelOrderDetail>> hotelOrderDetail(@Path("order_id") int order_id);
 
+    /**
+     * 取消酒店订单
+     */
+    @DELETE("hotelapi/v2/orders/{order_id}")
+    Observable<JcsResponse<JsonElement>> cancelHotelOrder(@Path("order_id") int order_id);
+
+    /**
+     * 酒店订单申请退款
+     */
+    @DELETE("hotelapi/v2/orders/refund/{order_id}")
+    Observable<JcsResponse<JsonElement>> refundHotelOrder(@Path("order_id") int order_id);
+
+
+    /**
+     * 酒店下订单
+     */
+    @POST("hotelapi/v2/orders")
+    Observable<JcsResponse<HotelOrderCommitResponse>> commitHotelOrder(@Body HotelOrderRequest request);
 
 
 }

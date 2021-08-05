@@ -13,10 +13,10 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
+import com.jcs.where.features.hotel.order.OrderDetailActivity2
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
 import com.jcs.where.home.adapter.OrderListAdapter
 import com.jcs.where.home.decoration.MarginTopDecoration
-import com.jcs.where.hotel.activity.HotelOrderDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.fragment_order_child.*
@@ -143,7 +143,9 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         val data = mAdapter.data[position]
         when (viewType) {
             OrderListResponse.ORDER_TYPE_HOTEL_1 -> {
-                HotelOrderDetailActivity.goTo(context, data.id.toString())
+                startActivity(OrderDetailActivity2::class.java, Bundle().apply {
+                    putString(Constant.PARAM_ORDER_ID, data.id.toString())
+                })
             }
             OrderListResponse.ORDER_TYPE_DINE_2 -> {
                 startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {

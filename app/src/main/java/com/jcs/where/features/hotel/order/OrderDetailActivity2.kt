@@ -118,7 +118,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
             GlideUtil.load(this, images[0], image_iv, 5)
         }
         hotel_name_tv.text = hotelData.name
-        location_tv.text = hotelData.address
+        location_tv.text = hotelData.address.replace("\n","")
         room_name_tv.text = getString(R.string.room_name_format, roomData.name, roomData.room_num)
 
         room_type_tv.text = getString(R.string.room_type_format, roomData.room_type)

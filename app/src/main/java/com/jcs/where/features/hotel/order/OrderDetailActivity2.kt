@@ -2,13 +2,16 @@ package com.jcs.where.features.hotel.order
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelOrderDetail
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
@@ -90,7 +93,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
         merUuid = hotelData.mer_uuid
         merName = hotelData.mer_name
 
-        if (hotelData.im_status == 1) {
+        if (hotelData.im_status == 1 && merUuid.isNotBlank()) {
             chat_v.visibility = View.VISIBLE
             chat_ll.visibility = View.VISIBLE
         } else {
@@ -181,7 +184,13 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                         text = getString(R.string.to_pay_2)
                         setOnClickListener {
                             // 立即支付
-
+                            val orderIds = ArrayList<Int>()
+                            orderIds.add(order_id)
+                            startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                                putDouble(Constant.PARAM_TOTAL_PRICE, order_data.price.toDouble())
+                                putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                                putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
+                            })
                         }
                     }
 
@@ -189,7 +198,16 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                         text = getString(R.string.to_cancel_order)
                         visibility = View.VISIBLE
                         setOnClickListener {
-                            presenter.cancelOrder(order_id)
+
+                            AlertDialog.Builder(this@OrderDetailActivity2)
+                                    .setTitle(R.string.prompt)
+                                    .setMessage(R.string.cancel_order_confirm)
+                                    .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                                        presenter.cancelOrder(order_id)
+                                        dialogInterface.dismiss()
+                                    }
+                                    .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                                    .create().show()
                         }
                     }
 

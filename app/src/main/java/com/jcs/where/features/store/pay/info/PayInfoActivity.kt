@@ -39,6 +39,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
      * 1 水电订单
      * 2 美食
      * 3 外卖
+     * 4 酒店
      */
     private var useType = 0
 
@@ -69,7 +70,6 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
     }
 
     override fun initData() {
-
         presenter = PayInfoPresenter(this)
 
     }
@@ -169,6 +169,9 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
                 }
                 Constant.PAY_INFO_TAKEAWAY -> {
                     presenter.upLoadTakeawayPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+                }
+                Constant.PAY_INFO_HOTEL -> {
+                    presenter.upLoadHotelPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
                 }
                 else -> {
                 }

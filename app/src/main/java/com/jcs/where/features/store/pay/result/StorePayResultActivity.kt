@@ -43,7 +43,6 @@ class StorePayResultActivity : BaseActivity() {
 
     override fun bindListener() {
 
-
         mJcsTitle.setBackIvClickListener {
 
         }

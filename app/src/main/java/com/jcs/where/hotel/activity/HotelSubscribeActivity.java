@@ -3,6 +3,7 @@ package com.jcs.where.hotel.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,17 +16,21 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.response.HotelOrderResponse;
+import com.jcs.where.api.response.hotel.HotelOrderCommitOrder;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.codepicker.Country;
 import com.jcs.where.codepicker.CountryPicker;
 import com.jcs.where.codepicker.OnPick;
+import com.jcs.where.features.store.pay.StorePayActivity;
 import com.jcs.where.home.dialog.AreaCodeListDialog;
 import com.jcs.where.hotel.model.HotelSubscribeModel;
+import com.jcs.where.utils.Constant;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import androidx.appcompat.widget.Toolbar;
 import io.reactivex.annotations.NonNull;
@@ -225,12 +230,22 @@ public class HotelSubscribeActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull HotelOrderCommitResponse hotelOrderResponse) {
+            public void onSuccess(@NonNull HotelOrderCommitResponse response) {
                 stopLoading();
                 showToast(getString(R.string.subscribe_success));
 
 
-//                HotelPayActivity.goTo(HotelSubscribeActivity.this, hotelOrderResponse);
+//                HotelPayActivity.goTo(HotelSubscribeActivity.this, response);
+
+                ArrayList<Integer> orderIds = new ArrayList<>();
+                HotelOrderCommitOrder order = response.getOrder();
+                orderIds.add(order.getId());
+                Bundle bundle = new Bundle();
+                bundle.putDouble(Constant.PARAM_TOTAL_PRICE , response.getTotal_price().doubleValue() );
+                bundle.putIntegerArrayList(Constant.PARAM_ORDER_IDS ,orderIds );
+                bundle.putInt(Constant.PARAM_TYPE , Constant.PAY_INFO_HOTEL);
+                startActivityAfterLogin(StorePayActivity.class,bundle);
+
             }
         });
     }

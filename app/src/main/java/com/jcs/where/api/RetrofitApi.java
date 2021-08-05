@@ -1474,5 +1474,14 @@ public interface RetrofitApi {
     @POST("hotelapi/v2/orders")
     Observable<JcsResponse<HotelOrderCommitResponse>> commitHotelOrder(@Body HotelOrderRequest request);
 
+    /**
+     * 酒店-转账支付（上传支付信息）
+     */
+    @POST("hotelapi/v2/bank_card/pay")
+    Observable<JcsResponse<JsonElement>> upLoadHotelPayAccountInfo(
+            @Body UpLoadBillsPayAccountInfo request
+    );
+
+
 
 }

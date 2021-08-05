@@ -30,10 +30,9 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
      * 1 水电订单
      * 2 美食
      * 3 外卖
+     * 4 酒店
      */
     private var useType = 0
-
-
 
     private var totalPrice: Double = 0.0
     private var orderIds = java.util.ArrayList<Int>()

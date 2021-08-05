@@ -20,6 +20,9 @@ interface PayInfoView : BaseMvpView {
 class PayInfoPresenter(private var view: PayInfoView) : BaseMvpPresenter(view) {
 
 
+    /**
+     * 商城支付
+     */
     fun upLoadPayAccountInfo(orderIds: ArrayList<Int>, accountName: String, accountNumber: String, id: Int) {
 
         val apply = UpLoadPayAccountInfo().apply {
@@ -102,6 +105,33 @@ class PayInfoPresenter(private var view: PayInfoView) : BaseMvpPresenter(view) {
         })
 
     }
+
+    /**
+     * 酒店支付
+     */
+    fun upLoadHotelPayAccountInfo(orderIds: ArrayList<Int>, accountName: String, accountNumber: String, id: Int) {
+
+        if (orderIds.isEmpty()) {
+            return
+        }
+
+        val apply = UpLoadBillsPayAccountInfo().apply {
+            order_id =  orderIds[0]
+            bank_card_account = accountName
+            bank_card_number = accountNumber
+            card_id = id
+        }
+        requestApi(mRetrofit.upLoadHotelPayAccountInfo(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.paySuccess()
+            }
+        })
+
+    }
+
+
+
+
 
 
 

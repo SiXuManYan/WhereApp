@@ -138,27 +138,13 @@
 
 
     <LinearLayout
+        android:id="@+id/bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:id="@+id/left_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_white_radius_4_stroke_cc_1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingStart="@dimen/dp_8"
-            android:paddingTop="@dimen/dp_4"
-            android:paddingEnd="@dimen/dp_8"
-            android:paddingBottom="@dimen/dp_4"
-            android:textSize="@dimen/sp_13"
-            android:visibility="gone"
-            tools:text="@string/to_cancel_order"
-            tools:visibility="visible" />
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
 
 
         <TextView
@@ -175,9 +161,7 @@
             android:paddingBottom="@dimen/dp_4"
             android:textColor="@color/orange_FD6431"
             android:textSize="@dimen/sp_13"
-            android:visibility="gone"
-            tools:text="@string/to_pay"
-            tools:visibility="visible" />
+            tools:text="@string/to_pay" />
 
 
     </LinearLayout>

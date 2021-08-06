@@ -18,17 +18,12 @@ import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.features.hotel.order.OrderDetailActivity2
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
-import com.jcs.where.home.activity.ApplyRefundActivity
-import com.jcs.where.hotel.activity.HotelCommentActivity
-import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.utils.*
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
-import com.jcs.where.widget.calendar.JcsCalendarDialog
 
 /**
  * Created by Wangsw  2021/5/12 10:00.
@@ -104,17 +99,14 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         third_tv.text = StringUtils.getString(R.string.hotel_price_format, modelData.room_price.toPlainString())
 
         // 底部
-        val left_tv = holder.getView<TextView>(R.id.left_tv)
+        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
         when (status) {
             1 -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.VISIBLE
-                right_tv.text = StringUtils.getString(R.string.to_pay)
-
+                bottom_ll.visibility = View.VISIBLE
+                right_tv.text = StringUtils.getString(R.string.to_pay_2)
                 right_tv.setOnClickListener {
-
                     // 立即支付
                     val orderIds = ArrayList<Int>()
                     orderIds.add(item.id)
@@ -125,76 +117,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     })
                 }
             }
-            2 -> {
-                left_tv.visibility = View.VISIBLE
-                right_tv.visibility = View.VISIBLE
-                left_tv.text = StringUtils.getString(R.string.to_refund)
-                right_tv.text = StringUtils.getString(R.string.to_use)
-                left_tv.setOnClickListener {
-                    // 申请退款
-                    startActivity(ApplyRefundActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ID_2, item.id.toString())
-                    })
-                }
-                right_tv.setOnClickListener {
-                    // 去使用
-                    startActivity(OrderDetailActivity2::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_ORDER_ID, item.id)
-                    })
-                }
-            }
-            3 -> {
-                left_tv.visibility = View.VISIBLE
-                right_tv.visibility = View.VISIBLE
-                left_tv.text = StringUtils.getString(R.string.to_review)
-                right_tv.text = StringUtils.getString(R.string.book_again)
-                left_tv.setOnClickListener {
-                    // 去评价
-                    startActivity(HotelCommentActivity::class.java, Bundle().apply {
-                        putString(Constant.PARAM_ID_2, item.id.toString())
-                    })
-                }
-                right_tv.setOnClickListener {
-                    // 再次预定
-                    val dialog = JcsCalendarDialog().apply {
-                        initCalendar(context)
-                    }
-                    HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
-                }
-            }
-            4, 5, 6, 7 -> {
-
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.VISIBLE
-                right_tv.text = StringUtils.getString(R.string.book_again)
-                right_tv.setOnClickListener {
-                    // 再次预定
-                    val dialog = JcsCalendarDialog().apply {
-                        initCalendar(this@OrderListAdapter.context)
-                    }
-                    HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
-                }
-            }
-
-            8 -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.VISIBLE
-                right_tv.text = StringUtils.getString(R.string.refund_failed)
-                right_tv.setOnClickListener {
-                    // 申请退款
-                    startActivity(OrderDetailActivity2::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_ORDER_ID, item.id)
-                    })
-                }
-
-            }
-            9, 10 -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.GONE
-            }
+//            5 -> {
+//                right_tv.visibility = View.GONE
+//                right_tv.text = StringUtils.getString(R.string.to_review)
+//            }
             else -> {
-                left_tv.visibility = View.GONE
-                right_tv.visibility = View.GONE
+                bottom_ll.visibility = View.GONE
             }
         }
 

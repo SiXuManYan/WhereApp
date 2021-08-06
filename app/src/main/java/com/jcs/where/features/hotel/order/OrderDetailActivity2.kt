@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelOrderDetail
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.pay.StorePayActivity
@@ -274,6 +275,12 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         ToastUtils.showShort(getString(R.string.refund_commit_success))
         finish()
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        if (baseEvent.code == EventCode.EVENT_CLOSE_PAY) {
+            finish()
+        }
     }
 
 

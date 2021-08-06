@@ -12,11 +12,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.store.PayChannel
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.pay.info.PayInfoActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_pay.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/6/23 15:10.
@@ -135,6 +138,8 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                     dialogInterface.dismiss()
                 }
                 .setNegativeButton(R.string.give_up) { dialogInterface, i ->
+
+                    EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CLOSE_PAY))
                     dialogInterface.dismiss()
                     finish()
                 }

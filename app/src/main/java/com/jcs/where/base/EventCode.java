@@ -94,5 +94,13 @@ public class EventCode {
      */
     public static final int EVENT_REFRESH_COLLECTION = 1019;
 
+    /**
+     * 取消支付
+     */
+    public static final int EVENT_CLOSE_PAY = 1020;
+
+
+
+
 
 }

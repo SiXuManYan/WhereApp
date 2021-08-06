@@ -109,6 +109,7 @@ public class DishView extends LinearLayout {
 
     private void setItemData(DishResponse data, View view) {
 
+        RelativeLayout child_container_rl = view.findViewById(R.id.child_container_rl);
         ImageView dishIv = view.findViewById(R.id.dish_iv);
         TextView dishNameTv = view.findViewById(R.id.dish_name_tv);
         TextView salesTv = view.findViewById(R.id.sales_tv);
@@ -125,7 +126,7 @@ public class DishView extends LinearLayout {
         SpannableStringBuilder builder = new SpanUtils().append(oldPrice).setStrikethrough().create();
         oldPriceTv.setText(builder);
 
-        buyTv.setOnClickListener(v -> {
+        child_container_rl.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), SetMealActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Constant.PARAM_ID, String.valueOf(data.id));

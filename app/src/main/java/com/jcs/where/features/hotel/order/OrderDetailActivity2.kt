@@ -234,7 +234,6 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                             text = getString(R.string.to_refund)
                             visibility = View.VISIBLE
                             setOnClickListener {
-
                                 AlertDialog.Builder(this@OrderDetailActivity2)
                                         .setTitle(R.string.prompt)
                                         .setMessage(R.string.refund_dialog_hint)

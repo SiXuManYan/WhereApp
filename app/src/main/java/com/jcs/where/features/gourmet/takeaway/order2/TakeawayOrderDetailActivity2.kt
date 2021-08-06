@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.*
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
@@ -124,7 +125,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         contact_name_tv.text = getString(R.string.address_name_format, contactName, contactNumber)
 
 
-        if (orderData.status != 1) {
+        if (orderData.status != 1 && orderData.status != 3) {
             payment_container_ll.visibility = View.VISIBLE
             pay_way_tv.text = paymentChannel.payment_channel
             payment_name_tv.text = getString(R.string.payment_name_format, paymentChannel.bank_card_account)
@@ -260,6 +261,12 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         ToastUtils.showShort(getString(R.string.refund_commit_toast))
         presenter.getDetail(orderId)
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        if (baseEvent.code == EventCode.EVENT_CLOSE_PAY) {
+            finish()
+        }
     }
 
 

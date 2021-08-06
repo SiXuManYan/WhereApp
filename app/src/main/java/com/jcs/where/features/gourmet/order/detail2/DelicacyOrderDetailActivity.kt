@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
@@ -100,7 +101,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
             View.GONE
         }
 
-        if (orderData.status != 1 && orderData.status != 2) {
+        if (orderData.status != 1 && orderData.status != 3) {
             pay_container_ll.visibility = View.VISIBLE
             pay_way_tv.text = paymentChannel.payment_channel
             payment_name_tv.text = getString(R.string.payment_name_format, paymentChannel.bank_card_account)
@@ -242,6 +243,12 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         ToastUtils.showShort(getString(R.string.refund_commit_toast))
         presenter.getDetail(orderId)
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        if (baseEvent.code == EventCode.EVENT_CLOSE_PAY) {
+            finish()
+        }
     }
 
 }

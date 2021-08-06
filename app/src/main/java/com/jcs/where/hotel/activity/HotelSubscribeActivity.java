@@ -225,17 +225,11 @@ public class HotelSubscribeActivity extends BaseActivity {
         mModel.postHotelOrder2(request, new BaseObserver<HotelOrderCommitResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             public void onSuccess(@NonNull HotelOrderCommitResponse response) {
-                stopLoading();
-                showToast(getString(R.string.subscribe_success));
-
-
-//                HotelPayActivity.goTo(HotelSubscribeActivity.this, response);
 
                 ArrayList<Integer> orderIds = new ArrayList<>();
                 HotelOrderCommitOrder order = response.getOrder();

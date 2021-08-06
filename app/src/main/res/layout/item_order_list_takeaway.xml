@@ -14,6 +14,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

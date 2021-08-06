@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
@@ -73,8 +74,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
         // 标题
         holder.setText(R.id.name_tv, item.title)
-        val name_ll = holder.getView<LinearLayout>(R.id.name_ll)
-        name_ll.setOnClickListener {
+        val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
+        title_rl.setOnClickListener {
             val dialog = JcsCalendarDialog()
             dialog.initCalendar(context)
             HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
@@ -167,8 +168,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val second_tv = holder.getView<TextView>(R.id.second_tv)
         val third_tv = holder.getView<TextView>(R.id.third_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
-        val name_ll = holder.getView<LinearLayout>(R.id.name_ll)
-        name_ll.setOnClickListener {
+        val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
+        title_rl.setOnClickListener {
             startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
                 putString(Constant.PARAM_ID, item.model_id.toString())
             })
@@ -243,8 +244,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val second_tv = holder.getView<TextView>(R.id.second_tv)
         val third_tv = holder.getView<TextView>(R.id.third_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
-        val name_ll = holder.getView<LinearLayout>(R.id.name_ll)
-        name_ll.setOnClickListener {
+        val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
+        title_rl.setOnClickListener {
             startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
                 putString(Constant.PARAM_ID, item.model_id.toString())
             })
@@ -326,8 +327,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val second_tv = holder.getView<TextView>(R.id.second_tv)
         val third_tv = holder.getView<TextView>(R.id.third_tv)
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
-        val name_ll = holder.getView<LinearLayout>(R.id.name_ll)
-        name_ll.setOnClickListener {
+        val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
+        title_rl.setOnClickListener {
             startActivity(StoreDetailActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_ID, item.model_id)
             })

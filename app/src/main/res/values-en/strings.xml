@@ -61,7 +61,7 @@
     <string name="area_philippines">Philippines +63</string>
     <string name="pay_order">Pay orders</string>
     <string name="to_pay">Pay</string>
-    <string name="to_cancel_order">Cancel Order</string>
+    <string name="to_cancel_order">Cancel order</string>
     <string name="check_in_time">Check-in time:%1$s</string>
     <string name="check_out_time">Check-out time:%1$s</string>
     <string name="hotel_reservation">hotel reservation</string>
@@ -812,7 +812,7 @@ Gentleman must let go</string>
     <string name="status_pended">Pended</string>
     <string name="address_name_format">%1$s&#160;%2$s</string>
     <string name="map_navigation">Map navigation</string>
-    <string name="call_business">Call merchant</string>
+    <string name="call_business">Call the business</string>
     <string name="contact_merchant">Contact merchant</string>
     <string name="resident">Resident</string>
 
@@ -831,6 +831,8 @@ Gentleman must let go</string>
     <string name="hotel_order_status_4">The room will be reserved for you, please stay at ease. If there are special circumstances, please contact the merchant in time.</string>
     <string name="hotel_order_status_5">Thank you for using where to book a hotel and look forward to visiting again</string>
     <string name="refund_commit_success">Refund commit success</string>
+    <string name="pay_success">Pay Success</string>
+    <string name="refund_dialog_hint">Are you sure to refund?</string>
 
 
 </resources>

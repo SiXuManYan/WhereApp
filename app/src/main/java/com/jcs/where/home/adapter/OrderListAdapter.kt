@@ -83,10 +83,13 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         // 状态
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
 
+        // 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功）
         val status = modelData.order_status
         order_status_tv.text = BusinessUtils.getHotelStatusText(status)
         if (status == 1 || status == 5) {
             order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_EF4814))
+        }else{
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.black_333333))
         }
 
         // 内容
@@ -154,6 +157,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val status = modelData.order_status
         if (status == 1) {
             order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_EF4814))
+        }else{
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.black_333333))
         }
         order_status_tv.text = BusinessUtils.getDelicacyOrderStatusText(status)
         // 内容

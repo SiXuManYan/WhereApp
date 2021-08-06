@@ -349,8 +349,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/map_navigation"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:textColor="@color/grey_666666"
-                        android:textSize="@dimen/sp_13" />
+                        android:textSize="@dimen/sp_12" />
 
 
                 </LinearLayout>
@@ -381,8 +383,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/call_business"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:textColor="@color/grey_666666"
-                        android:textSize="@dimen/sp_13" />
+                        android:textSize="@dimen/sp_12" />
 
 
                 </LinearLayout>
@@ -418,9 +422,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:text="@string/contact_merchant"
                         android:textColor="@color/grey_666666"
-                        android:textSize="@dimen/sp_13" />
+                        android:textSize="@dimen/sp_12" />
 
 
                 </LinearLayout>

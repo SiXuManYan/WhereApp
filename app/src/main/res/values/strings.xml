@@ -839,6 +839,8 @@ Gentleman must let go</string>
     <string name="hotel_order_status_4">房间将为您保留，请安心入住。如有特殊情况，请及时联系商家。</string>
     <string name="hotel_order_status_5">感谢您使用where预定酒店，期待再次光临</string>
     <string name="refund_commit_success">退款申请提交成功</string>
+    <string name="pay_success">支付成功</string>
+    <string name="refund_dialog_hint">确定退款吗？</string>
 
 
     strin

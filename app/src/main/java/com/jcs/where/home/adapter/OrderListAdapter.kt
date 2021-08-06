@@ -22,8 +22,10 @@ import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
+import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.utils.*
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
+import com.jcs.where.widget.calendar.JcsCalendarDialog
 
 /**
  * Created by Wangsw  2021/5/12 10:00.
@@ -71,6 +73,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
         // 标题
         holder.setText(R.id.name_tv, item.title)
+        val name_ll = holder.getView<LinearLayout>(R.id.name_ll)
+        name_ll.setOnClickListener {
+            val dialog = JcsCalendarDialog()
+            dialog.initCalendar(context)
+            HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+        }
 
         // 状态
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)

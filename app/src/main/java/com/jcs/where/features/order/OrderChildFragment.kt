@@ -160,7 +160,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
                 startActivity(TakeawayOrderDetailActivity2::class.java, Bundle().apply {
-                    putString(Constant.PARAM_ORDER_ID, data.id.toString())
+                    putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }
 

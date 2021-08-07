@@ -59,7 +59,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
 
     override fun initData() {
         presenter = TakeawayOrderDetailPresenter(this)
-        presenter.getDetail(orderId)
+        presenter.getDetail(orderId.toInt())
     }
 
     override fun bindListener() {

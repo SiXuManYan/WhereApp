@@ -15,6 +15,7 @@ import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.order.parent.OrderActivity
 import com.jcs.where.features.store.pay.info.PayInfoActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -141,9 +142,9 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
 
                     // 1.关闭各个类型的提交订单页
                     EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CANCEL_PAY))
-                    // todo 2.跳转至订单列表
+                    // 2.跳转至订单列表
 
-
+                    startActivity(OrderActivity::class.java)
                     dialogInterface.dismiss()
                     finish()
                 }

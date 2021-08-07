@@ -15,6 +15,8 @@ import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.store.StoreOrderCommitData
 import com.jcs.where.api.response.store.StoreOrderInfoResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressAdapter
 import com.jcs.where.features.address.edit.AddressEditActivity
@@ -199,6 +201,18 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
         })
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        val code = baseEvent.code
+        when (code) {
+            EventCode.EVENT_CANCEL_PAY -> finish()
+            else -> {
+
+            }
+        }
     }
 
 

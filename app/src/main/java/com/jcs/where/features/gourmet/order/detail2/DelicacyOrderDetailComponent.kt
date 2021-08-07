@@ -30,7 +30,7 @@ interface DelicacyOrderDetailView : BaseMvpView {
 class DelicacyOrderDetailPresenter(private var view: DelicacyOrderDetailView) : BaseMvpPresenter(view) {
 
 
-    fun getDetail(orderId: String) {
+    fun getDetail(orderId: Int) {
         requestApi(mRetrofit.getFoodOrderDetail(orderId), object : BaseMvpObserver<FoodOrderDetail>(view) {
             override fun onSuccess(response: FoodOrderDetail?) {
                 response?.let {
@@ -43,7 +43,7 @@ class DelicacyOrderDetailPresenter(private var view: DelicacyOrderDetailView) : 
     /**
      * 取消订单
      */
-    fun cancelOrder(orderId: String) {
+    fun cancelOrder(orderId: Int) {
         requestApi(mRetrofit.cancelFoodOrder(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 view.cancelSuccess()
@@ -55,7 +55,7 @@ class DelicacyOrderDetailPresenter(private var view: DelicacyOrderDetailView) : 
     /**
      * 申请退款
      */
-    fun refundOrder(orderId: String) {
+    fun refundOrder(orderId: Int) {
         requestApi(mRetrofit.delicacyOrderRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 view.refundSuccess()

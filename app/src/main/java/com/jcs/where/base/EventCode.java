@@ -97,10 +97,13 @@ public class EventCode {
     /**
      * 取消支付
      */
-    public static final int EVENT_CLOSE_PAY = 1020;
+    public static final int EVENT_CANCEL_PAY = 1020;
 
-
-
+    /**
+     * 酒店、美食、外卖、商城
+     * 订单提交成功
+     */
+    public static final int EVENT_ORDER_COMMIT_SUCCESS = 1021;
 
 
 }

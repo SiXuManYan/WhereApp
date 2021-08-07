@@ -11,14 +11,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.request.HotelOrderRequest;
-import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.hotel.HotelOrderCommitOrder;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.codepicker.Country;
 import com.jcs.where.codepicker.CountryPicker;
@@ -28,11 +31,13 @@ import com.jcs.where.home.dialog.AreaCodeListDialog;
 import com.jcs.where.hotel.model.HotelSubscribeModel;
 import com.jcs.where.utils.Constant;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import androidx.appcompat.widget.Toolbar;
 import io.reactivex.annotations.NonNull;
 
 public class HotelSubscribeActivity extends BaseActivity {
@@ -62,6 +67,7 @@ public class HotelSubscribeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         toolbar = findViewById(R.id.toolbar);
         setMargins(toolbar, 0, getStatusBarHeight(), 0, 0);
         hotelNameTv = findViewById(R.id.tv_hotelname);
@@ -235,10 +241,10 @@ public class HotelSubscribeActivity extends BaseActivity {
                 HotelOrderCommitOrder order = response.getOrder();
                 orderIds.add(order.getId());
                 Bundle bundle = new Bundle();
-                bundle.putDouble(Constant.PARAM_TOTAL_PRICE , response.getTotal_price().doubleValue() );
-                bundle.putIntegerArrayList(Constant.PARAM_ORDER_IDS ,orderIds );
-                bundle.putInt(Constant.PARAM_TYPE , Constant.PAY_INFO_HOTEL);
-                startActivityAfterLogin(StorePayActivity.class,bundle);
+                bundle.putDouble(Constant.PARAM_TOTAL_PRICE, response.getTotal_price().doubleValue());
+                bundle.putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds);
+                bundle.putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL);
+                startActivityAfterLogin(StorePayActivity.class, bundle);
 
             }
         });
@@ -247,4 +253,22 @@ public class HotelSubscribeActivity extends BaseActivity {
     public void select(String area) {
         mAreaTv.setText(area);
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
+            finish();
+        }
+    }
+
+
 }

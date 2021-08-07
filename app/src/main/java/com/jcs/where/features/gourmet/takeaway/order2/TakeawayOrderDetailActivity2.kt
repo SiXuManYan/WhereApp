@@ -29,11 +29,11 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/7/28 16:12.
- *
+ * 美食外卖模块订单详情
  */
 class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresenter>(), TakeawayOrderDetailView {
 
-    private var orderId = "";
+    private var orderId = 0;
     private var contactNumber = "";
     private var merUuid = "";
     private var restaurantName = "";
@@ -52,7 +52,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
             finish()
             return
         }
-        orderId = bundle.getString(Constant.PARAM_ORDER_ID, "")
+        orderId = bundle.getInt(Constant.PARAM_ORDER_ID, 0)
 
         mAdapter = TakeawayGoodDataAdapter()
         good_rv.apply {
@@ -171,7 +171,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
 
 
                     val orderIds = ArrayList<Int>()
-                    orderIds.add(orderId.toInt())
+                    orderIds.add(orderId)
                     startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
                         putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
                         putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
@@ -264,7 +264,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        if (baseEvent.code == EventCode.EVENT_CLOSE_PAY) {
+        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
             finish()
         }
     }

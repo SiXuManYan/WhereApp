@@ -47,8 +47,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
      * 3.待评价
      * 4.退款售后
      */
-
-    public var orderType: Int = 0
+    var orderType: Int = 0
 
 
     override fun getLayoutId() = R.layout.fragment_order_child
@@ -133,8 +132,14 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         if (baseEvent == null) {
             return
         }
-        if (baseEvent.code == EventCode.EVENT_REFRESH_ORDER_LIST) {
-            onRefresh()
+
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_ORDER_LIST,
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS-> {
+                onRefresh()
+            }
+            else -> {
+            }
         }
     }
 
@@ -149,7 +154,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             }
             OrderListResponse.ORDER_TYPE_DINE_2 -> {
                 startActivity(DelicacyOrderDetailActivity::class.java, Bundle().apply {
-                    putString(Constant.PARAM_ORDER_ID, data.id.toString())
+                    putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }
 

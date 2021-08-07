@@ -139,7 +139,11 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                 }
                 .setNegativeButton(R.string.give_up) { dialogInterface, i ->
 
-                    EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CLOSE_PAY))
+                    // 1.关闭各个类型的提交订单页
+                    EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CANCEL_PAY))
+                    // todo 2.跳转至订单列表
+
+
                     dialogInterface.dismiss()
                     finish()
                 }

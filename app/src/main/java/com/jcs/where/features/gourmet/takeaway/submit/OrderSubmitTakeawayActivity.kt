@@ -16,7 +16,6 @@ import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
-import com.jcs.where.api.response.gourmet.order.OrderResponse
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderSubmitData
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -234,13 +233,6 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         mAddressAdapter.setNewInstance(toMutableList)
     }
 
-    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_ADDRESS) {
-            presenter.getAddress()
-        }
-    }
-
 
     private fun showAddress() {
         val addressDialog = BottomSheetDialog(this)
@@ -308,5 +300,18 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
         finish()
     }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        val code = baseEvent.code
+        when (code) {
+            EventCode.EVENT_ADDRESS -> presenter.getAddress()
+            EventCode.EVENT_CANCEL_PAY -> finish()
+            else -> {
+
+            }
+        }
+    }
+
 
 }

@@ -12,8 +12,10 @@ import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
 class TakeawayOrderDetailPresenter (val view: TakeawayOrderDetailView) : BaseMvpPresenter(view) {
 
 
-
-    fun getDetail(orderId: String) {
+    /**
+     * 外卖订单详情
+     */
+    fun getDetail(orderId: Int) {
         requestApi(mRetrofit.getTakeawayOrderDetail(orderId), object : BaseMvpObserver<TakeawayOrderDetail>(view) {
             override fun onSuccess(response: TakeawayOrderDetail?) {
                 response?.let {
@@ -27,7 +29,7 @@ class TakeawayOrderDetailPresenter (val view: TakeawayOrderDetailView) : BaseMvp
     /**
      * 取消订单
      */
-    fun cancelOrder(orderId: String) {
+    fun cancelOrder(orderId: Int) {
         requestApi(mRetrofit.takeawayOrderCancel(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 view.cancelSuccess()
@@ -40,7 +42,7 @@ class TakeawayOrderDetailPresenter (val view: TakeawayOrderDetailView) : BaseMvp
     /**
      * 申请退款
      */
-    fun refundOrder(orderId: String) {
+    fun refundOrder(orderId: Int) {
         requestApi(mRetrofit.takeawayOrderRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 view.refundSuccess()

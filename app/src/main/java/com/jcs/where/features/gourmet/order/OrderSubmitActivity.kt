@@ -9,6 +9,8 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
@@ -79,14 +81,6 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
 
     override fun summitSuccess(response: FoodOrderSubmitData) {
 
-        /*
-        startActivityAfterLogin(PayActivity::class.java, Bundle().apply {
-            putParcelableArrayList(Constant.PARAM_DATA, ArrayList(response.orders))
-            putString(Constant.PARAM_TOTAL_PRICE, mTotalPrice)
-        })
-        */
-
-
         val orderIds = ArrayList<Int>()
         response.orders.forEach {
             orderIds.add(it.id)
@@ -97,10 +91,14 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
         })
-
         finish()
+    }
 
-
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
+            finish()
+        }
     }
 
 

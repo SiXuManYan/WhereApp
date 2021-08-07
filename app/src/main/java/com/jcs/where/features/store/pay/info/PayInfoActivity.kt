@@ -67,6 +67,9 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
             payment_name_tv.text = it.card_account
             payment_account_number_tv.text = it.card_account
         }
+
+        // 提交订单成功，刷新列表
+        EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_ORDER_COMMIT_SUCCESS))
     }
 
     override fun initData() {

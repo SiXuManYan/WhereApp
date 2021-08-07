@@ -1107,7 +1107,7 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/eat_in/orders/{order_id}")
     Observable<JcsResponse<FoodOrderDetail>> getFoodOrderDetail(
-            @Path("order_id") String order_id
+            @Path("order_id") int order_id
     );
 
     /**
@@ -1115,7 +1115,7 @@ public interface RetrofitApi {
      */
     @DELETE("restaurantapi/v2/eat_in/orders/{order_id}")
     Observable<JcsResponse<JsonElement>> cancelFoodOrder(
-            @Path("order_id") String order_id
+            @Path("order_id") int order_id
     );
 
 
@@ -1124,7 +1124,7 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/take_out/orders/{order_id}")
     Observable<JcsResponse<TakeawayOrderDetail>> getTakeawayOrderDetail(
-            @Path("order_id") String order_id
+            @Path("order_id") int order_id
     );
 
 
@@ -1410,19 +1410,19 @@ public interface RetrofitApi {
      * 美食-餐厅退款
      */
     @DELETE("restaurantapi/v2/eat_in/orders/refund/{order_id}")
-    Observable<JcsResponse<JsonElement>> delicacyOrderRefund(@Path("order_id") String order_id);
+    Observable<JcsResponse<JsonElement>> delicacyOrderRefund(@Path("order_id") int order_id);
 
     /**
      * 美食-外卖取消订单
      */
     @DELETE("restaurantapi/v2/take_out/orders/{order_id}")
-    Observable<JcsResponse<JsonElement>> takeawayOrderCancel(@Path("order_id") String order_id);
+    Observable<JcsResponse<JsonElement>> takeawayOrderCancel(@Path("order_id") int order_id);
 
     /**
      * 美食-外卖退款
      */
     @DELETE("restaurantapi/v2/take_out/orders/refund/{order_id}")
-    Observable<JcsResponse<JsonElement>> takeawayOrderRefund(@Path("order_id") String order_id);
+    Observable<JcsResponse<JsonElement>> takeawayOrderRefund(@Path("order_id") int order_id);
 
 
     /**

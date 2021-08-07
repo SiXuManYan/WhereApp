@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_store_pay_bills.*
 /**
  * Created by Wangsw  2021/6/29 16:40.
  *  水电支付
+ *
  */
 class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnItemClickListener {
 
@@ -76,10 +77,8 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
         SpanUtils.with(rule_tv).append(string0)
                 .append(string1)
                 .setClickSpan(object : ClickableSpan() {
-                    override fun onClick(widget: View) {
-                        WebViewActivity.goTo(this@BillsPayActivity, FeaturesUtil.getConditionAgreement());
-                    }
-
+                    override fun onClick(widget: View) =
+                            WebViewActivity.goTo(this@BillsPayActivity, FeaturesUtil.getConditionAgreement())
                     override fun updateDrawState(ds: TextPaint) {
                         ds.color = getColor(R.color.blue_69AEF5);
                         ds.isUnderlineText = true
@@ -89,10 +88,8 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
                 .append(string2)
                 .append(string3)
                 .setClickSpan(object : ClickableSpan() {
-                    override fun onClick(widget: View) {
-
-                        WebViewActivity.goTo(this@BillsPayActivity, FeaturesUtil.getPrivacyPolicy());
-                    }
+                    override fun onClick(widget: View) =
+                            WebViewActivity.goTo(this@BillsPayActivity, FeaturesUtil.getPrivacyPolicy())
 
                     override fun updateDrawState(ds: TextPaint) {
                         ds.color = getColor(R.color.blue_69AEF5);

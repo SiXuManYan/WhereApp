@@ -286,7 +286,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        if (baseEvent.code == EventCode.EVENT_CLOSE_PAY) {
+        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
             finish()
         }
     }

@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.EventBus
  */
 class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter>(), DelicacyOrderDetailView {
 
-    private var orderId = ""
+    private var orderId =  0
     private var merUuid = ""
     private var restaurantName = ""
     private var tel = ""
@@ -43,7 +43,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
             finish()
             return
         }
-        orderId = bundle.getString(Constant.PARAM_ORDER_ID, "")
+        orderId = bundle.getInt(Constant.PARAM_ORDER_ID, 0)
     }
 
     override fun isStatusDark() = true
@@ -246,7 +246,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        if (baseEvent.code == EventCode.EVENT_CLOSE_PAY) {
+        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
             finish()
         }
     }

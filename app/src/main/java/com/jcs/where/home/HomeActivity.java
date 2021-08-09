@@ -40,8 +40,6 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
     private final ArrayList<Fragment> frList = new ArrayList<>();
     private TabLayout mTabLayout;
     private Long mTapTime = 0L;
-//    private FusedLocationProviderClient fusedLocationClient;
-//    private LocationRequest locationRequest;
 
 
     @Override
@@ -55,8 +53,6 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
         initFragment();
         mTabLayout = findViewById(R.id.homeTabs);
         initTabLayout();
-
-
     }
 
 

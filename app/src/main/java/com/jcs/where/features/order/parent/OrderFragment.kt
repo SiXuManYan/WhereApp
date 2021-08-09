@@ -21,19 +21,30 @@ import kotlinx.android.synthetic.main.fragment_order_parent.*
  */
 class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
+    var needBack = false
 
     private var type: ArrayList<OrderTabResponse> = ArrayList()
 
     override fun getLayoutId() = R.layout.fragment_order_parent
 
-    override fun initView(view: View) {
-        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_tv))
+    override fun initView(view: View?) {
 
-        if (User.isLogon()) {
-            login_rl.visibility = View.GONE
-        } else {
-            login_rl.visibility = View.VISIBLE
+        view?.let {
+            BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_rl))
         }
+
+        login_rl.visibility = if (User.isLogon()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+
+        order_back_iv.visibility = if (needBack) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+
 
     }
 
@@ -47,6 +58,10 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
     override fun bindListener() {
         login_tv.setOnClickListener {
             startActivity(LoginActivity::class.java)
+        }
+
+        order_back_iv.setOnClickListener {
+            activity?.finish()
         }
     }
 

@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
@@ -15,8 +12,12 @@ import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.gourmet.order.OrderSubmitActivity
+import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
 import com.jcs.where.features.order.parent.OrderActivity
+import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.features.store.pay.info.PayInfoActivity
+import com.jcs.where.hotel.activity.HotelSubscribeActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_pay.*
@@ -140,15 +141,32 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                 }
                 .setNegativeButton(R.string.give_up) { dialogInterface, i ->
 
-                    // 1.关闭各个类型的提交订单页
-                    EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CANCEL_PAY))
-                    // 2.跳转至订单列表
+                    handleNegative()
 
-                    startActivity(OrderActivity::class.java)
+
+
                     dialogInterface.dismiss()
                     finish()
                 }
                 .create().show()
+    }
+
+    private fun handleNegative() {
+
+        // 1.任务栈内存在各个提交订单activity时，跳转至订单列表
+
+        val hotel = ActivityUtils.isActivityExistsInStack(HotelSubscribeActivity::class.java)
+        val food = ActivityUtils.isActivityExistsInStack(OrderSubmitActivity::class.java)
+        val takeaway = ActivityUtils.isActivityExistsInStack(OrderSubmitTakeawayActivity::class.java)
+        val store = ActivityUtils.isActivityExistsInStack(StoreOrderCommitActivity::class.java)
+
+        if (hotel || food || takeaway||store ) {
+
+            // 2.关闭各个类型的提交订单页
+            EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CANCEL_PAY))
+            startActivity(OrderActivity::class.java)
+        }
+
     }
 
 }

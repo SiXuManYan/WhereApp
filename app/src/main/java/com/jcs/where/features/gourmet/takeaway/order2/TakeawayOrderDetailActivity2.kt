@@ -263,11 +263,11 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         presenter.getDetail(orderId)
     }
 
-    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
-            finish()
-        }
-    }
+//    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+//        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
+//            finish()
+//        }
+//    }
 
 
 }

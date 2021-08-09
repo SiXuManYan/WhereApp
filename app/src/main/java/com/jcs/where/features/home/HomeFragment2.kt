@@ -15,13 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
-import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.adapter.ModulesAdapter
 import com.jcs.where.api.response.BannerResponse
@@ -99,7 +97,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     override fun getLayoutId() = R.layout.fragment_home2
 
     override fun initView(view: View) {
-        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title))
+//        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title))
 
         initBanner()
         initPlate()

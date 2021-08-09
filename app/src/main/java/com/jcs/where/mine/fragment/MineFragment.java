@@ -26,6 +26,7 @@ import com.jcs.where.customer.ExtendChatActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.address.AddressActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
+import com.jcs.where.features.order.parent.OrderActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
@@ -120,17 +121,13 @@ public class MineFragment extends BaseFragment {
 
         setting_iv.setOnClickListener(this::onSettingClick);
         message_view.setOnClickListener(this::onMessageClick);
+        view.findViewById(R.id.test_v).setOnClickListener(v -> {
+            startActivity(OrderActivity.class);
+        });
     }
 
     private void onMessageClick(View view) {
-
         startActivityAfterLogin(MessageCenterActivity.class);
-
-//        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
-//        String targetId = "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5";
-//        String title = "111";
-//        RongIM.getInstance().startConversation(getActivity(), conversationType, targetId, title, null);
-
     }
 
     private void onMerchantSettledClicked(View view) {

@@ -112,7 +112,6 @@
 
         <activity
             android:name=".home.HomeActivity"
-            android:fitsSystemWindows="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

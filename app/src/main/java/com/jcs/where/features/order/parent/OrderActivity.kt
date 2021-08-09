@@ -14,7 +14,9 @@ class OrderActivity : BaseActivity() {
     override fun initView() {
         val transaction = supportFragmentManager.beginTransaction()
 
-        val orderFragment = OrderFragment()
+        val orderFragment = OrderFragment().apply {
+            needBack = true
+        }
         if (orderFragment.isAdded) {
             transaction.show(orderFragment)
         } else {

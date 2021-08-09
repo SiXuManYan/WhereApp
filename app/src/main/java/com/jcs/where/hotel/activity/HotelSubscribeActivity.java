@@ -40,6 +40,9 @@ import java.util.ArrayList;
 
 import io.reactivex.annotations.NonNull;
 
+/**
+ * 酒店提交订单
+ */
 public class HotelSubscribeActivity extends BaseActivity {
 
     private static final String EXT_BEAN = "bean";

@@ -124,7 +124,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         }
         ll_banner.layoutParams = bannerParams
 
-        ll_banner.outlineProvider = object : ViewOutlineProvider(){
+        ll_banner.outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline?) {
                 outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
             }
@@ -140,11 +140,11 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 .setIndicatorGravity(XBanner.INDICATOR_CENTER)
                 .setImageLoader(object : AbstractUrlLoader() {
                     override fun loadImages(context: Context, url: String, image: ImageView) {
-                        GlideUtil.load(context,url,image)
+                        GlideUtil.load(context, url, image,4)
                     }
 
                     override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
-                        GlideUtil.load(context,url,gifImageView)
+                        GlideUtil.load(context, url, gifImageView,4)
                     }
                 })
     }
@@ -163,7 +163,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             adapter = mModulesAdapter
         }
 
-        moduleRecycler.outlineProvider = object : ViewOutlineProvider(){
+        moduleRecycler.outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline?) {
                 outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
             }
@@ -206,7 +206,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                             putString(Constant.PARAM_PID_NAME, getString(R.string.filter_food))
                         })
                     }
-                    10->{
+                    10 -> {
                         startActivity(StoreRecommendActivity::class.java)
                     }
 
@@ -223,14 +223,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
      * 新闻相关
      */
     private fun initNews() {
-
-
-        news_container_ll.outlineProvider = object : ViewOutlineProvider(){
-            override fun getOutline(view: View, outline: Outline?) {
-                outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
-            }
-        }
-        news_container_ll.clipToOutline = true
 
 
         mNewsAdapter = HomeNewsAdapter().apply {
@@ -271,8 +263,12 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             override fun onTabReselect(position: Int) = Unit
         })
 
+
         // 更多新闻
         more_news_iv.setOnClickListener {
+            startActivity(NewsActivity::class.java)
+        }
+        more_news_tv.setOnClickListener {
             startActivity(NewsActivity::class.java)
         }
 
@@ -337,8 +333,9 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
 
     private fun initScroll() {
-        moduleRecycler.isNestedScrollingEnabled = true
-        rv_home.isNestedScrollingEnabled = true
+        moduleRecycler.isNestedScrollingEnabled = false
+        rv_home.isNestedScrollingEnabled = false
+
         nested_scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ -> // 滑到的底部
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                 mHomeRecommendAdapter.loadMoreModule.loadMoreToLoading()
@@ -529,12 +526,10 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         if (newsData.isNullOrEmpty()) {
             news_rl.visibility = View.GONE
             news_rv.visibility = View.GONE
-            news_split_v.visibility = View.GONE
             return
         }
         news_rl.visibility = View.VISIBLE
         news_rv.visibility = View.VISIBLE
-        news_split_v.visibility = View.VISIBLE
 
         mNewsTabDataList.clear()
         mNewsAdapterDataList.clear()

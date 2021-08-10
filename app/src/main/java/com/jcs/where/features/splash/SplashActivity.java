@@ -48,6 +48,13 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     protected void initView() {
+        // 状态栏透明
+        BarUtils.setStatusBarColor(this, Color.TRANSPARENT, true);
+        BarUtils.setStatusBarLightMode(this, false);
+        BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content));
+        BarUtils.setNavBarVisibility(this, false);
+
+
         if (!isTaskRoot()) {
             finish();
             return;
@@ -57,11 +64,6 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
         pagerVp = findViewById(R.id.pager_vp);
         pointView = findViewById(R.id.point_view);
 
-        // 状态栏透明
-        BarUtils.setStatusBarColor(this, Color.TRANSPARENT, true);
-        BarUtils.setStatusBarLightMode(this, false);
-        BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content));
-        BarUtils.setNavBarVisibility(this, false);
 
         initPager();
 

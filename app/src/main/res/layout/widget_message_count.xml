@@ -4,14 +4,14 @@
     android:layout_width="@dimen/dp_30"
     android:layout_height="@dimen/dp_30"
     android:orientation="vertical"
-    tools:background="@color/blue_4C9EF2">
+    tools:background="@color/blue_377BFF">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:scaleType="centerInside"
-        android:src="@mipmap/ic_mine_message_common" />
+        android:src="@mipmap/ic_home_message" />
 
     <TextView
         android:id="@+id/message_count_tv"

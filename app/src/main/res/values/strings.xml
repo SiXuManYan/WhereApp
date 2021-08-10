@@ -483,14 +483,13 @@
 3. 为帮助您在APP中拨打投诉电话或其他咨询热线，我们可能会申请拨打电话权限。该权限不会收集隐私信息，且仅在你使用前述功能时使用。\n\n</string>
     <string name="use_agreement_content_5">4. 为了实现第三方登录以及信息分享功能，我们在使用了第三方 MobTech 的[ShareSdk]产品，此产品的隐私策略条款，请参阅：</string>
     <string name="use_agreement_content_6">https://www.mob.com/about/policy。\n\n</string>
-    <string name="use_agreement_content_8" >5.为了更好的帮助您解决在使用过程中可能出现的问题，我们使用了第三方 Comm100 [Comm100 Live Chat]产品，此产品的隐私策略请参阅：</string>
-    <string name="use_agreement_content_9" >https://www.comm100.com/platform/security \n\n</string>
-    <string name="use_agreement_content_10" >6.为了实现推送功能，我们引入了第三方 Jiguang SDK 的[JPush]产品，此产品的隐私策略请参阅：</string>
-    <string name="use_agreement_content_11" >https://www.jiguang.cn/license/privacy \n\n</string>
+    <string name="use_agreement_content_8">5.为了更好的帮助您解决在使用过程中可能出现的问题，我们使用了第三方 Comm100 [Comm100 Live Chat]产品，此产品的隐私策略请参阅：</string>
+    <string name="use_agreement_content_9">https://www.comm100.com/platform/security \n\n</string>
+    <string name="use_agreement_content_10">6.为了实现推送功能，我们引入了第三方 Jiguang SDK 的[JPush]产品，此产品的隐私策略请参阅：</string>
+    <string name="use_agreement_content_11">https://www.jiguang.cn/license/privacy \n\n</string>
 
 
     <string name="use_agreement_content_7">7. 上述权限以及摄像头、GPS、相机、相册、麦克风，存储空间、等敏感权限均不会默认或强制开启收集信息，只有经过明示授权才会为实现功能或服务时使用，您均可以拒绝且不影响你继续使用Where。</string>
-
 
 
     <string name="agree_and_continue">同意并继续</string>
@@ -702,7 +701,6 @@
     <string name="bills_status_6">退款成功</string>
 
 
-
     <!-- 账单表单 -->
     <string name="payment_details">账单详情</string>
     <string name="enter_hint">请输入</string>
@@ -830,9 +828,7 @@ Gentleman must let go</string>
     <string name="refund_commit_success">退款申请提交成功</string>
     <string name="pay_success">支付成功</string>
     <string name="refund_dialog_hint">确定退款吗？</string>
-
-
-    strin
+    <string name="more">more</string>
 
 
 </resources>

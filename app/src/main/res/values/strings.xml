@@ -75,7 +75,6 @@
     <string name="stay_people_number">%1$d人入住</string>
     <string name="with_wifi">有WIFI</string>
     <string name="no_wifi">无WIFI</string>
-    <string name="subscribe_success">预订成功</string>
     <string name="subscribe_prompt">预订</string>
     <string name="please_input_phone_number">请填写手机</string>
     <string name="please_input_name">请填写姓名</string>
@@ -158,9 +157,6 @@
     <string name="main_tab_title_mine">我的</string>
     <string name="to_login">登录</string>
     <string name="mine_about_us">关于我们</string>
-    <string name="cancel_order">取消订单</string>
-    <string name="book_again">再次预定</string>
-    <string name="to_use">去使用</string>
     <string name="to_review">去评价</string>
     <string name="payment_failed">支付失败</string>
     <string name="refunding">退款中</string>
@@ -357,10 +353,6 @@
     <string name="hint_receive_message">用于接收短信通知</string>
     <string name="hint_input_user_name">请填写实际入住人姓名</string>
     <string name="to_install">是否去安装 %1$s ？</string>
-    <string name="order_number">订单号%1$s</string>
-    <string name="order_cancel_prompt">%1$s00:00前可致电商家免费取消</string>
-    <string name="reserve_room_prompt">房间将为您整晚保留，请安心入住</string>
-    <string name="online_payment">在线付</string>
     <string name="call_merchant">致电商家</string>
     <string name="satisfied">满意</string>
     <string name="very_satisfied">非常满意</string>
@@ -592,9 +584,6 @@
     <string name="delivery_address">配送地址</string>
     <string name="order_number_title">订单编号</string>
     <string name="pay_time">下单时间</string>
-    <string name="merchant_cancelled">商家已取消</string>
-    <string name="wait_confirmed">待确认</string>
-    <string name="hotel_content_format">%1$d&#160;room，%2$s</string>
     <string name="hotel_date_format">%1$s&#160;至&#160;%2$s</string>
     <string name="hotel_price_format">房价:₱%1$s</string>
     <string name="total_price_format">总价:₱%1$s</string>

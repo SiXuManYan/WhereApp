@@ -73,7 +73,6 @@
     <string name="stay_people_number">%1$d</string>
     <string name="with_wifi">WiFi</string>
     <string name="no_wifi">WiFi</string>
-    <string name="subscribe_success">booking succeed</string>
     <string name="please_input_phone_number">Please fill in your phone</string>
     <string name="please_input_name">Please fill in the name</string>
     <string name="can_not_reduce">Can\'t lose again</string>
@@ -154,9 +153,6 @@
     <string name="main_tab_title_mine">Me</string>
     <string name="to_login">Sign In</string>
     <string name="mine_about_us">About us</string>
-    <string name="cancel_order">Cancel</string>
-    <string name="book_again">Book again</string>
-    <string name="to_use">To use</string>
     <string name="to_review">To review</string>
     <string name="payment_failed">Payment failed</string>
     <string name="refunding">refunding</string>
@@ -359,10 +355,6 @@
     <string name="hint_receive_message">receive message</string>
     <string name="hint_input_user_name">input user name</string>
     <string name="to_install">Do you want to install %1$s ?</string>
-    <string name="order_number">Order Number %1$s</string>
-    <string name="order_cancel_prompt">Free cancellation before %1$s 00:00</string>
-    <string name="reserve_room_prompt">The room will be reserved for you all night</string>
-    <string name="online_payment">Online payment</string>
     <string name="call_merchant">Call the merchant</string>
     <string name="satisfied">Satisfied</string>
     <string name="very_satisfied">Very Satisfied</string>
@@ -586,9 +578,6 @@
     <string name="delivery_address">Delivery address</string>
     <string name="order_number_title">Order number</string>
     <string name="pay_time">Pay Time</string>
-    <string name="merchant_cancelled">Merchant cancelled</string>
-    <string name="wait_confirmed">Wait Confirmed</string>
-    <string name="hotel_content_format">%1$d room，%2$s</string>
     <string name="hotel_date_format">%1$s&#160;to&#160;%2$s</string>
     <string name="hotel_price_format">Price：₱%1$s</string>
     <string name="total_price_format">Total Price:₱%1$s</string>

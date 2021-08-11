@@ -829,6 +829,7 @@ Gentleman must let go</string>
     <string name="pay_success">支付成功</string>
     <string name="refund_dialog_hint">确定退款吗？</string>
     <string name="more">more</string>
+    <string name="hotel">Hotel</string>
 
 
 </resources>

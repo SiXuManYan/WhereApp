@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_8"
+    android:paddingTop="@dimen/dp_0"
+    android:paddingBottom="@dimen/dp_4"
+    android:layout_marginEnd="@dimen/dp_8"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_153"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic[6]" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_4"
+            android:background="@drawable/shape_black_radius_2"
+            android:padding="@dimen/dp_4"
+            android:text="@string/hotel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="2"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_13"
+        tools:text="@tools:sample/lorem/random" />
+
+
+    <com.jcs.where.widget.ratingstar.RatingStarView
+        android:id="@+id/star_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_4"
+        app:rsv_cornerRadius="@dimen/dp_10"
+        app:rsv_drawStrokeForHalfStar="true"
+        app:rsv_enableSelectRating="false"
+        app:rsv_onlyHalfStar="false"
+        app:rsv_rating="1"
+        app:rsv_starBackgroundColor="@color/grey_F5F5F5"
+        app:rsv_starForegroundColor="@color/yellow_FEBA32"
+        app:rsv_starMargin="@dimen/dp_3"
+        app:rsv_starNum="5"
+        app:rsv_starThickness="0.65"
+        app:rsv_strokeColor="@color/transplant"
+        app:rsv_strokeWidth="0dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_4">
+
+        <TextView
+            android:id="@+id/score_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:background="@drawable/shape_blue_radius_2_377bff"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/dp_4"
+            android:paddingTop="@dimen/dp_1"
+            android:paddingEnd="@dimen/dp_4"
+            android:paddingBottom="@dimen/dp_1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            tools:text="4.5" />
+
+        <TextView
+            android:id="@+id/location_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/grey_999999"
+            android:textSize="@dimen/sp_11"
+            tools:text="Ivana,Cagayan Valley" />
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/distance_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_999999"
+        android:textSize="@dimen/sp_11"
+        tools:text="@string/distance_format" />
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:id="@+id/tag_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:background="@drawable/shape_blue_stoke_radius_2_98bbff"
+                android:includeFontPadding="false"
+                android:padding="@dimen/dp_4"
+                android:textColor="@color/blue_377BFF"
+                android:textSize="@dimen/sp_11"
+                tools:text="tab" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+
+    <TextView
+        android:id="@+id/price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:textColor="@color/red_FF5837"
+        android:textSize="@dimen/sp_12"
+        tools:text="6666666666666" />
+
+
+
+
+</LinearLayout>

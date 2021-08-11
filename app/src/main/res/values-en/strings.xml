@@ -823,6 +823,7 @@ Gentleman must let go</string>
     <string name="pay_success">Pay Success</string>
     <string name="refund_dialog_hint">Are you sure to refund?</string>
     <string name="more">more</string>
+    <string name="hotel">Hotel</string>
 
 
 </resources>

@@ -4,12 +4,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Outline
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.ViewOutlineProvider
 import android.widget.ImageView
-import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -20,6 +18,7 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
+import com.google.android.material.appbar.AppBarLayout
 import com.jcs.where.R
 import com.jcs.where.adapter.ModulesAdapter
 import com.jcs.where.api.response.BannerResponse
@@ -58,7 +57,7 @@ import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import com.jcs.where.yellow_page.activity.YellowPageActivity
-import kotlinx.android.synthetic.main.fragment_home2.*
+import kotlinx.android.synthetic.main.fragment_home3.*
 import pl.droidsonroids.gif.GifImageView
 import java.util.*
 
@@ -94,10 +93,9 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
 
 
-    override fun getLayoutId() = R.layout.fragment_home2
+    override fun getLayoutId() = R.layout.fragment_home3
 
     override fun initView(view: View) {
-//        BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.rl_title))
 
         initBanner()
         initPlate()
@@ -124,13 +122,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         }
         ll_banner.layoutParams = bannerParams
 
-        ll_banner.outlineProvider = object : ViewOutlineProvider() {
-            override fun getOutline(view: View, outline: Outline?) {
-                outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
-            }
-        }
-        ll_banner.clipToOutline = true
-
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
                 .setTitleHeight(50)
                 .isAutoPlay(true)
@@ -140,11 +131,11 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 .setIndicatorGravity(XBanner.INDICATOR_CENTER)
                 .setImageLoader(object : AbstractUrlLoader() {
                     override fun loadImages(context: Context, url: String, image: ImageView) {
-                        GlideUtil.load(context, url, image,4)
+                        GlideUtil.load(context, url, image, 4)
                     }
 
                     override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
-                        GlideUtil.load(context, url, gifImageView,4)
+                        GlideUtil.load(context, url, gifImageView, 4)
                     }
                 })
     }
@@ -162,13 +153,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             }
             adapter = mModulesAdapter
         }
-
-        moduleRecycler.outlineProvider = object : ViewOutlineProvider() {
-            override fun getOutline(view: View, outline: Outline?) {
-                outline!!.setRoundRect(0, 0, view.width, view.height, SizeUtils.dp2px(4f).toFloat())
-            }
-        }
-        moduleRecycler.clipToOutline = true
 
         // 点击
         mModulesAdapter.setOnItemClickListener { _, _, position ->
@@ -224,7 +208,6 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
      */
     private fun initNews() {
 
-
         mNewsAdapter = HomeNewsAdapter().apply {
             setOnItemClickListener { _, _, position ->
                 val child = data[position]
@@ -278,6 +261,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
     /** 推荐列表 */
     private fun initRecommend() {
         swipeLayout.setOnRefreshListener(this)
+        swipeLayout.setColorSchemeColors(ColorUtils.getColor(R.color.blue_377BFF))
+
         mHomeRecommendAdapter = HomeRecommendAdapter(true)
         rv_home.apply {
             adapter = mHomeRecommendAdapter
@@ -286,7 +271,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
             })
             layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
                 override fun canScrollVertically(): Boolean {
-                    return false
+                    return true
                 }
             }
         }
@@ -333,14 +318,35 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
 
     private fun initScroll() {
-        moduleRecycler.isNestedScrollingEnabled = false
-        rv_home.isNestedScrollingEnabled = false
 
-        nested_scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ -> // 滑到的底部
-            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                mHomeRecommendAdapter.loadMoreModule.loadMoreToLoading()
+        moduleRecycler.isNestedScrollingEnabled = false
+        rv_home.isNestedScrollingEnabled = true
+        bottom_cl.isNestedScrollingEnabled = true
+
+        child_abl.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
+            override fun onStateChanged(appBarLayout: AppBarLayout, expanded: State, verticalOffset: Int) {
+                when (expanded) {
+                    State.EXPANDED -> {
+                        parent_abl.setExpanded(true)
+                        swipeLayout.isEnabled = true
+                    }
+
+                    State.COLLAPSED -> {
+                        parent_abl.setExpanded(false)
+                        swipeLayout.isEnabled = false
+                    }
+
+                    State.IDLE -> {
+                        swipeLayout.isEnabled = false
+                    }
+                }
+                Log.d("verticalOffset", "expanded == " + expanded.name + "    verticalOffset == $verticalOffset")
+
             }
         })
+
+        swipeLayout.postDelayed({ swipeLayout.isEnabled = false }, 200)
+
     }
 
 

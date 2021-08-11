@@ -83,8 +83,8 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_12"
+                    android:layout_height="@dimen/dp_12"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/dp_15"
                     android:layout_marginEnd="@dimen/dp_14"
@@ -100,7 +100,7 @@
                     android:maxLines="1"
                     android:text="@string/home_search_hint"
                     android:textColor="@color/grey_BFBFBF"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/sp_13" />
 
 
             </LinearLayout>
@@ -176,10 +176,10 @@
                             app:tl_indicator_corner_radius="1.5dp"
                             app:tl_indicator_width="@dimen/dp_21"
                             app:tl_tab_space_equal="false"
-                            app:tl_textBold="SELECT"
+                            app:tl_textBold="NONE"
                             app:tl_textSelectColor="@color/blue_377BFF"
                             app:tl_textUnselectColor="@color/grey_999999"
-                            app:tl_textsize="@dimen/sp_14"
+                            app:tl_textsize="@dimen/sp_16"
                             app:tl_underline_color="@color/transplant"
                             app:tl_underline_height="1px" />
 
@@ -189,21 +189,21 @@
                     <TextView
                         android:id="@+id/more_news_tv"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/sp_12"
                         android:layout_height="wrap_content"
-                        android:alpha="0.99"
-                        android:textColor="@color/grey_B5B5B5"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@id/more_news_iv"
-                        android:text="@string/more" />
+                        android:alpha="0.99"
+                        android:text="@string/more"
+                        android:textColor="@color/grey_B5B5B5"
+                        android:textSize="@dimen/sp_12" />
 
                     <ImageView
                         android:id="@+id/more_news_iv"
                         android:layout_width="@dimen/dp_14"
                         android:layout_height="@dimen/dp_14"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/dp_15"
                         android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_15"
                         android:alpha="0.99"
                         android:background="@color/white"
                         android:scaleType="centerInside"

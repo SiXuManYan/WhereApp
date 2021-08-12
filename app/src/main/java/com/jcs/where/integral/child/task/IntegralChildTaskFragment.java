@@ -44,7 +44,7 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
     private TextView mSignInTv;
 
     private RecyclerView mRv;
-    private HomeRecommendAdapter mAdapter;
+    private IntegralRecommendAdapter mAdapter;
     private int page = Constant.DEFAULT_FIRST_PAGE;
 
     public static IntegralChildTaskFragment newInstance() {
@@ -71,7 +71,7 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
         View header = getLayoutInflater().inflate(R.layout.header_integral_task, null);
         mSignInTv = header.findViewById(R.id.sign_in_tv);
 
-        mAdapter = new HomeRecommendAdapter(false);
+        mAdapter = new IntegralRecommendAdapter();
         mRv.setAdapter(mAdapter);
         mRv.addItemDecoration(getItemDecoration());
         mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);

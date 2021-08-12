@@ -12,7 +12,7 @@ import java.util.ArrayList
  * Created by Wangsw  2021/4/12 13:54.
  *
  */
-interface HomeView2 : BaseMvpView {
+interface HomeView : BaseMvpView {
 
 
     /**

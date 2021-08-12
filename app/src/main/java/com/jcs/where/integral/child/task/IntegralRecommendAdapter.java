@@ -23,26 +23,21 @@ import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * Created by Wangsw  2021/3/2 11:39.
- * 推荐列表
+ * 签到推荐列表
  */
-public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder> implements LoadMoreModule {
+public class IntegralRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder> implements LoadMoreModule {
 
 
-    public HomeRecommendAdapter(boolean newType) {
+    public IntegralRecommendAdapter() {
         super();
-        if (newType) {
-            addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel_2);
-            addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service_2);
-            addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food_2);
-            addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel_2);
-        } else {
-            addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel);
-            addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service);
-            addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food);
-            addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel);
-        }
+        addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel);
+        addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service);
+        addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food);
+        addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel);
     }
 
 
@@ -242,8 +237,8 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         String image = "";
 
 
-        if (data.images != null && data.images.length > 0) {
-            image = data.images[0];
+        if (data.images != null && data.images.size() > 0) {
+            image = data.images.get(0);
             Glide.with(getContext()).load(image).apply(options).into(image_iv);
         } else {
             Glide.with(getContext()).load(R.mipmap.ic_empty_gray).apply(options).into(image_iv);
@@ -258,8 +253,8 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
 
         tag_ll.removeAllViews();
 
-        String[] tags = data.tags;
-        if (tags.length <= 0) {
+        ArrayList<String> tags = data.tags;
+        if (tags.size() <= 0) {
             return;
         }
 

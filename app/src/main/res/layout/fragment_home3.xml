@@ -247,8 +247,7 @@
                         android:paddingEnd="@dimen/dp_15"
                         android:text="@string/nearby"
                         android:textColor="@color/blue_377BFF"
-                        android:textSize="@dimen/sp_16"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_16" />
 
 
                 </com.google.android.material.appbar.AppBarLayout>
@@ -259,7 +258,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:overScrollMode="never"
-                    android:paddingBottom="20dp"
+                    android:paddingStart="@dimen/dp_8"
+                    android:paddingEnd="@dimen/dp_8"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     tools:itemCount="10"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

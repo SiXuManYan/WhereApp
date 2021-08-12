@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/blue_4C9EF2"
->
+    android:background="@color/blue_377BFF"
+    android:fitsSystemWindows="true">
 
 
     <RelativeLayout
@@ -39,9 +38,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_below="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/title_rl"
         android:background="@color/white"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_category" />

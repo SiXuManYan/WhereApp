@@ -4,14 +4,12 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -43,7 +41,6 @@ import com.jcs.where.home.activity.TravelStayActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
 import com.jcs.where.hotel.activity.CityPickerActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
-import com.jcs.where.integral.child.task.HomeRecommendAdapter
 import com.jcs.where.news.NewsActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity
@@ -67,7 +64,7 @@ import java.util.*
  * 首页
  *
  */
-class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefreshLayout.OnRefreshListener {
+class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLayout.OnRefreshListener {
 
     /** 推荐列表请求 */
     private var recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
@@ -263,17 +260,13 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         swipeLayout.setOnRefreshListener(this)
         swipeLayout.setColorSchemeColors(ColorUtils.getColor(R.color.blue_377BFF))
 
-        mHomeRecommendAdapter = HomeRecommendAdapter(true)
+        mHomeRecommendAdapter = HomeRecommendAdapter()
         rv_home.apply {
             adapter = mHomeRecommendAdapter
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1f), SizeUtils.dp2px(128f), SizeUtils.dp2px(15f)).apply {
+            addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(16f),SizeUtils.dp2px(8f), SizeUtils.dp2px(8f)).apply {
                 setDrawHeaderFooter(false)
             })
-            layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
-                override fun canScrollVertically(): Boolean {
-                    return true
-                }
-            }
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
         val emptyView = EmptyView(context).apply {
             showEmptyDefault()
@@ -281,7 +274,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
         mHomeRecommendAdapter.apply {
             setEmptyView(emptyView)
             loadMoreModule.isAutoLoadMore = true
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 recommedRequestPage++
                 presenter.getRecommendList(recommedRequestPage)
@@ -292,8 +285,8 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                 when (itemViewType) {
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
                         val dialog = JcsCalendarDialog()
-                        dialog.initCalendar(this@HomeFragment2.activity)
-                        HotelDetailActivity.goTo(this@HomeFragment2.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                        dialog.initCalendar(this@HomeFragment.activity)
+                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
                         startActivity(MechanismDetailActivity::class.java, Bundle().apply {
@@ -306,9 +299,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
-                        TouristAttractionDetailActivity.goTo(this@HomeFragment2.activity, data.id)
-                    }
-                    else -> {
+                        TouristAttractionDetailActivity.goTo(this@HomeFragment.activity, data.id)
                     }
                 }
 
@@ -351,7 +342,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
 
 
     override fun initData() {
-        presenter = HomePresenter2(this)
+        presenter = HomePresenter(this)
         initCity()
         rxTimer = RxTimer()
         presenter.getMessageCount()
@@ -482,7 +473,7 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                     return
                 }
                 if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
-                    WebViewActivity.goTo(this@HomeFragment2.activity, data.h5_link)
+                    WebViewActivity.goTo(this@HomeFragment.activity, data.h5_link)
                     return
                 }
 
@@ -491,11 +482,11 @@ class HomeFragment2 : BaseMvpFragment<HomePresenter2>(), HomeView2, SwipeRefresh
                     when (data.target_type) {
                         1 -> {
                             val dialog = JcsCalendarDialog()
-                            dialog.initCalendar(this@HomeFragment2.activity)
-                            HotelDetailActivity.goTo(this@HomeFragment2.activity, data.target_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                            dialog.initCalendar(this@HomeFragment.activity)
+                            HotelDetailActivity.goTo(this@HomeFragment.activity, data.target_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                         }
                         2 -> {
-                            TouristAttractionDetailActivity.goTo(this@HomeFragment2.activity, data.target_id)
+                            TouristAttractionDetailActivity.goTo(this@HomeFragment.activity, data.target_id)
                         }
                         3 -> {
                             startActivity(NewsDetailActivity::class.java, Bundle().apply {

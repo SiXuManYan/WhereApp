@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_153"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic[6]" />
+            tools:src="@tools:sample/backgrounds/scenic[9]" />
 
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/dp_4"
             android:background="@drawable/shape_black_radius_2"
             android:padding="@dimen/dp_4"
-            android:text="@string/hotel"
+            android:text="@string/food"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_10" />
 
@@ -49,24 +49,6 @@
         android:textSize="@dimen/sp_13"
         tools:text="@tools:sample/lorem/random" />
 
-
-    <com.jcs.where.widget.ratingstar.RatingStarView
-        android:id="@+id/star_view"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_4"
-        app:rsv_cornerRadius="@dimen/dp_10"
-        app:rsv_drawStrokeForHalfStar="true"
-        app:rsv_enableSelectRating="false"
-        app:rsv_onlyHalfStar="false"
-        app:rsv_rating="1"
-        app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-        app:rsv_starForegroundColor="@color/yellow_FEBA32"
-        app:rsv_starMargin="@dimen/dp_3"
-        app:rsv_starNum="5"
-        app:rsv_starThickness="0.65"
-        app:rsv_strokeColor="@color/transplant"
-        app:rsv_strokeWidth="0dp" />
 
 
     <LinearLayout
@@ -144,13 +126,5 @@
 
 
 
-    <TextView
-        android:id="@+id/price_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
-        android:textColor="@color/red_FF5837"
-        android:textSize="@dimen/sp_14"
-        tools:text="6666666666666" />
 
 </LinearLayout>

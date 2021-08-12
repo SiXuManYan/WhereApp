@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:background="@color/blue_5A9DFE">
+    android:background="@color/blue_377BFF">
 
 
 
@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@color/blue_5A9DFE"
             android:gravity="center"
             android:text="@string/main_tab_title_order"
             android:textColor="@color/white"

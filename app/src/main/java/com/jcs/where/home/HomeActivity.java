@@ -20,7 +20,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.category.CategoryFragment2;
-import com.jcs.where.features.home.HomeFragment2;
+import com.jcs.where.features.home.HomeFragment;
 import com.jcs.where.features.order.parent.OrderFragment;
 import com.jcs.where.mine.fragment.MineFragment;
 import com.jcs.where.utils.Constant;
@@ -118,7 +118,7 @@ public class HomeActivity extends BaseMvpActivity<MainPresenter> implements Main
 
 
     private void initFragment() {
-        frList.add(new HomeFragment2());
+        frList.add(new HomeFragment());
         frList.add(new CategoryFragment2());
         frList.add(new OrderFragment());
         frList.add(new MineFragment());

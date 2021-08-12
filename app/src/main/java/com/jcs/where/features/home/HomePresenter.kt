@@ -27,7 +27,7 @@ import java.util.*
  * Created by Wangsw  2021/4/12 13:53.
  *
  */
-class HomePresenter2(val view: HomeView2) : BaseMvpPresenter(view) {
+class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
 
     /**

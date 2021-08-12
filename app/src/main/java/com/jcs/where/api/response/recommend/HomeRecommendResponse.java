@@ -2,6 +2,8 @@ package com.jcs.where.api.response.recommend;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.util.ArrayList;
+
 /**
  * Created by Wangsw  2021/3/1 17:26.
  * 推荐
@@ -46,7 +48,7 @@ public class HomeRecommendResponse implements MultiItemEntity {
 
 
 
-    public String[] images = {};
+    public ArrayList<String> images = new ArrayList<>();
 
 
     public String title = "";
@@ -64,7 +66,7 @@ public class HomeRecommendResponse implements MultiItemEntity {
     /**
      * 标签
      */
-    public String[] tags = {};
+    public ArrayList<String> tags = new ArrayList<>();
     public String address = "";
     public String lat = "";
     public String lng = "";

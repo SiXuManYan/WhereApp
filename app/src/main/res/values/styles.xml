@@ -12,11 +12,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-
     <!-- 应用内 activity 主题 -->
     <style name="CommonActivityTheme" parent="AppTheme">
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
     </style>
+
+
 
     <!--界面切换动画 （从左至右）-->
     <style name="ActivityAnimation">

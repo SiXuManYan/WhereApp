@@ -22,7 +22,7 @@ import com.blankj.utilcode.util.SpanUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.currency.WebViewActivity;
-import com.jcs.where.home.HomeActivity;
+import com.jcs.where.features.main.MainActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
@@ -242,7 +242,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     }
 
     private void toHome() {
-        toActivity(HomeActivity.class);
+        startActivity(MainActivity.class);
         finish();
     }
 

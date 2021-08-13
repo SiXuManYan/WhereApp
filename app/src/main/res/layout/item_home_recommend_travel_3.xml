@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/dp_4"
             android:background="@drawable/shape_black_radius_2"
             android:padding="@dimen/dp_4"
-            android:text="@string/food"
+            android:text="@string/travel"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_10" />
 

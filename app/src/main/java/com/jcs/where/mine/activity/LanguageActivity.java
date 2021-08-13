@@ -1,26 +1,24 @@
 package com.jcs.where.mine.activity;
 
-import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.BaseApplication;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.home.HomeActivity;
+import com.jcs.where.features.main.MainActivity;
 import com.jcs.where.mine.adapter.LanguageAdapter;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.LocalLanguageUtil;
-import com.jcs.where.utils.SPKey;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * create by zyf on 2021/1/10 8:00 下午
@@ -80,7 +78,7 @@ public class LanguageActivity extends BaseActivity {
             BaseApplication application = (BaseApplication) getApplication();
             application.changeLanguage();
             // 修改了语言，则要重新启动 HomeActivity
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

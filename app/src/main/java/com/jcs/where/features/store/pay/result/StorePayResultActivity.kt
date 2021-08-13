@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.features.bills.hydropower.record.PaymentRecordActivity
-import com.jcs.where.home.HomeActivity
+import com.jcs.where.features.main.MainActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_pay_result.*
 
@@ -50,7 +50,7 @@ class StorePayResultActivity : BaseActivity() {
         check_order_tv.setOnClickListener {
 
             if (useType == Constant.PAY_INFO_ESTORE || useType == Constant.PAY_INFO_FOOD || useType == Constant.PAY_INFO_TAKEAWAY || useType == Constant.PAY_INFO_HOTEL) {
-                startActivityClearTop(HomeActivity::class.java, Bundle().apply {
+                startActivityClearTop(MainActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_TAB, 2)
                 })
             }

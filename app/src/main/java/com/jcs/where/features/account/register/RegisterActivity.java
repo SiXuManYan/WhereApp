@@ -12,7 +12,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.home.HomeActivity;
+import com.jcs.where.features.main.MainActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -109,7 +109,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     public void registerSuccess() {
         ToastUtils.showShort(R.string.register_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
-        startActivityClearTop(HomeActivity.class, null);
+        startActivityClearTop(MainActivity.class, null);
         finish();
     }
 }

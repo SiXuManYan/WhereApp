@@ -27,7 +27,7 @@ import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.account.bind.BindPhoneActivity;
 import com.jcs.where.features.account.password.PasswordResetActivity;
 import com.jcs.where.features.account.register.RegisterActivity;
-import com.jcs.where.home.HomeActivity;
+import com.jcs.where.features.main.MainActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -255,7 +255,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void LoginSuccess() {
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         ToastUtils.showShort(getString(R.string.login_success));
-        startActivityClearTop(HomeActivity.class, null);
+        startActivityClearTop(MainActivity.class, null);
         finish();
     }
 

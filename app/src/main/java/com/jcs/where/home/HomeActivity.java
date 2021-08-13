@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends BaseMvpActivity<MainPresenter> implements MainView {
+public class HomeActivity extends BaseMvpActivity<HomePresenter> implements HomeView {
 
     private static final int REQUEST_PERMISSION_CODE = 1;
     FragmentManager fm;

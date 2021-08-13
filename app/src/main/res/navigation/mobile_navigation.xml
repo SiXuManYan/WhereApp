@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_mine"
-        android:name="com.jcs.where.mine.fragment.MineFragment"
+        android:name="com.jcs.where.features.mine.MineFragment"
         tools:layout="@layout/fragment_mine" />
 
 

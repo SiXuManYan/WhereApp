@@ -6,20 +6,24 @@
 
     <FrameLayout
         android:id="@+id/fl_content"
-        android:layout_above="@+id/tabs_navigator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tabs_navigator" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/tabs_navigator"
+        android:background="@drawable/shape_navigation_bar" />
 
     <com.flyco.tablayout.CommonTabLayout
         android:id="@+id/tabs_navigator"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="@dimen/dp_55"
         android:layout_alignParentBottom="true"
         app:tl_indicator_width="@dimen/dp_0"
-        android:background="?android:attr/selectableItemBackground"
         app:tl_textSelectColor="@color/blue_377BFF"
         app:tl_textUnselectColor="@color/gray_adb7c8"
-        app:tl_textsize="10sp" />
+        app:tl_textsize="@dimen/sp_11" />
 
 </RelativeLayout>

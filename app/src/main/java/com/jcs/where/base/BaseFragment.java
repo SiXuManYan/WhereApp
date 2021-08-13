@@ -92,7 +92,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void changeStatusTextColor() {
-//        setAndroidNativeLightStatusBar(getActivity(), isStatusDark());
+        setAndroidNativeLightStatusBar(getActivity(), isStatusDark());
     }
 
     protected boolean isStatusDark() {

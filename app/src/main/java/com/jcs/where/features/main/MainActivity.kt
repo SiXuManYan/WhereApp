@@ -13,8 +13,8 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.category.CategoryFragment2
 import com.jcs.where.features.home.HomeFragment
+import com.jcs.where.features.mine.MineFragment
 import com.jcs.where.features.order.parent.OrderFragment
-import com.jcs.where.mine.fragment.MineFragment
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus

@@ -125,11 +125,11 @@
     <string name="login_success">登录成功</string>
     <string name="commit_success">提交成功</string>
     <string name="hint_input_phone_number">请输入手机号</string>
-    <string name="mine_change_language">修改语言</string>
+    <string name="mine_change_language">切换语言</string>
     <string name="mine_merchant_settled">商家入驻</string>
     <string name="mine_collection">我的收藏</string>
     <string name="mine_collection_title">我的收藏</string>
-    <string name="mine_address">地址管理</string>
+    <string name="mine_address">我的地址</string>
     <string name="mine_manager">我的功能</string>
     <string name="mine_after_sales">退款/售后</string>
     <string name="mine_reviews">待评价</string>
@@ -828,11 +828,15 @@ Gentleman must let go</string>
     <string name="refund_commit_success">退款申请提交成功</string>
     <string name="pay_success">支付成功</string>
     <string name="refund_dialog_hint">确定退款吗？</string>
-    <string name="more">more</string>
-    <string name="hotel">Hotel</string>
-    <string name="general_service">General Service</string>
-    <string name="food">Food</string>
-    <string name="travel">Travel</string>
+    <string name="more">更多</string>
+    <string name="hotel">酒店</string>
+    <string name="general_service">综合服务</string>
+    <string name="food">餐厅</string>
+    <string name="travel">旅游</string>
+    <string name="my_likes">我的积分</string>
+    <string name="my_conis">我的收藏</string>
+    <string name="viewed">我的足迹</string>
+    <string name="vouchers">我的卡券</string>
 
 
 </resources>

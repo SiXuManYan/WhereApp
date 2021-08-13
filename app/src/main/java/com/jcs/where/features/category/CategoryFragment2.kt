@@ -27,6 +27,10 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
     override fun getLayoutId() = R.layout.fragment_category_2
 
+    override fun isStatusDark() = false
+
+    override fun needChangeStatusBarStatus() = true
+
     override fun initView(view: View?) {
         view?.let {
             BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_rl))

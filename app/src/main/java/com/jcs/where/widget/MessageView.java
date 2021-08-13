@@ -4,9 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 
 import com.jcs.where.R;
@@ -17,6 +19,7 @@ import com.jcs.where.R;
 public class MessageView extends LinearLayout {
 
     private TextView message_count_tv;
+    private ImageView message_iv;
     private int currentMessageCount = 0;
 
     public MessageView(Context context) {
@@ -43,6 +46,7 @@ public class MessageView extends LinearLayout {
     private void initView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_message_count, this, true);
         message_count_tv = view.findViewById(R.id.message_count_tv);
+        message_iv = view.findViewById(R.id.message_iv);
     }
 
     /**
@@ -60,6 +64,8 @@ public class MessageView extends LinearLayout {
         this.currentMessageCount = count;
     }
 
+    public void setMessageImageResource(@DrawableRes int resId) {
 
-
+        message_iv.setImageResource(resId);
+    }
 }

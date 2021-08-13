@@ -59,6 +59,7 @@ import io.rong.imlib.RongIMClient;
 
 import static android.app.Activity.RESULT_OK;
 
+@Deprecated
 public class MineFragment extends BaseFragment {
 
 

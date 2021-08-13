@@ -89,6 +89,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     /** 新闻列表数据 */
     private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
 
+    override fun isStatusDark() = false
+
+    override fun needChangeStatusBarStatus() = true
+
 
     override fun getLayoutId() = R.layout.fragment_home3
 

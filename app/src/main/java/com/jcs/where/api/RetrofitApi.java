@@ -1443,7 +1443,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 商城评价列表数量
+     * 获取订单tab
      */
     @GET("commonapi/v2/orders/filters")
     Observable<JcsResponse<ArrayList<OrderTabResponse>>> getOrderTabs();

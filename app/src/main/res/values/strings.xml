@@ -837,6 +837,7 @@ Gentleman must let go</string>
     <string name="my_conis">我的收藏</string>
     <string name="viewed">我的足迹</string>
     <string name="vouchers">我的卡券</string>
+    <string name="empty_card_coupon">暂无卡券</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.jcs.where.integral;
+package com.jcs.where.features.integral;
 
 import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.api.response.SignListResponse;

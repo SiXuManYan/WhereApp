@@ -1,4 +1,4 @@
-package com.jcs.where.integral.child.detail;
+package com.jcs.where.features.integral.child.detail;
 
 import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.api.response.IntegralDetailResponse;

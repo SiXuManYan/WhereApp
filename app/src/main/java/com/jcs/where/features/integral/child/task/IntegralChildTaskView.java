@@ -1,4 +1,4 @@
-package com.jcs.where.integral.child.task;
+package com.jcs.where.features.integral.child.task;
 
 import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;

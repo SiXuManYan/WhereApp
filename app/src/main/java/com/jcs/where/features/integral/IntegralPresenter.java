@@ -1,10 +1,11 @@
-package com.jcs.where.integral;
+package com.jcs.where.features.integral;
 
 import com.google.gson.JsonElement;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.UserInfoResponse;
+import com.jcs.where.features.integral.IntegralView;
 
 import io.reactivex.annotations.NonNull;
 

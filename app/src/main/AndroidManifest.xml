@@ -272,7 +272,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".integral.IntegralActivity"
+            android:name=".features.integral.IntegralActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 

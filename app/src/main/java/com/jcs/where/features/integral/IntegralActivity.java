@@ -1,4 +1,4 @@
-package com.jcs.where.integral;
+package com.jcs.where.features.integral;
 
 import android.graphics.Typeface;
 import android.view.View;
@@ -21,8 +21,8 @@ import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.integral.child.detail.IntegralChildDetailFragment;
-import com.jcs.where.integral.child.task.IntegralChildTaskFragment;
+import com.jcs.where.features.integral.child.detail.IntegralChildDetailFragment;
+import com.jcs.where.features.integral.child.task.IntegralChildTaskFragment;
 import com.jcs.where.widget.IntegralItemView;
 
 import org.greenrobot.eventbus.EventBus;

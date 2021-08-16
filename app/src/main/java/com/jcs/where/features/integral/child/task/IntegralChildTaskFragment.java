@@ -1,4 +1,4 @@
-package com.jcs.where.integral.child.task;
+package com.jcs.where.features.integral.child.task;
 
 
 import android.os.Bundle;

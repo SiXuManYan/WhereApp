@@ -1,9 +1,10 @@
-package com.jcs.where.integral.child.task;
+package com.jcs.where.features.integral.child.task;
 
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
+import com.jcs.where.features.integral.child.task.IntegralChildTaskView;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;

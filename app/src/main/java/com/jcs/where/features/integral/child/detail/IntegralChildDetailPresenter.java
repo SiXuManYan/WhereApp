@@ -1,9 +1,10 @@
-package com.jcs.where.integral.child.detail;
+package com.jcs.where.features.integral.child.detail;
 
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.IntegralDetailResponse;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.features.integral.child.detail.IntegralChildDetailView;
 
 import java.util.List;
 

@@ -740,7 +740,7 @@
     <string name="give_up">Give up</string>
     <string name="merchant">Merchant</string>
     <string name="connect_service">Contact Customer Service</string>
-    <string name="conditions_privacy">By Submit up, you agree to our Terms and Conditions and Privacy Policy</string>
+    <string name="conditions_privacy">By submitting, you agree to our Terms and Conditions and Privacy Policy</string>
 
     <string name="conditions_privacy_0">By Submit up, you agree to our </string>
     <string name="conditions_privacy_1">&#160;Terms and Conditions&#160;</string>

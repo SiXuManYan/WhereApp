@@ -30,7 +30,7 @@ import com.jcs.where.features.order.parent.OrderActivity;
 import com.jcs.where.features.setting.SettingActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.hotel.activity.CityPickerActivity;
-import com.jcs.where.integral.IntegralActivity;
+import com.jcs.where.features.integral.IntegralActivity;
 import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.mine.activity.CollectionListActivity;
 import com.jcs.where.mine.activity.FootprintActivity;

@@ -1,4 +1,4 @@
-package com.jcs.where.integral.child.detail;
+package com.jcs.where.features.integral.child.detail;
 
 
 import android.view.View;

@@ -330,7 +330,7 @@
     <LinearLayout
         android:id="@+id/top_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
+        android:layout_height="@dimen/dp_44"
         android:gravity="end|center_vertical"
         android:orientation="horizontal">
 

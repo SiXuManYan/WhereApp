@@ -23,16 +23,6 @@
             tools:src="@tools:sample/backgrounds/scenic[7]" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_4"
-            android:layout_marginTop="@dimen/dp_4"
-            android:background="@drawable/shape_black_radius_2"
-            android:padding="@dimen/dp_4"
-            android:text="@string/general_service"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_10" />
 
     </FrameLayout>
 

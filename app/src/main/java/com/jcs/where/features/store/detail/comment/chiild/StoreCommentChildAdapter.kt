@@ -70,9 +70,6 @@ class StoreCommentAdapter : BaseQuickAdapter<CommentResponse, BaseViewHolder>(R.
             } else {
                 grid
             }
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(15f), 0, 0).apply {
-                setDrawHeaderFooter(false)
-            })
             adapter = imageAdapter
         }
 
@@ -103,8 +100,6 @@ class StoreCommentImageAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layo
             child_iv.layoutParams = layoutParams
         }
         GlideUtil.load(context, item, child_iv, 5)
-
-
 
     }
 

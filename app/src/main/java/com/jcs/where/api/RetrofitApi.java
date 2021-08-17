@@ -82,6 +82,7 @@ import com.jcs.where.api.response.gourmet.qr.QrResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
+import com.jcs.where.api.response.hotel.HotelComment;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
@@ -1482,6 +1483,19 @@ public interface RetrofitApi {
             @Body UpLoadBillsPayAccountInfo request
     );
 
+
+    /**
+     * 酒店订单申请退款
+     *
+     * @param type 评价显示类型（1：晒图，2：低分，3：最新 0 全部）
+     */
+    @GET("hotelapi/v2/hotel/{hotel_id}/comments")
+    Observable<JcsResponse<PageResponse<HotelComment>>> getHotelCommentList(
+            @Path("hotel_id") int hotel_id,
+            @Query("type") int type,
+            @Query("page") int page
+
+    );
 
 
 }

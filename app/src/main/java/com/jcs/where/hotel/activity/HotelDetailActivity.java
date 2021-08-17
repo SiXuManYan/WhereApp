@@ -10,6 +10,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -18,7 +19,6 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,12 +46,14 @@ import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.features.hotel.comment.HotelCommentActivity2;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter;
 import com.jcs.where.hotel.activity.detail.MediaData;
 import com.jcs.where.hotel.helper.HotelSelectDateHelper;
 import com.jcs.where.hotel.model.HotelDetailModel;
 import com.jcs.where.popupwindow.RoomDetailPopup;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MobUtil;
@@ -89,13 +91,13 @@ public class HotelDetailActivity extends BaseActivity {
     private TextView checkInTv, checkOutTv, addressTv;
     private String phone;
     private TextView mStartDateTv, mStartWeekTv, mEndDateTv, mEndWeekTv, mTotalDayTv;
-    private RecyclerView roomRv, facilitiesRv;
+    private RecyclerView roomRv, rv_facilities;
     private RoomAdapter roomAdapter;
     private FacilitiesAdapter facilitiesAdapter;
     private TextView policyStartTimeTv, policyEndTimeTv, policyChildrenTv;
     private NestedScrollView scrollView;
     private View useView;
-    private LinearLayout commentLl;
+    private LinearLayout ll_comment;
     private CircleImageView commentAvaterIv;
     private TextView commentNameTv, commentDetailTv, seeMoreTv;
     private ImageView likeIv, shareIv;
@@ -222,17 +224,17 @@ public class HotelDetailActivity extends BaseActivity {
         roomRv.setAdapter(roomAdapter);
 
 
-        facilitiesRv = findViewById(R.id.rv_facilities);
+        rv_facilities = findViewById(R.id.rv_facilities);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HotelDetailActivity.this, 2) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         };
-        facilitiesRv.setLayoutManager(gridLayoutManager);
-        facilitiesRv.setNestedScrollingEnabled(true);
+        rv_facilities.setLayoutManager(gridLayoutManager);
+        rv_facilities.setNestedScrollingEnabled(true);
         facilitiesAdapter = new FacilitiesAdapter();
-        facilitiesRv.setAdapter(facilitiesAdapter);
+        rv_facilities.setAdapter(facilitiesAdapter);
 
 
         policyStartTimeTv = findViewById(R.id.tv_policystarttime);
@@ -292,16 +294,15 @@ public class HotelDetailActivity extends BaseActivity {
 
         useView.getBackground().setAlpha(0);
         toolbar.getBackground().setAlpha(0);//透明
-        commentLl = findViewById(R.id.ll_comment);
+        ll_comment = findViewById(R.id.ll_comment);
         commentAvaterIv = findViewById(R.id.iv_commentavatar);
         commentNameTv = findViewById(R.id.username);
         commentDetailTv = findViewById(R.id.tv_commentdetail);
         seeMoreTv = findViewById(R.id.tv_seemore);
-        seeMoreTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HotelCommentActivity.goTo(HotelDetailActivity.this, mHotelId);
-            }
+        seeMoreTv.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constant.PARAM_ID, mHotelId);
+            startActivity(HotelCommentActivity2.class, bundle);
         });
         findViewById(R.id.tv_commentnumber).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -640,9 +641,9 @@ public class HotelDetailActivity extends BaseActivity {
             public void onSuccess(@NonNull HotelCommentsResponse hotelCommentsResponse) {
                 stopLoading();
                 if (hotelCommentsResponse.getData().size() == 0) {
-                    commentLl.setVisibility(View.GONE);
+                    ll_comment.setVisibility(View.GONE);
                 } else {
-                    commentLl.setVisibility(View.VISIBLE);
+                    ll_comment.setVisibility(View.VISIBLE);
                     if (hotelCommentsResponse.getData().size() > 1) {
                         seeMoreTv.setVisibility(View.VISIBLE);
                     } else {

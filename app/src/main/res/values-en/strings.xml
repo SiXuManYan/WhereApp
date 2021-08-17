@@ -827,8 +827,8 @@ Gentleman must let go</string>
     <string name="general_service">General Service</string>
     <string name="food">Food</string>
     <string name="travel">Travel</string>
-    <string name="my_likes">My likes</string>
-    <string name="my_conis">My conis</string>
+    <string name="my_likes">My conis</string>
+    <string name="my_conis">My likes</string>
     <string name="viewed">Viewed</string>
     <string name="vouchers">Vouchers</string>
     <string name="empty_card_coupon">No coupons</string>

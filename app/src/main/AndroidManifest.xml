@@ -620,6 +620,7 @@
         <activity android:name=".features.hotel.order.OrderDetailActivity2" />
         <activity android:name=".features.order.parent.OrderActivity" />
         <activity android:name=".features.coupon.CardCouponActivity" />
+        <activity android:name=".features.hotel.comment.HotelCommentActivity2" />
 
 
     </application>

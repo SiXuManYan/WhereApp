@@ -31,6 +31,7 @@ public class Constant {
     public static final String PARAM_RESTAURANT_NAME = "param_restaurant_name";
     public static final String PARAM_NUMBER = "param_number";
     public static final String PARAM_ORDER_ID = "param_order_id";
+    public static final String PARAM_HOTEL_ID = "param_hotel_id";
     public static final String PARAM_ORDER_IDS = "param_order_ids";
     public static final String PARAM_SHOP_ID = "param_shop_id";
     public static final String PARAM_SHOP_NAME = "param_shop_name";

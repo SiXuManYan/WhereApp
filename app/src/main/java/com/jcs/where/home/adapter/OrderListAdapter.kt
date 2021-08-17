@@ -19,6 +19,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
+import com.jcs.where.features.hotel.comment.post.HotelCommentPostActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -101,9 +102,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         if (item.image.isNotEmpty()) {
             val options = RequestOptions.bitmapTransform(
-                    GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                    .error(R.mipmap.ic_empty_gray)
-                    .placeholder(R.mipmap.ic_empty_gray)
+                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL)
+            )
+                .error(R.mipmap.ic_empty_gray)
+                .placeholder(R.mipmap.ic_empty_gray)
             Glide.with(context).load(item.image[0]).apply(options).into(image_iv)
         }
         first_tv.text = modelData.room_name
@@ -129,10 +131,17 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     })
                 }
             }
-//            5 -> {
-//                right_tv.visibility = View.GONE
-//                right_tv.text = StringUtils.getString(R.string.to_review)
-//            }
+            5 -> {
+                bottom_ll.visibility = View.VISIBLE
+                right_tv.visibility = View.GONE
+                right_tv.text = StringUtils.getString(R.string.to_review)
+                right_tv.setOnClickListener {
+                    startActivityAfterLogin(HotelCommentPostActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ORDER_ID, item.id)
+                        putInt(Constant.PARAM_HOTEL_ID, item.model_id)
+                    })
+                }
+            }
             else -> {
                 bottom_ll.visibility = View.GONE
             }
@@ -176,9 +185,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
 
         val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray)
+            GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL)
+        )
+            .error(R.mipmap.ic_empty_gray)
+            .placeholder(R.mipmap.ic_empty_gray)
         Glide.with(context).load(modelData.food_image).apply(options).into(image_iv)
 
 
@@ -253,9 +263,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         if (item.image.isNotEmpty()) {
             val options = RequestOptions.bitmapTransform(
-                    GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                    .error(R.mipmap.ic_empty_gray)
-                    .placeholder(R.mipmap.ic_empty_gray)
+                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL)
+            )
+                .error(R.mipmap.ic_empty_gray)
+                .placeholder(R.mipmap.ic_empty_gray)
             Glide.with(context).load(item.image[0]).apply(options).into(image_iv)
         }
 
@@ -335,9 +346,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
 
         val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray)
+            GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL)
+        )
+            .error(R.mipmap.ic_empty_gray)
+            .placeholder(R.mipmap.ic_empty_gray)
 
 
         if (goods.isNotEmpty()) {

@@ -7,7 +7,9 @@ import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
+import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.SuccessResponse;
+import com.jcs.where.api.response.hotel.HotelComment;
 
 import java.util.List;
 
@@ -38,4 +40,11 @@ public class HotelDetailModel extends BaseModel {
     public void getComments(int hotelId, BaseObserver<HotelCommentsResponse> observer) {
         dealResponse(mRetrofit.getHotelComments(hotelId), observer);
     }
+
+    public void getHotelCommentList(int hotelId, BaseObserver<PageResponse<HotelComment>> observer) {
+        dealResponse(mRetrofit.getHotelCommentList(hotelId,0,1), observer);
+    }
+
+
+
 }

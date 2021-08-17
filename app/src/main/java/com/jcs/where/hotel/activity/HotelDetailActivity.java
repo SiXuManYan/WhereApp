@@ -43,10 +43,13 @@ import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
+import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.api.response.hotel.HotelComment;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.SubscribeBean;
 import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.hotel.comment.HotelCommentActivity2;
+import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter;
 import com.jcs.where.hotel.activity.detail.MediaData;
@@ -57,7 +60,6 @@ import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MobUtil;
-import com.jcs.where.widget.StarView;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.widget.pager.IndicatorView2;
@@ -70,7 +72,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
@@ -98,8 +99,7 @@ public class HotelDetailActivity extends BaseActivity {
     private NestedScrollView scrollView;
     private View useView;
     private LinearLayout ll_comment;
-    private CircleImageView commentAvaterIv;
-    private TextView commentNameTv, commentDetailTv, seeMoreTv;
+    private TextView seeMoreTv;
     private ImageView likeIv, shareIv;
     private TextView titleTv, desc_tv, view_all_desc_tv, view_all_amenities_tv;
     private int like = 2;
@@ -107,8 +107,6 @@ public class HotelDetailActivity extends BaseActivity {
     private RelativeLayout hotelDetailRl, navigationRl;
     private String hotelName, hotelBreakfast;
     private ImageView star1Iv, star2Iv, star3Iv, star4Iv, star5Iv;
-    private StarView mStarView;
-    private TextView timeTv;
     private HotelDetailModel mModel;
     private int mHotelId;
     private JcsCalendarAdapter.CalendarBean mStartDateBean;
@@ -261,7 +259,6 @@ public class HotelDetailActivity extends BaseActivity {
                         likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhiteunlike));
                     }
                     shareIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_share_black));
-//                    toolbar.setNavigationIcon(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_back_black));
                     back_iv.setImageResource(R.drawable.ic_back_black);
 
 
@@ -295,9 +292,7 @@ public class HotelDetailActivity extends BaseActivity {
         useView.getBackground().setAlpha(0);
         toolbar.getBackground().setAlpha(0);//透明
         ll_comment = findViewById(R.id.ll_comment);
-        commentAvaterIv = findViewById(R.id.iv_commentavatar);
-        commentNameTv = findViewById(R.id.username);
-        commentDetailTv = findViewById(R.id.tv_commentdetail);
+
         seeMoreTv = findViewById(R.id.tv_seemore);
         seeMoreTv.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
@@ -313,8 +308,6 @@ public class HotelDetailActivity extends BaseActivity {
         likeIv.setOnClickListener(view -> collection(like != 1));
         hotelDetailRl = findViewById(R.id.rl_hoteldetail);
         navigationRl = findViewById(R.id.rl_navigation);
-        mStarView = findViewById(R.id.starView);
-        timeTv = findViewById(R.id.tv_time);
 
 
     }
@@ -629,37 +622,35 @@ public class HotelDetailActivity extends BaseActivity {
         });
     }
 
+
+    private RecyclerView comment_rv;
+    private HotelCommentAdapter mAdapter = new HotelCommentAdapter();
+
+
     private void initCommentList() {
-        showLoading();
-        mModel.getComments(mHotelId, new BaseObserver<HotelCommentsResponse>() {
+
+        comment_rv = findViewById(R.id.comment_rv);
+        comment_rv.setAdapter(mAdapter);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
+                LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+
+        comment_rv.setLayoutManager(linearLayoutManager);
+
+        mModel.getHotelCommentList(mHotelId, new BaseObserver<PageResponse<HotelComment>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
+
             }
 
             @Override
-            public void onSuccess(@NonNull HotelCommentsResponse hotelCommentsResponse) {
-                stopLoading();
-                if (hotelCommentsResponse.getData().size() == 0) {
-                    ll_comment.setVisibility(View.GONE);
-                } else {
-                    ll_comment.setVisibility(View.VISIBLE);
-                    if (hotelCommentsResponse.getData().size() > 1) {
-                        seeMoreTv.setVisibility(View.VISIBLE);
-                    } else {
-                        seeMoreTv.setVisibility(View.GONE);
-                    }
-                    HotelCommentsResponse.DataBean dataBean = hotelCommentsResponse.getData().get(0);
-                    if (!TextUtils.isEmpty(dataBean.getAvatar())) {
-                        GlideUtil.load(HotelDetailActivity.this, dataBean.getAvatar(), commentAvaterIv);
-                    } else {
-                        commentAvaterIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
-                    }
-                    commentNameTv.setText(dataBean.getUsername());
-                    timeTv.setText(dataBean.getCreated_at());
-                    mStarView.setStartNum(dataBean.getStar());
-                    commentDetailTv.setText(dataBean.getContent());
-                }
+            public void onSuccess(@NonNull PageResponse<HotelComment> hotelCommentsResponse) {
+                mAdapter.setNewInstance(hotelCommentsResponse.getData());
             }
         });
     }

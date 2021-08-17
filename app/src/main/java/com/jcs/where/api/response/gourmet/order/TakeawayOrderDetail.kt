@@ -28,7 +28,11 @@ data class TakeawayOrderData(
         var price: BigDecimal = BigDecimal.ZERO,
 
         /** 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功）	 */
-        var status: Int
+        var status: Int,
+
+        /** 评论状态（1：未评论，2：已评论） */
+        var comment_status: Int = 0
+
 )
 
 

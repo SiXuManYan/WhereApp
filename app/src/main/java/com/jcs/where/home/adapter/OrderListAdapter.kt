@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.comment.post.HotelCommentPostActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
@@ -220,11 +221,15 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
             6 -> {
                 // 交易成功待评价
-                bottom_ll.visibility = View.GONE
+                bottom_ll.visibility = View.VISIBLE
 
                 right_tv.text = StringUtils.getString(R.string.evaluation)
                 right_tv.setOnClickListener {
-                    // 评价
+                    startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ORDER_ID, item.id)
+                        putInt(Constant.PARAM_RESTAURANT_ID, item.model_id)
+                        putInt(Constant.PARAM_TYPE, 1)
+                    })
                 }
             }
             else -> {
@@ -298,10 +303,14 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
             8 -> {
                 // 交易成功。待评价
-                bottom_ll.visibility = View.GONE
+                bottom_ll.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_review)
                 right_tv.setOnClickListener {
-
+                    startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ORDER_ID, item.id)
+                        putInt(Constant.PARAM_RESTAURANT_ID, item.model_id)
+                        putInt(Constant.PARAM_TYPE, 2)
+                    })
 
                 }
             }

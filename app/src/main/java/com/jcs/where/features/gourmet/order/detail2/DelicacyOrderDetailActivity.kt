@@ -14,6 +14,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -193,7 +194,11 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                         text = getString(R.string.evaluation)
                     }
                     right_tv.setOnClickListener {
-                        // 评价
+                        startActivity(FoodCommentPostActivity::class.java,Bundle().apply {
+                            putInt(Constant.PARAM_ORDER_ID , orderId)
+                            putInt(Constant.PARAM_RESTAURANT_ID , restaurantData.id)
+                            putInt(Constant.PARAM_TYPE , 1)
+                        })
                     }
                 } else {
                     bottom_container_rl.visibility = View.GONE

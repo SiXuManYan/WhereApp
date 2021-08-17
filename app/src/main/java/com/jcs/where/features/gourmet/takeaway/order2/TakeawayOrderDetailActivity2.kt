@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.*
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
-import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayGoodDataAdapter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailPresenter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailView
@@ -201,7 +201,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                             .create().show()
                 }
             }
-/*            8 -> {
+            8 -> {
                 if (orderData.comment_status == 1) {
                     bottom_container_rl.visibility = View.VISIBLE
                     left_tv.apply {
@@ -213,12 +213,16 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                         text = getString(R.string.evaluation)
                     }
                     right_tv.setOnClickListener {
-                        // 评价
+                        startActivity(FoodCommentPostActivity::class.java,Bundle().apply {
+                            putInt(Constant.PARAM_ORDER_ID , orderId)
+                            putInt(Constant.PARAM_RESTAURANT_ID , restaurantData.id)
+                            putInt(Constant.PARAM_TYPE , 2)
+                        })
                     }
                 } else {
                     bottom_container_rl.visibility = View.GONE
                 }
-            }*/
+            }
             else -> {
                 bottom_container_rl.visibility = View.GONE
             }

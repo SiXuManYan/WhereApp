@@ -21,6 +21,7 @@ import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
 import com.jcs.where.api.request.bills.BillsOrderCommit;
 import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
+import com.jcs.where.api.request.hotel.FoodCommitComment;
 import com.jcs.where.api.request.hotel.HotelCommitComment;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
@@ -1503,6 +1504,12 @@ public interface RetrofitApi {
      */
     @POST("hotelapi/v2/hotel/comment")
     Observable<JcsResponse<JsonElement>> commitHotelComment(@Body HotelCommitComment request);
+
+    /**
+     * 美食提交评价
+     */
+    @POST("restaurantapi/v2/comments")
+    Observable<JcsResponse<JsonElement>> commitFoodComment(@Body FoodCommitComment request);
 
 
 }

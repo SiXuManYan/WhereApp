@@ -11,6 +11,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelOrderDetail
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.comment.post.HotelCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -213,14 +214,14 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                         setOnClickListener {
 
                             AlertDialog.Builder(this@OrderDetailActivity2)
-                                    .setTitle(R.string.prompt)
-                                    .setMessage(R.string.cancel_order_confirm)
-                                    .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-                                        presenter.cancelOrder(order_id)
-                                        dialogInterface.dismiss()
-                                    }
-                                    .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
-                                    .create().show()
+                                .setTitle(R.string.prompt)
+                                .setMessage(R.string.cancel_order_confirm)
+                                .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                                    presenter.cancelOrder(order_id)
+                                    dialogInterface.dismiss()
+                                }
+                                .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                                .create().show()
                         }
                     }
 
@@ -234,34 +235,40 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                             visibility = View.VISIBLE
                             setOnClickListener {
                                 AlertDialog.Builder(this@OrderDetailActivity2)
-                                        .setTitle(R.string.prompt)
-                                        .setMessage(R.string.refund_dialog_hint)
-                                        .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-                                            presenter.refundOrder(order_id)
-                                            dialogInterface.dismiss()
-                                        }
-                                        .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
-                                        .create().show()
+                                    .setTitle(R.string.prompt)
+                                    .setMessage(R.string.refund_dialog_hint)
+                                    .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                                        presenter.refundOrder(order_id)
+                                        dialogInterface.dismiss()
+                                    }
+                                    .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                                    .create().show()
                             }
                         } else {
                             visibility = View.GONE
                         }
                     }
                 }
-//                5 -> {
-//                    left_tv.apply {
-//                        if (order_data.comment_status == 1) {
-//                            text = getString(R.string.to_review)
-//                            visibility = View.VISIBLE
-//                            setOnClickListener {
-//                              // 去评价
-//                            }
-//                        } else {
-//                            visibility = View.GONE
-//                        }
-//                    }
-//                    right_tv.visibility = View.GONE
-//                }
+                5 -> {
+                    left_tv.apply {
+                        if (order_data.comment_status == 1) {
+                            text = getString(R.string.to_review)
+                            visibility = View.VISIBLE
+                            setOnClickListener {
+
+                                startActivityAfterLogin(HotelCommentPostActivity::class.java, Bundle().apply {
+                                    putInt(Constant.PARAM_ORDER_ID, order_id)
+                                    putInt(Constant.PARAM_HOTEL_ID, hotelData.id)
+                                })
+
+
+                            }
+                        } else {
+                            visibility = View.GONE
+                        }
+                    }
+                    right_tv.visibility = View.GONE
+                }
                 else -> {
                     bottom_ll.visibility = View.GONE
                 }

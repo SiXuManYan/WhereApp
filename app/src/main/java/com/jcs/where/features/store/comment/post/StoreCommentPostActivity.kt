@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundAdapter
 import com.jcs.where.utils.BusinessUtils
@@ -15,6 +16,7 @@ import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.OnChangeRatingByClickListener
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_store_comment_post.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/7/14 14:42.
@@ -113,6 +115,7 @@ class StoreCommentPostActivity : BaseMvpActivity<StoreCommentPostPresenter>(), S
     }
 
     override fun commitSuccess() {
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         ToastUtils.showShort(R.string.commit_success)
         finish()
     }

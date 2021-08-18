@@ -1,15 +1,19 @@
 package com.jcs.where.features.hotel.comment.post
 
-import android.graphics.Color
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundAdapter
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.widget.ratingstar.OnChangeRatingByClickListener
+import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_hotel_comment_post.*
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -29,7 +33,6 @@ class HotelCommentPostActivity : BaseMvpActivity<HotelCommentPostPresenter>(), H
     override fun isStatusDark(): Boolean = true
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
             hotelId = it.getInt(Constant.PARAM_HOTEL_ID)
@@ -84,9 +87,29 @@ class HotelCommentPostActivity : BaseMvpActivity<HotelCommentPostPresenter>(), H
             }
         }
 
+        star_view.onChangeRatingByClickListener = object : OnChangeRatingByClickListener {
+            override fun clickRatingResult(rating: Int) {
+                comment_value_tv.text = BusinessUtils.getCommentRatingText(rating)
+            }
+
+        }
+
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            return
+        }
+        val elements = Matisse.obtainPathResult(data)
+        elements.forEach {
+            mImageAdapter.addData(it)
+        }
+    }
+
+
     override fun commitSuccess() {
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         ToastUtils.showShort(R.string.commit_success)
         finish()
     }

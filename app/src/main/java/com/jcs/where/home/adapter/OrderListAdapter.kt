@@ -134,7 +134,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             }
             5 -> {
                 bottom_ll.visibility = View.VISIBLE
-                right_tv.visibility = View.GONE
+                right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_review)
                 right_tv.setOnClickListener {
                     startActivityAfterLogin(HotelCommentPostActivity::class.java, Bundle().apply {
@@ -223,7 +223,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 // 交易成功待评价
                 bottom_ll.visibility = View.VISIBLE
 
-                right_tv.text = StringUtils.getString(R.string.evaluation)
+                right_tv.text = StringUtils.getString(R.string.to_review)
                 right_tv.setOnClickListener {
                     startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
                         putInt(Constant.PARAM_ORDER_ID, item.id)

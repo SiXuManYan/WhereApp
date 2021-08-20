@@ -55,7 +55,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
     private NestedScrollView scrollView;
     private int like = 2;
     private int toolbarStatus = 0;
-    private TextView nameTv, startTimeTv, scoreTv, commnetNumberTv, addressTv;
+    private TextView nameTv, startTimeTv, scoreTv, tv_commentnumber, addressTv;
     private RelativeLayout navigationRl;
     private String phone;
     private TextView introduceTv, noticeTv, mToWriteCommentTv;
@@ -169,7 +169,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
 
         nameTv = findViewById(R.id.tv_name);
         scoreTv = findViewById(R.id.tv_score);
-        commnetNumberTv = findViewById(R.id.tv_commentnumber);
+        tv_commentnumber = findViewById(R.id.tv_commentnumber);
         startTimeTv = findViewById(R.id.tv_starttime);
         addressTv = findViewById(R.id.tv_address);
         navigationRl = findViewById(R.id.rl_navigation);
@@ -328,7 +328,7 @@ public class TouristAttractionDetailActivity extends BaseActivity {
                 nameTv.setText(response.getName());
                 scoreTv.setText(response.getGrade() + "");
                 String commentNumberText = String.format(getString(R.string.comment_num_prompt), response.getComments_count());
-                commnetNumberTv.setText(commentNumberText);
+                tv_commentnumber.setText(commentNumberText);
                 String businessHour = getString(R.string.business_hour) + response.getStart_time() + "-" + response.getEnd_time();
                 startTimeTv.setText(businessHour);
                 addressTv.setText(response.getAddress());
@@ -365,6 +365,8 @@ public class TouristAttractionDetailActivity extends BaseActivity {
         mCommentAdapter.setOnItemChildClickListener(this::onCommentItemChildClicked);
 
         mToWriteCommentTv.setOnClickListener(this::onToWriteCommentClicked);
+        back_iv.setOnClickListener(v -> finish());
+        tv_commentnumber.setOnClickListener(v -> TravelCommentActivity.goTo(TouristAttractionDetailActivity.this, mId));
     }
 
     private void onToWriteCommentClicked(View view) {

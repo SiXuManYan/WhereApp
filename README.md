@@ -46,6 +46,10 @@ GooglePlay 发布成功后，在Android以及Pc搜索不到应用解决方案
       标签选择生活时尚
 
 
+1.加loading
+2.美食筛选跳转页面
+
+
 
 
 

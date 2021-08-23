@@ -340,7 +340,7 @@ public class HotelActivity extends BaseActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQ_SELECT_CITY) {
             mCityName = data.getStringExtra(CityPickerActivity.EXTRA_CITY);
-            mCityId = data.getStringExtra(CityPickerActivity.EXTRA_CITYID);
+            mCityId = data.getStringExtra(CityPickerActivity.EXTRA_CITY_ID);
             mLocationTv.setText(mCityName);
         }
     }

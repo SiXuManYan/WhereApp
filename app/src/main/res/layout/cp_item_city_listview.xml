@@ -5,30 +5,31 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:ignore="RtlHardcoded"
-    android:background="@color/grey_F5F5F5">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_item_city_listview_letter"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingRight="36dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textSize="16sp"
-        android:textColor="@color/blue_4C9EF2"
+        android:text="A"
+        android:textSize="@dimen/sp_13"
+        android:textColor="@color/grey_666666"
         android:clickable="false"/>
 
     <TextView
         android:id="@+id/tv_item_city_listview_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:text="阿富汗"
         android:padding="15dp"
         android:background="@drawable/shape_city_normal_bg"
         android:layout_marginBottom="1dp"
-        android:clickable="true"
         android:gravity="center_vertical"
-        android:textSize="16sp"
-        android:textColor="#5c5c5c"/>
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/black_333333"/>
 
 </LinearLayout>

@@ -14,7 +14,6 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CityPickerResponse;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.bean.CityResponse;
-import com.jcs.where.bean.LocateState;
 import com.jcs.where.hotel.activity.picker.CityPickerPresenter;
 import com.jcs.where.hotel.activity.picker.CityPickerView;
 import com.jcs.where.hotel.model.CityPickerModel;
@@ -39,11 +38,15 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
 
 
     public static final String EXTRA_CITY = "city";
-    public static final String EXTRA_CITYID = "cityId";
-    private ListView mListView;
+    public static final String EXTRA_CITY_ID = "cityId";
+
+    private ListView listview_all_city;
     private SideLetterBar mLetterBar;
     private CityListAdapter mCityAdapter;
     private CityPickerModel mModel;
+    private TextView location_tv;
+    private TextView get_location_tv;
+    private String locality;
 
     @Override
     protected boolean isStatusDark() {
@@ -64,16 +67,20 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
 
     @Override
     protected void initView() {
-        mListView = findViewById(R.id.listview_all_city);
+        location_tv = findViewById(R.id.location_tv);
+        get_location_tv = findViewById(R.id.get_location_tv);
+
+
+        listview_all_city = findViewById(R.id.listview_all_city);
         TextView overlay = findViewById(R.id.tv_letter_overlay);
         mLetterBar = findViewById(R.id.side_letter_bar);
         mLetterBar.setOverlay(overlay);
         mLetterBar.setOnLetterChangedListener(letter -> {
             int position = mCityAdapter.getLetterPosition(letter);
-            mListView.setSelection(position);
+            listview_all_city.setSelection(position);
         });
         mCityAdapter = new CityListAdapter(this);
-        mListView.setAdapter(mCityAdapter);
+        listview_all_city.setAdapter(mCityAdapter);
         initCity();
     }
 
@@ -98,10 +105,11 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
             public void onGetAddress(Address address) {
                 String countryName = address.getCountryName();//国家
                 String adminArea = address.getAdminArea();//省
-                String locality = address.getLocality();//市
+                //市
+                locality = address.getLocality();
                 String subLocality = address.getSubLocality();//区
                 String featureName = address.getFeatureName();//街道
-                mCityAdapter.updateLocateState(LocateState.SUCCESS, locality, "0" + "");
+                location_tv.setText(locality);
             }
 
             @Override
@@ -150,29 +158,23 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     protected void initData() {
         mModel = new CityPickerModel();
         getCityData();
-        mCityAdapter.setOnCityClickListener(new CityListAdapter.OnCityClickListener() {
-            @Override
-            public void onCityClick(String name, String id) {//选择城市
-                Intent intent = new Intent();
-                intent.putExtra(EXTRA_CITY, name);
-                intent.putExtra(EXTRA_CITYID, id);
-                setResult(RESULT_OK, intent);
-                SPUtil.getInstance().saveString(SPKey.K_CURRENT_AREA_ID, id);
-                finish();
-            }
+        //选择城市
+        mCityAdapter.setOnCityClickListener(this::selectCity);
+    }
 
-            @Override
-            public void onLocateClick() {//点击定位按钮
-                mCityAdapter.updateLocateState(LocateState.LOCATING, null, null);
-//                checkIsGooglePlayConn();//重新定位
-                getCurrentCity();
-            }
-        });
+    private void selectCity(String name, String id) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_CITY, name);
+        intent.putExtra(EXTRA_CITY_ID, id);
+        setResult(RESULT_OK, intent);
+        SPUtil.getInstance().saveString(SPKey.K_CURRENT_AREA_ID, id);
+        finish();
     }
 
     @Override
     protected void bindListener() {
-
+        get_location_tv.setOnClickListener(v -> initCity());
+        location_tv.setOnClickListener(v -> selectCity(locality, "0"));
     }
 
 

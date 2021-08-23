@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,8 +31,6 @@ import com.jcs.where.utils.RequestResultCode;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -298,7 +295,7 @@ public class MerchantSettledActivity extends BaseActivity {
             case RequestResultCode.REQUEST_MERCHANT_SETTLED_TO_CITY_PICKER:
                 if (resultCode == RESULT_OK) {
                     String cityName = data.getStringExtra(CityPickerActivity.EXTRA_CITY);
-                    String cityId = data.getStringExtra(CityPickerActivity.EXTRA_CITYID);
+                    String cityId = data.getStringExtra(CityPickerActivity.EXTRA_CITY_ID);
                     mRequest.setAreaId(Integer.parseInt(cityId));
                     mMerchantCityTv.setText(cityName);
                 }

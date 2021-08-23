@@ -35,7 +35,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
 import com.jcs.where.api.response.search.SearchResultResponse
 import com.jcs.where.api.response.search.SearchResultResponse.TYPE_4_RESTAURANT
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.search.SearchAllAdapter
+import com.jcs.where.features.search.result.SearchAllAdapter
 import com.jcs.where.hotel.activity.map.HotelMapViewPagerTransformer
 import com.jcs.where.hotel.watcher.AfterInputWatcher
 import com.jcs.where.utils.CacheUtil

@@ -833,6 +833,10 @@ Gentleman must let go</string>
     <string name="vouchers">Vouchers</string>
     <string name="empty_card_coupon">No coupons</string>
     <string name="current_location_title">Current Location</string>
+    <string name="empty_search">No results found</string>
+    <string name="empty_search_hint">Try searching different keywords</string>
+    <string name="back_home">Back to home</string>
+    <string name="history_record">History Record</string>
 
 
 </resources>

@@ -24,6 +24,7 @@ public class EmptyView extends LinearLayout {
     private TextView empty_message_tv;
     private TextView empty_hint_tv;
     private TextView action_tv;
+    private LinearLayout parent_ll;
 
     public EmptyView(Context context) {
         super(context);
@@ -53,6 +54,7 @@ public class EmptyView extends LinearLayout {
         empty_message_tv = view.findViewById(R.id.empty_message_tv);
         empty_hint_tv = view.findViewById(R.id.empty_hint_tv);
         action_tv = view.findViewById(R.id.action_tv);
+        parent_ll = view.findViewById(R.id.parent_ll);
     }
 
     public void setEmptyImage(@DrawableRes int imageId) {
@@ -112,8 +114,25 @@ public class EmptyView extends LinearLayout {
         empty_message_tv.setVisibility(View.GONE);
         empty_hint_tv.setVisibility(View.GONE);
         action_tv.setVisibility(View.GONE);
-
     }
 
+
+    public void initEmpty(@DrawableRes int imageId,
+                                @StringRes int emptyMessage,
+                                @StringRes int emptyHint,
+                                @StringRes int actionString,
+                                View.OnClickListener listener){
+
+        parent_ll.setVisibility(View.GONE);
+        empty_iv.setImageResource(imageId);
+        empty_message_tv.setText(emptyMessage);
+        empty_hint_tv.setText(emptyHint);
+        action_tv.setText(actionString);
+        action_tv.setOnClickListener(listener);
+    }
+
+    public void showEmptyContainer(){
+        parent_ll.setVisibility(View.VISIBLE);
+    }
 
 }

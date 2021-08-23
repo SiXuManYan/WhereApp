@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_600"
     android:gravity="center"
+    android:id="@+id/parent_ll"
     android:orientation="vertical">
 
 
@@ -21,19 +22,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_18"
-        android:textColor="@color/grey_666666"
-        android:textSize="@dimen/sp_14"
-        android:text="@string/empty_network_error" />
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_18"
+        tools:text="@string/empty_network_error" />
 
     <TextView
         android:id="@+id/empty_hint_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_12"
         android:textColor="@color/grey_666666"
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_14"
         android:visibility="gone"
         tools:text="@string/empty_network_error_hint"
         tools:visibility="visible" />
@@ -41,17 +42,14 @@
 
     <TextView
         android:id="@+id/action_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_162"
+        android:layout_height="@dimen/dp_44"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/shape_blue_radius_4"
-        android:paddingStart="@dimen/dp_20"
-        android:paddingTop="@dimen/dp_6"
-        android:paddingEnd="@dimen/dp_20"
-        android:paddingBottom="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/shape_blue_radius_22"
+        android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_16"
         android:visibility="gone"
         tools:text="@string/empty_network_error_action"
         tools:visibility="visible" />

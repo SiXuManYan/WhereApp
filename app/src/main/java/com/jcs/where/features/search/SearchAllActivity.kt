@@ -1,139 +1,85 @@
-package com.jcs.where.features.search;
+package com.jcs.where.features.search
 
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ColorUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.jcs.where.R;
-import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
-import com.jcs.where.api.response.search.SearchResultResponse;
-import com.jcs.where.base.IntentEntry;
-import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
-import com.jcs.where.government.activity.MechanismDetailActivity;
-import com.jcs.where.hotel.activity.HotelDetailActivity;
-import com.jcs.where.hotel.watcher.AfterInputWatcher;
-import com.jcs.where.travel.TouristAttractionDetailActivity;
-import com.jcs.where.widget.calendar.JcsCalendarDialog;
-
-import java.util.List;
-
-import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_1_HOTEL;
-import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_2_TRAVEL;
-import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_3_SERVICE;
-import static com.jcs.where.api.response.search.SearchResultResponse.TYPE_4_RESTAURANT;
-import static com.jcs.where.utils.Constant.PARAM_ID;
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.jcs.where.R
+import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.search.result.SearchAllResultActivity
+import com.jcs.where.features.store.history.SearchHistoryAdapter
+import com.jcs.where.utils.Constant
+import com.jcs.where.view.MyLayoutManager
+import kotlinx.android.synthetic.main.activity_search_all.*
 
 /**
  * Created by Wangsw  2021/2/25 10:25.
  * 搜索
  */
-public class SearchAllActivity extends BaseMvpActivity<SearchAllPresenter> implements SearchAllView, OnItemClickListener {
+class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
 
+    private lateinit var mAdapter: SearchHistoryAdapter
 
-    private AppCompatEditText search_aet;
-    private TextView
-            cancel_tv;
-    private SearchAllAdapter mAdapter;
-    private RecyclerView recycler;
+    override fun getLayoutId() = R.layout.activity_search_all
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_search_all;
-    }
+    override fun isStatusDark() = true
 
-    @Override
-    protected boolean isStatusDark() {
-        return true;
-    }
-
-    @Override
-    protected void initView() {
-        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.parent_ll));
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
-        recycler = findViewById(R.id.recycler);
-        search_aet = findViewById(R.id.search_aet);
-        cancel_tv = findViewById(R.id.cancel_tv);
-
-    }
-
-    @Override
-    protected void initData() {
-        presenter = new SearchAllPresenter(this);
-        mAdapter = new SearchAllAdapter();
-        recycler.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
-    }
-
-    @Override
-    protected void bindListener() {
-        cancel_tv.setOnClickListener(v -> finish());
-
-        search_aet.addTextChangedListener(new AfterInputWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                String finalInput = s.toString().trim();
-                handleSearch(finalInput);
+    override fun initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
+        mAdapter = SearchHistoryAdapter().apply {
+            setOnItemClickListener { _, _, position ->
+                val s = mAdapter.data[position]
+                handleSearch(s)
             }
-        });
+        }
+        history_rv.apply {
+            adapter = mAdapter
+            layoutManager = MyLayoutManager()
+        }
+
     }
 
-    private void handleSearch(String finalInput) {
+    override fun initData() {
+        presenter = SearchAllPresenter(this)
+        val searchHistory = presenter.searchHistory
+        mAdapter.setNewInstance(searchHistory)
+
+    }
+
+    override fun bindListener() {
+        cancel_tv.setOnClickListener { finish() }
+
+        search_aet.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    val finalInput = search_aet.text.toString().trim()
+                    handleSearch(finalInput)
+
+                    if (finalInput.isNotBlank()) {
+                        presenter.saveSearchHistory(finalInput)
+                        mAdapter.addData(finalInput)
+                    }
+                    return true
+                }
+                return false
+            }
+
+        })
+
+        delete_iv.setOnClickListener {
+            mAdapter.setNewInstance(null)
+        }
+    }
+
+    private fun handleSearch(finalInput: String) {
         if (TextUtils.isEmpty(finalInput)) {
-            mAdapter.setNewInstance(null);
-            return;
+            return
         }
-        mAdapter.keyWord = finalInput;
-        presenter.search(finalInput);
+        val bundle = Bundle()
+        bundle.putString(Constant.PARAM_NAME, finalInput)
+        startActivity(SearchAllResultActivity::class.java,bundle)
     }
-
-    @Override
-    public void bindSearchResult(List<SearchResultResponse> response) {
-        if (response == null || response.isEmpty()) {
-            mAdapter.setNewInstance(null);
-            return;
-        }
-        mAdapter.setNewInstance(response);
-    }
-
-
-    @Override
-    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-        SearchResultResponse data = mAdapter.getData().get(position);
-
-        switch (data.type) {
-            case TYPE_1_HOTEL:
-                JcsCalendarDialog dialog = new JcsCalendarDialog();
-                dialog.initCalendar(this);
-                HotelDetailActivity.goTo(this, data.id, dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
-                break;
-            case TYPE_2_TRAVEL:
-                TouristAttractionDetailActivity.goTo(this, data.id);
-                break;
-            case TYPE_3_SERVICE:
-                toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
-                break;
-            case TYPE_4_RESTAURANT:
-                Bundle bundle = new Bundle();
-                bundle.putString(PARAM_ID, String.valueOf(data.id));
-                startActivity(RestaurantDetailActivity.class, bundle);
-                break;
-            default:
-                break;
-        }
-
-    }
-
-
 }

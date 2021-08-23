@@ -1,4 +1,4 @@
-package com.jcs.where.features.search;
+package com.jcs.where.features.search.result;
 
 import android.text.SpannableString;
 import android.widget.TextView;
@@ -28,7 +28,7 @@ public class SearchAllAdapter extends BaseQuickAdapter<SearchResultResponse, Bas
     @Override
     protected void convert(@NotNull BaseViewHolder holder, SearchResultResponse response) {
         TextView name_tv = holder.getView(R.id.name_tv);
-        SpannableString spannableString = FeaturesUtil.getHighLightKeyWord(ColorUtils.getColor(R.color.blue_4C9EF2), response.name, keyWord);
+        SpannableString spannableString = FeaturesUtil.getHighLightKeyWord(ColorUtils.getColor(R.color.blue_377BFF), response.name, keyWord);
         name_tv.setText(spannableString);
     }
 }

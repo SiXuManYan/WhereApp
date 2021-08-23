@@ -623,6 +623,7 @@
         <activity android:name=".features.hotel.comment.HotelCommentActivity2" />
         <activity android:name=".features.hotel.comment.post.HotelCommentPostActivity" />
         <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />
+        <activity android:name=".features.search.result.SearchAllResultActivity" />
 
 
     </application>

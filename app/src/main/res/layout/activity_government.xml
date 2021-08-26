@@ -150,11 +150,10 @@
                 android:layout_height="1px"
                 android:background="@color/grey_F5F5F5" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:itemCount="50"
-                tools:listitem="@layout/item_store_recommend" />
+           <androidx.viewpager.widget.ViewPager
+               android:id="@+id/content_vp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

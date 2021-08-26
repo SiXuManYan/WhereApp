@@ -20,11 +20,11 @@ import com.jcs.where.R;
  */
 public class EmptyView extends LinearLayout {
 
-    private ImageView empty_iv;
-    private TextView empty_message_tv;
-    private TextView empty_hint_tv;
-    private TextView action_tv;
-    private LinearLayout parent_ll;
+    public ImageView empty_iv;
+    public TextView empty_message_tv;
+    public TextView empty_hint_tv;
+    public TextView action_tv;
+    public LinearLayout parent_ll;
 
     public EmptyView(Context context) {
         super(context);
@@ -118,10 +118,10 @@ public class EmptyView extends LinearLayout {
 
 
     public void initEmpty(@DrawableRes int imageId,
-                                @StringRes int emptyMessage,
-                                @StringRes int emptyHint,
-                                @StringRes int actionString,
-                                View.OnClickListener listener){
+                          @StringRes int emptyMessage,
+                          @StringRes int emptyHint,
+                          @StringRes int actionString,
+                          View.OnClickListener listener) {
 
         parent_ll.setVisibility(View.GONE);
         empty_iv.setImageResource(imageId);
@@ -131,8 +131,12 @@ public class EmptyView extends LinearLayout {
         action_tv.setOnClickListener(listener);
     }
 
-    public void showEmptyContainer(){
+    public void showEmptyContainer() {
         parent_ll.setVisibility(View.VISIBLE);
+    }
+
+    public void hideEmptyContainer() {
+        parent_ll.setVisibility(View.GONE);
     }
 
 }

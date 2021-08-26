@@ -23,13 +23,13 @@ public class MechanismResponse implements ISearchResponse, MapMarkerUtil.IMapDat
      * tags : ["标签"]
      */
 
-    private Integer id;
-    private String title;
-    private String address;
-    private double lat;
-    private double lng;
-    private Double distance;
-    private List<String> images;
+    public Integer id;
+    public String title;
+    public String address;
+    public double lat;
+    public double lng;
+    public Double distance;
+    public List<String> images;
     public List<String> tags = new ArrayList();
 
     public Integer getId() {

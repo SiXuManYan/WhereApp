@@ -105,5 +105,10 @@ public class EventCode {
      */
     public static final int EVENT_ORDER_COMMIT_SUCCESS = 1021;
 
+    /**
+     * 刷新机构列表
+     */
+    public static final int EVENT_REFRESH_MECHANISM = 1022;
+
 
 }

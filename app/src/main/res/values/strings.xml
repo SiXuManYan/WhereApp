@@ -843,6 +843,7 @@ Gentleman must let go</string>
     <string name="empty_search_hint">尝试搜索其他词试试</string>
     <string name="back_home">返回首页</string>
     <string name="history_record">搜索历史</string>
+    <string name="back">返回</string>
 
 
 </resources>

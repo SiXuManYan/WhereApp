@@ -917,7 +917,7 @@ public interface RetrofitApi {
      * @see <a href="https://where.w.eolinker.com/#/home/api_studio/inside/api/detail?apiID=4657209&groupID=1167151&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档地址</a>
      */
     @GET("commonapi/v2/categories")
-    Observable<JcsResponse<List<Category>>> getCategoriesList(
+    Observable<JcsResponse<ArrayList<Category>>> getCategoriesList(
             @Query("level") int level,
             @Query("pid") int pid,
             @Query("type") int type);
@@ -1510,6 +1510,36 @@ public interface RetrofitApi {
      */
     @POST("restaurantapi/v2/comments")
     Observable<JcsResponse<JsonElement>> commitFoodComment(@Body FoodCommitComment request);
+
+
+    /**
+     * 获得分类列表
+     *
+     * @param level 分类级别
+     * @param pid   parentId 上级分类的id
+     * @return 分类列表
+     */
+    @GET("commonapi/v2/categories")
+    Observable<JcsResponse<ArrayList<Category>>> getCategoryList(@Query("level") int level, @Query("pid") int pid);
+
+
+    /**
+     * 获得机构列表数据(带分页)
+     *
+     * @param categoryId 分类ID（数据类型为‘1’或‘[1,2,3]’）
+     * @param search     查询字段
+     * @return
+     */
+    @GET("generalapi/v2/infos")
+    Observable<JcsResponse<PageResponse<MechanismResponse>>> getMechanismList(
+            @Query("page") int page,
+            @Query("cate_id") String categoryId,
+            @Query("area_id") @Nullable String area_id,
+            @Query("search_input") @Nullable String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng
+
+    );
 
 
 }

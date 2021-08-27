@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.MechanismResponse
@@ -16,7 +17,7 @@ import com.jcs.where.utils.GlideUtil
  * Created by Wangsw  2021/8/26 14:02.
  *  机构信息
  */
-class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.layout.item_mechanism) {
+class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.layout.item_mechanism) ,LoadMoreModule{
 
 
     override fun convert(holder: BaseViewHolder, item: MechanismResponse) {

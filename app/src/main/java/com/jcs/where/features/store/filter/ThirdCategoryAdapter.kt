@@ -17,8 +17,10 @@ class ThirdCategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout
     override fun convert(holder: BaseViewHolder, item: Category) {
 
         val third_category = holder.getView<CheckedTextView>(R.id.third_category)
-        third_category.text = item.name
-        third_category.isChecked = item.nativeIsSelected
+        third_category.apply {
+            text = item.name
+            isChecked = item.nativeIsSelected
+        }
 
 
         val layoutParams = third_category.layoutParams

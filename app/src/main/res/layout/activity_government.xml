@@ -93,8 +93,11 @@
         app:tl_underline_color="@color/grey_F5F5F5"
         app:tl_underline_height="1px" />
 
-    <RelativeLayout
-        android:id="@+id/child_tag_rl"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/child_tag_rv"
+        tools:listitem="1"
+        android:background="@color/white"
+        tools:itemCount="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -119,11 +122,11 @@
         <LinearLayout
             android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="450dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/shape_white_top_radius_8"
             android:orientation="vertical"
-            app:behavior_hideable="true"
+            app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/dp_50"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -136,6 +139,7 @@
                 android:background="@drawable/shape_gray_radius_3" />
 
             <TextView
+                android:id="@+id/total_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -143,17 +147,17 @@
                 android:layout_marginBottom="@dimen/dp_12"
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_12"
-                tools:text="共10个相关结果" />
+                tools:text="@string/total_list_count_format" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/grey_F5F5F5" />
 
-           <androidx.viewpager.widget.ViewPager
-               android:id="@+id/content_vp"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"/>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/content_vp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

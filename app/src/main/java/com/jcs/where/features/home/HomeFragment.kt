@@ -31,6 +31,7 @@ import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
+import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.recommend.StoreRecommendActivity
@@ -165,7 +166,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             }
             if (data.dev_status == 1) {
                 when (data.id) {
-                    1 -> startActivity(GovernmentMapActivity::class.java)
+                    1 -> startActivity(GovernmentActivity::class.java)
+//                    1 -> startActivity(GovernmentMapActivity::class.java)
                     2 -> {
                         startActivity(YellowPageActivity::class.java, Bundle().apply {
                             putIntegerArrayList(YellowPageActivity.K_CATEGORIES, data.categories as (ArrayList<Int>))

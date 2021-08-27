@@ -80,6 +80,7 @@
     <color name="color_98bbff">#98BBFF</color>
     <color name="red_FF5837">#FF5837</color>
     <color name="gray_adb7c8">#ADB7C8</color>
+    <color name="blue_E8F0FF">#E8F0FF</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

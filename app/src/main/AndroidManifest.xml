@@ -624,6 +624,7 @@
         <activity android:name=".features.hotel.comment.post.HotelCommentPostActivity" />
         <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />
         <activity android:name=".features.search.result.SearchAllResultActivity" />
+        <activity android:name=".features.map.government.GovernmentActivity" />
 
 
     </application>

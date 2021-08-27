@@ -4,6 +4,7 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MechanismResponse
+import com.jcs.where.api.response.PageResponse
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.SPUtil
@@ -14,33 +15,30 @@ import com.jcs.where.utils.SPUtil
  */
 interface MechanismChildView : BaseMvpView {
 
-    fun bindData(response: MutableList<MechanismResponse>)
+    fun bindData(response: MutableList<MechanismResponse>, isLastPage: Boolean, total: Int)
 
 }
 
 
 class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPresenter(view) {
 
-    fun getData(categoryId: String, search: String) {
+    fun getData(page: Int, categoryId: String, search: String) {
         val areaIdStr = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID)
 
-        val areaId: Int = try {
-            areaIdStr.toInt()
-        } catch (e: Exception) {
-            0
-        }
-
-        requestApi(mRetrofit.getMechanismListForMap(
+        requestApi(mRetrofit.getMechanismList(
+            page,
             categoryId,
-            areaId,
+            areaIdStr,
             search,
             Constant.LAT,
             Constant.LNG
-        ), object : BaseMvpObserver<List<MechanismResponse>>(view) {
-            override fun onSuccess(response: List<MechanismResponse>) {
-                view.bindData(response.toMutableList())
+        ), object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
+            override fun onSuccess(response: PageResponse<MechanismResponse>) {
+                val total = response.total
+                val isLastPage = response.lastPage == page
+                val data = response.data
+                view.bindData(data.toMutableList(), isLastPage,total)
             }
-
         })
     }
 }

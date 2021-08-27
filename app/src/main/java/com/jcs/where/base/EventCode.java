@@ -110,5 +110,10 @@ public class EventCode {
      */
     public static final int EVENT_REFRESH_MECHANISM = 1022;
 
+    /**
+     * 列表总数
+     */
+    public static final int EVENT_SET_LIST_TOTAL_COUNT= 1023;
+
 
 }

@@ -82,7 +82,7 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
         }
         mAdapter = FoodCommentAdapter().apply {
             loadMoreModule.isAutoLoadMore = true
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener(this@FoodCommentFragment)
             setEmptyView(emptyView)
         }

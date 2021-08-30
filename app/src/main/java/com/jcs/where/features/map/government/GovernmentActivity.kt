@@ -1,10 +1,21 @@
 package com.jcs.where.features.map.government
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.location.Address
+import android.location.Location
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
-import com.flyco.tablayout.listener.OnTabSelectListener
+import com.blankj.utilcode.util.ToastUtils
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.base.BaseEvent
@@ -12,7 +23,13 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.map.MechanismPagerAdapter
 import com.jcs.where.features.store.filter.ThirdCategoryAdapter
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.LocationUtil
+import com.jcs.where.utils.PermissionUtils
 import kotlinx.android.synthetic.main.activity_government.*
+import kotlinx.android.synthetic.main.activity_government.tabs_type
+import kotlinx.android.synthetic.main.fragment_home3.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
@@ -20,7 +37,8 @@ import java.util.*
  * Created by Wangsw  2021/8/24 17:04.
  * 政府机构
  */
-class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentView {
+class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentView,
+    OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
 
     // 内容和 tab二级分类
@@ -36,6 +54,12 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     @SuppressLint("NotifyDataSetChanged")
     override fun initView() {
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
+        initChild()
+        initMap()
+    }
+
+
+    private fun initChild() {
         mPagerAdapter = MechanismPagerAdapter(supportFragmentManager)
         mChildTagAdapter = ThirdCategoryAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
@@ -57,6 +81,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         }
     }
 
+
     override fun initData() {
         presenter = GovernmentPresenter(this)
         presenter.getGovernmentChildCategory()
@@ -66,11 +91,14 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
         back_iv.setOnClickListener { finish() }
 
-        tabs_type.setOnTabSelectListener(object : OnTabSelectListener {
+        content_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
-            override fun onTabReselect(position: Int) = Unit
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
 
-            override fun onTabSelect(position: Int) {
+            override fun onPageScrollStateChanged(state: Int) = Unit
+
+            override fun onPageSelected(position: Int) {
+
                 mChildTagAdapter.setNewInstance(null)
                 val category = mPagerAdapter.category
                 if (category.isEmpty()) {
@@ -81,6 +109,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                     mChildTagAdapter.setNewInstance(child.child_categories)
                 }
             }
+
         })
     }
 
@@ -104,8 +133,108 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             val count = baseEvent.message
             total_count_tv.text = getString(R.string.total_list_count_format, count)
         }
+    }
+
+    // 地图相关
 
 
+    private lateinit var map: GoogleMap
+
+    private lateinit var myLocation: CameraPosition
+
+
+    private fun initMap() {
+
+        // 获取 SupportMapFragment 并在地图准备好使用时请求通知
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
+
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        map = googleMap ?: return
+        map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(Constant.LAT, Constant.LNG)))
+        googleMap.setOnMyLocationButtonClickListener(this)
+        googleMap.setOnMyLocationClickListener(this)
+        enableMyLocation()
+        // 获得展示在地图上的数据
+        // 当前位置
+
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun enableMyLocation() {
+        if (!::map.isInitialized) return
+
+        PermissionUtils.permissionAny(
+            this, {
+                if (it) {
+                    map.isMyLocationEnabled = true
+
+
+                    moveMyLocation()
+
+
+                }
+            }, Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+    }
+
+    private fun moveMyLocation() {
+        LocationUtil.getInstance().addressCallback = object : LocationUtil.AddressCallback {
+            override fun onGetAddress(address: Address) {
+
+                val countryName = address.countryName //国家
+                val adminArea = address.adminArea //省
+                val locality = address.locality //市
+                val subLocality = address.subLocality //区
+                val featureName = address.featureName //街道
+            }
+
+            override fun onGetLocation(lat: Double, lng: Double) {
+                CacheUtil.getShareDefault().put(Constant.SP_LATITUDE, lat.toFloat())
+                CacheUtil.getShareDefault().put(Constant.SP_LONGITUDE, lng.toFloat())
+
+
+                myLocation = CameraPosition.Builder().target(LatLng(lat, lng))
+                    .zoom(15.5f)
+                    .bearing(0f)
+                    .tilt(25f)
+                    .build()
+
+                // 移动到当前位置
+                map.animateCamera(CameraUpdateFactory.newCameraPosition(myLocation), object : GoogleMap.CancelableCallback {
+
+                    override fun onCancel() = Unit
+
+                    override fun onFinish() = Unit
+
+                })
+
+
+            }
+        }
+    }
+
+    /**
+     * 移动到我的位置
+     */
+    override fun onMyLocationButtonClick(): Boolean {
+        if (!::myLocation.isInitialized) return false
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show()
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(myLocation))
+        return false
+    }
+
+    /**
+     * 点击我的位置 maker
+     */
+    override fun onMyLocationClick(location: Location) {
+        ToastUtils.showShort("Current location:\n$location")
     }
 
 

@@ -235,23 +235,25 @@ public class MapMarkerUtil {
 
                 // 将坐标点保存到 bounders 中，用于设置最佳的 map zoom
                 mLatLngBoundsBuilder.include(latLng);
+
                 TextView markerView = (TextView) getMarkerView();
                 markerView.setText(mapData.getName());
-                MarkerBitmapDescriptors markerBitmapDescriptors = new MarkerBitmapDescriptors();
-                markerBitmapDescriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
-                markerBitmapDescriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
+
+                MarkerBitmapDescriptors descriptors = new MarkerBitmapDescriptors();
+                descriptors.setSelectedBitmapDescriptor(getSelectView(markerView));
+                descriptors.setUnselectedBitmapDescriptor(getUnselectedView(markerView));
 
 
                 MarkerOptions option = new MarkerOptions()
                         .position(latLng)
-                        .icon(markerBitmapDescriptors.getUnselectedBitmapDescriptor())
+                        .icon(descriptors.getUnselectedBitmapDescriptor())
                         .zIndex(4)
                         .draggable(false);//是否可以拖动
 
                 // 将第一个设置为选中状态
                 if (i == mCurrentPosition) {
-                    markerBitmapDescriptors.setSelected(true);
-                    option.icon(markerBitmapDescriptors.getSelectedBitmapDescriptor());
+                    descriptors.setSelected(true);
+                    option.icon(descriptors.getSelectedBitmapDescriptor());
                 }
 
                 // 在地图上绘制
@@ -264,7 +266,7 @@ public class MapMarkerUtil {
                     mCurrentPosition = i;
                 }
                 mMarkersOnMap.add(marker);
-                mDescriptors.add(markerBitmapDescriptors);
+                mDescriptors.add(descriptors);
             }
         }
 
@@ -295,6 +297,9 @@ public class MapMarkerUtil {
     public void addAllMechanismForMap(List<? extends MapMarkerUtil.IMapData> mechanismResponses) {
         mMechanismsForMap.addAll(mechanismResponses);
     }
+
+
+
 
     public void selectMarker(int position) {
         if (isSingleMarker) {

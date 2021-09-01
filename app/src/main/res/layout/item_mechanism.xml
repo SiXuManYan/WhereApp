@@ -21,16 +21,33 @@
         android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/title_tv"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lineSpacingMultiplier="1.2"
-            android:maxLines="2"
-            android:textColor="@color/black_333333"
-            android:textSize="@dimen/sp_13"
-            tools:text="@tools:sample/lorem/random" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLines="2"
+                android:layout_toStartOf="@+id/close_iv"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_13"
+                tools:text="@tools:sample/lorem/random" />
+
+
+            <ImageView
+                android:id="@+id/close_iv"
+                android:src="@mipmap/ic_store_close"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
 
 
         <TextView
@@ -84,6 +101,7 @@
 
 
     </LinearLayout>
+
 
 
 </RelativeLayout>

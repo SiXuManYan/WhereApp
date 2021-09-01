@@ -1,5 +1,6 @@
 package com.jcs.where.features.map
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,10 +18,19 @@ import com.jcs.where.utils.GlideUtil
  * Created by Wangsw  2021/8/26 14:02.
  *  机构信息
  */
-class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.layout.item_mechanism) ,LoadMoreModule{
+class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.layout.item_mechanism), LoadMoreModule {
 
+    public var showClose = false
 
     override fun convert(holder: BaseViewHolder, item: MechanismResponse) {
+
+        val close_iv = holder.getView<ImageView>(R.id.close_iv)
+        close_iv.visibility = if (showClose) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+
 
         // 图片
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
@@ -72,8 +82,18 @@ class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.l
             }
             tag_ll.addView(tv)
         }
+    }
 
+
+    public fun getSelectDataIndex(item: MechanismResponse): Int {
+        val indexOf = data.indexOf(item)
+        return if (indexOf == -1) {
+            0
+        } else {
+            indexOf
+        }
 
     }
+
 
 }

@@ -1542,4 +1542,18 @@ public interface RetrofitApi {
     );
 
 
+    /**
+     * 获得展示在地图上的机构数据
+     *
+     */
+    @GET("generalapi/v2/map/infos")
+    Observable<JcsResponse<ArrayList<MechanismResponse>>> getMechanismListToMap(
+            @Query("cate_id") int categoryId,
+            @Query("area_id") @Nullable String area_id,
+            @Query("search_input") @Nullable String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng
+    );
+
+
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.google.android.gms.maps.model.LatLng;
+import com.jcs.where.BuildConfig;
 
 /**
  * create by zyf on 2021/1/6 11:45 上午
@@ -110,11 +111,20 @@ public class CacheUtil {
     }
 
 
-    public static LatLng getMyCacheLocation(){
-        double lat = getShareDefault().getFloat(Constant.SP_LATITUDE, (float) Constant.LAT);
-        double lng = getShareDefault().getFloat(Constant.SP_LONGITUDE, (float) Constant.LNG);
+    public static LatLng getMyCacheLocation() {
 
-        return new LatLng(lat , lng);
+        double lat = 0;
+        double lng = 0;
+        if (BuildConfig.FLAVOR == "dev") {
+            lat = Constant.LAT;
+            lng = Constant.LNG;
+        } else {
+            lat = getShareDefault().getFloat(Constant.SP_LATITUDE, 0);
+            lng = getShareDefault().getFloat(Constant.SP_LONGITUDE, 0);
+        }
+
+
+        return new LatLng(lat, lng);
 
     }
 

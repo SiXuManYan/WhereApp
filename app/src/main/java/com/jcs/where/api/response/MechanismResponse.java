@@ -32,6 +32,11 @@ public class MechanismResponse implements ISearchResponse, MapMarkerUtil.IMapDat
     public List<String> images;
     public List<String> tags = new ArrayList();
 
+    /**
+     * 是否选中
+     */
+    public boolean native_select = false;
+
     public Integer getId() {
         return id;
     }

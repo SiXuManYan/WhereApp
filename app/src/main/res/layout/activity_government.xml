@@ -95,11 +95,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/child_tag_rv"
-        tools:listitem="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         tools:itemCount="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        tools:listitem="1" />
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -120,7 +120,7 @@
         behavior_peekHeight 折叠状态的透视高度
         -->
         <LinearLayout
-            android:id="@+id/bottom_sheet"
+            android:id="@+id/bottom_sheet_ll"
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:layout_alignParentBottom="true"
@@ -160,6 +160,22 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bottom_sheet_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_white_top_radius_8"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_16"
+            app:behavior_hideable="true"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_mechanism" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

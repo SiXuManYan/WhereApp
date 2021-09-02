@@ -47,10 +47,10 @@ import kotlin.collections.ArrayList
 class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentView {
 
 
-    // 内容和 tab二级分类
+    /** 内容和 tab二级分类 */
     private lateinit var mPagerAdapter: MechanismPagerAdapter
 
-    // 三级分类
+    /** 三级分类 */
     private lateinit var mChildTagAdapter: ThirdCategoryAdapter
 
     /** pager Behavior */
@@ -62,6 +62,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     /** marker 选中后，对应的列表内容 */
     private lateinit var mMarkerContentAdapter: MechanismAdapter
 
+    /** 从分类tab跳转时，根据 categoryId  调整viewPager 位置 */
+    private var childCategoryId = 0
+
     override fun getLayoutId() = R.layout.activity_government
 
     override fun isStatusDark() = true
@@ -69,11 +72,14 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     @SuppressLint("NotifyDataSetChanged")
     override fun initView() {
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
-
+        initExtra()
         initChild()
         initBehavior()
         initMarkerClickListContent()
+    }
 
+    private fun initExtra() {
+         childCategoryId = intent.getIntExtra(Constant.PARAM_CHILD_CATEGORY_ID, 0)
     }
 
 
@@ -218,6 +224,19 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         content_vp.offscreenPageLimit = response.size
         content_vp.adapter = mPagerAdapter
         tabs_type.setViewPager(content_vp)
+
+        // 滚动到目标位置
+        if (childCategoryId > 0) {
+            var targetIndex = 0
+            response.forEachIndexed { index, category ->
+                if (category.id == childCategoryId) {
+                    targetIndex = index
+                    return@forEachIndexed
+                }
+            }
+            content_vp.currentItem = targetIndex
+        }
+
     }
 
 

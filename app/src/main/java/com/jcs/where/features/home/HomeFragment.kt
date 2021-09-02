@@ -36,7 +36,6 @@ import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.recommend.StoreRecommendActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
-import com.jcs.where.government.activity.GovernmentMapActivity
 import com.jcs.where.government.activity.MechanismDetailActivity
 import com.jcs.where.home.activity.TravelStayActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
@@ -125,21 +124,21 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         ll_banner.layoutParams = bannerParams
 
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                .setTitleHeight(50)
-                .isAutoPlay(true)
-                .setDelay(5000)
-                .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
-                .setUpIndicatorSize(6, 6)
-                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
-                .setImageLoader(object : AbstractUrlLoader() {
-                    override fun loadImages(context: Context, url: String, image: ImageView) {
-                        GlideUtil.load(context, url, image, 4)
-                    }
+            .setTitleHeight(50)
+            .isAutoPlay(true)
+            .setDelay(5000)
+            .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
+            .setUpIndicatorSize(6, 6)
+            .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+            .setImageLoader(object : AbstractUrlLoader() {
+                override fun loadImages(context: Context, url: String, image: ImageView) {
+                    GlideUtil.load(context, url, image, 4)
+                }
 
-                    override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
-                        GlideUtil.load(context, url, gifImageView, 4)
-                    }
-                })
+                override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
+                    GlideUtil.load(context, url, gifImageView, 4)
+                }
+            })
     }
 
     /** 金刚区相关 */
@@ -167,7 +166,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             if (data.dev_status == 1) {
                 when (data.id) {
                     1 -> startActivity(GovernmentActivity::class.java)
-//                    1 -> startActivity(GovernmentMapActivity::class.java)
                     2 -> {
                         startActivity(YellowPageActivity::class.java, Bundle().apply {
                             putIntegerArrayList(YellowPageActivity.K_CATEGORIES, data.categories as (ArrayList<Int>))
@@ -269,9 +267,15 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         mHomeRecommendAdapter = HomeRecommendAdapter()
         rv_home.apply {
             adapter = mHomeRecommendAdapter
-            addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(16f),SizeUtils.dp2px(8f), SizeUtils.dp2px(8f)).apply {
-                setDrawHeaderFooter(false)
-            })
+            addItemDecoration(
+                DividerDecoration(
+                    Color.TRANSPARENT,
+                    SizeUtils.dp2px(16f),
+                    SizeUtils.dp2px(8f),
+                    SizeUtils.dp2px(8f)
+                ).apply {
+                    setDrawHeaderFooter(false)
+                })
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
         val emptyView = EmptyView(context).apply {
@@ -489,7 +493,16 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         1 -> {
                             val dialog = JcsCalendarDialog()
                             dialog.initCalendar(this@HomeFragment.activity)
-                            HotelDetailActivity.goTo(this@HomeFragment.activity, data.target_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                            HotelDetailActivity.goTo(
+                                this@HomeFragment.activity,
+                                data.target_id,
+                                dialog.startBean,
+                                dialog.endBean,
+                                1,
+                                "",
+                                "",
+                                1
+                            )
                         }
                         2 -> {
                             TouristAttractionDetailActivity.goTo(this@HomeFragment.activity, data.target_id)

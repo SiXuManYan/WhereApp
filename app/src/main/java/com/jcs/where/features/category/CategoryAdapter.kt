@@ -18,6 +18,7 @@ import com.jcs.where.api.response.category.Category
 import com.jcs.where.base.BaseMapActivity
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
+import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.government.activity.GovernmentMapActivity
 import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.travel.TravelMapActivity
@@ -151,8 +152,8 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
                         })
                     }
                     TYPE_GOVERNMENT -> {
-                        startActivity(GovernmentMapActivity::class.java, Bundle().apply {
-                            putString(BaseMapActivity.K_CHILD_CATEGORY_ID, it.id.toString())
+                        startActivity(GovernmentActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_CHILD_CATEGORY_ID, it.id)
                         })
                     }
 

@@ -65,7 +65,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
         selectedChannel?.let {
             payment_platform_tv.text = it.title
             payment_name_tv.text = it.card_account
-            payment_account_number_tv.text = it.card_account
+            payment_account_number_tv.text = it.card_number
         }
 
         // 提交订单成功，刷新列表

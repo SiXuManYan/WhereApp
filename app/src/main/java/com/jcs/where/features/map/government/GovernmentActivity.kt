@@ -382,7 +382,6 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
 
-
         // 在地图上添加大量Marker
         addMarkersToMap(response)
 

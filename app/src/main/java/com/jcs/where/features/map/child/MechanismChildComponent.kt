@@ -29,8 +29,8 @@ class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPre
             page,
             categoryId,
             areaIdStr,
-            search,
-            Constant.LAT,
+            null,
+            Constant.LAT ,
             Constant.LNG
         ), object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
             override fun onSuccess(response: PageResponse<MechanismResponse>) {

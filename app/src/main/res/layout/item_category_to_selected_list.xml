@@ -17,6 +17,7 @@
         android:id="@+id/categoryCheckedIcon"
         android:layout_width="@dimen/dp_15"
         android:layout_height="@dimen/dp_10"
+        android:visibility="gone"
         android:src="@mipmap/ic_right_checked_blue"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.search.result.SearchAllResultActivity
+import com.jcs.where.features.search.yellow.YellowPageSearchResultActivity
 import com.jcs.where.features.store.history.SearchHistoryAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.MyLayoutManager
@@ -21,6 +22,17 @@ import kotlinx.android.synthetic.main.activity_search_all.*
  */
 class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
 
+    /**
+     * 0 全部搜索
+     * 1 企业黄页
+     */
+    private var type = 0
+
+    /**
+     * 分类id
+     */
+    private var categoryId :String?= ""
+
     private lateinit var mAdapter: SearchHistoryAdapter
 
     override fun getLayoutId() = R.layout.activity_search_all
@@ -28,6 +40,11 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
     override fun isStatusDark() = true
 
     override fun initView() {
+
+        type = intent.getIntExtra(Constant.PARAM_TYPE, 0)
+        categoryId = intent.getStringExtra(Constant.PARAM_CATEGORY_ID)
+
+
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
         mAdapter = SearchHistoryAdapter().apply {
             setOnItemClickListener { _, _, position ->
@@ -80,6 +97,20 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
         }
         val bundle = Bundle()
         bundle.putString(Constant.PARAM_NAME, finalInput)
-        startActivity(SearchAllResultActivity::class.java,bundle)
+
+        when (type) {
+            0 -> {
+                startActivity(SearchAllResultActivity::class.java, bundle)
+            }
+            1 -> {
+                bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
+                startActivity(YellowPageSearchResultActivity::class.java, bundle)
+                finish()
+            }
+            else -> {
+            }
+        }
+
+
     }
 }

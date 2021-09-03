@@ -1536,8 +1536,8 @@ public interface RetrofitApi {
             @Query("cate_id") String categoryId,
             @Query("area_id") @Nullable String area_id,
             @Query("search_input") @Nullable String search,
-            @Query("lat") double lat,
-            @Query("lng") double lng
+            @Query("lat") @Nullable Double lat,
+            @Query("lng") @Nullable Double lng
 
     );
 

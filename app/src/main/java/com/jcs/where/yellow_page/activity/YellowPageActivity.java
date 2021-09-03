@@ -1,7 +1,8 @@
 package com.jcs.where.yellow_page.activity;
 
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
@@ -23,8 +25,9 @@ import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.features.map.MechanismAdapter;
+import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
-import com.jcs.where.government.adapter.MechanismListAdapter;
 import com.jcs.where.search.SearchActivity;
 import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.CacheUtil;
@@ -33,6 +36,7 @@ import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.RequestResultCode;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.view.empty.EmptyView;
+import com.jcs.where.widget.list.DividerDecoration;
 import com.jcs.where.yellow_page.CategoryToSelectedListFragment;
 import com.jcs.where.yellow_page.model.YellowPageModel;
 
@@ -45,6 +49,7 @@ import io.reactivex.annotations.NonNull;
  * create by zyf on 2021/1/3 10:14 AM
  */
 public class YellowPageActivity extends BaseActivity implements OnLoadMoreListener {
+
     public static final String K_ID = "id";
     public static final String K_CATEGORIES = "categories";
     public static final String K_DEFAULT_CHILD_CATEGORY_ID = "defaultChildCategoryId";
@@ -53,9 +58,9 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
     private ImageView mFirstArrowIv, mSecondArrowIv, mThirdArrowIv;
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecyclerView;
-    private TextView mSearchEt;
 
-    private MechanismListAdapter mAdapter;
+    private MechanismAdapter mAdapter;
+
     private YellowPageModel mModel;
 
     private CategoryToSelectedListFragment mToSelectedListFragment;
@@ -72,7 +77,6 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
 
     @Override
     protected void initView() {
-        mSearchEt = findViewById(R.id.searchEt);
 
         mFirstCateTv = findViewById(R.id.firstCateTv);
         mSecondCateTv = findViewById(R.id.secondCateTv);
@@ -81,6 +85,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mFirstArrowIv = findViewById(R.id.firstArrowIv);
         mSecondArrowIv = findViewById(R.id.secondArrowIv);
         mThirdArrowIv = findViewById(R.id.thirdArrowIv);
+        mJcsTitle.setFirstRightIvClickListener(this::onSearchClicked);
 
         setSecondLevelEnable(false);
         setThirdLevelEnable(false);
@@ -94,15 +99,16 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         emptyView.showEmptyDefault();
 
         // adapter
-        mAdapter = new MechanismListAdapter();
+        mAdapter = new MechanismAdapter();
         mAdapter.setEmptyView(emptyView);
         BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
         loadMoreModule.setAutoLoadMore(true);
         loadMoreModule.setEnableLoadMoreIfNotFullPage(true);
         loadMoreModule.setOnLoadMoreListener(this);
-
-
         mRecyclerView.setAdapter(mAdapter);
+        DividerDecoration decoration = new DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0);
+        mRecyclerView.addItemDecoration(decoration);
+
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         mToSelectedListFragment = (CategoryToSelectedListFragment) supportFragmentManager.findFragmentById(R.id.categoryFragment);
@@ -127,7 +133,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
     private void getData() {
         String jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES);
         if (jsonStr.equals("")) {
-            // 获取网路数据
+
             getInitYellowPage();
         } else {
             mFirstLevelCategories = JsonUtil.getInstance().fromJsonToList(jsonStr, new TypeToken<List<CategoryResponse>>() {
@@ -193,23 +199,23 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mFirstCateTv.setText(selectFirstCate.getName());
         CategoryResponse selectSecondCate = mToSelectedListFragment.getSelectSecondCate();
         if (selectSecondCate == null) {
-            changeLevelTitleStatus(mFirstCateTv, R.color.blue_4D9FF2, mFirstArrowIv, R.mipmap.ic_arrow_bottom_black);
+            changeLevelTitleStatus(mFirstCateTv, R.color.blue_4D9FF2, mFirstArrowIv, R.mipmap.ic_store_down);
             return;
         }
         mSecondCateTv.setText(selectSecondCate.getName());
         mSecondCateTv.setOnClickListener(this::onSecondCateClicked);
         mThirdCateTv.setOnClickListener(this::onThirdCateClicked);
-        changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_arrow_bottom_black);
-        changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_arrow_bottom_black);
+        changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_store_down);
+        changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_store_down);
         CategoryResponse selectThirdCate = mToSelectedListFragment.getSelectThirdCate();
         if (selectThirdCate == null) {
-            changeLevelTitleStatus(mSecondCateTv, R.color.blue_4D9FF2, mSecondArrowIv, R.mipmap.ic_arrow_bottom_black);
+            changeLevelTitleStatus(mSecondCateTv, R.color.blue_4D9FF2, mSecondArrowIv, R.mipmap.ic_store_down);
             return;
         }
 
         mThirdCateTv.setText(selectThirdCate.getName());
-        changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mSecondArrowIv, R.mipmap.ic_arrow_bottom_black);
-        changeLevelTitleStatus(mThirdCateTv, R.color.blue_4B9DF1, mThirdArrowIv, R.mipmap.ic_arrow_bottom_black);
+        changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mSecondArrowIv, R.mipmap.ic_store_down);
+        changeLevelTitleStatus(mThirdCateTv, R.color.blue_4B9DF1, mThirdArrowIv, R.mipmap.ic_store_down);
     }
 
     private void changeLevelTitleStatus(TextView cateTv, int colorRes, ImageView arrowIv, int iconRes) {
@@ -283,11 +289,14 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
 
         mAdapter.setOnItemClickListener(this::onMechanismItemClicked);
 
-        mSearchEt.setOnClickListener(this::onSearchClicked);
     }
 
     private void onSearchClicked(View view) {
-        SearchActivity.goTo(this, "", SearchTag.YELLOW_PAGE, RequestResultCode.REQUEST_YELLOW_PAGE_TO_SEARCH);
+        String categoryId = mToSelectedListFragment.getCurrentCategoryId();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.PARAM_TYPE , 1);
+        bundle.putString(Constant.PARAM_CATEGORY_ID ,categoryId );
+        startActivity(SearchAllActivity.class ,bundle);
     }
 
     private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
@@ -316,7 +325,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
 
     public void onFirstCateClicked(View view) {
         if (mToSelectedListFragment.isVisible() && mToSelectedListFragment.isFirstLevel()) {
-            changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_arrow_bottom_black);
+            changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_store_down);
             hideCategoryListFragment();
         } else {
             // 如果选项列表未显示
@@ -325,29 +334,28 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
                 mToSelectedListFragment.setData(mFirstLevelCategories, CategoryToSelectedListFragment.LEVEL_FIRST);
                 CategoryResponse selectFirstCate = mToSelectedListFragment.getSelectFirstCate();
                 if (selectFirstCate != null && selectFirstCate.getChild_categories().size() > 0) {
-                    changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mSecondArrowIv, R.mipmap.ic_arrow_bottom_black);
+                    changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mSecondArrowIv, R.mipmap.ic_store_down);
                 } else {
                     setThirdLevelEnable(false);
                 }
 
                 CategoryResponse selectSecondCate = mToSelectedListFragment.getSelectSecondCate();
                 if (selectSecondCate != null && selectSecondCate.getChild_categories().size() > 0) {
-                    changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_arrow_bottom_black);
+                    changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_store_down);
                 } else {
                     setThirdLevelEnable(false);
                 }
             } else {
                 mToSelectedListFragment.notifyAdapter();
             }
-            changeLevelTitleStatus(mFirstCateTv, R.color.blue_4D9FF2, mFirstArrowIv, R.mipmap.ic_arrow_top_blue);
+            changeLevelTitleStatus(mFirstCateTv, R.color.blue_4D9FF2, mFirstArrowIv, R.mipmap.ic_store_up);
             showCategoryListFragment();
         }
     }
 
     public void onSecondCateClicked(View view) {
-        Log.e("YellowPageActivity", "onSecondCateClicked: " + "");
         if (mToSelectedListFragment.isVisible() && mToSelectedListFragment.isSecondLevel()) {
-            changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mSecondArrowIv, R.mipmap.ic_arrow_bottom_black);
+            changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mSecondArrowIv, R.mipmap.ic_store_down);
             hideCategoryListFragment();
         } else {
             // 如果选项列表未显示
@@ -355,10 +363,10 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
                 // 如果选项列表数据不是二级分类数据，则设置为二级分类数据
                 CategoryResponse firstSelected = mFirstLevelCategories.get(mToSelectedListFragment.getSelectFirstPosition());
                 mToSelectedListFragment.setData(firstSelected.getChild_categories(), CategoryToSelectedListFragment.LEVEL_SECOND);
-                changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_arrow_bottom_black);
+                changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_store_down);
                 CategoryResponse selectSecondCate = mToSelectedListFragment.getSelectSecondCate();
                 if (selectSecondCate != null && selectSecondCate.getChild_categories().size() > 0) {
-                    changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_arrow_bottom_black);
+                    changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_store_down);
                 } else {
                     setThirdLevelEnable(false);
                 }
@@ -366,7 +374,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
                 // 不刷新的话，选中状态的 对勾 icon 无法显示
                 mToSelectedListFragment.notifyAdapter();
             }
-            changeLevelTitleStatus(mSecondCateTv, R.color.blue_4D9FF2, mSecondArrowIv, R.mipmap.ic_arrow_top_blue);
+            changeLevelTitleStatus(mSecondCateTv, R.color.blue_4D9FF2, mSecondArrowIv, R.mipmap.ic_store_up);
             showCategoryListFragment();
         }
     }
@@ -374,7 +382,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
     public void onThirdCateClicked(View view) {
         if (mToSelectedListFragment.isVisible() && mToSelectedListFragment.isThirdLevel()) {
             hideCategoryListFragment();
-            changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_arrow_bottom_black);
+            changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_store_down);
         } else {
             // 如果选项列表未显示
             if (!mToSelectedListFragment.isThirdLevel()) {
@@ -383,13 +391,13 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
                 CategoryResponse secondSelected = firstSelected.getChild_categories().get(mToSelectedListFragment.getSelectSecondPosition());
                 mToSelectedListFragment.setData(secondSelected.getChild_categories(), CategoryToSelectedListFragment.LEVEL_THIRD);
                 mFirstCateTv.setTextColor(getColor(R.color.black_333333));
-                changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_arrow_bottom_black);
-                mSecondArrowIv.setImageResource(R.mipmap.ic_arrow_bottom_black);
+                changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_store_down);
+                mSecondArrowIv.setImageResource(R.mipmap.ic_store_down);
             } else {
                 // 不刷新的话，选中状态的 对勾 icon 无法显示
                 mToSelectedListFragment.notifyAdapter();
             }
-            changeLevelTitleStatus(mThirdCateTv, R.color.blue_4D9FF2, mThirdArrowIv, R.mipmap.ic_arrow_top_blue);
+            changeLevelTitleStatus(mThirdCateTv, R.color.blue_4D9FF2, mThirdArrowIv, R.mipmap.ic_store_up);
             showCategoryListFragment();
         }
     }
@@ -402,7 +410,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         } else {
             mSecondCateTv.setTextColor(getColor(R.color.grey_BFBFBF));
             mSecondCateTv.setOnClickListener(null);
-            mSecondArrowIv.setImageResource(R.mipmap.ic_arrow_bottom_black);
+            mSecondArrowIv.setImageResource(R.mipmap.ic_store_down);
         }
 
         if (mToSelectedListFragment != null) {
@@ -418,7 +426,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
             mThirdCateTv.setTextColor(getColor(R.color.black_333333));
             mThirdCateTv.setOnClickListener(this::onThirdCateClicked);
         } else {
-            changeLevelTitleStatus(mThirdCateTv, R.color.grey_BFBFBF, mThirdArrowIv, R.mipmap.ic_arrow_bottom_black);
+            changeLevelTitleStatus(mThirdCateTv, R.color.grey_BFBFBF, mThirdArrowIv, R.mipmap.ic_store_down);
             mThirdCateTv.setOnClickListener(null);
         }
 
@@ -457,7 +465,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
                 break;
         }
         if (tempArrowIv != null) {
-            tempArrowIv.setImageResource(R.mipmap.ic_arrow_bottom_black);
+            tempArrowIv.setImageResource(R.mipmap.ic_store_down);
         }
         page = Constant.DEFAULT_FIRST_PAGE;
         getMechanismDataFromNet(page, mToSelectedListFragment.getCurrentCategoryId(), "");

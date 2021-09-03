@@ -172,7 +172,7 @@
             android:paddingBottom="@dimen/dp_16"
             app:behavior_hideable="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:layout_behavior="@string/bottom_sheet_behavior"
             tools:itemCount="1"
             tools:listitem="@layout/item_mechanism" />
 

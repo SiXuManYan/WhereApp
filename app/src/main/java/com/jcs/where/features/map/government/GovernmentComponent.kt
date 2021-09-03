@@ -89,8 +89,6 @@ open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresen
 
         val myLocation = CacheUtil.getMyCacheLocation()
 
-
-
         requestApi(mRetrofit.getMechanismListToMap(ID_GOVERNMENT,
             null, null, myLocation.latitude, myLocation.longitude),object :BaseMvpObserver<ArrayList<MechanismResponse>>(view){
             override fun onSuccess(response: ArrayList<MechanismResponse>) {

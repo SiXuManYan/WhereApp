@@ -625,6 +625,7 @@
         <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />
         <activity android:name=".features.search.result.SearchAllResultActivity" />
         <activity android:name=".features.map.government.GovernmentActivity" />
+        <activity android:name=".features.search.yellow.YellowPageSearchResultActivity" />
 
 
     </application>

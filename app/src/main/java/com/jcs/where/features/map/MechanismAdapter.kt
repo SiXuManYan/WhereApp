@@ -3,7 +3,10 @@ package com.jcs.where.features.map
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.marginTop
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
@@ -29,6 +32,13 @@ class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.l
             View.VISIBLE
         } else {
             View.GONE
+        }
+
+        val container_rl = holder.getView<RelativeLayout>(R.id.container_rl)
+        if (holder.adapterPosition == 0) {
+            val param = container_rl.layoutParams as RecyclerView.LayoutParams
+            param.topMargin = SizeUtils.dp2px(15f)
+            container_rl.layoutParams = param
         }
 
 

@@ -39,10 +39,6 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
     }
 
     private fun initImage(holder: BaseViewHolder, item: MediaData) {
-//        val options = RequestOptions.bitmapTransform(
-//                GlideRoundedCornersTransform(8, GlideRoundedCornersTransform.CornerType.LEFT))
-//                .error(R.mipmap.ic_empty_gray)
-//                .placeholder(R.mipmap.ic_empty_gray)
 //
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
 

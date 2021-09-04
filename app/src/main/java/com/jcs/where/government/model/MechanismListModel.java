@@ -16,9 +16,9 @@ public class MechanismListModel extends BaseModel {
     /**
      * 获得综合服务、政府机构列表数据
      */
-    public void getMechanismList(String categoryId, BaseObserver<PageResponse<MechanismResponse>> observer) {
+    public void getMechanismList(int page ,String categoryId, BaseObserver<PageResponse<MechanismResponse>> observer) {
 
-        dealResponse(mRetrofit.getMechanismListById(categoryId, "", Constant.LAT, Constant.LNG), observer);
+        dealResponse(mRetrofit.getMechanismListById2(page ,categoryId, "", Constant.LAT, Constant.LNG), observer);
     }
 
     /**

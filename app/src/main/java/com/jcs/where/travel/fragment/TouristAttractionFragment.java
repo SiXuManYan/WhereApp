@@ -86,7 +86,6 @@ public class TouristAttractionFragment extends BaseFragment {
         mRecycler = view.findViewById(R.id.mechanismRecycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRadioGroup = view.findViewById(R.id.mechanismRadioGroup);
-        mSearchNoneGroup = view.findViewById(R.id.searchNoneGroup);
     }
 
     @Override

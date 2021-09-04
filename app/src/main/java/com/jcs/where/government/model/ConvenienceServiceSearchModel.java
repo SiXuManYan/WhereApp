@@ -13,8 +13,8 @@ public class ConvenienceServiceSearchModel extends BaseModel {
     /**
      * 获得综合服务、政府机构列表数据
      */
-    public void getMechanismList(String categoryId, String searchInput ,BaseObserver<PageResponse<MechanismResponse>> observer) {
+    public void getMechanismList(int page ,String categoryId, String searchInput ,BaseObserver<PageResponse<MechanismResponse>> observer) {
 
-        dealResponse(mRetrofit.getMechanismListById(categoryId, searchInput, Constant.LAT, Constant.LNG), observer);
+        dealResponse(mRetrofit.getMechanismListById2(page,categoryId, searchInput, Constant.LAT, Constant.LNG), observer);
     }
 }

@@ -294,7 +294,7 @@ public class SearchActivity extends BaseActivity {
             mSearchEt.clearFocus();
 
             if (mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
-                ConvenienceServiceSearchActivity.goTo(this,mCategoryId, mSearchEt.getText().toString());
+//                ConvenienceServiceSearchActivity.goTo(this,mCategoryId, mSearchEt.getText().toString());
             }
             return true;
         }

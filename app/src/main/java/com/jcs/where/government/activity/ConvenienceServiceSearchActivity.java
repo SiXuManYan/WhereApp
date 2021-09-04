@@ -2,14 +2,17 @@ package com.jcs.where.government.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -17,10 +20,11 @@ import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
-import com.jcs.where.government.adapter.MechanismListAdapter;
-import com.jcs.where.government.fragment.MechanismListFragment;
+import com.jcs.where.features.map.MechanismAdapter;
 import com.jcs.where.government.model.ConvenienceServiceSearchModel;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.view.empty.EmptyView;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import java.util.List;
 
@@ -30,48 +34,52 @@ import io.reactivex.annotations.NonNull;
  * 页面-综合服务的搜索结果页
  * create by zyf on 2021/3/11 11:12 下午
  */
-public class ConvenienceServiceSearchActivity extends BaseActivity {
+public class ConvenienceServiceSearchActivity extends BaseActivity implements OnLoadMoreListener {
     private ConvenienceServiceSearchModel mModel;
-    public static final String K_INPUT = "input";
-    public static final String K_CATEGORY_ID = "categoryId";
-    private MechanismListFragment mFragment;
+
     private RecyclerView mRecycler;
     private SwipeRefreshLayout mSwipeLayout;
-    private MechanismListAdapter mAdapter;
+    private MechanismAdapter mAdapter;
     private String mCurrentCategoryId;
     private String mSearchInput;
     private int page = Constant.DEFAULT_FIRST_PAGE;
 
+    private EmptyView emptyView;
+
 
     public static void goTo(Activity activity, String categoryId, String input) {
         Intent intent = new Intent(activity, ConvenienceServiceSearchActivity.class);
-        intent.putExtra(K_INPUT, input);
-        intent.putExtra(K_CATEGORY_ID, categoryId);
+        intent.putExtra(Constant.PARAM_NAME, input);
+        intent.putExtra(Constant.PARAM_CATEGORY_ID, categoryId);
         activity.startActivity(intent);
     }
 
     @Override
     protected void initView() {
-        mSearchInput = getIntent().getStringExtra(K_INPUT);
-        mCurrentCategoryId = getIntent().getStringExtra(K_CATEGORY_ID);
+        mSearchInput = getIntent().getStringExtra(Constant.PARAM_NAME);
+        mCurrentCategoryId = getIntent().getStringExtra(Constant.PARAM_CATEGORY_ID);
         mJcsTitle.setMiddleTitle(mSearchInput);
         mSwipeLayout = findViewById(R.id.mechanismRefresh);
 
+        emptyView = new EmptyView(this);
+        emptyView.showEmptyDefault();
+
         mRecycler = findViewById(R.id.recycler);
+        mRecycler.addItemDecoration(new DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0));
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MechanismListAdapter();
+        mAdapter = new MechanismAdapter();
         mRecycler.setAdapter(mAdapter);
 
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah_default);
-        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
-        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        mAdapter.setEmptyView(emptyView);
+        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        mAdapter.setEmptyView(emptyView);
 
     }
 
     @Override
     protected void initData() {
         mModel = new ConvenienceServiceSearchModel();
-        getMechanismList(mCurrentCategoryId, mSearchInput);
+        onSwipeRefresh();
     }
 
     @Override
@@ -93,20 +101,16 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
     }
 
     private void onSwipeRefresh() {
-        Log.e("MechanismListFragment", "onSwipeRefresh: " + "-----");
-        getMechanismList(mCurrentCategoryId, mSearchInput);
+        page = Constant.DEFAULT_FIRST_PAGE;
+        getMechanismList(page);
     }
 
     /**
      * 根据分类id获取机构信息
-     *
-     * @param categoryId 分类id
      */
-    private void getMechanismList(String categoryId, String searchInput) {
-        mSwipeLayout.setRefreshing(true);
-        Log.e("MechanismListFragment", "getMechanismList: " + "id=" + categoryId);
+    private void getMechanismList(int page) {
 
-        mModel.getMechanismList(categoryId, searchInput, new BaseObserver<PageResponse<MechanismResponse>>() {
+        mModel.getMechanismList(page, mCurrentCategoryId, mSearchInput, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
@@ -114,12 +118,32 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
+            public void onSuccess(@NonNull PageResponse<MechanismResponse> response) {
                 mSwipeLayout.setRefreshing(false);
-                mAdapter.getData().clear();
-                List<MechanismResponse> data = mechanismPageResponse.getData();
-                if (data != null && data.size() > 0) {
+                List<MechanismResponse> data = response.getData();
+                boolean isLastPage = response.getLastPage() == page;
+
+                BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+                if (data.isEmpty()) {
+                    if (page == Constant.DEFAULT_FIRST_PAGE) {
+                        mAdapter.setNewInstance(null);
+                        loadMoreModule.loadMoreComplete();
+                        emptyView.showEmptyDefault();
+                    } else {
+                        loadMoreModule.loadMoreEnd();
+                    }
+                    return;
+                }
+                if (page == Constant.DEFAULT_FIRST_PAGE) {
+                    mAdapter.setNewInstance(data);
+                    loadMoreModule.checkDisableLoadMoreIfNotFullPage();
+                } else {
                     mAdapter.addData(data);
+                    if (isLastPage) {
+                        loadMoreModule.loadMoreEnd();
+                    } else {
+                        loadMoreModule.loadMoreComplete();
+                    }
                 }
             }
         });
@@ -133,5 +157,11 @@ public class ConvenienceServiceSearchActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_convenience_service_search_result;
+    }
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        getMechanismList(page);
     }
 }

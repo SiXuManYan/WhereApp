@@ -12,6 +12,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.search.result.SearchAllResultActivity
 import com.jcs.where.features.search.yellow.YellowPageSearchResultActivity
 import com.jcs.where.features.store.history.SearchHistoryAdapter
+import com.jcs.where.government.activity.ConvenienceServiceSearchActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.MyLayoutManager
 import kotlinx.android.synthetic.main.activity_search_all.*
@@ -25,6 +26,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
     /**
      * 0 全部搜索
      * 1 企业黄页
+     * 2 综合服务
      */
     private var type = 0
 
@@ -105,6 +107,11 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             1 -> {
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
                 startActivity(YellowPageSearchResultActivity::class.java, bundle)
+                finish()
+            }
+            2->{
+                bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
+                startActivity(ConvenienceServiceSearchActivity::class.java, bundle)
                 finish()
             }
             else -> {

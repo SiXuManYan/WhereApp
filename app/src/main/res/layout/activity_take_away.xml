@@ -224,7 +224,7 @@
             android:src="@mipmap/ic_share_white2" />
 
         <ImageView
-            android:id="@+id/likeIv"
+            android:id="@+id/like_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

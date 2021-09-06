@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.Group;
 
+import com.google.gson.JsonElement;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -197,7 +198,7 @@ public class MechanismDetailActivity extends BaseActivity {
     }
 
     private void toDelCollect() {
-        mModel.delCollectMechanism(mMechanismId, new BaseObserver<SuccessResponse>() {
+        mModel.delCollectMechanism(mMechanismId, new BaseObserver<JsonElement>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -205,7 +206,7 @@ public class MechanismDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull SuccessResponse successResponseResponse) {
+            public void onSuccess(@NonNull JsonElement successResponseResponse) {
                 stopLoading();
                 // 取消收藏成功
                 mJcsTitle.setSecondRightIcon(R.mipmap.ic_uncollected_black);
@@ -215,7 +216,7 @@ public class MechanismDetailActivity extends BaseActivity {
     }
 
     private void toCollect() {
-        mModel.postCollectMechanism(mMechanismId, new BaseObserver<SuccessResponse>() {
+        mModel.postCollectMechanism(mMechanismId, new BaseObserver<JsonElement>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -223,7 +224,7 @@ public class MechanismDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull SuccessResponse successResponseResponse) {
+            public void onSuccess(@NonNull JsonElement successResponseResponse) {
                 stopLoading();
                 // 收藏成功
                 mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red);

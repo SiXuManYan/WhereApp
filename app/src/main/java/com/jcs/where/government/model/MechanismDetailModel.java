@@ -1,5 +1,6 @@
 package com.jcs.where.government.model;
 
+import com.google.gson.JsonElement;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.MechanismDetailResponse;
@@ -16,11 +17,11 @@ public class MechanismDetailModel extends BaseModel {
         dealResponse(mRetrofit.getMechanismDetailById(mechanismId), observer);
     }
 
-    public void postCollectMechanism(int mechanismId, BaseObserver<SuccessResponse> observer) {
+    public void postCollectMechanism(int mechanismId, BaseObserver<JsonElement> observer) {
         dealResponse(mRetrofit.postCollectMechanism(mechanismId), observer);
     }
 
-    public void delCollectMechanism(int mechanismId, BaseObserver<SuccessResponse> observer) {
+    public void delCollectMechanism(int mechanismId, BaseObserver<JsonElement> observer) {
         dealResponse(mRetrofit.delCollectMechanism(mechanismId), observer);
     }
 }

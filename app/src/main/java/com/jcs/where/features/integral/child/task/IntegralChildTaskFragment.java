@@ -21,6 +21,7 @@ import com.jcs.where.base.EventCode;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.travel.TouristAttractionDetailActivity;
@@ -173,6 +174,10 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
                 break;
             case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
                 toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
+
+
+
+
                 break;
             case HomeRecommendResponse.MODULE_TYPE_3_FOOD:
                 Bundle bundle = new Bundle();

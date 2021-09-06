@@ -839,6 +839,7 @@ Gentleman must let go</string>
     <string name="history_record">History Record</string>
     <string name="back">Back</string>
     <string name="total_list_count_format">A total of %1$s results</string>
+    <string name="contact_number_2">Contact Number</string>
 
 
 </resources>

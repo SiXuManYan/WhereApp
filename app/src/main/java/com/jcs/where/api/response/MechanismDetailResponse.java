@@ -3,6 +3,7 @@ package com.jcs.where.api.response;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,25 +32,25 @@ public class MechanismDetailResponse implements Serializable {
      * facebook : 
      */
 
-    private int id;
-    private String uuid;
-    private String title;
-    private int week_start;
-    private int week_end;
-    private String start_time;
-    private String end_time;
-    private String address;
-    private Double lat;
-    private Double lng;
-    private String tel;
+    public int id;
+    public String uuid;
+    public String title;
+    public int week_start;
+    public int week_end;
+    public String start_time;
+    public String end_time;
+    public String address;
+    public Double lat;
+    public Double lng;
+    public String tel;
     @SerializedName("abstract")
-    private String abstractX;
-    private int collect_status;
-    private String extension_tel;
-    private String web_site;
-    private String email;
-    private String facebook;
-    private List<String> images;
+    public String abstractX;
+    public int collect_status;
+    public String extension_tel;
+    public String web_site;
+    public String email;
+    public String facebook;
+    public List<String> images = new ArrayList<>();
 
     public int getId() {
         return id;

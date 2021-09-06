@@ -193,9 +193,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     private fun setLikeImage() {
         if (collect_status == 2) {
-            likeIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hotelwhitelike))
+            like_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hotelwhitelike))
         } else {
-            likeIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hoteltransparentunlike))
+            like_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hoteltransparentunlike))
         }
     }
 
@@ -216,7 +216,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             MobUtil.shareFacebookWebPage(url, this@TakeawayActivity)
         }
 
-        likeIv.setOnClickListener {
+        like_iv.setOnClickListener {
             if (collect_status == 1) {
                 presenter.collection(restaurant_id)
             } else {

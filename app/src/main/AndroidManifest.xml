@@ -626,6 +626,7 @@
         <activity android:name=".features.search.result.SearchAllResultActivity" />
         <activity android:name=".features.map.government.GovernmentActivity" />
         <activity android:name=".features.search.yellow.YellowPageSearchResultActivity" />
+        <activity android:name=".features.mechanism.MechanismActivity" />
 
 
     </application>

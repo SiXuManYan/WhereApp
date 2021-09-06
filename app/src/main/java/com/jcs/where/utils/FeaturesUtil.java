@@ -575,6 +575,7 @@ public class FeaturesUtil {
 
 
     public static void startNaviGoogle(Context context, Float lat, Float lng) {
+
         if (isAvilible(context, "com.google.android.apps.maps")) {
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

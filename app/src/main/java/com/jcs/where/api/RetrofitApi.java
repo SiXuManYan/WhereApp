@@ -374,7 +374,7 @@ public interface RetrofitApi {
      * @param mechanismId 机构id
      */
     @POST("generalapi/v2/collects")
-    Observable<JcsResponse<SuccessResponse>> postCollectMechanism(@Query("info_id") int mechanismId);
+    Observable<JcsResponse<JsonElement>> postCollectMechanism(@Query("info_id") int mechanismId);
 
     /**
      * 取消收藏机构
@@ -382,7 +382,7 @@ public interface RetrofitApi {
      * @param mechanismId 机构id
      */
     @DELETE("generalapi/v2/collects")
-    Observable<JcsResponse<SuccessResponse>> delCollectMechanism(@Query("info_id") int mechanismId);
+    Observable<JcsResponse<JsonElement>> delCollectMechanism(@Query("info_id") int mechanismId);
 
     /**
      * 获取综合服务页面的区域列表

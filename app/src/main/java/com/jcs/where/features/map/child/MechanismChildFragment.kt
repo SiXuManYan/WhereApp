@@ -13,6 +13,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.map.MechanismAdapter
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.government.activity.MechanismDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -78,10 +79,9 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
     override fun bindListener() = Unit
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
         val data = mAdapter.data[position]
-        startActivity(MechanismDetailActivity::class.java, Bundle().apply {
-            putString(MechanismDetailActivity.K_MECHANISM_ID, data.id.toString())
+        startActivity(MechanismActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, data.id)
         })
     }
 

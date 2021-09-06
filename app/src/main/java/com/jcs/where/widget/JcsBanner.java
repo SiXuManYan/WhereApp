@@ -90,6 +90,7 @@ public class JcsBanner extends ConstraintLayout {
     }
 
     public void setPicData(List<String> picData) {
+
         this.mPicData.clear();
         this.mPicData.addAll(picData);
         addDot(picData.size());

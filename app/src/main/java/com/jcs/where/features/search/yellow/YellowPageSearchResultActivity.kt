@@ -13,7 +13,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.map.MechanismAdapter
-import com.jcs.where.government.activity.MechanismDetailActivity
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -75,12 +75,12 @@ class YellowPageSearchResultActivity : BaseMvpActivity<YellowPageSearchResultPre
 
     override fun initData() {
         presenter = YellowPageSearchResultPresenter(this)
-        presenter.getData(page,categoryId,search)
+        presenter.getData(page, categoryId, search)
     }
 
     override fun onLoadMore() {
         page++
-        presenter.getData(page,categoryId,search)
+        presenter.getData(page, categoryId, search)
     }
 
     override fun bindListener() {
@@ -115,9 +115,10 @@ class YellowPageSearchResultActivity : BaseMvpActivity<YellowPageSearchResultPre
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
-        startActivity(MechanismDetailActivity::class.java, Bundle().apply {
-            putString(MechanismDetailActivity.K_MECHANISM_ID, data.id.toString())
+        startActivity(MechanismActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, data.id)
         })
+
     }
 
 }

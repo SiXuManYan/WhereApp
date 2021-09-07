@@ -24,10 +24,9 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.base.IntentEntry;
 import com.jcs.where.features.map.MechanismAdapter;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.features.search.SearchAllActivity;
-import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.JsonUtil;
@@ -291,14 +290,16 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
     private void onSearchClicked(View view) {
         String categoryId = mToSelectedListFragment.getCurrentCategoryId();
         Bundle bundle = new Bundle();
-        bundle.putInt(Constant.PARAM_TYPE , 1);
-        bundle.putString(Constant.PARAM_CATEGORY_ID ,categoryId );
-        startActivity(SearchAllActivity.class ,bundle);
+        bundle.putInt(Constant.PARAM_TYPE, 1);
+        bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId);
+        startActivity(SearchAllActivity.class, bundle);
     }
 
     private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
-        MechanismResponse mechanismResponse = mAdapter.getData().get(position);
-        toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(mechanismResponse.getId())));
+        MechanismResponse response = mAdapter.getData().get(position);
+        Bundle b = new Bundle();
+        b.putInt(Constant.PARAM_ID, response.id);
+        startActivity(MechanismActivity.class, b);
     }
 
     private int page = Constant.DEFAULT_FIRST_PAGE;

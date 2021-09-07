@@ -1,5 +1,7 @@
 package com.jcs.where.government.fragment;
 
+import static com.jcs.where.utils.Constant.PARAM_ID;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,9 +26,8 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.base.IntentEntry;
 import com.jcs.where.features.map.MechanismAdapter;
-import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.government.model.MechanismListModel;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
@@ -260,13 +261,10 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
 
     private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         int mechanismId = mAdapter.getData().get(position).getId();
-        toActivity(
-                MechanismDetailActivity.class,
-                new IntentEntry(
-                        MechanismDetailActivity.K_MECHANISM_ID,
-                        String.valueOf(mechanismId)
-                )
-        );
+        Bundle b = new Bundle();
+        b.putInt(PARAM_ID, mechanismId);
+        startActivity(MechanismActivity.class, b);
+
     }
 
     /**

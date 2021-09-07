@@ -3,6 +3,7 @@ package com.jcs.where.search;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
@@ -21,8 +25,7 @@ import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
-import com.jcs.where.government.activity.ConvenienceServiceSearchActivity;
-import com.jcs.where.government.activity.MechanismDetailActivity;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.hotel.watcher.AfterInputWatcher;
 import com.jcs.where.news.NewsSearchResultActivity;
 import com.jcs.where.search.adapter.HotSearchAdapter;
@@ -31,13 +34,11 @@ import com.jcs.where.search.adapter.SearchHistoryAdapter;
 import com.jcs.where.search.bean.ISearchResponse;
 import com.jcs.where.search.model.SearchModel;
 import com.jcs.where.search.tag.SearchTag;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.SearchHistoryUtils;
 import com.jcs.where.view.MyLayoutManager;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 酒店搜索页面
@@ -267,13 +268,13 @@ public class SearchActivity extends BaseActivity {
             toActivity(NewsSearchResultActivity.class, new IntentEntry(NewsSearchResultActivity.K_INPUT, item.getName()));
         }
 
-        if (mSearchTag == SearchTag.YELLOW_PAGE) {
-            toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(item.getId())));
+        if (mSearchTag == SearchTag.YELLOW_PAGE || mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
+            Bundle b = new Bundle();
+            b.putInt(Constant.PARAM_ID, item.getId());
+            startActivity(MechanismActivity.class, b);
         }
 
-        if (mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
-            toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(item.getId())));
-        }
+
     }
 
     private void onClearClicked(View view) {

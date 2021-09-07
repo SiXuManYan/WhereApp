@@ -1,6 +1,8 @@
 package com.jcs.where.features.integral.child.task;
 
 
+import static com.jcs.where.utils.Constant.PARAM_ID;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,11 +20,9 @@ import com.jcs.where.R;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
-import com.jcs.where.base.IntentEntry;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
 import com.jcs.where.features.mechanism.MechanismActivity;
-import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.utils.Constant;
@@ -32,8 +32,6 @@ import com.jcs.where.widget.list.DividerDecoration;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-
-import static com.jcs.where.utils.Constant.PARAM_ID;
 
 /**
  * Created by Wangsw  2021/1/22 10:06.
@@ -173,11 +171,9 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
                 HotelDetailActivity.goTo(getActivity(), data.id, dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
                 break;
             case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
-                toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.id)));
-
-
-
-
+                Bundle b = new Bundle();
+                b.putInt(PARAM_ID, data.id);
+                startActivity(MechanismActivity.class, b);
                 break;
             case HomeRecommendResponse.MODULE_TYPE_3_FOOD:
                 Bundle bundle = new Bundle();

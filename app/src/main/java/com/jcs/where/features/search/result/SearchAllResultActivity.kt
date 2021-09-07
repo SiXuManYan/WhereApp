@@ -8,10 +8,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.search.SearchResultResponse
-import com.jcs.where.base.IntentEntry
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.government.activity.MechanismDetailActivity
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.home.HomeActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
@@ -104,10 +103,11 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
                 HotelDetailActivity.goTo(this, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
             }
             SearchResultResponse.TYPE_2_TRAVEL -> TouristAttractionDetailActivity.goTo(this, data.id)
-            SearchResultResponse.TYPE_3_SERVICE -> toActivity(
-                MechanismDetailActivity::class.java,
-                IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, data.id.toString())
-            )
+            SearchResultResponse.TYPE_3_SERVICE ->{
+                startActivity(MechanismActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, data.id)
+                })
+            }
             SearchResultResponse.TYPE_4_RESTAURANT -> {
                 val bundle = Bundle()
                 bundle.putString(Constant.PARAM_ID, data.id.toString())

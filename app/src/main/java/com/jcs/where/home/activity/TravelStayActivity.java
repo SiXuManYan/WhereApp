@@ -1,5 +1,7 @@
 package com.jcs.where.home.activity;
 
+import static com.jcs.where.utils.Constant.PARAM_ID;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,8 +31,8 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.frams.common.Html5Url;
-import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.home.decoration.HomeModulesItemDecoration;
 import com.jcs.where.hotel.activity.HotelActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
@@ -86,7 +88,6 @@ public class TravelStayActivity extends BaseActivity {
                 .priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .transform(new GlideRoundTransform(4));
-
 
 
         banner3.setLayoutParams(layoutParams);
@@ -223,9 +224,8 @@ public class TravelStayActivity extends BaseActivity {
                                     break;
                                 case 4:
                                     Bundle b = new Bundle();
-                                    b.putString(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(data.target_id));
-                                    startActivity(MechanismDetailActivity.class, b);
-
+                                    b.putInt(PARAM_ID, data.target_id);
+                                    startActivity(MechanismActivity.class, b);
                                     break;
                                 case 5:
                                     Bundle bd = new Bundle();

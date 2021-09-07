@@ -21,9 +21,8 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
-import com.jcs.where.base.IntentEntry;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.features.store.detail.StoreDetailActivity;
-import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.mine.adapter.SameCityListAdapter;
 import com.jcs.where.mine.model.CollectionListModel;
@@ -180,7 +179,9 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
                     HotelDetailActivity.goTo(context, response.getHotel().getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
                     break;
                 case SameCityType.Mechanism:
-                    toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, response.getGeneral().getId()));
+                    Bundle b = new Bundle();
+                    b.putInt(Constant.PARAM_ID, response.general.id);
+                    startActivity(MechanismActivity.class, b);
                     break;
                 case SameCityType.TouristAttraction:
                     TouristAttractionDetailActivity.goTo(context, response.getTravel().getId());

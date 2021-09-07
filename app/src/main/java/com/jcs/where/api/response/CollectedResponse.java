@@ -16,17 +16,17 @@ public class CollectedResponse implements MultiItemEntity {
      */
 
     @SerializedName("type")
-    private Integer type;
+    public Integer type;
     @SerializedName("news")
-    private NewsResponse news;
+    public NewsResponse news;
     @SerializedName("hotel")
-    private HotelResponse hotel;
+    public HotelResponse hotel;
     @SerializedName("travel")
-    private TouristAttractionResponse travel;
+    public TouristAttractionResponse travel;
     @SerializedName("restaurant")
-    private RestaurantResponse restaurant;
+    public RestaurantResponse restaurant;
     @SerializedName("general")
-    private GeneralResponse general;
+    public GeneralResponse general;
 
     public StoreCollectionResponse estore;
 

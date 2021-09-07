@@ -10,21 +10,16 @@ import java.util.List;
  */
 public class GeneralResponse {
     @SerializedName("id")
-    private String id;
+    public int id;
     @SerializedName("name")
-    private String name;
+    public String name;
     @SerializedName("address")
-    private String address;
+    public String address;
     @SerializedName("images")
-    private List<String> images;
+    public List<String> images;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+
 
     public String getName() {
         return name;

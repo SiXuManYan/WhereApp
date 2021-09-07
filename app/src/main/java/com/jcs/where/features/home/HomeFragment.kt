@@ -32,12 +32,11 @@ import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.features.map.government.GovernmentActivity
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.recommend.StoreRecommendActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
-import com.jcs.where.government.activity.GovernmentMapActivity
-import com.jcs.where.government.activity.MechanismDetailActivity
 import com.jcs.where.home.activity.TravelStayActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
 import com.jcs.where.hotel.activity.CityPickerActivity
@@ -301,8 +300,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
-                        startActivity(MechanismDetailActivity::class.java, Bundle().apply {
-                            putString(MechanismDetailActivity.K_MECHANISM_ID, data.id.toString())
+                        startActivity(MechanismActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_ID, data.id)
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
@@ -515,8 +514,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                             })
                         }
                         4 -> {
-                            startActivity(MechanismDetailActivity::class.java, Bundle().apply {
-                                putString(MechanismDetailActivity.K_MECHANISM_ID, data.target_id.toString())
+                            startActivity(MechanismActivity::class.java, Bundle().apply {
+                                putInt(Constant.PARAM_ID, data.target_id)
                             })
                         }
                         5 -> {

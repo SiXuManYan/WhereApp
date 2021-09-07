@@ -14,7 +14,6 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.map.MechanismAdapter
 import com.jcs.where.features.mechanism.MechanismActivity
-import com.jcs.where.government.activity.MechanismDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration

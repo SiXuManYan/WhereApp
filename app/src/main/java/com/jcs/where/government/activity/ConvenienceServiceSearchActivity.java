@@ -1,8 +1,11 @@
 package com.jcs.where.government.activity;
 
+import static com.jcs.where.utils.Constant.PARAM_ID;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,8 +22,8 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.base.IntentEntry;
 import com.jcs.where.features.map.MechanismAdapter;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.government.model.ConvenienceServiceSearchModel;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
@@ -91,13 +94,9 @@ public class ConvenienceServiceSearchActivity extends BaseActivity implements On
 
     private void onMechanismItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         int mechanismId = mAdapter.getData().get(position).getId();
-        toActivity(
-                MechanismDetailActivity.class,
-                new IntentEntry(
-                        MechanismDetailActivity.K_MECHANISM_ID,
-                        String.valueOf(mechanismId)
-                )
-        );
+        Bundle b = new Bundle();
+        b.putInt(PARAM_ID, mechanismId);
+        startActivity(MechanismActivity.class, b);
     }
 
     private void onSwipeRefresh() {

@@ -1,5 +1,7 @@
 package com.jcs.where.mine.activity;
 
+import static com.jcs.where.utils.Constant.PARAM_ID;
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,10 +16,9 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.FootprintResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.base.IntentEntry;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
+import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.features.store.detail.StoreDetailActivity;
-import com.jcs.where.government.activity.MechanismDetailActivity;
 import com.jcs.where.hotel.activity.HotelDetailActivity;
 import com.jcs.where.mine.adapter.FootprintListAdapter;
 import com.jcs.where.mine.model.FootprintModel;
@@ -27,8 +28,6 @@ import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
 import java.util.List;
-
-import static com.jcs.where.utils.Constant.PARAM_ID;
 
 /**
  * 页面-足迹
@@ -107,7 +106,9 @@ public class FootprintActivity extends BaseActivity {
                 TouristAttractionDetailActivity.goTo(this, dtoId);
                 break;
             case FootprintType.Mechanism:
-                toActivity(MechanismDetailActivity.class, new IntentEntry(MechanismDetailActivity.K_MECHANISM_ID, String.valueOf(dtoId)));
+                Bundle b = new Bundle();
+                b.putInt(PARAM_ID, dtoId);
+                startActivity(MechanismActivity.class, b);
                 break;
             case FootprintType.Restaurant:
                 String id = String.valueOf(data.getModuleData().getId());
@@ -117,9 +118,9 @@ public class FootprintActivity extends BaseActivity {
                 break;
             case FootprintType.E_STORE:
                 int shopId = data.getModuleData().getId();
-                Bundle b = new Bundle();
-                b.putInt(Constant.PARAM_ID, shopId);
-                startActivity(StoreDetailActivity.class, b);
+                Bundle b1 = new Bundle();
+                b1.putInt(Constant.PARAM_ID, shopId);
+                startActivity(StoreDetailActivity.class, b1);
                 break;
             default:
                 break;

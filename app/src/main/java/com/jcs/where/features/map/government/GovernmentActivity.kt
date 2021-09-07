@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Location
+import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.map.CustomInfoWindowAdapter
 import com.jcs.where.features.map.MechanismAdapter
 import com.jcs.where.features.map.MechanismPagerAdapter
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.store.filter.ThirdCategoryAdapter
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
@@ -73,18 +75,22 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     override fun initView() {
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
         initExtra()
-        initChild()
+        initCategoryChild()
         initBehavior()
         initMarkerClickListContent()
     }
 
     private fun initExtra() {
-         childCategoryId = intent.getIntExtra(Constant.PARAM_CHILD_CATEGORY_ID, 0)
+        childCategoryId = intent.getIntExtra(Constant.PARAM_CHILD_CATEGORY_ID, 0)
     }
 
 
+    /**
+     * 三级分类
+     */
     @SuppressLint("NotifyDataSetChanged")
-    private fun initChild() {
+    private fun initCategoryChild() {
+
         mPagerAdapter = MechanismPagerAdapter(supportFragmentManager)
         mChildTagAdapter = ThirdCategoryAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
@@ -112,6 +118,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      */
     private fun initBehavior() {
         pagerBehavior = from(bottom_sheet_ll)
+        pagerBehavior.state = STATE_EXPANDED
+
+
         makerBehavior = from(bottom_sheet_rv)
         makerBehavior.state = STATE_HIDDEN
         makerBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -155,15 +164,18 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      * Maker 选中后，对应的列表数据
      */
     private fun initMarkerClickListContent() {
+
         mMarkerContentAdapter = MechanismAdapter().apply {
             showClose = true
             addChildClickViewIds(R.id.close_iv)
             setOnItemChildClickListener { _, _, _ ->
                 makerBehavior.state = STATE_HIDDEN
             }
-            setOnItemClickListener { adapter, view, position ->
-
-                // todo 进入详情页
+            setOnItemClickListener { _, _, position ->
+                val data = this.data[position]
+                startActivity(MechanismActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, data.id)
+                })
             }
         }
 

@@ -5,7 +5,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -23,7 +22,7 @@ import com.jcs.where.utils.GlideUtil
  */
 class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.layout.item_mechanism), LoadMoreModule {
 
-    public var showClose = false
+    var showClose = false
 
     override fun convert(holder: BaseViewHolder, item: MechanismResponse) {
 
@@ -35,11 +34,14 @@ class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.l
         }
 
         val container_rl = holder.getView<RelativeLayout>(R.id.container_rl)
+        val param = container_rl.layoutParams as RecyclerView.LayoutParams
+
         if (holder.adapterPosition == 0) {
-            val param = container_rl.layoutParams as RecyclerView.LayoutParams
             param.topMargin = SizeUtils.dp2px(15f)
-            container_rl.layoutParams = param
+        } else {
+            param.topMargin = SizeUtils.dp2px(0f)
         }
+        container_rl.layoutParams = param
 
 
         // 图片

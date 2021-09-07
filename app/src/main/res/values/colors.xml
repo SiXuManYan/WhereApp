@@ -69,8 +69,6 @@
     <color name="green_63C3A7">#63C3A7</color>
     <color name="grey_979797">#979797</color>
     <color name="orange_FFA27E">#FFA27E</color>
-    <color name="white_DCE0F3">#DCE0F3</color>
-    <color name="blue_D9ECFF">#D9ECFF</color>
     <color name="blue_EDF5FD">#EDF5FD</color>
     <color name="grey_B5B5B5">#B5B5B5</color>
     <color name="yellow_FEBA32">#FEBA32</color>
@@ -81,7 +79,6 @@
     <color name="red_FF5837">#FF5837</color>
     <color name="gray_adb7c8">#ADB7C8</color>
     <color name="blue_E8F0FF">#E8F0FF</color>
-    <color name="blue_E8F0FFs">#40001846</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

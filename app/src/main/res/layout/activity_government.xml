@@ -131,7 +131,6 @@
             app:layout_behavior="@string/bottom_sheet_behavior">
 
             <View
-                android:id="@+id/capsule_v"
                 android:layout_width="@dimen/dp_35"
                 android:layout_height="@dimen/dp_5"
                 android:layout_gravity="center_horizontal"

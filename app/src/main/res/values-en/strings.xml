@@ -97,7 +97,6 @@
     <string name="prompt_input_government_name_3">Police Office</string>
     <string name="all">All</string>
     <string name="title_select_city">Select City</string>
-    <string name="government_name">Government name</string>
     <string name="business_hour">Business hours</string>
     <string name="extension_number">Extension Number</string>
     <string name="website">website</string>
@@ -108,7 +107,6 @@
     <string name="mechanism_introduce">Agency presentation</string>
     <string name="no_introduce">No introduction</string>
     <string name="call">call</string>
-    <string name="not_provide_tel_number">No phone number</string>
     <string name="google_map_not_installed">You have not installed Google Maps</string>
     <string name="enterprise_yellow_page">Enterprise</string>
     <string name="city_news">1Bataan News</string>
@@ -136,7 +134,6 @@
     <string name="mine_booked">Booked</string>
     <string name="language_title">language</string>
     <string name="home_search_hint">Search title or keyword</string>
-    <string name="mechanism_to">&#045;</string>
     <string name="google_map">Google map</string>
     <string name="hotel_title">Tourism</string>
     <string name="search">Search</string>
@@ -159,8 +156,6 @@
     <string name="refunded">refunded</string>
     <string name="refund_failed">Refund failed</string>
     <string name="mine_footprint">Footprint</string>
-    <string name="positioning">Positioning...</string>
-    <string name="position_failed">Position Failed</string>
     <string name="position">Position</string>
     <string name="loading">Loading</string>
     <string name="facebook_website">Facebook Link</string>
@@ -824,7 +819,6 @@ Gentleman must let go</string>
     <string name="refund_dialog_hint">Are you sure to refund?</string>
     <string name="more">more</string>
     <string name="hotel">Hotel</string>
-    <string name="general_service">General Service</string>
     <string name="food">Food</string>
     <string name="travel">Travel</string>
     <string name="my_likes">My conis</string>

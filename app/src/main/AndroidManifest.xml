@@ -225,19 +225,6 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".government.activity.GovernmentMapActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".government.activity.MechanismDetailActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
             android:name=".yellow_page.activity.YellowPageActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"

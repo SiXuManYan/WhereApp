@@ -102,7 +102,6 @@
     <string name="prompt_input_government_name_3">搜索政府机构</string>
     <string name="all">全部</string>
     <string name="title_select_city">城市选择</string>
-    <string name="government_name">政府名字</string>
     <string name="business_hour">营业时间</string>
     <string name="extension_number">分机号码</string>
     <string name="website">网站</string>
@@ -113,7 +112,6 @@
     <string name="mechanism_introduce">机构介绍</string>
     <string name="no_introduce">暂无介绍</string>
     <string name="call">呼叫</string>
-    <string name="not_provide_tel_number">未提供电话号码</string>
     <string name="google_map_not_installed">您尚未安装谷歌地图</string>
     <string name="enterprise_yellow_page">企业黄页</string>
     <string name="city_news">同城新闻</string>
@@ -141,7 +139,6 @@
     <string name="mine_login_register">登录/注册</string>
     <string name="language_title">修改语言</string>
     <string name="home_search_hint">搜索标题或关键字</string>
-    <string name="mechanism_to">至</string>
 
     <string name="google_map">Google 地图</string>
     <string name="hotel_title">旅游住宿</string>
@@ -163,8 +160,6 @@
     <string name="refunded">已退款</string>
     <string name="refund_failed">退款失败</string>
     <string name="mine_footprint">我的足迹</string>
-    <string name="positioning">正在定位…</string>
-    <string name="position_failed">定位失败</string>
     <string name="position">定位</string>
     <string name="loading">加载中…</string>
     <string name="close_page_prompt">您确定要关闭该页面吗?</string>
@@ -830,7 +825,6 @@ Gentleman must let go</string>
     <string name="refund_dialog_hint">确定退款吗？</string>
     <string name="more">更多</string>
     <string name="hotel">酒店</string>
-    <string name="general_service">综合服务</string>
     <string name="food">餐厅</string>
     <string name="travel">旅游</string>
     <string name="my_likes">我的积分</string>

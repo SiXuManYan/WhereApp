@@ -1,5 +1,7 @@
 package com.jcs.where.features.search
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -27,6 +29,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 0 全部搜索
      * 1 企业黄页
      * 2 综合服务
+     * 3.政府地图
      */
     private var type = 0
 
@@ -112,6 +115,10 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             2->{
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
                 startActivity(ConvenienceServiceSearchActivity::class.java, bundle)
+                finish()
+            }
+            3->{
+                setResult(Activity.RESULT_OK , Intent().putExtras(bundle))
                 finish()
             }
             else -> {

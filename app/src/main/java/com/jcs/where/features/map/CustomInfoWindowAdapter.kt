@@ -20,6 +20,10 @@ import com.jcs.where.features.map.government.GovernmentActivity
  *
  * 文档：
  * @see <a href="https://developers.google.com/maps/documentation/android-sdk/reference/com/google/android/libraries/maps/GoogleMap.InfoWindowAdapter">InfoWindowAdapter</a>
+ *
+ *
+ * 谷歌地图由于回收机制，默认只能显示一个info窗口，
+ * 使用 layout转bitmap ，setmaker 替代
  */
 class CustomInfoWindowAdapter(activity: AppCompatActivity) : GoogleMap.InfoWindowAdapter {
 

@@ -47,15 +47,15 @@
                 android:scaleType="centerInside"
                 android:src="@mipmap/ic_homesearch" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_aet"
+            <TextView
+                android:id="@+id/search_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/delete_iv"
                 android:layout_toEndOf="@+id/search_iv"
+                android:gravity="center_vertical"
                 android:background="@null"
                 android:hint="@string/search_all_hint"
-                android:imeOptions="actionSearch"
                 android:singleLine="true"
                 android:textColor="@color/black_333333"
                 android:textColorHint="@color/grey_999999"

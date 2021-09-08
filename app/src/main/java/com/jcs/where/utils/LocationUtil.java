@@ -160,7 +160,7 @@ public class LocationUtil {
         try {
             List<Address> locationList = gc.getFromLocation(latitude, longitude, 1);
 
-            if (locationList != null) {
+            if (locationList != null && !locationList.isEmpty() ) {
                 Address address = locationList.get(0);
                 String countryName = address.getCountryName();//国家
                 String countryCode = address.getCountryCode();
@@ -181,8 +181,8 @@ public class LocationUtil {
 //                    addressCallback.onGetAddress(address);
 //                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
+
         }
     }
 

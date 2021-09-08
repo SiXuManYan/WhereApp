@@ -2,17 +2,22 @@ package com.jcs.where.features.map.government
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.location.Address
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -30,6 +35,7 @@ import com.jcs.where.features.map.CustomInfoWindowAdapter
 import com.jcs.where.features.map.MechanismAdapter
 import com.jcs.where.features.map.MechanismPagerAdapter
 import com.jcs.where.features.mechanism.MechanismActivity
+import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.filter.ThirdCategoryAdapter
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
@@ -66,6 +72,19 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
     /** 从分类tab跳转时，根据 categoryId  调整viewPager 位置 */
     private var childCategoryId = 0
+
+
+
+    /** 处理搜索 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras
+            val searchName = bundle?.getString(Constant.PARAM_NAME, "")
+            search_tv.text = searchName
+            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD , searchName))
+        }
+    }
+
 
     override fun getLayoutId() = R.layout.activity_government
 
@@ -226,6 +245,16 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             }
 
         })
+
+        search_tv.setOnClickListener {
+            searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 3))
+        }
+
+
+        delete_iv.setOnClickListener {
+            search_tv.text = ""
+            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD , ""))
+        }
     }
 
     override fun bindGovernmentChildCategory(response: ArrayList<Category>) {
@@ -289,6 +318,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             // 移动到巴朗牙
             map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(Constant.LAT, Constant.LNG)))
 
+            // 调整内置UI padding 防止logo被遮挡
+            setPadding(0, 0, 0, SizeUtils.dp2px(120f))
+
             // 自定义信息样式
             setInfoWindowAdapter(CustomInfoWindowAdapter(this@GovernmentActivity))
 
@@ -308,9 +340,11 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         }
 
         map.uiSettings.apply {
-            // 隐藏缩放控件
-            isZoomControlsEnabled = false
+
+            setAllGesturesEnabled(true)
+            isMapToolbarEnabled = true
         }
+
 
         // 当前位置
         enableMyLocation()
@@ -420,7 +454,6 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             )
 
             maker?.tag = it
-            maker?.showInfoWindow()
             makers.add(maker)
         }
 
@@ -439,22 +472,28 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         marker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_select))
         marker.showInfoWindow()
 
-        // 切换底部数据
+        // 切换底部列表数据
         val index = makers.indexOf(marker)
         if (index != -1) {
             bottom_sheet_rv.scrollToPosition(index)
             makerBehavior.state = STATE_EXPANDED
         }
 
-        // 平滑移动到目标位置
-        val targetCamera = CameraPosition.Builder().target(marker.position)
-            .zoom(15.5f)
-            .bearing(0f)
-            .tilt(25f)
-            .build()
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
+        Handler(mainLooper).postDelayed({
 
-        return true
+            // 地图平滑移动到目标位置
+            val targetCamera = CameraPosition.Builder().target(marker.position)
+                .zoom(15.5f)
+                .bearing(0f)
+                .tilt(25f)
+                .build()
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
+
+        }, 10)
+
+
+
+        return false
     }
 
     /**

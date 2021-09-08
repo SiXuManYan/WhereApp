@@ -5,9 +5,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.api.response.PageResponse
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.SPKey
-import com.jcs.where.utils.SPUtil
+import com.jcs.where.utils.*
 
 /**
  * Created by Wangsw  2021/8/26 14:27.
@@ -22,16 +20,17 @@ interface MechanismChildView : BaseMvpView {
 
 class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPresenter(view) {
 
-    fun getData(page: Int, categoryId: String, search: String) {
+    fun getData(page: Int, categoryId: String, search: String?) {
         val areaIdStr = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID)
+        val myLocation = CacheUtil.getMyCacheLocation()
 
         requestApi(mRetrofit.getMechanismList(
             page,
             categoryId,
             areaIdStr,
-            null,
-            Constant.LAT ,
-            Constant.LNG
+            search,
+            myLocation.latitude,
+            myLocation.longitude
         ), object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
             override fun onSuccess(response: PageResponse<MechanismResponse>) {
                 val total = response.total

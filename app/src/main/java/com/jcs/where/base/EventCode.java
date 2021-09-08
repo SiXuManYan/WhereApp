@@ -115,5 +115,10 @@ public class EventCode {
      */
     public static final int EVENT_SET_LIST_TOTAL_COUNT= 1023;
 
+    /**
+     * 刷新子列表
+     */
+    public static final int EVENT_REFRESH_CHILD= 1024;
+
 
 }

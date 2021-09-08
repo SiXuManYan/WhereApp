@@ -31,6 +31,7 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
     private lateinit var mAdapter: MechanismAdapter
     private lateinit var emptyView: EmptyView
     var categoryId = ""
+    var search = ""
     private var page = Constant.DEFAULT_FIRST_PAGE
 
     override fun getLayoutId() = R.layout.single_recycler_view
@@ -67,7 +68,9 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
     }
 
     override fun loadOnVisible() {
-        presenter.getData(page, categoryId, "")
+        if (isViewVisible) {
+            presenter.getData(page, categoryId, search)
+        }
     }
 
     override fun onLoadMore() {
@@ -117,11 +120,29 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
         if (baseEvent == null) {
             return
         }
-        if (baseEvent.code == EventCode.EVENT_REFRESH_MECHANISM) {
-            page = Constant.DEFAULT_FIRST_PAGE
-            categoryId = baseEvent.message
-            presenter.getData(page, categoryId, "")
+
+        when (baseEvent.code) {
+
+            EventCode.EVENT_REFRESH_MECHANISM  -> {
+                page = Constant.DEFAULT_FIRST_PAGE
+                categoryId = baseEvent.message
+              loadOnVisible()
+            }
+
+            EventCode.EVENT_REFRESH_CHILD  -> {
+                page = Constant.DEFAULT_FIRST_PAGE
+                search = baseEvent.message
+                loadOnVisible()
+
+
+            }
+
+            else -> {
+
+            }
         }
+
+
 
 
     }

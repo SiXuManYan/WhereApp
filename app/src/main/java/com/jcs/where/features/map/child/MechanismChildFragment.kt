@@ -3,6 +3,7 @@ package com.jcs.where.features.map.child
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
@@ -13,12 +14,12 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.map.MechanismAdapter
+import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.single_recycler_view.*
-import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/8/26 14:27.
@@ -27,12 +28,14 @@ import org.greenrobot.eventbus.EventBus
 class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), MechanismChildView, OnItemClickListener,
     OnLoadMoreListener {
 
-
     private lateinit var mAdapter: MechanismAdapter
     private lateinit var emptyView: EmptyView
     var categoryId = ""
     var search = ""
     private var page = Constant.DEFAULT_FIRST_PAGE
+    public var totalCount = 0
+    public var totalCountView: TextView? = null
+
 
     override fun getLayoutId() = R.layout.single_recycler_view
 
@@ -89,13 +92,15 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
 
     override fun bindData(response: MutableList<MechanismResponse>, isLastPage: Boolean, total: Int) {
 
+        totalCount = total
+        updateActivityCount()
+
         val loadMoreModule = mAdapter.loadMoreModule
         if (response.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
                 emptyView.showEmptyContainer()
-                EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_SET_LIST_TOTAL_COUNT, "0"))
             } else {
                 loadMoreModule.loadMoreEnd()
             }
@@ -104,7 +109,7 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
         if (page == Constant.DEFAULT_FIRST_PAGE) {
             mAdapter.setNewInstance(response)
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()
-            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_SET_LIST_TOTAL_COUNT, total.toString()))
+
         } else {
             mAdapter.addData(response)
             if (isLastPage) {
@@ -123,29 +128,34 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
 
         when (baseEvent.code) {
 
-            EventCode.EVENT_REFRESH_MECHANISM  -> {
+            EventCode.EVENT_REFRESH_MECHANISM -> {
                 page = Constant.DEFAULT_FIRST_PAGE
                 categoryId = baseEvent.message
-              loadOnVisible()
+                loadOnVisible()
             }
 
-            EventCode.EVENT_REFRESH_CHILD  -> {
+            EventCode.EVENT_REFRESH_CHILD -> {
                 page = Constant.DEFAULT_FIRST_PAGE
                 search = baseEvent.message
                 loadOnVisible()
-
-
-            }
-
-            else -> {
-
             }
         }
-
-
-
-
     }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if (!hidden) {
+            updateActivityCount()
+        }
+    }
+
+    private fun updateActivityCount(){
+        val governmentActivity = activity as GovernmentActivity
+        governmentActivity.getTotalCountView().text =  getString(R.string.total_list_count_format, totalCount)
+    }
+
+
 
 
 }

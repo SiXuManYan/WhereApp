@@ -4,17 +4,21 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.location.Address
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import biz.laenger.android.vpbs.BottomSheetUtils
+import biz.laenger.android.vpbs.ViewPagerBottomSheetBehavior
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -41,6 +45,7 @@ import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
 import com.jcs.where.utils.PermissionUtils
+import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_government.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
@@ -62,7 +67,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     private lateinit var mChildTagAdapter: ThirdCategoryAdapter
 
     /** pager Behavior */
-    private lateinit var pagerBehavior: BottomSheetBehavior<LinearLayout>
+    private lateinit var pagerBehavior: ViewPagerBottomSheetBehavior<LinearLayout>
 
     /** maker  Behavior */
     private lateinit var makerBehavior: BottomSheetBehavior<RecyclerView>
@@ -74,14 +79,13 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     private var childCategoryId = 0
 
 
-
     /** 处理搜索 */
     private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val bundle = it.data?.extras
             val searchName = bundle?.getString(Constant.PARAM_NAME, "")
             search_tv.text = searchName
-            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD , searchName))
+            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, searchName))
         }
     }
 
@@ -103,6 +107,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         childCategoryId = intent.getIntExtra(Constant.PARAM_CHILD_CATEGORY_ID, 0)
     }
 
+    fun getTotalCountView(): TextView {
+        return total_count_tv
+    }
 
     /**
      * 三级分类
@@ -111,9 +118,12 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     private fun initCategoryChild() {
 
         mPagerAdapter = MechanismPagerAdapter(supportFragmentManager)
+
         mChildTagAdapter = ThirdCategoryAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
+
                 val child = mChildTagAdapter.data
+                // 设置选中
                 child.forEachIndexed { index, category ->
                     category.nativeIsSelected = index == position
                 }
@@ -122,12 +132,14 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                 // 刷新筛选列表
                 val target = mChildTagAdapter.data[position]
                 EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_MECHANISM, target.id.toString()))
-
             }
         }
         child_tag_rv.apply {
             adapter = mChildTagAdapter
             layoutManager = LinearLayoutManager(this@GovernmentActivity, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(
+                DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(16f), 0, 0)
+            )
         }
     }
 
@@ -136,8 +148,11 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      * 处理底部联动
      */
     private fun initBehavior() {
-        pagerBehavior = from(bottom_sheet_ll)
-        pagerBehavior.state = STATE_EXPANDED
+        BottomSheetUtils.setupViewPager(content_vp)
+//        pagerBehavior = from(bottom_sheet_ll)
+        pagerBehavior = ViewPagerBottomSheetBehavior.from(bottom_sheet_ll)
+
+        pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_EXPANDED
 
 
         makerBehavior = from(bottom_sheet_rv)
@@ -157,14 +172,14 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                     }
                     STATE_EXPANDED -> {
                         //处于完全展开的状态
-                        pagerBehavior.state = STATE_COLLAPSED
+                        pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_COLLAPSED
                     }
                     STATE_COLLAPSED -> {
                         //默认的折叠状态
                     }
                     STATE_HIDDEN -> {
                         //下滑动完全隐藏
-                        pagerBehavior.state = STATE_EXPANDED
+                        pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_EXPANDED
                     }
 
                     else -> {
@@ -238,26 +253,29 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                 if (category.isEmpty()) {
                     return
                 }
+
+                // 更新三级分类
                 val child = category[position]
                 if (child.has_children == 2 && child.child_categories.isNotEmpty()) {
                     mChildTagAdapter.setNewInstance(child.child_categories)
                 }
-            }
+                mPagerAdapter.currentPosition = position
 
+            }
         })
 
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 3))
         }
 
-
         delete_iv.setOnClickListener {
             search_tv.text = ""
-            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD , ""))
+            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, ""))
         }
     }
 
-    override fun bindGovernmentChildCategory(response: ArrayList<Category>) {
+
+    override fun bindSecondCategory(response: ArrayList<Category>) {
 
         // pager
         mPagerAdapter.category.addAll(response)
@@ -278,19 +296,6 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             content_vp.currentItem = targetIndex
         }
 
-    }
-
-
-    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
-        super.onEventReceived(baseEvent)
-        if (baseEvent == null) {
-            return
-        }
-        if (baseEvent.code == EventCode.EVENT_SET_LIST_TOTAL_COUNT) {
-            // 列表数量
-            val count = baseEvent.message
-            total_count_tv.text = getString(R.string.total_list_count_format, count)
-        }
     }
 
 

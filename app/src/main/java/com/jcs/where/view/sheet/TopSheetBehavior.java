@@ -30,7 +30,7 @@ import java.lang.ref.WeakReference;
 /**
  * An interaction behavior plugin for a child view of {@link CoordinatorLayout} to make it work as
  * a bottom sheet.
- *
+ * 类似bottom sheet ，可以顶部弹出
  *  @see <a href="https://github.com/carlos-mg89/TopSheetBehavior">TopSheetBehavior</a>
  */
 public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {

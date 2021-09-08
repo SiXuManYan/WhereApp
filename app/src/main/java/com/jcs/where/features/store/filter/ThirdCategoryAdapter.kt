@@ -30,12 +30,6 @@ class ThirdCategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout
             } else {
                 layoutParams.marginStart = 0
             }
-
-            if (holder.adapterPosition == data.size - 1) {
-                layoutParams.marginEnd = SizeUtils.dp2px(15f)
-            } else {
-                layoutParams.marginEnd = SizeUtils.dp2px(5f)
-            }
         }
 
 

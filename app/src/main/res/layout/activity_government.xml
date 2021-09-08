@@ -13,7 +13,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
-        android:layout_marginBottom="@dimen/dp_5"
         android:background="@color/white_FEFEFE"
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15">
@@ -96,10 +95,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/child_tag_rv"
         android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:background="@color/white"
         tools:itemCount="1"
-        tools:listitem="1" />
+        tools:listitem="@layout/item_store_third_category" />
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -128,7 +128,7 @@
             android:orientation="vertical"
             app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/dp_50"
-            app:layout_behavior="@string/bottom_sheet_behavior">
+            app:layout_behavior="@string/view_pager_bottom_sheet_behavior">
 
             <View
                 android:layout_width="@dimen/dp_35"

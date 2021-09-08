@@ -12,6 +12,9 @@ buildscript {
 
         // banner maven
         maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+
+        // view pager bottom sheet
+        maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'

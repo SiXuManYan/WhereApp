@@ -3,7 +3,6 @@ package com.jcs.where.features.map.government
 import com.blankj.utilcode.util.StringUtils
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -11,9 +10,6 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.SPKey
-import com.jcs.where.utils.SPUtil
 import java.util.*
 
 /**
@@ -29,7 +25,7 @@ interface GovernmentView : BaseMvpView,
     /**
      * 分类
      */
-    fun bindGovernmentChildCategory(response: ArrayList<Category>)
+    fun bindSecondCategory(response: ArrayList<Category>)
 
     /**
      * 地点
@@ -73,7 +69,7 @@ open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresen
                     }
 
                 }
-                view.bindGovernmentChildCategory(response)
+                view.bindSecondCategory(response)
             }
 
         })

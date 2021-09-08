@@ -1,6 +1,7 @@
 package com.jcs.where.features.map
 
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
@@ -24,6 +25,7 @@ import com.jcs.where.features.map.government.GovernmentActivity
  *
  * 谷歌地图由于回收机制，默认只能显示一个info窗口，
  * 使用 layout转bitmap ，setmaker 替代
+ * 已经隐藏，使用时布局文件设置打开
  */
 class CustomInfoWindowAdapter(activity: AppCompatActivity) : GoogleMap.InfoWindowAdapter {
 
@@ -45,7 +47,8 @@ class CustomInfoWindowAdapter(activity: AppCompatActivity) : GoogleMap.InfoWindo
 
     private fun render(marker: Marker, view: View) {
         val title_tv = view.findViewById<TextView>(R.id.title_tv)
-
+        val title_ll = view.findViewById<LinearLayout>(R.id.title_ll)
+        title_ll.visibility = View.GONE
         if (marker.title != null) {
             title_tv.text = marker.title
         }

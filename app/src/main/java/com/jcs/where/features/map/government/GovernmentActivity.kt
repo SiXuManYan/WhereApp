@@ -9,7 +9,9 @@ import android.location.Address
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,10 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import biz.laenger.android.vpbs.BottomSheetUtils
 import biz.laenger.android.vpbs.ViewPagerBottomSheetBehavior
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -451,12 +450,19 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         makers.clear()
 
         response.forEach {
+
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+            val title_tv = view.findViewById<TextView>(R.id.title_tv)
+            title_tv.text = it.title
+
             val maker = map.addMarker(
                 MarkerOptions()
                     .position(LatLng(it.lat, it.lng))
                     .title(it.name)
                     .snippet("")
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_common))
+                    .icon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
+
+//                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_common)) // 只添加maker
                 // .infoWindowAnchor(0.5f, 0.5f) 调整标题和指针位置
             )
 
@@ -474,10 +480,28 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
         // 切换 maker 图片
         makers.forEach {
-            it?.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_common))
+
+            val mechanismResponse = it?.tag as MechanismResponse
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+            val title_tv = view.findViewById<TextView>(R.id.title_tv)
+            title_tv.text = mechanismResponse.title
+            val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+            image_iv.setImageResource(R.mipmap.ic_marker_common)
+
+//            it?.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_common))
+            it.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
+
         }
-        marker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_select))
-        marker.showInfoWindow()
+//        marker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_select))
+        marker.hideInfoWindow()
+
+        val mechanismResponse = marker.tag as MechanismResponse
+        val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+        val title_tv = view.findViewById<TextView>(R.id.title_tv)
+        title_tv.text = mechanismResponse.title
+        val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+        image_iv.setImageResource(R.mipmap.ic_marker_select)
+        marker.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
 
         // 切换底部列表数据
         val index = makers.indexOf(marker)

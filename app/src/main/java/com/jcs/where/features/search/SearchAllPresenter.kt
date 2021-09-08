@@ -20,7 +20,7 @@ class SearchAllPresenter(private val view: SearchAllView) : BaseMvpPresenter(vie
         val key = Constant.SP_SEARCH_HISTORY
         val history = shareDefault.getString(key, "")
         if (history.isEmpty()) {
-            shareDefault.put(key, history)
+            shareDefault.put(key, finalInput)
             return
         }
         shareDefault.put(key, "$history,$finalInput")

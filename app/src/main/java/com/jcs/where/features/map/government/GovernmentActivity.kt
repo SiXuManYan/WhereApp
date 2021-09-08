@@ -321,7 +321,8 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         map.apply {
 
             // 移动到巴朗牙
-            map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(Constant.LAT, Constant.LNG)))
+            moveCamera(CameraUpdateFactory.newLatLng(LatLng(Constant.LAT, Constant.LNG)))
+
 
             // 调整内置UI padding 防止logo被遮挡
             setPadding(0, 0, 0, SizeUtils.dp2px(120f))
@@ -345,9 +346,10 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         }
 
         map.uiSettings.apply {
-
-            setAllGesturesEnabled(true)
             isMapToolbarEnabled = true
+            // 隐藏我的位置和图层
+//            isMyLocationButtonEnabled = false
+
         }
 
 

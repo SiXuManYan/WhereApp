@@ -11,11 +11,11 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        app:rightFirstIcon="@mipmap/ic_search_black"
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:middleTitle="@string/enterprise_yellow_page" />
+        app:middleTitle="@string/enterprise_yellow_page"
+        app:rightFirstIcon="@mipmap/ic_search_black" />
 
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -50,7 +50,7 @@
             <ImageView
                 android:id="@+id/firstArrowIv"
                 android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_4"
+                android:layout_height="@dimen/dp_8"
                 android:layout_marginStart="@dimen/dp_4"
                 android:src="@mipmap/ic_store_down" />
 
@@ -80,7 +80,7 @@
             <ImageView
                 android:id="@+id/secondArrowIv"
                 android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_4"
+                android:layout_height="@dimen/dp_8"
                 android:layout_marginStart="@dimen/dp_4"
                 android:src="@mipmap/ic_store_down" />
 
@@ -91,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right|center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -110,7 +110,7 @@
             <ImageView
                 android:id="@+id/thirdArrowIv"
                 android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_4"
+                android:layout_height="@dimen/dp_8"
                 android:layout_marginStart="@dimen/dp_4"
                 android:src="@mipmap/ic_store_down" />
 
@@ -119,18 +119,12 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:layout_below="@+id/category_ll"
-        android:background="@color/grey_F5F5F5" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/line">
+        android:layout_below="@+id/category_ll">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/yellowPageRecycler"
@@ -144,7 +138,7 @@
         android:name="com.jcs.where.yellow_page.CategoryToSelectedListFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_286"
-        android:layout_below="@+id/line"
+        android:layout_below="@+id/category_ll"
         android:visibility="gone"
         tools:visibility="visible" />
 

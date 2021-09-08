@@ -84,7 +84,7 @@ class YellowPageSearchResultActivity : BaseMvpActivity<YellowPageSearchResultPre
     }
 
     override fun bindListener() {
-
+        back_iv.setOnClickListener { finish() }
     }
 
     override fun bindData(response: MutableList<MechanismResponse>, isLastPage: Boolean) {

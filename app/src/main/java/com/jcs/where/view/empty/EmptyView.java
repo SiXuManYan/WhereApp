@@ -133,6 +133,7 @@ public class EmptyView extends LinearLayout {
 
     public void showEmptyContainer() {
         parent_ll.setVisibility(View.VISIBLE);
+        empty_hint_tv.setVisibility(View.VISIBLE);
     }
 
     public void hideEmptyContainer() {

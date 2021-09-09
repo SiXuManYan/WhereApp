@@ -406,9 +406,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
 
                 myLocation = CameraPosition.Builder().target(LatLng(lat, lng))
-                    .zoom(15.5f)
+                    .zoom(20f)
                     .bearing(0f)
-                    .tilt(25f)
+                    .tilt(0f)
                     .build()
             }
         }

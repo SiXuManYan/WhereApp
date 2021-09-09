@@ -12,10 +12,7 @@ import com.jcs.where.features.map.child.MechanismChildFragment
  */
 class MechanismPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_SET_USER_VISIBLE_HINT) {
 
-    /**
-     * 当前fragment坐标
-     */
-    var currentPosition: Int = 0
+
     var category: ArrayList<Category> = ArrayList()
     var total_count_tv:TextView ? = null
 

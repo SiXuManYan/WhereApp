@@ -27,7 +27,7 @@ class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPre
         requestApi(mRetrofit.getMechanismList(
             page,
             categoryId,
-            areaIdStr,
+            null,
             search,
             myLocation.latitude,
             myLocation.longitude

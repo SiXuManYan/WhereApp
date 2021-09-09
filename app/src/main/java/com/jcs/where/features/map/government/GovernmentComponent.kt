@@ -37,7 +37,7 @@ interface GovernmentView : BaseMvpView,
 open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresenter(view) {
 
 
-    private val ID_GOVERNMENT = 1
+    public val ID_GOVERNMENT = 1
 
     /**
      * 获取"政府"的子分类
@@ -81,12 +81,14 @@ open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresen
      * 获取地图数据
      * tag:为了渐变直接取全部，不根据tab选中刷新
      */
-    fun getMakerData() {
+    fun getMakerData(categoryId: Int) {
 
         val myLocation = CacheUtil.getMyCacheLocation()
 
-        requestApi(mRetrofit.getMechanismListToMap(ID_GOVERNMENT,
-            null, null, myLocation.latitude, myLocation.longitude),object :BaseMvpObserver<ArrayList<MechanismResponse>>(view){
+        requestApi(mRetrofit.getMechanismListToMap(
+            categoryId,
+            null, null, myLocation.latitude, myLocation.longitude
+        ), object : BaseMvpObserver<ArrayList<MechanismResponse>>(view) {
             override fun onSuccess(response: ArrayList<MechanismResponse>) {
                 view.bindMakerList(response)
             }

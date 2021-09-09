@@ -78,6 +78,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     private var childCategoryId = 0
 
 
+    public val ID_GOVERNMENT = 1
+
+
     /** 处理搜索 */
     private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
@@ -119,7 +122,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         mPagerAdapter = MechanismPagerAdapter(supportFragmentManager)
 
         mChildTagAdapter = ThirdCategoryAdapter().apply {
-            setOnItemClickListener { adapter, view, position ->
+            setOnItemClickListener { _, _, position ->
 
                 val child = mChildTagAdapter.data
                 // 设置选中
@@ -131,6 +134,11 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                 // 刷新筛选列表
                 val target = mChildTagAdapter.data[position]
                 EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_MECHANISM, target.id.toString()))
+
+                // 更新 maker
+                if (!::map.isInitialized) return@setOnItemClickListener
+                presenter.getMakerData(child[position].id)
+
             }
         }
         child_tag_rv.apply {
@@ -148,7 +156,6 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      */
     private fun initBehavior() {
         BottomSheetUtils.setupViewPager(content_vp)
-//        pagerBehavior = from(bottom_sheet_ll)
         pagerBehavior = ViewPagerBottomSheetBehavior.from(bottom_sheet_ll)
 
         pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_EXPANDED
@@ -258,7 +265,10 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                 if (child.has_children == 2 && child.child_categories.isNotEmpty()) {
                     mChildTagAdapter.setNewInstance(child.child_categories)
                 }
-                mPagerAdapter.currentPosition = position
+
+                // 获得展示在地图上的数据
+                if (!::map.isInitialized) return
+                presenter.getMakerData(category[position].id)
 
             }
         })
@@ -356,7 +366,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         enableMyLocation()
 
         // 获得展示在地图上的数据
-        presenter.getMakerData()
+        presenter.getMakerData(ID_GOVERNMENT)
 
     }
 
@@ -447,6 +457,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      */
     private fun addMarkersToMap(response: ArrayList<MechanismResponse>) {
         if (!::map.isInitialized || response.isEmpty()) return
+        map.clear()
         makers.clear()
 
         response.forEach {
@@ -461,11 +472,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                     .title(it.name)
                     .snippet("")
                     .icon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
-
-//                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_common)) // 只添加maker
-                // .infoWindowAnchor(0.5f, 0.5f) 调整标题和指针位置
             )
-
             maker?.tag = it
             makers.add(maker)
         }
@@ -478,27 +485,28 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      */
     override fun onMarkerClick(marker: Marker): Boolean {
 
-        // 切换 maker 图片
-        makers.forEach {
 
-            val mechanismResponse = it?.tag as MechanismResponse
+
+
+        // 所有 maker 设置成未选中
+        makers.forEach {
+            val makerTag = it?.tag as MechanismResponse
             val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
             val title_tv = view.findViewById<TextView>(R.id.title_tv)
-            title_tv.text = mechanismResponse.title
+            title_tv.text = makerTag.title
             val image_iv = view.findViewById<ImageView>(R.id.image_iv)
             image_iv.setImageResource(R.mipmap.ic_marker_common)
 
-//            it?.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_common))
             it.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
 
         }
-//        marker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_select))
         marker.hideInfoWindow()
 
-        val mechanismResponse = marker.tag as MechanismResponse
+        // 设置当前选中
+        val currentMakerTag = marker.tag as MechanismResponse
         val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
         val title_tv = view.findViewById<TextView>(R.id.title_tv)
-        title_tv.text = mechanismResponse.title
+        title_tv.text = currentMakerTag.title
         val image_iv = view.findViewById<ImageView>(R.id.image_iv)
         image_iv.setImageResource(R.mipmap.ic_marker_select)
         marker.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
@@ -511,7 +519,6 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         }
 
         Handler(mainLooper).postDelayed({
-
             // 地图平滑移动到目标位置
             val targetCamera = CameraPosition.Builder().target(marker.position)
                 .zoom(15.5f)
@@ -521,8 +528,6 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
 
         }, 10)
-
-
 
         return false
     }

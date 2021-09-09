@@ -269,12 +269,13 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                 // 获得展示在地图上的数据
                 if (!::map.isInitialized) return
                 presenter.getMakerData(category[position].id)
-
+                makerBehavior.state = STATE_HIDDEN
             }
         })
 
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 3))
+            makerBehavior.state = STATE_HIDDEN
         }
 
         delete_iv.setOnClickListener {

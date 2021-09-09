@@ -36,7 +36,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
     /**
      * 分类id
      */
-    private var categoryId :String?= ""
+    private var categoryId: String? = ""
 
     private lateinit var mAdapter: SearchHistoryAdapter
 
@@ -112,13 +112,13 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
                 startActivity(YellowPageSearchResultActivity::class.java, bundle)
                 finish()
             }
-            2->{
+            2 -> {
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
                 startActivity(ConvenienceServiceSearchActivity::class.java, bundle)
                 finish()
             }
-            3->{
-                setResult(Activity.RESULT_OK , Intent().putExtras(bundle))
+            3 -> {
+                setResult(Activity.RESULT_OK, Intent().putExtras(bundle))
                 finish()
             }
             else -> {

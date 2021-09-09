@@ -65,7 +65,9 @@ public class ConvenienceServiceSearchActivity extends BaseActivity implements On
         mSwipeLayout = findViewById(R.id.mechanismRefresh);
 
         emptyView = new EmptyView(this);
-        emptyView.showEmptyDefault();
+        emptyView.initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint, R.string.back, v -> {
+        });
+        emptyView.action_tv.setVisibility(View.GONE);
 
         mRecycler = findViewById(R.id.recycler);
         mRecycler.addItemDecoration(new DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0));
@@ -75,7 +77,7 @@ public class ConvenienceServiceSearchActivity extends BaseActivity implements On
 
         mAdapter.setEmptyView(emptyView);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
-        mAdapter.setEmptyView(emptyView);
+
 
     }
 
@@ -127,7 +129,7 @@ public class ConvenienceServiceSearchActivity extends BaseActivity implements On
                     if (page == Constant.DEFAULT_FIRST_PAGE) {
                         mAdapter.setNewInstance(null);
                         loadMoreModule.loadMoreComplete();
-                        emptyView.showEmptyDefault();
+                        emptyView.showEmptyContainer();
                     } else {
                         loadMoreModule.loadMoreEnd();
                     }

@@ -9,15 +9,15 @@
 
     <ImageView
         android:id="@+id/image_iv"
-        android:layout_width="@dimen/dp_118"
-        android:layout_height="@dimen/dp_88"
+        android:layout_width="@dimen/dp_98"
+        android:layout_height="@dimen/dp_73"
         android:layout_marginEnd="@dimen/dp_12"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_88"
+        android:layout_height="@dimen/dp_73"
         android:layout_toEndOf="@+id/image_iv"
         android:orientation="vertical">
 
@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/close_iv"
                 android:ellipsize="end"
+                android:includeFontPadding="false"
                 android:lineSpacingMultiplier="1.2"
                 android:maxLines="1"
                 android:textColor="@color/black_333333"
@@ -42,23 +43,24 @@
 
             <ImageView
                 android:id="@+id/close_iv"
-                android:src="@mipmap/ic_store_close"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
                 android:layout_alignParentEnd="true"
+                android:src="@mipmap/ic_close_map"
                 android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                tools:visibility="visible" />
 
         </RelativeLayout>
-
 
 
         <TextView
             android:id="@+id/location_tv"
             android:layout_width="match_parent"
-            android:layout_below="@+id/title_rl"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_below="@+id/title_rl"
+            android:layout_marginTop="@dimen/dp_3"
             android:ellipsize="end"
+            android:includeFontPadding="false"
             android:maxLines="1"
             android:textColor="@color/grey_999999"
             android:textSize="@dimen/sp_11"
@@ -69,8 +71,9 @@
             android:id="@+id/distance_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
             android:layout_below="@+id/location_tv"
+            android:layout_marginTop="@dimen/dp_3"
+            android:includeFontPadding="false"
             android:textColor="@color/grey_999999"
             android:textSize="@dimen/sp_11"
             tools:text="@string/distance_format" />
@@ -80,7 +83,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/dp_4"
             android:scrollbars="none">
 
 

@@ -47,8 +47,6 @@ class CustomInfoWindowAdapter(activity: AppCompatActivity) : GoogleMap.InfoWindo
 
     private fun render(marker: Marker, view: View) {
         val title_tv = view.findViewById<TextView>(R.id.title_tv)
-        val title_ll = view.findViewById<LinearLayout>(R.id.title_ll)
-        title_ll.visibility = View.GONE
         if (marker.title != null) {
             title_tv.text = marker.title
         }

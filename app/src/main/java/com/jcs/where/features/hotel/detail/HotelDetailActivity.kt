@@ -4,7 +4,7 @@ import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 
 /**
- * Created by Wangsw  2021/5/18 14:47.
+ * Created by Wangsw  2021/9/13 14:47.
  * 酒店详情
  */
 class HotelDetailActivity :BaseMvpActivity<HotelDetailPresenter>(),HotelDetailView{
@@ -17,7 +17,7 @@ class HotelDetailActivity :BaseMvpActivity<HotelDetailPresenter>(),HotelDetailVi
     }
 
     override fun initData() {
-
+        presenter = HotelDetailPresenter(this)
     }
 
     override fun bindListener() {

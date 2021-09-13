@@ -49,7 +49,7 @@ public class CityPickerResponse {
             this.letter = letter;
         }
 
-        public List<Areas> getAreas() {
+        public List<Areas>  getAreas() {
             return areas;
         }
 

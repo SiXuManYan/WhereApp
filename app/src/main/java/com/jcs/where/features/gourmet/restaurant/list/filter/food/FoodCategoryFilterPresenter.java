@@ -28,7 +28,7 @@ public class FoodCategoryFilterPresenter extends BaseMvpPresenter {
      */
     public void getCategoriesList(int pid, String pidName) {
 
-        requestApi(mRetrofit.getCategoriesList(3, pid, 1), new BaseMvpObserver<ArrayList<Category>>(view) {
+        requestApi(mRetrofit.getCategoriesList(3, String.valueOf(pid), 1), new BaseMvpObserver<ArrayList<Category>>(view) {
             @Override
             protected void onSuccess(ArrayList<Category> response) {
                 // 添加默认的美食类型

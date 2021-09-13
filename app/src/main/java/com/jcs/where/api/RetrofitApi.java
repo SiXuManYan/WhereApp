@@ -198,7 +198,7 @@ public interface RetrofitApi {
      * 获得轮播图
      *
      * @param type 区分是哪个页面的轮播图
-     * @return 轮播图
+     * @return 轮播图  1：首页顶部，2：旅游住宿，3：首页
      */
     @GET("commonapi/v2/banners")
     Observable<JcsResponse<List<BannerResponse>>> getBanners(@Query("type") int type);
@@ -779,7 +779,7 @@ public interface RetrofitApi {
     Observable<JcsResponse<MerchantSettledInfoResponse>> getMerchantSettledInfo();
 
     /**
-     * 推荐列表
+     * 推荐列表(首页)
      */
     @GET("commonapi/v2/recommends")
     Observable<JcsResponse<PageResponse<HomeRecommendResponse>>> getRecommends(
@@ -787,6 +787,15 @@ public interface RetrofitApi {
             @Query("lat") String lat,
             @Query("lng") String lng,
             @Query("area_id") String area_id
+    );
+
+
+ /**
+     * 推荐列表(旅游)
+     */
+    @GET("travelapi/v2/recommends")
+    Observable<JcsResponse<PageResponse<HomeRecommendResponse>>> getTravelRecommends(
+            @Query("page") int page
     );
 
 
@@ -919,8 +928,8 @@ public interface RetrofitApi {
     @GET("commonapi/v2/categories")
     Observable<JcsResponse<ArrayList<Category>>> getCategoriesList(
             @Query("level") int level,
-            @Query("pid") int pid,
-            @Query("type") int type);
+            @Query("pid")  String pid,
+            @Query("type") @Nullable Integer type);
 
 
     /**

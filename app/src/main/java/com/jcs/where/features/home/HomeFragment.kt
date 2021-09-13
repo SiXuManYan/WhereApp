@@ -406,7 +406,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     override fun onRefresh() {
         rxTimer.cancel()
         top_banner.pause()
-        // 推荐
         swipeLayout.isRefreshing = true
         recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
         presenter.getRecommendList(recommedRequestPage)

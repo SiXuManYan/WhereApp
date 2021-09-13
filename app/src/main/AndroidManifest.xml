@@ -614,6 +614,7 @@
         <activity android:name=".features.map.government.GovernmentActivity" />
         <activity android:name=".features.search.yellow.YellowPageSearchResultActivity" />
         <activity android:name=".features.mechanism.MechanismActivity" />
+        <activity android:name=".features.travel.home.TravelHomeActivity" />
 
 
     </application>

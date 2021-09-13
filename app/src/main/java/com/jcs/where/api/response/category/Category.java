@@ -41,8 +41,13 @@ public class Category {
      */
     public boolean nativeIsSelected = false;
 
-    public boolean follow_status ;
-    public boolean is_default ;
+    public boolean follow_status;
+    public boolean is_default;
+
+    /**
+     *  app 本地添加的类型，跳转网页
+     */
+    public boolean nativeIsWebType = false;
 
     @Override
     public boolean equals(Object o) {

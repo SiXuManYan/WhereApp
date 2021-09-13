@@ -24,13 +24,25 @@ class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPre
         val areaIdStr = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID)
         val myLocation = CacheUtil.getMyCacheLocation()
 
+        val latitude = if (myLocation.latitude == 0.0) {
+            null
+        }else{
+            myLocation.latitude
+        }
+        val longitude = if (myLocation.longitude == 0.0){
+            null
+        }else{
+            myLocation.longitude
+        }
+
+
         requestApi(mRetrofit.getMechanismList(
             page,
             categoryId,
             null,
             search,
-            myLocation.latitude,
-            myLocation.longitude
+            latitude,
+            longitude
         ), object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
             override fun onSuccess(response: PageResponse<MechanismResponse>) {
                 val total = response.total

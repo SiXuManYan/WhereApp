@@ -43,7 +43,7 @@ open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresen
      * 获取"政府"的子分类
      */
     fun getGovernmentChildCategory() {
-        requestApi(mRetrofit.getCategoriesList(2, ID_GOVERNMENT, 2), object : BaseMvpObserver<ArrayList<Category>>(view) {
+        requestApi(mRetrofit.getCategoriesList(2, ID_GOVERNMENT.toString(), 2), object : BaseMvpObserver<ArrayList<Category>>(view) {
             override fun onSuccess(response: ArrayList<Category>) {
 
                 // 当前二级分类全部

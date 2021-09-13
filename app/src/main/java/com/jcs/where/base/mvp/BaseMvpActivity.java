@@ -23,13 +23,13 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
 
 
     public T presenter;
-//    private Unbinder butterKnifeBind;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-//        butterKnifeBind = ButterKnife.bind(this);
+
 
     }
 
@@ -40,9 +40,6 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
         if (presenter != null) {
             presenter.detachView();
         }
-//        if (butterKnifeBind != null) {
-//            butterKnifeBind.unbind();
-//        }
 
     }
 

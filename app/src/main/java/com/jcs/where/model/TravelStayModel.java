@@ -12,7 +12,6 @@ import java.util.List;
 
 public class TravelStayModel extends BaseModel {
     public void getCategories(int level, List<Integer> categories, BaseObserver<List<CategoryResponse>> observer) {
-        Log.e("TravelStayModel", "getCategories: " + categories.toString());
         dealResponse(mRetrofit.getCategories(level, categories.toString()), observer);
     }
 

@@ -41,7 +41,6 @@ public class TouristAttractionFragment extends BaseFragment {
     private TouristAttractionListModel mModel;
     private CategoryResponse mCategoryResponse;
     private List<CategoryResponse> mChildCategories;
-    private Group mSearchNoneGroup;
     /**
      * 第一次展示时获取网络数据
      * 此 tag 表示是否已经获取过网络数据
@@ -166,7 +165,7 @@ public class TouristAttractionFragment extends BaseFragment {
     private void getTouristAttractionList(String categoryId) {
         mCurrentCategoryId = categoryId;
         mSwipeLayout.setRefreshing(true);
-        Log.e("MechanismListFragment", "getTouristAttractionList: " + "id=" + categoryId);
+
 
         mModel.getTouristAttractionList(categoryId, new BaseObserver<PageResponse<TouristAttractionResponse>>() {
             @Override
@@ -182,14 +181,12 @@ public class TouristAttractionFragment extends BaseFragment {
                 List<TouristAttractionResponse> data = pageResponse.getData();
                 if (data != null && data.size() > 0) {
                     mAdapter.addData(data);
-                    mSearchNoneGroup.setVisibility(View.GONE);
                     mRadioGroup.setVisibility(View.VISIBLE);
                 } else {
                     mAdapter.notifyDataSetChanged();
                     if (mChildCategories.size() == 1) {
                         mRadioGroup.setVisibility(View.GONE);
                     }
-                    mSearchNoneGroup.setVisibility(View.VISIBLE);
                 }
             }
         });

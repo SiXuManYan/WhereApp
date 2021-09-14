@@ -89,9 +89,9 @@
                     android:id="@+id/status_desc_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
                     android:layout_below="@+id/status_tv"
                     android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginEnd="@dimen/dp_15"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
@@ -185,13 +185,6 @@
                 android:background="@color/grey_F5F5F5" />
 
 
-
-
-
-
-
-
-
             <!-- 支付信息 -->
 
             <LinearLayout
@@ -282,9 +275,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
+                    android:orientation="horizontal"
                     android:visibility="gone"
-                    tools:visibility="visible"
-                    android:orientation="horizontal">
+                    tools:visibility="visible">
 
 
                     <ImageView
@@ -315,11 +308,10 @@
 
             </LinearLayout>
 
-        <!---->
-        <!---->
-        <!---->
-        <!---->
-
+            <!---->
+            <!---->
+            <!---->
+            <!---->
 
 
             <TextView
@@ -337,14 +329,14 @@
                 android:id="@+id/account_name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_41"
                 android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_41"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:text="sssda"
-                android:textStyle="bold"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                tools:text="sssda" />
 
 
             <View
@@ -368,14 +360,14 @@
                 android:id="@+id/present_address_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_41"
                 android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_41"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:text="sssda"
-                android:textStyle="bold"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                tools:text="sssda" />
 
 
             <View
@@ -399,14 +391,14 @@
                 android:id="@+id/contact_no_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_41"
                 android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_41"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:text="sssda"
-                android:textStyle="bold"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                tools:text="sssda" />
 
 
             <View
@@ -419,8 +411,6 @@
             <!---->
             <!---->
             <!---->
-
-
 
 
             <TextView
@@ -437,14 +427,14 @@
                 android:id="@+id/amount_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_41"
                 android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_41"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:text="sssda"
-                android:textStyle="bold"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                tools:text="sssda" />
 
 
             <View
@@ -498,25 +488,25 @@
                 android:id="@+id/biller_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_41"
                 android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_41"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:text="sssda"
-                android:textStyle="bold"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14"  />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                tools:text="sssda" />
 
 
             <LinearLayout
                 android:id="@+id/company_ll"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:paddingTop="@dimen/dp_15"
                 android:paddingBottom="@dimen/dp_15"
-                android:layout_height="wrap_content">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -532,12 +522,12 @@
                     android:id="@+id/company_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_8"
+                    android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
                     android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_13" />
-
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -555,7 +545,6 @@
             <!---->
 
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -571,14 +560,14 @@
                 android:id="@+id/account_number_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_41"
                 android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_41"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:text="sssda"
-                android:textStyle="bold"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                tools:text="sssda" />
 
 
             <View
@@ -603,14 +592,14 @@
                 android:id="@+id/soa_invoice_no_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_41"
                 android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_41"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                tools:text="sssda"
-                android:textStyle="bold"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14"  />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                tools:text="sssda" />
 
 
             <View
@@ -619,10 +608,7 @@
                 android:background="@color/grey_F5F5F5" />
 
 
-
-
-
-                 <TextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
@@ -711,16 +697,9 @@
                 android:background="@color/grey_F5F5F5" />
 
 
-
-
-
-
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
 
 </RelativeLayout>

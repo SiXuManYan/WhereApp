@@ -242,6 +242,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
         }
         mLat = data.lat
         mLng = data.lng
+        point_view.setPointCount(data.images.size)
         mAdapter.setNewInstance(data.images)
 
     }

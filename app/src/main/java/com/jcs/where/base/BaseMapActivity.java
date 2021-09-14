@@ -315,7 +315,7 @@ public abstract class BaseMapActivity extends BaseActivity implements OnMapReady
 
     private int getAreaId() {
         try {
-            return Integer.parseInt(SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID));
+            return Integer.parseInt(SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID));
         } catch (NumberFormatException e) {
             return 0;
         }

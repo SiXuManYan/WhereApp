@@ -129,7 +129,7 @@ public class HomeModel extends BaseModel {
     }
 
     public String getCurrentAreaId() {
-        return SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID);
+        return SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID);
     }
 
     public CityResponse getCurrentCity(String currentCityId) {

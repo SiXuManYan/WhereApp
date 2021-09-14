@@ -4,16 +4,13 @@ import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.JcsResponse;
 import com.jcs.where.api.response.CategoryResponse;
-import com.jcs.where.api.response.MechanismPageResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
-import com.jcs.where.yellow_page.model.YellowPageModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,7 +47,7 @@ public class ConvenienceServiceModel extends BaseModel {
     }
 
     public int getCityResponseIndexById(List<CityResponse> cityResponses) {
-        String cityId = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID);
+        String cityId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID);
         int size = cityResponses.size();
         for (int i = 0; i < size; i++) {
             CityResponse cityResponse = cityResponses.get(i);

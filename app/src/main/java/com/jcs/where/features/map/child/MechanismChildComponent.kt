@@ -1,11 +1,13 @@
 package com.jcs.where.features.map.child
 
+import com.blankj.utilcode.util.SPUtils
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.api.response.PageResponse
-import com.jcs.where.utils.*
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.SPKey
 
 /**
  * Created by Wangsw  2021/8/26 14:27.
@@ -21,19 +23,8 @@ interface MechanismChildView : BaseMvpView {
 class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPresenter(view) {
 
     fun getData(page: Int, categoryId: String, search: String?) {
-        val areaIdStr = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID)
-        val myLocation = CacheUtil.getMyCacheLocation()
 
-        val latitude = if (myLocation.latitude == 0.0) {
-            null
-        }else{
-            myLocation.latitude
-        }
-        val longitude = if (myLocation.longitude == 0.0){
-            null
-        }else{
-            myLocation.longitude
-        }
+        val safeSelectLatLng = CacheUtil.getSafeSelectLatLng()
 
 
         requestApi(mRetrofit.getMechanismList(
@@ -41,14 +32,14 @@ class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPre
             categoryId,
             null,
             search,
-            latitude,
-            longitude
+            safeSelectLatLng.latitude,
+            safeSelectLatLng.longitude
         ), object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
             override fun onSuccess(response: PageResponse<MechanismResponse>) {
                 val total = response.total
                 val isLastPage = response.lastPage == page
                 val data = response.data
-                view.bindData(data.toMutableList(), isLastPage,total)
+                view.bindData(data.toMutableList(), isLastPage, total)
             }
         })
     }

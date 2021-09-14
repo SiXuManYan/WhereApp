@@ -424,11 +424,11 @@ public interface RetrofitApi {
 
     /**
      * 获得城市选择列表
-     *
+     * 列表类型（letter-字母形式，list-列表形式）
      * @return
      */
     @GET("commonapi/v2/areas")
-    Observable<JcsResponse<CityPickerResponse>> getCityPickers();
+    Observable<JcsResponse<CityPickerResponse>> getCityPickers(@Query("type") @Nullable String type);
 
     /**
      * 获得新闻页的标签

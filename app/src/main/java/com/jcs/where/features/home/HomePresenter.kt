@@ -33,7 +33,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
     /**
      *  当前区域id
      */
-    fun getCurrentAreaId(): String = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID)
+    fun getCurrentAreaId(): String = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID)
 
     fun getCurrentCity(currentCityId: String): CityResponse? {
         val citiesJson = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_ALL_CITIES)
@@ -57,7 +57,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      * 推荐列表
      */
     fun getRecommendList(page: Int) {
-        val areaId = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID)
+        val areaId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID)
         val lat = Constant.LAT.toString() + ""
         val lng = Constant.LNG.toString() + ""
 

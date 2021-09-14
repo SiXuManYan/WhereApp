@@ -2,6 +2,7 @@ package com.jcs.where.features.mechanism
 
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -195,10 +196,40 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
         val endWeek: String = weeks[data.week_end - 1]
         time_tv.text = getString(R.string.valid_period_format2, startWeek, endWeek)
 
-        phone_tv.text = businessPhone
-        mail_tv.text = data.email
-        web_tv.text = data.web_site
-        facebook_tv.text = data.facebook
+        phone_tv.apply {
+            text = businessPhone
+            visibility = if (businessPhone.isBlank()) {
+                View.GONE
+            }else{
+                View.VISIBLE
+            }
+
+        }
+        mail_tv.apply {
+            text = data.email
+            visibility = if (data.email.isBlank()) {
+                View.GONE
+            }else{
+                View.VISIBLE
+            }
+        }
+        web_tv.apply {
+            text = data.web_site
+            visibility = if (data.web_site.isBlank()) {
+                View.GONE
+            }else{
+                View.VISIBLE
+            }
+        }
+        facebook_tv.apply {
+            text = data.facebook
+            visibility = if (data.facebook.isBlank()) {
+                View.GONE
+            }else{
+                View.VISIBLE
+            }
+
+        }
         val content = data.abstractX
         content_tv.text = if (content.isBlank()) {
             getString(R.string.no_introduce)

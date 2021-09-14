@@ -3,10 +3,13 @@ package com.jcs.where.bean;
 import java.util.Objects;
 
 public class CityResponse {
-    private String id;
-    private String name;
-    private String pinyin;
-    private boolean isHot;
+    public String id;
+    public String name;
+    public String pinyin;
+    public boolean isHot;
+    public double lat;
+    public double lng;
+
 
     public CityResponse() {
     }

@@ -4,7 +4,6 @@ import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
-import com.jcs.where.features.integral.child.task.IntegralChildTaskView;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.utils.SPUtil;
@@ -25,7 +24,7 @@ public class IntegralChildTaskPresenter extends BaseMvpPresenter {
 
     public void getRecommendList(int page) {
 
-        String areaId = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID);
+        String areaId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID);
         String lat = Constant.LAT + "";
         String lng = Constant.LNG + "";
 

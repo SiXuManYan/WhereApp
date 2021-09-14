@@ -7,6 +7,7 @@ import android.location.Address;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.jcs.where.R;
 import com.jcs.where.adapter.CityListAdapter;
 import com.jcs.where.api.BaseObserver;
@@ -46,7 +47,9 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     private CityPickerModel mModel;
     private TextView location_tv;
     private TextView get_location_tv;
-    private String locality;
+    private String currentAreaName;
+    private double currentLat;
+    private double currentLng;
 
     @Override
     protected boolean isStatusDark() {
@@ -106,15 +109,16 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
                 String countryName = address.getCountryName();//国家
                 String adminArea = address.getAdminArea();//省
                 //市
-                locality = address.getLocality();
+                currentAreaName = address.getLocality();
                 String subLocality = address.getSubLocality();//区
                 String featureName = address.getFeatureName();//街道
-                location_tv.setText(locality);
+                location_tv.setText(currentAreaName);
             }
 
             @Override
             public void onGetLocation(double lat, double lng) {
-
+                currentLat = lat;
+                currentLng = lng;
             }
         });
 
@@ -134,17 +138,22 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
                 stopLoading();
                 HashSet<CityResponse> cityResponses = new HashSet<>();
 
-                List<CityPickerResponse.Lists> lists = response.getLists();
+                List<CityPickerResponse.CityChild> lists = response.lists;
                 int listSize = lists.size();
-                for (int i = 0; i < listSize; i++) {
-                    List<CityPickerResponse.Lists.Areas> areas = lists.get(i).getAreas();
-                    int areaSize = areas.size();
-                    for (int j = 0; j < areaSize; j++) {
-                        CityPickerResponse.Lists.Areas areasDTO = areas.get(j);
 
-                        String name = areasDTO.getName().replace("　", "");
-                        cityResponses.add(new CityResponse(areasDTO.getId(), name, PinyinUtils.getPinYin(name), false));
-                    }
+                for (int i = 0; i < listSize; i++) {
+
+                    CityPickerResponse.CityChild child = lists.get(i);
+
+                    String name = child.name.replace("　", "");
+                    CityResponse city = new CityResponse();
+                    city.id = child.id;
+                    city.name = name;
+                    city.lat = child.lat;
+                    city.lng = child.lng;
+                    city.pinyin = PinyinUtils.getPinYin(name);
+                    cityResponses.add(city);
+
                 }
                 //set转换list
                 ArrayList<CityResponse> cities = new ArrayList<>(cityResponses);
@@ -162,19 +171,35 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
         mCityAdapter.setOnCityClickListener(this::selectCity);
     }
 
-    private void selectCity(String name, String id) {
+    private void selectCity(String name, String id, double lat, double lng) {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_CITY, name);
         intent.putExtra(EXTRA_CITY_ID, id);
         setResult(RESULT_OK, intent);
-        SPUtil.getInstance().saveString(SPKey.K_CURRENT_AREA_ID, id);
+
+        // old
+        SPUtil.getInstance().saveString(SPKey.SELECT_AREA_ID, id);
+
+        // new
+        SPUtils.getInstance().put(SPKey.SELECT_AREA_ID, id);
+        SPUtils.getInstance().put(SPKey.SELECT_LAT, (float) lat);
+        SPUtils.getInstance().put(SPKey.SELECT_LNG, (float) lng);
+
         finish();
     }
 
     @Override
     protected void bindListener() {
         get_location_tv.setOnClickListener(v -> initCity());
-        location_tv.setOnClickListener(v -> selectCity(locality, "0"));
+
+        // 存储当前位置
+
+
+        location_tv.setOnClickListener(v -> {
+            if (currentLat != 0) {
+                selectCity(currentAreaName, "0", currentLat, currentLng);
+            }
+        });
     }
 
 

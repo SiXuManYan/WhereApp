@@ -26,14 +26,13 @@ public class Html5Url {
     /**
      * comm100 客服聊天地址
      */
-    public static final String COMM100_CHAT_URL = "https://vue.livelyhelp.chat/chatWindow.aspx?siteId=60001617&planId=8da6d622-e5b2-4741-bcdc-855d5d82f95a#";
+    public static final String COMM100_CHAT_URL = "https://vue.comm100.com/visitorside/html/chatwindow.300e735de7efe4da16c20ea2575fedab59802d7e.html?siteId=60001617&planId=6c962659-16b9-41ac-8fc3-2c0a2ce92452";
     public static final String MODEL_HOTEL = "hotel";
     public static final String MODEL_NEWS = "news";
     public static final String MODEL_TRAVEL = "travel";
     public static final String MODEL_GENERAL = "general";
     public static final String MODEL_RESTAURANT = "restaurant";
     public static final String MODEL_E_STORE = "eStore";
-
 
     /**
      * 分享facebook

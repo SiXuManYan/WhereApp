@@ -93,11 +93,12 @@ public class CityListAdapter extends BaseAdapter {
             holder = (CityViewHolder) view.getTag();
         }
 
-        final String city = mCities.get(position).getName();
-        final String cityId = mCities.get(position).getId();
+        CityResponse response = mCities.get(position);
+        final String city = response.getName();
+        final String cityId = response.getId();
         holder.name.setText(city);
 
-        String currentLetter = PinyinUtils.getFirstLetter(mCities.get(position).getPinyin());
+        String currentLetter = PinyinUtils.getFirstLetter(response.getPinyin());
         String previousLetter = position >= 1 ? PinyinUtils.getFirstLetter(mCities.get(position - 1).getPinyin()) : "A";
         holder.letter.setText(currentLetter);
 
@@ -108,7 +109,7 @@ public class CityListAdapter extends BaseAdapter {
         }
         holder.name.setOnClickListener(v -> {
             if (onCityClickListener != null) {
-                onCityClickListener.onCityClick(city, cityId);
+                onCityClickListener.onCityClick(city, cityId , response.lat,response.lng);
             }
         });
         return view;
@@ -119,7 +120,7 @@ public class CityListAdapter extends BaseAdapter {
     }
 
     public interface OnCityClickListener {
-        void onCityClick(String name, String id);
+        void onCityClick(String name, String id, double lat, double lng);
 
     }
 

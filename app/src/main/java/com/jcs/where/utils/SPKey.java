@@ -27,7 +27,9 @@ public final class SPKey {
     /**
      * 存储当前城市id
      */
-    public static final String K_CURRENT_AREA_ID = "k_current_area_id";
+    public static final String SELECT_AREA_ID = "k_current_area_id";
+    public static final String SELECT_LAT = "k_current_area_lat";
+    public static final String SELECT_LNG = "k_current_area_lng";
 
     /**
      * 企业黄页页面的分类存储key

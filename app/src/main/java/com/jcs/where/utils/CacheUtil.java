@@ -122,10 +122,23 @@ public class CacheUtil {
             lat = getShareDefault().getFloat(Constant.SP_LATITUDE, 0);
             lng = getShareDefault().getFloat(Constant.SP_LONGITUDE, 0);
         }
-
-
         return new LatLng(lat, lng);
+    }
+
+    /**
+     * 获取选择城市的经纬度
+     * @return
+     */
+    public static LatLng getSafeSelectLatLng(){
+
+        float selectLat = SPUtils.getInstance().getFloat(SPKey.SELECT_LAT, (float) Constant.LAT);
+        float selectLng = SPUtils.getInstance().getFloat(SPKey.SELECT_LNG, (float) Constant.LNG);
+
+        return new  LatLng(selectLat, selectLng);
 
     }
+
+
+
 
 }

@@ -10,7 +10,7 @@ import com.jcs.where.api.response.CityPickerResponse;
 public class CityPickerModel extends BaseModel {
 
     public void getCityPickers(BaseObserver<CityPickerResponse> observer) {
-        dealResponse(mRetrofit.getCityPickers(), observer);
+        dealResponse(mRetrofit.getCityPickers("list"), observer);
     }
 
 }

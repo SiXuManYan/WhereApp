@@ -1,5 +1,6 @@
 package com.jcs.where.features.map.government
 
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.StringUtils
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -10,6 +11,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.SPKey
 import java.util.*
 
 /**
@@ -82,12 +84,11 @@ open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresen
      * tag:为了渐变直接取全部，不根据tab选中刷新
      */
     fun getMakerData(categoryId: Int) {
-
-        val myLocation = CacheUtil.getMyCacheLocation()
+        val safeSelectLatLng = CacheUtil.getSafeSelectLatLng()
 
         requestApi(mRetrofit.getMechanismListToMap(
             categoryId,
-            null, null, myLocation.latitude, myLocation.longitude
+            null, null, safeSelectLatLng.latitude, safeSelectLatLng.longitude
         ), object : BaseMvpObserver<ArrayList<MechanismResponse>>(view) {
             override fun onSuccess(response: ArrayList<MechanismResponse>) {
                 view.bindMakerList(response)

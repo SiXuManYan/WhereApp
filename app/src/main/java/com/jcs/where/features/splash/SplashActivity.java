@@ -249,10 +249,10 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     @Override
     protected void initData() {
         presenter = new SplashPresenter(this);
-        String cityId = SPUtil.getInstance().getString(SPKey.K_CURRENT_AREA_ID);
+        String cityId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID);
         if (cityId.isEmpty()) {
             // 默认巴郎牙
-            SPUtil.getInstance().saveString(SPKey.K_CURRENT_AREA_ID, "3");
+            SPUtil.getInstance().saveString(SPKey.SELECT_AREA_ID, "3");
         }
         presenter.getYellowPageAllCategories();
     }

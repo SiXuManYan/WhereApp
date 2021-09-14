@@ -78,5 +78,10 @@ class BillOrderDetails {
      */
     var statement_date = ""
 
+    /**
+     * 电力公司
+     */
+    var electricity_company = ""
+
 
 }

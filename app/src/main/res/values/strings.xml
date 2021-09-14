@@ -840,6 +840,10 @@ Gentleman must let go</string>
     <string name="back">返回</string>
     <string name="total_list_count_format">共%1$d个相关结果</string>
     <string name="contact_number_2">Contact Number</string>
+    <string name="electricity_company">电力公司</string>
+    <string name="select_power_company">请选择电力公司</string>
+    <string name="penelco">PENELCO</string>
+    <string name="afab">AFAB GREENCORE POWER SOLUTION (Transco)</string>
 
 
 </resources>

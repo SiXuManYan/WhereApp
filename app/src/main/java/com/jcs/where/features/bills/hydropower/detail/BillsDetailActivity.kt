@@ -1,5 +1,6 @@
 package com.jcs.where.features.bills.hydropower.detail
 
+import android.view.View
 import com.jcs.where.R
 import com.jcs.where.api.response.order.bill.BillOrderDetails
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -68,6 +69,14 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
         status_tv.text = presenter.getStatus(data.order_status)
 
         presenter.getStatusDescText(status_desc_tv, data.order_status)
+        val electricityCompany = data.electricity_company
+        if (electricityCompany.isEmpty()) {
+            company_ll.visibility = View.GONE
+        }else{
+            company_ll.visibility = View.VISIBLE
+            company_tv.text = electricityCompany
+        }
+
 
     }
 

@@ -4,8 +4,12 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.request.bills.BillsOrderCommit
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -40,6 +44,11 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
 
     override fun initData() {
         presenter = PaymentEditPresenter(this)
+        if (billType == 2) {
+            company_ll.visibility = View.VISIBLE
+        }else{
+            company_ll.visibility = View.GONE
+        }
     }
 
     override fun bindListener() {
@@ -53,7 +62,9 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
         input_date_tv.setOnClickListener {
             selectDate(input_date_tv)
         }
-
+        company_ll.setOnClickListener {
+            showCompanyDialog()
+        }
 
         val watcher = object : TextWatcher {
 
@@ -64,7 +75,16 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             override fun afterTextChanged(s: Editable?) {
 
 
-                if (!ProductUtils.checkEditEmpty(account_name_et, present_address_et, contact_no_et, amount_et, biller_et, account_number_et, soa_invoice_no_et)) {
+                if (!ProductUtils.checkEditEmpty(
+                        account_name_et,
+                        present_address_et,
+                        contact_no_et,
+                        amount_et,
+                        biller_et,
+                        account_number_et,
+                        soa_invoice_no_et
+                    )
+                ) {
                     next_tv.isEnabled = false
                     next_tv.alpha = 0.7f
                 } else {
@@ -98,6 +118,7 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             val dateStr = date_tv.text.toString().trim()
             val dueDate = due_date_tv.text.toString().trim()
             val inputDate = input_date_tv.text.toString().trim()
+            val company = company_tv.text.toString().trim()
 
             if (dateStr.isEmpty()) {
                 ToastUtils.showShort(R.string.select_date)
@@ -111,6 +132,11 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
                 ToastUtils.showShort(R.string.select_date)
                 return@setOnClickListener
             }
+            if (billType == 2 && company.isBlank()) {
+                ToastUtils.showShort(R.string.select_power_company)
+                return@setOnClickListener
+            }
+
 
             val apply = BillsOrderCommit().apply {
                 bill_type = billType
@@ -124,6 +150,7 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
                 date = dateStr
                 due_date = dueDate
                 statement_date = inputDate
+                electricity_company = company
             }
 
             startActivity(BillsPayActivity::class.java, Bundle().apply {
@@ -154,6 +181,32 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             finish()
         }
     }*/
+
+    private fun showCompanyDialog() {
+        val addressDialog = BottomSheetDialog(this, R.style.bottom_sheet_edit)
+
+        val view = LayoutInflater.from(this).inflate(R.layout.electricity_company, null)
+        addressDialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (e: Exception) {
+        }
+
+        view.findViewById<TextView>(R.id.cancel_tv).setOnClickListener {
+            addressDialog.dismiss()
+        }
+        view.findViewById<TextView>(R.id.item_1_tv).setOnClickListener {
+            company_tv.text = getString(R.string.penelco)
+            addressDialog.dismiss()
+        }
+        view.findViewById<TextView>(R.id.item_2_tv).setOnClickListener {
+            company_tv.text = getString(R.string.afab)
+            addressDialog.dismiss()
+        }
+        addressDialog.show()
+
+    }
 
 
 }

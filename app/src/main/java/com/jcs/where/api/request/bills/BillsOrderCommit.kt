@@ -6,7 +6,7 @@ import java.io.Serializable
  * Created by Wangsw  2021/6/29 14:50.
  *  水电提交订单
  */
-class BillsOrderCommit :Serializable{
+class BillsOrderCommit : Serializable {
 
     var bill_type = 0
 
@@ -52,7 +52,6 @@ class BillsOrderCommit :Serializable{
     val remark = ""
 
 
-
     /**
      * 账单日期
      */
@@ -71,8 +70,10 @@ class BillsOrderCommit :Serializable{
     var statement_date = ""
 
 
-
-
+    /**
+     * 电力公司（PENELCO 、 AFAB GREENCORE POWER SOLUTION (Transco)）
+     */
+    var electricity_company: String? = null
 
 
 }

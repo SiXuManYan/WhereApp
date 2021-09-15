@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.google.android.material.appbar.AppBarLayout
 import com.jcs.where.R
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.category.Category
@@ -18,11 +19,15 @@ import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
+import com.jcs.where.features.home.AppBarStateChangeListener
 import com.jcs.where.features.home.HomeRecommendAdapter
 import com.jcs.where.features.mechanism.MechanismActivity
+import com.jcs.where.frams.common.Html5Url
+import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
+import com.jcs.where.travel.TravelMapActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
@@ -31,13 +36,6 @@ import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_travel_home.*
-import kotlinx.android.synthetic.main.activity_travel_home.bottom_cl
-import kotlinx.android.synthetic.main.activity_travel_home.ll_banner
-import kotlinx.android.synthetic.main.activity_travel_home.rv_home
-import kotlinx.android.synthetic.main.activity_travel_home.swipeLayout
-import kotlinx.android.synthetic.main.activity_travel_home.top_banner
-import kotlinx.android.synthetic.main.fragment_home3.*
-
 import pl.droidsonroids.gif.GifImageView
 import java.util.*
 
@@ -59,6 +57,8 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
     /** 功能区 */
     private lateinit var mModuleAdapter: TravelModuleAdapter
 
+    override fun isStatusDark() = true
+
 
     override fun getLayoutId() = R.layout.activity_travel_home
 
@@ -68,25 +68,46 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
         initModule()
         initBanner()
         initScroll()
+        initRecommend()
     }
 
     private fun initModule() {
         mModuleAdapter = TravelModuleAdapter().apply {
             setOnItemClickListener { _, _, position ->
-                mModuleAdapter.data[position]
+                val category = mModuleAdapter.data[position]
+                val childId = category.id
+                if (category.nativeIsWebType) {
+                    WebViewActivity.goTo(this@TravelHomeActivity, Html5Url.TOURISM_MANAGEMENT_URL)
+                } else {
 
+                    when (category.type) {
+                        1 -> {
+                            // 酒店
+                            startActivity(HotelActivity::class.java, Bundle().apply {
+                                putString(HotelActivity.K_CATEGORY_ID, childId.toString())
+                            })
+                        }
 
+                        2 -> {
+                            // 旅游
+                            startActivity(TravelMapActivity::class.java, Bundle().apply {
+                                putString(HotelActivity.K_CATEGORY_ID, childId.toString())
+                            })
+                        }
+
+                    }
+                }
 
 
             }
         }
 
         module_rv.apply {
-               layoutManager = object : GridLayoutManager(context, 5, RecyclerView.VERTICAL, false) {
-                   override fun canScrollVertically(): Boolean {
-                       return false
-                   }
-               }
+            layoutManager = object : GridLayoutManager(context, 3, RecyclerView.VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
             adapter = mModuleAdapter
         }
 
@@ -95,12 +116,20 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
     private fun initScroll() {
         rv_home.isNestedScrollingEnabled = true
         bottom_cl.isNestedScrollingEnabled = true
+
+        child_abl.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
+            override fun onStateChanged(appBarLayout: AppBarLayout, expanded: State, verticalOffset: Int) {
+                swipeLayout.isEnabled = verticalOffset >= 0 // 滑动到顶部时开启
+            }
+        })
+        swipeLayout.postDelayed({ swipeLayout.isEnabled = false }, 200)
+
     }
 
     /** 轮播图 */
     private fun initBanner() {
         val bannerParams = ll_banner.layoutParams.apply {
-            height = ScreenUtils.getScreenWidth() * 142 / 343
+            height = ScreenUtils.getScreenWidth() * 172 / 343
         }
         ll_banner.layoutParams = bannerParams
 
@@ -213,7 +242,6 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                 }
 
                 if (data.redirect_type == 2) {
-
                     when (data.target_type) {
                         1 -> {
                             val dialog = JcsCalendarDialog()
@@ -229,24 +257,16 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                                 1
                             )
                         }
-                        2 -> {
-                            TouristAttractionDetailActivity.goTo(this@TravelHomeActivity, data.target_id)
-                        }
-                        3 -> {
-                            startActivity(NewsDetailActivity::class.java, Bundle().apply {
-                                putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
-                            })
-                        }
-                        4 -> {
-                            startActivity(MechanismActivity::class.java, Bundle().apply {
-                                putInt(Constant.PARAM_ID, data.target_id)
-                            })
-                        }
-                        5 -> {
-                            startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                                putString(Constant.PARAM_ID, data.target_id.toString())
-                            })
-                        }
+                        2 -> TouristAttractionDetailActivity.goTo(this@TravelHomeActivity, data.target_id)
+                        3 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {
+                            putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
+                        })
+                        4 -> startActivity(MechanismActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_ID, data.target_id)
+                        })
+                        5 -> startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
+                            putString(Constant.PARAM_ID, data.target_id.toString())
+                        })
                     }
                     return
                 }
@@ -292,6 +312,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
         presenter.getRecommendList(page)
     }
 
+
     override fun onPause() {
         super.onPause()
         top_banner?.pause()
@@ -304,7 +325,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
 
     override fun onResume() {
         super.onResume()
-        top_banner?.start()
+        top_banner?.startPlayIfNeeded()
     }
 
 

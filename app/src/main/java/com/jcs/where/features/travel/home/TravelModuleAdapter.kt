@@ -18,6 +18,7 @@ class TravelModuleAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.
 
     override fun convert(holder: BaseViewHolder, item: Category) {
 
+
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val name_tv = holder.getView<TextView>(R.id.name_tv)
 
@@ -28,7 +29,6 @@ class TravelModuleAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.
             GlideUtil.load(context, item.icon, image_iv)
             name_tv.text = item.name
         }
-
 
     }
 }

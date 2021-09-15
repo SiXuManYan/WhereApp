@@ -34,6 +34,7 @@ import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.recommend.StoreRecommendActivity
+import com.jcs.where.features.travel.home.TravelHomeActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
 import com.jcs.where.home.activity.TravelStayActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
@@ -166,8 +167,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         })
                     }
                     3 -> {
-                        startActivity(TravelStayActivity::class.java, Bundle().apply {
-                            putIntegerArrayList(TravelStayActivity.K_CATEGORY_IDS, data.categories as (ArrayList<Int>))
+//                        startActivity(TravelStayActivity::class.java, Bundle().apply {
+//                            putIntegerArrayList(TravelStayActivity.K_CATEGORY_IDS, data.categories as (ArrayList<Int>))
+//                        })
+                        startActivity(TravelHomeActivity::class.java, Bundle().apply {
+                            putIntegerArrayList(Constant.PARAM_CATEGORY_ID, data.categories as (ArrayList<Int>))
                         })
                     }
                     4, 5, 6, 7 -> {

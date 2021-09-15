@@ -39,7 +39,6 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.api.response.HotelCommentsResponse;
 import com.jcs.where.api.response.HotelDetailResponse;
 import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
@@ -299,11 +298,8 @@ public class HotelDetailActivity extends BaseActivity {
             bundle.putInt(Constant.PARAM_ID, mHotelId);
             startActivity(HotelCommentActivity2.class, bundle);
         });
-        findViewById(R.id.tv_commentnumber).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HotelCommentActivity.goTo(HotelDetailActivity.this, mHotelId);
-            }
+        findViewById(R.id.tv_commentnumber).setOnClickListener(view -> {
+            seeMoreTv.performClick();
         });
         likeIv.setOnClickListener(view -> collection(like != 1));
         hotelDetailRl = findViewById(R.id.rl_hoteldetail);
@@ -475,6 +471,13 @@ public class HotelDetailActivity extends BaseActivity {
                     // 返回数据某些情况会类型不匹配
                     String check_in_time = data.policy.check_in_time;
                     String check_out_time = data.policy.check_out_time;
+
+                    if (TextUtils.isEmpty(check_in_time)) {
+                        check_in_time = "";
+                    }
+                    if (TextUtils.isEmpty(check_out_time)) {
+                        check_out_time = "";
+                    }
 
                     checkInTv.setText(String.format(getString(R.string.check_in_time), check_in_time));
                     checkOutTv.setText(String.format(getString(R.string.check_out_time), check_out_time));

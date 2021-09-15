@@ -433,7 +433,13 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
 
     override fun bindMakerList(response: ArrayList<MechanismResponse>) {
-        if (!::map.isInitialized || response.isEmpty()) return
+        if (!::map.isInitialized ) return
+
+        if (response.isEmpty()) {
+            map.clear()
+            makers.clear()
+            return
+        }
 
 
         // 相机移动到maker范围
@@ -443,7 +449,8 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             bounds.include(LatLng(it.lat, it.lng))
         }
 
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+
 
         // 在地图上添加大量Marker
         addMarkersToMap(response)
@@ -486,9 +493,6 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      */
     override fun onMarkerClick(marker: Marker): Boolean {
 
-
-
-
         // 所有 maker 设置成未选中
         makers.forEach {
             val makerTag = it?.tag as MechanismResponse
@@ -524,7 +528,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             val targetCamera = CameraPosition.Builder().target(marker.position)
                 .zoom(15.5f)
                 .bearing(0f)
-                .tilt(25f)
+                .tilt(0f)
                 .build()
             map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
 

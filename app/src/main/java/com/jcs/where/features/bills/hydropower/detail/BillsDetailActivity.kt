@@ -36,6 +36,9 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
     }
 
     override fun bindListener() {
+        back_iv.setOnClickListener {
+            finish()
+        }
         service_ll.setOnClickListener {
             startActivityAfterLogin(ExtendChatActivity::class.java)
         }
@@ -72,7 +75,7 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
         val electricityCompany = data.electricity_company
         if (electricityCompany.isEmpty()) {
             company_ll.visibility = View.GONE
-        }else{
+        } else {
             company_ll.visibility = View.VISIBLE
             company_tv.text = electricityCompany
         }

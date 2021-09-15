@@ -90,6 +90,7 @@ public class LanguageActivity extends BaseActivity {
             application.changeLanguage();
 
             EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_LANGUAGE));
+            finish();
         }
     }
 

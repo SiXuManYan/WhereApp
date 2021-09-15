@@ -1,6 +1,5 @@
 package com.jcs.where.features.home
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -36,7 +35,6 @@ import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.recommend.StoreRecommendActivity
 import com.jcs.where.features.travel.home.TravelHomeActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
-import com.jcs.where.home.activity.TravelStayActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
 import com.jcs.where.hotel.activity.CityPickerActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
@@ -46,7 +44,6 @@ import com.jcs.where.news.NewsVideoActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
-import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.utils.SPKey
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner

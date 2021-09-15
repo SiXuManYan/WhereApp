@@ -3,6 +3,7 @@ package com.jcs.where.features.main
 
 import android.content.Intent
 import androidx.fragment.app.Fragment
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
@@ -16,6 +17,7 @@ import com.jcs.where.features.home.HomeFragment
 import com.jcs.where.features.mine.MineFragment
 import com.jcs.where.features.order.parent.OrderFragment
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.SPKey
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
@@ -43,6 +45,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
     override fun bindListener() = Unit
 
     override fun onBackPressed() {
+
         if (System.currentTimeMillis() - mTapTime > 2000) {
             ToastUtils.showShort(getString(R.string.main_back_hint))
             mTapTime = System.currentTimeMillis()
@@ -60,8 +63,8 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
             tabs_navigator.currentTab = tabIndex
             if (tabIndex == 2) {
                 EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
-            }
 
+            }
         }
     }
 
@@ -71,6 +74,12 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
         if (code == EventCode.EVENT_SIGN_OUT) {
             finish()
         }
+        if (code == EventCode.EVENT_REFRESH_LANGUAGE) {
+            SPUtils.getInstance().put(SPKey.K_LANGUAGE_TAB, 3)
+            recreate()
+        }
+
+
     }
 
     private fun initTabs() {
@@ -118,6 +127,13 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
 
             override fun onTabReselect(position: Int) = Unit
         })
+
+        val languageTabIndex = SPUtils.getInstance().getInt(SPKey.K_LANGUAGE_TAB, 0)
+        if (languageTabIndex > 0) {
+            tabs_navigator.currentTab = languageTabIndex
+            SPUtils.getInstance().put(SPKey.K_LANGUAGE_TAB, 0)
+        }
+
     }
 
 

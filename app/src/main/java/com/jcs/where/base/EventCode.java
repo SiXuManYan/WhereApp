@@ -121,4 +121,7 @@ public class EventCode {
     public static final int EVENT_REFRESH_CHILD= 1024;
 
 
+    public static final int EVENT_REFRESH_LANGUAGE= 1025;
+
+
 }

@@ -49,7 +49,7 @@ public class LocalLanguageUtil {
         }
 
         String language = CacheUtil.getLanguageFromCache();
-        Log.e("LocalLanguageUtil", "getSetLanguageLocale: " + language);
+
         if (language.equals("zh")) {
             return Locale.CHINA;
         }

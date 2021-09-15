@@ -73,7 +73,6 @@ public class BaseApplication extends Application {
 
 
     public void changeLanguage() {
-        Log.e("BaseApplication", "changeLanguage: " + "-----");
         LocalLanguageUtil.getInstance().setApplicationLanguage(this);
     }
 
@@ -85,29 +84,6 @@ public class BaseApplication extends Application {
         MultiDex.install(this);
     }
 
-    public void setLanguage() {
-        // //获得res资源对象
-        Resources resources = getResources();
-
-        //获得设置对象
-        Configuration configuration = resources.getConfiguration();
-
-        //获取系统当前的语言
-        String language = configuration.locale.getLanguage();
-
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        Log.e("BaseApplication", "setLanguage: " + language);
-        //根据系统语言进行设置
-        if (language.equals("zh")) {
-            configuration.locale = Locale.SIMPLIFIED_CHINESE;
-            resources.updateConfiguration(configuration, displayMetrics);
-//            CacheUtil.cacheLanguage("zh");
-        } else if (language.equals("en")) {
-            configuration.locale = Locale.US;
-            resources.updateConfiguration(configuration, displayMetrics);
-//            CacheUtil.cacheLanguage("en");
-        }
-    }
 
     /**
      * 初始化 comm 100 客服

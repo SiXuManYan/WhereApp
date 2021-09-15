@@ -11,9 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.*
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.google.android.material.appbar.AppBarLayout
@@ -48,6 +46,7 @@ import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.PermissionUtils
+import com.jcs.where.utils.SPKey
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import com.jcs.where.view.empty.EmptyView
@@ -89,15 +88,12 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     /** 新闻列表数据 */
     private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
 
-    override fun isStatusDark() = false
-
-    override fun needChangeStatusBarStatus() = true
-
-
     override fun getLayoutId() = R.layout.fragment_home3
 
     override fun initView(view: View) {
-
+        view?.let {
+            BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.swipeLayout))
+        }
         initBanner()
         initPlate()
         initNews()
@@ -105,14 +101,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         initScroll()
     }
 
+
+
     private fun initCity() {
-        PermissionUtils.permissionAny(activity, {
-            if (it) {
-                presenter.initCity(city_tv)
-            } else {
-                presenter.initDefaultCity(city_tv)
-            }
-        }, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+        val cityName = SPUtils.getInstance().getString(SPKey.SELECT_AREA_NAME, StringUtils.getString(R.string.default_city_name))
+        city_tv.text = cityName
     }
 
 

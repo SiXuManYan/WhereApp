@@ -27,11 +27,6 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
     override fun getLayoutId() = R.layout.fragment_order_parent
 
-
-    override fun isStatusDark() = false
-
-    override fun needChangeStatusBarStatus() = true
-
     override fun initView(view: View?) {
 
         view?.let {

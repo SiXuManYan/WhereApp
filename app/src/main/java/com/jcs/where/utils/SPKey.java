@@ -28,6 +28,7 @@ public final class SPKey {
      * 存储当前城市id
      */
     public static final String SELECT_AREA_ID = "k_current_area_id";
+    public static final String SELECT_AREA_NAME = "k_current_area_name";
     public static final String SELECT_LAT = "k_current_area_lat";
     public static final String SELECT_LNG = "k_current_area_lng";
 
@@ -47,5 +48,6 @@ public final class SPKey {
     public static final String K_SERVICE_CATEGORIES = "k_service_categories_";
 
     public static final String K_SEARCH_HISTORY = "k_search_history";
+    public static final String K_LANGUAGE_TAB = "k_language_tab";
 
 }

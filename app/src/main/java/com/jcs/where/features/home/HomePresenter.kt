@@ -1,12 +1,7 @@
 package com.jcs.where.features.home
 
-import android.location.Address
-import android.widget.TextView
-import com.blankj.utilcode.util.StringUtils
 import com.google.gson.JsonObject
-import com.google.gson.reflect.TypeToken
 import com.jcs.where.BuildConfig
-import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -16,9 +11,10 @@ import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
-import com.jcs.where.bean.CityResponse
 import com.jcs.where.storage.entity.User
-import com.jcs.where.utils.*
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.SPKey
+import com.jcs.where.utils.SPUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 import java.util.*
@@ -29,30 +25,7 @@ import java.util.*
  */
 class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
-
-    /**
-     *  当前区域id
-     */
-    fun getCurrentAreaId(): String = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID)
-
-    fun getCurrentCity(currentCityId: String): CityResponse? {
-        val citiesJson = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_ALL_CITIES)
-
-        if (!citiesJson.isNullOrBlank()) {
-            val cityList = JsonUtil.getInstance().fromJsonToList<CityResponse>(citiesJson, object : TypeToken<List<CityResponse?>?>() {}.type)
-            val size = cityList.size
-            for (i in 0 until size) {
-                val cityResponse = cityList[i]
-                if (cityResponse.id == currentCityId) {
-                    return cityResponse
-                }
-            }
-
-        }
-        return null
-    }
-
-
+    
     /**
      * 推荐列表
      */
@@ -61,14 +34,16 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
         val lat = Constant.LAT.toString() + ""
         val lng = Constant.LNG.toString() + ""
 
-        requestApi(mRetrofit.getRecommends(page, lat, lng, areaId), object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view) {
-            override fun onSuccess(response: PageResponse<HomeRecommendResponse>) {
-                val isLastPage = response.lastPage == page
-                val data = response.data.toMutableList()
+        requestApi(
+            mRetrofit.getRecommends(page, lat, lng, areaId),
+            object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view) {
+                override fun onSuccess(response: PageResponse<HomeRecommendResponse>) {
+                    val isLastPage = response.lastPage == page
+                    val data = response.data.toMutableList()
 
-                view.bindRecommendData(data, isLastPage)
-            }
-        })
+                    view.bindRecommendData(data, isLastPage)
+                }
+            })
     }
 
     /**
@@ -123,7 +98,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
                 response.forEach {
                     bannerUrls.add(it.src)
                 }
-                view.bindTopBannerData(bannerUrls,response)
+                view.bindTopBannerData(bannerUrls, response)
             }
         })
     }
@@ -171,39 +146,6 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
     }
 
-    fun initDefaultCity(cityTv: TextView) {
-        val currentAreaId = getCurrentAreaId()
-        if (currentAreaId == "3") {
-            // 默认巴郎牙
-            cityTv.text = StringUtils.getString(R.string.default_city_name)
-            return
-        }
-        val currentCity = getCurrentCity(currentAreaId)
-        if (currentCity == null) {
-            cityTv.text = StringUtils.getString(R.string.default_city_name)
-        } else {
-            cityTv.text = currentCity.name
-        }
-    }
-
-    fun initCity(cityTv: TextView) {
-
-        LocationUtil.getInstance().addressCallback = object : LocationUtil.AddressCallback {
-            override fun onGetAddress(address: Address) {
-                val countryName = address.countryName //国家
-                val adminArea = address.adminArea //省
-                val locality = address.locality //市
-                val subLocality = address.subLocality //区
-                val featureName = address.featureName //街道
-                cityTv.text = locality
-            }
-
-            override fun onGetLocation(lat: Double, lng: Double) {
-                CacheUtil.getShareDefault().put(Constant.SP_LATITUDE, lat.toFloat())
-                CacheUtil.getShareDefault().put(Constant.SP_LONGITUDE, lng.toFloat())
-            }
-        }
-    }
 
     /**
      * 连接融云
@@ -217,7 +159,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
         val user = User.getInstance()
         user.rongData
 
-        RongIM.connect(user.rongData.token,object :RongIMClient.ConnectCallback(){
+        RongIM.connect(user.rongData.token, object : RongIMClient.ConnectCallback() {
 
 
             override fun onError(p0: RongIMClient.ConnectionErrorCode?) = Unit
@@ -227,7 +169,6 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
             override fun onSuccess(p0: String?) = Unit
 
         })
-
 
 
     }

@@ -24,6 +24,7 @@ public class Constant {
     public static final String PARAM_ID = "param_id";
     public static final String PARAM_TYPE = "param_type";
     public static final String PARAM_TAB = "param_tab";
+    public static final String PARAM_CHANGE_LANGUAGE = "param_change_language";
     public static final String PARAM_ID_2 = "id";
     public static final String PARAM_PID = "param_pid";
     public static final String PARAM_PID_NAME = "param_pid_name";

@@ -182,6 +182,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
 
         // new
         SPUtils.getInstance().put(SPKey.SELECT_AREA_ID, id);
+        SPUtils.getInstance().put(SPKey.SELECT_AREA_NAME, name);
         SPUtils.getInstance().put(SPKey.SELECT_LAT, (float) lat);
         SPUtils.getInstance().put(SPKey.SELECT_LNG, (float) lng);
 

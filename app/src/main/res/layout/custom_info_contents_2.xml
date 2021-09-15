@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_white_radius_10"
         android:ellipsize="end"
+        android:maxWidth="@dimen/dp_200"
         android:paddingStart="@dimen/dp_12"
         android:paddingTop="@dimen/dp_2"
         android:paddingEnd="@dimen/dp_12"

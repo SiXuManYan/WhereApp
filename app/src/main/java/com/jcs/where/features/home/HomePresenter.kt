@@ -12,6 +12,7 @@ import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.SPUtil
@@ -31,11 +32,12 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      */
     fun getRecommendList(page: Int) {
         val areaId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID)
-        val lat = Constant.LAT.toString() + ""
-        val lng = Constant.LNG.toString() + ""
+
+        val selectLatLng = CacheUtil.getSafeSelectLatLng()
+
 
         requestApi(
-            mRetrofit.getRecommends(page, lat, lng, areaId),
+            mRetrofit.getRecommends(page, selectLatLng.latitude.toString(), selectLatLng.longitude.toString(), areaId),
             object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view) {
                 override fun onSuccess(response: PageResponse<HomeRecommendResponse>) {
                     val isLastPage = response.lastPage == page

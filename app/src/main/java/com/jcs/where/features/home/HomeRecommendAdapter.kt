@@ -201,8 +201,6 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
             }
             tag_ll.addView(tv)
         }
-
-
     }
 
 }

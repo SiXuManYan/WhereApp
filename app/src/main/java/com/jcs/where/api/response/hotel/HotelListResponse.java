@@ -55,7 +55,7 @@ public class HotelListResponse {
     public String facebook_link;
     public String star_level = "";
 
-    public List<Tags> tags = new ArrayList<>();
+    public ArrayList<Tags> tags = new ArrayList<>();
 
 
     public class Tags {

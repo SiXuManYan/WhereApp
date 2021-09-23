@@ -1565,4 +1565,13 @@ public interface RetrofitApi {
     );
 
 
+    /**
+     * 酒店猜你喜欢的酒店列表
+     *
+     * @return 酒店列表
+     */
+    @GET("hotelapi/v2/hotels/recommends")
+    Observable<JcsResponse<ArrayList<HotelListResponse>>> hotelHomeRecommend();
+
+
 }

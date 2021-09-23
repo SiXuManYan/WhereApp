@@ -22,6 +22,7 @@ import com.jcs.where.widget.ratingstar.RatingStarView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +115,7 @@ public class HotelListAdapter extends BaseQuickAdapter<HotelListResponse, BaseVi
 
         tag_ll.removeAllViews();
 
-        List<HotelListResponse.Tags> tags = data.tags;
+        ArrayList<HotelListResponse.Tags> tags = data.tags;
         if (tags.size() <= 0) {
             return;
         }

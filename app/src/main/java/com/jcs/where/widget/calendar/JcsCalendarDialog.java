@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseBottomDialog;
@@ -49,7 +51,7 @@ public class JcsCalendarDialog extends BaseBottomDialog {
 
     @Override
     protected int getHeight() {
-        return 684;
+        return ScreenUtils.getScreenHeight();
     }
 
     @Override
@@ -62,11 +64,11 @@ public class JcsCalendarDialog extends BaseBottomDialog {
     @Override
     protected void initData() {
         if (mBeans == null || mBeans.size() == 0) {
-            Log.e("JcsCalendarDialog", "initData: " + "please invoke method: initCalendar");
             return;
         }
         mAdapter = new JcsCalendarAdapter(R.layout.item_hotel_calendar_dialog_header, R.layout.item_hotel_calendar_dialog_child, mBeans);
         mRecycler.setAdapter(mAdapter);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 7);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -249,6 +251,7 @@ public class JcsCalendarDialog extends BaseBottomDialog {
     }
 
     public void initCalendar(Context context) {
+
         mYearMonthSF = new SimpleDateFormat(context.getString(R.string.date_format_year_month), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
         mMonthDaySF = new SimpleDateFormat(context.getString(R.string.date_format_month_day), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
         mMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_mm_dd), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));

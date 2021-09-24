@@ -75,6 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:background="?android:attr/selectableItemBackground"
                         android:layout_centerVertical="true"
                         android:src="@mipmap/ic_hotel_my_location" />
 
@@ -92,6 +93,7 @@
 
 
                     <TextView
+                        android:id="@+id/date_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -125,12 +127,13 @@
                     android:background="@color/grey_F5F5F5" />
 
                 <TextView
+                    android:id="@+id/score_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:textColor="@color/grey_666666"
                     android:textSize="@dimen/sp_15"
-                    tools:text="价格/星级/评分" />
+                    android:text="@string/prompt_price_star" />
 
                 <View
                     android:layout_width="match_parent"
@@ -155,6 +158,7 @@
                         android:textStyle="bold" />
 
                     <com.jcs.where.widget.NumberView2
+                        android:id="@+id/number_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -238,22 +242,15 @@
             android:scaleType="centerInside"
             android:src="@mipmap/ic_back_light" />
 
-        <ImageView
-            android:id="@+id/shareIv"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_gravity="end"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_share_light" />
+        <TextView
+            android:id="@+id/title_tv"
+            tools:text="title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_17" />
 
-        <ImageView
-            android:id="@+id/like_iv"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/dp_30"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_like_normal_light" />
 
     </androidx.appcompat.widget.Toolbar>
 

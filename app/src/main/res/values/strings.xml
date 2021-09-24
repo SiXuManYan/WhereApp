@@ -18,7 +18,7 @@
     <string name="show_price_with_forward_unit">₱%1$d</string>
     <string name="show_price_with_forward_unit_f">₱%1$.2f</string>
     <string name="prompt_star">星级</string>
-    <string name="prompt_price_star">价格/星级</string>
+    <string name="prompt_price_star">价格/星级/评分</string>
     <string name="score_prompt">评分</string>
     <string name="start_less_than_2"><![CDATA[<2]]></string>
     <string name="digital_3">3</string>

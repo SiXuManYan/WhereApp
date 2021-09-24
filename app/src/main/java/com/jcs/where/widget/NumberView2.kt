@@ -17,8 +17,8 @@ import com.jcs.where.R
  */
 class NumberView2 : LinearLayout {
 
-    private lateinit var cut_iv: ImageView
-    private lateinit var add_iv: ImageView
+    public lateinit var cut_iv: ImageView
+    public lateinit var add_iv: ImageView
     private lateinit var value_tv: TextView
     var goodNum = 0
     var MIN_GOOD_NUM = 0

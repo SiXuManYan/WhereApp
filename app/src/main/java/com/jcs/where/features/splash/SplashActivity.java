@@ -66,7 +66,6 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
 
         initPager();
-
         initAnimation();
     }
 
@@ -74,6 +73,22 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
         SplashAdapter adapter = new SplashAdapter();
         adapter.onStartClickListener = v -> toHome();
         pagerVp.setAdapter(adapter);
+        pagerVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                pointView.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void initAnimation() {
@@ -260,22 +275,6 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     @Override
     protected void bindListener() {
 
-        pagerVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                pointView.onPageSelected(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
     }
 

@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_640"
-    android:paddingTop="@dimen/dp_4"
-    android:background="@drawable/shape_hotel_calendar_dialog">
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_hotel_calendar_dialog"
+    android:paddingTop="@dimen/dp_4">
 
     <TextView
         android:id="@+id/calendarTitle"
@@ -24,10 +24,10 @@
         android:layout_height="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_5"
         android:layout_marginEnd="@dimen/dp_5"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_5"
-        android:paddingEnd="@dimen/dp_10"
         android:paddingStart="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_5"
         android:src="@mipmap/ic_close_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,51 +35,50 @@
     <TextView
         android:id="@+id/sunday"
         style="@style/day_of_week"
-        android:text="@string/calendar_sunday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/monday"
-        app:layout_constraintTop_toBottomOf="@id/calendarTitle"
         android:layout_marginTop="@dimen/dp_30"
-        />
+        android:text="@string/calendar_sunday"
+        app:layout_constraintEnd_toStartOf="@id/monday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calendarTitle" />
 
     <TextView
         android:id="@+id/monday"
         style="@style/day_of_week"
         android:text="@string/calendar_monday"
-        app:layout_constraintStart_toEndOf="@id/sunday"
         app:layout_constraintEnd_toStartOf="@id/tuesday"
+        app:layout_constraintStart_toEndOf="@id/sunday"
         app:layout_constraintTop_toTopOf="@id/sunday" />
 
     <TextView
         android:id="@+id/tuesday"
         style="@style/day_of_week"
         android:text="@string/calendar_tuesday"
-        app:layout_constraintStart_toEndOf="@id/monday"
         app:layout_constraintEnd_toStartOf="@id/wednesday"
+        app:layout_constraintStart_toEndOf="@id/monday"
         app:layout_constraintTop_toTopOf="@id/sunday" />
 
     <TextView
         android:id="@+id/wednesday"
         style="@style/day_of_week"
         android:text="@string/calendar_wednesday"
-        app:layout_constraintStart_toEndOf="@id/tuesday"
         app:layout_constraintEnd_toStartOf="@id/thursday"
+        app:layout_constraintStart_toEndOf="@id/tuesday"
         app:layout_constraintTop_toTopOf="@id/sunday" />
 
     <TextView
         android:id="@+id/thursday"
         style="@style/day_of_week"
         android:text="@string/calendar_thursday"
-        app:layout_constraintStart_toEndOf="@id/wednesday"
         app:layout_constraintEnd_toStartOf="@id/friday"
+        app:layout_constraintStart_toEndOf="@id/wednesday"
         app:layout_constraintTop_toTopOf="@id/sunday" />
 
     <TextView
         android:id="@+id/friday"
         style="@style/day_of_week"
         android:text="@string/calendar_friday"
-        app:layout_constraintStart_toEndOf="@id/thursday"
         app:layout_constraintEnd_toStartOf="@id/saturday"
+        app:layout_constraintStart_toEndOf="@id/thursday"
         app:layout_constraintTop_toTopOf="@id/sunday" />
 
     <TextView
@@ -88,31 +87,30 @@
         android:text="@string/calendar_saturday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/friday"
-        app:layout_constraintTop_toTopOf="@id/sunday"/>
+        app:layout_constraintTop_toTopOf="@id/sunday" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecycler"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sunday"
         android:layout_marginTop="@dimen/dp_8"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sunday" />
 
-    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/ensureBtn"
         android:layout_width="@dimen/dp_270"
         android:layout_height="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/shape_ensure_btn"
         android:text="@string/ensure"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_17"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/dp_30"
-        android:background="@drawable/shape_ensure_btn"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

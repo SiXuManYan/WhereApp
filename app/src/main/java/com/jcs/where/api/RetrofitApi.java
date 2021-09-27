@@ -426,6 +426,7 @@ public interface RetrofitApi {
     /**
      * 获得城市选择列表
      * 列表类型（letter-字母形式，list-列表形式）
+     *
      * @return
      */
     @GET("commonapi/v2/areas")
@@ -791,7 +792,7 @@ public interface RetrofitApi {
     );
 
 
- /**
+    /**
      * 推荐列表(旅游)
      */
     @GET("travelapi/v2/recommends")
@@ -910,8 +911,8 @@ public interface RetrofitApi {
      * !--level 3 pid 89 type =1 --
      *
      * @param level 分类级别
-     * @param type  分类类型（1：只看下一级，2：所有下级）
      * @param pid   上级ID（详细看底部参数说明）
+     * @param type  分类类型（1：只看下一级，2：所有下级）
      *
      *              <p>
      *              PID参数说明：
@@ -929,7 +930,7 @@ public interface RetrofitApi {
     @GET("commonapi/v2/categories")
     Observable<JcsResponse<ArrayList<Category>>> getCategoriesList(
             @Query("level") int level,
-            @Query("pid")  String pid,
+            @Query("pid") String pid,
             @Query("type") @Nullable Integer type);
 
 
@@ -1554,7 +1555,6 @@ public interface RetrofitApi {
 
     /**
      * 获得展示在地图上的机构数据
-     *
      */
     @GET("generalapi/v2/map/infos")
     Observable<JcsResponse<ArrayList<MechanismResponse>>> getMechanismListToMap(
@@ -1573,6 +1573,25 @@ public interface RetrofitApi {
      */
     @GET("hotelapi/v2/hotels/recommends")
     Observable<JcsResponse<ArrayList<HotelHomeRecommend>>> hotelHomeRecommend();
+
+    /**
+     * 酒店地图模式列表
+     * @param area_id 区域id 必须传
+     *  @see <a href="https://where.w.eolinker.com/home/api_studio/inside/api/detail?apiID=3925068&groupID=1000127&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档</a>
+     */
+    @GET("hotelapi/v2/hotels")
+    Observable<JcsResponse<PageResponse<HotelHomeRecommend>>> hotelChildList(
+            @Query("page") int page,
+            @Query("area_id") @Nullable String area_id,
+            @Query("lat") @Nullable Double lat,
+            @Query("lng") @Nullable Double lng,
+            @Query("search_input") @Nullable String search_input,
+            @Query("star_level") @Nullable String star_level,
+            @Query("hotel_type_ids") @Nullable String hotel_type_ids,
+            @Query("price_range") @Nullable String price_range,
+            @Query("grade") @Nullable String grade
+
+    );
 
 
 }

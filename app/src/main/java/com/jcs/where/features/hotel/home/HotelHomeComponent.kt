@@ -23,4 +23,9 @@ class HotelDetailPresenter(private var view: HotelHomeView) : BaseMvpPresenter(v
             }
         })
     }
+
+
+
+
+
 }

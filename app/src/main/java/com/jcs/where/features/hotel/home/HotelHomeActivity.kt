@@ -1,4 +1,4 @@
-package com.jcs.where.features.hotel.detail
+package com.jcs.where.features.hotel.home
 
 import android.Manifest
 import android.graphics.Color
@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
-import com.jcs.where.api.response.hotel.HotelListResponse
+import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.home.dialog.HotelStarDialog
 import com.jcs.where.utils.*
@@ -106,6 +106,13 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
                 title_tv.visibility = View.GONE
             }
             isToolbarDark = alpha > 130
+            back_iv.setImageResource(
+                if (isToolbarDark) {
+                    R.mipmap.ic_back_black
+                } else {
+                    R.mipmap.ic_back_light
+                }
+            )
 
             useView.background.alpha = alpha
             toolbar.background.alpha = alpha
@@ -169,7 +176,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         }
     }
 
-    override fun bindData(response: ArrayList<HotelListResponse>) {
+    override fun bindData(response: ArrayList<HotelHomeRecommend>) {
         if (response.isEmpty()) {
             emptyView.showEmptyContainer()
         }

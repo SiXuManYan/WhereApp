@@ -85,6 +85,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
 import com.jcs.where.api.response.hotel.HotelComment;
+import com.jcs.where.api.response.hotel.HotelHomeRecommend;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
@@ -1571,7 +1572,7 @@ public interface RetrofitApi {
      * @return 酒店列表
      */
     @GET("hotelapi/v2/hotels/recommends")
-    Observable<JcsResponse<ArrayList<HotelListResponse>>> hotelHomeRecommend();
+    Observable<JcsResponse<ArrayList<HotelHomeRecommend>>> hotelHomeRecommend();
 
 
 }

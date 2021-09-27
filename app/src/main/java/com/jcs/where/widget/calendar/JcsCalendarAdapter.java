@@ -1,8 +1,12 @@
 package com.jcs.where.widget.calendar;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.blankj.utilcode.util.ColorUtils;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.entity.JSectionEntity;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -13,8 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.List;
-
-import androidx.core.content.ContextCompat;
 
 public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapter.CalendarBean, BaseViewHolder> {
     private boolean mIsEndSelected = false;
@@ -44,31 +46,31 @@ public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapt
             View itemView = baseViewHolder.itemView;
             if (calendarBean.isStartDay) {
                 if (mIsEndSelected) {
-                    rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
+                    rightView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));
                 }
-                dateView.setBackgroundResource(R.mipmap.start_date_selected);
+                dateView.setBackgroundResource(R.drawable.shape_circle_blue);
                 actionTv.setText(R.string.calendar_enter_stay);
             } else if (calendarBean.isEndDay) {
-                leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
-                dateView.setBackgroundResource(R.mipmap.end_date_selected);
+                leftView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));
+                dateView.setBackgroundResource(R.drawable.shape_circle_blue);
                 actionTv.setText(R.string.calendar_leave_stay);
             } else if (calendarBean.isSelected) {
-                leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
-                rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
-                dateView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue_D5EAFF));
+                leftView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));
+                rightView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));
+                dateView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));
                 actionTv.setText("");
             } else {
                 actionTv.setText("");
                 dateView.setBackgroundResource(0);
-                leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-                rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                leftView.setBackgroundColor(Color.WHITE);
+                rightView.setBackgroundColor(Color.WHITE);
             }
         } else {
             baseViewHolder.setText(R.id.dayTv, "");
             dateView.setBackgroundResource(0);
-            dateView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-            leftView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-            rightView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            dateView.setBackgroundColor(Color.WHITE);
+            leftView.setBackgroundColor(Color.WHITE);
+            rightView.setBackgroundColor(Color.WHITE);
         }
     }
 

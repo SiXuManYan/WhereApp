@@ -200,11 +200,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity
-            android:name=".travel.TravelWriteCommentActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".travel.TravelCommentActivity"
@@ -615,7 +610,7 @@
         <activity android:name=".features.search.yellow.YellowPageSearchResultActivity" />
         <activity android:name=".features.mechanism.MechanismActivity" />
         <activity android:name=".features.travel.home.TravelHomeActivity" />
-        <activity android:name=".features.hotel.detail.HotelHomeActivity" />
+        <activity android:name=".features.hotel.home.HotelHomeActivity" />
 
 
     </application>

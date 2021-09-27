@@ -1,4 +1,4 @@
-package com.jcs.where.features.hotel.detail
+package com.jcs.where.features.hotel.home
 
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -10,7 +10,7 @@ import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
-import com.jcs.where.api.response.hotel.HotelListResponse
+import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
@@ -19,9 +19,9 @@ import com.jcs.where.widget.ratingstar.RatingStarView
  * Created by Wangsw  2021/9/23 10:12.
  *
  */
-class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelListResponse, BaseViewHolder>(R.layout.item_hotel_recommend) {
+class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelHomeRecommend, BaseViewHolder>(R.layout.item_hotel_recommend) {
 
-    override fun convert(holder: BaseViewHolder, item: HotelListResponse) {
+    override fun convert(holder: BaseViewHolder, item: HotelHomeRecommend) {
         bindHotelView(holder, item)
     }
 
@@ -29,7 +29,7 @@ class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelListResponse, BaseViewHo
     /**
      * 酒店
      */
-    private fun bindHotelView(holder: BaseViewHolder, data: HotelListResponse) {
+    private fun bindHotelView(holder: BaseViewHolder, data: HotelHomeRecommend) {
 
 
         // 图片
@@ -61,7 +61,7 @@ class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelListResponse, BaseViewHo
         SpanUtils.with(price_tv)
             .append(StringUtils.getString(R.string.price_unit))
             .setFontSize(12, true)
-            .append(data.price)
+            .append(data.price.toPlainString())
             .setFontSize(14, true)
             .create()
     }
@@ -69,7 +69,7 @@ class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelListResponse, BaseViewHo
     /**
      * 图片
      */
-    fun loadImage(data: HotelListResponse, image_iv: ImageView) {
+    fun loadImage(data: HotelHomeRecommend, image_iv: ImageView) {
         var image = ""
         if (data.images.isNotEmpty()) {
             image = data.images[0]
@@ -78,7 +78,7 @@ class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelListResponse, BaseViewHo
     }
 
 
-    private fun initTag(data: HotelListResponse, tag_ll: LinearLayout) {
+    private fun initTag(data: HotelHomeRecommend, tag_ll: LinearLayout) {
         tag_ll.removeAllViews()
         if (data.tags.isEmpty()) {
             return
@@ -92,7 +92,7 @@ class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelListResponse, BaseViewHo
                 setPaddingRelative(SizeUtils.dp2px(4f), SizeUtils.dp2px(2f), SizeUtils.dp2px(4f), SizeUtils.dp2px(2f))
                 setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
                 textSize = 11f
-                text = it.name
+                text = it
                 setBackgroundResource(R.drawable.shape_blue_stoke_radius_2_98bbff);
                 isSingleLine = true
             }

@@ -115,12 +115,12 @@ public class HotelListAdapter extends BaseQuickAdapter<HotelListResponse, BaseVi
 
         tag_ll.removeAllViews();
 
-        ArrayList<HotelListResponse.Tags> tags = data.tags;
+        ArrayList<String> tags = data.tags;
         if (tags.size() <= 0) {
             return;
         }
 
-        for (HotelListResponse.Tags tag : tags) {
+        for (String tag : tags) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMarginEnd(SizeUtils.dp2px(2));
             TextView tv = new TextView(getContext());
@@ -128,7 +128,7 @@ public class HotelListAdapter extends BaseQuickAdapter<HotelListResponse, BaseVi
             tv.setPaddingRelative(SizeUtils.dp2px(4), SizeUtils.dp2px(2), SizeUtils.dp2px(4), SizeUtils.dp2px(2));
             tv.setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2));
             tv.setTextSize(11);
-            tv.setText(tag.name);
+            tv.setText(tag);
             tv.setBackgroundResource(R.drawable.shape_blue_stoke_radius_1);
             tag_ll.addView(tv);
         }

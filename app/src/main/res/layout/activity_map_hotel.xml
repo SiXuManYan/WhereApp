@@ -113,12 +113,12 @@
 
         <ImageView
             android:id="@+id/type_iv"
-            android:scaleType="centerInside"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_15"
+            android:scaleType="centerInside"
             android:src="@mipmap/ic_type_list" />
 
 
@@ -176,14 +176,13 @@
             android:id="@+id/bottom_sheet_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_white_top_radius_8"
             android:paddingTop="@dimen/dp_16"
-            android:paddingBottom="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_50"
             app:behavior_hideable="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/bottom_sheet_behavior"
             tools:itemCount="1"
-            tools:listitem="@layout/item_hotel_recommend" />
+            tools:listitem="@layout/item_hotel_recommend_card" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

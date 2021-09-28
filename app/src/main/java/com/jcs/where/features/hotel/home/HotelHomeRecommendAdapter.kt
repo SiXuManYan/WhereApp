@@ -7,30 +7,36 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
 
 /**
  * Created by Wangsw  2021/9/23 10:12.
- *
+ *  酒店的 推荐、地图 以及Maker选中弹出 通用列表
  */
-class HotelHomeRecommendAdapter : BaseQuickAdapter<HotelHomeRecommend, BaseViewHolder>(R.layout.item_hotel_recommend) {
+class HotelHomeRecommendAdapter : BaseMultiItemQuickAdapter<HotelHomeRecommend, BaseViewHolder>(), LoadMoreModule {
+
+    init {
+        addItemType(HotelHomeRecommend.CONTENT_TYPE_COMMON, R.layout.item_hotel_recommend)
+        addItemType(HotelHomeRecommend.CONTENT_TYPE_CARD, R.layout.item_hotel_recommend)
+    }
 
     override fun convert(holder: BaseViewHolder, item: HotelHomeRecommend) {
         bindHotelView(holder, item)
     }
 
-
     /**
      * 酒店
      */
     private fun bindHotelView(holder: BaseViewHolder, data: HotelHomeRecommend) {
-
 
         // 图片
         val image_iv = holder.getView<ImageView>(R.id.image_iv)

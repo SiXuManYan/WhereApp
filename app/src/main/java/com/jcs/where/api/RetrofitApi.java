@@ -1594,4 +1594,19 @@ public interface RetrofitApi {
     );
 
 
+
+    /**
+     * 获取所有酒店地图 Maker 信息
+     */
+    @GET("hotelapi/v2/map/hotels")
+    Observable<JcsResponse<ArrayList<HotelHomeRecommend>>> getHotelMapMaker(
+            @Query("area_id") String area_id,
+            @Query("lat") String lat,
+            @Query("lng") String lng,
+            @Query("search_input") @Nullable String search_input,
+            @Query("star_level") @Nullable String star_level,
+            @Query("price_range") @Nullable String price_range
+    );
+
+
 }

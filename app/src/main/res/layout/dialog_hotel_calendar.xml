@@ -78,6 +78,7 @@
         android:id="@+id/calendarRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ensureBtn"
         android:layout_below="@+id/week_ll"
         android:layout_marginTop="@dimen/dp_8"
         android:overScrollMode="never" />
@@ -86,8 +87,8 @@
     <Button
         android:id="@+id/ensureBtn"
         android:layout_width="@dimen/dp_270"
-        android:layout_height="@dimen/dp_40"
         android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/dp_40"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_60"
         android:background="@drawable/shape_ensure_btn"

@@ -65,14 +65,15 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     /** 三级分类 */
     private lateinit var mChildTagAdapter: ThirdCategoryAdapter
 
+    /** marker 选中后，对应的列表内容 */
+    private lateinit var mMarkerContentAdapter: MechanismAdapter
+
     /** pager Behavior */
     private lateinit var pagerBehavior: ViewPagerBottomSheetBehavior<LinearLayout>
 
     /** maker  Behavior */
     private lateinit var makerBehavior: BottomSheetBehavior<RecyclerView>
 
-    /** marker 选中后，对应的列表内容 */
-    private lateinit var mMarkerContentAdapter: MechanismAdapter
 
     /** 从分类tab跳转时，根据 categoryId  调整viewPager 位置 */
     private var childCategoryId = 0
@@ -379,7 +380,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             this, {
                 if (it) {
                     map.isMyLocationEnabled = true
-                    moveMyLocation()
+                    getMyLocationInfo()
                 }
             }, Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -390,7 +391,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     /**
      * 获取我的位置信息
      */
-    private fun moveMyLocation() {
+    private fun getMyLocationInfo() {
         LocationUtil.getInstance().addressCallback = object : LocationUtil.AddressCallback {
             override fun onGetAddress(address: Address) {
                 val countryName = address.countryName //国家
@@ -428,7 +429,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
      * 点击我的位置 maker
      */
     override fun onMyLocationClick(location: Location) {
-        ToastUtils.showShort("Current location:\n$location")
+        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
     }
 
 
@@ -540,9 +541,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
     /**
      * 点击标记上的信息窗口
      */
-    override fun onInfoWindowClick(marker: Marker) {
-
-    }
+    override fun onInfoWindowClick(marker: Marker) = Unit
 
 
 }

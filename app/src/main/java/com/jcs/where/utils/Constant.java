@@ -1,5 +1,7 @@
 package com.jcs.where.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * 常量
  * create by zyf on 2021/1/8 10:59 上午
@@ -47,6 +49,8 @@ public class Constant {
     public static final String PARAM_ORDER_COMMIT_DATA = "param_order_commit_data";
     public static final String PARAM_CHILD_CATEGORY_ID = "param_child_category_id";
     public static final String PARAM_CATEGORY_ID = "param_category_id";
+
+
 
     /**
      * 账号
@@ -165,14 +169,12 @@ public class Constant {
     public static final String SP_LONGITUDE = "sp_longitude";
 
 
-
     public static final String PARAM_ADDRESS_ID = "param_address_id";
     public static final String PARAM_ADDRESS = "param_address";
     public static final String PARAM_RECIPIENT = "param_recipient";
     public static final String PARAM_SEX_MAN = "param_sex_man";
-    public static final String PARAM_SEX= "param_sex";
+    public static final String PARAM_SEX = "param_sex";
     public static final String PARAM_PHONE = "param_phone";
-
 
 
     public static final int PAY_INFO_ESTORE = 0;
@@ -180,6 +182,12 @@ public class Constant {
     public static final int PAY_INFO_FOOD = 2;
     public static final int PAY_INFO_TAKEAWAY = 3;
     public static final int PAY_INFO_HOTEL = 4;
+
+    public static final String PARAM_SEARCH = "param_search";
+    public static final String PARAM_STAR_LEVEL = "param_star_level";
+    public static final String PARAM_TYPE_ID = "param_type_id";
+    public static final String PARAM_PRICE_RANGE = "param_price_range";
+    public static final String PARAM_GRADE = "param_grade";
 
 
 

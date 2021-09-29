@@ -2,11 +2,12 @@ package com.jcs.where.features.hotel.map.child
 
 import android.graphics.Color
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.hotel.home.HotelHomeRecommendAdapter
 import com.jcs.where.utils.Constant
@@ -62,12 +63,10 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
         content_rv.apply {
             adapter = mAdapter
             addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(16f), SizeUtils.dp2px(15f), SizeUtils.dp2px(15f)))
-            layoutManager = object : LinearLayoutManager(activity, VERTICAL, false) {
-                override fun canScrollVertically(): Boolean {
-                    return false
-                }
-            }
+
         }
+        val padding = SizeUtils.dp2px(15f)
+        content_rv.setPaddingRelative(padding, 0, padding, 0)
 
 
     }
@@ -119,6 +118,21 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
         // todo 进入酒店详情
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_CHILD -> {
+                page = Constant.DEFAULT_FIRST_PAGE
+                search_input = baseEvent.message
+                loadOnVisible()
+            }
+        }
     }
 
 

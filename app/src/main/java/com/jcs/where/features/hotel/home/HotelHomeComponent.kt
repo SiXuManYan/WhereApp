@@ -19,6 +19,9 @@ class HotelDetailPresenter(private var view: HotelHomeView) : BaseMvpPresenter(v
     fun getData() {
         requestApi(mRetrofit.hotelHomeRecommend(), object : BaseMvpObserver<ArrayList<HotelHomeRecommend>>(view) {
             override fun onSuccess(response: ArrayList<HotelHomeRecommend>) {
+                response.forEach {
+                    it.contentType = HotelHomeRecommend.CONTENT_TYPE_COMMON
+                }
                 view.bindData(response)
             }
         })

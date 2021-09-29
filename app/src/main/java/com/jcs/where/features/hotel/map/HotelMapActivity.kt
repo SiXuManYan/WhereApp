@@ -8,10 +8,12 @@ import android.content.Intent
 import android.location.Address
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -26,15 +28,21 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.hotel.home.HotelHomeRecommendAdapter
-import com.jcs.where.features.map.CustomInfoWindowAdapter
 import com.jcs.where.features.map.HotelCustomInfoWindowAdapter
+import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
 import com.jcs.where.utils.PermissionUtils
+
 import kotlinx.android.synthetic.main.activity_map_hotel.*
+
+
+import org.greenrobot.eventbus.EventBus
 
 import java.util.*
 
@@ -44,8 +52,8 @@ import java.util.*
  */
 class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
 
-    /** 酒店分类 id */
-    private var categoryId = 0
+    /** 酒店分类 id ,用户获取酒店下的子分类 */
+    private var hotelCategoryId = 0
 
     /** 搜索内容 */
     var searchInput: String? = null
@@ -53,14 +61,13 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
     /** 星级 */
     var starLevel: String? = null
 
-    /** 住宿类型ID */
-    var hotelTypeIds: String? = null
-
     /** 价格区间 */
     var priceRange: String? = null
 
     /** 酒店分数 */
     var grade: String? = null
+
+    private var contentIsMap = false
 
     /** 内容和 tab二级分类 */
     private lateinit var mPagerAdapter: HotelMapPagerAdapter
@@ -81,11 +88,14 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
     companion object {
 
         fun navigation(
-            context: Context, searchInput: String?, starLevel: String?,
-            priceRange: String?, grade: String?
+            context: Context,
+            hotelCategoryId: Int,
+            searchInput: String? = null, starLevel: String? = null,
+            priceRange: String? = null, grade: String? = null
         ) {
 
             val bundle = Bundle().apply {
+                putInt(Constant.PARAM_CATEGORY_ID, hotelCategoryId)
                 putString(Constant.PARAM_SEARCH, searchInput)
                 putString(Constant.PARAM_STAR_LEVEL, starLevel)
                 putString(Constant.PARAM_PRICE_RANGE, priceRange)
@@ -110,18 +120,26 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         initCategory()
         initBehavior()
         initMarkerClickListContent()
-
     }
 
 
+    /** 处理搜索 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras
+            val searchName = bundle?.getString(Constant.PARAM_NAME, "")
+            search_tv.text = searchName
+            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, searchName))
+        }
+    }
 
 
     private fun initExtra() {
         val bundle = intent.extras ?: return
         bundle.apply {
+            hotelCategoryId = getInt(Constant.PARAM_CATEGORY_ID)
             searchInput = getString(Constant.PARAM_SEARCH)
             starLevel = getString(Constant.PARAM_STAR_LEVEL)
-            hotelTypeIds = getString(Constant.PARAM_TYPE_ID)
             priceRange = getString(Constant.PARAM_PRICE_RANGE)
             grade = getString(Constant.PARAM_GRADE)
         }
@@ -160,7 +178,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
     }
 
 
-
     private fun initMarkerClickListContent() {
         mMarkerContentAdapter = HotelHomeRecommendAdapter().apply {
 
@@ -171,26 +188,52 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         }
 
 
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(bottom_sheet_rv)
+
         bottom_sheet_rv.apply {
             adapter = mMarkerContentAdapter
             // 禁用横向滑动
-            layoutManager = object : LinearLayoutManager(context, HORIZONTAL, false) {
-                override fun canScrollHorizontally() = false
-            }
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+
+                    newState == RecyclerView.SCROLL_STATE_IDLE
+
+                }
+            })
         }
-        val pagerSnapHelper = PagerSnapHelper()
-        pagerSnapHelper.attachToRecyclerView(bottom_sheet_rv)
+
+
 
     }
 
     override fun initData() {
         presenter = HotelMapPresenter(this)
-        presenter.getHotelChildCategory(categoryId)
-
+        presenter.getHotelChildCategory(hotelCategoryId)
     }
 
 
     override fun bindListener() {
+        search_tv.setOnClickListener {
+            searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
+            makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+
+
+        type_iv.setOnClickListener {
+
+            VibrateUtils.vibrate(50)
+            if (contentIsMap) {
+                type_iv.setImageResource(R.mipmap.ic_type_list)
+                makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            } else {
+                type_iv.setImageResource(R.mipmap.ic_type_map)
+                makerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+            contentIsMap = !contentIsMap
+
+        }
 
     }
 
@@ -200,6 +243,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         mPagerAdapter.notifyDataSetChanged()
         content_vp.offscreenPageLimit = response.size
         content_vp.adapter = mPagerAdapter
+        tabs_type.setViewPager(content_vp)
     }
 
     // ################ 地图相关 ###################
@@ -259,7 +303,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         enableMyLocation()
 
         // 获得展示在地图上的数据
-//        presenter.getMakerData(ID_GOVERNMENT)
+        presenter.getMakerData()
     }
 
 
@@ -277,7 +321,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
     }
-
 
 
     /**
@@ -323,18 +366,9 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
     }
 
-    override fun onMarkerClick(marker: Marker): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    /**
-     * 点击标记上的信息窗口
-     */
-    override fun onInfoWindowClick(marker: Marker) = Unit
-
 
     override fun bindMakerList(response: MutableList<HotelHomeRecommend>) {
-        if (!::map.isInitialized ) return
+        if (!::map.isInitialized) return
 
         if (response.isEmpty()) {
             map.clear()
@@ -369,8 +403,8 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         response.forEach {
 
             val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
-            val title_tv = view.findViewById<TextView>(R.id.title_tv)
-            title_tv.text = StringUtils.getString(R.string.price_unit_format,it.price.toPlainString())
+            val title_tv = view.findViewById<AppCompatCheckedTextView>(R.id.title_tv)
+            title_tv.text = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
 
             val maker = map.addMarker(
                 MarkerOptions()
@@ -383,6 +417,54 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
             makers.add(maker)
         }
 
+    }
+
+
+    /**
+     * 点击标记上的信息窗口
+     */
+    override fun onInfoWindowClick(marker: Marker) = Unit
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        // 所有 maker 设置成未选中
+        makers.forEach {
+            val makerTag = it?.tag as HotelHomeRecommend
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
+            view.findViewById<AppCompatCheckedTextView>(R.id.title_tv).apply {
+                isChecked = false
+                text = StringUtils.getString(R.string.price_unit_format, makerTag.price.toPlainString())
+            }
+            it.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
+        }
+        marker.hideInfoWindow()
+
+        // 设置当前选中
+        val makerTag = marker.tag as HotelHomeRecommend
+        val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
+        view.findViewById<AppCompatCheckedTextView>(R.id.title_tv).apply {
+            isChecked = true
+            text = StringUtils.getString(R.string.price_unit_format, makerTag.price.toPlainString())
+        }
+
+        // 切换底部列表数据
+        val index = makers.indexOf(marker)
+        if (index != -1) {
+            bottom_sheet_rv.scrollToPosition(index)
+            makerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        // 地图平滑移动到目标位置
+        Handler(mainLooper).postDelayed({
+
+            val targetCamera = CameraPosition.Builder().target(marker.position)
+                .zoom(15.5f)
+                .bearing(0f)
+                .tilt(0f)
+                .build()
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
+        }, 10)
+
+        return false
     }
 
 

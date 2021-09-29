@@ -30,6 +30,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 1 企业黄页
      * 2 综合服务
      * 3.政府地图
+     * 4.酒店地图
      */
     private var type = 0
 
@@ -117,7 +118,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
                 startActivity(ConvenienceServiceSearchActivity::class.java, bundle)
                 finish()
             }
-            3 -> {
+            3, 4 -> {
                 setResult(Activity.RESULT_OK, Intent().putExtras(bundle))
                 finish()
             }

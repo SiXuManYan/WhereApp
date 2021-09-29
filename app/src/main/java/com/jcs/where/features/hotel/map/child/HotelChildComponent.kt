@@ -31,7 +31,7 @@ class HotelChildPresenter(private var view: HotelChildView) : BaseMvpPresenter(v
                     val isLastPage = response.lastPage == page
                     val data = response.data
                     data.forEach {
-                        it.contentType = HotelHomeRecommend.CONTENT_TYPE_CARD
+                        it.contentType = HotelHomeRecommend.CONTENT_TYPE_COMMON
                     }
                     view.bindList(data.toMutableList(), isLastPage)
                 }

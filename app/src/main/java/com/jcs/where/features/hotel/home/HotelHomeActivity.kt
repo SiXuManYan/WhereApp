@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.map.HotelMapActivity
 import com.jcs.where.home.dialog.HotelStarDialog
 import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
@@ -27,14 +28,14 @@ import java.util.*
 class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView, NumberView2.OnValueChangeListener,
     HotelStarDialog.HotelStarCallback {
 
-    private lateinit var mAdapter: HotelHomeRecommendAdapter
-
-    private lateinit var emptyView: EmptyView
+    /** 酒店分类 id ,用户获取酒店下的子分类 */
+    private var hotelCategoryId = 0
 
     private var isToolbarDark = false
-
     private var totalRoom = 0
 
+    private lateinit var emptyView: EmptyView
+    private lateinit var mAdapter: HotelHomeRecommendAdapter
     private lateinit var mJcsCalendarDialog: JcsCalendarDialog
     private lateinit var mHotelStarDialog: HotelStarDialog
 
@@ -43,7 +44,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     override fun getLayoutId() = R.layout.activity_hotel_detail_new
 
     override fun initView() {
-
+        initExtra()
         initList()
         initScroll()
         number_view.apply {
@@ -53,6 +54,12 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             updateNumber(1)
             valueChangeListener = this@HotelHomeActivity
         }
+
+    }
+
+    private fun initExtra() {
+        val bundle = intent.extras
+//        hotelCategoryId = bundle?.getInt(Constant.PARAM_CATEGORY_ID, 0)
 
     }
 
@@ -99,11 +106,11 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             var alpha = (y.toFloat() / headHeight * 255).toInt()
             if (alpha >= 255) {
                 alpha = 255
-                title_tv.visibility = View.VISIBLE
+                hotel_title_tv.visibility = View.VISIBLE
             }
             if (alpha <= 5) {
                 alpha = 0
-                title_tv.visibility = View.GONE
+                hotel_title_tv.visibility = View.GONE
             }
             isToolbarDark = alpha > 130
             back_iv.setImageResource(
@@ -173,6 +180,9 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         }
         date_tv.setOnClickListener {
             mJcsCalendarDialog.show(supportFragmentManager)
+        }
+        inquire_tv.setOnClickListener {
+            HotelMapActivity.navigation(this,107)
         }
     }
 

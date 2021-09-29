@@ -54,7 +54,6 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
 //            headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
 //            footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
 //        }
-
         if (parent.getAdapter() instanceof BaseQuickAdapter) {
             headerCount = ((BaseQuickAdapter<?, ?>) parent.getAdapter()).getHeaderLayoutCount();
             footerCount = ((BaseQuickAdapter<?, ?>) parent.getAdapter()).getFooterLayoutCount();

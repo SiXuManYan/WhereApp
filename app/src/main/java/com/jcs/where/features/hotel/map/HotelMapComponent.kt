@@ -65,14 +65,20 @@ class HotelMapPresenter(private var view: HotelMapView) : BaseMvpPresenter(view)
     /**
      * 获取酒店地图所有 Maker 信息
      */
-    fun getMakerData(page: Int, search_input: String?, star_level: String?, price_range: String?) {
+    fun getMakerData(search_input: String? = null, star_level: String? = null, price_range: String? = null) {
 
         val instance = SPUtils.getInstance()
         val areaId = instance.getString(SPKey.SELECT_AREA_ID, "")
 
         requestApi(mRetrofit.getHotelMapMaker( areaId, null, null, search_input, star_level,price_range),
             object : BaseMvpObserver<ArrayList<HotelHomeRecommend>>(view) {
-                override fun onSuccess(response: ArrayList<HotelHomeRecommend>) = view.bindMakerList(response.toMutableList())
+                override fun onSuccess(response: ArrayList<HotelHomeRecommend>) {
+                    response.forEach {
+                        it.contentType = HotelHomeRecommend.CONTENT_TYPE_CARD
+                    }
+
+                    view.bindMakerList(response.toMutableList())
+                }
             })
     }
 

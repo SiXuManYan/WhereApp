@@ -8,12 +8,10 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
-import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
@@ -26,7 +24,7 @@ class HotelHomeRecommendAdapter : BaseMultiItemQuickAdapter<HotelHomeRecommend, 
 
     init {
         addItemType(HotelHomeRecommend.CONTENT_TYPE_COMMON, R.layout.item_hotel_recommend)
-        addItemType(HotelHomeRecommend.CONTENT_TYPE_CARD, R.layout.item_hotel_recommend)
+        addItemType(HotelHomeRecommend.CONTENT_TYPE_CARD, R.layout.item_hotel_recommend_card)
     }
 
     override fun convert(holder: BaseViewHolder, item: HotelHomeRecommend) {

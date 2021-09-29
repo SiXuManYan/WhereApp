@@ -478,7 +478,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             val maker = map.addMarker(
                 MarkerOptions()
                     .position(LatLng(it.lat, it.lng))
-                    .title(it.name)
+                    .title(it.title)
                     .snippet("")
                     .icon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
             )
@@ -524,8 +524,8 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             makerBehavior.state = STATE_EXPANDED
         }
 
+        // 地图平滑移动到目标位置
         Handler(mainLooper).postDelayed({
-            // 地图平滑移动到目标位置
             val targetCamera = CameraPosition.Builder().target(marker.position)
                 .zoom(15.5f)
                 .bearing(0f)

@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import biz.laenger.android.vpbs.BottomSheetUtils
 import biz.laenger.android.vpbs.ViewPagerBottomSheetBehavior
 import com.blankj.utilcode.util.*
@@ -205,7 +206,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         }
 
 
-
     }
 
     override fun initData() {
@@ -234,6 +234,25 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
             contentIsMap = !contentIsMap
 
         }
+
+        content_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+
+
+            override fun onPageScrollStateChanged(state: Int) = Unit
+
+            override fun onPageSelected(position: Int) {
+                if (mPagerAdapter.category.isEmpty()) return
+                if (!::map.isInitialized) return
+
+                val category = mPagerAdapter.category[position]
+
+                presenter.getMakerData(search_input = null, star_level = null, price_range = null, category.id)
+                makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
+
+        })
+
 
     }
 

@@ -227,17 +227,7 @@ public interface RetrofitApi {
     @GET("hotelapi/v2/hotel/{id}")
     Observable<JcsResponse<HotelDetailResponse>> getHotelDetail(@Path("id") int hotelId);
 
-    /**
-     * 获取酒店房间列表
-     * hotel/{hotel_id}/rooms?start_date=2020-06-16&end_date=2020-06-17&room_num=1
-     */
-    @GET("hotelapi/v2/hotel/{hotel_id}/rooms")
-    Observable<JcsResponse<List<HotelRoomListResponse>>> getHotelRooms(
-            @Path("hotel_id") int hotelId,
-            @Query("start_date") String starDate,
-            @Query("end_date") String endDate,
-            @Query("room_num") int roomNum
-    );
+
 
     /**
      * 根据房间id获得酒店房间详情
@@ -1605,7 +1595,21 @@ public interface RetrofitApi {
             @Query("lng") String lng,
             @Query("search_input") @Nullable String search_input,
             @Query("star_level") @Nullable String star_level,
-            @Query("price_range") @Nullable String price_range
+            @Query("price_range") @Nullable String price_range,
+            @Query("hotel_type_ids") @Nullable Integer hotelTypeIds
+    );
+
+
+    /**
+     * 获取酒店房间列表
+     * hotel/{hotel_id}/rooms?start_date=2020-06-16&end_date=2020-06-17&room_num=1
+     */
+    @GET("hotelapi/v2/hotel/{hotel_id}/rooms")
+    Observable<JcsResponse<ArrayList<HotelRoomListResponse>>> getHotelRooms(
+            @Path("hotel_id") int hotelId,
+            @Query("start_date") String starDate,
+            @Query("end_date") String endDate,
+            @Query("room_num") int roomNum
     );
 
 

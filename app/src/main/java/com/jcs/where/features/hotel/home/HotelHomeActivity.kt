@@ -18,7 +18,7 @@ import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.activity_hotel_detail_new.*
+import kotlinx.android.synthetic.main.activity_hotel_home.*
 import java.util.*
 
 /**
@@ -41,7 +41,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
     override fun isStatusDark() = isToolbarDark
 
-    override fun getLayoutId() = R.layout.activity_hotel_detail_new
+    override fun getLayoutId() = R.layout.activity_hotel_home
 
     override fun initView() {
         initExtra()

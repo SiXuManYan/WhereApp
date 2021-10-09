@@ -11,6 +11,7 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.hotel.HotelComment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
@@ -29,7 +30,7 @@ public class HotelDetailModel extends BaseModel {
         dealResponse(mRetrofit.getHotelDetail(hotelId), observer);
     }
 
-    public void getHotelRooms(int hotelId, String startDate, String endDate, int roomNum, BaseObserver<List<HotelRoomListResponse>> observer) {
+    public void getHotelRooms(int hotelId, String startDate, String endDate, int roomNum, BaseObserver<ArrayList<HotelRoomListResponse>> observer) {
         dealResponse(mRetrofit.getHotelRooms(hotelId, startDate, endDate, roomNum), observer);
     }
 

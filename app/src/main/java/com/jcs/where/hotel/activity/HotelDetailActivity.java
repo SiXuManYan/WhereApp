@@ -610,7 +610,7 @@ public class HotelDetailActivity extends BaseActivity {
         showLoading();
         Log.e("HotelDetailActivity", "initRoomList: " + "mHotelId=" + mHotelId);
 
-        mModel.getHotelRooms(mHotelId, mStartDateBean.getShowYearMonthDayDateWithSplit(), mEndDateBean.getShowYearMonthDayDateWithSplit(), mRoomNum, new BaseObserver<List<HotelRoomListResponse>>() {
+        mModel.getHotelRooms(mHotelId, mStartDateBean.getShowYearMonthDayDateWithSplit(), mEndDateBean.getShowYearMonthDayDateWithSplit(), mRoomNum, new BaseObserver<ArrayList<HotelRoomListResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 stopLoading();
@@ -618,7 +618,7 @@ public class HotelDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(@NonNull List<HotelRoomListResponse> hotelRoomListRespons) {
+            public void onSuccess(@NonNull ArrayList<HotelRoomListResponse> hotelRoomListRespons) {
                 stopLoading();
                 roomAdapter.setNewInstance(hotelRoomListRespons);
             }
@@ -723,32 +723,32 @@ public class HotelDetailActivity extends BaseActivity {
                             @Override
                             public void getDate(int id, String name, String bed, int window, int wifi, int people, int cancel) {
                                 // ToastUtils.showLong(HotelDetailActivity.this, id + "");
-                                SubscribeBean subscribeBean = new SubscribeBean();
-                                subscribeBean.hotelName = hotelName;
-                                subscribeBean.roomId = id;
-                                subscribeBean.roomName = name;
-                                subscribeBean.bed = bed;
+                                SubscribeBean bean = new SubscribeBean();
+                                bean.hotelName = hotelName;
+                                bean.roomId = id;
+                                bean.roomName = name;
+                                bean.bed = bed;
                                 if (breakfast == 1) {
-                                    subscribeBean.breakfast = getString(R.string.with_breakfast);
+                                    bean.breakfast = getString(R.string.with_breakfast);
                                 } else {
-                                    subscribeBean.breakfast = getString(R.string.no_breakfast);
+                                    bean.breakfast = getString(R.string.no_breakfast);
                                 }
-                                subscribeBean.window = window;
-                                subscribeBean.wifi = wifi;
-                                subscribeBean.people = people;
-                                subscribeBean.cancel = cancel;
-                                subscribeBean.startDate = mStartDateTv.getText().toString();
-                                subscribeBean.startWeek = mStartWeekTv.getText().toString();
-                                subscribeBean.startYMD = mStartDateBean.getShowYearMonthDayDateWithSplit();
-                                subscribeBean.endYMD = mEndDateBean.getShowYearMonthDayDateWithSplit();
-                                subscribeBean.endDate = mEndDateTv.getText().toString();
-                                subscribeBean.endWeek = mEndWeekTv.getText().toString();
-                                subscribeBean.night = mTotalDayTv.getText().toString();
-                                subscribeBean.roomNumber = String.valueOf(mRoomNum);
-                                subscribeBean.roomPrice = response.getPrice();
-//                                    subscribeBean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
-//                                    subscribeBean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
-                                HotelSubscribeActivity.goTo(HotelDetailActivity.this, subscribeBean);
+                                bean.window = window;
+                                bean.wifi = wifi;
+                                bean.people = people;
+                                bean.cancel = cancel;
+                                bean.startDate = mStartDateTv.getText().toString();
+                                bean.startWeek = mStartWeekTv.getText().toString();
+                                bean.startYMD = mStartDateBean.getShowYearMonthDayDateWithSplit();
+                                bean.endYMD = mEndDateBean.getShowYearMonthDayDateWithSplit();
+                                bean.endDate = mEndDateTv.getText().toString();
+                                bean.endWeek = mEndWeekTv.getText().toString();
+                                bean.night = mTotalDayTv.getText().toString();
+                                bean.roomNumber = String.valueOf(mRoomNum);
+                                bean.roomPrice = response.getPrice();
+//                                    bean.startYear = getIntent().getStringExtra(EXT_STARTYEAR);
+//                                    bean.endYear = getIntent().getStringExtra(EXT_ENDYEAR);
+                                HotelSubscribeActivity.goTo(HotelDetailActivity.this, bean);
                             }
                         }).builder();
 
@@ -781,36 +781,36 @@ public class HotelDetailActivity extends BaseActivity {
         protected void convert(@NotNull BaseViewHolder holder, HotelRoomListResponse data) {
 
             TextView surplus_tv = holder.getView(R.id.surplus_tv);
-            surplus_tv.setText(getString(R.string.surplus_format, data.remain_room_num));
+            surplus_tv.setText(getString(R.string.surplus_format, data.getRemain_room_num()));
 
             RoundedImageView photoIv = holder.getView(R.id.iv_photo);
-            if (!TextUtils.isEmpty(data.images.get(0))) {
-                GlideUtil.load(getContext(), data.images.get(0), photoIv);
+            if (!TextUtils.isEmpty(data.getImages().get(0))) {
+                GlideUtil.load(getContext(), data.getImages().get(0), photoIv);
             } else {
                 photoIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_test));
             }
             TextView nameTv = holder.getView(R.id.tv_name);
 
-            nameTv.setText(data.name);
+            nameTv.setText(data.getName());
             TextView typeTv = holder.getView(R.id.tv_hotelType);
             String breakfast = null;
-            if (data.breakfast_type == 1) {
+            if (data.getBreakfast_type() == 1) {
                 breakfast = getString(R.string.with_breakfast);
             } else {
                 breakfast = getString(R.string.no_breakfast);
             }
-            String typeText = data.hotel_room_type + "  " + breakfast + "  ";
+            String typeText = data.getHotel_room_type() + "  " + breakfast + "  ";
             typeTv.setText(typeText);
 
             SpannableString m2 = new SpannableString("m2");
             m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
             m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(data.room_area);
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(data.getRoom_area());
             spannableStringBuilder.append(m2);
             TextView roomAreaTv = holder.getView(R.id.tv_roomarea);
             roomAreaTv.setText(spannableStringBuilder);
             TextView priceTv = holder.getView(R.id.tv_price);
-            priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), data.price));
+            priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), data.getPrice()));
             RecyclerView tagRv = holder.getView(R.id.rv_tag);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                     LinearLayoutManager.HORIZONTAL, false) {
@@ -824,7 +824,7 @@ public class HotelDetailActivity extends BaseActivity {
 
             tagRv.setLayoutManager(linearLayoutManager);
 
-            tagAdapter.addData(data.tags);
+            tagAdapter.addData(data.getTags());
 
 
             tagRv.setAdapter(tagAdapter);
@@ -832,7 +832,7 @@ public class HotelDetailActivity extends BaseActivity {
 
             TextView subscribeTv = holder.getView(R.id.tv_subscribe);
             LinearLayout tagLl = holder.getView(R.id.ll_tag);
-            if (data.remain_room_num == 0) {
+            if (data.getRoom_num() == 0) {
                 subscribeTv.setText(R.string.full);
                 subscribeTv.setBackground(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.bg_noroom));
                 subscribeTv.setTextColor(getResources().getColor(R.color.grey_999999));
@@ -849,7 +849,7 @@ public class HotelDetailActivity extends BaseActivity {
                 tagLl.setVisibility(View.VISIBLE);
                 priceTv.setTextColor(getResources().getColor(R.color.orange_FF5B1B));
                 holder.getView(R.id.rl_room).setOnClickListener(view ->
-                        initRoomDetail(data.id, data.breakfast_type)
+                        initRoomDetail(data.getId(), data.getBreakfast_type())
                 );
             }
 
@@ -867,7 +867,7 @@ public class HotelDetailActivity extends BaseActivity {
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, HotelRoomListResponse.TagsBean tagsBean) {
             TextView tagTv = baseViewHolder.getView(R.id.tv_tag);
-            tagTv.setText(tagsBean.zh_cn_name);
+            tagTv.setText(tagsBean.getZh_cn_name());
         }
     }
 

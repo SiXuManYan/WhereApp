@@ -97,7 +97,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
         facebook_tv.setOnClickListener {
             WebViewActivity.goTo(this, facebook)
         }
-        shareIv.setOnClickListener {
+        share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_GENERAL, infoId)
             MobUtil.shareFacebookWebPage(url, this@MechanismActivity)
         }
@@ -171,7 +171,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
     }
 
     private fun setShareImage() {
-        shareIv.setImageResource(
+        share_iv.setImageResource(
             if (isToolbarDark) {
                 R.mipmap.ic_share_night
             } else {

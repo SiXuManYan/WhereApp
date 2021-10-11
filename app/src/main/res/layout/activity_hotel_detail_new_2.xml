@@ -244,11 +244,12 @@
 
 
                     <TextView
+                        android:id="@+id/select_date_tv"
                         android:layout_width="match_parent"
-                        android:layout_toStartOf="@+id/right_tv"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/dp_7"
+                        android:layout_toStartOf="@+id/right_tv"
                         android:gravity="center_vertical"
                         android:lineSpacingMultiplier="1.2"
                         android:minHeight="@dimen/dp_33"
@@ -280,16 +281,175 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_home"
+                android:id="@+id/room_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:itemCount="10"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_hotel_recommend" />
+                tools:itemCount="1"
+                tools:listitem="@layout/item_hotel_room" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_15"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_16"
+                    android:text="@string/comment"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_12"
+                    android:text="@string/more"
+                    app:drawableEndCompat="@mipmap/ic_room_right" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comment_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_comment_hotel" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_16"
+                android:text="@string/hotel_policy"/>
+
+
+            <TextView
+                android:id="@+id/hotel_clock_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_14"
+                tools:text="入住时间：14:00       离店时间：12:00"
+                app:drawableStartCompat="@mipmap/ic_hotel_clock" />
+
+
+
+            <TextView
+                android:id="@+id/hotel_child_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_14"
+                tools:text="儿童 Children are allowed in the hotel"
+                app:drawableStartCompat="@mipmap/ic_hotel_child" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_16"
+                android:text="@string/hotel_facilities"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/facility_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_hotel_facilities" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawablePadding="@dimen/dp_5"
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/blue_377BFF"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/view_all_desc"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_16"
+                android:text="@string/hotel_introduction"/>
+
+
+            <TextView
+                android:id="@+id/desc_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_14"
+                tools:text="@string/test_hint"/>
 
 
         </LinearLayout>
@@ -302,6 +462,7 @@
         android:id="@+id/useView"
         android:layout_width="match_parent"
         android:layout_height="24dp" />
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -322,15 +483,22 @@
             android:scaleType="centerInside"
             android:src="@mipmap/ic_back_light" />
 
-        <TextView
-            android:id="@+id/hotel_title_tv"
-            tools:text="title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/black_333333"
-            android:textSize="@dimen/sp_17" />
+        <ImageView
+            android:id="@+id/share_iv"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="end"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_share_light" />
 
+        <ImageView
+            android:id="@+id/like_iv"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_like_normal_light" />
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -85,6 +85,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
 import com.jcs.where.api.response.hotel.HotelComment;
+import com.jcs.where.api.response.hotel.HotelDetail;
 import com.jcs.where.api.response.hotel.HotelHomeRecommend;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
@@ -210,7 +211,7 @@ public interface RetrofitApi {
      * @param hotelId 酒店id
      */
     @POST("hotelapi/v2/collects")
-    Observable<JcsResponse<Object>> postCollectHotel(@Query("hotel_id") int hotelId);
+    Observable<JcsResponse<JsonElement>> postCollectHotel(@Query("hotel_id") int hotelId);
 
     /**
      * 取消收藏
@@ -218,7 +219,7 @@ public interface RetrofitApi {
      * @param hotelId 酒店id
      */
     @DELETE("hotelapi/v2/collects")
-    Observable<JcsResponse<Object>> delCollectHotel(@Query("hotel_id") int hotelId);
+    Observable<JcsResponse<JsonElement>> delCollectHotel(@Query("hotel_id") int hotelId);
 
 
     /**
@@ -1488,7 +1489,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 酒店订单申请退款
+     * 酒店评论列表
      *
      * @param type 评价显示类型（1：晒图，2：低分，3：最新 0 全部）
      */
@@ -1611,6 +1612,13 @@ public interface RetrofitApi {
             @Query("end_date") String endDate,
             @Query("room_num") int roomNum
     );
+
+
+    /**
+     * 获取酒店详情
+     */
+    @GET("hotelapi/v2/hotel/{id}")
+    Observable<JcsResponse<HotelDetail>> hotelDetail(@Path("id") int hotelId);
 
 
 }

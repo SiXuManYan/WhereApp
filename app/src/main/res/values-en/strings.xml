@@ -840,6 +840,10 @@ Gentleman must let go</string>
     <string name="afab">AFAB GREENCORE POWER SOLUTION (Transco)</string>
     <string name="afab2">AFAB GREENCORE POWER \n SOLUTION (Transco)</string>
     <string name="room_total">Rooms</string>
+    <string name="hotel_policy">Hotel Policy</string>
+    <string name="hotel_facilities">Hotel Facilities</string>
+    <string name="hotel_introduction">Hotel Introduction</string>
 
+    <string name="check_in_out_time_format">Check-in time:%1$s   Check-out time:%2$s</string>
 
 </resources>

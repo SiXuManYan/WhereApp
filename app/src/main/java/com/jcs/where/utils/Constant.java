@@ -188,6 +188,8 @@ public class Constant {
     public static final String PARAM_TYPE_ID = "param_type_id";
     public static final String PARAM_PRICE_RANGE = "param_price_range";
     public static final String PARAM_GRADE = "param_grade";
+    public static final String PARAM_START_DATE = "param_start_date";
+    public static final String PARAM_END_DATE = "param_end_date";
 
 
 

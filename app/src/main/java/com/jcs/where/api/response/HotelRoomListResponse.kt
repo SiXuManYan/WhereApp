@@ -17,6 +17,10 @@ class HotelRoomListResponse {
 
     var room_area= ""
     var room_num= 0
+
+    /**
+     * 剩余房间数量
+     */
     var remain_room_num = 0
     var price :BigDecimal = BigDecimal.ZERO
 

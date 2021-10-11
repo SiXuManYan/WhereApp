@@ -1,5 +1,6 @@
 package com.jcs.where.hotel.model;
 
+import com.google.gson.JsonElement;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.JcsResponse;
@@ -18,11 +19,11 @@ import retrofit2.Response;
 
 public class HotelDetailModel extends BaseModel {
 
-    public void postCollectHotel(int hotelId, BaseObserver<Object> observer) {
+    public void postCollectHotel(int hotelId, BaseObserver<JsonElement> observer) {
         dealResponse(mRetrofit.postCollectHotel(hotelId), observer);
     }
 
-    public void delCollectHotel(int hotelId, BaseObserver<Object> observer) {
+    public void delCollectHotel(int hotelId, BaseObserver<JsonElement> observer) {
         dealResponse(mRetrofit.delCollectHotel(hotelId), observer);
     }
 

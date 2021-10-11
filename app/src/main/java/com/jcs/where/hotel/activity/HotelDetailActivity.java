@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.google.gson.JsonElement;
 import com.jcs.where.R;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
@@ -667,7 +668,7 @@ public class HotelDetailActivity extends BaseActivity {
     private void collection(boolean status) {
         showLoading();
         if (status) {
-            mModel.postCollectHotel(mHotelId, new BaseObserver<Object>() {
+            mModel.postCollectHotel(mHotelId, new BaseObserver<JsonElement>() {
 
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
@@ -676,14 +677,14 @@ public class HotelDetailActivity extends BaseActivity {
                 }
 
                 @Override
-                protected void onSuccess(Object response) {
+                protected void onSuccess(JsonElement response) {
                     stopLoading();
                     like = 1;
                     likeIv.setImageDrawable(ContextCompat.getDrawable(HotelDetailActivity.this, R.drawable.ic_hotelwhitelike));
                 }
             });
         } else {
-            mModel.delCollectHotel(mHotelId, new BaseObserver<Object>() {
+            mModel.delCollectHotel(mHotelId, new BaseObserver<JsonElement>() {
 
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
@@ -692,7 +693,7 @@ public class HotelDetailActivity extends BaseActivity {
                 }
 
                 @Override
-                protected void onSuccess(Object response) {
+                protected void onSuccess(JsonElement response) {
                     stopLoading();
                     like = 2;
                     if (toolbarStatus == 0) {

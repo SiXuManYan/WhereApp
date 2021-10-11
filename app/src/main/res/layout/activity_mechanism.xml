@@ -253,7 +253,7 @@
             android:src="@mipmap/ic_back_light" />
 
         <ImageView
-            android:id="@+id/shareIv"
+            android:id="@+id/share_iv"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:layout_gravity="end"

@@ -1,9 +1,16 @@
 package com.jcs.where.features.hotel.detail
 
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.HotelRoomListResponse
+import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import com.jcs.where.utils.GlideUtil
 
 /**
  * Created by Wangsw  2021/10/9 16:17.
@@ -14,5 +21,60 @@ class HotelRoomAdapter : BaseQuickAdapter<HotelRoomListResponse, BaseViewHolder>
 
     override fun convert(holder: BaseViewHolder, item: HotelRoomListResponse) {
 
+
+        // 图片
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        loadImage(item, image_iv)
+
+
+        val title_tv = holder.getView<TextView>(R.id.title_tv)
+        val desc_tv = holder.getView<TextView>(R.id.desc_tv)
+        val price_tv = holder.getView<TextView>(R.id.price_tv)
+        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
+        val inventory_tv = holder.getView<TextView>(R.id.inventory_tv)
+        val booking_tv = holder.getView<TextView>(R.id.booking_tv)
+
+        title_tv.text = item.name
+        desc_tv.text = item.hotel_room_type
+        price_tv.text = context.getString(R.string.price_unit_format , item.price.toPlainString())
+        inventory_tv.text = context.getString(R.string.surplus_format , item.remain_room_num)
+
+        initTag(item,tag_ll)
     }
+
+
+    /**
+     * 图片
+     */
+    fun loadImage(data: HotelRoomListResponse, image_iv: ImageView) {
+        var image = ""
+        if (data.images.isNotEmpty()) {
+            image = data.images[0]
+        }
+        GlideUtil.load(context, image, image_iv, 4)
+    }
+
+    private fun initTag(data: HotelRoomListResponse, tag_ll: LinearLayout) {
+        tag_ll.removeAllViews()
+        if (data.tags.isEmpty()) {
+            return
+        }
+
+        data.tags.forEach {
+            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.marginEnd = SizeUtils.dp2px(2f)
+            val tv = TextView(context).apply {
+                layoutParams = params
+                setPaddingRelative(SizeUtils.dp2px(4f), SizeUtils.dp2px(2f), SizeUtils.dp2px(4f), SizeUtils.dp2px(2f))
+                setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
+                textSize = 11f
+                text = it.zh_cn_name
+                setBackgroundResource(R.drawable.shape_blue_stoke_radius_2_98bbff);
+                isSingleLine = true
+            }
+            tag_ll.addView(tv)
+        }
+    }
+
+
 }

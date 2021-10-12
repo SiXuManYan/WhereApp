@@ -811,8 +811,8 @@ Gentleman must let go</string>
     <string name="room_type_format">·&#160;%1$s</string>
     <string name="room_content_format">·&#160;%1$s&#160;|&#160;%2$s&#160;</string>
     <string name="room_time_format">%1$s-%2$s&#160;|&#160;%3$d Night</string>
-    <string name="breakfast_support">含早</string>
-    <string name="breakfast_un_support">不含早</string>
+    <string name="breakfast_support">含早餐</string>
+    <string name="breakfast_un_support">不含早餐</string>
     <string name="free_wifi">免费WIFI</string>
     <string name="charged_wifi">收费WIFI</string>
     <string name="hotel_order_status_1">请尽快进行支付</string>
@@ -851,5 +851,9 @@ Gentleman must let go</string>
     <string name="hotel_introduction">酒店介绍</string>
 
     <string name="check_in_out_time_format">入住时间：%1$s   退房时间：%2$s</string>
+    <string name="room_facilities">房间设施</string>
+    <string name="people_number_format">可住%1$d人</string>
+
+
 
 </resources>

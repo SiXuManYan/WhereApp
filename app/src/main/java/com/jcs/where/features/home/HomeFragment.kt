@@ -28,6 +28,7 @@ import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.message.MessageCenterActivity
@@ -291,7 +292,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
                         val dialog = JcsCalendarDialog()
                         dialog.initCalendar(this@HomeFragment.activity)
-                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+//                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
                         startActivity(MechanismActivity::class.java, Bundle().apply {
@@ -487,16 +489,19 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         1 -> {
                             val dialog = JcsCalendarDialog()
                             dialog.initCalendar(this@HomeFragment.activity)
-                            HotelDetailActivity.goTo(
-                                this@HomeFragment.activity,
-                                data.target_id,
-                                dialog.startBean,
-                                dialog.endBean,
-                                1,
-                                "",
-                                "",
-                                1
-                            )
+//                            HotelDetailActivity.goTo(
+//                                this@HomeFragment.activity,
+//                                data.target_id,
+//                                dialog.startBean,
+//                                dialog.endBean,
+//                                1,
+//                                "",
+//                                "",
+//                                1
+//                            )
+
+                            HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
+
                         }
                         2 -> {
                             TouristAttractionDetailActivity.goTo(this@HomeFragment.activity, data.target_id)

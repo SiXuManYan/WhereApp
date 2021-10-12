@@ -612,6 +612,7 @@
         <activity android:name=".features.travel.home.TravelHomeActivity" />
         <activity android:name=".features.hotel.home.HotelHomeActivity" />
         <activity android:name=".features.hotel.map.HotelMapActivity" />
+        <activity android:name=".features.hotel.detail.HotelDetailActivity2" />
 
 
     </application>

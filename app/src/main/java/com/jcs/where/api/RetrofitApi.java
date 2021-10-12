@@ -90,6 +90,7 @@ import com.jcs.where.api.response.hotel.HotelHomeRecommend;
 import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
+import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
@@ -1620,5 +1621,17 @@ public interface RetrofitApi {
     @GET("hotelapi/v2/hotel/{id}")
     Observable<JcsResponse<HotelDetail>> hotelDetail(@Path("id") int hotelId);
 
+
+
+    /**
+     * 酒店房间详情
+     */
+    @GET("hotelapi/v2/hotel/room/{room_id}")
+    Observable<JcsResponse<RoomDetail>> getHotelRoomDetail(
+            @Path("room_id") int roomId,
+            @Query("room_num") int roomNum,
+            @Query("start_date") String starDate,
+            @Query("end_date") String endDate
+    );
 
 }

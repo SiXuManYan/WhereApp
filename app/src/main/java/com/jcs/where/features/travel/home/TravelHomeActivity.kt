@@ -21,6 +21,7 @@ import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.AppBarStateChangeListener
 import com.jcs.where.features.home.HomeRecommendAdapter
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.HotelActivity
@@ -185,7 +186,9 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
                         val dialog = JcsCalendarDialog()
                         dialog.initCalendar(this@TravelHomeActivity)
-                        HotelDetailActivity.goTo(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+//                        HotelDetailActivity.goTo(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                        HotelDetailActivity2.navigation(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean, "", "", "")
+
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
                         startActivity(MechanismActivity::class.java, Bundle().apply {
@@ -246,16 +249,17 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                         1 -> {
                             val dialog = JcsCalendarDialog()
                             dialog.initCalendar(this@TravelHomeActivity)
-                            HotelDetailActivity.goTo(
-                                this@TravelHomeActivity,
-                                data.target_id,
-                                dialog.startBean,
-                                dialog.endBean,
-                                1,
-                                "",
-                                "",
-                                1
-                            )
+//                            HotelDetailActivity.goTo(
+//                                this@TravelHomeActivity,
+//                                data.target_id,
+//                                dialog.startBean,
+//                                dialog.endBean,
+//                                1,
+//                                "",
+//                                "",
+//                                1
+//                            )
+                            HotelDetailActivity2.navigation(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean, "", "", "")
                         }
                         2 -> TouristAttractionDetailActivity.goTo(this@TravelHomeActivity, data.target_id)
                         3 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {

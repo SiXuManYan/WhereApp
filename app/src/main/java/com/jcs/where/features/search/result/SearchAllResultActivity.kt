@@ -10,6 +10,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.search.SearchResultResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.home.HomeActivity
 import com.jcs.where.hotel.activity.HotelDetailActivity
@@ -100,7 +101,8 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
             SearchResultResponse.TYPE_1_HOTEL -> {
                 val dialog = JcsCalendarDialog()
                 dialog.initCalendar(this)
-                HotelDetailActivity.goTo(this, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+//                HotelDetailActivity.goTo(this, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                HotelDetailActivity2.navigation(this, data.id, dialog.startBean, dialog.endBean, "", "", "")
             }
             SearchResultResponse.TYPE_2_TRAVEL -> TouristAttractionDetailActivity.goTo(this, data.id)
             SearchResultResponse.TYPE_3_SERVICE ->{

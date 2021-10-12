@@ -4,46 +4,31 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.HotelRoomListResponse
 import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
-import com.jcs.where.features.hotel.map.HotelMapActivity
+import com.jcs.where.features.hotel.detail.room.RoomDetailFragment
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
-import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean
+import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.*
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.address_tv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.back_iv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.facebook_tv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.like_iv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.media_fl
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.media_rv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.name_tv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.nav_ll
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.phone_ll
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.phone_tv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.point_view
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.scrollView
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.share_iv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.time_tv
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.toolbar
-import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.useView
-import kotlinx.android.synthetic.main.activity_mechanism.*
 import java.util.*
 
 
@@ -54,7 +39,6 @@ import java.util.*
 class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetailView {
 
 
-    /** 酒店分类 id ,用户获取酒店下的子分类 */
     private var hotelId = 0
 
     /** 星级 */
@@ -65,6 +49,9 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
     /** 酒店分数 */
     var grade: String? = null
+
+    private lateinit var mStartDateBean: CalendarBean
+    private lateinit var mEndDateBean: CalendarBean
 
 
     /** 房间 */
@@ -90,8 +77,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     private var facebook = ""
     private var mLat = 0.0
     private var mLng = 0.0
-    private lateinit var mStartDateBean: CalendarBean
-    private lateinit var mEndDateBean: CalendarBean
+
 
     override fun isStatusDark() = isToolbarDark
 
@@ -103,8 +89,8 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         fun navigation(
             context: Context,
             hotelId: Int,
-            startDate: JcsCalendarAdapter.CalendarBean,
-            endDate: JcsCalendarAdapter.CalendarBean,
+            startDate: CalendarBean,
+            endDate: CalendarBean,
             starLevel: String? = null,
             priceRange: String? = null,
             grade: String? = null
@@ -118,7 +104,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
             }
-            val intent = Intent(context, HotelMapActivity::class.java)
+            val intent = Intent(context, HotelDetailActivity2::class.java)
                 .putExtras(bundle)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -135,14 +121,13 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         initExtra()
         initScroll()
         initMedia()
-        initRoom()
     }
 
 
     private fun initExtra() {
         val bundle = intent.extras ?: return
         bundle.apply {
-            hotelId = getInt(Constant.PARAM_CATEGORY_ID)
+            hotelId = getInt(Constant.PARAM_HOTEL_ID)
             starLevel = getString(Constant.PARAM_STAR_LEVEL)
             priceRange = getString(Constant.PARAM_PRICE_RANGE)
             grade = getString(Constant.PARAM_GRADE)
@@ -181,16 +166,34 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         }
 
         // 禁用滑动
+        mRoomAdapter = HotelRoomAdapter()
+        mRoomAdapter.setOnItemClickListener { _, _, position ->
+            val data = mRoomAdapter.data[position]
+            RoomDetailFragment.newInstance(hotelId, data.id, mStartDateBean, mEndDateBean, starLevel, priceRange, grade).apply {
+                show(supportFragmentManager,this.tag)
+            }
+        }
+
         room_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
             override fun canScrollVertically(): Boolean = false
         }
+        room_rv.addItemDecoration(
+            DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(16f), 0, 0)
+        )
+        room_rv.adapter = mRoomAdapter
+
+        mCommentAdapter = HotelCommentAdapter()
         comment_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
             override fun canScrollVertically(): Boolean = false
         }
+        comment_rv.adapter = mCommentAdapter
 
+
+        mFacilitiesAdapter = HotelFacilitiesAdapter()
         facility_rv.layoutManager = object : GridLayoutManager(this, 2, VERTICAL, false) {
             override fun canScrollVertically(): Boolean = false
         }
+        facility_rv.adapter = mFacilitiesAdapter
     }
 
     /**
@@ -242,16 +245,11 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
     }
 
-    private fun initRoom() {
-        mRoomAdapter = HotelRoomAdapter()
-        room_rv.adapter = mRoomAdapter
-
-    }
-
 
     override fun initData() {
         presenter = HotelDetailPresenter(this)
         presenter.getData(hotelId)
+        presenter.getRoomList(hotelId, mStartDateBean.showMonthDayDate, mEndDateBean.showMonthDayDate, 1)
     }
 
     override fun bindListener() {
@@ -277,6 +275,9 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             } else {
                 presenter.unCollection(hotelId)
             }
+        }
+        back_iv.setOnClickListener {
+            finish()
         }
 
 
@@ -368,10 +369,8 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
         // 评价
         mCommentAdapter.setNewInstance(response.comments)
-        mFacilitiesAdapter.setNewInstance(response.facilities)
 
         // 政策
-
         response.policy?.let {
             hotel_clock_tv.text =
                 getString(R.string.check_in_out_time_format, it.check_in_time, it.check_out_time)
@@ -379,7 +378,11 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             hotel_child_tv.text = it.children
         }
 
+        // 设施
+        mFacilitiesAdapter.setNewInstance(response.facilities)
 
+        // 介绍
+        desc_tv.text = response.desc
 
 
     }

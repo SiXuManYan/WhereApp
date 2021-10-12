@@ -54,7 +54,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_7"
-                    android:minHeight="@dimen/dp_33"
                     android:gravity="center_vertical"
                     android:lineSpacingMultiplier="1.2"
                     android:textColor="@color/black_333333"

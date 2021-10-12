@@ -1,12 +1,17 @@
 package com.jcs.where.utils;
 
-import org.jetbrains.annotations.Nullable;
-
 /**
  * 常量
  * create by zyf on 2021/1/8 10:59 上午
  */
 public class Constant {
+
+
+    /**
+     * 防连点时间间隔
+     **/
+    public static final long CLICK_INTERVAL = 1000L;
+
     public static final String GOOGLE_PLAY_APP_STORE_PACKAGE_NAME = "com.android.vending";
 
     public static final double LAT = 14.6631685;
@@ -35,6 +40,7 @@ public class Constant {
     public static final String PARAM_NUMBER = "param_number";
     public static final String PARAM_ORDER_ID = "param_order_id";
     public static final String PARAM_HOTEL_ID = "param_hotel_id";
+    public static final String PARAM_ROOM_ID = "param_room_id";
     public static final String PARAM_ORDER_IDS = "param_order_ids";
     public static final String PARAM_SHOP_ID = "param_shop_id";
     public static final String PARAM_SHOP_NAME = "param_shop_name";
@@ -49,7 +55,6 @@ public class Constant {
     public static final String PARAM_ORDER_COMMIT_DATA = "param_order_commit_data";
     public static final String PARAM_CHILD_CATEGORY_ID = "param_child_category_id";
     public static final String PARAM_CATEGORY_ID = "param_category_id";
-
 
 
     /**
@@ -190,7 +195,6 @@ public class Constant {
     public static final String PARAM_GRADE = "param_grade";
     public static final String PARAM_START_DATE = "param_start_date";
     public static final String PARAM_END_DATE = "param_end_date";
-
 
 
 }

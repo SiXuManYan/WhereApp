@@ -21,6 +21,7 @@ import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.comment.post.HotelCommentPostActivity
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -80,7 +81,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         title_rl.setOnClickListener {
             val dialog = JcsCalendarDialog()
             dialog.initCalendar(context)
-            HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+//            HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+
+            HotelDetailActivity2.navigation(context, item.model_id, dialog.startBean, dialog.endBean, "", "", "")
         }
 
         // 状态

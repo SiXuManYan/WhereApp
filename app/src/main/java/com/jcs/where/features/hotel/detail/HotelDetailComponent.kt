@@ -17,7 +17,11 @@ import java.util.*
 
 interface HotelDetailView : BaseMvpView {
     fun bindDetail(response: HotelDetail, mediaList: ArrayList<MediaData>)
-    fun collectionHandleSuccess(collectionStatus: Int)
+
+    /**
+     * 	收藏状态（1：已收藏，2：未收藏）
+     */
+    fun collectionHandleSuccess(collectionStatus: Boolean)
     fun bindRoom(toMutableList: MutableList<HotelRoomListResponse>)
 }
 
@@ -55,7 +59,7 @@ class HotelDetailPresenter(private var view: HotelDetailView) : BaseMvpPresenter
     fun collection(infoId: Int) {
         requestApi(mRetrofit.postCollectHotel(infoId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
-                view.collectionHandleSuccess(2)
+                view.collectionHandleSuccess(true)
             }
         })
     }
@@ -64,7 +68,7 @@ class HotelDetailPresenter(private var view: HotelDetailView) : BaseMvpPresenter
 
         requestApi(mRetrofit.delCollectHotel(infoId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
-                view.collectionHandleSuccess(1)
+                view.collectionHandleSuccess(false)
             }
         })
     }

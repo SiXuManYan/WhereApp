@@ -32,6 +32,7 @@ import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.home.HotelHomeRecommendAdapter
 import com.jcs.where.features.map.HotelCustomInfoWindowAdapter
 import com.jcs.where.features.search.SearchAllActivity
@@ -39,6 +40,7 @@ import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
 import com.jcs.where.utils.PermissionUtils
+import com.jcs.where.widget.calendar.JcsCalendarAdapter
 
 import kotlinx.android.synthetic.main.activity_map_hotel.*
 
@@ -68,6 +70,10 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
     /** 酒店分数 */
     var grade: String? = null
 
+    private lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
+    private lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
+
+
     private var contentIsMap = false
 
     /** 内容和 tab二级分类 */
@@ -91,16 +97,20 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         fun navigation(
             context: Context,
             hotelCategoryId: Int,
-            searchInput: String? = null, starLevel: String? = null,
-            priceRange: String? = null, grade: String? = null
+            starLevel: String? = null,
+            priceRange: String? = null,
+            grade: String? = null,
+            startDate: JcsCalendarAdapter.CalendarBean,
+            endDate: JcsCalendarAdapter.CalendarBean
         ) {
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_CATEGORY_ID, hotelCategoryId)
-                putString(Constant.PARAM_SEARCH, searchInput)
                 putString(Constant.PARAM_STAR_LEVEL, starLevel)
                 putString(Constant.PARAM_PRICE_RANGE, priceRange)
                 putString(Constant.PARAM_GRADE, grade)
+                putSerializable(Constant.PARAM_START_DATE, startDate)
+                putSerializable(Constant.PARAM_END_DATE, endDate)
             }
             val intent = Intent(context, HotelMapActivity::class.java)
                 .putExtras(bundle)
@@ -128,9 +138,9 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
     private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val bundle = it.data?.extras
-            val searchName = bundle?.getString(Constant.PARAM_NAME, "")
-            search_tv.text = searchName
-            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, searchName))
+            searchInput = bundle?.getString(Constant.PARAM_NAME, "")
+            search_tv.text = searchInput
+            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, searchInput))
         }
     }
 
@@ -139,10 +149,14 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         val bundle = intent.extras ?: return
         bundle.apply {
             hotelCategoryId = getInt(Constant.PARAM_CATEGORY_ID)
-            searchInput = getString(Constant.PARAM_SEARCH)
             starLevel = getString(Constant.PARAM_STAR_LEVEL)
             priceRange = getString(Constant.PARAM_PRICE_RANGE)
             grade = getString(Constant.PARAM_GRADE)
+            mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
+            mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
+
+            start_date_tv.text = mStartDateBean.showMonthDayDateWithSplit
+            end_date_tv.text = mEndDateBean.showMonthDayDateWithSplit
         }
 
 
@@ -184,7 +198,8 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
 
             setOnItemClickListener { _, _, position ->
                 val data = this.data[position]
-                // TODO 进入酒店详情
+                HotelDetailActivity2.navigation(this@HotelMapActivity, data.id, mStartDateBean, mEndDateBean, "", "", "")
+
             }
         }
 
@@ -199,7 +214,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 
-                    newState == RecyclerView.SCROLL_STATE_IDLE
+//                    newState == RecyclerView.SCROLL_STATE_IDLE
 
                 }
             })
@@ -218,6 +233,8 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
             makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+
         }
 
 
@@ -292,7 +309,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
 
 
             // 调整内置UI padding 防止logo被遮挡
-            setPadding(0, 0, 0, SizeUtils.dp2px(120f))
+            setPadding(0, 0, 0, SizeUtils.dp2px(220f))
 
             // 自定义信息样式
             setInfoWindowAdapter(HotelCustomInfoWindowAdapter(this@HotelMapActivity))

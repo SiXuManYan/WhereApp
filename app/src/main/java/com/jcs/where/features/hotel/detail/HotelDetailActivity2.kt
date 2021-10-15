@@ -17,6 +17,7 @@ import com.jcs.where.api.response.HotelRoomListResponse
 import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.hotel.comment.HotelCommentActivity2
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.hotel.detail.room.RoomDetailFragment
 import com.jcs.where.frams.common.Html5Url
@@ -288,6 +289,12 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         back_iv.setOnClickListener {
             finish()
         }
+        more_comment_tv.setOnClickListener {
+
+            startActivityAfterLogin(HotelCommentActivity2::class.java,Bundle().apply {
+                putInt(Constant.PARAM_ID, hotelId);
+            })
+        }
 
 
     }
@@ -396,8 +403,12 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
     }
 
-    override fun collectionHandleSuccess(collectionStatus: Int) {
-        collect_status = collectionStatus
+    override fun collectionHandleSuccess(collectionStatus: Boolean) {
+        collect_status = if (collectionStatus) {
+            1
+        }else{
+            2
+        }
         setLikeImage()
     }
 

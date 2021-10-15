@@ -194,8 +194,9 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             mJcsCalendarDialog.show(supportFragmentManager)
         }
         inquire_tv.setOnClickListener {
-            HotelMapActivity.navigation(this,hotelCategoryId)
+            HotelMapActivity.navigation(this,hotelCategoryId,"","","",mJcsCalendarDialog.startBean,mJcsCalendarDialog.endBean)
         }
+
     }
 
     override fun bindData(response: ArrayList<HotelHomeRecommend>) {

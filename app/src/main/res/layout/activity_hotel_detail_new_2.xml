@@ -309,15 +309,16 @@
                     android:text="@string/comment"/>
 
                 <TextView
+                    android:id="@+id/more_comment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/dp_5"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dp_5"
                     android:gravity="center_vertical"
+                    android:text="@string/more"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_12"
-                    android:text="@string/more"
                     app:drawableEndCompat="@mipmap/ic_room_right" />
 
             </RelativeLayout>

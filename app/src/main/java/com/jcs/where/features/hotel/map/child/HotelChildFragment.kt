@@ -9,9 +9,11 @@ import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.home.HotelHomeRecommendAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.single_recycler_view.*
 
@@ -27,6 +29,9 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
     var hotel_type_ids: String? = null
     var price_range: String? = null
     var grade: String? = null
+
+    lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
+    lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
 
 
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -117,7 +122,7 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
-        // todo 进入酒店详情
+        HotelDetailActivity2.navigation(requireContext(), data.id, mStartDateBean, mEndDateBean, "", "", "")
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {

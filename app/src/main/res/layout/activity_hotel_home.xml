@@ -95,7 +95,7 @@
                     <TextView
                         android:id="@+id/date_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/dp_10"
                         android:layout_toStartOf="@+id/total_time_tv"

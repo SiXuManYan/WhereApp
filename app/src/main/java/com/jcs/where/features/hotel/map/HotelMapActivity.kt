@@ -41,6 +41,7 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
 import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
+import com.jcs.where.widget.calendar.JcsCalendarDialog
 
 import kotlinx.android.synthetic.main.activity_map_hotel.*
 
@@ -53,7 +54,7 @@ import java.util.*
  * Created by Wangsw  2021/9/27 14:06.
  *  酒店地图
  */
-class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
+class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, JcsCalendarDialog.OnDateSelectedListener {
 
     /** 酒店分类 id ,用户获取酒店下的子分类 */
     private var hotelCategoryId = 0
@@ -69,6 +70,8 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
 
     /** 酒店分数 */
     var grade: String? = null
+
+    private lateinit var mJcsCalendarDialog: JcsCalendarDialog
 
     private lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
     private lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
@@ -139,9 +142,13 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         if (it.resultCode == Activity.RESULT_OK) {
             val bundle = it.data?.extras
             searchInput = bundle?.getString(Constant.PARAM_NAME, "")
-            search_tv.text = searchInput
-            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, searchInput))
+            search()
         }
+    }
+
+    private fun search() {
+        search_tv.text = searchInput
+        EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, searchInput))
     }
 
 
@@ -155,11 +162,15 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
 
-            start_date_tv.text = mStartDateBean.showMonthDayDateWithSplit
-            end_date_tv.text = mEndDateBean.showMonthDayDateWithSplit
+            updateDate()
         }
 
 
+    }
+
+    private fun updateDate() {
+        start_date_tv.text = mStartDateBean.showMonthDayDateWithSplit
+        end_date_tv.text = mEndDateBean.showMonthDayDateWithSplit
     }
 
     private fun initCategory() {
@@ -168,6 +179,9 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
             starLevel = this@HotelMapActivity.starLevel
             priceRange = this@HotelMapActivity.priceRange
             grade = this@HotelMapActivity.grade
+            startDateBean = mStartDateBean
+            endDateBean = mEndDateBean
+
         }
 
     }
@@ -224,6 +238,12 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
     }
 
     override fun initData() {
+        mJcsCalendarDialog = JcsCalendarDialog().apply {
+            initCalendar(this@HotelMapActivity)
+            setOnDateSelectedListener(this@HotelMapActivity)
+
+        }
+
         presenter = HotelMapPresenter(this)
         presenter.getHotelChildCategory(hotelCategoryId)
     }
@@ -233,8 +253,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
             makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-
-
         }
 
 
@@ -269,6 +287,19 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
             }
 
         })
+
+        back_iv.setOnClickListener {
+            finish()
+        }
+
+        delete_iv.setOnClickListener {
+            searchInput = ""
+            search()
+        }
+
+        date_ll.setOnClickListener {
+            mJcsCalendarDialog.show(supportFragmentManager)
+        }
 
 
     }
@@ -501,6 +532,12 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView {
         }, 10)
 
         return false
+    }
+
+    override fun onDateSelected(startDate: JcsCalendarAdapter.CalendarBean, endDate: JcsCalendarAdapter.CalendarBean) {
+        mStartDateBean = startDate
+        mEndDateBean = endDate
+        updateDate()
     }
 
 

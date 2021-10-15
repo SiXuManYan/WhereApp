@@ -196,6 +196,9 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         inquire_tv.setOnClickListener {
             HotelMapActivity.navigation(this,hotelCategoryId,"","","",mJcsCalendarDialog.startBean,mJcsCalendarDialog.endBean)
         }
+        back_iv.setOnClickListener {
+            finish()
+        }
 
     }
 
@@ -215,10 +218,12 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     }
 
     override fun selectResult(
-        mPriceBeans: HotelStarDialog.PriceIntervalBean?,
-        mSelectStartBean: HotelStarDialog.StarBean?,
-        mScoreBean: HotelStarDialog.ScoreBean?
+        mPriceBeans: HotelStarDialog.PriceIntervalBean,
+        mSelectStartBean: HotelStarDialog.StarBean,
+        mScoreBean: HotelStarDialog.ScoreBean
     ) {
+
+        (mPriceBeans.priceShow + " / "+mSelectStartBean.starShow+" / " + mScoreBean.scoreString).also { score_tv.text = it }
 
     }
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.RoomDetail
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
+import com.jcs.where.features.hotel.book.HotelBookActivity
 import com.jcs.where.features.hotel.detail.HotelFacilitiesAdapter
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
@@ -18,6 +19,7 @@ import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 
 import kotlinx.android.synthetic.main.fragment_hotel_room.*
+import java.math.BigDecimal
 
 import java.util.*
 
@@ -43,6 +45,9 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     /** 酒店分数 */
     var grade: String? = null
 
+    var price: BigDecimal = BigDecimal.ZERO
+    var hotelRoomType = ""
+    private var hotelName = ""
 
     private lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
     private lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
@@ -59,6 +64,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
 
 
         fun newInstance(
+            hotelName:String,
             hotelId: Int,
             roomId: Int,
             startDate: JcsCalendarAdapter.CalendarBean,
@@ -72,6 +78,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
 
 
             val apply = Bundle().apply {
+                putString(Constant.PARAM_NAME, hotelName)
                 putInt(Constant.PARAM_HOTEL_ID, hotelId)
                 putInt(Constant.PARAM_ROOM_ID, roomId)
                 putString(Constant.PARAM_STAR_LEVEL, starLevel)
@@ -100,11 +107,13 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     private fun initExtra() {
 
         arguments?.apply {
+            hotelName = getString(Constant.PARAM_NAME, "")
             hotelId = getInt(Constant.PARAM_HOTEL_ID)
             roomId = getInt(Constant.PARAM_ROOM_ID)
             starLevel = getString(Constant.PARAM_STAR_LEVEL)
             priceRange = getString(Constant.PARAM_PRICE_RANGE)
             grade = getString(Constant.PARAM_GRADE)
+
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
 
@@ -117,17 +126,6 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     override fun initData() {
         presenter = RoomDetailPresenter(this)
         presenter.getDetail(roomId, 1, mStartDateBean.showMonthDayDate, mEndDateBean.showMonthDayDate)
-    }
-
-    override fun bindListener() {
-        back_iv.setOnClickListener {
-            dismissAllowingStateLoss()
-        }
-        booking_tv.setOnClickListener {
-
-        }
-
-
     }
 
 
@@ -193,7 +191,8 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
         mMediaAdapter.setNewInstance(mediaList)
         point_view.setPointCount(mediaList.size)
 
-        bed_tv.text = response.hotel_room_type
+        hotelRoomType = response.hotel_room_type
+        bed_tv.text = hotelRoomType
         when (response.breakfast_type) {
             1 -> breakfast_tv.text = getString(R.string.breakfast_support)
             2 -> breakfast_tv.text = getString(R.string.breakfast_un_support)
@@ -203,8 +202,37 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
         people_tv.text = getString(R.string.people_number_format, response.people)
 
         mFacilitiesAdapter.setNewInstance(response.facilities)
-
+        price = response.price
         price_tv.text = getString(R.string.price_unit_format, response.price.toPlainString())
+        note_tv.text = if (response.is_cancel == 1) {
+            getString(R.string.cancelable)
+        } else {
+            getString(R.string.not_cancelable)
+        }
+
+    }
+
+    override fun bindListener() {
+        back_iv.setOnClickListener {
+            dismissAllowingStateLoss()
+        }
+        booking_tv.setOnClickListener {
+
+            HotelBookActivity.navigation(
+                requireContext(),
+                hotelRoomId = roomId,
+                price = price.toDouble(),
+                roomType = hotelRoomType,
+                breakFastType = breakfast_tv.text.toString(),
+                roomArea = area_tv.text.toString(),
+                roomPeople = people_tv.text.toString(),
+                hotelName = hotelName,
+                cancelable = note_tv.text.toString(),
+                startDate = mStartDateBean,
+                endDate = mEndDateBean
+            )
+            dismissAllowingStateLoss()
+        }
 
 
     }

@@ -853,7 +853,12 @@ Gentleman must let go</string>
     <string name="check_in_out_time_format">入住时间：%1$s   退房时间：%2$s</string>
     <string name="room_facilities">房间设施</string>
     <string name="people_number_format">可住%1$d人</string>
-
+    <string name="check_in_times">入住时间</string>
+    <string name="check_in_info">入住信息</string>
+    <string name="check_in_date">入住日期</string>
+    <string name="check_out_date">退房日期</string>
+    <string name="length_of_stay">住宿时间</string>
+    <string name="resident_input_hint">请填写实际入住人姓名</string>
 
 
 </resources>

@@ -68,7 +68,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
     private var isToolbarDark = false
 
-    /** 是否收藏 */
+    /** 是否收藏  收藏状态（1：已收藏，2：未收藏） */
     private var collect_status = 1
 
 
@@ -169,8 +169,17 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         mRoomAdapter = HotelRoomAdapter()
         mRoomAdapter.setOnItemClickListener { _, _, position ->
             val data = mRoomAdapter.data[position]
-            RoomDetailFragment.newInstance(hotelId, data.id, mStartDateBean, mEndDateBean, starLevel, priceRange, grade).apply {
-                show(supportFragmentManager,this.tag)
+            RoomDetailFragment.newInstance(
+                name_tv.text.toString(),
+                hotelId,
+                data.id,
+                mStartDateBean,
+                mEndDateBean,
+                starLevel,
+                priceRange,
+                grade
+            ).apply {
+                show(supportFragmentManager, this.tag)
             }
         }
 
@@ -271,9 +280,9 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         }
         like_iv.setOnClickListener {
             if (collect_status == 1) {
-                presenter.collection(hotelId)
-            } else {
                 presenter.unCollection(hotelId)
+            } else {
+                presenter.collection(hotelId)
             }
         }
         back_iv.setOnClickListener {
@@ -287,7 +296,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     private fun setLikeImage() {
 
         like_iv.setImageResource(
-            if (collect_status == 2) {
+            if (collect_status == 1) {
                 if (isToolbarDark) {
                     R.mipmap.ic_like_red_night
                 } else {

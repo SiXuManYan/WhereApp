@@ -11,11 +11,13 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.map.HotelMapActivity
 import com.jcs.where.home.dialog.HotelStarDialog
 import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
+import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_hotel_home.*
@@ -26,7 +28,7 @@ import java.util.*
  * 酒店详情
  */
 class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView, NumberView2.OnValueChangeListener,
-    HotelStarDialog.HotelStarCallback {
+    HotelStarDialog.HotelStarCallback, JcsCalendarDialog.OnDateSelectedListener {
 
     /** 酒店分类 id ,用户获取酒店下的子分类 */
     private var hotelCategoryId = 0
@@ -59,7 +61,11 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
     private fun initExtra() {
         val bundle = intent.extras
-//        hotelCategoryId = bundle?.getInt(Constant.PARAM_CATEGORY_ID, 0)
+        bundle?.let {
+            hotelCategoryId = bundle.getInt(Constant.PARAM_CATEGORY_ID, 0)
+        }
+
+
 
     }
 
@@ -72,6 +78,12 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
         mAdapter = HotelHomeRecommendAdapter().apply {
             setEmptyView(emptyView)
+            setOnItemClickListener { _, _, position ->
+//                val dialog = JcsCalendarDialog()
+//                dialog.initCalendar(this@HotelHomeActivity)
+                val hotel = mAdapter.data[position]
+                HotelDetailActivity2.navigation(this@HotelHomeActivity, hotel.id, mJcsCalendarDialog.startBean, mJcsCalendarDialog.endBean, "", "", "")
+            }
         }
 
 
@@ -136,10 +148,10 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
         mJcsCalendarDialog = JcsCalendarDialog().apply {
             initCalendar(this@HotelHomeActivity)
+            setOnDateSelectedListener(this@HotelHomeActivity)
+
         }
-        val start = mJcsCalendarDialog.startBean.showMonthDayDate
-        val end = mJcsCalendarDialog.startBean.showWeekday
-        date_tv.text =    getString(R.string.valid_period_format2 ,start,end)
+
 
         mHotelStarDialog = HotelStarDialog().apply {
             setCallback(this@HotelHomeActivity)
@@ -182,7 +194,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             mJcsCalendarDialog.show(supportFragmentManager)
         }
         inquire_tv.setOnClickListener {
-            HotelMapActivity.navigation(this,107)
+            HotelMapActivity.navigation(this,hotelCategoryId)
         }
     }
 
@@ -207,6 +219,12 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         mScoreBean: HotelStarDialog.ScoreBean?
     ) {
 
+    }
+
+    override fun onDateSelected(startDate: JcsCalendarAdapter.CalendarBean, endDate: JcsCalendarAdapter.CalendarBean) {
+        val start = mJcsCalendarDialog.startBean.showMonthDayDate
+        val end = mJcsCalendarDialog.startBean.showMonthDayDate
+        date_tv.text =    getString(R.string.valid_period_format2 ,start,end)
     }
 
 

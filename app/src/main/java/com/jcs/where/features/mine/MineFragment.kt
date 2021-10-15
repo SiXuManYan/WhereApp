@@ -18,6 +18,7 @@ import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
 import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.features.integral.IntegralActivity
+import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.CollectionListActivity
 import com.jcs.where.mine.activity.FootprintActivity
 import com.jcs.where.mine.activity.LanguageActivity
@@ -113,8 +114,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(ExtendChatActivity::class.java)
         }
         about_rl.setOnClickListener {
-//            startActivity(AboutActivity::class.java)
-            startActivity(HotelHomeActivity::class.java)
+            startActivity(AboutActivity::class.java)
+
         }
 
     }

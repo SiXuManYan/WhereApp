@@ -1,7 +1,6 @@
-package com.jcs.where.api.request;
+package com.jcs.where.api.request
 
-public class HotelOrderRequest {
-
+class HotelOrderRequest {
     /**
      * hotel_room_id : 1
      * price : 200
@@ -12,15 +11,12 @@ public class HotelOrderRequest {
      * room_num : 1
      * country_code : 86
      */
-
-    public String hotel_room_id;
-    public String price;
-    public String username;
-    public String phone;
-    public String start_date;
-    public String end_date;
-    public String room_num;
-    public String country_code;
-
-
+    var hotel_room_id = 0
+    var price = ""
+    var username = ""
+    var phone: String = ""
+    var start_date: String = ""
+    var end_date: String = ""
+    var room_num = ""
+    var country_code = ""
 }

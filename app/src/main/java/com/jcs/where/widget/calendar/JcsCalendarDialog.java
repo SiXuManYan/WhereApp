@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -30,7 +31,7 @@ public class JcsCalendarDialog extends BaseBottomDialog {
 
     private ImageView mCloseIv;
     private RecyclerView mRecycler;
-    private Button mEnsureBtn;
+    private TextView mEnsureBtn;
     private List<CalendarBean> mBeans;
     private CalendarBean mStartBean, mEndBean;
     private JcsCalendarAdapter mAdapter;

@@ -91,6 +91,7 @@ public class Constant {
     public static final String PARAM_BOOLEAN = "param_boolean";
     public static final String PARAM_DESCRIPTION = "param_description";
     public static final String PARAM_SELECT_IMAGE = "param_select_image";
+    public static final String PARAM_CANCELABLE = "param_cancelable";
 
     /**
      * 包装费
@@ -195,6 +196,11 @@ public class Constant {
     public static final String PARAM_GRADE = "param_grade";
     public static final String PARAM_START_DATE = "param_start_date";
     public static final String PARAM_END_DATE = "param_end_date";
+
+    public static final String PARAM_ROOM_TYPE = "param_room_type";
+    public static final String PARAM_BREAKFAST = "param_breakfast";
+    public static final String PARAM_ROOM_AREA = "param_room_area";
+    public static final String PARAM_ROOM_PEOPLE = "param_room_people";
 
 
 }

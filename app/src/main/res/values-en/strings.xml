@@ -847,5 +847,11 @@ Gentleman must let go</string>
     <string name="check_in_out_time_format">Check-in time:%1$s   Check-out time:%2$s</string>
     <string name="room_facilities">Room facilities</string>
     <string name="people_number_format">Total %1$d</string>
+    <string name="check_in_times">Check in time</string>
+    <string name="check_in_date">Check in date</string>
+    <string name="check_in_info">check in info</string>
+    <string name="check_out_date">check out date</string>
+    <string name="length_of_stay">Length of stay</string>
+    <string name="resident_input_hint">请填写实际入住人姓名</string>
 
 </resources>

@@ -222,14 +222,14 @@ public class HotelSubscribeActivity extends BaseActivity {
         String month = getString(R.string.month);
         String day = getString(R.string.day);
         String symbolShortLink = getString(R.string.symbol_short_link);
-        request.hotel_room_id = String.valueOf(subscribeBean.roomId);
-        request.price = priceTv.getText().toString().replace(getString(R.string.price_unit), "");
-        request.phone = phoneEt.getText().toString();
-        request.username = nameEt.getText().toString();
-        request.start_date = subscribeBean.startYMD;
-        request.end_date = subscribeBean.endYMD;
-        request.room_num = roomNumTv.getText().toString();
-        request.country_code = "63";
+        request.setHotel_room_id(subscribeBean.roomId);
+        request.setPrice( priceTv.getText().toString().replace(getString(R.string.price_unit), "")); ;
+        request.setPhone(phoneEt.getText().toString());
+        request.setUsername(nameEt.getText().toString());
+        request.setStart_date( subscribeBean.startYMD);
+        request.setEnd_date( subscribeBean.endYMD);
+        request.setRoom_num( roomNumTv.getText().toString()); ;
+        request.setCountry_code("63");
 
         mModel.postHotelOrder2(request, new BaseObserver<HotelOrderCommitResponse>() {
             @Override

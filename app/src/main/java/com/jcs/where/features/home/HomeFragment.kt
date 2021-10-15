@@ -292,8 +292,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
                         val dialog = JcsCalendarDialog()
                         dialog.initCalendar(this@HomeFragment.activity)
-//                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
-                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
+                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+//                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
                         startActivity(MechanismActivity::class.java, Bundle().apply {

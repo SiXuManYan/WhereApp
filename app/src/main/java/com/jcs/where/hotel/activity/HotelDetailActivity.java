@@ -811,7 +811,7 @@ public class HotelDetailActivity extends BaseActivity {
             TextView roomAreaTv = holder.getView(R.id.tv_roomarea);
             roomAreaTv.setText(spannableStringBuilder);
             TextView priceTv = holder.getView(R.id.tv_price);
-            priceTv.setText(String.format(getString(R.string.show_price_with_forward_unit), data.getPrice()));
+            priceTv.setText(getString(R.string.price_unit_format, data.getPrice().toString()));
             RecyclerView tagRv = holder.getView(R.id.rv_tag);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HotelDetailActivity.this,
                     LinearLayoutManager.HORIZONTAL, false) {

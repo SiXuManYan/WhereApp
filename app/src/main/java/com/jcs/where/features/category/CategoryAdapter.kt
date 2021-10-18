@@ -15,12 +15,11 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.gson.reflect.TypeToken
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
-import com.jcs.where.base.BaseMapActivity
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
 import com.jcs.where.features.map.government.GovernmentActivity
+import com.jcs.where.features.travel.map.TravelMapActivity
 import com.jcs.where.hotel.activity.HotelActivity
-import com.jcs.where.travel.TravelMapActivity
 import com.jcs.where.utils.*
 import com.jcs.where.yellow_page.activity.YellowPageActivity
 import java.util.*
@@ -145,9 +144,7 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
                         })
                     }
                     TYPE_TOURISM -> {
-                        startActivity(TravelMapActivity::class.java, Bundle().apply {
-                            putString(BaseMapActivity.K_CHILD_CATEGORY_ID, it.id.toString())
-                        })
+                        TravelMapActivity.navigation(context,it.id)
                     }
                     TYPE_GOVERNMENT -> {
                         startActivity(GovernmentActivity::class.java, Bundle().apply {
@@ -168,7 +165,8 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
                         // 传递企业黄页一级分类id
                         val jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID)
                         if (!jsonStr.isNullOrBlank()) {
-                            val categoryIds = JsonUtil.getInstance().fromJsonToList<Int>(jsonStr, object : TypeToken<List<Int>>() {}.type)
+                            val categoryIds =
+                                JsonUtil.getInstance().fromJsonToList<Int>(jsonStr, object : TypeToken<List<Int>>() {}.type)
                             val categories = categoryIds as ArrayList<Int>
                             startActivity(YellowPageActivity::class.java, Bundle().apply {
                                 putIntegerArrayList(YellowPageActivity.K_CATEGORIES, categories)

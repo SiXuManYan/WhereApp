@@ -24,11 +24,11 @@ import com.jcs.where.features.home.HomeRecommendAdapter
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.mechanism.MechanismActivity
+import com.jcs.where.features.travel.map.TravelMapActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.travel.TouristAttractionDetailActivity
-import com.jcs.where.travel.TravelMapActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
@@ -84,21 +84,13 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                     when (category.type) {
                         1 -> {
                             // 酒店
-//                            startActivity(HotelActivity::class.java, Bundle().apply {
-//                                putString(HotelActivity.K_CATEGORY_ID, childId.toString())
-//                            })
                             startActivity(HotelHomeActivity::class.java,Bundle().apply {
                                 putInt(Constant.PARAM_CATEGORY_ID, childId)
                             })
                         }
-
                         2 -> {
-                            // 旅游
-                            startActivity(TravelMapActivity::class.java, Bundle().apply {
-                                putString(HotelActivity.K_CATEGORY_ID, childId.toString())
-                            })
+                            TravelMapActivity.navigation(this@TravelHomeActivity,childId)
                         }
-
                     }
                 }
 

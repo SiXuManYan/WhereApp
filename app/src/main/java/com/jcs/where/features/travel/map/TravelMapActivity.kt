@@ -1,4 +1,5 @@
-package com.jcs.where.features.hotel.map
+package com.jcs.where.features.travel.map
+
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -11,9 +12,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -28,62 +30,40 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
-import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import com.jcs.where.api.response.travel.TravelChild
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.hotel.detail.HotelDetailActivity2
-import com.jcs.where.features.hotel.home.HotelHomeRecommendAdapter
 import com.jcs.where.features.map.HotelCustomInfoWindowAdapter
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
 import com.jcs.where.utils.PermissionUtils
-import com.jcs.where.widget.calendar.JcsCalendarAdapter
-import com.jcs.where.widget.calendar.JcsCalendarDialog
-
-import kotlinx.android.synthetic.main.activity_map_hotel.*
-
-
+import kotlinx.android.synthetic.main.activity_travel_map.*
 import org.greenrobot.eventbus.EventBus
-
 import java.util.*
 
 /**
- * Created by Wangsw  2021/9/27 14:06.
- *  酒店地图
+ * Created by Wangsw  2021/10/18 9:37.
+ *  旅游地图
  */
-class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, JcsCalendarDialog.OnDateSelectedListener {
+class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
-    /** 酒店分类 id ,用户获取酒店下的子分类 */
-    private var hotelCategoryId = 0
+    /** 旅游模块分类id */
+    private var travelCategoryId = 0
+
+    /** 当前参与请求的分类id */
+    private var currentRequestCategoryId = 0
 
     /** 搜索内容 */
     var searchInput: String? = null
 
-    /** 星级 */
-    var starLevel: String? = null
+    /** 子列表 */
+    private lateinit var mPagerAdapter: TravelPagerAdapter
 
-    /** 价格区间 */
-    var priceRange: String? = null
-
-    /** 酒店分数 */
-    var grade: String? = null
-
-    private lateinit var mJcsCalendarDialog: JcsCalendarDialog
-
-    private lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
-    private lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
-
-
-    private var contentIsMap = false
-
-    /** 内容和 tab二级分类 */
-    private lateinit var mPagerAdapter: HotelMapPagerAdapter
-
-    /** marker 选中后，对应的列表内容 */
-    private lateinit var mMarkerContentAdapter: HotelHomeRecommendAdapter
+    /** marker 选中后弹出的 item */
+    private lateinit var mMarkerContentAdapter: TravelMarkerSelectedAdapter
 
     /** pager Behavior */
     private lateinit var pagerBehavior: ViewPagerBottomSheetBehavior<LinearLayout>
@@ -91,31 +71,31 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
     /** maker  Behavior */
     private lateinit var makerBehavior: BottomSheetBehavior<RecyclerView>
 
+    /** 区分地图和列表模式 */
+    private var contentIsMap = false
+
+    // ################ 地图相关 ###################
+
+    private lateinit var map: GoogleMap
+
+    // 我的位置
+    private lateinit var myLocation: CameraPosition
+
+    // 地图上的所有maker
+    private var makers: ArrayList<Marker?> = ArrayList()
+
     override fun isStatusDark() = true
 
-    override fun getLayoutId() = R.layout.activity_map_hotel
+    override fun getLayoutId() = R.layout.activity_travel_map
 
     companion object {
 
-        fun navigation(
-            context: Context,
-            hotelCategoryId: Int,
-            starLevel: String? = null,
-            priceRange: String? = null,
-            grade: String? = null,
-            startDate: JcsCalendarAdapter.CalendarBean,
-            endDate: JcsCalendarAdapter.CalendarBean
-        ) {
+        fun navigation(context: Context, categoryId: Int) {
 
             val bundle = Bundle().apply {
-                putInt(Constant.PARAM_CATEGORY_ID, hotelCategoryId)
-                putString(Constant.PARAM_STAR_LEVEL, starLevel)
-                putString(Constant.PARAM_PRICE_RANGE, priceRange)
-                putString(Constant.PARAM_GRADE, grade)
-                putSerializable(Constant.PARAM_START_DATE, startDate)
-                putSerializable(Constant.PARAM_END_DATE, endDate)
+                putInt(Constant.PARAM_CATEGORY_ID, categoryId)
             }
-            val intent = Intent(context, HotelMapActivity::class.java)
+            val intent = Intent(context, TravelMapActivity::class.java)
                 .putExtras(bundle)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -124,16 +104,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             }
             context.startActivity(intent)
         }
-    }
-
-
-    override fun initView() {
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
-        initExtra()
-        initMap()
-        initCategory()
-        initBehavior()
-        initMarkerClickListContent()
     }
 
 
@@ -146,50 +116,28 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         }
     }
 
-    private fun search() {
-        delete_iv.visibility = if (searchInput.isNullOrBlank()) {
-            View.GONE
-        } else {
-            View.VISIBLE
-        }
-        search_tv.text = searchInput
-        EventBus.getDefault().post(BaseEvent<String?>(EventCode.EVENT_REFRESH_CHILD, searchInput))
-        // todo marker
 
+    override fun initView() {
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
+        initExtra()
+        initMap()
+        initBehavior()
+        initMarkerClickListContent()
     }
 
 
     private fun initExtra() {
         val bundle = intent.extras ?: return
         bundle.apply {
-            hotelCategoryId = getInt(Constant.PARAM_CATEGORY_ID)
-            starLevel = getString(Constant.PARAM_STAR_LEVEL)
-            priceRange = getString(Constant.PARAM_PRICE_RANGE)
-            grade = getString(Constant.PARAM_GRADE)
-            mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
-            mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
-
-            updateDate()
+            travelCategoryId = getInt(Constant.PARAM_CATEGORY_ID)
         }
-
-
+        mPagerAdapter = TravelPagerAdapter(supportFragmentManager)
     }
 
-    private fun updateDate() {
-        start_date_tv.text = mStartDateBean.showMonthDayDateWithSplit
-        end_date_tv.text = mEndDateBean.showMonthDayDateWithSplit
-    }
-
-    private fun initCategory() {
-        mPagerAdapter = HotelMapPagerAdapter(supportFragmentManager).apply {
-            starLevel = this@HotelMapActivity.starLevel
-            priceRange = this@HotelMapActivity.priceRange
-            grade = this@HotelMapActivity.grade
-            startDateBean = mStartDateBean
-            endDateBean = mEndDateBean
-
-        }
-
+    private fun initMap() {
+        // 获取 SupportMapFragment 并在地图准备好使用时请求通知
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
     }
 
     private fun initBehavior() {
@@ -212,14 +160,12 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
     }
 
-
     private fun initMarkerClickListContent() {
-        mMarkerContentAdapter = HotelHomeRecommendAdapter().apply {
+        mMarkerContentAdapter = TravelMarkerSelectedAdapter().apply {
 
             setOnItemClickListener { _, _, position ->
                 val data = this.data[position]
-                HotelDetailActivity2.navigation(this@HotelMapActivity, data.id, mStartDateBean, mEndDateBean, "", "", "")
-
+                // todo 旅游详情
             }
         }
 
@@ -233,35 +179,26 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-
 //                    newState == RecyclerView.SCROLL_STATE_IDLE
-
                 }
             })
         }
 
-
     }
+
 
     override fun initData() {
-        mJcsCalendarDialog = JcsCalendarDialog().apply {
-            initCalendar(this@HotelMapActivity)
-            setOnDateSelectedListener(this@HotelMapActivity)
+        presenter = TravelMapPresenter(this)
+        presenter.getGovernmentChildCategory(travelCategoryId)
 
-        }
 
-        presenter = HotelMapPresenter(this)
-        presenter.getHotelChildCategory(hotelCategoryId)
     }
-
 
     override fun bindListener() {
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
             makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
-
-
         type_iv.setOnClickListener {
 
             VibrateUtils.vibrate(50)
@@ -275,7 +212,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             contentIsMap = !contentIsMap
 
         }
-
         content_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
 
@@ -288,7 +224,8 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
                 val category = mPagerAdapter.category[position]
 
-                presenter.getMakerData(search_input = null, star_level = null, price_range = null, category.id)
+                currentRequestCategoryId = category.id
+                presenter.getMakerData(currentRequestCategoryId, searchInput)
                 makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
 
@@ -303,14 +240,9 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             search()
         }
 
-        date_ll.setOnClickListener {
-            mJcsCalendarDialog.show(supportFragmentManager)
-        }
-
-
     }
 
-    override fun bindCategory(response: ArrayList<Category>) {
+    override fun bindSecondCategory(response: ArrayList<Category>) {
         // pager
         mPagerAdapter.category.addAll(response)
         mPagerAdapter.notifyDataSetChanged()
@@ -319,21 +251,16 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         tabs_type.setViewPager(content_vp)
     }
 
-    // ################ 地图相关 ###################
 
-    private lateinit var map: GoogleMap
-
-    // 我的位置
-    private lateinit var myLocation: CameraPosition
-
-    // 地图上的所有maker
-    private var makers: ArrayList<Marker?> = ArrayList()
-
-
-    private fun initMap() {
-        // 获取 SupportMapFragment 并在地图准备好使用时请求通知
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
-        mapFragment?.getMapAsync(this)
+    private fun search() {
+        delete_iv.visibility = if (searchInput.isNullOrBlank()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        search_tv.text = searchInput
+        EventBus.getDefault().post(BaseEvent<String?>(EventCode.EVENT_REFRESH_CHILD, searchInput))
+        presenter.getMakerData(currentRequestCategoryId, searchInput)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -349,19 +276,19 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             setPadding(0, 0, 0, SizeUtils.dp2px(220f))
 
             // 自定义信息样式
-            setInfoWindowAdapter(HotelCustomInfoWindowAdapter(this@HotelMapActivity))
+            setInfoWindowAdapter(HotelCustomInfoWindowAdapter(this@TravelMapActivity))
 
             // 点击标记
-            setOnMarkerClickListener(this@HotelMapActivity)
+            setOnMarkerClickListener(this@TravelMapActivity)
 
             // 点击标记信息窗口
-            setOnInfoWindowClickListener(this@HotelMapActivity)
+            setOnInfoWindowClickListener(this@TravelMapActivity)
 
             // 移动到我的位置
-            setOnMyLocationButtonClickListener(this@HotelMapActivity)
+            setOnMyLocationButtonClickListener(this@TravelMapActivity)
 
             // 点击我的位置
-            setOnMyLocationClickListener(this@HotelMapActivity)
+            setOnMyLocationClickListener(this@TravelMapActivity)
             // 辅助功能模式，覆盖视图上的默认内容描述
             setContentDescription("Map with lots of markers.");
         }
@@ -376,9 +303,8 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         enableMyLocation()
 
         // 获得展示在地图上的数据
-        presenter.getMakerData()
+        presenter.getMakerData(currentRequestCategoryId, searchInput)
     }
-
 
     @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
@@ -423,24 +349,8 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         }
     }
 
-    /**
-     * 移动到我的位置
-     */
-    override fun onMyLocationButtonClick(): Boolean {
-        if (!::myLocation.isInitialized) return false
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(myLocation))
-        return false
-    }
 
-    /**
-     * 点击我的位置 maker
-     */
-    override fun onMyLocationClick(location: Location) {
-        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
-    }
-
-
-    override fun bindMakerList(response: MutableList<HotelHomeRecommend>) {
+    override fun bindMakerList(response: MutableList<TravelChild>) {
         if (!::map.isInitialized) return
 
         if (response.isEmpty()) {
@@ -464,20 +374,23 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
         // 展示marker 列表数据
         mMarkerContentAdapter.setNewInstance(response)
-
-
     }
 
-    private fun addMarkersToMap(response: MutableList<HotelHomeRecommend>) {
+    /**
+     * 向地图中添加 Maker
+     */
+    private fun addMarkersToMap(response: MutableList<TravelChild>) {
         if (!::map.isInitialized || response.isEmpty()) return
         map.clear()
         makers.clear()
 
         response.forEach {
 
-            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
-            val title_tv = view.findViewById<AppCompatCheckedTextView>(R.id.title_tv)
-            title_tv.text = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+            val title_tv = view.findViewById<TextView>(R.id.title_tv)
+            val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+            title_tv.text = it.name
+            image_iv.setImageResource(R.mipmap.ic_marker_common_travel)
 
             val maker = map.addMarker(
                 MarkerOptions()
@@ -493,31 +406,30 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
     }
 
 
-    /**
-     * 点击标记上的信息窗口
-     */
-    override fun onInfoWindowClick(marker: Marker) = Unit
-
     override fun onMarkerClick(marker: Marker): Boolean {
+
         // 所有 maker 设置成未选中
         makers.forEach {
-            val makerTag = it?.tag as HotelHomeRecommend
-            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
-            view.findViewById<AppCompatCheckedTextView>(R.id.title_tv).apply {
-                isChecked = false
-                text = StringUtils.getString(R.string.price_unit_format, makerTag.price.toPlainString())
-            }
+            val makerTag = it?.tag as TravelChild
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+            val title_tv = view.findViewById<TextView>(R.id.title_tv)
+            title_tv.text = makerTag.name
+            val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+            image_iv.setImageResource(R.mipmap.ic_marker_common_travel)
+
             it.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
+
         }
         marker.hideInfoWindow()
 
         // 设置当前选中
-        val makerTag = marker.tag as HotelHomeRecommend
-        val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
-        view.findViewById<AppCompatCheckedTextView>(R.id.title_tv).apply {
-            isChecked = true
-            text = StringUtils.getString(R.string.price_unit_format, makerTag.price.toPlainString())
-        }
+        val currentMakerTag = marker.tag as TravelChild
+        val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+        val title_tv = view.findViewById<TextView>(R.id.title_tv)
+        title_tv.text = currentMakerTag.name
+        val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+        image_iv.setImageResource(R.mipmap.ic_marker_select_travel)
+        marker.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
 
         // 切换底部列表数据
         val index = makers.indexOf(marker)
@@ -528,23 +440,29 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
         // 地图平滑移动到目标位置
         Handler(mainLooper).postDelayed({
-
             val targetCamera = CameraPosition.Builder().target(marker.position)
                 .zoom(15.5f)
                 .bearing(0f)
                 .tilt(0f)
                 .build()
             map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
+
         }, 10)
 
         return false
     }
 
-    override fun onDateSelected(startDate: JcsCalendarAdapter.CalendarBean, endDate: JcsCalendarAdapter.CalendarBean) {
-        mStartDateBean = startDate
-        mEndDateBean = endDate
-        updateDate()
+    override fun onMyLocationButtonClick(): Boolean {
+        if (!::myLocation.isInitialized) return false
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(myLocation))
+        return false
     }
 
+    override fun onMyLocationClick(location: Location) {
+        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
+    }
+
+
+    override fun onInfoWindowClick(marker: Marker) = Unit
 
 }

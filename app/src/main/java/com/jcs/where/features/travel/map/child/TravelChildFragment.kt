@@ -1,49 +1,42 @@
-package com.jcs.where.features.map.child
+package com.jcs.where.features.travel.map.child
 
 import android.graphics.Color
-import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
-import com.jcs.where.api.response.MechanismResponse
+import com.jcs.where.api.response.travel.TravelChild
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.map.MechanismAdapter
-import com.jcs.where.features.map.government.GovernmentActivity
-import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.single_recycler_view.*
 
 /**
- * Created by Wangsw  2021/8/26 14:27.
- * 机构列表
+ * Created by Wangsw  2021/10/18 9:53.
+ * 旅游地图子列表
  */
-class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), MechanismChildView, OnItemClickListener,
-    OnLoadMoreListener {
+class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChildView, OnLoadMoreListener, OnItemClickListener {
 
-    private lateinit var mAdapter: MechanismAdapter
-    private lateinit var emptyView: EmptyView
-    var categoryId = ""
-    var search = ""
+
+    var categoryId = 0
+    var searchInput: String? = null
     private var page = Constant.DEFAULT_FIRST_PAGE
-    private var totalCount = 0
-    var totalCountView: TextView? = null
 
     /** 搜索改变时，延时刷新 */
     private var needRefresh = false
 
+    private lateinit var emptyView: EmptyView
+    private lateinit var mAdapter: TravelChildAdapter
+
 
     override fun getLayoutId() = R.layout.single_recycler_view
 
-    override fun initView(view: View?) {
-
+    override fun initView(view: View) {
         emptyView = EmptyView(context).apply {
             initEmpty(
                 R.mipmap.ic_empty_search, R.string.empty_search,
@@ -53,12 +46,12 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
             }
             action_tv.visibility = View.GONE
         }
-        mAdapter = MechanismAdapter().apply {
+        mAdapter = TravelChildAdapter().apply {
             setEmptyView(emptyView)
-            setOnItemClickListener(this@MechanismChildFragment)
+            setOnItemClickListener(this@TravelChildFragment)
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
-            loadMoreModule.setOnLoadMoreListener(this@MechanismChildFragment)
+            loadMoreModule.setOnLoadMoreListener(this@TravelChildFragment)
         }
 
         content_rv.adapter = mAdapter
@@ -69,35 +62,28 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
 
     }
 
-    override fun initData() {
-        presenter = MechanismChildPresenter(this)
-    }
 
     override fun loadOnVisible() {
         if (isViewVisible) {
-            presenter.getData(page, categoryId, search)
+            presenter.getData(page, categoryId, searchInput)
         }
     }
 
+
+    override fun initData() {
+        presenter = TravelChildPresenter(this)
+    }
+
+    override fun bindListener() {
+
+    }
+
     override fun onLoadMore() {
-        page++
-        loadOnVisible()
+
     }
 
-    override fun bindListener() = Unit
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val data = mAdapter.data[position]
-        startActivity(MechanismActivity::class.java, Bundle().apply {
-            putInt(Constant.PARAM_ID, data.id)
-        })
-    }
-
-    override fun bindData(response: MutableList<MechanismResponse>, isLastPage: Boolean, total: Int) {
-
-        totalCount = total
-        updateActivityCount()
-
+    override fun bindData(response: MutableList<TravelChild>, lastPage: Boolean) {
         val loadMoreModule = mAdapter.loadMoreModule
         if (response.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -115,12 +101,29 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
 
         } else {
             mAdapter.addData(response)
-            if (isLastPage) {
+            if (lastPage) {
                 loadMoreModule.loadMoreEnd()
             } else {
                 loadMoreModule.loadMoreComplete()
             }
         }
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+        // todo 旅游详情
+    }
+
+
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if (isVisibleToUser && needRefresh) {
+            loadOnVisible()
+            needRefresh = false
+        }
+
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {
@@ -130,47 +133,15 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
         }
 
         when (baseEvent.code) {
-
-            EventCode.EVENT_REFRESH_MECHANISM -> {
-                page = Constant.DEFAULT_FIRST_PAGE
-                categoryId = baseEvent.message
-                if (isViewVisible) {
-                    loadOnVisible()
-                } else {
-                    needRefresh = true
-                }
-            }
-
             EventCode.EVENT_REFRESH_CHILD -> {
+                searchInput = baseEvent.message
                 page = Constant.DEFAULT_FIRST_PAGE
-                search = baseEvent.message
                 if (isViewVisible) {
                     loadOnVisible()
                 } else {
                     needRefresh = true
                 }
             }
-        }
-    }
-
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            updateActivityCount()
-            if (needRefresh) {
-                loadOnVisible()
-                needRefresh = false
-            }
-        }
-
-    }
-
-
-    private fun updateActivityCount() {
-        if (isViewVisible && activity != null) {
-            val governmentActivity = activity as GovernmentActivity
-            governmentActivity.getTotalCountView().text = getString(R.string.total_list_count_format, totalCount)
         }
     }
 

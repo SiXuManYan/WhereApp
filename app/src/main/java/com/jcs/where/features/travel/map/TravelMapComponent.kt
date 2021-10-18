@@ -1,4 +1,4 @@
-package com.jcs.where.features.map.government
+package com.jcs.where.features.travel.map
 
 import com.blankj.utilcode.util.StringUtils
 import com.google.android.gms.maps.GoogleMap
@@ -7,49 +7,42 @@ import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.api.response.category.Category
+import com.jcs.where.api.response.travel.TravelChild
 import com.jcs.where.utils.CacheUtil
-import java.util.*
+import java.util.ArrayList
 
 /**
- * Created by Wangsw  2021/8/24 17:04.
+ * Created by Wangsw  2021/10/18 9:38.
  *
  */
-interface GovernmentView : BaseMvpView,
-    OnMapReadyCallback,
+interface TravelMapView : BaseMvpView , OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener,
     GoogleMap.OnMarkerClickListener,
-    GoogleMap.OnInfoWindowClickListener {
+    GoogleMap.OnInfoWindowClickListener{
     /**
      * 分类
      */
     fun bindSecondCategory(response: ArrayList<Category>)
-
-    /**
-     * 地点
-     */
-    fun bindMakerList(response: ArrayList<MechanismResponse>)
-
+    fun bindMakerList(response: MutableList<TravelChild>)
 }
 
-open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresenter(view) {
 
+class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(view) {
 
-    public val ID_GOVERNMENT = 1
 
     /**
-     * 获取"政府"的子分类
+     * 获取二级分类
      */
-    fun getGovernmentChildCategory() {
-        requestApi(mRetrofit.getCategoriesList(2, ID_GOVERNMENT.toString(), 2), object : BaseMvpObserver<ArrayList<Category>>(view) {
+    fun getGovernmentChildCategory(firstCategoryId:Int) {
+        requestApi(mRetrofit.getCategoriesList(3, firstCategoryId.toString(), 2), object : BaseMvpObserver<ArrayList<Category>>(view) {
             override fun onSuccess(response: ArrayList<Category>) {
 
                 // 当前二级分类全部
                 val secondAll = Category().apply {
                     name = StringUtils.getString(R.string.all)
-                    id = ID_GOVERNMENT
+                    id = 0
                     has_children = 1
                     nativeIsSelected = true
                 }
@@ -77,24 +70,20 @@ open class GovernmentPresenter(private val view: GovernmentView) : BaseMvpPresen
 
     }
 
-    /**
-     * 获取地图数据
-     * tag:为了渐变直接取全部，不根据tab选中刷新
-     */
-    fun getMakerData(categoryId: Int, search: String? = null) {
+    fun getMakerData(categoryId: Int, searchInput: String? =null) {
+
         val safeSelectLatLng = CacheUtil.getSafeSelectLatLng()
 
-        requestApi(mRetrofit.getMechanismListToMap(
+        requestApi(mRetrofit.getTravelMarker(
             categoryId,
-            null, null, safeSelectLatLng.latitude, safeSelectLatLng.longitude
-        ), object : BaseMvpObserver<ArrayList<MechanismResponse>>(view) {
-            override fun onSuccess(response: ArrayList<MechanismResponse>) {
-                view.bindMakerList(response)
+            searchInput,
+            safeSelectLatLng.latitude,
+            safeSelectLatLng.longitude
+        ), object : BaseMvpObserver<ArrayList<TravelChild>>(view) {
+            override fun onSuccess(response: ArrayList<TravelChild>) {
+                view.bindMakerList(response.toMutableList())
             }
-
         })
 
     }
-
-
 }

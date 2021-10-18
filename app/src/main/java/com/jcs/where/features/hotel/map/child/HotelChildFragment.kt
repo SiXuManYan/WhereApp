@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.single_recycler_view.*
 class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildView {
 
 
-    var search_input: String? = null
+    var searchInput: String? = null
     var star_level: String? = null
     var hotel_type_ids: String? = null
     var price_range: String? = null
@@ -32,6 +32,9 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
 
     lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
     lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
+
+    /** 搜索改变时，延时刷新 */
+    private var needRefresh = false
 
 
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -82,7 +85,7 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
 
     override fun loadOnVisible() {
         if (isViewVisible) {
-            presenter.getData(page, search_input, star_level, hotel_type_ids, price_range, grade)
+            presenter.getData(page, searchInput, star_level, hotel_type_ids, price_range, grade)
         }
     }
 
@@ -125,6 +128,15 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
         HotelDetailActivity2.navigation(requireContext(), data.id, mStartDateBean, mEndDateBean, "", "", "")
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser && needRefresh) {
+            loadOnVisible()
+            needRefresh = false
+        }
+
+    }
+
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {
         super.onEventReceived(baseEvent)
         if (baseEvent == null) {
@@ -133,9 +145,13 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
 
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_CHILD -> {
+                searchInput = baseEvent.message
                 page = Constant.DEFAULT_FIRST_PAGE
-                search_input = baseEvent.message
-                loadOnVisible()
+                if (isViewVisible) {
+                    loadOnVisible()
+                } else {
+                    needRefresh = true
+                }
             }
         }
     }

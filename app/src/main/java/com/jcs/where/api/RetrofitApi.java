@@ -110,6 +110,7 @@ import com.jcs.where.api.response.store.StoreRecommend;
 import com.jcs.where.api.response.store.cart.StoreCartResponse;
 import com.jcs.where.api.response.store.comment.StoreCommentCount;
 import com.jcs.where.api.response.store.comment.StoreCommentDetail;
+import com.jcs.where.api.response.travel.TravelChild;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
@@ -228,7 +229,6 @@ public interface RetrofitApi {
      */
     @GET("hotelapi/v2/hotel/{id}")
     Observable<JcsResponse<HotelDetailResponse>> getHotelDetail(@Path("id") int hotelId);
-
 
 
     /**
@@ -1568,8 +1568,9 @@ public interface RetrofitApi {
 
     /**
      * 酒店地图模式列表
+     *
      * @param area_id 区域id 必须传
-     *  @see <a href="https://where.w.eolinker.com/home/api_studio/inside/api/detail?apiID=3925068&groupID=1000127&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档</a>
+     * @see <a href="https://where.w.eolinker.com/home/api_studio/inside/api/detail?apiID=3925068&groupID=1000127&projectHashKey=zyRnJSLb6c6ae86fc0cd75b6afab3f7023c37b6f55614c9&spaceKey=where">接口文档</a>
      */
     @GET("hotelapi/v2/hotels")
     Observable<JcsResponse<PageResponse<HotelHomeRecommend>>> hotelChildList(
@@ -1584,7 +1585,6 @@ public interface RetrofitApi {
             @Query("grade") @Nullable String grade
 
     );
-
 
 
     /**
@@ -1622,7 +1622,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<HotelDetail>> hotelDetail(@Path("id") int hotelId);
 
 
-
     /**
      * 酒店房间详情
      */
@@ -1634,6 +1633,28 @@ public interface RetrofitApi {
             @Query("end_date") String endDate
     );
 
+
+    /**
+     * 旅游景点列表
+     */
+    @GET("travelapi/v2/travels?version=2")
+    Observable<JcsResponse<PageResponse<TravelChild>>> getTravelChildList(
+            @Query("page") int page,
+            @Query("category_id") int categoryId,
+            @Query("search_input") @Nullable String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng);
+
+
+    /**
+     * 旅游景点地图marker
+     */
+    @GET("travelapi/v2/map/travels?version=2")
+    Observable<JcsResponse<ArrayList<TravelChild>>> getTravelMarker(
+            @Query("category_id") int categoryId,
+            @Query("search_input") @Nullable String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng);
 
 
 }

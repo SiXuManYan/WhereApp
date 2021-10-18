@@ -81,15 +81,32 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
     public val ID_GOVERNMENT = 1
 
+    /** 当前参与请求的分类id */
+    private var currentRequestCategoryId = 1
+
+
+    /** 搜索内容 */
+    var searchInput: String? = null
+
 
     /** 处理搜索 */
     private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val bundle = it.data?.extras
-            val searchName = bundle?.getString(Constant.PARAM_NAME, "")
-            search_tv.text = searchName
-            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, searchName))
+            searchInput = bundle?.getString(Constant.PARAM_NAME, "")
+            search()
         }
+    }
+
+    private fun search() {
+        delete_iv.visibility = if (searchInput.isNullOrBlank()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        search_tv.text = searchInput
+        EventBus.getDefault().post(BaseEvent<String?>(EventCode.EVENT_REFRESH_CHILD, searchInput))
+        presenter.getMakerData(currentRequestCategoryId, searchInput)
     }
 
 
@@ -138,7 +155,10 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
                 // 更新 maker
                 if (!::map.isInitialized) return@setOnItemClickListener
-                presenter.getMakerData(child[position].id)
+
+
+                currentRequestCategoryId = child[position].id
+                presenter.getMakerData(currentRequestCategoryId,searchInput)
 
             }
         }
@@ -269,7 +289,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
                 // 获得展示在地图上的数据
                 if (!::map.isInitialized) return
-                presenter.getMakerData(category[position].id)
+
+                currentRequestCategoryId = category[position].id
+                presenter.getMakerData(currentRequestCategoryId)
                 makerBehavior.state = STATE_HIDDEN
             }
         })
@@ -280,8 +302,8 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         }
 
         delete_iv.setOnClickListener {
-            search_tv.text = ""
-            EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_CHILD, ""))
+            searchInput = null
+            search()
         }
     }
 
@@ -368,7 +390,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         enableMyLocation()
 
         // 获得展示在地图上的数据
-        presenter.getMakerData(ID_GOVERNMENT)
+        presenter.getMakerData(ID_GOVERNMENT,searchInput)
 
     }
 

@@ -11,7 +11,7 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:backIcon="@drawable/ic_back_black"
         app:middleTitle="@string/title_setting"

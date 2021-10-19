@@ -35,7 +35,7 @@ import java.util.*
 
 /**
  * Created by Wangsw  2021/10/8 11:33.
- *
+ * 酒店详情
  */
 class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetailView {
 

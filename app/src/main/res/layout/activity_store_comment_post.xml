@@ -228,8 +228,8 @@
 
                     <ImageView
                         android:id="@+id/select_iv"
-                        android:layout_width="@dimen/dp_59"
-                        android:layout_height="@dimen/dp_59"
+                        android:layout_width="@dimen/dp_76"
+                        android:layout_height="@dimen/dp_76"
                         android:layout_marginEnd="@dimen/dp_5"
                         android:scaleType="centerInside"
                         android:src="@mipmap/ic_store_upload_image" />
@@ -239,7 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:itemCount="1"
-                        tools:layout_height="@dimen/dp_59"
+                        tools:layout_height="@dimen/dp_76"
                         tools:listitem="@layout/item_refund_image" />
 
                 </LinearLayout>

@@ -36,6 +36,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.map.HotelCustomInfoWindowAdapter
 import com.jcs.where.features.search.SearchAllActivity
+import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
@@ -165,7 +166,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
             setOnItemClickListener { _, _, position ->
                 val data = this.data[position]
-                // todo 旅游详情
+                TravelDetailActivity.navigation(this@TravelMapActivity,data.id)
             }
         }
 

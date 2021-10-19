@@ -1,70 +1,50 @@
-package com.jcs.where.features.hotel.comment.child
+package com.jcs.where.features.travel.comment
 
-import android.os.Bundle
-import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.hotel.HotelComment
-import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
+import kotlinx.android.synthetic.main.activity_travel_comment.*
+import kotlinx.android.synthetic.main.activity_travel_comment.recycler
+import kotlinx.android.synthetic.main.activity_travel_comment.swipe_layout
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
 
+
+
 /**
- * Created by Wangsw  2021/8/17 10:58.
- * 酒店评论列表
+ * Created by Wangsw  2021/10/19 14:35.
+ * 旅游评论
  */
-class HotelCommentFragment : BaseMvpFragment<HotelCommentPresenter>(), HotelCommentView, SwipeRefreshLayout.OnRefreshListener,
-    OnLoadMoreListener {
+class TravelCommentActivity : BaseMvpActivity<TravelCommentPresenter>(), TravelCommentView {
 
-
-    /** 酒店id */
-    private var hotel_id = 0
-
-
-    /**
-     * 显示类型（1：晒图，2：低分，3：最新）
-     */
-    private var listType = 0
-
-    private lateinit var mAdapter: HotelCommentAdapter
-
-    private lateinit var emptyView: EmptyView
+    private var travelId = 0
     private var page = Constant.DEFAULT_FIRST_PAGE
 
-
-    companion object {
-
-        /**
-         * @param hotel_id 酒店ID
-         * @param listType 显示类型（1：晒图，2：低分，3：最新）
-         */
-        fun newInstance(hotel_id: Int, listType: Int? = 0): HotelCommentFragment {
-            val fragment = HotelCommentFragment()
-            val bundle = Bundle().apply {
-                putInt(Constant.PARAM_SHOP_ID, hotel_id)
-                listType?.let {
-                    putInt(Constant.PARAM_TYPE, listType)
-                }
-            }
-            fragment.arguments = bundle
-            return fragment
-        }
-
-    }
+    private lateinit var mAdapter: HotelCommentAdapter
+    private lateinit var emptyView: EmptyView
 
 
-    override fun getLayoutId() = R.layout.fragment_refresh_list
+    override fun getLayoutId() = R.layout.activity_travel_comment
 
-    override fun initView(view: View) {
-        arguments?.let {
-            hotel_id = it.getInt(Constant.PARAM_SHOP_ID, 0)
-            listType = it.getInt(Constant.PARAM_ACCOUNT, 1)
+    override fun isStatusDark() = true
+
+    override fun initView() {
+
+        val bundle = intent.extras
+        bundle?.let {
+            travelId = it.getInt(Constant.PARAM_ID, 0)
         }
 
         swipe_layout.setOnRefreshListener(this)
-        emptyView = EmptyView(context).apply {
+        emptyView = EmptyView(this).apply {
             showEmptyDefault()
         }
 
@@ -73,35 +53,31 @@ class HotelCommentFragment : BaseMvpFragment<HotelCommentPresenter>(), HotelComm
             headerWithEmptyEnable = true
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-            loadMoreModule.setOnLoadMoreListener(this@HotelCommentFragment)
+            loadMoreModule.setOnLoadMoreListener(this@TravelCommentActivity)
             setEmptyView(emptyView)
         }
         recycler.adapter = mAdapter
 
-
     }
 
     override fun initData() {
-        presenter = HotelCommentPresenter(this)
+        presenter = TravelCommentPresenter(this)
+        presenter.getDetail(page, travelId)
     }
 
     override fun bindListener() = Unit
 
+
     override fun onRefresh() {
         swipe_layout.isRefreshing = true
         page = Constant.DEFAULT_FIRST_PAGE
-        loadOnVisible()
+        presenter.getDetail(page, travelId)
     }
 
     override fun onLoadMore() {
         page++
-        loadOnVisible()
+        presenter.getDetail(page, travelId)
     }
-
-    override fun loadOnVisible() {
-        presenter.getStoreCommentList(hotel_id, page, listType)
-    }
-
 
     override fun bindData(data: MutableList<HotelComment>, lastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
@@ -131,4 +107,29 @@ class HotelCommentFragment : BaseMvpFragment<HotelCommentPresenter>(), HotelComm
         }
     }
 
+
 }
+
+
+interface TravelCommentView : BaseMvpView,SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
+    fun bindData(data: MutableList<HotelComment>, lastPage: Boolean)
+
+}
+
+class TravelCommentPresenter(private var view: TravelCommentView) : BaseMvpPresenter(view) {
+    fun getDetail(page: Int, travelId: Int) {
+        requestApi(mRetrofit.travelComment(page, travelId), object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
+
+            override fun onSuccess(response: PageResponse<HotelComment>) {
+                val isLastPage = response.lastPage == page
+                val data = response.data
+                view.bindData(data.toMutableList(), isLastPage)
+            }
+
+        })
+    }
+
+}
+
+
+

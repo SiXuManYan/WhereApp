@@ -859,6 +859,9 @@ Gentleman must let go</string>
     <string name="check_out_date">退房日期</string>
     <string name="length_of_stay">住宿时间</string>
     <string name="resident_input_hint">请填写实际入住人姓名</string>
+    <string name="attractions_info">景点介绍</string>
+    <string name="tourist_notice_title">游客须知</string>
+    <string name="write_comment">写评论</string>
 
 
 </resources>

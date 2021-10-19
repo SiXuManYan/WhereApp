@@ -110,11 +110,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".home.HomeActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+
 
 
         <activity
@@ -124,55 +120,15 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".hotel.activity.HotelActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
             android:name=".hotel.activity.CityPickerActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity
-            android:name=".hotel.activity.HotelListActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".hotel.activity.HotelDetailActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".hotel.activity.HotelSubscribeActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".hotel.activity.HotelMapActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".hotel.activity.HotelCommentActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".mango.ImageBrowseActivity"
             android:theme="@style/mangoAppTheme" />
-
-        <activity
-            android:name=".hotel.activity.WriteCommentActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".search.SearchActivity"
@@ -182,27 +138,6 @@
 
         <activity
             android:name=".currency.WebViewActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-
-        <activity
-            android:name=".travel.TravelMapActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".travel.TouristAttractionDetailActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-
-        <activity
-            android:name=".travel.TravelCommentActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -300,7 +235,6 @@
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
 
 
         <activity
@@ -594,7 +528,7 @@
         <activity android:name=".features.order.parent.OrderActivity" />
         <activity android:name=".features.coupon.CardCouponActivity" />
         <activity android:name=".features.hotel.comment.HotelCommentActivity2" />
-        <activity android:name=".features.hotel.comment.post.HotelCommentPostActivity" />
+        <activity android:name=".features.comment.CommentPostActivity" />
         <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />
         <activity android:name=".features.search.result.SearchAllResultActivity" />
         <activity android:name=".features.map.government.GovernmentActivity" />
@@ -606,6 +540,8 @@
         <activity android:name=".features.hotel.detail.HotelDetailActivity2" />
         <activity android:name=".features.hotel.book.HotelBookActivity" />
         <activity android:name=".features.travel.map.TravelMapActivity" />
+        <activity android:name=".features.travel.detail.TravelDetailActivity" />
+        <activity android:name=".features.travel.comment.TravelCommentActivity" />
 
 
     </application>

@@ -21,13 +21,13 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2;
 import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.features.store.detail.StoreDetailActivity;
-import com.jcs.where.hotel.activity.HotelDetailActivity;
+import com.jcs.where.features.travel.detail.TravelDetailActivity;
 import com.jcs.where.mine.adapter.SameCityListAdapter;
 import com.jcs.where.mine.model.CollectionListModel;
 import com.jcs.where.mine.view_type.SameCityType;
-import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
@@ -176,7 +176,7 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
                 case SameCityType.Hotel:
                     JcsCalendarDialog dialog = new JcsCalendarDialog();
                     dialog.initCalendar(context);
-                    HotelDetailActivity.goTo(context, response.getHotel().getId(), dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                    HotelDetailActivity2.Companion.navigation(requireContext(), response.hotel.getId(), dialog.getStartBean(), dialog.getEndBean(), "", "", "");
                     break;
                 case SameCityType.Mechanism:
                     Bundle b = new Bundle();
@@ -184,7 +184,7 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
                     startActivity(MechanismActivity.class, b);
                     break;
                 case SameCityType.TouristAttraction:
-                    TouristAttractionDetailActivity.goTo(context, response.getTravel().getId());
+                    TravelDetailActivity.Companion.navigation(requireContext(), getId());
                     break;
                 case SameCityType.Store:
                     Bundle bundle = new Bundle();

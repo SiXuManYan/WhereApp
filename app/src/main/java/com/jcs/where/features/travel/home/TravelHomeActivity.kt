@@ -24,11 +24,10 @@ import com.jcs.where.features.home.HomeRecommendAdapter
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.mechanism.MechanismActivity
+import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.map.TravelMapActivity
 import com.jcs.where.frams.common.Html5Url
-import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.news.NewsDetailActivity
-import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
@@ -84,12 +83,12 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                     when (category.type) {
                         1 -> {
                             // 酒店
-                            startActivity(HotelHomeActivity::class.java,Bundle().apply {
+                            startActivity(HotelHomeActivity::class.java, Bundle().apply {
                                 putInt(Constant.PARAM_CATEGORY_ID, childId)
                             })
                         }
                         2 -> {
-                            TravelMapActivity.navigation(this@TravelHomeActivity,childId)
+                            TravelMapActivity.navigation(this@TravelHomeActivity, childId)
                         }
                     }
                 }
@@ -196,7 +195,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
-                        TouristAttractionDetailActivity.goTo(this@TravelHomeActivity, data.id)
+                        TravelDetailActivity.navigation(this@TravelHomeActivity, data.id)
                     }
                 }
 
@@ -254,9 +253,19 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
 //                                "",
 //                                1
 //                            )
-                            HotelDetailActivity2.navigation(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean, "", "", "")
+                            HotelDetailActivity2.navigation(
+                                this@TravelHomeActivity,
+                                data.id,
+                                dialog.startBean,
+                                dialog.endBean,
+                                "",
+                                "",
+                                ""
+                            )
                         }
-                        2 -> TouristAttractionDetailActivity.goTo(this@TravelHomeActivity, data.target_id)
+                        2 -> {
+                            TravelDetailActivity.navigation(this@TravelHomeActivity, data.target_id)
+                        }
                         3 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {
                             putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
                         })

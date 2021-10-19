@@ -11,6 +11,7 @@ import com.jcs.where.api.response.travel.TravelChild
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -111,7 +112,7 @@ class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChild
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
-        // todo 旅游详情
+        TravelDetailActivity.navigation(requireContext(),data.id)
     }
 
 

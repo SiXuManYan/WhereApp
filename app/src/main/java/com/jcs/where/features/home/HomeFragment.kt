@@ -34,15 +34,14 @@ import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.recommend.StoreRecommendActivity
+import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.home.TravelHomeActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
 import com.jcs.where.hotel.activity.CityPickerActivity
-import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.news.NewsActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity
-import com.jcs.where.travel.TouristAttractionDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.SPKey
@@ -99,7 +98,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         initRecommend()
         initScroll()
     }
-
 
 
     private fun initCity() {
@@ -292,8 +290,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
                         val dialog = JcsCalendarDialog()
                         dialog.initCalendar(this@HomeFragment.activity)
-                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
-//                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
+//                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
+                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
                         startActivity(MechanismActivity::class.java, Bundle().apply {
@@ -306,7 +304,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
-                        TouristAttractionDetailActivity.goTo(this@HomeFragment.activity, data.id)
+                        TravelDetailActivity.navigation(requireContext(), data.id)
                     }
                 }
 
@@ -489,22 +487,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         1 -> {
                             val dialog = JcsCalendarDialog()
                             dialog.initCalendar(this@HomeFragment.activity)
-//                            HotelDetailActivity.goTo(
-//                                this@HomeFragment.activity,
-//                                data.target_id,
-//                                dialog.startBean,
-//                                dialog.endBean,
-//                                1,
-//                                "",
-//                                "",
-//                                1
-//                            )
-
                             HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
 
                         }
                         2 -> {
-                            TouristAttractionDetailActivity.goTo(this@HomeFragment.activity, data.target_id)
+                            TravelDetailActivity.navigation(requireContext(), data.target_id)
                         }
                         3 -> {
                             startActivity(NewsDetailActivity::class.java, Bundle().apply {

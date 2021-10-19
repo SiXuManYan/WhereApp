@@ -21,5 +21,6 @@ class HotelComment {
     var username = ""
     var avatar = ""
     var content = ""
+    var star_level = 0.0f
 
 }

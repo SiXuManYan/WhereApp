@@ -11,7 +11,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelOrderDetail
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.hotel.comment.post.HotelCommentPostActivity
+import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -255,13 +255,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                             text = getString(R.string.to_review)
                             visibility = View.VISIBLE
                             setOnClickListener {
-
-                                startActivityAfterLogin(HotelCommentPostActivity::class.java, Bundle().apply {
-                                    putInt(Constant.PARAM_ORDER_ID, order_id)
-                                    putInt(Constant.PARAM_HOTEL_ID, hotelData.id)
-                                })
-
-
+                                CommentPostActivity.navigation(this@OrderDetailActivity2,0,hotelData.id,order_id)
                             }
                         } else {
                             visibility = View.GONE

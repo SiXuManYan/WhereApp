@@ -1,6 +1,9 @@
-package com.jcs.where.features.gourmet.comment.post
+package com.jcs.where.features.comment
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -17,15 +20,27 @@ import org.greenrobot.eventbus.EventBus
 
 
 /**
- * Created by Wangsw  2021/8/17 17:25.
- * 美食评价
+ * Created by Wangsw  2021/10/19 15:04.
+ * 发表评价
+ * 0 酒店
+ * 1 旅游
  */
-class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), FoodCommentPostView {
+class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView {
 
-
+    /** 订单id */
     private var orderId = 0
-    private var restaurantId = 0
-    private var type = 0
+
+    /** 业务id 如：酒店id  旅游id */
+    private var targetId = 0
+
+    /** 评论类型( 0 酒店 , 1 旅游) */
+    private var commentType = 0
+
+    /** 名称 */
+    private var name = ""
+
+    /** 头像 */
+    private var avatar = ""
 
 
     private lateinit var mImageAdapter: StoreRefundAdapter
@@ -34,11 +49,61 @@ class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), Foo
 
     override fun isStatusDark(): Boolean = true
 
+    companion object {
+
+        /**
+         * @param commentType  评论类型( 0 酒店 , 1 旅游)
+         * @param targetId 业务id （酒店、旅游）
+         * @param orderId 订单id(如需要)
+         * @param name 名字(如需要)
+         * @param avatar 名字(如需要)
+         *
+         */
+        fun navigation(
+            context: Context,
+            commentType: Int,
+            targetId: Int,
+            orderId: Int? = null,
+            name: String? = "",
+            avatar: String? = "",
+        ) {
+
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_TYPE, commentType)
+                putInt(Constant.PARAM_ID, targetId)
+
+                orderId?.let {
+                    putInt(Constant.PARAM_ORDER_ID, it)
+                }
+
+                name?.let {
+                    putString(Constant.PARAM_NAME, it)
+                }
+
+                avatar?.let {
+                    putString(Constant.PARAM_AVATAR, it)
+                }
+
+            }
+            val intent = Intent(context, CommentPostActivity::class.java)
+                .putExtras(bundle)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
+
+
     override fun initView() {
         intent.extras?.let {
-            orderId = it.getInt(Constant.PARAM_ORDER_ID)
-            restaurantId = it.getInt(Constant.PARAM_RESTAURANT_ID)
-            type = it.getInt(Constant.PARAM_TYPE)
+            commentType = it.getInt(Constant.PARAM_TYPE,0)
+            targetId = it.getInt(Constant.PARAM_ID,0)
+            orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
+            name = it.getString(Constant.PARAM_NAME, "")
+            avatar = it.getString(Constant.PARAM_AVATAR, "")
         }
 
         // 相册
@@ -46,11 +111,7 @@ class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), Foo
             addChildClickViewIds(R.id.delete_iv)
             setOnItemChildClickListener { adapter, view, position ->
                 when (view.id) {
-                    R.id.delete_iv -> {
-                        mImageAdapter.removeAt(position)
-                    }
-                    else -> {
-                    }
+                    R.id.delete_iv -> mImageAdapter.removeAt(position)
                 }
             }
         }
@@ -64,9 +125,8 @@ class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), Foo
     }
 
     override fun initData() {
-        presenter = FoodCommentPostPresenter(this)
-        presenter.restaurantId = restaurantId
-        presenter.commmentType = type
+        presenter = CommentPostPresenter(this)
+        presenter.targetId = targetId
     }
 
     override fun bindListener() {
@@ -85,10 +145,18 @@ class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), Foo
             val content = content_et.text.toString().trim()
 
             if (mImageAdapter.data.isNotEmpty()) {
-                presenter.upLoadImage(orderId, rating, content, ArrayList(mImageAdapter.data))
-            } else {
-                presenter.commitStoreComment(orderId, rating, content, null)
+                presenter.upLoadImage(commentType, orderId, rating, content, ArrayList(mImageAdapter.data))
+                return@setOnClickListener
             }
+            when (commentType) {
+                0 -> presenter.postHotelComment(orderId, rating, content, null)
+                1 -> presenter.postTravelComment(rating, content)
+
+                else -> {
+                }
+            }
+
+
         }
 
         star_view.onChangeRatingByClickListener = object : OnChangeRatingByClickListener {
@@ -99,7 +167,6 @@ class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), Foo
         }
 
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -112,9 +179,11 @@ class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), Foo
         }
     }
 
+
     override fun commitSuccess() {
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         ToastUtils.showShort(R.string.commit_success)
         finish()
     }
+
 }

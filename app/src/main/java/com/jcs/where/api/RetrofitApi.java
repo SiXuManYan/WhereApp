@@ -23,6 +23,7 @@ import com.jcs.where.api.request.bills.BillsOrderCommit;
 import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.hotel.FoodCommitComment;
 import com.jcs.where.api.request.hotel.HotelCommitComment;
+import com.jcs.where.api.request.hotel.TravelCommitComment;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
@@ -111,6 +112,7 @@ import com.jcs.where.api.response.store.cart.StoreCartResponse;
 import com.jcs.where.api.response.store.comment.StoreCommentCount;
 import com.jcs.where.api.response.store.comment.StoreCommentDetail;
 import com.jcs.where.api.response.travel.TravelChild;
+import com.jcs.where.api.response.travel.TravelDetail;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
@@ -548,17 +550,6 @@ public interface RetrofitApi {
     @GET("travelapi/v2/travels/{travel_id}")
     Observable<JcsResponse<TouristAttractionDetailResponse>> getTouristAttractionDetail(@Path("travel_id") int touristAttractionId);
 
-    /**
-     * 收藏旅游景点
-     */
-    @POST("travelapi/v2/collects/{travel_id}")
-    Observable<JcsResponse<SuccessResponse>> postCollectTouristAttraction(@Path("travel_id") int travelId);
-
-    /**
-     * 取消收藏旅游景点
-     */
-    @DELETE("travelapi/v2/collects/{travel_id}")
-    Observable<JcsResponse<SuccessResponse>> delCollectTouristAttraction(@Path("travel_id") int travelId);
 
     /**
      * 获得旅游景点评论列表
@@ -1508,6 +1499,18 @@ public interface RetrofitApi {
     @POST("hotelapi/v2/hotel/comment")
     Observable<JcsResponse<JsonElement>> commitHotelComment(@Body HotelCommitComment request);
 
+
+
+    /**
+     * 旅游提交评价
+     */
+    @POST("travelapi/v2/comments")
+    Observable<JcsResponse<JsonElement>> commitTravelComment(@Body TravelCommitComment request);
+
+
+
+
+
     /**
      * 美食提交评价
      */
@@ -1656,5 +1659,34 @@ public interface RetrofitApi {
             @Query("lat") double lat,
             @Query("lng") double lng);
 
+
+    /**
+     * 旅游详情
+     */
+    @GET("travelapi/v2/travels/{travel_id}")
+    Observable<JcsResponse<TravelDetail>> getTravelDetail(@Path("travel_id") int travelId);
+
+
+    /**
+     * 收藏旅游景点
+     */
+    @POST("travelapi/v2/collects/{travel_id}")
+    Observable<JcsResponse<JsonElement>> travelCollection(@Path("travel_id") int travelId);
+
+    /**
+     * 取消收藏旅游景点
+     */
+    @DELETE("travelapi/v2/collects/{travel_id}")
+    Observable<JcsResponse<JsonElement>> travelUnCollection(@Path("travel_id") int travelId);
+
+
+    /**
+     * 旅游评论
+     */
+    @GET("travelapi/v2/comments/{travel_id}")
+    Observable<JcsResponse<PageResponse<HotelComment>>> travelComment(
+            @Query("page") int page,
+            @Path("travel_id") int touristAttractionId
+    );
 
 }

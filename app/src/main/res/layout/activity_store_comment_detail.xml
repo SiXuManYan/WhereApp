@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     tools:itemCount="1"
-                    tools:layout_height="@dimen/dp_59"
+                    tools:layout_height="@dimen/dp_76"
                     tools:listitem="@layout/item_refund_image" />
 
 

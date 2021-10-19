@@ -17,13 +17,13 @@ import com.jcs.where.api.response.FootprintResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2;
 import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.features.store.detail.StoreDetailActivity;
-import com.jcs.where.hotel.activity.HotelDetailActivity;
+import com.jcs.where.features.travel.detail.TravelDetailActivity;
 import com.jcs.where.mine.adapter.FootprintListAdapter;
 import com.jcs.where.mine.model.FootprintModel;
 import com.jcs.where.mine.view_type.FootprintType;
-import com.jcs.where.travel.TouristAttractionDetailActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 
@@ -100,10 +100,10 @@ public class FootprintActivity extends BaseActivity {
             case FootprintType.Hotel:
                 JcsCalendarDialog dialog = new JcsCalendarDialog();
                 dialog.initCalendar(this);
-                HotelDetailActivity.goTo(this, dtoId, dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                HotelDetailActivity2.Companion.navigation(this, dtoId, dialog.getStartBean(), dialog.getEndBean(), "", "", "");
                 break;
             case FootprintType.TouristAttraction:
-                TouristAttractionDetailActivity.goTo(this, dtoId);
+                TravelDetailActivity.Companion.navigation(this, dtoId);
                 break;
             case FootprintType.Mechanism:
                 Bundle b = new Bundle();

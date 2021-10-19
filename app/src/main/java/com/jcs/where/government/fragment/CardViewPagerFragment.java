@@ -13,7 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.jcs.where.R;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.travel.TouristAttractionDetailActivity;
+import com.jcs.where.features.travel.detail.TravelDetailActivity;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MapMarkerUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -97,7 +97,7 @@ public class CardViewPagerFragment extends BaseFragment {
 
     public void onPageClicked(int position) {
         int mechanismId = mAdapter.mData.get(position).getId();
-        TouristAttractionDetailActivity.goTo(getContext(), mechanismId);
+        TravelDetailActivity.Companion.navigation(requireContext(), mechanismId);
     }
 
     public void selectPosition(int selectPosition) {

@@ -11,10 +11,9 @@ import com.jcs.where.api.response.search.SearchResultResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.main.MainActivity
 import com.jcs.where.features.mechanism.MechanismActivity
-import com.jcs.where.home.HomeActivity
-import com.jcs.where.hotel.activity.HotelDetailActivity
-import com.jcs.where.travel.TouristAttractionDetailActivity
+import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.calendar.JcsCalendarDialog
@@ -55,7 +54,7 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
                 R.mipmap.ic_empty_search, R.string.empty_search,
                 R.string.empty_search_hint, R.string.back_home
             ) {
-                startActivityClearTop(HomeActivity::class.java, null)
+                startActivityClearTop(MainActivity::class.java, null)
             }
 
         }
@@ -104,8 +103,10 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
 //                HotelDetailActivity.goTo(this, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                 HotelDetailActivity2.navigation(this, data.id, dialog.startBean, dialog.endBean, "", "", "")
             }
-            SearchResultResponse.TYPE_2_TRAVEL -> TouristAttractionDetailActivity.goTo(this, data.id)
-            SearchResultResponse.TYPE_3_SERVICE ->{
+            SearchResultResponse.TYPE_2_TRAVEL -> {
+                TravelDetailActivity.navigation(this@SearchAllResultActivity, data.id)
+            }
+            SearchResultResponse.TYPE_3_SERVICE -> {
                 startActivity(MechanismActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_ID, data.id)
                 })

@@ -23,7 +23,7 @@ import java.util.*
 
 /**
  * Created by Wangsw  2021/10/13 15:17.
- *
+ *  酒店预订房间
  */
 class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, NumberView2.OnValueChangeListener {
 

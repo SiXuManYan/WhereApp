@@ -17,9 +17,9 @@ import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
+import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.travel.map.TravelMapActivity
-import com.jcs.where.hotel.activity.HotelActivity
 import com.jcs.where.utils.*
 import com.jcs.where.yellow_page.activity.YellowPageActivity
 import java.util.*
@@ -139,9 +139,10 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
                         })
                     }
                     TYPE_HOTEL -> {
-                        startActivity(HotelActivity::class.java, Bundle().apply {
-                            putString(HotelActivity.K_CATEGORY_ID, it.id.toString())
+                        startActivity(HotelHomeActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_CATEGORY_ID, it.id)
                         })
+
                     }
                     TYPE_TOURISM -> {
                         TravelMapActivity.navigation(context,it.id)

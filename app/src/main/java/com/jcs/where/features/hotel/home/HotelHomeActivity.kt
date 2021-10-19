@@ -25,7 +25,7 @@ import java.util.*
 
 /**
  * Created by Wangsw  2021/9/13 14:47.
- * 酒店详情
+ * 酒店首页
  */
 class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView, NumberView2.OnValueChangeListener,
     HotelStarDialog.HotelStarCallback, JcsCalendarDialog.OnDateSelectedListener {

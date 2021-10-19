@@ -18,15 +18,14 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.features.hotel.comment.post.HotelCommentPostActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
-import com.jcs.where.hotel.activity.HotelDetailActivity
 import com.jcs.where.utils.*
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.calendar.JcsCalendarDialog
@@ -140,10 +139,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_review)
                 right_tv.setOnClickListener {
-                    startActivityAfterLogin(HotelCommentPostActivity::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_ORDER_ID, item.id)
-                        putInt(Constant.PARAM_HOTEL_ID, item.model_id)
-                    })
+                    CommentPostActivity.navigation(context, 0, item.model_id, item.id)
                 }
             }
             else -> {

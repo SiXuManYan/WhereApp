@@ -14,10 +14,10 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
+import com.jcs.where.features.hotel.book.HotelBookActivity
 import com.jcs.where.features.order.parent.OrderActivity
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.features.store.pay.info.PayInfoActivity
-import com.jcs.where.hotel.activity.HotelSubscribeActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_pay.*
@@ -79,8 +79,10 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                     return false
                 }
             }
-            addItemDecoration(DividerDecoration(getColor(R.color.colorPrimary), SizeUtils.dp2px(20f),
-                    0, 0).apply { setDrawHeaderFooter(false) })
+            addItemDecoration(DividerDecoration(
+                getColor(R.color.colorPrimary), SizeUtils.dp2px(20f),
+                0, 0
+            ).apply { setDrawHeaderFooter(false) })
         }
     }
 
@@ -133,34 +135,34 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
 
     private fun onBackClick() {
         AlertDialog.Builder(this)
-                .setTitle(R.string.prompt)
-                .setMessage(R.string.give_up_payment_hint)
-                .setCancelable(false)
-                .setPositiveButton(R.string.continue_to_pay) { dialogInterface, i ->
-                    dialogInterface.dismiss()
-                }
-                .setNegativeButton(R.string.give_up) { dialogInterface, i ->
+            .setTitle(R.string.prompt)
+            .setMessage(R.string.give_up_payment_hint)
+            .setCancelable(false)
+            .setPositiveButton(R.string.continue_to_pay) { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton(R.string.give_up) { dialogInterface, i ->
 
-                    handleNegative()
+                handleNegative()
 
 
 
-                    dialogInterface.dismiss()
-                    finish()
-                }
-                .create().show()
+                dialogInterface.dismiss()
+                finish()
+            }
+            .create().show()
     }
 
     private fun handleNegative() {
 
         // 1.任务栈内存在各个提交订单activity时，跳转至订单列表
 
-        val hotel = ActivityUtils.isActivityExistsInStack(HotelSubscribeActivity::class.java)
+        val hotel = ActivityUtils.isActivityExistsInStack(HotelBookActivity::class.java)
         val food = ActivityUtils.isActivityExistsInStack(OrderSubmitActivity::class.java)
         val takeaway = ActivityUtils.isActivityExistsInStack(OrderSubmitTakeawayActivity::class.java)
         val store = ActivityUtils.isActivityExistsInStack(StoreOrderCommitActivity::class.java)
 
-        if (hotel || food || takeaway||store ) {
+        if (hotel || food || takeaway || store) {
 
             // 2.关闭各个类型的提交订单页
             EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CANCEL_PAY))

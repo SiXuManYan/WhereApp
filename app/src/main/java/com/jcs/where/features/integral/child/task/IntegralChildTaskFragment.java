@@ -22,9 +22,9 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2;
 import com.jcs.where.features.mechanism.MechanismActivity;
-import com.jcs.where.hotel.activity.HotelDetailActivity;
-import com.jcs.where.travel.TouristAttractionDetailActivity;
+import com.jcs.where.features.travel.detail.TravelDetailActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.widget.calendar.JcsCalendarDialog;
 import com.jcs.where.widget.list.DividerDecoration;
@@ -168,7 +168,7 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
             case HomeRecommendResponse.MODULE_TYPE_1_HOTEL:
                 JcsCalendarDialog dialog = new JcsCalendarDialog();
                 dialog.initCalendar(getActivity());
-                HotelDetailActivity.goTo(getActivity(), data.id, dialog.getStartBean(), dialog.getEndBean(), 1, "", "", 1);
+                HotelDetailActivity2.Companion.navigation(requireContext(), data.id, dialog.getStartBean(), dialog.getEndBean(), "", "", "");
                 break;
             case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
                 Bundle b = new Bundle();
@@ -181,7 +181,7 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
                 startActivity(RestaurantDetailActivity.class, bundle);
                 break;
             case HomeRecommendResponse.MODULE_TYPE_4_TRAVEL:
-                TouristAttractionDetailActivity.goTo(getActivity(), data.id);
+                TravelDetailActivity.Companion.navigation(requireContext(), data.id);
                 break;
             default:
                 break;

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -13,6 +14,7 @@ import com.jcs.where.features.store.refund.StoreRefundAdapter
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.OnChangeRatingByClickListener
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_comment_post.*
@@ -99,8 +101,8 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
 
     override fun initView() {
         intent.extras?.let {
-            commentType = it.getInt(Constant.PARAM_TYPE,0)
-            targetId = it.getInt(Constant.PARAM_ID,0)
+            commentType = it.getInt(Constant.PARAM_TYPE, 0)
+            targetId = it.getInt(Constant.PARAM_ID, 0)
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
             name = it.getString(Constant.PARAM_NAME, "")
             avatar = it.getString(Constant.PARAM_AVATAR, "")
@@ -119,6 +121,13 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
         image_rv.apply {
             adapter = mImageAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+        if (name.isNotBlank()) {
+            target_user_ll.visibility = View.VISIBLE
+            name_tv.text = name
+            GlideUtil.load(this, avatar, image_iv, 5)
+        } else {
+            target_user_ll.visibility = View.VISIBLE
         }
 
 

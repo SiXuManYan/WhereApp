@@ -1685,8 +1685,8 @@ public interface RetrofitApi {
      */
     @GET("travelapi/v2/comments/{travel_id}")
     Observable<JcsResponse<PageResponse<HotelComment>>> travelComment(
-            @Query("page") int page,
-            @Path("travel_id") int touristAttractionId
+            @Path("travel_id") int touristAttractionId,
+            @Query("page") int page
     );
 
 }

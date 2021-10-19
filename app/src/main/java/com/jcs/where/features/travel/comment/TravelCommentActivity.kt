@@ -17,8 +17,6 @@ import kotlinx.android.synthetic.main.activity_travel_comment.recycler
 import kotlinx.android.synthetic.main.activity_travel_comment.swipe_layout
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
 
-
-
 /**
  * Created by Wangsw  2021/10/19 14:35.
  * 旅游评论
@@ -111,14 +109,14 @@ class TravelCommentActivity : BaseMvpActivity<TravelCommentPresenter>(), TravelC
 }
 
 
-interface TravelCommentView : BaseMvpView,SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
+interface TravelCommentView : BaseMvpView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
     fun bindData(data: MutableList<HotelComment>, lastPage: Boolean)
 
 }
 
 class TravelCommentPresenter(private var view: TravelCommentView) : BaseMvpPresenter(view) {
     fun getDetail(page: Int, travelId: Int) {
-        requestApi(mRetrofit.travelComment(page, travelId), object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
+        requestApi(mRetrofit.travelComment(travelId, page), object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
 
             override fun onSuccess(response: PageResponse<HotelComment>) {
                 val isLastPage = response.lastPage == page

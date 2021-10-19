@@ -26,7 +26,7 @@ class TravelDetail  {
     var lng = 0.0
     var grade = 0.0f
     var comments_count = 0
-    var is_collect = 0
+
 
 
     /**
@@ -46,7 +46,7 @@ class TravelDetail  {
     /**
      * 	收藏状态（1：已收藏，2：未收藏）
      */
-    val collect_status = 0
+    val is_collect = 0
 
 
 

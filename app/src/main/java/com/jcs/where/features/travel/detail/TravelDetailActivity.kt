@@ -47,10 +47,10 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
     private var mLng = 0.0
 
     /** 景点名称 */
-    private var name  = ""
+    private var name = ""
 
     /** 景点图片 */
-    private var  image  = ""
+    private var image = ""
 
     /** 轮播 */
     private lateinit var mMediaAdapter: DetailMediaAdapter
@@ -91,7 +91,6 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
         val bundle = intent.extras ?: return
         bundle.apply {
             travelId = getInt(Constant.PARAM_ID)
-
         }
     }
 
@@ -184,6 +183,7 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
 
     override fun initData() {
         presenter = TravelDetailPresenter(this)
+        presenter.getData(travelId)
     }
 
     private fun setLikeImage() {
@@ -280,12 +280,12 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
             })
         }
         write_comment_ll.setOnClickListener {
-            CommentPostActivity.navigation(this,1,travelId)
+            CommentPostActivity.navigation(this, 1, travelId, null, name, image)
         }
     }
 
     override fun bindDetail(response: TravelDetail, mediaList: ArrayList<MediaData>) {
-        collect_status = response.collect_status
+        collect_status = response.is_collect
         businessPhone = response.phone
         setLikeImage()
 
@@ -297,11 +297,11 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
         mMediaAdapter.setNewInstance(mediaList)
         point_view.setPointCount(mediaList.size)
 
-         name = response.name
+        name = response.name
         name_tv.text = name
         score_tv.text = response.grade.toString()
 
-        time_tv.text = response.start_time
+        (response.start_time + "-" + response.end_time).also { time_tv.text = it }
         phone_tv.text = response.phone
         address_tv.text = response.address
 
@@ -312,7 +312,7 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
         desc_tv.text = response.content
         notice_tv.text = response.notice
 
-        comment_count_tv.text = getString(R.string.comment_format,response.comments_count)
+        comment_count_tv.text = getString(R.string.comment_format, response.comments_count)
 
     }
 

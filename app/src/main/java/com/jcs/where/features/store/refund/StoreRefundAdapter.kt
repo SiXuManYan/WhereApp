@@ -18,7 +18,7 @@ class StoreRefundAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.ite
     override fun convert(holder: BaseViewHolder, item: String) {
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val delete_iv = holder.getView<ImageView>(R.id.delete_iv)
-        GlideUtil.load(context, item, image_iv)
+        GlideUtil.load(context, item, image_iv, 8)
 
         if (hideDelete) {
             delete_iv.visibility = View.GONE

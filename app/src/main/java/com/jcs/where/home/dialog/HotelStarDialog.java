@@ -1,8 +1,8 @@
 package com.jcs.where.home.dialog;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
@@ -13,7 +13,6 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseBottomDialog;
 import com.jcs.where.utils.BigDecimalUtil;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,9 @@ import java.util.List;
 
 public class HotelStarDialog extends BaseBottomDialog implements View.OnClickListener {
 
-    private TextView priceTv;
+    private ImageView close;
+    private TextView price_start_tv;
+    private TextView price_end_tv;
     private Button ensureBtn;
     private TextView price0To1, price1To2, price2To5, priceAbove5;
     private TextView starLessThan2, star3, star4, star5;
@@ -58,14 +59,17 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
      */
     private StarBean mSelectStartBean = new StarBean();
 
+
     @Override
     protected int getLayout() {
-        return R.layout.dialog_hotel_star;
+        return R.layout.dialog_hotel_star_2;
     }
 
     @Override
     protected void initView(View view) {
-        priceTv = view.findViewById(R.id.priceTv);
+        close = view.findViewById(R.id.close);
+        price_start_tv = view.findViewById(R.id.price_start_tv);
+        price_end_tv = view.findViewById(R.id.price_end_tv);
         ensureBtn = view.findViewById(R.id.ensureBtn);
 
         price0To1 = view.findViewById(R.id.price0To1);
@@ -140,6 +144,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
     @Override
     protected void bindListener() {
+        close.setOnClickListener(v -> dismiss());
         ensureBtn.setOnClickListener(this);
 
         int priceSize = priceTvs.size();
@@ -180,15 +185,12 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
                 float leftProgress = mSeekBar.getLeftSeekBar().getProgress();
                 float rightProgress = mSeekBar.getRightSeekBar().getProgress();
 
-                StringBuilder priceShow = new StringBuilder(getString(R.string.price_unit));
-                priceShow
-                        .append(" ")
-                        .append(mDecimalFormat.format(leftProgress / 10))
-                        .append("-")
-                        .append(mDecimalFormat.format(rightProgress / 10))
-                        .append("k");
+                String startPrice = mDecimalFormat.format(leftProgress / 10) + "k";
+                String endPrice = mDecimalFormat.format(rightProgress / 10) + "k";
 
-                priceTv.setText(priceShow);
+                price_start_tv.setText(getString(R.string.price_unit_format, startPrice));
+                price_end_tv.setText(getString(R.string.price_unit_format, endPrice));
+
                 unSelectByList(null, priceTvs);
 
                 //
@@ -234,7 +236,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
     @Override
     protected int getHeight() {
-        return 388;
+        return 540;
     }
 
     @Override
@@ -242,7 +244,8 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
         if (view instanceof Button) {
             //点击了确定
-            StringBuilder callbackToShow = new StringBuilder(priceTv.getText().toString());
+            StringBuilder callbackToShow = new StringBuilder(price_start_tv.getText() + "-" + price_end_tv.getText());
+
             if (mSelectStartBean != null) {
                 callbackToShow.append("，").append(mSelectStartBean.starShow);
             }
@@ -258,13 +261,22 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
             view.setSelected(true);
             PriceIntervalBean priceIntervalBean = priceBeans.get(view);
             if (priceIntervalBean != null) {
-                Log.e("HotelStarDialog", "----onClick---" + priceIntervalBean.toString());
                 //说明点击的是价格
-                priceTv.setText(priceIntervalBean.priceShow);
+
                 int start = priceIntervalBean.startProgress;
                 int end = priceIntervalBean.endProgress;
                 mSeekBar.setProgress(start, end);
+
+                String startPrice = mDecimalFormat.format(start / 10) + "k";
+                String endPrice = mDecimalFormat.format(end / 10) + "k";
+
+
+                price_start_tv.setText(getString(R.string.price_unit_format, startPrice));
+                price_end_tv.setText(getString(R.string.price_unit_format, endPrice));
+
                 mPriceBeans = priceIntervalBean;
+
+
             }
 
             StarBean starBean = starBeans.get(view);
@@ -303,7 +315,9 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         for (int i = 0; i < scoreSize; i++) {
             scoreTvs.get(i).setSelected(false);
         }
-        priceTv.setText("");
+        price_start_tv.setText("");
+        price_end_tv.setText("");
+
     }
 
     public static class PriceIntervalBean {
@@ -311,7 +325,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         public int startProgress;
         public int endProgress;
         public String priceShow = "";
-        public int startPrice ;
+        public int startPrice;
         public int endPrice;
 
         public PriceIntervalBean() {

@@ -101,6 +101,21 @@
         <item name="android:focusable">true</item>
     </style>
 
+
+    <style name="hotel_star_tv_2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_35</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/selector_hotel_star_tag</item>
+        <item name="android:background">@drawable/selector_hotel_star</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:selectable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+
     <style name="hotel_star_star_tv" parent="hotel_star_tv">
         <item name="rightDrawableList">@drawable/selector_hotel_star_icon</item>
         <item name="rightDrawableListWidth">@dimen/dp_11</item>

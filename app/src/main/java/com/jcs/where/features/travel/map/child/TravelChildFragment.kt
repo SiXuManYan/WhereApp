@@ -80,7 +80,8 @@ class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChild
     }
 
     override fun onLoadMore() {
-
+        page++
+        loadOnVisible()
     }
 
 

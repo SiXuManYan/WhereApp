@@ -3,8 +3,6 @@ package com.jcs.where.features.hotel.comment.child
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -13,7 +11,6 @@ import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelComment
 import com.jcs.where.features.store.detail.comment.chiild.StoreCommentImageAdapter
 import com.jcs.where.utils.GlideUtil
-import com.jcs.where.widget.list.DividerDecoration
 import com.jcs.where.widget.ratingstar.RatingStarView
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -35,7 +32,12 @@ class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.lay
 
         GlideUtil.load(context, item.avatar, avatar_civ)
         name_tv.text = item.username
-        star_rs.rating = item.star
+        if (item.star > 0.0f) {
+            star_rs.rating = item.star
+        }else{
+            star_rs.rating = item.star_level
+        }
+
         comment_time_tv.text = item.created_at
         content_tv.text = item.content
 

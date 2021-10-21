@@ -20,15 +20,16 @@
     <string name="show_price_with_forward_unit_f">₱%1$.2f</string>
     <string name="prompt_star">Star Rating</string>
     <string name="prompt_price_star">Price/Star/Score</string>
+    <string name="prompt_price_star_title">Select Price/Star/Score</string>
     <string name="score_prompt">Score</string>
     <string name="start_less_than_2">&#8804;2</string>
     <string name="digital_3">3</string>
     <string name="digital_4">4</string>
     <string name="digital_5">5</string>
-    <string name="score_3_0">3.0 \n Good</string>
-    <string name="score_3_5">3.5 \n Fabulous</string>
-    <string name="score_4_0">4.0 \n Superb</string>
-    <string name="score_4_5">4.5 \n Exceptional</string>
+    <string name="score_3_0">3.0&#160;Good</string>
+    <string name="score_3_5">3.5&#160;Fabulous</string>
+    <string name="score_4_0">4.0&#160;Superb</string>
+    <string name="score_4_5">4.5&#160;Exceptional</string>
     <string name="ensure">Confirm</string>
     <string name="select_date">Dates</string>
     <string name="calendar_sunday">Sun</string>
@@ -857,5 +858,6 @@ Gentleman must let go</string>
     <string name="tourist_notice_title">Tourist Notice</string>
     <string name="write_comment">Comment</string>
     <string name="all_comment">All comment</string>
+    <string name="default_time">1 night total</string>
 
 </resources>

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.HotelCollectionRequest
 import com.jcs.where.api.response.HotelRoomListResponse
 import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.hotel.activity.detail.MediaData
@@ -53,7 +54,12 @@ class HotelDetailPresenter(private var view: HotelDetailView) : BaseMvpPresenter
 
 
     fun collection(infoId: Int) {
-        requestApi(mRetrofit.postCollectHotel(infoId), object : BaseMvpObserver<JsonElement>(view) {
+
+        val apply = HotelCollectionRequest().apply {
+            hotel_id = infoId
+        }
+
+        requestApi(mRetrofit.postCollectHotel(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.collectionHandleSuccess(true)
             }
@@ -61,8 +67,10 @@ class HotelDetailPresenter(private var view: HotelDetailView) : BaseMvpPresenter
     }
 
     fun unCollection(infoId: Int) {
-
-        requestApi(mRetrofit.delCollectHotel(infoId), object : BaseMvpObserver<JsonElement>(view) {
+        val apply = HotelCollectionRequest().apply {
+            hotel_id = infoId
+        }
+        requestApi(mRetrofit.delCollectHotel(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.collectionHandleSuccess(false)
             }

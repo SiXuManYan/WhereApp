@@ -8,6 +8,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundAdapter
@@ -149,7 +150,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
             FeaturesUtil.handleMediaSelect(this, Constant.IMG, max)
         }
         commit_tv.setOnClickListener {
-
+            commit_tv.isClickable = false
             val rating = star_view.rating.toInt()
             val content = content_et.text.toString().trim()
 
@@ -193,6 +194,11 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         ToastUtils.showShort(R.string.commit_success)
         finish()
+    }
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        commit_tv.isClickable = true
     }
 
 }

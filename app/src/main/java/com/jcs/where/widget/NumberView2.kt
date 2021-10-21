@@ -66,8 +66,8 @@ class NumberView2 : LinearLayout {
 
                 if (!alwaysEnableCut) {
                     cut_iv.visibility = View.INVISIBLE
-                    value_tv.visibility = View.INVISIBLE
                 }
+                value_tv.visibility = View.VISIBLE
             } else {
                 cut_iv.visibility = View.VISIBLE
                 value_tv.visibility = View.VISIBLE
@@ -108,13 +108,15 @@ class NumberView2 : LinearLayout {
         } else {
             count
         }
-        if (goodNum > 0) {
+
+        if (goodNum > MIN_GOOD_NUM) {
             cut_iv.visibility = View.VISIBLE
-            value_tv.visibility = View.VISIBLE
+
         } else {
             cut_iv.visibility = View.INVISIBLE
-            value_tv.visibility = View.INVISIBLE
         }
+
+        value_tv.visibility = View.VISIBLE
         value_tv.text = goodNum.toString()
     }
 

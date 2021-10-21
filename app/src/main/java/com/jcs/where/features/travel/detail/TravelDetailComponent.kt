@@ -5,6 +5,7 @@ import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.TravelCollectionRequest
 import com.jcs.where.api.response.HotelRoomListResponse
 import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.api.response.travel.TravelDetail
@@ -54,7 +55,11 @@ class TravelDetailPresenter(private var view: TravelDetailView):BaseMvpPresenter
 
 
     fun collection(id: Int) {
-        requestApi(mRetrofit.travelCollection(id), object : BaseMvpObserver<JsonElement>(view) {
+        val apply = TravelCollectionRequest().apply {
+            travel_id = id
+        }
+
+        requestApi(mRetrofit.travelCollection(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.collectionHandleSuccess(true)
             }

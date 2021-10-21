@@ -266,9 +266,9 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
         }
         like_iv.setOnClickListener {
             if (collect_status == 1) {
-                presenter.unCollection(travelId)
-            } else {
                 presenter.collection(travelId)
+            } else {
+                presenter.unCollection(travelId)
             }
         }
         back_iv.setOnClickListener {

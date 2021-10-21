@@ -19,15 +19,16 @@
     <string name="show_price_with_forward_unit_f">₱%1$.2f</string>
     <string name="prompt_star">星级</string>
     <string name="prompt_price_star">价格/星级/评分</string>
+    <string name="prompt_price_star_title">选择价格/星级/评分</string>
     <string name="score_prompt">评分</string>
     <string name="start_less_than_2"><![CDATA[<2]]></string>
     <string name="digital_3">3</string>
     <string name="digital_4">4</string>
     <string name="digital_5">5</string>
-    <string name="score_3_0">3.0\n一般</string>
-    <string name="score_3_5">3.5\n满意</string>
-    <string name="score_4_0">4.0\n很好</string>
-    <string name="score_4_5">4.5\n超赞</string>
+    <string name="score_3_0">3.0&#160;一般</string>
+    <string name="score_3_5">3.5&#160;满意</string>
+    <string name="score_4_0">4.0&#160;很好</string>
+    <string name="score_4_5">4.5&#160;超赞</string>
     <string name="ensure">确定</string>
     <string name="select_date">选择日期</string>
     <string name="calendar_sunday">日</string>
@@ -863,6 +864,7 @@ Gentleman must let go</string>
     <string name="tourist_notice_title">游客须知</string>
     <string name="write_comment">写评论</string>
     <string name="all_comment">全部评价</string>
+    <string name="default_time">共1晚</string>
 
 
 </resources>

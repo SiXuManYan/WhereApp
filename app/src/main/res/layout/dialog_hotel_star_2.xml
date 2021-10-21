@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="540dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dp_15"
+    android:paddingEnd="@dimen/dp_15">
+
+
+    <RelativeLayout
+        android:id="@+id/title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44">
+
+        <TextView
+            android:id="@+id/calendarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/prompt_price_star"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_17" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_close_black" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/pricePrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:text="@string/price_prompt"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16">
+
+        <TextView
+            android:id="@+id/price_start_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue_377BFF"
+            android:textSize="@dimen/sp_13"
+            android:textStyle="bold"
+            tools:text="₱0.0k" />
+
+        <TextView
+            android:id="@+id/price_end_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/blue_377BFF"
+            android:textSize="@dimen/sp_13"
+            android:textStyle="bold"
+            tools:text="₱0.0k" />
+
+
+    </RelativeLayout>
+
+
+    <com.jaygoo.widget.RangeSeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rsb_gravity="bottom"
+        app:rsb_indicator_drawable="@drawable/seek_bar_indicator"
+        app:rsb_indicator_height="wrap_content"
+        app:rsb_indicator_padding_bottom="@dimen/dp_3"
+        app:rsb_indicator_padding_top="@dimen/dp_3"
+        app:rsb_indicator_show_mode="showWhenTouch"
+        app:rsb_indicator_width="@dimen/dp_43"
+        app:rsb_max="50"
+        app:rsb_mode="range"
+        app:rsb_progress_color="@color/blue_377BFF"
+        app:rsb_thumb_drawable="@drawable/seek_bar_thumb"
+        app:rsb_tick_mark_mode="number" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_13"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/price0To1"
+            style="@style/hotel_star_tv_2"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/price_0_to_1" />
+
+        <TextView
+            android:id="@+id/price1To2"
+            style="@style/hotel_star_tv_2"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/price_1_to_2" />
+
+        <TextView
+            android:id="@+id/price2To5"
+            style="@style/hotel_star_tv_2"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/price_2_to_5" />
+
+        <TextView
+            android:id="@+id/priceAbove5"
+            style="@style/hotel_star_tv_2"
+            android:text="@string/price_above_5" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/starPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/prompt_star"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:orientation="horizontal">
+
+        <com.jcs.where.widget.DrawableTextView
+            android:id="@+id/starLessThan2"
+            style="@style/hotel_star_tv_2"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/start_less_than_2" />
+
+        <com.jcs.where.widget.DrawableTextView
+            android:id="@+id/star3"
+            style="@style/hotel_star_tv_2"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/digital_3" />
+
+        <com.jcs.where.widget.DrawableTextView
+            android:id="@+id/star4"
+            style="@style/hotel_star_tv_2"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/digital_4" />
+
+        <com.jcs.where.widget.DrawableTextView
+            android:id="@+id/star5"
+            style="@style/hotel_star_tv_2"
+            android:text="@string/digital_5" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/scorePrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/score_prompt"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16">
+
+
+        <TextView
+            android:id="@+id/score_30"
+            style="@style/hotel_star_tv_2"
+            android:layout_width="@dimen/dp_78"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/score_3_0" />
+
+        <TextView
+            android:id="@+id/score_35"
+            style="@style/hotel_star_tv_2"
+            android:layout_width="@dimen/dp_78"
+            android:layout_height="@dimen/dp_44"
+            android:text="@string/score_3_5" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16">
+
+
+        <TextView
+            android:id="@+id/score_40"
+            style="@style/hotel_star_tv_2"
+            android:layout_width="@dimen/dp_78"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginEnd="@dimen/dp_9"
+            android:text="@string/score_4_0" />
+
+        <TextView
+            android:id="@+id/score_45"
+
+            style="@style/hotel_star_tv_2"
+            android:layout_width="@dimen/dp_78"
+            android:layout_height="@dimen/dp_44"
+            android:text="@string/score_4_5" />
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/ensureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:background="@drawable/shape_blue_radius_24"
+        android:gravity="center"
+        android:text="@string/ensure"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_17" />
+
+</LinearLayout>

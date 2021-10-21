@@ -8,10 +8,12 @@ import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
 import com.jcs.where.api.request.CollectionRequest;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
+import com.jcs.where.api.request.HotelCollectionRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.StoreOrderCommit;
+import com.jcs.where.api.request.TravelCollectionRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
 import com.jcs.where.api.request.WriteHotelCommentRequest;
 import com.jcs.where.api.request.account.BindPhoneRequest;
@@ -215,15 +217,14 @@ public interface RetrofitApi {
      * @param hotelId 酒店id
      */
     @POST("hotelapi/v2/collects")
-    Observable<JcsResponse<JsonElement>> postCollectHotel(@Query("hotel_id") int hotelId);
+    Observable<JcsResponse<JsonElement>> postCollectHotel(@Body HotelCollectionRequest request);
 
     /**
      * 取消收藏
      *
-     * @param hotelId 酒店id
      */
     @DELETE("hotelapi/v2/collects")
-    Observable<JcsResponse<JsonElement>> delCollectHotel(@Query("hotel_id") int hotelId);
+    Observable<JcsResponse<JsonElement>> delCollectHotel(@Body HotelCollectionRequest request);
 
 
     /**
@@ -1670,8 +1671,8 @@ public interface RetrofitApi {
     /**
      * 收藏旅游景点
      */
-    @POST("travelapi/v2/collects/{travel_id}")
-    Observable<JcsResponse<JsonElement>> travelCollection(@Path("travel_id") int travelId);
+    @POST("travelapi/v2/collects")
+    Observable<JcsResponse<JsonElement>> travelCollection(@Body TravelCollectionRequest travelCollectionRequest);
 
     /**
      * 取消收藏旅游景点

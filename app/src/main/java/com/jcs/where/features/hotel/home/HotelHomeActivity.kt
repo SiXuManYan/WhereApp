@@ -7,6 +7,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
@@ -50,7 +51,8 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         initList()
         initScroll()
         number_view.apply {
-            alwaysEnableCut = true
+            alwaysEnableCut = false
+            MIN_GOOD_NUM = 1
             cut_iv.setImageResource(R.mipmap.ic_cut_black)
             add_iv.setImageResource(R.mipmap.ic_add_black)
             updateNumber(1)
@@ -64,7 +66,6 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         bundle?.let {
             hotelCategoryId = bundle.getInt(Constant.PARAM_CATEGORY_ID, 0)
         }
-
 
 
     }
@@ -82,7 +83,15 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 //                val dialog = JcsCalendarDialog()
 //                dialog.initCalendar(this@HotelHomeActivity)
                 val hotel = mAdapter.data[position]
-                HotelDetailActivity2.navigation(this@HotelHomeActivity, hotel.id, mJcsCalendarDialog.startBean, mJcsCalendarDialog.endBean, "", "", "")
+                HotelDetailActivity2.navigation(
+                    this@HotelHomeActivity,
+                    hotel.id,
+                    mJcsCalendarDialog.startBean,
+                    mJcsCalendarDialog.endBean,
+                    "",
+                    "",
+                    ""
+                )
             }
         }
 
@@ -157,6 +166,13 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             setCallback(this@HotelHomeActivity)
         }
 
+        val today = System.currentTimeMillis()
+        val tomorrow = System.currentTimeMillis() + 1000 * 60 * 60 * 24
+
+
+
+        (TimeUtils.millis2String(today,"MM-dd") + " ~ " + TimeUtils.millis2String(tomorrow,"MM-dd")).also { date_tv.text = it }
+
     }
 
     private fun getLocation(handleClick: Boolean) {
@@ -168,6 +184,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
                             val locality = address.locality //市
                             name_tv.text = locality
                         }
+
                         override fun onGetLocation(lat: Double, lng: Double) {
                             CacheUtil.getShareDefault().put(Constant.SP_LATITUDE, lat.toFloat())
                             CacheUtil.getShareDefault().put(Constant.SP_LONGITUDE, lng.toFloat())
@@ -194,7 +211,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             mJcsCalendarDialog.show(supportFragmentManager)
         }
         inquire_tv.setOnClickListener {
-            HotelMapActivity.navigation(this,hotelCategoryId,"","","",mJcsCalendarDialog.startBean,mJcsCalendarDialog.endBean)
+            HotelMapActivity.navigation(this, hotelCategoryId, "", "", "", mJcsCalendarDialog.startBean, mJcsCalendarDialog.endBean)
         }
         back_iv.setOnClickListener {
             finish()
@@ -223,14 +240,14 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         mScoreBean: HotelStarDialog.ScoreBean
     ) {
 
-        (mPriceBeans.priceShow + " / "+mSelectStartBean.starShow+" / " + mScoreBean.scoreString).also { score_tv.text = it }
+        (mPriceBeans.priceShow + " / " + mSelectStartBean.starShow + " / " + mScoreBean.scoreString).also { score_tv.text = it }
 
     }
 
     override fun onDateSelected(startDate: JcsCalendarAdapter.CalendarBean, endDate: JcsCalendarAdapter.CalendarBean) {
         val start = mJcsCalendarDialog.startBean.showMonthDayDate
         val end = mJcsCalendarDialog.startBean.showMonthDayDate
-        date_tv.text =    getString(R.string.valid_period_format2 ,start,end)
+        date_tv.text = getString(R.string.valid_period_format2, start, end)
     }
 
 

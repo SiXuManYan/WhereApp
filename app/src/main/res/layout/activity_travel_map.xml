@@ -39,10 +39,18 @@
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_0">
 
-
+            <ImageView
+                android:id="@+id/search_iv"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_homesearch" />
             <TextView
                 android:id="@+id/search_tv"
                 android:layout_width="match_parent"
+                android:layout_toEndOf="@+id/search_iv"
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/delete_iv"
                 android:background="@null"

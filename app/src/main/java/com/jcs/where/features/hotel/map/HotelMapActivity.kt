@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
@@ -475,9 +476,15 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
         response.forEach {
 
-            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
-            val title_tv = view.findViewById<AppCompatCheckedTextView>(R.id.title_tv)
-            title_tv.text = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker_2, null)
+            view.findViewById<AppCompatCheckedTextView>(R.id.title_tv).apply {
+                text = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
+                isChecked = false
+            }
+
+            view.findViewById<ImageView>(R.id.triangle_iv).apply {
+                setImageResource(R.drawable.shape_triangle_down_white)
+            }
 
             val maker = map.addMarker(
                 MarkerOptions()
@@ -502,22 +509,31 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         // 所有 maker 设置成未选中
         makers.forEach {
             val makerTag = it?.tag as HotelHomeRecommend
-            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker_2, null)
             view.findViewById<AppCompatCheckedTextView>(R.id.title_tv).apply {
-                isChecked = false
                 text = StringUtils.getString(R.string.price_unit_format, makerTag.price.toPlainString())
+                isChecked = false
             }
+            view.findViewById<ImageView>(R.id.triangle_iv).apply {
+                setImageResource(R.drawable.shape_triangle_down_white)
+            }
+
             it.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
         }
         marker.hideInfoWindow()
 
         // 设置当前选中
         val makerTag = marker.tag as HotelHomeRecommend
-        val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker, null)
+        val view = LayoutInflater.from(this).inflate(R.layout.custom_info_hotel_maker_2, null)
         view.findViewById<AppCompatCheckedTextView>(R.id.title_tv).apply {
-            isChecked = true
             text = StringUtils.getString(R.string.price_unit_format, makerTag.price.toPlainString())
+            isChecked = true
         }
+        view.findViewById<ImageView>(R.id.triangle_iv).apply {
+            setImageResource(R.drawable.shape_triangle_down_blue)
+        }
+
+        marker.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
 
         // 切换底部列表数据
         val index = makers.indexOf(marker)

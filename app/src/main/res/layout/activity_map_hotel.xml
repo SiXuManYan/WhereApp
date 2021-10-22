@@ -43,6 +43,7 @@
             <LinearLayout
                 android:id="@+id/date_ll"
                 android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
                 android:minWidth="@dimen/dp_26"
                 android:orientation="vertical">
@@ -82,12 +83,23 @@
                 android:src="@mipmap/ic_arrow_black_right_down" />
 
 
+            <ImageView
+                android:id="@+id/search_iv"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toEndOf="@+id/arrow_iv"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_homesearch" />
+
             <TextView
                 android:id="@+id/search_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/delete_iv"
-                android:layout_toEndOf="@+id/arrow_iv"
+                android:layout_toEndOf="@+id/search_iv"
                 android:background="@null"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
@@ -105,6 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:visibility="gone"
                 android:padding="@dimen/dp_8"
                 android:scaleType="centerInside"
                 android:src="@mipmap/ic_close_circle" />
@@ -162,7 +175,7 @@
             android:background="@drawable/shape_white_top_radius_8"
             android:orientation="vertical"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="@dimen/dp_0"
+            app:behavior_peekHeight="@dimen/dp_15"
             app:layout_behavior="@string/view_pager_bottom_sheet_behavior">
 
 

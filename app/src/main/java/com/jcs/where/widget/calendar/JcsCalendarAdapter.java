@@ -48,11 +48,11 @@ public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapt
                 if (mIsEndSelected) {
                     rightView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));
                 }
-                dateView.setBackgroundResource(R.drawable.shape_circle_blue);
+                dateView.setBackgroundResource(R.mipmap.start_date_selected);
                 actionTv.setText(R.string.calendar_enter_stay);
             } else if (calendarBean.isEndDay) {
                 leftView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));
-                dateView.setBackgroundResource(R.drawable.shape_circle_blue);
+                dateView.setBackgroundResource(R.mipmap.end_date_selected);
                 actionTv.setText(R.string.calendar_leave_stay);
             } else if (calendarBean.isSelected) {
                 leftView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF));

@@ -83,23 +83,27 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecycler"
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="500dp"
         android:layout_below="@+id/week_ll"
-        android:layout_marginTop="@dimen/dp_8" />
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/white" />
 
     <TextView
         android:id="@+id/ensureBtn"
         android:layout_width="@dimen/dp_270"
         android:layout_height="@dimen/dp_40"
         android:layout_below="@+id/calendarRecycler"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/shape_ensure_btn"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/shape_blue_radius_24"
         android:gravity="center"
         android:text="@string/ensure"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_17" />
+
+
+
+
 
 
 

@@ -188,6 +188,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
     private fun updateDate() {
         start_date_tv.text = mStartDateBean.showMonthDayDateWithSplit
         end_date_tv.text = mEndDateBean.showMonthDayDateWithSplit
+
     }
 
     private fun initCategory() {

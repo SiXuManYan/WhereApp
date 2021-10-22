@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -100,8 +101,6 @@ public class JcsCalendarDialog extends BaseBottomDialog {
                 mStartBean = mAdapter.getItem(start);
                 mEndBean = mAdapter.getItem(end);
                 mOnDateSelectedListener.onDateSelected(mAdapter.getItem(start), mAdapter.getItem(end));
-            } else {
-                Log.e("JcsCalendarDialog", "onEnsureBtnClicked: " + "please bind OnDateSelectedListener");
             }
         }
         dismiss();
@@ -253,11 +252,13 @@ public class JcsCalendarDialog extends BaseBottomDialog {
 
     public void initCalendar(Context context) {
 
-        mYearMonthSF = new SimpleDateFormat(context.getString(R.string.date_format_year_month), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
-        mMonthDaySF = new SimpleDateFormat(context.getString(R.string.date_format_month_day), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
-        mMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_mm_dd), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
-        mYearMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_yyyy_mm_dd), LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
-        mWeekdaySF = new SimpleDateFormat("E", LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext()));
+        Locale languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext());
+
+        mYearMonthSF = new SimpleDateFormat(context.getString(R.string.date_format_year_month), languageLocale);
+        mMonthDaySF = new SimpleDateFormat(context.getString(R.string.date_format_month_day), languageLocale);
+        mMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_mm_dd), languageLocale);
+        mYearMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_yyyy_mm_dd), languageLocale);
+        mWeekdaySF = new SimpleDateFormat("E", languageLocale);
 
         Calendar instance = Calendar.getInstance();
 
@@ -283,7 +284,7 @@ public class JcsCalendarDialog extends BaseBottomDialog {
         int max = instance.getActualMaximum(Calendar.DATE);
 
         start.set(Calendar.YEAR, 2021);
-        start.set(Calendar.MONTH, 8);
+        start.set(Calendar.MONTH, 9);
         start.set(Calendar.DAY_OF_MONTH, 1);
 
         end.set(Calendar.YEAR, 2023);

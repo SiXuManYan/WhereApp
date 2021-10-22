@@ -40,7 +40,7 @@
             tools:text="James James James James James James " />
 
         <TextView
-            android:id="@+id/desc_tv"
+            android:id="@+id/room_desc_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_tv"
@@ -56,7 +56,7 @@
 
         <LinearLayout
             android:id="@+id/tag_ll"
-            android:layout_below="@+id/desc_tv"
+            android:layout_below="@+id/room_desc_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_4"
@@ -121,7 +121,7 @@
             android:paddingBottom="@dimen/dp_4"
             android:text="@string/subscribe_prompt"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_11" />
+            android:textSize="@dimen/sp_14" />
 
     </RelativeLayout>
 

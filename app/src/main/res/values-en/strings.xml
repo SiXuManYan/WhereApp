@@ -77,8 +77,8 @@
     <string name="please_input_phone_number">Please fill in your phone</string>
     <string name="please_input_name">Please fill in the name</string>
     <string name="can_not_reduce">Can\'t lose again</string>
-    <string name="cancelable">Cancel</string>
-    <string name="not_cancelable">Unable to cancel</string>
+    <string name="cancelable">Can be Canceled</string>
+    <string name="not_cancelable">Cannot be Canceled</string>
     <string name="with_window">Window</string>
     <string name="no_window">Windless</string>
     <string name="month">month</string>

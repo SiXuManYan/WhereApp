@@ -22,8 +22,8 @@
             <FrameLayout
                 android:id="@+id/media_fl"
                 android:layout_width="match_parent"
-                tools:background="@color/blue_377BFF"
-                android:layout_height="@dimen/dp_250">
+                android:layout_height="@dimen/dp_250"
+                tools:background="@color/blue_377BFF">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/media_rv"
@@ -54,8 +54,8 @@
                 <com.jcs.where.widget.ratingstar.RatingStarView
                     android:id="@+id/star_view"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
                     app:rsv_cornerRadius="@dimen/dp_2"
                     app:rsv_drawStrokeForHalfStar="true"
                     app:rsv_enableSelectRating="false"
@@ -74,10 +74,10 @@
                     android:id="@+id/name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/dp_33"
                     android:layout_marginTop="@dimen/dp_7"
                     android:gravity="center_vertical"
                     android:lineSpacingMultiplier="1.2"
+                    android:minHeight="@dimen/dp_33"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_22"
                     android:textStyle="bold"
@@ -87,8 +87,8 @@
                 <LinearLayout
                     android:id="@+id/score_ll"
                     android:layout_width="match_parent"
-                    android:gravity="center_vertical"
                     android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -100,6 +100,7 @@
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_4"
                         android:paddingTop="@dimen/dp_1"
+                        android:layout_gravity="center_vertical"
                         android:paddingEnd="@dimen/dp_4"
                         android:paddingBottom="@dimen/dp_1"
                         android:textColor="@color/white"
@@ -111,16 +112,16 @@
                         android:id="@+id/score_retouch_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/dp_14"
                         android:includeFontPadding="false"
-                        android:textColor="@color/blue_4C9EF2"
+                        android:textColor="@color/blue_377BFF"
                         android:textSize="@dimen/sp_12"
                         android:textStyle="bold"
                         tools:text="不错" />
 
 
                 </LinearLayout>
-
 
 
                 <TextView
@@ -152,12 +153,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
+                    android:drawablePadding="@dimen/dp_15"
+                    android:gravity="center_vertical"
                     android:lineSpacingMultiplier="1.2"
                     android:minHeight="@dimen/dp_48"
-                    android:drawablePadding="@dimen/dp_15"
                     android:textColor="@color/grey_999999"
-                    app:drawableStartCompat="@mipmap/ic_mine_address"
                     android:textSize="@dimen/sp_14"
+                    app:drawableStartCompat="@mipmap/ic_tag_black_location"
                     tools:text="Walk from No. 77 Northwest of Roosevelt Square to Exit B2-2 of Xi'an Road Station, Metro Line 1/2" />
 
 
@@ -169,8 +171,10 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/blue_377BFF"
                     android:textSize="@dimen/sp_14"
+                    android:visibility="gone"
                     app:drawableStartCompat="@mipmap/ic_tag_facebook"
-                    tools:text="www.facebook.com" />
+                    tools:text="www.facebook.com"
+                    tools:visibility="visible" />
 
 
                 <LinearLayout
@@ -236,12 +240,10 @@
                 </LinearLayout>
 
 
-                
-                
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_44">
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_marginTop="@dimen/dp_28">
 
 
                     <TextView
@@ -265,8 +267,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:drawablePadding="@dimen/dp_5"
                         android:layout_centerVertical="true"
+                        android:drawablePadding="@dimen/dp_5"
                         android:gravity="center_vertical"
                         android:textColor="@color/blue_377BFF"
                         android:textSize="@dimen/sp_14"
@@ -274,11 +276,9 @@
                         tools:text="共1晚" />
 
                 </RelativeLayout>
-                
 
 
             </LinearLayout>
-
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -292,21 +292,21 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_15"
-                android:layout_height="wrap_content">
+                android:paddingBottom="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:drawablePadding="@dimen/dp_5"
                     android:gravity="center_vertical"
-                    android:layout_centerVertical="true"
+                    android:text="@string/comment"
                     android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_16"
-                    android:text="@string/comment"/>
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:id="@+id/more_comment_tv"
@@ -338,45 +338,71 @@
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_15"
                 android:paddingBottom="@dimen/dp_10"
+                android:text="@string/hotel_policy"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_16"
-                android:text="@string/hotel_policy"/>
+                android:textSize="@dimen/sp_16" />
 
 
-            <TextView
-                android:id="@+id/hotel_clock_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
-                android:drawablePadding="@dimen/dp_5"
-                android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                android:paddingTop="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14"
-                tools:text="入住时间：14:00       离店时间：12:00"
-                app:drawableStartCompat="@mipmap/ic_hotel_clock" />
+                android:paddingEnd="@dimen/dp_15">
 
 
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_hotel_clock" />
 
-            <TextView
-                android:id="@+id/hotel_child_tv"
+
+                <TextView
+                    android:id="@+id/hotel_clock_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="入住时间：14:00       离店时间：12:00" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
-                android:drawablePadding="@dimen/dp_5"
-                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                android:paddingTop="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14"
-                tools:text="儿童 Children are allowed in the hotel"
-                app:drawableStartCompat="@mipmap/ic_hotel_child" />
+                android:paddingEnd="@dimen/dp_15">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_hotel_child" />
+
+
+                <TextView
+                    android:id="@+id/hotel_child_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="儿童 Children are allowed in the hotel" />
+
+            </LinearLayout>
 
 
             <TextView
@@ -385,12 +411,12 @@
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_15"
                 android:paddingBottom="@dimen/dp_10"
+                android:text="@string/hotel_facilities"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_16"
-                android:text="@string/hotel_facilities"/>
+                android:textSize="@dimen/sp_16" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -409,15 +435,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:drawablePadding="@dimen/dp_5"
-                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_15"
                 android:paddingBottom="@dimen/dp_10"
+                android:text="@string/view_all_desc"
                 android:textColor="@color/blue_377BFF"
                 android:textSize="@dimen/sp_13"
-                android:text="@string/view_all_desc"/>
+                android:visibility="gone" />
 
 
             <TextView
@@ -426,12 +452,12 @@
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_15"
                 android:paddingBottom="@dimen/dp_10"
+                android:text="@string/hotel_introduction"
                 android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_16"
-                android:text="@string/hotel_introduction"/>
+                android:textSize="@dimen/sp_16" />
 
 
             <TextView
@@ -440,14 +466,14 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="center_vertical"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
                 android:lineSpacingMultiplier="1.2"
+                android:paddingStart="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_15"
                 android:paddingBottom="@dimen/dp_10"
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_14"
-                tools:text="@string/test_hint"/>
+                tools:text="@string/test_hint" />
 
 
         </LinearLayout>

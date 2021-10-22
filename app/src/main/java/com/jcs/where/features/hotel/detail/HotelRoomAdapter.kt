@@ -28,14 +28,14 @@ class HotelRoomAdapter : BaseQuickAdapter<HotelRoomListResponse, BaseViewHolder>
 
 
         val title_tv = holder.getView<TextView>(R.id.title_tv)
-        val desc_tv = holder.getView<TextView>(R.id.desc_tv)
+        val room_desc_tv = holder.getView<TextView>(R.id.room_desc_tv)
         val price_tv = holder.getView<TextView>(R.id.price_tv)
         val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
         val inventory_tv = holder.getView<TextView>(R.id.inventory_tv)
         val booking_tv = holder.getView<TextView>(R.id.booking_tv)
 
         title_tv.text = item.name
-        desc_tv.text = item.hotel_room_type
+        room_desc_tv.text = item.hotel_room_type
         price_tv.text = context.getString(R.string.price_unit_format , item.price.toPlainString())
         inventory_tv.text = context.getString(R.string.surplus_format , item.remain_room_num)
 

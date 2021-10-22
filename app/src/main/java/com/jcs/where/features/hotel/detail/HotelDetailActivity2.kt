@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -291,7 +292,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         }
         more_comment_tv.setOnClickListener {
 
-            startActivityAfterLogin(HotelCommentActivity2::class.java,Bundle().apply {
+            startActivityAfterLogin(HotelCommentActivity2::class.java, Bundle().apply {
                 putInt(Constant.PARAM_ID, hotelId);
             })
         }
@@ -381,7 +382,15 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         time_tv.text = response.start_business_time
         phone_tv.text = response.tel
         address_tv.text = response.address
-        facebook_tv.text = response.facebook_link
+
+        response.facebook_link.apply {
+            facebook_tv.visibility = if (isEmpty()) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+            facebook_tv.text = this
+        }
 
         // 评价
         mCommentAdapter.setNewInstance(response.comments)
@@ -406,7 +415,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
         collect_status = if (collectionStatus) {
             1
-        }else{
+        } else {
             2
         }
         setLikeImage()

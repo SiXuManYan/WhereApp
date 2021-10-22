@@ -51,6 +51,19 @@ abstract class BaseBottomSheetDialogFragment<T : BaseMvpPresenter> : BottomSheet
 
     }
 
+/*    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        // 展开高度
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            val dialog = dialog as BottomSheetDialog?
+            val bottomSheet = dialog!!.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+            val behavior: BottomSheetBehavior<FrameLayout> = BottomSheetBehavior.from<FrameLayout>(bottomSheet)
+            // behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            behavior.peekHeight =  SizeUtils.dp2px(500f)
+        }
+        super.onViewCreated(view, savedInstanceState)
+    }*/
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
@@ -176,7 +189,6 @@ abstract class BaseBottomSheetDialogFragment<T : BaseMvpPresenter> : BottomSheet
 
 
     }
-
 
 
 }

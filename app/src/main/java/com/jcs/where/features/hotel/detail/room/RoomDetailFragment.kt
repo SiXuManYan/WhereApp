@@ -1,15 +1,18 @@
 package com.jcs.where.features.hotel.detail.room
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.RoomDetail
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
+import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
 import com.jcs.where.features.hotel.book.HotelBookActivity
 import com.jcs.where.features.hotel.detail.HotelFacilitiesAdapter
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
@@ -17,10 +20,8 @@ import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.shuyu.gsyvideoplayer.GSYVideoManager
-
 import kotlinx.android.synthetic.main.fragment_hotel_room.*
 import java.math.BigDecimal
-
 import java.util.*
 
 
@@ -64,7 +65,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
 
 
         fun newInstance(
-            hotelName:String,
+            hotelName: String,
             hotelId: Int,
             roomId: Int,
             startDate: JcsCalendarAdapter.CalendarBean,
@@ -98,10 +99,19 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
 
     override fun getLayoutId() = R.layout.fragment_hotel_room
 
+
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // 设置最大高度和展开高度
+        return FixedHeightBottomSheetDialog(requireContext(), theme, SizeUtils.dp2px(710f))
+    }
+
+
     override fun initView(parent: View) {
         initExtra()
         initMedia()
         initList()
+
     }
 
     private fun initExtra() {

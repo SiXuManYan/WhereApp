@@ -100,7 +100,7 @@ public class FootprintActivity extends BaseActivity {
             case FootprintType.Hotel:
                 JcsCalendarDialog dialog = new JcsCalendarDialog();
                 dialog.initCalendar(this);
-                HotelDetailActivity2.Companion.navigation(this, dtoId, dialog.getStartBean(), dialog.getEndBean(), "", "", "");
+                HotelDetailActivity2.Companion.navigation(this, dtoId, dialog.getStartBean(), dialog.getEndBean(), null, null, null, 1);
                 break;
             case FootprintType.TouristAttraction:
                 TravelDetailActivity.Companion.navigation(this, dtoId);

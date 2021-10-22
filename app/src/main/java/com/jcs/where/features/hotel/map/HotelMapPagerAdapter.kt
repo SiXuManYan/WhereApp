@@ -17,6 +17,9 @@ class HotelMapPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAV
     var grade: String? = null
     var category: ArrayList<Category> = ArrayList()
 
+    /** 房间数量 */
+     var roomNumberCount = 1
+
 
      lateinit var startDateBean: JcsCalendarAdapter.CalendarBean
      lateinit var endDateBean: JcsCalendarAdapter.CalendarBean
@@ -32,6 +35,7 @@ class HotelMapPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAV
         grade = this@HotelMapPagerAdapter.grade
         mStartDateBean = startDateBean
         mEndDateBean = endDateBean
+        roomNumber = roomNumberCount
 
     }
 }

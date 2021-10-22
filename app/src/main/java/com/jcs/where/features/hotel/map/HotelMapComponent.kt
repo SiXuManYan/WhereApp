@@ -73,7 +73,7 @@ class HotelMapPresenter(private var view: HotelMapView) : BaseMvpPresenter(view)
     ) {
 
         val instance = SPUtils.getInstance()
-        val areaId = instance.getString(SPKey.SELECT_AREA_ID, "")
+        val areaId = instance.getString(SPKey.SELECT_AREA_ID, "0")
 
         requestApi(mRetrofit.getHotelMapMaker(areaId, null, null, search_input, star_level, price_range,hotel_type_ids),
             object : BaseMvpObserver<ArrayList<HotelHomeRecommend>>(view) {

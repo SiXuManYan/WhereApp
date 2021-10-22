@@ -176,7 +176,7 @@ public class SameCityListFragment extends BaseFragment implements OnLoadMoreList
                 case SameCityType.Hotel:
                     JcsCalendarDialog dialog = new JcsCalendarDialog();
                     dialog.initCalendar(context);
-                    HotelDetailActivity2.Companion.navigation(requireContext(), response.hotel.getId(), dialog.getStartBean(), dialog.getEndBean(), "", "", "");
+                    HotelDetailActivity2.Companion.navigation(requireContext(), response.hotel.getId(), dialog.getStartBean(), dialog.getEndBean(), null, null, null,1);
                     break;
                 case SameCityType.Mechanism:
                     Bundle b = new Bundle();

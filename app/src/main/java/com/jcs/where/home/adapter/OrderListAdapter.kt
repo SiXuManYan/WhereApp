@@ -80,9 +80,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         title_rl.setOnClickListener {
             val dialog = JcsCalendarDialog()
             dialog.initCalendar(context)
-//            HotelDetailActivity.goTo(context, item.model_id, dialog.startBean, dialog.endBean, 1, "", "", 1)
 
-            HotelDetailActivity2.navigation(context, item.model_id, dialog.startBean, dialog.endBean, "", "", "")
+            HotelDetailActivity2.navigation(context, item.model_id, dialog.startBean, dialog.endBean)
         }
 
         // 状态

@@ -50,6 +50,9 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     var hotelRoomType = ""
     private var hotelName = ""
 
+    /** 房间数量 */
+    private var roomNumber = 1
+
     private lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
     private lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
 
@@ -72,7 +75,8 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
             endDate: JcsCalendarAdapter.CalendarBean,
             starLevel: String? = null,
             priceRange: String? = null,
-            grade: String? = null
+            grade: String? = null,
+            roomNumber :Int? = 1
         ): RoomDetailFragment {
 
             val fragment = RoomDetailFragment()
@@ -87,6 +91,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
                 putString(Constant.PARAM_GRADE, grade)
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
+                putInt(Constant.PARAM_ROOM_NUMBER, roomNumber!!)
             }
             fragment.arguments = apply
 
@@ -123,7 +128,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
             starLevel = getString(Constant.PARAM_STAR_LEVEL)
             priceRange = getString(Constant.PARAM_PRICE_RANGE)
             grade = getString(Constant.PARAM_GRADE)
-
+            roomNumber =  getInt(Constant.PARAM_ROOM_NUMBER)
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
 
@@ -135,7 +140,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
 
     override fun initData() {
         presenter = RoomDetailPresenter(this)
-        presenter.getDetail(roomId, 1, mStartDateBean.showMonthDayDate, mEndDateBean.showMonthDayDate)
+        presenter.getDetail(roomId, roomNumber, mStartDateBean.showYearMonthDayDateWithSplit, mEndDateBean.showYearMonthDayDateWithSplit)
     }
 
 
@@ -238,6 +243,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
                 roomPeople = people_tv.text.toString(),
                 hotelName = hotelName,
                 cancelable = note_tv.text.toString(),
+                roomNumber = roomNumber,
                 startDate = mStartDateBean,
                 endDate = mEndDateBean
             )

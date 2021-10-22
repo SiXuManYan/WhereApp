@@ -18,6 +18,7 @@ import com.jcs.where.bean.CityResponse;
 import com.jcs.where.hotel.activity.picker.CityPickerPresenter;
 import com.jcs.where.hotel.activity.picker.CityPickerView;
 import com.jcs.where.hotel.model.CityPickerModel;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.PermissionUtils;
 import com.jcs.where.utils.PinyinUtils;
@@ -36,10 +37,6 @@ import java.util.List;
  * 城市选择页面
  */
 public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> implements CityPickerView {
-
-
-    public static final String EXTRA_CITY = "city";
-    public static final String EXTRA_CITY_ID = "cityId";
 
     private ListView listview_all_city;
     private SideLetterBar mLetterBar;
@@ -172,10 +169,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     }
 
     private void selectCity(String name, String id, double lat, double lng) {
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_CITY, name);
-        intent.putExtra(EXTRA_CITY_ID, id);
-        setResult(RESULT_OK, intent);
 
         // old
         SPUtil.getInstance().saveString(SPKey.SELECT_AREA_ID, id);
@@ -185,6 +178,12 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
         SPUtils.getInstance().put(SPKey.SELECT_AREA_NAME, name);
         SPUtils.getInstance().put(SPKey.SELECT_LAT, (float) lat);
         SPUtils.getInstance().put(SPKey.SELECT_LNG, (float) lng);
+
+        Intent intent = new Intent();
+        intent.putExtra(Constant.PARAM_SELECT_AREA_NAME, name);
+        intent.putExtra(Constant.PARAM_SELECT_AREA_ID, id);
+        setResult(RESULT_OK, intent);
+
 
         finish();
     }

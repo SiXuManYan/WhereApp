@@ -51,7 +51,9 @@
                 android:paddingEnd="@dimen/dp_15">
 
                 <RelativeLayout
+                    android:id="@+id/city_rl"
                     android:layout_width="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
                     android:layout_height="@dimen/dp_48">
 
 

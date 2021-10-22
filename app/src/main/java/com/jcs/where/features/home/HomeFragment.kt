@@ -291,7 +291,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         val dialog = JcsCalendarDialog()
                         dialog.initCalendar(this@HomeFragment.activity)
 //                        HotelDetailActivity.goTo(this@HomeFragment.activity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
-                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
+                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean)
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
                         startActivity(MechanismActivity::class.java, Bundle().apply {
@@ -448,7 +448,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         when (requestCode) {
             REQ_SELECT_CITY -> {
                 // 选择城市
-                city_tv.text = data.getStringExtra(CityPickerActivity.EXTRA_CITY)
+                city_tv.text = data.getStringExtra(Constant.PARAM_SELECT_AREA_NAME)
                 onRefresh()
             }
             else -> {
@@ -487,7 +487,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         1 -> {
                             val dialog = JcsCalendarDialog()
                             dialog.initCalendar(this@HomeFragment.activity)
-                            HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean, "", "", "")
+                            HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean)
 
                         }
                         2 -> {

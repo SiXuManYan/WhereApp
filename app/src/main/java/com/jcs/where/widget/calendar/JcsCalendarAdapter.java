@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import com.blankj.utilcode.util.ColorUtils;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.entity.JSectionEntity;
@@ -83,30 +81,42 @@ public class JcsCalendarAdapter extends BaseSectionQuickAdapter<JcsCalendarAdapt
     }
 
     public static class CalendarBean extends JSectionEntity implements Serializable {
-        long time;
-        String showYearMonthDate;
+        public long time;
+
         /**
-         * 9月10日
+         * 中文：2021年10月
+         * en: Oct 2021
          */
-        String showMonthDayDate;
+        public String showYearMonthDate;
         /**
-         * 09-10
+         * 中文：9月10日
+         * en: Oct 22
          */
-        String showMonthDayDateWithSplit;
+        public String showMonthDayDate;
         /**
-         * 2021-01-10
+         * 中文：09-10
+         * en: OCT 22
          */
-        String showYearMonthDayDateWithSplit;
-        String showWeekday;
-        int year;
-        int month;
-        int day;
-        boolean isSelected;
-        boolean isStartDay;
-        boolean isEndDay;
-        boolean isToday;
-        int itemType;
-        boolean isHeader;
+        public String showMonthDayDateWithSplit;
+        /**
+         * 中文：2021-01-10
+         * en: 2021-10-11
+         */
+        public String showYearMonthDayDateWithSplit;
+
+        /**
+         * 中英文：Fri
+         */
+        public String showWeekday;
+        public int year;
+        public int month;
+        public int day;
+        public boolean isSelected;
+        public boolean isStartDay;
+        public boolean isEndDay;
+        public boolean isToday;
+        public int itemType;
+        public boolean isHeader;
 
         public long getTime() {
             return time;

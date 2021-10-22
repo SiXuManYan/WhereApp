@@ -60,6 +60,9 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
     /** 酒店分类 id ,用户获取酒店下的子分类 */
     private var hotelCategoryId = 0
 
+    /** 当前参与请求的分类id */
+    private var currentRequestCategoryId = 0
+
     /** 搜索内容 */
     var searchInput: String? = null
 
@@ -71,6 +74,10 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
     /** 酒店分数 */
     var grade: String? = null
+
+
+    /** 房间数量 */
+    private var roomNumber = 1
 
     private lateinit var mJcsCalendarDialog: JcsCalendarDialog
 
@@ -104,6 +111,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             starLevel: String? = null,
             priceRange: String? = null,
             grade: String? = null,
+            roomNumber: Int = 1,
             startDate: JcsCalendarAdapter.CalendarBean,
             endDate: JcsCalendarAdapter.CalendarBean
         ) {
@@ -113,6 +121,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
                 putString(Constant.PARAM_STAR_LEVEL, starLevel)
                 putString(Constant.PARAM_PRICE_RANGE, priceRange)
                 putString(Constant.PARAM_GRADE, grade)
+                putInt(Constant.PARAM_ROOM_NUMBER, roomNumber)
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
             }
@@ -156,7 +165,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         search_tv.text = searchInput
         EventBus.getDefault().post(BaseEvent<String?>(EventCode.EVENT_REFRESH_CHILD, searchInput))
         // todo marker
-
+        presenter.getMakerData(search_input = searchInput, star_level = starLevel, price_range = priceRange, currentRequestCategoryId)
     }
 
 
@@ -169,7 +178,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             grade = getString(Constant.PARAM_GRADE)
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
-
+            roomNumber = getInt(Constant.PARAM_ROOM_NUMBER, 1)
             updateDate()
         }
 
@@ -188,7 +197,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             grade = this@HotelMapActivity.grade
             startDateBean = mStartDateBean
             endDateBean = mEndDateBean
-
+            roomNumberCount = this@HotelMapActivity.roomNumber
         }
 
     }
@@ -219,7 +228,16 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
             setOnItemClickListener { _, _, position ->
                 val data = this.data[position]
-                HotelDetailActivity2.navigation(this@HotelMapActivity, data.id, mStartDateBean, mEndDateBean, "", "", "")
+                HotelDetailActivity2.navigation(
+                    this@HotelMapActivity,
+                    data.id,
+                    mStartDateBean,
+                    mEndDateBean,
+                    starLevel,
+                    priceRange,
+                    grade,
+                    roomNumber
+                )
 
             }
         }
@@ -288,8 +306,13 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
                 if (!::map.isInitialized) return
 
                 val category = mPagerAdapter.category[position]
-
-                presenter.getMakerData(search_input = null, star_level = null, price_range = null, category.id)
+                currentRequestCategoryId = category.id
+                presenter.getMakerData(
+                    search_input = searchInput,
+                    star_level = starLevel,
+                    price_range = priceRange,
+                    currentRequestCategoryId
+                )
                 makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
 
@@ -377,7 +400,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         enableMyLocation()
 
         // 获得展示在地图上的数据
-        presenter.getMakerData()
+        presenter.getMakerData(search_input = searchInput, star_level = starLevel, price_range = priceRange, currentRequestCategoryId)
     }
 
 

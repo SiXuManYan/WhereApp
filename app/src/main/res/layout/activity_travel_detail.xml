@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_40">
+            android:paddingBottom="@dimen/dp_50">
 
 
             <FrameLayout
@@ -101,7 +101,7 @@
                     android:gravity="center_vertical"
                     android:lineSpacingMultiplier="1.2"
                     android:minHeight="@dimen/dp_48"
-                    android:textColor="@color/grey_999999"
+                    android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_14"
                     app:drawableStartCompat="@mipmap/ic_tag_black_location"
                     tools:text="Walk from No. 77 Northwest of Roosevelt Square to Exit B2-2 of Xi'an Road Station, Metro Line 1/2" />
@@ -223,8 +223,8 @@
                     android:layout_centerVertical="true"
                     android:drawablePadding="@dimen/dp_5"
                     android:gravity="center_vertical"
-                    android:text="@string/more"
-                    android:textColor="@color/black_333333"
+                    android:text="@string/more_comment"
+                    android:textColor="@color/grey_666666"
                     android:textSize="@dimen/sp_12"
                     app:drawableEndCompat="@mipmap/ic_room_right" />
 
@@ -368,10 +368,16 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/write_comment_ll"
+        android:background="@drawable/shape_navigation_bar" />
+
     <LinearLayout
         android:id="@+id/write_comment_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/dp_48"
         android:layout_alignParentBottom="true"
         android:alpha="0.98"
         android:background="@color/white"

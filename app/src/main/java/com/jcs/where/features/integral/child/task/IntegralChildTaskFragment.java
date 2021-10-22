@@ -168,7 +168,7 @@ public class IntegralChildTaskFragment extends BaseMvpFragment<IntegralChildTask
             case HomeRecommendResponse.MODULE_TYPE_1_HOTEL:
                 JcsCalendarDialog dialog = new JcsCalendarDialog();
                 dialog.initCalendar(getActivity());
-                HotelDetailActivity2.Companion.navigation(requireContext(), data.id, dialog.getStartBean(), dialog.getEndBean(), "", "", "");
+                HotelDetailActivity2.Companion.navigation(requireContext(), data.id, dialog.getStartBean(), dialog.getEndBean(), null, null, null,1);
                 break;
             case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
                 Bundle b = new Bundle();

@@ -1,20 +1,20 @@
 package com.jcs.where.features.hotel.home
 
-import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
-import android.location.Address
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.TimeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
+import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.map.HotelMapActivity
 import com.jcs.where.home.dialog.HotelStarDialog
+import com.jcs.where.hotel.activity.CityPickerActivity
 import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
@@ -23,6 +23,7 @@ import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_hotel_home.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Wangsw  2021/9/13 14:47.
@@ -35,7 +36,18 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     private var hotelCategoryId = 0
 
     private var isToolbarDark = false
-    private var totalRoom = 0
+
+    /** 房间数量 */
+    private var roomNumber = 1
+
+    /** 价格 */
+    private var priceRange: String? = null
+
+    /** 星级 */
+    private var starLevel: String? = null
+
+    /** 酒店分数 */
+    private var grade: String? = null
 
     private lateinit var emptyView: EmptyView
     private lateinit var mAdapter: HotelHomeRecommendAdapter
@@ -45,6 +57,17 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     override fun isStatusDark() = isToolbarDark
 
     override fun getLayoutId() = R.layout.activity_hotel_home
+
+    /** 处理城市信息 */
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras
+            if (bundle != null) {
+                val city = bundle.getString(Constant.PARAM_SELECT_AREA_NAME)
+                name_tv.text = city
+            }
+        }
+    }
 
     override fun initView() {
         initExtra()
@@ -57,6 +80,12 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             add_iv.setImageResource(R.mipmap.ic_add_black)
             updateNumber(1)
             valueChangeListener = this@HotelHomeActivity
+        }
+        val city = SPUtils.getInstance().getString(SPKey.SELECT_AREA_NAME, "")
+        if (city.isNotBlank()) {
+            name_tv.text = city
+        } else {
+            name_tv.text = getString(R.string.please_choose_the_city)
         }
 
     }
@@ -80,17 +109,16 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         mAdapter = HotelHomeRecommendAdapter().apply {
             setEmptyView(emptyView)
             setOnItemClickListener { _, _, position ->
-//                val dialog = JcsCalendarDialog()
-//                dialog.initCalendar(this@HotelHomeActivity)
                 val hotel = mAdapter.data[position]
                 HotelDetailActivity2.navigation(
                     this@HotelHomeActivity,
                     hotel.id,
                     mJcsCalendarDialog.startBean,
                     mJcsCalendarDialog.endBean,
-                    "",
-                    "",
-                    ""
+                    starLevel,
+                    priceRange,
+                    grade,
+                    roomNumber
                 )
             }
         }
@@ -153,12 +181,9 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     override fun initData() {
         presenter = HotelDetailPresenter(this)
         presenter.getData()
-        getLocation(false)
-
         mJcsCalendarDialog = JcsCalendarDialog().apply {
             initCalendar(this@HotelHomeActivity)
             setOnDateSelectedListener(this@HotelHomeActivity)
-
         }
 
 
@@ -166,44 +191,17 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             setCallback(this@HotelHomeActivity)
         }
 
-        val today = System.currentTimeMillis()
-        val tomorrow = System.currentTimeMillis() + 1000 * 60 * 60 * 24
 
+        (mJcsCalendarDialog.startBean.showMonthDayDate + " - " + mJcsCalendarDialog.endBean.showMonthDayDate).also {
+            date_tv.text = it
+        }
 
-
-        (TimeUtils.millis2String(today,"MM-dd") + " ~ " + TimeUtils.millis2String(tomorrow,"MM-dd")).also { date_tv.text = it }
 
     }
 
-    private fun getLocation(handleClick: Boolean) {
-        PermissionUtils.permissionAny(
-            this, {
-                if (it) {
-                    LocationUtil.getInstance().addressCallback = object : LocationUtil.AddressCallback {
-                        override fun onGetAddress(address: Address) {
-                            val locality = address.locality //市
-                            name_tv.text = locality
-                        }
-
-                        override fun onGetLocation(lat: Double, lng: Double) {
-                            CacheUtil.getShareDefault().put(Constant.SP_LATITUDE, lat.toFloat())
-                            CacheUtil.getShareDefault().put(Constant.SP_LONGITUDE, lng.toFloat())
-                        }
-                    }
-                } else {
-                    if (handleClick) AppUtils.launchAppDetailsSettings()
-                    ToastUtils.showShort(R.string.open_permission)
-                }
-            },
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-    }
 
     override fun bindListener() {
-        my_location_tv.setOnClickListener {
-            getLocation(true)
-        }
+
         score_tv.setOnClickListener {
             mHotelStarDialog.show(supportFragmentManager)
         }
@@ -211,10 +209,23 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             mJcsCalendarDialog.show(supportFragmentManager)
         }
         inquire_tv.setOnClickListener {
-            HotelMapActivity.navigation(this, hotelCategoryId, "", "", "", mJcsCalendarDialog.startBean, mJcsCalendarDialog.endBean)
+            HotelMapActivity.navigation(
+                this,
+                hotelCategoryId,
+                starLevel,
+                priceRange,
+                grade,
+                roomNumber,
+                mJcsCalendarDialog.startBean,
+                mJcsCalendarDialog.endBean
+            )
         }
         back_iv.setOnClickListener {
             finish()
+        }
+
+        city_rl.setOnClickListener {
+            launcher.launch(Intent(this, CityPickerActivity::class.java))
         }
 
     }
@@ -227,20 +238,44 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     }
 
     override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
-        totalRoom = goodNum
+        roomNumber = goodNum
     }
 
-    override fun selectPriceOrStar(show: String?) {
+    override fun selectPriceOrStar(show: String?) = Unit
 
-    }
 
     override fun selectResult(
-        mPriceBeans: HotelStarDialog.PriceIntervalBean,
-        mSelectStartBean: HotelStarDialog.StarBean,
-        mScoreBean: HotelStarDialog.ScoreBean
+        priceBeans: HotelStarDialog.PriceIntervalBean,
+        selectStarBean: HotelStarDialog.StarBean, scoreBean: HotelStarDialog.ScoreBean
     ) {
 
-        (mPriceBeans.priceShow + " / " + mSelectStartBean.starShow + " / " + mScoreBean.scoreString).also { score_tv.text = it }
+        (priceBeans.priceShow + " / " + selectStarBean.starShow + " / " + scoreBean.scoreString).also { score_tv.text = it }
+
+
+        // 价格
+        val startPrice = priceBeans.startPrice
+        val endPrice = priceBeans.endPrice
+        val priceList = ArrayList<Int>().apply {
+            clear()
+            add(startPrice)
+            add(endPrice)
+        }
+        priceRange = Gson().toJson(priceList)
+
+        // 星级
+        val star = selectStarBean.starValue
+
+        val scoreList = ArrayList<Int>().apply {
+            clear()
+            if (star == 2) {
+                add(1)
+            }
+            add(star)
+        }
+        starLevel = Gson().toJson(scoreList)
+
+        // 评分
+        grade = scoreBean.score.toString()
 
     }
 

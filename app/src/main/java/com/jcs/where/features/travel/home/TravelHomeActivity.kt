@@ -181,7 +181,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                         val dialog = JcsCalendarDialog()
                         dialog.initCalendar(this@TravelHomeActivity)
 //                        HotelDetailActivity.goTo(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
-                        HotelDetailActivity2.navigation(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean, "", "", "")
+                        HotelDetailActivity2.navigation(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean)
 
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
@@ -257,10 +257,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                                 this@TravelHomeActivity,
                                 data.id,
                                 dialog.startBean,
-                                dialog.endBean,
-                                "",
-                                "",
-                                ""
+                                dialog.endBean
                             )
                         }
                         2 -> {

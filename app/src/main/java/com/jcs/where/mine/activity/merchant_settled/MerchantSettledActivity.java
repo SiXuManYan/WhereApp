@@ -26,6 +26,7 @@ import com.jcs.where.hotel.activity.CityPickerActivity;
 import com.jcs.where.mine.model.merchant_settled.MerchantSettledModel;
 import com.jcs.where.storage.dao.UserDao;
 import com.jcs.where.storage.entity.User;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.RequestResultCode;
 
@@ -294,8 +295,8 @@ public class MerchantSettledActivity extends BaseActivity {
                 break;
             case RequestResultCode.REQUEST_MERCHANT_SETTLED_TO_CITY_PICKER:
                 if (resultCode == RESULT_OK) {
-                    String cityName = data.getStringExtra(CityPickerActivity.EXTRA_CITY);
-                    String cityId = data.getStringExtra(CityPickerActivity.EXTRA_CITY_ID);
+                    String cityName = data.getStringExtra(Constant.PARAM_SELECT_AREA_NAME);
+                    String cityId = data.getStringExtra(Constant.PARAM_SELECT_AREA_ID);
                     mRequest.setAreaId(Integer.parseInt(cityId));
                     mMerchantCityTv.setText(cityName);
                 }

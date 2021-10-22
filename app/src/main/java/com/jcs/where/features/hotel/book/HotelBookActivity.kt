@@ -31,7 +31,8 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
 
     private var hotelRoomId = 0
     private var totalPrice = 0.0
-    private var number = 1
+    /** 房间数量 */
+    private var roomNumber = 1
 
     private var roomType = ""
     private var breakFastType = ""
@@ -64,8 +65,9 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             roomPeople: String,
             hotelName: String,
             cancelable: String,
+            roomNumber :Int? = 1,
             startDate: JcsCalendarAdapter.CalendarBean,
-            endDate: JcsCalendarAdapter.CalendarBean,
+            endDate: JcsCalendarAdapter.CalendarBean
         ) {
 
             val bundle = Bundle().apply {
@@ -77,6 +79,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
                 putString(Constant.PARAM_ROOM_PEOPLE, roomPeople)
                 putString(Constant.PARAM_NAME, hotelName)
                 putString(Constant.PARAM_CANCELABLE, cancelable)
+                putInt(Constant.PARAM_ROOM_NUMBER, roomNumber!!)
 
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
@@ -103,7 +106,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             MIN_GOOD_NUM = 1
             cut_iv.setImageResource(R.mipmap.ic_cut_black)
             add_iv.setImageResource(R.mipmap.ic_add_black)
-            updateNumber(1)
+            updateNumber(roomNumber)
             valueChangeListener = this@HotelBookActivity
         }
         country_tv.text = mCountryPrefix
@@ -126,6 +129,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             roomPeople = getString(Constant.PARAM_ROOM_PEOPLE, "")
             hotelName = getString(Constant.PARAM_NAME, "")
             cancelable = getString(Constant.PARAM_CANCELABLE, "")
+            roomNumber =  getInt(Constant.PARAM_ROOM_NUMBER,1)
             name_tv.text = hotelName
             cancel_tv.text = cancelable
 
@@ -153,7 +157,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
     }
 
     override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
-        number = goodNum
+        roomNumber = goodNum
     }
 
     override fun bindListener() {
@@ -175,9 +179,9 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
                 phone = userPhone
                 start_date = mStartDateBean.showYearMonthDayDateWithSplit
                 end_date = mEndDateBean.showYearMonthDayDateWithSplit
-                room_num = number.toString()
+                room_num = roomNumber.toString()
                 country_code = mCountryPrefix
-                price = BigDecimalUtil.mul(totalPrice, number.toDouble()).toPlainString()
+                price = BigDecimalUtil.mul(totalPrice, roomNumber.toDouble()).toPlainString()
             }
 
             presenter.commitOrder(apply)

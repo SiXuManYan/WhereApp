@@ -197,11 +197,14 @@ public class Constant {
     public static final String PARAM_GRADE = "param_grade";
     public static final String PARAM_START_DATE = "param_start_date";
     public static final String PARAM_END_DATE = "param_end_date";
+    public static final String PARAM_ROOM_NUMBER = "param_room_number";
 
     public static final String PARAM_ROOM_TYPE = "param_room_type";
     public static final String PARAM_BREAKFAST = "param_breakfast";
     public static final String PARAM_ROOM_AREA = "param_room_area";
     public static final String PARAM_ROOM_PEOPLE = "param_room_people";
+    public static final String PARAM_SELECT_AREA_NAME = "param_select_area_name";
+    public static final String PARAM_SELECT_AREA_ID = "param_select_area_id";
 
 
 }

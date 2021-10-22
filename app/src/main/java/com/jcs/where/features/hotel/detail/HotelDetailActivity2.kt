@@ -52,6 +52,10 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     /** 酒店分数 */
     var grade: String? = null
 
+
+    /** 房间数量 */
+    private var roomNumber = 1
+
     private lateinit var mStartDateBean: CalendarBean
     private lateinit var mEndDateBean: CalendarBean
 
@@ -95,7 +99,8 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             endDate: CalendarBean,
             starLevel: String? = null,
             priceRange: String? = null,
-            grade: String? = null
+            grade: String? = null,
+            roomNumber :Int? = 1
         ) {
 
             val bundle = Bundle().apply {
@@ -105,6 +110,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                 putString(Constant.PARAM_GRADE, grade)
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
+                putInt(Constant.PARAM_ROOM_NUMBER, roomNumber!!)
             }
             val intent = Intent(context, HotelDetailActivity2::class.java)
                 .putExtras(bundle)
@@ -135,8 +141,9 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             grade = getString(Constant.PARAM_GRADE)
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as CalendarBean
+            roomNumber =  getInt(Constant.PARAM_ROOM_NUMBER,1)
         }
-        (mStartDateBean.showMonthDayDate + mEndDateBean.showMonthDayDate).also { select_date_tv.text = it }
+        (mStartDateBean.showMonthDayDate + " / " + mEndDateBean.showMonthDayDate).also { select_date_tv.text = it }
 
 
     }
@@ -179,7 +186,8 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                 mEndDateBean,
                 starLevel,
                 priceRange,
-                grade
+                grade,
+                roomNumber
             ).apply {
                 show(supportFragmentManager, this.tag)
             }

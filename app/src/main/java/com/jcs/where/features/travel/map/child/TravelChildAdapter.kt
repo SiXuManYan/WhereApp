@@ -27,7 +27,7 @@ class TravelChildAdapter : BaseQuickAdapter<TravelChild, BaseViewHolder>(R.layou
      */
     private fun bindTraverView(holder: BaseViewHolder, data: TravelChild) {
 
-        // 与首页是共用布局，所以按照设计图，需要单独调整边距
+
         val travel_container_ll = holder.getView<LinearLayout>(R.id.travel_container_ll)
         val layoutParams = travel_container_ll.layoutParams as RecyclerView.LayoutParams
         layoutParams.apply {

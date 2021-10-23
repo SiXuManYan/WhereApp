@@ -268,7 +268,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     override fun initData() {
         presenter = HotelDetailPresenter(this)
         presenter.getData(hotelId)
-        presenter.getRoomList(hotelId, mStartDateBean.showMonthDayDate, mEndDateBean.showMonthDayDate, 1)
+        presenter.getRoomList(hotelId, mStartDateBean.showYearMonthDayDateWithSplit, mEndDateBean.showYearMonthDayDateWithSplit, roomNumber)
     }
 
     override fun bindListener() {

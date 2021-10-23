@@ -3,6 +3,7 @@ package com.jcs.where.features.hotel.home
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
@@ -28,6 +29,19 @@ class HotelHomeRecommendAdapter : BaseMultiItemQuickAdapter<HotelHomeRecommend, 
     }
 
     override fun convert(holder: BaseViewHolder, item: HotelHomeRecommend) {
+        if (holder.itemViewType == HotelHomeRecommend.CONTENT_TYPE_COMMON) {
+            val container = holder.getView<LinearLayout>(R.id.hotel_recommend_container_ll)
+            val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+            layoutParams.apply {
+                topMargin = if (holder.adapterPosition == 0) {
+                    SizeUtils.dp2px(15f)
+                } else {
+                    0
+                }
+            }
+            container.layoutParams = layoutParams
+        }
+
         bindHotelView(holder, item)
     }
 

@@ -23,7 +23,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     private ImageView close;
     private TextView price_start_tv;
     private TextView price_end_tv;
-    private Button ensureBtn;
+    private TextView ensureBtn;
     private TextView price0To1, price1To2, price2To5, priceAbove5;
     private TextView starLessThan2, star3, star4, star5;
     private TextView score30, score35, score40, score45;

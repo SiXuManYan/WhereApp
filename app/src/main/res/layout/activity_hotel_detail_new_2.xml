@@ -62,10 +62,10 @@
                     app:rsv_onlyHalfStar="true"
                     app:rsv_rating="1"
                     app:rsv_starBackgroundColor="@color/transplant"
-                    app:rsv_starForegroundColor="@color/yellow_FCE314"
+                    app:rsv_starForegroundColor="@color/yellow_FEBA32"
                     app:rsv_starMargin="@dimen/dp_3"
                     app:rsv_starNum="5"
-                    app:rsv_starThickness="0.5"
+                    app:rsv_starThickness="1"
                     app:rsv_strokeColor="@color/transplant"
                     app:rsv_strokeWidth="0dp" />
 
@@ -424,8 +424,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
                 tools:itemCount="1"
                 tools:listitem="@layout/item_hotel_facilities" />
 

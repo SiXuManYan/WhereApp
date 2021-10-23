@@ -2,12 +2,14 @@ package com.jcs.where.features.hotel.detail.room
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.RoomDetail
@@ -19,6 +21,7 @@ import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
+import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.fragment_hotel_room.*
 import java.math.BigDecimal
@@ -76,7 +79,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
             starLevel: String? = null,
             priceRange: String? = null,
             grade: String? = null,
-            roomNumber :Int? = 1
+            roomNumber: Int? = 1
         ): RoomDetailFragment {
 
             val fragment = RoomDetailFragment()
@@ -105,10 +108,11 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     override fun getLayoutId() = R.layout.fragment_hotel_room
 
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // 设置最大高度和展开高度
-        return FixedHeightBottomSheetDialog(requireContext(), theme, SizeUtils.dp2px(710f))
+        val height = ScreenUtils.getScreenHeight() * 9 / 10
+
+        return FixedHeightBottomSheetDialog(requireContext(), theme, height)
     }
 
 
@@ -128,19 +132,24 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
             starLevel = getString(Constant.PARAM_STAR_LEVEL)
             priceRange = getString(Constant.PARAM_PRICE_RANGE)
             grade = getString(Constant.PARAM_GRADE)
-            roomNumber =  getInt(Constant.PARAM_ROOM_NUMBER)
+            roomNumber = getInt(Constant.PARAM_ROOM_NUMBER)
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
 
         }
-
-
+        name_tv.text = hotelName
+        title_name_tv.text = hotelName
     }
 
 
     override fun initData() {
         presenter = RoomDetailPresenter(this)
-        presenter.getDetail(roomId, roomNumber, mStartDateBean.showYearMonthDayDateWithSplit, mEndDateBean.showYearMonthDayDateWithSplit)
+        presenter.getDetail(
+            roomId,
+            roomNumber,
+            mStartDateBean.showYearMonthDayDateWithSplit,
+            mEndDateBean.showYearMonthDayDateWithSplit
+        )
     }
 
 
@@ -198,6 +207,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
         }
         facility_rv.adapter = mFacilitiesAdapter
         facility_rv.isNestedScrollingEnabled = true
+
     }
 
     override fun bindDetail(response: RoomDetail, mediaList: ArrayList<MediaData>) {

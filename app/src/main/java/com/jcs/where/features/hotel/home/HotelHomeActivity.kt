@@ -74,11 +74,16 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         initList()
         initScroll()
         number_view.apply {
-            alwaysEnableCut = false
+            alwaysEnableCut = true
             MIN_GOOD_NUM = 1
-            cut_iv.setImageResource(R.mipmap.ic_cut_black)
+            MAX_GOOD_NUM = 20
+            cut_iv.setImageResource(R.mipmap.ic_cut_black_transparent)
             add_iv.setImageResource(R.mipmap.ic_add_black)
-            updateNumber(1)
+            cutResIdCommon = R.mipmap.ic_cut_black
+            cutResIdMin = R.mipmap.ic_cut_black_transparent
+            addResIdCommon = R.mipmap.ic_add_black
+            addResIdMax = R.mipmap.ic_add_black_transparent
+            updateNumber(roomNumber)
             valueChangeListener = this@HotelHomeActivity
         }
         val city = SPUtils.getInstance().getString(SPKey.SELECT_AREA_NAME, "")

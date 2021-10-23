@@ -102,10 +102,15 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
     override fun initView() {
         initExtra()
         number_view.apply {
-            alwaysEnableCut = false
+            alwaysEnableCut = true
             MIN_GOOD_NUM = 1
-            cut_iv.setImageResource(R.mipmap.ic_cut_black)
+            MAX_GOOD_NUM = 20
+            cut_iv.setImageResource(R.mipmap.ic_cut_black_transparent)
             add_iv.setImageResource(R.mipmap.ic_add_black)
+            cutResIdCommon = R.mipmap.ic_cut_black
+            cutResIdMin = R.mipmap.ic_cut_black_transparent
+            addResIdCommon = R.mipmap.ic_add_black
+            addResIdMax = R.mipmap.ic_add_black_transparent
             updateNumber(roomNumber)
             valueChangeListener = this@HotelBookActivity
         }

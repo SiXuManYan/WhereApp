@@ -861,6 +861,6 @@ Gentleman must let go</string>
     <string name="default_time">1 night total</string>
     <string name="more_comment">more</string>
     <string name="please_choose_the_city">请选择城市</string>
-    <string name="total_date_format">%1$s&#160;Night</string>
+    <string name="total_date_format">%1$s&#160;night total</string>
 
 </resources>

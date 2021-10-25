@@ -143,7 +143,10 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as CalendarBean
             roomNumber =  getInt(Constant.PARAM_ROOM_NUMBER,1)
         }
+
         (mStartDateBean.showMonthDayDate + " / " + mEndDateBean.showMonthDayDate).also { select_date_tv.text = it }
+        val span = (mEndDateBean.time - mStartDateBean.time) / (1000 * 60 * 60 * 24)
+        right_tv.text = getString(R.string.total_date_format, span.toString())
 
 
     }

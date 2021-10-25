@@ -165,10 +165,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
 
         GlideUtil.load(this, roomImage, hotel_image_iv, 5)
 
-        var span = (mEndDateBean.time - mStartDateBean.time) / (1000 * 60 * 60 * 24)
-        if (span < 1) {
-            span = 1
-        }
+        val span = (mEndDateBean.time - mStartDateBean.time) / (1000 * 60 * 60 * 24)
         total_date_tv.text = getString(R.string.total_date_format, span.toString())
     }
 

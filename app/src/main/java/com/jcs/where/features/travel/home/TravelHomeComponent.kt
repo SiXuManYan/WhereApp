@@ -1,5 +1,6 @@
 package com.jcs.where.features.travel.home
 
+import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -8,6 +9,9 @@ import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.SPKey
 import java.util.*
 
 /**
@@ -68,16 +72,19 @@ class TravelHomePresenter(private var view: TravelHomeView) : BaseMvpPresenter(v
     /**
      * 推荐列表
      */
-    fun getRecommendList(page: Int) {
+    fun getRecommendList() {
+
+        val latLng = CacheUtil.getSafeSelectLatLng()
+        val areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "")
 
 
         requestApi(
-            mRetrofit.getTravelRecommends(page),
+            mRetrofit.getTravelRecommends(areaId,latLng.latitude.toString(),latLng.longitude.toString()),
             object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view) {
                 override fun onSuccess(response: PageResponse<HomeRecommendResponse>) {
-                    val isLastPage = response.lastPage == page
+//                    val isLastPage = response.lastPage == page
                     val data = response.data.toMutableList()
-                    view.bindRecommendData(data, isLastPage)
+                    view.bindRecommendData(data, true)
                 }
             })
     }

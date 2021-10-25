@@ -171,7 +171,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getRecommendList(page)
+                presenter.getRecommendList()
             }
             setOnItemClickListener { _, _, position ->
                 val data = mRecommendAdapter.data[position]
@@ -208,7 +208,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
 
         presenter.getTopBanner()
         presenter.getCategories(categories)
-        presenter.getRecommendList(page)
+        presenter.getRecommendList()
     }
 
     override fun bindListener() {
@@ -294,17 +294,8 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
             }
             return
         }
-        if (page == Constant.DEFAULT_FIRST_PAGE) {
-            mRecommendAdapter.setNewInstance(data)
-            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
-        } else {
-            mRecommendAdapter.addData(data)
-            if (lastPage) {
-                loadMoreModule.loadMoreEnd()
-            } else {
-                loadMoreModule.loadMoreComplete()
-            }
-        }
+        mRecommendAdapter.setNewInstance(data)
+        loadMoreModule.loadMoreEnd()
     }
 
     override fun onRefresh() {
@@ -313,7 +304,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
 
         swipeLayout.isRefreshing = true
         page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getRecommendList(page)
+        presenter.getRecommendList()
     }
 
 

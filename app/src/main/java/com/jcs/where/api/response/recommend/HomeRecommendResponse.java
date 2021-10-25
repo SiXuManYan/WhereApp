@@ -90,7 +90,7 @@ public class HomeRecommendResponse implements MultiItemEntity {
     /**
      * 距离
      */
-    public String distance = "0";
+    public String distance = "";
     /**
      * 均价
      */

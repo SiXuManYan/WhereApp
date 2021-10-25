@@ -781,7 +781,10 @@ public interface RetrofitApi {
      */
     @GET("travelapi/v2/recommends")
     Observable<JcsResponse<PageResponse<HomeRecommendResponse>>> getTravelRecommends(
-            @Query("page") int page
+            @Query("area_id") String area_id,
+            @Query("lat") String lat,
+            @Query("lng") String lng
+
     );
 
 

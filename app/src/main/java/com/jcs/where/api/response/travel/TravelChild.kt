@@ -17,7 +17,7 @@ class TravelChild {
     var grade = 0.0
     var tags = ArrayList<String>()
     var comments_count = 0
-    var distance = "0"
+    var distance = ""
 
 
 }

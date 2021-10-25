@@ -146,7 +146,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
         (mStartDateBean.showMonthDayDate + " / " + mEndDateBean.showMonthDayDate).also { select_date_tv.text = it }
         val span = (mEndDateBean.time - mStartDateBean.time) / (1000 * 60 * 60 * 24)
-        right_tv.text = getString(R.string.total_date_format, span.toString())
+        right_tv.text = getString(R.string.total_date_format, span.toString()) 
 
 
     }

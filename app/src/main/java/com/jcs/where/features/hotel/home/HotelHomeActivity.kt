@@ -84,6 +84,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             addResIdCommon = R.mipmap.ic_add_black
             addResIdMax = R.mipmap.ic_add_black_transparent
             updateNumber(roomNumber)
+            cut_iv.visibility = View.VISIBLE
             valueChangeListener = this@HotelHomeActivity
         }
         val city = SPUtils.getInstance().getString(SPKey.SELECT_AREA_NAME, "")

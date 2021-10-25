@@ -65,6 +65,7 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
         video_gsy.isAutoFullWithSize = false
         video_gsy.isReleaseWhenLossAudio = false
 
+
         // 增加圆角
 //        video_gsy.outlineProvider = object : ViewOutlineProvider() {
 //            override fun getOutline(view: View, outline: Outline) {

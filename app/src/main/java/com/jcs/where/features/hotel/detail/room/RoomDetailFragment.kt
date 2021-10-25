@@ -2,7 +2,6 @@ package com.jcs.where.features.hotel.detail.room
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.RoomDetail
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
@@ -21,7 +19,6 @@ import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
-import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.fragment_hotel_room.*
 import java.math.BigDecimal
@@ -48,7 +45,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     /** 酒店分数 */
     var grade: String? = null
 
-    var price: BigDecimal = BigDecimal.ZERO
+    var singlePrice: BigDecimal = BigDecimal.ZERO
     var hotelRoomType = ""
     private var hotelName = ""
     private var roomImage = ""
@@ -230,7 +227,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
         people_tv.text = getString(R.string.people_number_format, response.people)
 
         mFacilitiesAdapter.setNewInstance(response.facilities)
-        price = response.price
+        singlePrice = response.price
         price_tv.text = getString(R.string.price_unit_format, response.price.toPlainString())
         note_tv.text = if (response.is_cancel == 1) {
             getString(R.string.cancelable)
@@ -249,7 +246,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
             HotelBookActivity.navigation(
                 requireContext(),
                 hotelRoomId = roomId,
-                price = price.toDouble(),
+                singlePrice = singlePrice.toDouble(),
                 roomType = hotelRoomType,
                 breakFastType = breakfast_tv.text.toString(),
                 roomArea = area_tv.text.toString(),

@@ -83,13 +83,20 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
         val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
         val edit_sw = holder.getView<ViewSwitcher>(R.id.edit_sw)
 
-        if (showEdit && !item.is_default) {
-            edit_sw.visibility = View.VISIBLE
+        if (showEdit) {
 
             if (item.follow_status) {
                 edit_sw.displayedChild = 1
+
+                if (item.is_default) {
+                    edit_sw.visibility = View.GONE
+                } else {
+                    edit_sw.visibility = View.VISIBLE
+                }
+
             } else {
                 edit_sw.displayedChild = 0
+                edit_sw.visibility = View.VISIBLE
             }
 
         } else {
@@ -145,7 +152,7 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
 
                     }
                     TYPE_TOURISM -> {
-                        TravelMapActivity.navigation(context,it.id)
+                        TravelMapActivity.navigation(context, it.id)
                     }
                     TYPE_GOVERNMENT -> {
                         startActivity(GovernmentActivity::class.java, Bundle().apply {

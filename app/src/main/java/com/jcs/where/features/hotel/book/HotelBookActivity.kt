@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -22,6 +23,7 @@ import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import kotlinx.android.synthetic.main.activity_hotel_boolk.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -31,7 +33,8 @@ import java.util.*
 class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, NumberView2.OnValueChangeListener {
 
     private var hotelRoomId = 0
-    private var totalPrice = 0.0
+    private var singlePrice = 0.0
+    private var totalPrice :BigDecimal = BigDecimal.ZERO
 
     /** 房间数量 */
     private var roomNumber = 1
@@ -61,7 +64,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
         fun navigation(
             context: Context,
             hotelRoomId: Int,
-            price: Double,
+            singlePrice: Double,
             roomType: String,
             breakFastType: String,
             roomArea: String,
@@ -76,7 +79,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ROOM_ID, hotelRoomId)
-                putDouble(Constant.PARAM_PRICE, price)
+                putDouble(Constant.PARAM_PRICE, singlePrice)
                 putString(Constant.PARAM_ROOM_TYPE, roomType)
                 putString(Constant.PARAM_BREAKFAST, breakFastType)
                 putString(Constant.PARAM_ROOM_AREA, roomArea)
@@ -117,6 +120,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             addResIdCommon = R.mipmap.ic_add_black
             addResIdMax = R.mipmap.ic_add_black_transparent
             updateNumber(roomNumber)
+            cut_iv.visibility = View.VISIBLE
             valueChangeListener = this@HotelBookActivity
         }
         country_tv.text = mCountryPrefix
@@ -127,8 +131,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
         val bundle = intent.extras ?: return
         bundle.apply {
             hotelRoomId = getInt(Constant.PARAM_ROOM_ID)
-            totalPrice = getDouble(Constant.PARAM_PRICE)
-            price_tv.text = getString(R.string.price_unit_format, totalPrice.toString())
+            singlePrice = getDouble(Constant.PARAM_PRICE)
 
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
@@ -145,7 +148,14 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             cancel_tv.text = cancelable
         }
 
+        handlePrice()
 
+
+    }
+
+    private fun handlePrice() {
+        totalPrice = BigDecimalUtil.mul(singlePrice, roomNumber.toDouble())
+        price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
     }
 
 
@@ -171,6 +181,8 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
 
     override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
         roomNumber = goodNum
+        handlePrice()
+
     }
 
     override fun bindListener() {
@@ -194,7 +206,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
                 end_date = mEndDateBean.showYearMonthDayDateWithSplit
                 room_num = roomNumber.toString()
                 country_code = mCountryPrefix
-                price = BigDecimalUtil.mul(totalPrice, roomNumber.toDouble()).toPlainString()
+                price = totalPrice.toPlainString()
             }
 
             presenter.commitOrder(apply)

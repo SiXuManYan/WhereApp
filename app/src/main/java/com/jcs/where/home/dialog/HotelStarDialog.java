@@ -152,7 +152,6 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
             TextView textView = priceTvs.get(i);
             textView.setTag(TAG_PRICE);
             textView.setOnClickListener(this);
-
         }
 
         int starSize = starTvs.size();
@@ -206,6 +205,10 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
     private void unSelectByTag(TextView textView) {
         String tag = (String) textView.getTag();
+        if (tag == null) {
+            return;
+        }
+
         List<TextView> temp = null;
         switch (tag) {
             case TAG_PRICE:
@@ -240,10 +243,12 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     @Override
+
     public void onClick(View view) {
 
-        if (view instanceof Button) {
-            //点击了确定
+
+        int id = view.getId();
+        if (id == R.id.ensureBtn) {
             StringBuilder callbackToShow = new StringBuilder(price_start_tv.getText() + "-" + price_end_tv.getText());
 
             if (mSelectStartBean != null) {

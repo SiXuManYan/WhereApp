@@ -201,7 +201,9 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         )
         room_rv.adapter = mRoomAdapter
 
-        mCommentAdapter = HotelCommentAdapter()
+        mCommentAdapter = HotelCommentAdapter().apply {
+            isDiamond = true
+        }
         comment_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
             override fun canScrollVertically(): Boolean = false
         }

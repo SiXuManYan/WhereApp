@@ -16,6 +16,7 @@ import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import kotlinx.android.synthetic.main.activity_hotel_boolk.*
@@ -31,8 +32,10 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
 
     private var hotelRoomId = 0
     private var totalPrice = 0.0
+
     /** 房间数量 */
     private var roomNumber = 1
+    private var roomImage = ""
 
     private var roomType = ""
     private var breakFastType = ""
@@ -65,7 +68,8 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             roomPeople: String,
             hotelName: String,
             cancelable: String,
-            roomNumber :Int? = 1,
+            roomNumber: Int? = 1,
+            roomImage: String,
             startDate: JcsCalendarAdapter.CalendarBean,
             endDate: JcsCalendarAdapter.CalendarBean
         ) {
@@ -80,6 +84,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
                 putString(Constant.PARAM_NAME, hotelName)
                 putString(Constant.PARAM_CANCELABLE, cancelable)
                 putInt(Constant.PARAM_ROOM_NUMBER, roomNumber!!)
+                putString(Constant.PARAM_ROOM_IMAGE, roomImage)
 
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
@@ -134,10 +139,10 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             roomPeople = getString(Constant.PARAM_ROOM_PEOPLE, "")
             hotelName = getString(Constant.PARAM_NAME, "")
             cancelable = getString(Constant.PARAM_CANCELABLE, "")
-            roomNumber =  getInt(Constant.PARAM_ROOM_NUMBER,1)
+            roomNumber = getInt(Constant.PARAM_ROOM_NUMBER, 1)
+            roomImage = getString(Constant.PARAM_ROOM_IMAGE, "")
             name_tv.text = hotelName
             cancel_tv.text = cancelable
-
         }
 
 
@@ -158,7 +163,13 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
         start_date_tv.text = mStartDateBean.showMonthDayDate
         end_date_tv.text = mEndDateBean.showMonthDayDate
 
+        GlideUtil.load(this, roomImage, hotel_image_iv, 5)
 
+        var span = (mEndDateBean.time - mStartDateBean.time) / (1000 * 60 * 60 * 24)
+        if (span < 1) {
+            span = 1
+        }
+        total_date_tv.text = getString(R.string.total_date_format, span.toString())
     }
 
     override fun onNumberChange(goodNum: Int, isAdd: Boolean) {

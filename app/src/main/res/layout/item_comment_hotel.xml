@@ -36,26 +36,43 @@
             tools:text="糖糖" />
 
 
-        <com.jcs.where.widget.ratingstar.RatingStarView
-            android:id="@+id/star_rs"
+        <!--        <com.jcs.where.widget.ratingstar.RatingStarView
+                    android:id="@+id/star_rs"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_13"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:layout_toStartOf="@+id/comment_time_tv"
+                    android:layout_toEndOf="@+id/avatar_civ"
+                    app:rsv_cornerRadius="@dimen/dp_10"
+                    app:rsv_drawStrokeForHalfStar="true"
+                    app:rsv_enableSelectRating="false"
+                    app:rsv_onlyHalfStar="false"
+                    app:rsv_rating="1"
+                    app:rsv_starBackgroundColor="@color/grey_F5F5F5"
+                    app:rsv_starForegroundColor="@color/yellow_FEBA32"
+                    app:rsv_starMargin="@dimen/dp_3"
+                    app:rsv_starNum="5"
+                    app:rsv_starThickness="0.7"
+                    app:rsv_strokeColor="@color/transplant"
+                    app:rsv_strokeWidth="0dp" />-->
+
+        <com.jcs.where.widget.comment.StarView
+            android:id="@+id/comment_sv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_13"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_2"
             android:layout_toStartOf="@+id/comment_time_tv"
             android:layout_toEndOf="@+id/avatar_civ"
-            app:rsv_cornerRadius="@dimen/dp_10"
-            app:rsv_drawStrokeForHalfStar="true"
-            app:rsv_enableSelectRating="false"
-            app:rsv_onlyHalfStar="false"
-            app:rsv_rating="1"
-            app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-            app:rsv_starForegroundColor="@color/yellow_FEBA32"
-            app:rsv_starMargin="@dimen/dp_3"
-            app:rsv_starNum="5"
-            app:rsv_starThickness="0.7"
-            app:rsv_strokeColor="@color/transplant"
-            app:rsv_strokeWidth="0dp" />
+            app:checkStarDrawable="@mipmap/ic_comment_star_yellow"
+            app:starCount="5"
+            app:starDrawable="@mipmap/ic_comment_star_gray"
+            app:starHeight="@dimen/dp_14"
+            app:starHorizontalSpace="@dimen/dp_2"
+            app:starWidth="@dimen/dp_14" />
 
 
         <TextView

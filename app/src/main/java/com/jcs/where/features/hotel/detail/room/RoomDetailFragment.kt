@@ -37,7 +37,6 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
 
     private var hotelId = 0
 
-
     private var roomId = 0
 
     /** 星级 */
@@ -52,6 +51,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     var price: BigDecimal = BigDecimal.ZERO
     var hotelRoomType = ""
     private var hotelName = ""
+    private var roomImage = ""
 
     /** 房间数量 */
     private var roomNumber = 1
@@ -215,6 +215,9 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
         // 轮播
         mMediaAdapter.setNewInstance(mediaList)
         point_view.setPointCount(mediaList.size)
+        if (mediaList.isNotEmpty()) {
+          roomImage =   mediaList[0].src
+        }
 
         hotelRoomType = response.hotel_room_type
         bed_tv.text = hotelRoomType
@@ -254,6 +257,7 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
                 hotelName = hotelName,
                 cancelable = note_tv.text.toString(),
                 roomNumber = roomNumber,
+                roomImage= roomImage,
                 startDate = mStartDateBean,
                 endDate = mEndDateBean
             )

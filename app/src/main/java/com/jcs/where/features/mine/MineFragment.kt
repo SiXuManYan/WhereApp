@@ -12,6 +12,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
+import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.coupon.CardCouponActivity
 import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.message.MessageCenterActivity
@@ -114,8 +115,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(ExtendChatActivity::class.java)
         }
         about_rl.setOnClickListener {
-            startActivity(AboutActivity::class.java)
-
+//            startActivity(AboutActivity::class.java)
+            CommentPostActivity.navigation(requireContext(),0,0,0)
         }
 
     }

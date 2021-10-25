@@ -278,7 +278,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
     override fun bindListener() {
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
-            makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            //  makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
 

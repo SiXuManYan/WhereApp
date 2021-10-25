@@ -16,9 +16,9 @@ import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
-import com.jcs.where.widget.ratingstar.OnChangeRatingByClickListener
 import com.zhihu.matisse.Matisse
-import kotlinx.android.synthetic.main.activity_comment_post.*
+
+import kotlinx.android.synthetic.main.activity_comment_post_2.*
 import org.greenrobot.eventbus.EventBus
 
 
@@ -48,7 +48,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
 
     private lateinit var mImageAdapter: StoreRefundAdapter
 
-    override fun getLayoutId() = R.layout.activity_comment_post
+    override fun getLayoutId() = R.layout.activity_comment_post_2
 
     override fun isStatusDark(): Boolean = true
 
@@ -132,11 +132,20 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
         }
 
 
+        if (commentType == 0) {
+            comment_star_view.apply {
+                setCheckStarDrawable(R.mipmap.ic_comment_diamond_yellow)
+                setStarDrawable(R.mipmap.ic_comment_diamond_gray)
+                refreshView()
+            }
+        }
+
     }
 
     override fun initData() {
         presenter = CommentPostPresenter(this)
         presenter.targetId = targetId
+
     }
 
     override fun bindListener() {
@@ -151,7 +160,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
         }
         commit_tv.setOnClickListener {
             commit_tv.isClickable = false
-            val rating = star_view.rating.toInt()
+            val rating = comment_star_view.checkStarCount
             val content = content_et.text.toString().trim()
 
             if (mImageAdapter.data.isNotEmpty()) {
@@ -169,13 +178,9 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
 
         }
 
-        star_view.onChangeRatingByClickListener = object : OnChangeRatingByClickListener {
-            override fun clickRatingResult(rating: Int) {
-                comment_value_tv.text = BusinessUtils.getCommentRatingText(rating)
-            }
-
+        comment_star_view.setStoreItemOnClickListener {
+            comment_value_tv.text = BusinessUtils.getCommentRatingText(it + 1)
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

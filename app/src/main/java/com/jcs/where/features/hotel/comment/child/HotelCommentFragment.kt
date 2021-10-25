@@ -69,6 +69,7 @@ class HotelCommentFragment : BaseMvpFragment<HotelCommentPresenter>(), HotelComm
         }
 
         mAdapter = HotelCommentAdapter().apply {
+            isDiamond = true
             footerWithEmptyEnable = true
             headerWithEmptyEnable = true
             loadMoreModule.isAutoLoadMore = true

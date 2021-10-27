@@ -113,15 +113,20 @@ public class EventCode {
     /**
      * 列表总数
      */
-    public static final int EVENT_SET_LIST_TOTAL_COUNT= 1023;
+    public static final int EVENT_SET_LIST_TOTAL_COUNT = 1023;
 
     /**
      * 刷新子列表
      */
-    public static final int EVENT_REFRESH_CHILD= 1024;
+    public static final int EVENT_REFRESH_CHILD = 1024;
 
 
-    public static final int EVENT_REFRESH_LANGUAGE= 1025;
+    public static final int EVENT_REFRESH_LANGUAGE = 1025;
+
+
+    public static final int EVENT_REFRESH_CHILD_START_DATE = 1026;
+
+    public static final int EVENT_REFRESH_CHILD_END_DATE = 1027;
 
 
 }

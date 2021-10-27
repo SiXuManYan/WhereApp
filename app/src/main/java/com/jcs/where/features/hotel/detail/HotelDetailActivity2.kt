@@ -18,6 +18,7 @@ import com.jcs.where.api.response.HotelRoomListResponse
 import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.hotel.book.HotelBookActivity
 import com.jcs.where.features.hotel.comment.HotelCommentActivity2
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.hotel.detail.room.RoomDetailFragment
@@ -31,6 +32,7 @@ import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
+
 import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.*
 import java.util.*
 
@@ -177,6 +179,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
         // 禁用滑动
         mRoomAdapter = HotelRoomAdapter()
+        mRoomAdapter.addChildClickViewIds(R.id.booking_tv)
         mRoomAdapter.setOnItemClickListener { _, _, position ->
             val data = mRoomAdapter.data[position]
             RoomDetailFragment.newInstance(
@@ -192,6 +195,52 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             ).apply {
                 show(supportFragmentManager, this.tag)
             }
+        }
+        mRoomAdapter.setOnItemChildClickListener { adapter, view, position ->
+
+            if (view.id == R.id.booking_tv) {
+
+                val roomData = mRoomAdapter.data[position]
+
+
+                val breakfast_type = when (roomData.breakfast_type) {
+                    1 -> getString(R.string.breakfast_support)
+                    2 -> getString(R.string.breakfast_un_support)
+                    else -> ""
+                }
+
+              val cancelable =   if (roomData.is_cancel == 1) {
+                    getString(R.string.cancelable)
+                } else {
+                    getString(R.string.not_cancelable)
+                }
+                val imageStr = if (roomData.images.isNotEmpty()) {
+                    roomData.images[0]
+                }else{
+                    ""
+                }
+
+
+
+                HotelBookActivity.navigation(
+                    this@HotelDetailActivity2,
+                    hotelRoomId = roomData.id,
+                    singlePrice = roomData.price.toDouble(),
+                    roomType = roomData.hotel_room_type,
+                    breakFastType = breakfast_type,
+                    roomArea = roomData.room_area,
+                    roomPeople = getString(R.string.people_number_format, roomData.people),
+                    hotelName =  name_tv.text.toString(),
+                    cancelable =cancelable,
+                    roomNumber = roomNumber,
+                    roomImage = imageStr,
+                    startDate = mStartDateBean,
+                    endDate = mEndDateBean
+                )
+
+
+            }
+
         }
 
         room_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {

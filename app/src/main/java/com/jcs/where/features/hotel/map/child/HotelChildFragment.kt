@@ -31,7 +31,7 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
     var grade: String? = null
 
     /** 房间数量 */
-     var roomNumber = 1
+    var roomNumber = 1
 
     lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
     lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
@@ -128,7 +128,16 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
-        HotelDetailActivity2.navigation(requireContext(), data.id, mStartDateBean, mEndDateBean, star_level, price_range, grade,roomNumber)
+        HotelDetailActivity2.navigation(
+            requireContext(),
+            data.id,
+            mStartDateBean,
+            mEndDateBean,
+            star_level,
+            price_range,
+            grade,
+            roomNumber
+        )
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -156,6 +165,14 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
                     needRefresh = true
                 }
             }
+            EventCode.EVENT_REFRESH_CHILD_START_DATE -> {
+                mStartDateBean  = baseEvent.data as JcsCalendarAdapter.CalendarBean
+
+            }
+            EventCode.EVENT_REFRESH_CHILD_END_DATE -> {
+                mEndDateBean  = baseEvent.data as JcsCalendarAdapter.CalendarBean
+            }
+
         }
     }
 

@@ -27,6 +27,7 @@ class HotelRoomListResponse {
     /** 是否可取消（1：可取消，2：不可取消） */
     var is_cancel = 0
 
+    var people = 0
 
     var tags: ArrayList<TagsBean> = ArrayList()
 

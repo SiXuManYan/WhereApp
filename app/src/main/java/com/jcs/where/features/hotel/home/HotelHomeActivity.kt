@@ -198,11 +198,12 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         }
 
 
-        (mJcsCalendarDialog.startBean.showMonthDayDate + " - " + mJcsCalendarDialog.endBean.showMonthDayDate).also {
-            date_tv.text = it
-        }
+        setDate()
+
 
     }
+
+
 
 
     override fun bindListener() {
@@ -308,10 +309,22 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     }
 
     override fun onDateSelected(startDate: JcsCalendarAdapter.CalendarBean, endDate: JcsCalendarAdapter.CalendarBean) {
-        val start = mJcsCalendarDialog.startBean.showMonthDayDate
-        val end = mJcsCalendarDialog.endBean.showMonthDayDate
-        date_tv.text = getString(R.string.valid_period_format2, start, end)
+
+        mJcsCalendarDialog.startBean = startDate
+        mJcsCalendarDialog.endBean = endDate
+        setDate()
     }
+
+    private fun setDate() {
+        val startBean = mJcsCalendarDialog.startBean
+        val endBean = mJcsCalendarDialog.endBean
+        (startBean.showMonthDayDate + " - " + endBean.showMonthDayDate).also {
+            date_tv.text = it
+        }
+        val span = (endBean.time - startBean.time) / (1000 * 60 * 60 * 24)
+        total_time_tv.text = getString(R.string.total_date_format, span.toString())
+    }
+
 
 
 }

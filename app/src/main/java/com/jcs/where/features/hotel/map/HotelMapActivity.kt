@@ -284,7 +284,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
         type_iv.setOnClickListener {
 
-            VibrateUtils.vibrate(50)
+
             if (contentIsMap) {
                 type_iv.setImageResource(R.mipmap.ic_type_map)
                 makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
@@ -584,6 +584,9 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         mStartDateBean = startDate
         mEndDateBean = endDate
         updateDate()
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_REFRESH_CHILD_START_DATE, mStartDateBean))
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_REFRESH_CHILD_END_DATE, mEndDateBean))
+
     }
 
 

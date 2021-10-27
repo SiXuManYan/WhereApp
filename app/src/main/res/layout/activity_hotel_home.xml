@@ -116,9 +116,9 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:gravity="center_vertical"
+                        android:text="@string/default_time"
                         android:textColor="@color/grey_666666"
-                        android:textSize="@dimen/sp_14"
-                        android:text="@string/default_time" />
+                        android:textSize="@dimen/sp_14" />
 
 
                 </RelativeLayout>

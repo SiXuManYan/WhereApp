@@ -202,7 +202,6 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
         }
         type_iv.setOnClickListener {
 
-            VibrateUtils.vibrate(50)
             if (contentIsMap) {
                 type_iv.setImageResource(R.mipmap.ic_type_map)
                 makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN

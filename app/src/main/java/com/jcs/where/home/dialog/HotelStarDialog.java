@@ -1,17 +1,17 @@
 package com.jcs.where.home.dialog;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentManager;
-
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseBottomDialog;
 import com.jcs.where.utils.BigDecimalUtil;
+import com.jcs.where.utils.Constant;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
     private ImageView close;
     private TextView price_start_tv;
-    private TextView price_end_tv;
     private TextView ensureBtn;
     private TextView price0To1, price1To2, price2To5, priceAbove5;
     private TextView starLessThan2, star3, star4, star5;
@@ -51,13 +50,16 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     /**
      * 选中的价格区间
      */
-    private PriceIntervalBean mPriceBeans = new PriceIntervalBean();
+    private PriceIntervalBean mPriceBeans = new PriceIntervalBean(0, 50, "₱ 0–5k", 0, 5000);
 
 
     /**
      * 选中的星级
      */
     private StarBean mSelectStartBean = new StarBean();
+    private Integer cachePriceIndex = null;
+    private Integer cacheStarIndex = null;
+    private Integer cacheScoreIndex = null;
 
 
     @Override
@@ -69,7 +71,6 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     protected void initView(View view) {
         close = view.findViewById(R.id.close);
         price_start_tv = view.findViewById(R.id.price_start_tv);
-        price_end_tv = view.findViewById(R.id.price_end_tv);
         ensureBtn = view.findViewById(R.id.ensureBtn);
 
         price0To1 = view.findViewById(R.id.price0To1);
@@ -91,11 +92,6 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         mSeekBar.setIndicatorTextDecimalFormat("0");
     }
 
-    @Override
-    public void show(FragmentManager fm) {
-        super.show(fm);
-
-    }
 
     @Override
     protected void initData() {
@@ -137,8 +133,10 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
         scoreBeans.put(score40, new ScoreBean(4.0f, getString(R.string.score_4_0_hint)));
         scoreBeans.put(score45, new ScoreBean(4.5f, getString(R.string.score_4_5_hint)));
 
+        initCache();
 
     }
+
 
     @Override
     protected void bindListener() {
@@ -185,20 +183,23 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
                 String startPrice = mDecimalFormat.format(leftProgress / 10) + "k";
                 String endPrice = mDecimalFormat.format(rightProgress / 10) + "k";
 
-                price_start_tv.setText(getString(R.string.price_unit_format, startPrice));
-                price_end_tv.setText(getString(R.string.price_unit_format, endPrice));
+                String priceShow = getString(R.string.price_unit_format, startPrice + "-" + endPrice);
+                price_start_tv.setText(priceShow);
 
-                unSelectByList(null, priceTvs);
+                unSelectPrice(priceTvs);
 
-                //
 
                 float leftPrice = BigDecimalUtil.mul(leftProgress, 100).floatValue();
                 mPriceBeans.startPrice = Math.round(leftPrice);
 
                 float rightPrice = BigDecimalUtil.mul(rightProgress, 100).floatValue();
                 mPriceBeans.endPrice = Math.round(rightPrice);
+
+                mPriceBeans.priceShow = priceShow;
+
             }
         });
+        mSeekBar.setProgress(0, 50);
     }
 
     private void unSelectByTag(TextView textView) {
@@ -223,17 +224,35 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     }
 
     private void unSelectByList(TextView textView, List<TextView> temp) {
-        if (temp != null) {
-            int size = temp.size();
-            for (int j = 0; j < size; j++) {
+        if (temp == null) {
+            return;
+        }
 
-                TextView tv = temp.get(j);
-                if (tv != textView) {
-                    tv.setSelected(false);
-                }
+
+        int size = temp.size();
+        for (int j = 0; j < size; j++) {
+
+            TextView tv = temp.get(j);
+            if (tv != textView) {
+                tv.setSelected(false);
             }
         }
     }
+
+
+    private void unSelectPrice(List<TextView> temp) {
+        if (temp == null) {
+            return;
+        }
+
+
+        int size = temp.size();
+        for (int j = 0; j < size; j++) {
+            TextView tv = temp.get(j);
+            tv.setSelected(false);
+        }
+    }
+
 
     @Override
     protected int getHeight() {
@@ -244,55 +263,118 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
 
     public void onClick(View view) {
 
-
         int id = view.getId();
         if (id == R.id.ensureBtn) {
-            StringBuilder callbackToShow = new StringBuilder(price_start_tv.getText() + "-" + price_end_tv.getText());
+            StringBuilder callbackToShow = new StringBuilder(price_start_tv.getText());
 
             if (mSelectStartBean != null) {
                 callbackToShow.append("，").append(mSelectStartBean.starShow);
             }
             mCallback.selectPriceOrStar(callbackToShow.toString());
+
             mCallback.selectResult(mPriceBeans, mSelectStartBean, mScoreBean);
+
+            SPUtils spUtils = SPUtils.getInstance();
+            spUtils.put(Constant.SP_PRICE_SHOW, mPriceBeans.priceShow);
+
+            if (cachePriceIndex != null) {
+                spUtils.put(Constant.SP_PRICE_SELECTED, cachePriceIndex);
+            } else {
+                spUtils.put(Constant.SP_PRICE_SELECTED, -1);
+            }
+
+
+            if (cacheStarIndex != null) {
+                spUtils.put(Constant.SP_STAR_SELECTED, cacheStarIndex);
+            } else {
+                spUtils.put(Constant.SP_STAR_SELECTED, -1);
+            }
+
+
+            if (cacheScoreIndex != null) {
+                spUtils.put(Constant.SP_SCORE_SELECTED, cacheScoreIndex);
+            } else {
+                spUtils.put(Constant.SP_SCORE_SELECTED, -1);
+            }
+
+
             dismiss();
             return;
         }
 
 
         if (view instanceof TextView) {
-            unSelectByTag((TextView) view);
-            view.setSelected(true);
-            PriceIntervalBean priceIntervalBean = priceBeans.get(view);
-            if (priceIntervalBean != null) {
-                //说明点击的是价格
+            boolean isSelected = view.isSelected();
+            if (isSelected) {
+                view.setSelected(false);
+            } else {
+                unSelectByTag((TextView) view);
+                view.setSelected(true);
+            }
 
-                int start = priceIntervalBean.startProgress;
-                int end = priceIntervalBean.endProgress;
-                mSeekBar.setProgress(start, end);
+            //说明点击的是价格
+            PriceIntervalBean priceBean = priceBeans.get(view);
+            if (priceBean != null) {
+                if (view.isSelected()) {
+                    mPriceBeans = priceBean;
 
-                String startPrice = mDecimalFormat.format(start / 10) + "k";
-                String endPrice = mDecimalFormat.format(end / 10) + "k";
+                    int startProgress = priceBean.startProgress;
+                    int endProgress = priceBean.endProgress;
 
-
-                price_start_tv.setText(getString(R.string.price_unit_format, startPrice));
-                price_end_tv.setText(getString(R.string.price_unit_format, endPrice));
-
-                mPriceBeans = priceIntervalBean;
-
+                    mSeekBar.setProgress(startProgress, endProgress);
+                    price_start_tv.setText(priceBean.priceShow);
+                    cachePriceIndex = priceTvs.indexOf(view);
+                } else {
+                    mPriceBeans = new PriceIntervalBean(0, 50, StringUtils.getString(R.string.price_0_to_50), 0, 5000);
+                    mSeekBar.setProgress(0, 50);
+                    price_start_tv.setText(mPriceBeans.priceShow);
+                    cachePriceIndex = null;
+                }
 
             }
 
+            // 说明点击的是星级
             StarBean starBean = starBeans.get(view);
             if (starBean != null) {
-                // 说明点击的是星级
-                mSelectStartBean = starBean;
+                if (view.isSelected()) {
+                    mSelectStartBean = starBean;
+                    cacheStarIndex = starTvs.indexOf(view);
+                } else {
+                    mSelectStartBean = new StarBean();
+                    cacheStarIndex = null;
+                }
             }
 
+            // 点击评分
             ScoreBean scoreBean = scoreBeans.get(view);
             if (scoreBean != null) {
-                // 点击评分
-                mScoreBean = scoreBean;
+                if (view.isSelected()) {
+                    mScoreBean = scoreBean;
+                    cacheScoreIndex = scoreTvs.indexOf(view);
+                } else {
+                    mScoreBean = new ScoreBean();
+                    cacheScoreIndex = null;
+                }
+
             }
+        }
+    }
+
+    private void initCache() {
+        SPUtils spUtils = SPUtils.getInstance();
+        String cachePriceShow = spUtils.getString(Constant.SP_PRICE_SHOW, StringUtils.getString(R.string.price_0_to_50));
+        int cachePriceSelectIndex = spUtils.getInt(Constant.SP_PRICE_SELECTED, -1);
+        int cacheStarSelectIndex = spUtils.getInt(Constant.SP_STAR_SELECTED, -1);
+        int cacheScoreSelectIndex = spUtils.getInt(Constant.SP_SCORE_SELECTED, -1);
+        price_start_tv.setText(cachePriceShow);
+        if (cachePriceSelectIndex != -1) {
+            priceTvs.get(cachePriceSelectIndex).setSelected(true);
+        }
+        if (cacheStarSelectIndex != -1) {
+            starTvs.get(cacheStarSelectIndex).setSelected(true);
+        }
+        if (cacheScoreSelectIndex != -1) {
+            scoreTvs.get(cacheScoreSelectIndex).setSelected(true);
         }
 
 
@@ -319,7 +401,6 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
             scoreTvs.get(i).setSelected(false);
         }
         price_start_tv.setText("");
-        price_end_tv.setText("");
 
     }
 

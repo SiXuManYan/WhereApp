@@ -208,7 +208,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     override fun bindListener() {
 
         score_tv.setOnClickListener {
-            mHotelStarDialog.show(supportFragmentManager)
+            mHotelStarDialog.show(supportFragmentManager,"")
         }
         date_tv.setOnClickListener {
             mJcsCalendarDialog.show(supportFragmentManager)
@@ -254,7 +254,21 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         selectStarBean: HotelStarDialog.StarBean, scoreBean: HotelStarDialog.ScoreBean
     ) {
 
-        (priceBeans.priceShow + " / " + selectStarBean.starShow + " / " + scoreBean.scoreString).also { score_tv.text = it }
+        val priceShow = priceBeans.priceShow
+
+        val starShow = if (selectStarBean.starShow .isEmpty()) {
+            getString(R.string.star_default)
+        }else{
+            selectStarBean.starShow
+        }
+        val scoreString = if (scoreBean.scoreString.isEmpty()) {
+            getString(R.string.score_default)
+        }else{
+            scoreBean.scoreString
+        }
+
+
+        ("$priceShow / $starShow / $scoreString").also { score_tv.text = it }
 
 
         // 价格
@@ -269,18 +283,27 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
         // 星级
         val star = selectStarBean.starValue
-
-        val scoreList = ArrayList<Int>().apply {
-            clear()
-            if (star == 2) {
-                add(1)
+        starLevel = if (star!=0) {
+            val scoreList = ArrayList<Int>().apply {
+                clear()
+                if (star == 2) {
+                    add(1)
+                }
+                add(star)
             }
-            add(star)
+            Gson().toJson(scoreList)
+        }else {
+            null
         }
-        starLevel = Gson().toJson(scoreList)
+
 
         // 评分
-        grade = scoreBean.score.toString()
+        val score = scoreBean.score
+        grade = if (score == 0.0f) {
+            null
+        }else{
+            score.toString()
+        }
 
     }
 

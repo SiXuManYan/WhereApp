@@ -174,6 +174,10 @@ public class Constant {
     public static final String SP_DEVICE_ID = "sp_device_id";
     public static final String SP_LATITUDE = "sp_latitude";
     public static final String SP_LONGITUDE = "sp_longitude";
+    public static final String SP_PRICE_SHOW = "SP_PRICE_SHOW";
+    public static final String SP_PRICE_SELECTED = "SP_PRICE_SELECTED";
+    public static final String SP_STAR_SELECTED = "SP_STAR_SELECTED";
+    public static final String SP_SCORE_SELECTED = "SP_SCORE_SELECTED";
 
 
     public static final String PARAM_ADDRESS_ID = "param_address_id";

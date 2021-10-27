@@ -252,7 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/dp_7"
-                        android:layout_toStartOf="@+id/right_tv"
+                        android:layout_toStartOf="@+id/right_date_tv"
                         android:gravity="center_vertical"
                         android:lineSpacingMultiplier="1.2"
                         android:minHeight="@dimen/dp_33"
@@ -263,7 +263,7 @@
 
 
                     <TextView
-                        android:id="@+id/right_tv"
+                        android:id="@+id/right_date_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

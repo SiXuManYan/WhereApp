@@ -94,9 +94,7 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     @Override
     public void show(FragmentManager fm) {
         super.show(fm);
-        if (mSeekBar != null) {
-            mSeekBar.setProgress(0, 0);
-        }
+
     }
 
     @Override

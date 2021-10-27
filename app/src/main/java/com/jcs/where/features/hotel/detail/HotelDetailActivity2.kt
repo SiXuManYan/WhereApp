@@ -28,6 +28,7 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
 import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean
+import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.*
@@ -38,7 +39,7 @@ import java.util.*
  * Created by Wangsw  2021/10/8 11:33.
  * 酒店详情
  */
-class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetailView {
+class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetailView, JcsCalendarDialog.OnDateSelectedListener {
 
 
     private var hotelId = 0
@@ -56,6 +57,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     /** 房间数量 */
     private var roomNumber = 1
 
+    private lateinit var mJcsCalendarDialog: JcsCalendarDialog
     private lateinit var mStartDateBean: CalendarBean
     private lateinit var mEndDateBean: CalendarBean
 
@@ -100,7 +102,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             starLevel: String? = null,
             priceRange: String? = null,
             grade: String? = null,
-            roomNumber :Int? = 1
+            roomNumber: Int? = 1
         ) {
 
             val bundle = Bundle().apply {
@@ -141,15 +143,11 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             grade = getString(Constant.PARAM_GRADE)
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as CalendarBean
-            roomNumber =  getInt(Constant.PARAM_ROOM_NUMBER,1)
+            roomNumber = getInt(Constant.PARAM_ROOM_NUMBER, 1)
         }
-
-        (mStartDateBean.showMonthDayDate + " / " + mEndDateBean.showMonthDayDate).also { select_date_tv.text = it }
-        val span = (mEndDateBean.time - mStartDateBean.time) / (1000 * 60 * 60 * 24)
-        right_tv.text = getString(R.string.total_date_format, span.toString()) 
-
-
+        setDate()
     }
+
 
     private fun initScroll() {
         // alpha
@@ -272,8 +270,17 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
     override fun initData() {
         presenter = HotelDetailPresenter(this)
+        mJcsCalendarDialog = JcsCalendarDialog().apply {
+            initCalendar(this@HotelDetailActivity2)
+            setOnDateSelectedListener(this@HotelDetailActivity2)
+        }
         presenter.getData(hotelId)
-        presenter.getRoomList(hotelId, mStartDateBean.showYearMonthDayDateWithSplit, mEndDateBean.showYearMonthDayDateWithSplit, roomNumber)
+        presenter.getRoomList(
+            hotelId,
+            mStartDateBean.showYearMonthDayDateWithSplit,
+            mEndDateBean.showYearMonthDayDateWithSplit,
+            roomNumber
+        )
     }
 
     override fun bindListener() {
@@ -309,8 +316,9 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                 putInt(Constant.PARAM_ID, hotelId);
             })
         }
-
-
+        right_date_tv.setOnClickListener {
+            mJcsCalendarDialog.show(supportFragmentManager)
+        }
     }
 
 
@@ -392,7 +400,15 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         score_tv.text = response.grade.toString()
         score_retouch_tv.text = FeaturesUtil.getGradeRetouchString(response.grade)
 
-        time_tv.text = response.start_business_time
+        val startBusinessTime = response.start_business_time
+        if (startBusinessTime.isEmpty()) {
+            time_tv.visibility = View.GONE
+        } else {
+            time_tv.text = startBusinessTime
+            time_tv.visibility = View.VISIBLE
+        }
+
+
         phone_tv.text = response.tel
         address_tv.text = response.address
 
@@ -413,7 +429,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             hotel_clock_tv.text =
                 getString(R.string.check_in_out_time_format, it.check_in_time, it.check_out_time)
 
-            hotel_child_tv.text = it.children
+            hotel_child_tv.text = getString(R.string.children_format, it.children)
         }
 
         // 设施
@@ -435,6 +451,25 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     }
 
     override fun bindRoom(toMutableList: MutableList<HotelRoomListResponse>) = mRoomAdapter.setNewInstance(toMutableList)
+
+
+    private fun setDate() {
+        (mStartDateBean.showMonthDayDate + " / " + mEndDateBean.showMonthDayDate).also { select_date_tv.text = it }
+        val span = (mEndDateBean.time - mStartDateBean.time) / (1000 * 60 * 60 * 24)
+        right_date_tv.text = getString(R.string.total_date_format, span.toString())
+    }
+
+    override fun onDateSelected(startDate: CalendarBean, endDate: CalendarBean) {
+        mStartDateBean = startDate
+        mEndDateBean = endDate
+        setDate()
+        presenter.getRoomList(
+            hotelId,
+            mStartDateBean.showYearMonthDayDateWithSplit,
+            mEndDateBean.showYearMonthDayDateWithSplit,
+            roomNumber
+        )
+    }
 
 
 }

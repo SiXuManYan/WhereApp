@@ -13,7 +13,9 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.store.pay.StorePayActivity
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
@@ -34,7 +36,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
 
     private var hotelRoomId = 0
     private var singlePrice = 0.0
-    private var totalPrice :BigDecimal = BigDecimal.ZERO
+    private var totalPrice: BigDecimal = BigDecimal.ZERO
 
     /** 房间数量 */
     private var roomNumber = 1
@@ -91,16 +93,20 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
 
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
-
-
             }
-            val intent = Intent(context, HotelBookActivity::class.java)
-                .putExtras(bundle)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            val intent = if (User.isLogon()) {
+                Intent(context, HotelBookActivity::class.java).putExtras(bundle)
+            } else {
+                Intent(context, LoginActivity::class.java)
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
             if (context !is Activity) {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
+
+
             context.startActivity(intent)
         }
     }

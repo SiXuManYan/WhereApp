@@ -202,7 +202,6 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
             date_tv.text = it
         }
 
-
     }
 
 
@@ -287,7 +286,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
     override fun onDateSelected(startDate: JcsCalendarAdapter.CalendarBean, endDate: JcsCalendarAdapter.CalendarBean) {
         val start = mJcsCalendarDialog.startBean.showMonthDayDate
-        val end = mJcsCalendarDialog.startBean.showMonthDayDate
+        val end = mJcsCalendarDialog.endBean.showMonthDayDate
         date_tv.text = getString(R.string.valid_period_format2, start, end)
     }
 

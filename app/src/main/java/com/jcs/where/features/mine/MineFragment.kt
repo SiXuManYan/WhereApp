@@ -12,13 +12,11 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
-import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.coupon.CardCouponActivity
-import com.jcs.where.features.hotel.home.HotelHomeActivity
+import com.jcs.where.features.integral.IntegralActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
 import com.jcs.where.features.setting.information.ModifyInfoActivity
-import com.jcs.where.features.integral.IntegralActivity
 import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.CollectionListActivity
 import com.jcs.where.mine.activity.FootprintActivity
@@ -88,7 +86,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(FootprintActivity::class.java)
         }
         vouchers_tv.setOnClickListener {
-           startActivityAfterLogin(CardCouponActivity::class.java)
+            startActivityAfterLogin(CardCouponActivity::class.java)
         }
         merchant_rl.setOnClickListener {
             if (!User.isLogon()) {
@@ -115,8 +113,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(ExtendChatActivity::class.java)
         }
         about_rl.setOnClickListener {
-//            startActivity(AboutActivity::class.java)
-            CommentPostActivity.navigation(requireContext(),0,0,0)
+            startActivity(AboutActivity::class.java)
         }
 
     }

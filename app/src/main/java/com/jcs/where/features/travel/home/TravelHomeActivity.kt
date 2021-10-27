@@ -286,14 +286,6 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
     override fun bindRecommendData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean) {
         swipeLayout.isRefreshing = false
         val loadMoreModule = mRecommendAdapter.loadMoreModule
-        if (data.isEmpty()) {
-            if (page == Constant.DEFAULT_FIRST_PAGE) {
-                loadMoreModule.loadMoreComplete()
-            } else {
-                loadMoreModule.loadMoreEnd()
-            }
-            return
-        }
         mRecommendAdapter.setNewInstance(data)
         loadMoreModule.loadMoreEnd()
     }

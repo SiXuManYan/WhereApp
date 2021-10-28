@@ -460,7 +460,7 @@
             android:name=".features.address.edit.AddressEditActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".features.gourmet.restaurant.list.RestaurantListActivity"
+            android:name=".features.gourmet.restaurant.list.RestaurantHomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity"

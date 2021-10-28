@@ -1,423 +1,327 @@
-package com.jcs.where.features.gourmet.restaurant.list;
+package com.jcs.where.features.gourmet.restaurant.list
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
-import android.widget.CheckedTextView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
-
-import com.blankj.utilcode.util.ColorUtils;
-import com.blankj.utilcode.util.KeyboardUtils;
-import com.blankj.utilcode.util.SizeUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.chad.library.adapter.base.listener.OnLoadMoreListener;
-import com.chad.library.adapter.base.module.BaseLoadMoreModule;
-import com.jcs.where.R;
-import com.jcs.where.api.response.area.AreaResponse;
-import com.jcs.where.api.response.category.Category;
-import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
-import com.jcs.where.base.BaseEvent;
-import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.bean.RestaurantListRequest;
-import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity;
-import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment;
-import com.jcs.where.features.gourmet.restaurant.map.RestaurantMapActivity;
-import com.jcs.where.features.gourmet.takeaway.TakeawayActivity;
-import com.jcs.where.utils.Constant;
-import com.jcs.where.view.empty.EmptyView;
-import com.jcs.where.widget.list.DividerDecoration;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
-
-import static com.jcs.where.utils.Constant.PARAM_ID;
+import android.graphics.Color
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.CheckedTextView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.viewpager.widget.ViewPager
+import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.jcs.where.R
+import com.jcs.where.api.response.area.AreaResponse
+import com.jcs.where.api.response.category.Category
+import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.bean.RestaurantListRequest
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
+import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment.MoreFilter
+import com.jcs.where.features.gourmet.restaurant.map.RestaurantMapActivity
+import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
+import com.jcs.where.utils.Constant
+import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.list.DividerDecoration
+import kotlinx.android.synthetic.main.activity_gourmet_list.*
+import kotlinx.android.synthetic.main.layout_filter.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by Wangsw  2021/3/24 13:56.
- * 餐厅列表
+ * 美食首页
  */
-public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresenter> implements RestaurantListView, OnLoadMoreListener, OnItemChildClickListener, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), RestaurantHomeView {
 
+    private var page = Constant.DEFAULT_FIRST_PAGE
 
-    private int page = Constant.DEFAULT_FIRST_PAGE;
+    private lateinit var mAdapter: DelicacyAdapter
+    private lateinit var mRequest: RestaurantListRequest
+    private lateinit var emptyView: EmptyView
 
-    private SwipeRefreshLayout swipe_layout;
-    private RecyclerView recycler;
-    private LinearLayout
-            category_ll,
-            area_filter_ll,
-            food_filter_ll,
-            other_filter_ll,
-            filter_container_ll;
-    private ViewPager filter_pager;
-    private View dismiss_view;
-    private AppCompatEditText city_et;
+    private var mCategoryId = 0
+    private var mPidName = ""
 
+    override fun getLayoutId() = R.layout.activity_gourmet_list
 
-    private DelicacyAdapter mAdapter;
-
-    private RestaurantListRequest mRequest;
-    private Animation mFilterShowAnimation;
-    private Animation mFilterHideAnimation;
-    private CheckedTextView area_tv;
-    private CheckedTextView food_tv;
-    private CheckedTextView other_tv;
-    private int mCategoryId;
-    private ImageView clearIv;
-
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_gourmet_list;
+    override fun initView() {
+        initExtra()
+        initFilter()
+        initList()
     }
 
-    @Override
-    protected void initView() {
-        Bundle bundle = getIntent().getExtras();
-        mCategoryId = bundle.getInt(Constant.PARAM_PID, 89);
-        String mPidName = bundle.getString(Constant.PARAM_PID_NAME, "");
-        swipe_layout = findViewById(R.id.swipe_layout);
-        recycler = findViewById(R.id.recycler);
-        city_et = findViewById(R.id.cityEt);
+
+    private fun initExtra() {
+        val bundle = intent.extras ?: return
+        mCategoryId = bundle.getInt(Constant.PARAM_PID, 89)
+        mPidName = bundle.getString(Constant.PARAM_PID_NAME, "")
+        food_tv.text = mPidName
+
+    }
+
+    private fun initFilter() {
+        filter_pager.offscreenPageLimit = 2
+        val adapter = RestaurantPagerAdapter(supportFragmentManager, 0)
+        adapter.pid = mCategoryId
+        adapter.pidName = mPidName
+        filter_pager.adapter = adapter
+    }
 
 
-        // filter
-        category_ll = findViewById(R.id.category_ll);
-        area_filter_ll = findViewById(R.id.area_filter_ll);
-        food_filter_ll = findViewById(R.id.food_filter_ll);
-        other_filter_ll = findViewById(R.id.other_filter_ll);
-        area_tv = findViewById(R.id.area_tv);
-        food_tv = findViewById(R.id.food_tv);
-        other_tv = findViewById(R.id.other_tv);
-
-        filter_container_ll = findViewById(R.id.filter_container_ll);
-        filter_pager = findViewById(R.id.filter_pager);
-        dismiss_view = findViewById(R.id.dismiss_view);
-        filter_pager.setOffscreenPageLimit(2);
-        RestaurantPagerAdapter adapter = new RestaurantPagerAdapter(getSupportFragmentManager(), 0);
-        adapter.pid = mCategoryId;
-        adapter.pidName = mPidName;
-
-        filter_pager.setAdapter(adapter);
-
+    private fun initList() {
         // list
-        EmptyView emptyView = new EmptyView(this);
-        emptyView.showEmptyDefault();
-        mAdapter = new DelicacyAdapter();
-        mAdapter.getLoadMoreModule().setAutoLoadMore(true);
-        mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
-        mAdapter.setEmptyView(emptyView);
-        mAdapter.addChildClickViewIds(R.id.takeaway_support_tv);
-        mAdapter.setOnItemChildClickListener(this);
-        mAdapter.setOnItemClickListener(this);
-        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        emptyView = EmptyView(this).apply {
+            initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint, R.string.back) {}
+            action_tv.visibility = View.GONE
+        }
 
-
-        recycler.setAdapter(mAdapter);
-        recycler.addItemDecoration(getItemDecoration());
-        recycler.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL) );
-
-        // 动画
-        mFilterShowAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_in);
-        mFilterHideAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_out);
-
-        // 默认
-        food_tv.setText(mPidName);
+        mAdapter = DelicacyAdapter().apply {
+            setEmptyView(emptyView)
+            loadMoreModule.isAutoLoadMore = true
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+            addChildClickViewIds(R.id.takeaway_support_tv)
+            setOnItemChildClickListener(this@RestaurantHomeActivity)
+            setOnItemClickListener(this@RestaurantHomeActivity)
+            loadMoreModule.setOnLoadMoreListener(this@RestaurantHomeActivity)
+        }
+        recycler.apply {
+            adapter = mAdapter
+            addItemDecoration(
+                DividerDecoration(
+                    Color.TRANSPARENT,
+                    SizeUtils.dp2px(16f),
+                    SizeUtils.dp2px(8f),
+                    SizeUtils.dp2px(8f)
+                ).apply {
+                    setDrawHeaderFooter(false)
+                })
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
 
     }
 
-    @Override
-    protected boolean isStatusDark() {
-        return true;
+
+    override fun isStatusDark() = true
+
+    override fun initData() {
+        presenter = RestaurantHomePresenter(this)
+        mRequest = RestaurantListRequest()
+        mRequest.category_id = mCategoryId.toString()
+        onRefresh()
     }
 
-    @Override
-    protected void initData() {
-        presenter = new RestaurantListPresenter(this);
-        mRequest = new RestaurantListRequest();
-        mRequest.category_id = String.valueOf(mCategoryId);
-        onRefresh();
-    }
-
-    @Override
-    protected void bindListener() {
-        swipe_layout.setOnRefreshListener(this);
-        findViewById(R.id.back_iv).setOnClickListener(v -> finish());
-        clearIv = findViewById(R.id.clearIv);
-        clearIv.setOnClickListener(this::onClearSearchClick);
-        area_filter_ll.setOnClickListener(this::onAreaFilterClick);
-        food_filter_ll.setOnClickListener(this::onFoodFilterClick);
-        other_filter_ll.setOnClickListener(this::onOtherFilterClick);
-        dismiss_view.setOnClickListener(this::onFilterDismissClick);
-        filter_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < category_ll.getChildCount(); i++) {
-                    changeFilterTabStyle(position, i);
+    override fun bindListener() {
+        swipe_layout.setOnRefreshListener(this)
+        back_iv.setOnClickListener { finish() }
+        clearIv.setOnClickListener { onClearSearchClick() }
+        area_filter_ll.setOnClickListener { onAreaFilterClick() }
+        food_filter_ll.setOnClickListener { onFoodFilterClick() }
+        other_filter_ll.setOnClickListener { onOtherFilterClick() }
+        dismiss_view.setOnClickListener { onFilterDismissClick() }
+        filter_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+            override fun onPageScrollStateChanged(state: Int) = Unit
+            override fun onPageSelected(position: Int) {
+                for (i in 0 until category_ll.childCount) {
+                    changeFilterTabStyle(position, i)
                 }
-
             }
-        });
-        city_et.setOnEditorActionListener((v, actionId, event) -> {
-            String searchKey = city_et.getText().toString().trim();
+        })
+        city_et.setOnEditorActionListener { _: TextView, actionId: Int, _: KeyEvent ->
 
+            val searchKey = city_et.text.toString().trim()
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                mRequest.search_input = searchKey;
-                onRefresh();
-                KeyboardUtils.hideSoftInput(city_et);
-                return true;
+                mRequest.search_input = searchKey
+                onRefresh()
+                KeyboardUtils.hideSoftInput(city_et)
+                return@setOnEditorActionListener true
             }
-            return false;
-        });
-        city_et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String trim = s.toString().trim();
-                if (TextUtils.isEmpty(trim)) {
-                    clearIv.setVisibility(View.GONE);
+            false
+        }
+        city_et.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) = Unit
+            override fun afterTextChanged(s: Editable) {
+                val trim = s.toString().trim()
+                clearIv.visibility = if (trim.isEmpty()) {
+                    View.GONE
                 } else {
-                    clearIv.setVisibility(View.VISIBLE);
+                    View.VISIBLE
                 }
             }
-        });
-
-        findViewById(R.id.iv_map).setOnClickListener(v -> {
-
-            Bundle bundle = new Bundle();
-            bundle.putString(Constant.PARAM_ID, String.valueOf(mCategoryId));
-            startActivity(RestaurantMapActivity.class, bundle);
-        });
-
-    }
-
-    private void onClearSearchClick(View view) {
-        city_et.setText("");
-        if (!TextUtils.isEmpty(mRequest.search_input)) {
-            mRequest.search_input = null;
-            onRefresh();
+        })
+        map_iv.setOnClickListener {
+            startActivity(RestaurantMapActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_ID, mCategoryId.toString())
+            })
         }
     }
 
-
-    @Override
-    public void onRefresh() {
-        swipe_layout.setRefreshing(true);
-        page = Constant.DEFAULT_FIRST_PAGE;
-        presenter.getList(page, mRequest);
-    }
-
-    @Override
-    public void onLoadMore() {
-        page++;
-        presenter.getList(page, mRequest);
-    }
-
-    @Override
-    public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-        RestaurantResponse data = mAdapter.getData().get(position);
-
-        Bundle bundle = new Bundle();
-        bundle.putString(PARAM_ID, data.id);
-        startActivity(TakeawayActivity.class, bundle);
-    }
-
-
-    @Override
-    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-        RestaurantResponse data = mAdapter.getData().get(position);
-        Bundle bundle = new Bundle();
-        bundle.putString(PARAM_ID, data.id);
-        startActivity(RestaurantDetailActivity.class, bundle);
-    }
-
-    @Override
-    public void bindList(List<RestaurantResponse> data, boolean isLastPage) {
-        if (swipe_layout.isRefreshing()) {
-            swipe_layout.setRefreshing(false);
+    private fun onClearSearchClick() {
+        city_et.setText("")
+        if (mRequest.search_input.isNotEmpty()) {
+            mRequest.search_input = null
+            onRefresh()
         }
+    }
 
-        BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+    override fun onRefresh() {
+        swipe_layout.isRefreshing = true
+        page = Constant.DEFAULT_FIRST_PAGE
+        presenter.getList(page, mRequest)
+    }
+
+    override fun onLoadMore() {
+        page++
+        presenter.getList(page, mRequest)
+    }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+        val bundle = Bundle()
+        bundle.putString(Constant.PARAM_ID, data.id)
+        startActivity(TakeawayActivity::class.java, bundle)
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+        startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
+            putString(Constant.PARAM_ID, data.id)
+        })
+    }
+
+    override fun bindList(data: MutableList<RestaurantResponse>, isLastPage: Boolean) {
+        if (swipe_layout.isRefreshing) {
+            swipe_layout.isRefreshing = false
+        }
+        val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
-                mAdapter.setNewInstance(null);
-                loadMoreModule.loadMoreComplete();
+                mAdapter.setNewInstance(null)
+                loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
-                loadMoreModule.loadMoreEnd();
+                loadMoreModule.loadMoreEnd()
             }
-            return;
+            return
         }
         if (page == Constant.DEFAULT_FIRST_PAGE) {
-            mAdapter.setNewInstance(data);
-            loadMoreModule.checkDisableLoadMoreIfNotFullPage();
+            mAdapter.setNewInstance(data)
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
         } else {
-            mAdapter.addData(data);
+            mAdapter.addData(data)
             if (isLastPage) {
-                loadMoreModule.loadMoreEnd();
+                loadMoreModule.loadMoreEnd()
             } else {
-                loadMoreModule.loadMoreComplete();
+                loadMoreModule.loadMoreComplete()
             }
         }
     }
-
-    private RecyclerView.ItemDecoration getItemDecoration() {
-        DividerDecoration itemDecoration = new DividerDecoration(
-                Color.TRANSPARENT,
-                SizeUtils.dp2px(16),
-                SizeUtils.dp2px(8),
-                SizeUtils.dp2px(8));
-        itemDecoration.setDrawHeaderFooter(false);
-        return itemDecoration;
-    }
-
 
     /**
      * 区域筛选
      */
-    private void onAreaFilterClick(View view) {
-        switchFilterPager(0);
-    }
+    private fun onAreaFilterClick() = switchFilterPager(0)
 
     /**
      * 美食类型筛选
      */
-    private void onFoodFilterClick(View view) {
-        switchFilterPager(1);
-    }
+    private fun onFoodFilterClick() = switchFilterPager(1)
 
     /**
      * 其他筛选
      */
-    private void onOtherFilterClick(View view) {
-        switchFilterPager(2);
-    }
+    private fun onOtherFilterClick() = switchFilterPager(2)
 
-    private void onFilterDismissClick(View view) {
-        handleFilterVisible(mFilterHideAnimation, View.GONE);
+    private fun onFilterDismissClick() {
+        handleFilterVisible(View.GONE)
 
         // 清空tab选中状态
-        LinearLayout childTabLL = (LinearLayout) category_ll.getChildAt(filter_pager.getCurrentItem());
-        CheckedTextView tabText = (CheckedTextView) childTabLL.getChildAt(0);
-        ImageView tabImage = (ImageView) childTabLL.getChildAt(1);
-        tabText.setChecked(false);
-        tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
+        val childTabLL = category_ll.getChildAt(filter_pager.currentItem) as LinearLayout
+        val tabText = childTabLL.getChildAt(0) as CheckedTextView
+        val tabImage = childTabLL.getChildAt(1) as ImageView
+        tabText.isChecked = false
+        tabImage.setImageResource(R.mipmap.ic_arrow_filter_black)
     }
 
-
-    private void switchFilterPager(int index) {
-        int currentItem = filter_pager.getCurrentItem();
-        if (filter_container_ll.getVisibility() == View.GONE) {
-
-            handleFilterVisible(mFilterShowAnimation, View.VISIBLE);
+    private fun switchFilterPager(index: Int) {
+        val currentItem = filter_pager.currentItem
+        if (filter_container_ll.visibility == View.GONE) {
+            handleFilterVisible(View.VISIBLE)
             // 切换tab状态
-            changeFilterTabStyle(currentItem, index);
+            changeFilterTabStyle(currentItem, index)
         } else {
-
             if (currentItem == index) {
-
-                handleFilterVisible(mFilterHideAnimation, View.GONE);
+                handleFilterVisible(View.GONE)
 
                 // 清空tab选中状态
-                LinearLayout childTabLL = (LinearLayout) category_ll.getChildAt(index);
-                CheckedTextView tabText = (CheckedTextView) childTabLL.getChildAt(0);
-                ImageView tabImage = (ImageView) childTabLL.getChildAt(1);
-                tabText.setChecked(false);
-                tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
-
+                val childTabLL = category_ll.getChildAt(index) as LinearLayout
+                val tabText = childTabLL.getChildAt(0) as CheckedTextView
+                val tabImage = childTabLL.getChildAt(1) as ImageView
+                tabText.isChecked = false
+                tabImage.setImageResource(R.mipmap.ic_arrow_filter_black)
             }
         }
-        filter_pager.setCurrentItem(index, true);
+        filter_pager.setCurrentItem(index, true)
     }
 
-    private void handleFilterVisible(Animation mFilterHideAnimation, int gone) {
-//        filter_container_ll.startAnimation(mFilterHideAnimation);
-        filter_container_ll.setVisibility(gone);
+    private fun handleFilterVisible(visibility: Int) {
+        filter_container_ll.visibility = visibility
     }
 
-    private void changeFilterTabStyle(int pagerPosition, int tabIndex) {
-        LinearLayout childTabLL = (LinearLayout) category_ll.getChildAt(tabIndex);
-        CheckedTextView tabText = (CheckedTextView) childTabLL.getChildAt(0);
-        ImageView tabImage = (ImageView) childTabLL.getChildAt(1);
+    private fun changeFilterTabStyle(pagerPosition: Int, tabIndex: Int) {
+        val childTabLL = category_ll.getChildAt(tabIndex) as LinearLayout
+        val tabText = childTabLL.getChildAt(0) as CheckedTextView
+        val tabImage = childTabLL.getChildAt(1) as ImageView
         if (pagerPosition == tabIndex) {
-            tabText.setChecked(true);
-            tabImage.setImageResource(R.mipmap.ic_arrow_filter_blue);
+            tabText.isChecked = true
+            tabImage.setImageResource(R.mipmap.ic_arrow_filter_blue)
         } else {
-            tabText.setChecked(false);
-            tabImage.setImageResource(R.mipmap.ic_arrow_filter_black);
+            tabText.isChecked = false
+            tabImage.setImageResource(R.mipmap.ic_arrow_filter_black)
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventReceived(BaseEvent<?> baseEvent) {
-        Object data = baseEvent.data;
-
-        if (data instanceof AreaResponse) {
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        val data = baseEvent.data
+        if (data is AreaResponse) {
             // 区域筛选
-            mRequest.trading_area_id = ((AreaResponse) data).id;
-            String name = ((AreaResponse) data).name;
+            mRequest.trading_area_id = data.id
+            val name = data.name
             if (!TextUtils.isEmpty(name)) {
-                area_tv.setText(name);
+                area_tv.text = name
             }
-        } else if (data instanceof Category) {
+        } else if (data is Category) {
             // 美食列别筛选
-            int id = ((Category) data).id;
+            val id = data.id
             if (id == 0) {
-                mRequest.category_id = null;
+                mRequest.category_id = null
             } else {
-                mRequest.category_id = String.valueOf(id);
+                mRequest.category_id = id.toString()
             }
-
-            String name = ((Category) data).name;
+            val name = data.name
             if (!TextUtils.isEmpty(name)) {
-                food_tv.setText(name);
+                food_tv.text = name
             }
-        } else if (data instanceof MoreFilterFragment.MoreFilter) {
+        } else if (data is MoreFilter) {
             // 其他筛选
-            MoreFilterFragment.MoreFilter more = (MoreFilterFragment.MoreFilter) data;
-            mRequest.per_price = more.per_price;
-            mRequest.service = more.service;
-            mRequest.sort = more.sort;
+            val more = data
+            mRequest.per_price = more.per_price
+            mRequest.service = more.service
+            mRequest.sort = more.sort
         }
-        onRefresh();
-        dismiss_view.performClick();
+        onRefresh()
+        dismiss_view.performClick()
     }
-
-
 }

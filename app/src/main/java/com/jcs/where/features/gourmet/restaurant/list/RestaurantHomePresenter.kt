@@ -1,40 +1,35 @@
-package com.jcs.where.features.gourmet.restaurant.list;
+package com.jcs.where.features.gourmet.restaurant.list
 
-import com.jcs.where.api.network.BaseMvpObserver;
-import com.jcs.where.api.network.BaseMvpPresenter;
-import com.jcs.where.api.response.PageResponse;
-import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
-import com.jcs.where.bean.RestaurantListRequest;
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.response.PageResponse
+import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
+import com.jcs.where.bean.RestaurantListRequest
 
 /**
  * Created by Wangsw  2021/3/24 13:57.
  */
-public class RestaurantListPresenter extends BaseMvpPresenter {
+class RestaurantHomePresenter(private val view: RestaurantHomeView) : BaseMvpPresenter(view) {
 
-    private RestaurantListView view;
-
-    public RestaurantListPresenter(RestaurantListView view) {
-        super(view);
-        this.view = view;
-    }
-
-
-    public void getList(int page, RestaurantListRequest request) {
+    fun getList(page: Int, request: RestaurantListRequest) {
         requestApi(mRetrofit.getRestaurantList(
-                page,
-                request.trading_area_id,
-                request.per_price,
-                request.service,
-                request.sort,
-                request.search_input,
-                request.lat,
-                request.lng,
-                request.category_id), new BaseMvpObserver<PageResponse<RestaurantResponse>>(view) {
-            @Override
-            protected void onSuccess(PageResponse<RestaurantResponse> response) {
-                boolean isLastPage = response.getLastPage() == page;
-                view.bindList(response.getData(), isLastPage);
+            page,
+            request.trading_area_id,
+            request.per_price,
+            request.service,
+            request.sort,
+            request.search_input,
+            request.lat,
+            request.lng,
+            request.category_id
+        ), object : BaseMvpObserver<PageResponse<RestaurantResponse>>(
+            view
+        ) {
+             override fun onSuccess(response: PageResponse<RestaurantResponse>) {
+                 val isLastPage = response.lastPage == page
+                 val data = response.data
+                view.bindList(data.toMutableList(), isLastPage)
             }
-        });
+        })
     }
 }

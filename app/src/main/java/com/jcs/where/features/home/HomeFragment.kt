@@ -27,7 +27,7 @@ import com.jcs.where.convenience.activity.ConvenienceServiceActivity
 import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
+import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.mechanism.MechanismActivity
@@ -180,7 +180,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                     }
                     8 -> startActivity(PayBillsActivity::class.java)
                     9 -> {
-                        startActivity(RestaurantListActivity::class.java, Bundle().apply {
+                        startActivity(RestaurantHomeActivity::class.java, Bundle().apply {
                             putInt(Constant.PARAM_PID, 89)
                             putString(Constant.PARAM_PID_NAME, getString(R.string.filter_food))
                         })

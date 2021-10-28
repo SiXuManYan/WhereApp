@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
-import com.jcs.where.features.gourmet.restaurant.list.RestaurantListActivity
+import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.travel.map.TravelMapActivity
@@ -164,7 +164,7 @@ class CategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item
 
                     }
                     TYPE_RESTAURANT -> {
-                        startActivity(RestaurantListActivity::class.java, Bundle().apply {
+                        startActivity(RestaurantHomeActivity::class.java, Bundle().apply {
                             putInt(Constant.PARAM_PID, it.id)
                             putString(Constant.PARAM_PID_NAME, it.name)
                         })

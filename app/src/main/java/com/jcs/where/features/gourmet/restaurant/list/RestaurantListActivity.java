@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.restaurant.list;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -70,7 +72,8 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     private AppCompatEditText city_et;
 
 
-    private RestaurantListAdapter mAdapter;
+    private DelicacyAdapter mAdapter;
+
     private RestaurantListRequest mRequest;
     private Animation mFilterShowAnimation;
     private Animation mFilterHideAnimation;
@@ -118,16 +121,19 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
         // list
         EmptyView emptyView = new EmptyView(this);
         emptyView.showEmptyDefault();
-        mAdapter = new RestaurantListAdapter();
+        mAdapter = new DelicacyAdapter();
         mAdapter.getLoadMoreModule().setAutoLoadMore(true);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
         mAdapter.setEmptyView(emptyView);
-        mAdapter.addChildClickViewIds(R.id.take_ll);
+        mAdapter.addChildClickViewIds(R.id.takeaway_support_tv);
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnItemClickListener(this);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+
+
         recycler.setAdapter(mAdapter);
         recycler.addItemDecoration(getItemDecoration());
+        recycler.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL) );
 
         // 动画
         mFilterShowAnimation = AnimationUtils.loadAnimation(this, R.anim.filter_in);
@@ -292,7 +298,11 @@ public class RestaurantListActivity extends BaseMvpActivity<RestaurantListPresen
     }
 
     private RecyclerView.ItemDecoration getItemDecoration() {
-        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1), SizeUtils.dp2px(15), SizeUtils.dp2px(15));
+        DividerDecoration itemDecoration = new DividerDecoration(
+                Color.TRANSPARENT,
+                SizeUtils.dp2px(16),
+                SizeUtils.dp2px(8),
+                SizeUtils.dp2px(8));
         itemDecoration.setDrawHeaderFooter(false);
         return itemDecoration;
     }

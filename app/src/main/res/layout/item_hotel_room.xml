@@ -88,7 +88,7 @@
             android:layout_marginBottom="@dimen/dp_4"
             android:gravity="end"
             android:includeFontPadding="false"
-            android:textColor="@color/red_FF5837"
+            android:textColor="@color/orange_FF5837"
             android:textSize="@dimen/sp_16"
             tools:text="¥7878" />
 

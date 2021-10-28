@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dp_8"
-    android:paddingTop="@dimen/dp_0"
-    android:paddingBottom="@dimen/dp_4"
     android:layout_marginEnd="@dimen/dp_8"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_0"
+    android:paddingBottom="@dimen/dp_4">
 
 
     <FrameLayout
@@ -20,19 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_153"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic[6]" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_4"
-            android:layout_marginTop="@dimen/dp_4"
-            android:background="@drawable/shape_black_radius_2"
-            android:padding="@dimen/dp_4"
-            android:text="@string/hotel"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_10" />
+            tools:src="@tools:sample/backgrounds/scenic[9]" />
 
     </FrameLayout>
 
@@ -50,36 +37,17 @@
         tools:text="@tools:sample/lorem/random" />
 
 
-    <com.jcs.where.widget.ratingstar.RatingStarView
-        android:id="@+id/star_view"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_4"
-        app:rsv_cornerRadius="@dimen/dp_10"
-        app:rsv_drawStrokeForHalfStar="true"
-        app:rsv_enableSelectRating="false"
-        app:rsv_onlyHalfStar="false"
-        app:rsv_rating="1"
-        app:rsv_starBackgroundColor="@color/transplant"
-        app:rsv_starForegroundColor="@color/yellow_FEBA32"
-        app:rsv_starMargin="@dimen/dp_3"
-        app:rsv_starNum="5"
-        app:rsv_starThickness="0.65"
-        app:rsv_strokeColor="@color/transplant"
-        app:rsv_strokeWidth="0dp" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/dp_4">
+        android:layout_marginTop="@dimen/dp_4"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/score_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_12"
             android:background="@drawable/shape_blue_radius_2_377bff"
             android:includeFontPadding="false"
             android:paddingStart="@dimen/dp_4"
@@ -90,30 +58,31 @@
             android:textSize="@dimen/sp_11"
             tools:text="4.5" />
 
+
         <TextView
-            android:id="@+id/location_tv"
+            android:id="@+id/per_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/grey_999999"
+            android:textColor="@color/grey_666666"
             android:textSize="@dimen/sp_11"
-            tools:text="Ivana,Cagayan Valley" />
-
+            tools:text="111/person" />
 
 
     </LinearLayout>
 
 
     <TextView
-        android:id="@+id/distance_tv"
+        android:id="@+id/location_tv"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/dp_4"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/grey_999999"
         android:textSize="@dimen/sp_11"
-        tools:text="@string/distance_format" />
-
+        tools:text="Ivana,Cagayan Valley" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -143,14 +112,21 @@
     </HorizontalScrollView>
 
 
-
     <TextView
-        android:id="@+id/price_tv"
+        android:id="@+id/takeaway_support_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_8"
-        android:textColor="@color/orange_FF5837"
-        android:textSize="@dimen/sp_14"
-        tools:text="6666666666666" />
+        android:background="@drawable/shape_orange_radius_15"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingEnd="@dimen/dp_8"
+        android:paddingBottom="@dimen/dp_4"
+        android:text="@string/take_away_support_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_11"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
 
 </LinearLayout>

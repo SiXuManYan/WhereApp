@@ -164,7 +164,7 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:includeFontPadding="false"
-            android:textColor="@color/red_FF5837"
+            android:textColor="@color/orange_FF5837"
             android:textSize="@dimen/sp_14"
             tools:text="6666666666666" />
 

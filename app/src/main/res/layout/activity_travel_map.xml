@@ -47,12 +47,13 @@
                 android:layout_marginEnd="@dimen/dp_10"
                 android:scaleType="centerInside"
                 android:src="@mipmap/ic_homesearch" />
+
             <TextView
                 android:id="@+id/search_tv"
                 android:layout_width="match_parent"
-                android:layout_toEndOf="@+id/search_iv"
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/delete_iv"
+                android:layout_toEndOf="@+id/search_iv"
                 android:background="@null"
                 android:ellipsize="end"
                 android:gravity="center_vertical"

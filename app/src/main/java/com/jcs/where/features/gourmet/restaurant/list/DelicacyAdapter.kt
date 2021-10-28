@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
@@ -18,32 +19,47 @@ import com.jcs.where.utils.GlideUtil
  * Created by Wangsw  2021/10/28 13:53.
  *
  */
-class DelicacyAdapter : BaseQuickAdapter<RestaurantResponse, BaseViewHolder>(R.layout.item_delicacy_list),LoadMoreModule {
+class DelicacyAdapter : BaseQuickAdapter<RestaurantResponse, BaseViewHolder>(R.layout.item_delicacy_list), LoadMoreModule {
 
 
-    override fun convert(holder: BaseViewHolder, data: RestaurantResponse) {
+    override fun convert(holder: BaseViewHolder, item: RestaurantResponse) {
+
+        val container = holder.getView<LinearLayout>(R.id.delicacy_container_ll)
+        val adapterPosition = holder.adapterPosition
+        val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+
+        layoutParams.apply {
+            topMargin = if (adapterPosition < 2) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+        container.layoutParams = layoutParams
+
+
         // 图片
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
-        loadImage(data, image_iv)
+        loadImage(item, image_iv)
 
         // 标题
         val title_tv = holder.getView<TextView>(R.id.title_tv)
-        title_tv.text = data.title
+        title_tv.text = item.title
 
 
         // 评分
         val score_tv = holder.getView<TextView>(R.id.score_tv)
-        score_tv.text = data.grade.toString()
+        score_tv.text = item.grade.toString()
 
         // 地点
-        holder.setText(R.id.location_tv, data.trading_area.replace("\n", ""))
+        holder.setText(R.id.location_tv, item.trading_area.replace("\n", ""))
 
         // 人均
-        holder.setText(R.id.per_price_tv, StringUtils.getString(R.string.per_price_format, data.per_price))
+        holder.setText(R.id.per_price_tv, StringUtils.getString(R.string.per_price_format, item.per_price))
 
         // 外卖
         val takeaway_support_tv = holder.getView<TextView>(R.id.takeaway_support_tv)
-        takeaway_support_tv.visibility = if (data.take_out_status == 2) {
+        takeaway_support_tv.visibility = if (item.take_out_status == 2) {
             View.VISIBLE
         } else {
             View.GONE
@@ -51,7 +67,7 @@ class DelicacyAdapter : BaseQuickAdapter<RestaurantResponse, BaseViewHolder>(R.l
 
         // tag
         val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        initTag(data, tag_ll)
+        initTag(item, tag_ll)
     }
 
 

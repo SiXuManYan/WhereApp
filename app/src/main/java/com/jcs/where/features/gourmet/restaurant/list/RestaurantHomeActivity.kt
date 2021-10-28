@@ -250,6 +250,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         val tabText = childTabLL.getChildAt(0) as CheckedTextView
         val tabImage = childTabLL.getChildAt(1) as ImageView
         tabText.isChecked = false
+        tabText.paint.isFakeBoldText = false
         tabImage.setImageResource(R.mipmap.ic_arrow_filter_black)
     }
 
@@ -284,6 +285,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         val tabImage = childTabLL.getChildAt(1) as ImageView
         if (pagerPosition == tabIndex) {
             tabText.isChecked = true
+            tabText.paint.isFakeBoldText = true
             tabImage.setImageResource(R.mipmap.ic_arrow_filter_blue)
         } else {
             tabText.isChecked = false

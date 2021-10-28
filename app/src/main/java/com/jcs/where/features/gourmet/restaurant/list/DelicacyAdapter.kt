@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
 import com.jcs.where.utils.GlideUtil
+import com.jcs.where.widget.ratingstar.RatingStarView
 
 /**
  * Created by Wangsw  2021/10/28 13:53.
@@ -51,6 +52,10 @@ class DelicacyAdapter : BaseQuickAdapter<RestaurantResponse, BaseViewHolder>(R.l
         val score_tv = holder.getView<TextView>(R.id.score_tv)
         score_tv.text = item.grade.toString()
 
+        // 星星
+        val star_view = holder.getView<RatingStarView>(R.id.star_view)
+        star_view.rating = item.grade
+
         // 地点
         holder.setText(R.id.location_tv, item.trading_area.replace("\n", ""))
 
@@ -64,6 +69,8 @@ class DelicacyAdapter : BaseQuickAdapter<RestaurantResponse, BaseViewHolder>(R.l
         } else {
             View.GONE
         }
+
+
 
         // tag
         val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)

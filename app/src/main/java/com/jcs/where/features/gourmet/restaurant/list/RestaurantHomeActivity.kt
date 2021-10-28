@@ -65,7 +65,6 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         mCategoryId = bundle.getInt(Constant.PARAM_PID, 89)
         mPidName = bundle.getString(Constant.PARAM_PID_NAME, "")
         food_tv.text = mPidName
-
     }
 
     private fun initFilter() {

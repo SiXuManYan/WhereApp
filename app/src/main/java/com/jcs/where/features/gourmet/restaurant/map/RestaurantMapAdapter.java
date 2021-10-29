@@ -92,16 +92,16 @@ public class RestaurantMapAdapter extends PagerAdapter {
 
         RatingStarView star_view = view.findViewById(R.id.star_view);
         parent_rl.setOnClickListener(v -> {
-            context.startActivity(new Intent(context, RestaurantDetailActivity.class).putExtra(Constant.PARAM_ID, data.id).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            context.startActivity(new Intent(context, RestaurantDetailActivity.class).putExtra(Constant.PARAM_ID, String.valueOf(data.getId())).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         });
 
 
-        name_tv.setText(data.title);
+        name_tv.setText(data.getTitle());
 
 
         // 星级
 
-        float grade = data.grade;
+        float grade = data.getGrade();
 //        if (grade < 3.0) {
 //            star_view.setVisibility(View.GONE);
 //            score_tv.setVisibility(View.GONE);
@@ -116,14 +116,14 @@ public class RestaurantMapAdapter extends PagerAdapter {
         score_tv.setText(String.valueOf(grade));
 
         // 评论数
-        comment_count_tv.setText(StringUtils.getString(R.string.comment_count_format2, data.comment_num));
+        comment_count_tv.setText(StringUtils.getString(R.string.comment_count_format2, data.getComment_num()));
 
         // 地域 、 餐厅类型
-        area_name_tv.setText(data.trading_area);
-        restaurant_type_tv.setText(data.type);
+        area_name_tv.setText(data.getTrading_area());
+        restaurant_type_tv.setText(data.getType());
 
         // 人均
-        per_price_tv.setText(StringUtils.getString(R.string.per_price_format, data.per_price));
+        per_price_tv.setText(StringUtils.getString(R.string.per_price_format, data.getPer_price()));
 
         loadImage(data, image_iv);
     }
@@ -135,8 +135,8 @@ public class RestaurantMapAdapter extends PagerAdapter {
                 .error(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray);
         String image = "";
-        if (data.images.size() > 0) {
-            image = data.images.get(0);
+        if (data.getImages().size() > 0) {
+            image = data.getImages().get(0);
             Glide.with(context).load(image).apply(options).into(image_iv);
         } else {
             Glide.with(context).load(R.mipmap.ic_empty_gray).apply(options).into(image_iv);

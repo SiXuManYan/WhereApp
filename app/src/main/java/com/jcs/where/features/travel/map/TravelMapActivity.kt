@@ -191,8 +191,6 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     override fun initData() {
         presenter = TravelMapPresenter(this)
         presenter.getGovernmentChildCategory(travelCategoryId)
-
-
     }
 
     override fun bindListener() {
@@ -336,8 +334,8 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
             }
 
             override fun onGetLocation(lat: Double, lng: Double) {
-                CacheUtil.getShareDefault().put(Constant.SP_LATITUDE, lat.toFloat())
-                CacheUtil.getShareDefault().put(Constant.SP_LONGITUDE, lng.toFloat())
+                CacheUtil.getShareDefault().put(Constant.SP_MY_LATITUDE, lat.toFloat())
+                CacheUtil.getShareDefault().put(Constant.SP_MY_LONGITUDE, lng.toFloat())
 
 
                 myLocation = CameraPosition.Builder().target(LatLng(lat, lng))

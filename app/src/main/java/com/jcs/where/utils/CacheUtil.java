@@ -119,8 +119,8 @@ public class CacheUtil {
             lat = Constant.LAT;
             lng = Constant.LNG;
         } else {
-            lat = getShareDefault().getFloat(Constant.SP_LATITUDE, 0);
-            lng = getShareDefault().getFloat(Constant.SP_LONGITUDE, 0);
+            lat = getShareDefault().getFloat(Constant.SP_MY_LATITUDE, 0);
+            lng = getShareDefault().getFloat(Constant.SP_MY_LONGITUDE, 0);
         }
         return new LatLng(lat, lng);
     }

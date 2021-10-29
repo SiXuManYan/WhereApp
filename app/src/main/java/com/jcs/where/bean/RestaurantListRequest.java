@@ -33,15 +33,15 @@ public class RestaurantListRequest {
     /**
      * 纬度
      */
-    public String lat;
+    public double lat;
 
     /**
      * 经度
      */
-    public String lng;
+    public double lng;
 
     /**
      * 分类ID
      */
-    public String category_id;
+    public Integer category_id;
 }

@@ -125,7 +125,6 @@
             android:id="@+id/bottom_sheet_ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:orientation="vertical"
             app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/dp_15"

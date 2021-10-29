@@ -1,22 +1,36 @@
 package com.jcs.where.features.gourmet.restaurant.list
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
+import android.location.Address
+import android.location.Location
 import android.os.Bundle
-import android.text.Editable
+import android.os.Handler
 import android.text.TextUtils
-import android.text.TextWatcher
-import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcs.where.R
 import com.jcs.where.api.response.area.AreaResponse
 import com.jcs.where.api.response.category.Category
@@ -28,13 +42,17 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment.MoreFilter
 import com.jcs.where.features.gourmet.restaurant.map.RestaurantMapActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
-import com.jcs.where.utils.Constant
+import com.jcs.where.features.map.HotelCustomInfoWindowAdapter
+import com.jcs.where.features.search.SearchAllActivity
+import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_gourmet_list.*
+
 import kotlinx.android.synthetic.main.layout_filter.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 /**
  * Created by Wangsw  2021/3/24 13:56.
@@ -42,22 +60,67 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), RestaurantHomeView {
 
-    private var page = Constant.DEFAULT_FIRST_PAGE
-
-    private lateinit var mAdapter: DelicacyAdapter
-    private lateinit var mRequest: RestaurantListRequest
-    private lateinit var emptyView: EmptyView
 
     private var mCategoryId = 0
     private var mPidName = ""
 
+    private var page = Constant.DEFAULT_FIRST_PAGE
+
+    private lateinit var emptyView: EmptyView
+    private lateinit var mRequest: RestaurantListRequest
+
+    /** 列表 */
+    private lateinit var mAdapter: DelicacyAdapter
+
+    /** marker 选中后弹出的 item */
+    private lateinit var mMarkerContentAdapter: DelicacyAdapter
+
+    /** pager Behavior */
+    private lateinit var pagerBehavior: BottomSheetBehavior<RecyclerView>
+
+    /** maker  Behavior */
+    private lateinit var makerBehavior: BottomSheetBehavior<RecyclerView>
+
+    /** 区分地图和列表模式 */
+    private var contentIsMap = false
+
+    // ################ 地图相关 ###################
+
+    private lateinit var map: GoogleMap
+
+    // 我的位置
+    private lateinit var myLocation: CameraPosition
+
+    // 地图上的所有maker
+    private var makers: ArrayList<Marker?> = ArrayList()
+
+
+    override fun isStatusDark() = true
+
+
     override fun getLayoutId() = R.layout.activity_gourmet_list
+
+
+
+    /** 处理搜索 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras
+            mRequest.search_input = bundle?.getString(Constant.PARAM_NAME, "")
+            search()
+        }
+    }
+
 
     override fun initView() {
         initExtra()
         initFilter()
         initList()
+        initMap()
+        initBehavior()
+        initMarkerClickListContent()
     }
+
 
 
     private fun initExtra() {
@@ -77,7 +140,8 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
 
 
     private fun initList() {
-        // list
+
+        // 列表
         emptyView = EmptyView(this).apply {
             initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint, R.string.back) {}
             action_tv.visibility = View.GONE
@@ -109,19 +173,73 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     }
 
 
-    override fun isStatusDark() = true
+    private fun initMap() {
+        // 获取 SupportMapFragment 并在地图准备好使用时请求通知
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
+
+    }
+
+    private fun initBehavior() {
+
+        pagerBehavior = BottomSheetBehavior.from(recycler)
+        pagerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+        makerBehavior = BottomSheetBehavior.from(bottom_sheet_rv)
+        makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        makerBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
+            override fun onStateChanged(bottomSheet: View, newState: Int) = when (newState) {
+                BottomSheetBehavior.STATE_EXPANDED -> pagerBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                BottomSheetBehavior.STATE_HIDDEN -> pagerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                else -> { }
+            }
+        })
+    }
+
+
+    private fun initMarkerClickListContent() {
+        mMarkerContentAdapter = DelicacyAdapter().apply {
+            addChildClickViewIds(R.id.takeaway_ll)
+            setOnItemChildClickListener(this@RestaurantHomeActivity)
+            setOnItemClickListener(this@RestaurantHomeActivity)
+        }
+
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(bottom_sheet_rv)
+
+        bottom_sheet_rv.apply {
+            adapter = mMarkerContentAdapter
+
+            // 禁用横向滑动
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                    newState == RecyclerView.SCROLL_STATE_IDLE
+                }
+            })
+        }
+
+    }
+
 
     override fun initData() {
         presenter = RestaurantHomePresenter(this)
-        mRequest = RestaurantListRequest()
-        mRequest.category_id = mCategoryId.toString()
-        onRefresh()
+        mRequest = RestaurantListRequest().apply {
+            category_id = mCategoryId
+
+            val latLng = CacheUtil.getSafeSelectLatLng()
+
+            lat = latLng.latitude
+            lng = latLng.longitude
+        }
+        page = Constant.DEFAULT_FIRST_PAGE
+        presenter.getList(page, mRequest)
     }
 
     override fun bindListener() {
-        swipe_layout.setOnRefreshListener(this)
         back_iv.setOnClickListener { finish() }
-        clearIv.setOnClickListener { onClearSearchClick() }
+        delete_iv.setOnClickListener { onClearSearchClick() }
         area_filter_ll.setOnClickListener { onAreaFilterClick() }
         food_filter_ll.setOnClickListener { onFoodFilterClick() }
         other_filter_ll.setOnClickListener { onOtherFilterClick() }
@@ -135,29 +253,10 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
                 }
             }
         })
-        city_et.setOnEditorActionListener { _: TextView, actionId: Int, _: KeyEvent ->
 
-            val searchKey = city_et.text.toString().trim()
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                mRequest.search_input = searchKey
-                onRefresh()
-                KeyboardUtils.hideSoftInput(city_et)
-                return@setOnEditorActionListener true
-            }
-            false
+        search_tv.setOnClickListener {
+            searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
         }
-        city_et.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) = Unit
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) = Unit
-            override fun afterTextChanged(s: Editable) {
-                val trim = s.toString().trim()
-                clearIv.visibility = if (trim.isEmpty()) {
-                    View.GONE
-                } else {
-                    View.VISIBLE
-                }
-            }
-        })
         map_iv.setOnClickListener {
             startActivity(RestaurantMapActivity::class.java, Bundle().apply {
                 putString(Constant.PARAM_ID, mCategoryId.toString())
@@ -165,18 +264,29 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         }
     }
 
+    private fun search() {
+        val searchInput = mRequest.search_input
+        delete_iv.visibility = if (searchInput.isNullOrBlank()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        search_tv.text = searchInput
+        onRefresh()
+    }
+
     private fun onClearSearchClick() {
-        city_et.setText("")
-        if (mRequest.search_input.isNotEmpty()) {
+        search_tv.text = ""
+        if (mRequest.search_input.isNotBlank()) {
             mRequest.search_input = null
             onRefresh()
         }
     }
 
-    override fun onRefresh() {
-        swipe_layout.isRefreshing = true
+    fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE
         presenter.getList(page, mRequest)
+        presenter.getMakerData(mRequest)
     }
 
     override fun onLoadMore() {
@@ -187,21 +297,19 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
         val bundle = Bundle()
-        bundle.putString(Constant.PARAM_ID, data.id)
+        bundle.putString(Constant.PARAM_ID, data.id.toString())
         startActivity(TakeawayActivity::class.java, bundle)
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
         startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-            putString(Constant.PARAM_ID, data.id)
+            putString(Constant.PARAM_ID, data.id.toString())
         })
     }
 
     override fun bindList(data: MutableList<RestaurantResponse>, isLastPage: Boolean) {
-        if (swipe_layout.isRefreshing) {
-            swipe_layout.isRefreshing = false
-        }
+
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -309,7 +417,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             if (id == 0) {
                 mRequest.category_id = null
             } else {
-                mRequest.category_id = id.toString()
+                mRequest.category_id = id
             }
             val name = data.name
             if (!TextUtils.isEmpty(name)) {
@@ -325,4 +433,198 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         onRefresh()
         dismiss_view.performClick()
     }
+
+    override fun bindMakerList(response: MutableList<RestaurantResponse>) {
+        if (!::map.isInitialized) return
+
+        if (response.isEmpty()) {
+            map.clear()
+            makers.clear()
+            return
+        }
+
+        // 相机移动到maker范围
+        val bounds = LatLngBounds.Builder()
+
+        response.forEach {
+            bounds.include(LatLng(it.lat, it.lng))
+        }
+
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+
+
+        // 在地图上添加大量Marker
+        addMarkersToMap(response)
+
+        // 展示marker 列表数据
+        mMarkerContentAdapter.setNewInstance(response)
+    }
+
+    /**
+     * 向地图中添加 Maker
+     */
+    private fun addMarkersToMap(response: MutableList<RestaurantResponse>) {
+        if (!::map.isInitialized || response.isEmpty()) return
+        map.clear()
+        makers.clear()
+
+        response.forEach {
+
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+            val title_tv = view.findViewById<TextView>(R.id.title_tv)
+            val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+            title_tv.text = it.title
+            image_iv.setImageResource(R.mipmap.ic_marker_common_travel)
+
+            val maker = map.addMarker(
+                MarkerOptions()
+                    .position(LatLng(it.lat, it.lng))
+                    .title(it.title)
+                    .snippet("")
+                    .icon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
+            )
+            maker?.tag = it
+            makers.add(maker)
+        }
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        map = googleMap ?: return
+        map.apply {
+
+            // 移动到巴朗牙
+            moveCamera(CameraUpdateFactory.newLatLng(LatLng(Constant.LAT, Constant.LNG)))
+
+
+            // 调整内置UI padding 防止logo被遮挡
+            setPadding(0, 0, 0, SizeUtils.dp2px(220f))
+
+            // 自定义信息样式
+            setInfoWindowAdapter(HotelCustomInfoWindowAdapter(this@RestaurantHomeActivity))
+
+            // 点击标记
+            setOnMarkerClickListener(this@RestaurantHomeActivity)
+
+            // 点击标记信息窗口
+            setOnInfoWindowClickListener(this@RestaurantHomeActivity)
+
+            // 移动到我的位置
+            setOnMyLocationButtonClickListener(this@RestaurantHomeActivity)
+
+            // 点击我的位置
+            setOnMyLocationClickListener(this@RestaurantHomeActivity)
+            // 辅助功能模式，覆盖视图上的默认内容描述
+            setContentDescription("Map with lots of markers.");
+        }
+
+        map.uiSettings.apply {
+            isMapToolbarEnabled = true
+            // 隐藏我的位置和图层
+            // isMyLocationButtonEnabled = false
+        }
+
+        // 当前位置
+        enableMyLocation()
+        presenter.getMakerData(mRequest)
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun enableMyLocation() {
+        if (!::map.isInitialized) return
+
+        PermissionUtils.permissionAny(
+            this, {
+                if (it) {
+                    map.isMyLocationEnabled = true
+                    getMyLocationInfo()
+                }
+            }, Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    }
+
+
+    /**
+     * 获取我的位置信息
+     */
+    private fun getMyLocationInfo() {
+        LocationUtil.getInstance().addressCallback = object : LocationUtil.AddressCallback {
+            override fun onGetAddress(address: Address) = Unit
+
+            override fun onGetLocation(lat: Double, lng: Double) {
+                CacheUtil.getShareDefault().put(Constant.SP_MY_LATITUDE, lat.toFloat())
+                CacheUtil.getShareDefault().put(Constant.SP_MY_LONGITUDE, lng.toFloat())
+
+                myLocation = CameraPosition.Builder().target(LatLng(lat, lng))
+                    .zoom(20f)
+                    .bearing(0f)
+                    .tilt(0f)
+                    .build()
+            }
+        }
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        if (!::myLocation.isInitialized) return false
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(myLocation))
+        return false
+    }
+
+    override fun onMyLocationClick(location: Location) {
+        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
+    }
+
+    override fun onInfoWindowClick(marker: Marker) = Unit
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+
+        // 所有 maker 设置成未选中
+        makers.forEach {
+            val makerTag = it?.tag as RestaurantResponse
+            val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+            val title_tv = view.findViewById<TextView>(R.id.title_tv)
+            title_tv.text = makerTag.title
+            val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+            image_iv.setImageResource(R.mipmap.ic_marker_common_travel)
+
+            it.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
+
+        }
+        marker.hideInfoWindow()
+
+        // 设置当前选中
+        val currentMakerTag = marker.tag as RestaurantResponse
+        val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+        val title_tv = view.findViewById<TextView>(R.id.title_tv)
+        title_tv.text = currentMakerTag.title
+        val image_iv = view.findViewById<ImageView>(R.id.image_iv)
+        image_iv.setImageResource(R.mipmap.ic_marker_select_travel)
+        marker.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
+
+        // 切换底部列表数据
+        val index = makers.indexOf(marker)
+        if (index != -1) {
+            bottom_sheet_rv.scrollToPosition(index)
+            makerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        // 地图平滑移动到目标位置
+        Handler(mainLooper).postDelayed({
+            val targetCamera = CameraPosition.Builder().target(marker.position)
+                .zoom(15.5f)
+                .bearing(0f)
+                .tilt(0f)
+                .build()
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
+
+        }, 10)
+
+        return false
+    }
+
+
+
+
 }

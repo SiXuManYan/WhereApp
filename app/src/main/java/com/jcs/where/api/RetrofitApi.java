@@ -888,9 +888,29 @@ public interface RetrofitApi {
             @Query("service") @Nullable String service,
             @Query("sort") int sort,
             @Query("search_input") @Nullable String search_input,
-            @Query("lat") @Nullable String lat,
-            @Query("lng") @Nullable String lng,
-            @Query("category_id") @Nullable String category_id);
+            @Query("lat") @Nullable Double lat,
+            @Query("lng") @Nullable Double lng,
+            @Query("category_id") @Nullable Integer category_id);
+
+
+    /**
+     * 美食地图商品列表
+     *
+     * @param search_input 搜索内容
+     * @param lat          纬度
+     * @param lng          经度
+     * @param category_id  分类ID
+     */
+    @GET("restaurantapi/v2/map/restaurants")
+    Observable<JcsResponse<ArrayList<RestaurantResponse>>> getRestaurantMapMarker(
+            @Query("trading_area_id") @Nullable String trading_area_id,
+            @Query("per_price") @Nullable String per_price,
+            @Query("service") @Nullable String service,
+            @Query("sort") int sort,
+            @Query("search_input") @Nullable String search_input,
+            @Query("lat") @Nullable Double lat,
+            @Query("lng") @Nullable Double lng,
+            @Query("category_id") @Nullable Integer category_id);
 
 
     /**

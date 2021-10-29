@@ -24,8 +24,8 @@ class StoreSearchPresenter(val view: StoreSearchView) : BaseMvpPresenter(view) {
             lat = null
             lng = null
         } else {
-            lat = CacheUtil.getShareDefault().getFloat(Constant.SP_LATITUDE, Constant.LAT.toFloat())
-            lng = CacheUtil.getShareDefault().getFloat(Constant.SP_LONGITUDE, Constant.LAT.toFloat())
+            lat = CacheUtil.getShareDefault().getFloat(Constant.SP_MY_LATITUDE, Constant.LAT.toFloat())
+            lng = CacheUtil.getShareDefault().getFloat(Constant.SP_MY_LONGITUDE, Constant.LAT.toFloat())
         }
 
         requestApi(mRetrofit.getStoreList(

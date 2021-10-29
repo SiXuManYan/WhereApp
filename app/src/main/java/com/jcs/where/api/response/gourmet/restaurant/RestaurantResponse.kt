@@ -1,47 +1,41 @@
-package com.jcs.where.api.response.gourmet.restaurant;
+package com.jcs.where.api.response.gourmet.restaurant
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import java.math.BigDecimal
+import java.util.ArrayList
 
 /**
  * Created by Wangsw  2021/3/25 11:18.
  * 餐厅列表
  */
-public class RestaurantResponse {
+class RestaurantResponse  : MultiItemEntity {
 
-/*    {
-        "id": 0,
-            "images": [],
-            "title": "",
-            "grade": "",
-            "comment_num": 0,
-            "per_price": "",
-            "distance": "",
-            "type": "",
-            "trading_area": "",
-            "tags": [],
-            "take_out_status": "",
-            "lat": "",
-            "lng": ""
-    }*/
+    companion object {
+        /** 0普通列表 */
+        val CONTENT_TYPE_COMMON = 0
+        /** 1外层增加 CardView */
+        val CONTENT_TYPE_CARD = 1
+    }
 
+    var id = 0
+    var images : ArrayList<String> = ArrayList()
+    var title = ""
+    var grade = 0f
+    var comment_num = 0
+    var per_price: BigDecimal = BigDecimal.ZERO
+    var distance = 0f
+    var type: String = ""
+    var trading_area: String = ""
+    var tags = ArrayList<String>()
+    var take_out_status = 0
+    var lat = 0.0
+    var lng = 0.0
 
-    public String id = "0";
-    public ArrayList<String> images = new ArrayList<>();
+    /** 0普通列表 ，1 外层增加 CardView */
+    var contentType = CONTENT_TYPE_COMMON
 
-    public String title = "";
-    public float grade;
-
-    public int comment_num;
-
-    public BigDecimal per_price;
-    public float distance;
-    public String type;
-    public String trading_area;
-
-    public ArrayList<String> tags = new ArrayList<>();
-    public int take_out_status;
-    public double lat;
-    public double lng;
+    override val itemType: Int
+        get() = contentType
 
 }

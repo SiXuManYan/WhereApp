@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -20,23 +21,15 @@ import com.jcs.where.widget.ratingstar.RatingStarView
  * Created by Wangsw  2021/10/28 13:53.
  *
  */
-class DelicacyAdapter : BaseQuickAdapter<RestaurantResponse, BaseViewHolder>(R.layout.item_delicacy_list), LoadMoreModule {
+class DelicacyAdapter : BaseMultiItemQuickAdapter<RestaurantResponse, BaseViewHolder>(), LoadMoreModule {
 
+    init {
+        addItemType(RestaurantResponse.CONTENT_TYPE_COMMON , R.layout.item_delicacy_list)
+        addItemType(RestaurantResponse.CONTENT_TYPE_CARD , R.layout.item_delicacy_list_card)
+    }
 
     override fun convert(holder: BaseViewHolder, item: RestaurantResponse) {
 
-        val container = holder.getView<LinearLayout>(R.id.delicacy_container_ll)
-        val adapterPosition = holder.adapterPosition
-        val layoutParams = container.layoutParams as RecyclerView.LayoutParams
-
-        layoutParams.apply {
-            topMargin = if (adapterPosition < 2) {
-                SizeUtils.dp2px(16f)
-            } else {
-                0
-            }
-        }
-        container.layoutParams = layoutParams
 
 
         // 图片
@@ -62,19 +55,48 @@ class DelicacyAdapter : BaseQuickAdapter<RestaurantResponse, BaseViewHolder>(R.l
         // 人均
         holder.setText(R.id.per_price_tv, StringUtils.getString(R.string.per_price_format, item.per_price))
 
-        // 外卖
-        val takeaway_support_tv = holder.getView<TextView>(R.id.takeaway_support_tv)
-        takeaway_support_tv.visibility = if (item.take_out_status == 2) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-
 
 
         // tag
         val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
         initTag(item, tag_ll)
+
+        when(holder.itemViewType){
+            RestaurantResponse.CONTENT_TYPE_COMMON->{
+
+                val container = holder.getView<LinearLayout>(R.id.delicacy_container_ll)
+                val adapterPosition = holder.adapterPosition
+                val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+
+                layoutParams.apply {
+                    topMargin = if (adapterPosition < 2) {
+                        SizeUtils.dp2px(16f)
+                    } else {
+                        0
+                    }
+                }
+                container.layoutParams = layoutParams
+
+                // 外卖
+                val takeaway_support_tv = holder.getView<TextView>(R.id.takeaway_support_tv)
+                takeaway_support_tv.visibility = if (item.take_out_status == 2) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+
+            }
+            RestaurantResponse.CONTENT_TYPE_CARD->{
+                // 外卖
+                val takeaway_ll = holder.getView<LinearLayout>(R.id.takeaway_ll)
+                takeaway_ll.visibility = if (item.take_out_status == 2) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+        }
+
     }
 
 

@@ -1,75 +1,49 @@
-package com.jcs.where.api.response.gourmet.restaurant;
+package com.jcs.where.api.response.gourmet.restaurant
 
-import java.util.ArrayList;
+import com.jcs.where.api.response.gourmet.dish.DishResponse
+import com.jcs.where.api.response.hotel.HotelComment
+import java.util.ArrayList
 
 /**
  * Created by Wangsw  2021/4/1 11:15.
  * 餐厅详情
  */
-public class RestaurantDetailResponse {
+class RestaurantDetailResponse {
+    var id = ""
+    var uuid = ""
+    var title = ""
+    var images = ArrayList<String>()
+    var video = ""
+    var video_image = ""
+    var grade = 0f
+    var comment_num: String? = null
+    var per_price = ""
+    var address = ""
+    var start_time = ""
+    var end_time = ""
+    var lat = 0.0
+    var lng = 0.0
+    var distance = ""
+    var tel = ""
 
-/*    {
-        "id": "ID",
-            "uuid": "Uuid",
-            "title": "名称",
-            "images": "图片",
-            "video": "视频",
-            "video_image": "视频图片",
-            "grade": "分数",
-            "comment_num": "评价数量",
-            "per_price": "人均价格",
-            "address": "地址",
-            "start_time": "营业开始时间",
-            "end_time": "营业结束时间",
-            "lat": "纬度",
-            "lng": "经度",
-            "distance": "距离（km）",
-            "tel": "电话",
-            "collect_status": "收藏状态（1：未收藏，2：已收藏）",
-            "take_out_status": "外卖状态（1：关闭，2：开启）",
-            "mer_uuid": "商家uuid",
-            "mer_name": "商户名称",
-            "im_status": "IM聊天开启状态（1：开启，2：关闭）"
-    }*/
-
-
-    public String id = "";
-    public String uuid = "";
-    public String title = "";
-    public ArrayList<String> images = new ArrayList<>();
-    public String video = "";
-    public String video_image = "";
-    public float grade ;
-    public String comment_num ;
-    public String per_price = "";
-    public String address = "";
-    public String start_time = "";
-    public String end_time = "";
-    public String lat = "";
-    public String lng = "";
-    public String distance = "";
-    public String tel = "";
     /**
      * 收藏状态（1：未收藏，2：已收藏）
      */
-    public int collect_status = 0;
-    public int take_out_status ;
-    public String mer_uuid = "";
-    public String mer_name = "";
+    var collect_status = 0
+    var take_out_status = 0
+    var mer_uuid = ""
+    var mer_name = ""
 
     /**
-     * 	IM聊天开启状态（1：开启，2：关闭）
+     * IM聊天开启状态（1：开启，2：关闭）
      */
-    public int im_status ;
+    var im_status = 0
+    var introduction = ""
+    var website = ""
+    var facebook = ""
+    var email = ""
 
-
-
-
-
-
-
-
-
-
+    var comments:ArrayList<HotelComment> = ArrayList()
+    var goods : ArrayList<DishResponse> = ArrayList()
 
 }

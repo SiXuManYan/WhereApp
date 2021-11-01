@@ -876,5 +876,8 @@ Gentleman must let go</string>
     <string name="take_away_support_text">支持外卖</string>
     <string name="minimum">最小值</string>
     <string name="max">最大值</string>
+    <string name="store_introduction">店铺介绍</string>
+    <string name="empty_dish_hint">该店暂无堂食菜品</string>
+    <string name="empty_introduction">该店暂无店铺介绍</string>
 
 </resources>

@@ -462,8 +462,8 @@
     <string name="praise_first">Praise first</string>
     <string name="sales_priority">Sales Priority</string>
     <string name="nearest_first">Nearest</string>
-    <string name="dine_in_dishes">Menu</string>
-    <string name="panic_buying">Check Out</string>
+    <string name="dine_in_dishes">Dine-in dishes</string>
+    <string name="panic_buying">Span Up</string>
     <string name="sale_format">Sold&#160;%1$s</string>
     <string name="unfold_more">Unfold More</string>
     <string name="fold">Fold</string>
@@ -869,4 +869,9 @@ Gentleman must let go</string>
     <string name="take_away_support_text">Support delivery</string>
     <string name="minimum">Minimum</string>
     <string name="max">Max</string>
+    <string name="store_introduction">Store Introduction</string>
+    <string name="empty_dish_hint">There are no dine-in dishes at this restaurant</string>
+    <string name="empty_introduction">This shop has no shop introduction</string>
+
+
 </resources>

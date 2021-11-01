@@ -1,104 +1,62 @@
-package com.jcs.where.features.gourmet.restaurant.detail;
+package com.jcs.where.features.gourmet.restaurant.detail
 
-import com.google.gson.JsonElement;
-import com.jcs.where.api.network.BaseMvpObserver;
-import com.jcs.where.api.network.BaseMvpPresenter;
-import com.jcs.where.api.request.CollectionRestaurantRequest;
-import com.jcs.where.api.response.PageResponse;
-import com.jcs.where.api.response.gourmet.comment.CommentResponse;
-import com.jcs.where.api.response.gourmet.dish.DishResponse;
-import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
-import com.jcs.where.utils.Constant;
 
-import java.util.List;
+import com.google.gson.JsonElement
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.CollectionRestaurantRequest
+import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
+import com.jcs.where.utils.CacheUtil
+
 
 /**
  * Created by Wangsw  2021/4/1 10:28.
  */
-public class RestaurantDetailPresenter extends BaseMvpPresenter {
+interface RestaurantDetailView : BaseMvpView {
 
-    private RestaurantDetailView view;
+    fun bindData(response: RestaurantDetailResponse)
 
-    public RestaurantDetailPresenter(RestaurantDetailView view) {
-        super(view);
-        this.view = view;
-    }
+    fun collectionHandleSuccess(collectionStatus: Boolean)
+}
 
-    public void getDetail(String restaurantId) {
-        requestApi(mRetrofit.getRestaurantDetail(restaurantId, Constant.LAT + "", Constant.LNG + ""), new BaseMvpObserver<RestaurantDetailResponse>(view) {
-            @Override
-            protected void onSuccess(RestaurantDetailResponse response) {
-                if (response == null) {
-                    return;
+/**
+ * Created by Wangsw  2021/4/1 10:28.
+ */
+class RestaurantDetailPresenter(private val view: RestaurantDetailView) : BaseMvpPresenter(view) {
+
+    fun getDetail(restaurantId: String?) {
+        val latLng = CacheUtil.getSafeSelectLatLng()
+        requestApi(
+            mRetrofit.getRestaurantDetail(restaurantId, latLng.latitude, latLng.longitude),
+            object : BaseMvpObserver<RestaurantDetailResponse>(view) {
+                 override fun onSuccess(response: RestaurantDetailResponse) {
+
+                    view.bindData(response)
                 }
-                view.bindData(response);
-            }
-        });
-
-
-    }
-
-    /**
-     * 堂食菜品列表
-     */
-    public void getDishList(String restaurantId) {
-
-
-        requestApi(mRetrofit.getDishList(1, restaurantId), new BaseMvpObserver<PageResponse<DishResponse>>(view) {
-            @Override
-            protected void onSuccess(PageResponse<DishResponse> response) {
-                List<DishResponse> data = response.getData();
-                if (data != null && !data.isEmpty()) {
-                    view.bindDishData(data);
-                }
-
-            }
-        });
-
-    }
-
-    /**
-     * 评论列表
-     */
-    public void getCommentList(String restaurantId) {
-        requestApi(mRetrofit.getCommentList(1, 0, restaurantId), new BaseMvpObserver<PageResponse<CommentResponse>>(view) {
-            @Override
-            protected void onSuccess(PageResponse<CommentResponse> response) {
-                List<CommentResponse> data = response.getData();
-                if (data != null && !data.isEmpty()) {
-                    view.bindCommentData(data);
-                }
-            }
-        });
-    }
-
-    public void collection(String restaurantId) {
-
-        CollectionRestaurantRequest request = new CollectionRestaurantRequest();
-        request.restaurant_id = restaurantId;
-
-        requestApi(mRetrofit.collectsRestaurant(request), new BaseMvpObserver<JsonElement>(view) {
-            @Override
-            protected void onSuccess(JsonElement response) {
-                view.collectionSuccess();
-            }
-        });
-
+            })
     }
 
 
-    public void unCollection(String restaurantId) {
 
-        CollectionRestaurantRequest request = new CollectionRestaurantRequest();
-        request.restaurant_id = restaurantId;
 
-        requestApi(mRetrofit.unCollectsRestaurant(request), new BaseMvpObserver<JsonElement>(view) {
-            @Override
-            protected void onSuccess(JsonElement response) {
-                view.unCollectionSuccess();
+    fun collection(restaurantId: String?) {
+        val request = CollectionRestaurantRequest()
+        request.restaurant_id = restaurantId
+        requestApi(mRetrofit.collectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.collectionHandleSuccess(true)
             }
-        });
-
+        })
     }
 
+    fun unCollection(restaurantId: String?) {
+        val request = CollectionRestaurantRequest()
+        request.restaurant_id = restaurantId
+        requestApi(mRetrofit.unCollectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.collectionHandleSuccess(false)
+            }
+        })
+    }
 }

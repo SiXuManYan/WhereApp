@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_92"
+    android:gravity="center"
+    android:paddingStart="@dimen/dp_15"
+    android:paddingEnd="@dimen/dp_15"
+    android:lineSpacingMultiplier="1.2"
+    android:id="@+id/empty_text_tv"
+    android:textColor="@color/grey_666666"
+    android:textSize="@dimen/sp_13"
+    android:text="@string/empty_dish_hint" />
+

@@ -23,4 +23,6 @@ class HotelComment {
     var content = ""
     var star_level = 0.0f
 
+    var merchant_review = ""
+
 }

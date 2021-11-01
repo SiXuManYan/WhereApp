@@ -2,6 +2,7 @@ package com.jcs.where.api.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public class PageResponse<T> {
     @SerializedName("total")
     private Integer total;
 
-    private List<T> data;
+    private List<T> data = new ArrayList<>();
 
     public List<T> getData() {
         return data;

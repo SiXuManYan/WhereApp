@@ -455,13 +455,13 @@
     <string name="filter_food">All Food</string>
     <string name="filter_other">Filter</string>
     <string name="reset">Reset</string>
-    <string name="average_price">Average Price</string>
-    <string name="to">to</string>
+    <string name="average_price">Per Capita price</string>
+    <string name="to">&#160;-&#160;</string>
     <string name="merchant_service">Merchant Service</string>
     <string name="smart_sorting">Smart Sorting</string>
-    <string name="praise_first">Rating</string>
+    <string name="praise_first">Praise first</string>
     <string name="sales_priority">Sales Priority</string>
-    <string name="nearest_first">Nearest First</string>
+    <string name="nearest_first">Nearest</string>
     <string name="dine_in_dishes">Menu</string>
     <string name="panic_buying">Check Out</string>
     <string name="sale_format">Sold&#160;%1$s</string>
@@ -867,4 +867,6 @@ Gentleman must let go</string>
     <string name="total_date_format">%1$s&#160;night total</string>
     <string name="children_format">Children&#160;%1$s</string>
     <string name="take_away_support_text">Support delivery</string>
+    <string name="minimum">Minimum</string>
+    <string name="max">Max</string>
 </resources>

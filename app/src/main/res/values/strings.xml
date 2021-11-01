@@ -456,7 +456,7 @@
     <string name="filter_other">筛选</string>
     <string name="reset">重置</string>
     <string name="average_price">人均价格</string>
-    <string name="to">至</string>
+    <string name="to">&#160;-&#160;</string>
     <string name="merchant_service">商家服务</string>
     <string name="smart_sorting">智能排序</string>
     <string name="praise_first">好评优先</string>
@@ -874,5 +874,7 @@ Gentleman must let go</string>
     <string name="total_date_format">共&#160;%1$s&#160;晚</string>
     <string name="children_format">儿童&#160;%1$s</string>
     <string name="take_away_support_text">支持外卖</string>
+    <string name="minimum">最小值</string>
+    <string name="max">最大值</string>
 
 </resources>

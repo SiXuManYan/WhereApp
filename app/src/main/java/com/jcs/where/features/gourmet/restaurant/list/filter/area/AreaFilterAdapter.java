@@ -1,10 +1,7 @@
 package com.jcs.where.features.gourmet.restaurant.list.filter.area;
 
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import androidx.appcompat.widget.AppCompatCheckedTextView;
 
-import com.blankj.utilcode.util.ColorUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -24,16 +21,12 @@ public class AreaFilterAdapter extends BaseQuickAdapter<AreaResponse, BaseViewHo
 
     @Override
     protected void convert(@NotNull BaseViewHolder holder, AreaResponse data) {
-        TextView contentTv = holder.getView(R.id.content_tv);
-        ImageView selectedIv = holder.getView(R.id.selected_iv);
+        AppCompatCheckedTextView contentTv = holder.getView(R.id.content_tv);
 
         contentTv.setText(data.name);
-        if (data.nativeIsSelected) {
-            contentTv.setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2));
-            selectedIv.setVisibility(View.VISIBLE);
-        } else {
-            contentTv.setTextColor(ColorUtils.getColor(R.color.black_333333));
-            selectedIv.setVisibility(View.GONE);
-        }
+
+        boolean nativeIsSelected = data.nativeIsSelected;
+        contentTv.setChecked(nativeIsSelected);
+        contentTv.getPaint().setFakeBoldText(nativeIsSelected);
     }
 }

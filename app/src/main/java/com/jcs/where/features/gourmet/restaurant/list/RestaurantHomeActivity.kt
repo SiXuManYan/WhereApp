@@ -12,10 +12,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckedTextView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -363,7 +360,6 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         val tabText = childTabLL.getChildAt(0) as CheckedTextView
         val tabImage = childTabLL.getChildAt(1) as ImageView
         tabText.isChecked = false
-        tabText.paint.isFakeBoldText = false
         tabImage.setImageResource(R.mipmap.ic_arrow_filter_black)
     }
 
@@ -402,6 +398,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             tabImage.setImageResource(R.mipmap.ic_arrow_filter_blue)
         } else {
             tabText.isChecked = false
+            tabText.paint.isFakeBoldText = false
             tabImage.setImageResource(R.mipmap.ic_arrow_filter_black)
         }
     }

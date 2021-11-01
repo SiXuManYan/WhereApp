@@ -22,7 +22,6 @@ import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -35,9 +34,9 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.bean.RestaurantListRequest
+import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFragment.MoreFilter
-import com.jcs.where.features.gourmet.restaurant.map.RestaurantMapActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.map.HotelCustomInfoWindowAdapter
 import com.jcs.where.features.search.SearchAllActivity
@@ -45,7 +44,6 @@ import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_gourmet_list.*
-
 import kotlinx.android.synthetic.main.layout_filter.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -98,7 +96,6 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     override fun getLayoutId() = R.layout.activity_gourmet_list
 
 
-
     /** 处理搜索 */
     private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
@@ -117,7 +114,6 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         initBehavior()
         initMarkerClickListContent()
     }
-
 
 
     private fun initExtra() {
@@ -149,8 +145,12 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             addChildClickViewIds(R.id.takeaway_support_tv)
-            setOnItemChildClickListener(this@RestaurantHomeActivity)
-            setOnItemClickListener(this@RestaurantHomeActivity)
+            setOnItemChildClickListener { _, _, position ->
+                onItemChildClick(this, position)
+            }
+            setOnItemClickListener { _, _, position ->
+                onItemClick(this, position)
+            }
             loadMoreModule.setOnLoadMoreListener(this@RestaurantHomeActivity)
         }
         recycler.apply {
@@ -189,7 +189,8 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             override fun onStateChanged(bottomSheet: View, newState: Int) = when (newState) {
                 BottomSheetBehavior.STATE_EXPANDED -> pagerBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 BottomSheetBehavior.STATE_HIDDEN -> pagerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                else -> { }
+                else -> {
+                }
             }
         })
     }
@@ -198,8 +199,12 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     private fun initMarkerClickListContent() {
         mMarkerContentAdapter = DelicacyAdapter().apply {
             addChildClickViewIds(R.id.takeaway_ll)
-            setOnItemChildClickListener(this@RestaurantHomeActivity)
-            setOnItemClickListener(this@RestaurantHomeActivity)
+            setOnItemChildClickListener { _, _, position ->
+                onItemChildClick(this, position)
+            }
+            setOnItemClickListener { _, _, position ->
+                onItemClick(this, position)
+            }
         }
 
         val pagerSnapHelper = PagerSnapHelper()
@@ -209,12 +214,10 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             adapter = mMarkerContentAdapter
 
             // 禁用横向滑动
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                    newState == RecyclerView.SCROLL_STATE_IDLE
-                }
-            })
+            layoutManager = object : LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
+                override fun canScrollHorizontally() = false
+            }
+
         }
 
     }
@@ -265,6 +268,10 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             }
             contentIsMap = !contentIsMap
         }
+
+        cart_iv.setOnClickListener {
+            startActivityAfterLogin(ShoppingCartActivity::class.java)
+        }
     }
 
     private fun search() {
@@ -297,15 +304,16 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         presenter.getList(page, mRequest)
     }
 
-    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val data = mAdapter.data[position]
+    fun onItemChildClick(adapter: DelicacyAdapter, position: Int) {
+
+        val data = adapter.data[position]
         val bundle = Bundle()
         bundle.putString(Constant.PARAM_ID, data.id.toString())
         startActivity(TakeawayActivity::class.java, bundle)
     }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val data = mAdapter.data[position]
+    fun onItemClick(adapter: DelicacyAdapter, position: Int) {
+        val data = adapter.data[position]
         startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
             putString(Constant.PARAM_ID, data.id.toString())
         })
@@ -626,8 +634,6 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
 
         return false
     }
-
-
 
 
 }

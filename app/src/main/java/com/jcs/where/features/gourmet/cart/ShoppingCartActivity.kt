@@ -21,7 +21,7 @@ import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/4/7 14:49.
- * 购物车
+ * 餐饮美食购物车
  *
  */
 class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingCartView,

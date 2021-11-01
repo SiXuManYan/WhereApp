@@ -14,8 +14,6 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
  */
 interface RestaurantHomeView : BaseMvpView,
     OnLoadMoreListener,
-    OnItemChildClickListener,
-    OnItemClickListener,
     OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener,

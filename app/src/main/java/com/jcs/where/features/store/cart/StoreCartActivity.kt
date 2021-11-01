@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/7/5 10:30.
- *
+ * 商城购物车
  */
 class StoreCartActivity : BaseActivity() {
 

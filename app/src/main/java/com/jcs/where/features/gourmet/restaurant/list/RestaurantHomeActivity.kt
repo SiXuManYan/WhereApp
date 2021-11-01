@@ -257,10 +257,16 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
         }
-        map_iv.setOnClickListener {
-            startActivity(RestaurantMapActivity::class.java, Bundle().apply {
-                putString(Constant.PARAM_ID, mCategoryId.toString())
-            })
+
+        type_iv.setOnClickListener {
+            if (contentIsMap) {
+                type_iv.setImageResource(R.mipmap.ic_type_map)
+                makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            } else {
+                type_iv.setImageResource(R.mipmap.ic_type_list)
+                makerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+            contentIsMap = !contentIsMap
         }
     }
 

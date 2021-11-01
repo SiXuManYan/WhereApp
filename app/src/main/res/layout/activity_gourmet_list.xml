@@ -85,7 +85,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/map_iv"
+                android:id="@+id/type_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
@@ -140,6 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:layout_marginEnd="@dimen/dp_4"
                 android:maxLines="1"
                 android:text="@string/filter_city"
                 android:textColor="@color/selector_black_blue"
@@ -171,6 +172,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:layout_marginEnd="@dimen/dp_4"
                 android:text="@string/filter_food"
                 android:textColor="@color/selector_black_blue"
                 android:textSize="@dimen/sp_13" />

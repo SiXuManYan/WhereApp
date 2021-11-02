@@ -6,13 +6,18 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
@@ -24,14 +29,17 @@ import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
+import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_restaurant_detail_2.*
+
 import java.util.*
 
 /**
@@ -44,7 +52,9 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     /**
      * 餐厅id
      */
-    private var mRestaurantId: String? = null
+    private var mRestaurantId = 0
+
+    private var goodNumber = 1
 
     /**
      * 餐厅名称
@@ -83,7 +93,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     override fun getLayoutId() = R.layout.activity_restaurant_detail_2
 
     override fun initView() {
-        mRestaurantId = intent.getStringExtra(Constant.PARAM_ID)
+        mRestaurantId = intent.getIntExtra(Constant.PARAM_ID, 0)
         initMedia()
         initScroll()
         initComment()
@@ -173,11 +183,8 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             setEmptyView(R.layout.view_empty_text)
             setOnItemClickListener { _, _, position ->
                 val dish = mDishAdapter.data[position]
-                startActivity(SetMealActivity::class.java, Bundle().apply {
-                    putString(Constant.PARAM_ID, dish.id.toString())
-                    putString(Constant.PARAM_RESTAURANT_ID, mRestaurantId)
-                    putString(Constant.PARAM_RESTAURANT_NAME, mRestaurantName)
-                })
+                showCompanyDialog(dish)
+
             }
         }
         dish_rv.apply {
@@ -237,7 +244,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         }
         support_takeaway_tv.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString(Constant.PARAM_ID, mRestaurantId)
+            bundle.putString(Constant.PARAM_ID, mRestaurantId.toString())
             startActivity(TakeawayActivity::class.java, bundle)
         }
         navigation_iv.setOnClickListener {
@@ -272,7 +279,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         }
         findViewById<View>(R.id.more_comment_tv).setOnClickListener {
             val bundle = Bundle()
-            bundle.putString(Constant.PARAM_ID, mRestaurantId)
+            bundle.putString(Constant.PARAM_ID, mRestaurantId.toString())
             startActivity(FoodCommentActivity::class.java, bundle)
         }
     }
@@ -414,6 +421,61 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
                 R.mipmap.ic_share_light
             }
         )
+    }
+
+    private fun showCompanyDialog(dish: DishResponse) {
+
+        goodNumber = 1
+
+        val addressDialog = BottomSheetDialog(this, R.style.bottom_sheet_edit)
+        val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_good_number, null)
+        addressDialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (e: Exception) {
+        }
+
+        val stockTv = view.findViewById<TextView>(R.id.stock_tv)
+        val numberView = view.findViewById<NumberView2>(R.id.number_view)
+
+        dish.inventory.apply {
+            if (!isNullOrBlank()) {
+                stockTv.text = getString(R.string.stock_format_2, this)
+                stockTv.visibility = View.VISIBLE
+            } else {
+                stockTv.visibility = View.GONE
+            }
+        }
+
+        numberView.apply {
+            alwaysEnableCut = true
+            MIN_GOOD_NUM = 1
+            MAX_GOOD_NUM = BusinessUtils.getSafeStock(dish.inventory)
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+            add_iv.setImageResource(R.mipmap.ic_add_blue)
+            updateNumber(goodNumber)
+            cut_iv.visibility = View.VISIBLE
+            valueChangeListener = object : NumberView2.OnValueChangeListener {
+                override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
+                    this@RestaurantDetailActivity.goodNumber = goodNum
+                }
+
+            }
+        }
+
+        view.findViewById<TextView>(R.id.confirm_tv).setOnClickListener {
+            startActivity(SetMealActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ID, dish.id)
+                putInt(Constant.PARAM_RESTAURANT_ID, mRestaurantId)
+                putInt(Constant.PARAM_GOOD_NUMBER, this@RestaurantDetailActivity.goodNumber)
+                putString(Constant.PARAM_RESTAURANT_NAME, mRestaurantName)
+            })
+
+            addressDialog.dismiss()
+        }
+
+        addressDialog.show()
     }
 
 

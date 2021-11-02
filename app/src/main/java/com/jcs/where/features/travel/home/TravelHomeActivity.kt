@@ -190,7 +190,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                     }
                     HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
                         startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                            putString(Constant.PARAM_ID, data.id.toString())
+                            putInt(Constant.PARAM_ID, data.id)
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
@@ -269,7 +269,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                             putInt(Constant.PARAM_ID, data.target_id)
                         })
                         5 -> startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                            putString(Constant.PARAM_ID, data.target_id.toString())
+                            putInt(Constant.PARAM_ID, data.target_id)
                         })
                     }
                     return

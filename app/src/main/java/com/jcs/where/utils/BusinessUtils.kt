@@ -72,5 +72,23 @@ object BusinessUtils {
         else -> ""
     }
 
+    fun getSafeStock(inventory:String):Int{
+      return  if (inventory.isBlank()) {
+            99
+        } else {
+            try {
+                val value = inventory.toInt()
+                if (value < 0) {
+                    0
+                } else {
+                    value
+                }
+
+            } catch (e: IllegalArgumentException) {
+                0
+            }
+        }
+    }
+
 
 }

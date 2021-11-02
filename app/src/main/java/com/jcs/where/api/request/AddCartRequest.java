@@ -5,7 +5,7 @@ package com.jcs.where.api.request;
  */
 public class AddCartRequest {
 
-    public String good_id = "";
-    public int good_num = 0;
+    public int good_id = 0;
+    public int good_num = 1;
 
 }

@@ -92,7 +92,7 @@ public class RestaurantMapAdapter extends PagerAdapter {
 
         RatingStarView star_view = view.findViewById(R.id.star_view);
         parent_rl.setOnClickListener(v -> {
-            context.startActivity(new Intent(context, RestaurantDetailActivity.class).putExtra(Constant.PARAM_ID, String.valueOf(data.getId())).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            context.startActivity(new Intent(context, RestaurantDetailActivity.class).putExtra(Constant.PARAM_ID, data.getId()).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         });
 
 

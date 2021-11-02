@@ -506,6 +506,7 @@
     <string name="select_all">Select All</string>
     <string name="total_cart">Total Cart：</string>
     <string name="total_cart_2">Total ：</string>
+    <string name="total_cart_3">Total&#160;</string>
     <string name="settlement">Settlement</string>
     <string name="edit">Edit</string>
     <string name="prepaid_reload">Prepaid\nReload</string>
@@ -620,8 +621,9 @@
     <string name="sold_format">Sold %1$d</string>
     <string name="collapse_details">Collapse Details</string>
     <string name="product_details">Product details</string>
-    <string name="number">number</string>
-    <string name="stock_format">stock%1$d</string>
+    <string name="number">Quantity</string>
+    <string name="stock_format">Stock%1$d</string>
+    <string name="stock_format_2">Stock&#160;%1$s</string>
     <string name="delivery_method_none">Please choose a delivery method</string>
     <string name="phone_number">phone number</string>
     <string name="store_phone_hint">Please input mobile phone number</string>
@@ -872,6 +874,8 @@ Gentleman must let go</string>
     <string name="store_introduction">Store Introduction</string>
     <string name="empty_dish_hint">There are no dine-in dishes at this restaurant</string>
     <string name="empty_introduction">This shop has no shop introduction</string>
+    <string name="package_content">Package content</string>
+    <string name="inventory_shortage">Inventory shortage</string>
 
 
 </resources>

@@ -511,6 +511,7 @@
     <string name="select_all">全选</string>
     <string name="total_cart">合计：</string>
     <string name="total_cart_2">合计：</string>
+    <string name="total_cart_3">合计&#160;</string>
     <string name="settlement">结算</string>
     <string name="edit">编辑</string>
     <string name="prepaid_reload">Prepaid\nReload</string>
@@ -629,6 +630,7 @@
     <string name="product_details">商品详情</string>
     <string name="number">数量</string>
     <string name="stock_format">库存%1$d</string>
+    <string name="stock_format_2">库存&#160;%1$s</string>
     <string name="delivery_method_none">请选择配送方式</string>
     <string name="phone_number">手机号码</string>
     <string name="store_phone_hint">请输入手机号码</string>
@@ -879,5 +881,7 @@ Gentleman must let go</string>
     <string name="store_introduction">店铺介绍</string>
     <string name="empty_dish_hint">该店暂无堂食菜品</string>
     <string name="empty_introduction">该店暂无店铺介绍</string>
+    <string name="package_content">套餐内容</string>
+    <string name="inventory_shortage">Inventory shortage</string>
 
 </resources>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/child_container_rl"
     android:layout_width="match_parent"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_height="@dimen/dp_71"
     android:paddingStart="@dimen/dp_15"
     android:paddingEnd="@dimen/dp_15">

@@ -113,7 +113,7 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
             }
             SearchResultResponse.TYPE_4_RESTAURANT -> {
                 val bundle = Bundle()
-                bundle.putString(Constant.PARAM_ID, data.id.toString())
+                bundle.putInt(Constant.PARAM_ID, data.id)
                 startActivity(RestaurantDetailActivity::class.java, bundle)
             }
             else -> {

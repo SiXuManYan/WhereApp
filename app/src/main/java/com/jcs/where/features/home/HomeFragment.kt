@@ -299,7 +299,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                     }
                     HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
                         startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                            putString(Constant.PARAM_ID, data.id.toString())
+                            putInt(Constant.PARAM_ID, data.id)
                         })
                     }
                     HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
@@ -504,7 +504,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         }
                         5 -> {
                             startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                                putString(Constant.PARAM_ID, data.target_id.toString())
+                                putInt(Constant.PARAM_ID, data.target_id)
                             })
                         }
                     }

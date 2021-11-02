@@ -342,7 +342,7 @@
     <RelativeLayout
         android:id="@+id/bottom_rl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="@dimen/dp_50"
         android:layout_alignParentBottom="true"
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15">

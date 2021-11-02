@@ -315,7 +315,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     fun onItemClick(adapter: DelicacyAdapter, position: Int) {
         val data = adapter.data[position]
         startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-            putString(Constant.PARAM_ID, data.id.toString())
+            putInt(Constant.PARAM_ID, data.id)
         })
     }
 

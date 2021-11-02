@@ -26,6 +26,9 @@ public class DishDetailResponse {
     public String meals ;
     public String rule ;
 
+    /** 库存 0没有，空为无限大 */
+    public String inventory = "";
+
 
 
 }

@@ -25,10 +25,9 @@ interface RestaurantDetailView : BaseMvpView {
  */
 class RestaurantDetailPresenter(private val view: RestaurantDetailView) : BaseMvpPresenter(view) {
 
-    fun getDetail(restaurantId: String?) {
+    fun getDetail(restaurantId: Int) {
         val latLng = CacheUtil.getSafeSelectLatLng()
-        requestApi(
-            mRetrofit.getRestaurantDetail(restaurantId, latLng.latitude, latLng.longitude),
+        requestApi(mRetrofit.getRestaurantDetail(restaurantId, latLng.latitude, latLng.longitude),
             object : BaseMvpObserver<RestaurantDetailResponse>(view) {
                  override fun onSuccess(response: RestaurantDetailResponse) {
 
@@ -40,9 +39,9 @@ class RestaurantDetailPresenter(private val view: RestaurantDetailView) : BaseMv
 
 
 
-    fun collection(restaurantId: String?) {
+    fun collection(restaurantId: Int) {
         val request = CollectionRestaurantRequest()
-        request.restaurant_id = restaurantId
+        request.restaurant_id = restaurantId.toString()
         requestApi(mRetrofit.collectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.collectionHandleSuccess(true)
@@ -50,9 +49,9 @@ class RestaurantDetailPresenter(private val view: RestaurantDetailView) : BaseMv
         })
     }
 
-    fun unCollection(restaurantId: String?) {
+    fun unCollection(restaurantId: Int) {
         val request = CollectionRestaurantRequest()
-        request.restaurant_id = restaurantId
+        request.restaurant_id = restaurantId.toString()
         requestApi(mRetrofit.unCollectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.collectionHandleSuccess(false)

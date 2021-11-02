@@ -1,6 +1,7 @@
 package com.jcs.where.base.mvp;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 
@@ -29,8 +30,10 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-
-
+        View view = findViewById(R.id.back_iv);
+        if (view!=null) {
+            view.setOnClickListener(v -> finish());
+        }
     }
 
     @Override

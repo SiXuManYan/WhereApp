@@ -179,7 +179,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
             startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                putString(Constant.PARAM_ID, item.model_id.toString())
+                putInt(Constant.PARAM_ID, item.model_id)
             })
         }
 
@@ -260,7 +260,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
             startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                putString(Constant.PARAM_ID, item.model_id.toString())
+                putInt(Constant.PARAM_ID, item.model_id)
             })
         }
 

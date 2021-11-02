@@ -1,42 +1,40 @@
-package com.jcs.where.features.gourmet.restaurant.packages;
+package com.jcs.where.features.gourmet.restaurant.packages
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.JsonElement;
-import com.jcs.where.api.network.BaseMvpObserver;
-import com.jcs.where.api.network.BaseMvpPresenter;
-import com.jcs.where.api.request.AddCartRequest;
-import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
+import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.JsonElement
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.AddCartRequest
+import com.jcs.where.api.response.gourmet.dish.DishDetailResponse
+import com.jcs.where.utils.BusinessUtils
+import com.jcs.where.widget.NumberView2
+
+
+/**
+ * Created by Wangsw  2021/4/6 14:36.
+ */
+interface SetMealView : BaseMvpView, NumberView2.OnValueChangeListener {
+    fun bindData(data: DishDetailResponse, inventoryValue: Int)
+}
 
 /**
  * Created by Wangsw  2021/4/6 14:37.
  */
-public class SetMealPresenter extends BaseMvpPresenter {
-
-    private SetMealView view;
-
-    public SetMealPresenter(SetMealView view) {
-        super(view);
-        this.view = view;
-    }
-
-    public void getDetail(String eatInFoodId) {
-        requestApi(mRetrofit.getDishDetail(eatInFoodId), new BaseMvpObserver<DishDetailResponse>(view) {
-            @Override
-            protected void onSuccess(DishDetailResponse response) {
-                view.bindData(response);
+class SetMealPresenter(private val view: SetMealView) : BaseMvpPresenter(view) {
+    fun getDetail(eatInFoodId: Int) {
+        requestApi(mRetrofit.getDishDetail(eatInFoodId), object : BaseMvpObserver<DishDetailResponse>(view) {
+            override fun onSuccess(response: DishDetailResponse) {
+                view.bindData(response, BusinessUtils.getSafeStock(response.inventory))
             }
-        });
+        })
     }
 
-    public void addCart(AddCartRequest request){
-
-        requestApi(mRetrofit.addCartNumber(request), new BaseMvpObserver<JsonElement>(view) {
-            @Override
-            protected void onSuccess(JsonElement response) {
-                ToastUtils.showShort("add success");
+    fun addCart(request: AddCartRequest?) {
+        requestApi(mRetrofit.addCartNumber(request), object : BaseMvpObserver<JsonElement>(view) {
+            protected override fun onSuccess(response: JsonElement) {
+                ToastUtils.showShort("add success")
             }
-        });
-
+        })
     }
-
 }

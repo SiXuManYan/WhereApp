@@ -26,7 +26,7 @@ public class DishResponse {
     /** 销量 */
     public String sale_num = "";
 
-    /**  库存*/
+    /**  库存  */
     public String inventory = "";
     public BigDecimal price = BigDecimal.ZERO;
     public BigDecimal original_price = BigDecimal.ZERO;

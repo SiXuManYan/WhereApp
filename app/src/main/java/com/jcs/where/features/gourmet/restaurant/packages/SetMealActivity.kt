@@ -1,162 +1,245 @@
-package com.jcs.where.features.gourmet.restaurant.packages;
+package com.jcs.where.features.gourmet.restaurant.packages
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.SpanUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.jcs.where.R;
-import com.jcs.where.api.request.AddCartRequest;
-import com.jcs.where.api.response.gourmet.cart.Products;
-import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
-import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
-import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.gourmet.cart.ShoppingCartActivity;
-import com.jcs.where.features.gourmet.order.OrderSubmitActivity;
-import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.image.GlideRoundedCornersTransform;
-
-import java.util.ArrayList;
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SpanUtils
+import com.jcs.where.R
+import com.jcs.where.api.request.AddCartRequest
+import com.jcs.where.api.response.gourmet.cart.Products
+import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
+import com.jcs.where.api.response.gourmet.dish.DishDetailResponse
+import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
+import com.jcs.where.features.gourmet.order.OrderSubmitActivity
+import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
+import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.utils.BigDecimalUtil
+import com.jcs.where.utils.Constant
+import com.shuyu.gsyvideoplayer.GSYVideoManager
+import kotlinx.android.synthetic.main.activity_set_meal_2.*
+import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by Wangsw  2021/4/6 14:38.
- * 套餐详情
+ * 菜品详情
  */
-public class SetMealActivity extends BaseMvpActivity<SetMealPresenter> implements SetMealView {
-
-    private TextView name_tv;
-    private ImageView image_iv;
-    private TextView now_price_tv;
-    private TextView old_price_tv;
-    private TextView sales_tv;
-    private TextView set_meal_content_tv;
-    private TextView rule_tv;
-    private ImageView shopping_cart;
-    private TextView now_price2_tv;
-    private TextView old_price2_tv;
-    private TextView buy_after_tv;
-    private TextView buy_now_tv;
-
-    private String mEatInFoodId;
-    private String mRestaurantId;
-    private String mRestaurantName;
-    private DishDetailResponse mData;
+class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
 
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_set_meal;
-    }
+    private var isToolbarDark = false
+    private var mEatInFoodId = 0
+    private var mRestaurantId = 0
+    private var mRestaurantName = ""
+    private var mData: DishDetailResponse? = null
+    private lateinit var mMediaAdapter: DetailMediaAdapter
 
-    @Override
-    protected void initView() {
-        BarUtils.setStatusBarColor(this, Color.WHITE);
-        name_tv = findViewById(R.id.name_tv);
-        image_iv = findViewById(R.id.image_iv);
-        now_price_tv = findViewById(R.id.now_price_tv);
-        old_price_tv = findViewById(R.id.old_price_tv);
-        sales_tv = findViewById(R.id.sales_tv);
-        set_meal_content_tv = findViewById(R.id.set_meal_content_tv);
-        rule_tv = findViewById(R.id.rule_tv);
-        shopping_cart = findViewById(R.id.shopping_cart);
-        now_price2_tv = findViewById(R.id.now_price2_tv);
-        old_price2_tv = findViewById(R.id.old_price2_tv);
-        buy_after_tv = findViewById(R.id.buy_after_tv);
-        buy_now_tv = findViewById(R.id.buy_now_tv);
-    }
+    private var goodNumber = 1
+    private var mInventory = 0
+    private var singlePrice: BigDecimal = BigDecimal.ZERO
+    private var totalPrice: BigDecimal = BigDecimal.ZERO
 
-    @Override
-    protected boolean isStatusDark() {
-        return true;
-    }
+    override fun isStatusDark() = isToolbarDark
 
-    @Override
-    protected void initData() {
-        mEatInFoodId = getIntent().getStringExtra(Constant.PARAM_ID);
-        mRestaurantId = getIntent().getStringExtra(Constant.PARAM_RESTAURANT_ID);
-        mRestaurantName = getIntent().getStringExtra(Constant.PARAM_RESTAURANT_NAME);
-        presenter = new SetMealPresenter(this);
-        presenter.getDetail(mEatInFoodId);
-    }
+    override fun getLayoutId() = R.layout.activity_set_meal_2
 
-    @Override
-    protected void bindListener() {
-        shopping_cart.setOnClickListener(this::onShoppingCartClick);
-        buy_after_tv.setOnClickListener(this::onBuyAfterClick);
-        buy_now_tv.setOnClickListener(this::onBuyNowClick);
+    override fun initView() {
+        initExtra()
+        initMedia()
+        initScroll()
+        number_view.apply {
+            alwaysEnableCut = true
+            MIN_GOOD_NUM = 1
+            MAX_GOOD_NUM = 20
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+            add_iv.setImageResource(R.mipmap.ic_add_blue)
+            updateNumber(goodNumber)
+            cut_iv.visibility = View.VISIBLE
+            valueChangeListener = this@SetMealActivity
+        }
     }
 
 
-    @Override
-    public void bindData(DishDetailResponse data) {
+    private fun initExtra() {
+        val bundle = intent.extras
+        bundle?.let {
+            mEatInFoodId = it.getInt(Constant.PARAM_ID, 0)
+            mRestaurantId = it.getInt(Constant.PARAM_RESTAURANT_ID, 0)
+            goodNumber = it.getInt(Constant.PARAM_GOOD_NUMBER, 1)
+            mRestaurantName = it.getString(Constant.PARAM_RESTAURANT_NAME, "")
+        }
+    }
 
-        RequestOptions options = RequestOptions.bitmapTransform(
-                new GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray);
-        Glide.with(this).load(data.image).apply(options).into(image_iv);
+    private fun initMedia() {
+        mMediaAdapter = DetailMediaAdapter()
+        PagerSnapHelper().attachToRecyclerView(media_rv)
+        media_rv.apply {
+            layoutManager = LinearLayoutManager(this@SetMealActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = mMediaAdapter
+        }
+        media_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 
-        name_tv.setText(data.title);
-        now_price_tv.setText(getString(R.string.price_unit_format, data.price.toPlainString()));
-        now_price2_tv.setText(getString(R.string.price_unit_format, data.price.toPlainString()));
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
 
-        String oldPrice = getString(R.string.price_unit_format, data.original_price);
-        SpannableStringBuilder builder = new SpanUtils().append(oldPrice)
-                .setStrikethrough().create();
-        old_price_tv.setText(builder);
-        old_price2_tv.setText(builder);
-        sales_tv.setText(getString(R.string.sale_format, data.sale_num));
-        set_meal_content_tv.setText(data.meals);
-        rule_tv.setText(data.rule);
-        mData = data;
+                val firstItemPosition = layoutManager.findFirstVisibleItemPosition()
+                val lastItemPosition = layoutManager.findLastVisibleItemPosition()
 
+                if (GSYVideoManager.instance().playPosition >= 0) {
+                    val position = GSYVideoManager.instance().playPosition
+                    if (GSYVideoManager.instance().playTag == DetailMediaAdapter.TAG && (position < firstItemPosition || position > lastItemPosition)) {
+                        if (GSYVideoManager.isFullState(this@SetMealActivity)) {
+                            return
+                        }
+                        GSYVideoManager.releaseAllVideos()
+                        mMediaAdapter.notifyDataSetChanged()
+                    }
+                }
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    point_view.onPageSelected(firstItemPosition)
+                }
+            }
+        })
+    }
+
+    private fun initScroll() {
+        useView.setBackgroundColor(getColor(R.color.white))
+        toolbar.setBackgroundColor(getColor(R.color.white))
+        useView.background.alpha = 0
+        toolbar.background.alpha = 0
+        scrollView.setOnScrollChangeListener { _, _, y, _, _ ->
+            val headHeight = media_fl.measuredHeight - toolbar.measuredHeight
+            var alpha = (y.toFloat() / headHeight * 255).toInt()
+            if (alpha >= 255) {
+                alpha = 255
+            }
+            if (alpha <= 5) {
+                alpha = 0
+            }
+            isToolbarDark = alpha > 130
+            useView.background.alpha = alpha
+            toolbar.background.alpha = alpha
+            changeStatusTextColor()
+        }
     }
 
 
-    private void onBuyNowClick(View view) {
-
-        Products products = new Products();
-        products.good_data.id = mData.id;
-        products.good_data.title = mData.title;
-        products.good_data.image = mData.image;
-        products.good_data.price = mData.price;
-        products.good_data.original_price = mData.original_price;
-
-        products.good_num = 1;
-        products.nativeIsSelect = true;
-
-        ShoppingCartResponse response = new ShoppingCartResponse();
-        response.restaurant_id = mRestaurantId;
-        response.nativeIsSelect = true;
-        response.restaurant_name = mRestaurantName;
-        response.products.add(products);
-
-        ArrayList<ShoppingCartResponse> value = new ArrayList<>();
-        value.add(response);
-        Bundle bundle = new Bundle();
-
-        bundle.putSerializable(Constant.PARAM_DATA, value);
-        bundle.putString(Constant.PARAM_TOTAL_PRICE, mData.price.toPlainString());
-
-        startActivityAfterLogin(OrderSubmitActivity.class, bundle);
-
+    override fun initData() {
+        presenter = SetMealPresenter(this)
+        presenter.getDetail(mEatInFoodId)
     }
 
-    private void onBuyAfterClick(View view) {
-        AddCartRequest request = new AddCartRequest();
-        request.good_id = String.valueOf(mData.id);
-        request.good_num = 1;
-        presenter.addCart(request);
+    override fun bindListener() {
+        shopping_cart.setOnClickListener { startActivityAfterLogin(ShoppingCartActivity::class.java) }
+        buy_after_tv.setOnClickListener { onBuyAfter() }
+        buy_now_tv.setOnClickListener { onBuyNow() }
     }
 
-    private void onShoppingCartClick(View view) {
-        startActivityAfterLogin(ShoppingCartActivity.class);
+    override fun onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return
+        }
+        super.onBackPressed()
     }
+
+    override fun onPause() {
+        super.onPause()
+        GSYVideoManager.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        GSYVideoManager.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        GSYVideoManager.releaseAllVideos()
+    }
+
+    override fun bindData(data: DishDetailResponse, inventoryValue: Int) {
+
+        val mediaList = ArrayList<MediaData>()
+        val media = MediaData().apply {
+            type = MediaData.IMAGE
+            cover = data.image
+            src = data.image
+        }
+        mediaList.add(media)
+        mMediaAdapter.setNewInstance(mediaList)
+        point_view.setPointCount(1)
+        mInventory = inventoryValue
+        number_view.MAX_GOOD_NUM = inventoryValue
+        name_tv.text = data.title
+
+        val price = data.price
+        singlePrice = price
+        now_price_tv.text = getString(R.string.price_unit_format, price.toPlainString())
+        val oldPrice = getString(R.string.price_unit_format, data.original_price)
+        val builder = SpanUtils().append(oldPrice).setStrikethrough().create()
+        old_price_tv.text = builder
+        sales_tv.text = getString(R.string.sale_format, data.sale_num)
+        set_meal_content_tv.text = data.meals
+        rule_tv.text = data.rule
+        mData = data
+        data.inventory.apply {
+            if (!isNullOrBlank()) {
+                stock_tv.text = getString(R.string.stock_format_2, this)
+            }
+        }
+
+
+        handlePrice()
+    }
+
+    private fun onBuyNow() {
+        val product = Products().apply {
+            good_data.id = mData!!.id
+            good_data.title = mData!!.title
+            good_data.image = mData!!.image
+            good_data.price = totalPrice
+            good_data.original_price = mData!!.original_price
+            good_num = goodNumber
+            nativeIsSelect = true
+        }
+        val response = ShoppingCartResponse().apply {
+            restaurant_id = mRestaurantId.toString()
+            nativeIsSelect = true
+            restaurant_name = mRestaurantName
+            products.add(product)
+        }
+
+        val value = ArrayList<ShoppingCartResponse>().apply {
+            add(response)
+        }
+        startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
+            putSerializable(Constant.PARAM_DATA, value)
+            putString(Constant.PARAM_TOTAL_PRICE, mData!!.price.toPlainString())
+        })
+    }
+
+    private fun onBuyAfter() {
+        val request = AddCartRequest().apply {
+            good_id = mData!!.id
+            good_num = goodNumber
+        }
+        presenter.addCart(request)
+    }
+
+    override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
+        goodNumber = goodNum
+        handlePrice()
+    }
+
+    private fun handlePrice() {
+        totalPrice = BigDecimalUtil.mul(singlePrice, BigDecimal(goodNumber))
+        total_price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
+    }
+
 
 }

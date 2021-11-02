@@ -184,7 +184,6 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
 
     private fun showCompanyDialog() {
         val addressDialog = BottomSheetDialog(this, R.style.bottom_sheet_edit)
-
         val view = LayoutInflater.from(this).inflate(R.layout.electricity_company, null)
         addressDialog.setContentView(view)
         try {
@@ -205,7 +204,6 @@ class PaymentEditActivity : BaseMvpActivity<PaymentEditPresenter>(), PaymentEdit
             addressDialog.dismiss()
         }
         addressDialog.show()
-
     }
 
 

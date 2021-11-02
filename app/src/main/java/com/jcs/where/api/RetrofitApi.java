@@ -953,7 +953,7 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/restaurants/{restaurant_id}")
     Observable<JcsResponse<RestaurantDetailResponse>> getRestaurantDetail(
-            @Path("restaurant_id") String restaurant_id,
+            @Path("restaurant_id") int restaurant_id,
             @Query("lat") @Nullable Double lat,
             @Query("lng") @Nullable Double lng
     );
@@ -986,7 +986,7 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/eat_in_foods/{eat_in_food_id}")
     Observable<JcsResponse<DishDetailResponse>> getDishDetail(
-            @Path("eat_in_food_id") String eat_in_food_id
+            @Path("eat_in_food_id") int eat_in_food_id
     );
 
     /**

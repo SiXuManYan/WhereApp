@@ -536,15 +536,15 @@
     <string name="please_select_a_product">请选择商品</string>
     <string name="pay_order_title">支付订单</string>
     <string name="look_order">查看订单</string>
-    <string name="dishes">菜品</string>
+    <string name="dishes">外卖菜品</string>
     <string name="nothing_selected">未选购商品</string>
     <string name="delivery_time_format">配送约%1$d分钟</string>
     <string name="delivery_time_format2">大约%1$s送达</string>
     <string name="free_delivery">免配送费</string>
     <string name="delivery_price_format">另需%1$s配送费</string>
-    <string name="to_settle">去结算</string>
+    <string name="to_settle">结算</string>
     <string name="packaging_fee">包装费</string>
-    <string name="clear_shopping_cart">清空购物车</string>
+    <string name="clear_shopping_cart">清空</string>
     <string name="choose_shipping_address">选择收货地址</string>
     <string name="send_out_now">立即送出</string>
     <string name="delivery_fee">配送费</string>
@@ -882,6 +882,11 @@ Gentleman must let go</string>
     <string name="empty_dish_hint">该店暂无堂食菜品</string>
     <string name="empty_introduction">该店暂无店铺介绍</string>
     <string name="package_content">套餐内容</string>
-    <string name="inventory_shortage">Inventory shortage</string>
+    <string name="inventory_shortage">库存短缺</string>
+    <string name="selected_goods">已选商品</string>
+    <string name="packaging_fee_format">包装费&#160;₱%1$s</string>
+    <string name="delivery_price_format_2">配送费&#160;%1$s</string>
+    <string name="empty_cart">空</string>
+
 
 </resources>

@@ -455,7 +455,6 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
             add_iv.setImageResource(R.mipmap.ic_add_blue)
             updateNumber(goodNumber)
-            cut_iv.visibility = View.VISIBLE
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                     this@RestaurantDetailActivity.goodNumber = goodNum

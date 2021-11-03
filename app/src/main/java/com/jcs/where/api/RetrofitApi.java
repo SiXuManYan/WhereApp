@@ -1074,7 +1074,7 @@ public interface RetrofitApi {
     );
 
     /**
-     * 外卖详情
+     * 外卖菜品列表
      */
     @GET("restaurantapi/v2/take_out/goods")
     Observable<JcsResponse<PageResponse<DishTakeawayResponse>>> takeawayGoodList(

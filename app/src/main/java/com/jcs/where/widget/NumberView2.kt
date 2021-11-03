@@ -138,24 +138,34 @@ class NumberView2 : LinearLayout {
     /**
      * 更新数量
      */
-    fun updateNumber(count: Int) {
-        goodNum = if (count < 0) {
-            0
-        } else {
-            count
-        }
-
+    fun updateNumberJudgeMin(count: Int) {
+        updateNumber(count)
         if (goodNum > MIN_GOOD_NUM) {
             cut_iv.visibility = View.VISIBLE
 
         } else {
             cut_iv.visibility = View.INVISIBLE
         }
-
-        value_tv.visibility = View.VISIBLE
-        value_tv.text = goodNum.toString()
     }
 
+    /**
+     * 更新数量
+     */
+    fun updateNumber(count: Int) {
+        goodNum = if (count < 0) {
+            0
+        } else {
+            count
+        }
+        value_tv.visibility = View.VISIBLE
+        value_tv.text = goodNum.toString()
+
+        if (goodNum > MIN_GOOD_NUM) {
+            if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
+        } else {
+            if (cutResIdMin != 0) cut_iv.setImageResource(cutResIdMin)
+        }
+    }
 
     /**
      * 展示删除

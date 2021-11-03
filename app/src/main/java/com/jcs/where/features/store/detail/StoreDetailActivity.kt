@@ -118,7 +118,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         number_view.apply {
             MIN_GOOD_NUM = 1
-            updateNumber(1)
+            updateNumberJudgeMin(1)
             alwaysEnableCut(true)
         }
 
@@ -219,7 +219,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
                     putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, appList)
                 })
                 cart_ll.visibility = View.GONE
-                number_view.updateNumber(1)
+                number_view.updateNumberJudgeMin(1)
             }
 
 

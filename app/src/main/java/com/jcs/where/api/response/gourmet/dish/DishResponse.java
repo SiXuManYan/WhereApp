@@ -1,5 +1,6 @@
 package com.jcs.where.api.response.gourmet.dish;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * Created by Wangsw  2021/4/1 15:07.
  * 堂食菜品列表
  */
-public class DishResponse {
+public class DishResponse implements Serializable {
 
 /*    {
         "id": 1,

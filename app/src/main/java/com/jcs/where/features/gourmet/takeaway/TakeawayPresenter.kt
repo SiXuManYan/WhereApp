@@ -1,12 +1,9 @@
 package com.jcs.where.features.gourmet.takeaway
 
-import com.google.gson.JsonElement
+import android.annotation.SuppressLint
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
-import com.jcs.where.api.request.CollectionRestaurantRequest
-import com.jcs.where.api.response.PageResponse
-import com.jcs.where.api.response.gourmet.comment.CommentResponse
-import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
+import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.utils.BigDecimalUtil
 import java.math.BigDecimal
@@ -35,20 +32,6 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
 
     }
 
-    /**
-     * 外卖菜品列表
-     */
-    fun getDishList(restaurantId: String) {
-
-        requestApi(mRetrofit.takeawayGoodList(1, restaurantId), object : BaseMvpObserver<PageResponse<DishTakeawayResponse>>(view) {
-            override fun onSuccess(response: PageResponse<DishTakeawayResponse>?) {
-                if (response == null || response.data.isEmpty()) {
-                    return
-                }
-                view.bindDishList(response.data.toMutableList())
-            }
-        })
-    }
 
     /**
      * 计算价格
@@ -78,9 +61,9 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
         return totalCount
     }
 
-    fun getSelectedList(adapter: TakeawayAdapter): ArrayList<DishTakeawayResponse> {
+    fun getSelectedList(adapter: TakeawayAdapter): ArrayList<DishResponse> {
 
-        val list = ArrayList<DishTakeawayResponse>()
+        val list = ArrayList<DishResponse>()
 
         adapter.data.forEach {
             if (it.nativeSelectCount > 0) {
@@ -88,46 +71,16 @@ class TakeawayPresenter(val view: TakeawayView) : BaseMvpPresenter(view) {
             }
         }
         return list
-
     }
 
-    fun collection(restaurantId: String) {
-        val request = CollectionRestaurantRequest().apply {
-            this.restaurant_id = restaurantId
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearCart(adapter: TakeawayAdapter){
+        val list = ArrayList<DishResponse>()
+
+        adapter.data.forEach {
+           it.nativeSelectCount = 0
         }
-        requestApi(mRetrofit.collectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement?) {
-                view.collectionSuccess()
-            }
-        })
-
-    }
-
-    fun unCollection(restaurantId: String) {
-        val request = CollectionRestaurantRequest().apply {
-            this.restaurant_id = restaurantId
-        }
-        requestApi(mRetrofit.unCollectsRestaurant(request), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement?) {
-                view.unCollectionSuccess()
-            }
-
-        })
-
-    }
-
-    /**
-     * 评论列表
-     */
-    fun getCommentList(restaurantId: String) {
-        requestApi(mRetrofit.getCommentList(1, 0, restaurantId), object : BaseMvpObserver<PageResponse<CommentResponse>>(view) {
-            override fun onSuccess(response: PageResponse<CommentResponse>) {
-                val data = response.data
-                if (!data.isNullOrEmpty()) {
-                    view.bindCommentData(data)
-                }
-            }
-        })
+        adapter.notifyDataSetChanged()
     }
 
 

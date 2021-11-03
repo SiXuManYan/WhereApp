@@ -125,7 +125,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             cutResIdMin = R.mipmap.ic_cut_black_transparent
             addResIdCommon = R.mipmap.ic_add_black
             addResIdMax = R.mipmap.ic_add_black_transparent
-            updateNumber(roomNumber)
+            updateNumberJudgeMin(roomNumber)
             cut_iv.visibility = View.VISIBLE
             valueChangeListener = this@HotelBookActivity
         }

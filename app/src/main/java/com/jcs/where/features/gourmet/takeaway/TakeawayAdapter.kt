@@ -1,29 +1,30 @@
 package com.jcs.where.features.gourmet.takeaway
 
+import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
-import com.jcs.where.utils.image.GlideRoundedCornersTransform
+import com.jcs.where.utils.BusinessUtils
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.NumberView2
 
 /**
  * Created by Wangsw  2021/4/25 14:33.
  * 外卖菜品列表
  */
-class TakeawayAdapter : BaseQuickAdapter<DishTakeawayResponse, BaseViewHolder>(R.layout.item_dishes) {
+class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.item_dish_takeaway) {
 
 
     var onSelectCountChange: OnSelectCountChange? = null
+
+
+    var minGoodNum = 0
 
     /**
      * 用户选中数量更新监听
@@ -39,65 +40,47 @@ class TakeawayAdapter : BaseQuickAdapter<DishTakeawayResponse, BaseViewHolder>(R
 
     }
 
-    override fun convert(holder: BaseViewHolder, item: DishTakeawayResponse) {
+    override fun convert(holder: BaseViewHolder, item: DishResponse) {
 
-        val image_iv = holder.getView<ImageView>(R.id.image_iv)
-        val good_name_tv = holder.getView<TextView>(R.id.good_name_tv)
-        val sales_tv = holder.getView<TextView>(R.id.sales_tv)
-        val now_price_tv = holder.getView<TextView>(R.id.now_price_tv)
+        holder.setText(R.id.dish_name_tv, item.title)
+        holder.setText(R.id.sales_tv, StringUtils.getString(R.string.sale_format, item.sale_num))
+        holder.setText(R.id.now_price_tv, StringUtils.getString(R.string.price_unit_format, item.price.toPlainString()))
         val old_price_tv = holder.getView<TextView>(R.id.old_price_tv)
-        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        val number_view = holder.getView<NumberView2>(R.id.number_view)
-
-        val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray)
-
-        Glide.with(context).load(item.image).apply(options).into(image_iv);
-
-        good_name_tv.text = item.title
-        sales_tv.text = StringUtils.getString(R.string.sale_format, item.sale_num)
-        initTag(item, tag_ll)
-
-        now_price_tv.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
+        val dish_iv = holder.getView<ImageView>(R.id.dish_iv)
 
         val oldPrice = StringUtils.getString(R.string.price_unit_format, item.original_price.toPlainString())
         val builder = SpanUtils().append(oldPrice).setStrikethrough().create()
         old_price_tv.text = builder
 
-        // 商品数量
-        number_view.updateNumber(item.nativeSelectCount)
-        number_view.valueChangeListener = object : NumberView2.OnValueChangeListener {
-            override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
-                item.nativeSelectCount = goodNum
-                onSelectCountChange?.selectCountChange(goodNum , item.id)
+        GlideUtil.load(context, item.image, dish_iv, 4)
+
+
+        val number_view = holder.getView<NumberView2>(R.id.number_view).apply {
+            alwaysEnableCut = false
+            MIN_GOOD_NUM = minGoodNum
+            MAX_GOOD_NUM = BusinessUtils.getSafeStock(item.inventory)
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+            add_iv.setImageResource(R.mipmap.ic_add_blue)
+            updateNumberJudgeMin(item.nativeSelectCount)
+            valueChangeListener = object : NumberView2.OnValueChangeListener {
+                override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
+                    item.nativeSelectCount = goodNum
+                    onSelectCountChange?.selectCountChange(goodNum , item.id)
+                }
+
             }
         }
+
+
+
+
+
+
+
 
     }
 
 
-    private fun initTag(data: DishTakeawayResponse, tag_ll: LinearLayout) {
-        tag_ll.removeAllViews()
-        val tags = data.tags
-        if (tags.size <= 0) {
-            return
-        }
-        for (tag in tags) {
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.marginEnd = SizeUtils.dp2px(2f)
-            val tv = TextView(context).apply {
-                layoutParams = params
-                setPaddingRelative(SizeUtils.dp2px(4f), SizeUtils.dp2px(1f), SizeUtils.dp2px(4f), SizeUtils.dp2px(1f))
-                setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2))
-                textSize = 11f
-                text = tag
-                setBackgroundResource(R.drawable.shape_blue_stoke_radius_1)
-                isSingleLine = true
-            }
-            tag_ll.addView(tv)
-        }
-    }
+
 
 }

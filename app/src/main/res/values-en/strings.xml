@@ -540,7 +540,7 @@
     <string name="delivery_price_format">Delivery Price %1$s</string>
     <string name="to_settle">To Settle</string>
     <string name="packaging_fee">Packaging Fee</string>
-    <string name="clear_shopping_cart">Clear Shopping Cart</string>
+    <string name="clear_shopping_cart">Clear</string>
     <string name="choose_shipping_address">Choose Shipping Address</string>
     <string name="send_out_now">Send Out Now</string>
     <string name="delivery_fee">Delivery Fee</string>
@@ -876,6 +876,9 @@ Gentleman must let go</string>
     <string name="empty_introduction">This shop has no shop introduction</string>
     <string name="package_content">Package content</string>
     <string name="inventory_shortage">Inventory shortage</string>
-
+    <string name="selected_goods">Selected goods</string>
+    <string name="packaging_fee_format">Packaging fee&#160;₱%1$s</string>
+    <string name="delivery_price_format_2">Delivery fee&#160;%1$s</string>
+    <string name="empty_cart">Empty</string>
 
 </resources>

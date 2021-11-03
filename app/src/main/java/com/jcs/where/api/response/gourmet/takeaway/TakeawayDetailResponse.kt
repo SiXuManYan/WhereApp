@@ -1,6 +1,8 @@
 package com.jcs.where.api.response.gourmet.takeaway
 
+import com.jcs.where.api.response.gourmet.dish.DishResponse
 import java.math.BigDecimal
+import java.util.ArrayList
 
 
 /**
@@ -53,5 +55,7 @@ class TakeawayDetailResponse {
 
     /** IM聊天开启状态（1：开启，2：关闭） */
     var im_status = 0
+
+    var goods : ArrayList<DishResponse> = ArrayList()
 
 }

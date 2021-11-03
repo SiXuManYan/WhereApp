@@ -5,28 +5,21 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
-import com.jcs.where.api.response.gourmet.comment.CommentResponse
-import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.gourmet.comment.FoodCommentActivity
-import com.jcs.where.features.gourmet.comment.FoodCommentAdapter
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
-import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
-import com.jcs.where.utils.MobUtil
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
-import kotlinx.android.synthetic.main.activity_take_away.*
-import kotlinx.android.synthetic.main.item_search.*
+import kotlinx.android.synthetic.main.activity_take_away_2.*
 import kotlinx.android.synthetic.main.layout_take_away_shopping_cart.*
 import java.math.BigDecimal
 
@@ -51,11 +44,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     private lateinit var mDishAdapter: TakeawayAdapter
     private lateinit var mCartAdapter: TakeawayAdapter
-    private lateinit var mCommentAdapter: FoodCommentAdapter
 
 
-    /** 是否收藏 */
-    private var collect_status = 1
+    private var isToolbarDark = false
 
     /** IM聊天开启状态（1：开启，2：关闭） */
     private var im_status = 0
@@ -64,9 +55,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     private var mer_uuid = ""
     private var mer_name = ""
 
-    override fun getLayoutId() = R.layout.activity_take_away
+    override fun getLayoutId() = R.layout.activity_take_away_2
 
-    override fun isStatusDark() = (toolbarStatus == 1)
+    override fun isStatusDark() = isToolbarDark
 
     override fun initView() {
 
@@ -81,8 +72,6 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     }
 
     private fun initRecyclerView() {
-
-
         // 菜品列表
         mDishAdapter = TakeawayAdapter().apply {
             setEmptyView(EmptyView(this@TakeawayActivity).apply {
@@ -98,30 +87,20 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                     return false
                 }
             }
-            addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(10f),
-                    0, 0).apply { setDrawHeaderFooter(true) })
+            addItemDecoration(DividerDecoration(
+                Color.WHITE, SizeUtils.dp2px(10f),
+                0, 0
+            ).apply { setDrawHeaderFooter(true) })
             adapter = mDishAdapter
         }
 
 
-        // 评论列表
-        mCommentAdapter = FoodCommentAdapter()
-
-
-        comment_rv.apply {
-            isNestedScrollingEnabled = true
-            layoutManager = object : LinearLayoutManager(this@TakeawayActivity, VERTICAL, false) {
-                override fun canScrollVertically(): Boolean {
-                    return false
-                }
-            }
-            adapter = mCommentAdapter
-        }
-
         // 购物车列表
         mCartAdapter = TakeawayAdapter().apply {
+            minGoodNum = 1
             setEmptyView(EmptyView(this@TakeawayActivity).apply {
                 showEmptyDefault()
+                empty_message_tv.text = StringUtils.getString(R.string.empty_cart)
             })
             onSelectCountChange = object : TakeawayAdapter.OnSelectCountChange {
 
@@ -142,8 +121,10 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
         shopping_cart_rv.apply {
             layoutManager = LinearLayoutManager(this@TakeawayActivity, LinearLayoutManager.VERTICAL, false)
-            addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(10f),
-                    0, 0).apply { setDrawHeaderFooter(true) })
+            addItemDecoration(DividerDecoration(
+                Color.WHITE, SizeUtils.dp2px(10f),
+                0, 0
+            ).apply { setDrawHeaderFooter(true) })
             adapter = mCartAdapter
         }
 
@@ -151,14 +132,12 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
     private fun initScroll() {
 
-        // alpha
         useView.setBackgroundColor(getColor(R.color.white))
         toolbar.setBackgroundColor(getColor(R.color.white))
-
         useView.background.alpha = 0
         toolbar.background.alpha = 0
         scrollView.setOnScrollChangeListener { _, _, y, _, _ ->
-            val headHeight = image_iv.measuredHeight - toolbar.measuredHeight
+            val headHeight = media_fl.measuredHeight - toolbar.measuredHeight
             var alpha = (y.toFloat() / headHeight * 255).toInt()
             if (alpha >= 255) {
                 alpha = 255
@@ -166,17 +145,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             if (alpha <= 5) {
                 alpha = 0
             }
-            if (alpha > 130) {
-                setLikeImage()
-                shareIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_share_black))
-                back_iv.setImageResource(R.drawable.ic_back_black)
-                toolbarStatus = 1
-            } else {
-                setLikeImage()
-                shareIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_share_white))
-                back_iv.setImageResource(R.drawable.ic_back_white)
-                toolbarStatus = 0
-            }
+            isToolbarDark = alpha > 130
+            setBackImage()
+
             useView.background.alpha = alpha
             toolbar.background.alpha = alpha
             if (alpha == 255) {
@@ -188,44 +159,27 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             changeStatusTextColor()
         }
 
-
     }
 
-    private fun setLikeImage() {
-        if (collect_status == 2) {
-            like_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hotelwhitelike))
-        } else {
-            like_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hoteltransparentunlike))
-        }
+
+    private fun setBackImage() {
+        back_iv.setImageResource(
+            if (isToolbarDark) {
+                R.mipmap.ic_back_black
+            } else {
+                R.mipmap.ic_back_light
+            }
+        )
     }
 
     override fun initData() {
         presenter = TakeawayPresenter(this)
         presenter.getDetailData(restaurant_id)
-        presenter.getDishList(restaurant_id)
-        presenter.getCommentList(restaurant_id)
     }
 
     override fun bindListener() {
-        back_iv.setOnClickListener {
-            finish()
-        }
-
-        shareIv.setOnClickListener {
-            val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_RESTAURANT, restaurant_id)
-            MobUtil.shareFacebookWebPage(url, this@TakeawayActivity)
-        }
-
-        like_iv.setOnClickListener {
-            if (collect_status == 1) {
-                presenter.collection(restaurant_id)
-            } else {
-                presenter.unCollection(restaurant_id)
-            }
-        }
 
         service_iv.setOnClickListener {
-
             if (im_status == 1 && mer_uuid.isNotBlank()) {
                 RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mer_uuid, restaurant_name, null)
             } else {
@@ -241,7 +195,6 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         }
 
         cart_iv.setOnClickListener {
-
             val selectedList = presenter.getSelectedList(mDishAdapter)
             mCartAdapter.setNewInstance(selectedList)
 
@@ -276,21 +229,22 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             })
         }
 
-        more_comment_tv.setOnClickListener {
-
-            startActivity(FoodCommentActivity::class.java, Bundle().apply {
-                putString(Constant.PARAM_ID, restaurant_id)
-            })
+        clear_cart_tv.setOnClickListener {
+            mCartAdapter.setNewInstance(null)
+            presenter.clearCart(mDishAdapter)
+            handleBottom()
         }
+
     }
 
     override fun bindData(data: TakeawayDetailResponse) {
-        GlideUtil.load(this, data.take_out_image, image_iv)
-        collect_status = data.collect_status
+
+        GlideUtil.load(this, data.take_out_image, media_iv)
+
+
         businessPhone = data.tel
         mer_uuid = data.mer_uuid
         mer_name = data.mer_name
-        setLikeImage()
         val restaurantName = data.restaurant_name
         restaurant_name = restaurantName
         restaurant_tv.text = restaurantName
@@ -299,7 +253,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         // 配送费
         val deliveryCost = data.delivery_cost
         if (deliveryCost.compareTo(BigDecimal.ZERO) == 1) {
-            delivery_fee_tv.text = getString(R.string.delivery_price_format, deliveryCost.toPlainString())
+            delivery_fee_tv.text = getString(R.string.delivery_price_format_2, deliveryCost.toPlainString())
         } else {
             delivery_fee_tv.text = getString(R.string.free_delivery)
         }
@@ -307,18 +261,16 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
         // 包装费
         val toPlainString = data.packing_charges.toPlainString()
-        packaging_fee_tv.text = getString(R.string.price_unit_format, toPlainString)
+        packaging_fee_tv.text = getString(R.string.packaging_fee_format, toPlainString)
         packing_charges = toPlainString
 
         // 聊天
         im_status = data.im_status
 
+        mDishAdapter.setNewInstance(data.goods)
 
     }
 
-    override fun bindDishList(list: MutableList<DishTakeawayResponse>) {
-        mDishAdapter.setNewInstance(list)
-    }
 
     override fun selectCountChange(goodNum: Int, id: Int) = handleBottom()
 
@@ -337,32 +289,15 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
             count_tv.visibility = View.VISIBLE
             count_tv.text = totalCount.toString()
             cart_iv.setImageResource(R.mipmap.ic_cart_blue)
-            settlement_tv.setBackgroundResource(R.drawable.shape_gradient_orange)
+            settlement_tv.alpha = 1f
         } else {
             count_tv.visibility = View.GONE
             cart_iv.setImageResource(R.mipmap.ic_cart_gray)
-            settlement_tv.setBackgroundResource(R.drawable.shape_gradient_orange_un_enable)
+            settlement_tv.alpha = 0.5f
 
         }
 
     }
 
-    override fun collectionSuccess() {
-        collect_status = 2
-        setLikeImage()
-    }
 
-    override fun unCollectionSuccess() {
-        collect_status = 1
-        setLikeImage()
-    }
-
-    override fun bindCommentData(data: List<CommentResponse>) {
-        mCommentAdapter.setNewInstance(null)
-        for (i in data.indices) {
-            if (i <= 1) {
-                mCommentAdapter.addData(data[i])
-            }
-        }
-    }
 }

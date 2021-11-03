@@ -8,6 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 
@@ -15,10 +16,10 @@ import com.jcs.where.utils.image.GlideRoundedCornersTransform
  * Created by Wangsw  2021/4/27 14:58.
  * 待提交订单的外卖菜品列表
  */
-class OrderSubmitTakeawayAdapter : BaseQuickAdapter<DishTakeawayResponse, BaseViewHolder>(R.layout.item_dishes_for_order_submit) {
+class OrderSubmitTakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.item_dishes_for_order_submit) {
 
 
-    override fun convert(holder: BaseViewHolder, item: DishTakeawayResponse) {
+    override fun convert(holder: BaseViewHolder, item: DishResponse) {
 
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val good_name_tv = holder.getView<TextView>(R.id.good_name_tv)

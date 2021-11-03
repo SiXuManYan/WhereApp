@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
+import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderSubmitData
 import com.jcs.where.base.BaseEvent
@@ -54,7 +55,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     private var restaurant_name: String = ""
 
     /** 菜品列表 */
-    private lateinit var dish_list: ArrayList<DishTakeawayResponse>
+    private lateinit var dish_list: ArrayList<DishResponse>
 
     var addressDialog: BottomSheetDialog? = null
     var timeDialog: BottomSheetDialog? = null
@@ -88,7 +89,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         delivery_cost = bundle.getString(Constant.PARAM_DELIVERY_COST, "0")
         total_price = bundle.getString(Constant.PARAM_TOTAL_PRICE, "0")
         restaurant_name = bundle.getString(Constant.PARAM_NAME, "0")
-        dish_list = bundle.getSerializable(Constant.PARAM_DATA) as ArrayList<DishTakeawayResponse>
+        dish_list = bundle.getSerializable(Constant.PARAM_DATA) as ArrayList<DishResponse>
 
         // list
         initRecyclerView()

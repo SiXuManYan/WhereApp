@@ -107,7 +107,7 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
         number_view.apply {
             MIN_GOOD_NUM = 1
             alwaysEnableCut(true)
-            updateNumber(it.good_num)
+            updateNumberJudgeMin(it.good_num)
 
 
             valueChangeListener = object : NumberView2.OnValueChangeListener {

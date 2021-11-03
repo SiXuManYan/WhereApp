@@ -35,6 +35,8 @@ class HotelCommentActivity2 : BaseActivity() {
 
     override fun initView() {
         hotelId = intent.getIntExtra(Constant.PARAM_ID, 0)
+
+
         pager.offscreenPageLimit = TAB_TITLES.size
         pager.adapter = InnerPagerAdapter(supportFragmentManager, 0)
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -77,7 +79,6 @@ class HotelCommentActivity2 : BaseActivity() {
 
 
         }
-
 
     }
 

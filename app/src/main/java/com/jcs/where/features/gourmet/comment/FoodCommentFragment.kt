@@ -6,7 +6,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.comment.CommentResponse
+import com.jcs.where.api.response.hotel.HotelComment
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
@@ -21,14 +23,13 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
     /** 餐厅id */
     private var restaurant_id: String = ""
 
-    /** 商家id */
-    private var shop_id: String = ""
+
 
     private var listType = 0
 
     private var page = Constant.DEFAULT_FIRST_PAGE
 
-    private lateinit var mAdapter: FoodCommentAdapter
+    private lateinit var mAdapter: HotelCommentAdapter
     private lateinit var emptyView: EmptyView
 
     companion object {
@@ -48,18 +49,7 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
             return fragment
         }
 
-        /**
-         * 美食评论
-         * @param shop_id 商家ID
-         */
-        fun newInstance(shop_id: String): FoodCommentFragment {
-            val fragment = FoodCommentFragment()
-            val bundle = Bundle().apply {
-                putString(Constant.PARAM_SHOP_ID, shop_id)
-            }
-            fragment.arguments = bundle
-            return fragment
-        }
+
 
     }
 
@@ -68,19 +58,15 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
     override fun initView(view: View) {
         arguments?.let {
             restaurant_id = it.getString(Constant.PARAM_ID, "")
-            shop_id = it.getString(Constant.PARAM_SHOP_ID, "")
             listType = it.getInt(Constant.PARAM_TYPE, 0)
         }
 
         // list
         swipe_layout.setOnRefreshListener(this)
-        if (shop_id.isNotEmpty()) {
-            swipe_layout.isEnabled = false
-        }
         emptyView = EmptyView(context).apply {
             showEmptyNothing()
         }
-        mAdapter = FoodCommentAdapter().apply {
+        mAdapter = HotelCommentAdapter().apply {
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener(this@FoodCommentFragment)
@@ -113,14 +99,12 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
         if (restaurant_id.isNotEmpty()) {
             presenter.getFoodCommentList(restaurant_id, page, listType)
         }
-        if (shop_id.isNotEmpty()) {
-            presenter.getStoreCommentList(shop_id, page)
-        }
+
 
 
     }
 
-    override fun bindCommentData(data: MutableList<CommentResponse>, isLastPage: Boolean) {
+    override fun bindCommentData(data: MutableList<HotelComment>, isLastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
             swipe_layout.isRefreshing = false
         }

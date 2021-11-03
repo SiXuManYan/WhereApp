@@ -3,13 +3,16 @@ package com.jcs.where.features.gourmet.comment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
+import com.google.android.material.radiobutton.MaterialRadioButton
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_food_comment.*
+
 
 /**
  * Created by Wangsw  2021/5/27 16:10.
@@ -39,12 +42,45 @@ class FoodCommentActivity : BaseActivity() {
         }
         pager.offscreenPageLimit = TAB_TITLES.size
         pager.adapter = InnerPagerAdapter(supportFragmentManager, 0)
-        tabs_type.setViewPager(pager)
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+
+            override fun onPageScrollStateChanged(state: Int) = Unit
+
+            override fun onPageSelected(position: Int) {
+                val rb = sort_rg.getChildAt(position) as MaterialRadioButton
+                rb.isChecked = true
+            }
+
+        })
+
+
     }
 
     override fun initData() = Unit
 
-    override fun bindListener() = Unit
+    override fun bindListener() {
+        sort_rg.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.all_rb -> {
+                    pager.currentItem = 0
+                }
+                R.id.picture_rb -> {
+                    pager.currentItem = 1
+                }
+                R.id.bad_reviews_rb -> {
+                    pager.currentItem = 2
+                }
+                R.id.high_option_rb -> {
+                    pager.currentItem = 3
+                }
+                else -> {
+                }
+            }
+
+
+        }
+    }
 
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {

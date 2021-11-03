@@ -11,7 +11,7 @@ class HotelComment {
     var images:ArrayList<String> = ArrayList()
     var star = 0.0f
     var created_at = ""
-    var hotel_id = 0
+
 
     /**
      * 评论类型
@@ -23,6 +23,11 @@ class HotelComment {
     var content = ""
     var star_level = 0.0f
 
+
+    /** 酒店评论含有 */
+    var hotel_id = 0
+
+    /** 美食评论 */
     var merchant_review = ""
 
 }

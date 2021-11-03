@@ -982,6 +982,19 @@ public interface RetrofitApi {
 
 
     /**
+     * 餐厅评论列表
+     *
+     * @param type 列表类型（0：全部，1：有图，2：好评，3：差评）
+     */
+    @GET("restaurantapi/v2/comments")
+    Observable<JcsResponse<PageResponse<HotelComment>>> getFoodCommentList(
+            @Query("page") int page,
+            @Query("type") int type,
+            @Query("restaurant_id") String restaurant_id
+    );
+
+
+    /**
      * 堂食菜品详情
      */
     @GET("restaurantapi/v2/eat_in_foods/{eat_in_food_id}")

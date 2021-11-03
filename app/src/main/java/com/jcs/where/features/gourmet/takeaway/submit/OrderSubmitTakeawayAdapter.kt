@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 
 /**
@@ -21,20 +22,14 @@ class OrderSubmitTakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder
 
     override fun convert(holder: BaseViewHolder, item: DishResponse) {
 
-        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        val imageIv = holder.getView<ImageView>(R.id.order_image_iv)
         val good_name_tv = holder.getView<TextView>(R.id.good_name_tv)
 
         val now_price_tv = holder.getView<TextView>(R.id.now_price_tv)
         val count_tv = holder.getView<TextView>(R.id.count_tv)
 
 
-        val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray)
-
-        Glide.with(context).load(item.image).apply(options).into(image_iv);
-
+        GlideUtil.load(context,item.image,imageIv,4)
         good_name_tv.text = item.title
 
         now_price_tv.text = StringUtils.getString(R.string.price_unit_format, item.price)

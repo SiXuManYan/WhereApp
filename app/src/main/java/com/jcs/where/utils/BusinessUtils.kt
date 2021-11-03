@@ -72,8 +72,8 @@ object BusinessUtils {
         else -> ""
     }
 
-    fun getSafeStock(inventory:String):Int{
-      return  if (inventory.isBlank()) {
+    fun getSafeStock(inventory:String?):Int{
+      return  if (inventory.isNullOrBlank()) {
             99
         } else {
             try {

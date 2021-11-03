@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/child_container_rl"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_101"
+    android:layout_height="@dimen/dp_80"
     android:paddingTop="@dimen/dp_10"
     android:paddingBottom="@dimen/dp_10"
     tools:background="@color/white">
@@ -15,16 +15,20 @@
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
         android:layout_centerVertical="true"
+        android:drawablePadding="0dp"
+        android:background="?android:attr/selectableItemBackground"
         android:drawableStart="@drawable/selector_store_cart_select_all" />
 
 
     <ImageView
         android:id="@+id/image_iv"
-        android:layout_width="@dimen/dp_81"
-        android:layout_height="@dimen/dp_81"
-        android:layout_marginStart="@dimen/dp_10"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_60"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_8"
         android:layout_toEndOf="@+id/good_checked_tv"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
 
@@ -33,19 +37,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/image_iv"
+        android:includeFontPadding="false"
         android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/sp_13"
         tools:text="商品名称" />
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/good_name"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/image_iv"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
 
         <TextView
@@ -53,17 +57,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:textColor="@color/orange_FF5B1B"
+            android:textColor="@color/orange_FF5837"
             android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
             tools:text="$1000.00" />
 
         <TextView
             android:id="@+id/old_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_2"
             android:includeFontPadding="false"
-            android:textColor="@color/grey_999999"
+            android:textColor="@color/grey_b7b7b7"
             android:textSize="@dimen/sp_13"
             tools:text="$1000.00" />
 
@@ -75,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_centerVertical="true" />
 
 
 </RelativeLayout>

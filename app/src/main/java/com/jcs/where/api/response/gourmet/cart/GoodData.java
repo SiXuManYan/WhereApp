@@ -1,8 +1,5 @@
 package com.jcs.where.api.response.gourmet.cart;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -16,5 +13,10 @@ public class GoodData implements Serializable {
     public String image = "";
     public BigDecimal price = BigDecimal.ZERO;
     public BigDecimal original_price =  BigDecimal.ZERO;
+
+    /**
+     * 库存
+     */
+    public String inventory = "";
 
 }

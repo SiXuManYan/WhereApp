@@ -23,8 +23,6 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
     /** 餐厅id */
     private var restaurant_id: String = ""
 
-
-
     private var listType = 0
 
     private var page = Constant.DEFAULT_FIRST_PAGE

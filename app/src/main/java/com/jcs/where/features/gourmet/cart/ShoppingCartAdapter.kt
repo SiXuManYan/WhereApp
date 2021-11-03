@@ -82,7 +82,7 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
         name_tv.text = data.restaurant_name
 
         if (data.nativeIsSelect) {
-            select_all_iv.setImageResource(R.mipmap.ic_checked_orange)
+            select_all_iv.setImageResource(R.mipmap.ic_checked_blue)
         } else {
             select_all_iv.setImageResource(R.mipmap.ic_un_checked)
         }
@@ -103,7 +103,7 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
             data.nativeIsSelect = !currentIsSelect
             if (data.nativeIsSelect) {
                 VibrateUtils.vibrate(10)
-                select_all_iv.setImageResource(R.mipmap.ic_checked_orange)
+                select_all_iv.setImageResource(R.mipmap.ic_checked_blue)
             } else {
                 select_all_iv.setImageResource(R.mipmap.ic_un_checked)
             }
@@ -136,7 +136,7 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                     val finals = !result.contains(false)
                     if (finals) {
                         // 全部选中
-                        select_all_iv.setImageResource(R.mipmap.ic_checked_orange)
+                        select_all_iv.setImageResource(R.mipmap.ic_checked_blue)
                     } else {
                         // 部分选中
                         select_all_iv.setImageResource(R.mipmap.ic_un_checked)

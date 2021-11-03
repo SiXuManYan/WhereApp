@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.cart
 
+import android.view.View
 import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -13,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.Products
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.NumberView
 
@@ -52,7 +54,24 @@ class ShoppingCartChildAdapter : BaseQuickAdapter<Products, BaseViewHolder>(R.la
         val good_name = holder.getView<TextView>(R.id.good_name)
         val now_price_tv = holder.getView<TextView>(R.id.now_price_tv)
         val old_price_tv = holder.getView<TextView>(R.id.old_price_tv)
+
         val number_view = holder.getView<NumberView>(R.id.number_view).apply {
+
+            val count = products.good_num
+
+            MIN_GOOD_NUM = 1
+            MAX_GOOD_NUM = BusinessUtils.getSafeStock(products.good_data.inventory)
+
+
+            cut_iv.setImageResource(R.mipmap.ic_cut_black_transparent)
+            add_iv.setImageResource(R.mipmap.ic_add_black)
+            cutResIdCommon = R.mipmap.ic_cut_black
+            cutResIdMin = R.mipmap.ic_cut_black_transparent
+            addResIdCommon = R.mipmap.ic_add_black
+            addResIdMax = R.mipmap.ic_add_black_transparent
+
+            updateNumber(count)
+
             setData(products)
             valueChangeListener = numberChangeListener
         }

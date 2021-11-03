@@ -3,7 +3,6 @@ package com.jcs.where.features.gourmet.cart
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.*
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -25,10 +24,10 @@ import java.math.BigDecimal
  *
  */
 class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingCartView,
-        OnLoadMoreListener,
-        SwipeRefreshLayout.OnRefreshListener,
-        NumberView.OnValueChangerListener,
-        ShoppingCartAdapter.OnUserSelectListener {
+    OnLoadMoreListener,
+    SwipeRefreshLayout.OnRefreshListener,
+    NumberView.OnValueChangerListener,
+    ShoppingCartAdapter.OnUserSelectListener {
 
     private lateinit var mAdapter: ShoppingCartAdapter
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -46,7 +45,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
         mAdapter = ShoppingCartAdapter().apply {
             loadMoreModule.isAutoLoadMore = true
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             setEmptyView(emptyView)
             loadMoreModule.setOnLoadMoreListener(this@ShoppingCartActivity)
             numberChangeListener = this@ShoppingCartActivity
@@ -55,10 +54,10 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
         recycler_view.adapter = mAdapter
         recycler_view.addItemDecoration(DividerDecoration(
-                ColorUtils.getColor(R.color.colorPrimary),
-                SizeUtils.dp2px(10f),
-                SizeUtils.dp2px(15f),
-                SizeUtils.dp2px(15f)).apply { setDrawHeaderFooter(true) })
+            ColorUtils.getColor(R.color.white),
+            SizeUtils.dp2px(10f),
+            0, 0
+        ).apply { setDrawHeaderFooter(true) })
 
 
     }
@@ -101,7 +100,8 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
                 VibrateUtils.vibrate(10)
                 presenter.handleSelectAll(mAdapter, true)
                 val handlePrice = presenter.handlePrice(mAdapter)
-                total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
+                total_price_tv.text =
+                    StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
             } else {
                 presenter.handleSelectAll(mAdapter, false)
                 totalPrice = BigDecimal.ZERO
@@ -131,17 +131,17 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
             if (deleteItem.isNotEmpty()) {
                 AlertDialog.Builder(this)
-                        .setCancelable(false)
-                        .setTitle(R.string.hint)
-                        .setMessage(getString(R.string.confirm_delete_hint))
-                        .setPositiveButton(R.string.confirm) { _, _ ->
-                            presenter.deleteCart(delete)
-                        }
-                        .setNegativeButton(R.string.cancel) { dialog, _ ->
-                            dialog?.dismiss()
-                        }
-                        .create()
-                        .show()
+                    .setCancelable(false)
+                    .setTitle(R.string.hint)
+                    .setMessage(getString(R.string.confirm_delete_hint))
+                    .setPositiveButton(R.string.confirm) { _, _ ->
+                        presenter.deleteCart(delete)
+                    }
+                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                        dialog?.dismiss()
+                    }
+                    .create()
+                    .show()
             }
         }
 
@@ -171,7 +171,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     private fun changeSelectImage(selected: Boolean) {
         if (selected) {
-            all_iv.setImageResource(R.mipmap.ic_checked_orange)
+            all_iv.setImageResource(R.mipmap.ic_checked_blue)
         } else {
             all_iv.setImageResource(R.mipmap.ic_un_checked)
         }
@@ -219,7 +219,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     }
 
-    override fun onNumberChange(cartId: Int, isAdd: Boolean) {
+    override fun onNumberChange(cartId: Int, isAdd: Boolean, goodNum: Int) {
 
         // 重新计算价格
         getNowPrice()

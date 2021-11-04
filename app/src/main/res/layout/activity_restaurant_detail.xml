@@ -144,7 +144,7 @@
                     android:src="@mipmap/ic_address_2" />
 
                 <TextView
-                    android:id="@+id/address_tv"
+                    android:id="@+id/address_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

@@ -551,7 +551,7 @@
     <string name="delivery_fee">配送费</string>
     <string name="actual_payment">实付款</string>
     <string name="remarks">备注</string>
-    <string name="remarks_input">输入备注</string>
+    <string name="remarks_input">请输入备注</string>
     <string name="count_format">x%1$d</string>
     <string name="new_shipping_address">新增收货地址</string>
     <string name="recipient_format">%1$s(%2$s)%3$s</string>

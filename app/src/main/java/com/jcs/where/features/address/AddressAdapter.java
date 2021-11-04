@@ -28,7 +28,7 @@ public class AddressAdapter extends BaseQuickAdapter<AddressResponse, BaseViewHo
     @Override
     protected void convert(@NotNull BaseViewHolder holder, AddressResponse data) {
 
-        addressTv = holder.getView(R.id.address_tv);
+        addressTv = holder.getView(R.id.address_name_tv);
         nameTv = holder.getView(R.id.name_tv);
         phoneTv = holder.getView(R.id.phone_tv);
         editIv = holder.getView(R.id.edit_iv);

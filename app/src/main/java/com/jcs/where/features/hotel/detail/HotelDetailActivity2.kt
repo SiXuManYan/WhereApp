@@ -459,7 +459,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
 
         phone_tv.text = response.tel
-        address_tv.text = response.address
+        address_name_tv.text = response.address
 
         response.facebook_link.apply {
             facebook_tv.visibility = if (isEmpty()) {

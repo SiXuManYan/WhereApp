@@ -303,7 +303,7 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
 
         (response.start_time + "-" + response.end_time).also { time_tv.text = it }
         phone_tv.text = response.phone
-        address_tv.text = response.address
+        address_name_tv.text = response.address
 
         // 评价
         mCommentAdapter.setNewInstance(response.comments)

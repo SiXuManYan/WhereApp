@@ -101,7 +101,7 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
                 } else {
                     getString(R.string.lady)
                 }
-                address_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
+                address_name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
                 addressDialog?.dismiss()
             }
             setOnItemChildClickListener { _, view, position ->

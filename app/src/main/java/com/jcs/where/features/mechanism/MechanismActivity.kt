@@ -183,7 +183,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
     override fun bindDetail(data: MechanismDetailResponse) {
 
         name_tv.text = data.title
-        address_tv.text = data.address
+        address_name_tv.text = data.address
         collect_status = data.collect_status
         businessPhone = data.tel
         webUrl = data.web_site

@@ -121,7 +121,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         val address = orderData.address
         contactNumber = address.contact_number
         val contactName = address.contact_name
-        address_tv.text = address.address
+        address_name_tv.text = address.address
         contact_name_tv.text = getString(R.string.address_name_format, contactName, contactNumber)
 
 

@@ -278,7 +278,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         web_value_tv.text = data.web_site
         email_value_tv.text = data.email
         facebook_value_tv.text = data.facebook
-        address_tv.text = data.address
+        address_name_tv.text = data.address
         delivery_fee = data.delivery_fee
         EventBus.getDefault().post(BaseEvent<StoreShopRequest>(StoreShopRequest(shop_name, delivery_fee)))
 

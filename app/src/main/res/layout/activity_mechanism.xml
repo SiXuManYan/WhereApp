@@ -63,7 +63,7 @@
 
 
                 <TextView
-                    android:id="@+id/address_tv"
+                    android:id="@+id/address_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"

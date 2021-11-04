@@ -110,7 +110,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         } else {
             orderData.delivery_time
         }
-        address_tv.text = orderData.address.address
+        address_name_tv.text = orderData.address.address
         order_number_tv.text = orderData.trade_no
         pay_time_tv.text = orderData.created_at
         mAdapter.setNewInstance(goodData)

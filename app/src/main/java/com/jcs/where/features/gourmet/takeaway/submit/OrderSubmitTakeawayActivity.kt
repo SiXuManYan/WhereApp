@@ -16,7 +16,6 @@ import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.gourmet.dish.DishResponse
-import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderSubmitData
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -127,16 +126,16 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
             setOnItemClickListener { adapter, view, position ->
                 val selectData = mAddressAdapter.data[position]
                 mSelectAddressData = selectData
-                select_address_tv.visibility = ViewGroup.GONE
+                select_address_tv.text = selectData.address
                 address_rl.visibility = ViewGroup.VISIBLE
-                address_tv.text = selectData.address
-
                 val sex = if (selectData.sex == 1) {
                     getString(R.string.sir)
                 } else {
                     getString(R.string.lady)
                 }
-                name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
+                address_name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
+                phone_tv.text = selectData.contact_number
+
                 addressDialog?.dismiss()
             }
             setOnItemChildClickListener { _, view, position ->
@@ -185,9 +184,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         select_address_tv.setOnClickListener {
             showAddress()
         }
-        address_rl.setOnClickListener {
-            showAddress()
-        }
+
 
         time_tv.setOnClickListener {
             showTime()

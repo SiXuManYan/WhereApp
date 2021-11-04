@@ -13,7 +13,7 @@
         android:layout_toStartOf="@+id/edit_iv">
 
         <TextView
-            android:id="@+id/address_tv"
+            android:id="@+id/address_name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_10"
@@ -30,7 +30,7 @@
             android:id="@+id/name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/address_tv"
+            android:layout_below="@+id/address_name_tv"
             android:textColor="@color/grey_999999"
             android:textSize="@dimen/sp_13"
             tools:text="x 女士" />
@@ -40,7 +40,7 @@
             android:id="@+id/phone_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/address_tv"
+            android:layout_below="@+id/address_name_tv"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_toEndOf="@+id/name_tv"
             android:textColor="@color/grey_999999"

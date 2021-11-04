@@ -547,7 +547,7 @@
     <string name="delivery_fee">Delivery Fee</string>
     <string name="actual_payment">Actual Payment</string>
     <string name="remarks">Remarks</string>
-    <string name="remarks_input">Remarks Input</string>
+    <string name="remarks_input">Please enter comments</string>
     <string name="count_format">x%1$d</string>
     <string name="new_shipping_address">Add New Shipping Address</string>
     <string name="recipient_format">%1$s(%2$s)%3$s</string>

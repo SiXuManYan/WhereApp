@@ -307,7 +307,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         score_tv.text = data.grade.toString()
         star_view.rating = data.grade
         per_price_tv.text = getString(R.string.per_price_format, data.per_price)
-        address_tv.text = data.address
+        address_name_tv.text = data.address
         time_tv.text = getString(R.string.time_format, data.start_time, data.end_time)
         if (data.take_out_status == 2) {
             support_takeaway_tv.visibility = View.VISIBLE

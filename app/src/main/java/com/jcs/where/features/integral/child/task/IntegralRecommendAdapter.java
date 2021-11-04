@@ -137,7 +137,7 @@ public class IntegralRecommendAdapter extends BaseMultiItemQuickAdapter<HomeReco
         initTag(data, tag_ll);
 
         // 地址
-        holder.setText(R.id.address_tv, data.address);
+        holder.setText(R.id.address_name_tv, data.address);
         holder.setText(R.id.food_distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
 
     }
@@ -162,7 +162,7 @@ public class IntegralRecommendAdapter extends BaseMultiItemQuickAdapter<HomeReco
         initTag(data, tag_ll);
 
         // 地址
-        holder.setText(R.id.address_tv, data.address);
+        holder.setText(R.id.address_name_tv, data.address);
     }
 
     /**

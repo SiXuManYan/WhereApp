@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
-import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderDetail
 import com.jcs.where.base.BaseEvent
@@ -106,7 +105,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             service_second_value_tv.text = data.delivery_times
             recipient_info_ll.visibility = View.VISIBLE
             data.address?.let {
-                address_tv.text = it.address
+                address_name_tv.text = it.address
                 recipient_tv.text = getString(R.string.star_text_format, it.contact_name, it.contact_number)
             }
 

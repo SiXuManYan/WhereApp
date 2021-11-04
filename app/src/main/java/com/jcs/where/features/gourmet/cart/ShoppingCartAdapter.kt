@@ -2,14 +2,16 @@ package com.jcs.where.features.gourmet.cart
 
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
@@ -18,111 +20,111 @@ import com.jcs.where.widget.NumberView
 
 /**
  * Created by Wangsw  2021/4/7 16:34.
+ * 美食购物车、美食提交订单
  */
-class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolder>(R.layout.item_shopping_cart), LoadMoreModule {
+class ShoppingCartAdapter : BaseMultiItemQuickAdapter<ShoppingCartResponse, BaseViewHolder>(), LoadMoreModule {
 
-      var holder: BaseViewHolder? = null
 
-    /**
-     * 商品数量改变监听
-     */
+    init {
+        addItemType(ShoppingCartResponse.CONTENT_TYPE_COMMON, R.layout.item_shopping_cart)
+        addItemType(ShoppingCartResponse.CONTENT_TYPE_COMMIT, R.layout.item_shopping_cart_for_commit)
+    }
+
+    /** 商品数量改变监听 */
     var numberChangeListener: NumberView.OnValueChangerListener? = null
 
-    /**
-     * 选中全部监听
-     */
+    /** 选中全部监听 */
     var onUserSelectListener: OnUserSelectListener? = null
 
-    lateinit var mChildAdapter: ShoppingCartChildAdapter
 
-
-    lateinit var m_select_all_iv: ImageView
-
-
-    /**
-     * 选中全部、子view选中监听
-     */
+    /** 选中全部、子view选中监听 */
     interface OnUserSelectListener {
-        /**
-         * 选中了item的标题
-         */
+
+        /** 选中了item的标题 */
         fun onTitleSelectClick(isSelected: Boolean)
 
-        /**
-         * 子选中了item内具体的某一项
-         */
+        /** 子选中了item内具体的某一项 */
         fun onChildSelectClick(isSelected: Boolean)
     }
 
-    override fun convert(holder: BaseViewHolder, data: ShoppingCartResponse) {
+    override fun convert(holder: BaseViewHolder, item: ShoppingCartResponse) {
 
-        this.holder = holder;
-        val title_ll = holder.getView<LinearLayout>(R.id.title_ll)
-        val select_all_iv = holder.getView<ImageView>(R.id.select_all_iv)
-        m_select_all_iv = select_all_iv
+        when (holder.itemViewType) {
+            ShoppingCartResponse.CONTENT_TYPE_COMMON -> {
+                bindTitleItem(holder, item)
+                bindProductItemAndHandleSelect(holder, item)
+            }
 
-        val name_tv = holder.getView<TextView>(R.id.name_tv)
-        val content_rv = holder.getView<RecyclerView>(R.id.content_rv)
+            ShoppingCartResponse.CONTENT_TYPE_COMMIT -> {
+                bindTitleItem(holder, item)
+                bindProductItem(holder, item)
 
+                bindItemTotalPrice(holder, item)
+
+            }
+        }
+    }
+
+
+
+
+    /**
+     * 标题
+     */
+    private fun bindTitleItem(holder: BaseViewHolder, data: ShoppingCartResponse) {
+        val title = holder.getView<LinearLayout>(R.id.title_ll)
         if (holder.adapterPosition == 0) {
-            val layoutParams = title_ll.layoutParams as LinearLayout.LayoutParams
+            val layoutParams = title.layoutParams as LinearLayout.LayoutParams
             layoutParams.topMargin = SizeUtils.dp2px(10f)
-            title_ll.layoutParams = layoutParams
+            title.layoutParams = layoutParams
         }
 
+        holder.setText(R.id.name_tv, data.restaurant_name)
+    }
 
-        // 内容
-        content_rv.layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
-            override fun canScrollVertically(): Boolean {
-                return false
+
+    /**
+     * 菜品
+     */
+    private fun bindProductItem(holder: BaseViewHolder, data: ShoppingCartResponse): ShoppingCartChildAdapter {
+        val contentRv = holder.getView<RecyclerView>(R.id.content_rv)
+        val childAdapter = ShoppingCartChildAdapter().apply {
+            setNewInstance(data.products)
+            numberChangeListener = this@ShoppingCartAdapter.numberChangeListener
+        }
+
+        contentRv.apply {
+            adapter = childAdapter
+            layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
             }
         }
+        return childAdapter
+    }
 
-        // 标题
-        name_tv.text = data.restaurant_name
 
+    /**
+     * 处理选择菜品
+     */
+    private fun bindProductItemAndHandleSelect(holder: BaseViewHolder, data: ShoppingCartResponse) {
+
+        // 菜品内容
+        val childAdapter = bindProductItem(holder, data)
+
+        // 全选
+        val selectAllIv = holder.getView<ImageView>(R.id.select_all_iv)
         if (data.nativeIsSelect) {
-            select_all_iv.setImageResource(R.mipmap.ic_checked_blue)
+            selectAllIv.setImageResource(R.mipmap.ic_checked_blue)
         } else {
-            select_all_iv.setImageResource(R.mipmap.ic_un_checked)
+            selectAllIv.setImageResource(R.mipmap.ic_un_checked)
         }
 
-        val childAdapter = ShoppingCartChildAdapter()
-        mChildAdapter = childAdapter
-
-
-        childAdapter.setNewInstance(data.products)
-        content_rv.adapter = childAdapter
-        childAdapter.numberChangeListener = numberChangeListener
-
-        // 选中全部，取消全部
-        select_all_iv.setOnClickListener {
-
-            val currentIsSelect = data.nativeIsSelect
-
-            data.nativeIsSelect = !currentIsSelect
-            if (data.nativeIsSelect) {
-                VibrateUtils.vibrate(10)
-                select_all_iv.setImageResource(R.mipmap.ic_checked_blue)
-            } else {
-                select_all_iv.setImageResource(R.mipmap.ic_un_checked)
-            }
-
-            childAdapter.data.forEach {
-                it.nativeIsSelect = data.nativeIsSelect
-            }
-            Handler(Looper.getMainLooper()).postDelayed(Runnable {
-                childAdapter.notifyDataSetChanged()
-            }, 50)
-
-
-
-            onUserSelectListener?.onTitleSelectClick(data.nativeIsSelect)
-
-        }
 
         // 子view 选中监听
-        childAdapter.checkedChangeListener = object : ShoppingCartChildAdapter.OnChildContainerClick {
+        childAdapter.checkedChangeListener = object
+            : ShoppingCartChildAdapter.OnChildContainerClick {
             override fun onClick(isChecked: Boolean) {
 
                 val result = ArrayList<Boolean>()
@@ -136,17 +138,17 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
                     val finals = !result.contains(false)
                     if (finals) {
                         // 全部选中
-                        select_all_iv.setImageResource(R.mipmap.ic_checked_blue)
+                        selectAllIv.setImageResource(R.mipmap.ic_checked_blue)
                     } else {
                         // 部分选中
-                        select_all_iv.setImageResource(R.mipmap.ic_un_checked)
+                        selectAllIv.setImageResource(R.mipmap.ic_un_checked)
                     }
 
                     data.nativeIsSelect = finals
 
                 } else {
                     // 取消选中事件
-                    select_all_iv.setImageResource(R.mipmap.ic_un_checked)
+                    selectAllIv.setImageResource(R.mipmap.ic_un_checked)
                     data.nativeIsSelect = false
                 }
 
@@ -156,6 +158,47 @@ class ShoppingCartAdapter : BaseQuickAdapter<ShoppingCartResponse, BaseViewHolde
 
         }
 
+        // 选中全部，取消全部
+        selectAllIv.setOnClickListener {
+
+            val currentIsSelect = data.nativeIsSelect
+
+            data.nativeIsSelect = !currentIsSelect
+            if (data.nativeIsSelect) {
+                VibrateUtils.vibrate(10)
+                selectAllIv.setImageResource(R.mipmap.ic_checked_blue)
+            } else {
+                selectAllIv.setImageResource(R.mipmap.ic_un_checked)
+            }
+
+            childAdapter.data.forEach {
+                it.nativeIsSelect = data.nativeIsSelect
+            }
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                childAdapter.notifyDataSetChanged()
+            }, 50)
+
+            onUserSelectListener?.onTitleSelectClick(data.nativeIsSelect)
+
+        }
+    }
+
+
+    /**
+     * 处理总价格
+     */
+    private fun bindItemTotalPrice(holder: BaseViewHolder, item: ShoppingCartResponse) {
+        val totalPriceLl = holder.getView<LinearLayout>(R.id.item_total_price_ll)
+        val totalPriceTv = holder.getView<TextView>(R.id.item_total_price_tv)
+
+        val nativeTotalPrice = item.nativeTotalPrice
+        if (nativeTotalPrice != null) {
+            totalPriceLl.visibility = View.VISIBLE
+            totalPriceTv.text =
+                StringUtils.getString(R.string.price_unit_format, nativeTotalPrice.stripTrailingZeros().toPlainString())
+        } else {
+            totalPriceLl.visibility = View.GONE
+        }
     }
 
 

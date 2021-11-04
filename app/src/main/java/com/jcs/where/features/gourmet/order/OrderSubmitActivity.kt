@@ -2,6 +2,7 @@ package com.jcs.where.features.gourmet.order
 
 import android.graphics.Color
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -42,6 +43,7 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
             setEmptyView(emptyView)
         }
         recycler_view.adapter = mAdapter
+        recycler_view.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recycler_view.addItemDecoration(DividerDecoration(
                 ColorUtils.getColor(R.color.colorPrimary),
                 SizeUtils.dp2px(10f), 0, 0).apply { setDrawHeaderFooter(false) })

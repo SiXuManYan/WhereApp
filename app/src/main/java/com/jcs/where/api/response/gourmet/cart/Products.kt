@@ -1,20 +1,24 @@
-package com.jcs.where.api.response.gourmet.cart;
+package com.jcs.where.api.response.gourmet.cart
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
+import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import java.io.Serializable
 
 /**
  * Created by Wangsw  2021/4/7 11:42.
  */
-public class Products implements Serializable {
-
-    public int cart_id;
-    public int good_num;
-    public GoodData good_data = new GoodData();
-    public boolean nativeIsSelect = false;
+class Products : Serializable, MultiItemEntity {
 
 
 
+    /** 0普通列表 ，1 美食提交订单 */
+    var contentType = ShoppingCartResponse.CONTENT_TYPE_COMMON
+
+    override val itemType: Int
+        get() = contentType
+
+    var cart_id = 0
+    var good_num = 0
+    var good_data = GoodData()
+    var nativeIsSelect = false
 }

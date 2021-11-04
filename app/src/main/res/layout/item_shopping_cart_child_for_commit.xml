@@ -11,7 +11,7 @@
 
 
     <ImageView
-        android:id="@+id/order_image_iv"
+        android:id="@+id/image_iv"
         android:layout_width="@dimen/dp_56"
         android:layout_height="@dimen/dp_56"
         android:layout_marginEnd="@dimen/dp_8"
@@ -22,7 +22,7 @@
         android:id="@+id/good_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/order_image_iv"
+        android:layout_toEndOf="@+id/image_iv"
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:maxLines="1"
@@ -31,16 +31,36 @@
         tools:text="商品名称" />
 
 
-    <TextView
-        android:id="@+id/now_price_tv"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/order_image_iv"
-        android:includeFontPadding="false"
-        android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_14"
-        tools:text="$1000.00" />
+        android:layout_toEndOf="@+id/image_iv"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/now_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_14"
+            tools:text="$1000.00" />
+
+        <TextView
+            android:id="@+id/old_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/grey_b7b7b7"
+            android:textSize="@dimen/sp_13"
+            android:visibility="gone"
+            tools:text="$1000.00" />
+
+
+    </LinearLayout>
 
 
     <TextView
@@ -48,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/order_image_iv"
+        android:layout_toEndOf="@+id/image_iv"
         android:includeFontPadding="false"
         android:textColor="@color/grey_999999"
         android:textSize="@dimen/sp_13"

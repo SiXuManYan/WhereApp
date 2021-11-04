@@ -14,10 +14,11 @@
         android:id="@+id/good_checked_tv"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_8"
         android:layout_centerVertical="true"
-        android:drawablePadding="0dp"
         android:background="?android:attr/selectableItemBackground"
-        android:drawableStart="@drawable/selector_store_cart_select_all" />
+        android:drawableStart="@drawable/selector_store_cart_select_all"
+        android:drawablePadding="0dp" />
 
 
     <ImageView
@@ -25,7 +26,6 @@
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_60"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_8"
         android:layout_toEndOf="@+id/good_checked_tv"
         android:scaleType="centerCrop"
@@ -33,7 +33,7 @@
 
 
     <TextView
-        android:id="@+id/good_name"
+        android:id="@+id/good_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/image_iv"

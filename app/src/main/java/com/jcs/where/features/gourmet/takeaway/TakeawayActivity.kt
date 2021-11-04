@@ -97,7 +97,6 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
         // 购物车列表
         mCartAdapter = TakeawayAdapter().apply {
-            minGoodNum = 1
             setEmptyView(EmptyView(this@TakeawayActivity).apply {
                 showEmptyDefault()
                 empty_message_tv.text = StringUtils.getString(R.string.empty_cart)
@@ -109,9 +108,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                     // 更新菜品列表数量
                     mDishAdapter.data.forEachIndexed { index, dishResponse ->
                         if (dishResponse.id == id) {
-                            dishResponse.nativeSelectCount = goodNum
-                            mDishAdapter.notifyItemChanged(index)
-                        }
+                                dishResponse.nativeSelectCount = goodNum
+                                mDishAdapter.notifyItemChanged(index)
+                            }
                     }
                     // 更新
                     handleBottom()

@@ -880,5 +880,6 @@ Gentleman must let go</string>
     <string name="packaging_fee_format">Packaging fee&#160;₱%1$s</string>
     <string name="delivery_price_format_2">Delivery fee&#160;%1$s</string>
     <string name="empty_cart">Empty</string>
+    <string name="total_price">Total Price</string>
 
 </resources>

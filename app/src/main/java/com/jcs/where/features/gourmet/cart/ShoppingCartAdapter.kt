@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.cart
 
+import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -17,6 +19,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.widget.NumberView
+import com.jcs.where.widget.list.DividerDecoration
 
 /**
  * Created by Wangsw  2021/4/7 16:34.
@@ -100,6 +103,7 @@ class ShoppingCartAdapter : BaseMultiItemQuickAdapter<ShoppingCartResponse, Base
                     return false
                 }
             }
+            addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(16f), 0, 0))
         }
         return childAdapter
     }
@@ -195,7 +199,7 @@ class ShoppingCartAdapter : BaseMultiItemQuickAdapter<ShoppingCartResponse, Base
         if (nativeTotalPrice != null) {
             totalPriceLl.visibility = View.VISIBLE
             totalPriceTv.text =
-                StringUtils.getString(R.string.price_unit_format, nativeTotalPrice.stripTrailingZeros().toPlainString())
+                StringUtils.getString(R.string.price_unit_format, nativeTotalPrice.toPlainString())
         } else {
             totalPriceLl.visibility = View.GONE
         }

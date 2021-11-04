@@ -122,6 +122,7 @@
     <string name="login_success">login successful</string>
     <string name="commit_success">Commit Successful</string>
     <string name="hint_input_phone_number">Mobile Number</string>
+    <string name="hint_input_phone_number_2">Please fill in your mobile phone number</string>
     <string name="mine_change_language">Language</string>
     <string name="mine_merchant_settled">Merchant</string>
     <string name="mine_collection">Collection</string>

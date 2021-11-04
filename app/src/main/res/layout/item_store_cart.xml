@@ -38,9 +38,7 @@
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15">
 
-        <include layout="@layout/item_shopping_cart_child" />
 
-        <include layout="@layout/item_shopping_cart_child" />
 
     </LinearLayout>
 

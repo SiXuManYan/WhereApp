@@ -31,10 +31,8 @@
         android:id="@+id/content_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginEnd="@dimen/dp_15"
         tools:itemCount="2"
-        tools:listitem="@layout/item_shopping_cart_child" />
+        tools:listitem="@layout/item_shopping_cart_child_for_commit" />
 
 
     <LinearLayout

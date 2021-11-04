@@ -49,8 +49,34 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
         }
 
         return totalPrice
-
     }
+
+    fun getSelectedList(adapter: ShoppingCartAdapter): ArrayList<ShoppingCartResponse> {
+
+        val list = ArrayList<ShoppingCartResponse>()
+
+        adapter.data.forEach {
+
+            if (it.nativeIsSelect) {
+                list.add(it)
+            }else{
+                val parent = ShoppingCartResponse()
+                it.products.forEach { child ->
+                    if (child.nativeIsSelect) {
+                        parent.products.add(child)
+                    }
+                }
+                if (parent.products.isNotEmpty()) {
+                    list.add(it)
+                }
+            }
+
+
+
+        }
+        return list
+    }
+
 
     /**
      * 顶级是否全部选中

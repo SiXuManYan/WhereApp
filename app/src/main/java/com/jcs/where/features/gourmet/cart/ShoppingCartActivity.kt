@@ -54,9 +54,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
         recycler_view.adapter = mAdapter
         recycler_view.addItemDecoration(DividerDecoration(
-            ColorUtils.getColor(R.color.white),
-            SizeUtils.dp2px(10f),
-            0, 0
+            ColorUtils.getColor(R.color.grey_F5F5F5), 1, 0, 0
         ).apply { setDrawHeaderFooter(true) })
 
 
@@ -101,11 +99,11 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
                 presenter.handleSelectAll(mAdapter, true)
                 val handlePrice = presenter.handlePrice(mAdapter)
                 total_price_tv.text =
-                    StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
+                    StringUtils.getString(R.string.price_unit_format, handlePrice.toPlainString())
             } else {
                 presenter.handleSelectAll(mAdapter, false)
                 totalPrice = BigDecimal.ZERO
-                total_price_tv.text = getString(R.string.price_unit_format, totalPrice.stripTrailingZeros().toPlainString())
+                total_price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
             }
 
             changeSelectImage(isSelectAll)
@@ -157,11 +155,11 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
                 return@setOnClickListener
             }
 
-
-            // todo 判断选中数据，而不是全部
             startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
 
-                putSerializable(Constant.PARAM_DATA, ArrayList<ShoppingCartResponse>(mAdapter.data))
+                val selectedList = presenter.getSelectedList(mAdapter)
+
+                putSerializable(Constant.PARAM_DATA, selectedList)
 
                 putString(Constant.PARAM_TOTAL_PRICE, totalPrice.toPlainString())
             })
@@ -242,7 +240,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     private fun getNowPrice() {
         val handlePrice = presenter.handlePrice(mAdapter)
-        val toPlainString = handlePrice.stripTrailingZeros().toPlainString()
+        val toPlainString = handlePrice.toPlainString()
         total_price_tv.text = StringUtils.getString(R.string.price_unit_format, toPlainString)
     }
 

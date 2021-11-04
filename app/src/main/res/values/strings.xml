@@ -889,5 +889,6 @@ Gentleman must let go</string>
     <string name="delivery_price_format_2">配送费&#160;%1$s</string>
     <string name="empty_cart">空</string>
     <string name="total_price">Total Price</string>
+    <string name="add_new_address">添加新地址</string>
 
 </resources>

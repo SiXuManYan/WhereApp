@@ -882,5 +882,6 @@ Gentleman must let go</string>
     <string name="delivery_price_format_2">Delivery fee&#160;%1$s</string>
     <string name="empty_cart">Empty</string>
     <string name="total_price">Total Price</string>
+    <string name="add_new_address">Add new address</string>
 
 </resources>

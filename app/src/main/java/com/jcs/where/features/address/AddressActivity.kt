@@ -1,112 +1,97 @@
-package com.jcs.where.features.address;
+package com.jcs.where.features.address
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.blankj.utilcode.util.ColorUtils;
-import com.blankj.utilcode.util.SizeUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.jcs.where.R;
-import com.jcs.where.api.response.address.AddressResponse;
-import com.jcs.where.base.BaseEvent;
-import com.jcs.where.base.EventCode;
-import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.address.edit.AddressEditActivity;
-import com.jcs.where.utils.Constant;
-import com.jcs.where.view.empty.EmptyView;
-import com.jcs.where.widget.list.DividerDecoration;
-
-import java.util.List;
+import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.jcs.where.R
+import com.jcs.where.api.response.address.AddressResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
+import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.address.edit.AddressEditActivity
+import com.jcs.where.utils.Constant
+import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.list.DividerDecoration
+import kotlinx.android.synthetic.main.activity_address.*
 
 /**
  * Created by Wangsw  2021/3/22 10:33.
  * 收货地址
  */
-public class AddressActivity extends BaseMvpActivity<AddressPresenter> implements AddressView, OnItemChildClickListener {
+class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItemChildClickListener {
 
-    private ImageView mBackIv;
-    private TextView mAddTv;
-    private RecyclerView mRecyclerView;
-    private AddressAdapter mAdapter;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_address;
+    private lateinit var mAdapter: AddressAdapter
+    override fun getLayoutId() = R.layout.activity_address
+
+    override fun initView() {
+
+
+        val emptyView = EmptyView(this).apply {
+            showEmptyDefault()
+        }
+
+        mAdapter = AddressAdapter().apply {
+            setEmptyView(emptyView)
+            addChildClickViewIds(R.id.edit_iv)
+            setOnItemChildClickListener(this@AddressActivity)
+        }
+
+
+        recycler_view.setAdapter(mAdapter)
+        recycler_view.addItemDecoration(itemDecoration)
     }
 
-    @Override
-    protected void initView() {
-        mBackIv = findViewById(R.id.back_iv);
-        mAddTv = findViewById(R.id.add_tv);
-        mRecyclerView = findViewById(R.id.recycler_view);
-        mAdapter = new AddressAdapter();
-        EmptyView emptyView = new EmptyView(this);
-        emptyView.showEmptyDefault();
-        mAdapter.setEmptyView(emptyView);
-        mAdapter.addChildClickViewIds(R.id.edit_iv);
-        mAdapter.setOnItemChildClickListener(this);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(getItemDecoration());
+    override fun isStatusDark(): Boolean {
+        return true
     }
 
-    @Override
-    protected boolean isStatusDark() {
-        return true;
+    override fun initData() {
+        presenter = AddressPresenter(this)
+        presenter.list
     }
 
-    @Override
-    protected void initData() {
-        presenter = new AddressPresenter(this);
-        presenter.getList();
+    override fun bindList(response: List<AddressResponse>) {
+        mAdapter.setNewInstance(response.toMutableList())
     }
 
-    @Override
-    public void bindList(List<AddressResponse> response) {
-        if (response == null || response.isEmpty()) {
-            mAdapter.setNewInstance(null);
-        } else {
-            mAdapter.setNewInstance(response);
+    override fun bindListener() {
+        add_tv.setOnClickListener {
+            startActivity(AddressEditActivity::class.java)
         }
     }
 
-    @Override
-    protected void bindListener() {
-        mBackIv.setOnClickListener(v -> finish());
-        mAddTv.setOnClickListener(v -> startActivity(AddressEditActivity.class));
-    }
-
-    @Override
-    public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-        AddressResponse data = mAdapter.getData().get(position);
-        if (view.getId() == R.id.edit_iv) {
-            Bundle bundle = new Bundle();
-            bundle.putString(Constant.PARAM_ADDRESS_ID, data.id);
-            bundle.putInt(Constant.PARAM_SEX, data.sex);
-            bundle.putString(Constant.PARAM_ADDRESS, data.address);
-            bundle.putString(Constant.PARAM_RECIPIENT, data.contact_name);
-            bundle.putString(Constant.PARAM_PHONE, data.contact_number);
-            startActivity(AddressEditActivity.class, bundle);
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val data = mAdapter.data[position]
+        if (view.id == R.id.edit_iv) {
+            startActivity(AddressEditActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_ADDRESS_ID, data.id)
+                putInt(Constant.PARAM_SEX, data.sex)
+                putString(Constant.PARAM_ADDRESS, data.address)
+                putString(Constant.PARAM_RECIPIENT, data.contact_name)
+                putString(Constant.PARAM_PHONE, data.contact_number)
+            })
         }
     }
 
-    private RecyclerView.ItemDecoration getItemDecoration() {
-        DividerDecoration itemDecoration = new DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1), SizeUtils.dp2px(15), SizeUtils.dp2px(15));
-        itemDecoration.setDrawHeaderFooter(false);
-        return itemDecoration;
-    }
+    private val itemDecoration: ItemDecoration
+        get() {
+            return DividerDecoration(
+                ColorUtils.getColor(R.color.colorPrimary),
+                SizeUtils.dp2px(1f),
+                0,
+                0
+            )
+        }
 
-    @Override
-    public void onEventReceived(BaseEvent<?> baseEvent) {
-        super.onEventReceived(baseEvent);
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
         if (baseEvent.code == EventCode.EVENT_ADDRESS) {
-            presenter.getList();
+            presenter.list
         }
-
     }
 }

@@ -486,7 +486,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             alwaysEnableCut = true
             MIN_GOOD_NUM = 1
             MAX_GOOD_NUM = BusinessUtils.getSafeStock(dish.inventory)
-            cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue)
             add_iv.setImageResource(R.mipmap.ic_add_blue)
             updateNumber(goodNumber)
             cut_iv.visibility = View.VISIBLE

@@ -55,9 +55,14 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
             alwaysEnableCut = true
             MIN_GOOD_NUM = 1
             MAX_GOOD_NUM = 20
-            cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue)
             add_iv.setImageResource(R.mipmap.ic_add_blue)
-            updateNumberJudgeMin(goodNumber)
+            cutResIdCommon = R.mipmap.ic_cut_blue
+            cutResIdMin = R.mipmap.ic_cut_blue_transparent
+            addResIdCommon = R.mipmap.ic_add_blue
+            addResIdMax = R.mipmap.ic_add_blue_transparent
+
+            updateNumber(goodNumber)
             cut_iv.visibility = View.VISIBLE
             valueChangeListener = this@SetMealActivity
         }

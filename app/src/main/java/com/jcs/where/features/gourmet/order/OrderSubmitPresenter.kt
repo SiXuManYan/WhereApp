@@ -34,6 +34,7 @@ class OrderSubmitPresenter(val view: OrderSubmitView) : BaseMvpPresenter(view) {
             val apply = OrderSubmitChildRequest().apply {
                 good_id = it.good_data.id
                 good_num = it.good_num
+                cart_id = it.cart_id
             }
             goodIds.add(apply)
         }

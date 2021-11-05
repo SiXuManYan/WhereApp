@@ -108,19 +108,14 @@
 
     </RelativeLayout>
 
-    <View
-        android:id="@+id/line_v"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/title_rl"
-        android:background="@color/grey_F5F5F5" />
+
 
 
     <LinearLayout
         android:id="@+id/category_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        android:layout_below="@+id/line_v"
+        android:layout_below="@+id/title_rl"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

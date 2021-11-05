@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.dish.DishResponse
-import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.NumberView2
@@ -59,7 +58,7 @@ class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.
             alwaysEnableCut = false
             MIN_GOOD_NUM = minGoodNum
             MAX_GOOD_NUM = BusinessUtils.getSafeStock(item.inventory)
-            cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue)
             add_iv.setImageResource(R.mipmap.ic_add_blue)
             updateNumberJudgeMin(item.nativeSelectCount)
             valueChangeListener = object : NumberView2.OnValueChangeListener {

@@ -18,9 +18,9 @@ import com.jcs.where.R
  */
 class NumberView2 : LinearLayout {
 
-    public lateinit var cut_iv: ImageView
-    public lateinit var add_iv: ImageView
-    private lateinit var value_tv: TextView
+     lateinit var cut_iv: ImageView
+     lateinit var add_iv: ImageView
+     lateinit var value_tv: TextView
 
     var goodNum = 0
     var MIN_GOOD_NUM = 0
@@ -100,6 +100,7 @@ class NumberView2 : LinearLayout {
 
             VibrateUtils.vibrate(10)
             value_tv.text = goodNum.toString()
+            value_tv.visibility = View.VISIBLE
             valueChangeListener?.onNumberChange(goodNum, false)
             cut_iv.isClickable = false
             Handler(Looper.myLooper()!!).postDelayed({

@@ -288,10 +288,10 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/total_tv"
             android:gravity="end"
-            android:textStyle="bold"
             android:includeFontPadding="false"
             android:textColor="@color/orange_FF5837"
-            android:textSize="@dimen/sp_18"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
             tools:text="¥7878" />
 
 

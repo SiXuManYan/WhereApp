@@ -7,5 +7,6 @@ public class OrderSubmitChildRequest {
 
     public int good_id = 0;
     public int good_num = 0;
+    public Integer cart_id ;
 
 }

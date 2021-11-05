@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -69,14 +68,12 @@ class ShoppingCartAdapter : BaseMultiItemQuickAdapter<ShoppingCartResponse, Base
     }
 
 
-
-
     /**
      * 标题
      */
     private fun bindTitleItem(holder: BaseViewHolder, data: ShoppingCartResponse) {
         val title = holder.getView<LinearLayout>(R.id.title_ll)
-        if (holder.adapterPosition == 0) {
+        if (holder.adapterPosition == 0 && holder.itemViewType == ShoppingCartResponse.CONTENT_TYPE_COMMON) {
             val layoutParams = title.layoutParams as LinearLayout.LayoutParams
             layoutParams.topMargin = SizeUtils.dp2px(10f)
             title.layoutParams = layoutParams

@@ -59,15 +59,20 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
 
             if (it.nativeIsSelect) {
                 list.add(it)
+
             }else{
-                val parent = ShoppingCartResponse()
+                val parent = ShoppingCartResponse().apply {
+                    restaurant_id = it.restaurant_id
+                    restaurant_name = it.restaurant_name
+                }
+
                 it.products.forEach { child ->
                     if (child.nativeIsSelect) {
                         parent.products.add(child)
                     }
                 }
                 if (parent.products.isNotEmpty()) {
-                    list.add(it)
+                    list.add(parent)
                 }
             }
 

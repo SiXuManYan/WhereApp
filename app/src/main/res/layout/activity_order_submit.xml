@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:itemCount="1"
-                tools:listitem="@layout/item_order_submit" />
+                tools:listitem="@layout/item_shopping_cart_for_commit" />
 
 
             <View

@@ -202,7 +202,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
             good_data.id = mData!!.id
             good_data.title = mData!!.title
             good_data.image = mData!!.image
-            good_data.price = totalPrice
+            good_data.price = mData!!.price
             good_data.original_price = mData!!.original_price
             good_num = goodNumber
             nativeIsSelect = true
@@ -219,7 +219,8 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
         }
         startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
             putSerializable(Constant.PARAM_DATA, value)
-            putString(Constant.PARAM_TOTAL_PRICE, mData!!.price.toPlainString())
+            val totalPrice = BigDecimalUtil.mul(mData!!.price, BigDecimal(goodNumber))
+            putString(Constant.PARAM_TOTAL_PRICE, totalPrice.toEngineeringString())
         })
     }
 

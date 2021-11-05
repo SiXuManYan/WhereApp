@@ -4,8 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData
@@ -15,7 +13,6 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartAdapter
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
-import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_order_submit.*
 
 /**

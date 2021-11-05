@@ -142,7 +142,6 @@ class NumberView2 : LinearLayout {
         updateNumber(count)
         if (goodNum > MIN_GOOD_NUM) {
             cut_iv.visibility = View.VISIBLE
-
         } else {
             cut_iv.visibility = View.INVISIBLE
         }

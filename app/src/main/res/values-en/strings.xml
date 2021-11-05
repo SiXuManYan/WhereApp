@@ -622,7 +622,7 @@
     <string name="sold_format">Sold %1$d</string>
     <string name="collapse_details">Collapse Details</string>
     <string name="product_details">Product details</string>
-    <string name="number">Quantity</string>
+    <string name="number">Number</string>
     <string name="stock_format">Stock%1$d</string>
     <string name="stock_format_2">Stock&#160;%1$s</string>
     <string name="delivery_method_none">Please choose a delivery method</string>
@@ -883,5 +883,6 @@ Gentleman must let go</string>
     <string name="empty_cart">Empty</string>
     <string name="total_price">Total Price</string>
     <string name="add_new_address">Add new address</string>
+    <string name="select_number">Select Number</string>
 
 </resources>

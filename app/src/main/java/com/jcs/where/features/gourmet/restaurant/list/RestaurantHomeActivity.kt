@@ -485,7 +485,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             val title_tv = view.findViewById<TextView>(R.id.title_tv)
             val image_iv = view.findViewById<ImageView>(R.id.image_iv)
             title_tv.text = it.title
-            image_iv.setImageResource(R.mipmap.ic_marker_common_travel)
+            image_iv.setImageResource(R.mipmap.ic_marker_common_food)
 
             val maker = map.addMarker(
                 MarkerOptions()
@@ -598,7 +598,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             val title_tv = view.findViewById<TextView>(R.id.title_tv)
             title_tv.text = makerTag.title
             val image_iv = view.findViewById<ImageView>(R.id.image_iv)
-            image_iv.setImageResource(R.mipmap.ic_marker_common_travel)
+            image_iv.setImageResource(R.mipmap.ic_marker_common_food)
 
             it.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
 
@@ -611,7 +611,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         val title_tv = view.findViewById<TextView>(R.id.title_tv)
         title_tv.text = currentMakerTag.title
         val image_iv = view.findViewById<ImageView>(R.id.image_iv)
-        image_iv.setImageResource(R.mipmap.ic_marker_select_travel)
+        image_iv.setImageResource(R.mipmap.ic_marker_select_food)
         marker.setIcon(BitmapDescriptorFactory.fromBitmap(ConvertUtils.view2Bitmap(view)))
 
         // 切换底部列表数据

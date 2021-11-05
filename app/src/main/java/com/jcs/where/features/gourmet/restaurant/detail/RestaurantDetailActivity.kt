@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -17,29 +18,28 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.cart.Products
+import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentActivity
+import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
-import com.jcs.where.utils.BusinessUtils
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.FeaturesUtil
-import com.jcs.where.utils.MobUtil
+import com.jcs.where.utils.*
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_restaurant_detail_2.*
-
 import java.util.*
 
 /**
@@ -59,7 +59,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     /**
      * 餐厅名称
      */
-    private var mRestaurantName: String? = null
+    private var mRestaurantName = ""
     private var mLat = 0.0
     private var mLng = 0.0
 
@@ -181,10 +181,43 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
 
         mDishAdapter = DishAdapter().apply {
             setEmptyView(R.layout.view_empty_text)
-            setOnItemClickListener { _, _, position ->
+            addChildClickViewIds(R.id.buy_tv)
+            setOnItemChildClickListener { _, _, position ->
+                // 直接购买
+                val dish = mDishAdapter.data[position]
+                val price = dish.price
+                val product = Products().apply {
+                    good_data.id = dish.id
+                    good_data.title = dish.title
+                    good_data.image = dish.image
+                    good_data.price = price
+                    good_data.original_price = dish.original_price
+                    good_num = goodNumber
+                    nativeIsSelect = true
+                }
+
+                val response = ShoppingCartResponse().apply {
+                    restaurant_id = mRestaurantId.toString()
+                    nativeIsSelect = true
+                    restaurant_name = mRestaurantName
+                    products.add(product)
+                }
+
+                val value = ArrayList<ShoppingCartResponse>().apply {
+                    add(response)
+                }
+
+                startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
+                    putSerializable(Constant.PARAM_DATA, value)
+                    putString(Constant.PARAM_TOTAL_PRICE, price.toPlainString())
+                })
+
+            }
+
+            setOnItemClickListener { _, view, position ->
+
                 val dish = mDishAdapter.data[position]
                 showCompanyDialog(dish)
-
             }
         }
         dish_rv.apply {
@@ -270,8 +303,6 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         back_iv.setOnClickListener {
             finish()
         }
-
-
         chat_iv.setOnClickListener {
             if (mMerUuid.isNotBlank()) {
                 RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mMerUuid, mRestaurantName, null)
@@ -438,6 +469,9 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
 
         val stockTv = view.findViewById<TextView>(R.id.stock_tv)
         val numberView = view.findViewById<NumberView2>(R.id.number_view)
+        view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
+            addressDialog.dismiss()
+        }
 
         dish.inventory.apply {
             if (!isNullOrBlank()) {
@@ -455,6 +489,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
             add_iv.setImageResource(R.mipmap.ic_add_blue)
             updateNumber(goodNumber)
+            cut_iv.visibility = View.VISIBLE
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                     this@RestaurantDetailActivity.goodNumber = goodNum

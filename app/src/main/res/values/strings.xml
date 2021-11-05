@@ -440,10 +440,10 @@
     <string name="add">添加</string>
     <string name="delete">删除</string>
     <string name="address_edit_hint">请填写详细地址</string>
-    <string name="recipient">联系人：</string>
+    <string name="recipient">联系人</string>
     <string name="sir">先生</string>
     <string name="lady">女士</string>
-    <string name="contact_number">联系电话：</string>
+    <string name="contact_number">联系电话</string>
     <string name="address_phone_edit">请填写收货人电话号码</string>
     <string name="edit_address">编辑收货地址</string>
     <string name="add_address">添加收货地址</string>

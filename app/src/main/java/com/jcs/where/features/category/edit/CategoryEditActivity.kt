@@ -40,7 +40,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
 
     override fun initView() {
 
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.blue_4C9EF2))
+        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.blue_377BFF))
 
         mSelectedAdapter = CategoryAdapter().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {

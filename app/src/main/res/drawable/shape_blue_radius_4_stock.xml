@@ -8,6 +8,6 @@
 
     <stroke
         android:width="@dimen/dp_1"
-        android:color="@color/blue_72B9FF" />
+        android:color="@color/blue_377BFF" />
 
 </shape>

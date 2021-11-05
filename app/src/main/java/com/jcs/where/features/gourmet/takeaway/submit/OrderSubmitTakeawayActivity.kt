@@ -1,5 +1,6 @@
 package com.jcs.where.features.gourmet.takeaway.submit
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -11,12 +12,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
+import com.jcs.where.api.response.gourmet.dish.DeliveryTimeRetouch
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderSubmitData
 import com.jcs.where.base.BaseEvent
@@ -101,6 +104,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initRecyclerView() {
         mAdapter = OrderSubmitTakeawayAdapter().apply {
             setEmptyView(EmptyView(this@OrderSubmitTakeawayActivity).apply {
@@ -115,26 +119,34 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
                     return false
                 }
             }
-            addItemDecoration(DividerDecoration(
-                Color.WHITE, SizeUtils.dp2px(10f),
-                0, 0
-            ).apply { setDrawHeaderFooter(true) })
+            addItemDecoration(
+                DividerDecoration(
+                    Color.WHITE, SizeUtils.dp2px(10f),
+                    0, 0
+                )
+            )
             adapter = mAdapter
         }
 
 
         // 送达时间
         mTimeAdapter = TimeAdapter().apply {
-            setOnItemClickListener { adapter, view, position ->
-                val time = mTimeAdapter.data[position]
-
+            setOnItemClickListener { _, _, position ->
+                val timeData = mTimeAdapter.data[position]
                 mDeliveryTimeType = if (position == 0) {
                     1
                 } else {
                     2
                 }
-                mDeliveryTime = time
-                delivery_time_tv.text = getString(R.string.delivery_time_format2, TimeUtil.getFormatTimeHM(time))
+                mDeliveryTime = timeData.time
+                delivery_time_tv.text = getString(R.string.delivery_time_format2, TimeUtil.getFormatTimeHM(timeData.time))
+
+
+                mTimeAdapter.data.forEachIndexed { index, deliveryTimeRetouch ->
+                    deliveryTimeRetouch.nativeSelected = index == position
+                }
+                mTimeAdapter.notifyDataSetChanged()
+
                 timeDialog?.dismiss()
             }
 
@@ -218,7 +230,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         searchLauncher.launch(Intent(this, AddressActivity::class.java).putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
     }
 
-    override fun bindTime(otherTimes: java.util.ArrayList<String>) {
+    override fun bindTime(otherTimes: MutableList<DeliveryTimeRetouch>) {
         mTimeAdapter.setNewInstance(otherTimes)
     }
 
@@ -235,8 +247,11 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
             e.printStackTrace()
         }
 
-        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recycler_view.adapter = mTimeAdapter
+        val rv = view.findViewById<RecyclerView>(R.id.recycler_view)
+        rv.apply {
+            adapter = mTimeAdapter
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), 1, 0, 0))
+        }
 
         view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
             timeDialog.dismiss()

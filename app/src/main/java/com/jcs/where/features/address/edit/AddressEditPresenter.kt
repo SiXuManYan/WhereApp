@@ -1,87 +1,84 @@
-package com.jcs.where.features.address.edit;
+package com.jcs.where.features.address.edit
 
-import android.text.TextUtils;
+import android.text.TextUtils
+import com.blankj.utilcode.util.ToastUtils
 
-import androidx.annotation.Nullable;
+import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.R
+import com.jcs.where.api.response.address.AddressRequest
+import com.google.gson.JsonElement
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpView
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.JsonElement;
-import com.google.gson.internal.$Gson$Preconditions;
-import com.jcs.where.R;
-import com.jcs.where.api.network.BaseMvpObserver;
-import com.jcs.where.api.network.BaseMvpPresenter;
-import com.jcs.where.api.response.address.AddressRequest;
 
 /**
  * Created by Wangsw  2021/3/22 14:16.
  */
-public class AddressEditPresenter extends BaseMvpPresenter {
+interface AddressEditView : BaseMvpView {
+    /**
+     * 修改成功
+     */
+    fun editSuccess()
 
-    private AddressEditView view;
+    /**
+     * 地址添加成功
+     */
+    fun addAddressSuccess()
 
-    public AddressEditPresenter(AddressEditView view) {
-        super(view);
-        this.view = view;
-    }
+    /**
+     * 地址删除成功
+     */
+    fun deleteAddressSuccess()
+}
 
+/**
+ * Created by Wangsw  2021/3/22 14:16.
+ */
+class AddressEditPresenter(private val view: AddressEditView) : BaseMvpPresenter(view) {
     /**
      * 修改和添加地址
      */
-    public void handleSave(String address, String recipient, String phone, int sex, boolean isChange, @Nullable String mAddressId) {
-
-
+    fun handleSave(address: String?, recipient: String?, phone: String?, sex: Int, isChange: Boolean, mAddressId: String?) {
         if (TextUtils.isEmpty(address)) {
-            ToastUtils.showShort(R.string.address_edit_hint);
-            return;
+            ToastUtils.showShort(R.string.address_edit_hint)
+            return
         }
         if (TextUtils.isEmpty(recipient)) {
-            ToastUtils.showShort(R.string.recipient_edit_hint);
-            return;
+            ToastUtils.showShort(R.string.recipient_edit_hint)
+            return
         }
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort(R.string.address_phone_edit);
-            return;
+            ToastUtils.showShort(R.string.address_phone_edit)
+            return
         }
-
-
-        AddressRequest body = new AddressRequest();
-        body.address = address;
-        body.contact_name = recipient;
-        body.contact_number = phone;
-        body.sex = sex;
-
+        val body = AddressRequest()
+        body.address = address
+        body.contact_name = recipient
+        body.contact_number = phone
+        body.sex = sex
         if (isChange) {
-
-            requestApi(mRetrofit.editAddress(mAddressId, body), new BaseMvpObserver<JsonElement>(view) {
-                @Override
-                protected void onSuccess(JsonElement response) {
-                    view.editSuccess();
+            requestApi(mRetrofit.editAddress(mAddressId, body), object : BaseMvpObserver<JsonElement>(view) {
+                protected override fun onSuccess(response: JsonElement) {
+                    view.editSuccess()
                 }
-            });
-
-
+            })
         } else {
-            requestApi(mRetrofit.addAddress(body), new BaseMvpObserver<JsonElement>(view) {
-                @Override
-                protected void onSuccess(JsonElement response) {
-                    view.addAddressSuccess();
+            requestApi(mRetrofit.addAddress(body), object : BaseMvpObserver<JsonElement>(view) {
+                protected override fun onSuccess(response: JsonElement) {
+                    view.addAddressSuccess()
                 }
-            });
-
+            })
         }
-
-
     }
 
     /**
      * 删除地址
      */
-    public void deleteAddress(String mAddressId) {
-        requestApi(mRetrofit.deleteAddress(mAddressId), new BaseMvpObserver<JsonElement>(view) {
-            @Override
-            protected void onSuccess(JsonElement response) {
-                view.deleteAddressSuccess();
+    fun deleteAddress(mAddressId: String?) {
+        requestApi(mRetrofit.deleteAddress(mAddressId), object : BaseMvpObserver<JsonElement>(view) {
+            protected override fun onSuccess(response: JsonElement) {
+                view.deleteAddressSuccess()
             }
-        });
+        })
     }
 }

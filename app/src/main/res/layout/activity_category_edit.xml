@@ -12,7 +12,7 @@
         android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:background="@color/blue_4C9EF2">
+        android:background="@color/blue_377BFF">
 
         <TextView
             android:id="@+id/finish_tv"

@@ -1,5 +1,7 @@
 package com.jcs.where.features.address
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
@@ -7,6 +9,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.base.BaseEvent
@@ -22,14 +25,17 @@ import kotlinx.android.synthetic.main.activity_address.*
  * Created by Wangsw  2021/3/22 10:33.
  * 收货地址
  */
-class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItemChildClickListener {
+class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItemChildClickListener, OnItemClickListener {
 
+    var handleItemClick = false
 
     private lateinit var mAdapter: AddressAdapter
+
     override fun getLayoutId() = R.layout.activity_address
 
     override fun initView() {
 
+        handleItemClick = intent.getBooleanExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, false)
 
         val emptyView = EmptyView(this).apply {
             showEmptyDefault()
@@ -39,6 +45,7 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
             setEmptyView(emptyView)
             addChildClickViewIds(R.id.edit_iv)
             setOnItemChildClickListener(this@AddressActivity)
+            setOnItemClickListener(this@AddressActivity)
         }
 
 
@@ -93,5 +100,18 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
         if (baseEvent.code == EventCode.EVENT_ADDRESS) {
             presenter.list
         }
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        if (!handleItemClick) {
+            return
+        }
+        val address = mAdapter.data[position]
+        setResult(Activity.RESULT_OK, Intent().putExtras(Bundle().apply {
+            putSerializable(Constant.PARAM_DATA, address)
+        }))
+        finish()
+
+
     }
 }

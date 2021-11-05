@@ -1,9 +1,11 @@
 package com.jcs.where.api.response.address;
 
+import java.io.Serializable;
+
 /**
  * Created by Wangsw  2021/3/22 13:49.
  */
-public class AddressResponse {
+public class AddressResponse implements Serializable {
 
 /*    {
         "id": 5,
@@ -19,7 +21,7 @@ public class AddressResponse {
     /**
      * 性别（1：先生，2：女士）
      */
-    public int sex;
+    public int sex = 0;
     public String address = "";
     public String contact_name = "";
     public String contact_number = "";

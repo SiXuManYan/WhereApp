@@ -11,7 +11,6 @@ import java.util.ArrayList
  *
  */
 interface OrderSubmitTakeawayView :BaseMvpView{
-    fun bindAddress(toMutableList: MutableList<AddressResponse>)
     fun bindTime(otherTimes: ArrayList<String>)
     fun submitSuccess(response: TakeawayOrderSubmitData)
 }

@@ -14,15 +14,6 @@ import com.jcs.where.bean.OrderSubmitTakeawayRequest
  */
 class OrderSubmitTakeawayPresenter(val view: OrderSubmitTakeawayView) : BaseMvpPresenter(view) {
 
-    fun getAddress() {
-        requestApi(mRetrofit.addressList(), object : BaseMvpObserver<List<AddressResponse>>(view) {
-            override fun onSuccess(response: List<AddressResponse>) {
-
-                view.bindAddress(response.toMutableList())
-            }
-
-        })
-    }
 
 
     fun getTimeList(id: String) {

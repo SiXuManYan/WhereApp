@@ -1,11 +1,13 @@
 package com.jcs.where.features.gourmet.takeaway.submit
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.BarUtils
@@ -22,8 +24,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.bean.OrderSubmitChildRequest
 import com.jcs.where.bean.OrderSubmitTakeawayRequest
-import com.jcs.where.features.address.AddressAdapter
-import com.jcs.where.features.address.edit.AddressEditActivity
+import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.time.TimeUtil
@@ -71,7 +72,6 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
     private lateinit var mAdapter: OrderSubmitTakeawayAdapter
 
-    private lateinit var mAddressAdapter: AddressAdapter
     private lateinit var mTimeAdapter: TimeAdapter
 
     override fun getLayoutId() = R.layout.activity_order_submit_takeaway
@@ -115,43 +115,13 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
                     return false
                 }
             }
-            addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(10f),
-                    0, 0).apply { setDrawHeaderFooter(true) })
+            addItemDecoration(DividerDecoration(
+                Color.WHITE, SizeUtils.dp2px(10f),
+                0, 0
+            ).apply { setDrawHeaderFooter(true) })
             adapter = mAdapter
         }
 
-        // 收货地址
-        mAddressAdapter = AddressAdapter().apply {
-            addChildClickViewIds(R.id.edit_iv)
-            setOnItemClickListener { adapter, view, position ->
-                val selectData = mAddressAdapter.data[position]
-                mSelectAddressData = selectData
-                select_address_tv.text = selectData.address
-                address_rl.visibility = ViewGroup.VISIBLE
-                val sex = if (selectData.sex == 1) {
-                    getString(R.string.sir)
-                } else {
-                    getString(R.string.lady)
-                }
-                address_name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
-                phone_tv.text = selectData.contact_number
-
-                addressDialog?.dismiss()
-            }
-            setOnItemChildClickListener { _, view, position ->
-                val data: AddressResponse = mAddressAdapter.data[position]
-                if (view.id == R.id.edit_iv) {
-                    val bundle = Bundle()
-                    bundle.putString(Constant.PARAM_ADDRESS_ID, data.id)
-                    bundle.putInt(Constant.PARAM_SEX, data.sex)
-                    bundle.putString(Constant.PARAM_ADDRESS, data.address)
-                    bundle.putString(Constant.PARAM_RECIPIENT, data.contact_name)
-                    bundle.putString(Constant.PARAM_PHONE, data.contact_number)
-                    startActivity(AddressEditActivity::class.java, bundle)
-                    addressDialog?.dismiss()
-                }
-            }
-        }
 
         // 送达时间
         mTimeAdapter = TimeAdapter().apply {
@@ -175,17 +145,14 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     override fun initData() {
         mAdapter.setNewInstance(dish_list)
         presenter = OrderSubmitTakeawayPresenter(this)
-        presenter.getAddress()
         presenter.getTimeList(mRestaurantId)
 
     }
 
     override fun bindListener() {
-        select_address_tv.setOnClickListener {
+        select_address_rl.setOnClickListener {
             showAddress()
         }
-
-
         time_tv.setOnClickListener {
             showTime()
         }
@@ -227,36 +194,28 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     }
 
 
-    override fun bindAddress(toMutableList: MutableList<AddressResponse>) {
-        mAddressAdapter.setNewInstance(toMutableList)
+    /** 处理选择地址 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras ?: return@registerForActivityResult
+
+            val selectData = bundle.getSerializable(Constant.PARAM_DATA) as AddressResponse
+            mSelectAddressData = selectData
+            select_address_tv.text = selectData.address
+            address_rl.visibility = ViewGroup.VISIBLE
+            val sex = if (selectData.sex == 1) {
+                getString(R.string.sir)
+            } else {
+                getString(R.string.lady)
+            }
+            address_name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
+            phone_tv.text = selectData.contact_number
+        }
     }
 
 
     private fun showAddress() {
-        val addressDialog = BottomSheetDialog(this)
-        this.addressDialog = addressDialog
-        val view = LayoutInflater.from(this).inflate(R.layout.layout_select_address, null)
-        addressDialog.setContentView(view)
-        try {
-            val parent = view.parent as ViewGroup
-            parent.setBackgroundResource(android.R.color.transparent)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recycler_view.adapter = mAddressAdapter
-
-        view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
-            addressDialog.dismiss()
-        }
-
-        val add_new_address_tv = view.findViewById<TextView>(R.id.add_new_address_tv)
-        add_new_address_tv.setOnClickListener {
-            startActivity(AddressEditActivity::class.java)
-            addressDialog.dismiss()
-        }
-        addressDialog.show()
+        searchLauncher.launch(Intent(this, AddressActivity::class.java).putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
     }
 
     override fun bindTime(otherTimes: java.util.ArrayList<String>) {
@@ -301,13 +260,8 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
-        val code = baseEvent.code
-        when (code) {
-            EventCode.EVENT_ADDRESS -> presenter.getAddress()
+        when (baseEvent.code) {
             EventCode.EVENT_CANCEL_PAY -> finish()
-            else -> {
-
-            }
         }
     }
 

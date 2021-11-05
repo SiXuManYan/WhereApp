@@ -93,6 +93,7 @@ public class Constant {
     public static final String PARAM_DESCRIPTION = "param_description";
     public static final String PARAM_SELECT_IMAGE = "param_select_image";
     public static final String PARAM_CANCELABLE = "param_cancelable";
+    public static final String PARAM_HANDLE_ADDRESS_SELECT = "param_handle_address_select";
 
     /**
      * 包装费

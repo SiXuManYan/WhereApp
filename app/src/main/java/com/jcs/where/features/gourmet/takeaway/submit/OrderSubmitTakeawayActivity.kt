@@ -60,7 +60,6 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     /** 菜品列表 */
     private lateinit var dish_list: ArrayList<DishResponse>
 
-    var addressDialog: BottomSheetDialog? = null
     var timeDialog: BottomSheetDialog? = null
 
     /** 收货地址 */

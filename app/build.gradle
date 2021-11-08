@@ -17,7 +17,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 18
-        versionName "0.2.5.test.beta1"
+        versionName "0.2.5.test.beta2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"

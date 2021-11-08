@@ -52,8 +52,9 @@
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15"
@@ -64,25 +65,26 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/recipient_et"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
+        android:layout_height="wrap_content"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="@string/recipient_edit_hint"
         android:imeOptions="actionNext"
         android:lineSpacingMultiplier="1.2"
-        android:singleLine="true"
         android:maxLines="1"
         android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_8"
         android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_8"
+        android:singleLine="true"
         android:textColor="@color/black_333333"
         android:textColorHint="@color/grey_B5B5B5"
         android:textSize="@dimen/sp_14"
-        android:textStyle="bold"
         tools:text="" />
 
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="@dimen/dp_15"
@@ -126,14 +128,14 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_15"
         android:layout_marginEnd="@dimen/dp_15"
-        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_17"
         android:background="@color/grey_F5F5F5" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15"
@@ -145,35 +147,36 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/phone_et"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
+        android:layout_height="wrap_content"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="@string/address_phone_edit"
         android:imeOptions="actionNext"
         android:inputType="phone"
-        android:singleLine="true"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="1"
         android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_8"
         android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_8"
+        android:singleLine="true"
         android:textColor="@color/black_333333"
         android:textColorHint="@color/grey_B5B5B5"
         android:textSize="@dimen/sp_14"
-        android:textStyle="bold"
         tools:text="" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_15"
-        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_17"
         android:background="@color/grey_F5F5F5" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15"
@@ -185,7 +188,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/address_et"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
+        android:layout_height="wrap_content"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="@string/address_edit_hint"
@@ -193,17 +196,18 @@
         android:lineSpacingMultiplier="1.2"
         android:maxLines="3"
         android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_8"
         android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_8"
         android:textColor="@color/black_333333"
         android:textColorHint="@color/grey_B5B5B5"
-        android:textSize="@dimen/sp_14"
-        android:textStyle="bold" />
+        android:textSize="@dimen/sp_14" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginStart="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_15"
         android:layout_marginBottom="@dimen/dp_21"
         android:background="@color/grey_F5F5F5" />

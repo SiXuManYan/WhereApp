@@ -16,7 +16,7 @@
         app:middleTitle="@string/order_submit"
         app:middleTitleColor="@color/black_333333"
         app:showBackIv="true"
-        app:showBottomLine="true" />
+        app:showBottomLine="false" />
 
 
     <androidx.core.widget.NestedScrollView

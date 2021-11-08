@@ -44,6 +44,8 @@ import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_gourmet_list.*
+import kotlinx.android.synthetic.main.activity_gourmet_list.back_iv
+import kotlinx.android.synthetic.main.activity_restaurant_detail_2.*
 import kotlinx.android.synthetic.main.layout_filter.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -212,13 +214,21 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
 
         bottom_sheet_rv.apply {
             adapter = mMarkerContentAdapter
-
-            // 禁用横向滑动
-            layoutManager = object : LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
-                override fun canScrollHorizontally() = false
-            }
-
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
+        bottom_sheet_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val firstItemPosition = layoutManager.findFirstVisibleItemPosition()
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && makers.size > firstItemPosition) {
+                    val marker = makers[firstItemPosition]
+                    marker?.let {
+                        onMarkerClick(it)
+                    }
+                }
+            }
+        })
+
 
     }
 

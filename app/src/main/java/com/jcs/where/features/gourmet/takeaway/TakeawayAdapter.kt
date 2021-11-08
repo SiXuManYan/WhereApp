@@ -55,12 +55,13 @@ class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.
 
 
         val number_view = holder.getView<NumberView2>(R.id.number_view).apply {
-            alwaysEnableCut = false
             MIN_GOOD_NUM = minGoodNum
+            alwaysEnableCut = false
+            hideValueWithMin = true
             MAX_GOOD_NUM = BusinessUtils.getSafeStock(item.inventory)
             cut_iv.setImageResource(R.mipmap.ic_cut_blue)
             add_iv.setImageResource(R.mipmap.ic_add_blue)
-            updateNumberJudgeMin(item.nativeSelectCount)
+            updateNumberJudgeMinAndValue(item.nativeSelectCount)
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                     item.nativeSelectCount = goodNum

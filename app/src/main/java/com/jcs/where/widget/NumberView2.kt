@@ -18,15 +18,16 @@ import com.jcs.where.R
  */
 class NumberView2 : LinearLayout {
 
-     lateinit var cut_iv: ImageView
-     lateinit var add_iv: ImageView
-     lateinit var value_tv: TextView
+    lateinit var cut_iv: ImageView
+    lateinit var add_iv: ImageView
+    lateinit var value_tv: TextView
 
     var goodNum = 0
     var MIN_GOOD_NUM = 0
     var MAX_GOOD_NUM = Int.MAX_VALUE
 
     var alwaysEnableCut = false
+    var hideValueWithMin = false
 
 
     @DrawableRes
@@ -88,19 +89,23 @@ class NumberView2 : LinearLayout {
                 if (!alwaysEnableCut) {
                     cut_iv.visibility = View.INVISIBLE
                 }
-                value_tv.visibility = View.VISIBLE
+                if (hideValueWithMin) {
+                    value_tv.visibility = View.INVISIBLE
+                } else {
+                    value_tv.visibility = View.VISIBLE
+                }
                 if (cutResIdMin != 0) cut_iv.setImageResource(cutResIdMin)
             } else {
                 cut_iv.visibility = View.VISIBLE
                 value_tv.visibility = View.VISIBLE
+
                 if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
             }
 
-            if (addResIdCommon!=0) add_iv.setImageResource(addResIdCommon)
+            if (addResIdCommon != 0) add_iv.setImageResource(addResIdCommon)
 
             VibrateUtils.vibrate(10)
             value_tv.text = goodNum.toString()
-            value_tv.visibility = View.VISIBLE
             valueChangeListener?.onNumberChange(goodNum, false)
             cut_iv.isClickable = false
             Handler(Looper.myLooper()!!).postDelayed({
@@ -114,14 +119,14 @@ class NumberView2 : LinearLayout {
             if (goodNum >= MAX_GOOD_NUM) {
                 goodNum = MAX_GOOD_NUM
 
-                if (addResIdMax!=0) add_iv.setImageResource(addResIdMax)
+                if (addResIdMax != 0) add_iv.setImageResource(addResIdMax)
             } else {
-                if (addResIdCommon!=0) {
+                if (addResIdCommon != 0) {
                     add_iv.setImageResource(addResIdCommon)
                 }
             }
 
-            if (cutResIdCommon!=0) cut_iv.setImageResource(cutResIdCommon)
+            if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
 
             cut_iv.visibility = View.VISIBLE
             value_tv.visibility = View.VISIBLE
@@ -147,6 +152,19 @@ class NumberView2 : LinearLayout {
             cut_iv.visibility = View.INVISIBLE
         }
     }
+
+    fun updateNumberJudgeMinAndValue(count: Int) {
+        updateNumber(count)
+        if (goodNum > MIN_GOOD_NUM) {
+            cut_iv.visibility = View.VISIBLE
+            value_tv.visibility = View.VISIBLE
+
+        } else {
+            cut_iv.visibility = View.INVISIBLE
+            value_tv.visibility = View.INVISIBLE
+        }
+    }
+
 
     /**
      * 更新数量

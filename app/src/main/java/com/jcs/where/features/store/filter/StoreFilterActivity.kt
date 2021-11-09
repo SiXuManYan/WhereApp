@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
@@ -150,11 +151,8 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
             showEmptyNothing()
         }
 
-        val gridLayoutManager = GridLayoutManager(this, 2)
-        val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0).apply {
-            setDrawHeaderFooter(false)
-        }
-
+        val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
 
         mAdapter = StoreRecommendAdapter().apply {
             setEmptyView(emptyView)
@@ -270,11 +268,11 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
         val tabImage = childTabLL.getChildAt(1) as ImageView
         if (pagerPosition == tabIndex) {
             tabText.isChecked = true
-            tabImage.setImageResource(R.mipmap.ic_store_up)
+            tabImage.setImageResource(R.mipmap.ic_arrow_filter_blue)
             tabText.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
         } else {
             tabText.isChecked = false
-            tabImage.setImageResource(R.mipmap.ic_store_down)
+            tabImage.setImageResource(R.mipmap.ic_arrow_filter_black)
             tabText.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
         }
 

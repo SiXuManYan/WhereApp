@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_F5F5F5"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -112,9 +112,9 @@
             <ImageView
                 android:id="@+id/firstArrowIv"
                 android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_4"
+                android:layout_height="@dimen/dp_8"
                 android:layout_marginStart="@dimen/dp_4"
-                android:src="@mipmap/ic_store_down" />
+                android:src="@mipmap/ic_arrow_filter_black" />
 
 
         </LinearLayout>
@@ -141,9 +141,9 @@
             <ImageView
                 android:id="@+id/secondArrowIv"
                 android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_4"
+                android:layout_height="@dimen/dp_8"
                 android:layout_marginStart="@dimen/dp_4"
-                android:src="@mipmap/ic_store_down" />
+                android:src="@mipmap/ic_arrow_filter_black" />
 
         </LinearLayout>
 

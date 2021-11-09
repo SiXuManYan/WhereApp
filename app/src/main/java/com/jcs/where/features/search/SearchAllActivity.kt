@@ -14,6 +14,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.search.result.SearchAllResultActivity
 import com.jcs.where.features.search.yellow.YellowPageSearchResultActivity
 import com.jcs.where.features.store.history.SearchHistoryAdapter
+import com.jcs.where.features.store.search.StoreSearchActivity
 import com.jcs.where.government.activity.ConvenienceServiceSearchActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.MyLayoutManager
@@ -31,6 +32,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 2 综合服务
      * 3.政府地图
      * 4.酒店地图
+     * 5.商城
      */
     private var type = 0
 
@@ -121,6 +123,9 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             3, 4 -> {
                 setResult(Activity.RESULT_OK, Intent().putExtras(bundle))
                 finish()
+            }
+            5 -> {
+                startActivity(StoreSearchActivity::class.java, bundle)
             }
             else -> {
             }

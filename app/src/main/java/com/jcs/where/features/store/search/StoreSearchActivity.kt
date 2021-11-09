@@ -35,7 +35,7 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
-        intent.getStringExtra(Constant.PARAM_TITLE)?.let {
+        intent.getStringExtra(Constant.PARAM_NAME)?.let {
             title = it
             search_aet.text = it
         }

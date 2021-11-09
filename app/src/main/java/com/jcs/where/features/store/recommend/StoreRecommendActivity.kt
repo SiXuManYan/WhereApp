@@ -11,9 +11,9 @@ import com.jcs.where.R
 import com.jcs.where.api.response.category.StoryBannerCategory
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.cart.StoreCartActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
-import com.jcs.where.features.store.history.SearchHistoryActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_list.*
@@ -32,11 +32,8 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
 
     override fun initView() {
 
-
         initBanner()
-
         initContent()
-
     }
 
     override fun isStatusDark() = true
@@ -85,7 +82,6 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
 
     override fun initData() {
         presenter = StoreRecommendPresenter(this)
-
         presenter.getBanner()
         presenter.getRecommend()
 
@@ -96,7 +92,9 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
             finish()
         }
         search_ll.setOnClickListener {
-            startActivity(SearchHistoryActivity::class.java)
+            startActivity(SearchAllActivity::class.java,Bundle().apply {
+                putInt(Constant.PARAM_TYPE , 5)
+            })
         }
         cart_iv.setOnClickListener {
             startActivityAfterLogin(StoreCartActivity::class.java)

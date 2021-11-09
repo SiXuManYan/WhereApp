@@ -21,10 +21,10 @@ import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.cart.StoreCartActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.filter.screen.ScreenFilterFragment
-import com.jcs.where.features.store.history.SearchHistoryActivity
 import com.jcs.where.features.store.recommend.StoreRecommendAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -184,7 +184,9 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
 
     override fun bindListener() {
         title_rl.setOnClickListener {
-            startActivity(SearchHistoryActivity::class.java)
+            startActivity(SearchAllActivity::class.java,Bundle().apply {
+                putInt(Constant.PARAM_TYPE , 5)
+            })
         }
     }
 

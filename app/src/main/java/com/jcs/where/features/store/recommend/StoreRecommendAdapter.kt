@@ -1,5 +1,6 @@
 package com.jcs.where.features.store.recommend
 
+import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,7 +12,6 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.utils.GlideUtil
-import com.jcs.where.utils.image.GlideRoundedCornersTransform
 
 /**
  * Created by Wangsw  2021/6/1 16:09.
@@ -30,7 +30,7 @@ class StoreRecommendAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R
 
         item.images.forEachIndexed { index, url ->
             if (index == 0) {
-                GlideUtil.load(context, url, image_iv, 5, GlideRoundedCornersTransform.CornerType.ALL)
+                GlideUtil.load(context, url, image_iv, 5)
             }
         }
         title_tv.text = item.title
@@ -38,15 +38,16 @@ class StoreRecommendAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R
 
         tag_ll.removeAllViews()
         item.tags.forEach {
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                marginEnd = SizeUtils.dp2px(2f)
+            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, SizeUtils.dp2px(20f)).apply {
+                marginEnd = SizeUtils.dp2px(4f)
             }
             val textView = TextView(context).apply {
                 layoutParams = params
                 setBackgroundResource(R.drawable.shape_orange_stoke_radius_2)
                 maxLines = 1
-                setPaddingRelative(SizeUtils.dp2px(5f), SizeUtils.dp2px(4f), SizeUtils.dp2px(5f), SizeUtils.dp2px(4f));
-                setTextColor(ColorUtils.getColor(R.color.orange_FF5B1B))
+                gravity = Gravity.CENTER
+                setPaddingRelative(SizeUtils.dp2px(4f), 0, SizeUtils.dp2px(4f), 0)
+                setTextColor(ColorUtils.getColor(R.color.orange_FF5837))
                 textSize = 11f
                 text = it
             }

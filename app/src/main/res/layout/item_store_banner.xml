@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/container_first_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_87"
+        android:layout_height="@dimen/dp_72"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -28,7 +28,7 @@
     <LinearLayout
         android:id="@+id/container_second_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_87"
+        android:layout_height="@dimen/dp_72"
         android:gravity="center"
         android:orientation="horizontal">
 

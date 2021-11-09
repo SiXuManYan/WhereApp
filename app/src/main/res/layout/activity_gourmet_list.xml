@@ -41,7 +41,7 @@
                 android:layout_height="@dimen/dp_12"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:src="@mipmap/ic_homesearch" />
+                android:src="@mipmap/ic_search_title" />
 
             <TextView
                 android:id="@+id/search_tv"

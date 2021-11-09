@@ -2,10 +2,7 @@ package com.jcs.where.features.store.recommend
 
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -56,8 +53,8 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
         helper.attachToRecyclerView(banner_rv)
 
         point_view.apply {
-            selectedDrawableResId = R.drawable.shape_point_selected
-            commonDrawableResId = R.drawable.shape_point_selected_9999
+            selectedDrawableResId = R.drawable.shape_point_selected_377bff
+            commonDrawableResId = R.drawable.shape_point_selected_d8d8d8
         }
 
         banner_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -77,11 +74,8 @@ class StoreRecommendActivity : BaseMvpActivity<StoreRecommendPresenter>(), Store
     private fun initContent() {
         mAdapter = StoreRecommendAdapter()
         mAdapter.setOnItemClickListener(this@StoreRecommendActivity)
-        val gridLayoutManager = GridLayoutManager(this, 2)
-        val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0).apply {
-            setDrawHeaderFooter(false)
-        }
-
+        val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
         content_rv.apply {
             adapter = mAdapter
             layoutManager = gridLayoutManager

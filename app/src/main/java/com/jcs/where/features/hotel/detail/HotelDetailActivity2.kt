@@ -382,7 +382,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                 }
             } else {
                 if (isToolbarDark) {
-                    R.mipmap.ic_like_norma_nightl
+                    R.mipmap.ic_like_normal_night
                 } else {
                     R.mipmap.ic_like_normal_light
                 }

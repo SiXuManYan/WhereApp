@@ -225,7 +225,8 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         }
 
-        mJcsTitle.setSecondRightIvClickListener {
+
+        like_iv.setOnClickListener {
             if (collect_status == 1) {
                 presenter.collection(shop_id)
             } else {
@@ -233,7 +234,7 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
             }
         }
 
-        mJcsTitle.setFirstRightIvClickListener {
+        share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_E_STORE, shop_id)
             MobUtil.shareFacebookWebPage(url, this@StoreDetailActivity)
         }
@@ -246,22 +247,20 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         title_tv.text = data.title
         shop_name = data.title
 
-        nav_tv.setOnClickListener {
+        nav_ll.setOnClickListener {
             if (data.lat != 0f && data.lng != 0f) {
                 FeaturesUtil.startNaviGoogle(this, data.lat, data.lng)
             }
         }
 
         if (data.im_status == 1 && !TextUtils.isEmpty(data.mer_uuid)) {
-            phone_tv.text = getString(R.string.merchant)
-            phone_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.mipmap.ic_store_service, 0, 0)
-            phone_tv.setOnClickListener {
+            phone_value_iv.setImageResource(R.mipmap.ic_phone_bold)
+            phone_ll.setOnClickListener {
                 RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, null)
             }
         } else {
-            phone_tv.text = getString(R.string.telephone)
-            phone_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.mipmap.ic_store_phone_blue, 0, 0)
-            phone_tv.setOnClickListener {
+            phone_value_iv.setImageResource(R.mipmap.ic_phone_bold)
+            phone_ll.setOnClickListener {
                 val tel = data.tel
                 if (!TextUtils.isEmpty(tel)) {
                     val intent = Intent(Intent.ACTION_DIAL).apply {
@@ -286,12 +285,20 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         take_times = data.take_times
 
         collect_status = data.collect_status
-        if (collect_status == 1) {
-            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2)
-        } else {
-            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red)
-        }
+        setLikeImage()
 
+    }
+
+
+    private fun setLikeImage() {
+
+        like_iv.setImageResource(
+            if (collect_status == 1) {
+                R.mipmap.ic_like_red_night
+            } else {
+                R.mipmap.ic_like_normal_night
+            }
+        )
     }
 
 
@@ -349,13 +356,12 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
     override fun changeCollection(isCollection: Boolean) {
 
-        if (isCollection) {
-            collect_status = 2
-            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_red)
+        collect_status = if (isCollection) {
+            2
         } else {
-            collect_status = 1
-            mJcsTitle.setSecondRightIcon(R.mipmap.ic_like_black2)
+            1
         }
+        setLikeImage()
         EventBus.getDefault().post(BaseEvent<String>(EventCode.EVENT_REFRESH_COLLECTION))
     }
 

@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/image_iv"
         android:layout_width="@dimen/dp_135"
-        android:layout_height="@dimen/dp_135"
+        android:layout_height="@dimen/dp_125"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -19,19 +19,19 @@
         android:id="@+id/good_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_8"
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:maxLines="1"
         android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_13"
+        android:textSize="@dimen/sp_12"
         android:textStyle="bold"
         tools:text="@tools:sample/lorem/random" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:textColor="@color/orange_FF5B1B"
+            android:textColor="@color/orange_FF5837"
             android:textSize="@dimen/sp_14"
             android:textStyle="bold"
             tools:text="$1000.00" />

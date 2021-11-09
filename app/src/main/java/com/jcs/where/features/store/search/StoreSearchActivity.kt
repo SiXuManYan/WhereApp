@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -14,6 +16,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_search_store.*
 
 /**
@@ -58,6 +61,7 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
         recycler_view.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1f),SizeUtils.dp2px(15f) , 0))
         }
     }
 

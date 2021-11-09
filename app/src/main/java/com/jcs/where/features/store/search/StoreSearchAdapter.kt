@@ -1,8 +1,5 @@
 package com.jcs.where.features.store.search
 
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -17,11 +14,8 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreRecommend
-import com.jcs.where.features.store.good.StoreGoodDetailActivity
-import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
-import com.jcs.where.utils.image.GlideRoundedCornersTransform
 
 /**
  * Created by Wangsw  2021/6/7 15:55.
@@ -40,7 +34,7 @@ class StoreSearchAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.la
         // 图片
         item.images.forEachIndexed { index, url ->
             if (index == 0) {
-                GlideUtil.load(context, url, avatar_iv, 5, GlideRoundedCornersTransform.CornerType.ALL)
+                GlideUtil.load(context, url, avatar_iv, 4)
             }
         }
         title_tv.text = item.title
@@ -50,15 +44,16 @@ class StoreSearchAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.la
         // tag
         tag_ll.removeAllViews()
         item.tags.forEach {
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                marginEnd = SizeUtils.dp2px(2f)
-            }
+            val params =
+                LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                    marginEnd = SizeUtils.dp2px(2f)
+                }
             val textView = TextView(context).apply {
                 layoutParams = params
                 setBackgroundResource(R.drawable.shape_orange_stoke_radius_2)
                 maxLines = 1
                 setPaddingRelative(SizeUtils.dp2px(5f), SizeUtils.dp2px(4f), SizeUtils.dp2px(5f), SizeUtils.dp2px(4f));
-                setTextColor(ColorUtils.getColor(R.color.orange_FF5B1B))
+                setTextColor(ColorUtils.getColor(R.color.orange_FF5837))
                 textSize = 11f
                 text = it
             }
@@ -72,15 +67,9 @@ class StoreSearchAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.la
     }
 
     private fun bindChild(holder: BaseViewHolder, item: StoreRecommend) {
-        val split_v = holder.getView<View>(R.id.split_v)
         val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
         child_container_ll.removeAllViews()
 
-        if (item.goods.isNullOrEmpty()) {
-            split_v.visibility = View.GONE
-        } else {
-            split_v.visibility = View.VISIBLE
-        }
 
         item.goods.forEachIndexed { index, it ->
 
@@ -98,17 +87,14 @@ class StoreSearchAdapter : BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.la
             // 边距
             val layoutParams = child_ll.layoutParams as LinearLayout.LayoutParams
             layoutParams.apply {
-                if (index == 0) {
-                    marginStart = SizeUtils.dp2px(15f)
-                }
-                marginEnd = SizeUtils.dp2px(10f)
+                marginEnd = SizeUtils.dp2px(15f)
             }
             child_ll.layoutParams = layoutParams
 
             // 图片
             it.images.forEachIndexed { imageIndex, url ->
                 if (imageIndex == 0) {
-                    GlideUtil.load(context, url, image_iv, 5, GlideRoundedCornersTransform.CornerType.ALL)
+                    GlideUtil.load(context, url, image_iv, 4)
                 }
             }
 

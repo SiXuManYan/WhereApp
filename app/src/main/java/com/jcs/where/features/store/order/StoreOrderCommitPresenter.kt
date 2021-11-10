@@ -38,15 +38,7 @@ class StoreOrderCommitPresenter(private var view: StoreOrderCommitView) : BaseMv
         return totalPrice
     }
 
-    fun getAddress() {
-        requestApi(mRetrofit.addressList(), object : BaseMvpObserver<List<AddressResponse>>(view) {
-            override fun onSuccess(response: List<AddressResponse>) {
 
-                view.bindAddress(response.toMutableList())
-            }
-
-        })
-    }
 
     fun orderCommit(data: ArrayList<StoreOrderCommitData>, addressId: String?, phone: String) {
 

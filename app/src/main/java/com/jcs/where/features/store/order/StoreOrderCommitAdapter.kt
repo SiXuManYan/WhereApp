@@ -14,9 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreOrderCommitData
-import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.GlideUtil
-import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/6/22 11:53.
@@ -53,19 +51,21 @@ class StoreOrderCommitAdapter : BaseQuickAdapter<StoreOrderCommitData, BaseViewH
         child_container_ll.removeAllViews()
         item.goods.forEach {
 
-            val child = LayoutInflater.from(context).inflate(R.layout.layout_child_store_commit, null)
-            val image_iv = child.findViewById<ImageView>(R.id.image_iv)
-            val good_name_tv = child.findViewById<TextView>(R.id.good_name_tv)
-            val good_count_tv = child.findViewById<TextView>(R.id.good_count_tv)
-            val price_tv = child.findViewById<TextView>(R.id.price_tv)
+            val child = LayoutInflater.from(context).inflate(R.layout.item_dishes_for_order_submit, null)
 
-            GlideUtil.load(context, it.image, image_iv)
+            val image_iv = child.findViewById<ImageView>(R.id.order_image_iv)
+            val good_name_tv = child.findViewById<TextView>(R.id.good_name_tv)
+            val good_count_tv = child.findViewById<TextView>(R.id.count_tv)
+            val price_tv = child.findViewById<TextView>(R.id.now_price_tv)
+
+            GlideUtil.load(context, it.image, image_iv, 4)
             good_name_tv.text = it.goodName
             good_count_tv.text = StringUtils.getString(R.string.count_format, it.good_num)
 
             price_tv.text = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
 
             child_container_ll.addView(child)
+            child.layoutParams
         }
 
 

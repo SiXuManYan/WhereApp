@@ -9,6 +9,5 @@ import com.jcs.where.api.response.store.StoreOrderInfoResponse
  *
  */
 interface StoreOrderCommitView : BaseMvpView {
-    fun bindAddress(toMutableList: MutableList<AddressResponse>)
     fun commitSuccess(response: StoreOrderInfoResponse)
 }

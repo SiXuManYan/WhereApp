@@ -4,157 +4,203 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:middleTitle="@string/place_order"
-        app:showBottomLine="true" />
+        app:middleTitle="@string/place_order" />
 
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/jcsTitle"
-        android:background="@color/grey_F5F5F5">
+        android:layout_below="@+id/jcsTitle">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_50">
+            android:paddingTop="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_200">
 
 
             <LinearLayout
+                android:id="@+id/address_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_15"
-                android:background="@drawable/shape_white_radius_8"
                 android:orientation="vertical"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_0"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10">
-
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15">
 
                 <RelativeLayout
+                    android:id="@+id/select_address_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48">
+                    android:layout_height="wrap_content">
+
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/select_address_tv"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_toStartOf="@+id/tag_iv"
+                        android:background="@color/white"
                         android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/business_services"
+                        android:gravity="center_vertical"
+                        android:lineSpacingMultiplier="1.2"
+                        android:maxLines="2"
+                        android:text="@string/choose_shipping_address"
                         android:textColor="@color/black_333333"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
 
 
-                    <TextView
-                        android:id="@+id/delivery_value_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/tag_iv"
+                        android:layout_width="@dimen/dp_14"
+                        android:layout_height="@dimen/dp_14"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:textColor="@color/black_333333"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="bold"
-                        tools:text="Self Extraction" />
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_arrow_gray" />
+
 
                 </RelativeLayout>
 
 
-                <View
+                <LinearLayout
+                    android:id="@+id/address_value_ll"
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/grey_F5F5F5" />
-
-                <RelativeLayout
-                    android:id="@+id/phone_rl"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <TextView
-                        android:id="@+id/phone_title_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/phone_number"
-                        android:textColor="@color/black_333333"
-                        android:textSize="@dimen/sp_14" />
-
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/phone_aet"
+                        android:id="@+id/address_name_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@id/phone_title_tv"
-                        android:background="@null"
-                        android:gravity="center_vertical|end"
-                        android:hint="@string/store_phone_hint"
-                        android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:lines="1"
-                        android:maxLength="11"
-                        android:textColor="@color/grey_999999"
-                        android:textColorHint="@color/grey_999999"
-                        android:textSize="@dimen/sp_14" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/dp_15"
+                        android:paddingEnd="@dimen/dp_15"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_14"
+                        tools:text="Heart" />
 
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:id="@+id/address_rl"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/phone_tv"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:background="@color/white"
                         android:ellipsize="end"
+                        android:gravity="center_vertical"
                         android:maxLines="1"
-                        android:text="@string/consignee_info"
-                        android:textColor="@color/black_333333"
-                        android:textSize="@dimen/sp_14" />
+                        android:paddingStart="@dimen/dp_15"
+                        android:paddingEnd="@dimen/dp_15"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_14"
+                        tools:text="糖糖" />
+                </LinearLayout>
+
+            </LinearLayout>
 
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_arrow_gray" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/grey_F5F5F5" />
 
-                </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/phone_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <TextView
-                    android:id="@+id/address_name_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:maxLines="2"
-                    tools:text="@tools:sample/lorem/random"
+                    android:id="@+id/phone_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:ellipsize="end"
-                    android:textColor="@color/grey_666666"
+                    android:maxLines="1"
+                    android:text="@string/phone_number"
+                    android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_14" />
 
 
-            </LinearLayout>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/phone_aet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/phone_title_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|end"
+                    android:hint="@string/store_phone_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="11"
+                    android:textColor="@color/grey_999999"
+                    android:textColorHint="@color/grey_999999"
+                    android:textSize="@dimen/sp_14" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginStart="@dimen/dp_15"
+                android:background="@color/grey_F5F5F5" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/business_services"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14" />
+
+
+                <TextView
+                    android:id="@+id/delivery_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    tools:text="Self Extraction" />
+
+            </RelativeLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -171,64 +217,66 @@
 
     </androidx.core.widget.NestedScrollView>
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/bottom_rl"
+        android:background="@drawable/shape_navigation_bar_gray" />
+
+
     <!--235 140-->
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/bottom_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15">
 
 
-        <RelativeLayout
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="235"
-            android:paddingStart="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_15">
+        <TextView
+            android:id="@+id/total_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/total"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_14" />
 
 
-            <TextView
-                android:id="@+id/total_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/total"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/total_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/total_tv"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color_F64944"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            tools:text="$100.00" />
 
-
-            <TextView
-                android:id="@+id/total_price_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/total_tv"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_17"
-                android:textStyle="bold"
-                tools:text="$100.00" />
-
-
-        </RelativeLayout>
 
         <TextView
             android:id="@+id/submit_tv"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="140"
-            android:background="@drawable/shape_gradient_buy_now_0"
+            android:layout_width="@dimen/dp_179"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_orange_radius_20"
             android:gravity="center"
             android:text="@string/pay_order"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_17" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,16 +1,14 @@
 package com.jcs.where.features.store.order
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.store.StoreOrderCommitData
@@ -18,8 +16,7 @@ import com.jcs.where.api.response.store.StoreOrderInfoResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.address.AddressAdapter
-import com.jcs.where.features.address.edit.AddressEditActivity
+import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -35,7 +32,6 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
     private var totalPrice: BigDecimal = BigDecimal.ZERO
 
-    private var addressDialog: BottomSheetDialog? = null
 
     private var data: ArrayList<StoreOrderCommitData> = ArrayList()
 
@@ -44,7 +40,25 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
     private lateinit var mAdapter: StoreOrderCommitAdapter
 
-    private lateinit var mAddressAdapter: AddressAdapter
+
+    /** 处理选择地址 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras ?: return@registerForActivityResult
+
+            val selectData = bundle.getSerializable(Constant.PARAM_DATA) as AddressResponse
+            mSelectAddressData = selectData
+            select_address_tv.text = selectData.address
+            address_value_ll.visibility = ViewGroup.VISIBLE
+            val sex = if (selectData.sex == 1) {
+                getString(R.string.sir)
+            } else {
+                getString(R.string.lady)
+            }
+            address_name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
+            phone_tv.text = selectData.contact_number
+        }
+    }
 
 
     override fun getLayoutId() = R.layout.activity_store_order_commit
@@ -54,13 +68,10 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
         val bundle = intent.extras
         bundle?.let {
             data = it.getSerializable(Constant.PARAM_ORDER_COMMIT_DATA) as ArrayList<StoreOrderCommitData>
-
-
         }
 
         initContent()
 
-        initAddress()
     }
 
     private fun initContent() {
@@ -68,8 +79,10 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
         content_rv.apply {
             adapter = mAdapter
             addItemDecoration(
-                    DividerDecoration(ColorUtils.getColor(R.color.colorPrimary),
-                            SizeUtils.dp2px(10f), 0, 0).apply { setDrawHeaderFooter(false) }
+                DividerDecoration(
+                    ColorUtils.getColor(R.color.white),
+                    SizeUtils.dp2px(10f), 0, 0
+                )
             )
         }
         if (data.isNotEmpty()) {
@@ -79,92 +92,26 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
                 phone_rl.visibility = View.VISIBLE
             } else {
                 delivery_value_tv.text = getString(R.string.express)
-                address_rl.visibility = View.VISIBLE
+                address_ll.visibility = View.VISIBLE
             }
         }
 
 
     }
 
-    private fun initAddress() {
-        mAddressAdapter = AddressAdapter()
-
-        // 收货地址
-        mAddressAdapter = AddressAdapter().apply {
-            addChildClickViewIds(R.id.edit_iv)
-            setOnItemClickListener { adapter, view, position ->
-                val selectData = mAddressAdapter.data[position]
-                mSelectAddressData = selectData
-
-                val sex = if (selectData.sex == 1) {
-                    getString(R.string.sir)
-                } else {
-                    getString(R.string.lady)
-                }
-                address_name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
-                addressDialog?.dismiss()
-            }
-            setOnItemChildClickListener { _, view, position ->
-                val data: AddressResponse = mAddressAdapter.data[position]
-                if (view.id == R.id.edit_iv) {
-                    val bundle = Bundle()
-                    bundle.putString(Constant.PARAM_ADDRESS_ID, data.id)
-                    bundle.putInt(Constant.PARAM_SEX, data.sex)
-                    bundle.putString(Constant.PARAM_ADDRESS, data.address)
-                    bundle.putString(Constant.PARAM_RECIPIENT, data.contact_name)
-                    bundle.putString(Constant.PARAM_PHONE, data.contact_number)
-                    startActivity(AddressEditActivity::class.java, bundle)
-                    addressDialog?.dismiss()
-                }
-            }
-        }
-    }
 
     override fun isStatusDark() = true
 
     override fun initData() {
         presenter = StoreOrderCommitPresenter(this)
-        presenter.getAddress()
         totalPrice = presenter.handlePrice(mAdapter)
         total_price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
     }
 
 
-    private fun showAddress() {
-        val addressDialog = BottomSheetDialog(this)
-        this.addressDialog = addressDialog
-        val view = LayoutInflater.from(this).inflate(R.layout.layout_select_address, null)
-        addressDialog.setContentView(view)
-        try {
-            val parent = view.parent as ViewGroup
-            parent.setBackgroundResource(android.R.color.transparent)
-        } catch (e: Exception) {
-
-        }
-
-        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recycler_view.adapter = mAddressAdapter
-
-        view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
-            addressDialog.dismiss()
-        }
-
-        val add_new_address_tv = view.findViewById<TextView>(R.id.add_new_address_tv)
-        add_new_address_tv.setOnClickListener {
-            startActivity(AddressEditActivity::class.java)
-            addressDialog.dismiss()
-        }
-        addressDialog.show()
-    }
-
-
-    override fun bindAddress(toMutableList: MutableList<AddressResponse>) {
-        mAddressAdapter.setNewInstance(toMutableList)
-    }
-
     override fun bindListener() {
-        address_rl.setOnClickListener {
-            showAddress()
+        address_ll.setOnClickListener {
+            searchLauncher.launch(Intent(this, AddressActivity::class.java).putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
         }
 
         submit_tv.setOnClickListener {

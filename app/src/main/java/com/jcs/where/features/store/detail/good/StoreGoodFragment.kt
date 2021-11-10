@@ -1,7 +1,9 @@
 package com.jcs.where.features.store.detail.good
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -16,6 +18,7 @@ import com.jcs.where.features.store.good.StoreGoodDetailActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_refresh_list_no_refresh.*
 import org.greenrobot.eventbus.EventBus
 
@@ -90,7 +93,11 @@ class StoreGoodFragment : BaseMvpFragment<StoreGoodPresenter>(), StoreGoodView, 
                 EventBus.getDefault().post(BaseEvent(storeGoods))
             }
         }
-        recycler.adapter = mAdapter
+        recycler.apply {
+            adapter = mAdapter
+            addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0))
+
+        }
 
 
     }

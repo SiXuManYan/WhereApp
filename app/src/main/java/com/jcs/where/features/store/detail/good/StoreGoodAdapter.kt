@@ -2,23 +2,24 @@ package com.jcs.where.features.store.detail.good
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.StoreGoods
-import com.jcs.where.utils.image.GlideRoundedCornersTransform
+import com.jcs.where.utils.GlideUtil
 
 /**
  * Created by Wangsw  2021/6/16 16:14.
  *
  */
-class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.item_store_good), LoadMoreModule {
+class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.item_store_good_2), LoadMoreModule {
 
 
     override fun convert(holder: BaseViewHolder, item: StoreGoods) {
@@ -30,23 +31,27 @@ class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.i
         val old_price_tv = holder.getView<TextView>(R.id.old_price_tv)
         val express_tv = holder.getView<TextView>(R.id.express_tv)
         val self_tv = holder.getView<TextView>(R.id.self_tv)
-        val sold_tv = holder.getView<TextView>(R.id.sold_tv)
-        val buy_tv = holder.getView<TextView>(R.id.buy_tv)
+        val container = holder.getView<RelativeLayout>(R.id.child_container_rl)
 
 
-        val options = RequestOptions.bitmapTransform(
-                GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray)
+        val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+        layoutParams.apply {
+            topMargin = if (holder.adapterPosition == 0) {
+                SizeUtils.dp2px(15f)
+            } else {
+                0
+            }
+        }
+
+
 
 
         if (item.images.isNotEmpty()) {
-            Glide.with(context).load(item.images[0]).apply(options).into(image_iv);
+            GlideUtil.load(context, item.images[0], image_iv, 4)
         }
 
 
         good_name_tv.text = item.title
-
         now_price_tv.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
         val oldPrice = StringUtils.getString(R.string.price_unit_format, item.original_price.toPlainString())
         val builder = SpanUtils().append(oldPrice).setStrikethrough().create()
@@ -68,7 +73,7 @@ class StoreGoodAdapter : BaseQuickAdapter<StoreGoods, BaseViewHolder>(R.layout.i
             }
         }
 
-        sold_tv.text = StringUtils.getString(R.string.sold_format, item.sale_num)
+        holder.setText(R.id.sold_tv, StringUtils.getString(R.string.sale_format, item.sale_num))
 
 
     }

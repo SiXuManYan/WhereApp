@@ -40,7 +40,6 @@ class StoreCommentActivity : BaseMvpActivity<StoreCommentListPresenter>(), Store
         }
         shop_id = bundle.getInt(Constant.PARAM_SHOP_ID, 0)
 
-        pager.setNoScroll(true)
         pager.offscreenPageLimit = TAB_TITLES.size
         pager.adapter = InnerPagerAdapter(supportFragmentManager, 0)
     }

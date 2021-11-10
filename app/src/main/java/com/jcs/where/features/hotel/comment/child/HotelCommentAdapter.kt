@@ -1,5 +1,8 @@
 package com.jcs.where.features.hotel.comment.child
 
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +36,9 @@ class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.lay
         val content_tv = holder.getView<ExpandableTextView>(R.id.content_etv)
         val image_rv = holder.getView<RecyclerView>(R.id.image_rv)
 
+        val merchant_ll = holder.getView<LinearLayout>(R.id.merchant_ll)
+        val merchant_reply_tv = holder.getView<TextView>(R.id.merchant_reply_tv)
+        val merchant_iv = holder.getView<ImageView>(R.id.merchant_iv)
 
         GlideUtil.load(context, item.avatar, avatar_civ)
         name_tv.text = item.username
@@ -67,6 +73,16 @@ class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.lay
         image_rv.apply {
             layoutManager = liner
             adapter = imageAdapter
+        }
+
+        // 商家回复
+        if (item.merchant_review.isNotEmpty()) {
+            merchant_ll.visibility = View.VISIBLE
+            merchant_iv.visibility = View.VISIBLE
+            merchant_reply_tv.text = item.merchant_review
+        } else {
+            merchant_ll.visibility = View.GONE
+            merchant_iv.visibility = View.GONE
         }
 
     }

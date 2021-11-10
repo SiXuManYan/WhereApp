@@ -9,7 +9,7 @@ class HotelComment {
     var id = 0
     var user_id = 0
     var images:ArrayList<String> = ArrayList()
-    var star = 0.0f
+
     var created_at = ""
 
 
@@ -21,6 +21,8 @@ class HotelComment {
     var username = ""
     var avatar = ""
     var content = ""
+
+    var star = 0.0f
     var star_level = 0.0f
 
 

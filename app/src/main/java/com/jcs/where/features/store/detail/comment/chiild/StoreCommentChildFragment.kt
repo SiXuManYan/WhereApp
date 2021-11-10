@@ -8,7 +8,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.comment.CommentResponse
+import com.jcs.where.api.response.hotel.HotelComment
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.store.detail.comment.StoreCommentActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -34,7 +36,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
      */
     private var listType = 1
 
-    private lateinit var mAdapter: StoreCommentAdapter
+    private lateinit var mAdapter: HotelCommentAdapter
     private lateinit var emptyView: EmptyView
     private var page = Constant.DEFAULT_FIRST_PAGE
     private var headerView: View? = null
@@ -103,8 +105,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
         }
 
 
-        mAdapter = StoreCommentAdapter().apply {
-            singleLineImage = !showAll
+        mAdapter = HotelCommentAdapter().apply {
             footerWithEmptyEnable = true
             headerWithEmptyEnable = true
             if (showAll) {
@@ -148,7 +149,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
     }
 
 
-    override fun bindCommentData(data: MutableList<CommentResponse>, isLastPage: Boolean, total: Int) {
+    override fun bindCommentData(data: MutableList<HotelComment>, isLastPage: Boolean, total: Int) {
         if (swipe_layout.isRefreshing) {
             swipe_layout.isRefreshing = false
         }

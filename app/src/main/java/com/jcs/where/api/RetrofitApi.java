@@ -1407,6 +1407,17 @@ public interface RetrofitApi {
             @Query("shop_id") String shop_id,
             @Query("type") int type
     );
+ /**
+     * 商城评论列表
+     *
+     * @param type 类型（1-全部，2-最新，3-有图）
+     */
+    @GET("generalapi/v2/comments")
+    Observable<JcsResponse<PageResponse<HotelComment>>> getStoreCommentList2(
+            @Query("page") int page,
+            @Query("shop_id") String shop_id,
+            @Query("type") int type
+    );
 
 
     /**

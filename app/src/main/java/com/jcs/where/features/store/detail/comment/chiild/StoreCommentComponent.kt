@@ -5,6 +5,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.gourmet.comment.CommentResponse
+import com.jcs.where.api.response.hotel.HotelComment
 
 /**
  * Created by Wangsw  2021/7/16 15:25.
@@ -12,7 +13,7 @@ import com.jcs.where.api.response.gourmet.comment.CommentResponse
  */
 
 interface StoreCommentView : BaseMvpView {
-    fun bindCommentData(data: MutableList<CommentResponse>, isLastPage: Boolean, total: Int)
+    fun bindCommentData(data: MutableList<HotelComment>, isLastPage: Boolean, total: Int)
 }
 
 
@@ -23,11 +24,10 @@ class StoreCommentPresenter(private var view: StoreCommentView) : BaseMvpPresent
      */
     fun getStoreCommentList(shop_id: Int, page: Int, showAll: Boolean, type: Int) {
 
-        requestApi(mRetrofit.getStoreCommentList(page, shop_id.toString(), type), object : BaseMvpObserver<PageResponse<CommentResponse>>(view) {
-            override fun onSuccess(response: PageResponse<CommentResponse>) {
+        requestApi(mRetrofit.getStoreCommentList2(page, shop_id.toString(), type), object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
+            override fun onSuccess(response: PageResponse<HotelComment>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data
-
 
                 if (!showAll && data.size > 2) {
                     view.bindCommentData(data.subList(0, 2).toMutableList(), isLastPage,response.total)

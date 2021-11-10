@@ -8,7 +8,7 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:middleTitle="@string/comment"
         app:middleTitleColor="@color/black_333333"
@@ -31,14 +31,14 @@
             android:layout_height="@dimen/dp_28"
             android:layout_marginEnd="@dimen/dp_11"
             android:checked="true"
-            android:background="@drawable/selector_store_comment_filter"
+            android:background="@drawable/selector_hotel_comment"
             android:button="@null"
             android:gravity="center"
             android:minWidth="@dimen/dp_78"
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_12"
             android:text="@string/all_default"
-            android:textColor="@color/selector_gray666_blue"
+            android:textColor="@color/selector_white_grey"
             android:textSize="@dimen/sp_13" />
 
 
@@ -47,14 +47,14 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_28"
             android:layout_marginEnd="@dimen/dp_11"
-            android:background="@drawable/selector_store_comment_filter"
+            android:background="@drawable/selector_hotel_comment"
             android:button="@null"
             android:gravity="center"
             android:minWidth="@dimen/dp_78"
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_12"
             android:text="@string/has_image_default"
-            android:textColor="@color/selector_gray666_blue"
+            android:textColor="@color/selector_white_grey"
             android:textSize="@dimen/sp_13" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -62,20 +62,20 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_28"
             android:layout_marginEnd="@dimen/dp_11"
-            android:background="@drawable/selector_store_comment_filter"
+            android:background="@drawable/selector_hotel_comment"
             android:button="@null"
             android:gravity="center"
             android:minWidth="@dimen/dp_78"
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_12"
             android:text="@string/newest_default"
-            android:textColor="@color/selector_gray666_blue"
+            android:textColor="@color/selector_white_grey"
             android:textSize="@dimen/sp_13" />
 
 
     </RadioGroup>
 
-    <com.jcs.where.widget.NoScrollViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

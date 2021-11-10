@@ -2,10 +2,9 @@ package com.jcs.where.features.store.cart.child
 
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckedTextView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.ViewGroup
+import android.widget.*
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -14,6 +13,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.store.cart.StoreCartGroup
 import com.jcs.where.api.response.store.cart.StoreCartItem
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.NumberView2
 
@@ -72,7 +72,8 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
 
         child_container_ll.removeAllViews()
         item.goods.forEach {
-            val child = LayoutInflater.from(context).inflate(R.layout.item_store_cart_child, null)
+            val child = LayoutInflater.from(context).inflate(R.layout.item_shopping_cart_child_for_store, null)
+
             bindChild(child, it, select_all_tv, item)
             child_container_ll.addView(child)
         }
@@ -84,7 +85,7 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
 
         val good_checked_tv = child.findViewById<CheckedTextView>(R.id.good_checked_tv)
         val image_iv = child.findViewById<ImageView>(R.id.image_iv)
-        val good_name = child.findViewById<TextView>(R.id.good_name)
+        val good_name = child.findViewById<TextView>(R.id.good_name_tv)
         val now_price_tv = child.findViewById<TextView>(R.id.now_price_tv)
         val old_price_tv = child.findViewById<TextView>(R.id.old_price_tv)
         val number_view = child.findViewById<NumberView2>(R.id.number_view)
@@ -105,10 +106,16 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
         old_price_tv.text = oldBuilder
 
         number_view.apply {
+            alwaysEnableCut = true
             MIN_GOOD_NUM = 1
-            alwaysEnableCut(true)
+            MAX_GOOD_NUM = BusinessUtils.getSafeStock(goodData.inventory)
+            cut_iv.setImageResource(R.mipmap.ic_cut_black_transparent)
+            add_iv.setImageResource(R.mipmap.ic_add_black)
+            cutResIdCommon = R.mipmap.ic_cut_black
+            cutResIdMin = R.mipmap.ic_cut_black_transparent
+            addResIdCommon = R.mipmap.ic_add_black
+            addResIdMax = R.mipmap.ic_add_black_transparent
             updateNumberJudgeMin(it.good_num)
-
 
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {

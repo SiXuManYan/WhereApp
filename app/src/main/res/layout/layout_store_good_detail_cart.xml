@@ -114,9 +114,9 @@
             android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="Business hours: 8:00 a.m. - 12:00 p.m. - 14:00 p.m. - 19:00"
             android:textColor="@color/grey_999999"
-            android:textSize="@dimen/sp_12"
-            android:text="Business hours: 8:00 a.m. - 12:00 p.m. - 14:00 p.m. - 19:00" />
+            android:textSize="@dimen/sp_12" />
 
         <View
             android:id="@+id/time_v"

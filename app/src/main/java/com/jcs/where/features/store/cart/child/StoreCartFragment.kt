@@ -77,11 +77,11 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
         recycler_view.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            addItemDecoration(DividerDecoration(
-                    ColorUtils.getColor(R.color.colorPrimary),
-                    SizeUtils.dp2px(10f),
-                    SizeUtils.dp2px(15f),
-                    SizeUtils.dp2px(15f)).apply { setDrawHeaderFooter(true) })
+//            addItemDecoration(DividerDecoration(
+//                    ColorUtils.getColor(R.color.colorPrimary),
+//                    SizeUtils.dp2px(10f),
+//                    SizeUtils.dp2px(15f),
+//                    SizeUtils.dp2px(15f)).apply { setDrawHeaderFooter(true) })
 
         }
 
@@ -110,10 +110,10 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
                 VibrateUtils.vibrate(10)
                 val handlePrice = presenter.handlePrice(mAdapter)
                 total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
-                select_count_tv.text = getString(R.string.total_format, presenter.getSelectedCount(mAdapter))
+//                select_count_tv.text = getString(R.string.total_format, presenter.getSelectedCount(mAdapter))
             } else {
                 total_price_tv.text = getString(R.string.price_unit_format, "0.00")
-                select_count_tv.text = getString(R.string.total_format, 0)
+//                select_count_tv.text = getString(R.string.total_format, 0)
             }
 
             select_all_tv.isChecked = isSelectAll
@@ -218,7 +218,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
         val handlePrice = presenter.handlePrice(mAdapter)
         total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
         // 选中数量
-        select_count_tv.text = getString(R.string.total_format, presenter.getSelectedCount(mAdapter))
+//        select_count_tv.text = getString(R.string.total_format, presenter.getSelectedCount(mAdapter))
         // 是否全选
         select_all_tv.isChecked = presenter.checkSelectAll(mAdapter)
     }

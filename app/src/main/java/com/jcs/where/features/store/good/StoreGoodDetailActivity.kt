@@ -103,9 +103,12 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
                 })
 
         number_view.apply {
+            alwaysEnableCut = true
             MIN_GOOD_NUM = 1
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue)
+            add_iv.setImageResource(R.mipmap.ic_add_blue)
             updateNumberJudgeMin(1)
-            alwaysEnableCut(true)
+            cut_iv.visibility = View.VISIBLE
         }
     }
 
@@ -249,7 +252,9 @@ class StoreGoodDetailActivity : BaseMvpActivity<StoreGoodDetailPresenter>(), Sto
 
         delivery_times = data.delivery_times
         take_times = data.take_times
-        stock_tv.text = getString(R.string.stock_format, data.inventory)
+        val inventory = data.inventory
+        stock_tv.text = getString(R.string.stock_format, inventory)
+        number_view.MAX_GOOD_NUM = inventory
     }
 
 

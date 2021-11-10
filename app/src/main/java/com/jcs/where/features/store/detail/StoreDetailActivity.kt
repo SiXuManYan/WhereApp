@@ -29,6 +29,7 @@ import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.*
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
+import com.jcs.where.widget.NumberView2
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_detail.*
@@ -63,8 +64,10 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
     var take_times = ""
 
     val TAB_TITLES =
-            arrayOf(StringUtils.getString(R.string.good),
-                    StringUtils.getString(R.string.comment))
+        arrayOf(
+            StringUtils.getString(R.string.good),
+            StringUtils.getString(R.string.comment)
+        )
 
     var isBuyNow = false
 
@@ -93,21 +96,21 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         }
         ll_banner.layoutParams = bannerParams
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
-                .setTitleHeight(50)
-                .isAutoPlay(true)
-                .setDelay(5000)
-                .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
-                .setUpIndicatorSize(6, 6)
-                .setIndicatorGravity(XBanner.INDICATOR_CENTER)
-                .setImageLoader(object : AbstractUrlLoader() {
-                    override fun loadImages(context: Context, url: String, image: ImageView) {
-                        GlideUtil.load(context, url, image)
-                    }
+            .setTitleHeight(50)
+            .isAutoPlay(true)
+            .setDelay(5000)
+            .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
+            .setUpIndicatorSize(6, 6)
+            .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+            .setImageLoader(object : AbstractUrlLoader() {
+                override fun loadImages(context: Context, url: String, image: ImageView) {
+                    GlideUtil.load(context, url, image)
+                }
 
-                    override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
-                        GlideUtil.load(context, url, gifImageView)
-                    }
-                })
+                override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
+                    GlideUtil.load(context, url, gifImageView)
+                }
+            })
 
         pager.setNoScroll(true)
         pager.offscreenPageLimit = TAB_TITLES.size
@@ -118,8 +121,12 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
 
         number_view.apply {
             MIN_GOOD_NUM = 1
+            alwaysEnableCut = true
+            MIN_GOOD_NUM = 1
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue)
+            add_iv.setImageResource(R.mipmap.ic_add_blue)
             updateNumberJudgeMin(1)
-            alwaysEnableCut(true)
+            cut_iv.visibility = View.VISIBLE
         }
 
         handle_tv.text = getString(R.string.buy_now)
@@ -272,7 +279,13 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
         }
 
         val stringArray = StringUtils.getStringArray(R.array.weeks)
-        time_value_tv.text = getString(R.string.mechanism_to_format, data.start_time, data.end_time, stringArray[data.week_start - 1], stringArray[data.week_end - 1])
+        time_value_tv.text = getString(
+            R.string.mechanism_to_format,
+            data.start_time,
+            data.end_time,
+            stringArray[data.week_start - 1],
+            stringArray[data.week_end - 1]
+        )
         phone_value_tv.text = data.tel
         web_value_tv.text = data.web_site
         email_value_tv.text = data.email
@@ -323,10 +336,18 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         val data = baseEvent.data
         if (data is StoreGoods) {
+
+
+            number_view.apply {
+                updateNumber(1)
+                MAX_GOOD_NUM = data.inventory
+            }
+
             cart_ll.visibility = View.VISIBLE
             isBuyNow = true
             now_price = data.price
             good_id = data.id
+
 
             if (data.images.isNotEmpty()) {
                 good_image = data.images[0]

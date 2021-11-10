@@ -611,7 +611,7 @@
     <string name="screen">screen</string>
     <string name="business_services">Business services</string>
     <string name="self_extraction">Self Extraction</string>
-    <string name="express">express</string>
+    <string name="express">Express</string>
     <string name="intelligent_sorting">Intelligent sorting</string>
     <string name="distance_first">Distance from near to far</string>
     <string name="comment_first">Favourable comment</string>
@@ -884,5 +884,6 @@ Gentleman must let go</string>
     <string name="total_price">Total Price</string>
     <string name="add_new_address">Add new address</string>
     <string name="select_number">Select Number</string>
+    <string name="select_service">Select Service And Number</string>
 
 </resources>

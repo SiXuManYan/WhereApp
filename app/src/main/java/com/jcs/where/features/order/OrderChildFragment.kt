@@ -3,6 +3,7 @@ package com.jcs.where.features.order
 import android.os.Bundle
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.ColorUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -55,6 +56,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
     override fun initView(view: View?) {
 
         swipe_layout.setOnRefreshListener(this)
+        swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.white))
         val emptyView = EmptyView(context).apply {
             showEmptyDefault()
         }

@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dp_15"
-    android:layout_marginEnd="@dimen/dp_15"
-    android:background="@drawable/shape_white_radius_8"
+    android:background="@color/white"
     android:orientation="vertical"
     android:paddingStart="@dimen/dp_10"
-    android:paddingTop="@dimen/dp_10"
-    android:paddingEnd="@dimen/dp_10"
-    android:paddingBottom="@dimen/dp_10">
+    android:paddingEnd="@dimen/dp_10">
 
 
     <RelativeLayout
         android:id="@+id/title_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_48">
 
         <ImageView
             android:id="@+id/type_iv"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_5"
-            android:src="@mipmap/order_icon" />
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_order_hotel" />
 
 
         <LinearLayout
@@ -41,10 +40,13 @@
                 android:id="@+id/name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_2"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14"
+                app:drawableEndCompat="@mipmap/ic_arrow_right_black"
                 tools:text="Camayan Beach Hotel" />
 
 
@@ -54,7 +56,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dp_10"
                 android:scaleType="centerInside"
-                android:src="@drawable/arrow_right" />
+                android:src="@mipmap/ic_arrow_right_black" />
 
         </LinearLayout>
 
@@ -73,15 +75,6 @@
     </RelativeLayout>
 
 
-    <View
-        android:id="@+id/split_v"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:background="@color/grey_F5F5F5" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,8 +82,8 @@
 
         <ImageView
             android:id="@+id/image_iv"
-            android:layout_width="@dimen/dp_55"
-            android:layout_height="@dimen/dp_55"
+            android:layout_width="@dimen/dp_56"
+            android:layout_height="@dimen/dp_56"
             android:layout_marginEnd="@dimen/dp_12"
             android:scaleType="centerInside"
             tools:src="@tools:sample/avatars" />
@@ -98,7 +91,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_55"
+            android:layout_height="@dimen/dp_56"
             android:orientation="vertical">
 
             <TextView
@@ -108,65 +101,66 @@
                 android:layout_alignParentTop="true"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_12"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_13"
                 tools:text="商务房" />
 
             <TextView
                 android:id="@+id/second_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_12"
+                android:textColor="@color/grey_999999"
+                android:textSize="@dimen/sp_13"
                 tools:text="04-27 至 04-28" />
 
-            <TextView
-                android:id="@+id/third_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_12"
-                tools:text="房价： 1299" />
+
         </RelativeLayout>
 
 
     </LinearLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/bottom_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_9"
         android:gravity="end"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/third_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_14"
+            tools:text="房价： 1299" />
 
 
         <TextView
             android:id="@+id/right_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_118"
+            android:layout_height="@dimen/dp_28"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/dp_10"
-            android:background="@drawable/shape_white_radius_4_stroke_orange"
+            android:background="@drawable/shape_white_radius_14_stroke_orange"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
-            android:paddingStart="@dimen/dp_8"
-            android:paddingTop="@dimen/dp_4"
-            android:paddingEnd="@dimen/dp_8"
-            android:paddingBottom="@dimen/dp_4"
             android:textColor="@color/orange_FD6431"
-            android:textSize="@dimen/sp_13"
+            android:textSize="@dimen/sp_14"
             tools:text="@string/to_pay" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

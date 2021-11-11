@@ -91,7 +91,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val status = modelData.order_status
         order_status_tv.text = BusinessUtils.getHotelStatusText(status)
         if (status == 1 || status == 5) {
-            order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_EF4814))
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_FF5837))
         } else {
             order_status_tv.setTextColor(ColorUtils.getColor(R.color.black_333333))
         }
@@ -115,12 +115,11 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         third_tv.text = StringUtils.getString(R.string.hotel_price_format, modelData.room_price.toPlainString())
 
         // 底部
-        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
         when (status) {
             1 -> {
-                bottom_ll.visibility = View.VISIBLE
+                right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_pay_2)
                 right_tv.setOnClickListener {
                     // 立即支付
@@ -134,7 +133,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
             }
             5 -> {
-                bottom_ll.visibility = View.VISIBLE
+                right_tv.visibility = View.VISIBLE
                 right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_review)
                 right_tv.setOnClickListener {
@@ -142,7 +141,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
             }
             else -> {
-                bottom_ll.visibility = View.GONE
+                right_tv.visibility = View.GONE
             }
         }
 
@@ -166,7 +165,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         // 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功）
         val status = modelData.order_status
         if (status == 1 || status == 6) {
-            order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_EF4814))
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_FF5837))
         } else {
             order_status_tv.setTextColor(ColorUtils.getColor(R.color.black_333333))
         }
@@ -196,13 +195,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部
-        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
         when (status) {
             1 -> {
                 // 1：待付款
-                bottom_ll.visibility = View.VISIBLE
+                right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_pay_2)
 
                 right_tv.setOnClickListener {
@@ -219,8 +217,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
             6 -> {
                 // 交易成功待评价
-                bottom_ll.visibility = View.VISIBLE
-
+                right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_review)
                 right_tv.setOnClickListener {
                     startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
@@ -231,7 +228,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
             }
             else -> {
-                bottom_ll.visibility = View.GONE
+                right_tv.visibility = View.GONE
             }
         }
     }
@@ -279,12 +276,11 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         // 底部
         val right_tv = holder.getView<TextView>(R.id.right_tv)
-        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
 
         when (modelData.order_status) {
 
             1 -> {
-                bottom_ll.visibility = View.VISIBLE
+                right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_pay_2)
 
                 right_tv.setOnClickListener {
@@ -301,7 +297,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
             8 -> {
                 // 交易成功。待评价
-                bottom_ll.visibility = View.VISIBLE
+                right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_review)
                 right_tv.setOnClickListener {
                     startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
@@ -313,7 +309,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
             }
             else -> {
-                bottom_ll.visibility = View.GONE
+                right_tv.visibility = View.GONE
             }
 
         }
@@ -369,16 +365,11 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部
-        val left_tv = holder.getView<TextView>(R.id.left_tv)
         val right_tv = holder.getView<TextView>(R.id.right_tv)
-        val bottom_ll = holder.getView<LinearLayout>(R.id.bottom_ll)
-
-
         when (modelData.order_status) {
             1 -> {
                 right_tv.text = context.getString(R.string.to_pay_2)
                 right_tv.visibility = View.VISIBLE
-                bottom_ll.visibility = View.VISIBLE
 
                 right_tv.setOnClickListener {
                     val orderIds = ArrayList<Int>()
@@ -401,11 +392,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 val commentStatus = modelData.comment_status
                 if (commentStatus == 3) {
                     right_tv.visibility = View.GONE
-                    bottom_ll.visibility = View.GONE
                 } else {
-
                     right_tv.visibility = View.VISIBLE
-                    bottom_ll.visibility = View.VISIBLE
 
                     if (commentStatus == 1) {
                         right_tv.text = context.getString(R.string.evaluation_go)
@@ -431,16 +419,11 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
             }
             12 -> {
-                left_tv.text = context.getString(R.string.modify_application)
-                left_tv.visibility = View.GONE
                 right_tv.text = context.getString(R.string.cancel_application)
                 right_tv.visibility = View.GONE
-                bottom_ll.visibility = View.GONE
             }
             else -> {
-                left_tv.visibility = View.GONE
                 right_tv.visibility = View.GONE
-                bottom_ll.visibility = View.GONE
 
             }
 

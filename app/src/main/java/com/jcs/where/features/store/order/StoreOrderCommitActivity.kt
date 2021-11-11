@@ -89,10 +89,12 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
             mAdapter.setNewInstance(data)
             if (data[0].delivery_type == 1) {
                 delivery_value_tv.text = getString(R.string.self_extraction)
+                address_ll.visibility = View.GONE
                 phone_rl.visibility = View.VISIBLE
             } else {
                 delivery_value_tv.text = getString(R.string.express)
                 address_ll.visibility = View.VISIBLE
+                phone_rl.visibility = View.GONE
             }
         }
 

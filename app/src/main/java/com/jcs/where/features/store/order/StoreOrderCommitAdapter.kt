@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -65,7 +66,9 @@ class StoreOrderCommitAdapter : BaseQuickAdapter<StoreOrderCommitData, BaseViewH
             price_tv.text = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
 
             child_container_ll.addView(child)
-            child.layoutParams
+            val layoutParams = child.layoutParams as LinearLayout.LayoutParams
+            layoutParams.bottomMargin = SizeUtils.dp2px(10f)
+            child.layoutParams = layoutParams
         }
 
 

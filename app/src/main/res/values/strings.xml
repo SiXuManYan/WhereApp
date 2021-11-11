@@ -892,5 +892,6 @@ Gentleman must let go</string>
     <string name="add_new_address">添加新地址</string>
     <string name="select_number">选择数量</string>
     <string name="select_service">请选择服务和数量</string>
+    <string name="call_the_business">联系商家</string>
 
 </resources>

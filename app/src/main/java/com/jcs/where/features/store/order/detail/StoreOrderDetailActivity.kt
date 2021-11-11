@@ -1,12 +1,16 @@
 package com.jcs.where.features.store.order.detail
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderDetail
 import com.jcs.where.base.BaseEvent
@@ -20,9 +24,11 @@ import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.features.store.refund.StoreRefundActivity
 import com.jcs.where.features.store.refund.detail.StoreRefundDetailActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.widget.list.DividerDecoration
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_order_detail.*
+
 import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
 
@@ -39,6 +45,8 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
     private var totalPrice = 0.0
 
     private lateinit var mAdapter: StoreOrderDetailAdapter
+
+    private var tel = ""
 
     override fun isStatusDark() = true
 
@@ -57,6 +65,9 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
                 override fun canScrollVertically() = false
             }
             adapter = mAdapter
+            addItemDecoration(
+                DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(10f), 0, 0)
+            )
         }
 
 
@@ -69,17 +80,21 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
     }
 
     override fun bindListener() {
-        back_iv.setOnClickListener {
-            finish()
-        }
         service_ll.setOnClickListener {
             startActivityAfterLogin(ExtendChatActivity::class.java)
+        }
+        phone_ll.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$tel")
+            }
+            startActivity(intent)
         }
 
     }
 
 
     override fun bindData(data: StoreOrderDetail) {
+        tel = data.phone
         status_tv.text = presenter.getStatusText(data.delivery_type, data.status)
         presenter.getStatusDescText(status_desc_tv, data.status)
         order_number_tv.text = data.trade_no
@@ -128,7 +143,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
         }
 
         if (data.status == 12) {
-            service_ll.visibility = View.VISIBLE
+            service_ll.visibility = View.INVISIBLE
         } else {
             service_ll.visibility = View.GONE
         }
@@ -143,12 +158,12 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             business_name_tv.text = it.title
 
             if (it.im_status == 1 && !TextUtils.isEmpty(it.mer_uuid)) {
-                im_iv.visibility = View.VISIBLE
-                im_iv.setOnClickListener { _ ->
+                im_ll.visibility = View.VISIBLE
+                im_ll.setOnClickListener { _ ->
                     RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, it.mer_uuid, it.mer_name, null)
                 }
             } else {
-                im_iv.visibility = View.GONE
+                im_ll.visibility = View.GONE
             }
 
             if (it.images.isNotEmpty()) {
@@ -266,17 +281,17 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 
     private fun cancelOrder(orderId: Int) {
         AlertDialog.Builder(this)
-                .setTitle(R.string.prompt)
-                .setMessage(R.string.cancel_order_confirm)
-                .setCancelable(false)
-                .setPositiveButton(R.string.confirm) { dialogInterface, i ->
-                    presenter.cancelStoreOrder(orderId)
-                    dialogInterface.dismiss()
-                }
-                .setNegativeButton(R.string.cancel) { dialogInterface, i ->
-                    dialogInterface.dismiss()
-                }
-                .create().show()
+            .setTitle(R.string.prompt)
+            .setMessage(R.string.cancel_order_confirm)
+            .setCancelable(false)
+            .setPositiveButton(R.string.confirm) { dialogInterface, i ->
+                presenter.cancelStoreOrder(orderId)
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton(R.string.cancel) { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }
+            .create().show()
 
     }
 

@@ -25,9 +25,9 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/8/3 14:45.
- *
+ * 酒店订单详情
  */
-class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetailView {
+class HotelHotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), HotelOrderDetailView {
 
     var order_id = 0
     var lat = 0f
@@ -52,7 +52,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
 
     override fun initData() {
 
-        presenter = OrderDetailPresenter(this)
+        presenter = HotelOrderDetailPresenter(this)
         presenter.getDetail(order_id)
 
     }
@@ -213,7 +213,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                         visibility = View.VISIBLE
                         setOnClickListener {
 
-                            AlertDialog.Builder(this@OrderDetailActivity2)
+                            AlertDialog.Builder(this@HotelHotelOrderDetailActivity)
                                 .setTitle(R.string.prompt)
                                 .setMessage(R.string.cancel_order_confirm)
                                 .setPositiveButton(R.string.ensure) { dialogInterface, i ->
@@ -234,7 +234,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                             text = getString(R.string.to_refund)
                             visibility = View.VISIBLE
                             setOnClickListener {
-                                AlertDialog.Builder(this@OrderDetailActivity2)
+                                AlertDialog.Builder(this@HotelHotelOrderDetailActivity)
                                     .setTitle(R.string.prompt)
                                     .setMessage(R.string.refund_dialog_hint)
                                     .setPositiveButton(R.string.ensure) { dialogInterface, i ->
@@ -255,7 +255,7 @@ class OrderDetailActivity2 : BaseMvpActivity<OrderDetailPresenter>(), OrderDetai
                             text = getString(R.string.to_review)
                             visibility = View.VISIBLE
                             setOnClickListener {
-                                CommentPostActivity.navigation(this@OrderDetailActivity2,0,hotelData.id,order_id)
+                                CommentPostActivity.navigation(this@HotelHotelOrderDetailActivity,0,hotelData.id,order_id)
                             }
                         } else {
                             visibility = View.GONE

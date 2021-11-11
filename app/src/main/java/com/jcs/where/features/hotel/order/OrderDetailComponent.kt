@@ -10,7 +10,7 @@ import com.jcs.where.api.response.hotel.HotelOrderDetail
  * Created by Wangsw  2021/8/3 14:46.
  *
  */
-interface OrderDetailView : BaseMvpView {
+interface HotelOrderDetailView : BaseMvpView {
 
     /**
      * 酒店订单详情数据
@@ -29,14 +29,14 @@ interface OrderDetailView : BaseMvpView {
 
 }
 
-class OrderDetailPresenter(private var view: OrderDetailView) : BaseMvpPresenter(view) {
+class HotelOrderDetailPresenter(private var viewHotel: HotelOrderDetailView) : BaseMvpPresenter(viewHotel) {
 
     /**
      * 酒店订单详情数据
      */
     fun getDetail(orderId: Int) {
-        requestApi(mRetrofit.hotelOrderDetail(orderId), object : BaseMvpObserver<HotelOrderDetail>(view) {
-            override fun onSuccess(response: HotelOrderDetail) = view.bindDetail(response)
+        requestApi(mRetrofit.hotelOrderDetail(orderId), object : BaseMvpObserver<HotelOrderDetail>(viewHotel) {
+            override fun onSuccess(response: HotelOrderDetail) = viewHotel.bindDetail(response)
         })
     }
 
@@ -45,8 +45,8 @@ class OrderDetailPresenter(private var view: OrderDetailView) : BaseMvpPresenter
      * 取消订单
      */
     fun cancelOrder(orderId: Int) {
-        requestApi(mRetrofit.cancelHotelOrder(orderId), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement) = view.cancelSuccess()
+        requestApi(mRetrofit.cancelHotelOrder(orderId), object : BaseMvpObserver<JsonElement>(viewHotel) {
+            override fun onSuccess(response: JsonElement) = viewHotel.cancelSuccess()
         })
     }
 
@@ -56,8 +56,8 @@ class OrderDetailPresenter(private var view: OrderDetailView) : BaseMvpPresenter
      * 申请退款
      */
     fun refundOrder(orderId: Int) {
-        requestApi(mRetrofit.refundHotelOrder(orderId), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement) = view.refundCommitSuccess()
+        requestApi(mRetrofit.refundHotelOrder(orderId), object : BaseMvpObserver<JsonElement>(viewHotel) {
+            override fun onSuccess(response: JsonElement) = viewHotel.refundCommitSuccess()
         })
     }
 

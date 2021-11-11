@@ -112,7 +112,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
         first_tv.text = modelData.room_name
         second_tv.text = StringUtils.getString(R.string.hotel_date_format, modelData.start_date, modelData.end_date)
-        third_tv.text = StringUtils.getString(R.string.hotel_price_format, modelData.room_price.toPlainString())
+        third_tv.text = StringUtils.getString(R.string.total_price_format, modelData.room_price.toPlainString())
 
         // 底部
         val right_tv = holder.getView<TextView>(R.id.right_tv)

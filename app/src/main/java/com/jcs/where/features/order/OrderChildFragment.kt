@@ -14,7 +14,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
-import com.jcs.where.features.hotel.order.OrderDetailActivity2
+import com.jcs.where.features.hotel.order.HotelHotelOrderDetailActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
 import com.jcs.where.home.adapter.OrderListAdapter
 import com.jcs.where.home.decoration.MarginTopDecoration
@@ -150,7 +150,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         val data = mAdapter.data[position]
         when (viewType) {
             OrderListResponse.ORDER_TYPE_HOTEL_1 -> {
-                startActivity(OrderDetailActivity2::class.java, Bundle().apply {
+                startActivity(HotelHotelOrderDetailActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }

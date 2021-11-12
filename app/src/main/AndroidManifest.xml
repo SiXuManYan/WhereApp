@@ -491,9 +491,6 @@
             android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".features.gourmet.takeaway.order.TakeawayOrderDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".features.gourmet.restaurant.map.RestaurantMapActivity"
             android:screenOrientation="portrait" />
         <activity

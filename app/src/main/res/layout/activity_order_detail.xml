@@ -249,7 +249,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10"
+                android:layout_height="@dimen/dp_16"
                 android:background="@color/grey_F5F5F5" />
 
 
@@ -437,7 +437,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10"
+                android:layout_height="@dimen/dp_16"
                 android:background="@color/grey_F5F5F5" />
 
 
@@ -546,7 +546,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10"
+                android:layout_height="@dimen/dp_16"
                 android:background="@color/grey_F5F5F5" />
 
 

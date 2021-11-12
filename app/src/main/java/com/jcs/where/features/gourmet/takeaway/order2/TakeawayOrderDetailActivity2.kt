@@ -227,7 +227,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                 bottom_container_rl.visibility = View.GONE
             }
         }
-
+        bottom_v.visibility = bottom_container_rl.visibility
         // 处理状态描述文案
         when (orderData.status) {
             4 -> {

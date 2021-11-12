@@ -168,7 +168,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10"
+                android:layout_height="@dimen/dp_16"
                 android:background="@color/grey_F5F5F5" />
 
 
@@ -271,8 +271,8 @@
                 <LinearLayout
                     android:id="@+id/im_ll"
                     android:layout_width="@dimen/dp_0"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/dp_48"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:visibility="gone"
@@ -298,7 +298,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_15"
+                android:layout_height="@dimen/dp_16"
                 android:background="@color/grey_F5F5F5" />
             <!-- 收货人信息 -->
 
@@ -360,7 +360,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_15"
+                android:layout_height="@dimen/dp_16"
                 android:background="@color/grey_F5F5F5" />
 
 
@@ -480,7 +480,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_15"
                     android:background="@color/grey_F5F5F5" />
 
@@ -536,12 +536,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
                     tools:text="$10" />
 
                 <View
@@ -622,6 +622,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:orientation="horizontal">
 
             <TextView

@@ -8,6 +8,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.category.CategoryAdapter
+import com.jcs.where.features.category.CategoryAdapter2
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_category_edit.*
@@ -21,8 +22,8 @@ import java.util.*
 class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryEditView {
 
 
-    private lateinit var mSelectedAdapter: CategoryAdapter
-    private lateinit var mUnSelectedAdapter: CategoryAdapter
+    private lateinit var mSelectedAdapter: CategoryAdapter2
+    private lateinit var mUnSelectedAdapter: CategoryAdapter2
 
     /**
      * 用户在此页面新增的关注的分类
@@ -42,7 +43,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
 
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.blue_377BFF))
 
-        mSelectedAdapter = CategoryAdapter().apply {
+        mSelectedAdapter = CategoryAdapter2().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
                 showEmptyNothing()
             })
@@ -66,7 +67,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
             }
 
         }
-        mUnSelectedAdapter = CategoryAdapter().apply {
+        mUnSelectedAdapter = CategoryAdapter2().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
                 showEmptyNothing()
             })
@@ -123,7 +124,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
     }
 
     override fun bindListener() {
-        close_iv.setOnClickListener {
+        close_tv.setOnClickListener {
             VibrateUtils.vibrate(20)
             finish()
         }
@@ -134,7 +135,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
     }
 
     private fun getItemDecoration(): DividerDecoration {
-        return DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(5f), 0, 0).apply {
+        return DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(5f), 0, 0).apply {
             setDrawHeaderFooter(false)
         }
     }

@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_category_2.*
 class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
 
-    private lateinit var mAdapter: CategoryAdapter
+    private lateinit var mAdapter: CategoryAdapter2
     private lateinit var emptyView: EmptyView
 
     override fun getLayoutId() = R.layout.fragment_category_2
@@ -31,12 +31,10 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
             BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_rl))
         }
 
-        mAdapter = CategoryAdapter()
+        mAdapter = CategoryAdapter2()
         recycler_view.apply {
             adapter = mAdapter
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(5f), 0, 0).apply {
-                setDrawHeaderFooter(false)
-            })
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(5f), 0, 0))
         }
 
         emptyView = EmptyView(context).apply {
@@ -51,7 +49,7 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
     }
 
     override fun bindListener() {
-        more_category_iv.setOnClickListener {
+        more_category_tv.setOnClickListener {
             startActivity(CategoryEditActivity::class.java)
         }
     }

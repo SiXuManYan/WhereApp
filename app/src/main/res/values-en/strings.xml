@@ -886,5 +886,6 @@ Gentleman must let go</string>
     <string name="select_number">Select Number</string>
     <string name="select_service">Select Service And Number</string>
     <string name="call_the_business">Call The Business</string>
+    <string name="edit_my_category">Edit My Category</string>
 
 </resources>

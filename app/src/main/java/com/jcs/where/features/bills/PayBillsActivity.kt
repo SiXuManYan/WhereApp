@@ -17,7 +17,7 @@ class PayBillsActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_pay_bills
 
-    override fun isStatusDark() = true
+    override fun isStatusDark() = false
 
     override fun initView() {
 
@@ -46,7 +46,7 @@ class PayBillsActivity : BaseActivity() {
         internet_ll.setOnClickListener {
             showComing()
         }
-        mJcsTitle.setFirstRightIvClickListener {
+        record_iv.setOnClickListener {
             startActivityAfterLogin(PaymentRecordActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_TYPE, 2)
             })

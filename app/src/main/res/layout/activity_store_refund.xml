@@ -27,22 +27,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_0"
             android:paddingBottom="@dimen/dp_200">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_white_radius_8"
+                android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
+                    android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
@@ -72,12 +70,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/shape_white_radius_8"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
+                    android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
@@ -94,7 +92,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47">
+                    android:layout_height="@dimen/dp_48">
 
 
                     <TextView
@@ -128,7 +126,10 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_47"
+                android:layout_height="@dimen/dp_48"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:background="@color/grey_F5F5F5"
                 android:gravity="center_vertical"
                 android:lineSpacingMultiplier="1.2"
                 android:text="@string/refund_delivery_fee_hint"
@@ -139,13 +140,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_white_radius_8"
+                android:background="@color/white"
                 android:orientation="vertical">
 
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
+                    android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
@@ -164,7 +165,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
+                    android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
@@ -186,13 +187,13 @@
                     android:minHeight="@dimen/dp_70"
                     android:padding="@dimen/dp_5"
                     android:textColor="@color/grey_666666"
-                    android:textColorHint="@color/grey_666666"
+                    android:textColorHint="@color/grey_999999"
                     android:textSize="@dimen/sp_12" />
 
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
+                    android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
@@ -208,20 +209,23 @@
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_0">
 
+
+
+
                     <ImageView
                         android:id="@+id/upload_iv"
-                        android:layout_width="@dimen/dp_59"
-                        android:layout_height="@dimen/dp_59"
+                        android:layout_width="@dimen/dp_76"
+                        android:layout_height="@dimen/dp_76"
                         android:layout_marginEnd="@dimen/dp_5"
+                        android:background="@drawable/shape_grey_radius_8"
                         android:scaleType="centerInside"
-                        android:src="@mipmap/ic_store_upload_image" />
+                        android:src="@mipmap/ic_upload_image"  />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/image_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:itemCount="1"
-                        tools:layout_height="@dimen/dp_59"
                         tools:listitem="@layout/item_refund_image" />
 
                 </LinearLayout>
@@ -248,13 +252,13 @@
     <TextView
         android:id="@+id/refund_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_44"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/dp_15"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_15"
         android:layout_marginBottom="@dimen/dp_30"
-        android:background="@drawable/shape_gradient_integral_sign_out"
+        android:background="@drawable/shape_blue_radius_25"
         android:gravity="center"
         android:text="@string/submit_application"
         android:textColor="@color/white"

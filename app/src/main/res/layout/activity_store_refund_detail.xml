@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_F5F5F5"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.jcs.where.widget.JcsTitle
@@ -130,7 +130,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
+                    android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"
@@ -147,7 +147,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47">
+                    android:layout_height="@dimen/dp_48">
 
 
                     <TextView
@@ -186,7 +186,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47">
+                    android:layout_height="@dimen/dp_48">
 
 
                     <TextView
@@ -224,7 +224,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47">
+                    android:layout_height="@dimen/dp_48">
 
 
                     <TextView
@@ -260,6 +260,7 @@
                 android:layout_height="@dimen/dp_48"
                 android:gravity="center_vertical"
                 android:lineSpacingMultiplier="1.2"
+                android:background="@color/grey_F5F5F5"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="@string/refund_delivery_fee_hint"
@@ -276,7 +277,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
+                    android:layout_height="@dimen/dp_48"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="@dimen/dp_15"

@@ -94,19 +94,19 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
             add(
                 TabEntity(
                     getString(R.string.main_tab_title_category),
-                    R.drawable.ic_home_category_selected, R.drawable.ic_home_category_normal
+                    R.mipmap.ic_home_category_selected, R.mipmap.ic_home_category_normal
                 )
             )
             add(
                 TabEntity(
                     getString(R.string.main_tab_title_order),
-                    R.drawable.ic_home_order_selected, R.drawable.ic_home_order_normal
+                    R.mipmap.ic_home_order_selected, R.mipmap.ic_home_order_normal
                 )
             )
             add(
                 TabEntity(
                     getString(R.string.main_tab_title_mine),
-                    R.drawable.ic_mine_press, R.drawable.ic_mine_normal
+                    R.mipmap.ic_mine_press, R.mipmap.ic_mine_normal
                 )
             )
         }

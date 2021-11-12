@@ -6,6 +6,7 @@ import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -15,13 +16,15 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.hydropower.detail.BillsDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_refresh_list.*
 
 /**
  * Created by Wangsw  2021/6/28 16:16.
  * 水电缴费记录
  */
-class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), PaymentRecordView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener, OnItemClickListener {
+class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), PaymentRecordView, SwipeRefreshLayout.OnRefreshListener,
+    OnLoadMoreListener, OnItemClickListener {
 
 
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -35,6 +38,8 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
         mJcsTitle.setMiddleTitle(getString(R.string.payment_record))
+        swipe_layout.setBackgroundColor(Color.WHITE)
+
         container_ll.setBackgroundColor(ColorUtils.getColor(R.color.grey_F5F5F5))
 
         swipe_layout.setOnRefreshListener(this@PaymentRecordActivity)
@@ -53,6 +58,7 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
 
         recycler.apply {
             adapter = mAdapter
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(1f), SizeUtils.dp2px(15f),  SizeUtils.dp2px(15f)))
         }
 
 

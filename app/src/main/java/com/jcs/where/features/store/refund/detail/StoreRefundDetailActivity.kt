@@ -104,6 +104,7 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
 
         if (data.status == 12) {
             bottom_rl.visibility = View.VISIBLE
+            bottom_v.visibility = View.VISIBLE
         }
 
         mAdapter.setNewInstance(data.goods)

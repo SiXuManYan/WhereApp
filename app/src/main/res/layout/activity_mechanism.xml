@@ -61,16 +61,32 @@
                     android:textStyle="bold"
                     tools:text="Damore and sons" />
 
-
-                <TextView
-                    android:id="@+id/address_name_tv"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:lineSpacingMultiplier="1.2"
-                    android:textColor="@color/grey_999999"
-                    android:textSize="@dimen/sp_14"
-                    tools:text="Walk from No. 77 Northwest of Roosevelt Square to Exit B2-2 of Xi'an Road Station, Metro Line 1/2" />
+                    android:layout_marginTop="@dimen/dp_5">
+
+
+                    <ImageView
+                        android:id="@+id/address_start_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_4"
+                        android:src="@mipmap/ic_address_start" />
+
+                    <TextView
+                        android:id="@+id/address_name_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/address_start_iv"
+                        android:includeFontPadding="false"
+                        android:lineSpacingMultiplier="1.2"
+                        android:textColor="@color/grey_999999"
+                        android:textSize="@dimen/sp_14"
+                        tools:text="Walk from No. 77 Northwest of Roosevelt Square to Exit B2-2 of Xi'an Road Station, Metro Line 1/2" />
+
+
+                </RelativeLayout>
 
 
                 <LinearLayout

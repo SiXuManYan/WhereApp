@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -115,10 +115,10 @@
                 android:layout_height="@dimen/dp_41"
                 android:background="@null"
                 android:digits="0123456789+"
-                android:inputType="phone"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_hint"
                 android:imeOptions="actionNext"
+                android:inputType="phone"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:singleLine="true"
@@ -250,12 +250,12 @@
             <LinearLayout
                 android:id="@+id/company_ll"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:paddingTop="@dimen/dp_15"
                 android:paddingBottom="@dimen/dp_15"
-                android:layout_height="wrap_content">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -271,13 +271,12 @@
                     android:id="@+id/company_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:paddingEnd="@dimen/dp_15"
                     android:hint="@string/enter_hint"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
                     android:textColor="@color/grey_666666"
                     android:textSize="@dimen/sp_13" />
-
 
 
             </LinearLayout>
@@ -310,10 +309,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_41"
                 android:background="@null"
+                android:digits="0123456789"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_hint"
                 android:imeOptions="actionNext"
-                android:digits="0123456789"
                 android:inputType="number"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
@@ -346,11 +345,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_41"
                 android:background="@null"
+                android:digits="0123456789"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_hint"
-                android:digits="0123456789"
-                android:inputType="number"
                 android:imeOptions="actionDone"
+                android:inputType="number"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:singleLine="true"
@@ -475,7 +474,7 @@
         android:layout_marginEnd="@dimen/dp_15"
         android:layout_marginBottom="@dimen/dp_15"
         android:alpha="0.7"
-        android:background="@drawable/shape_gradient_integral_sign_out"
+        android:background="@drawable/shape_blue_radius_25"
         android:enabled="false"
         android:gravity="center"
         android:text="@string/next"

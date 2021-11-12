@@ -66,10 +66,10 @@
             <TextView
                 android:id="@+id/pay_tv"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_45"
+                android:layout_height="@dimen/dp_50"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_30"
-                android:background="@drawable/shape_gradient_integral_sign_out"
+                android:background="@drawable/shape_blue_radius_25"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18"

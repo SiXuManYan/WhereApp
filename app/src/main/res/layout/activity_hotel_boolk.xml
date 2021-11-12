@@ -310,7 +310,7 @@
                 android:layout_toEndOf="@id/subscript_iv"
                 android:background="@null"
                 android:gravity="center_vertical|end"
-                android:hint="@string/login_phone_input"
+                android:hint="@string/mobile_phone"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="11"

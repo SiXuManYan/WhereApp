@@ -275,7 +275,7 @@
                     android:layout_height="@dimen/dp_48"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     tools:visibility="visible">
 
 

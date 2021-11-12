@@ -209,6 +209,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                 bottom_container_rl.visibility = View.GONE
             }
         }
+        bottom_v.visibility = bottom_container_rl.visibility
 
         // 处理状态描述文案
         when (orderData.status) {

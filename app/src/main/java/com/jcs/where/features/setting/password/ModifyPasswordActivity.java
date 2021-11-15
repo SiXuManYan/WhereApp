@@ -12,10 +12,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.account.login.LoginActivity;
-import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.FeaturesUtil;
-import com.jcs.where.utils.SPKey;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,7 +27,6 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
             old_password_aet,
             new_password_aet;
     private ImageView
-            old_password_rule_iv,
             new_password_rule_iv;
 
     /**
@@ -49,7 +45,6 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         old_password_aet = findViewById(R.id.old_password_aet);
         new_password_aet = findViewById(R.id.new_password_aet);
-        old_password_rule_iv = findViewById(R.id.old_password_rule_iv);
         new_password_rule_iv = findViewById(R.id.new_password_rule_iv);
     }
 
@@ -60,7 +55,6 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
 
     @Override
     protected void bindListener() {
-        old_password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         new_password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         findViewById(R.id.confirm_tv).setOnClickListener(this::onConfirmClick);
     }
@@ -76,11 +70,9 @@ public class ModifyPasswordActivity extends BaseMvpActivity<ModifyPasswordPresen
     private void onPasswordRuleClick(View view) {
         if (mOldIsCipherText) {
             // 切换至明文
-            FeaturesUtil.editOpen(old_password_aet, old_password_rule_iv, R.mipmap.ic_login_eye_open_gray);
             FeaturesUtil.editOpen(new_password_aet, new_password_rule_iv, R.mipmap.ic_login_eye_open_gray);
         } else {
             // 切换至密文
-            FeaturesUtil.editDismiss(old_password_aet, old_password_rule_iv, R.mipmap.ic_login_eye_close_gray);
             FeaturesUtil.editDismiss(new_password_aet, new_password_rule_iv, R.mipmap.ic_login_eye_close_gray);
         }
         mOldIsCipherText = !mOldIsCipherText;

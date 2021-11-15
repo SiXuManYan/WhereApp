@@ -1,7 +1,11 @@
 package com.jcs.where.features.setting.phone.verify.password;
 
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
@@ -26,6 +30,7 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
 
     private ImageView password_rule_iv;
     private AppCompatEditText password_aet;
+    private TextView confirm_tv;
 
     /**
      * 是否为密文
@@ -42,6 +47,7 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         password_rule_iv = findViewById(R.id.password_rule_iv);
         password_aet = findViewById(R.id.password_aet);
+        confirm_tv = findViewById(R.id.confirm_tv);
     }
 
     @Override
@@ -58,7 +64,28 @@ public class PasswordVerifyActivity extends BaseMvpActivity<PasswordVerifyPresen
     @Override
     protected void bindListener() {
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
-        findViewById(R.id.confirm_tv).setOnClickListener(this::onConfirmClick);
+        confirm_tv.setOnClickListener(this::onConfirmClick);
+        password_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+                    confirm_tv.setAlpha(0.5f);
+                }
+
+
+            }
+        });
     }
 
 

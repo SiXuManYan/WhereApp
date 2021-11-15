@@ -83,6 +83,8 @@
     <color name="blue_001846">#40001846</color>
     <color name="color_DCE8FF">#DCE8FF</color>
     <color name="color_F64944">#F64944</color>
+    <color name="color_F12F2F">#F12F2F</color>
+    <color name="color_F0F0F0">#F0F0F0</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

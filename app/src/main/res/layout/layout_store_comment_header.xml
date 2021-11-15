@@ -20,7 +20,6 @@
 
     <TextView
         android:id="@+id/more_comment_tv"
-        app:drawableEndCompat="@mipmap/ic_room_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -29,6 +28,7 @@
         android:gravity="center_vertical"
         android:text="@string/more"
         android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_12" />
+        android:textSize="@dimen/sp_12"
+        app:drawableEndCompat="@mipmap/ic_room_right" />
 
 </RelativeLayout>

@@ -7,7 +7,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.address.AddressResponse
 
 interface AddressView : BaseMvpView {
-    fun bindList(response: List<AddressResponse>)
+    fun bindList(response: ArrayList<AddressResponse>)
 }
 
 /**
@@ -18,9 +18,9 @@ class AddressPresenter(private val view: AddressView) : BaseMvpPresenter(view) {
 
     val list: Unit
         get() {
-            requestApi(mRetrofit.addressList(), object : BaseMvpObserver<List<AddressResponse>>(view) {
+            requestApi(mRetrofit.addressList(), object : BaseMvpObserver<ArrayList<AddressResponse>>(view) {
 
-                override fun onSuccess(response: List<AddressResponse>) {
+                override fun onSuccess(response: ArrayList<AddressResponse>) {
                     view.bindList(response)
                 }
             })

@@ -30,6 +30,7 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
     var handleItemClick = false
 
     private lateinit var mAdapter: AddressAdapter
+    private lateinit var emptyView: EmptyView
 
     override fun getLayoutId() = R.layout.activity_address
 
@@ -37,8 +38,8 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
 
         handleItemClick = intent.getBooleanExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, false)
 
-        val emptyView = EmptyView(this).apply {
-            showEmptyDefault()
+        emptyView = EmptyView(this).apply {
+            initEmpty(R.mipmap.ic_empty_card_coupon, R.string.no_address, R.string.add_new_address_hint)
         }
 
         mAdapter = AddressAdapter().apply {
@@ -62,7 +63,10 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
         presenter.list
     }
 
-    override fun bindList(response: List<AddressResponse>) {
+    override fun bindList(response: ArrayList<AddressResponse>) {
+        if (response.isEmpty()) {
+            emptyView.showEmptyContainer()
+        }
         mAdapter.setNewInstance(response.toMutableList())
     }
 

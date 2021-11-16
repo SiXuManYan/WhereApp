@@ -843,7 +843,7 @@ public interface RetrofitApi {
      * 收货地址列表
      */
     @GET("commonapi/v2/addresses")
-    Observable<JcsResponse<List<AddressResponse>>> addressList();
+    Observable<JcsResponse<ArrayList<AddressResponse>>> addressList();
 
     /**
      * 修改地址

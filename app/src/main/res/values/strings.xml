@@ -322,7 +322,7 @@
     <string name="old_password_empty_hint">请输入原密码</string>
     <string name="new_password_empty_hint">请输入新密码</string>
     <string name="enter_verify_code">输入短信验证码</string>
-    <string name="verify_code_send_to_format">验证码已发送至%1$s</string>
+    <string name="verify_code_send_to_format">验证码已发送至&#160;%1$s</string>
     <string name="resend_format">重新发送(%1$s)</string>
     <string name="phone_reset_success">手机号修改成功</string>
     <string name="modify_phone">修改手机</string>

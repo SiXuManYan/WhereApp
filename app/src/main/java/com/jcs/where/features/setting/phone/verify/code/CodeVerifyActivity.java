@@ -36,8 +36,7 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
 
 
     private VerificationCodeView captcha_view;
-    private TextView resend_tv;
-    private JcsTitle jcsTitle;
+    private TextView resend_tv,target_tv;
 
     @Override
     protected int getLayoutId() {
@@ -49,7 +48,7 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white));
         captcha_view = findViewById(R.id.captcha_view);
         resend_tv = findViewById(R.id.resend_tv);
-        jcsTitle = findViewById(R.id.jcsTitle);
+        target_tv = findViewById(R.id.target_tv);
     }
 
     @Override
@@ -65,13 +64,13 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
         mNewAccountCountryCode = getIntent().getStringExtra(Constant.PARAM_COUNTRY_CODE);
 
         if (mUseMode == 1) {
-            jcsTitle.setMiddleTitle(getString(R.string.modify_phone));
+            mJcsTitle.setMiddleTitle(getString(R.string.modify_phone));
         }
         getVerifyCode();
     }
 
     private void getVerifyCode() {
-        presenter.getVerifyCode(resend_tv);
+        presenter.getVerifyCode(resend_tv,target_tv);
     }
 
     @Override

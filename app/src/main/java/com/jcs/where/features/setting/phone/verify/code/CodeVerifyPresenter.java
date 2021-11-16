@@ -10,7 +10,6 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpObserver;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.request.SendCodeRequest;
-import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.Constant;
@@ -37,8 +36,9 @@ public class CodeVerifyPresenter extends BaseMvpPresenter {
      * 获取验证码
      *
      * @param getVerifyTv
+     * @param target_tv
      */
-    public void getVerifyCode(TextView getVerifyTv) {
+    public void getVerifyCode(TextView getVerifyTv, TextView target_tv) {
         User user = User.getInstance();
         SendCodeRequest request = new SendCodeRequest();
         request.setPhone(user.phone);
@@ -52,6 +52,7 @@ public class CodeVerifyPresenter extends BaseMvpPresenter {
                 getVerifyTv.setClickable(false);
                 countdown(getVerifyTv, StringUtils.getString(R.string.get_again));
                 ToastUtils.showShort(R.string.verify_code_send_success);
+                target_tv.setText(StringUtils.getString(R.string.verify_code_send_to_format, user.phone));
             }
 
             @Override

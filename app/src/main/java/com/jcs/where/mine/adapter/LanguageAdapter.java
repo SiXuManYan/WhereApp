@@ -16,16 +16,16 @@ public class LanguageAdapter extends BaseQuickAdapter<LanguageAdapter.LanguageBe
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder baseViewHolder, LanguageBean languageBean) {
-        baseViewHolder.setText(R.id.languageTitleTv, languageBean.title);
+    protected void convert(@NotNull BaseViewHolder holder, LanguageBean languageBean) {
+        holder.setText(R.id.languageTitleTv, languageBean.title);
         if (languageBean.isSelected) {
-            baseViewHolder.setGone(R.id.languageCheckedIcon, false);
+            holder.setGone(R.id.languageCheckedIcon, false);
         } else {
-            baseViewHolder.setGone(R.id.languageCheckedIcon, true);
+            holder.setGone(R.id.languageCheckedIcon, true);
         }
 
-        if (baseViewHolder.getAdapterPosition() == getItemCount() - 1) {
-            baseViewHolder.setGone(R.id.bottomLine, true);
+        if (holder.getAdapterPosition() == getItemCount() - 1) {
+            holder.setGone(R.id.bottomLine, true);
         }
     }
 

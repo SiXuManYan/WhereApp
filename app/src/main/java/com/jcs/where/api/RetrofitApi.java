@@ -74,6 +74,7 @@ import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
+import com.jcs.where.api.response.collection.MyCollection;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
@@ -1734,6 +1735,17 @@ public interface RetrofitApi {
     @GET("travelapi/v2/comments/{travel_id}")
     Observable<JcsResponse<PageResponse<HotelComment>>> travelComment(
             @Path("travel_id") int touristAttractionId,
+            @Query("page") int page
+    );
+
+
+    /**
+     * 收藏
+     * @param type 类型（1：同城，2：文章，3：视频）
+     */
+    @GET("commonapi/v2/collects?type=1")
+    Observable<JcsResponse<PageResponse<MyCollection>>> getCollection(
+            @Query("type") int type,
             @Query("page") int page
     );
 

@@ -44,7 +44,7 @@
         android:layout_height="@dimen/dp_40"
         android:layout_below="@+id/title_rl"
         android:background="@color/white"
-        app:tl_indicator_color="@color/blue_4C9EF2"
+        app:tl_indicator_color="@color/blue_377BFF"
         app:tl_indicator_corner_radius="1.5dp"
         app:tl_indicator_width="@dimen/dp_25"
         app:tl_textBold="SELECT"

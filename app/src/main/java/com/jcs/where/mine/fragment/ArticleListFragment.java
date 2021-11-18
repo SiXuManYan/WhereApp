@@ -187,7 +187,7 @@ public class ArticleListFragment extends BaseFragment implements OnLoadMoreListe
 
     private void onArticleItemClicked(BaseQuickAdapter<?, ?> baseQuickAdapter, View view, int position) {
         NewsResponse item = mAdapter.getItem(position).getNews();
-        toActivity(NewsDetailActivity.class, new IntentEntry("newsId", String.valueOf(item.getId())));
+        toActivity(NewsDetailActivity.class, new IntentEntry(Constant.PARAM_NEWS_ID, String.valueOf(item.getId())));
     }
 
     private void onRefreshListener() {

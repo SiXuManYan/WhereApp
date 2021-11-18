@@ -210,10 +210,10 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
         NewsResponse item = mAdapter.getItem(position);
         int itemViewType = mAdapter.getItemViewType(position);
         if (itemViewType != NewsType.VIDEO) {
-            toActivity(NewsDetailActivity.class, new IntentEntry("newsId", String.valueOf(item.getId())));
+            toActivity(NewsDetailActivity.class, new IntentEntry(Constant.PARAM_NEWS_ID, String.valueOf(item.getId())));
         } else {
             // 跳转到播放视频的详情页面
-            toActivity(NewsVideoActivity.class, new IntentEntry("newsId", String.valueOf(item.getId())));
+            toActivity(NewsVideoActivity.class, new IntentEntry(Constant.PARAM_NEWS_ID, String.valueOf(item.getId())));
         }
     }
 

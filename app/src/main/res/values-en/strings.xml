@@ -146,7 +146,7 @@
     <string name="search_hotel">Search Hotel</string>
     <string name="cancelled">Cancelled</string>
     <string name="completed">Completed</string>
-    <string name="comment_num_prompt">%1$d reviews</string>
+    <string name="comment_num_prompt">%1$d comments</string>
     <string name="date_format_year_month">MMM yyyy</string>
     <string name="date_format_mm_dd">MMM d</string>
     <string name="main_tab_title_home">Home</string>
@@ -410,7 +410,7 @@
     <string name="grade_1">Fabulous</string>
     <string name="grade_2">Superb</string>
     <string name="grade_3">Exceptional</string>
-    <string name="comment_count_format">%1$s reviews</string>
+    <string name="comment_count_format">%1$s comments</string>
     <string name="comment_count_format2">(%1$s)</string>
     <string name="recommend_home">Recommend</string>
     <string name="distance_format">&#60;&#160;%1$s&#160;km</string>
@@ -890,6 +890,7 @@ Gentleman must let go</string>
     <string name="mobile_phone">Mobile Phone</string>
     <string name="no_address">No Address</string>
     <string name="add_new_address_hint">Please add new address</string>
-
+    <string name="common_2_format">%1$s&#160;%2$s</string>
+    <string name="no_content">No content yet</string>
 
 </resources>

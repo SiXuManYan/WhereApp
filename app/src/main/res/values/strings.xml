@@ -897,5 +897,7 @@ Gentleman must let go</string>
     <string name="mobile_phone">移动电话</string>
     <string name="no_address">暂无地址</string>
     <string name="add_new_address_hint">添加新地址</string>
+    <string name="common_2_format">%1$s&#160;%2$s</string>
+    <string name="no_content">暂无内容</string>
 
 </resources>

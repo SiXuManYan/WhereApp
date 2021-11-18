@@ -50,7 +50,7 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
         }
 
 
-        recycler_view.setAdapter(mAdapter)
+        recycler_view.adapter = mAdapter
         recycler_view.addItemDecoration(itemDecoration)
     }
 

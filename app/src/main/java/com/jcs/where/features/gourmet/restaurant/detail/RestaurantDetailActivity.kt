@@ -1,6 +1,8 @@
 package com.jcs.where.features.gourmet.restaurant.detail
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -30,6 +32,7 @@ import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
@@ -87,6 +90,25 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     private lateinit var mDishAdapter: DishAdapter
     private lateinit var mMediaAdapter: DetailMediaAdapter
     private lateinit var mCommentAdapter: HotelCommentAdapter
+
+
+    companion object {
+
+        fun navigation(context: Context, id: Int) {
+
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_ID, id)
+            }
+            val intent = Intent(context, RestaurantDetailActivity::class.java)
+                .putExtras(bundle)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
 
     override fun isStatusDark() = isToolbarDark
 

@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.order.OrderChildFragment
+import com.jcs.where.features.collection.city.CollectionFragment
 import kotlinx.android.synthetic.main.actitiy_collection.*
 
 /**
@@ -44,7 +44,9 @@ class CollectionActivity : BaseMvpActivity<CollectionPresenter>(), CollectionVie
 
         override fun getPageTitle(position: Int): CharSequence = TAB_TITLES[position]
 
-        override fun getItem(position: Int): Fragment = OrderChildFragment.getInstance(0)
+        override fun getItem(position: Int): Fragment = CollectionFragment().apply {
+            type = position + 1
+        }
 
         override fun getCount(): Int = TAB_TITLES.size
     }

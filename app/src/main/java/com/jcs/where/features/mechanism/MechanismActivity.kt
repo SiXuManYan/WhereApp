@@ -1,7 +1,10 @@
 package com.jcs.where.features.mechanism
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -11,6 +14,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.MechanismDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
@@ -40,6 +44,26 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
     private var facebook = ""
     private var mLat = 0.0
     private var mLng = 0.0
+
+
+
+    companion object {
+
+        fun navigation(context: Context, id: Int) {
+
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_ID, id)
+            }
+            val intent = Intent(context, MechanismActivity::class.java)
+                .putExtras(bundle)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
 
     override fun getLayoutId() = R.layout.activity_mechanism
 

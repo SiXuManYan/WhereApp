@@ -1,5 +1,6 @@
 package com.jcs.where.features.store.detail
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -29,7 +30,6 @@ import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.*
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
-import com.jcs.where.widget.NumberView2
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_detail.*
@@ -83,6 +83,26 @@ class StoreDetailActivity : BaseMvpActivity<StoreDetailPresenter>(), StoreDetail
      * 收藏状态（1：未收藏，2：已收藏）
      */
     private var collect_status = 0
+
+
+    companion object {
+
+        fun navigation(context: Context, id: Int) {
+
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_ID, id)
+            }
+            val intent = Intent(context, StoreDetailActivity::class.java)
+                .putExtras(bundle)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
+
 
     override fun getLayoutId() = R.layout.activity_store_detail
 

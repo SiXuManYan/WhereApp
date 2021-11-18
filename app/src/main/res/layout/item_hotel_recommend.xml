@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/hotel_recommend_container_ll"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal">
@@ -64,10 +64,10 @@
             app:rsv_onlyHalfStar="true"
             app:rsv_rating="1"
             app:rsv_starBackgroundColor="@color/transplant"
-            app:rsv_starForegroundColor="@color/yellow_FCE314"
+            app:rsv_starForegroundColor="@color/yellow_FEBA32"
             app:rsv_starMargin="@dimen/dp_3"
             app:rsv_starNum="5"
-            app:rsv_starThickness="0.5"
+            app:rsv_starThickness="0.7"
             app:rsv_strokeColor="@color/transplant"
             app:rsv_strokeWidth="0dp" />
 
@@ -132,30 +132,34 @@
 
         </LinearLayout>
 
-
-        <LinearLayout
-            android:id="@+id/tag_ll"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_2"
-            android:orientation="horizontal">
+            android:layout_marginBottom="@dimen/dp_2">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/tag_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_2"
-                android:background="@drawable/shape_blue_stoke_radius_1"
-                android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_4"
-                android:paddingTop="@dimen/dp_1"
-                android:paddingEnd="@dimen/dp_4"
-                android:paddingBottom="@dimen/dp_1"
-                android:textColor="@color/blue_4C9EF2"
-                android:textSize="@dimen/sp_12"
-                tools:text="tab" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_2"
+                    android:background="@drawable/shape_blue_stoke_radius_1"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingTop="@dimen/dp_1"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:paddingBottom="@dimen/dp_1"
+                    android:textColor="@color/blue_4C9EF2"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="tab" />
 
 
-        </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
 
 
         <TextView

@@ -114,14 +114,16 @@ class EmptyView : LinearLayout {
     fun initEmpty(
         @DrawableRes imageId: Int,
         @StringRes emptyMessage: Int,
-        @StringRes emptyHint: Int,
+        @StringRes emptyHint: Int?=null,
         @StringRes actionString: Int? = null,
         listener: OnClickListener?  = null
     ) {
         parent_ll.visibility = GONE
         empty_iv.setImageResource(imageId)
         empty_message_tv.setText(emptyMessage)
-        empty_hint_tv.setText(emptyHint)
+        emptyHint?.let {
+            empty_hint_tv.setText(it)
+        }
         actionString?.let {
             action_tv.setText(it)
         }

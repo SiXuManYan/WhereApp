@@ -19,6 +19,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.news.model.NewsDetailModel;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.GlideUtil;
 import com.jcs.where.utils.MobUtil;
 import com.jcs.where.widget.JcsTitle;
@@ -70,7 +71,7 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
         mModel = new NewsDetailModel();
-        mNewsId = getIntent().getStringExtra("newsId");
+        mNewsId = getIntent().getStringExtra(Constant.PARAM_NEWS_ID);
         showLoading();
         mModel.getNewsDetail(mNewsId, new BaseObserver<NewsDetailResponse>() {
             @Override

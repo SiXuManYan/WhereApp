@@ -223,11 +223,6 @@
             android:screenOrientation="portrait" />
 
 
-        <activity
-            android:name=".mine.activity.CollectionListActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".features.account.bind.BindPhoneActivity" />
 
         <activity
@@ -538,6 +533,7 @@
         <activity android:name=".features.travel.map.TravelMapActivity" />
         <activity android:name=".features.travel.detail.TravelDetailActivity" />
         <activity android:name=".features.travel.comment.TravelCommentActivity" />
+        <activity android:name=".features.collection.CollectionActivity" />
 
 
     </application>

@@ -1,10 +1,23 @@
 package com.jcs.where.api.response.collection
 
+import com.chad.library.adapter.base.entity.MultiItemEntity
+
 /**
  * Created by Wangsw  2021/11/16 16:32.
  *
  */
-class MyCollection {
+class MyCollection  : MultiItemEntity{
+
+    companion object {
+
+        var TYPE_HOTEL  = 1
+        var TYPE_TRAVEL  = 2
+        var TYPE_NEWS  = 3
+        var TYPE_GENERAL  = 11
+        var TYPE_RESTAURANT  = 12
+        var TYPE_STORE  = 13
+
+    }
 
     /** 类型（1-酒店，2-旅游，3-新闻，11-综合服务，12-餐厅，13-eStore） */
     var type = 0
@@ -15,6 +28,8 @@ class MyCollection {
     var general: GeneralCollection? = null
     var restaurant: RestaurantCollection? = null
     var estore: StoreCollection? = null
+    override val itemType: Int
+        get() = type
 }
 
 class HotelCollection {

@@ -215,7 +215,6 @@ public interface RetrofitApi {
     /**
      * 收藏酒店
      *
-     * @param hotelId 酒店id
      */
     @POST("hotelapi/v2/collects")
     Observable<JcsResponse<JsonElement>> postCollectHotel(@Body HotelCollectionRequest request);
@@ -224,7 +223,7 @@ public interface RetrofitApi {
      * 取消收藏
      *
      */
-    @DELETE("hotelapi/v2/collects")
+    @HTTP(method = "DELETE", path = "hotelapi/v2/collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> delCollectHotel(@Body HotelCollectionRequest request);
 
 
@@ -1745,8 +1744,8 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v2/collects?type=1")
     Observable<JcsResponse<PageResponse<MyCollection>>> getCollection(
-            @Query("type") int type,
-            @Query("page") int page
+            @Query("page") int page,
+            @Query("type") int type
     );
 
 }

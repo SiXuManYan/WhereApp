@@ -75,6 +75,7 @@ import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MyCollection;
+import com.jcs.where.api.response.footprint.Footprint;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
@@ -214,14 +215,12 @@ public interface RetrofitApi {
 
     /**
      * 收藏酒店
-     *
      */
     @POST("hotelapi/v2/collects")
     Observable<JcsResponse<JsonElement>> postCollectHotel(@Body HotelCollectionRequest request);
 
     /**
      * 取消收藏
-     *
      */
     @HTTP(method = "DELETE", path = "hotelapi/v2/collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> delCollectHotel(@Body HotelCollectionRequest request);
@@ -1407,7 +1406,8 @@ public interface RetrofitApi {
             @Query("shop_id") String shop_id,
             @Query("type") int type
     );
- /**
+
+    /**
      * 商城评论列表
      *
      * @param type 类型（1-全部，2-最新，3-有图）
@@ -1548,15 +1548,11 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> commitHotelComment(@Body HotelCommitComment request);
 
 
-
     /**
      * 旅游提交评价
      */
     @POST("travelapi/v2/comments")
     Observable<JcsResponse<JsonElement>> commitTravelComment(@Body TravelCommitComment request);
-
-
-
 
 
     /**
@@ -1740,6 +1736,7 @@ public interface RetrofitApi {
 
     /**
      * 收藏
+     *
      * @param type 类型（1：同城，2：文章，3：视频）
      */
     @GET("commonapi/v2/collects?type=1")
@@ -1747,5 +1744,12 @@ public interface RetrofitApi {
             @Query("page") int page,
             @Query("type") int type
     );
+
+
+    /**
+     * 获得足迹列表
+     */
+    @GET("commonapi/v2/histories")
+    Observable<JcsResponse<PageResponse<Footprint>>> getFootprint(@Query("page") int page);
 
 }

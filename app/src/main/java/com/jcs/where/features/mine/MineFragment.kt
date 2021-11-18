@@ -14,12 +14,13 @@ import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.collection.CollectionActivity
 import com.jcs.where.features.coupon.CardCouponActivity
+import com.jcs.where.features.footprint.FootprintActivity
 import com.jcs.where.features.integral.IntegralActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
 import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.mine.activity.AboutActivity
-import com.jcs.where.mine.activity.FootprintActivity
+
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantSettledActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity

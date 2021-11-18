@@ -534,6 +534,7 @@
         <activity android:name=".features.travel.detail.TravelDetailActivity" />
         <activity android:name=".features.travel.comment.TravelCommentActivity" />
         <activity android:name=".features.collection.CollectionActivity" />
+        <activity android:name=".features.footprint.FootprintActivity" />
 
 
     </application>

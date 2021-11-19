@@ -1,8 +1,11 @@
 package com.jcs.where.features.merchant.form
 
 import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -18,6 +21,7 @@ import java.io.File
  */
 
 interface SettledFormView : BaseMvpView {
+    fun postResult(result: Boolean)
 
 }
 
@@ -29,8 +33,7 @@ class SettledFormPresenter(private var view: SettledFormView) : BaseMvpPresenter
      * @param commentType       0 酒店
      *                          1 旅游
      */
-    fun upLoadImage(body: MerchantSettledPost , imageUrls: ArrayList<String>) {
-
+    fun upLoadImage(body: MerchantSettledPost, imageUrls: ArrayList<String>) {
         val map: HashMap<String, RequestBody> = HashMap()
         imageUrls.forEach {
             if (!RegexUtils.isURL(it)) {
@@ -56,11 +59,15 @@ class SettledFormPresenter(private var view: SettledFormView) : BaseMvpPresenter
 
 
     fun postForm(body: MerchantSettledPost) {
-        requestApi(mRetrofit.postMerchantSettled(body),object :BaseMvpObserver<JsonElement>(view){
+        requestApi(mRetrofit.postMerchantSettled(body), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
-
+                view.postResult(true)
             }
 
+            override fun onError(errorResponse: ErrorResponse?) {
+                super.onError(errorResponse)
+                view.postResult(false)
+            }
         })
 
 

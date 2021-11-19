@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.request.merchant.MerchantSettledPost
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.store.refund.StoreRefundAdapter
 import com.jcs.where.hotel.activity.CityPickerActivity
@@ -17,6 +19,7 @@ import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.RequestResultCode
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.fragment_form_settled.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/11/19 15:43.
@@ -34,10 +37,8 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
     override fun getLayoutId() = R.layout.fragment_form_settled
 
 
-    /** 处理城市信息 */
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         val bundle = it.data?.extras ?: return@registerForActivityResult
-
         when (it.resultCode) {
             Activity.RESULT_OK -> {
                 area_tv.text = bundle.getString(Constant.PARAM_SELECT_AREA_NAME)
@@ -46,8 +47,6 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
             RequestResultCode.RESULT_SETTLED_TYPE_TO_MERCHANT_SETTLED -> {
                 mer_type_tv.text = bundle.getString("typeName", "")
                 merTypeId = bundle.getInt("typeId", 0)
-            }
-            else -> {
             }
         }
 
@@ -108,10 +107,24 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
                 has_physical_store = hasPhysicalStore
             }
 
+            apply.apply {
+                if (first_name.isBlank() || middle_name.isBlank() || last_name.isBlank() || contact_number.isBlank()
+                    || email.isBlank() || mer_name.isBlank() || mer_address.isBlank() || mer_tel.isBlank()) {
+
+                    ToastUtils.showShort(R.string.please_enter)
+                    return@setOnClickListener
+                }
+                if (mer_type_id == 0 || area_id == 0 || has_physical_store == 0) {
+                    ToastUtils.showShort(R.string.please_selected)
+                    return@setOnClickListener
+                }
+            }
+
             if (mImageAdapter.data.isNotEmpty()) {
                 presenter.upLoadImage(apply, ArrayList(mImageAdapter.data))
                 return@setOnClickListener
             }
+            presenter.postForm(apply)
 
 
         }
@@ -129,6 +142,11 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
             mImageAdapter.addData(it)
         }
 
+    }
+
+    override fun postResult(result: Boolean) {
+        commit_tv.isClickable = true
+        EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_MERCHANT_POST_SUCCESS))
     }
 
 

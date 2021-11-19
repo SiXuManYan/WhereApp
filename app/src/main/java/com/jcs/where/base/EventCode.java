@@ -128,5 +128,7 @@ public class EventCode {
 
     public static final int EVENT_REFRESH_CHILD_END_DATE = 1027;
 
+    public static final int EVENT_MERCHANT_POST_SUCCESS = 1028;
+
 
 }

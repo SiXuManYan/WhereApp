@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:middleTitle="@string/mine_merchant_settled" />
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:id="@+id/type_form_tv"
+                        android:layout_width="@dimen/dp_32"
+                        android:layout_height="@dimen/dp_32"
+                        android:background="@drawable/selector_blue_circle_32"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/_1"
+                        android:textAlignment="center"
+                        android:textColor="@color/selector_white_grey"
+                        android:textSize="@dimen/sp_11" />
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:id="@+id/one_v"
+                        android:layout_width="@dimen/dp_74"
+                        android:layout_height="@dimen/dp_8"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:layout_marginEnd="@dimen/dp_8"
+                        android:background="@drawable/selector_blue_line_4" />
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:id="@+id/type_period_tv"
+                        android:layout_width="@dimen/dp_32"
+                        android:layout_height="@dimen/dp_32"
+                        android:background="@drawable/selector_blue_circle_32"
+                        android:gravity="center"
+                        android:text="@string/_2"
+                        android:textAlignment="center"
+                        android:textColor="@color/selector_white_grey"
+                        android:textSize="@dimen/sp_11" />
+
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:id="@+id/two_v"
+                        android:layout_width="@dimen/dp_74"
+                        android:layout_height="@dimen/dp_8"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:layout_marginEnd="@dimen/dp_8"
+                        android:background="@drawable/selector_blue_line_4" />
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:id="@+id/type_result_tv"
+                        android:layout_width="@dimen/dp_32"
+                        android:layout_height="@dimen/dp_32"
+                        android:background="@drawable/selector_blue_circle_32"
+                        android:gravity="center"
+                        android:text="@string/_3"
+                        android:textAlignment="center"
+                        android:textColor="@color/selector_white_grey"
+                        android:textSize="@dimen/sp_11" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:layout_width="@dimen/dp_89"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/merchant_settled_prompt_step_1"
+                        android:textAlignment="center"
+                        android:textColor="@color/selector_black_gray"
+                        android:textSize="@dimen/sp_11" />
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:layout_width="@dimen/dp_89"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_30"
+                        android:layout_marginEnd="@dimen/dp_30"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/merchant_settled_prompt_step_2"
+                        android:textAlignment="center"
+                        android:textColor="@color/selector_black_gray"
+                        android:textSize="@dimen/sp_11" />
+
+                    <androidx.appcompat.widget.AppCompatCheckedTextView
+                        android:layout_width="@dimen/dp_89"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/merchant_settled_prompt_step_3"
+                        android:textAlignment="center"
+                        android:textColor="@color/selector_black_gray"
+                        android:textSize="@dimen/sp_11" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</LinearLayout>

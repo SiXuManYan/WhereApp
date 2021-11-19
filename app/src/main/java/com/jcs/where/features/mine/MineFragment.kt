@@ -73,7 +73,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             }
         }
 
-
         integral_iv.setOnClickListener {
             startActivityAfterLogin(IntegralActivity::class.java)
         }

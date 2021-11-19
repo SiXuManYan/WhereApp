@@ -26,6 +26,7 @@ import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.hotel.FoodCommitComment;
 import com.jcs.where.api.request.hotel.HotelCommitComment;
 import com.jcs.where.api.request.hotel.TravelCommitComment;
+import com.jcs.where.api.request.merchant.MerchantSettledPost;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
@@ -1751,5 +1752,12 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v2/histories")
     Observable<JcsResponse<PageResponse<Footprint>>> getFootprint(@Query("page") int page);
+
+
+    /**
+     * 提交商家入驻信息
+     */
+    @POST("userapi/v2/merchants")
+    Observable<JcsResponse<JsonElement>> postMerchantSettled(@Body MerchantSettledPost request);
 
 }

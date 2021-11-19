@@ -370,19 +370,19 @@
     <string name="merchant_settled_prompt_step_2">信息审核\n( 1~3天 )</string>
     <string name="merchant_settled_prompt_step_3">教育训练\n上线运营</string>
     <string name="merchant_settled_prompt_contact">联系人信息</string>
-    <string name="merchant_settled_prompt_name"><font color='#FF0000'>*</font><font color='#666666'>名</font></string>
+    <string name="merchant_settled_prompt_name"><font color='#FF0000'>*&#160;</font><font color='#666666'>名</font></string>
     <string name="merchant_settled_prompt_middle_name">中间名</string>
-    <string name="merchant_settled_prompt_last_name"><font color='#FF0000'>*</font><font color='#666666'>姓</font></string>
-    <string name="merchant_settled_prompt_phone"><font color='#FF0000'>*</font><font color='#666666'>联系电话</font></string>
-    <string name="merchant_settled_prompt_email"><font color='#FF0000'>*</font><font color='#666666'>电子邮箱</font></string>
+    <string name="merchant_settled_prompt_last_name"><font color='#FF0000'>*&#160;</font><font color='#666666'>姓</font></string>
+    <string name="merchant_settled_prompt_phone"><font color='#FF0000'>*&#160;</font><font color='#666666'>联系电话</font></string>
+    <string name="merchant_settled_prompt_email"><font color='#FF0000'>*&#160;</font><font color='#666666'>电子邮箱</font></string>
     <string name="merchant_settled_prompt_merchant">商家信息</string>
-    <string name="merchant_settled_prompt_merchant_name"><font color='#FF0000'>*</font><font color='#666666'>商家名称</font></string>
-    <string name="merchant_settled_prompt_merchant_type"><font color='#FF0000'>*</font><font color='#666666'>商家类型</font></string>
-    <string name="merchant_settled_prompt_merchant_city"><font color='#FF0000'>*</font><font color='#666666'>所在城市</font></string>
-    <string name="merchant_settled_prompt_merchant_address"><font color='#FF0000'>*</font><font color='#666666'>商家地址</font></string>
-    <string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*</font><font color='#666666'>商家电话</font></string>
-    <string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*</font><font color='#666666'>是否有实体店面</font></string>
-    <string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*</font><font color='#666666'>上传营业执照(正反面2张照片)</font></string>
+    <string name="merchant_settled_prompt_merchant_name"><font color='#FF0000'>*&#160;</font><font color='#666666'>商家名称</font></string>
+    <string name="merchant_settled_prompt_merchant_type"><font color='#FF0000'>*&#160;</font><font color='#666666'>商家类型</font></string>
+    <string name="merchant_settled_prompt_merchant_city"><font color='#FF0000'>*&#160;</font><font color='#666666'>所在城市</font></string>
+    <string name="merchant_settled_prompt_merchant_address"><font color='#FF0000'>*&#160;</font><font color='#666666'>商家地址</font></string>
+    <string name="merchant_settled_prompt_merchant_phone"><font color='#FF0000'>*&#160;</font><font color='#666666'>商家电话</font></string>
+    <string name="merchant_settled_prompt_merchant_entity"><font color='#FF0000'>*&#160;</font><font color='#666666'>是否有实体店面</font></string>
+    <string name="merchant_settled_prompt_merchant_license"><font color='#FF0000'>*&#160;</font><font color='#666666'>上传营业执照(正反面2张照片)</font></string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="image_message">图片</string>
@@ -899,5 +899,6 @@ Gentleman must let go</string>
     <string name="add_new_address_hint">添加新地址</string>
     <string name="common_2_format">%1$s&#160;%2$s</string>
     <string name="no_content">暂无内容</string>
+    <string name="please_selected">请选择</string>
 
 </resources>

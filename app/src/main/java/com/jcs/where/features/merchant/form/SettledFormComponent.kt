@@ -1,16 +1,17 @@
 package com.jcs.where.features.merchant.form
 
 import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.jcs.where.R
+import com.jcs.where.BaseApplication
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.merchant.MerchantSettledPost
 import com.jcs.where.api.response.UploadFileResponse2
+import com.jcs.where.storage.entity.User
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
@@ -33,7 +34,7 @@ class SettledFormPresenter(private var view: SettledFormView) : BaseMvpPresenter
      * @param commentType       0 酒店
      *                          1 旅游
      */
-    fun upLoadImage(body: MerchantSettledPost, imageUrls: ArrayList<String>) {
+    fun upLoadImage(body: MerchantSettledPost, imageUrls: ArrayList<String>, isReCommit: Boolean, reCommitMerchantId: Int) {
         val map: HashMap<String, RequestBody> = HashMap()
         imageUrls.forEach {
             if (!RegexUtils.isURL(it)) {
@@ -52,23 +53,59 @@ class SettledFormPresenter(private var view: SettledFormView) : BaseMvpPresenter
             override fun onSuccess(response: UploadFileResponse2) {
                 val descImages = Gson().toJson(response.link)
                 body.business_license = descImages
-                postForm(body)
+                postForm(body, isReCommit, reCommitMerchantId)
             }
         })
     }
 
 
-    fun postForm(body: MerchantSettledPost) {
-        requestApi(mRetrofit.postMerchantSettled(body), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement) {
-                view.postResult(true)
-            }
+    private fun postForm(body: MerchantSettledPost, isReCommit: Boolean, reCommitMerchantId: Int) {
 
-            override fun onError(errorResponse: ErrorResponse?) {
-                super.onError(errorResponse)
-                view.postResult(false)
-            }
-        })
+        if (isReCommit) {
+            requestApi(mRetrofit.repostMerchantSettled(reCommitMerchantId, body), object : BaseMvpObserver<JsonElement>(view) {
+                override fun onSuccess(response: JsonElement) {
+
+
+                    val user = User.getInstance()
+                    user.merchantApplyStatus = 1
+
+                    val app = Utils.getApp() as BaseApplication
+                    val userDao = app.database.userDao()
+                    userDao.addUser(user)
+                    User.update()
+
+                    view.postResult(true)
+
+                }
+
+                override fun onError(errorResponse: ErrorResponse?) {
+                    super.onError(errorResponse)
+                    view.postResult(false)
+                }
+            })
+        } else {
+            requestApi(mRetrofit.postMerchantSettled(body), object : BaseMvpObserver<JsonElement>(view) {
+                override fun onSuccess(response: JsonElement) {
+
+
+                    val user = User.getInstance()
+                    user.merchantApplyStatus = 1
+
+                    val app = Utils.getApp() as BaseApplication
+                    val userDao = app.database.userDao()
+                    userDao.addUser(user)
+                    User.update()
+
+                    view.postResult(true)
+
+                }
+
+                override fun onError(errorResponse: ErrorResponse?) {
+                    super.onError(errorResponse)
+                    view.postResult(false)
+                }
+            })
+        }
 
 
     }

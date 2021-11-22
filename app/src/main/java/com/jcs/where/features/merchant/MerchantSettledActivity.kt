@@ -7,17 +7,24 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.jcs.where.R
+import com.jcs.where.api.request.merchant.MerchantSettledData
+import com.jcs.where.api.request.merchant.MerchantSettledPost
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.merchant.form.SettledFormFragment
+import com.jcs.where.storage.entity.User
 import kotlinx.android.synthetic.main.activity_merchant_settled_home.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/11/19 14:15.
  * 商家入住
  */
 class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), MerchantSettledView {
+
+
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_merchant_settled_home
 
@@ -33,6 +40,12 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
 
     override fun initData() {
         presenter = MerchantSettledPresenter(this)
+        val user = User.getInstance()
+        if (user.merchantApplyStatus == 1) {
+            presenter.getData()
+        } else {
+            pager_vp.currentItem = 0
+        }
     }
 
     override fun bindListener() {
@@ -46,17 +59,17 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
                 when (position) {
                     0 -> {
                         type_form_tv.isChecked = true
-                        type_period_tv.isChecked = false
+                        type_period_tv.isChecked = true
                         type_result_tv.isChecked = false
                     }
                     1 -> {
-                        type_form_tv.isChecked = false
+                        type_form_tv.isChecked = true
                         type_period_tv.isChecked = true
                         type_result_tv.isChecked = false
                     }
                     2 -> {
-                        type_form_tv.isChecked = false
-                        type_period_tv.isChecked = false
+                        type_form_tv.isChecked = true
+                        type_period_tv.isChecked = true
                         type_result_tv.isChecked = true
                     }
                 }
@@ -86,10 +99,26 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
 
         when (baseEvent.code) {
             EventCode.EVENT_MERCHANT_POST_SUCCESS -> {
+                EventBus.getDefault().post(BaseEvent(EventCode.EVENT_MERCHANT_CHANGE_TYPE, 1))
                 pager_vp.currentItem = 1
+            }
+            EventCode.EVENT_MERCHANT_RECOMMIT -> {
+                pager_vp.currentItem = 0
             }
             else -> {
 
+            }
+        }
+    }
+
+    override fun bindData(response: MerchantSettledData) {
+        when (response.is_verify) {
+            2 -> {
+                pager_vp.currentItem = 2
+            }
+            else -> {
+                EventBus.getDefault().post(BaseEvent(EventCode.EVENT_MERCHANT_CHANGE_TYPE, response))
+                pager_vp.currentItem = 1
             }
         }
     }
@@ -99,7 +128,17 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
 
         override fun getPageTitle(position: Int): CharSequence = ""
 
-        override fun getItem(position: Int): Fragment = SettledFormFragment()
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> SettledFormFragment()
+                1 -> SettledResultFragment().apply {
+                    type = 1
+                }
+                else -> SettledResultFragment().apply {
+                    type = 2
+                }
+            }
+        }
 
         override fun getCount(): Int = 3
     }

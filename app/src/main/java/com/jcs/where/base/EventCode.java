@@ -130,5 +130,9 @@ public class EventCode {
 
     public static final int EVENT_MERCHANT_POST_SUCCESS = 1028;
 
+    public static final int EVENT_MERCHANT_RECOMMIT = 1029;
+
+    public static final int EVENT_MERCHANT_CHANGE_TYPE = 1030;
+
 
 }

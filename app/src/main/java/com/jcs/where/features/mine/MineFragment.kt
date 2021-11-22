@@ -16,15 +16,13 @@ import com.jcs.where.features.collection.CollectionActivity
 import com.jcs.where.features.coupon.CardCouponActivity
 import com.jcs.where.features.footprint.FootprintActivity
 import com.jcs.where.features.integral.IntegralActivity
+import com.jcs.where.features.merchant.MerchantSettledActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
 import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.mine.activity.AboutActivity
-
 import com.jcs.where.mine.activity.LanguageActivity
-import com.jcs.where.mine.activity.merchant_settled.MerchantSettledActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity
-import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.SPKey
@@ -89,17 +87,17 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(CardCouponActivity::class.java)
         }
         merchant_rl.setOnClickListener {
-            if (!User.isLogon()) {
-                startActivity(LoginActivity::class.java)
-                return@setOnClickListener
-            }
-            val user = User.getInstance()
-            if (user.merchantApplyStatus != 1) {
-                startActivity(MerchantSettledActivity::class.java)
-                return@setOnClickListener
-            }
-            presenter.getMerchantSettledInfo()
-
+//            if (!User.isLogon()) {
+//                startActivity(LoginActivity::class.java)
+//                return@setOnClickListener
+//            }
+//            val user = User.getInstance()
+//            if (user.merchantApplyStatus != 1) {
+//                startActivity(MerchantSettledActivity::class.java)
+//                return@setOnClickListener
+//            }
+//            presenter.getMerchantSettledInfo()
+            startActivityAfterLogin(MerchantSettledActivity::class.java)
 
         }
         language_rl.setOnClickListener {

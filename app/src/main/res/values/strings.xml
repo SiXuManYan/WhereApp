@@ -900,5 +900,6 @@ Gentleman must let go</string>
     <string name="common_2_format">%1$s&#160;%2$s</string>
     <string name="no_content">暂无内容</string>
     <string name="please_selected">请选择</string>
+    <string name="please_upload">请上传</string>
 
 </resources>

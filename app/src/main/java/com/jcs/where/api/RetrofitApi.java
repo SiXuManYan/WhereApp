@@ -26,6 +26,7 @@ import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.hotel.FoodCommitComment;
 import com.jcs.where.api.request.hotel.HotelCommitComment;
 import com.jcs.where.api.request.hotel.TravelCommitComment;
+import com.jcs.where.api.request.merchant.MerchantSettledData;
 import com.jcs.where.api.request.merchant.MerchantSettledPost;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
@@ -1760,4 +1761,16 @@ public interface RetrofitApi {
     @POST("userapi/v2/merchants")
     Observable<JcsResponse<JsonElement>> postMerchantSettled(@Body MerchantSettledPost request);
 
+    /**
+     * 获取商家入驻信息
+     */
+    @GET("userapi/v2/merchants/info")
+    Observable<JcsResponse<MerchantSettledData>> getMerchantSettled();
+
+
+    /**
+     * 提交商家入驻信息
+     */
+    @PATCH("userapi/v2/merchants/{merchant_id}")
+    Observable<JcsResponse<JsonElement>> repostMerchantSettled(@Path("merchant_id") int merchant_id, @Body MerchantSettledPost request);
 }

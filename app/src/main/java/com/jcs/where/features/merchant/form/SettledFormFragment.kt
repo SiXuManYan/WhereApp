@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.request.merchant.MerchantSettledData
 import com.jcs.where.api.request.merchant.MerchantSettledPost
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -31,8 +32,12 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
     private var merTypeId = 0
     private var areaId = 0
     private var hasPhysicalStore = 0
+    private var isReCommit = false
+    private var reCommitMerchantId = 0
+
 
     private lateinit var mImageAdapter: StoreRefundAdapter
+
 
     override fun getLayoutId() = R.layout.fragment_form_settled
 
@@ -99,6 +104,7 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
                 last_name = last_name_et.text.toString()
                 contact_number = contact_number_et.text.toString()
                 email = email_et.text.toString()
+                mer_name = mer_name_et.text.toString().trim()
                 mer_address = mer_address_et.text.toString()
                 mer_tel = mer_tel_et.text.toString()
 
@@ -107,10 +113,11 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
                 has_physical_store = hasPhysicalStore
             }
 
+
             apply.apply {
                 if (first_name.isBlank() || middle_name.isBlank() || last_name.isBlank() || contact_number.isBlank()
-                    || email.isBlank() || mer_name.isBlank() || mer_address.isBlank() || mer_tel.isBlank()) {
-
+                    || email.isBlank() || mer_name.isBlank() || mer_address.isBlank() || mer_tel.isBlank()
+                ) {
                     ToastUtils.showShort(R.string.please_enter)
                     return@setOnClickListener
                 }
@@ -120,17 +127,16 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
                 }
             }
 
-            if (mImageAdapter.data.isNotEmpty()) {
-                presenter.upLoadImage(apply, ArrayList(mImageAdapter.data))
+            if (mImageAdapter.data.size < 2) {
+                ToastUtils.showShort(getString(R.string.please_upload))
                 return@setOnClickListener
             }
-            presenter.postForm(apply)
-
-
+            presenter.upLoadImage(apply, ArrayList(mImageAdapter.data), isReCommit,reCommitMerchantId)
         }
 
 
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -147,6 +153,32 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
     override fun postResult(result: Boolean) {
         commit_tv.isClickable = true
         EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_MERCHANT_POST_SUCCESS))
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+        when (baseEvent.code) {
+            EventCode.EVENT_MERCHANT_CHANGE_TYPE -> {
+                val response = baseEvent.data as MerchantSettledData
+                isReCommit = true
+                response.apply {
+                    first_name_et.setText(first_name)
+                    middle_name_et.setText(middle_name)
+                    last_name_et.setText(last_name)
+                    contact_number_et.setText(contact_number)
+                    email_et.setText(email)
+                    mer_name_et.setText(mer_name)
+                    mer_address_et.setText(mer_address)
+                    mer_tel_et.setText(mer_tel)
+                }
+            }
+            else -> {
+
+            }
+        }
     }
 
 

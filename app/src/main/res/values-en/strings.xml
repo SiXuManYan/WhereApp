@@ -893,5 +893,6 @@ Gentleman must let go</string>
     <string name="common_2_format">%1$s&#160;%2$s</string>
     <string name="no_content">No content yet</string>
     <string name="please_selected">please selected</string>
+    <string name="please_upload">Please upload</string>
 
 </resources>

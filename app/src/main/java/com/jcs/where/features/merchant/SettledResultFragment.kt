@@ -1,40 +1,107 @@
 package com.jcs.where.features.merchant
 
 import android.view.View
-import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.base.BaseFragment
+import com.jcs.where.api.request.merchant.MerchantSettledData
+import com.jcs.where.api.request.merchant.MerchantSettledPost
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import kotlinx.android.synthetic.main.fragemnt_settled_result.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/11/19 18:15.
  * 商家入驻审核中、审核结果
  */
-class SettledResultFragment :BaseMvpFragment<SettledResultPresenter>(),SettledResultView {
-    override fun initView(view: View?) {
-        TODO("Not yet implemented")
+class SettledResultFragment : BaseMvpFragment<SettledResultPresenter>(), SettledResultView {
+
+
+    /**
+     * 审核状态（1：待审核，2：审核通过，3：审核未通过）
+     */
+    var type = 0
+
+
+    override fun getLayoutId() = R.layout.fragemnt_settled_result
+
+    override fun initView(view: View) {
+        changeContent(type)
     }
 
     override fun initData() {
-        TODO("Not yet implemented")
+
+
     }
 
     override fun bindListener() {
-        TODO("Not yet implemented")
+        recommit_tv.setOnClickListener {
+            EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_MERCHANT_RECOMMIT))
+        }
     }
 
-    override fun getLayoutId(): Int {
-        TODO("Not yet implemented")
+
+    /**
+     * 审核状态（1：待审核，2：审核通过，3：审核未通过）
+     */
+    private fun changeContent(type: Int) {
+        when (type) {
+            2 -> {
+                type_image_iv.setImageResource(R.mipmap.ic_audit_success)
+                type_text_tv.text = getString(R.string.merchant_verify_success_title)
+                type_desc_tv.text = getString(R.string.merchant_verify_success_desc)
+                recommit_tv.visibility = View.GONE
+            }
+            3 -> {
+                type_image_iv.setImageResource(R.mipmap.ic_audit_fail)
+                type_text_tv.text = getString(R.string.merchant_verify_faild_title)
+                type_desc_tv.text = getString(R.string.merchant_verify_faild_desc)
+                recommit_tv.visibility = View.VISIBLE
+            }
+            else -> {
+                type_image_iv.setImageResource(R.mipmap.ic_auditing)
+                type_text_tv.text = getString(R.string.merchant_verify_ing_title)
+                type_desc_tv.text = getString(R.string.merchant_verify_ing_desc)
+                recommit_tv.visibility = View.GONE
+            }
+        }
+
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+        when (baseEvent.code) {
+            EventCode.EVENT_MERCHANT_POST_SUCCESS -> {
+                type = 1
+                changeContent(type)
+            }
+            EventCode.EVENT_MERCHANT_CHANGE_TYPE -> {
+                type = if (baseEvent.data is MerchantSettledData) {
+                    (baseEvent.data as MerchantSettledData).is_verify
+                } else {
+                    (baseEvent.data as Int)
+                }
+                changeContent(type)
+            }
+            else -> {
+
+            }
+        }
     }
 
 
 }
 
-interface SettledResultView :BaseMvpView {
+interface SettledResultView : BaseMvpView {
 
 }
 
-class SettledResultPresenter(private var view: SettledResultView):BaseMvpPresenter(view){
+class SettledResultPresenter(private var view: SettledResultView) : BaseMvpPresenter(view) {
 
 }

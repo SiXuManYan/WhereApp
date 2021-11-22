@@ -4,7 +4,7 @@ package com.jcs.where.api.request.merchant
  * Created by Wangsw  2021/11/19 16:28.
  * 商家入驻表单提交
  */
-class MerchantSettledPost {
+class MerchantSettledData {
 
 /*
   first_name:名
@@ -40,27 +40,26 @@ class MerchantSettledPost {
     var mer_facebook = ""
     var mer_email = ""
     var has_physical_store = 0
-    var business_license = ""
+    var business_license :ArrayList<String> = ArrayList()
 
 
     /// 获取信息
     /**
      * 审核状态（1：待审核，2：审核通过，3：审核未通过）
      */
-    var id: Int? = null
+    var id = 0
 
     /**
      * 审核状态（1：待审核，2：审核通过，3：审核未通过）
      */
-    var is_verify: Int? = null
-    var created_at: String? = null
+    var is_verify = 0
+    var created_at = ""
 
     /**
      * 备注
      */
-    var notes: String? = null
+    var notes: String = ""
 
-    // 重新提交
 
 
 }

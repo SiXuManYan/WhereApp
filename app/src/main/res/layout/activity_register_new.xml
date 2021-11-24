@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login_activity_background"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_back"
         style="@style/TopButton"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_back_white" />
+        android:src="@mipmap/ic_back_black" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -21,34 +21,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="@dimen/dp_40"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_28"
+            android:paddingEnd="@dimen/dp_15"
             android:paddingBottom="@dimen/dp_40">
 
             <TextView
                 android:id="@+id/title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_15"
                 android:text="@string/set_password"
-                android:textColor="@color/white"
+                android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_20"
                 android:textStyle="bold" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_45"
-                android:layout_marginTop="@dimen/dp_80"
-                android:paddingStart="@dimen/dp_45"
-                android:paddingEnd="@dimen/dp_45">
+                android:layout_height="@dimen/dp_56"
+                android:layout_marginTop="@dimen/dp_65">
 
                 <ImageView
                     android:id="@+id/tag_password_iv"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
                     android:layout_centerVertical="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/ic_login_password" />
+                    android:src="@mipmap/ic_login_password_gray" />
 
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -64,10 +63,10 @@
                     android:inputType="textPassword"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:textColor="@color/black_333333"
+                    android:textColorHint="@color/grey_B5B5B5"
                     android:textSize="@dimen/sp_14" />
 
                 <ImageView
@@ -77,7 +76,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/ic_login_eye_close" />
+                    android:src="@mipmap/ic_login_eye_close_gray" />
 
             </RelativeLayout>
 
@@ -85,25 +84,20 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginStart="@dimen/dp_45"
-                android:layout_marginEnd="@dimen/dp_45"
-                android:background="@color/grey_CCCCCC" />
+                android:background="@color/grey_B5B5B5" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_45"
-                android:layout_marginTop="@dimen/dp_20"
-                android:paddingStart="@dimen/dp_45"
-                android:paddingEnd="@dimen/dp_45">
+                android:layout_height="@dimen/dp_56">
 
                 <ImageView
                     android:id="@+id/confirm_iv"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
                     android:layout_centerVertical="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/ic_confirm_password" />
+                    android:src="@mipmap/ic_confirm_password_gray" />
 
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -119,10 +113,10 @@
                     android:inputType="textPassword"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:textColor="@color/black_333333"
+                    android:textColorHint="@color/grey_B5B5B5"
                     android:textSize="@dimen/sp_14" />
 
                 <ImageView
@@ -132,7 +126,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/ic_login_eye_close" />
+                    android:src="@mipmap/ic_login_eye_close_gray" />
 
             </RelativeLayout>
 
@@ -140,23 +134,20 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginStart="@dimen/dp_45"
-                android:layout_marginEnd="@dimen/dp_45"
-                android:background="@color/grey_CCCCCC" />
+                android:background="@color/grey_B5B5B5" />
 
 
             <TextView
                 android:id="@+id/register_tv"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_45"
-                android:layout_marginStart="@dimen/dp_45"
-                android:layout_marginTop="85dp"
-                android:layout_marginEnd="@dimen/dp_45"
-                android:background="@drawable/shape_gradient_integral_sign_out_radius8"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginTop="@dimen/dp_44"
+                android:background="@drawable/shape_blue_radius_22"
                 android:gravity="center"
                 android:text="@string/login_in"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
+                android:textColor="@color/white_FEFEFE"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
 
 
         </LinearLayout>

@@ -49,6 +49,11 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     private boolean mIsCipherTextConfirm = true;
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_register_new;
     }
@@ -56,7 +61,6 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     @Override
     protected void initView() {
         BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
-        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.blue_395668));
         password_aet = findViewById(R.id.password_aet);
         password_confirm_aet = findViewById(R.id.password_confirm_aet);
         password_rule_iv = findViewById(R.id.password_rule_iv);
@@ -82,9 +86,9 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
-            FeaturesUtil.editOpen(password_aet, password_rule_iv);
+            FeaturesUtil.editOpen(password_aet, password_rule_iv,R.mipmap.ic_login_eye_open_gray);
         } else {
-            FeaturesUtil.editDismiss(password_aet, password_rule_iv);
+            FeaturesUtil.editDismiss(password_aet, password_rule_iv,R.mipmap.ic_login_eye_close_gray);
         }
         mIsCipherText = !mIsCipherText;
     }

@@ -284,13 +284,20 @@
                 android:orientation="horizontal">
 
 
-                <CheckedTextView
-                    android:id="@+id/login_rule_tv"
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/rule_check_cb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_6"
+                    android:button="@drawable/selector_login_rule"
+                    android:checked="false" />
+
+
+                <CheckedTextView
+                    android:id="@+id/login_rule_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:checked="true"
-                    android:drawableStart="@drawable/selector_store_cart_select_all"
-                    android:drawablePadding="@dimen/dp_6"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/login_rule"
                     android:textColor="@color/white" />

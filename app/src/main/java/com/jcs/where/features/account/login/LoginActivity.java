@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.blankj.utilcode.util.BarUtils;
@@ -37,6 +38,8 @@ import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Objects;
 
 import cn.sharesdk.facebook.Facebook;
 import cn.sharesdk.framework.PlatformDb;
@@ -84,6 +87,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      * 默认 菲律宾+63前缀
      */
     private String mCountryPrefix = StringUtils.getStringArray(R.array.country_prefix)[0];
+    private AppCompatCheckBox rule_check_cb;
 
     @Override
     protected int getLayoutId() {
@@ -114,6 +118,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         forgot_password_tv = findViewById(R.id.forgot_password_tv);
         password_rule_iv = findViewById(R.id.password_rule_iv);
         title_tv = findViewById(R.id.title_tv);
+        rule_check_cb = findViewById(R.id.rule_check_cb);
 
     }
 
@@ -142,7 +147,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                     @Override
                     public void updateDrawState(@NonNull TextPaint ds) {
                         ds.setColor(Color.WHITE);
-                        ds.setUnderlineText(false);
+                        ds.setUnderlineText(true);
                     }
                 })
                 .append(and)
@@ -156,7 +161,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                     @Override
                     public void updateDrawState(@NonNull TextPaint ds) {
                         ds.setColor(Color.WHITE);
-                        ds.setUnderlineText(false);
+                        ds.setUnderlineText(true);
                     }
                 }).create();
 
@@ -215,9 +220,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      */
     private void onLoginClick(View view) {
 
-        String account = phone_aet.getText().toString().trim();
-        String verifyCode = verify_code_aet.getText().toString().trim();
-        String password = password_aet.getText().toString().trim();
+        if (!rule_check_cb.isChecked()) {
+            ToastUtils.showShort(R.string.agrees_rule_hint);
+            return;
+        }
+
+        String account = Objects.requireNonNull(phone_aet.getText()).toString().trim();
+        String verifyCode = Objects.requireNonNull(verify_code_aet.getText()).toString().trim();
+        String password = Objects.requireNonNull(password_aet.getText()).toString().trim();
         presenter.handleLogin(mIsVerifyMode, mCountryPrefix, account, verifyCode, password);
     }
 

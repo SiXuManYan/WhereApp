@@ -196,7 +196,7 @@
 
     <string name="integral">My Integral</string>
     <string name="consecutive_check_in_to_win_integral">Consecutive check in to win integral</string>
-    <string name="integral_rule">Rule</string>
+    <string name="integral_rule">Sign In Rule</string>
     <string name="integral_continuous_time">1day</string>
     <string name="my_scores">My scores</string>
     <string name="sign_in_now">Checked in now</string>
@@ -894,5 +894,7 @@ Gentleman must let go</string>
     <string name="no_content">No content yet</string>
     <string name="please_selected">please selected</string>
     <string name="please_upload">Please upload</string>
+    <string name="agrees_rule_hint">Please agrees to the \n "User Agreement" and "Privacy Policy"</string>
+    <string name="daily_sign_in">Daily Sign In</string>
 
 </resources>

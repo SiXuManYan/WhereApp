@@ -200,7 +200,7 @@
 
     <string name="integral">我的积分</string>
     <string name="consecutive_check_in_to_win_integral">连续签到赢积分</string>
-    <string name="integral_rule">规则</string>
+    <string name="integral_rule">签到规则</string>
     <string name="integral_continuous_time">1天</string>
     <string name="my_scores">我的积分</string>
     <string name="sign_in_now">立即签到</string>
@@ -901,5 +901,7 @@ Gentleman must let go</string>
     <string name="no_content">暂无内容</string>
     <string name="please_selected">请选择</string>
     <string name="please_upload">请上传</string>
+    <string name="agrees_rule_hint">请同意《用户协议》和《隐私政策》</string>
+    <string name="daily_sign_in">每日签到</string>
 
 </resources>

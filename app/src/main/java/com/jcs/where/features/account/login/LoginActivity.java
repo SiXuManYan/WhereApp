@@ -1,11 +1,16 @@
 package com.jcs.where.features.account.login;
 
+import static com.jcs.where.utils.Constant.PARAM_ACCOUNT;
+import static com.jcs.where.utils.Constant.PARAM_COUNTRY_CODE;
+import static com.jcs.where.utils.Constant.PARAM_VERIFY_CODE;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -37,10 +42,6 @@ import cn.sharesdk.facebook.Facebook;
 import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.google.GooglePlus;
 
-import static com.jcs.where.utils.Constant.PARAM_ACCOUNT;
-import static com.jcs.where.utils.Constant.PARAM_COUNTRY_CODE;
-import static com.jcs.where.utils.Constant.PARAM_VERIFY_CODE;
-
 /**
  * Created by Wangsw  2021/1/28 16:43.
  * 注册登录 + 密码登录
@@ -49,13 +50,15 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
 
     private TextView
-            login_rule_tv,
+
             country_tv,
             login_type_tv,
             get_verify_tv,
             error_hint_tv,
             forgot_password_tv,
             title_tv;
+
+    private CheckedTextView login_rule_tv;
 
     private AppCompatEditText
             phone_aet,
@@ -98,7 +101,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         }
 
         BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
-        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.blue_395668));
+        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.color_4966C1));
         login_rule_tv = findViewById(R.id.login_rule_tv);
         country_tv = findViewById(R.id.country_tv);
         phone_aet = findViewById(R.id.phone_aet);

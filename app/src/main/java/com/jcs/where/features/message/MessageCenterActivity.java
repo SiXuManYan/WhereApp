@@ -11,11 +11,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.flyco.tablayout.SlidingTabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.features.message.conversation.BusinessConversationFragment;
 import com.jcs.where.features.message.notice.SystemNoticeFragment;
-import com.jcs.where.widget.tabs.SlidingTabLayout;
 
 /**
  * Created by Wangsw  2021/2/19 17:07.

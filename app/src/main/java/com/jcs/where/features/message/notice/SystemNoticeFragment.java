@@ -1,11 +1,15 @@
 package com.jcs.where.features.message.notice;
 
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
@@ -14,6 +18,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.message.notice.detail.SystemMessageDetailActivity;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.widget.list.DividerDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +47,7 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
     protected void initView(View view) {
         swipe_layout = view.findViewById(R.id.swipe_layout);
         recycler = view.findViewById(R.id.recycler);
+        recycler.addItemDecoration(new DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), SizeUtils.dp2px(1f),SizeUtils.dp2px(15f),0));
     }
 
     @Override

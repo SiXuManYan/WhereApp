@@ -85,6 +85,9 @@
     <color name="color_F64944">#F64944</color>
     <color name="color_F12F2F">#F12F2F</color>
     <color name="color_F0F0F0">#F0F0F0</color>
+    <color name="color_EC0000">#EC0000</color>
+    <color name="color_FF4F4F">#FF4F4F</color>
+    <color name="color_4966C1">#4966C1</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

@@ -104,7 +104,7 @@
                         android:id="@+id/verify_code_aet"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_toStartOf="@+id/tag_v"
+                        android:layout_toStartOf="@+id/get_verify_tv"
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="@string/verify_code_hint"
@@ -112,21 +112,11 @@
                         android:inputType="number"
                         android:lines="1"
                         android:maxLength="11"
-                        android:paddingStart="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_0"
                         android:paddingEnd="@dimen/dp_10"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
                         android:textSize="@dimen/sp_16" />
-
-                    <View
-                        android:id="@+id/tag_v"
-                        android:layout_width="1px"
-                        android:layout_height="10dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:layout_marginEnd="@dimen/dp_10"
-                        android:layout_toStartOf="@+id/get_verify_tv"
-                        android:background="@color/grey_CCCCCC" />
 
 
                     <TextView
@@ -165,7 +155,7 @@
                         android:inputType="textPassword"
                         android:lines="1"
                         android:maxLength="20"
-                        android:paddingStart="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_0"
                         android:paddingEnd="@dimen/dp_10"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"

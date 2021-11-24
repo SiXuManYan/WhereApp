@@ -55,6 +55,11 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
     private int mLoginType;
 
     @Override
+    protected boolean isStatusDark() {
+        return true;
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_bind_phone;
     }
@@ -62,7 +67,6 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
     @Override
     protected void initView() {
         BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
-        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.blue_395668));
         phone_aet = findViewById(R.id.phone_aet);
         verify_code_aet = findViewById(R.id.verify_code_aet);
         password_aet = findViewById(R.id.password_aet);
@@ -103,10 +107,10 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
             // 切换至明文
-            FeaturesUtil.editOpen(password_aet, password_rule_iv);
+            FeaturesUtil.editOpen(password_aet, password_rule_iv,R.mipmap.ic_login_eye_open_gray);
         } else {
             // 切换至密文
-            FeaturesUtil.editDismiss(password_aet, password_rule_iv);
+            FeaturesUtil.editDismiss(password_aet, password_rule_iv,R.mipmap.ic_login_eye_close_gray);
         }
         mIsCipherText = !mIsCipherText;
     }

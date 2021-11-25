@@ -221,8 +221,8 @@
     <string name="sign_in_rule_message">1. Log-in users can sign in once a day and receive rewards.\n\n2. There will be extra points for 7 consecutive check-in days, and no extra points for the remaining consecutive check-in days.\n\n3. When the continuous check-in is interrupted, the accumulated points will be retained, and will not be cleared, but the consecutive check-in days will be accumulated again.\n\n4. If there is a user violation, where has the right to terminate its sign-in immediately.</string>
     <string name="temp_zero">0</string>
 
-    <string name="to_finish">to finish</string>
-    <string name="finished">finished</string>
+    <string name="to_finish">To Complete</string>
+    <string name="finished">Finished</string>
 
     <string name="add_format">+%1$d</string>
 
@@ -233,14 +233,14 @@
     <string name="sign_in_type_4">Sign in</string>
 
     <string name="empty_data_default">Data Updating</string>
-    <string name="item_sign_in">Sign in</string>
-    <string name="item_sign_in_content">Points for successful sign-in</string>
-    <string name="item_comment">Comment points</string>
-    <string name="ic_task_comment_content">Give praise to get higher points</string>
-    <string name="ic_task_invite">Invite new users to register</string>
-    <string name="ic_task_invite_content">After successful registration, the inviter can get 500 points</string>
-    <string name="ic_task_register">Register points</string>
-    <string name="ic_task_register_content">Get 500 points after successful registration</string>
+    <string name="item_sign_in">Checked in</string>
+    <string name="item_sign_in_content">Sign in and get 20 points</string>
+    <string name="item_comment">Comment Merchant</string>
+    <string name="ic_task_comment_content">Comments can get 20 points</string>
+    <string name="ic_task_invite">Invitation To Register</string>
+    <string name="ic_task_invite_content">Inviters can get 500 points</string>
+    <string name="ic_task_register">Registration Points</string>
+    <string name="ic_task_register_content">Register to earn 500 points</string>
     <string name="news_more_recommend">More recommend</string>
     <string name="mine_customer_service">Service</string>
     <string name="title_setting">Settings</string>
@@ -896,5 +896,6 @@ Gentleman must let go</string>
     <string name="please_upload">Please upload</string>
     <string name="agrees_rule_hint">Please agrees to the \n "User Agreement" and "Privacy Policy"</string>
     <string name="daily_sign_in">Daily Sign In</string>
+    <string name="sign_in_rewards">Sign in and receive rewards</string>
 
 </resources>

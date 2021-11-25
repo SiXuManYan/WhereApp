@@ -145,6 +145,8 @@ public class IntegralActivity extends BaseMvpActivity<IntegralPresenter> impleme
         if (mSignInContainerLl.getVisibility() != View.VISIBLE) {
             mSignInContainerLl.setVisibility(View.VISIBLE);
         }
+
+
     }
 
     /**

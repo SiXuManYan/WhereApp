@@ -16,7 +16,7 @@
         android:width="1px"
         android:color="@color/white" />
 
-    <corners android:radius="@dimen/dp_12" />
+    <corners android:radius="@dimen/dp_14" />
 
 
 </shape>

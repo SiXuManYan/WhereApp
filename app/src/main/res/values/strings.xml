@@ -232,9 +232,9 @@
     <string name="sign_in_type_4">签到</string>
     <string name="empty_data_default">数据更新中</string>
     <string name="item_sign_in">签到</string>
-    <string name="item_sign_in_content">成功签到可获得积分</string>
-    <string name="item_comment">评论积分</string>
-    <string name="ic_task_comment_content">给好评可以获得更高积分哦</string>
+    <string name="item_sign_in_content">成功签到可获得20积分</string>
+    <string name="item_comment">评论商家</string>
+    <string name="ic_task_comment_content">给好评可以获得20积分</string>
     <string name="ic_task_invite">邀请新用户注册</string>
     <string name="ic_task_invite_content">注册成功后邀请者可获得500积分</string>
     <string name="ic_task_register">注册积分</string>
@@ -903,5 +903,6 @@ Gentleman must let go</string>
     <string name="please_upload">请上传</string>
     <string name="agrees_rule_hint">请同意《用户协议》和《隐私政策》</string>
     <string name="daily_sign_in">每日签到</string>
+    <string name="sign_in_rewards">签到领奖励</string>
 
 </resources>

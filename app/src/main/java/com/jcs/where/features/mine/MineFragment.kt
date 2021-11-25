@@ -14,8 +14,9 @@ import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.collection.CollectionActivity
 import com.jcs.where.features.coupon.CardCouponActivity
+import com.jcs.where.features.daily.scoe.ScoreActivity
+import com.jcs.where.features.daily.sign.SignInActivity
 import com.jcs.where.features.footprint.FootprintActivity
-import com.jcs.where.features.integral.SignInActivity
 import com.jcs.where.features.merchant.MerchantSettledActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
@@ -75,7 +76,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(SignInActivity::class.java)
         }
         integral_tv.setOnClickListener {
-            integral_iv.performClick()
+            startActivityAfterLogin(ScoreActivity::class.java)
         }
         collect_tv.setOnClickListener {
             startActivityAfterLogin(CollectionActivity::class.java)

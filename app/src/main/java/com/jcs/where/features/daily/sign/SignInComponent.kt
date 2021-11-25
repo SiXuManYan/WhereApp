@@ -1,4 +1,4 @@
-package com.jcs.where.features.integral
+package com.jcs.where.features.daily.sign
 
 import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver

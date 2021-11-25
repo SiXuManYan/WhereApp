@@ -536,7 +536,8 @@
         <activity android:name=".features.collection.CollectionActivity" />
         <activity android:name=".features.footprint.FootprintActivity" />
         <activity android:name=".features.merchant.MerchantSettledActivity" />
-        <activity android:name=".features.integral.SignInActivity" />
+        <activity android:name=".features.daily.sign.SignInActivity" />
+        <activity android:name=".features.daily.scoe.ScoreActivity" />
 
 
     </application>

@@ -1,4 +1,4 @@
-package com.jcs.where.features.integral
+package com.jcs.where.features.daily.sign
 
 import android.widget.CheckedTextView
 import android.widget.LinearLayout

@@ -904,5 +904,9 @@ Gentleman must let go</string>
     <string name="agrees_rule_hint">请同意《用户协议》和《隐私政策》</string>
     <string name="daily_sign_in">每日签到</string>
     <string name="sign_in_rewards">签到领奖励</string>
+    <string name="score_rule">积分规则</string>
+    <string name="my_points">我的积分</string>
+    <string name="current_point">当前可用积分</string>
+    <string name="get_point_hint">下单积分可抵扣现金</string>
 
 </resources>

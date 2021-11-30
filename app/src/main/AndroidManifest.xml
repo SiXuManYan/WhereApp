@@ -538,6 +538,7 @@
         <activity android:name=".features.merchant.MerchantSettledActivity" />
         <activity android:name=".features.daily.sign.SignInActivity" />
         <activity android:name=".features.daily.scoe.ScoreActivity" />
+        <activity android:name=".features.mall.home.MallHomeActivity" />
 
 
     </application>

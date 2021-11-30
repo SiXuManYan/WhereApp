@@ -176,8 +176,8 @@
                             <HorizontalScrollView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/white"
                                 android:layout_toStartOf="@+id/more_news_tv"
+                                android:background="@color/white"
                                 android:scrollbars="none">
 
                                 <com.flyco.tablayout.CommonTabLayout

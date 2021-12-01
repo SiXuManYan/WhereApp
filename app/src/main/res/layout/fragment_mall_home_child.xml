@@ -27,7 +27,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/banner_rv"
                     android:layout_width="match_parent"
-                    tools:listitem="@layout/item_store_banner"
+                    tools:listitem="@layout/item_mall_banner"
                     android:layout_height="wrap_content"
                     tools:itemCount="1"
                     android:background="@color/white" />

@@ -25,10 +25,10 @@ class MallHomeChildBannerAdapter : BaseQuickAdapter<StoryBannerCategory, BaseVie
         val second_ll = holder.getView<LinearLayout>(R.id.container_second_ll)
 
         item.childItem.forEachIndexed { index, category ->
-            if (index < 4) {
+            if (index < 3) {
                 bindChild(first_ll, index, category)
             } else {
-                bindChild(second_ll, index - 4, category)
+                bindChild(second_ll, index - 3, category)
             }
         }
 

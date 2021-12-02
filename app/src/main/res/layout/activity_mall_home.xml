@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -76,27 +78,26 @@
 
 
         <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tabs_type"
+            android:id="@+id/tabs_stl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/split_v"
             app:tl_indicator_color="@color/transplant"
             app:tl_indicator_corner_radius="1.5dp"
-            app:tl_indicator_width_equal_title="true"
             app:tl_textBold="SELECT"
             app:tl_textSelectColor="@color/blue_377BFF"
             app:tl_textUnselectColor="@color/grey_666666"
             app:tl_textsize="@dimen/sp_15"
-            android:layout_toStartOf="@+id/split_v"
             app:tl_underline_color="@color/grey_F5F5F5"
             app:tl_underline_height="1px" />
 
 
         <View
             android:id="@+id/split_v"
-            android:layout_toStartOf="@+id/all_iv"
-            android:background="@color/grey_F5F5F5"
             android:layout_width="match_parent"
-            android:layout_height="1px"/>
+            android:layout_height="1px"
+            android:layout_toStartOf="@+id/all_iv"
+            android:background="@color/grey_F5F5F5" />
 
 
         <ImageView
@@ -112,10 +113,28 @@
     </RelativeLayout>
 
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager_vp"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_category_rv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_300"
+            android:background="@color/white"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior=".view.sheet.TopSheetBehavior"
+            tools:listitem="@layout/item_address_time" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </LinearLayout>

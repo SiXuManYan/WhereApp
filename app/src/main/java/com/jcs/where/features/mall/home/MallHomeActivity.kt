@@ -1,13 +1,22 @@
 package com.jcs.where.features.mall.home
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.home.child.MallHomeChildFragment
+import com.jcs.where.view.sheet.TopSheetBehavior
 import kotlinx.android.synthetic.main.activity_mall_home.*
+import org.greenrobot.eventbus.EventBus
+
 
 /**
  * Created by Wangsw  2021/11/30 16:22.
@@ -15,40 +24,104 @@ import kotlinx.android.synthetic.main.activity_mall_home.*
  */
 class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
+    private lateinit var mAdapter: TopCategoryAdapter
+    private lateinit var topSheetBehavior: TopSheetBehavior<RecyclerView>
+
     private var firstCategory: ArrayList<Category> = ArrayList()
 
     override fun getLayoutId() = R.layout.activity_mall_home
 
     override fun initView() {
+        initTop()
+    }
 
+    private fun initTop() {
+
+        topSheetBehavior = TopSheetBehavior.from(top_category_rv)
+        topSheetBehavior.setTopSheetCallback(object : TopSheetBehavior.TopSheetCallback() {
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+        })
+
+
+        mAdapter = TopCategoryAdapter().apply {
+            setOnItemClickListener { _, _, position ->
+                val selectCategory = mAdapter.data[position]
+
+                // 更新标题
+                pager_vp.currentItem = position
+
+                updateChild(selectCategory)
+                topSheetBehavior.state = TopSheetBehavior.STATE_COLLAPSED
+
+            }
+        }
+
+        top_category_rv.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = mAdapter
+        }
+
+    }
+
+    private fun updateChild(selectCategory: Category) {
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_SELECTED_CATEGORY, selectCategory))
     }
 
     override fun initData() {
         presenter = MallHomePresenter(this)
+        presenter.getFirstCategory()
     }
 
     override fun bindListener() {
+
         cart_iv.setOnClickListener {
-            // todo 新版商城购物车
+
         }
 
         search_ll.setOnClickListener {
-            // TODO 新版商城筛选
+
+        }
+        all_iv.setOnClickListener {
+            if (topSheetBehavior.state == TopSheetBehavior.STATE_EXPANDED) {
+                topSheetBehavior.state = TopSheetBehavior.STATE_COLLAPSED
+            } else {
+                topSheetBehavior.state = TopSheetBehavior.STATE_EXPANDED
+            }
         }
 
     }
 
+
     override fun bindCategory(response: ArrayList<Category>, titles: ArrayList<String>) {
 
+        firstCategory.clear()
         firstCategory.addAll(response)
-        val innerPagerAdapter = InnerPagerAdapter(supportFragmentManager, 0).apply {
-            notifyDataSetChanged()
-        }
+
+        val innerPagerAdapter = InnerPagerAdapter(supportFragmentManager, 0)
+        innerPagerAdapter.notifyDataSetChanged()
+
         pager_vp.apply {
             offscreenPageLimit = response.size
-            adapter = innerPagerAdapter
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+
+                override fun onPageSelected(position: Int) = updateChild(firstCategory[position])
+
+                override fun onPageScrollStateChanged(state: Int) = Unit
+            })
         }
-        tabs_type.setViewPager(pager_vp)
+        pager_vp.adapter = innerPagerAdapter
+        tabs_stl.setViewPager(pager_vp, titles.toTypedArray())
+
+        mAdapter.setNewInstance(firstCategory)
     }
 
 

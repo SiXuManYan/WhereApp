@@ -29,6 +29,7 @@ import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.mall.home.MallHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.message.MessageCenterActivity
@@ -186,7 +187,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         })
                     }
                     10 -> {
-                        startActivity(StoreRecommendActivity::class.java)
+//                        startActivity(StoreRecommendActivity::class.java)
+                        startActivity(MallHomeActivity::class.java)
                     }
 
                     else -> showComing()

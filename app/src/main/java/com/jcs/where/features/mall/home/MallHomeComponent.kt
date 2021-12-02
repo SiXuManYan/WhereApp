@@ -19,6 +19,7 @@ class MallHomePresenter(private var view: MallHomeView) : BaseMvpPresenter(view)
 
 
     fun getFirstCategory() {
+
         requestApi(mRetrofit.storeCategoryFirst, object : BaseMvpObserver<ArrayList<Category>>(view) {
             override fun onSuccess(response: ArrayList<Category>) {
                 val titles: ArrayList<String> = ArrayList()

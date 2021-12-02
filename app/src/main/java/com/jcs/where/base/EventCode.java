@@ -134,5 +134,7 @@ public class EventCode {
 
     public static final int EVENT_MERCHANT_CHANGE_TYPE = 1030;
 
+    public static final int EVENT_SELECTED_CATEGORY = 1031;
+
 
 }

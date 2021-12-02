@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_4"
+    android:paddingBottom="@dimen/dp_4">
 
 
     <LinearLayout
@@ -19,8 +21,6 @@
 
         <include layout="@layout/item_category_child_for_mall" />
 
-        <include layout="@layout/item_category_child_for_mall" />
-
 
     </LinearLayout>
 
@@ -29,10 +29,9 @@
         android:id="@+id/container_second_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_112"
+        android:layout_marginTop="@dimen/dp_4"
         android:gravity="center"
         android:orientation="horizontal">
-
-        <include layout="@layout/item_category_child_for_mall" />
 
         <include layout="@layout/item_category_child_for_mall" />
 

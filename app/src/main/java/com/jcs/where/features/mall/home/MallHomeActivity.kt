@@ -9,13 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
-import com.jcs.where.base.BaseEvent
-import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.home.child.MallHomeChildFragment
 import com.jcs.where.view.sheet.TopSheetBehavior
 import kotlinx.android.synthetic.main.activity_mall_home.*
-import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -30,6 +27,8 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
     private var firstCategory: ArrayList<Category> = ArrayList()
 
     override fun getLayoutId() = R.layout.activity_mall_home
+
+    override fun isStatusDark() = true
 
     override fun initView() {
         initTop()
@@ -58,7 +57,6 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
                 // 更新标题
                 pager_vp.currentItem = position
 
-                updateChild(selectCategory)
                 topSheetBehavior.state = TopSheetBehavior.STATE_COLLAPSED
 
             }
@@ -71,9 +69,6 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     }
 
-    private fun updateChild(selectCategory: Category) {
-        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_SELECTED_CATEGORY, selectCategory))
-    }
 
     override fun initData() {
         presenter = MallHomePresenter(this)
@@ -105,20 +100,23 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
         firstCategory.clear()
         firstCategory.addAll(response)
 
+
+
+        pager_vp.offscreenPageLimit = response.size
+        pager_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+
+            override fun onPageSelected(position: Int) {
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) = Unit
+        })
+
         val innerPagerAdapter = InnerPagerAdapter(supportFragmentManager, 0)
         innerPagerAdapter.notifyDataSetChanged()
-
-        pager_vp.apply {
-            offscreenPageLimit = response.size
-            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
-
-                override fun onPageSelected(position: Int) = updateChild(firstCategory[position])
-
-                override fun onPageScrollStateChanged(state: Int) = Unit
-            })
-        }
         pager_vp.adapter = innerPagerAdapter
+
         tabs_stl.setViewPager(pager_vp, titles.toTypedArray())
 
         mAdapter.setNewInstance(firstCategory)
@@ -128,6 +126,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
         override fun getPageTitle(position: Int): CharSequence = firstCategory[position].name
+
 
         override fun getItem(position: Int): Fragment = MallHomeChildFragment().apply {
             targetFirstCategory = firstCategory[position]

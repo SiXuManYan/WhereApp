@@ -12,7 +12,7 @@ import com.jcs.where.utils.GlideUtil
 
 /**
  * Created by Wangsw  2021/12/2 17:09.
- *
+ * 新版商城推荐
  */
 class MallRecommendAdapter :BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.layout.item_mall_rerommend) {
     override fun convert(holder: BaseViewHolder, item: StoreRecommend) {
@@ -27,11 +27,11 @@ class MallRecommendAdapter :BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.l
             return@forEach
         }
         title.text = item.title
-        nowPrice.text = StringUtils.getString(R.string.price_unit_format,"-")
+        nowPrice.text = StringUtils.getString(R.string.price_unit_format,"????")
 
-        val oldBuilder = SpanUtils().append(StringUtils.getString(R.string.price_unit_format, "-"))
+        val oldBuilder = SpanUtils().append(StringUtils.getString(R.string.price_unit_format, "????"))
             .setStrikethrough().create()
-        nowPrice.text = oldBuilder
+        oldPrice.text = oldBuilder
 
 
 

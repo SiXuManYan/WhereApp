@@ -1,9 +1,11 @@
 package com.jcs.where.features.mall.home.child
 
+import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
+import com.jcs.where.api.response.store.StoreRecommend
 
 /**
  * Created by Wangsw  2021/11/30 17:01.
@@ -11,6 +13,7 @@ import com.jcs.where.api.response.category.StoryBannerCategory
  */
 interface MallHomeChildView : BaseMvpView {
     fun bindBannerData(result: ArrayList<StoryBannerCategory>)
+    fun bindRecommend(response:ArrayList<StoreRecommend>)
 
 }
 
@@ -68,6 +71,12 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
 
     fun getRecommend() {
 
+        // 暂时用原有商城推荐替代
+        requestApi(mRetrofit.storeRecommends, object : BaseMvpObserver<ArrayList<StoreRecommend>>(view) {
+            override fun onSuccess(response: ArrayList<StoreRecommend>) {
+                view.bindRecommend(response)
+            }
+        })
     }
 
 }

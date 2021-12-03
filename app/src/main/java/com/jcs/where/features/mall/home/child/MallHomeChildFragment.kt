@@ -12,8 +12,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
-import com.jcs.where.base.BaseEvent
-import com.jcs.where.base.EventCode
+import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_mall_home_child.*
@@ -24,10 +23,13 @@ import kotlinx.android.synthetic.main.fragment_mall_home_child.*
  */
 class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHomeChildView, OnItemClickListener {
 
-    /** 当前页对应的一级分类 */
+    /** 当前页面对应的一级分类 */
     lateinit var targetFirstCategory: Category
 
+    /** 二级分类轮播 */
     private lateinit var mBannerAdapter: MallHomeChildBannerAdapter
+
+    /** 商品推荐 */
     private lateinit var mAdapter: MallRecommendAdapter
 
     override fun getLayoutId() = R.layout.fragment_mall_home_child
@@ -45,14 +47,15 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
             commonDrawableResId = R.drawable.shape_point_selected_d8d8d8
         }
 
-        mBannerAdapter = MallHomeChildBannerAdapter()
+        mBannerAdapter = MallHomeChildBannerAdapter().apply {
+            setEmptyView(R.layout.view_empty_data_brvah_default)
+        }
         banner_rv.apply {
             adapter = mBannerAdapter
-            layoutManager    = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
         val helper = PagerSnapHelper()
         helper.attachToRecyclerView(banner_rv)
-
 
         banner_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -67,12 +70,12 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
         })
 
 
-
     }
 
     private fun initContent() {
-        mAdapter = MallRecommendAdapter()
-        mAdapter.setOnItemClickListener(this@MallHomeChildFragment)
+        mAdapter = MallRecommendAdapter().apply {
+            setOnItemClickListener(this@MallHomeChildFragment)
+        }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
         content_rv.apply {
@@ -84,13 +87,15 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     override fun initData() {
         presenter = MallHomeChildPresenter(this)
-        loadData()
+
     }
 
-    private fun loadData() {
+
+    override fun loadOnVisible() {
         presenter.handleBanner(targetFirstCategory)
         presenter.getRecommend()
     }
+
 
     override fun bindListener() {
 
@@ -98,27 +103,14 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     override fun bindBannerData(result: ArrayList<StoryBannerCategory>) {
         mBannerAdapter.setNewInstance(result)
+        point_view.setPointCount(result.size)
+    }
+
+    override fun bindRecommend(response: ArrayList<StoreRecommend>) {
+        mAdapter.setNewInstance(response)
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        // todo 新版商城详情
-    }
-
-    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        super.onEventReceived(baseEvent)
-
-        when (baseEvent.code) {
-            EventCode.EVENT_SELECTED_CATEGORY -> {
-                val category = baseEvent.data as Category
-                targetFirstCategory = category
-                loadData()
-            }
-            else -> {
-            }
-        }
-
-
-
 
     }
 

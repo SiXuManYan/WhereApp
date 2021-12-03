@@ -127,8 +127,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/top_category_rv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_300"
-            android:background="@color/white"
+            android:layout_height="@dimen/dp_400"
+            android:background="@color/colorPrimary"
             app:behavior_peekHeight="0dp"
             app:layout_behavior=".view.sheet.TopSheetBehavior"
             tools:listitem="@layout/item_address_time" />

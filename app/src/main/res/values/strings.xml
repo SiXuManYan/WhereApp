@@ -908,5 +908,9 @@ Gentleman must let go</string>
     <string name="my_points">我的积分</string>
     <string name="current_point">当前可用积分</string>
     <string name="get_point_hint">下单积分可抵扣现金</string>
+    <string name="complex">综合</string>
+    <string name="sales">销量</string>
+    <string name="price_down">价格降序</string>
+    <string name="price_up">价格升序</string>
 
 </resources>

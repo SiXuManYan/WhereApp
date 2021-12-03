@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp_44"
+    android:gravity="center"
+    android:paddingStart="@dimen/dp_8"
+    android:paddingEnd="@dimen/dp_8"
+    android:orientation="vertical">
+
+
+    <CheckedTextView
+        android:id="@+id/child_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_24"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:background="@drawable/selector_restaurant_filter_2"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:minWidth="@dimen/dp_52"
+        android:text="@string/complex"
+        android:textColor="@color/selector_black_blue"
+        android:textSize="@dimen/sp_13"
+        tools:text="烧烤" />
+
+
+</LinearLayout>

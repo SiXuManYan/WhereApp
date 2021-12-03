@@ -19,6 +19,9 @@ interface MallHomeChildView : BaseMvpView {
 
 class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPresenter(view) {
 
+    /**
+     * 获取一级分类中的二级分类，用于轮播
+     */
     fun handleBanner(targetFirstCategory: Category) {
 
         val result: ArrayList<StoryBannerCategory> = ArrayList()

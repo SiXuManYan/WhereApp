@@ -14,7 +14,7 @@ import com.jcs.where.utils.GlideUtil
  * Created by Wangsw  2021/12/2 17:09.
  * 新版商城推荐
  */
-class MallRecommendAdapter :BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.layout.item_mall_rerommend) {
+class MallRecommendAdapter :BaseQuickAdapter<StoreRecommend, BaseViewHolder>(R.layout.item_mall_recommend) {
     override fun convert(holder: BaseViewHolder, item: StoreRecommend) {
 
         val image = holder.getView<ImageView>(R.id.image_iv)

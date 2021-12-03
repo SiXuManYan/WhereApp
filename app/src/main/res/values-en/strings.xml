@@ -901,5 +901,9 @@ Gentleman must let go</string>
     <string name="my_points">My points</string>
     <string name="current_point">Current Available Points</string>
     <string name="get_point_hint">Deductible cash of single point</string>
+    <string name="complex">Complex</string>
+    <string name="sales">Sales</string>
+    <string name="price_down">Price Down</string>
+    <string name="price_up">Price Up</string>
 
 </resources>

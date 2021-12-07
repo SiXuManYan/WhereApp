@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
+import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.home.child.MallHomeChildFragment
 import com.jcs.where.view.sheet.TopSheetBehavior
@@ -24,7 +25,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
     private lateinit var mAdapter: TopCategoryAdapter
     private lateinit var topSheetBehavior: TopSheetBehavior<RecyclerView>
 
-    private var firstCategory: ArrayList<Category> = ArrayList()
+    private var firstCategory: ArrayList<MallCategory> = ArrayList()
 
     override fun getLayoutId() = R.layout.activity_mall_home
 
@@ -95,7 +96,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
     }
 
 
-    override fun bindCategory(response: ArrayList<Category>, titles: ArrayList<String>) {
+    override fun bindCategory(response: ArrayList<MallCategory>, titles: ArrayList<String>) {
 
         firstCategory.clear()
         firstCategory.addAll(response)

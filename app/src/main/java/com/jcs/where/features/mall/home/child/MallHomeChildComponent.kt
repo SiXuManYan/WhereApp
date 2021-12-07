@@ -5,6 +5,9 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
+import com.jcs.where.api.response.mall.MallBannerCategory
+import com.jcs.where.api.response.mall.MallCategory
+import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.api.response.store.StoreRecommend
 
 /**
@@ -12,8 +15,8 @@ import com.jcs.where.api.response.store.StoreRecommend
  *
  */
 interface MallHomeChildView : BaseMvpView {
-    fun bindBannerData(result: ArrayList<StoryBannerCategory>)
-    fun bindRecommend(response:ArrayList<StoreRecommend>)
+    fun bindBannerData(result: ArrayList<MallBannerCategory>)
+    fun bindRecommend(response:ArrayList<MallGood>)
 
 }
 
@@ -22,17 +25,17 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
     /**
      * 获取一级分类中的二级分类，用于轮播
      */
-    fun handleBanner(targetFirstCategory: Category) {
+    fun handleBanner(targetFirstCategory: MallCategory) {
 
-        val result: ArrayList<StoryBannerCategory> = ArrayList()
+        val result: ArrayList<MallBannerCategory> = ArrayList()
 
-        val page0 = StoryBannerCategory()
-        val page1 = StoryBannerCategory()
-        val page2 = StoryBannerCategory()
-        val page3 = StoryBannerCategory()
-        val page4 = StoryBannerCategory()
+        val page0 = MallBannerCategory()
+        val page1 = MallBannerCategory()
+        val page2 = MallBannerCategory()
+        val page3 = MallBannerCategory()
+        val page4 = MallBannerCategory()
 
-        targetFirstCategory.child_categories.forEachIndexed { index, category ->
+        targetFirstCategory.second_level.forEachIndexed { index, category ->
             val i = 6
             if (index < i) {
                 page0.childItem.add(category)
@@ -72,11 +75,11 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
 
     }
 
-    fun getRecommend() {
+    fun getRecommend(categoryId:Int) {
 
         // 暂时用原有商城推荐替代
-        requestApi(mRetrofit.storeRecommends, object : BaseMvpObserver<ArrayList<StoreRecommend>>(view) {
-            override fun onSuccess(response: ArrayList<StoreRecommend>) {
+        requestApi(mRetrofit.getMallRecommendGood(categoryId), object : BaseMvpObserver<ArrayList<MallGood>>(view) {
+            override fun onSuccess(response: ArrayList<MallGood>) {
                 view.bindRecommend(response)
             }
         })

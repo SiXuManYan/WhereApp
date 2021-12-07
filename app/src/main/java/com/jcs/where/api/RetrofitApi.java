@@ -99,6 +99,8 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.hydropower.PaymentRecord;
+import com.jcs.where.api.response.mall.MallCategory;
+import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
@@ -1773,4 +1775,19 @@ public interface RetrofitApi {
      */
     @PATCH("userapi/v2/merchants/{merchant_id}")
     Observable<JcsResponse<JsonElement>> repostMerchantSettled(@Path("merchant_id") int merchant_id, @Body MerchantSettledPost request);
+
+
+    /**
+     * 获取商城一二级分类
+     */
+    @GET("estoreapi/v2/categories/one")
+    Observable<JcsResponse<ArrayList<MallCategory>>> getMallFirstSecondCategory();
+
+    /**
+     * 获取商城首页推荐商品
+     */
+    @GET("estoreapi/v2/goods/rand")
+    Observable<JcsResponse<ArrayList<MallGood>>> getMallRecommendGood(@Query("categoryId") int categoryId);
+
+
 }

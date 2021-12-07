@@ -9,17 +9,19 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
+import com.jcs.where.api.response.mall.MallBannerCategory
+import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.features.store.filter.StoreFilterActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 
 /**
- * Created by Wangsw  2021/6/2 11:48.
+ * Created by Wangsw  2021/11/2 11:48.
  * 商城 轮播图 （一级分类）
  */
-class MallHomeChildBannerAdapter : BaseQuickAdapter<StoryBannerCategory, BaseViewHolder>(R.layout.item_mall_banner) {
+class MallHomeChildBannerAdapter : BaseQuickAdapter<MallBannerCategory, BaseViewHolder>(R.layout.item_mall_banner) {
 
-    override fun convert(holder: BaseViewHolder, item: StoryBannerCategory) {
+    override fun convert(holder: BaseViewHolder, item: MallBannerCategory) {
 
         val first_ll = holder.getView<LinearLayout>(R.id.container_first_ll)
         val second_ll = holder.getView<LinearLayout>(R.id.container_second_ll)
@@ -34,7 +36,7 @@ class MallHomeChildBannerAdapter : BaseQuickAdapter<StoryBannerCategory, BaseVie
 
     }
 
-    private fun bindChild(childContainer: LinearLayout, index: Int, category: Category) {
+    private fun bindChild(childContainer: LinearLayout, index: Int, category: MallCategory) {
 
         val child = childContainer.getChildAt(index)
 

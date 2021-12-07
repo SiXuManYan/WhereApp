@@ -12,8 +12,12 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
+import com.jcs.where.api.response.mall.MallBannerCategory
+import com.jcs.where.api.response.mall.MallCategory
+import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.api.response.store.StoreRecommend
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_mall_home_child.*
 
@@ -24,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_mall_home_child.*
 class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHomeChildView, OnItemClickListener {
 
     /** 当前页面对应的一级分类 */
-    lateinit var targetFirstCategory: Category
+    lateinit var targetFirstCategory: MallCategory
 
     /** 二级分类轮播 */
     private lateinit var mBannerAdapter: MallHomeChildBannerAdapter
@@ -73,8 +77,13 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
     }
 
     private fun initContent() {
+
+        val emptyView = EmptyView(requireContext())
+        emptyView.showEmptyDefault()
+
         mAdapter = MallRecommendAdapter().apply {
             setOnItemClickListener(this@MallHomeChildFragment)
+            setEmptyView(emptyView)
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
@@ -93,7 +102,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     override fun loadOnVisible() {
         presenter.handleBanner(targetFirstCategory)
-        presenter.getRecommend()
+        presenter.getRecommend(targetFirstCategory.id)
     }
 
 
@@ -101,12 +110,12 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     }
 
-    override fun bindBannerData(result: ArrayList<StoryBannerCategory>) {
+    override fun bindBannerData(result: ArrayList<MallBannerCategory>) {
         mBannerAdapter.setNewInstance(result)
         point_view.setPointCount(result.size)
     }
 
-    override fun bindRecommend(response: ArrayList<StoreRecommend>) {
+    override fun bindRecommend(response: ArrayList<MallGood>) {
         mAdapter.setNewInstance(response)
     }
 

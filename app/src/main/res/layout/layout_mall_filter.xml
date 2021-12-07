@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/filter_container_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:showIn="@layout/activity_mall_second"
+    tools:visibility="visible">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <CheckedTextView
+            android:id="@+id/filter_complex_ctv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:text="@string/complex"
+            android:textColor="@color/selector_black_blue"
+            android:textSize="@dimen/sp_13" />
+
+        <CheckedTextView
+            android:id="@+id/filter_price_down_ctv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:text="@string/price_down"
+            android:textColor="@color/selector_black_blue"
+            android:textSize="@dimen/sp_13" />
+
+        <CheckedTextView
+            android:id="@+id/filter_price_up_ctv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:text="@string/price_up"
+            android:textColor="@color/selector_black_blue"
+            android:textSize="@dimen/sp_13" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dismiss_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@color/grey_666666" />
+
+</LinearLayout>

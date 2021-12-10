@@ -912,5 +912,7 @@ Gentleman must let go</string>
     <string name="sales">销量</string>
     <string name="price_down">价格降序</string>
     <string name="price_up">价格升序</string>
+    <string name="price_range">价格区间</string>
+    <string name="min">最小值</string>
 
 </resources>

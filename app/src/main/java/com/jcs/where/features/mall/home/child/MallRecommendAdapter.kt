@@ -5,6 +5,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGood
@@ -14,7 +15,7 @@ import com.jcs.where.utils.GlideUtil
  * Created by Wangsw  2021/12/2 17:09.
  * 新版商城推荐
  */
-class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend) {
+class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend) ,LoadMoreModule{
     override fun convert(holder: BaseViewHolder, item: MallGood) {
 
         val image = holder.getView<ImageView>(R.id.image_iv)

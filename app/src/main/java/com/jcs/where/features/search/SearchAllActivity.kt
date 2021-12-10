@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.result.MallSearchResultActivity
 import com.jcs.where.features.search.result.SearchAllResultActivity
 import com.jcs.where.features.search.yellow.YellowPageSearchResultActivity
 import com.jcs.where.features.store.history.SearchHistoryAdapter
@@ -33,6 +34,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 3.政府地图
      * 4.酒店地图
      * 5.商城
+     * 6.新版商城
      */
     private var type = 0
 
@@ -126,6 +128,9 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             }
             5 -> {
                 startActivity(StoreSearchActivity::class.java, bundle)
+            }
+            6->{
+                startActivity(MallSearchResultActivity::class.java, bundle)
             }
             else -> {
             }

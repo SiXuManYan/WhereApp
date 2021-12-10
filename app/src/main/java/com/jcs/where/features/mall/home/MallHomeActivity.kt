@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.home
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -12,6 +13,8 @@ import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.home.child.MallHomeChildFragment
+import com.jcs.where.features.search.SearchAllActivity
+import com.jcs.where.utils.Constant
 import com.jcs.where.view.sheet.TopSheetBehavior
 import kotlinx.android.synthetic.main.activity_mall_home.*
 
@@ -83,7 +86,9 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
         }
 
         search_ll.setOnClickListener {
-
+            startActivity(SearchAllActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 6)
+            })
         }
         all_iv.setOnClickListener {
             if (topSheetBehavior.state == TopSheetBehavior.STATE_EXPANDED) {

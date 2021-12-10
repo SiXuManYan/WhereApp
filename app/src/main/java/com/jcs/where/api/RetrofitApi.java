@@ -1790,4 +1790,37 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<MallGood>>> getMallRecommendGood(@Query("categoryId") int categoryId);
 
 
+    /**
+     * 获取商城三级级分类
+     */
+    @GET("estoreapi/v2/categories/one")
+    Observable<JcsResponse<ArrayList<MallCategory>>> getMallThirdCategory(@Query("categoryId") int categoryId);
+
+
+    /**
+     * 获取商城商品列表
+     *
+     * @param order      order 价格排序(降序 desc, 升序 asc)
+     * @param title      商品名称
+     * @param categoryId 分类id
+     * @param startPrice 最小价格 start和price同时进行传递
+     * @param endPrice   最大价格 start和price同时进行传递
+     * @param sold       销量排序(降序 desc, 升序 asc)
+     * @param shopId     店铺id
+     */
+    @GET("estoreapi/v2/goods")
+    Observable<JcsResponse<PageResponse<MallGood>>> getMallGoodList(
+            @Query("page") int page,
+            @Query("order") @Nullable String order,
+            @Query("title") @Nullable String title,
+            @Query("categoryId") @Nullable  Integer categoryId,
+            @Query("start") @Nullable String startPrice,
+            @Query("end") @Nullable String endPrice,
+            @Query("sold") @Nullable String sold,
+            @Query("shopId") @Nullable Integer shopId
+
+
+    );
+
+
 }

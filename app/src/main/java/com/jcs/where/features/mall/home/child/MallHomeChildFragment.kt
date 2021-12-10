@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_mall_home_child.*
  * Created by Wangsw  2021/11/30 17:01.
  * 商城首页商品
  */
-class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHomeChildView, OnItemClickListener {
+class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHomeChildView {
 
     /** 当前页面对应的一级分类 */
     lateinit var targetFirstCategory: MallCategory
@@ -82,15 +82,15 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
         emptyView.showEmptyDefault()
 
         mAdapter = MallRecommendAdapter().apply {
-            setOnItemClickListener(this@MallHomeChildFragment)
             setEmptyView(emptyView)
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
         content_rv.apply {
             adapter = mAdapter
-            layoutManager = gridLayoutManager
+             layoutManager = gridLayoutManager
             addItemDecoration(decoration)
+
         }
     }
 
@@ -119,9 +119,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
         mAdapter.setNewInstance(response)
     }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
 
-    }
 
 
 }

@@ -539,6 +539,8 @@
         <activity android:name=".features.daily.sign.SignInActivity" />
         <activity android:name=".features.daily.scoe.ScoreActivity" />
         <activity android:name=".features.mall.home.MallHomeActivity" />
+        <activity android:name=".features.mall.second.MallSecondActivity" />
+        <activity android:name=".features.mall.result.MallSearchResultActivity" />
 
 
     </application>

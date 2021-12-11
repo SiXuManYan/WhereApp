@@ -11,10 +11,10 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 18,
-      "versionName": "0.2.5.test.beta2",
+      "versionCode": 19,
+      "versionName": "0.2.6.test.beta1",
       "enabled": true,
-      "outputFile": "Where_v18_(0.2.5.test.beta2)_20211108.apk"
+      "outputFile": "Where_v19_(0.2.6.test.beta1)_20211210.apk"
     }
   ]
 }

@@ -89,6 +89,7 @@
     <color name="color_FF4F4F">#FF4F4F</color>
     <color name="color_4966C1">#4966C1</color>
     <color name="color_yellow_ffcc00">#FFCC00</color>
+    <color name="color_red_f64944">#F64944</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

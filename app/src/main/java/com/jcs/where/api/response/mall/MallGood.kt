@@ -18,5 +18,4 @@ class MallGood {
     var sold = ""
     var category_id = ""
 
-
 }

@@ -1,6 +1,8 @@
 package com.jcs.where.features.mall.home.child
 
+import android.content.Intent
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
@@ -9,15 +11,17 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGood
+import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.utils.GlideUtil
 
 /**
  * Created by Wangsw  2021/12/2 17:09.
  * 新版商城推荐
  */
-class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend) ,LoadMoreModule{
+class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend), LoadMoreModule {
     override fun convert(holder: BaseViewHolder, item: MallGood) {
 
+        val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
         val image = holder.getView<ImageView>(R.id.image_iv)
         val title = holder.getView<TextView>(R.id.title_tv)
         val nowPrice = holder.getView<TextView>(R.id.now_price_tv)
@@ -32,5 +36,8 @@ class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout
         oldPrice.text = oldBuilder
 
 
+        container_ll.setOnClickListener {
+            MallDetailActivity.navigation(context,item.id)
+        }
     }
 }

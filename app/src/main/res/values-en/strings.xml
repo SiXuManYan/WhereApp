@@ -906,6 +906,9 @@ Gentleman must let go</string>
     <string name="price_down">Price Down</string>
     <string name="price_up">Price Up</string>
     <string name="price_range">Price Range</string>
-    <string name="min">最小值</string>
+    <string name="selected">Selected</string>
+    <string name="product_details_tag">Product Details</string>
+    <string name="mall_service">Service</string>
+    <string name="mall_shop">Shop</string>
 
 </resources>

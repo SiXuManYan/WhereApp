@@ -36,7 +36,6 @@ class MallShopActivity : BaseMvpActivity<MallShopPresenter>(), MallShopView {
 
     override fun getLayoutId() = R.layout.activity_mall_shop
 
-
     companion object {
 
         fun navigation(context: Context, shopId: Int, shopName: String? = "") {

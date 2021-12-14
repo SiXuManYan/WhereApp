@@ -2,9 +2,7 @@ package com.jcs.where.features.store.cart.child
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -81,7 +79,7 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
 
     }
 
-    private fun bindChild(child: View, it: StoreCartItem, groupSelectAllTv: CheckedTextView, groupData: StoreCartGroup) {
+    private fun bindChild(child: View, storeCartItem: StoreCartItem, groupSelectAllTv: CheckedTextView, groupData: StoreCartGroup) {
 
         val good_checked_tv = child.findViewById<CheckedTextView>(R.id.good_checked_tv)
         val image_iv = child.findViewById<ImageView>(R.id.image_iv)
@@ -91,7 +89,7 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
         val number_view = child.findViewById<NumberView2>(R.id.number_view)
 
 
-        val goodData = it.good_data
+        val goodData = storeCartItem.good_data
 
         if (goodData.images.isNotEmpty()) {
             GlideUtil.load(context, goodData.images[0], image_iv, 4)
@@ -115,35 +113,34 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
             cutResIdMin = R.mipmap.ic_cut_black_transparent
             addResIdCommon = R.mipmap.ic_add_black
             addResIdMax = R.mipmap.ic_add_black_transparent
-            updateNumberJudgeMin(it.good_num)
+            updateNumberJudgeMin(storeCartItem.good_num)
 
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
-                    it.good_num = goodNum
-                    numberChangeListener?.onChildNumberChange(it.cart_id, isAdd)
+                    storeCartItem.good_num = goodNum
+                    numberChangeListener?.onChildNumberChange(storeCartItem.cart_id, isAdd)
 
                 }
             }
-
         }
 
         // child 选中
         good_checked_tv.apply {
-            this.isChecked = it.nativeIsSelect
+            this.isChecked = storeCartItem.nativeIsSelect
             setOnClickListener { view ->
-                val currentIsSelect = it.nativeIsSelect
-                it.nativeIsSelect = !currentIsSelect
-                if (it.nativeIsSelect) {
+                val currentIsSelect = storeCartItem.nativeIsSelect
+                storeCartItem.nativeIsSelect = !currentIsSelect
+                if (storeCartItem.nativeIsSelect) {
                     VibrateUtils.vibrate(10)
                 }
-                this.isChecked = it.nativeIsSelect
+                this.isChecked = storeCartItem.nativeIsSelect
 
                 // 判断组内是否全选
                 val isGroupSelectAll = checkGroupSelectAll(groupData)
                 groupData.nativeIsSelect = isGroupSelectAll
                 groupSelectAllTv.isChecked = isGroupSelectAll
 
-                onChildSelectClick?.onChildSelected(it.nativeIsSelect)
+                onChildSelectClick?.onChildSelected(storeCartItem.nativeIsSelect)
 
 
             }

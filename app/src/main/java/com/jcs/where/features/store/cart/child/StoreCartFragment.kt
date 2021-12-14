@@ -15,7 +15,6 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
-import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragemnt_store_cart.*
 
 
@@ -24,8 +23,8 @@ import kotlinx.android.synthetic.main.fragemnt_store_cart.*
  * 购物车
  */
 class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
-        SwipeRefreshLayout.OnRefreshListener,
-        StoreCartValueChangeListener, OnChildSelectClick, OnGroupSelectClick {
+    SwipeRefreshLayout.OnRefreshListener,
+    StoreCartValueChangeListener, OnChildSelectClick, OnGroupSelectClick {
 
     /**
      *  列表类型（0：自提，1：商家配送）
@@ -77,12 +76,6 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
         recycler_view.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//            addItemDecoration(DividerDecoration(
-//                    ColorUtils.getColor(R.color.colorPrimary),
-//                    SizeUtils.dp2px(10f),
-//                    SizeUtils.dp2px(15f),
-//                    SizeUtils.dp2px(15f)).apply { setDrawHeaderFooter(true) })
-
         }
 
     }
@@ -109,7 +102,8 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
             if (isSelectAll) {
                 VibrateUtils.vibrate(10)
                 val handlePrice = presenter.handlePrice(mAdapter)
-                total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
+                total_price_tv.text =
+                    StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
 //                select_count_tv.text = getString(R.string.total_format, presenter.getSelectedCount(mAdapter))
             } else {
                 total_price_tv.text = getString(R.string.price_unit_format, "0.00")

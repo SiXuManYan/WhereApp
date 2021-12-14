@@ -99,6 +99,7 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.hydropower.PaymentRecord;
+import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
@@ -1829,6 +1830,11 @@ public interface RetrofitApi {
     @GET("estoreapi/v2/goods/{id}")
     Observable<JcsResponse<MallGoodDetail>> getMallGoodDetail(@Path("id") int goodId);
 
+    /**
+     * 获取商城首页推荐商品
+     */
+    @GET("estoreapi/v2/goods/{id}")
+    Observable<JcsResponse<PageResponse<MallCartGroup>>> mallCartList(@Query("page") int page);
 
 
 }

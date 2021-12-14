@@ -21,6 +21,7 @@ import com.jcs.where.features.merchant.MerchantSettledActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
 import com.jcs.where.features.setting.information.ModifyInfoActivity
+import com.jcs.where.features.store.recommend.StoreRecommendActivity
 import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity
@@ -112,7 +113,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(ExtendChatActivity::class.java)
         }
         about_rl.setOnClickListener {
-            startActivity(AboutActivity::class.java)
+//            startActivity(AboutActivity::class.java)
+            startActivity(StoreRecommendActivity::class.java)
         }
 
     }

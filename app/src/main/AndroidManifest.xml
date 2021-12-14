@@ -543,6 +543,7 @@
         <activity android:name=".features.mall.second.MallSecondActivity" />
         <activity android:name=".features.mall.result.MallSearchResultActivity" />
         <activity android:name=".features.mall.detail.MallDetailActivity" />
+        <activity android:name=".features.mall.shop.MallShopActivity" />
 
 
     </application>

@@ -25,6 +25,11 @@ class MallGoodDetail {
     /** 商品属性组合信息 */
     var specs = ArrayList<MallSpecs>()
 
+    var shop_id = 0
+    var shop_name = ""
+    var collect_status = ""
+
+
 }
 
 class MallAttribute {

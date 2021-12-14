@@ -3,6 +3,8 @@ package com.jcs.where.features.mall.home.child
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -20,11 +22,27 @@ import com.jcs.where.utils.GlideUtil
 class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend), LoadMoreModule {
     override fun convert(holder: BaseViewHolder, item: MallGood) {
 
+
         val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
         val image = holder.getView<ImageView>(R.id.image_iv)
         val title = holder.getView<TextView>(R.id.title_tv)
         val nowPrice = holder.getView<TextView>(R.id.now_price_tv)
         val oldPrice = holder.getView<TextView>(R.id.old_price_tv)
+
+
+
+        val adapterPosition = holder.adapterPosition
+        val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
+
+        layoutParams.apply {
+            topMargin = if (adapterPosition < 2) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+        container_ll.layoutParams = layoutParams
+
 
         GlideUtil.load(context, item.main_image, image, 4)
         title.text = item.title

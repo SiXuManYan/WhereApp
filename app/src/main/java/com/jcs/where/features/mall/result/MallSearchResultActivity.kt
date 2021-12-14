@@ -34,9 +34,9 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
     override fun isStatusDark() = true
 
     override fun initView() {
-        initContent()
         searchInput = intent.getStringExtra(Constant.PARAM_NAME)
         search_tv.text = searchInput
+        initContent()
     }
 
     private fun initContent() {

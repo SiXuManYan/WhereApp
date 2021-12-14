@@ -1,6 +1,5 @@
 package com.jcs.where.features.mall.home.child
 
-import android.content.Intent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView

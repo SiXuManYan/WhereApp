@@ -29,7 +29,20 @@ class MallGoodDetail {
 
 class MallAttribute {
     var key = ""
-    var value = ArrayList<String>()
+    var value = ArrayList<MallAttributeValue>()
+}
+
+
+class MallAttributeValue {
+    var key = ""
+    var name = ""
+
+    /**
+     * 0 未选中
+     * 1 选中
+     * 2 不可选
+     */
+    var nativeIsSelected = 0
 }
 
 class MallSpecs {

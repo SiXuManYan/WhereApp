@@ -1876,5 +1876,15 @@ public interface RetrofitApi {
     );
 
 
+    /**
+     * 修改商城购物车商品数量
+     */
+    @PATCH("estoreapi/v2/carts/numbers")
+    Observable<JcsResponse<JsonElement>> changeMallCartNumber(
+            @Query("cart_id") int cart_id,
+            @Query("number") int number
+    );
+
+
 
 }

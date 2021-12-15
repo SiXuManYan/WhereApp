@@ -2,6 +2,10 @@ package com.jcs.where.features.mall.cart
 
 import android.annotation.SuppressLint
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.JsonElement
+import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -119,6 +123,19 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
             }
         }
         return totalPrice
+    }
+
+    /**
+     * 修改购物车商品数量
+     */
+    fun changeCartNumber(cartId: Int, number: Int) {
+
+        requestApi(mRetrofit.changeMallCartNumber(cartId, number), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+
+        })
     }
 
     fun clearStoreCart() {

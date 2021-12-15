@@ -138,9 +138,12 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
         presenter.getData(page)
     }
 
-    override fun onChildNumberChange(cartId: Int, add: Boolean) {
+    override fun onChildNumberChange(cartId: Int, add: Boolean) = Unit
 
+    override fun onChildNumberChange(cartId: Int, add: Boolean, number: Int) {
+        presenter.changeCartNumber(cartId,number)
     }
+
 
     override fun onChildSelected(checked: Boolean) {
 

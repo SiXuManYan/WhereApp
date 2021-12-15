@@ -179,6 +179,10 @@ interface StoreCartValueChangeListener {
      * @param add 是否是添加
      */
     fun onChildNumberChange(cartId: Int, add: Boolean)
+
+    fun onChildNumberChange(cartId: Int, add: Boolean ,number:Int){
+
+    }
 }
 
 

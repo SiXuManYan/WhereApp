@@ -119,6 +119,9 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
                     override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                         mallCartItem.good_num = goodNum
                         numberChangeListener?.onChildNumberChange(mallCartItem.cart_id, isAdd)
+                        numberChangeListener?.onChildNumberChange(mallCartItem.cart_id, isAdd,goodNum)
+
+
                     }
                 }
             }

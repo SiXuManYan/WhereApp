@@ -1,12 +1,13 @@
 package com.jcs.where.api.response.mall
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/12/14 18:26.
  *
  */
-class MallCartGroup {
+class MallCartGroup : Serializable {
 
 
     /** 店铺id */
@@ -19,10 +20,12 @@ class MallCartGroup {
 
     /** 本地记录是否选中 */
     var nativeIsSelect = false
+    var nativeTotalDelivery = 0
+    var nativeRemark = ""
 
 }
 
-class MallCartItem {
+class MallCartItem : Serializable {
 
     /** 本地记录是否选中 */
     var nativeIsSelect = false
@@ -39,17 +42,19 @@ class MallCartItem {
     /** 商品详情 */
     var goods_info: MallGoodInfo? = null
     var specs_info: MallSpecsInfo? = null
+    var delivery_fee :BigDecimal = BigDecimal.ZERO
+
 
 }
 
 /** 商品详情 */
-class MallGoodInfo {
+class MallGoodInfo : Serializable {
     var title = ""
     var photo = ""
 }
 
-class MallSpecsInfo {
+class MallSpecsInfo : Serializable {
     var specs: HashMap<String, String> = HashMap()
-    var price : BigDecimal = BigDecimal.ZERO
+    var price: BigDecimal = BigDecimal.ZERO
     var stock = 0
 }

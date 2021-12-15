@@ -194,6 +194,7 @@ public class Constant {
     public static final int PAY_INFO_FOOD = 2;
     public static final int PAY_INFO_TAKEAWAY = 3;
     public static final int PAY_INFO_HOTEL = 4;
+    public static final int PAY_INFO_MALL = 5;
 
     public static final String PARAM_SEARCH = "param_search";
     public static final String PARAM_STAR_LEVEL = "param_star_level";

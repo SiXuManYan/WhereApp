@@ -103,6 +103,8 @@ import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
+import com.jcs.where.api.response.mall.request.MallCommitResponse;
+import com.jcs.where.api.response.mall.request.MallOrderCommit;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
@@ -1835,6 +1837,25 @@ public interface RetrofitApi {
      */
     @GET("estoreapi/v2/goods/{id}")
     Observable<JcsResponse<PageResponse<MallCartGroup>>> mallCartList(@Query("page") int page);
+
+
+    /**
+     * 提交订单
+     */
+    @POST("estoreapi/v2/orders")
+    Observable<JcsResponse<MallCommitResponse>> mallOrderCommit(
+            @Body MallOrderCommit request
+    );
+
+
+
+    /**
+     * 新版商城支付（上传支付信息）
+     */
+    @POST("estoreapi/v2/bank_card/pay")
+    Observable<JcsResponse<JsonElement>> upLoadMallAccountInfo(
+            @Body UpLoadBillsPayAccountInfo request
+    );
 
 
 }

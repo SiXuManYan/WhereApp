@@ -40,6 +40,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
      * 2 美食
      * 3 外卖
      * 4 酒店
+     * 5 新版商城
      */
     private var useType = 0
 
@@ -175,6 +176,9 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
                 }
                 Constant.PAY_INFO_HOTEL -> {
                     presenter.upLoadHotelPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
+                }
+                Constant.PAY_INFO_MALL ->{
+                    presenter.upLoadMallPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
                 }
                 else -> {
                 }

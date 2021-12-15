@@ -1,12 +1,18 @@
 package com.jcs.where.features.mall.cart
 
+import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_mall_cart.*
@@ -90,8 +96,23 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
         }
 
 
+        edit_tv.setOnClickListener {
+            right_vs.displayedChild = 1
+            bottom_vs.displayedChild = 1
+            total_price_tv.visibility = View.GONE
+
+        }
+
+        cancel_tv.setOnClickListener {
+            right_vs.displayedChild = 0
+            bottom_vs.displayedChild = 0
+            total_price_tv.visibility = View.VISIBLE
+
+        }
+
+
         settlement_tv.setOnClickListener {
-/*
+
             val selectedCount = presenter.getSelectedCount(mAdapter)
             if (selectedCount <= 0) {
                 ToastUtils.showShort(R.string.please_select_a_product)
@@ -100,41 +121,9 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
 
             val selectedData = presenter.getSelectedData(mAdapter)
 
-            val appList: ArrayList<StoreOrderCommitData> = ArrayList()
-
-            selectedData.forEach {
-
-                // shop
-                val shop = StoreOrderCommitData().apply {
-                    shop_id = it.shop_id
-                    shop_title = it.shop_name
-                    delivery_type = listType + 1
-                    delivery_fee = it.delivery_fee.toFloat()
-                }
-
-                // shop $good
-                it.goods.forEach { good ->
-                    val goodData = good.good_data
-                    val goodInfo = StoreGoodsCommit().apply {
-                        good_id = goodData.id
-                        delivery_type = listType + 1
-
-                        if (goodData.images.isNotEmpty()) {
-                            image = goodData.images[0]
-                        }
-                        goodName = goodData.title
-                        good_num = good.good_num
-                        price = goodData.price
-                    }
-                    shop.goods.add(goodInfo)
-                }
-                appList.add(shop)
-            }
-
-            startActivityAfterLogin(StoreOrderCommitActivity::class.java, Bundle().apply {
-                putSerializable(Constant.PARAM_ORDER_COMMIT_DATA, appList)
+            startActivityAfterLogin(MallOrderCommitActivity::class.java, Bundle().apply {
+                putSerializable(Constant.PARAM_DATA, selectedData)
             })
-*/
         }
 
 
@@ -159,6 +148,18 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
 
     override fun onGroupSelected(nativeIsSelect: Boolean) {
 
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+//                // 支付成功，手动调用接口删除
+//                presenter.deleteCart(mAdapter)
+            }
+            EventCode.EVENT_CANCEL_PAY -> {
+                finish()
+            }
+        }
     }
 
 

@@ -15,6 +15,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
 import com.jcs.where.features.hotel.book.HotelBookActivity
+import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.order.parent.OrderActivity
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.features.store.pay.info.PayInfoActivity
@@ -36,6 +37,7 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
      * 2 美食
      * 3 外卖
      * 4 酒店
+     * 5 新版商城
      */
     private var useType = 0
 
@@ -142,11 +144,7 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                 dialogInterface.dismiss()
             }
             .setNegativeButton(R.string.give_up) { dialogInterface, i ->
-
                 handleNegative()
-
-
-
                 dialogInterface.dismiss()
                 finish()
             }
@@ -161,8 +159,9 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
         val food = ActivityUtils.isActivityExistsInStack(OrderSubmitActivity::class.java)
         val takeaway = ActivityUtils.isActivityExistsInStack(OrderSubmitTakeawayActivity::class.java)
         val store = ActivityUtils.isActivityExistsInStack(StoreOrderCommitActivity::class.java)
+        val mall = ActivityUtils.isActivityExistsInStack(MallOrderCommitActivity::class.java)
 
-        if (hotel || food || takeaway || store) {
+        if (hotel || food || takeaway || store || mall) {
 
             // 2.关闭各个类型的提交订单页
             EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CANCEL_PAY))

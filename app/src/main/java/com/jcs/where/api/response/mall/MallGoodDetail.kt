@@ -27,7 +27,9 @@ class MallGoodDetail {
 
     var shop_id = 0
     var shop_name = ""
-    var collect_status = ""
+
+    /** 0未收藏 1收藏 */
+    var collect_status = 0
 
 
 }

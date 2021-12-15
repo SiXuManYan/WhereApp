@@ -103,6 +103,7 @@ import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
+import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
 import com.jcs.where.api.response.mall.request.MallOrderCommit;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
@@ -1126,7 +1127,7 @@ public interface RetrofitApi {
     );
 
     /**
-     * 收藏餐厅
+     * 取消收藏餐厅
      */
     @HTTP(method = "DELETE", path = "restaurantapi/v2/collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> unCollectsRestaurant(
@@ -1856,6 +1857,24 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> upLoadMallAccountInfo(
             @Body UpLoadBillsPayAccountInfo request
     );
+
+
+    /**
+     * 收藏新版商城店铺
+     */
+    @POST("estoreapi/v2/collects")
+    Observable<JcsResponse<JsonElement>> collectsMallShop(
+            @Body MallCollection request
+    );
+
+    /**
+     * 取消收藏新版商城店铺
+     */
+    @HTTP(method = "DELETE", path = "estoreapi/v2/collects", hasBody = true)
+    Observable<JcsResponse<JsonElement>> unCollectsMallShop(
+            @Body MallCollection request
+    );
+
 
 
 }

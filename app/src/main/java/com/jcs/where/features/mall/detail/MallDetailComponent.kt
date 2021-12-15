@@ -13,10 +13,13 @@ import android.text.style.LeadingMarginSpan
 import android.text.style.LineBackgroundSpan
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.CollectionRestaurantRequest
 import com.jcs.where.api.response.mall.MallGoodDetail
+import com.jcs.where.api.response.mall.request.MallCollection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,6 +31,7 @@ import kotlinx.coroutines.withContext
  */
 interface MallDetailView : BaseMvpView {
     fun bindDetail(response: MallGoodDetail)
+    fun collectionHandleSuccess(collectionStatus: Boolean)
 }
 
 class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(view) {
@@ -40,6 +44,43 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
             }
         })
     }
+
+
+
+
+
+    fun collection(shopId: Int) {
+        val request = MallCollection().apply {
+            shop_id = shopId
+        }
+
+        requestApi(mRetrofit.collectsMallShop(request), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.collectionHandleSuccess(true)
+            }
+        })
+    }
+
+    fun unCollection(shopId: Int) {
+        val request = MallCollection().apply {
+            shop_id = shopId
+        }
+        requestApi(mRetrofit.unCollectsMallShop(request), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.collectionHandleSuccess(false)
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
+
 }
 
 class ImageGetter(

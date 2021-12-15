@@ -21,6 +21,7 @@ import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
+
 import java.util.*
 
 
@@ -33,6 +34,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     private var goodId = 0
     private var shopId = 0
     private var shopName = ""
+
+    /**
+     * 收藏状态（0：未收藏，1：已收藏）
+     */
+    private var collect_status = 0
 
     private lateinit var mMediaAdapter: DetailMediaAdapter
 
@@ -106,10 +112,16 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     override fun bindListener() {
         select_attr_tv.setOnClickListener {
-            mSkuDialog.show(supportFragmentManager,mSkuDialog.tag)
+            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }
         mall_shop_tv.setOnClickListener {
-            MallShopActivity.navigation(this,shopId,shopName)
+            MallShopActivity.navigation(this, shopId, shopName)
+        }
+        like_iv.setOnClickListener {
+            if (collect_status == 0) {
+                presenter.collection(shopId)
+            }
+            presenter.unCollection(shopId)
         }
 
     }
@@ -135,6 +147,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         mSkuDialog.data = response
         shopId = response.shop_id
         shopName = response.shop_name
+        collect_status = response.collect_status
+        setLikeImage()
     }
 
     private fun disPlayHtml(html: String) {
@@ -166,6 +180,27 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     override fun onDestroy() {
         super.onDestroy()
         GSYVideoManager.releaseAllVideos()
+    }
+
+    private fun setLikeImage() {
+
+        like_iv.setImageResource(
+            if (collect_status == 0) {
+                R.mipmap.ic_like_red_night
+            } else {
+                R.mipmap.ic_like_normal_night
+            }
+        )
+    }
+
+    override fun collectionHandleSuccess(collectionStatus: Boolean) {
+
+        collect_status = if (collectionStatus) {
+            1
+        } else {
+            0
+        }
+        setLikeImage()
     }
 
 

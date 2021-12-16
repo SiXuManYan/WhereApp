@@ -32,7 +32,6 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
 
     override fun getLayoutId() = R.layout.activity_mall_order_detail
 
-
     private var orderId = 0
 
     private var totalPrice = 0.0

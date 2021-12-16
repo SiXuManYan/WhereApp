@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_200">
+            android:paddingBottom="700dp">
 
 
             <LinearLayout
@@ -35,8 +35,7 @@
                 android:orientation="vertical"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                >
+                android:paddingEnd="@dimen/dp_15">
 
                 <RelativeLayout
                     android:id="@+id/select_address_rl"
@@ -118,7 +117,6 @@
                     android:background="@color/grey_F5F5F5" />
 
             </LinearLayout>
-
 
 
             <androidx.recyclerview.widget.RecyclerView

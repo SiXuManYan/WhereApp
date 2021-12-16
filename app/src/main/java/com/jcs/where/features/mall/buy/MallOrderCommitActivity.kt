@@ -101,9 +101,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     override fun commitSuccess(response: MallCommitResponse) {
 
-
         startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-            putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice.toDouble())
+            putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, response.orders)
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
         })

@@ -1888,13 +1888,7 @@ public interface RetrofitApi {
 
 
 
-    /**
-     * 新商城订单详情
-     */
-    @GET("generalapi/v2/orders/{order_id}")
-    Observable<JcsResponse<StoreOrderDetail>> mallOrderDetail(
-            @Path("order_id") int order_id
-    );
+
 
     /**
      * 商城加入购物车
@@ -1904,6 +1898,14 @@ public interface RetrofitApi {
             @Body MallAddCart request
     );
 
+
+    /**
+     * 新商城订单详情
+     */
+    @GET("generalapi/v2/orders/{order_id}")
+    Observable<JcsResponse<StoreOrderDetail>> mallOrderDetail(
+            @Path("order_id") int order_id
+    );
 
 
 }

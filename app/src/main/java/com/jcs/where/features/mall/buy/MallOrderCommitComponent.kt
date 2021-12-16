@@ -1,13 +1,12 @@
 package com.jcs.where.features.mall.buy
 
+import com.google.gson.Gson
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.mall.MallCartGroup
-import com.jcs.where.api.response.mall.request.MallCommitResponse
-import com.jcs.where.api.response.mall.request.MallOrderCommit
-import com.jcs.where.api.response.mall.request.MallOrderCommitGoodGroup
-import com.jcs.where.api.response.mall.request.MallOrderCommitGoodItem
+import com.jcs.where.api.response.mall.request.*
 import com.jcs.where.utils.BigDecimalUtil
 import java.math.BigDecimal
 import java.util.*
@@ -49,18 +48,20 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
     fun orderCommit(data: ArrayList<MallCartGroup>, addressId: String?) {
 
-
-        val commitBean = MallOrderCommit().apply {
-            address_id = addressId
-        }
-
+        val specsIdsArray = ArrayList<String>()
+        val goodsGroup = ArrayList<MallOrderCommitGoodGroup>()
 
         data.forEach { group ->
+
+            val itemGroup = MallOrderCommitGoodGroup().apply {
+                remark = group.nativeRemark
+                shop_id = group.shop_id
+            }
 
             group.gwc.forEach { gwc ->
 
 
-                commitBean.specsIds.add(gwc.specs_id.toString() + "," + gwc.good_num.toShort())
+                specsIdsArray.add(gwc.specs_id.toString() + "," + gwc.good_num.toShort())
 
                 val item = MallOrderCommitGoodItem().apply {
                     good_id = gwc.good_id
@@ -69,26 +70,26 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
                     cart_id = gwc.cart_id
                 }
 
-                val itemGroup = MallOrderCommitGoodGroup().apply {
-                    goods.add(item)
-                    remark = group.nativeRemark
-                    shop_id = group.shop_id
-                }
-                commitBean.goods.add(itemGroup)
-
-
-
-
+                itemGroup.goods.add(item)
             }
-
+            goodsGroup.add(itemGroup)
 
         }
 
+        val gson = Gson()
+        val bean = MallOrderCommit().apply {
+            address_id = addressId
+            specsIds = gson.toJson(specsIdsArray)
+            goods = gson.toJson(goodsGroup)
+        }
 
-
-        requestApi(mRetrofit.mallOrderCommit(commitBean), object : BaseMvpObserver<MallCommitResponse>(view) {
+        requestApi(mRetrofit.mallOrderCommit(bean), object : BaseMvpObserver<MallCommitResponse>(view) {
             override fun onSuccess(response: MallCommitResponse) {
                 view.commitSuccess(response)
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                super.onError(errorResponse)
             }
 
         })

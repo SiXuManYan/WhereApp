@@ -12,9 +12,8 @@ class MallOrderCommit{
     var address_id :String? = null
     var specsIds = ""
     var goods = ""
+
 }
-
-
 
 class MallOrderCommitGoodGroup {
 

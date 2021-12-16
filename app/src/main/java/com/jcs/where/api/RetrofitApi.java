@@ -104,6 +104,7 @@ import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
+import com.jcs.where.api.response.mall.MallOrderDetail;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
@@ -1904,9 +1905,16 @@ public interface RetrofitApi {
      * 新商城订单详情
      */
     @GET("generalapi/v2/orders/{order_id}")
-    Observable<JcsResponse<StoreOrderDetail>> mallOrderDetail(
+    Observable<JcsResponse<MallOrderDetail>> mallOrderDetail(
             @Path("order_id") int order_id
     );
+
+
+    /**
+     * 取消订单
+     */
+    @DELETE("estoreapi/v2/order/{order_id}")
+    Observable<JcsResponse<JsonElement>> cancelMallOrder(@Path("order_id") int order_id);
 
 
 }

@@ -81,6 +81,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             address_id = addressId
             specsIds = gson.toJson(specsIdsArray)
             goods = gson.toJson(goodsGroup)
+
         }
 
         requestApi(mRetrofit.mallOrderCommit(bean), object : BaseMvpObserver<MallCommitResponse>(view) {

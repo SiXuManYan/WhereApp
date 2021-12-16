@@ -11,6 +11,7 @@ class UpLoadBillsPayAccountInfo {
      */
     var order_id = 0
 
+
     /**
      * 	转账户头
      */
@@ -26,7 +27,32 @@ class UpLoadBillsPayAccountInfo {
      * 	收款方转账银行卡Id
      */
     var card_id = 0
+}
 
 
+class UpLoadMallPayAccountInfo{
+
+
+    /**
+     * 订单id
+     * 参数示例：[1,2]
+     */
+    var order_id = ""
+
+    /**
+     * 	转账户头
+     */
+    var bank_card_account = ""
+
+    /**
+     * 转账账户
+     */
+    var bank_card_number = ""
+
+
+    /**
+     * 	收款方转账银行卡Id
+     */
+    var card_id = 0
 
 }

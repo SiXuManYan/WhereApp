@@ -6,6 +6,7 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo
+import com.jcs.where.api.request.bills.UpLoadMallPayAccountInfo
 import com.jcs.where.api.request.store.UpLoadPayAccountInfo
 import java.util.*
 
@@ -139,8 +140,8 @@ class PayInfoPresenter(private var view: PayInfoView) : BaseMvpPresenter(view) {
             return
         }
 
-        val apply = UpLoadBillsPayAccountInfo().apply {
-            order_id =  orderIds[0]
+        val apply = UpLoadMallPayAccountInfo().apply {
+            order_id = Gson().toJson(orderIds)
             bank_card_account = accountName
             bank_card_number = accountNumber
             card_id = id

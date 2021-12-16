@@ -23,6 +23,7 @@ import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
 import com.jcs.where.api.request.bills.BillsOrderCommit;
 import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
+import com.jcs.where.api.request.bills.UpLoadMallPayAccountInfo;
 import com.jcs.where.api.request.hotel.FoodCommitComment;
 import com.jcs.where.api.request.hotel.HotelCommitComment;
 import com.jcs.where.api.request.hotel.TravelCommitComment;
@@ -1856,7 +1857,7 @@ public interface RetrofitApi {
      */
     @POST("estoreapi/v2/bank_card/pay")
     Observable<JcsResponse<JsonElement>> upLoadMallAccountInfo(
-            @Body UpLoadBillsPayAccountInfo request
+            @Body UpLoadMallPayAccountInfo request
     );
 
 

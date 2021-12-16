@@ -545,6 +545,7 @@
         <activity android:name=".features.mall.detail.MallDetailActivity" />
         <activity android:name=".features.mall.shop.MallShopActivity" />
         <activity android:name=".features.mall.buy.MallOrderCommitActivity" />
+        <activity android:name=".features.mall.cart.MallCartActivity" />
 
 
     </application>

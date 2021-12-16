@@ -12,13 +12,14 @@ import android.text.Layout
 import android.text.style.LeadingMarginSpan
 import android.text.style.LineBackgroundSpan
 import android.widget.TextView
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.api.request.CollectionRestaurantRequest
 import com.jcs.where.api.response.mall.MallGoodDetail
+import com.jcs.where.api.response.mall.request.MallAddCart
 import com.jcs.where.api.response.mall.request.MallCollection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -36,17 +37,14 @@ interface MallDetailView : BaseMvpView {
 
 class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(view) {
 
-    fun getDetail(goodId:Int){
+    fun getDetail(goodId: Int) {
 
-        requestApi(mRetrofit.getMallGoodDetail(19),object :BaseMvpObserver<MallGoodDetail>(view){
+        requestApi(mRetrofit.getMallGoodDetail(19), object : BaseMvpObserver<MallGoodDetail>(view) {
             override fun onSuccess(response: MallGoodDetail) {
                 view.bindDetail(response)
             }
         })
     }
-
-
-
 
 
     fun collection(shopId: Int) {
@@ -73,12 +71,19 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
     }
 
 
+    fun addCart(goodId: Int, goodNumber: Int, specsId: Int) {
+        val apply = MallAddCart().apply {
+            good_id = goodId
+            good_num = goodNumber
+            specs_id = specsId
+        }
+        requestApi(mRetrofit.mallAddCart(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                ToastUtils.showShort("add success")
+            }
 
-
-
-
-
-
+        })
+    }
 
 
 }
@@ -98,11 +103,11 @@ class ImageGetter(
         GlobalScope.launch(Dispatchers.IO) {
             runCatching {
 
-                val bitmap =  Glide.with(context).asBitmap().load(url).submit().get()
+                val bitmap = Glide.with(context).asBitmap().load(url).submit().get()
 
                 val drawable = BitmapDrawable(res, bitmap)
 
-              // 为了确保图像不会超出屏幕，设置宽度小于屏幕宽度，您可以根据需要更改图像大小
+                // 为了确保图像不会超出屏幕，设置宽度小于屏幕宽度，您可以根据需要更改图像大小
                 val width = getScreenWidth() - 150
 
                 // Images may stretch out if you will only resize width,

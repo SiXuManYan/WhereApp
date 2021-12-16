@@ -16,5 +16,12 @@ class MallGoodListRequest {
 }
 
 enum class SortEnum {
-    desc , asc
+    desc, asc
+}
+
+class MallAddCart {
+    var good_id = 0
+    var good_num = 0
+    var specs_id = 0
+
 }

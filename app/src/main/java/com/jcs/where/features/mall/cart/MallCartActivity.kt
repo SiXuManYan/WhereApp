@@ -18,6 +18,7 @@ import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_mall_cart.*
 
 
+
 /**
  * Created by Wangsw  2021/12/14 17:49.
  * 商城购物车
@@ -130,7 +131,32 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
     }
 
     override fun bindData(data: MutableList<MallCartGroup>, lastPage: Boolean) {
+        if (swipe_layout.isRefreshing) {
+            swipe_layout.isRefreshing = false
+        }
 
+        val loadMoreModule = mAdapter.loadMoreModule
+        if (data.isEmpty()) {
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                mAdapter.setNewInstance(null)
+                loadMoreModule.loadMoreComplete()
+            } else {
+                loadMoreModule.loadMoreEnd()
+            }
+            return
+        }
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mAdapter.setNewInstance(data)
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
+        } else {
+            mAdapter.addData(data)
+            if (lastPage) {
+                loadMoreModule.loadMoreEnd()
+            } else {
+                loadMoreModule.loadMoreComplete()
+            }
+        }
+        getNowPrice()
     }
 
     override fun onRefresh() {
@@ -152,6 +178,14 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
     override fun onGroupSelected(nativeIsSelect: Boolean) {
 
     }
+
+    private fun getNowPrice() {
+        val handlePrice = presenter.handlePrice(mAdapter)
+        val toPlainString = handlePrice.toPlainString()
+        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, toPlainString)
+    }
+
+
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         when (baseEvent.code) {

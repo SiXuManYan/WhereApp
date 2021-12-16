@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/item_shopping_cart_child_for_store_new" />
+        <include layout="@layout/item_shopping_cart_child_for_store_mall" />
 
     </LinearLayout>
 

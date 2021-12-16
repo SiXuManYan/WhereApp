@@ -103,6 +103,7 @@ import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
+import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
 import com.jcs.where.api.response.mall.request.MallOrderCommit;
@@ -1834,9 +1835,9 @@ public interface RetrofitApi {
     Observable<JcsResponse<MallGoodDetail>> getMallGoodDetail(@Path("id") int goodId);
 
     /**
-     * 获取商城首页推荐商品
+     * 购物车
      */
-    @GET("estoreapi/v2/goods/{id}")
+    @GET("estoreapi/v2/carts")
     Observable<JcsResponse<PageResponse<MallCartGroup>>> mallCartList(@Query("page") int page);
 
 
@@ -1877,12 +1878,30 @@ public interface RetrofitApi {
 
 
     /**
-     * 修改商城购物车商品数量
+     * 修改新商城购物车商品数量
      */
     @PATCH("estoreapi/v2/carts/numbers")
     Observable<JcsResponse<JsonElement>> changeMallCartNumber(
             @Query("cart_id") int cart_id,
             @Query("number") int number
+    );
+
+
+
+    /**
+     * 新商城订单详情
+     */
+    @GET("generalapi/v2/orders/{order_id}")
+    Observable<JcsResponse<StoreOrderDetail>> mallOrderDetail(
+            @Path("order_id") int order_id
+    );
+
+    /**
+     * 商城加入购物车
+     */
+    @POST("estoreapi/v2/carts")
+    Observable<JcsResponse<JsonElement>> mallAddCart(
+            @Body MallAddCart request
     );
 
 

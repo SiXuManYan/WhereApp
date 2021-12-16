@@ -13,7 +13,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
+import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.GlideUtil
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/12/15 14:09.
@@ -34,11 +36,11 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
 
         child_container_ll.removeAllViews()
 
-        var totalItem = 0F
+        var totalItem :BigDecimal = BigDecimal.ZERO
 
         item.gwc.forEach {
 
-            totalItem += it.delivery_fee
+            totalItem  = BigDecimalUtil.add(it.delivery_fee,totalItem)
 
             val child = LayoutInflater.from(context).inflate(R.layout.item_dishes_for_order_submit_mall, null)
             val image_iv = child.findViewById<ImageView>(R.id.order_image_iv)
@@ -73,7 +75,7 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
             child.layoutParams = layoutParams
 
         }
-        delivery_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalItem.toString())
+        delivery_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalItem.toPlainString())
 
         remark_aet.addTextChangedListener(object : TextWatcher {
 

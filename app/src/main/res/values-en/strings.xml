@@ -545,6 +545,7 @@
     <string name="choose_shipping_address">Choose Shipping Address</string>
     <string name="send_out_now">Send Out Now</string>
     <string name="delivery_fee">Delivery Fee</string>
+    <string name="delivery_fee_2">Delivery Fee</string>
     <string name="actual_payment">Actual Payment</string>
     <string name="remarks">Remarks</string>
     <string name="remarks_input">Please enter comments</string>

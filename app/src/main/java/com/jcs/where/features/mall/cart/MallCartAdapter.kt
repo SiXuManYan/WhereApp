@@ -77,7 +77,7 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
 
         child_container_ll.removeAllViews()
         item.gwc.forEach {
-            val child = LayoutInflater.from(context).inflate(R.layout.item_shopping_cart_child_for_store, null)
+            val child = LayoutInflater.from(context).inflate(R.layout.item_shopping_cart_child_for_store_mall, null)
 
             bindChild(child, it, select_all_tv, item)
             child_container_ll.addView(child)

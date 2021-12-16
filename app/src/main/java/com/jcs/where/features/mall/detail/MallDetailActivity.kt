@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.shop.MallShopActivity
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
@@ -34,6 +35,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     private var goodId = 0
     private var shopId = 0
     private var shopName = ""
+    private var goodNumber = 1
 
     /**
      * 收藏状态（0：未收藏，1：已收藏）
@@ -124,6 +126,13 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             presenter.unCollection(shopId)
         }
 
+        buy_after_tv.setOnClickListener {
+            presenter.addCart(goodId, goodNumber, 27)
+        }
+
+        shopping_cart.setOnClickListener {
+            startActivityAfterLogin(MallCartActivity::class.java)
+        }
     }
 
     override fun bindDetail(response: MallGoodDetail) {

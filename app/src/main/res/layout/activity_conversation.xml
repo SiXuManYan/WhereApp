@@ -9,9 +9,10 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:middleTitleColor="@color/black_333333"
+        app:rightFirstIcon="@mipmap/ic_im"
         app:showBackIv="true" />
 
     <FrameLayout

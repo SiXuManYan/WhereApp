@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.jcs.where.R
-import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.home.child.MallHomeChildFragment
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
@@ -82,7 +82,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
     override fun bindListener() {
 
         cart_iv.setOnClickListener {
-
+            startActivityAfterLogin(MallCartActivity::class.java)
         }
 
         search_ll.setOnClickListener {

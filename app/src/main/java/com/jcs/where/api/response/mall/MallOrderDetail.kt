@@ -16,7 +16,6 @@ class MallOrderDetail {
     val mer_name = ""
 
 
-
     /** 订单ID */
     var id = 0
 
@@ -50,6 +49,12 @@ class MallOrderDetail {
 
     /** 支付渠道 */
     var pay_channel = ""
+
+    /** 电话（自提时） */
+    var tel = ""
+
+    /**1支持退货 2不支持退货*/
+    var isCancel = 0
 }
 
 class MallOrderGood {
@@ -60,8 +65,8 @@ class MallOrderGood {
     var good_image = ""
     var good_num = 0
     var good_price = ""
-    var good_specs : HashMap<String, String> = HashMap()
-    var created_at  = ""
+    var good_specs: HashMap<String, String> = HashMap()
+    var created_at = ""
 
 
 }

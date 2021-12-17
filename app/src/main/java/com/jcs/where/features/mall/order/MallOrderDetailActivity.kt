@@ -112,13 +112,15 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
 
 
         mAdapter.setNewInstance(data.order_goods)
-        // 商品信息
 
+        // 商品信息
 
         if (data.im_status == 1 && !TextUtils.isEmpty(data.mer_uuid)) {
             im_ll.visibility = View.VISIBLE
             im_ll.setOnClickListener { _ ->
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, null)
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, Bundle().apply {
+                    putString(Constant.PARAM_PHONE,data.tel)
+                })
             }
         } else {
             im_ll.visibility = View.GONE
@@ -157,13 +159,17 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 bottom_container_rl.visibility = View.GONE
             }
             5 -> {
-                bottom_container_rl.visibility = View.VISIBLE
+                if (data.isCancel ==1) {
+                    bottom_container_rl.visibility = View.VISIBLE
+                    left_tv.visibility = View.VISIBLE
+                    left_tv.text = getString(R.string.apply_return)
+                    left_tv.setOnClickListener {
+                        // 申请退货
+                        doRefund()
+                    }
 
-                left_tv.visibility = View.VISIBLE
-                left_tv.text = getString(R.string.apply_return)
-                left_tv.setOnClickListener {
-                    // 申请退货
-                    doRefund()
+                }else{
+                    bottom_container_rl.visibility = View.GONE
                 }
                 right_tv.visibility = View.GONE
 

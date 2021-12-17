@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
-import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -195,7 +194,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         setLikeImage()
         if (response.im_status == 1 && !TextUtils.isEmpty(response.mer_uuid)) {
             mall_service_tv.setOnClickListener { _ ->
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, response.mer_uuid, response.mer_name, null)
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE,
+                    response.mer_uuid, response.mer_name, null)
             }
         }
     }

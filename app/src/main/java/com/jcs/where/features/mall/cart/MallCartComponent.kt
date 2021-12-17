@@ -79,8 +79,6 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
         val selectData: ArrayList<MallCartGroup> = ArrayList()
 
         adapter.data.forEach {
-
-
             val group = MallCartGroup().apply {
 
                 shop_id = it.shop_id

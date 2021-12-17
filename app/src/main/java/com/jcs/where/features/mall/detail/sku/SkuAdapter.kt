@@ -11,7 +11,7 @@ import com.jcs.where.api.response.mall.MallAttributeValue
  * Created by Wangsw  2021/12/13 17:12.
  *
  */
-class SkuSecondAdapter : BaseQuickAdapter<MallAttributeValue, BaseViewHolder>(R.layout.item_sku_second) {
+class SkuAdapter : BaseQuickAdapter<MallAttributeValue, BaseViewHolder>(R.layout.item_sku_second) {
 
     override fun convert(holder: BaseViewHolder, item: MallAttributeValue) {
         val valueTv = holder.getView<CheckedTextView>(R.id.sku_value_tv)
@@ -27,6 +27,7 @@ class SkuSecondAdapter : BaseQuickAdapter<MallAttributeValue, BaseViewHolder>(R.
                 valueTv.isChecked = false
                 valueTv.setTextColor(ColorUtils.getColor(R.color.grey_b7b7b7))
             }
+
         }
 
 

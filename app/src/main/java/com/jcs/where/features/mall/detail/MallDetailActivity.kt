@@ -13,16 +13,18 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
+import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
+import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.MallShopActivity
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
-
 import java.util.*
 
 
@@ -30,12 +32,15 @@ import java.util.*
  * Created by Wangsw  2021/12/10 14:57.
  * 商品详情
  */
-class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView {
+class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, MallSkuSelectResult {
 
     private var goodId = 0
     private var shopId = 0
     private var shopName = ""
     private var goodNumber = 1
+    private var mData: MallGoodDetail? = null
+    private var mallSpecs: MallSpecs? = null
+
 
     /**
      * 收藏状态（0：未收藏，1：已收藏）
@@ -68,7 +73,9 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     override fun initView() {
         goodId = intent.getIntExtra(Constant.PARAM_ID, 0)
-        mSkuDialog = MallSkuFragment()
+        mSkuDialog = MallSkuFragment().apply {
+            selectResult = this@MallDetailActivity
+        }
         initMedia()
     }
 
@@ -127,7 +134,28 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
 
         buy_after_tv.setOnClickListener {
-            presenter.addCart(goodId, goodNumber, 27)
+            if (mallSpecs == null) {
+                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+            } else {
+                presenter.addCart(goodId, goodNumber, mallSpecs!!.specs_id)
+            }
+        }
+
+        buy_now_tv.setOnClickListener {
+            if (mData == null) {
+                return@setOnClickListener
+            }
+            if (mallSpecs == null) {
+                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+            } else {
+
+                val selectedData = presenter.getSelectedData(mData!!, mallSpecs!!, goodNumber)
+                startActivityAfterLogin(MallOrderCommitActivity::class.java, Bundle().apply {
+                    putSerializable(Constant.PARAM_DATA, selectedData)
+                })
+
+
+            }
         }
 
         shopping_cart.setOnClickListener {
@@ -136,7 +164,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
     override fun bindDetail(response: MallGoodDetail) {
-
+        mData = response
         val mediaList = ArrayList<MediaData>()
         for (image in response.sub_images) {
             val media = MediaData()
@@ -213,6 +241,20 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             0
         }
         setLikeImage()
+    }
+
+    override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {
+
+        this.mallSpecs = mallSpecs
+        goodNumber = goodNum
+
+        val buff = StringBuffer()
+        mallSpecs.specs.values.forEach {
+            buff.append("$it, ")
+        }
+        select_attr_tv.text = buff
+
+
     }
 
 

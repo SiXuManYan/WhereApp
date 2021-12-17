@@ -1,16 +1,20 @@
 package com.jcs.where.features.mall.detail.sku
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ScreenUtils
-import com.bumptech.glide.Glide
+import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallAttributeValue
 import com.jcs.where.api.response.mall.MallGoodDetail
+import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
+import com.jcs.where.utils.GlideUtil
+import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.NumberView2
 import kotlinx.android.synthetic.main.fragment_mall_sku.*
 
@@ -18,14 +22,16 @@ import kotlinx.android.synthetic.main.fragment_mall_sku.*
  * Created by Wangsw  2021/12/13 14:45.
  *
  */
-class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallSkuView {
+class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallSkuView, TargetGoodItemClickCallBack {
 
+    var selectResult: MallSkuSelectResult? = null
+    var result: MallSpecs? = null
 
     lateinit var data: MallGoodDetail
 
     private lateinit var mAdapter: SkuFirstAdapter
 
-    private   var value = ArrayList<MallAttributeValue>()
+    private var value = ArrayList<MallAttributeValue>()
 
     override fun getLayoutId() = R.layout.fragment_mall_sku
 
@@ -35,25 +41,26 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     override fun initView(parent: View) {
 
-        Glide.with(requireContext()).load(data.main_image).into(good_iv)
-
-        ("₱" + data.min_price + " - " + "₱" + data.max_price).also { price_tv.text = it }
 
         // content
-        mAdapter = SkuFirstAdapter()
-        content_rv.apply {
-            adapter = mAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            isNestedScrollingEnabled = true
-        }
-        mAdapter.setNewInstance(data.attribute_list)
+        initSkuLayout()
+
+        initOther()
+
+    }
+
+    private fun initOther() {
+        GlideUtil.load(requireContext(), data.main_image, good_iv, 4)
+
+
 
         number_view.apply {
             alwaysEnableCut = false
             MIN_GOOD_NUM = 1
+            MAX_GOOD_NUM = data.stock
             cut_iv.setImageResource(R.mipmap.ic_cut_blue)
             add_iv.setImageResource(R.mipmap.ic_add_blue)
-            updateNumberJudgeMin(1)
+            updateNumber(1)
             cut_iv.visibility = View.VISIBLE
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
@@ -62,6 +69,20 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
             }
         }
+        stock_tv.text = StringUtils.getString(R.string.stock_format, data.stock)
+    }
+
+    private fun initSkuLayout() {
+        mAdapter = SkuFirstAdapter().apply {
+            targetGoodItemClickCallBack = this@MallSkuFragment
+        }
+        content_rv.apply {
+            adapter = mAdapter
+            layoutManager = MyLayoutManager()
+            isNestedScrollingEnabled = true
+        }
+
+        mAdapter.setNewInstance(data.attribute_list)
 
     }
 
@@ -73,5 +94,70 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         back_iv.setOnClickListener {
             dismiss()
         }
+
+        confirm_tv.setOnClickListener {
+            if (result == null) {
+                return@setOnClickListener
+            }
+            // 判断是否所有必选都选中
+            mAdapter.data.forEach {
+                it.value.forEach {
+                    if (it.nativeIsSelected == 0) {
+                        ToastUtils.showShort("请选择" + it.key)
+                        return@setOnClickListener
+                    }
+                }
+            }
+            selectResult?.selectResult(result!!, number_view.goodNum)
+            dismissAllowingStateLoss()
+        }
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onItemClick(userSelect: MallAttributeValue) {
+
+        // 1.筛选出符合目标的结果集
+        val matchSpecsList = presenter.filterTargetSpecsList(data, userSelect)
+
+        // 2.筛选结果集中包含的所有商品属性，刷新列表中的选中状态
+
+        // 所有属性值
+        val attributes = ArrayList<String>()
+        matchSpecsList.forEach {
+            val resultValues = it.specs.values
+            resultValues.forEach {
+                attributes.add(it)
+            }
+
+        }
+
+        // 根据存在的属性，匹配列表中的可选状态
+        mAdapter.data.forEach { group ->
+            // group eg: 颜色
+            group.value.forEach { child ->
+
+                // 判读当前可操作的item状态
+                if (child.nativeIsSelected == 0) {
+                    if (attributes.contains(child.name)) {
+                        // 包含
+                        child.nativeIsSelected = 0
+                    } else {
+                        // 不包含
+                        child.nativeIsSelected = 2
+                    }
+
+                }
+            }
+        }
+        mAdapter.notifyDataSetChanged()
+
+
+        if (matchSpecsList.size == 1) {
+            val mallSpecs = matchSpecsList[0]
+
+            result = mallSpecs
+            price_tv.text = getString(R.string.price_unit_format, mallSpecs.price.toPlainString())
+        }
+    }
+
 }

@@ -18,7 +18,7 @@ import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.api.response.mall.MallGoodDetail
+import com.jcs.where.api.response.mall.*
 import com.jcs.where.api.response.mall.request.MallAddCart
 import com.jcs.where.api.response.mall.request.MallCollection
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +41,8 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
 
         requestApi(mRetrofit.getMallGoodDetail(goodId), object : BaseMvpObserver<MallGoodDetail>(view) {
             override fun onSuccess(response: MallGoodDetail) {
+
+
                 view.bindDetail(response)
             }
         })
@@ -83,6 +85,40 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
             }
 
         })
+    }
+
+
+    fun getSelectedData(mData: MallGoodDetail, mallSpecs: MallSpecs, goodNumber: Int): ArrayList<MallCartGroup> {
+
+        val selectData: ArrayList<MallCartGroup> = ArrayList()
+
+        val goodInfo = MallGoodInfo().apply {
+            title = mData.shop_name
+            photo = mData.main_image
+        }
+
+        val msi = MallSpecsInfo().apply {
+            specs = mallSpecs.specs
+            price = mallSpecs.price
+        }
+
+        val item = MallCartItem().apply {
+            good_id = mallSpecs.goods_id
+            specs_id = mallSpecs.specs_id
+            good_num = goodNumber
+            delivery_fee = mData.delivery_fee
+            goods_info = goodInfo
+            specs_info = msi
+        }
+
+        val group = MallCartGroup().apply {
+            shop_id = mData.shop_id
+            title = mData.title
+        }
+
+        group.gwc.add(item)
+        selectData.add(group)
+        return selectData
     }
 
 

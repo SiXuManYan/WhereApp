@@ -1,5 +1,7 @@
 package com.jcs.where.api.response.mall
 
+import java.math.BigDecimal
+
 /**
  * Created by Wangsw  2021/12/11 14:39.
  * 商品详情
@@ -26,10 +28,16 @@ class MallGoodDetail {
     var specs = ArrayList<MallSpecs>()
 
     var shop_id = 0
+
     var shop_name = ""
 
     /** 0未收藏 1收藏 */
     var collect_status = 0
+    var delivery_fee :BigDecimal = BigDecimal.ZERO
+    var website = ""
+    var mer_name = ""
+    var mer_uuid = ""
+    var im_status = 0
 
 
 }
@@ -55,8 +63,9 @@ class MallAttributeValue {
 class MallSpecs {
 
     var id = 0
-    var good_id = 0
-    var price = ""
+    var goods_id = 0
+    var specs_id = 0
+    var price: BigDecimal = BigDecimal.ZERO
     var stock = 0
     var image = ""
     var specs: HashMap<String, String> = HashMap()

@@ -5,7 +5,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.text.method.LinkMovementMethod
+import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +26,8 @@ import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
 import com.shuyu.gsyvideoplayer.GSYVideoManager
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
 import java.util.*
 
@@ -189,6 +193,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         shopName = response.shop_name
         collect_status = response.collect_status
         setLikeImage()
+        if (response.im_status == 1 && !TextUtils.isEmpty(response.mer_uuid)) {
+            mall_service_tv.setOnClickListener { _ ->
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, response.mer_uuid, response.mer_name, null)
+            }
+        }
     }
 
     private fun disPlayHtml(html: String) {

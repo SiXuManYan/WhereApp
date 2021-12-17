@@ -53,11 +53,14 @@ open class OrderModelData {
     var delivery_type = 0
 
     /** 商城商品信息 */
-    var goods: ArrayList<OrderStoreGoods> = ArrayList()
+    var goods: ArrayList<OrderMallGoods> = ArrayList()
 
 
     /** 评论状态（1-未评论，2-已评论，3-已超时） */
     var comment_status = 0
+
+    // #### ##### 新版商城 #####
+
 
 }
 
@@ -139,7 +142,7 @@ class OrderStore {
     var delivery_type = 0
 
     /** 商城商品信息 */
-    var goods: ArrayList<OrderStoreGoods> = ArrayList()
+    var goods: ArrayList<OrderMallGoods> = ArrayList()
 
 }
 
@@ -158,5 +161,29 @@ class OrderStoreGoods {
     var good_image: ArrayList<String> = ArrayList()
     var good_title = ""
     var good_num = 0
-    var price: BigDecimal = BigDecimal.ZERO
+}
+
+
+/**
+ * 商城商品信息
+ */
+class OrderMallGoods {
+
+    /** 商品id */
+    var id = 0
+
+    /** 商品名称 */
+    var title = ""
+
+    /**
+     * 旧版商城  ArrayList<String>
+     * 新版 String
+     */
+    var good_image: Any? = null
+    var good_title = ""
+    var good_num = 0
+
+    var good_specs = HashMap<String, String>()
+
+
 }

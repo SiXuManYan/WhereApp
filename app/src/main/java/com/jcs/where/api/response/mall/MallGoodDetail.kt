@@ -17,7 +17,7 @@ class MallGoodDetail {
     var category_id = 0
 
     /** html 富文本 */
-    var desc = ""
+    var desc: String? = ""
 
     /** 商品属性 */
     var attribute_list = ArrayList<MallAttribute>()

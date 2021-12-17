@@ -8,8 +8,8 @@ import java.math.BigDecimal
  */
 
 
-class MallOrderCommit{
-    var address_id :String? = null
+class MallOrderCommit {
+    var address_id: String? = null
     var specsIds = ""
     var goods = ""
 
@@ -26,16 +26,17 @@ class MallOrderCommitGoodItem {
     var good_id = 0
     var num = 0
     var specs_id = 0
-    var cart_id :Int? = null
+    var cart_id: Int? = null
 }
 
 
-class MallCommitResponse{
+class MallCommitResponse {
 
     /**
      * 订单 id
      */
     var orders = ArrayList<Int>()
+
     /**
      * 总价
      */

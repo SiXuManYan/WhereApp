@@ -152,7 +152,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         title_tv.text = response.title
 
 
-        disPlayHtml(response.desc)
+        response.desc?.let {
+            disPlayHtml(it)
+        }
+
         mSkuDialog.data = response
         shopId = response.shop_id
         shopName = response.shop_name

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
@@ -41,25 +40,18 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         addItemType(OrderListResponse.ORDER_TYPE_DINE_2, R.layout.item_order_list_food)
         addItemType(OrderListResponse.ORDER_TYPE_TAKEAWAY_3, R.layout.item_order_list_takeaway)
         addItemType(OrderListResponse.ORDER_TYPE_STORE_4, R.layout.item_order_list_store)
+        addItemType(OrderListResponse.ORDER_TYPE_STORE_5, R.layout.item_order_list_store)
     }
 
 
     override fun convert(holder: BaseViewHolder, item: OrderListResponse) {
 
         when (holder.itemViewType) {
-            OrderListResponse.ORDER_TYPE_HOTEL_1 -> {
-                bindHotelItem(holder, item)
-            }
-
-            OrderListResponse.ORDER_TYPE_DINE_2 -> {
-                bindFoodItem(holder, item)
-            }
-            OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
-                bindTakeawayItem(holder, item)
-            }
-            OrderListResponse.ORDER_TYPE_STORE_4 -> {
-                bindStoreItem(holder, item)
-            }
+            OrderListResponse.ORDER_TYPE_HOTEL_1 -> bindHotelItem(holder, item)
+            OrderListResponse.ORDER_TYPE_DINE_2 -> bindFoodItem(holder, item)
+            OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> bindTakeawayItem(holder, item)
+            OrderListResponse.ORDER_TYPE_STORE_4 -> bindStoreItem(holder, item)
+            OrderListResponse.ORDER_TYPE_STORE_5 -> bindMallItem(holder, item)
             else -> {
             }
         }
@@ -355,9 +347,11 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             .placeholder(R.mipmap.ic_empty_gray)
 
 
+
         if (goods.isNotEmpty()) {
-            if (goods[0].good_image.isNotEmpty()) {
-                Glide.with(context).load(goods[0].good_image[0]).apply(options).into(image_iv)
+            val goodImage = goods[0].good_image as ArrayList<String>
+            if (goodImage.isNotEmpty()) {
+                Glide.with(context).load(goodImage[0]).apply(options).into(image_iv)
             }
             first_tv.text = goods[0].good_title
         }
@@ -431,6 +425,119 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
     }
 
+
+    /** mall 商城 */
+    private fun bindMallItem(holder: BaseViewHolder, item: OrderListResponse) {
+
+        val modelData = item.model_data
+        if (modelData == null) {
+            return
+        }
+
+        val goods = modelData.goods
+
+
+        // 标题
+        holder.setText(R.id.name_tv, item.title)
+
+        // 状态
+        val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
+        FeaturesUtil.bindStoreOrderStatus(modelData.order_status, modelData.delivery_type, order_status_tv)
+
+        // 内容
+        val first_tv = holder.getView<TextView>(R.id.first_tv)
+        val second_tv = holder.getView<TextView>(R.id.second_tv)
+        val third_tv = holder.getView<TextView>(R.id.third_tv)
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
+        title_rl.setOnClickListener {
+            startActivity(StoreDetailActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ID, item.model_id)
+            })
+        }
+
+        val options = RequestOptions.bitmapTransform(
+            GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL)
+        )
+            .error(R.mipmap.ic_empty_gray)
+            .placeholder(R.mipmap.ic_empty_gray)
+
+
+
+        if (goods.isNotEmpty()) {
+            val goodImage = goods[0].good_image as String
+            Glide.with(context).load(goodImage).apply(options).into(image_iv)
+            first_tv.text = goods[0].good_title
+        }
+        second_tv.text = StringUtils.getString(R.string.quantity_format, goods.size)
+        third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
+
+        // 底部
+        val right_tv = holder.getView<TextView>(R.id.right_tv)
+        when (modelData.order_status) {
+            1 -> {
+                right_tv.text = context.getString(R.string.to_pay_2)
+                right_tv.visibility = View.VISIBLE
+
+                right_tv.setOnClickListener {
+                    val orderIds = ArrayList<Int>()
+                    orderIds.add(item.id)
+                    startActivity(StorePayActivity::class.java, Bundle().apply {
+                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
+                    })
+                }
+            }
+            5 -> {
+
+                val shopName = item.title
+                var shopImage = ""
+                if (item.image.isNotEmpty()) {
+                    shopImage = item.image[0]
+                }
+
+                val commentStatus = modelData.comment_status
+                if (commentStatus == 3) {
+                    right_tv.visibility = View.GONE
+                } else {
+                    right_tv.visibility = View.VISIBLE
+
+                    if (commentStatus == 1) {
+                        right_tv.text = context.getString(R.string.evaluation_go)
+                        right_tv.setOnClickListener {
+                            // 去评价
+//                            startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
+//                                putInt(Constant.PARAM_ORDER_ID, item.id)
+//                                putString(Constant.PARAM_SHOP_NAME, shopName)
+//                                putString(Constant.PARAM_SHOP_IMAGE, shopImage)
+//                            })
+                        }
+                    }
+
+                    if (commentStatus == 2) {
+                        right_tv.text = context.getString(R.string.view_evaluation)
+                        right_tv.setOnClickListener {
+                            // 查看评价
+//                            startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
+//                                putInt(Constant.PARAM_ORDER_ID, item.id)
+//                            })
+                        }
+                    }
+                }
+            }
+            12 -> {
+                right_tv.text = context.getString(R.string.cancel_application)
+                right_tv.visibility = View.GONE
+            }
+            else -> {
+                right_tv.visibility = View.GONE
+
+            }
+
+
+        }
+    }
 
     private fun startActivity(target: Class<*>, bundle: Bundle?) {
         if (bundle != null) {

@@ -3,6 +3,7 @@ package com.jcs.where.api.response.order
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import java.math.BigDecimal
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * create by zyf on 2020/12/11 7:57 PM
@@ -56,6 +57,10 @@ class OrderListResponse : MultiItemEntity {
      */
     var image: List<String> = ArrayList()
 
+    var shop_title = ""
+
+    var shop_images = ArrayList<String>()
+
 
 
     companion object {
@@ -78,5 +83,10 @@ class OrderListResponse : MultiItemEntity {
          * 订单类型：estore
          */
         const val ORDER_TYPE_STORE_4 = 4
+
+        /**
+         * 订单类型：新版estore
+         */
+        const val ORDER_TYPE_STORE_5 = 5
     }
 }

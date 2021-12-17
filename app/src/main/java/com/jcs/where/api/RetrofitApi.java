@@ -1904,7 +1904,7 @@ public interface RetrofitApi {
     /**
      * 新商城订单详情
      */
-    @GET("generalapi/v2/orders/{order_id}")
+    @GET("estoreapi/v2/order/{order_id}")
     Observable<JcsResponse<MallOrderDetail>> mallOrderDetail(
             @Path("order_id") int order_id
     );

@@ -39,7 +39,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
 
     fun getDetail(goodId: Int) {
 
-        requestApi(mRetrofit.getMallGoodDetail(19), object : BaseMvpObserver<MallGoodDetail>(view) {
+        requestApi(mRetrofit.getMallGoodDetail(goodId), object : BaseMvpObserver<MallGoodDetail>(view) {
             override fun onSuccess(response: MallGoodDetail) {
                 view.bindDetail(response)
             }

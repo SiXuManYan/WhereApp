@@ -10,14 +10,14 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.mall.MallOrderDetail
-import com.jcs.where.api.response.order.store.StoreOrderDetail
 
 /**
  * Created by Wangsw  2021/12/16 11:27.
  *
  */
-interface  MallOrderDetailView :BaseMvpView{
+interface MallOrderDetailView : BaseMvpView {
     fun bindData(data: MallOrderDetail)
+
     /**
      * 订单取消成功
      */
@@ -25,7 +25,7 @@ interface  MallOrderDetailView :BaseMvpView{
 
 }
 
-class MallOrderDetailPresenter(private var view:MallOrderDetailView):BaseMvpPresenter(view){
+class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpPresenter(view) {
     fun getOrderDetail(orderId: Int) {
 
         requestApi(mRetrofit.mallOrderDetail(orderId), object : BaseMvpObserver<MallOrderDetail>(view) {
@@ -48,7 +48,7 @@ class MallOrderDetailPresenter(private var view:MallOrderDetailView):BaseMvpPres
      * 配送方式（1:自提，2:商家配送）
      * */
 
-    fun getStatusText( orderStatus: Int): String {
+    fun getStatusText(orderStatus: Int): String {
 
 
         return when (orderStatus) {
@@ -130,7 +130,7 @@ class MallOrderDetailPresenter(private var view:MallOrderDetailView):BaseMvpPres
                 status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_12)
                 status_desc_tv.visibility = View.VISIBLE
             }
-            else ->{
+            else -> {
                 status_desc_tv.visibility = View.GONE
             }
         }

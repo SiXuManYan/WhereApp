@@ -1,6 +1,7 @@
 package com.jcs.where.api.response.mall
 
 import com.jcs.where.api.response.order.store.StoreOrderAddress
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
@@ -57,7 +58,7 @@ class MallOrderDetail {
     var isCancel = 0
 }
 
-class MallOrderGood {
+class MallOrderGood :Serializable {
     var id = 0
     var order_id = 0
     var good_id = 0

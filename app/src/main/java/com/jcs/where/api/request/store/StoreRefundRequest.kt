@@ -16,6 +16,9 @@ class StoreRefundRequest {
 
 }
 
+
+
+
 /**
  * 商城再次申请售后
  */
@@ -27,5 +30,29 @@ class StoreRefundModifyRequest {
      * "["ssssss","xxxxx"]"
      */
     var images:String? = null
+}
 
+
+
+class MallRefundRequest{
+
+    var cancel_reason = ""
+
+    /**
+     * "["ssssss","xxxxx"]"
+     */
+    var cancel_images:String? = null
+}
+
+/**
+ * 商城再次申请售后
+ */
+class MallRefundModifyRequest {
+
+    var desc = ""
+
+    /**
+     * "["ssssss","xxxxx"]"
+     */
+    var images:String? = null
 }

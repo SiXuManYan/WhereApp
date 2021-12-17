@@ -14,6 +14,8 @@ import com.jcs.where.api.response.mall.MallOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.refund.apply.MallRefundActivity
+import com.jcs.where.features.mall.refund.detail.MallRefundDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -228,11 +230,11 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
      */
     private fun doRefund() {
 
-//        startActivity(StoreRefundActivity::class.java, Bundle().apply {
-//            putParcelableArrayList(Constant.PARAM_DATA, ArrayList(mAdapter.data))
-//            putInt(Constant.PARAM_ORDER_ID, orderId)
-//            putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
-//        })
+        startActivity(MallRefundActivity::class.java, Bundle().apply {
+            putSerializable(Constant.PARAM_DATA, ArrayList(mAdapter.data))
+            putInt(Constant.PARAM_ORDER_ID, orderId)
+            putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
+        })
 
     }
 
@@ -241,9 +243,9 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
      * 查看售后详情
      */
     private fun viewRefundDetail() {
-//        startActivity(StoreRefundDetailActivity::class.java, Bundle().apply {
-//            putInt(Constant.PARAM_ORDER_ID, orderId)
-//        })
+        startActivity(MallRefundDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ORDER_ID, orderId)
+        })
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {

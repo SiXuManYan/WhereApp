@@ -32,6 +32,8 @@ import com.jcs.where.api.request.merchant.MerchantSettledPost;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.store.MallRefundModifyRequest;
+import com.jcs.where.api.request.store.MallRefundRequest;
 import com.jcs.where.api.request.store.StoreAddCart;
 import com.jcs.where.api.request.store.StoreCommitComment;
 import com.jcs.where.api.request.store.StoreRefundModifyRequest;
@@ -114,6 +116,7 @@ import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
 import com.jcs.where.api.response.order.bill.BillOrderDetails;
 import com.jcs.where.api.response.order.store.RefundDetail;
+import com.jcs.where.api.response.order.store.RefundDetailMall;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.order.tab.OrderTabResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
@@ -1321,11 +1324,32 @@ public interface RetrofitApi {
             @Body StoreRefundRequest request
     );
 
+
+    /**
+     * mall商城申请退款/退货
+     */
+    @POST("estoreapi/v2/order/refunds/{order_id}")
+    Observable<JcsResponse<JsonElement>> mallRefund(
+            @Path("order_id") int orderId,
+            @Body MallRefundRequest request
+    );
+
+
     /**
      * 商城退货详情
      */
     @GET("generalapi/v2/order/refunds/{orderId}")
     Observable<JcsResponse<RefundDetail>> storeRefundDetail(
+            @Path("orderId") int orderId
+    );
+
+
+
+    /**
+     * mall 商城退货详情
+     */
+    @GET("estoreapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<RefundDetailMall>> mallRefundDetail(
             @Path("orderId") int orderId
     );
 
@@ -1345,6 +1369,15 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> storeRefundModify(
             @Path("orderId") int orderId,
             @Body StoreRefundModifyRequest request
+    );
+
+    /**
+     * mall商城  修改申请退款
+     */
+    @PATCH("estoreapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<JsonElement>> mallRefundModify(
+            @Path("orderId") int orderId,
+            @Body MallRefundModifyRequest request
     );
 
 

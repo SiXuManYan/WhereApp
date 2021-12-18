@@ -46,7 +46,7 @@ class MallOrderDetail {
     /** 订单时间 */
     var created_at = ""
 
-    var order_goods = ArrayList<MallOrderGood>()
+    var goods = ArrayList<MallOrderGood>()
 
     /** 支付渠道 */
     var pay_channel = ""

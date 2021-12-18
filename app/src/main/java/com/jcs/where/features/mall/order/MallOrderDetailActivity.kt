@@ -84,7 +84,6 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
 
 
         // 商家服务
-
         recipient_info_ll.visibility = View.VISIBLE
         data.address?.let {
             address_name_tv.text = it.address
@@ -113,7 +112,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         business_name_tv.text = shopName
 
 
-        mAdapter.setNewInstance(data.order_goods)
+        mAdapter.setNewInstance(data.goods)
 
         // 商品信息
 

@@ -21,9 +21,11 @@ import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.MallShopActivity
+import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.MobUtil
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
@@ -123,6 +125,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
     override fun bindListener() {
+        share_iv.setOnClickListener {
+            val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_MALL, goodId)
+            MobUtil.shareFacebookWebPage(url, this@MallDetailActivity)
+        }
         select_attr_tv.setOnClickListener {
             mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }

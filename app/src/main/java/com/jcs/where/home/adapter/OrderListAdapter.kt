@@ -490,8 +490,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
             }
             5 -> {
-
-                val shopName = item.title
+                right_tv.visibility = View.GONE
+             /*   val shopName = item.title
                 var shopImage = ""
                 if (item.image.isNotEmpty()) {
                     shopImage = item.image[0]
@@ -524,7 +524,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 //                            })
                         }
                     }
-                }
+                }*/
             }
             12 -> {
                 right_tv.text = context.getString(R.string.cancel_application)

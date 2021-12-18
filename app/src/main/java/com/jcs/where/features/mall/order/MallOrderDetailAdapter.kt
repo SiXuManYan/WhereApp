@@ -24,5 +24,13 @@ class MallOrderDetailAdapter : BaseQuickAdapter<MallOrderGood, BaseViewHolder>(R
         good_name_tv.text = item.good_title
         good_count_tv.text = context.getString(R.string.count_format, item.good_num)
         price_tv.text = context.getString(R.string.price_unit_format, item.good_price.toString())
+
+
+        val buffer = StringBuffer()
+        item.good_specs.forEach {
+            buffer.append(it.value + " ")
+        }
+        attr_tv.text = buffer
+
     }
 }

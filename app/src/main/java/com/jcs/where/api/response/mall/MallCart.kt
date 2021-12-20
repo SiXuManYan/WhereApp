@@ -42,14 +42,14 @@ class MallCartItem : Serializable {
     /** 商品详情 */
     var goods_info: MallGoodInfo? = null
     var specs_info: MallSpecsInfo? = null
-    var delivery_fee :BigDecimal = BigDecimal.ZERO
+    var delivery_fee: BigDecimal = BigDecimal.ZERO
 
 
 }
 
 /** 商品详情 */
 class MallGoodInfo : Serializable {
-    var title = ""
+    var title: String? = ""
     var photo = ""
 }
 

@@ -41,7 +41,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private var goodId = 0
     private var shopId = 0
-    private var shopName = ""
+    private var shopName: String?  = ""
     private var goodNumber = 1
     private var mData: MallGoodDetail? = null
     private var mallSpecs: MallSpecs? = null
@@ -200,8 +200,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         setLikeImage()
         if (response.im_status == 1 && !TextUtils.isEmpty(response.mer_uuid)) {
             mall_service_tv.setOnClickListener { _ ->
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE,
-                    response.mer_uuid, response.mer_name, null)
+                RongIM.getInstance().startConversation(
+                    this, Conversation.ConversationType.PRIVATE,
+                    response.mer_uuid, response.mer_name, null
+                )
             }
         }
     }

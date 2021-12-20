@@ -29,7 +29,7 @@ class MallGoodDetail {
 
     var shop_id = 0
 
-    var shop_name = ""
+    var shop_name :String?= ""
 
     /** 0未收藏 1收藏 */
     var collect_status = 0

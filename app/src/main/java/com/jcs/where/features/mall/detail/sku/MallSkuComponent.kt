@@ -36,22 +36,31 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
 
     fun filterTargetSpecsList2(source: MallGoodDetail, userSelect: ArrayList<MallAttributeValue>): ArrayList<MallSpecs> {
 
-        // 1.筛选出符合目标的结果集、2.刷新列表
-        val specs = ArrayList<MallSpecs>()
+        // 1.筛选出符合目标的结果集
 
+        val specs = ArrayList<MallSpecs>()
         source.specs.forEach { ms ->
+
             if (userSelect.isEmpty()) {
                 specs.add(ms)
             } else {
-                userSelect.forEach {
-                    if (ms.specs.containsValue(it.name)) {
-                        specs.add(ms)
-                    }
+                if (ms.specs.values.containsAll(getUserSelectedValues(userSelect))) {
+                    specs.add(ms)
                 }
             }
 
         }
         return specs
+    }
+
+
+    private fun getUserSelectedValues(userSelect: ArrayList<MallAttributeValue>): ArrayList<String> {
+        val userSelectedValue = ArrayList<String>()
+        userSelect.forEach {
+            userSelectedValue.add(it.name)
+        }
+        return userSelectedValue
+
     }
 
     /**

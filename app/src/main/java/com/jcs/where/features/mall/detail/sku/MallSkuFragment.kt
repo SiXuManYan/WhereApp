@@ -114,10 +114,9 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun onItemClick(userSelect: MallAttributeValue) {
-        // 1.筛选出符合目标的结果集
-        val matchSpecsList = presenter.filterTargetSpecsList(data, userSelect)
-
+    override fun onItemClick2(userSelect: MallAttributeValue) {
+        val allUserSelected = presenter.getAllUserSelectedAttributeValue(mAdapter)
+        val matchSpecsList = presenter.filterTargetSpecsList2(data, allUserSelected)
         // 2.筛选结果集中包含的所有商品属性，刷新列表中的选中状态
 
         // 所有属性值
@@ -132,64 +131,20 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
         // 根据存在的属性，匹配列表中的可选状态
         mAdapter.data.forEach { group ->
-            // group eg: 颜色
-            group.value.forEach { child ->
-
-                // 判读当前可操作的item状态
-                if (child.nativeIsSelected == 0) {
-                    if (attributes.contains(child.name)) {
-                        // 包含
-                        child.nativeIsSelected = 0
-                    } else {
-                        // 不包含
-                        child.nativeIsSelected = 2
-                    }
-
-                }
-            }
-        }
-        mAdapter.notifyDataSetChanged()
-
-
-        if (matchSpecsList.size == 1) {
-            val mallSpecs = matchSpecsList[0]
-
-            result = mallSpecs
-            price_tv.text = getString(R.string.price_unit_format, mallSpecs.price.toPlainString())
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onItemClick2(userSelect: MallAttributeValue) {
-        val allUserSelected = presenter.getAllUserSelectedAttributeValue(mAdapter)
-        val matchSpecsList = presenter.filterTargetSpecsList2(data, allUserSelected)
-        // 2.筛选结果集中包含的所有商品属性，刷新列表中的选中状态
-
-        // 所有属性值
-
-
-        // 根据存在的属性，匹配列表中的可选状态
-        mAdapter.data.forEach { group ->
 
             group.value.forEach { item ->
-
-                matchSpecsList.forEach { match ->
-                    // 存在即为可操作
-                    if (match.specs.containsValue(item.name)) {
-                        if (item.nativeIsSelected == 2) {
-                            item.nativeIsSelected = 0
-                        }
-                    } else {
-                        // 不存在记为不可操作
-                        item.nativeIsSelected = 2
-                    }
+                // 存在即为可操作
+                if (attributes.contains(item.name)) when (item.nativeIsSelected) {
+                    0 -> item.nativeIsSelected = 0
+                    1 -> item.nativeIsSelected = 1
+                    2 -> item.nativeIsSelected = 0
+                } else {
+                    // 不存在记为不可操作
+                    item.nativeIsSelected = 2
                 }
-
             }
-
         }
         mAdapter.notifyDataSetChanged()
-
 
         if (matchSpecsList.size == 1) {
             val mallSpecs = matchSpecsList[0]

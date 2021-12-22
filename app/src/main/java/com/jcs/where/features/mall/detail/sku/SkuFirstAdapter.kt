@@ -32,7 +32,7 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
 
         }
 
-  /*      contentAdapter.setOnItemClickListener { _, _, position ->
+        contentAdapter.setOnItemClickListener { _, _, position ->
 
             val allData = contentAdapter.data
             val mallAttributeValue = allData[position]
@@ -67,37 +67,7 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
                 else -> {
                 }
             }
-
-
-
-        }*/
-
-        contentAdapter.setOnItemClickListener { _, _, position ->
-
-            val allData = contentAdapter.data
-            val mallAttributeValue = allData[position]
-
-            when (mallAttributeValue.nativeIsSelected) {
-                0, 1 -> {
-                    // 为可选状态时才进行操作
-                    allData.forEachIndexed { index, child ->
-                        if (child.nativeIsSelected != 2) {
-                            if (index == position) {
-                                child.nativeIsSelected = 1
-                            } else {
-                                child.nativeIsSelected = 0
-                            }
-                        }
-                    }
-                    contentAdapter.notifyDataSetChanged()
-//                    targetGoodItemClickCallBack?.onItemClick(mallAttributeValue)
-
-                }
-                else -> {
-                }
-            }
         }
-
 
         secondRv.apply {
             adapter = contentAdapter
@@ -107,7 +77,6 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
 }
 
 interface TargetGoodItemClickCallBack {
-    fun onItemClick(userSelect: MallAttributeValue)
     fun onItemClick2(userSelect: MallAttributeValue)
 
 }

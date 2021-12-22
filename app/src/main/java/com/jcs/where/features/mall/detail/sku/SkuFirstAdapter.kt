@@ -31,6 +31,47 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
             setNewInstance(item.value)
 
         }
+
+  /*      contentAdapter.setOnItemClickListener { _, _, position ->
+
+            val allData = contentAdapter.data
+            val mallAttributeValue = allData[position]
+
+            when (mallAttributeValue.nativeIsSelected) {
+                0 -> {
+                    allData.forEachIndexed { index, child ->
+                        if (child.nativeIsSelected != 2) {
+                            if (index == position) {
+                                child.nativeIsSelected = 1
+                            }else {
+                                child.nativeIsSelected = 0
+                            }
+                        }
+                    }
+                    contentAdapter.notifyDataSetChanged()
+                    targetGoodItemClickCallBack?.onItemClick2(mallAttributeValue)
+                }
+                1 -> {
+                    allData.forEachIndexed { index, child ->
+                        if (child.nativeIsSelected != 2) {
+                            if (index == position) {
+                                child.nativeIsSelected = 0
+                            }else {
+                                child.nativeIsSelected = 1
+                            }
+                        }
+                    }
+                    contentAdapter.notifyDataSetChanged()
+                    targetGoodItemClickCallBack?.onItemClick2(mallAttributeValue)
+                }
+                else -> {
+                }
+            }
+
+
+
+        }*/
+
         contentAdapter.setOnItemClickListener { _, _, position ->
 
             val allData = contentAdapter.data
@@ -49,7 +90,7 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
                         }
                     }
                     contentAdapter.notifyDataSetChanged()
-                    targetGoodItemClickCallBack?.onItemClick(mallAttributeValue)
+//                    targetGoodItemClickCallBack?.onItemClick(mallAttributeValue)
 
                 }
                 else -> {
@@ -67,5 +108,6 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
 
 interface TargetGoodItemClickCallBack {
     fun onItemClick(userSelect: MallAttributeValue)
+    fun onItemClick2(userSelect: MallAttributeValue)
 
 }

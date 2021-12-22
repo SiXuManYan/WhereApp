@@ -33,4 +33,41 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
         return specs
 
     }
+
+    fun filterTargetSpecsList2(source: MallGoodDetail, userSelect: ArrayList<MallAttributeValue>): ArrayList<MallSpecs> {
+
+        // 1.筛选出符合目标的结果集、2.刷新列表
+        val specs = ArrayList<MallSpecs>()
+
+        source.specs.forEach { ms ->
+            if (userSelect.isEmpty()) {
+                specs.add(ms)
+            } else {
+                userSelect.forEach {
+                    if (ms.specs.containsValue(it.name)) {
+                        specs.add(ms)
+                    }
+                }
+            }
+
+        }
+        return specs
+    }
+
+    /**
+     * 获取所有用户选中的项目
+     */
+    fun getAllUserSelectedAttributeValue(mAdapter: SkuFirstAdapter): ArrayList<MallAttributeValue> {
+
+        val value = ArrayList<MallAttributeValue>()
+
+        mAdapter.data.forEach { group ->
+            group.value.forEach { item ->
+                if (item.nativeIsSelected == 1) {
+                    value.add(item)
+                }
+            }
+        }
+        return value
+    }
 }

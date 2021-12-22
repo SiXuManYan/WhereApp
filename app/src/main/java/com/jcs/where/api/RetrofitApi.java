@@ -1834,7 +1834,7 @@ public interface RetrofitApi {
     /**
      * 获取商城三级级分类
      */
-    @GET("estoreapi/v2/categories/one")
+    @GET("estoreapi/v2/categories/three")
     Observable<JcsResponse<ArrayList<MallCategory>>> getMallThirdCategory(@Query("categoryId") int categoryId);
 
 

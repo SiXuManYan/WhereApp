@@ -39,7 +39,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
 
 
-    /** 当前页面对应的一级分类 */
+    /** 当前页面对应的二级分类 */
     private var categoryId = 0
     private var goodRequest = MallGoodListRequest()
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -113,9 +113,10 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
         mAdapter = MallRecommendAdapter().apply {
             setEmptyView(emptyView)
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {
                 page++
+                goodRequest.page = page
                 presenter.getMallList(goodRequest)
             }
         }

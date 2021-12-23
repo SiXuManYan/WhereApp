@@ -76,7 +76,7 @@ class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.lay
         }
 
         // 商家回复
-        if (item.merchant_review.isNotEmpty()) {
+        if (!item.merchant_review.isNullOrBlank()) {
             merchant_ll.visibility = View.VISIBLE
             merchant_iv.visibility = View.VISIBLE
             merchant_reply_tv.text = item.merchant_review

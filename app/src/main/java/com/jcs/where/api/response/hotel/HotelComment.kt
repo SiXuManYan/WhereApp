@@ -30,6 +30,6 @@ class HotelComment {
     var hotel_id = 0
 
     /** 美食评论 */
-    var merchant_review = ""
+    var merchant_review :String? = null
 
 }

@@ -10,11 +10,10 @@ import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.mall.MallCommentCount
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_hotel_comment_2.*
-
-import java.util.*
 
 /**
  * Created by Wangsw  2021/12/23 13:57.
@@ -86,18 +85,15 @@ class MallCommentActivity : BaseMvpActivity<MallCommentPresenter>(), MallComment
                 }
             }
 
-
         }
 
     }
 
-    override fun bindCount(response: ArrayList<Int>) {
-        if (response.size >= 4) {
-            all_rb.text = getString(R.string.all_format, response[0])
-            picture_rb.text = getString(R.string.has_image_format, response[1])
-            bad_reviews_rb.text = getString(R.string.newest_format, response[2])
-            high_option_rb.text = getString(R.string.low_rating_with_number, response[3])
-        }
+    override fun bindCount(response: MallCommentCount) {
+        all_rb.text = getString(R.string.all_format, response.all)
+        picture_rb.text = getString(R.string.has_image_format, response.new)
+        bad_reviews_rb.text = getString(R.string.newest_format, response.photo)
+        high_option_rb.text = getString(R.string.low_rating_with_number, response.low)
     }
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
@@ -115,7 +111,7 @@ class MallCommentActivity : BaseMvpActivity<MallCommentPresenter>(), MallComment
 }
 
 interface MallCommentView : BaseMvpView {
-    fun bindCount(response: ArrayList<Int>)
+    fun bindCount(response: MallCommentCount)
 
 }
 
@@ -123,8 +119,8 @@ class MallCommentPresenter(private var view: MallCommentView) : BaseMvpPresenter
 
     fun getCommentCount(goodId: Int) {
 
-        requestApi(mRetrofit.mallCommentCount(goodId), object : BaseMvpObserver<ArrayList<Int>>(view) {
-            override fun onSuccess(response: ArrayList<Int>) {
+        requestApi(mRetrofit.mallCommentCount(goodId), object : BaseMvpObserver<MallCommentCount>(view) {
+            override fun onSuccess(response: MallCommentCount) {
                 view.bindCount(response)
             }
 

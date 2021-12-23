@@ -46,8 +46,8 @@ class MallCommentFragment : BaseMvpFragment<MallCommentChildPresenter>(), MallCo
          * @param hotel_id 酒店ID
          * @param listType 显示类型（1：晒图，2：低分，3：最新）
          */
-        fun newInstance(hotel_id: Int, listType: Int? = 0): HotelCommentFragment {
-            val fragment = HotelCommentFragment()
+        fun newInstance(hotel_id: Int, listType: Int? = 0): MallCommentFragment {
+            val fragment = MallCommentFragment()
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_SHOP_ID, hotel_id)
                 listType?.let {
@@ -75,7 +75,6 @@ class MallCommentFragment : BaseMvpFragment<MallCommentChildPresenter>(), MallCo
         }
 
         mAdapter = HotelCommentAdapter().apply {
-            isDiamond = true
             footerWithEmptyEnable = true
             headerWithEmptyEnable = true
             loadMoreModule.isAutoLoadMore = true

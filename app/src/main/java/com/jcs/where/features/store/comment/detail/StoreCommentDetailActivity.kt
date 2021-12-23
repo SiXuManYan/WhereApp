@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_store_comment_detail.*
 class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(), StoreCommentDetailView {
 
     private var orderId = 0
+    private var commentId = 0
 
     /** 0旧版商城 1新版商城 */
     private var useType = 0
@@ -38,6 +39,7 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
         BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
+            commentId = it.getInt(Constant.PARAM_COMMENT_ID)
             useType = it.getInt(Constant.PARAM_TYPE)
         }
 
@@ -60,7 +62,14 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
 
     override fun initData() {
         presenter = StoreCommentDetailPresenter(this)
-        presenter.getDetail(orderId,useType)
+
+        if (useType == 0) {
+            presenter.getStoreComment(orderId)
+        }
+        if (useType == 1) {
+            presenter.getMallComment(commentId)
+        }
+
     }
 
     override fun bindListener() {

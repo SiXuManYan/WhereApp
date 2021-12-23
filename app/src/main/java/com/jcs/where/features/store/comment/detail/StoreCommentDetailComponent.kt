@@ -19,22 +19,23 @@ interface StoreCommentDetailView : BaseMvpView {
 class StoreCommentDetailPresenter(private var view: StoreCommentDetailView) : BaseMvpPresenter(view) {
 
 
-    fun getDetail(orderId: Int, useType: Int) {
+    fun getStoreComment(orderId: Int) {
 
-        if (useType == 0) {
-            requestApi(mRetrofit.storeCommentDetail(orderId), object : BaseMvpObserver<StoreCommentDetail>(view) {
+        requestApi(mRetrofit.storeCommentDetail(orderId), object : BaseMvpObserver<StoreCommentDetail>(view) {
 
-                override fun onSuccess(response: StoreCommentDetail) {
-                    view.bingDetail(response)
-                }
-            })
-        } else {
-            requestApi(mRetrofit.mallCommentDetail(orderId), object : BaseMvpObserver<StoreCommentDetail>(view) {
-                override fun onSuccess(response: StoreCommentDetail) {
-                    view.bingDetail(response)
-                }
-            })
-        }
+            override fun onSuccess(response: StoreCommentDetail) {
+                view.bingDetail(response)
+            }
+        })
+    }
+
+
+    fun getMallComment(commentId: Int) {
+        requestApi(mRetrofit.mallCommentDetail(commentId), object : BaseMvpObserver<StoreCommentDetail>(view) {
+            override fun onSuccess(response: StoreCommentDetail) {
+                view.bingDetail(response)
+            }
+        })
 
     }
 

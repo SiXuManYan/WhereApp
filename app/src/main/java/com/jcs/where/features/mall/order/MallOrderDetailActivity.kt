@@ -165,7 +165,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             5 -> {
 
                 val commentStatus = data.comment_status
-                val isCancel = data.isCancel
+                val isCancel = data.is_cancel
                 if (isCancel == 2 && commentStatus == 3) {
                     bottom_container_rl.visibility = View.GONE
                 } else {
@@ -202,7 +202,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                         right_tv.setOnClickListener {
                             // 查看评价
                             startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
-                                putInt(Constant.PARAM_ORDER_ID, orderId)
+                                putInt(Constant.PARAM_COMMENT_ID, data.comments_id)
                                 putInt(Constant.PARAM_TYPE, 1)
                             })
                         }

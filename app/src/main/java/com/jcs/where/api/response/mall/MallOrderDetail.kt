@@ -55,7 +55,7 @@ class MallOrderDetail {
     var tel = ""
 
     /**1支持退货 2不支持退货*/
-    var isCancel = 0
+    var is_cancel = 0
 
     /** 评论状态（1-未评论，2-已评论，3-已超时） */
     var comment_status = 0

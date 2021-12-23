@@ -104,6 +104,7 @@ import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
+import com.jcs.where.api.response.mall.MallCommentCount;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
 import com.jcs.where.api.response.mall.MallOrderDetail;
@@ -1973,13 +1974,13 @@ public interface RetrofitApi {
     /**
      * mall商城评价数量
      */
-    @POST("estoreapi/v2/comments/num")
-    Observable<JcsResponse<ArrayList<Integer>>> mallCommentCount( @Query("goods_id") int goods_id);
+    @GET("estoreapi/v2/comments/num")
+    Observable<JcsResponse<MallCommentCount>> mallCommentCount(@Query("goods_id") int goods_id);
 
     /**
      * 商城评价详情
      */
     @GET("estoreapi/v2/comments/{comments_id}")
-    Observable<JcsResponse<StoreCommentDetail>> mallCommentDetail(@Path("order_id") int order_id);
+    Observable<JcsResponse<StoreCommentDetail>> mallCommentDetail(@Path("comments_id") int comments_id);
 
 }

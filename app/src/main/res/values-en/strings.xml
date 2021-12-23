@@ -176,10 +176,10 @@
     <string name="customer_name">Guest Name</string>
     <string name="all_reviews">All Reviews</string>
     <string name="put_up">Put Up</string>
-    <string name="all_with_number">All%1$d</string>
-    <string name="show_icon_with_number">Photo%1$d</string>
-    <string name="low_rating_with_number">Low Rating%1$d</string>
-    <string name="new_with_number">New%1$d</string>
+    <string name="all_with_number">All(%1$d)</string>
+    <string name="show_icon_with_number">Photo(%1$d)</string>
+    <string name="low_rating_with_number">Low(%1$d)</string>
+    <string name="new_with_number">New(%1$d)</string>
     <string name="no_more">No More</string>
     <string name="policy_prompt">Policy</string>
     <string name="amenities_prompt">Amenities</string>
@@ -509,7 +509,7 @@
     <string name="total_cart_2">Total ：</string>
     <string name="total_cart_3">Total&#160;</string>
     <string name="settlement">Settlement</string>
-    <string name="edit">Edit</string>
+    <string name="edit">edit</string>
     <string name="prepaid_reload">Prepaid\nReload</string>
     <string name="water_utilities">Water\nUtilities</string>
     <string name="electric_utilities">Electric\nUtilities</string>
@@ -911,5 +911,7 @@ Gentleman must let go</string>
     <string name="product_details_tag">Product Details</string>
     <string name="mall_service">Service</string>
     <string name="mall_shop">Shop</string>
-
+    <string name="recommended_products">Recommended Products</string>
+    <string name="low_rating">Low</string>
+    <string name="comment_success">Comment Success</string>
 </resources>

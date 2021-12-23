@@ -8,6 +8,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.hotel.HotelCommitComment
 import com.jcs.where.api.request.hotel.TravelCommitComment
+import com.jcs.where.api.request.store.StoreCommitComment
 import com.jcs.where.api.response.UploadFileResponse2
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -29,6 +30,7 @@ class CommentPostPresenter(private var view: CommentView) : BaseMvpPresenter(vie
      * 业务id 如：
      * 酒店id
      * 旅游id
+     * 订单id（新版商城）
      */
     var targetId = 0
 
@@ -62,8 +64,11 @@ class CommentPostPresenter(private var view: CommentView) : BaseMvpPresenter(vie
                     0 -> {
                         postHotelComment(orderId, star, contentStr, descImages)
                     }
-                    1->{
-                        postTravelComment(star,contentStr,descImages)
+                    1 -> {
+                        postTravelComment(star, contentStr, descImages)
+                    }
+                    2 -> {
+                        commitMallComment(orderId, star, contentStr, descImages)
                     }
 
                     else -> {
@@ -103,7 +108,7 @@ class CommentPostPresenter(private var view: CommentView) : BaseMvpPresenter(vie
     /**
      * 发表旅游评价
      */
-    fun postTravelComment(stars: Int, contentStr: String, imageUrls: String? =null) {
+    fun postTravelComment(stars: Int, contentStr: String, imageUrls: String? = null) {
 
         val apply = TravelCommitComment().apply {
             images = imageUrls
@@ -116,6 +121,29 @@ class CommentPostPresenter(private var view: CommentView) : BaseMvpPresenter(vie
             travel_id = targetId
         }
         requestApi(mRetrofit.commitTravelComment(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.commitSuccess()
+            }
+
+        })
+    }
+
+    /**
+     * mall 商城评价
+     */
+    fun commitMallComment(orderId: Int, stars: Int, contentStr: String, imageUrls: String?) {
+
+        val apply = StoreCommitComment().apply {
+            images = imageUrls
+            content = if (contentStr.isEmpty()) {
+                null
+            } else {
+                contentStr
+            }
+            order_id = orderId
+            star = stars
+        }
+        requestApi(mRetrofit.commitMallComment(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.commitSuccess()
             }

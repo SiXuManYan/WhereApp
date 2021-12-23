@@ -16,8 +16,10 @@ import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
+import com.jcs.where.features.mall.comment.MallCommentActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.MallShopActivity
@@ -30,6 +32,7 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
+
 import java.util.*
 
 
@@ -41,20 +44,24 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private var goodId = 0
     private var shopId = 0
-    private var shopName: String?  = ""
+    private var shopName: String? = ""
     private var goodNumber = 1
     private var mData: MallGoodDetail? = null
     private var mallSpecs: MallSpecs? = null
 
+    /** 0只展示 1加入购物车 2直接购买 */
+    private var dialogHandle = 0
 
-    /**
-     * 收藏状态（0：未收藏，1：已收藏）
-     */
+
+    /** 收藏状态（0：未收藏，1：已收藏） */
     private var collect_status = 0
 
     private lateinit var mMediaAdapter: DetailMediaAdapter
 
     private lateinit var mSkuDialog: MallSkuFragment
+
+    /** 评价 */
+    private lateinit var mCommentAdapter: HotelCommentAdapter
 
     companion object {
 
@@ -82,6 +89,16 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             selectResult = this@MallDetailActivity
         }
         initMedia()
+        initComment()
+    }
+
+    private fun initComment() {
+        mCommentAdapter = HotelCommentAdapter()
+        comment_rv.isNestedScrollingEnabled = true
+        comment_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
+            override fun canScrollVertically(): Boolean = false
+        }
+        comment_rv.adapter = mCommentAdapter
     }
 
 
@@ -130,6 +147,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             MobUtil.shareFacebookWebPage(url, this@MallDetailActivity)
         }
         select_attr_tv.setOnClickListener {
+            dialogHandle = 0
             mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }
         mall_shop_tv.setOnClickListener {
@@ -144,9 +162,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
         buy_after_tv.setOnClickListener {
             if (mallSpecs == null) {
+                dialogHandle = 1
                 mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
             } else {
-                presenter.addCart(goodId, goodNumber, mallSpecs!!.specs_id)
+                addCart()
             }
         }
 
@@ -155,21 +174,33 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 return@setOnClickListener
             }
             if (mallSpecs == null) {
+                dialogHandle = 2
                 mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
             } else {
-
-                val selectedData = presenter.getSelectedData(mData!!, mallSpecs!!, goodNumber)
-                startActivityAfterLogin(MallOrderCommitActivity::class.java, Bundle().apply {
-                    putSerializable(Constant.PARAM_DATA, selectedData)
-                })
-
-
+                buyNow()
             }
         }
 
         shopping_cart.setOnClickListener {
             startActivityAfterLogin(MallCartActivity::class.java)
         }
+
+        more_comment_tv.setOnClickListener {
+            startActivity(MallCommentActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ID, goodId)
+            })
+        }
+    }
+
+    private fun buyNow() {
+        val selectedData = presenter.getSelectedData(mData!!, mallSpecs!!, goodNumber)
+        startActivityAfterLogin(MallOrderCommitActivity::class.java, Bundle().apply {
+            putSerializable(Constant.PARAM_DATA, selectedData)
+        })
+    }
+
+    private fun addCart() {
+        presenter.addCart(goodId, goodNumber, mallSpecs!!.specs_id)
     }
 
     override fun bindDetail(response: MallGoodDetail) {
@@ -206,6 +237,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 )
             }
         }
+
+        // 评价
+        comment_count_tv.text = getString(R.string.comment_format, response.count)
+        mCommentAdapter.setNewInstance(response.comments)
+
     }
 
     private fun disPlayHtml(html: String) {
@@ -270,6 +306,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             buff.append("$it, ")
         }
         select_attr_tv.text = buff
+
+        when (dialogHandle) {
+            1 -> addCart()
+            2 -> buyNow()
+        }
 
 
     }

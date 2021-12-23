@@ -14,8 +14,10 @@ import com.jcs.where.api.response.mall.MallOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.mall.refund.apply.MallRefundActivity
 import com.jcs.where.features.mall.refund.detail.MallRefundDetailActivity
+import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -119,9 +121,10 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         if (data.im_status == 1 && !TextUtils.isEmpty(data.mer_uuid)) {
             im_ll.visibility = View.VISIBLE
             im_ll.setOnClickListener { _ ->
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, Bundle().apply {
-                    putString(Constant.PARAM_PHONE,data.tel)
-                })
+                RongIM.getInstance()
+                    .startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, Bundle().apply {
+                        putString(Constant.PARAM_PHONE, data.tel)
+                    })
             }
         } else {
             im_ll.visibility = View.GONE
@@ -160,20 +163,51 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 bottom_container_rl.visibility = View.GONE
             }
             5 -> {
-                if (data.isCancel ==1) {
+
+                val commentStatus = data.comment_status
+                val isCancel = data.isCancel
+                if (isCancel == 2 && commentStatus == 3) {
+                    bottom_container_rl.visibility = View.GONE
+                } else {
                     bottom_container_rl.visibility = View.VISIBLE
+                }
+
+                if (isCancel == 1) {
                     left_tv.visibility = View.VISIBLE
                     left_tv.text = getString(R.string.apply_return)
                     left_tv.setOnClickListener {
                         // 申请退货
                         doRefund()
                     }
-
-                }else{
-                    bottom_container_rl.visibility = View.GONE
+                } else {
+                    left_tv.visibility = View.VISIBLE
                 }
-                right_tv.visibility = View.GONE
 
+
+                if (commentStatus == 3) {
+                    right_tv.visibility = View.GONE
+                } else {
+                    right_tv.visibility = View.VISIBLE
+
+                    if (commentStatus == 1) {
+                        right_tv.text = getString(R.string.evaluation_go)
+                        right_tv.setOnClickListener {
+                            // 去评价
+                            CommentPostActivity.navigation(this, 2, null, orderId, shopName, shopImage)
+                        }
+                    }
+
+                    if (commentStatus == 2) {
+                        right_tv.text = getString(R.string.view_evaluation)
+                        right_tv.setOnClickListener {
+                            // 查看评价
+                            startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
+                                putInt(Constant.PARAM_ORDER_ID, orderId)
+                                putInt(Constant.PARAM_TYPE, 1)
+                            })
+                        }
+                    }
+                }
             }
             8, 9, 10, 11, 12 -> {
                 //  查看售后详情

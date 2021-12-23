@@ -1,5 +1,6 @@
 package com.jcs.where.features.mine
 
+import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -17,6 +18,7 @@ import com.jcs.where.features.coupon.CardCouponActivity
 import com.jcs.where.features.daily.scoe.ScoreActivity
 import com.jcs.where.features.daily.sign.SignInActivity
 import com.jcs.where.features.footprint.FootprintActivity
+import com.jcs.where.features.mall.comment.MallCommentActivity
 import com.jcs.where.features.merchant.MerchantSettledActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
@@ -26,6 +28,7 @@ import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity
 import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.SPKey
 import kotlinx.android.synthetic.main.fragment_mine_2.*
@@ -113,8 +116,10 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(ExtendChatActivity::class.java)
         }
         about_rl.setOnClickListener {
-//            startActivity(AboutActivity::class.java)
-            startActivity(StoreRecommendActivity::class.java)
+            startActivity(AboutActivity::class.java)
+            startActivity(MallCommentActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ORDER_ID, 31)
+            })
         }
 
     }

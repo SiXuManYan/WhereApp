@@ -1,5 +1,6 @@
 package com.jcs.where.api.response.mall
 
+import com.jcs.where.api.response.hotel.HotelComment
 import java.math.BigDecimal
 
 /**
@@ -38,6 +39,10 @@ class MallGoodDetail {
     var mer_name = ""
     var mer_uuid = ""
     var im_status = 0
+
+    /** 评论数 */
+    var count = 0
+    var comments = ArrayList<HotelComment>()
 
 
 }

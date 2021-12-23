@@ -105,9 +105,8 @@
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
             android:layout_alignParentEnd="true"
-            android:rotation="270"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_back_black" />
+            android:src="@mipmap/ic_down_black" />
 
 
     </RelativeLayout>

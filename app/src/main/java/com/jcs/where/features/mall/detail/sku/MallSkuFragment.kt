@@ -97,12 +97,13 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
         confirm_tv.setOnClickListener {
             if (result == null) {
+                ToastUtils.showShort("请选择")
                 return@setOnClickListener
             }
             // 判断是否所有必选都选中
             mAdapter.data.forEach {
-                it.value.forEach {
-                    if (it.nativeIsSelected == 0) {
+                it.value.forEach { value->
+                    if (value.nativeIsSelected == 0) {
                         ToastUtils.showShort("请选择" + it.key)
                         return@setOnClickListener
                     }

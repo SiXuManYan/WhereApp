@@ -1,5 +1,7 @@
 package com.jcs.where.features.mall.second
 
+import com.blankj.utilcode.util.StringUtils
+import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -25,9 +27,17 @@ class MallSecondPresenter(private var view: MallSecondView) : BaseMvpPresenter(v
 
         requestApi(mRetrofit.getMallThirdCategory(secondCategoryId), object : BaseMvpObserver<ArrayList<MallCategory>>(view) {
             override fun onSuccess(response: ArrayList<MallCategory>) {
-                if (response.isNotEmpty()) {
-                    response[0].nativeIsSelected = true
-                }
+                // 手动添加二级分类
+                response.add(0,
+                    MallCategory().apply {
+                        id = secondCategoryId
+                        name = StringUtils.getString(R.string.all)
+                        icon = ""
+                        second_level = ArrayList<MallCategory>()
+                        nativeIsSelected = true
+                    }
+                )
+
                 view.bindThirdCategory(response)
             }
 
@@ -40,10 +50,10 @@ class MallSecondPresenter(private var view: MallSecondView) : BaseMvpPresenter(v
             request.page,
             request.order?.name,
             request.title,
-            request. categoryId,
+            request.categoryId,
             request.startPrice,
-            request. endPrice,
-            request.sold?. name,
+            request.endPrice,
+            request.sold?.name,
             request.shopId
         ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
             override fun onSuccess(response: PageResponse<MallGood>) {

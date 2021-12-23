@@ -21,6 +21,7 @@ import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.mall.comment.MallCommentActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -407,6 +408,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                             // 查看评价
                             startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
                                 putInt(Constant.PARAM_ORDER_ID, item.id)
+                                putInt(Constant.PARAM_TYPE, 0)
                             })
                         }
                     }
@@ -491,40 +493,25 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             }
             5 -> {
                 right_tv.visibility = View.GONE
-             /*   val shopName = item.title
+                val shopName = item.title
                 var shopImage = ""
                 if (item.image.isNotEmpty()) {
                     shopImage = item.image[0]
                 }
 
                 val commentStatus = modelData.comment_status
-                if (commentStatus == 3) {
-                    right_tv.visibility = View.GONE
-                } else {
+                if (commentStatus == 1) {
                     right_tv.visibility = View.VISIBLE
-
                     if (commentStatus == 1) {
                         right_tv.text = context.getString(R.string.evaluation_go)
                         right_tv.setOnClickListener {
                             // 去评价
-//                            startActivity(StoreCommentPostActivity::class.java, Bundle().apply {
-//                                putInt(Constant.PARAM_ORDER_ID, item.id)
-//                                putString(Constant.PARAM_SHOP_NAME, shopName)
-//                                putString(Constant.PARAM_SHOP_IMAGE, shopImage)
-//                            })
+                            CommentPostActivity.navigation(context, 2, null, item.id)
                         }
                     }
-
-                    if (commentStatus == 2) {
-                        right_tv.text = context.getString(R.string.view_evaluation)
-                        right_tv.setOnClickListener {
-                            // 查看评价
-//                            startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
-//                                putInt(Constant.PARAM_ORDER_ID, item.id)
-//                            })
-                        }
-                    }
-                }*/
+                } else {
+                    right_tv.visibility = View.GONE
+                }
             }
             12 -> {
                 right_tv.text = context.getString(R.string.cancel_application)

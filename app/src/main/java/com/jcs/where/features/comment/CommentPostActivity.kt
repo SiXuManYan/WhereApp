@@ -27,16 +27,17 @@ import org.greenrobot.eventbus.EventBus
  * 发表评价
  * 0 酒店
  * 1 旅游
+ * 2 商城
  */
 class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView {
 
     /** 订单id */
     private var orderId = 0
 
-    /** 业务id 如：酒店id  旅游id */
+    /** 业务id 如：酒店id  旅游id  订单id ,*/
     private var targetId = 0
 
-    /** 评论类型( 0 酒店 , 1 旅游) */
+    /** 评论类型( 0 酒店 , 1 旅游 ，2 mall商城) */
     private var commentType = 0
 
     /** 名称 */
@@ -56,7 +57,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
 
         /**
          * @param commentType  评论类型( 0 酒店 , 1 旅游)
-         * @param targetId 业务id （酒店、旅游）
+         * @param targetId 业务id （酒店、旅游,商品）
          * @param orderId 订单id(如需要)
          * @param name 名字(如需要)
          * @param avatar 名字(如需要)
@@ -65,7 +66,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
         fun navigation(
             context: Context,
             commentType: Int,
-            targetId: Int,
+            targetId: Int? = null,
             orderId: Int? = null,
             name: String? = "",
             avatar: String? = "",
@@ -73,7 +74,11 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_TYPE, commentType)
-                putInt(Constant.PARAM_ID, targetId)
+
+                targetId?.let {
+                    putInt(Constant.PARAM_ID, it)
+                }
+
 
                 orderId?.let {
                     putInt(Constant.PARAM_ORDER_ID, it)
@@ -128,7 +133,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
             name_tv.text = name
             GlideUtil.load(this, avatar, image_iv, 5)
         } else {
-            target_user_ll.visibility = View.VISIBLE
+            target_user_ll.visibility = View.GONE
         }
 
 
@@ -170,6 +175,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
             when (commentType) {
                 0 -> presenter.postHotelComment(orderId, rating, content, null)
                 1 -> presenter.postTravelComment(rating, content)
+                2 -> presenter.commitMallComment(rating, rating, content, null)
 
                 else -> {
                 }
@@ -200,7 +206,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
 
     override fun commitSuccess() {
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
-        ToastUtils.showShort(R.string.commit_success)
+        startActivity(CommentSuccessActivity::class.java)
         finish()
     }
 

@@ -18,10 +18,15 @@ import kotlinx.android.synthetic.main.activity_store_comment_detail.*
 /**
  * Created by Wangsw  2021/7/15 15:55.
  * 商城评价详情
+ * 0 旧版商城
+ * 1 新版商城
  */
 class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(), StoreCommentDetailView {
 
     private var orderId = 0
+
+    /** 0旧版商城 1新版商城 */
+    private var useType = 0
 
     private lateinit var mImageAdapter: StoreRefundAdapter
 
@@ -33,6 +38,7 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
         BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID)
+            useType = it.getInt(Constant.PARAM_TYPE)
         }
 
 
@@ -48,16 +54,13 @@ class StoreCommentDetailActivity : BaseMvpActivity<StoreCommentDetailPresenter>(
                     return false
                 }
             }
-//            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0).apply {
-//                setDrawHeaderFooter(false)
-//            })
         }
 
     }
 
     override fun initData() {
         presenter = StoreCommentDetailPresenter(this)
-        presenter.getDetail(orderId)
+        presenter.getDetail(orderId,useType)
     }
 
     override fun bindListener() {

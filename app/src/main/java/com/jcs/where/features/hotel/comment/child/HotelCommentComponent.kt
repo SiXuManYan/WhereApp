@@ -17,9 +17,7 @@ interface HotelCommentView : BaseMvpView {
 
 class HotelCommentPresenter(private var view: HotelCommentView) : BaseMvpPresenter(view) {
 
-    /**
-     * 商城评论列表
-     */
+
     fun getStoreCommentList(hotel_id: Int, page: Int, type: Int) {
 
         requestApi(mRetrofit.getHotelCommentList(hotel_id ,type, page ), object : BaseMvpObserver<PageResponse<HotelComment>>(view) {

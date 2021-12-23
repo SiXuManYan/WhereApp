@@ -549,6 +549,8 @@
         <activity android:name=".features.mall.order.MallOrderDetailActivity" />
         <activity android:name=".features.mall.refund.apply.MallRefundActivity" />
         <activity android:name=".features.mall.refund.detail.MallRefundDetailActivity" />
+        <activity android:name=".features.mall.comment.MallCommentActivity" />
+        <activity android:name=".features.comment.CommentSuccessActivity" />
 
 
     </application>

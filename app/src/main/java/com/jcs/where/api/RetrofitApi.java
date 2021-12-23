@@ -1950,4 +1950,36 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> cancelMallOrder(@Path("order_id") int order_id);
 
 
+    /**
+     * 新版商城评论列表
+     *
+     * @param type 列表类型（0：全部，1：有图，2：最新，3：低分）
+     */
+    @GET("estoreapi/v2/comments")
+    Observable<JcsResponse<PageResponse<HotelComment>>> getMallCommentList(
+            @Query("goods_id") int goods_id,
+            @Query("type") int type,
+            @Query("page") int page
+    );
+
+
+    /**
+     * mall商城提交评价
+     */
+    @POST("estoreapi/v2/comments")
+    Observable<JcsResponse<JsonElement>> commitMallComment(@Body StoreCommitComment request);
+
+
+    /**
+     * mall商城评价数量
+     */
+    @POST("estoreapi/v2/comments/num")
+    Observable<JcsResponse<ArrayList<Integer>>> mallCommentCount( @Query("goods_id") int goods_id);
+
+    /**
+     * 商城评价详情
+     */
+    @GET("estoreapi/v2/comments/{comments_id}")
+    Observable<JcsResponse<StoreCommentDetail>> mallCommentDetail(@Path("order_id") int order_id);
+
 }

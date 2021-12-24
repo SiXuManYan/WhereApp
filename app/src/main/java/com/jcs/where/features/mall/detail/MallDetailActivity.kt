@@ -105,6 +105,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
 
     private fun initMedia() {
+        point_view.apply {
+            selectedDrawableResId = R.drawable.shape_point_selected_377bff
+            commonDrawableResId = R.drawable.shape_point_selected_d8d8d8
+        }
         mMediaAdapter = DetailMediaAdapter()
         PagerSnapHelper().attachToRecyclerView(media_rv)
         media_rv.apply {

@@ -17,7 +17,7 @@
         android:paddingLeft="@dimen/dp_22"
         android:paddingRight="@dimen/dp_22"
         android:textAlignment="center"
-        android:textColor="@color/selector_black_blue"
+        android:textColor="@color/selector_gray666_blue"
         android:textSize="@dimen/sp_13"
         tools:checked="false"
         tools:text="loading" />

@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginBottom="@dimen/dp_30" />
+                    android:layout_marginBottom="@dimen/dp_10" />
 
             </FrameLayout>
 
@@ -258,7 +258,6 @@
             android:layout_width="@dimen/dp_50"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_26"
             android:gravity="center"
             android:text="@string/mall_service"
             android:textColor="@color/black_333333"
@@ -280,8 +279,9 @@
 
 
         <LinearLayout
-            android:layout_width="@dimen/dp_244"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
+            android:layout_toEndOf="@+id/mall_shop_tv"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true">
 

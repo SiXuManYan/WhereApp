@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -123,14 +123,29 @@
             android:layout_height="match_parent" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/top_category_rv"
+        <LinearLayout
+            android:id="@+id/top_category_ll"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_400"
-            android:background="@color/colorPrimary"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             app:behavior_peekHeight="0dp"
-            app:layout_behavior=".view.sheet.TopSheetBehavior"
-            tools:listitem="@layout/item_address_time" />
+            app:layout_behavior=".view.sheet.TopSheetBehavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/top_category_rv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_400"
+                android:background="@color/white"
+                tools:listitem="@layout/item_address_time" />
+
+            <View
+                android:id="@+id/dismiss_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5"
+                android:background="@color/grey_666666" />
+
+        </LinearLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

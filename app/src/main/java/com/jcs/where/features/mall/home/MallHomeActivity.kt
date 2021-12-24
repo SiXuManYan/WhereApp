@@ -2,6 +2,7 @@ package com.jcs.where.features.mall.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_mall_home.*
 class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     private lateinit var mAdapter: TopCategoryAdapter
-    private lateinit var topSheetBehavior: TopSheetBehavior<RecyclerView>
+    private lateinit var topSheetBehavior: TopSheetBehavior<LinearLayout>
 
     private var firstCategory: ArrayList<MallCategory> = ArrayList()
 
@@ -40,7 +41,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     private fun initTop() {
 
-        topSheetBehavior = TopSheetBehavior.from(top_category_rv)
+        topSheetBehavior = TopSheetBehavior.from(top_category_ll)
         topSheetBehavior.setTopSheetCallback(object : TopSheetBehavior.TopSheetCallback() {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -96,6 +97,9 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
             } else {
                 topSheetBehavior.state = TopSheetBehavior.STATE_EXPANDED
             }
+        }
+        dismiss_view.setOnClickListener {
+            topSheetBehavior.state = TopSheetBehavior.STATE_COLLAPSED
         }
 
     }

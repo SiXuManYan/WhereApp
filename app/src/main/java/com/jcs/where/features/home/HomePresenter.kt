@@ -142,8 +142,9 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
         requestApi(mRetrofit.homeNewsList, object : BaseMvpObserver<List<HomeNewsResponse>>(view) {
             override fun onSuccess(response: List<HomeNewsResponse>?) {
                 view.bindNewsData(response)
-
             }
+
+            override fun onError(errorResponse: ErrorResponse) = Unit
         })
 
     }

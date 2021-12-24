@@ -149,9 +149,24 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
         if (matchSpecsList.size == 1) {
             val mallSpecs = matchSpecsList[0]
-
             result = mallSpecs
             price_tv.text = getString(R.string.price_unit_format, mallSpecs.price.toPlainString())
+
+            val stock = mallSpecs.stock
+
+            stock_tv.text = StringUtils.getString(R.string.stock_format, stock)
+
+
+            number_view.apply {
+                if (stock<=0){
+                    MIN_GOOD_NUM = 0
+                }
+                MAX_GOOD_NUM = stock
+                updateNumberJudgeMin(MIN_GOOD_NUM)
+            }
+
+
+
         }
 
     }

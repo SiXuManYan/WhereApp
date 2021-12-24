@@ -453,7 +453,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
-            startActivity(StoreDetailActivity::class.java, Bundle().apply {
+            startActivity(MallCommentActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_ID, item.model_id)
             })
         }

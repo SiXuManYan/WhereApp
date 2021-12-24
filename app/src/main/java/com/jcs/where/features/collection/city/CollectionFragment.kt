@@ -136,7 +136,7 @@ class CollectionFragment : BaseMvpFragment<CollectionPresenter>(), CollectionVie
             }
             MyCollection.TYPE_STORE -> {
                 collection.estore?.let {
-                    StoreDetailActivity.navigation(requireContext(), it.id)
+                   // StoreDetailActivity.navigation(requireContext(), it.id)
                 }
             }
             MyCollection.TYPE_NEWS -> {

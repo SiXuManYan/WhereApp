@@ -38,7 +38,6 @@ import java.util.*
 class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondView {
 
 
-
     /** 当前页面对应的二级分类 */
     private var categoryId = 0
     private var goodRequest = MallGoodListRequest()

@@ -128,7 +128,7 @@ class FootprintActivity : BaseMvpActivity<FootprintPresenter>(), FootprintView, 
                 RestaurantDetailActivity.navigation(this@FootprintActivity, module.id)
             }
             Footprint.TYPE_STORE -> {
-                StoreDetailActivity.navigation(this@FootprintActivity, module.id)
+                // StoreDetailActivity.navigation(this@FootprintActivity, module.id)
             }
             Footprint.TYPE_NEWS -> {
                 startActivity(NewsDetailActivity::class.java, Bundle().apply {

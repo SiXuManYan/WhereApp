@@ -16,6 +16,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
@@ -26,6 +27,7 @@ import com.jcs.where.features.mall.shop.MallShopActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
 import com.shuyu.gsyvideoplayer.GSYVideoManager
@@ -161,24 +163,31 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
 
         buy_after_tv.setOnClickListener {
-            if (mallSpecs == null) {
-                dialogHandle = 1
-                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
-            } else {
-                addCart()
+            if (mData == null) {
+                return@setOnClickListener
             }
+//            if (mallSpecs == null) {
+//                dialogHandle = 1
+//                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+//            } else {
+//                addCart()
+//            }
+            dialogHandle = 1
+            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }
 
         buy_now_tv.setOnClickListener {
             if (mData == null) {
                 return@setOnClickListener
             }
-            if (mallSpecs == null) {
-                dialogHandle = 2
-                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
-            } else {
-                buyNow()
-            }
+//            if (mallSpecs == null) {
+//                dialogHandle = 2
+//                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+//            } else {
+//                buyNow()
+//            }
+            dialogHandle = 2
+            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }
 
         shopping_cart.setOnClickListener {
@@ -307,6 +316,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         select_attr_tv.text = buff
 
+        if (!User.isLogon()) {
+            startActivity(LoginActivity::class.java)
+            return
+        }
         when (dialogHandle) {
             1 -> addCart()
             2 -> buyNow()

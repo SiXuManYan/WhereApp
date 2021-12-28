@@ -22,14 +22,14 @@
         android:layout_height="@dimen/dp_28"
         android:layout_marginTop="@dimen/dp_4"
         android:ellipsize="end"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:includeFontPadding="false"
         android:maxLines="2"
         android:paddingStart="@dimen/dp_2"
         android:paddingEnd="@dimen/dp_2"
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_12"
-        tools:text="@tools:sample/lorem/random" />
+        tools:text="@tools:sample/lorem" />
 
 
 </LinearLayout>

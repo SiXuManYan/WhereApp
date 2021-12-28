@@ -88,7 +88,7 @@
             app:tl_textSelectColor="@color/blue_377BFF"
             app:tl_textUnselectColor="@color/grey_666666"
             app:tl_textsize="@dimen/sp_15"
-            app:tl_underline_color="@color/grey_F5F5F5"
+            app:tl_underline_color="@color/transplant"
             app:tl_underline_height="1px" />
 
 

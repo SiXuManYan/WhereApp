@@ -40,7 +40,7 @@ class MallHomeChildBannerAdapter : BaseQuickAdapter<MallBannerCategory, BaseView
         val image_iv = child.findViewById<ImageView>(R.id.image_iv)
         val content_tv = child.findViewById<TextView>(R.id.content_tv)
 
-        GlideUtil.load(context, category.icon, image_iv)
+        GlideUtil.load(context, category.icon, image_iv,1)
         content_tv.text = category.name
 
         child.setOnClickListener {

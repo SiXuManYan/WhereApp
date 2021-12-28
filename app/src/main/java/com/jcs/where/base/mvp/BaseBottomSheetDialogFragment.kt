@@ -75,7 +75,10 @@ abstract class BaseBottomSheetDialogFragment<T : BaseMvpPresenter> : BottomSheet
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         isViewCreated = true
-        EventBus.getDefault().register(this)
+        val eventBus = EventBus.getDefault()
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this)
+        }
         initView(view)
         initData()
         bindListener()
@@ -96,7 +99,10 @@ abstract class BaseBottomSheetDialogFragment<T : BaseMvpPresenter> : BottomSheet
 
     override fun onDestroyView() {
         super.onDestroyView()
-        EventBus.getDefault().unregister(this)
+        val eventBus = EventBus.getDefault()
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this)
+        }
         presenter?.detachView()
     }
 

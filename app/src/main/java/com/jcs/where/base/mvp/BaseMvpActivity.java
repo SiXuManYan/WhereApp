@@ -29,7 +29,10 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+        EventBus eventBus = EventBus.getDefault();
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this);
+        }
         View view = findViewById(R.id.back_iv);
         if (view!=null) {
             view.setOnClickListener(v -> finish());
@@ -39,7 +42,10 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this);
+        }
         if (presenter != null) {
             presenter.detachView();
         }

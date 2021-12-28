@@ -130,13 +130,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/satisfaction_tv"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_12"
                     app:checkStarDrawable="@mipmap/ic_comment_star_yellow"
                     app:starCount="5"
                     app:starDrawable="@mipmap/ic_comment_star_gray"
-                    app:starHeight="@dimen/dp_44"
-                    app:starHorizontalSpace="@dimen/dp_18"
-                    app:starWidth="@dimen/dp_44" />
+                    app:starHeight="@dimen/dp_40"
+                    app:starHorizontalSpace="@dimen/dp_16"
+                    app:starWidth="@dimen/dp_40" />
 
 
                 <TextView

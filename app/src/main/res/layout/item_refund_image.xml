@@ -18,9 +18,9 @@
         android:id="@+id/delete_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_10"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/dp_5"
-        android:padding="@dimen/dp_5"
         android:scaleType="centerInside"
         android:src="@mipmap/ic_delete_image" />
 

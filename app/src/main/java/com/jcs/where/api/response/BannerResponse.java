@@ -13,7 +13,7 @@ public class BannerResponse implements BaseBannerInfo {
     public int redirect_type;
 
     /**
-     * 模块类型（1:酒店，2:旅游，3:新闻，4:综合服务，5:餐厅
+     * 模块类型（1:酒店，2:旅游，3:新闻，4:综合服务，5:餐厅 6.新版 mall estore
      */
     public int target_type;
 

@@ -3,6 +3,7 @@ package com.jcs.where.features.mall.home.child
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.category.StoryBannerCategory
 import com.jcs.where.api.response.mall.MallBannerCategory
@@ -17,6 +18,7 @@ import com.jcs.where.api.response.store.StoreRecommend
 interface MallHomeChildView : BaseMvpView {
     fun bindBannerData(result: ArrayList<MallBannerCategory>)
     fun bindRecommend(response:ArrayList<MallGood>)
+    fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>)
 
 }
 
@@ -81,6 +83,26 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
         requestApi(mRetrofit.getMallRecommendGood(categoryId), object : BaseMvpObserver<ArrayList<MallGood>>(view) {
             override fun onSuccess(response: ArrayList<MallGood>) {
                 view.bindRecommend(response)
+            }
+        })
+    }
+
+
+    /**
+     * 获取顶部轮播图
+     */
+    fun getTopBanner() {
+        requestApi(mRetrofit.getBanners(4), object : BaseMvpObserver<List<BannerResponse>>(view) {
+            override fun onSuccess(response: List<BannerResponse>?) {
+                if (response == null || response.isEmpty()) {
+                    return
+                }
+
+                val bannerUrls: java.util.ArrayList<String> = java.util.ArrayList()
+                response.forEach {
+                    bannerUrls.add(it.src)
+                }
+                view.bindTopBannerData(bannerUrls, response)
             }
         })
     }

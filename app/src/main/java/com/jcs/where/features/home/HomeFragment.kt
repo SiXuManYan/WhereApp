@@ -29,6 +29,7 @@ import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.home.MallHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.mechanism.MechanismActivity
@@ -465,7 +466,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
 
-
             override fun onBannerDragging(item: Int) = Unit
 
             override fun onBannerIdle(item: Int) = Unit
@@ -489,26 +489,18 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                             val dialog = JcsCalendarDialog()
                             dialog.initCalendar(this@HomeFragment.activity)
                             HotelDetailActivity2.navigation(requireContext(), data.target_id, dialog.startBean, dialog.endBean)
-
                         }
-                        2 -> {
-                            TravelDetailActivity.navigation(requireContext(), data.target_id)
-                        }
-                        3 -> {
-                            startActivity(NewsDetailActivity::class.java, Bundle().apply {
-                                putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
-                            })
-                        }
-                        4 -> {
-                            startActivity(MechanismActivity::class.java, Bundle().apply {
-                                putInt(Constant.PARAM_ID, data.target_id)
-                            })
-                        }
-                        5 -> {
-                            startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                                putInt(Constant.PARAM_ID, data.target_id)
-                            })
-                        }
+                        2 -> TravelDetailActivity.navigation(requireContext(), data.target_id)
+                        3 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {
+                            putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
+                        })
+                        4 -> startActivity(MechanismActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_ID, data.target_id)
+                        })
+                        5 -> startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_ID, data.target_id)
+                        })
+                        6 -> MallDetailActivity.navigation(requireContext(), data.target_id)
                     }
                     return
                 }

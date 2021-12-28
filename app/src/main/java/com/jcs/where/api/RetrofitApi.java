@@ -113,6 +113,7 @@ import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
 import com.jcs.where.api.response.mall.request.MallOrderCommit;
+import com.jcs.where.api.response.mall.request.UnCollection;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
@@ -1910,7 +1911,7 @@ public interface RetrofitApi {
      */
     @HTTP(method = "DELETE", path = "estoreapi/v2/collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> unCollectsMallShop(
-            @Body MallCollection request
+            @Body UnCollection request
     );
 
 

@@ -14,6 +14,7 @@ import android.text.style.LineBackgroundSpan
 import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -21,6 +22,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.mall.*
 import com.jcs.where.api.response.mall.request.MallAddCart
 import com.jcs.where.api.response.mall.request.MallCollection
+import com.jcs.where.api.response.mall.request.UnCollection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -49,9 +51,9 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
     }
 
 
-    fun collection(shopId: Int) {
+    fun collection(goodId: Int) {
         val request = MallCollection().apply {
-            goods_id = shopId
+            goods_id = goodId
         }
 
         requestApi(mRetrofit.collectsMallShop(request), object : BaseMvpObserver<JsonElement>(view) {
@@ -61,9 +63,10 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         })
     }
 
-    fun unCollection(shopId: Int) {
-        val request = MallCollection().apply {
-            goods_id = shopId
+    fun unCollection(goodId: Int) {
+        val array = ArrayList<Int>(goodId)
+        val request = UnCollection().apply {
+            goods_id = Gson().toJson(array)
         }
         requestApi(mRetrofit.unCollectsMallShop(request), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {

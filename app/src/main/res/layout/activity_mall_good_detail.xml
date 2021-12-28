@@ -145,7 +145,7 @@
                     android:layout_centerVertical="true"
                     android:drawablePadding="@dimen/dp_5"
                     android:gravity="center_vertical"
-                    android:text="@string/more"
+                    android:text="@string/more_comment"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_12"
                     app:drawableEndCompat="@mipmap/ic_room_right" />
@@ -159,6 +159,10 @@
                 android:overScrollMode="never"
                 tools:itemCount="1"
                 tools:listitem="@layout/item_comment_hotel" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_16"
+                android:background="@color/grey_F5F5F5" />
 
 
 

@@ -77,6 +77,7 @@ class MallCommentFragment : BaseMvpFragment<MallCommentChildPresenter>(), MallCo
         mAdapter = HotelCommentAdapter().apply {
             footerWithEmptyEnable = true
             headerWithEmptyEnable = true
+            singleLineImage = false
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener(this@MallCommentFragment)

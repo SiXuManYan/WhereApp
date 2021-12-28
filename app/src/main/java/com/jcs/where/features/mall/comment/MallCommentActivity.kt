@@ -90,7 +90,6 @@ class MallCommentActivity : BaseMvpActivity<MallCommentPresenter>(), MallComment
     }
 
     override fun bindCount(response: MallCommentCount) {
-        all_rb.text = getString(R.string.all_format, response.all)
         picture_rb.text = getString(R.string.has_image_format, response.new)
         bad_reviews_rb.text = getString(R.string.newest_format, response.photo)
         high_option_rb.text = getString(R.string.low_rating_with_number, response.low)

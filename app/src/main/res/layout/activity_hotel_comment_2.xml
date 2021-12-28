@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <com.jcs.where.widget.JcsTitle
@@ -20,35 +19,35 @@
     <RadioGroup
         android:id="@+id/sort_rg"
         android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15"
         android:layout_height="@dimen/dp_44"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15">
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/all_rb"
             android:layout_width="@dimen/dp_0"
-            android:layout_weight="1"
-            android:layout_height="@dimen/dp_30"
+            android:layout_height="@dimen/dp_24"
             android:layout_marginEnd="@dimen/dp_11"
+            android:layout_weight="1"
             android:background="@drawable/selector_hotel_comment"
             android:button="@null"
+            android:checked="true"
             android:gravity="center"
             android:minWidth="@dimen/dp_78"
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_12"
             android:text="@string/all"
             android:textColor="@color/selector_white_grey"
-            android:textSize="@dimen/sp_13"
-            android:checked="true" />
+            android:textSize="@dimen/sp_13" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/picture_rb"
             android:layout_width="@dimen/dp_0"
-            android:layout_weight="1"
-            android:layout_height="@dimen/dp_30"
+            android:layout_height="@dimen/dp_24"
             android:layout_marginEnd="@dimen/dp_11"
+            android:layout_weight="1"
             android:background="@drawable/selector_hotel_comment"
             android:button="@null"
             android:gravity="center"
@@ -63,24 +62,24 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/bad_reviews_rb"
             android:layout_width="@dimen/dp_0"
-            android:layout_weight="1"
-            android:layout_height="@dimen/dp_30"
+            android:layout_height="@dimen/dp_24"
             android:layout_marginEnd="@dimen/dp_11"
+            android:layout_weight="1"
             android:background="@drawable/selector_hotel_comment"
             android:button="@null"
             android:gravity="center"
             android:minWidth="@dimen/dp_78"
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_12"
-            android:text="@string/bad_reviews"
+            android:text="@string/newest_default"
             android:textColor="@color/selector_white_grey"
             android:textSize="@dimen/sp_13" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/high_option_rb"
             android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_24"
             android:layout_weight="1"
-            android:layout_height="@dimen/dp_30"
             android:background="@drawable/selector_hotel_comment"
             android:button="@null"
             android:ellipsize="end"
@@ -89,13 +88,12 @@
             android:minWidth="@dimen/dp_78"
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_12"
-            android:text="@string/high_option"
+            android:text="@string/low_rating"
             android:textColor="@color/selector_white_grey"
             android:textSize="@dimen/sp_13" />
 
 
     </RadioGroup>
-
 
 
     <androidx.viewpager.widget.ViewPager

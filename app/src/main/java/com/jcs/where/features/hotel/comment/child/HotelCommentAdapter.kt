@@ -4,8 +4,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -15,7 +18,7 @@ import com.jcs.where.api.response.hotel.HotelComment
 import com.jcs.where.features.store.detail.comment.chiild.StoreCommentImageAdapter
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.comment.StarView
-import com.jcs.where.widget.ratingstar.RatingStarView
+import com.jcs.where.widget.list.DividerDecoration
 import de.hdodenhof.circleimageview.CircleImageView
 
 /**
@@ -25,6 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.layout.item_comment_hotel), LoadMoreModule {
 
 
+    var singleLineImage = true
     var isDiamond = false
 
 
@@ -50,7 +54,7 @@ class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.lay
             }
             checkStarCount = if (item.star > 0.0f) {
                 item.star.toInt()
-            }else{
+            } else {
                 item.star_level.toInt()
             }
             refreshView()
@@ -59,19 +63,26 @@ class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.lay
         comment_time_tv.text = item.created_at
         content_tv.text = item.content
 
-
+        // image
         val imageAdapter = StoreCommentImageAdapter()
-        imageAdapter.singleLineImage = true
+        imageAdapter.singleLineImage = singleLineImage
         imageAdapter.setNewInstance(item.images)
 
         val liner = object : LinearLayoutManager(context, RecyclerView.HORIZONTAL, false) {
-            override fun canScrollVertically(): Boolean {
-                return false
-            }
+            override fun canScrollVertically(): Boolean = false
+        }
+
+        val grid = object : GridLayoutManager(context, 3, RecyclerView.VERTICAL, false) {
+            override fun canScrollVertically(): Boolean = false
         }
 
         image_rv.apply {
-            layoutManager = liner
+            if (singleLineImage) {
+                layoutManager = liner
+            } else {
+                layoutManager = grid
+                addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0))
+            }
             adapter = imageAdapter
         }
 

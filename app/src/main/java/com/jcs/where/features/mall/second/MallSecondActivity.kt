@@ -22,6 +22,7 @@ import com.jcs.where.api.response.mall.request.MallGoodListRequest
 import com.jcs.where.api.response.mall.request.SortEnum
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
+import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.home.child.MallRecommendAdapter
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
@@ -133,6 +134,10 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
     }
 
     override fun bindListener() {
+        cart_iv.setOnClickListener {
+            startActivityAfterLogin(MallCartActivity::class.java)
+        }
+
         dismiss_view.setOnClickListener {
             filter_container_ll.visibility = View.GONE
         }

@@ -10,6 +10,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.home.child.MallRecommendAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -66,7 +67,9 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
     }
 
     override fun bindListener() {
-
+        cart_iv.setOnClickListener {
+            startActivityAfterLogin(MallCartActivity::class.java)
+        }
     }
 
     override fun bindData(data: MutableList<MallGood>, lastPage: Boolean) {

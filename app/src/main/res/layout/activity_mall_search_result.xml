@@ -82,14 +82,7 @@
             android:layout_centerVertical="true"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/type_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/dp_10"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_type_map" />
+
 
 
             <ImageView

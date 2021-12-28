@@ -123,6 +123,10 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
         mAdapter = MallRecommendAdapter().apply {
             setEmptyView(emptyView)
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+            loadMoreModule.setOnLoadMoreListener {
+               loadMoreModule.loadMoreEnd()
+            }
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
@@ -158,6 +162,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     override fun bindRecommend(response: ArrayList<MallGood>) {
         mAdapter.setNewInstance(response)
+        mAdapter.loadMoreModule.loadMoreEnd()
     }
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {

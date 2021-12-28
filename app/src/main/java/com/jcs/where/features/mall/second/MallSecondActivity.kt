@@ -152,7 +152,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
                 complex_tv.isChecked = true
                 complex_iv.rotation = 180f
             }
-            if (filter_complex_ctv.isChecked ||filter_price_down_ctv.isChecked|| filter_price_up_ctv.isChecked) {
+            if (filter_complex_ctv.isChecked || filter_price_down_ctv.isChecked || filter_price_up_ctv.isChecked) {
                 complex_tv.isChecked = true
             }
 
@@ -168,7 +168,10 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
             complex_tv.text = filter_complex_ctv.text
             filter_container_ll.visibility = View.GONE
+
             filter_complex_ctv.isChecked = true
+            filter_price_down_ctv.isChecked = false
+            filter_price_up_ctv.isChecked = false
             complex_tv.isChecked = true
 
         }
@@ -181,7 +184,9 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
             complex_tv.text = filter_price_down_ctv.text
             filter_container_ll.visibility = View.GONE
+            filter_complex_ctv.isChecked = false
             filter_price_down_ctv.isChecked = true
+            filter_price_up_ctv.isChecked = false
             complex_tv.isChecked = true
         }
         filter_price_up_ctv.setOnClickListener {
@@ -193,6 +198,8 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
             complex_tv.text = filter_price_up_ctv.text
             filter_container_ll.visibility = View.GONE
+            filter_complex_ctv.isChecked = false
+            filter_price_down_ctv.isChecked = false
             filter_price_up_ctv.isChecked = true
             complex_tv.isChecked = true
         }
@@ -202,11 +209,10 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             sales_tv.isChecked = !sales_tv.isChecked
             goodRequest.apply {
                 page = Constant.DEFAULT_FIRST_PAGE
-
                 sold = if (sales_tv.isChecked) {
-                    SortEnum.asc
-                } else {
                     SortEnum.desc
+                } else {
+                   null
                 }
             }
             presenter.getMallList(goodRequest)
@@ -287,6 +293,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
                     startPrice = min_et.text.toString()
                     endPrice = max_et.text.toString()
                 }
+                presenter.getMallList(goodRequest)
             }
             addressDialog.dismiss()
         }

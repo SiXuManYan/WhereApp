@@ -168,6 +168,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
 
         buy_after_tv.setOnClickListener {
+            if (!User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             if (mData == null) {
                 return@setOnClickListener
             }
@@ -182,6 +186,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
 
         buy_now_tv.setOnClickListener {
+            if (!User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             if (mData == null) {
                 return@setOnClickListener
             }

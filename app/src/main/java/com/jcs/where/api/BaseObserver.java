@@ -7,6 +7,8 @@ import com.jcs.where.BaseApplication;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.net.UnknownHostException;
+
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -56,10 +58,11 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
     @Override
     public void onError(@NonNull Throwable e) {
         String message = e.getMessage();
+        if (e instanceof UnknownHostException){
+            message = "Please check your network";
+        }
         ErrorResponse errorResponse = deployErrorResponse(message);
         if (errorResponse == null) return;
-
-        errorResponse.errMsg = "";
         onError(errorResponse);
     }
 

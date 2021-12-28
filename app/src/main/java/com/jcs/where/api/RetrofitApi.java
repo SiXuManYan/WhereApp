@@ -79,6 +79,7 @@ import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
+import com.jcs.where.api.response.collection.MallGoodCollection;
 import com.jcs.where.api.response.collection.MyCollection;
 import com.jcs.where.api.response.footprint.Footprint;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
@@ -1983,4 +1984,14 @@ public interface RetrofitApi {
     @GET("estoreapi/v2/comments/{comments_id}")
     Observable<JcsResponse<StoreCommentDetail>> mallCommentDetail(@Path("comments_id") int comments_id);
 
+
+    /**
+     * 商品收藏列表
+     *
+     *
+     */
+    @GET("estoreapi/v2/collects")
+    Observable<JcsResponse<PageResponse<MallGoodCollection>>> collectionGoodList(
+            @Query("page") int page
+    );
 }

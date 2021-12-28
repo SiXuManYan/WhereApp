@@ -51,7 +51,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
 
     fun collection(shopId: Int) {
         val request = MallCollection().apply {
-            shop_id = shopId
+            goods_id = shopId
         }
 
         requestApi(mRetrofit.collectsMallShop(request), object : BaseMvpObserver<JsonElement>(view) {
@@ -63,7 +63,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
 
     fun unCollection(shopId: Int) {
         val request = MallCollection().apply {
-            shop_id = shopId
+            goods_id = shopId
         }
         requestApi(mRetrofit.unCollectsMallShop(request), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {

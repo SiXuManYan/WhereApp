@@ -69,9 +69,7 @@ class CollectionFragment : BaseMvpFragment<CollectionPresenter>(), CollectionVie
         presenter = CollectionPresenter(this)
     }
 
-    override fun bindListener() {
-
-    }
+    override fun bindListener() = Unit
 
     override fun loadOnVisible() {
         presenter.getData(page, type)

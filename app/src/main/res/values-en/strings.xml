@@ -297,6 +297,7 @@
     <string name="collection_tab_same_city">Agency/MERT</string>
     <string name="collection_tab_article">Article</string>
     <string name="collection_tab_video">Video</string>
+    <string name="collection_tab_good">Good</string>
     <string name="bind_phone">Bind phone</string>
     <string name="is_client_valid">Client does not exist</string>
     <string name="is_client_valid_facebook">Facebook client is not installed. Whether to go to install ?</string>

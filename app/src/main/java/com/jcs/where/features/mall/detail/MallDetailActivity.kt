@@ -67,9 +67,9 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     companion object {
 
-        fun navigation(context: Context, categoryId: Int) {
+        fun navigation(context: Context, goodId: Int) {
             val bundle = Bundle().apply {
-                putInt(Constant.PARAM_ID, categoryId)
+                putInt(Constant.PARAM_ID, goodId)
             }
             val intent = Intent(context, MallDetailActivity::class.java)
                 .putExtras(bundle)
@@ -161,9 +161,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         like_iv.setOnClickListener {
             if (collect_status == 0) {
-                presenter.collection(shopId)
+                presenter.collection(goodId)
+            }else{
+                presenter.unCollection(goodId)
             }
-            presenter.unCollection(shopId)
         }
 
         buy_after_tv.setOnClickListener {
@@ -292,9 +293,9 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
         like_iv.setImageResource(
             if (collect_status == 0) {
-                R.mipmap.ic_like_red_night
-            } else {
                 R.mipmap.ic_like_normal_night
+            } else {
+                R.mipmap.ic_like_red_night
             }
         )
     }

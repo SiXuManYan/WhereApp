@@ -22,6 +22,7 @@ import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.comment.MallCommentActivity
+import com.jcs.where.features.mall.shop.MallShopActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -453,9 +454,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
-            startActivity(MallCommentActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_ID, item.model_id)
-            })
+//            startActivity(MallShopActivity::class.java, Bundle().apply {
+//                putInt(Constant.PARAM_ID, item.model_id)
+//            })
         }
 
         val options = RequestOptions.bitmapTransform(

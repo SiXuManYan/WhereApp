@@ -17,9 +17,9 @@ import java.text.DecimalFormat;
  */
 public class GlideUtil {
     private static RequestOptions options = new RequestOptions()
-            .placeholder(R.mipmap.ic_glide_default)//图片加载出来前，显示的图片
-            .fallback(R.mipmap.ic_glide_default) //url为空的时候,显示的图片
-            .error(R.mipmap.ic_glide_default);
+            .placeholder(R.mipmap.ic_empty_gray)//图片加载出来前，显示的图片
+            .fallback(R.mipmap.ic_empty_gray) //url为空的时候,显示的图片
+            .error(R.mipmap.ic_empty_gray);
 
 
     public static void load(Context context, String iconUrl, ImageView target) {
@@ -39,7 +39,7 @@ public class GlideUtil {
 
         RequestOptions options = RequestOptions.bitmapTransform(new GlideRoundedCornersTransform(radius, cornerType))
                 .error(R.mipmap.ic_empty_gray)
-                .fallback(R.mipmap.ic_glide_default)
+                .fallback(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray);
 
         Glide.with(context).load(url).apply(options).into(imageView);

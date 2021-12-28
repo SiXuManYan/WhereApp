@@ -97,6 +97,14 @@ class StoreCollection{
     var images: ArrayList<String> = ArrayList()
 }
 
+class MallGoodCollection{
+    var id = 0
+    var good_id = 0
+    var title = ""
+    var images = ""
+    var price = ""
+}
+
 
 
 

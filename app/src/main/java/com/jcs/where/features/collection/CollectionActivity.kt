@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.collection.city.CollectionFragment
+import com.jcs.where.features.collection.good.CollectionGoodFragment
 import kotlinx.android.synthetic.main.actitiy_collection.*
 
 /**
@@ -19,7 +20,8 @@ class CollectionActivity : BaseMvpActivity<CollectionPresenter>(), CollectionVie
         arrayOf(
             StringUtils.getString(R.string.collection_tab_same_city),
             StringUtils.getString(R.string.collection_tab_article),
-            StringUtils.getString(R.string.collection_tab_video)
+            StringUtils.getString(R.string.collection_tab_video),
+            StringUtils.getString(R.string.collection_tab_good)
         )
 
     override fun isStatusDark() = true
@@ -39,13 +41,18 @@ class CollectionActivity : BaseMvpActivity<CollectionPresenter>(), CollectionVie
 
     override fun bindListener() = Unit
 
-
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
         override fun getPageTitle(position: Int): CharSequence = TAB_TITLES[position]
 
-        override fun getItem(position: Int): Fragment = CollectionFragment().apply {
-            type = position + 1
+        override fun getItem(position: Int): Fragment {
+            return if (position <= 2) {
+                CollectionFragment().apply {
+                    type = position + 1
+                }
+            } else {
+                CollectionGoodFragment()
+            }
         }
 
         override fun getCount(): Int = TAB_TITLES.size

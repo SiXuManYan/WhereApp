@@ -295,6 +295,7 @@
     <string name="collection_tab_same_city">同城</string>
     <string name="collection_tab_article">文章</string>
     <string name="collection_tab_video">视频</string>
+    <string name="collection_tab_good">商品</string>
     <string name="bind_phone">绑定手机</string>
     <string name="is_client_valid">客户端不存在</string>
     <string name="is_client_valid_facebook">您未安装Facebook，是否前往安装？</string>

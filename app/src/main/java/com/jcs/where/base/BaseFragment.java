@@ -99,13 +99,13 @@ public abstract class BaseFragment extends Fragment {
         return false;
     }
 
+    protected abstract int getLayoutId();
+
     protected abstract void initView(View view);
 
     protected abstract void initData();
 
     protected abstract void bindListener();
-
-    protected abstract int getLayoutId();
 
 
 

@@ -6,5 +6,5 @@ package com.jcs.where.api.response.mall.request
  */
 class MallCollection {
 
-    var shop_id = 0
+    var goods_id = 0
 }

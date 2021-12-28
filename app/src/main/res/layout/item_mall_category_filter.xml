@@ -4,8 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/dp_44"
     android:gravity="center"
-    android:paddingStart="@dimen/dp_8"
-    android:paddingEnd="@dimen/dp_8"
+    android:id="@+id/container_ll"
+    android:paddingStart="@dimen/dp_4"
+    android:paddingEnd="@dimen/dp_4"
     android:orientation="vertical">
 
 
@@ -15,14 +16,14 @@
         android:layout_height="@dimen/dp_24"
         android:gravity="center"
         android:textAlignment="center"
-        android:background="@drawable/selector_restaurant_filter_2"
+        android:background="@drawable/selector_mall_filter"
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingStart="@dimen/dp_12"
         android:paddingEnd="@dimen/dp_12"
         android:minWidth="@dimen/dp_52"
         android:text="@string/complex"
-        android:textColor="@color/selector_black_blue"
+        android:textColor="@color/selector_gray666_blue"
         android:textSize="@dimen/sp_12"
         tools:text="烧烤" />
 

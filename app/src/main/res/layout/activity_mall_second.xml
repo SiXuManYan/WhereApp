@@ -76,8 +76,8 @@
         android:id="@+id/category_rv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:paddingStart="@dimen/dp_8"
-        android:paddingEnd="@dimen/dp_8"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingEnd="@dimen/dp_12"
         tools:itemCount="10"
         tools:listitem="@layout/item_mall_category_filter" />
 
@@ -93,7 +93,7 @@
             android:id="@+id/complex_ll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -105,7 +105,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/complex"
-                android:textColor="@color/selector_black_blue"
+                android:textColor="@color/selector_gray666_blue"
                 android:textSize="@dimen/sp_13" />
 
             <ImageView
@@ -124,13 +124,13 @@
             android:id="@+id/sales_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
             android:text="@string/sales"
             android:textAlignment="center"
-            android:textColor="@color/selector_black_blue"
+            android:textColor="@color/selector_gray666_blue"
             android:textSize="@dimen/sp_13" />
 
 
@@ -138,7 +138,7 @@
             android:id="@+id/other_filter_ll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -151,16 +151,16 @@
                 android:maxLines="1"
                 android:text="@string/filter_other"
                 android:textAlignment="center"
-                android:textColor="@color/selector_black_blue"
+                android:textColor="@color/selector_gray666_blue"
                 android:textSize="@dimen/sp_13" />
 
 
             <ImageView
                 android:id="@+id/thirdArrowIv"
-                android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_arrow_filter_black" />
+                android:src="@mipmap/ic_mall_more_filter" />
 
         </LinearLayout>
 

@@ -66,7 +66,6 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
     }
 
 
-
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_mall_second
@@ -142,16 +141,16 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             if (filter_container_ll.visibility == View.VISIBLE) {
                 filter_container_ll.visibility = View.GONE
                 complex_tv.isChecked = false
-                sales_tv.isChecked = false
-                other_tv.isChecked = false
                 complex_iv.rotation = 0f
             } else {
                 filter_container_ll.visibility = View.VISIBLE
                 complex_tv.isChecked = true
                 complex_iv.rotation = 180f
-                sales_tv.isChecked = false
-                other_tv.isChecked = false
             }
+            if (filter_complex_ctv.isChecked ||filter_price_down_ctv.isChecked|| filter_price_up_ctv.isChecked) {
+                complex_tv.isChecked = true
+            }
+
         }
 
         filter_complex_ctv.setOnClickListener {
@@ -165,6 +164,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             complex_tv.text = filter_complex_ctv.text
             filter_container_ll.visibility = View.GONE
             filter_complex_ctv.isChecked = true
+            complex_tv.isChecked = true
 
         }
         filter_price_down_ctv.setOnClickListener {
@@ -177,6 +177,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             complex_tv.text = filter_price_down_ctv.text
             filter_container_ll.visibility = View.GONE
             filter_price_down_ctv.isChecked = true
+            complex_tv.isChecked = true
         }
         filter_price_up_ctv.setOnClickListener {
             goodRequest.apply {
@@ -188,28 +189,31 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             complex_tv.text = filter_price_up_ctv.text
             filter_container_ll.visibility = View.GONE
             filter_price_up_ctv.isChecked = true
+            complex_tv.isChecked = true
         }
 
         sales_tv.setOnClickListener {
-            if (filter_container_ll.visibility == View.VISIBLE) {
-                filter_container_ll.visibility = View.GONE
-                complex_tv.isChecked = false
-            }
+            filter_container_ll.visibility = View.GONE
             sales_tv.isChecked = !sales_tv.isChecked
-
             goodRequest.apply {
                 page = Constant.DEFAULT_FIRST_PAGE
-                sold = SortEnum.asc
+
+                sold = if (sales_tv.isChecked) {
+                    SortEnum.asc
+                } else {
+                    SortEnum.desc
+                }
             }
             presenter.getMallList(goodRequest)
         }
 
         other_filter_ll.setOnClickListener {
+            filter_container_ll.visibility = View.GONE
             showOtherFilterDialog()
         }
 
         search_ll.setOnClickListener {
-            startActivity(SearchAllActivity::class.java,Bundle().apply {
+            startActivity(SearchAllActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_TYPE, 6)
             })
         }
@@ -284,8 +288,6 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
         addressDialog.show()
     }
-
-
 
 
 }

@@ -268,7 +268,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void LoginSuccess() {
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         ToastUtils.showShort(getString(R.string.login_success));
-        startActivityClearTop(MainActivity.class, null);
+//        startActivityClearTop(MainActivity.class, null);
         finish();
     }
 

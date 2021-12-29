@@ -113,7 +113,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     public void registerSuccess() {
         ToastUtils.showShort(R.string.register_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
-        startActivityClearTop(MainActivity.class, null);
+//        startActivityClearTop(MainActivity.class, null);
         finish();
     }
 }

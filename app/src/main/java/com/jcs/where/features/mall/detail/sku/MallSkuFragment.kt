@@ -55,13 +55,20 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
 
         number_view.apply {
-            alwaysEnableCut = false
+            alwaysEnableCut = true
             MIN_GOOD_NUM = 1
-            MAX_GOOD_NUM = data.stock
-            cut_iv.setImageResource(R.mipmap.ic_cut_blue)
-            add_iv.setImageResource(R.mipmap.ic_add_blue)
+            MAX_GOOD_NUM = 1
+            cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+            add_iv.setImageResource(R.mipmap.ic_add_blue_transparent)
+
+            cutResIdCommon = R.mipmap.ic_cut_blue
+            cutResIdMin = R.mipmap.ic_cut_blue_transparent
+            addResIdCommon = R.mipmap.ic_add_blue
+            addResIdMax = R.mipmap.ic_add_blue_transparent
             updateNumber(1)
             cut_iv.visibility = View.VISIBLE
+            cut_iv.isClickable = false
+            add_iv.isClickable = false
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
 
@@ -88,7 +95,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     override fun initData() {
         presenter = MallSkuPresenter(this)
-        if (data.attribute_list.isEmpty() &&data.specs.isNotEmpty()) {
+        if (data.attribute_list.isEmpty() && data.specs.isNotEmpty()) {
             result = data.specs[0]
         }
     }
@@ -105,7 +112,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             }
             // 判断是否所有必选都选中
             mAdapter.data.forEach {
-                it.value.forEach { value->
+                it.value.forEach { value ->
                     if (value.nativeIsSelected == 0) {
                         ToastUtils.showShort("请选择" + it.key)
                         return@setOnClickListener
@@ -161,13 +168,14 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
 
             number_view.apply {
-                if (stock<=0){
+                if (stock <= 0) {
                     MIN_GOOD_NUM = 0
                 }
                 MAX_GOOD_NUM = stock
-                updateNumberJudgeMin(MIN_GOOD_NUM)
+                updateNumber(MIN_GOOD_NUM)
+                cut_iv.isClickable = true
+                add_iv.isClickable = true
             }
-
 
 
         }

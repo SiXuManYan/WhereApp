@@ -31,6 +31,7 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
     private var mPhone: String? = null
     private var mAddressId: String? = null
     private var mAreaId = 0
+    private var mAreaName = ""
 
     /**
      * 是否是修改
@@ -56,6 +57,10 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
             mRecipient = bundle.getString(Constant.PARAM_RECIPIENT, "")
             mSex = bundle.getInt(Constant.PARAM_SEX, 0)
             mPhone = bundle.getString(Constant.PARAM_PHONE, "")
+            mAreaId = bundle.getInt(Constant.PARAM_AREA_ID, 0)
+            mAreaName = bundle.getString(Constant.PARAM_AREA_NAME, "")
+            city_tv.text = mAreaName
+
             address_et.setText(mAddress)
             recipient_et.setText(mRecipient)
             if (mSex == 1) {
@@ -90,7 +95,7 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
         save_tv.setOnClickListener { handleSave() }
         delete_tv.setOnClickListener { deleteAddress() }
         city_tv.setOnClickListener {
-            launcher.launch(Intent(this, CityPickerActivity::class.java))
+            launcher.launch(Intent(this, CityPickerActivity::class.java).putExtra(Constant.PARAM_HIDE_CURRENT_LOCATION,true))
         }
     }
 
@@ -99,8 +104,9 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
         val bundle = it.data?.extras ?: return@registerForActivityResult
         when (it.resultCode) {
             Activity.RESULT_OK -> {
-                city_tv.text = bundle.getString(Constant.PARAM_SELECT_AREA_NAME)
+                mAreaName = bundle.getString(Constant.PARAM_SELECT_AREA_NAME,"")
                 mAreaId = bundle.getInt(Constant.PARAM_SELECT_AREA_ID, 0)
+                city_tv.text = mAreaName
             }
 
         }
@@ -109,7 +115,7 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
 
     private fun checkEnable() {
         val address = address_et.text.toString().trim()
-        val recipient = recipient_et.text.toString().trim ()
+        val recipient = recipient_et.text.toString().trim()
         val phone = phone_et.text.toString().trim()
         if (!TextUtils.isEmpty(address) && !TextUtils.isEmpty(recipient) && !TextUtils.isEmpty(phone)) {
             save_tv.alpha = 1.0f
@@ -120,14 +126,15 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
 
     private fun handleSave() {
         val address = address_et.text.toString().trim()
-        val recipient = recipient_et.text.toString().trim ()
+        val recipient = recipient_et.text.toString().trim()
         val phone = phone_et.text.toString().trim()
         mSex = if (man_rb.isChecked) {
             1
         } else {
             2
         }
-        presenter.handleSave(address, recipient, phone, mSex, isChange, mAddressId)
+
+        presenter.handleSave(address, recipient, phone, mSex, isChange, mAddressId, mAreaId)
     }
 
     private fun deleteAddress() {
@@ -135,7 +142,7 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
             .setTitle(R.string.hint)
             .setCancelable(false)
             .setMessage(getString(R.string.confirm_delete_address))
-            .setPositiveButton(R.string.confirm) { dialogInterface: DialogInterface?, i: Int -> presenter.deleteAddress(mAddressId) }
+            .setPositiveButton(R.string.confirm) { _: DialogInterface?, _: Int -> presenter.deleteAddress(mAddressId) }
             .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface, i: Int -> dialogInterface.dismiss() }
             .create().show()
     }

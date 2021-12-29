@@ -25,5 +25,7 @@ public class AddressResponse implements Serializable {
     public String address = "";
     public String contact_name = "";
     public String contact_number = "";
+    public String city_name = "";
+    public int city_id = 0;
 
 }

@@ -33,7 +33,6 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     private var data: ArrayList<MallCartGroup> = ArrayList()
 
-
     /** 收货地址 */
     var mSelectAddressData: AddressResponse? = null
 
@@ -88,7 +87,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     override fun bindListener() {
         address_ll.setOnClickListener {
-            searchLauncher.launch(Intent(this, AddressActivity::class.java).putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
+            searchLauncher.launch(Intent(this, AddressActivity::class.java)
+                .putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
         }
         submit_tv.setOnClickListener {
             if (mSelectAddressData == null) {

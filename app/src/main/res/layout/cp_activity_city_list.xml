@@ -29,6 +29,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/current_location_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dp_15"

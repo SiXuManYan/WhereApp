@@ -926,5 +926,6 @@ Gentleman must let go</string>
     <string name="finish">完成</string>
     <string name="address_select_city">选择城市</string>
     <string name="address_city_edit">请选择收货城市</string>
+    <string name="address_city_empty">请更新地址，添加选择城市</string>
 
 </resources>

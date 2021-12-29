@@ -22,5 +22,6 @@ public class AddressRequest {
     public String address = "";
     public String contact_name = "";
     public String contact_number = "";
+    public Integer city_id = null;
 
 }

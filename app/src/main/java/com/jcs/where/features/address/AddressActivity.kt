@@ -7,6 +7,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnItemClickListener
@@ -85,6 +86,8 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
                 putString(Constant.PARAM_ADDRESS, data.address)
                 putString(Constant.PARAM_RECIPIENT, data.contact_name)
                 putString(Constant.PARAM_PHONE, data.contact_number)
+                putString(Constant.PARAM_AREA_NAME, data.city_name)
+                putInt(Constant.PARAM_AREA_ID, data.city_id)
             })
         }
     }
@@ -111,10 +114,25 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
             return
         }
         val address = mAdapter.data[position]
-        setResult(Activity.RESULT_OK, Intent().putExtras(Bundle().apply {
-            putSerializable(Constant.PARAM_DATA, address)
-        }))
-        finish()
+        if (address.city_id == 0) {
+            ToastUtils.showShort(getString(R.string.address_city_empty))
+            startActivity(AddressEditActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_ADDRESS_ID, address.id)
+                putInt(Constant.PARAM_SEX, address.sex)
+                putString(Constant.PARAM_ADDRESS, address.address)
+                putString(Constant.PARAM_RECIPIENT, address.contact_name)
+                putString(Constant.PARAM_PHONE, address.contact_number)
+                putString(Constant.PARAM_AREA_NAME, address.city_name)
+                putInt(Constant.PARAM_AREA_ID, address.city_id)
+            })
+        }else{
+            setResult(Activity.RESULT_OK, Intent().putExtras(Bundle().apply {
+                putSerializable(Constant.PARAM_DATA, address)
+            }))
+            finish()
+        }
+
+
 
 
     }

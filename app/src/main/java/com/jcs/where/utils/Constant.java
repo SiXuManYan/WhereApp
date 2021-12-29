@@ -213,6 +213,9 @@ public class Constant {
     public static final String PARAM_ROOM_PEOPLE = "param_room_people";
     public static final String PARAM_SELECT_AREA_NAME = "param_select_area_name";
     public static final String PARAM_SELECT_AREA_ID = "param_select_area_id";
+    public static final String PARAM_AREA_ID = "param_area_id";
+    public static final String PARAM_AREA_NAME = "param_area_name";
+    public static final String PARAM_HIDE_CURRENT_LOCATION = "param_hide_current_location";
 
 
 }

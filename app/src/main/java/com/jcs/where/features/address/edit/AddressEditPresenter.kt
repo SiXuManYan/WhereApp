@@ -2,13 +2,12 @@ package com.jcs.where.features.address.edit
 
 import android.text.TextUtils
 import com.blankj.utilcode.util.ToastUtils
-
-import com.jcs.where.api.network.BaseMvpPresenter
-import com.jcs.where.R
-import com.jcs.where.api.response.address.AddressRequest
 import com.google.gson.JsonElement
+import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.address.AddressRequest
 
 
 /**
@@ -38,7 +37,15 @@ class AddressEditPresenter(private val view: AddressEditView) : BaseMvpPresenter
     /**
      * 修改和添加地址
      */
-    fun handleSave(address: String?, recipient: String?, phone: String?, sex: Int, isChange: Boolean, mAddressId: String?) {
+    fun handleSave(
+        address: String?,
+        recipient: String?,
+        phone: String?,
+        sex: Int,
+        isChange: Boolean,
+        mAddressId: String?,
+        mAreaId: Int?,
+    ) {
         if (TextUtils.isEmpty(address)) {
             ToastUtils.showShort(R.string.address_edit_hint)
             return
@@ -51,20 +58,26 @@ class AddressEditPresenter(private val view: AddressEditView) : BaseMvpPresenter
             ToastUtils.showShort(R.string.address_phone_edit)
             return
         }
+        if (mAreaId == 0) {
+            ToastUtils.showShort(R.string.address_city_edit)
+            return
+        }
+
         val body = AddressRequest()
         body.address = address
         body.contact_name = recipient
         body.contact_number = phone
         body.sex = sex
+        body.city_id = mAreaId
         if (isChange) {
             requestApi(mRetrofit.editAddress(mAddressId, body), object : BaseMvpObserver<JsonElement>(view) {
-                protected override fun onSuccess(response: JsonElement) {
+                override fun onSuccess(response: JsonElement) {
                     view.editSuccess()
                 }
             })
         } else {
             requestApi(mRetrofit.addAddress(body), object : BaseMvpObserver<JsonElement>(view) {
-                protected override fun onSuccess(response: JsonElement) {
+                override fun onSuccess(response: JsonElement) {
                     view.addAddressSuccess()
                 }
             })

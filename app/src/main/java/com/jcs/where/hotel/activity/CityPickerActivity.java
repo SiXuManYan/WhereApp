@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     private String currentAreaName;
     private double currentLat;
     private double currentLng;
+    private boolean hindCurrentLocation;
 
     @Override
     protected boolean isStatusDark() {
@@ -71,21 +73,22 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
+        overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.bottom_silent,R.anim.bottom_out);
+        overridePendingTransition(R.anim.bottom_silent, R.anim.bottom_out);
     }
 
     @Override
     protected void initView() {
+        hindCurrentLocation = getIntent().getBooleanExtra(Constant.PARAM_HIDE_CURRENT_LOCATION, false);
+
+
         location_tv = findViewById(R.id.location_tv);
         get_location_tv = findViewById(R.id.get_location_tv);
-
-
         listview_all_city = findViewById(R.id.listview_all_city);
         TextView overlay = findViewById(R.id.tv_letter_overlay);
         mLetterBar = findViewById(R.id.side_letter_bar);
@@ -100,6 +103,10 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     }
 
     private void initCity() {
+        if (hindCurrentLocation) {
+            findViewById(R.id.current_location_rl).setVisibility(View.GONE);
+            return;
+        }
 
         PermissionUtils.permissionAny(this, granted -> {
                     if (granted) {

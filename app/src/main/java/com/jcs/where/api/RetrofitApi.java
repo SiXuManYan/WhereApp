@@ -1407,12 +1407,26 @@ public interface RetrofitApi {
     @HTTP(method = "DELETE", path = "generalapi/v2/carts", hasBody = true)
     Observable<JcsResponse<JsonElement>> deleteStoreCart(@Body CartDeleteRequest cart_id);
 
+    /**
+     * 删除mall购物车
+     */
+    @HTTP(method = "DELETE", path = "estoreapi/v2/carts", hasBody = true)
+    Observable<JcsResponse<JsonElement>> deleteMallCart(@Body CartDeleteRequest cart_id);
+
 
     /**
      * 清空商城购物车
      */
     @DELETE("generalapi/v2/carts/clears")
     Observable<JcsResponse<JsonElement>> clearStoreCart();
+
+
+
+    /**
+     * 清空mall商城购物车
+     */
+    @DELETE("estoreapi/v2/carts/clears")
+    Observable<JcsResponse<JsonElement>> clearMallCart();
 
 
     /**

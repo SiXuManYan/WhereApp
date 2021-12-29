@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.CartDeleteRequest
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.mall.MallCartGroup
 import com.jcs.where.api.response.store.cart.StoreCartGroup
@@ -27,6 +29,8 @@ import java.math.BigDecimal
 interface MallCartView : BaseMvpView ,  SwipeRefreshLayout.OnRefreshListener,
     StoreCartValueChangeListener, OnChildSelectClick, OnGroupSelectClick {
     fun bindData(data: MutableList<MallCartGroup>, lastPage: Boolean)
+    fun changeNumberSuccess()
+    fun deleteSuccess()
 
 }
 
@@ -56,7 +60,6 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
             }
         }
         adapter.notifyDataSetChanged()
-
     }
 
     fun getSelectedCount(adapter: MallCartAdapter): Int {
@@ -131,17 +134,68 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
         requestApi(mRetrofit.changeMallCartNumber(cartId, number), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+                view.changeNumberSuccess()
             }
 
         })
     }
 
-    fun clearStoreCart() {
 
+    /**
+     * 顶级是否全部选中
+     */
+    fun checkSelectAll(adapter: MallCartAdapter): Boolean {
+        val result = ArrayList<Boolean>()
+        result.clear()
+        adapter.data.forEach { data ->
+            result.add(data.nativeIsSelect)
+            data.gwc.forEach {
+                result.add(it.nativeIsSelect)
+            }
+        }
+        return !result.contains(false)
     }
 
-    fun deleteCart(mAdapter: MallCartAdapter) {
+    /**
+     * 清空购物车
+     */
+    fun clearStoreCart() {
+        requestApi(mRetrofit.clearMallCart(), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+        })
+    }
 
+    /**
+     * 删除购物车
+     */
+    fun deleteCart(adapter: MallCartAdapter) {
+        if (adapter.data.isEmpty()) {
+            return
+        }
+        val delete = ArrayList<Int>()
+        adapter.data.forEach {
+            it.gwc.forEach { child ->
+                if (child.nativeIsSelect) {
+                    delete.add(child.cart_id)
+                }
+            }
+        }
+        if (delete.isEmpty()) {
+            return
+        }
+        val toJson = Gson().toJson(delete)
+        val apply = CartDeleteRequest().apply {
+            cart_id = toJson
+        }
+
+        requestApi(mRetrofit.deleteMallCart(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.deleteSuccess()
+                ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+            }
+        })
     }
 
 

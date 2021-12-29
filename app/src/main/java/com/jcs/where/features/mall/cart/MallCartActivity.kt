@@ -18,7 +18,6 @@ import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_mall_cart.*
 
 
-
 /**
  * Created by Wangsw  2021/12/14 17:49.
  * 商城购物车
@@ -91,7 +90,6 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
                 mAdapter.setNewInstance(null)
                 emptyView.showEmptyDefault()
             } else {
-
                 presenter.deleteCart(mAdapter)
             }
         }
@@ -100,14 +98,14 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
         edit_tv.setOnClickListener {
             right_vs.displayedChild = 1
             bottom_vs.displayedChild = 1
-            total_price_tv.visibility = View.GONE
+            total_price_ll.visibility = View.GONE
 
         }
 
         cancel_tv.setOnClickListener {
             right_vs.displayedChild = 0
             bottom_vs.displayedChild = 0
-            total_price_tv.visibility = View.VISIBLE
+            total_price_ll.visibility = View.VISIBLE
 
         }
 
@@ -167,16 +165,34 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
     override fun onChildNumberChange(cartId: Int, add: Boolean) = Unit
 
     override fun onChildNumberChange(cartId: Int, add: Boolean, number: Int) {
-        presenter.changeCartNumber(cartId,number)
+        presenter.changeCartNumber(cartId, number)
     }
 
 
     override fun onChildSelected(checked: Boolean) {
-
+        getNowPrice()
+        select_all_tv.isChecked = if (checked) {
+            presenter.checkSelectAll(mAdapter)
+        } else {
+            false
+        }
     }
 
-    override fun onGroupSelected(nativeIsSelect: Boolean) {
 
+    override fun onGroupSelected(nativeIsSelect: Boolean) {
+        select_all_tv.isChecked = if (nativeIsSelect) {
+            presenter.checkSelectAll(mAdapter)
+        } else {
+            false
+        }
+    }
+
+
+    override fun changeNumberSuccess() = getNowPrice()
+
+    override fun deleteSuccess() {
+        onRefresh()
+        select_all_tv.isChecked = presenter.checkSelectAll(mAdapter)
     }
 
     private fun getNowPrice() {
@@ -184,7 +200,6 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
         val toPlainString = handlePrice.toPlainString()
         total_price_tv.text = StringUtils.getString(R.string.price_unit_format, toPlainString)
     }
-
 
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {

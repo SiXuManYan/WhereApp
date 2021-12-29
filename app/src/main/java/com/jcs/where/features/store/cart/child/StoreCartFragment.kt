@@ -218,7 +218,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
     }
 
 
-    override fun deleteSuccess() = onRefresh()
+        override fun deleteSuccess() = onRefresh()
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
 

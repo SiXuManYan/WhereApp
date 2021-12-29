@@ -1,17 +1,20 @@
 package com.jcs.where.features.address.edit
 
+import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import android.text.Editable
 import android.text.TextUtils
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.home.watcher.AfterTextChangeWatcher
+import com.jcs.where.hotel.activity.CityPickerActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_address_edit.*
 import org.greenrobot.eventbus.EventBus
@@ -27,6 +30,7 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
     private var mSex = 0
     private var mPhone: String? = null
     private var mAddressId: String? = null
+    private var mAreaId = 0
 
     /**
      * 是否是修改
@@ -39,9 +43,7 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
 
     }
 
-    override fun isStatusDark(): Boolean {
-        return true
-    }
+    override fun isStatusDark(): Boolean = true
 
     override fun initData() {
         presenter = AddressEditPresenter(this)
@@ -87,6 +89,22 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
         })
         save_tv.setOnClickListener { handleSave() }
         delete_tv.setOnClickListener { deleteAddress() }
+        city_tv.setOnClickListener {
+            launcher.launch(Intent(this, CityPickerActivity::class.java))
+        }
+    }
+
+
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        val bundle = it.data?.extras ?: return@registerForActivityResult
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
+                city_tv.text = bundle.getString(Constant.PARAM_SELECT_AREA_NAME)
+                mAreaId = bundle.getInt(Constant.PARAM_SELECT_AREA_ID, 0)
+            }
+
+        }
+
     }
 
     private fun checkEnable() {

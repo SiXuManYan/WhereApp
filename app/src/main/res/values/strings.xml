@@ -446,6 +446,7 @@
     <string name="lady">女士</string>
     <string name="contact_number">联系电话</string>
     <string name="address_phone_edit">请填写收货人电话号码</string>
+
     <string name="edit_address">编辑收货地址</string>
     <string name="add_address">添加收货地址</string>
     <string name="confirm_delete_address">确认删除地址吗？</string>
@@ -923,6 +924,7 @@ Gentleman must let go</string>
     <string name="low_rating">低分</string>
     <string name="comment_success">评价成功</string>
     <string name="finish">完成</string>
-
+    <string name="address_select_city">选择城市</string>
+    <string name="address_city_edit">请选择收货城市</string>
 
 </resources>

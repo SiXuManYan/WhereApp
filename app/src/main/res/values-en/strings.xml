@@ -916,4 +916,6 @@ Gentleman must let go</string>
     <string name="low_rating">Low</string>
     <string name="comment_success">Comment Success</string>
     <string name="finish">Finish</string>
+    <string name="address_select_city">Select the City</string>
+    <string name="address_city_edit">Please select the receiving city</string>
 </resources>

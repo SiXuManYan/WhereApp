@@ -174,6 +174,71 @@
         android:layout_marginBottom="@dimen/dp_17"
         android:background="@color/grey_F5F5F5" />
 
+
+
+
+
+
+
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:text="@string/address_select_city"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_14" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/city_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/address_phone_edit"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="1"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_15"
+        app:drawableEndCompat="@mipmap/ic_setting_right"
+        android:paddingBottom="@dimen/dp_8"
+        android:textColor="@color/black_333333"
+        android:textColorHint="@color/grey_B5B5B5"
+        android:textSize="@dimen/sp_14"
+        tools:text="" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_17"
+        android:background="@color/grey_F5F5F5" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

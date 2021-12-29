@@ -4,8 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
+import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.jcs.where.R;
@@ -63,6 +66,18 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     @Override
     protected int getLayoutId() {
         return R.layout.cp_activity_city_list;
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.bottom_silent,R.anim.bottom_out);
     }
 
     @Override

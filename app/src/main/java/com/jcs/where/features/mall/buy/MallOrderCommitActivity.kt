@@ -36,6 +36,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     /** 收货地址 */
     var mSelectAddressData: AddressResponse? = null
 
+
+
     private lateinit var mAdapter: MallOrderCommitAdapter
 
     override fun isStatusDark() = true
@@ -75,13 +77,16 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             }
             address_name_tv.text = getString(R.string.recipient_format, selectData.contact_name, sex, selectData.contact_number)
             phone_tv.text = selectData.contact_number
+
+            presenter.getDelivery(mAdapter,selectData.city_id)
+
         }
     }
 
 
     override fun initData() {
         presenter = MallOrderCommitPresenter(this)
-         totalPrice = presenter.handlePrice(mAdapter)
+        totalPrice = presenter.handlePrice(mAdapter,mTotalServiceDeliveryFee)
         total_price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
     }
 
@@ -106,6 +111,11 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, response.orders)
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
         })
+    }
+
+    var mTotalServiceDeliveryFee :BigDecimal? = null
+    override fun bindTotalDelivery(totalServiceDeliveryFee: BigDecimal?) {
+        mTotalServiceDeliveryFee = totalServiceDeliveryFee
     }
 
 }

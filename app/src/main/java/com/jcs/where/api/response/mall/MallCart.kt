@@ -20,7 +20,9 @@ class MallCartGroup : Serializable {
 
     /** 本地记录是否选中 */
     var nativeIsSelect = false
-    var nativeTotalDelivery = 0
+
+    /** 本地记录，通过城市id额外获取的 当前店铺配送费 */
+    var nativeShopDelivery: BigDecimal? = null
     var nativeRemark = ""
 
 }

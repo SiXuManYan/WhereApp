@@ -112,6 +112,8 @@ import com.jcs.where.api.response.mall.MallOrderDetail;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
+import com.jcs.where.api.response.mall.request.MallDeliveryRequest;
+import com.jcs.where.api.response.mall.request.MallDeliveryResponse;
 import com.jcs.where.api.response.mall.request.MallOrderCommit;
 import com.jcs.where.api.response.mall.request.UnCollection;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
@@ -1347,7 +1349,6 @@ public interface RetrofitApi {
     );
 
 
-
     /**
      * mall 商城退货详情
      */
@@ -1419,7 +1420,6 @@ public interface RetrofitApi {
      */
     @DELETE("generalapi/v2/carts/clears")
     Observable<JcsResponse<JsonElement>> clearStoreCart();
-
 
 
     /**
@@ -1871,7 +1871,7 @@ public interface RetrofitApi {
             @Query("page") int page,
             @Query("order") @Nullable String order,
             @Query("title") @Nullable String title,
-            @Query("categoryId") @Nullable  Integer categoryId,
+            @Query("categoryId") @Nullable Integer categoryId,
             @Query("start") @Nullable String startPrice,
             @Query("end") @Nullable String endPrice,
             @Query("sold") @Nullable String sold,
@@ -1900,7 +1900,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<MallCommitResponse>> mallOrderCommit(
             @Body MallOrderCommit request
     );
-
 
 
     /**
@@ -1937,9 +1936,6 @@ public interface RetrofitApi {
             @Query("cart_id") int cart_id,
             @Query("number") int number
     );
-
-
-
 
 
     /**
@@ -2002,11 +1998,17 @@ public interface RetrofitApi {
 
     /**
      * 商品收藏列表
-     *
-     *
      */
     @GET("estoreapi/v2/collects")
     Observable<JcsResponse<PageResponse<MallGoodCollection>>> collectionGoodList(
             @Query("page") int page
     );
+
+    /**
+     * 店铺配送费
+     */
+    @GET("estoreapi/v2/delivery")
+    Observable<JcsResponse<MallDeliveryResponse>> shopDelivery(@Body MallDeliveryRequest request);
+
+
 }

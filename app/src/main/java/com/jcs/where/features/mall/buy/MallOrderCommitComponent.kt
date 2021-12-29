@@ -6,10 +6,7 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.mall.MallCartGroup
-import com.jcs.where.api.response.mall.request.MallCommitResponse
-import com.jcs.where.api.response.mall.request.MallOrderCommit
-import com.jcs.where.api.response.mall.request.MallOrderCommitGoodGroup
-import com.jcs.where.api.response.mall.request.MallOrderCommitGoodItem
+import com.jcs.where.api.response.mall.request.*
 import com.jcs.where.utils.BigDecimalUtil
 import java.math.BigDecimal
 import java.util.*
@@ -21,6 +18,8 @@ import java.util.*
 interface MallOrderCommitView : BaseMvpView {
     fun commitSuccess(response: MallCommitResponse)
 
+    fun bindTotalDelivery(totalServiceDeliveryFee: BigDecimal?)
+
 }
 
 
@@ -30,7 +29,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
     /**
      * 计算价格
      */
-    fun handlePrice(adapter: MallOrderCommitAdapter): BigDecimal {
+    fun handlePrice(adapter: MallOrderCommitAdapter, mTotalServiceDeliveryFee: BigDecimal?): BigDecimal {
 
         var totalPrice: BigDecimal = BigDecimal.ZERO
 
@@ -39,15 +38,26 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             it.gwc.forEach { good ->
 
                 // 商品价格
-                val mul = BigDecimalUtil.mul(good.specs_info!!.price, BigDecimal(good.good_num))
+                val goodPrice = BigDecimalUtil.mul(good.specs_info!!.price, BigDecimal(good.good_num))
 
-                // 配送费
-                val itemPrice = BigDecimalUtil.add(good.delivery_fee, mul)
+                // 配送费(以额外通过城市id获取到的为准)
+                val deliveryFee = if (mTotalServiceDeliveryFee != null) {
+
+                    BigDecimal.ZERO
+                } else {
+                    good.delivery_fee
+                }
+                val itemPrice = BigDecimalUtil.add(deliveryFee, goodPrice)
 
                 totalPrice = BigDecimalUtil.add(itemPrice, totalPrice)
             }
-
         }
+
+        // 接口返回的配送费不为空，加上
+        if (mTotalServiceDeliveryFee != null) {
+            totalPrice = BigDecimalUtil.add(mTotalServiceDeliveryFee, totalPrice)
+        }
+
         return totalPrice
     }
 
@@ -99,6 +109,64 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             }
 
         })
+    }
+
+
+    /**
+     * 通过城市id获取店铺配送费
+     */
+    fun getDelivery(adapter: MallOrderCommitAdapter, cityId: Int) {
+
+        val data = adapter.data
+        if (data.isEmpty()) {
+            return
+        }
+
+
+        val apply = MallDeliveryRequest().apply {
+            city_id = cityId
+        }
+
+        data.forEach { shop ->
+            val allGoods = ArrayList<MallDeliverItem>()
+            shop.gwc.forEach { gwc ->
+
+                val item = MallDeliverItem().apply {
+                    shop_id = shop.shop_id
+                    goods_id = gwc.good_id
+                    count = gwc.good_num
+                }
+                allGoods.add(item)
+            }
+            apply.goods.add(allGoods)
+        }
+
+        requestApi(mRetrofit.shopDelivery(apply), object : BaseMvpObserver<MallDeliveryResponse>(view) {
+            override fun onSuccess(response: MallDeliveryResponse) {
+                val deliveryFee = response.delivery_fee
+
+                // 刷新配送费
+                adapter.data.forEach {
+                    val shopIdKey = it.shop_id.toString()
+                    if (deliveryFee.containsKey(shopIdKey)) {
+                        it.nativeShopDelivery = deliveryFee[shopIdKey]
+                    }
+                }
+                adapter.notifyDataSetChanged()
+
+                // 获取总配送费
+                var totalServiceDeliveryFee = BigDecimal.ZERO
+                if (deliveryFee.containsKey("total")) {
+                    totalServiceDeliveryFee = deliveryFee["total"] as BigDecimal
+                }
+
+                view.bindTotalDelivery(totalServiceDeliveryFee)
+
+
+            }
+        })
+
+
     }
 
 

@@ -32,32 +32,26 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
      */
     fun handlePrice(adapter: MallOrderCommitAdapter, mTotalServiceDeliveryFee: BigDecimal?): BigDecimal {
 
-        var totalPrice: BigDecimal = BigDecimal.ZERO
+        val totalPrice: BigDecimal
 
-        adapter.data.forEach {
+        // 所有商品价格
+        var allGoodPrice = BigDecimal.ZERO
 
-            it.gwc.forEach { good ->
+        // 所有店铺配送费
+        var allDeliveryFee = BigDecimal.ZERO
 
+        adapter.data.forEach { shop ->
+
+            allDeliveryFee = BigDecimalUtil.add(allDeliveryFee, shop.delivery_fee)
+
+            shop.gwc.forEach { good ->
                 // 商品价格
                 val goodPrice = BigDecimalUtil.mul(good.specs_info!!.price, BigDecimal(good.good_num))
-
-                // 配送费(以额外通过城市id获取到的为准)
-                val deliveryFee = if (mTotalServiceDeliveryFee != null) {
-
-                    BigDecimal.ZERO
-                } else {
-                    good.delivery_fee
-                }
-                val itemPrice = BigDecimalUtil.add(deliveryFee, goodPrice)
-
-                totalPrice = BigDecimalUtil.add(itemPrice, totalPrice)
+                allGoodPrice = BigDecimalUtil.add(allGoodPrice, goodPrice)
             }
         }
 
-        // 接口返回的配送费不为空，加上
-        if (mTotalServiceDeliveryFee != null) {
-            totalPrice = BigDecimalUtil.add(mTotalServiceDeliveryFee, totalPrice)
-        }
+        totalPrice = BigDecimalUtil.add(allGoodPrice, allDeliveryFee)
 
         return totalPrice
     }
@@ -153,8 +147,9 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
                 adapter.data.forEach {
                     val shopIdKey = it.shop_id.toString()
                     if (deliveryFeeData.containsKey(shopIdKey)) {
-                        it.nativeShopDelivery = deliveryFeeData[shopIdKey]
-//                        it.nativeShopDelivery = BigDecimal(100) // test
+//                        it.nativeShopDelivery = deliveryFeeData[shopIdKey]
+                        it.delivery_fee = deliveryFeeData[shopIdKey]!!
+
                     }
                 }
                 adapter.notifyDataSetChanged()

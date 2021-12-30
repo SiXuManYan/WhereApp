@@ -83,10 +83,10 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
 
         adapter.data.forEach {
             val group = MallCartGroup().apply {
-
                 shop_id = it.shop_id
                 title = it.title
                 nativeIsSelect = true
+                delivery_fee = it.delivery_fee
             }
 
             it.gwc.forEach { child ->

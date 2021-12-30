@@ -180,6 +180,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
 
 
     override fun onGroupSelected(nativeIsSelect: Boolean) {
+        getNowPrice()
         select_all_tv.isChecked = if (nativeIsSelect) {
             presenter.checkSelectAll(mAdapter)
         } else {

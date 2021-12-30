@@ -103,13 +103,14 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         val msi = MallSpecsInfo().apply {
             specs = mallSpecs.specs
             price = mallSpecs.price
+
         }
 
         val item = MallCartItem().apply {
             good_id = mallSpecs.goods_id
             specs_id = mallSpecs.specs_id
             good_num = goodNumber
-            delivery_fee = mData.delivery_fee
+//            delivery_fee = mData.delivery_fee
             goods_info = goodInfo
             specs_info = msi
         }
@@ -117,6 +118,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         val group = MallCartGroup().apply {
             shop_id = mData.shop_id
             title = mData.title
+            delivery_fee =  mData.delivery_fee
         }
 
         group.gwc.add(item)

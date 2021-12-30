@@ -229,6 +229,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 bottom_container_rl.visibility = View.GONE
             }
         }
+        bottom_v.visibility =  bottom_container_rl.visibility
     }
 
     private fun cancelOrder(orderId: Int) {

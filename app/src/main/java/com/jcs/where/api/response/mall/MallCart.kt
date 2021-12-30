@@ -24,6 +24,7 @@ class MallCartGroup : Serializable {
     /** 本地记录，通过城市id额外获取的 当前店铺配送费 */
     var nativeShopDelivery: BigDecimal? = null
     var nativeRemark = ""
+    var delivery_fee: BigDecimal? = BigDecimal.ZERO
 
 }
 
@@ -44,7 +45,7 @@ class MallCartItem : Serializable {
     /** 商品详情 */
     var goods_info: MallGoodInfo? = null
     var specs_info: MallSpecsInfo? = null
-    var delivery_fee: BigDecimal = BigDecimal.ZERO
+//    var delivery_fee: BigDecimal = BigDecimal.ZERO
 
 
 }

@@ -36,12 +36,8 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
 
         child_container_ll.removeAllViews()
 
-        // 接口返回的各个商品的运费之和
-        var totalItemDeliveryFeeFromService: BigDecimal = BigDecimal.ZERO
 
         item.gwc.forEach {
-
-            totalItemDeliveryFeeFromService = BigDecimalUtil.add(it.delivery_fee, totalItemDeliveryFeeFromService)
 
             val child = LayoutInflater.from(context).inflate(R.layout.item_dishes_for_order_submit_mall, null)
             val image_iv = child.findViewById<ImageView>(R.id.order_image_iv)
@@ -76,11 +72,8 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
             child.layoutParams = layoutParams
 
         }
-        if (item.nativeShopDelivery != null) {
-            delivery_price_tv.text = StringUtils.getString(R.string.price_unit_format, item.nativeShopDelivery)
-        } else {
-            delivery_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalItemDeliveryFeeFromService.toPlainString())
-        }
+
+        delivery_price_tv.text = StringUtils.getString(R.string.price_unit_format, item.delivery_fee?.toPlainString())
 
         remark_aet.addTextChangedListener(object : TextWatcher {
 

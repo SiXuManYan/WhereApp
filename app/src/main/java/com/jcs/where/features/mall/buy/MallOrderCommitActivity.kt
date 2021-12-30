@@ -86,7 +86,11 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     override fun initData() {
         presenter = MallOrderCommitPresenter(this)
-        totalPrice = presenter.handlePrice(mAdapter,mTotalServiceDeliveryFee)
+        handleToatalPrice()
+    }
+
+    private fun handleToatalPrice() {
+        totalPrice = presenter.handlePrice(mAdapter, mTotalServiceDeliveryFee)
         total_price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
     }
 
@@ -116,6 +120,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     var mTotalServiceDeliveryFee :BigDecimal? = null
     override fun bindTotalDelivery(totalServiceDeliveryFee: BigDecimal?) {
         mTotalServiceDeliveryFee = totalServiceDeliveryFee
+        handleToatalPrice()
+
     }
 
 }

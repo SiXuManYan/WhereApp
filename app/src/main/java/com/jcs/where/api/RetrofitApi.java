@@ -2007,8 +2007,8 @@ public interface RetrofitApi {
     /**
      * 店铺配送费
      */
-    @GET("estoreapi/v2/delivery")
-    Observable<JcsResponse<MallDeliveryResponse>> shopDelivery(@Body MallDeliveryRequest request);
+    @POST("estoreapi/v2/delivery")
+    Observable<JcsResponse<MallDeliveryResponse>> shopDelivery(@Body MallDeliveryRequest request );
 
 
 }

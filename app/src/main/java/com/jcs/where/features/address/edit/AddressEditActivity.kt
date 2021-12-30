@@ -105,7 +105,8 @@ class AddressEditActivity : BaseMvpActivity<AddressEditPresenter>(), AddressEdit
         when (it.resultCode) {
             Activity.RESULT_OK -> {
                 mAreaName = bundle.getString(Constant.PARAM_SELECT_AREA_NAME,"")
-                mAreaId = bundle.getInt(Constant.PARAM_SELECT_AREA_ID, 0)
+                val areaId = bundle.getString(Constant.PARAM_SELECT_AREA_ID, "0")
+                mAreaId = areaId.toInt()
                 city_tv.text = mAreaName
             }
 

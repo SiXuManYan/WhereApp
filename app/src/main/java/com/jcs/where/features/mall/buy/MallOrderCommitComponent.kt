@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.buy
 
+import android.annotation.SuppressLint
 import com.google.gson.Gson
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -122,10 +123,11 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             return
         }
 
-
         val apply = MallDeliveryRequest().apply {
             city_id = cityId
         }
+
+        val goods = ArrayList<ArrayList<MallDeliverItem>>()
 
         data.forEach { shop ->
             val allGoods = ArrayList<MallDeliverItem>()
@@ -138,26 +140,30 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
                 }
                 allGoods.add(item)
             }
-            apply.goods.add(allGoods)
+            goods.add(allGoods)
         }
+        apply.goods = Gson().toJson(goods)
 
         requestApi(mRetrofit.shopDelivery(apply), object : BaseMvpObserver<MallDeliveryResponse>(view) {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSuccess(response: MallDeliveryResponse) {
-                val deliveryFee = response.delivery_fee
+                val deliveryFeeData = response.delivery_fee
 
-                // 刷新配送费
+                // 刷新列表中的配送费
                 adapter.data.forEach {
                     val shopIdKey = it.shop_id.toString()
-                    if (deliveryFee.containsKey(shopIdKey)) {
-                        it.nativeShopDelivery = deliveryFee[shopIdKey]
+                    if (deliveryFeeData.containsKey(shopIdKey)) {
+                        it.nativeShopDelivery = deliveryFeeData[shopIdKey]
+//                        it.nativeShopDelivery = BigDecimal(100) // test
                     }
                 }
                 adapter.notifyDataSetChanged()
 
                 // 获取总配送费
                 var totalServiceDeliveryFee = BigDecimal.ZERO
-                if (deliveryFee.containsKey("total")) {
-                    totalServiceDeliveryFee = deliveryFee["total"] as BigDecimal
+                if (deliveryFeeData.containsKey("total")) {
+                    totalServiceDeliveryFee = deliveryFeeData["total"] as BigDecimal
+//                    totalServiceDeliveryFee = BigDecimal(100) // test
                 }
 
                 view.bindTotalDelivery(totalServiceDeliveryFee)

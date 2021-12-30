@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -45,6 +46,23 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
         topSheetBehavior.setTopSheetCallback(object : TopSheetBehavior.TopSheetCallback() {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    TopSheetBehavior.STATE_EXPANDED ->{
+                        all_iv.rotation = 180f
+                    }
+                    TopSheetBehavior.STATE_HIDDEN -> {
+
+                    }
+                    TopSheetBehavior.STATE_COLLAPSED -> {
+                        all_iv.rotation = 0f
+                    }
+                    TopSheetBehavior.STATE_DRAGGING -> {
+
+                    }
+                    TopSheetBehavior.STATE_SETTLING -> {
+
+                    }
+                }
 
             }
 

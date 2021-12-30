@@ -6,9 +6,12 @@ import java.math.BigDecimal
  * Created by Wangsw  2021/12/29 18:37.
  *
  */
+
+
 class MallDeliveryRequest {
     var city_id = 0
-    var goods = ArrayList<ArrayList<MallDeliverItem>>()
+//    var goods = ArrayList<ArrayList<MallDeliverItem>>()
+    var goods = ""
 }
 
 class MallDeliverItem {

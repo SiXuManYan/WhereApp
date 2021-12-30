@@ -42,7 +42,7 @@ class MallShopActivity : BaseMvpActivity<MallShopPresenter>(), MallShopView {
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ID, shopId)
-                putString(Constant.PARAM_NAME, shopName)
+                putString(Constant.PARAM_SHOP_NAME, shopName)
             }
             val intent = Intent(context, MallShopActivity::class.java)
                 .putExtras(bundle)

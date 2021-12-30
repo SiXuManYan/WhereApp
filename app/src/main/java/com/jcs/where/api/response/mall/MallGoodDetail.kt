@@ -30,11 +30,11 @@ class MallGoodDetail {
 
     var shop_id = 0
 
-    var shop_name :String?= ""
+    var shop_name: String? = ""
 
     /** 0未收藏 1收藏 */
     var collect_status = 0
-    var delivery_fee :BigDecimal = BigDecimal.ZERO
+    var delivery_fee: BigDecimal = BigDecimal.ZERO
     var website = ""
     var mer_name = ""
     var mer_uuid = ""

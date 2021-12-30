@@ -14,7 +14,7 @@ class MallCartGroup : Serializable {
     var shop_id = 0
 
     /** 店铺名称  */
-    var title = ""
+    var title:String? = ""
 
     var gwc = ArrayList<MallCartItem>()
 

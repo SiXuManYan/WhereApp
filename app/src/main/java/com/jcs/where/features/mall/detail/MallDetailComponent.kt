@@ -96,7 +96,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         val selectData: ArrayList<MallCartGroup> = ArrayList()
 
         val goodInfo = MallGoodInfo().apply {
-            title = mData.shop_name
+            title = mData.title
             photo = mData.main_image
         }
 
@@ -117,7 +117,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
 
         val group = MallCartGroup().apply {
             shop_id = mData.shop_id
-            title = mData.title
+            title = mData.shop_name
             delivery_fee =  mData.delivery_fee
         }
 

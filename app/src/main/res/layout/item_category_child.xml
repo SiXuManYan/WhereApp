@@ -4,7 +4,9 @@
     android:id="@+id/child_parent_ll"
     android:layout_width="@dimen/dp_100"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:minHeight="@dimen/dp_70"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <ImageView
@@ -18,8 +20,9 @@
         android:id="@+id/content_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_3"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:lineSpacingMultiplier="1.2"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/sp_13"

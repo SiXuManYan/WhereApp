@@ -175,6 +175,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
                 updateNumber(MIN_GOOD_NUM)
                 cut_iv.isClickable = true
                 add_iv.isClickable = true
+                add_iv.setImageResource(R.mipmap.ic_add_blue)
             }
 
 

@@ -46,11 +46,11 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         BarUtils.addMarginTopEqualStatusBarHeight(top_ll)
         val topPadding = BarUtils.getStatusBarHeight() + SizeUtils.dp2px(40f)
         content_ll.setPaddingRelative(0, topPadding, 0, 0)
-        message_view.setMessageImageResource(R.mipmap.ic_mine_message)
+
+        initDefaultUi()
     }
 
     override fun initData() {
-
         presenter = MinePresenter(this)
         presenter.getUnreadMessageCount()
         presenter.getUserInfo()
@@ -148,10 +148,23 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             EventCode.EVENT_REFRESH_USER_INFO,
             EventCode.EVENT_SIGN_IN_CHANGE_STATUS,
             -> presenter.getUserInfo()
+            EventCode. EVENT_SIGN_OUT->{
+                initDefaultUi()
+            }
             else -> {
             }
         }
 
+    }
+
+    private fun initDefaultUi() {
+        name_tv.text = getString(R.string.mine_login_register)
+        create_time_tv.apply {
+            text = ""
+            visibility = View.GONE
+        }
+        avatar_iv.setImageResource(R.drawable.ic_noheader)
+        message_view.setMessageImageResource(R.mipmap.ic_mine_message)
     }
 
 }

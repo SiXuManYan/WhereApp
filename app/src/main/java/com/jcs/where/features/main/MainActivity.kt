@@ -71,9 +71,9 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         val code = baseEvent.code
-        if (code == EventCode.EVENT_SIGN_OUT) {
-            finish()
-        }
+//        if (code == EventCode.EVENT_SIGN_OUT) {
+//            finish()
+//        }
         if (code == EventCode.EVENT_REFRESH_LANGUAGE) {
             SPUtils.getInstance().put(SPKey.K_LANGUAGE_TAB, 3)
             recreate()

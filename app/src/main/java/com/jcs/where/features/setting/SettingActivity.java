@@ -129,11 +129,9 @@ public class SettingActivity extends BaseActivity {
                 .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
                     User.clearAllUser();
                     CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, "");
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean(Constant.PARAM_DISMISS_BACK_ICON, true);
 
                     EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
-                    startActivityClearTop(LoginActivity.class, null);
+                    startActivity(LoginActivity.class);
                     finish();
                     dialogInterface.dismiss();
                 })

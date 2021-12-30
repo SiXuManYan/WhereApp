@@ -12,7 +12,6 @@ import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.hotel.HotelComment
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
-import com.jcs.where.features.hotel.comment.child.HotelCommentFragment
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
@@ -43,13 +42,12 @@ class MallCommentFragment : BaseMvpFragment<MallCommentChildPresenter>(), MallCo
     companion object {
 
         /**
-         * @param hotel_id 酒店ID
-         * @param listType 显示类型（1：晒图，2：低分，3：最新）
+         * @param listType 列表类型（0：全部，1：有图，2：最新，3：低分）
          */
-        fun newInstance(hotel_id: Int, listType: Int? = 0): MallCommentFragment {
+        fun newInstance(goodId: Int, listType: Int? = 0): MallCommentFragment {
             val fragment = MallCommentFragment()
             val bundle = Bundle().apply {
-                putInt(Constant.PARAM_SHOP_ID, hotel_id)
+                putInt(Constant.PARAM_SHOP_ID, goodId)
                 listType?.let {
                     putInt(Constant.PARAM_TYPE, listType)
                 }
@@ -66,7 +64,7 @@ class MallCommentFragment : BaseMvpFragment<MallCommentChildPresenter>(), MallCo
     override fun initView(view: View) {
         arguments?.let {
             good_id = it.getInt(Constant.PARAM_SHOP_ID, 0)
-            listType = it.getInt(Constant.PARAM_ACCOUNT, 1)
+            listType = it.getInt(Constant.PARAM_TYPE, 0)
         }
 
         swipe_layout.setOnRefreshListener(this)

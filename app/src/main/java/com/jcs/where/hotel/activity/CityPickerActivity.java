@@ -105,6 +105,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     private void initCity() {
         if (hindCurrentLocation) {
             findViewById(R.id.current_location_rl).setVisibility(View.GONE);
+            findViewById(R.id.current_location_tv).setVisibility(View.GONE);
             return;
         }
 

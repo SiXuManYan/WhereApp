@@ -843,7 +843,7 @@ Gentleman must let go</string>
     <string name="viewed">我的足迹</string>
     <string name="vouchers">我的卡券</string>
     <string name="empty_card_coupon">暂无卡券</string>
-    <string name="current_location_title">Current Location</string>
+    <string name="current_location_title">当前城市</string>
     <string name="empty_search">无结果</string>
     <string name="empty_search_hint">尝试搜索其他词试试</string>
     <string name="back_home">返回首页</string>

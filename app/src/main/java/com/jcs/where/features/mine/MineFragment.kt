@@ -3,6 +3,8 @@ package com.jcs.where.features.mine
 import android.view.View
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.jcs.where.R
 import com.jcs.where.api.response.MerchantSettledInfoResponse
 import com.jcs.where.api.response.UserInfoResponse
@@ -25,8 +27,8 @@ import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity
 import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.SPKey
+import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import kotlinx.android.synthetic.main.fragment_mine_2.*
 
 /**
@@ -127,7 +129,13 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             text = response.createdAt
             visibility = View.VISIBLE
         }
-        GlideUtil.load(context, response.avatar, avatar_iv, 30)
+        val options = RequestOptions.bitmapTransform(GlideRoundedCornersTransform(30, GlideRoundedCornersTransform.CornerType.ALL))
+            .error(R.drawable.ic_noheader)
+            .fallback(R.drawable.ic_noheader)
+            .placeholder(R.drawable.ic_noheader)
+
+        Glide.with(requireContext()).load(response.avatar).apply(options).into(avatar_iv)
+
     }
 
     override fun handleMerchant(response: MerchantSettledInfoResponse) {
@@ -148,7 +156,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             EventCode.EVENT_REFRESH_USER_INFO,
             EventCode.EVENT_SIGN_IN_CHANGE_STATUS,
             -> presenter.getUserInfo()
-            EventCode. EVENT_SIGN_OUT->{
+            EventCode.EVENT_SIGN_OUT -> {
                 initDefaultUi()
             }
             else -> {

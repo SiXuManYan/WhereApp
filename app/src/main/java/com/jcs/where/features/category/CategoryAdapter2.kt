@@ -27,7 +27,7 @@ import com.jcs.where.yellow_page.activity.YellowPageActivity
 import java.util.*
 
 /**
- * Created by Wangsw  2021/4/15 16:01.
+ * Created by Wangsw  2021/11/12 16:01.
  *
  */
 class CategoryAdapter2 : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.item_category2) {
@@ -124,7 +124,7 @@ class CategoryAdapter2 : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.ite
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(8f), 0, 0))
         }
         childAdapter.setNewInstance(parent.child_categories)
-        childAdapter.setOnItemChildClickListener { _, _, position ->
+        childAdapter.setOnItemClickListener { _, _, position ->
             val childCategory = childAdapter.data[position]
             when (childCategory.type) {
                 TYPE_SERVICE -> {
@@ -150,7 +150,7 @@ class CategoryAdapter2 : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.ite
                 }
 
                 TYPE_TRAVEL -> {
-
+                    startActivity(TravelMapActivity::class.java,null)
                 }
                 TYPE_RESTAURANT -> {
                     startActivity(RestaurantHomeActivity::class.java, Bundle().apply {

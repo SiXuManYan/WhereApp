@@ -67,8 +67,13 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             addResIdMax = R.mipmap.ic_add_blue_transparent
             updateNumber(1)
             cut_iv.visibility = View.VISIBLE
-            cut_iv.isClickable = false
-            add_iv.isClickable = false
+
+
+            if (data.attribute_list.isNotEmpty()) {
+                cut_iv.isClickable = false
+                add_iv.isClickable = false
+            }
+
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
 

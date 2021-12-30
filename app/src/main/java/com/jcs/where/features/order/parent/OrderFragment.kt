@@ -65,6 +65,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
     }
 
     override fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>) {
+        type.clear()
         type.addAll(response)
 
 
@@ -75,6 +76,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
 
         tabs_type.setViewPager(viewpager, titles.toTypedArray())
+//        tabs_type.setViewPager(viewpager)
     }
 
 

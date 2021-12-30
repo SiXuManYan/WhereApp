@@ -96,6 +96,8 @@
         android:id="@+id/child_tag_rv"
         android:layout_width="match_parent"
         android:layout_gravity="center_vertical"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingBottom="@dimen/dp_2"
         android:layout_height="wrap_content"
         android:background="@color/white"
         tools:itemCount="1"

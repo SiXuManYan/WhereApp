@@ -494,6 +494,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         response.forEach {
 
             val view = LayoutInflater.from(this).inflate(R.layout.custom_info_contents_2, null)
+            val image = view.findViewById<ImageView>(R.id.image_iv)
+            image.setImageResource(R.mipmap.ic_marker_common)
+
             val title_tv = view.findViewById<TextView>(R.id.title_tv)
             title_tv.text = it.title
 

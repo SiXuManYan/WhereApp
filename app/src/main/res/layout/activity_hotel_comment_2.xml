@@ -34,13 +34,13 @@
             android:background="@drawable/selector_hotel_comment"
             android:button="@null"
             android:checked="true"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:minWidth="@dimen/dp_78"
-            android:paddingStart="@dimen/dp_12"
-            android:paddingEnd="@dimen/dp_12"
             android:text="@string/all"
             android:textColor="@color/selector_white_grey"
-            android:textSize="@dimen/sp_13" />
+            android:textSize="@dimen/sp_12" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/picture_rb"
@@ -50,13 +50,13 @@
             android:layout_weight="1"
             android:background="@drawable/selector_hotel_comment"
             android:button="@null"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:minWidth="@dimen/dp_78"
-            android:paddingStart="@dimen/dp_12"
-            android:paddingEnd="@dimen/dp_12"
             android:text="@string/picture"
             android:textColor="@color/selector_white_grey"
-            android:textSize="@dimen/sp_13" />
+            android:textSize="@dimen/sp_12" />
 
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -67,13 +67,13 @@
             android:layout_weight="1"
             android:background="@drawable/selector_hotel_comment"
             android:button="@null"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:minWidth="@dimen/dp_78"
-            android:paddingStart="@dimen/dp_12"
-            android:paddingEnd="@dimen/dp_12"
             android:text="@string/newest_default"
             android:textColor="@color/selector_white_grey"
-            android:textSize="@dimen/sp_13" />
+            android:textSize="@dimen/sp_12" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/high_option_rb"
@@ -86,11 +86,9 @@
             android:gravity="center"
             android:maxLines="1"
             android:minWidth="@dimen/dp_78"
-            android:paddingStart="@dimen/dp_12"
-            android:paddingEnd="@dimen/dp_12"
             android:text="@string/low_rating"
             android:textColor="@color/selector_white_grey"
-            android:textSize="@dimen/sp_13" />
+            android:textSize="@dimen/sp_12" />
 
 
     </RadioGroup>

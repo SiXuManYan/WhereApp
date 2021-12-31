@@ -110,7 +110,7 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
         mAdapter.setNewInstance(data.goods)
         val refundPrice = data.refund_price
         totalPrice = refundPrice.toDouble()
-        refund_price_tv.text = getString(R.string.price_unit_format, refundPrice.toPlainString())
+        amount_tv.text = getString(R.string.price_unit_format, refundPrice.toPlainString())
 
         cancel_time_tv.text = data.cancel_time
         trade_no_tv.text = data.trade_no.toString()

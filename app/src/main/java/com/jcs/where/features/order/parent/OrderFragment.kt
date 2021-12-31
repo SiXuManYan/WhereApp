@@ -82,10 +82,20 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
-            login_rl.visibility = View.GONE
-            presenter.getTabs()
+        when (baseEvent.code) {
+
+            EventCode.EVENT_LOGIN_SUCCESS -> {
+                login_rl.visibility = View.GONE
+                presenter.getTabs()
+            }
+            EventCode.EVENT_SIGN_OUT -> {
+                login_rl.visibility = View.VISIBLE
+            }
+            else -> {
+            }
         }
+
+
     }
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {

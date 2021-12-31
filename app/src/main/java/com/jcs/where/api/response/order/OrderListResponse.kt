@@ -87,6 +87,6 @@ class OrderListResponse : MultiItemEntity {
         /**
          * 订单类型：新版estore
          */
-        const val ORDER_TYPE_STORE_5 = 5
+        const val ORDER_TYPE_STORE_MALL_5 = 5
     }
 }

@@ -145,7 +145,11 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             EventCode.EVENT_ORDER_COMMIT_SUCCESS-> {
                 onRefresh()
             }
-
+            EventCode.EVENT_SIGN_OUT->{
+                if (isViewCreated) {
+                    mAdapter.setNewInstance(null)
+                }
+            }
             else -> {
             }
         }
@@ -177,7 +181,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
                     putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }
-            OrderListResponse.ORDER_TYPE_STORE_5 -> {
+            OrderListResponse.ORDER_TYPE_STORE_MALL_5 -> {
                 startActivity(MallOrderDetailActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_ORDER_ID, data.id)
                 })

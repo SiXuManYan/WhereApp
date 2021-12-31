@@ -21,8 +21,6 @@ import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
-import com.jcs.where.features.mall.comment.MallCommentActivity
-import com.jcs.where.features.mall.shop.MallShopActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -42,7 +40,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         addItemType(OrderListResponse.ORDER_TYPE_DINE_2, R.layout.item_order_list_food)
         addItemType(OrderListResponse.ORDER_TYPE_TAKEAWAY_3, R.layout.item_order_list_takeaway)
         addItemType(OrderListResponse.ORDER_TYPE_STORE_4, R.layout.item_order_list_store)
-        addItemType(OrderListResponse.ORDER_TYPE_STORE_5, R.layout.item_order_list_store)
+        addItemType(OrderListResponse.ORDER_TYPE_STORE_MALL_5, R.layout.item_order_list_store)
     }
 
 
@@ -53,7 +51,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             OrderListResponse.ORDER_TYPE_DINE_2 -> bindFoodItem(holder, item)
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> bindTakeawayItem(holder, item)
             OrderListResponse.ORDER_TYPE_STORE_4 -> bindStoreItem(holder, item)
-            OrderListResponse.ORDER_TYPE_STORE_5 -> bindMallItem(holder, item)
+            OrderListResponse.ORDER_TYPE_STORE_MALL_5 -> bindMallItem(holder, item)
             else -> {
             }
         }

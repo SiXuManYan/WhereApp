@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/dp_10">
+             >
 
                 <TextView
                     android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:itemCount="1"
-                    tools:listitem="@layout/item_dishes_for_order_submit" />
+                    tools:listitem="@layout/item_dishes_for_order_submit_mall" />
 
 
             </LinearLayout>

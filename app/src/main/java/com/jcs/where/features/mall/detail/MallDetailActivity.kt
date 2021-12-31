@@ -327,6 +327,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         mallSpecs.specs.values.forEach {
             buff.append("$it, ")
         }
+        buff.append(" "+ getString(R.string.quantity_format,goodNumber))
+
         select_attr_tv.text = buff
 
         if (!User.isLogon()) {

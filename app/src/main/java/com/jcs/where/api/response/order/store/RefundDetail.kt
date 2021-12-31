@@ -79,7 +79,7 @@ class RefundDetailMall {
     /**
      * 	退款单号
      */
-    var trade_no :Double = 0.0
+    var trade_no  = ""
 
     var cancel_images: ArrayList<String> = ArrayList()
 

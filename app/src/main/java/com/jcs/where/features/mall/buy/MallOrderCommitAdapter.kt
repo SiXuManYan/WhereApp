@@ -13,9 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
-import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.GlideUtil
-import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/12/15 14:09.
@@ -67,9 +65,15 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
             }
 
             child_container_ll.addView(child)
-            val layoutParams = child.layoutParams as LinearLayout.LayoutParams
-            layoutParams.bottomMargin = SizeUtils.dp2px(10f)
-            child.layoutParams = layoutParams
+
+            val params = child.layoutParams as LinearLayout.LayoutParams
+            params.bottomMargin = SizeUtils.dp2px(10f)
+
+            if (child_container_ll.indexOfChild(child) == 0) {
+                params.topMargin = SizeUtils.dp2px(10f)
+            }
+            child.layoutParams = params
+
 
         }
 

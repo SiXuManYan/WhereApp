@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.jcs.where.R
@@ -16,6 +17,7 @@ import com.jcs.where.features.store.refund.StoreRefundAdapter
 import com.jcs.where.features.store.refund.StoreRefundView
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.widget.list.DividerDecoration
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_store_refund.*
 import org.greenrobot.eventbus.EventBus
@@ -69,6 +71,8 @@ class MallRefundActivity : BaseMvpActivity<MallRefundPresenter>(), StoreRefundVi
                 override fun canScrollVertically() = false
             }
             adapter = mAdapter
+            addItemDecoration(DividerDecoration(getColor(R.color.white), SizeUtils.dp2px(10f),
+                0, 0))
         }
         amount_tv.text = getString(R.string.price_unit_format, totalPrice.toString())
 

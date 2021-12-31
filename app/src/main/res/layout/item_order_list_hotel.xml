@@ -50,13 +50,7 @@
                 tools:text="Camayan Beach Hotel" />
 
 
-            <ImageView
-                android:layout_width="@dimen/dp_6"
-                android:layout_height="@dimen/dp_10"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/dp_10"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_arrow_right_black" />
+
 
         </LinearLayout>
 

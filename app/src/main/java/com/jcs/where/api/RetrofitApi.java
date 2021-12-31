@@ -1365,6 +1365,14 @@ public interface RetrofitApi {
             @Path("orderId") int orderId
     );
 
+    /**
+     * mall商城  取消 申请退款
+     */
+    @DELETE("estoreapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<JsonElement>> cancelMallRefund(
+            @Path("orderId") int orderId
+    );
+
 
     /**
      * 商城  修改申请退款

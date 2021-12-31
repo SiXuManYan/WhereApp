@@ -115,7 +115,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
         totalPrice = refundPrice.toDouble()
         amount_tv.text = getString(R.string.price_unit_format, refundPrice.toPlainString())
 
-        cancel_time_tv.text = data.cancel_time
+        cancel_time_tv.text = data.refund_time
         trade_no_tv.text = data.trade_no
 
         val cancelReason = data.cancel_reason
@@ -129,7 +129,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
 
         // 取消成功,刷新列表和商城订单详情
         ToastUtils.showShort(getString(R.string.refund_cancel_request_success))
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
 
         finish()
 

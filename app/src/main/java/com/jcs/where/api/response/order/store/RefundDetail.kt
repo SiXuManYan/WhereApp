@@ -69,7 +69,7 @@ class RefundDetailMall {
     /**
      * 退款时间
      */
-    var cancel_time = ""
+    var refund_time = ""
 
     /**
      * 	退款描述

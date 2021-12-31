@@ -88,7 +88,7 @@ class MallRefundDetailPresenter(private var view: MallRefundDetailView) : BaseMv
      */
     fun cancelApplication(orderId: Int) {
 
-        requestApi(mRetrofit.cancelStoreRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
+        requestApi(mRetrofit.cancelMallRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.cancelSuccess()
             }

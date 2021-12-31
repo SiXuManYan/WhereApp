@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallOrderGood
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.order.MallOrderDetailAdapter
@@ -173,21 +174,23 @@ class MallRefundActivity : BaseMvpActivity<MallRefundPresenter>(), StoreRefundVi
     override fun applicationSuccess() {
         ToastUtils.showShort(R.string.application_success)
         // 回到商城订单详情，刷新
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }
 
     override fun modifyApplicationSuccess() {
         ToastUtils.showShort(R.string.modify_success)
         // 回到商城订单详情，刷新
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }
 
     override fun upLoadImageSuccess(link: ArrayList<String>, orderId: Int, desc: String) {
         if (isChange) {
             val allAlreadyUploadImage = presenter.getAllAlreadyUploadImage(mImageAdapter)
-            allAlreadyUploadImage.addAll(link)
+            if (link.isNotEmpty()) {
+                allAlreadyUploadImage.addAll(link)
+            }
 
             val descImages = Gson().toJson(allAlreadyUploadImage)
             presenter.modifyRefundAgain(orderId, desc, descImages)

@@ -351,10 +351,10 @@
             android:id="@+id/change_tv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_28"
+            android:layout_centerVertical="true"
             android:layout_toStartOf="@id/cancel_tv"
             android:background="@drawable/stock_gray_radius_14"
             android:gravity="center"
-            android:layout_centerVertical="true"
             android:minWidth="@dimen/dp_149"
             android:text="@string/modify_application"
             android:textSize="@dimen/sp_14" />
@@ -363,9 +363,9 @@
         <TextView
             android:id="@+id/cancel_tv"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="@dimen/dp_28"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_10"
             android:background="@drawable/stock_orange_radius_14"
             android:gravity="center"

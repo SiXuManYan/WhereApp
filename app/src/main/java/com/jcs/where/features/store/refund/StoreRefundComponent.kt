@@ -189,6 +189,11 @@ class MallRefundPresenter(private var view: StoreRefundView) : BaseMvpPresenter(
         val type = "2"
         val description = RequestBody.create(MediaType.parse("multipart/form-data"), type)
 
+        if (map.isEmpty()){
+            view.upLoadImageSuccess(ArrayList<String>(), orderId , desc)
+            return
+        }
+
         requestApi(mRetrofit.uploadMultiImages(description, map), object : BaseMvpObserver<UploadFileResponse2>(view) {
             override fun onSuccess(response: UploadFileResponse2) {
 //                val link = response.link

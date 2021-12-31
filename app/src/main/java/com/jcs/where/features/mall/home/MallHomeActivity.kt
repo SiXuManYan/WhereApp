@@ -123,9 +123,11 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     override fun bindCategory(response: ArrayList<MallCategory>, titles: ArrayList<String>) {
 
+        if (firstCategory.isEmpty()) {
+            return
+        }
         firstCategory.clear()
         firstCategory.addAll(response)
-
 
 
         pager_vp.offscreenPageLimit = response.size

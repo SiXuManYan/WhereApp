@@ -173,6 +173,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         }
         avatar_iv.setImageResource(R.drawable.ic_noheader)
         message_view.setMessageImageResource(R.mipmap.ic_mine_message)
+        message_view.setMessageCount(0)
     }
 
 }

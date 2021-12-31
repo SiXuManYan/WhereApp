@@ -83,7 +83,6 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-
             EventCode.EVENT_LOGIN_SUCCESS -> {
                 login_rl.visibility = View.GONE
                 presenter.getTabs()
@@ -94,7 +93,6 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
             else -> {
             }
         }
-
 
     }
 

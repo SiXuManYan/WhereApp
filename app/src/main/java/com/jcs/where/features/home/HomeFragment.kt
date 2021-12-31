@@ -22,6 +22,8 @@ import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.home.TabEntity
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.convenience.activity.ConvenienceServiceActivity
 import com.jcs.where.currency.WebViewActivity
@@ -567,6 +569,18 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             putBoolean(Constant.PARAM_IS_FORCE_INSTALL, response.is_force_install)
         }
         startActivity(UpgradeActivity::class.java, bundle)
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_SIGN_OUT -> {
+                message_view.setMessageCount(0)
+            }
+            else -> {
+            }
+        }
+
     }
 
 }

@@ -83,24 +83,7 @@ class NumberView2 : LinearLayout {
 
         cut_iv.setOnClickListener {
             goodNum -= 1
-            if (goodNum <= MIN_GOOD_NUM) {
-                goodNum = MIN_GOOD_NUM
-
-                if (!alwaysEnableCut) {
-                    cut_iv.visibility = View.INVISIBLE
-                }
-                if (hideValueWithMin) {
-                    value_tv.visibility = View.INVISIBLE
-                } else {
-                    value_tv.visibility = View.VISIBLE
-                }
-                if (cutResIdMin != 0) cut_iv.setImageResource(cutResIdMin)
-            } else {
-                cut_iv.visibility = View.VISIBLE
-                value_tv.visibility = View.VISIBLE
-
-                if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
-            }
+            updateCutButtonView()
 
             if (addResIdCommon != 0) add_iv.setImageResource(addResIdCommon)
 
@@ -113,19 +96,8 @@ class NumberView2 : LinearLayout {
             }, 500)
         }
         add_iv.setOnClickListener {
-
-
             goodNum += 1
-            if (goodNum >= MAX_GOOD_NUM) {
-                goodNum = MAX_GOOD_NUM
-
-                if (addResIdMax != 0) add_iv.setImageResource(addResIdMax)
-            } else {
-                if (addResIdCommon != 0) {
-                    add_iv.setImageResource(addResIdCommon)
-                }
-            }
-
+            updateAddButtonView()
             if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
 
             cut_iv.visibility = View.VISIBLE
@@ -138,6 +110,39 @@ class NumberView2 : LinearLayout {
             Handler(Looper.myLooper()!!).postDelayed({
                 add_iv.isClickable = true
             }, 500)
+        }
+    }
+
+    private fun updateCutButtonView() {
+        if (goodNum <= MIN_GOOD_NUM) {
+            goodNum = MIN_GOOD_NUM
+
+            if (!alwaysEnableCut) {
+                cut_iv.visibility = INVISIBLE
+            }
+            if (hideValueWithMin) {
+                value_tv.visibility = INVISIBLE
+            } else {
+                value_tv.visibility = VISIBLE
+            }
+            if (cutResIdMin != 0) cut_iv.setImageResource(cutResIdMin)
+        } else {
+            cut_iv.visibility = VISIBLE
+            value_tv.visibility = VISIBLE
+
+            if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
+        }
+    }
+
+    private fun updateAddButtonView() {
+        if (goodNum >= MAX_GOOD_NUM) {
+            goodNum = MAX_GOOD_NUM
+
+            if (addResIdMax != 0) add_iv.setImageResource(addResIdMax)
+        } else {
+            if (addResIdCommon != 0) {
+                add_iv.setImageResource(addResIdCommon)
+            }
         }
     }
 
@@ -178,11 +183,16 @@ class NumberView2 : LinearLayout {
         value_tv.visibility = View.VISIBLE
         value_tv.text = goodNum.toString()
 
-        if (goodNum > MIN_GOOD_NUM) {
-            if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
-        } else {
-            if (cutResIdMin != 0) cut_iv.setImageResource(cutResIdMin)
-        }
+//        if (goodNum > MIN_GOOD_NUM) {
+//            if (cutResIdCommon != 0) cut_iv.setImageResource(cutResIdCommon)
+//        } else {
+//            if (cutResIdMin != 0) cut_iv.setImageResource(cutResIdMin)
+//        }
+        updateCutButtonView()
+
+        updateAddButtonView()
+
+
     }
 
     /**

@@ -33,6 +33,8 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     private var value = ArrayList<MallAttributeValue>()
 
+    var goodNumber = 1
+
     override fun getLayoutId() = R.layout.fragment_mall_sku
 
 
@@ -57,7 +59,8 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         number_view.apply {
             alwaysEnableCut = true
             MIN_GOOD_NUM = 1
-            MAX_GOOD_NUM = data.stock
+
+
             cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
             add_iv.setImageResource(R.mipmap.ic_add_blue_transparent)
 
@@ -65,18 +68,28 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             cutResIdMin = R.mipmap.ic_cut_blue_transparent
             addResIdCommon = R.mipmap.ic_add_blue
             addResIdMax = R.mipmap.ic_add_blue_transparent
-            updateNumber(1)
+
+            if (result != null) {
+                MAX_GOOD_NUM = result!!.stock
+                add_iv.setImageResource(R.mipmap.ic_add_blue)
+            } else {
+                MAX_GOOD_NUM = data.stock
+            }
+            updateNumber(goodNumber)
+
             cut_iv.visibility = View.VISIBLE
 
-
-            if (data.attribute_list.isNotEmpty()) {
+            // 没有SKU 且 用户之前没有选择过
+            if (data.attribute_list.isNotEmpty() && result == null) {
                 cut_iv.isClickable = false
                 add_iv.isClickable = false
+                cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
+                add_iv.setImageResource(R.mipmap.ic_add_blue_transparent)
             }
 
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
-
+                    goodNumber = goodNum
                 }
 
             }

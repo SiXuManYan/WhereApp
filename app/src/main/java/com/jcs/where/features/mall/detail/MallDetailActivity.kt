@@ -238,7 +238,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         mMediaAdapter.setNewInstance(mediaList)
         point_view.setPointCount(mediaList.size)
 
-        price_tv.text = getString(R.string.price_unit_format, response.max_price)
+        price_tv.text = getString(R.string.price_unit_format, response.min_price)
         title_tv.text = response.title
 
 

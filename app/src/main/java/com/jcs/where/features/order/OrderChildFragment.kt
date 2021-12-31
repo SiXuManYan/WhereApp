@@ -27,7 +27,8 @@ import kotlinx.android.synthetic.main.fragment_order_child.*
  * Created by Wangsw  2021/5/12 14:08.
  * 订单列表
  */
-class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildView, OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildView, OnLoadMoreListener,
+    SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     companion object {
         @JvmStatic
@@ -88,7 +89,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
     }
 
     override fun loadOnVisible() {
-        presenter.getList(orderType, page)
+        onRefresh()
     }
 
     override fun bindList(toMutableList: MutableList<OrderListResponse>, lastPage: Boolean) {
@@ -121,7 +122,9 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getList(orderType, page)
+        if (isViewCreated) {
+            presenter.getList(orderType, page)
+        }
     }
 
     override fun onLoadMore() {
@@ -138,9 +141,11 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_ORDER_LIST,
+            EventCode.EVENT_LOGIN_SUCCESS,
             EventCode.EVENT_ORDER_COMMIT_SUCCESS-> {
                 onRefresh()
             }
+
             else -> {
             }
         }
@@ -172,7 +177,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
                     putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }
-            OrderListResponse.ORDER_TYPE_STORE_5->{
+            OrderListResponse.ORDER_TYPE_STORE_5 -> {
                 startActivity(MallOrderDetailActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_ORDER_ID, data.id)
                 })

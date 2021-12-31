@@ -356,6 +356,7 @@
             android:background="@drawable/stock_gray_radius_14"
             android:gravity="center"
             android:minWidth="@dimen/dp_149"
+            android:visibility="invisible"
             android:text="@string/modify_application"
             android:textSize="@dimen/sp_14" />
 

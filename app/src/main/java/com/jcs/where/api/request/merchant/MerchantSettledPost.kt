@@ -39,6 +39,8 @@ class MerchantSettledPost {
     var mer_site = ""
     var mer_facebook = ""
     var mer_email = ""
+
+    /** 是否有实体店（1：有，2：没有） */
     var has_physical_store = 0
     var business_license = ""
 

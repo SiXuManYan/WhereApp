@@ -31,6 +31,7 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
 
     private var merTypeId = 0
     private var areaId = 0
+    /** 是否有实体店（1：有，2：没有） */
     private var hasPhysicalStore = 0
     private var isReCommit = false
     private var reCommitMerchantId = 0
@@ -47,7 +48,8 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
         when (it.resultCode) {
             Activity.RESULT_OK -> {
                 area_tv.text = bundle.getString(Constant.PARAM_SELECT_AREA_NAME)
-                areaId = bundle.getInt(Constant.PARAM_SELECT_AREA_ID, 0)
+                val area = bundle.getString(Constant.PARAM_SELECT_AREA_ID, "0")
+                areaId = area.toInt()
             }
             RequestResultCode.RESULT_SETTLED_TYPE_TO_MERCHANT_SETTLED -> {
                 mer_type_tv.text = bundle.getString("typeName", "")
@@ -82,11 +84,11 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
         select_iv.setOnClickListener {
             val size = mImageAdapter.data.size
             if (size == 2) {
-                ToastUtils.showShort(R.string.refund_image_max_6)
+                ToastUtils.showShort(R.string.refund_image_max_2)
                 return@setOnClickListener
             }
             val max = 2 - size
-            FeaturesUtil.handleMediaSelect(activity, Constant.IMG, max)
+            FeaturesUtil.handleMediaSelect4Fragment(this, Constant.IMG, max)
         }
 
         area_tv.setOnClickListener {
@@ -96,8 +98,25 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
             launcher.launch(Intent(requireContext(), SettledTypeActivity::class.java))
         }
 
+        physical_store_rg.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.yes_rb -> {
+                    hasPhysicalStore = 1
+                }
+                R.id.no_rb -> {
+                    hasPhysicalStore = 2
+                }
+
+
+                else -> {
+                }
+            }
+
+        }
+
+
         commit_tv.setOnClickListener {
-            commit_tv.isClickable = false
+
             val apply = MerchantSettledPost().apply {
                 first_name = first_name_et.text.toString()
                 middle_name = middle_name_et.text.toString()
@@ -131,7 +150,9 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
                 ToastUtils.showShort(getString(R.string.please_upload))
                 return@setOnClickListener
             }
-            presenter.upLoadImage(apply, ArrayList(mImageAdapter.data), isReCommit,reCommitMerchantId)
+            commit_tv.isClickable = false
+            commit_tv.postDelayed(Runnable { commit_tv.isClickable = true }, 2000)
+            presenter.upLoadImage(apply, ArrayList(mImageAdapter.data), isReCommit, reCommitMerchantId)
         }
 
 

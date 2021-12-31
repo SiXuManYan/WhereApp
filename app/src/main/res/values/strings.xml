@@ -793,6 +793,7 @@ Gentleman must let go</string>
     <string name="bill_status_5">退款中</string>
     <string name="bill_status_6">退款成功</string>
     <string name="refund_image_max_6">最多6张</string>
+    <string name="refund_image_max_2">最多2张</string>
 
     <string name="all_format">全部(%1$d)</string>
     <string name="has_image_format">有图(%1$d)</string>

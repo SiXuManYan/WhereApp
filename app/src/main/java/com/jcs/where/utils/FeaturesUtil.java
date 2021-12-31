@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.blankj.utilcode.constant.RegexConstants;
 import com.blankj.utilcode.util.ColorUtils;
@@ -218,6 +219,37 @@ public class FeaturesUtil {
 
             if (granted) {
                 Matisse.from(activity)
+                        .choose(mimeTypes)
+                        .countable(true)
+                        .maxSelectable(max)
+                        .theme(R.style.Matisse_Dracula)
+                        .thumbnailScale(0.87f)
+                        .imageEngine(new Glide4Engine())
+                        .forResult(Constant.REQUEST_MEDIA);
+
+            } else {
+                ToastUtils.showShort(R.string.open_permission);
+            }
+
+
+        }, Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+
+    public static void handleMediaSelect4Fragment(Fragment fragment, int mediaType, int max) {
+
+        PermissionUtils.permissionAny(fragment.getActivity(), granted -> {
+
+            Set<MimeType> mimeTypes;
+            if (mediaType == 0) {
+                mimeTypes = MimeType.ofAll();
+            } else {
+                mimeTypes = MimeType.ofImage();
+            }
+            mimeTypes.remove(MimeType.GIF);
+
+            if (granted) {
+                Matisse.from(fragment)
                         .choose(mimeTypes)
                         .countable(true)
                         .maxSelectable(max)

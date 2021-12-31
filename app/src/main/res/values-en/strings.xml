@@ -781,6 +781,7 @@ Gentleman must let go</string>
     <string name="bill_status_5">Refunding</string>
     <string name="bill_status_6">Refund successfully</string>
     <string name="refund_image_max_6">upper limit at 6</string>
+    <string name="refund_image_max_2">upper limit at 2</string>
 
     <string name="all_format">All(%1$d)</string>
     <string name="has_image_format">Image(%1$d)</string>

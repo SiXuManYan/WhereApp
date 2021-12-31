@@ -123,7 +123,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     override fun bindCategory(response: ArrayList<MallCategory>, titles: ArrayList<String>) {
 
-        if (firstCategory.isEmpty()) {
+        if (response.isEmpty()) {
             return
         }
         firstCategory.clear()

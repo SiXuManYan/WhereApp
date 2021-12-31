@@ -57,7 +57,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         number_view.apply {
             alwaysEnableCut = true
             MIN_GOOD_NUM = 1
-            MAX_GOOD_NUM = 1
+            MAX_GOOD_NUM = data.stock
             cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
             add_iv.setImageResource(R.mipmap.ic_add_blue_transparent)
 

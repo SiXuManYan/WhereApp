@@ -134,7 +134,7 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
 
 
             apply.apply {
-                if (first_name.isBlank() || middle_name.isBlank() || last_name.isBlank() || contact_number.isBlank()
+                if (first_name.isBlank()  || last_name.isBlank() || contact_number.isBlank()
                     || email.isBlank() || mer_name.isBlank() || mer_address.isBlank() || mer_tel.isBlank()
                 ) {
                     ToastUtils.showShort(R.string.please_enter)
@@ -186,6 +186,7 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
                 val response = baseEvent.data as MerchantSettledData
                 isReCommit = true
                 response.apply {
+                    reCommitMerchantId = id
                     first_name_et.setText(first_name)
                     middle_name_et.setText(middle_name)
                     last_name_et.setText(last_name)

@@ -33,7 +33,6 @@ import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.account.bind.BindPhoneActivity;
 import com.jcs.where.features.account.password.PasswordResetActivity;
 import com.jcs.where.features.account.register.RegisterActivity;
-import com.jcs.where.features.main.MainActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -294,6 +293,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         int code = baseEvent.code;
         if (code == EventCode.EVENT_PASSWORD_RESET_SUCCESS) {
             password_aet.setText("");
+        }
+        if (code == EventCode.EVENT_LOGIN_SUCCESS) {
+            finish();
         }
     }
 

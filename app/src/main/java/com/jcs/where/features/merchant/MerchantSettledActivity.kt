@@ -110,7 +110,7 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
             }
         }
     }
-
+    // 审核状态（1：待审核，2：审核通过，3：审核未通过）
     override fun bindData(response: MerchantSettledData) {
         when (response.is_verify) {
             2 -> {

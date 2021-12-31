@@ -138,7 +138,6 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
     public void bindSuccess() {
         ToastUtils.showShort(R.string.login_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
-//        startActivityClearTop(MainActivity.class, null);
         finish();
     }
 }

@@ -33,8 +33,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/register_login"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_20"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_28"
+              />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -218,14 +218,18 @@
                 tools:visibility="visible" />
 
 
+            <!--
+
+            -->
             <TextView
                 android:id="@+id/login_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_54"
                 android:layout_marginTop="@dimen/dp_68"
-                android:background="@drawable/shape_white_radius_27_70p"
                 android:gravity="center"
+                android:background="@drawable/shape_white_radius_27_100p"
                 android:text="@string/login_in"
+                android:alpha="0.7"
                 android:textColor="@color/blue_377BFF"
                 android:textSize="@dimen/sp_17"
                 android:textStyle="bold" />

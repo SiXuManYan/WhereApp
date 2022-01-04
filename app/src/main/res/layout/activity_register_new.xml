@@ -32,14 +32,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/set_password"
                 android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_20"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_19"
+                />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_56"
-                android:layout_marginTop="@dimen/dp_65">
+                android:layout_marginTop="@dimen/dp_64">
 
                 <ImageView
                     android:id="@+id/tag_password_iv"
@@ -145,6 +145,7 @@
                 android:background="@drawable/shape_blue_radius_22"
                 android:gravity="center"
                 android:text="@string/login_in"
+                android:alpha="0.7"
                 android:textColor="@color/white_FEFEFE"
                 android:textSize="@dimen/sp_17"
                 android:textStyle="bold" />

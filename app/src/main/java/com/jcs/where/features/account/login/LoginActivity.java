@@ -61,6 +61,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             get_verify_tv,
             error_hint_tv,
             forgot_password_tv,
+            login_tv,
             title_tv;
 
     private CheckedTextView login_rule_tv;
@@ -125,6 +126,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         rule_check_cb = findViewById(R.id.rule_check_cb);
         clear_phone_iv = findViewById(R.id.clear_phone_iv);
         clear_verify_iv = findViewById(R.id.clear_verify_iv);
+        login_tv = findViewById(R.id.login_tv);
 
     }
 
@@ -181,10 +183,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         get_verify_tv.setOnClickListener(this::onVerifyGetClick);
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         forgot_password_tv.setOnClickListener(this::onForgotPasswordClick);
-        findViewById(R.id.login_tv).setOnClickListener(this::onLoginClick);
+        login_tv.setOnClickListener(this::onLoginClick);
         findViewById(R.id.facebook_login_iv).setOnClickListener(this::onFacebookLoginClick);
         findViewById(R.id.google_login_iv).setOnClickListener(this::onGoogleLoginClick);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+
+        clear_phone_iv.setOnClickListener(v -> phone_aet.setText(""));
+        clear_verify_iv.setOnClickListener(v -> verify_code_aet.setText(""));
+
         phone_aet.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -199,17 +205,26 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             @Override
             public void afterTextChanged(Editable s) {
                 String trim = s.toString().trim();
-                if (!TextUtils.isEmpty(trim)) {
-                    clear_phone_iv.setVisibility(View.VISIBLE);
-                } else {
+                if (TextUtils.isEmpty(trim)) {
                     clear_phone_iv.setVisibility(View.GONE);
+                    login_tv.setAlpha(0.7f);
+                } else {
+                    clear_phone_iv.setVisibility(View.VISIBLE);
+                    String password = password_aet.getText().toString().trim();
+                    String verifyCode = verify_code_aet.getText().toString().trim();
+                    if (mIsVerifyMode && !TextUtils.isEmpty(verifyCode)) {
+                        login_tv.setAlpha(0.9f);
+                    }
+                    if (!mIsVerifyMode && !TextUtils.isEmpty(password)) {
+                        login_tv.setAlpha(0.9f);
+                    }
+
                 }
             }
         });
-        clear_phone_iv.setOnClickListener(v -> phone_aet.setText(""));
-        clear_verify_iv.setOnClickListener(v -> verify_code_aet.setText(""));
 
-        verify_code_aet.addTextChangedListener(new TextWatcher() {
+
+        password_aet.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -223,15 +238,47 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             @Override
             public void afterTextChanged(Editable s) {
                 String trim = s.toString().trim();
-                if (!TextUtils.isEmpty(trim)) {
-                    clear_verify_iv.setVisibility(View.VISIBLE);
+                if (TextUtils.isEmpty(trim)) {
+                    if (!mIsVerifyMode) {
+                        login_tv.setAlpha(0.7f);
+                    }
                 } else {
+                    String phone = phone_aet.getText().toString().trim();
+                    if (!mIsVerifyMode && !TextUtils.isEmpty(phone)) {
+                        login_tv.setAlpha(0.9f);
+                    }
+                }
+
+            }
+
+        });
+
+        verify_code_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+                    if (mIsVerifyMode) {
+                        login_tv.setAlpha(0.7f);
+                    }
                     clear_verify_iv.setVisibility(View.GONE);
+                } else {
+                    clear_verify_iv.setVisibility(View.VISIBLE);
+                    String phone = phone_aet.getText().toString().trim();
+                    if (mIsVerifyMode && !TextUtils.isEmpty(phone)) {
+                        login_tv.setAlpha(0.9f);
+                    }
                 }
             }
         });
-
-
 
 
     }

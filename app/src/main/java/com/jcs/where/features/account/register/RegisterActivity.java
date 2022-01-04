@@ -1,18 +1,20 @@
 package com.jcs.where.features.account.register;
 
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.main.MainActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -47,6 +49,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
      * 确认密码是否为密文
      */
     private boolean mIsCipherTextConfirm = true;
+    private TextView register_tv;
 
     @Override
     protected boolean isStatusDark() {
@@ -73,31 +76,90 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         mAccount = getIntent().getStringExtra(Constant.PARAM_ACCOUNT);
         mVerifyCode = getIntent().getStringExtra(Constant.PARAM_VERIFY_CODE);
         mCountryCode = getIntent().getStringExtra(Constant.PARAM_COUNTRY_CODE);
+        register_tv = findViewById(R.id.register_tv);
+
+
     }
 
     @Override
     protected void bindListener() {
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         password_confirm_rule_iv.setOnClickListener(this::onConfirmPasswordRuleClick);
-        findViewById(R.id.register_tv).setOnClickListener(this::onRegisterClick);
+
+        register_tv.setOnClickListener(this::onRegisterClick);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+
+        password_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+                    register_tv.setAlpha(0.7f);
+                } else {
+                    String confirm = password_confirm_aet.getText().toString().trim();
+                    if (!TextUtils.isEmpty(confirm)) {
+                        register_tv.setAlpha(1.0f);
+                    }
+
+
+                }
+            }
+        });
+
+        password_confirm_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+                    register_tv.setAlpha(0.7f);
+                } else {
+                    String password = password_aet.getText().toString().trim();
+                    if (!TextUtils.isEmpty(password)) {
+                        register_tv.setAlpha(1.0f);
+                    }
+
+
+                }
+            }
+        });
+
     }
 
 
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
-            FeaturesUtil.editOpen(password_aet, password_rule_iv,R.mipmap.ic_login_eye_open_gray);
+            FeaturesUtil.editOpen(password_aet, password_rule_iv, R.mipmap.ic_login_eye_open_gray);
         } else {
-            FeaturesUtil.editDismiss(password_aet, password_rule_iv,R.mipmap.ic_login_eye_close_gray);
+            FeaturesUtil.editDismiss(password_aet, password_rule_iv, R.mipmap.ic_login_eye_close_gray);
         }
         mIsCipherText = !mIsCipherText;
     }
 
     private void onConfirmPasswordRuleClick(View view) {
         if (mIsCipherTextConfirm) {
-            FeaturesUtil.editOpen(password_confirm_aet, password_confirm_rule_iv);
+            FeaturesUtil.editOpen(password_confirm_aet, password_confirm_rule_iv, R.mipmap.ic_login_eye_open_gray);
         } else {
-            FeaturesUtil.editDismiss(password_confirm_aet, password_confirm_rule_iv);
+            FeaturesUtil.editDismiss(password_confirm_aet, password_confirm_rule_iv, R.mipmap.ic_login_eye_close_gray);
         }
         mIsCipherTextConfirm = !mIsCipherTextConfirm;
     }

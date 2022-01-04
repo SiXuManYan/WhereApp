@@ -280,8 +280,8 @@
     <string name="china_86">China +86</string>
     <string name="wrong_phone_hint">Malformed phone number</string>
     <string name="country_code_format">+%1$s</string>
-    <string name="get_again">Get again</string>
-    <string name="count_down_format">%1$d s</string>
+    <string name="get_again">Resend</string>
+    <string name="count_down_format">Resend(%1$d)s</string>
     <string name="verify_code_send_success">Code send success</string>
     <string name="set_password">Password set</string>
     <string name="register_success">Register success</string>

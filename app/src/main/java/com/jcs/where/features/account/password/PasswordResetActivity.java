@@ -1,5 +1,7 @@
 package com.jcs.where.features.account.password;
 
+import static com.jcs.where.utils.Constant.PARAM_ACCOUNT;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -21,8 +23,6 @@ import com.jcs.where.utils.FeaturesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import static com.jcs.where.utils.Constant.PARAM_ACCOUNT;
-
 /**
  * Created by Wangsw  2021/1/30 10:33.
  * 忘记密码（密码重置）
@@ -37,6 +37,7 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
 
     private TextView
             get_verify_tv,
+            reset_tv,
             country_tv;
 
     private ImageView password_rule_iv;
@@ -71,6 +72,7 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
         password_rule_iv = findViewById(R.id.password_rule_iv);
         clear_verify_iv = findViewById(R.id.clear_verify_iv);
         country_tv = findViewById(R.id.country_tv);
+        reset_tv = findViewById(R.id.reset_tv);
     }
 
     @Override
@@ -95,9 +97,40 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         country_tv.setOnClickListener(this::onCountryPrefixClick);
         get_verify_tv.setOnClickListener(this::onVerifyGetClick);
-        findViewById(R.id.reset_tv).setOnClickListener(this::onResetClick);
+        reset_tv.setOnClickListener(this::onResetClick);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
+
+        phone_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+                    reset_tv.setAlpha(0.7f);
+                } else {
+                    String verify = verify_code_aet.getText().toString().trim();
+                    String password = password_aet.getText().toString().trim();
+
+                    if (TextUtils.isEmpty(verify) || TextUtils.isEmpty(password)) {
+                        reset_tv.setAlpha(0.7f);
+                    } else {
+                        reset_tv.setAlpha(0.9f);
+                    }
+
+
+                }
+            }
+        });
 
         verify_code_aet.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,14 +146,62 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
             @Override
             public void afterTextChanged(Editable s) {
                 String trim = s.toString().trim();
-                if (!TextUtils.isEmpty(trim)) {
-                    clear_verify_iv.setVisibility(View.VISIBLE);
-                } else {
+                if (TextUtils.isEmpty(trim)) {
                     clear_verify_iv.setVisibility(View.GONE);
+                    reset_tv.setAlpha(0.7f);
+                } else {
+                    clear_verify_iv.setVisibility(View.VISIBLE);
+
+
+                    String phone = phone_aet.getText().toString().trim();
+                    String password = password_aet.getText().toString().trim();
+
+                    if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
+                        reset_tv.setAlpha(0.7f);
+                    } else {
+                        reset_tv.setAlpha(0.9f);
+                    }
+
                 }
             }
         });
         clear_verify_iv.setOnClickListener(v -> verify_code_aet.setText(""));
+
+
+
+        password_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+                    clear_verify_iv.setVisibility(View.GONE);
+                    reset_tv.setAlpha(0.7f);
+                } else {
+                    clear_verify_iv.setVisibility(View.VISIBLE);
+
+                    String phone = phone_aet.getText().toString().trim();
+                    String verify_code = verify_code_aet.getText().toString().trim();
+
+                    if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(verify_code)) {
+                        reset_tv.setAlpha(0.7f);
+                    } else {
+                        reset_tv.setAlpha(0.9f);
+                    }
+
+                }
+            }
+        });
+
 
     }
 

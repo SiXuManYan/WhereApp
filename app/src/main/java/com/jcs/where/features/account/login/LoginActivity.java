@@ -6,7 +6,10 @@ import static com.jcs.where.utils.Constant.PARAM_VERIFY_CODE;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextPaint;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
@@ -87,6 +90,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      */
     private String mCountryPrefix = StringUtils.getStringArray(R.array.country_prefix)[0];
     private AppCompatCheckBox rule_check_cb;
+    private ImageView clear_phone_iv;
+    private ImageView clear_verify_iv;
 
     @Override
     protected int getLayoutId() {
@@ -118,6 +123,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         password_rule_iv = findViewById(R.id.password_rule_iv);
         title_tv = findViewById(R.id.title_tv);
         rule_check_cb = findViewById(R.id.rule_check_cb);
+        clear_phone_iv = findViewById(R.id.clear_phone_iv);
+        clear_verify_iv = findViewById(R.id.clear_verify_iv);
 
     }
 
@@ -178,6 +185,54 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         findViewById(R.id.facebook_login_iv).setOnClickListener(this::onFacebookLoginClick);
         findViewById(R.id.google_login_iv).setOnClickListener(this::onGoogleLoginClick);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+        phone_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (!TextUtils.isEmpty(trim)) {
+                    clear_phone_iv.setVisibility(View.VISIBLE);
+                } else {
+                    clear_phone_iv.setVisibility(View.GONE);
+                }
+            }
+        });
+        clear_phone_iv.setOnClickListener(v -> phone_aet.setText(""));
+        clear_verify_iv.setOnClickListener(v -> verify_code_aet.setText(""));
+
+        verify_code_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (!TextUtils.isEmpty(trim)) {
+                    clear_verify_iv.setVisibility(View.VISIBLE);
+                } else {
+                    clear_verify_iv.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+
 
     }
 

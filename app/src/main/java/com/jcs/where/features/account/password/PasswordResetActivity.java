@@ -1,6 +1,8 @@
 package com.jcs.where.features.account.password;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
             country_tv;
 
     private ImageView password_rule_iv;
+    private ImageView clear_verify_iv;
 
 
     /**
@@ -66,6 +69,7 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
         password_aet = findViewById(R.id.password_aet);
         get_verify_tv = findViewById(R.id.get_verify_tv);
         password_rule_iv = findViewById(R.id.password_rule_iv);
+        clear_verify_iv = findViewById(R.id.clear_verify_iv);
         country_tv = findViewById(R.id.country_tv);
     }
 
@@ -93,6 +97,31 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
         get_verify_tv.setOnClickListener(this::onVerifyGetClick);
         findViewById(R.id.reset_tv).setOnClickListener(this::onResetClick);
         findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+
+
+        verify_code_aet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String trim = s.toString().trim();
+                if (!TextUtils.isEmpty(trim)) {
+                    clear_verify_iv.setVisibility(View.VISIBLE);
+                } else {
+                    clear_verify_iv.setVisibility(View.GONE);
+                }
+            }
+        });
+        clear_verify_iv.setOnClickListener(v -> verify_code_aet.setText(""));
+
     }
 
 

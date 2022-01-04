@@ -74,6 +74,7 @@
                     android:gravity="center_vertical"
                     android:hint="@string/login_phone_input"
                     android:imeOptions="actionDone"
+                    android:layout_toStartOf="@+id/clear_phone_iv"
                     android:inputType="number"
                     android:lines="1"
                     android:maxLength="11"
@@ -82,6 +83,17 @@
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="@dimen/sp_16" />
+
+
+                <ImageView
+                    android:id="@+id/clear_phone_iv"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:src="@mipmap/ic_login_clear"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
             </RelativeLayout>
 
@@ -117,6 +129,18 @@
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
                         android:textSize="@dimen/sp_16" />
+
+
+                    <ImageView
+                        android:id="@+id/clear_verify_iv"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:src="@mipmap/ic_login_clear"
+                        android:layout_toStartOf="@+id/get_verify_tv"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
 
                     <TextView

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
@@ -21,6 +22,7 @@ import com.jcs.where.home.adapter.OrderListAdapter
 import com.jcs.where.home.decoration.MarginTopDecoration
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
+import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_order_child.*
 
 /**
@@ -71,9 +73,8 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         }
         recycler_view.apply {
             adapter = mAdapter
-            addItemDecoration(object : MarginTopDecoration() {
-                override fun getMarginTop(): Int = 10
-            })
+
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(32f), SizeUtils.dp2px(15f),  SizeUtils.dp2px(15f)))
 
         }
 

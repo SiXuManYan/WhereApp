@@ -76,7 +76,7 @@
             android:id="@+id/image_iv"
             android:layout_width="@dimen/dp_56"
             android:layout_height="@dimen/dp_56"
-            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_8"
             android:scaleType="centerInside"
             tools:src="@tools:sample/avatars" />
 
@@ -145,7 +145,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/orange_FD6431"
+            android:textColor="@color/orange_FF5837"
             android:textSize="@dimen/sp_14"
             android:visibility="gone"
             tools:text="@string/to_pay"

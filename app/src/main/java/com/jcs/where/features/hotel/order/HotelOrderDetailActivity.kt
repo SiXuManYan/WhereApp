@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus
  * Created by Wangsw  2021/8/3 14:45.
  * 酒店订单详情
  */
-class HotelHotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), HotelOrderDetailView {
+class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), HotelOrderDetailView {
 
     var order_id = 0
     var lat = 0f
@@ -213,7 +213,7 @@ class HotelHotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>
                         visibility = View.VISIBLE
                         setOnClickListener {
 
-                            AlertDialog.Builder(this@HotelHotelOrderDetailActivity)
+                            AlertDialog.Builder(this@HotelOrderDetailActivity)
                                 .setTitle(R.string.prompt)
                                 .setMessage(R.string.cancel_order_confirm)
                                 .setPositiveButton(R.string.ensure) { dialogInterface, i ->
@@ -234,7 +234,7 @@ class HotelHotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>
                             text = getString(R.string.to_refund)
                             visibility = View.VISIBLE
                             setOnClickListener {
-                                AlertDialog.Builder(this@HotelHotelOrderDetailActivity)
+                                AlertDialog.Builder(this@HotelOrderDetailActivity)
                                     .setTitle(R.string.prompt)
                                     .setMessage(R.string.refund_dialog_hint)
                                     .setPositiveButton(R.string.ensure) { dialogInterface, i ->
@@ -255,7 +255,7 @@ class HotelHotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>
                             text = getString(R.string.to_review)
                             visibility = View.VISIBLE
                             setOnClickListener {
-                                CommentPostActivity.navigation(this@HotelHotelOrderDetailActivity,0,hotelData.id,order_id)
+                                CommentPostActivity.navigation(this@HotelOrderDetailActivity,0,hotelData.id,order_id)
                             }
                         } else {
                             visibility = View.GONE

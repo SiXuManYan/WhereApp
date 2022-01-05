@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class SettledTypeModel extends BaseModel {
 
-    public void getCategories(int level, String categoryId, BaseObserver<List<CategoryResponse>> observer) {
-        dealResponse(mRetrofit.getCategories(level, categoryId), observer);
-    }
+//    public void getCategories(int level, String categoryId, BaseObserver<List<CategoryResponse>> observer) {
+//        dealResponse(mRetrofit.getCategories(level, categoryId), observer);
+//    }
 
     public void getMerchantType(String level, int pid, BaseObserver<List<MerchantTypeResponse>> observer) {
         dealResponse(mRetrofit.getMerchantSettledType(level, pid), observer);

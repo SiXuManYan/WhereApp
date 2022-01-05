@@ -516,7 +516,7 @@
         <activity android:name=".features.bills.hydropower.detail.BillsDetailActivity" />
         <activity android:name=".features.gourmet.order.detail2.DelicacyOrderDetailActivity" />
         <activity android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2" />
-        <activity android:name=".features.hotel.order.HotelHotelOrderDetailActivity" />
+        <activity android:name=".features.hotel.order.HotelOrderDetailActivity" />
         <activity android:name=".features.order.parent.OrderActivity" />
         <activity android:name=".features.coupon.CardCouponActivity" />
         <activity android:name=".features.hotel.comment.HotelCommentActivity2" />

@@ -511,10 +511,10 @@
     <string name="total_cart_3">Total&#160;</string>
     <string name="settlement">Settlement</string>
     <string name="edit">edit</string>
-    <string name="prepaid_reload">Prepaid\nReload</string>
-    <string name="water_utilities">Water\nUtilities</string>
-    <string name="electric_utilities">Electric\nUtilities</string>
-    <string name="internet_billing">Internet\nBilling</string>
+    <string name="prepaid_reload">Prepaid Reload</string>
+    <string name="water_utilities">Water Utilities</string>
+    <string name="electric_utilities">Electric Utilities</string>
+    <string name="internet_billing">Internet Billing</string>
     <string name="Pay_Bills">Pay Bills</string>
     <string name="finish_edit_category">Finished</string>
     <string name="selected_category">Selected Category</string>

@@ -12,10 +12,11 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/hydropower_banner_iv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_177"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_default_banner" />
+            android:src="@mipmap/ic_hydropower_en" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

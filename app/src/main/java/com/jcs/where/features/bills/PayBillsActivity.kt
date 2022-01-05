@@ -6,6 +6,7 @@ import com.jcs.where.base.BaseActivity
 import com.jcs.where.features.bills.hydropower.edit.PaymentEditActivity
 import com.jcs.where.features.bills.hydropower.record.PaymentRecordActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.LocalLanguageUtil
 import kotlinx.android.synthetic.main.activity_pay_bills.*
 
 /**
@@ -20,6 +21,12 @@ class PayBillsActivity : BaseActivity() {
     override fun isStatusDark() = false
 
     override fun initView() {
+        val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this)
+        if (languageLocale.language == "zh") {
+            hydropower_banner_iv.setImageResource(R.mipmap.ic_hydropower_chn)
+        }else{
+            hydropower_banner_iv.setImageResource(R.mipmap.ic_hydropower_en)
+        }
 
     }
 

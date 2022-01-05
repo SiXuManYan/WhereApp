@@ -517,10 +517,10 @@
     <string name="total_cart_3">合计&#160;</string>
     <string name="settlement">结算</string>
     <string name="edit">编辑</string>
-    <string name="prepaid_reload">Prepaid\nReload</string>
-    <string name="water_utilities">Water\nUtilities</string>
-    <string name="electric_utilities">Electric\nUtilities</string>
-    <string name="internet_billing">Internet\nBilling</string>
+    <string name="prepaid_reload">预付费充值</string>
+    <string name="water_utilities">自来水公司</string>
+    <string name="electric_utilities">电力公司</string>
+    <string name="internet_billing">互联网账单</string>
     <string name="Pay_Bills">帐单付费</string>
     <string name="finish_edit_category">完成</string>
     <string name="selected_category">已选择分类</string>

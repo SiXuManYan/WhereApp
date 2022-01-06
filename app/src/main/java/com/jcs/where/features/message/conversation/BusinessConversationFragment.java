@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.base.mvp.BaseMvpFragment;
+import com.jcs.where.view.empty.EmptyView;
 
 import java.util.List;
 
@@ -35,6 +36,8 @@ public class BusinessConversationFragment extends BaseMvpFragment<BusinessConver
     private SwipeRefreshLayout swipe_layout;
     private RecyclerView recycler;
     private BusinessConversationAdapter mAdapter;
+    private EmptyView emptyView;
+
 
     @Override
     protected int getLayoutId() {
@@ -43,11 +46,14 @@ public class BusinessConversationFragment extends BaseMvpFragment<BusinessConver
 
     @Override
     protected void initView(View view) {
+        emptyView = new EmptyView(requireContext());
+        emptyView.showEmptyDefault();
         swipe_layout = view.findViewById(R.id.swipe_layout);
         swipe_layout.setOnRefreshListener(this);
         recycler = view.findViewById(R.id.recycler);
         mAdapter = new BusinessConversationAdapter();
         recycler.setAdapter(mAdapter);
+        mAdapter.setEmptyView(emptyView);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);

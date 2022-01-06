@@ -18,6 +18,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment;
 import com.jcs.where.currency.WebViewActivity;
 import com.jcs.where.features.message.notice.detail.SystemMessageDetailActivity;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.list.DividerDecoration;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
     private RecyclerView recycler;
     private SystemMessageAdapter mAdapter;
     public ArrayList<String> id = new ArrayList<>();
+    private EmptyView emptyView;
 
     @Override
     protected int getLayoutId() {
@@ -48,13 +50,17 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
         swipe_layout = view.findViewById(R.id.swipe_layout);
         recycler = view.findViewById(R.id.recycler);
         recycler.addItemDecoration(new DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), SizeUtils.dp2px(1f),SizeUtils.dp2px(15f),0));
+        emptyView = new EmptyView(requireContext());
+        emptyView.showEmptyDefault();
     }
 
     @Override
     protected void initData() {
+
         presenter = new SystemNoticePresenter(this);
         mAdapter = new SystemMessageAdapter();
         recycler.setAdapter(mAdapter);
+        mAdapter.setEmptyView(emptyView);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
         mAdapter.getLoadMoreModule().setAutoLoadMore(false);
         mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);

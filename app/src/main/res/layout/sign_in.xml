@@ -360,6 +360,8 @@
                 android:background="@drawable/stock_yellow_radius_22"
                 android:gravity="center"
                 android:text="@string/sign_in_rewards"
+                android:textStyle="bold"
+                tools:textColor="@color/black_33333360"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_17" />
 

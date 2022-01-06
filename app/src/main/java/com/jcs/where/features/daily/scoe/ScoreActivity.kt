@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.IntegralDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.daily.sign.SignInRuleActivity
 import com.jcs.where.features.integral.child.detail.IntegralChildAdapter
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -41,12 +42,7 @@ class ScoreActivity : BaseMvpActivity<ScorePresenter>(), ScoreView {
 
     override fun bindListener() {
         rule_tv.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle(R.string.sign_in_rule)
-                .setMessage(R.string.sign_in_rule_message)
-                .setCancelable(false)
-                .setPositiveButton(R.string.ensure) { dialogInterface, i -> dialogInterface.dismiss() }
-                .create().show()
+            startActivity(SignInRuleActivity::class.java)
         }
     }
 

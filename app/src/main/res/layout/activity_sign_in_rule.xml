@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:middleTitle="@string/integral_rule" />
+
+
+    <TextView
+       android:padding="@dimen/dp_15"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_13"
+        android:text="@string/sign_in_rule_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

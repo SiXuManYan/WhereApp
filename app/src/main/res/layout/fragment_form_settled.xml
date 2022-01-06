@@ -371,7 +371,7 @@
                 android:text="@string/yes"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14"
-                app:buttonTint="@color/blue_377BFF" />
+                />
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -385,7 +385,7 @@
                 android:text="@string/no"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14"
-                app:buttonTint="@color/blue_377BFF" />
+             />
 
 
         </RadioGroup>

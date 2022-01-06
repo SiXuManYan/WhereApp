@@ -2,8 +2,8 @@ package com.jcs.where.features.daily.sign
 
 import android.widget.CheckedTextView
 import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatCheckBox
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.SignListResponse
@@ -41,12 +41,7 @@ class SignInActivity : BaseMvpActivity<SignInPresenter>(), SignInView {
 
     override fun bindListener() {
         rule_tv.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle(R.string.sign_in_rule)
-                .setMessage(R.string.sign_in_rule_message)
-                .setCancelable(false)
-                .setPositiveButton(R.string.ensure) { dialogInterface, i -> dialogInterface.dismiss() }
-                .create().show()
+            startActivity(SignInRuleActivity::class.java)
         }
         sign_in_now_tv.setOnClickListener {
             presenter.signIn()
@@ -61,6 +56,7 @@ class SignInActivity : BaseMvpActivity<SignInPresenter>(), SignInView {
             sign_in_now_tv.apply {
                 setText(R.string.already_sign_in)
                 isClickable = false
+                setTextColor(ColorUtils.getColor(R.color.black_33333360))
             }
             sign_in_tv.apply {
                 setText(R.string.finished)

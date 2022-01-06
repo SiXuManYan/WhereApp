@@ -551,6 +551,7 @@
         <activity android:name=".features.mall.refund.detail.MallRefundDetailActivity" />
         <activity android:name=".features.mall.comment.MallCommentActivity" />
         <activity android:name=".features.comment.CommentSuccessActivity" />
+        <activity android:name=".features.daily.sign.SignInRuleActivity" />
 
 
     </application>

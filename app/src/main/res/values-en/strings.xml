@@ -200,7 +200,7 @@
     <string name="integral_continuous_time">1day</string>
     <string name="my_scores">My scores</string>
     <string name="sign_in_now">Checked in now</string>
-    <string name="already_sign_in">Already sign in</string>
+    <string name="already_sign_in">Signed in</string>
     <string name="points_task">Points task</string>
     <string name="points_details">Points details</string>
     <string name="hint">Prompt</string>

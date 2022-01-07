@@ -212,7 +212,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
                 sold = if (sales_tv.isChecked) {
                     SortEnum.desc
                 } else {
-                   null
+                    null
                 }
             }
             presenter.getMallList(goodRequest)
@@ -226,6 +226,8 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
         search_ll.setOnClickListener {
             startActivity(SearchAllActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_TYPE, 6)
+                // 通过2三级分类跳转搜索，要同时穿2级分类
+                putString(Constant.PARAM_CATEGORY_ID, categoryId.toString())
             })
         }
     }

@@ -35,6 +35,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 4.酒店地图
      * 5.商城
      * 6.新版商城
+     * 7.美食地图
      */
     private var type = 0
 
@@ -122,7 +123,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
                 startActivity(ConvenienceServiceSearchActivity::class.java, bundle)
                 finish()
             }
-            3, 4 -> {
+            3, 4 ,7-> {
                 setResult(Activity.RESULT_OK, Intent().putExtras(bundle))
                 finish()
             }
@@ -130,6 +131,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
                 startActivity(StoreSearchActivity::class.java, bundle)
             }
             6->{
+                bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
                 startActivity(MallSearchResultActivity::class.java, bundle)
             }
             else -> {

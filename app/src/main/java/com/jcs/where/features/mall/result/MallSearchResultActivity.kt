@@ -25,6 +25,9 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     private var searchInput: String? = null
 
+    /** 商城二级页跳转搜索传递的分类di */
+    private var categoryId: String? = null
+
     /** 商品推荐 */
     private lateinit var mAdapter: MallRecommendAdapter
 
@@ -36,6 +39,7 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     override fun initView() {
         searchInput = intent.getStringExtra(Constant.PARAM_NAME)
+        categoryId = intent.getStringExtra(Constant.PARAM_CATEGORY_ID)
         search_tv.text = searchInput
         initContent()
     }
@@ -49,7 +53,7 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
             setEmptyView(emptyView)
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getMallList(page, searchInput)
+                presenter.getMallList(page, searchInput, categoryId)
             }
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -63,12 +67,15 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     override fun initData() {
         presenter = MallSearchPresenter(this)
-        presenter.getMallList(page, searchInput)
+        presenter.getMallList(page, searchInput, categoryId)
     }
 
     override fun bindListener() {
         cart_iv.setOnClickListener {
             startActivityAfterLogin(MallCartActivity::class.java)
+        }
+        search_rl.setOnClickListener {
+            finish()
         }
     }
 
@@ -106,12 +113,20 @@ interface MallSearchView : BaseMvpView {
 
 class MallSearchPresenter(private var view: MallSearchView) : BaseMvpPresenter(view) {
 
-    fun getMallList(page: Int, title: String? = null) {
+    fun getMallList(page: Int, title: String? = null, categoryId: String?) {
+
+
+        val secondCategoryId = if (categoryId.isNullOrBlank()) {
+            null
+        } else {
+            categoryId.toInt()
+        }
+
         requestApi(mRetrofit.getMallGoodList(
             page,
             null,
             title,
-            null,
+            secondCategoryId,
             null,
             null,
             null,

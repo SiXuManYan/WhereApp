@@ -68,6 +68,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         password_confirm_aet = findViewById(R.id.password_confirm_aet);
         password_rule_iv = findViewById(R.id.password_rule_iv);
         password_confirm_rule_iv = findViewById(R.id.password_confirm_rule_iv);
+        register_tv = findViewById(R.id.register_tv);
     }
 
     @Override
@@ -76,9 +77,6 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         mAccount = getIntent().getStringExtra(Constant.PARAM_ACCOUNT);
         mVerifyCode = getIntent().getStringExtra(Constant.PARAM_VERIFY_CODE);
         mCountryCode = getIntent().getStringExtra(Constant.PARAM_COUNTRY_CODE);
-        register_tv = findViewById(R.id.register_tv);
-
-
     }
 
     @Override

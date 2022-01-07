@@ -115,12 +115,11 @@ public class LoginPresenter extends BaseMvpPresenter {
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                super.onError(errorResponse);
-                int errCode = errorResponse.getErrCode();
-
                 // 验证码登录，返回404时是新用户，需要走注册接口
-                if (loginType == Constant.LOGIN_TYPE_VERIFY_CODE && errCode == 404) {
+                if (loginType == Constant.LOGIN_TYPE_VERIFY_CODE && errorResponse.errCode == 404) {
                     mView.guideRegister(account, verifyCode);
+                }else {
+                    super.onError(errorResponse);
                 }
 
             }

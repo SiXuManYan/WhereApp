@@ -43,6 +43,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         addItemType(OrderListResponse.ORDER_TYPE_STORE_MALL_5, R.layout.item_order_list_store)
     }
 
+    /** mall 商城确认收货 */
+    var confirmReceipt: ConfirmReceipt? = null
+
 
     override fun convert(holder: BaseViewHolder, item: OrderListResponse) {
 
@@ -490,6 +493,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     })
                 }
             }
+            4 -> {
+                right_tv.text = context.getString(R.string.confirm_receipt)
+                right_tv.visibility = View.VISIBLE
+                confirmReceipt?.onConfirmReceiptClick(item.id)
+
+            }
             5 -> {
                 right_tv.visibility = View.GONE
                 val shopName = item.title
@@ -543,4 +552,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
     }
 
+}
+
+interface ConfirmReceipt {
+    fun onConfirmReceiptClick(orderId: Int)
 }

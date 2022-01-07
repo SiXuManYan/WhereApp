@@ -110,7 +110,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
 
 
         val shopName = data.shop_title
-        var shopImage = data.shop_images
+        val shopImage = data.shop_images
         business_name_tv.text = shopName
 
 
@@ -160,7 +160,26 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 right_tv.visibility = View.GONE
             }
             4 -> {
-                bottom_container_rl.visibility = View.GONE
+                bottom_container_rl.visibility = View.VISIBLE
+                left_tv.visibility = View.GONE
+                right_tv.visibility = View.VISIBLE
+                right_tv.text = getString(R.string.confirm_receipt)
+                right_tv.setOnClickListener {
+                    // 确认收货
+                    AlertDialog.Builder(this@MallOrderDetailActivity)
+                        .setTitle(R.string.prompt)
+                        .setMessage(R.string.confirm_receipt_hint)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                            presenter.confirmReceipt(orderId)
+                            dialogInterface.dismiss()
+                        }
+                        .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                        .create().show()
+
+                }
+
+
             }
             5 -> {
 
@@ -303,4 +322,9 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         finish()
     }
 
+
+    override fun confirmReceipt() {
+        presenter.getOrderDetail(orderId)
+        EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_REFRESH_ORDER_LIST))
+    }
 }

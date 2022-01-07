@@ -9,4 +9,7 @@ import com.jcs.where.api.response.order.OrderListResponse
  */
 interface OrderChildView :BaseMvpView{
     fun bindList(toMutableList: MutableList<OrderListResponse>, lastPage: Boolean)
+
+    /** 确认收货 */
+    fun confirmReceipt()
 }

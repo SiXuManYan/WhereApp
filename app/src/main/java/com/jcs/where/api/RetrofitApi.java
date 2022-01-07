@@ -2016,7 +2016,13 @@ public interface RetrofitApi {
      * 店铺配送费
      */
     @POST("estoreapi/v2/delivery")
-    Observable<JcsResponse<MallDeliveryResponse>> shopDelivery(@Body MallDeliveryRequest request );
+    Observable<JcsResponse<MallDeliveryResponse>> shopDelivery(@Body MallDeliveryRequest request);
+
+    /**
+     * 确认收货
+     */
+    @POST("estoreapi/v2/order/confirm/{order_id}")
+    Observable<JcsResponse<JsonElement>> confirmReceipt(@Path("order_id") int order_id);
 
 
 }

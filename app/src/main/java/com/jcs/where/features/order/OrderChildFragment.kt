@@ -2,6 +2,7 @@ package com.jcs.where.features.order
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -13,23 +14,29 @@ import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
 import com.jcs.where.features.hotel.order.HotelOrderDetailActivity
 import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
+import com.jcs.where.home.adapter.ConfirmReceipt
 import com.jcs.where.home.adapter.OrderListAdapter
+import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.SPKey
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_order_child.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/5/12 14:08.
  * 订单列表
  */
 class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildView, OnLoadMoreListener,
-    SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+    SwipeRefreshLayout.OnRefreshListener, OnItemClickListener, ConfirmReceipt {
 
     companion object {
         @JvmStatic
@@ -69,7 +76,10 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener(this@OrderChildFragment)
             setOnItemClickListener(this@OrderChildFragment)
+            confirmReceipt = this@OrderChildFragment
         }
+
+
         recycler_view.apply {
             adapter = mAdapter
 
@@ -120,6 +130,10 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         }
     }
 
+    override fun confirmReceipt() {
+        onRefresh()
+    }
+
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE
         if (isViewCreated) {
@@ -142,7 +156,8 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_ORDER_LIST,
             EventCode.EVENT_LOGIN_SUCCESS,
-            EventCode.EVENT_ORDER_COMMIT_SUCCESS-> {
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS,
+            -> {
                 onRefresh()
             }
             EventCode.EVENT_SIGN_OUT->{
@@ -190,6 +205,19 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             }
         }
 
+    }
+
+    override fun onConfirmReceiptClick(orderId: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.prompt)
+            .setMessage(R.string.confirm_receipt_hint)
+            .setCancelable(false)
+            .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                presenter.confirmReceipt(orderId)
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+            .create().show()
     }
 
 

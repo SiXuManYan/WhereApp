@@ -23,6 +23,9 @@ interface MallOrderDetailView : BaseMvpView {
      */
     fun orderCancelSuccess()
 
+    /** 确认收货成功 */
+    fun confirmReceipt()
+
 }
 
 class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpPresenter(view) {
@@ -149,6 +152,16 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
 
 
     }
+
+    fun confirmReceipt(orderId: Int) {
+        requestApi(mRetrofit.confirmReceipt(orderId),object :BaseMvpObserver<JsonElement>(view){
+            override fun onSuccess(response: JsonElement) {
+                view.confirmReceipt()
+            }
+
+        })
+    }
+
 
 
 }

@@ -29,8 +29,8 @@ interface MallOrderDetailView : BaseMvpView {
 }
 
 class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpPresenter(view) {
-    fun getOrderDetail(orderId: Int) {
 
+    fun getOrderDetail(orderId: Int) {
         requestApi(mRetrofit.mallOrderDetail(orderId), object : BaseMvpObserver<MallOrderDetail>(view) {
             override fun onSuccess(response: MallOrderDetail) {
                 view.bindData(response)

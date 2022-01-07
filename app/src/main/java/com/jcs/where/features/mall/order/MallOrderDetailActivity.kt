@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.CommentPostActivity
+import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.refund.apply.MallRefundActivity
 import com.jcs.where.features.mall.refund.detail.MallRefundDetailActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
@@ -53,16 +55,36 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
         }
 
-        mAdapter = MallOrderDetailAdapter()
+        mAdapter = MallOrderDetailAdapter().apply {
+            setOnItemClickListener { adapter, view, position ->
+                val itemData = mAdapter.data[position]
+                if (itemData.good_status == 0) {
+                    ToastUtils.showShort(R.string.product_removed)
+                }else {
+                    when (itemData.delete_status) {
+                        0 -> {
+                            MallDetailActivity.navigation(this@MallOrderDetailActivity,itemData.good_id)
+                        }
+                        1->{
+                            ToastUtils.showShort(R.string.product_delete)
+                        }
+
+                    }
+
+
+                }
+
+
+
+            }
+        }
         good_rv.apply {
             isNestedScrollingEnabled = true
             layoutManager = object : LinearLayoutManager(context, VERTICAL, false) {
                 override fun canScrollVertically() = false
             }
             adapter = mAdapter
-            addItemDecoration(
-                DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(10f), 0, 0)
-            )
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(10f), 0, 0))
         }
     }
 
@@ -117,7 +139,6 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         mAdapter.setNewInstance(data.goods)
 
         // 商品信息
-
         if (data.im_status == 1 && !TextUtils.isEmpty(data.mer_uuid)) {
             im_ll.visibility = View.VISIBLE
             im_ll.setOnClickListener { _ ->
@@ -130,6 +151,17 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             im_ll.visibility = View.GONE
         }
 
+        // 物流
+        val companyName = data.company_name
+
+        if (companyName.isNotBlank()) {
+            logistics_container_ll.visibility = View.VISIBLE
+            logistics_company_tv.text = getString(R.string.logistics_company_format,companyName)
+            logistics_number_tv.text = getString(R.string.logistics_number_format,data.logistics)
+
+        }else {
+            logistics_container_ll.visibility = View.GONE
+        }
 
         // 底部
         when (data.order_status) {
@@ -178,8 +210,6 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                         .create().show()
 
                 }
-
-
             }
             5 -> {
 
@@ -249,6 +279,9 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             }
         }
         bottom_v.visibility =  bottom_container_rl.visibility
+
+
+
     }
 
     private fun cancelOrder(orderId: Int) {

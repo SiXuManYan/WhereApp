@@ -61,6 +61,15 @@ class MallOrderDetail {
     var comment_status = 0
 
     var comments_id = 0
+
+    /** 物流公司 */
+    var company_name = ""
+
+    /** 物流单号 */
+    var logistics = ""
+
+
+
 }
 
 class MallOrderGood :Serializable {
@@ -73,6 +82,12 @@ class MallOrderGood :Serializable {
     var good_price = ""
     var good_specs: HashMap<String, String> = HashMap()
     var created_at = ""
+
+    /** 删除状态1已删除 0未删除 */
+    var delete_status = 0
+
+    /** 下架 0下架 1上架 */
+    var good_status = 0
 
 
 }

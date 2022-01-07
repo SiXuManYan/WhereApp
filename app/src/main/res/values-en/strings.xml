@@ -922,4 +922,11 @@ Gentleman must let go</string>
     <string name="address_city_empty">Please update the address and add the selected city</string>
     <string name="confirm_receipt">Confirm Receipt</string>
     <string name="confirm_receipt_hint">Please confirm that the goods have been received ?</string>
+    <string name="logistics_information">Logistics information</string>
+    <string name="logistics_company_format">Logistics company : %1$s</string>
+    <string name="logistics_number_format">Logistics number : %1$s</string>
+    <string name="copy">Copy</string>
+    <string name="product_removed">This product has been removed</string>
+    <string name="product_delete">Product does not exist</string>
+
 </resources>

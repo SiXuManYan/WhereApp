@@ -33,10 +33,7 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
         if (!eventBus.isRegistered(this)) {
             eventBus.register(this);
         }
-        View view = findViewById(R.id.back_iv);
-        if (view!=null) {
-            view.setOnClickListener(v -> finish());
-        }
+
     }
 
     @Override

@@ -68,6 +68,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             });
         }
+        View view = findViewById(R.id.back_iv);
+        if (view!=null) {
+            view.setOnClickListener(v -> finish());
+        }
         initView();
         bindListener();
         initData();

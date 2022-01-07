@@ -18,7 +18,7 @@ class PayBillsActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_pay_bills
 
-    override fun isStatusDark() = false
+    override fun isStatusDark() = true
 
     override fun initView() {
         val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this)

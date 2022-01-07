@@ -121,6 +121,9 @@ class SignInActivity : BaseMvpActivity<SignInPresenter>(), SignInView {
     }
 
 
-    override fun signInSuccess() = bindUserIntegral(true)
+    override fun signInSuccess(){
+        bindUserIntegral(true)
+        presenter.getSignInList()
+    }
 
 }

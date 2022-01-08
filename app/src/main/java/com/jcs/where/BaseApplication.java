@@ -188,6 +188,7 @@ public class BaseApplication extends Application {
 
             @Override
             public boolean onReceived(Message message, int left, boolean hasPackage, boolean offline) {
+                Log.e("融云","onReceived" );
                 return false;
             }
         });
@@ -198,6 +199,7 @@ public class BaseApplication extends Application {
             if (connectionStatus == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTING) {
                 setUserInfoProvider();
             }
+            Log.e("融云","connectionStatus == "+  connectionStatus);
         });
 
     }
@@ -213,13 +215,15 @@ public class BaseApplication extends Application {
 
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-
+                    Log.e("融云","setUserInfoProvider == onError");
                 }
 
                 @Override
                 protected void onSuccess(RongCloudUserResponse response) {
                     UserInfo userInfo = new UserInfo(userId, response.name, Uri.parse(response.avatar));
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                    Log.e("融云","setUserInfoProvider == onSuccess");
                 }
             }, userId);
 

@@ -349,10 +349,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
             // 切换至明文
-            FeaturesUtil.editOpen(password_aet, password_rule_iv);
+            FeaturesUtil.editOpen(password_aet, password_rule_iv,R.mipmap.ic_login_eye_open_white);
         } else {
             // 切换至密文
-            FeaturesUtil.editDismiss(password_aet, password_rule_iv);
+            FeaturesUtil.editDismiss(password_aet, password_rule_iv,R.mipmap.ic_login_eye_close_white);
         }
         mIsCipherText = !mIsCipherText;
     }

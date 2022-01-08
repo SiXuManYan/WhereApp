@@ -35,11 +35,12 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
         flatDir {
             dirs 'libs'
         }
-        maven {url  "https://dl.bintray.com/rongcloud/maven"}// 融云
+        maven {url "https://maven.rongcloud.cn/repository/maven-releases/"}// 融云
     }
 }
 

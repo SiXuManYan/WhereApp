@@ -257,6 +257,13 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                     this, Conversation.ConversationType.PRIVATE,
                     response.mer_uuid, response.mer_name, null
                 )
+//                 RongIM.getInstance().startConversation(
+//                    this, Conversation.ConversationType.PRIVATE,
+//                    "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5", response.mer_name, null
+//                )
+
+
+
             }
         }
 

@@ -18,8 +18,9 @@
 
     <ImageView
         android:id="@+id/arrowIv"
-        android:layout_width="@dimen/dp_8"
-        android:layout_height="@dimen/dp_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
         android:src="@mipmap/ic_arrow_right_gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -26,6 +26,7 @@ import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
@@ -142,12 +143,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         MerchantVerifyActivity.go(context, response.isVerify)
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (!hidden) {
-            presenter.getUnreadMessageCount()
-        }
-    }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {
         super.onEventReceived(baseEvent)
@@ -157,6 +152,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             EventCode.EVENT_SIGN_IN_CHANGE_STATUS,
             -> presenter.getUserInfo()
             EventCode.EVENT_SIGN_OUT -> {
+                presenter.alreadyConnectRongCloud = false
                 initDefaultUi()
             }
             else -> {
@@ -175,5 +171,20 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         message_view.setMessageImageResource(R.mipmap.ic_mine_message)
         message_view.setMessageCount(0)
     }
+
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            presenter.getUnreadMessageCount()
+            if (User.isLogon()) {
+                presenter?.connectRongCloud(User.getInstance().rongData.token)
+            }
+        }
+    }
+
+
+
+
 
 }

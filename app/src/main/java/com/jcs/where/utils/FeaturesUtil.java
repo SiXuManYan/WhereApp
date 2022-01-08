@@ -132,7 +132,7 @@ public class FeaturesUtil {
     public static void editOpen(EditText editText, ImageView imageView, @Nullable @DrawableRes Integer resId) {
 
         if (resId == null) {
-            imageView.setImageResource(R.mipmap.ic_login_eye_open);
+            imageView.setImageResource(R.mipmap.ic_login_eye_open_white);
         } else {
             imageView.setImageResource(resId);
         }
@@ -153,7 +153,7 @@ public class FeaturesUtil {
      */
     public static void editDismiss(EditText editText, ImageView imageView, @Nullable @DrawableRes Integer resId) {
         if (resId == null) {
-            imageView.setImageResource(R.mipmap.ic_login_eye_close);
+            imageView.setImageResource(R.mipmap.ic_login_eye_close_white);
         } else {
             imageView.setImageResource(resId);
         }
@@ -374,9 +374,6 @@ public class FeaturesUtil {
 
         }
     }
-
-
-
 
 
     /**
@@ -635,8 +632,6 @@ public class FeaturesUtil {
         //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
         return packageNames.contains(packageName);
     }
-
-
 
 
 }

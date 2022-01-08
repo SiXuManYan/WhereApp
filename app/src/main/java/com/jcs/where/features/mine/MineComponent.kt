@@ -1,5 +1,6 @@
 package com.jcs.where.features.mine
 
+import android.util.Log
 import com.blankj.utilcode.util.Utils
 import com.google.gson.JsonObject
 import com.jcs.where.BaseApplication
@@ -82,7 +83,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         })
     }
 
-    private var alreadyConnectRongCloud = false
+     var alreadyConnectRongCloud = false
 
 
     /**
@@ -114,27 +115,34 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         database.userDao().addUser(user)
         User.update()
 
-        connectRongCloud(response.rongData)
+        connectRongCloud(response.rongData.token)
     }
 
     /**
      * 连接融云
      */
-    private fun connectRongCloud(rongData: UserRongyunData) {
+     fun connectRongCloud(token: String) {
+        Log.e("融云", "alreadyConnectRongCloud == "+ alreadyConnectRongCloud)
+        if (!User.isLogon()) {
+            return
+        }
         if (alreadyConnectRongCloud) {
             return
         }
-        RongIM.connect(rongData.token, object : ConnectCallback() {
+        RongIM.connect(token, object : ConnectCallback() {
             override fun onDatabaseOpened(code: DatabaseOpenStatus) {
                 //消息数据库打开，可以进入到主页面
+                Log.e("融云", "onDatabaseOpened")
             }
 
             override fun onSuccess(s: String) {
                 //连接成功
                 alreadyConnectRongCloud = true
+                Log.e("融云", "链接成功")
             }
 
             override fun onError(errorCode: ConnectionErrorCode) {
+                Log.e("融云", "链接失败")
                 if (errorCode == ConnectionErrorCode.RC_CONN_TOKEN_INCORRECT) {
                     //从 APP 服务获取新 token，并重连
                     alreadyConnectRongCloud = false

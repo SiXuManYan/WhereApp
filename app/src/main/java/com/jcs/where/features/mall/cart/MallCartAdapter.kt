@@ -128,12 +128,18 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
 
 
             val attr = StringBuffer()
-            // 商品属性
-            it.specs.forEach { entry ->
-                attr.append(entry.value + " ")
-            }
-            good_attr_tv.text = attr
 
+            // 商品属性
+            val specs = it.specs
+            if (specs.isNullOrEmpty()) {
+                good_attr_tv.visibility = View.GONE
+            }else{
+                good_attr_tv.visibility = View.VISIBLE
+                specs.forEach { entry ->
+                    attr.append(entry.value + " ")
+                }
+                good_attr_tv.text = attr
+            }
         }
 
 

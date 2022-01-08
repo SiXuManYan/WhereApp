@@ -221,8 +221,9 @@
             <!--
 
             -->
-            <TextView
+            <Button
                 android:id="@+id/login_tv"
+                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_54"
                 android:layout_marginTop="@dimen/dp_68"
@@ -273,7 +274,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_139"
+                android:layout_marginTop="@dimen/dp_80"
                 android:paddingTop="@dimen/dp_5"
                 android:paddingBottom="@dimen/dp_5"
                 android:text="@string/other_login_type"

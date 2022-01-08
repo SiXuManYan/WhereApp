@@ -935,6 +935,6 @@ Gentleman must let go</string>
     <string name="logistics_number_format">物流单号：%1$S</string>
     <string name="copy">复制</string>
     <string name="product_removed">该商品已下架</string>
-    <string name="product_delete">Product does not exist</string>
+    <string name="product_delete">商品不存在</string>
 
 </resources>

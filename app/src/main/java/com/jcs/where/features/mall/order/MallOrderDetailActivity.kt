@@ -58,22 +58,19 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         mAdapter = MallOrderDetailAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
                 val itemData = mAdapter.data[position]
-                if (itemData.good_status == 0) {
-                    ToastUtils.showShort(R.string.product_removed)
-                }else {
-                    when (itemData.delete_status) {
-                        0 -> {
-                            MallDetailActivity.navigation(this@MallOrderDetailActivity,itemData.good_id)
+                when (itemData.delete_status) {
+                    0 -> {
+                        if (itemData.good_status == 0) {
+                            ToastUtils.showShort(R.string.product_removed)
+                        } else {
+                            MallDetailActivity.navigation(this@MallOrderDetailActivity, itemData.good_id)
                         }
-                        1->{
-                            ToastUtils.showShort(R.string.product_delete)
-                        }
-
+                    }
+                    1 -> {
+                        ToastUtils.showShort(R.string.product_delete)
                     }
 
-
                 }
-
 
 
             }
@@ -156,10 +153,10 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
 
         if (companyName.isNotBlank()) {
             logistics_container_ll.visibility = View.VISIBLE
-            logistics_company_tv.text = getString(R.string.logistics_company_format,companyName)
-            logistics_number_tv.text = getString(R.string.logistics_number_format,data.logistics)
+            logistics_company_tv.text = getString(R.string.logistics_company_format, companyName)
+            logistics_number_tv.text = getString(R.string.logistics_number_format, data.logistics)
 
-        }else {
+        } else {
             logistics_container_ll.visibility = View.GONE
         }
 
@@ -278,8 +275,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 bottom_container_rl.visibility = View.GONE
             }
         }
-        bottom_v.visibility =  bottom_container_rl.visibility
-
+        bottom_v.visibility = bottom_container_rl.visibility
 
 
     }

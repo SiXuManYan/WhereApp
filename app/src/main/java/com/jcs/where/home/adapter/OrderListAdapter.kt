@@ -496,7 +496,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             4 -> {
                 right_tv.text = context.getString(R.string.confirm_receipt)
                 right_tv.visibility = View.VISIBLE
-                confirmReceipt?.onConfirmReceiptClick(item.id)
+                right_tv.setOnClickListener {
+                    confirmReceipt?.onConfirmReceiptClick(item.id)
+                }
 
             }
             5 -> {

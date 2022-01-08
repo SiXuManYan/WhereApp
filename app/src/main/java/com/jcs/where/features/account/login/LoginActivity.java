@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,8 +62,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             get_verify_tv,
             error_hint_tv,
             forgot_password_tv,
-            login_tv,
             title_tv;
+
+    private Button login_tv;
+
 
     private CheckedTextView login_rule_tv;
 

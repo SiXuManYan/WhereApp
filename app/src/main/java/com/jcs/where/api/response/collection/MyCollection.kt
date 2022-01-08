@@ -103,6 +103,14 @@ class MallGoodCollection{
     var title = ""
     var images = ""
     var price = ""
+
+
+    /** 删除状态1已删除 0未删除 */
+    var delete_status = 0
+
+    /** 下架 0下架 1上架 */
+    var good_status = 0
+
 }
 
 

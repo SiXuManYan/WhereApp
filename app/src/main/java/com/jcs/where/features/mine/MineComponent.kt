@@ -2,15 +2,14 @@ package com.jcs.where.features.mine
 
 import android.util.Log
 import com.blankj.utilcode.util.Utils
-import com.google.gson.JsonObject
 import com.jcs.where.BaseApplication
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MerchantSettledInfoResponse
+import com.jcs.where.api.response.UnReadMessage
 import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.storage.entity.User
-import com.jcs.where.storage.entity.UserRongyunData
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.RongIMClient.*
@@ -34,15 +33,9 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         if (!User.isLogon()) {
             return
         }
-        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<JsonObject>(view) {
-            override fun onSuccess(response: JsonObject) {
-                var apiUnreadMessageCount = 0
-
-                if (response.has("count")) {
-                    apiUnreadMessageCount = response["count"].asInt
-                }
-
-                val finalApiUnreadMessageCount = apiUnreadMessageCount
+        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view) {
+            override fun onSuccess(response: UnReadMessage) {
+                val apiUnreadMessageCount =  response.count
 
                 RongIMClient.getInstance()
                     .getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
@@ -53,12 +46,12 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
                                 rongCount = it
                             }
 
-                            val totalCount = finalApiUnreadMessageCount + rongCount
+                            val totalCount = apiUnreadMessageCount + rongCount
                             view.bindUnreadMessageCount(totalCount)
 
                         }
 
-                        override fun onError(errorCode: RongIMClient.ErrorCode) {}
+                        override fun onError(errorCode: RongIMClient.ErrorCode) = Unit
                     })
 
             }

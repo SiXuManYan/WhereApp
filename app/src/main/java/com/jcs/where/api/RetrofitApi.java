@@ -70,6 +70,7 @@ import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.TouristAttractionResponse;
+import com.jcs.where.api.response.UnReadMessage;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UploadFileResponse2;
 import com.jcs.where.api.response.UserInfoResponse;
@@ -751,7 +752,7 @@ public interface RetrofitApi {
      * 获取未读消息数量
      */
     @GET("messageapi/v2/count")
-    Observable<JcsResponse<JsonObject>> getUnreadMessageCount();
+    Observable<JcsResponse<UnReadMessage>> getUnreadMessageCount();
 
     /**
      * 获取融云用户信息

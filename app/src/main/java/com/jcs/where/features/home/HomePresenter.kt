@@ -1,6 +1,5 @@
 package com.jcs.where.features.home
 
-import com.google.gson.JsonObject
 import com.jcs.where.BuildConfig
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -8,12 +7,12 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.PageResponse
+import com.jcs.where.api.response.UnReadMessage
 import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.Constant
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.SPUtil
 import io.rong.imkit.RongIM
@@ -55,22 +54,17 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
         if (!User.isLogon()) {
             return
         }
-        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<JsonObject>(view) {
-            override fun onSuccess(response: JsonObject) {
-                var apiUnreadMessageCount = 0
-                if (response.has("count")) {
-                    apiUnreadMessageCount = response["count"].asInt
-                }
-                val finalApiUnreadMessageCount = apiUnreadMessageCount
+        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view) {
+            override fun onSuccess(response: UnReadMessage) {
+                val apiUnreadMessageCount = response.count
                 RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
                     override fun onSuccess(rongMessageCount: Int?) {
 
                         if (rongMessageCount == null) {
-                            view.setMessageCount(finalApiUnreadMessageCount)
+                            view.setMessageCount(apiUnreadMessageCount)
                         } else {
-                            view.setMessageCount(finalApiUnreadMessageCount + rongMessageCount)
+                            view.setMessageCount(apiUnreadMessageCount + rongMessageCount)
                         }
-
                     }
 
                     override fun onError(errorCode: RongIMClient.ErrorCode) {
@@ -80,7 +74,6 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
             }
 
             override fun onError(errorResponse: ErrorResponse?) {
-                super.onError(errorResponse)
                 view.setMessageCount(0)
             }
         })

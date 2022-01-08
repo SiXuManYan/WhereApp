@@ -177,9 +177,9 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         super.onHiddenChanged(hidden)
         if (!hidden) {
             presenter.getUnreadMessageCount()
-            if (User.isLogon()) {
-                presenter?.connectRongCloud(User.getInstance().rongData.token)
-            }
+//            if (User.isLogon()) {
+//                presenter?.connectRongCloud(User.getInstance().rongData.token)
+//            }
         }
     }
 

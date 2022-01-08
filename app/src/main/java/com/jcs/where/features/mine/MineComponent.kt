@@ -142,7 +142,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
             }
 
             override fun onError(errorCode: ConnectionErrorCode) {
-                Log.e("融云", "链接失败")
+                Log.e("融云", "链接失败 errorCode == $errorCode")
                 if (errorCode == ConnectionErrorCode.RC_CONN_TOKEN_INCORRECT) {
                     //从 APP 服务获取新 token，并重连
                     alreadyConnectRongCloud = false

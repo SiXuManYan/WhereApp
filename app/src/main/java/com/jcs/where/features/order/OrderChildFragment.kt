@@ -154,9 +154,9 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         }
 
         when (baseEvent.code) {
-            EventCode.EVENT_REFRESH_ORDER_LIST,
             EventCode.EVENT_LOGIN_SUCCESS,
-            EventCode.EVENT_ORDER_COMMIT_SUCCESS,
+            EventCode.EVENT_REFRESH_ORDER_LIST,
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS
             -> {
                 onRefresh()
             }

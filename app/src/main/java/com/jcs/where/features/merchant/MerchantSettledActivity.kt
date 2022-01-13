@@ -8,12 +8,12 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.jcs.where.R
 import com.jcs.where.api.request.merchant.MerchantSettledData
-import com.jcs.where.api.request.merchant.MerchantSettledPost
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.merchant.form.SettledFormFragment
-import com.jcs.where.storage.entity.User
+import com.jcs.where.features.merchant.record.MerchantRecordActivity
+import com.jcs.where.features.merchant.recult.SettledResultFragment
 import kotlinx.android.synthetic.main.activity_merchant_settled_home.*
 import org.greenrobot.eventbus.EventBus
 
@@ -26,7 +26,7 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
 
     override fun isStatusDark() = true
 
-    override fun getLayoutId() = R.layout.activity_merchant_settled_home
+     override fun getLayoutId() = R.layout.activity_merchant_settled_home
 
 
     override fun initView() {
@@ -40,12 +40,8 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
 
     override fun initData() {
         presenter = MerchantSettledPresenter(this)
-        val user = User.getInstance()
-        if (user.merchantApplyStatus == 1) {
-            presenter.getData()
-        } else {
-            pager_vp.currentItem = 0
-        }
+        presenter.getData()
+        pager_vp.currentItem = 0
     }
 
     override fun bindListener() {
@@ -84,8 +80,11 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
                 child.isChecked = true
 
             }
-
         })
+
+        record_tv.setOnClickListener {
+            startActivity(MerchantRecordActivity::class.java)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
@@ -105,20 +104,33 @@ class MerchantSettledActivity : BaseMvpActivity<MerchantSettledPresenter>(), Mer
             EventCode.EVENT_MERCHANT_RECOMMIT -> {
                 pager_vp.currentItem = 0
             }
+
+            EventCode.EVENT_MERCHANT_COMMIT_NEW -> {
+                pager_vp.currentItem = 0
+
+
+            }
             else -> {
 
             }
         }
     }
+
     // 审核状态（1：待审核，2：审核通过，3：审核未通过）
-    override fun bindData(response: MerchantSettledData) {
+    override fun bindData(response: MerchantSettledData?) {
+        // 未提交过
+        if (response == null) {
+            pager_vp.currentItem = 0
+            return
+        }
+        // 提交过后的审核状态
         when (response.is_verify) {
-            2 -> {
-                pager_vp.currentItem = 2
-            }
-            else -> {
+            1, 3 -> {
                 EventBus.getDefault().post(BaseEvent(EventCode.EVENT_MERCHANT_CHANGE_TYPE, response))
                 pager_vp.currentItem = 1
+            }
+            2 -> {
+                pager_vp.currentItem = 2
             }
         }
     }

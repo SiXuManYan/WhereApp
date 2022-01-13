@@ -117,6 +117,7 @@ import com.jcs.where.api.response.mall.request.MallDeliveryRequest;
 import com.jcs.where.api.response.mall.request.MallDeliveryResponse;
 import com.jcs.where.api.response.mall.request.MallOrderCommit;
 import com.jcs.where.api.response.mall.request.UnCollection;
+import com.jcs.where.api.response.merchant.MerchantApplyRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
@@ -2025,5 +2026,14 @@ public interface RetrofitApi {
     @POST("estoreapi/v2/order/confirm/{order_id}")
     Observable<JcsResponse<JsonElement>> confirmReceipt(@Path("order_id") int order_id);
 
+
+
+    /**
+     * 商家入驻申请记录
+     */
+    @GET("userapi/v2/merchants")
+    Observable<JcsResponse<PageResponse<MerchantApplyRecord>>> merchantApplyRecord(
+            @Query("page") int page
+    );
 
 }

@@ -136,5 +136,7 @@ public class EventCode {
 
     public static final int EVENT_SELECTED_CATEGORY = 1031;
 
+    public static final int EVENT_MERCHANT_COMMIT_NEW = 1032;
+
 
 }

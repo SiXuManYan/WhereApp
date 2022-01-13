@@ -91,16 +91,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(CardCouponActivity::class.java)
         }
         merchant_rl.setOnClickListener {
-//            if (!User.isLogon()) {
-//                startActivity(LoginActivity::class.java)
-//                return@setOnClickListener
-//            }
-//            val user = User.getInstance()
-//            if (user.merchantApplyStatus != 1) {
-//                startActivity(MerchantSettledActivity::class.java)
-//                return@setOnClickListener
-//            }
-//            presenter.getMerchantSettledInfo()
             startActivityAfterLogin(MerchantSettledActivity::class.java)
 
         }

@@ -209,7 +209,7 @@
     <string name="points_task">积分任务</string>
     <string name="points_details">积分明细</string>
     <string name="hint">提示</string>
-    <string name="commit_again">重新提交</string>
+    <string name="recommit">重新提交</string>
     <string name="request_error">请求错误%1$d</string>
 
     <string name="day_1">1天</string>
@@ -936,5 +936,12 @@ Gentleman must let go</string>
     <string name="copy">复制</string>
     <string name="product_removed">该商品已下架</string>
     <string name="product_delete">商品不存在</string>
+    <string name="commit_again">再次提交</string>
+    <string name="apply_record">申请记录</string>
+    <string name="merchant_name">商家名称</string>
+    <string name="application_time_format">申请时间：%1$s</string>
+    <string name="wait_apply">待审核</string>
+    <string name="examination_passed">审核通过</string>
+    <string name="examination_passed_not">审核未通过</string>
 
 </resources>

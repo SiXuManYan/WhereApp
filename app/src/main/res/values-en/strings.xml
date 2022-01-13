@@ -204,7 +204,7 @@
     <string name="points_task">Points task</string>
     <string name="points_details">Points details</string>
     <string name="hint">Prompt</string>
-    <string name="commit_again">Commit again</string>
+    <string name="recommit">Commit again</string>
     <string name="request_error">Request error %1$d</string>
     <string name="news_followed">Followed</string>
     <string name="search_news_keyword">Search news by keyword</string>
@@ -928,5 +928,12 @@ Gentleman must let go</string>
     <string name="copy">Copy</string>
     <string name="product_removed">This product has been removed</string>
     <string name="product_delete">Product does not exist</string>
+    <string name="commit_again">Commit Again</string>
+    <string name="apply_record">Record</string>
+    <string name="merchant_name">Merchant Name</string>
+    <string name="application_time_format">Application Time：%1$s</string>
+    <string name="wait_apply">Wait Apply</string>
+    <string name="examination_passed">Examination Passed</string>
+    <string name="examination_passed_not">Examination Not Passed</string>
 
 </resources>

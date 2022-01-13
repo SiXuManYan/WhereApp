@@ -12,12 +12,11 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import java.io.IOException;
+import androidx.core.app.ActivityCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.core.app.ActivityCompat;
 
 /**
  * 获取地理位置的工具类
@@ -160,7 +159,7 @@ public class LocationUtil {
         try {
             List<Address> locationList = gc.getFromLocation(latitude, longitude, 1);
 
-            if (locationList != null && !locationList.isEmpty() ) {
+            if (locationList != null && !locationList.isEmpty()) {
                 Address address = locationList.get(0);
                 String countryName = address.getCountryName();//国家
                 String countryCode = address.getCountryCode();
@@ -228,8 +227,14 @@ public class LocationUtil {
         }
         LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
-        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        showLocation();
+        try {
+
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            showLocation();
+        } catch (Exception ignored) {
+
+        }
+
     }
 
     public interface AddressCallback {

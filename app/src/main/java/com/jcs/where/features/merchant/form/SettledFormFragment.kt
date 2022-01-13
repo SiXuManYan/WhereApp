@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -31,6 +32,7 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
 
     private var merTypeId = 0
     private var areaId = 0
+
     /** 是否有实体店（1：有，2：没有） */
     private var hasPhysicalStore = 0
     private var isReCommit = false
@@ -134,7 +136,7 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
 
 
             apply.apply {
-                if (first_name.isBlank()  || last_name.isBlank() || contact_number.isBlank()
+                if (first_name.isBlank() || last_name.isBlank() || contact_number.isBlank()
                     || email.isBlank() || mer_name.isBlank() || mer_address.isBlank() || mer_tel.isBlank()
                 ) {
                     ToastUtils.showShort(R.string.please_enter)
@@ -174,7 +176,9 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
     override fun postResult(result: Boolean) {
         commit_tv.isClickable = true
         EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_MERCHANT_POST_SUCCESS))
+        clearCache()
     }
+
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {
         super.onEventReceived(baseEvent)
@@ -201,6 +205,27 @@ class SettledFormFragment : BaseMvpFragment<SettledFormPresenter>(), SettledForm
 
             }
         }
+    }
+
+    private fun clearCache() {
+        for (index in 0 until container_ll.childCount) {
+
+            val childView = container_ll.getChildAt(index)
+            if (childView is AppCompatEditText) {
+                childView.setText("")
+            }
+        }
+        mer_type_tv.text = ""
+        area_tv.text = ""
+        yes_rb.isChecked = false
+        no_rb.isChecked = false
+        merTypeId = 0
+        areaId = 0
+        hasPhysicalStore = 0
+        isReCommit = false
+        reCommitMerchantId = 0
+        mImageAdapter.setNewInstance(null)
+
     }
 
 

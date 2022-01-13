@@ -11,16 +11,15 @@ import com.jcs.where.api.request.merchant.MerchantSettledPost
  *
  */
 interface MerchantSettledView : BaseMvpView {
-    fun bindData(response: MerchantSettledData)
+    fun bindData(response: MerchantSettledData?)
 
 }
 
 class MerchantSettledPresenter(var view: MerchantSettledView) : BaseMvpPresenter(view) {
 
     fun getData() {
-        requestApi(mRetrofit.merchantSettled, object : BaseMvpObserver<MerchantSettledData>(view) {
-            override fun onSuccess(response: MerchantSettledData) {
-
+        requestApi(mRetrofit.merchantSettled, object : BaseMvpObserver<MerchantSettledData?>(view) {
+            override fun onSuccess(response: MerchantSettledData?) {
                 view.bindData(response)
             }
         })

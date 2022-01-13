@@ -1,11 +1,10 @@
-package com.jcs.where.features.merchant
+package com.jcs.where.features.merchant.recult
 
 import android.view.View
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.merchant.MerchantSettledData
-import com.jcs.where.api.request.merchant.MerchantSettledPost
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
@@ -36,11 +35,7 @@ class SettledResultFragment : BaseMvpFragment<SettledResultPresenter>(), Settled
 
     }
 
-    override fun bindListener() {
-        recommit_tv.setOnClickListener {
-            EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_MERCHANT_RECOMMIT))
-        }
-    }
+    override fun bindListener() = Unit
 
 
     /**
@@ -52,19 +47,29 @@ class SettledResultFragment : BaseMvpFragment<SettledResultPresenter>(), Settled
                 type_image_iv.setImageResource(R.mipmap.ic_audit_success)
                 type_text_tv.text = getString(R.string.merchant_verify_success_title)
                 type_desc_tv.text = getString(R.string.merchant_verify_success_desc)
+                // 再次提交暂时隐藏
                 recommit_tv.visibility = View.GONE
+//                recommit_tv.text = getString(R.string.commit_again)
+//                recommit_tv.setOnClickListener {
+//                    EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_MERCHANT_COMMIT_NEW))
+//                }
             }
             3 -> {
                 type_image_iv.setImageResource(R.mipmap.ic_audit_fail)
                 type_text_tv.text = getString(R.string.merchant_verify_faild_title)
                 type_desc_tv.text = getString(R.string.merchant_verify_faild_desc)
                 recommit_tv.visibility = View.VISIBLE
+                recommit_tv.text = getString(R.string.recommit)
+                recommit_tv.setOnClickListener {
+                    EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_MERCHANT_RECOMMIT))
+                }
             }
             else -> {
                 type_image_iv.setImageResource(R.mipmap.ic_auditing)
                 type_text_tv.text = getString(R.string.merchant_verify_ing_title)
                 type_desc_tv.text = getString(R.string.merchant_verify_ing_desc)
                 recommit_tv.visibility = View.GONE
+
             }
         }
 

@@ -51,7 +51,7 @@
         android:layout_marginTop="@dimen/dp_32"
         android:background="@drawable/shape_blue_radius_22"
         android:gravity="center"
-        android:text="@string/commit_again"
+        android:text="@string/recommit"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_16"
         android:visibility="gone"

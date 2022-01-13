@@ -44,9 +44,7 @@ class MerchantSettledData {
 
 
     /// 获取信息
-    /**
-     * 审核状态（1：待审核，2：审核通过，3：审核未通过）
-     */
+
     var id = 0
 
     /**

@@ -90,6 +90,10 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
             EventCode.EVENT_SIGN_OUT -> {
                 login_rl.visibility = View.VISIBLE
             }
+            EventCode.EVENT_REFRESH_ORDER_LIST,
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS->{
+                presenter.getTabs()
+            }
             else -> {
             }
         }

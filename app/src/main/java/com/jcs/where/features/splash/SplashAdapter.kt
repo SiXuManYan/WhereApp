@@ -1,86 +1,61 @@
-package com.jcs.where.features.splash;
+package com.jcs.where.features.splash
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-
-import com.blankj.utilcode.util.StringUtils;
-import com.jcs.where.R;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.viewpager.widget.PagerAdapter
+import com.jcs.where.R
+import com.jcs.where.utils.LocalLanguageUtil
 
 /**
  * Created by Wangsw  2021/3/18 16:42.
  */
-public class SplashAdapter extends PagerAdapter {
+class SplashAdapter : PagerAdapter() {
 
-    private TextView titleTv;
-    private TextView contentTv;
-    private ImageView bgIv;
-    private TextView startTv;
-    public View.OnClickListener onStartClickListener;
+    private lateinit var bgIv: ImageView
 
-    @Override
-    public int getCount() {
-        return 3;
+
+    override fun getCount() = 4
+
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view === `object`
     }
 
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == object;
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as View)
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+
+        val view = LayoutInflater.from(container.context).inflate(R.layout.item_splash, container, false)
+        bgIv = view.findViewById(R.id.bg_iv)
+
+        initView(position, container.context)
+        container.addView(view)
+        return view
     }
 
+    private fun initView(position: Int, context: Context) {
 
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-
-
-        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_splash, container, false);
-        titleTv = view.findViewById(R.id.title_tv);
-        contentTv = view.findViewById(R.id.content_tv);
-        bgIv = view.findViewById(R.id.bg_iv);
-        startTv = view.findViewById(R.id.start_tv);
-        initView(position);
-
-
-        container.addView(view);
-        return view;
-
-
-    }
-
-    private void initView(int position) {
-        String[] title = StringUtils.getStringArray(R.array.splash_item_title);
-        String[] content = StringUtils.getStringArray(R.array.splash_item_content);
-        titleTv.setText(title[position]);
-        contentTv.setText(content[position]);
-        switch (position) {
-            case 0:
-                bgIv.setImageResource(R.mipmap.ic_splash_bg_02);
-                startTv.setVisibility(View.GONE);
-                break;
-            case 1:
-                bgIv.setImageResource(R.mipmap.ic_splash_bg_00);
-                startTv.setVisibility(View.GONE);
-                break;
-            case 2:
-                bgIv.setImageResource(R.mipmap.ic_splash_bg_01);
-                startTv.setVisibility(View.VISIBLE);
-                break;
-
+        val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(context)
+        if (languageLocale.language == "zh") {
+            when (position) {
+                0 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_0_cn)
+                1 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_1_cn)
+                2 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_2_cn)
+                3 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_3_cn)
+            }
+        } else {
+            when (position) {
+                0 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_0_en)
+                1 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_1_en)
+                2 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_2_en)
+                3 -> bgIv.setImageResource(R.mipmap.ic_splash_bg_3_en)
+            }
         }
 
-        if (onStartClickListener != null) {
-            startTv.setOnClickListener(onStartClickListener);
-        }
-    }
 
+    }
 }

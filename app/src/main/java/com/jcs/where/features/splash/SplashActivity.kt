@@ -1,282 +1,221 @@
-package com.jcs.where.features.splash;
+package com.jcs.where.features.splash
 
-import android.graphics.Color;
-import android.text.SpannableStringBuilder;
-import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.viewpager.widget.ViewPager;
-
-import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.SpanUtils;
-import com.jcs.where.R;
-import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.currency.WebViewActivity;
-import com.jcs.where.features.main.MainActivity;
-import com.jcs.where.utils.CacheUtil;
-import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.FeaturesUtil;
-import com.jcs.where.utils.SPKey;
-import com.jcs.where.utils.SPUtil;
-import com.jcs.where.widget.pager.IndicatorView;
-import com.mob.MobSDK;
+import android.content.DialogInterface
+import android.graphics.Color
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.viewpager.widget.ViewPager
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SpanUtils
+import com.jcs.where.R
+import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.main.MainActivity
+import com.jcs.where.utils.*
+import com.mob.MobSDK
+import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
  * Created by Wangsw  2021/3/18 15:36.
  */
-public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements SplashView {
+class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
-    private RelativeLayout splashContainerRl;
-    private ImageView firstIv;
-    private ViewPager pagerVp;
-    private IndicatorView pointView;
+    override fun getLayoutId() = R.layout.activity_splash
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_splash;
-    }
+    override fun initView() {
 
-    @Override
-    protected void initView() {
         // 状态栏透明
-        BarUtils.setStatusBarColor(this, Color.TRANSPARENT, true);
-        BarUtils.setStatusBarLightMode(this, false);
-        BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content));
-        BarUtils.setNavBarVisibility(this, false);
-
-
-        if (!isTaskRoot()) {
-            finish();
-            return;
+        BarUtils.setStatusBarColor(this, Color.TRANSPARENT, true)
+        BarUtils.setStatusBarLightMode(this, false)
+        BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content))
+        BarUtils.setNavBarVisibility(this, false)
+        if (!isTaskRoot) {
+            finish()
+            return
         }
-        splashContainerRl = findViewById(R.id.splash_container_rl);
-        firstIv = findViewById(R.id.first_iv);
-        pagerVp = findViewById(R.id.pager_vp);
-        pointView = findViewById(R.id.point_view);
-
-
-        initPager();
-        initAnimation();
+        point_view.apply {
+            commonDrawableResId = R.drawable.shape_point_normal_e7e7e7
+            selectedDrawableResId = R.drawable.shape_point_selected_377bff
+            setPointCount(4)
+        }
+        initPager()
+        initAnimation()
     }
 
-    private void initPager() {
-        SplashAdapter adapter = new SplashAdapter();
-        adapter.onStartClickListener = v -> toHome();
-        pagerVp.setAdapter(adapter);
-        pagerVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    private fun initPager() {
+        val adapter = SplashAdapter()
+        pager_vp.adapter = adapter
+        pager_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+
+            override fun onPageScrollStateChanged(state: Int) = Unit
+
+            override fun onPageSelected(position: Int) {
+                point_view.onPageSelected(position)
+                if (position == 3) {
+                    start_tv.visibility = View.VISIBLE
+                } else {
+                    start_tv.visibility = View.GONE
+                }
             }
-
-            @Override
-            public void onPageSelected(int position) {
-                pointView.onPageSelected(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        })
     }
 
-    private void initAnimation() {
-        AlphaAnimation animation = new AlphaAnimation(0f, 1f);
-        animation.setDuration(1000);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                initUserAgreement();
-
-
-            }
-        });
-
-        splashContainerRl.startAnimation(animation);
+    private fun initAnimation() {
+        val animation = AlphaAnimation(0f, 1f)
+        animation.duration = 1000
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) = Unit
+            override fun onAnimationRepeat(animation: Animation) = Unit
+            override fun onAnimationEnd(animation: Animation) = initUserAgreement()
+        })
+        splash_container_rl.startAnimation(animation)
     }
 
-    private void initUserAgreement() {
+    private fun initUserAgreement() {
+        val spanUtils = SpanUtils()
+        val builder = spanUtils.append(getString(R.string.use_agreement_content_0))
+            .append(getString(R.string.use_agreement_content_1))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) = WebViewActivity.goTo(this@SplashActivity, FeaturesUtil.getUserAgreement())
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            })
+            .append(getString(R.string.use_agreement_content_2))
+            .append(getString(R.string.use_agreement_content_3))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) = WebViewActivity.goTo(this@SplashActivity, FeaturesUtil.getPrivacyPolicy())
 
-        SpanUtils spanUtils = new SpanUtils();
-        SpannableStringBuilder builder = spanUtils.append(getString(R.string.use_agreement_content_0))
-                .append(getString(R.string.use_agreement_content_1))
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View widget) {
-                        WebViewActivity.goTo(SplashActivity.this, FeaturesUtil.getUserAgreement());
-                    }
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            })
+            .append(getString(R.string.use_agreement_content_4))
+            .append(getString(R.string.use_agreement_content_5))
+            .append(getString(R.string.use_agreement_content_6))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    WebViewActivity.goTo(this@SplashActivity, "https://www.mob.com/about/policy")
+                }
 
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(getColor(R.color.blue_4C9EF2));
-                        ds.setUnderlineText(true);
-                    }
-                })
-                .append(getString(R.string.use_agreement_content_2))
-                .append(getString(R.string.use_agreement_content_3))
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View widget) {
-                        WebViewActivity.goTo(SplashActivity.this, FeaturesUtil.getPrivacyPolicy());
-                    }
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            })
+            .append(getString(R.string.use_agreement_content_8))
+            .append(getString(R.string.use_agreement_content_9))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    WebViewActivity.goTo(this@SplashActivity, "https://www.comm100.com/platform/security/")
+                }
 
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(getColor(R.color.blue_4C9EF2));
-                        ds.setUnderlineText(true);
-                    }
-                })
-                .append(getString(R.string.use_agreement_content_4))
-                .append(getString(R.string.use_agreement_content_5))
-                .append(getString(R.string.use_agreement_content_6))
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View widget) {
-                        WebViewActivity.goTo(SplashActivity.this, "https://www.mob.com/about/policy");
-                    }
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            })
+            .append(getString(R.string.use_agreement_content_10))
+            .append(getString(R.string.use_agreement_content_11))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    WebViewActivity.goTo(this@SplashActivity, "https://www.jiguang.cn/license/privacy")
+                }
 
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(getColor(R.color.blue_4C9EF2));
-                        ds.setUnderlineText(true);
-                    }
-                })
-                .append(getString(R.string.use_agreement_content_8))
-                .append(getString(R.string.use_agreement_content_9))
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View widget) {
-                        WebViewActivity.goTo(SplashActivity.this, "https://www.comm100.com/platform/security/");
-                    }
-
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(getColor(R.color.blue_4C9EF2));
-                        ds.setUnderlineText(true);
-                    }
-                })
-                .append(getString(R.string.use_agreement_content_10))
-                .append(getString(R.string.use_agreement_content_11))
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View widget) {
-                        WebViewActivity.goTo(SplashActivity.this, "https://www.jiguang.cn/license/privacy");
-                    }
-
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(getColor(R.color.blue_4C9EF2));
-                        ds.setUnderlineText(true);
-                    }
-                })
-                .append(getString(R.string.use_agreement_content_7))
-                .create();
-
-
-        boolean isAgreeUserAgreement = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_AGREE_USER_AGREEMENT, false);
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            })
+            .append(getString(R.string.use_agreement_content_7))
+            .create()
+        val isAgreeUserAgreement = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_AGREE_USER_AGREEMENT, false)
         if (isAgreeUserAgreement) {
-            afterAnimation();
+            afterAnimation()
         } else {
-
-            AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle(R.string.tips_0)
-                    .setCancelable(false)
-                    .setMessage(builder)
-                    .setPositiveButton(R.string.agree_and_continue, (dialog, which) -> {
-                        afterAnimation();
-                        dialog.dismiss();
-                    })
-                    .setNegativeButton(R.string.disagree, (dialog, which) -> {
-                        handleDisagree();
-                        dialog.dismiss();
-                    })
-                    .create();
-            alertDialog.show();
+            val alertDialog = AlertDialog.Builder(this)
+                .setTitle(R.string.tips_0)
+                .setCancelable(false)
+                .setMessage(builder)
+                .setPositiveButton(R.string.agree_and_continue) { dialog: DialogInterface, which: Int ->
+                    afterAnimation()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.disagree) { dialog: DialogInterface, which: Int ->
+                    handleDisagree()
+                    dialog.dismiss()
+                }
+                .create()
+            alertDialog.show()
 
 
             // 富文本可点击
-            TextView message = alertDialog.findViewById(android.R.id.message);
+            val message = alertDialog.findViewById<TextView>(android.R.id.message)
             if (message != null) {
-                message.setMovementMethod(LinkMovementMethod.getInstance());
-                message.setLineSpacing(0f, 1.2f);
+                message.movementMethod = LinkMovementMethod.getInstance()
+                message.setLineSpacing(0f, 1.2f)
             }
         }
-
     }
 
-    private void handleDisagree() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.tips_1)
-                .setCancelable(false)
-                .setMessage(getString(R.string.disagree_privacy_policy_message))
-                .setPositiveButton(getString(R.string.goto_agree), (dialog, which) -> {
-                    initUserAgreement();
-                    dialog.dismiss();
-                })
-                .setNegativeButton(getString(R.string.not_yet), (dialog, which) -> {
-                    dialog.dismiss();
-                    AppUtils.exitApp();
-                })
-                .create()
-                .show();
+    private fun handleDisagree() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.tips_1)
+            .setCancelable(false)
+            .setMessage(getString(R.string.disagree_privacy_policy_message))
+            .setPositiveButton(getString(R.string.goto_agree)) { dialog: DialogInterface, which: Int ->
+                initUserAgreement()
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.not_yet)) { dialog: DialogInterface, which: Int ->
+                dialog.dismiss()
+                AppUtils.exitApp()
+            }
+            .create()
+            .show()
     }
 
-    private void afterAnimation() {
-        CacheUtil.getShareDefault().put(Constant.SP_IS_AGREE_USER_AGREEMENT, true);
-        MobSDK.submitPolicyGrantResult(true, null);
-        boolean isFirstOpen = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_FIRST_OPEN, true);
+    private fun afterAnimation() {
+        CacheUtil.getShareDefault().put(Constant.SP_IS_AGREE_USER_AGREEMENT, true)
+        MobSDK.submitPolicyGrantResult(true, null)
+        val isFirstOpen = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_FIRST_OPEN, true)
         if (isFirstOpen) {
-            pagerVp.setVisibility(View.VISIBLE);
-            pointView.setVisibility(View.VISIBLE);
-            firstIv.setVisibility(View.GONE);
-            CacheUtil.getShareDefault().put(Constant.SP_IS_FIRST_OPEN, false);
+            pager_vp.visibility = View.VISIBLE
+            point_view.visibility = View.VISIBLE
+            first_iv.visibility = View.GONE
+            CacheUtil.getShareDefault().put(Constant.SP_IS_FIRST_OPEN, false)
         } else {
-            toHome();
+            toHome()
         }
     }
 
-    private void toHome() {
-        startActivity(MainActivity.class);
-        finish();
+    private fun toHome() {
+        startActivity(MainActivity::class.java)
+        finish()
     }
 
-    @Override
-    protected void initData() {
-        presenter = new SplashPresenter(this);
-        String cityId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID);
+    override fun initData() {
+        presenter = SplashPresenter(this)
+        val cityId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID)
         if (cityId.isEmpty()) {
             // 默认巴郎牙
-            SPUtil.getInstance().saveString(SPKey.SELECT_AREA_ID, "3");
+            SPUtil.getInstance().saveString(SPKey.SELECT_AREA_ID, "3")
         }
-        presenter.getYellowPageAllCategories();
+        presenter.getYellowPageAllCategories()
     }
 
-    @Override
-    protected void bindListener() {
-
-
+    override fun bindListener() {
+        start_tv.setOnClickListener { toHome() }
     }
-
-
 }

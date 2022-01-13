@@ -935,5 +935,6 @@ Gentleman must let go</string>
     <string name="wait_apply">Wait Apply</string>
     <string name="examination_passed">Examination Passed</string>
     <string name="examination_passed_not">Examination Not Passed</string>
+    <string name="start_now">Start</string>
 
 </resources>

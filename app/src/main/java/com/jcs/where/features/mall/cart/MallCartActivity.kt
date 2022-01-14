@@ -224,7 +224,6 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
 
     override fun changeNumberSuccess() {
-        onRefresh()
         getNowPrice()
     }
 

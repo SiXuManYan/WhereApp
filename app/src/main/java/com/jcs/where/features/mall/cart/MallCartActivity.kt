@@ -168,12 +168,14 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                select_all_tv.visibility = View.GONE
             } else {
                 loadMoreModule.loadMoreEnd()
             }
             presenter.getExpiredGoods()
             return
         }
+        select_all_tv.visibility = View.VISIBLE
         if (page == Constant.DEFAULT_FIRST_PAGE) {
             mAdapter.setNewInstance(data)
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()
@@ -309,6 +311,10 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     override fun bindExpired(apply: MallCartGroup) {
         mAdapter.addData(apply)
+        mAdapter.loadMoreModule.loadMoreEnd()
+    }
+
+    override fun bindExpiredEmpty() {
         mAdapter.loadMoreModule.loadMoreEnd()
     }
 

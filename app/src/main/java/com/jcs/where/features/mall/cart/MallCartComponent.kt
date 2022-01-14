@@ -47,6 +47,9 @@ interface MallCartView : BaseMvpView,
     /** 处理失效商品 */
     fun bindExpired(apply: MallCartGroup)
 
+    /** 无失效商品 */
+    fun bindExpiredEmpty()
+
 }
 
 class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view) {
@@ -288,17 +291,15 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
     fun getExpiredGoods() {
         requestApi(mRetrofit.expiredGoods(), object : BaseMvpObserver<ArrayList<MallExpired>>(view) {
             override fun onSuccess(response: ArrayList<MallExpired>) {
+                if (response.isEmpty()) {
+                    view.bindExpiredEmpty()
+                    return
+                }
                 val apply = MallCartGroup().apply {
                     nativeIsNormalType = 1
                     nativeExpiredData.addAll(response)
                 }
-
-
-
-
                 view.bindExpired(apply)
-
-
             }
 
         })

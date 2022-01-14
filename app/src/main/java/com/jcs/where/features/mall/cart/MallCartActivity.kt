@@ -199,7 +199,6 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     override fun onChildNumberChange(cartId: Int, add: Boolean, number: Int) {
         presenter.changeCartNumber(cartId, number)
-        onRefresh()
     }
 
 
@@ -224,7 +223,10 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
     }
 
 
-    override fun changeNumberSuccess() = getNowPrice()
+    override fun changeNumberSuccess() {
+        onRefresh()
+        getNowPrice()
+    }
 
     override fun deleteSuccess() {
         onRefresh()

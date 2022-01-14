@@ -54,9 +54,7 @@ class MallCartAdapter : BaseMultiItemQuickAdapter<MallCartGroup, BaseViewHolder>
 
         when (holder.itemViewType) {
             0 -> bindCommonItem(holder, item)
-            1 ->{
-                bindExpiredItem(holder, item)
-            }
+            1 -> bindExpiredItem(holder, item)
         }
 
 

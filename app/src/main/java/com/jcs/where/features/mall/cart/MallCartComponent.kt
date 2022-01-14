@@ -135,7 +135,7 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
         var totalPrice: BigDecimal = BigDecimal.ZERO
         adapter.data.forEachIndexed { _, data ->
             data.gwc.forEach {
-                if (it.nativeIsSelect) {
+                if (it.nativeIsSelect && it.nativeEnable) {
 
                     val price = it.specs_info!!.price
 
@@ -173,14 +173,17 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
         val result = ArrayList<Boolean>()
         result.clear()
         adapter.data.forEach { data ->
-            result.add(data.nativeIsSelect)
-            data.gwc.forEach {
-                if (editMode) {
-                    result.add(it.nativeIsSelectEdit)
-                } else {
-                    result.add(it.nativeIsSelect)
-                }
 
+//            result.add(data.nativeIsSelect)
+
+            data.gwc.forEach {
+                if (it.nativeEnable) {
+                    if (editMode) {
+                        result.add(it.nativeIsSelectEdit)
+                    } else {
+                        result.add(it.nativeIsSelect)
+                    }
+                }
             }
         }
         return !result.contains(false)
@@ -229,10 +232,10 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
     }
 
 
-    fun changeSku(cartId: Int, specsId: Int, number: Int,mallSpecs: MallSpecs) {
+    fun changeSku(cartId: Int, specsId: Int, number: Int, mallSpecs: MallSpecs) {
         requestApi(mRetrofit.changeMallSku(cartId, specsId, number), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
-                view.changeSkuSuccess(mallSpecs,number)
+                view.changeSkuSuccess(mallSpecs, number)
             }
 
         })

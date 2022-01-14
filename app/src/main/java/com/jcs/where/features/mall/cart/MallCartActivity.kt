@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
+import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
 import com.jcs.where.api.response.mall.MallCartItem
@@ -116,7 +117,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             total_price_ll.visibility = View.GONE
             mAdapter.isEditMode = true
             mAdapter.notifyDataSetChanged()
-            select_all_tv.isChecked =  presenter.checkSelectAll(mAdapter)
+            select_all_tv.isChecked = presenter.checkSelectAll(mAdapter)
         }
 
         cancel_tv.setOnClickListener {
@@ -125,7 +126,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             total_price_ll.visibility = View.VISIBLE
             mAdapter.isEditMode = false
             mAdapter.notifyDataSetChanged()
-            select_all_tv.isChecked =  presenter.checkSelectAll(mAdapter)
+            select_all_tv.isChecked = presenter.checkSelectAll(mAdapter)
         }
 
 
@@ -184,6 +185,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     override fun onChildNumberChange(cartId: Int, add: Boolean, number: Int) {
         presenter.changeCartNumber(cartId, number)
+        onRefresh()
     }
 
 
@@ -198,12 +200,13 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
 
     override fun onGroupSelected(nativeIsSelect: Boolean) {
-        getNowPrice()
+
         select_all_tv.isChecked = if (nativeIsSelect) {
             presenter.checkSelectAll(mAdapter)
         } else {
             false
         }
+        getNowPrice()
     }
 
 
@@ -235,7 +238,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     private var mAdapterPosition = 0
     private var mChildIndex = 0
-    private lateinit var  mGwcSource : MallCartItem
+    private lateinit var mGwcSource: MallCartItem
 
 
     override fun reselectSkuClick(childIndex: Int, adapterPosition: Int, source: MallCartItem) {
@@ -244,7 +247,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         mGwcSource = source
 
         val goodsInfo = source.goods_info ?: return
-        mSkuDialog.data =  SkuDataSource().apply {
+        mSkuDialog.data = SkuDataSource().apply {
             main_image = goodsInfo.main_image
             min_price = goodsInfo.min_price
             stock = 0
@@ -258,9 +261,13 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {
 
-        presenter.changeSku(mGwcSource.cart_id,mallSpecs.specs_id,goodNum,mallSpecs)
+        // test
 
-
+        if (BuildConfig.FLAVOR == "dev") {
+            changeSkuSuccess(mallSpecs, goodNum)
+        } else {
+            presenter.changeSku(mGwcSource.cart_id, mallSpecs.specs_id, goodNum, mallSpecs)
+        }
     }
 
 

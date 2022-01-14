@@ -48,19 +48,6 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
         val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
 
 
-        select_all_tv.apply {
-            text = item.title
-
-            isChecked = if (isEditMode) {
-                item.nativeIsSelectEdit
-            } else {
-                item.nativeIsSelect
-            }
-
-
-        }
-
-
         // group 选中
         select_all_tv.setOnClickListener { _ ->
 
@@ -99,9 +86,8 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
 
                 val good_checked_tv = child_container_ll.getChildAt(index).findViewById<CheckedTextView>(R.id.good_checked_tv)
                 good_checked_tv.isChecked = isSelected
-                onGroupSelectClick?.onGroupSelected(isSelected)
-
             }
+            onGroupSelectClick?.onGroupSelected(select_all_tv.isChecked)
         }
 
         child_container_ll.removeAllViews()
@@ -110,6 +96,34 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
             bindChild(child, mallCartItem, select_all_tv, item, childIndex, holder.adapterPosition)
             child_container_ll.addView(child)
         }
+
+
+        select_all_tv.apply {
+            text = item.title
+
+            // 按钮是否可用
+            if (isEditMode) {
+                this.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.selector_store_cart_select_all, 0, 0, 0)
+                item.nativeEnable = true
+                this.isEnabled = true
+                this.isChecked = item.nativeIsSelectEdit
+            } else {
+
+                // 正常模式
+                item.nativeEnable = checkGroupAllEnable(item)
+                this.isEnabled = item.nativeEnable
+
+                if (item.nativeEnable) {
+                    isChecked = item.nativeIsSelect
+                } else {
+                    this.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_checked_unavailable, 0, 0, 0)
+                }
+
+
+            }
+
+        }
+
 
     }
 
@@ -139,6 +153,9 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
 
         // 是否库存不足
         val inventoryShortage = mallCartItem.good_num > mallCartItem.specs_info!!.stock
+
+        // sku 是否被删除
+        val skuDelete = mallCartItem.specs_info!!.delete_status
 
         mallCartItem.goods_info?.let {
             GlideUtil.load(context, it.photo, image_iv, 4)
@@ -214,25 +231,26 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
         }
 
 
-        // child 选中
+        // 判断组选中
         good_checked_tv.apply {
 
-            // 没有库存 SKU被删除
 
-            if (inventoryShortage || mallCartItem.specs_info!!.delete_status == 1) {
-                if (isEditMode) {
-                    mallCartItem.nativeEnable = true
-                    this.isEnabled = true
-                } else {
+            if (isEditMode) {
+                mallCartItem.nativeEnable = true
+                this.isEnabled = true
+                this.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.selector_store_cart_select_all, 0, 0, 0)
+            } else {
+                // 没有库存 SKU被删除
+                if (inventoryShortage || skuDelete == 1) {
                     mallCartItem.nativeEnable = false
                     this.isEnabled = false
+                    this.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_checked_unavailable, 0, 0, 0)
+                    return@apply
                 }
-                return@apply
             }
 
-            mallCartItem.nativeEnable = true
-            this.isEnabled = true
 
+//            this.isChecked = checkGroupSelectAll(groupData)
             this.isChecked = if (isEditMode) {
                 mallCartItem.nativeIsSelectEdit
             } else {
@@ -277,13 +295,34 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
         result.clear()
 
         groupData.gwc.forEach { data ->
-            if (isEditMode) {
-                result.add(data.nativeIsSelectEdit)
-            } else {
-                result.add(data.nativeIsSelect)
+            if (data.nativeEnable) {
+                if (isEditMode) {
+                    result.add(data.nativeIsSelectEdit)
+                } else {
+                    result.add(data.nativeIsSelect)
+                }
             }
+
         }
         return !result.contains(false)
+    }
+
+
+    /**
+     * 是否有可用子项
+     */
+    fun checkGroupAllEnable(groupData: MallCartGroup): Boolean {
+        val result = ArrayList<Boolean>()
+        result.clear()
+
+        groupData.gwc.forEach { data ->
+            if (isEditMode) {
+                result.add(true)
+            } else {
+                result.add(data.nativeEnable)
+            }
+        }
+        return result.contains(true)
     }
 
 }

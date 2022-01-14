@@ -5,9 +5,11 @@
 
     <item android:drawable="@mipmap/ic_un_checked" android:state_selected="false" />
 
+<!--
 
     <item android:drawable="@mipmap/ic_checked_unavailable" android:state_enabled="false" />
     <item android:drawable="@mipmap/ic_un_checked" android:state_enabled="true" />
+-->
 
 
     <item android:drawable="@mipmap/ic_un_checked" />

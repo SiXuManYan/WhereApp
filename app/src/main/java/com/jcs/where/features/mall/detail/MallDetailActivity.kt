@@ -12,6 +12,7 @@ import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
@@ -35,7 +36,6 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
-
 import java.util.*
 
 
@@ -236,7 +236,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
 
 
-        mSkuDialog.data =  SkuDataSource().apply {
+        mSkuDialog.data = SkuDataSource().apply {
             main_image = response.main_image
             min_price = response.min_price
             stock = response.stock

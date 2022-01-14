@@ -952,5 +952,6 @@ Gentleman must let go</string>
     <string name="good_expired_hint">商品已失效</string>
     <string name="expired_products">失效商品</string>
     <string name="empty_data_cart">暂无数据</string>
+    <string name="inventory_shortage_select">库存不足</string>
 
 </resources>

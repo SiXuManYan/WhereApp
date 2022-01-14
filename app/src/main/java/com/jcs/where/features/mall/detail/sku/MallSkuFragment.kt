@@ -140,6 +140,10 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
                     }
                 }
             }
+            if (number_view.goodNum == 0) {
+                ToastUtils.showShort(getString(R.string.inventory_shortage_select))
+                return@setOnClickListener
+            }
             selectResult?.selectResult(result!!, number_view.goodNum)
             dismissAllowingStateLoss()
         }

@@ -145,6 +145,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
 
     override fun loadOnVisible() {
+        if (!::targetFirstCategory.isInitialized) return
         presenter.handleBanner(targetFirstCategory)
         presenter.getRecommend(targetFirstCategory.id)
         presenter.getTopBanner()

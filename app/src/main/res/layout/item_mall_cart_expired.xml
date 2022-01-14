@@ -41,11 +41,6 @@
     </RelativeLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/grey_F5F5F5" />
-
 
     <LinearLayout
         android:id="@+id/child_container_ll"

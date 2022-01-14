@@ -142,6 +142,7 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
                 title = it.title
                 nativeIsSelect = true
                 delivery_fee = it.delivery_fee
+                nativeExpiredData =  ArrayList<MallExpired>()
             }
 
             it.gwc.forEach { child ->

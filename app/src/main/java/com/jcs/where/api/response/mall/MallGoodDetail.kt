@@ -1,6 +1,7 @@
 package com.jcs.where.api.response.mall
 
 import com.jcs.where.api.response.hotel.HotelComment
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
@@ -47,13 +48,13 @@ class MallGoodDetail {
 
 }
 
-class MallAttribute {
+class MallAttribute: Serializable {
     var key = ""
     var value = ArrayList<MallAttributeValue>()
 }
 
 
-class MallAttributeValue {
+class MallAttributeValue : Serializable{
     var key = ""
     var name = ""
 
@@ -65,7 +66,7 @@ class MallAttributeValue {
     var nativeIsSelected = 0
 }
 
-class MallSpecs {
+class MallSpecs : Serializable{
 
     var id = 0
     var goods_id = 0

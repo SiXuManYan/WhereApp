@@ -13,6 +13,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.CartDeleteRequest
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.mall.MallCartGroup
+import com.jcs.where.api.response.mall.MallExpired
 import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.features.store.cart.child.OnChildReselectSkuClick
 import com.jcs.where.features.store.cart.child.OnChildSelectClick
@@ -40,6 +41,12 @@ interface MallCartView : BaseMvpView,
     /** sku 更新成功 */
     fun changeSkuSuccess(mallSpecs: MallSpecs, number: Int)
 
+    /** 清空购物车 */
+    fun clearStoreCartSuccess()
+
+    /** 处理失效商品 */
+    fun bindExpired(apply: MallCartGroup)
+
 }
 
 class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view) {
@@ -60,9 +67,18 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
      */
     @SuppressLint("NotifyDataSetChanged")
     fun handleSelectAll(adapter: MallCartAdapter, select: Boolean) {
+
+
         val editMode = adapter.isEditMode
 
-        adapter.data.forEach {
+
+
+        adapter.data.forEachIndexed { index, it ->
+
+            if (adapter.getItemViewType(index) == 1) {
+                return@forEachIndexed
+            }
+
 
             if (editMode) {
                 it.nativeIsSelectEdit = select
@@ -87,7 +103,15 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
      */
     fun getSelectedCount(adapter: MallCartAdapter): Int {
         var count = 0
-        adapter.data.forEach {
+
+
+
+        adapter.data.forEachIndexed { index, it ->
+
+            if (adapter.getItemViewType(index) == 1) {
+                return@forEachIndexed
+            }
+
 
             it.gwc.forEach { child ->
                 if (child.nativeIsSelect) {
@@ -104,7 +128,12 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
 
         val selectData: ArrayList<MallCartGroup> = ArrayList()
 
-        adapter.data.forEach {
+        adapter.data.forEachIndexed { index, it ->
+
+            if (adapter.getItemViewType(index) == 1) {
+                return@forEachIndexed
+            }
+
             val group = MallCartGroup().apply {
                 shop_id = it.shop_id
                 title = it.title
@@ -133,7 +162,12 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
     fun handlePrice(adapter: MallCartAdapter): BigDecimal {
 
         var totalPrice: BigDecimal = BigDecimal.ZERO
-        adapter.data.forEachIndexed { _, data ->
+        adapter.data.forEachIndexed { index, data ->
+
+            if (adapter.getItemViewType(index) == 1) {
+                return@forEachIndexed
+            }
+
             data.gwc.forEach {
                 if (it.nativeIsSelect && it.nativeEnable) {
 
@@ -172,9 +206,12 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
 
         val result = ArrayList<Boolean>()
         result.clear()
-        adapter.data.forEach { data ->
+        adapter.data.forEachIndexed { index, data ->
 
 //            result.add(data.nativeIsSelect)
+            if (adapter.getItemViewType(index) == 1) {
+                return@forEachIndexed
+            }
 
             data.gwc.forEach {
                 if (it.nativeEnable) {
@@ -191,11 +228,13 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
 
     /**
      * 清空购物车
+     * @param clear 0清空正常商品 1清空失效商品
      */
-    fun clearStoreCart() {
-        requestApi(mRetrofit.clearMallCart(0), object : BaseMvpObserver<JsonElement>(view) {
+    fun clearStoreCart(clear:Int) {
+        requestApi(mRetrofit.clearMallCart(clear), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
+                view.clearStoreCartSuccess()
             }
         })
     }
@@ -208,7 +247,12 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
             return
         }
         val delete = ArrayList<Int>()
-        adapter.data.forEach {
+        adapter.data.forEachIndexed { index, it ->
+
+            if (adapter.getItemViewType(index) == 1) {
+                return@forEachIndexed
+            }
+
             it.gwc.forEach { child ->
                 if (child.nativeIsSelectEdit) {
                     delete.add(child.cart_id)
@@ -239,6 +283,26 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
             }
 
         })
+    }
+
+    fun getExpiredGoods() {
+        requestApi(mRetrofit.expiredGoods(), object : BaseMvpObserver<ArrayList<MallExpired>>(view) {
+            override fun onSuccess(response: ArrayList<MallExpired>) {
+                val apply = MallCartGroup().apply {
+                    nativeIsNormalType = 1
+                    nativeExpiredData.addAll(response)
+                }
+
+
+
+
+                view.bindExpired(apply)
+
+
+            }
+
+        })
+
     }
 
 

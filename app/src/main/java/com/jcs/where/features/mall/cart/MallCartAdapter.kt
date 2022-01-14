@@ -6,7 +6,7 @@ import android.widget.*
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
@@ -23,7 +23,7 @@ import com.jcs.where.widget.NumberView2
  * Created by Wangsw  2021/12/14 18:50.
  * 商城购物车
  */
-class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout.item_mall_cart), LoadMoreModule {
+class MallCartAdapter : BaseMultiItemQuickAdapter<MallCartGroup, BaseViewHolder>(), LoadMoreModule {
 
     /** child数量改变监听 */
     var numberChangeListener: StoreCartValueChangeListener? = null
@@ -37,12 +37,58 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
     /** 重新选择SKU */
     var onChildReselectSkuClick: OnChildReselectSkuClick? = null
 
+    /** 清空失效商品 */
+    var onDeleteExpiredClick: View.OnClickListener? = null
+
     /** 是否为编辑模式 */
     var isEditMode = false
 
 
+    init {
+        addItemType(0, R.layout.item_mall_cart)
+        addItemType(1, R.layout.item_mall_cart_expired)
+    }
+
+
     override fun convert(holder: BaseViewHolder, item: MallCartGroup) {
 
+        when (holder.itemViewType) {
+            0 -> bindCommonItem(holder, item)
+            1 ->{
+                bindExpiredItem(holder, item)
+            }
+        }
+
+
+    }
+
+    private fun bindExpiredItem(holder: BaseViewHolder, item: MallCartGroup) {
+
+        val deleteExpired = holder.getView<CheckedTextView>(R.id.delete_expired_tv)
+        val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
+
+        deleteExpired.setOnClickListener(onDeleteExpiredClick)
+
+        child_container_ll.removeAllViews()
+        item.nativeExpiredData.forEachIndexed { childIndex, mallCartItem ->
+
+
+            val child = LayoutInflater.from(context).inflate(R.layout.item_shopping_cart_child_for_store_mall_expired, null)
+
+            val image_iv = child.findViewById<ImageView>(R.id.image_iv)
+            val good_name = child.findViewById<TextView>(R.id.good_name_tv)
+            val goodData = mallCartItem.good_data
+
+            good_name.text = goodData.title
+            GlideUtil.load(context, goodData.photo, image_iv, 4)
+
+            child_container_ll.addView(child)
+        }
+
+
+    }
+
+    private fun bindCommonItem(holder: BaseViewHolder, item: MallCartGroup) {
         val store_cart_ll = holder.getView<LinearLayout>(R.id.store_cart_ll)
         val select_all_tv = holder.getView<CheckedTextView>(R.id.select_all_tv)
         val child_container_ll = holder.getView<LinearLayout>(R.id.child_container_ll)
@@ -123,8 +169,6 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
             }
 
         }
-
-
     }
 
     private fun bindChild(

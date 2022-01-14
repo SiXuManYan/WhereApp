@@ -51,10 +51,16 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         }
         mAdapter = MallCartAdapter().apply {
             setEmptyView(emptyView)
+            loadMoreModule.isAutoLoadMore = true
             numberChangeListener = this@MallCartActivity
             onChildSelectClick = this@MallCartActivity
             onGroupSelectClick = this@MallCartActivity
             onChildReselectSkuClick = this@MallCartActivity
+            onDeleteExpiredClick = View.OnClickListener {
+                presenter.clearStoreCart(1)
+
+
+            }
 
         }
         recycler_view.apply {
@@ -102,9 +108,13 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         delete_tv.setOnClickListener {
 
             if (select_all_tv.isChecked) {
-                presenter.clearStoreCart()
-                mAdapter.setNewInstance(null)
-                emptyView.showEmptyDefault()
+                presenter.clearStoreCart(0)
+//                mAdapter.setNewInstance(null)
+//                emptyView.showEmptyDefault()
+
+                // 565665656
+
+
             } else {
                 presenter.deleteCart(mAdapter)
             }
@@ -161,6 +171,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             } else {
                 loadMoreModule.loadMoreEnd()
             }
+            presenter.getExpiredGoods()
             return
         }
         if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -168,11 +179,12 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()
         } else {
             mAdapter.addData(data)
-            if (lastPage) {
-                loadMoreModule.loadMoreEnd()
-            } else {
-                loadMoreModule.loadMoreComplete()
-            }
+
+        }
+        if (lastPage) {
+            presenter.getExpiredGoods()
+        } else {
+            loadMoreModule.loadMoreComplete()
         }
         getNowPrice()
     }
@@ -263,11 +275,12 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
         // test
 
-        if (BuildConfig.FLAVOR == "dev") {
-            changeSkuSuccess(mallSpecs, goodNum)
-        } else {
-            presenter.changeSku(mGwcSource.cart_id, mallSpecs.specs_id, goodNum, mallSpecs)
-        }
+//        if (BuildConfig.FLAVOR == "dev") {
+//            changeSkuSuccess(mallSpecs, goodNum)
+//        } else {
+//            presenter.changeSku(mGwcSource.cart_id, mallSpecs.specs_id, goodNum, mallSpecs)
+//        }
+        presenter.changeSku(mGwcSource.cart_id, mallSpecs.specs_id, goodNum, mallSpecs)
     }
 
 
@@ -290,5 +303,13 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         getNowPrice()
     }
 
+    override fun clearStoreCartSuccess() {
+        onRefresh()
+    }
+
+    override fun bindExpired(apply: MallCartGroup) {
+        mAdapter.addData(apply)
+        mAdapter.loadMoreModule.loadMoreEnd()
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.jcs.where.api.response.mall
 
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import java.io.Serializable
 import java.math.BigDecimal
 
@@ -7,7 +8,7 @@ import java.math.BigDecimal
  * Created by Wangsw  2021/12/14 18:26.
  *
  */
-class MallCartGroup : Serializable {
+class MallCartGroup : Serializable, MultiItemEntity {
 
 
     /** 店铺id */
@@ -32,6 +33,17 @@ class MallCartGroup : Serializable {
     var nativeShopDelivery: BigDecimal? = null
     var nativeRemark = ""
     var delivery_fee: BigDecimal? = BigDecimal.ZERO
+
+    /** 0 普通商品 1 失效商品 */
+    var nativeIsNormalType = 0
+
+
+    override val itemType: Int
+        get() = nativeIsNormalType
+
+    /** 失效商品 */
+    var nativeExpiredData = ArrayList<MallExpired>()
+
 
 }
 

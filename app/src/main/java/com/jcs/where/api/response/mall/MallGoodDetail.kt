@@ -13,7 +13,7 @@ class MallGoodDetail {
     var title = ""
     var main_image = ""
     var sub_images = ArrayList<String>()
-    var min_price = ""
+    var min_price:String? = ""
     var max_price = ""
     var stock = 0
     var sold = 0
@@ -78,7 +78,7 @@ class MallSpecs {
 
 class SkuDataSource {
     var main_image = ""
-    var min_price = ""
+    var min_price :String?= ""
     var stock = 0
     /** 商品属性 */
     var attribute_list = ArrayList<MallAttribute>()

@@ -395,7 +395,7 @@
     <string name="merchant_verify_faild_title">审核失败</string>
     <string name="merchant_verify_faild_desc">您的资料审核失败，我们将以电话形式通知您，请耐心等待。</string>
 
-    <string name="merchant_verify_success_desc">您的资料已审核通过，我们将以电话形式通知您，请耐心等待。</string>
+    <string name="merchant_verify_success_desc">您的资料已审核通过，我们将以邮件或电话形式通知您，请耐心等待。</string>
     <string name="merchant_verify_success_title">恭喜您审核通过</string>
     <string name="merchant_verify_success_step2">审核通过</string>
     <string name="stay_info">入住信息</string>
@@ -947,5 +947,9 @@ Gentleman must let go</string>
     <string name="sku_invalid_hint">请重新选择商品规格</string>
     <string name="reselect">重选</string>
     <string name="stock_invalid_hint">请重新选择购买数量，商品库存不足。</string>
+    <string name="delete_all">全部删除</string>
+    <string name="lnvalid">商品失效</string>
+    <string name="good_expired_hint">商品已失效</string>
+    <string name="expired_products">失效商品</string>
 
 </resources>

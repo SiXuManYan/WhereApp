@@ -395,7 +395,7 @@
     <string name="stay_info">Check in information</string>
     <string name="merchant_verify_success_step2">Approved</string>
     <string name="merchant_verify_success_title">Congratulations on your approval</string>
-    <string name="merchant_verify_success_desc">Your information has been approved, we will inform you by telephone, please wait patiently.</string>
+    <string name="merchant_verify_success_desc">Your information has been approved, we will inform you by email or telephone, please wait patiently.</string>
     <string name="merchant_verify_faild_desc">Your data audit failed, we will inform you by telephone, please wait patiently.</string>
     <string name="merchant_verify_ing_title">Verifying</string>
     <string name="merchant_verify_faild_title">Audit failed</string>
@@ -939,5 +939,9 @@ Gentleman must let go</string>
     <string name="sku_invalid_hint">Please re-select the product specification</string>
     <string name="reselect">Reselect</string>
     <string name="stock_invalid_hint">Please re-select the purchase quantity, the product is out of stock.</string>
+    <string name="delete_all">Delete All</string>
+    <string name="lnvalid">Lnvalid</string>
+    <string name="good_expired_hint">The product has been removed</string>
+    <string name="expired_products">Expired Products</string>
 
 </resources>

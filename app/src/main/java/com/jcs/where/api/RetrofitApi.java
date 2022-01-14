@@ -106,6 +106,7 @@ import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallCommentCount;
+import com.jcs.where.api.response.mall.MallExpired;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
 import com.jcs.where.api.response.mall.MallOrderDetail;
@@ -2046,6 +2047,14 @@ public interface RetrofitApi {
             @Query("specs_id") int specs_id,
             @Query("nums") int nums
     );
+
+
+
+    /**
+     * 失效商品
+     */
+    @GET("estoreapi/v2/carts_efficacy")
+    Observable<JcsResponse<ArrayList<MallExpired>>> expiredGoods();
 
 
 }

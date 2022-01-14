@@ -948,8 +948,9 @@ Gentleman must let go</string>
     <string name="reselect">重选</string>
     <string name="stock_invalid_hint">请重新选择购买数量，商品库存不足。</string>
     <string name="delete_all">全部删除</string>
-    <string name="lnvalid">商品失效</string>
+    <string name="invalid">商品失效</string>
     <string name="good_expired_hint">商品已失效</string>
     <string name="expired_products">失效商品</string>
+    <string name="empty_data_cart">暂无数据</string>
 
 </resources>

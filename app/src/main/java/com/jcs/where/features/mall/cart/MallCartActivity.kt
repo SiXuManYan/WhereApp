@@ -48,6 +48,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         }
         emptyView = EmptyView(this).apply {
             showEmptyDefault()
+            this.empty_message_tv.text = StringUtils.getString(R.string.empty_data_cart)
         }
         mAdapter = MallCartAdapter().apply {
             setEmptyView(emptyView)

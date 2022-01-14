@@ -940,8 +940,9 @@ Gentleman must let go</string>
     <string name="reselect">Reselect</string>
     <string name="stock_invalid_hint">Please re-select the purchase quantity, the product is out of stock.</string>
     <string name="delete_all">Delete All</string>
-    <string name="lnvalid">Lnvalid</string>
+    <string name="invalid">Invalid</string>
     <string name="good_expired_hint">The product has been removed</string>
     <string name="expired_products">Expired Products</string>
+    <string name="empty_data_cart">No data</string>
 
 </resources>

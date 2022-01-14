@@ -2,13 +2,17 @@ package com.jcs.where.features.store.cart.child
 
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.CheckedTextView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
+import com.jcs.where.api.response.mall.MallCartItem
 import com.jcs.where.api.response.store.cart.StoreCartGroup
 import com.jcs.where.api.response.store.cart.StoreCartItem
 import com.jcs.where.utils.BusinessUtils
@@ -118,7 +122,7 @@ class StoreCartAdapter : BaseQuickAdapter<StoreCartGroup, BaseViewHolder>(R.layo
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                     storeCartItem.good_num = goodNum
-                    numberChangeListener?.onChildNumberChange(storeCartItem.cart_id, isAdd)
+                    numberChangeListener?.onChildNumberChange(storeCartItem.cart_id, isAdd, goodNum)
 
                 }
             }
@@ -178,9 +182,9 @@ interface StoreCartValueChangeListener {
      * @param cartId 购物车id
      * @param add 是否是添加
      */
-    fun onChildNumberChange(cartId: Int, add: Boolean)
 
-    fun onChildNumberChange(cartId: Int, add: Boolean ,number:Int){
+
+    fun onChildNumberChange(cartId: Int, add: Boolean, number: Int) {
 
     }
 }
@@ -212,4 +216,20 @@ interface OnGroupSelectClick {
      * group 选中状态改变，重新计算总价格，判断顶级全选
      */
     fun onGroupSelected(nativeIsSelect: Boolean)
+}
+
+
+/**
+ * 重新选择SKU
+ */
+interface OnChildReselectSkuClick {
+
+    /**
+     * @param childIndex        当前操作的商品 index
+     * @param adapterPosition   当前操作的店铺，在列表中的位置
+     * @param source             可用于更改的SKU数据源
+     *
+     */
+    fun reselectSkuClick(childIndex: Int, adapterPosition: Int, source: MallCartItem)
+
 }

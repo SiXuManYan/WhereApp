@@ -2,10 +2,8 @@ package com.jcs.where.features.mall.cart
 
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckedTextView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -14,6 +12,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
 import com.jcs.where.api.response.mall.MallCartItem
+import com.jcs.where.features.store.cart.child.OnChildReselectSkuClick
 import com.jcs.where.features.store.cart.child.OnChildSelectClick
 import com.jcs.where.features.store.cart.child.OnGroupSelectClick
 import com.jcs.where.features.store.cart.child.StoreCartValueChangeListener
@@ -24,22 +23,22 @@ import com.jcs.where.widget.NumberView2
  * Created by Wangsw  2021/12/14 18:50.
  * 商城购物车
  */
-class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout.item_mall_cart),LoadMoreModule {
+class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout.item_mall_cart), LoadMoreModule {
 
-    /**
-     * child数量改变监听
-     */
+    /** child数量改变监听 */
     var numberChangeListener: StoreCartValueChangeListener? = null
 
-    /**
-     * child选中状态监听
-     */
+    /** child选中状态监听 */
     var onChildSelectClick: OnChildSelectClick? = null
 
-    /**
-     * group 选中
-     */
+    /** group 选中 */
     var onGroupSelectClick: OnGroupSelectClick? = null
+
+    /** 重新选择SKU */
+    var onChildReselectSkuClick: OnChildReselectSkuClick? = null
+
+    /** 是否为编辑模式 */
+    var isEditMode = false
 
 
     override fun convert(holder: BaseViewHolder, item: MallCartGroup) {
@@ -51,41 +50,79 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
 
         select_all_tv.apply {
             text = item.title
-            isChecked = item.nativeIsSelect
+
+            isChecked = if (isEditMode) {
+                item.nativeIsSelectEdit
+            } else {
+                item.nativeIsSelect
+            }
+
+
         }
 
 
         // group 选中
         select_all_tv.setOnClickListener { _ ->
 
-            val currentIsSelect = item.nativeIsSelect
-            item.nativeIsSelect = !currentIsSelect
-            if (item.nativeIsSelect) {
+            val currentIsSelect = if (isEditMode) {
+                item.nativeIsSelectEdit
+            } else {
+                item.nativeIsSelect
+            }
+
+            if (isEditMode) {
+                item.nativeIsSelectEdit = !currentIsSelect
+            } else {
+                item.nativeIsSelect = !currentIsSelect
+            }
+            select_all_tv.isChecked = !currentIsSelect
+
+            if (item.nativeIsSelect || item.nativeIsSelectEdit) {
                 VibrateUtils.vibrate(10)
             }
-            select_all_tv.isChecked = item.nativeIsSelect
+
 
             // 子项全选
             item.gwc.forEachIndexed { index, storeCartItem ->
-                storeCartItem.nativeIsSelect = item.nativeIsSelect
+
+                val isSelected = if (isEditMode) {
+                    item.nativeIsSelectEdit
+                } else {
+                    item.nativeIsSelect
+                }
+
+                if (isEditMode) {
+                    storeCartItem.nativeIsSelectEdit = isSelected
+                } else {
+                    storeCartItem.nativeIsSelect = isSelected
+                }
+
                 val good_checked_tv = child_container_ll.getChildAt(index).findViewById<CheckedTextView>(R.id.good_checked_tv)
-                good_checked_tv.isChecked = item.nativeIsSelect
-                onGroupSelectClick?.onGroupSelected(item.nativeIsSelect)
+                good_checked_tv.isChecked = isSelected
+                onGroupSelectClick?.onGroupSelected(isSelected)
 
             }
         }
 
         child_container_ll.removeAllViews()
-        item.gwc.forEach {
+        item.gwc.forEachIndexed { childIndex, mallCartItem ->
             val child = LayoutInflater.from(context).inflate(R.layout.item_shopping_cart_child_for_store_mall, null)
-
-            bindChild(child, it, select_all_tv, item)
+            bindChild(child, mallCartItem, select_all_tv, item, childIndex, holder.adapterPosition)
             child_container_ll.addView(child)
+
+
         }
 
     }
 
-    private fun bindChild(child: View, mallCartItem: MallCartItem, groupSelectAllTv: CheckedTextView, groupData: MallCartGroup) {
+    private fun bindChild(
+        child: View,
+        mallCartItem: MallCartItem,
+        groupSelectAllTv: CheckedTextView,
+        groupData: MallCartGroup,
+        childIndex: Int,
+        adapterPosition: Int,
+    ) {
         val good_checked_tv = child.findViewById<CheckedTextView>(R.id.good_checked_tv)
         val image_iv = child.findViewById<ImageView>(R.id.image_iv)
         val good_name = child.findViewById<TextView>(R.id.good_name_tv)
@@ -93,12 +130,43 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
         val good_attr_tv = child.findViewById<TextView>(R.id.good_attr_tv)
         val number_view = child.findViewById<NumberView2>(R.id.number_view)
 
+
+        // SKU已被删除
+        val number_sku_sw = child.findViewById<ViewSwitcher>(R.id.number_sku_sw)
+        val reselect_sku_tv = child.findViewById<TextView>(R.id.reselect_sku_tv)
+        val sku_sw = child.findViewById<ViewSwitcher>(R.id.sku_sw)
+        // 商品库存不足
+
+        val stock_invalid_tv = child.findViewById<TextView>(R.id.stock_invalid_tv)
+
+        // 是否库存不足
+        val inventoryShortage = mallCartItem.good_num > mallCartItem.specs_info!!.stock
+
         mallCartItem.goods_info?.let {
             GlideUtil.load(context, it.photo, image_iv, 4)
             good_name.text = it.title
+            stock_invalid_tv.visibility = if (inventoryShortage) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
 
         mallCartItem.specs_info?.let {
+
+            if (it.delete_status == 1) {
+                number_sku_sw.displayedChild = 1
+                sku_sw.displayedChild = 1
+                good_name.setTextColor(ColorUtils.getColor(R.color.grey_999999))
+
+                return@let
+            }
+
+            number_sku_sw.displayedChild = 0
+            sku_sw.displayedChild = 0
+            good_name.setTextColor(ColorUtils.getColor(R.color.black_333333))
+
+
             val nowPrice: String = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
             now_price_tv.text = nowPrice
 
@@ -118,10 +186,7 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
                 valueChangeListener = object : NumberView2.OnValueChangeListener {
                     override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                         mallCartItem.good_num = goodNum
-                        numberChangeListener?.onChildNumberChange(mallCartItem.cart_id, isAdd)
-                        numberChangeListener?.onChildNumberChange(mallCartItem.cart_id, isAdd,goodNum)
-
-
+                        numberChangeListener?.onChildNumberChange(mallCartItem.cart_id, isAdd, goodNum)
                     }
                 }
             }
@@ -133,7 +198,7 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
             val specs = it.specs
             if (specs.isNullOrEmpty()) {
                 good_attr_tv.visibility = View.GONE
-            }else{
+            } else {
                 good_attr_tv.visibility = View.VISIBLE
                 specs.forEach { entry ->
                     attr.append(entry.value + " ")
@@ -143,23 +208,64 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
         }
 
 
+        good_attr_tv.setOnClickListener {
+            onChildReselectSkuClick?.reselectSkuClick(childIndex, adapterPosition, mallCartItem)
+        }
+        reselect_sku_tv.setOnClickListener {
+            good_attr_tv.performClick()
+        }
+
+
         // child 选中
         good_checked_tv.apply {
-            this.isChecked = mallCartItem.nativeIsSelect
+
+            // 没有库存 SKU被删除
+
+            if (inventoryShortage || mallCartItem.specs_info!!.delete_status == 1) {
+                if (isEditMode) {
+                    mallCartItem.nativeEnable = true
+                    this.isEnabled = true
+                } else {
+                    mallCartItem.nativeEnable = false
+                    this.isEnabled = false
+                }
+                return@apply
+            }
+
+            mallCartItem.nativeEnable = true
+            this.isEnabled = true
+
+            this.isChecked = if (isEditMode) {
+                mallCartItem.nativeIsSelectEdit
+            } else {
+                mallCartItem.nativeIsSelect
+            }
+
             setOnClickListener { view ->
-                val currentIsSelect = mallCartItem.nativeIsSelect
-                mallCartItem.nativeIsSelect = !currentIsSelect
-                if (mallCartItem.nativeIsSelect) {
+
+                val currentIsSelect: Boolean
+
+                if (isEditMode) {
+                    currentIsSelect = mallCartItem.nativeIsSelectEdit
+                    mallCartItem.nativeIsSelectEdit = !currentIsSelect
+                    this.isChecked = mallCartItem.nativeIsSelectEdit
+                } else {
+                    currentIsSelect = mallCartItem.nativeIsSelect
+                    mallCartItem.nativeIsSelect = !currentIsSelect
+                    this.isChecked = mallCartItem.nativeIsSelect
+                }
+
+
+                if (mallCartItem.nativeIsSelect || mallCartItem.nativeIsSelectEdit) {
                     VibrateUtils.vibrate(10)
                 }
-                this.isChecked = mallCartItem.nativeIsSelect
 
                 // 判断组内是否全选
                 val isGroupSelectAll = checkGroupSelectAll(groupData)
                 groupData.nativeIsSelect = isGroupSelectAll
                 groupSelectAllTv.isChecked = isGroupSelectAll
 
-                onChildSelectClick?.onChildSelected(mallCartItem.nativeIsSelect)
+                onChildSelectClick?.onChildSelected(this.isChecked)
 
             }
         }
@@ -173,7 +279,11 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
         result.clear()
 
         groupData.gwc.forEach { data ->
-            result.add(data.nativeIsSelect)
+            if (isEditMode) {
+                result.add(data.nativeIsSelectEdit)
+            } else {
+                result.add(data.nativeIsSelect)
+            }
         }
         return !result.contains(false)
     }

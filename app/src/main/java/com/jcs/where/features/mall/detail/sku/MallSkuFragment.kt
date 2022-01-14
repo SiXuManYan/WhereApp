@@ -9,8 +9,8 @@ import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallAttributeValue
-import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
+import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
 import com.jcs.where.utils.GlideUtil
@@ -27,7 +27,8 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
     var selectResult: MallSkuSelectResult? = null
     var result: MallSpecs? = null
 
-    lateinit var data: MallGoodDetail
+    lateinit var data: SkuDataSource
+
 
     private lateinit var mAdapter: SkuFirstAdapter
 
@@ -52,6 +53,8 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
     }
 
     private fun initOther() {
+
+        price_tv.text = getString(R.string.price_unit_format, data.min_price)
         GlideUtil.load(requireContext(), data.main_image, good_iv, 4)
 
 

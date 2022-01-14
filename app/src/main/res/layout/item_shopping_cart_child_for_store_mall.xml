@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -49,20 +50,44 @@
             android:textSize="@dimen/sp_13"
             tools:text="商品名称" />
 
-        <TextView
-            android:id="@+id/good_attr_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_24"
+
+        <ViewSwitcher
+            android:id="@+id/sku_sw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/good_name_tv"
             android:layout_marginTop="@dimen/dp_4"
-            android:layout_toEndOf="@+id/image_iv"
-            android:background="@drawable/shape_gray_radius_4"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:textColor="@color/black_333333"
-            android:textSize="@dimen/sp_13"
-            tools:text="asdasijiajdijasijdiajsidjidjaisjd" />
+            android:layout_toEndOf="@+id/image_iv">
+
+
+            <TextView
+                android:id="@+id/good_attr_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_24"
+                android:background="@drawable/shape_gray_radius_4"
+                android:drawablePadding="@dimen/dp_4"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingStart="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_8"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_13"
+                app:drawableEndCompat="@mipmap/ic_sku_down"
+                tools:text="暗色 xxxl" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:text="@string/sku_invalid_hint"
+                android:textColor="@color/orange_FF5837"
+                android:textSize="@dimen/sp_12" />
+
+
+        </ViewSwitcher>
 
 
         <LinearLayout
@@ -87,14 +112,49 @@
 
         </LinearLayout>
 
-        <com.jcs.where.widget.NumberView2
-            android:id="@+id/number_view"
+
+        <ViewSwitcher
+            android:id="@+id/number_sku_sw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true">
+
+            <com.jcs.where.widget.NumberView2
+                android:id="@+id/number_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/reselect_sku_tv"
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_24"
+                android:background="@drawable/stock_orange_radius_14"
+                android:gravity="center"
+                android:text="@string/reselect"
+                android:textColor="@color/orange_FF5837"
+                android:textSize="@dimen/sp_12" />
+
+
+        </ViewSwitcher>
 
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/stock_invalid_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_133"
+        android:layout_marginTop="@dimen/dp_8"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:text="@string/stock_invalid_hint"
+        android:textColor="@color/orange_FF5837"
+        android:textSize="@dimen/sp_12"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
 
 </LinearLayout>

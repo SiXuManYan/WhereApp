@@ -5,6 +5,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.mall.MallAttributeValue
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
+import com.jcs.where.api.response.mall.SkuDataSource
 
 /**
  * Created by Wangsw  2021/12/13 14:46.
@@ -34,7 +35,7 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
 
     }
 
-    fun filterTargetSpecsList2(source: MallGoodDetail, userSelect: ArrayList<MallAttributeValue>): ArrayList<MallSpecs> {
+    fun filterTargetSpecsList2(source: SkuDataSource, userSelect: ArrayList<MallAttributeValue>): ArrayList<MallSpecs> {
 
         // 1.筛选出符合目标的结果集
 

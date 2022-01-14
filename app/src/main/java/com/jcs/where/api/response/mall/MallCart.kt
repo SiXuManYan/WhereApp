@@ -14,12 +14,19 @@ class MallCartGroup : Serializable {
     var shop_id = 0
 
     /** 店铺名称  */
-    var title:String? = ""
+    var title: String? = ""
 
     var gwc = ArrayList<MallCartItem>()
 
     /** 本地记录是否选中 */
     var nativeIsSelect = false
+
+    /** 编辑是否选中 */
+    var nativeIsSelectEdit = false
+
+    /** 按钮是否可用 */
+    var nativeEnable = true
+
 
     /** 本地记录，通过城市id额外获取的 当前店铺配送费 */
     var nativeShopDelivery: BigDecimal? = null
@@ -33,6 +40,12 @@ class MallCartItem : Serializable {
     /** 本地记录是否选中 */
     var nativeIsSelect = false
 
+    /** 按钮是否可用 */
+    var nativeEnable = true
+
+    /** 编辑是否选中 */
+    var nativeIsSelectEdit = false
+
     var id = 0
     var cart_id = 0
     var good_id = 0
@@ -45,7 +58,10 @@ class MallCartItem : Serializable {
     /** 商品详情 */
     var goods_info: MallGoodInfo? = null
     var specs_info: MallSpecsInfo? = null
-//    var delivery_fee: BigDecimal = BigDecimal.ZERO
+
+
+    /** 所有的商品属性组合信息 */
+    var specs = ArrayList<MallSpecs>()
 
 
 }
@@ -54,10 +70,24 @@ class MallCartItem : Serializable {
 class MallGoodInfo : Serializable {
     var title: String? = ""
     var photo = ""
+
+    /** 库存数 ： 0库存不足 1 正常 */
+//   var good_stock = 1
+    /** 商品属性 */
+    var attribute_list = ArrayList<MallAttribute>()
+    var min_price = ""
+    var max_price = ""
+    var main_image = ""
+    var good_stock = 0
+
 }
 
 class MallSpecsInfo : Serializable {
     var specs: HashMap<String, String> = HashMap()
     var price: BigDecimal = BigDecimal.ZERO
     var stock = 0
+
+
+    /** SKU是否被删除  0未删除 1已删除 */
+    var delete_status = 0
 }

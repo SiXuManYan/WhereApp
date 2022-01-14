@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.cart
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,10 +10,16 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
+import com.jcs.where.api.response.mall.MallCartItem
+import com.jcs.where.api.response.mall.MallSpecs
+import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
+import com.jcs.where.features.mall.detail.sku.MallSkuFragment
+import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
+import com.jcs.where.features.store.cart.child.OnChildReselectSkuClick
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_mall_cart.*
@@ -22,11 +29,12 @@ import kotlinx.android.synthetic.main.activity_mall_cart.*
  * Created by Wangsw  2021/12/14 17:49.
  * 商城购物车
  */
-class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
+class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, MallSkuSelectResult {
 
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var emptyView: EmptyView
     private lateinit var mAdapter: MallCartAdapter
+    private lateinit var mSkuDialog: MallSkuFragment
 
     override fun isStatusDark() = true
 
@@ -34,7 +42,8 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
 
     override fun initView() {
         swipe_layout.apply {
-            setOnRefreshListener(this@MallCartActivity)
+//            setOnRefreshListener(this@MallCartActivity)
+            swipe_layout.isEnabled = false
             setColorSchemeColors(ColorUtils.getColor(R.color.blue_4C9EF2))
         }
         emptyView = EmptyView(this).apply {
@@ -45,11 +54,15 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
             numberChangeListener = this@MallCartActivity
             onChildSelectClick = this@MallCartActivity
             onGroupSelectClick = this@MallCartActivity
+            onChildReselectSkuClick = this@MallCartActivity
 
         }
         recycler_view.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+        mSkuDialog = MallSkuFragment().apply {
+            selectResult = this@MallCartActivity
         }
 
 
@@ -60,6 +73,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
         onRefresh()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun bindListener() {
         select_all_tv.setOnClickListener {
             var isSelectAll = select_all_tv.isChecked
@@ -74,10 +88,12 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
                 val handlePrice = presenter.handlePrice(mAdapter)
                 total_price_tv.text =
                     StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
-//                select_count_tv.text = getString(R.string.total_format, presenter.getSelectedCount(mAdapter))
+                // 数量
+                // select_count_tv.text = getString(R.string.total_format, presenter.getSelectedCount(mAdapter))
             } else {
                 total_price_tv.text = getString(R.string.price_unit_format, "0.00")
-//                select_count_tv.text = getString(R.string.total_format, 0)
+                // 数量
+                // select_count_tv.text = getString(R.string.total_format, 0)
             }
 
             select_all_tv.isChecked = isSelectAll
@@ -99,14 +115,18 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
             right_vs.displayedChild = 1
             bottom_vs.displayedChild = 1
             total_price_ll.visibility = View.GONE
-
+            mAdapter.isEditMode = true
+            mAdapter.notifyDataSetChanged()
+            select_all_tv.isChecked =  presenter.checkSelectAll(mAdapter)
         }
 
         cancel_tv.setOnClickListener {
             right_vs.displayedChild = 0
             bottom_vs.displayedChild = 0
             total_price_ll.visibility = View.VISIBLE
-
+            mAdapter.isEditMode = false
+            mAdapter.notifyDataSetChanged()
+            select_all_tv.isChecked =  presenter.checkSelectAll(mAdapter)
         }
 
 
@@ -162,7 +182,6 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
         presenter.getData(page)
     }
 
-    override fun onChildNumberChange(cartId: Int, add: Boolean) = Unit
 
     override fun onChildNumberChange(cartId: Int, add: Boolean, number: Int) {
         presenter.changeCartNumber(cartId, number)
@@ -213,6 +232,28 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView {
                 finish()
             }
         }
+    }
+
+    override fun reselectSkuClick(childIndex: Int, adapterPosition: Int, source: MallCartItem) {
+        val goodsInfo = source.goods_info ?: return
+
+        mSkuDialog.data =  SkuDataSource().apply {
+            main_image = goodsInfo.main_image
+            min_price = goodsInfo.min_price
+            stock = goodsInfo.good_stock
+            attribute_list.clear()
+            attribute_list.addAll(goodsInfo.attribute_list)
+            specs.clear()
+            specs.addAll(source.specs)
+        }
+        mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+    }
+
+    override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {
+
+
+
+
     }
 
 

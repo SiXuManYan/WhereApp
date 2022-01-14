@@ -196,7 +196,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
         handleBottom()
     }
 
-    override fun onChildNumberChange(cartId: Int, add: Boolean) {
+    override fun onChildNumberChange(cartId: Int, add: Boolean, number: Int) {
         val handlePrice = presenter.handlePrice(mAdapter)
         total_price_tv.text = StringUtils.getString(R.string.price_unit_format, handlePrice.stripTrailingZeros().toPlainString())
 

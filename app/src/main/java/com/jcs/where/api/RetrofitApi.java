@@ -3,7 +3,6 @@ package com.jcs.where.api;
 import androidx.annotation.Nullable;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
 import com.jcs.where.api.request.CollectionRequest;
@@ -1434,9 +1433,11 @@ public interface RetrofitApi {
 
     /**
      * 清空mall商城购物车
+     *
+     * @param clear 0清空正常商品 1清空失效商品
      */
     @DELETE("estoreapi/v2/carts/clears")
-    Observable<JcsResponse<JsonElement>> clearMallCart();
+    Observable<JcsResponse<JsonElement>> clearMallCart(@Query("clear") int clear);
 
 
     /**
@@ -2025,7 +2026,6 @@ public interface RetrofitApi {
      */
     @POST("estoreapi/v2/order/confirm/{order_id}")
     Observable<JcsResponse<JsonElement>> confirmReceipt(@Path("order_id") int order_id);
-
 
 
     /**

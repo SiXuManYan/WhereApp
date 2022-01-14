@@ -13,10 +13,9 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.CartDeleteRequest
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.mall.MallCartGroup
-import com.jcs.where.api.response.store.cart.StoreCartGroup
+import com.jcs.where.features.store.cart.child.OnChildReselectSkuClick
 import com.jcs.where.features.store.cart.child.OnChildSelectClick
 import com.jcs.where.features.store.cart.child.OnGroupSelectClick
-import com.jcs.where.features.store.cart.child.StoreCartAdapter
 import com.jcs.where.features.store.cart.child.StoreCartValueChangeListener
 import com.jcs.where.utils.BigDecimalUtil
 import java.math.BigDecimal
@@ -26,8 +25,13 @@ import java.math.BigDecimal
  *
  */
 
-interface MallCartView : BaseMvpView ,  SwipeRefreshLayout.OnRefreshListener,
-    StoreCartValueChangeListener, OnChildSelectClick, OnGroupSelectClick {
+interface MallCartView : BaseMvpView,
+    SwipeRefreshLayout.OnRefreshListener,
+    StoreCartValueChangeListener,
+    OnChildSelectClick,
+    OnGroupSelectClick,
+    OnChildReselectSkuClick {
+
     fun bindData(data: MutableList<MallCartGroup>, lastPage: Boolean)
     fun changeNumberSuccess()
     fun deleteSuccess()
@@ -37,7 +41,7 @@ interface MallCartView : BaseMvpView ,  SwipeRefreshLayout.OnRefreshListener,
 class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view) {
 
     fun getData(page: Int) {
-        requestApi(mRetrofit.mallCartList(page), object :BaseMvpObserver<PageResponse<MallCartGroup>>(view){
+        requestApi(mRetrofit.mallCartList(page), object : BaseMvpObserver<PageResponse<MallCartGroup>>(view) {
             override fun onSuccess(response: PageResponse<MallCartGroup>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data
@@ -52,16 +56,31 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
      */
     @SuppressLint("NotifyDataSetChanged")
     fun handleSelectAll(adapter: MallCartAdapter, select: Boolean) {
+        val editMode = adapter.isEditMode
 
         adapter.data.forEach {
-            it.nativeIsSelect = select
+
+            if (editMode) {
+                it.nativeIsSelectEdit = select
+            } else {
+                it.nativeIsSelect = select
+            }
+
             it.gwc.forEach { child ->
-                child.nativeIsSelect = select
+
+                if (editMode) {
+                    child.nativeIsSelectEdit = select
+                } else {
+                    child.nativeIsSelect = select
+                }
             }
         }
         adapter.notifyDataSetChanged()
     }
 
+    /**
+     * 用于结算
+     */
     fun getSelectedCount(adapter: MallCartAdapter): Int {
         var count = 0
         adapter.data.forEach {
@@ -76,8 +95,8 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
     }
 
 
-
     fun getSelectedData(adapter: MallCartAdapter): ArrayList<MallCartGroup> {
+
 
         val selectData: ArrayList<MallCartGroup> = ArrayList()
 
@@ -116,7 +135,6 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
 
                     val price = it.specs_info!!.price
 
-
                     val goodNum = it.good_num
                     val currentItemPrice = BigDecimalUtil.mul(price, BigDecimal(goodNum))
                     totalPrice = BigDecimalUtil.add(currentItemPrice, totalPrice)
@@ -145,12 +163,20 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
      * 顶级是否全部选中
      */
     fun checkSelectAll(adapter: MallCartAdapter): Boolean {
+
+        val editMode = adapter.isEditMode
+
         val result = ArrayList<Boolean>()
         result.clear()
         adapter.data.forEach { data ->
             result.add(data.nativeIsSelect)
             data.gwc.forEach {
-                result.add(it.nativeIsSelect)
+                if (editMode) {
+                    result.add(it.nativeIsSelectEdit)
+                } else {
+                    result.add(it.nativeIsSelect)
+                }
+
             }
         }
         return !result.contains(false)
@@ -160,7 +186,7 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
      * 清空购物车
      */
     fun clearStoreCart() {
-        requestApi(mRetrofit.clearMallCart(), object : BaseMvpObserver<JsonElement>(view) {
+        requestApi(mRetrofit.clearMallCart(0), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
             }
@@ -177,7 +203,7 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
         val delete = ArrayList<Int>()
         adapter.data.forEach {
             it.gwc.forEach { child ->
-                if (child.nativeIsSelect) {
+                if (child.nativeIsSelectEdit) {
                     delete.add(child.cart_id)
                 }
             }

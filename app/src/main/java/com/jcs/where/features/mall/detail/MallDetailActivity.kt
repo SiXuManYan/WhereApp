@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
+import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
@@ -162,7 +163,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         like_iv.setOnClickListener {
             if (collect_status == 0) {
                 presenter.collection(goodId)
-            }else{
+            } else {
                 presenter.unCollection(goodId)
             }
         }
@@ -175,12 +176,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             if (mData == null) {
                 return@setOnClickListener
             }
-//            if (mallSpecs == null) {
-//                dialogHandle = 1
-//                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
-//            } else {
-//                addCart()
-//            }
             dialogHandle = 1
             mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }
@@ -193,12 +188,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             if (mData == null) {
                 return@setOnClickListener
             }
-//            if (mallSpecs == null) {
-//                dialogHandle = 2
-//                mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
-//            } else {
-//                buyNow()
-//            }
             dialogHandle = 2
             mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }
@@ -246,7 +235,16 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             disPlayHtml(it)
         }
 
-        mSkuDialog.data = response
+
+        mSkuDialog.data =  SkuDataSource().apply {
+            main_image = response.main_image
+            min_price = response.min_price
+            stock = response.stock
+            attribute_list.clear()
+            attribute_list.addAll(response.attribute_list)
+            specs.clear()
+            specs.addAll(response.specs)
+        }
         shopId = response.shop_id
         shopName = response.shop_name
         collect_status = response.collect_status
@@ -261,7 +259,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 //                    this, Conversation.ConversationType.PRIVATE,
 //                    "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5", response.mer_name, null
 //                )
-
 
 
             }
@@ -334,7 +331,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         mallSpecs.specs.values.forEach {
             buff.append("$it, ")
         }
-        buff.append(" "+ getString(R.string.quantity_format,goodNumber))
+        buff.append(" " + getString(R.string.quantity_format, goodNumber))
 
         select_attr_tv.text = buff
 

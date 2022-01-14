@@ -75,3 +75,16 @@ class MallSpecs {
     var image = ""
     var specs: HashMap<String, String> = HashMap()
 }
+
+class SkuDataSource {
+    var main_image = ""
+    var min_price = ""
+    var stock = 0
+    /** 商品属性 */
+    var attribute_list = ArrayList<MallAttribute>()
+
+    /** 商品属性组合信息 */
+    var specs = ArrayList<MallSpecs>()
+
+
+}

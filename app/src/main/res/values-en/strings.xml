@@ -936,5 +936,8 @@ Gentleman must let go</string>
     <string name="examination_passed">Examination Passed</string>
     <string name="examination_passed_not">Examination Not Passed</string>
     <string name="start_now">Start</string>
+    <string name="sku_invalid_hint">Please re-select the product specification</string>
+    <string name="reselect">Reselect</string>
+    <string name="stock_invalid_hint">Please re-select the purchase quantity, the product is out of stock.</string>
 
 </resources>

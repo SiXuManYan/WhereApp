@@ -28,8 +28,10 @@
         android:id="@+id/child_container_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
+        <include layout="@layout/item_shopping_cart_child_for_store" />
         <include layout="@layout/item_shopping_cart_child_for_store" />
 
     </LinearLayout>

@@ -13,6 +13,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.CartDeleteRequest
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.mall.MallCartGroup
+import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.features.store.cart.child.OnChildReselectSkuClick
 import com.jcs.where.features.store.cart.child.OnChildSelectClick
 import com.jcs.where.features.store.cart.child.OnGroupSelectClick
@@ -35,6 +36,9 @@ interface MallCartView : BaseMvpView,
     fun bindData(data: MutableList<MallCartGroup>, lastPage: Boolean)
     fun changeNumberSuccess()
     fun deleteSuccess()
+
+    /** sku 更新成功 */
+    fun changeSkuSuccess(mallSpecs: MallSpecs, number: Int)
 
 }
 
@@ -221,6 +225,16 @@ class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view)
                 view.deleteSuccess()
                 ToastUtils.showShort(StringUtils.getString(R.string.successful_operation))
             }
+        })
+    }
+
+
+    fun changeSku(cartId: Int, specsId: Int, number: Int,mallSpecs: MallSpecs) {
+        requestApi(mRetrofit.changeMallSku(cartId, specsId, number), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.changeSkuSuccess(mallSpecs,number)
+            }
+
         })
     }
 

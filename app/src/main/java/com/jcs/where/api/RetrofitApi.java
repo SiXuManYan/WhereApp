@@ -2036,4 +2036,16 @@ public interface RetrofitApi {
             @Query("page") int page
     );
 
+
+    /**
+     * 修改新商城购物车SKU属性
+     */
+    @PATCH("estoreapi/v2/carts/numbers")
+    Observable<JcsResponse<JsonElement>> changeMallSku(
+            @Query("cart_id") int cart_id,
+            @Query("specs_id") int specs_id,
+            @Query("nums") int nums
+    );
+
+
 }

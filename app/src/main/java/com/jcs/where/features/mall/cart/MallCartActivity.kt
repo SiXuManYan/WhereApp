@@ -19,7 +19,6 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
-import com.jcs.where.features.store.cart.child.OnChildReselectSkuClick
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_mall_cart.*
@@ -234,13 +233,21 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         }
     }
 
-    override fun reselectSkuClick(childIndex: Int, adapterPosition: Int, source: MallCartItem) {
-        val goodsInfo = source.goods_info ?: return
+    private var mAdapterPosition = 0
+    private var mChildIndex = 0
+    private lateinit var  mGwcSource : MallCartItem
 
+
+    override fun reselectSkuClick(childIndex: Int, adapterPosition: Int, source: MallCartItem) {
+        mChildIndex = childIndex
+        mAdapterPosition = adapterPosition
+        mGwcSource = source
+
+        val goodsInfo = source.goods_info ?: return
         mSkuDialog.data =  SkuDataSource().apply {
             main_image = goodsInfo.main_image
             min_price = goodsInfo.min_price
-            stock = goodsInfo.good_stock
+            stock = 0
             attribute_list.clear()
             attribute_list.addAll(goodsInfo.attribute_list)
             specs.clear()
@@ -251,9 +258,29 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {
 
+        presenter.changeSku(mGwcSource.cart_id,mallSpecs.specs_id,goodNum,mallSpecs)
 
 
+    }
 
+
+    override fun changeSkuSuccess(mallSpecs: MallSpecs, number: Int) {
+        ToastUtils.showShort(R.string.modify_success)
+        mGwcSource.apply {
+            specs_id = mallSpecs.specs_id
+            good_id = mallSpecs.goods_id
+            good_num = number
+        }
+        mGwcSource.specs_info?.let {
+            it.specs = mallSpecs.specs
+            it.price = mallSpecs.price
+            it.stock = mallSpecs.stock
+            it.delete_status = 0
+        }
+
+        mAdapter.getItem(mAdapterPosition).gwc[mChildIndex] = mGwcSource
+        mAdapter.notifyItemChanged(mAdapterPosition)
+        getNowPrice()
     }
 
 

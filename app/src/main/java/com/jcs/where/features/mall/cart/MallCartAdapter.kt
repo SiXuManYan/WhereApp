@@ -109,8 +109,6 @@ class MallCartAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R.layout
             val child = LayoutInflater.from(context).inflate(R.layout.item_shopping_cart_child_for_store_mall, null)
             bindChild(child, mallCartItem, select_all_tv, item, childIndex, holder.adapterPosition)
             child_container_ll.addView(child)
-
-
         }
 
     }

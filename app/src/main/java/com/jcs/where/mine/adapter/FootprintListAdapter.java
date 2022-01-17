@@ -3,9 +3,7 @@ package com.jcs.where.mine.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
-import com.jcs.where.api.response.CollectedResponse;
 import com.jcs.where.api.response.FootprintResponse;
-import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.utils.GlideUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 

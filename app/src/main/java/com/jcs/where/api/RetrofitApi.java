@@ -9,12 +9,10 @@ import com.jcs.where.api.request.CollectionRequest;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelCollectionRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
-import com.jcs.where.api.request.MerchantSettledRequest;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.StoreOrderCommit;
 import com.jcs.where.api.request.TravelCollectionRequest;
 import com.jcs.where.api.request.UpdateUserInfoRequest;
-import com.jcs.where.api.request.WriteHotelCommentRequest;
 import com.jcs.where.api.request.account.BindPhoneRequest;
 import com.jcs.where.api.request.account.LoginRequest;
 import com.jcs.where.api.request.account.RegisterRequest;
@@ -41,16 +39,8 @@ import com.jcs.where.api.request.store.UpLoadPayAccountInfo;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
-import com.jcs.where.api.response.CollectedResponse;
-import com.jcs.where.api.response.CommentResponse;
 import com.jcs.where.api.response.FootprintResponse;
-import com.jcs.where.api.response.HomeNewsResponse;
-import com.jcs.where.api.response.HotelCommentsResponse;
-import com.jcs.where.api.response.HotelDetailResponse;
-import com.jcs.where.api.response.HotelOrderDetailResponse;
-import com.jcs.where.api.response.HotelOrderResponse;
 import com.jcs.where.api.response.HotelResponse;
-import com.jcs.where.api.response.HotelRoomDetailResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.IntegralDetailResponse;
 import com.jcs.where.api.response.LoginResponse;
@@ -62,13 +52,10 @@ import com.jcs.where.api.response.ModulesResponse;
 import com.jcs.where.api.response.NewsChannelResponse;
 import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.NewsResponse;
-import com.jcs.where.api.response.OrderNumResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.api.response.ParentCategoryResponse;
-import com.jcs.where.api.response.SearchResponse;
 import com.jcs.where.api.response.SignListResponse;
 import com.jcs.where.api.response.SuccessResponse;
-import com.jcs.where.api.response.TouristAttractionResponse;
 import com.jcs.where.api.response.UnReadMessage;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UploadFileResponse2;
@@ -85,8 +72,6 @@ import com.jcs.where.api.response.footprint.Footprint;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse;
-import com.jcs.where.api.response.gourmet.dish.DishResponse;
-import com.jcs.where.api.response.gourmet.dish.DishTakeawayResponse;
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail;
 import com.jcs.where.api.response.gourmet.order.FoodOrderSubmitData;
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail;
@@ -98,7 +83,6 @@ import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
 import com.jcs.where.api.response.hotel.HotelComment;
 import com.jcs.where.api.response.hotel.HotelDetail;
 import com.jcs.where.api.response.hotel.HotelHomeRecommend;
-import com.jcs.where.api.response.hotel.HotelListResponse;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
@@ -142,10 +126,8 @@ import com.jcs.where.api.response.travel.TravelDetail;
 import com.jcs.where.api.response.version.VersionResponse;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.bean.FollowCategoryRequest;
-import com.jcs.where.bean.HotelMapListBean;
 import com.jcs.where.bean.OrderSubmitRequest;
 import com.jcs.where.bean.OrderSubmitTakeawayRequest;
-import com.jcs.where.bean.TouristAttractionDetailResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,11 +158,7 @@ public interface RetrofitApi {
     @GET("commonapi/v2/modules")
     Observable<JcsResponse<List<ModulesResponse>>> getModules();
 
-    /**
-     * 首页新闻接口
-     */
-    @GET("newsapi/v2/news/notices?notice_num=10")
-    Observable<JcsResponse<List<HomeNewsResponse>>> getHomeNews();
+
 
     /**
      * 获得分类列表
@@ -249,73 +227,6 @@ public interface RetrofitApi {
 
 
     /**
-     * 获取酒店详情
-     */
-    @GET("hotelapi/v2/hotel/{id}")
-    Observable<JcsResponse<HotelDetailResponse>> getHotelDetail(@Path("id") int hotelId);
-
-
-    /**
-     * 根据房间id获得酒店房间详情
-     */
-    @GET("hotelapi/v2/hotel/room/{room_id}")
-    Observable<JcsResponse<HotelRoomDetailResponse>> getHotelRoomById(
-            @Path("room_id") int roomId,
-            @Query("start_date") String starDate,
-            @Query("end_date") String endDate,
-            @Query("room_num") int roomNum
-    );
-
-    /**
-     * 获取酒店评价
-     *
-     * @param hotelId 酒店id
-     */
-    @GET("hotelapi/v2/hotel/{hotel_id}/comments")
-    Observable<JcsResponse<HotelCommentsResponse>> getHotelComments(@Path("hotel_id") int hotelId);
-
-    /**
-     * 上传酒店评价
-     */
-    @POST("hotelapi/v2/hotel/comment")
-    Observable<JcsResponse<SuccessResponse>> postHotelComment(@Body WriteHotelCommentRequest request);
-
-    /**
-     * 获取酒店评价
-     *
-     * @param hotelId 酒店id
-     * @param type    评价类型：1-晒图 2-低分 3-最新
-     */
-    @GET("hotelapi/v2/hotel/{hotel_id}/comments")
-    Observable<JcsResponse<PageResponse<CommentResponse>>> getHotelComments(@Path("hotel_id") int hotelId, @Query("type") int type);
-
-    /**
-     * 获取酒店评论数量
-     *
-     * @param hotelId 酒店id
-     */
-    @GET("hotelapi/v2/hotel/{hotel_id}/comment/nums")
-    Observable<JcsResponse<List<Integer>>> getHotelCommentNum(@Path("hotel_id") int hotelId);
-
-    /**
-     * 酒店下订单
-     */
-    @POST("hotelapi/v2/orders")
-    Observable<JcsResponse<HotelOrderResponse>> postHotelOrder(@Body HotelOrderRequest request);
-
-    /**
-     * 酒店订单详情
-     */
-    @GET("hotelapi/v2/orders/{order_id}")
-    Observable<JcsResponse<HotelOrderDetailResponse>> getHotelOrderDetail(@Path("order_id") int orderId);
-
-    /**
-     * 获得订单各个类型的数量
-     */
-    @GET("commonapi/v2/orders/nums")
-    Observable<JcsResponse<OrderNumResponse>> getOrderNum();
-
-    /**
      * 获得订单列表
      */
     @GET("commonapi/v2/orders")
@@ -359,25 +270,6 @@ public interface RetrofitApi {
 
 
     /**
-     * 获得展示在地图上的机构数据
-     *
-     * @param categoryId 机构分类
-     * @param areaId     区域id，非必须（0）
-     * @param search     查询字段
-     * @param lat        必须
-     * @param lng        必须
-     * @return
-     */
-    @GET("generalapi/v2/map/infos")
-    Observable<JcsResponse<List<MechanismResponse>>> getMechanismListForMap(
-            @Query("cate_id") String categoryId,
-            @Query("area_id") int areaId,
-            @Query("search_input") String search,
-            @Query("lat") double lat,
-            @Query("lng") double lng
-    );
-
-    /**
      * 根据机构id，获取机构详情
      *
      * @param mechanismId 机构id
@@ -406,26 +298,6 @@ public interface RetrofitApi {
      */
     @GET("generalapi/v2/areas")
     Observable<JcsResponse<List<CityResponse>>> getAreaForService();
-
-    /**
-     * 搜索接口
-     *
-     * @param input 关键字
-     */
-    @GET("commonapi/v2/searches")
-    Observable<JcsResponse<List<SearchResponse>>> getSearchByInput(@Query("search_input") String input);
-
-    /**
-     * 登录
-     */
-    @PATCH("userapi/v2/login")
-    Observable<JcsResponse<LoginResponse>> patchLogin(@Body LoginRequest loginRequest);
-
-    /**
-     * 发送验证码
-     */
-    @POST("userapi/v2/mobile/auth/code")
-    Observable<JcsResponse<Object>> postSendCode(@Body SendCodeRequest sendCodeRequest);
 
     /**
      * 获得用户数据
@@ -533,55 +405,6 @@ public interface RetrofitApi {
 
 
     /**
-     * 获得展示在地图上的景点数据
-     *
-     * @param categoryId 景点分类
-     * @param areaId     区域id，非必须（0）
-     * @param search     查询字段
-     * @param lat        必须
-     * @param lng        必须
-     * @return
-     */
-    @GET("travelapi/v2/map/travels")
-    Observable<JcsResponse<List<TouristAttractionResponse>>> getTouristAttractionListForMap(
-            @Query("cate_id") String categoryId,
-            @Query("area_id") int areaId,
-            @Query("search_input") String search,
-            @Query("lat") double lat,
-            @Query("lng") double lng
-    );
-
-    /**
-     * 获得旅游景点的列表数据
-     *
-     * @param categoryId 机构分类
-     * @param search     查询字段
-     */
-    @GET("travelapi/v2/travels")
-    Observable<JcsResponse<PageResponse<TouristAttractionResponse>>> getTouristAttractionListById(
-            @Query("cate_id") String categoryId,
-            @Query("search_input") String search,
-            @Query("lat") double lat,
-            @Query("lng") double lng);
-
-    /**
-     * 获得旅游景点详情数据
-     *
-     * @param touristAttractionId 旅游景点id
-     */
-    @GET("travelapi/v2/travels/{travel_id}")
-    Observable<JcsResponse<TouristAttractionDetailResponse>> getTouristAttractionDetail(@Path("travel_id") int touristAttractionId);
-
-
-    /**
-     * 获得旅游景点评论列表
-     *
-     * @param touristAttractionId 旅游景点id
-     */
-    @GET("travelapi/v2/comments/{travel_id}")
-    Observable<JcsResponse<PageResponse<CommentResponse>>> getTouristAttractionCommentList(@Path("travel_id") int touristAttractionId);
-
-    /**
      * 登录
      */
     @PATCH("userapi/v2/login")
@@ -647,27 +470,6 @@ public interface RetrofitApi {
     @GET("generalapi/v2/hot/searches")
     Observable<JcsResponse<List<String>>> getHotConvenienceServiceListAtSearch();
 
-    /**
-     * 获得收藏页面-收藏的视频列表
-     * type=3 表示 视频
-     */
-    @GET("commonapi/v2/collects?type=3")
-    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionVideo(@Query("page") int page);
-
-    /**
-     * 获得收藏页面-收藏的文章列表
-     * type=2 表示 文章
-     */
-    @GET("commonapi/v2/collects?type=2")
-    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionArticle(@Query("page") int page);
-
-    /**
-     * 获得收藏页面-收藏的同城信息
-     * type=2 表示 文章
-     * (没有分页)
-     */
-    @GET("commonapi/v2/collects?type=1")
-    Observable<JcsResponse<PageResponse<CollectedResponse>>> getCollectionSameCity(@Query("page") int page);
 
     /**
      * 第三方登录
@@ -727,14 +529,6 @@ public interface RetrofitApi {
     @POST("commonapi/v2/file")
     Observable<JcsResponse<UploadFileResponse2>> uploadMultiImages(@Part("type") RequestBody type, @PartMap Map<String, RequestBody> maps);
 
-    /**
-     * 用户协议
-     *
-     * @param lang 语言（zh_cn或en）
-     */
-    @GET("users/agreement")
-    Observable<JcsResponse<JsonElement>> getAgreement(@Query("lang") String lang);
-
 
     /**
      * 系统通知消息列表
@@ -773,11 +567,6 @@ public interface RetrofitApi {
     @GET("userapi/v2/merchant/types/{level}")
     Observable<JcsResponse<List<MerchantTypeResponse>>> getMerchantSettledType(@Path("level") String level, @Query("pid") int pid);
 
-    /**
-     * 提交商家入驻信息
-     */
-    @POST("userapi/v2/merchants")
-    Observable<JcsResponse<SuccessResponse>> postMerchant(@Body MerchantSettledRequest request);
 
     /**
      * 获得商家入驻信息
@@ -816,48 +605,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<VersionResponse>> checkAppVersion(
             @Query("current_version") String current_version,
             @Query("device") String device);
-
-
-    /**
-     * 获取酒店地图列表
-     */
-    @GET("hotelapi/v2/map/hotels")
-    Observable<JcsResponse<List<HotelMapListBean>>> getHotelMapList(
-            @Query("lat") String lat,
-            @Query("lng") String lng,
-            @Query("area_id") String area_id,
-            @Query("search_input") @Nullable String search_input,
-            @Query("star_level") @Nullable String star_level,
-            @Query("price_range") @Nullable String price_range
-    );
-
-
-    /**
-     * 酒店列表
-     *
-     * @param page
-     * @param areaId       地区id
-     * @param lat          纬度
-     * @param lng          经度
-     * @param price_range  价格区间（特殊情况，900以上请传递[900,100000]）
-     * @param star_level   星级（特殊情况，二星以下请传递[1,2]）
-     * @param hotelTypeIds 住宿类型ID（多选）
-     * @param input        搜索酒店内容
-     * @param grade        酒店分数
-     */
-    @GET("hotelapi/v2/hotels")
-    Observable<JcsResponse<PageResponse<HotelListResponse>>> getHotelList(
-            @Query("page") int page,
-            @Query("lat") @Nullable String lat,
-            @Query("lng") @Nullable String lng,
-            @Query("area_id") @Nullable String areaId,
-            @Query("price_range") @Nullable String price_range,
-            @Query("star_level") @Nullable String star_level,
-            @Query("hotel_type_ids") @Nullable String hotelTypeIds,
-            @Query("search_input") @Nullable String input,
-            @Query("grade") @Nullable String grade
-
-    );
 
 
     /**
@@ -979,28 +726,6 @@ public interface RetrofitApi {
             @Query("lng") @Nullable Double lng
     );
 
-    /**
-     * 堂食菜品列表
-     */
-    @GET("restaurantapi/v2/eat_in_foods")
-    Observable<JcsResponse<PageResponse<DishResponse>>> getDishList(
-            @Query("page") int page,
-            @Query("restaurant_id") String restaurant_id
-    );
-
-
-    /**
-     * 餐厅评论列表
-     *
-     * @param type 列表类型（0：全部，1：有图，2：好评，3：差评）
-     */
-    @GET("restaurantapi/v2/comments")
-    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getCommentList(
-            @Query("page") int page,
-            @Query("type") int type,
-            @Query("restaurant_id") String restaurant_id
-    );
-
 
     /**
      * 餐厅评论列表
@@ -1036,12 +761,6 @@ public interface RetrofitApi {
      */
     @GET("newsapi/v2/news/index")
     Observable<JcsResponse<List<com.jcs.where.api.response.home.HomeNewsResponse>>> getHomeNewsList();
-
-    /**
-     * 获得CategoryFragment页面展示的一级二级分类数据
-     */
-    @GET("commonapi/v2/categories/list")
-    Observable<JcsResponse<ArrayList<Category>>> getCategoryList();
 
     /**
      * 获得可编辑分类列表
@@ -1092,15 +811,6 @@ public interface RetrofitApi {
     @GET("restaurantapi/v2/take_out/restaurants/{restaurant_id}")
     Observable<JcsResponse<TakeawayDetailResponse>> takeawayDetail(
             @Path("restaurant_id") String restaurant_id
-    );
-
-    /**
-     * 外卖菜品列表
-     */
-    @GET("restaurantapi/v2/take_out/goods")
-    Observable<JcsResponse<PageResponse<DishTakeawayResponse>>> takeawayGoodList(
-            @Query("page") int page,
-            @Query("restaurant_id") String restaurant_id
     );
 
 
@@ -1475,18 +1185,6 @@ public interface RetrofitApi {
      * @param type 类型（1-全部，2-最新，3-有图）
      */
     @GET("generalapi/v2/comments")
-    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.gourmet.comment.CommentResponse>>> getStoreCommentList(
-            @Query("page") int page,
-            @Query("shop_id") String shop_id,
-            @Query("type") int type
-    );
-
-    /**
-     * 商城评论列表
-     *
-     * @param type 类型（1-全部，2-最新，3-有图）
-     */
-    @GET("generalapi/v2/comments")
     Observable<JcsResponse<PageResponse<HotelComment>>> getStoreCommentList2(
             @Query("page") int page,
             @Query("shop_id") String shop_id,
@@ -1634,17 +1332,6 @@ public interface RetrofitApi {
      */
     @POST("restaurantapi/v2/comments")
     Observable<JcsResponse<JsonElement>> commitFoodComment(@Body FoodCommitComment request);
-
-
-    /**
-     * 获得分类列表
-     *
-     * @param level 分类级别
-     * @param pid   parentId 上级分类的id
-     * @return 分类列表
-     */
-    @GET("commonapi/v2/categories")
-    Observable<JcsResponse<ArrayList<Category>>> getCategoryList(@Query("level") int level, @Query("pid") int pid);
 
 
     /**
@@ -2047,7 +1734,6 @@ public interface RetrofitApi {
             @Query("specs_id") int specs_id,
             @Query("nums") int nums
     );
-
 
 
     /**

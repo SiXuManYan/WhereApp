@@ -43,7 +43,7 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
                         if (child.nativeIsSelected != 2) {
                             if (index == position) {
                                 child.nativeIsSelected = 1
-                            }else {
+                            } else {
                                 child.nativeIsSelected = 0
                             }
                         }
@@ -56,7 +56,7 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
                         if (child.nativeIsSelected != 2) {
                             if (index == position) {
                                 child.nativeIsSelected = 0
-                            }else {
+                            } else {
                                 child.nativeIsSelected = 1
                             }
                         }

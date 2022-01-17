@@ -95,7 +95,6 @@
 
 
     <com.jcs.where.view.popup.PopupConstraintLayout
-        android:id="@+id/topPopupLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"
         android:layout_below="@+id/title_rl"
@@ -104,7 +103,6 @@
         tools:visibility="visible">
 
         <com.jcs.where.view.EnterStayInfoView
-            android:id="@+id/enterStayInfoView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_120"
             android:background="@color/white_FEFEFE" />

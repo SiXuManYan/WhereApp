@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.jcs.where",
+  "variantName": "devRelease",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 21,
+      "versionName": "0.2.8",
+      "enabled": true,
+      "outputFile": "Where_v21_(0.2.8)_20220117.apk"
+    }
+  ]
+}

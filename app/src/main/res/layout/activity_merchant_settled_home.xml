@@ -76,7 +76,6 @@
 
 
                 <LinearLayout
-                    android:id="@+id/number_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_7"
@@ -148,7 +147,6 @@
 
 
                     <androidx.appcompat.widget.AppCompatCheckedTextView
-                        android:id="@+id/type_form_desc_tv"
                         android:layout_width="@dimen/dp_89"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -160,7 +158,6 @@
                         android:textSize="@dimen/sp_11" />
 
                     <androidx.appcompat.widget.AppCompatCheckedTextView
-                        android:id="@+id/type_period_desc_tv"
                         android:layout_width="@dimen/dp_89"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_30"
@@ -173,7 +170,6 @@
                         android:textSize="@dimen/sp_11" />
 
                     <androidx.appcompat.widget.AppCompatCheckedTextView
-                        android:id="@+id/type_result_desc_tv"
                         android:layout_width="@dimen/dp_89"
                         android:layout_height="wrap_content"
                         android:gravity="center"

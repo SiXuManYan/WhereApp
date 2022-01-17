@@ -44,12 +44,9 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     override fun initView(parent: View) {
 
-
         // content
         initSkuLayout()
-
         initOther()
-
     }
 
     private fun initOther() {
@@ -57,12 +54,9 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         price_tv.text = getString(R.string.price_unit_format, data.min_price)
         GlideUtil.load(requireContext(), data.main_image, good_iv, 4)
 
-
-
         number_view.apply {
             alwaysEnableCut = true
             MIN_GOOD_NUM = 1
-
 
             cut_iv.setImageResource(R.mipmap.ic_cut_blue_transparent)
             add_iv.setImageResource(R.mipmap.ic_add_blue_transparent)
@@ -111,7 +105,6 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         }
 
         mAdapter.setNewInstance(data.attribute_list)
-
     }
 
     override fun initData() {

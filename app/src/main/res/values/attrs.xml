@@ -158,18 +158,6 @@
     </declare-styleable>
 
 
-    <string-array name="splash_item_title">
-        <item>@string/splash_title_0</item>
-        <item>@string/splash_title_1</item>
-        <item>@string/splash_title_2</item>
-    </string-array>
-
-
-    <string-array name="splash_item_content">
-        <item>@string/splash_content_0</item>
-        <item>@string/splash_content_1</item>
-        <item>@string/splash_content_2</item>
-    </string-array>
 
 
     <string-array name="weeks">

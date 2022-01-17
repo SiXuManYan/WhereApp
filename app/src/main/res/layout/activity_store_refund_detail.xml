@@ -151,7 +151,6 @@
 
 
                     <TextView
-                        android:id="@+id/refund_price_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_47"
                         android:gravity="center_vertical"

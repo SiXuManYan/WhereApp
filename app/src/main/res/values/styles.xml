@@ -116,12 +116,6 @@
     </style>
 
 
-    <style name="hotel_star_star_tv" parent="hotel_star_tv">
-        <item name="rightDrawableList">@drawable/selector_hotel_star_icon</item>
-        <item name="rightDrawableListWidth">@dimen/dp_11</item>
-        <item name="rightDrawableListHeight">@dimen/dp_11</item>
-    </style>
-
     <style name="day_of_week">
         <item name="android:layout_width">@dimen/dp_0</item>
         <item name="android:layout_weight">1</item>
@@ -133,14 +127,6 @@
 
 
     <!--toolbar的右边menu的字体颜色和大小-->
-    <style name="AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="actionMenuTextColor">@android:color/white</item>
-        <item name="actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
-    </style>
-
-    <style name="MyActionBar.MenuTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
-        <item name="android:textSize">15dp</item>
-    </style>
 
     <!--自定义Dialog-->
     <style name="dialog" parent="Theme.AppCompat.Dialog">
@@ -227,9 +213,6 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
-
-    <style name="Theme.MyApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
     <style name="CustomBottomSheetDialogThemeLight" parent="Theme.Design.Light.BottomSheetDialog">

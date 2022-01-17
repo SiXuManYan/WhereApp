@@ -132,7 +132,7 @@ public class BindPhonePresenter extends BaseMvpPresenter {
             @Override
             protected void onSuccess(LoginResponse response) {
                 String token = response.getToken();
-                CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, token);
+                CacheUtil.saveToken(token);
                 mView.bindSuccess();
             }
         });

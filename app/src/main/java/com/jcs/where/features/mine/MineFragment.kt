@@ -68,11 +68,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(MessageCenterActivity::class.java)
         }
         user_info_rl.setOnClickListener {
-            if (CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN).isEmpty()) {
-                startActivity(LoginActivity::class.java)
-            } else {
-                startActivity(ModifyInfoActivity::class.java)
-            }
+            startActivityAfterLogin(ModifyInfoActivity::class.java)
         }
 
         integral_iv.setOnClickListener {

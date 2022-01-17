@@ -187,7 +187,7 @@ public class LoginPresenter extends BaseMvpPresenter {
      * @param token
      */
     private void saveToken(String token) {
-        CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, token);
+        CacheUtil.saveToken(token);
     }
 
 

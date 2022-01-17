@@ -546,7 +546,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
 
     private fun startActivityAfterLogin(target: Class<*>, bundle: Bundle?) {
-        val token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN)
+        val token = CacheUtil.getToken()
         if (TextUtils.isEmpty(token)) {
             startActivity(LoginActivity::class.java, null)
         } else {

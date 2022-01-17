@@ -218,7 +218,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected final void startActivityAfterLogin(@NotNull Class<?> target) {
-        String token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+        String token = CacheUtil.getToken();
         if (TextUtils.isEmpty(token)) {
             startActivity(LoginActivity.class);
         } else {
@@ -227,7 +227,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected final void startActivityAfterLogin(@NotNull Class<?> target,  Bundle bundle) {
-        String token = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+        String token = CacheUtil.getToken();
         if (TextUtils.isEmpty(token)) {
             startActivity(LoginActivity.class);
         } else {

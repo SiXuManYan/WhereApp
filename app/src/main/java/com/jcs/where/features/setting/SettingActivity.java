@@ -128,7 +128,7 @@ public class SettingActivity extends BaseActivity {
                 .setCancelable(false)
                 .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
                     User.clearAllUser();
-                    CacheUtil.cacheWithCurrentTime(SPKey.K_TOKEN, "");
+                    CacheUtil.saveToken("");
 
                     EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
                     startActivity(LoginActivity.class);

@@ -60,7 +60,7 @@ public class User {
     }
 
     public static boolean isLogon() {
-        return !TextUtils.isEmpty(CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN));
+        return !TextUtils.isEmpty(CacheUtil.getToken());
     }
 
     public static String getToken() {

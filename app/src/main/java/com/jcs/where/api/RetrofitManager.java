@@ -76,7 +76,7 @@ public class RetrofitManager {
                     language = "zh-CN";
                 }
                 requestBuilder.header("Locale", language);
-                String jsonStr = CacheUtil.needUpdateBySpKey(SPKey.K_TOKEN);
+                String jsonStr = CacheUtil.getToken();
                 if (!jsonStr.equals("")) {
                     requestBuilder.header("Authorization", "Bearer " + jsonStr);
                 }

@@ -27,44 +27,46 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
     @SuppressLint("NotifyDataSetChanged")
     private fun initChildItem(holder: BaseViewHolder, item: MallAttribute, secondRv: RecyclerView) {
 
-        val contentAdapter = SkuSecondAdapter().apply {
+        val secondAdapter = SkuSecondAdapter().apply {
             setNewInstance(item.value)
 
         }
 
-        contentAdapter.setOnItemClickListener { _, _, position ->
+        secondAdapter.setOnItemClickListener { _, _, position ->
 
-            val allData = contentAdapter.data
-            val mallAttributeValue = allData[position]
+            val allData = secondAdapter.data
+            val secondDataItem = allData[position]
 
-            when (mallAttributeValue.nativeIsSelected) {
+            when (secondDataItem.nativeIsSelected) {
                 0 -> {
                     allData.forEachIndexed { index, child ->
                         if (child.nativeIsSelected != 2) {
-                            if (index == position) {
+                            if (child == secondDataItem) {
                                 child.nativeIsSelected = 1
-                            }
-                            else {
+                            } else {
                                 child.nativeIsSelected = 0
                             }
                         }
                     }
-                    contentAdapter.notifyDataSetChanged()
-                    targetGoodItemClickCallBack?.onItemClick2(mallAttributeValue)
+                    secondAdapter.notifyDataSetChanged()
+                    targetGoodItemClickCallBack?.onItemClick2(secondDataItem)
+
                 }
                 1 -> {
                     allData.forEachIndexed { index, child ->
                         if (child.nativeIsSelected != 2) {
-                            if (index == position) {
+                            /*if (child == secondDataItem) {
                                 child.nativeIsSelected = 0
-                            }
+                            }*/
 //                            else {
 //                                child.nativeIsSelected = 1
 //                            }
+                            child.nativeIsSelected = 0
                         }
                     }
-                    contentAdapter.notifyDataSetChanged()
-                    targetGoodItemClickCallBack?.onItemClick2(mallAttributeValue)
+                    secondAdapter.notifyDataSetChanged()
+
+                    targetGoodItemClickCallBack?.onItemClick2(secondDataItem)
                 }
                 else -> {
                 }
@@ -72,10 +74,51 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
         }
 
         secondRv.apply {
-            adapter = contentAdapter
+            adapter = secondAdapter
             layoutManager = MyLayoutManager()
         }
     }
+
+
+    /**
+     * 获取所有用户选中的数量
+     */
+    fun getAllUserSelectedSize(mAdapter: SkuFirstAdapter): Int {
+        val value = ArrayList<MallAttributeValue>()
+        mAdapter.data.forEachIndexed { index, group ->
+            // 每一组
+            group.value.forEach { item ->
+
+                if (item.nativeIsSelected == 1) {
+                    value.add(item)
+                }
+            }
+        }
+
+        return value.size
+    }
+
+
+    /**
+     * 获取所有用户选中的index
+     */
+    fun getUserSelectedIndex(): Int {
+        var resultIndex = -1
+
+        val value = ArrayList<MallAttributeValue>()
+        data.forEachIndexed { index, group ->
+            // 每一组
+            group.value.forEach { item ->
+
+                if (item.nativeIsSelected == 1) {
+                    resultIndex = index
+                }
+            }
+        }
+
+        return resultIndex
+    }
+
 }
 
 interface TargetGoodItemClickCallBack {

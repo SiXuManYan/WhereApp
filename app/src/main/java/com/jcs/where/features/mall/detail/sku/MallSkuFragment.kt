@@ -147,15 +147,16 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
         val allUserSelected = presenter.getAllUserSelectedAttributeValue(mAdapter)
 
-        val matchSpecsList = presenter.filterTargetSpecsList2(data, allUserSelected)
+        val matchSpecsList = presenter.filterTargetSpecsList(data, allUserSelected,mAdapter)
 
 
-        // 所有属性值
-        val attributes = ArrayList<String>()
-        matchSpecsList.forEach {
-            val resultValues = it.specs.values
-            resultValues.forEach {
-                attributes.add(it)
+        // 所有符合条件的属性值
+        val targetAttrs = ArrayList<String>()
+        matchSpecsList.forEach { ms ->
+            val values = ms.specs.values
+
+            values.forEach {
+                targetAttrs.add(it)
             }
 
         }
@@ -163,18 +164,37 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         // 根据存在的属性，匹配列表中的可选状态
         mAdapter.data.forEach { group ->
 
-            group.value.forEach { item ->
+            // 每一组
+            group.value.forEachIndexed { childIndex, item ->
+
                 // 存在即为可操作
-                if (attributes.contains(item.name)) when (item.nativeIsSelected) {
-                    0 -> item.nativeIsSelected = 0
-                    1 -> item.nativeIsSelected = 1
-                    2 -> item.nativeIsSelected = 0
+                if (targetAttrs.contains(item.name)) {
+                    when (item.nativeIsSelected) {
+                        0 -> item.nativeIsSelected = 0
+                        1 -> item.nativeIsSelected = 1
+                        2 -> item.nativeIsSelected = 0
+                    }
                 } else {
                     item.nativeIsSelected = 2
-                    // 不存在记为不可操作
+                }
+
+            }
+        }
+
+        // 同组可选
+        if (allUserSelected.size == 1){
+            val index = mAdapter.getUserSelectedIndex()
+            if (index!=-1) {
+                mAdapter.data[index].value.forEach {
+                    when (it.nativeIsSelected) {
+                        0 -> it.nativeIsSelected = 0
+                        1 -> it.nativeIsSelected = 1
+                        2 -> it.nativeIsSelected = 0
+                    }
                 }
             }
         }
+
         mAdapter.notifyDataSetChanged()
 
         if (matchSpecsList.size == 1) {
@@ -197,8 +217,6 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
                 add_iv.isClickable = true
                 add_iv.setImageResource(R.mipmap.ic_add_blue)
             }
-
-
         }
 
     }

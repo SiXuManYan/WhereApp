@@ -22,23 +22,49 @@ interface MallSkuSelectResult {
 class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
 
 
-    fun filterTargetSpecsList2(source: SkuDataSource, userSelect: ArrayList<MallAttributeValue>): ArrayList<MallSpecs> {
+    /**
+     * 获取所有用户选中的项目
+     */
+    fun getAllUserSelectedAttributeValue(mAdapter: SkuFirstAdapter): ArrayList<MallAttributeValue> {
+        val value = ArrayList<MallAttributeValue>()
+        mAdapter.data.forEachIndexed { index, group ->
+            // 每一组
+            group.value.forEach { item ->
+
+                if (item.nativeIsSelected == 1) {
+                    value.add(item)
+                }
+            }
+        }
+
+        return value
+    }
+
+
+
+
+    fun filterTargetSpecsList(
+        source: SkuDataSource,
+        alreadySelect: ArrayList<MallAttributeValue>,
+        mAdapter: SkuFirstAdapter,
+    ): ArrayList<MallSpecs> {
 
         // 1.筛选出符合目标的结果集
-
         val specs = ArrayList<MallSpecs>()
+
         source.specs.forEach { ms ->
 
-            if (userSelect.isEmpty()) {
-                // 用户为选择任何，全集都可用
+            if (alreadySelect.isEmpty()) {
+                // 用户未来选择任何，全集都可用
                 specs.add(ms)
             } else {
-                if (ms.specs.values.containsAll(getUserSelectedValues(userSelect))) {
+                if (ms.specs.values.containsAll(getUserSelectedValues(alreadySelect))) {
                     specs.add(ms)
                 }
             }
-
         }
+
+
         return specs
     }
 
@@ -52,20 +78,5 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
 
     }
 
-    /**
-     * 获取所有用户选中的项目
-     */
-    fun getAllUserSelectedAttributeValue(mAdapter: SkuFirstAdapter): ArrayList<MallAttributeValue> {
 
-        val value = ArrayList<MallAttributeValue>()
-
-        mAdapter.data.forEach { group ->
-            group.value.forEach { item ->
-                if (item.nativeIsSelected == 1) {
-                    value.add(item)
-                }
-            }
-        }
-        return value
-    }
 }

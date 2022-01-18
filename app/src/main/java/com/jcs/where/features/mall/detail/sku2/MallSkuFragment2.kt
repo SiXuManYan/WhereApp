@@ -1,6 +1,5 @@
-package com.jcs.where.features.mall.detail.sku
+package com.jcs.where.features.mall.detail.sku2
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
@@ -13,6 +12,7 @@ import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
+import com.jcs.where.features.mall.detail.sku.*
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.NumberView2
@@ -22,13 +22,12 @@ import kotlinx.android.synthetic.main.fragment_mall_sku.*
  * Created by Wangsw  2021/12/13 14:45.
  *
  */
-class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallSkuView, TargetGoodItemClickCallBack {
+class MallSkuFragment2 : BaseBottomSheetDialogFragment<MallSkuPresenter2>(), MallSkuView2 {
 
     var selectResult: MallSkuSelectResult? = null
     var result: MallSpecs? = null
 
     lateinit var data: SkuDataSource
-
 
     private lateinit var mAdapter: SkuFirstAdapter
 
@@ -96,7 +95,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     private fun initSkuLayout() {
         mAdapter = SkuFirstAdapter().apply {
-            targetGoodItemClickCallBack = this@MallSkuFragment
+//            targetGoodItemClickCallBack = this@MallSkuFragment2
         }
         content_rv.apply {
             adapter = mAdapter
@@ -108,7 +107,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
     }
 
     override fun initData() {
-        presenter = MallSkuPresenter(this)
+        presenter = MallSkuPresenter2(this)
         if (data.attribute_list.isEmpty() && data.specs.isNotEmpty()) {
             result = data.specs[0]
         }
@@ -142,65 +141,5 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onItemClick2(userSelect: MallAttributeValue) {
-
-        val allUserSelected = presenter.getAllUserSelectedAttributeValue(mAdapter)
-
-        val matchSpecsList = presenter.filterTargetSpecsList2(data, allUserSelected)
-
-
-        // 所有属性值
-        val attributes = ArrayList<String>()
-        matchSpecsList.forEach {
-            val resultValues = it.specs.values
-            resultValues.forEach {
-                attributes.add(it)
-            }
-
-        }
-
-        // 根据存在的属性，匹配列表中的可选状态
-        mAdapter.data.forEach { group ->
-
-            group.value.forEach { item ->
-                // 存在即为可操作
-                if (attributes.contains(item.name)) when (item.nativeIsSelected) {
-                    0 -> item.nativeIsSelected = 0
-                    1 -> item.nativeIsSelected = 1
-                    2 -> item.nativeIsSelected = 0
-                } else {
-                    item.nativeIsSelected = 2
-                    // 不存在记为不可操作
-                }
-            }
-        }
-        mAdapter.notifyDataSetChanged()
-
-        if (matchSpecsList.size == 1) {
-            val mallSpecs = matchSpecsList[0]
-            result = mallSpecs
-            price_tv.text = getString(R.string.price_unit_format, mallSpecs.price.toPlainString())
-
-            val stock = mallSpecs.stock
-
-            stock_tv.text = StringUtils.getString(R.string.stock_format, stock)
-
-
-            number_view.apply {
-                if (stock <= 0) {
-                    MIN_GOOD_NUM = 0
-                }
-                MAX_GOOD_NUM = stock
-                updateNumber(MIN_GOOD_NUM)
-                cut_iv.isClickable = true
-                add_iv.isClickable = true
-                add_iv.setImageResource(R.mipmap.ic_add_blue)
-            }
-
-
-        }
-
-    }
 
 }

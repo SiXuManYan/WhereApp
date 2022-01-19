@@ -25,7 +25,7 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
     /**
      * 获取所有用户选中的项目
      */
-    fun getAllUserSelectedAttributeValue(mAdapter: SkuFirstAdapter): ArrayList<MallAttributeValue> {
+    fun getAllSelectedValue(mAdapter: SkuFirstAdapter): ArrayList<MallAttributeValue> {
         val value = ArrayList<MallAttributeValue>()
         mAdapter.data.forEachIndexed { index, group ->
             // 每一组
@@ -41,34 +41,35 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
     }
 
 
+    /**
+     * 筛选出复合条件的SKU集合
+     */
+    fun filterTargetSpecsList(source: SkuDataSource, alreadySelect: ArrayList<MallAttributeValue>): ArrayList<MallSpecs> {
 
-
-    fun filterTargetSpecsList(
-        source: SkuDataSource,
-        alreadySelect: ArrayList<MallAttributeValue>,
-        mAdapter: SkuFirstAdapter,
-    ): ArrayList<MallSpecs> {
-
-        // 1.筛选出符合目标的结果集
         val specs = ArrayList<MallSpecs>()
 
         source.specs.forEach { ms ->
 
             if (alreadySelect.isEmpty()) {
-                // 用户未来选择任何，全集都可用
-                specs.add(ms)
+                // 用户未来选择任何，全集（有库存时）都可用
+                if (ms.stock > 0) {
+                    specs.add(ms)
+                }
             } else {
                 if (ms.specs.values.containsAll(getUserSelectedValues(alreadySelect))) {
-                    specs.add(ms)
+                    if (ms.stock > 0) {
+                        specs.add(ms)
+                    }
                 }
             }
         }
-
-
         return specs
     }
 
 
+    /**
+     * 所有用户选中的值
+     */
     private fun getUserSelectedValues(userSelect: ArrayList<MallAttributeValue>): ArrayList<String> {
         val userSelectedValue = ArrayList<String>()
         userSelect.forEach {

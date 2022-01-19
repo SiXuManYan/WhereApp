@@ -105,6 +105,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         }
 
         mAdapter.setNewInstance(data.attribute_list)
+        onAttrItemClick()
     }
 
     override fun initData() {
@@ -121,14 +122,14 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
         confirm_tv.setOnClickListener {
             if (result == null) {
-                ToastUtils.showShort("请选择")
+                ToastUtils.showShort(R.string.please_selected)
                 return@setOnClickListener
             }
             // 判断是否所有必选都选中
             mAdapter.data.forEach {
                 it.value.forEach { value ->
                     if (value.nativeIsSelected == 0) {
-                        ToastUtils.showShort("请选择" + it.key)
+                        ToastUtils.showShort(getString(R.string.please_selected) + it.key)
                         return@setOnClickListener
                     }
                 }
@@ -143,22 +144,19 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun onItemClick2(userSelect: MallAttributeValue) {
+    override fun onAttrItemClick() {
 
-        val allUserSelected = presenter.getAllUserSelectedAttributeValue(mAdapter)
+        val allSelected = presenter.getAllSelectedValue(mAdapter)
 
-        val matchSpecsList = presenter.filterTargetSpecsList(data, allUserSelected,mAdapter)
-
+        val matchSpecsList = presenter.filterTargetSpecsList(data, allSelected)
 
         // 所有符合条件的属性值
         val targetAttrs = ArrayList<String>()
         matchSpecsList.forEach { ms ->
             val values = ms.specs.values
-
             values.forEach {
                 targetAttrs.add(it)
             }
-
         }
 
         // 根据存在的属性，匹配列表中的可选状态
@@ -181,10 +179,10 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             }
         }
 
-        // 同组可选
-        if (allUserSelected.size == 1){
-            val index = mAdapter.getUserSelectedIndex()
-            if (index!=-1) {
+        // 只选中1项目, 同组设置为可选
+        if (allSelected.size == 1) {
+            val index = mAdapter.getFirstUserSelectedIndex()
+            if (index != -1) {
                 mAdapter.data[index].value.forEach {
                     when (it.nativeIsSelected) {
                         0 -> it.nativeIsSelected = 0
@@ -205,7 +203,6 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             val stock = mallSpecs.stock
 
             stock_tv.text = StringUtils.getString(R.string.stock_format, stock)
-
 
             number_view.apply {
                 if (stock <= 0) {

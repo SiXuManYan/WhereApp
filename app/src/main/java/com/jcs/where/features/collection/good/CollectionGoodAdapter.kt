@@ -25,7 +25,7 @@ class CollectionGoodAdapter : BaseQuickAdapter<MallGoodCollection, BaseViewHolde
         val container = holder.getView<RelativeLayout>(R.id.child_container_rl)
         val goodIv = holder.getView<ImageView>(R.id.good_iv)
 
-        GlideUtil.load(context, item.images, goodIv, 4)
+        GlideUtil.load(context, item.image, goodIv, 4)
         val layoutParams = container.layoutParams as RecyclerView.LayoutParams
         layoutParams.topMargin = if (holder.adapterPosition == 0) {
             SizeUtils.dp2px(15f)

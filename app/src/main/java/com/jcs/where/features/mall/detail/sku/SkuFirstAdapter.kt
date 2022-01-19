@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallAttribute
-import com.jcs.where.api.response.mall.MallAttributeValue
 import com.jcs.where.view.MyLayoutManager
 
 /**
@@ -49,24 +48,17 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
                         }
                     }
                     secondAdapter.notifyDataSetChanged()
-                    targetGoodItemClickCallBack?.onItemClick2(secondDataItem)
-
+                    targetGoodItemClickCallBack?.onAttrItemClick()
                 }
                 1 -> {
                     allData.forEachIndexed { index, child ->
                         if (child.nativeIsSelected != 2) {
-                            /*if (child == secondDataItem) {
-                                child.nativeIsSelected = 0
-                            }*/
-//                            else {
-//                                child.nativeIsSelected = 1
-//                            }
                             child.nativeIsSelected = 0
                         }
                     }
                     secondAdapter.notifyDataSetChanged()
 
-                    targetGoodItemClickCallBack?.onItemClick2(secondDataItem)
+                    targetGoodItemClickCallBack?.onAttrItemClick()
                 }
                 else -> {
                 }
@@ -80,38 +72,20 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
     }
 
 
-    /**
-     * 获取所有用户选中的数量
-     */
-    fun getAllUserSelectedSize(mAdapter: SkuFirstAdapter): Int {
-        val value = ArrayList<MallAttributeValue>()
-        mAdapter.data.forEachIndexed { index, group ->
-            // 每一组
-            group.value.forEach { item ->
-
-                if (item.nativeIsSelected == 1) {
-                    value.add(item)
-                }
-            }
-        }
-
-        return value.size
-    }
-
 
     /**
-     * 获取所有用户选中的index
+     * 获取用户选中的组坐标
      */
-    fun getUserSelectedIndex(): Int {
+    fun getFirstUserSelectedIndex(): Int {
         var resultIndex = -1
 
-        val value = ArrayList<MallAttributeValue>()
         data.forEachIndexed { index, group ->
             // 每一组
             group.value.forEach { item ->
 
                 if (item.nativeIsSelected == 1) {
                     resultIndex = index
+                    return@forEachIndexed
                 }
             }
         }
@@ -122,6 +96,6 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
 }
 
 interface TargetGoodItemClickCallBack {
-    fun onItemClick2(userSelect: MallAttributeValue)
+    fun onAttrItemClick()
 
 }

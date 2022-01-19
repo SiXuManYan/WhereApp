@@ -62,7 +62,6 @@ class MallAttributeValue : Serializable{
      * 0 未选中
      * 1 选中
      * 2 不可选
-     * 3 未选中可切换
      */
     var nativeIsSelected = 0
 }

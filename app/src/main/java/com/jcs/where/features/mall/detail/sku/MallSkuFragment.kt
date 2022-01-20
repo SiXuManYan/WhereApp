@@ -147,18 +147,17 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
     @SuppressLint("NotifyDataSetChanged")
     override fun onAttrItemClick() {
 
-        val allSelected = presenter.getAllSelectedValue(mAdapter)
+        // 用户选中属性
+        val allSelected: ArrayList<MallAttributeValue> = presenter.getAllSelectedValue(mAdapter)
 
-        val matchSpecsList = presenter.filterTargetSpecsList(data, allSelected)
+        // 复合条件的SKU
+        val matchSpecsList: ArrayList<MallSpecs> = presenter.getTargetResult(data, allSelected)
 
-        // 所有符合条件的属性值
-        val targetAttrs = ArrayList<String>()
-        matchSpecsList.forEach { ms ->
-            val values = ms.specs.values
-            values.forEach {
-                targetAttrs.add(it)
-            }
-        }
+        // 所有符合条件的SKU属性值   // h 45  k65
+        val selectedResultValues : ArrayList<String> = presenter.getResultValue(matchSpecsList)
+
+        // 默认所有SKU合集 值
+        val defaultResultValue  : ArrayList<String> = presenter.getDefaultResultValue(data)
 
         // 根据存在的属性，匹配列表中的可选状态
         mAdapter.data.forEach { group ->
@@ -167,28 +166,47 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             group.value.forEachIndexed { childIndex, item ->
 
                 // 存在即为可操作
-                if (targetAttrs.contains(item.name)) {
+                if (selectedResultValues.contains(item.name)) {
                     when (item.nativeIsSelected) {
                         0 -> item.nativeIsSelected = 0
                         1 -> item.nativeIsSelected = 1
                         2 -> item.nativeIsSelected = 0
                     }
                 } else {
+//                    if (defaultResultValue.contains(item.name)) {
+//                        item.nativeIsSelected = 0
+//                    } else {
+//                        item.nativeIsSelected = 2
+//                    }
+
                     item.nativeIsSelected = 2
+
                 }
 
             }
         }
+
 
         // 只选中1项目, 同组设置为可选
         if (allSelected.size == 1) {
             val index = mAdapter.getFirstUserSelectedIndex()
             if (index != -1) {
                 mAdapter.data[index].value.forEach {
+//                    it.name
+
                     when (it.nativeIsSelected) {
                         0 -> it.nativeIsSelected = 0
                         1 -> it.nativeIsSelected = 1
-                        2 -> it.nativeIsSelected = 0
+                        2 -> {
+
+                            if (defaultResultValue.contains(it.name)) {
+                                // 结果集中包含选项，可选
+                                it.nativeIsSelected = 0
+                            } else {
+                                // 初始化筛选时，无库存，保持不可选中状态
+                                it.nativeIsSelected = 2
+                            }
+                        }
                     }
                 }
             }

@@ -183,6 +183,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
                 else -> {
                 }
             }
+            addressDialog.dismiss()
 
 
         }
@@ -192,6 +193,12 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
 
 
     override fun paySuccess() {
+        addressDialog?.let {
+            if (it.isShowing) {
+                it.dismiss()
+            }
+        }
+
         startActivityAfterLogin(StorePayResultActivity::class.java, Bundle().apply {
             putInt(Constant.PARAM_TYPE, useType)
         })

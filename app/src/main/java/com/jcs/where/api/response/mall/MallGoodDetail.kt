@@ -51,6 +51,7 @@ class MallGoodDetail {
 class MallAttribute: Serializable {
     var key = ""
     var value = ArrayList<MallAttributeValue>()
+    var nativeSelectedValue = ""
 }
 
 
@@ -75,12 +76,18 @@ class MallSpecs : Serializable{
     var stock = 0
     var image = ""
     var specs: HashMap<String, String> = HashMap()
+
+    /**
+     * sku 属性集合
+     */
+    var nativeSpecsValues = ArrayList<String>()
 }
 
 class SkuDataSource {
     var main_image = ""
     var min_price :String?= ""
     var stock = 0
+
     /** 商品属性 */
     var attribute_list = ArrayList<MallAttribute>()
 

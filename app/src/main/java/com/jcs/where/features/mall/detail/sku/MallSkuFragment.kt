@@ -104,8 +104,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             isNestedScrollingEnabled = true
         }
 
-        mAdapter.setNewInstance(data.attribute_list)
-        onAttrItemClick()
+
     }
 
     override fun initData() {
@@ -113,6 +112,8 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         if (data.attribute_list.isEmpty() && data.specs.isNotEmpty()) {
             result = data.specs[0]
         }
+        mAdapter.setNewInstance(data.attribute_list)
+        onAttrItemClick()
     }
 
     override fun bindListener() {

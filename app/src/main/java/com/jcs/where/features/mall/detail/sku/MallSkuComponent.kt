@@ -28,6 +28,7 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
     fun getAllSelectedValue(mAdapter: SkuFirstAdapter): ArrayList<MallAttributeValue> {
         val value = ArrayList<MallAttributeValue>()
         mAdapter.data.forEachIndexed { index, group ->
+
             // 每一组
             group.value.forEach { item ->
 

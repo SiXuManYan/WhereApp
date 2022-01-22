@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallAttribute
+import com.jcs.where.api.response.mall.MallAttributeValue
 import com.jcs.where.view.MyLayoutManager
 
 /**
@@ -28,41 +29,26 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
 
         val secondAdapter = SkuSecondAdapter().apply {
             setNewInstance(item.value)
-
         }
 
         secondAdapter.setOnItemClickListener { _, _, position ->
 
+
             val allData = secondAdapter.data
             val secondDataItem = allData[position]
-
-            when (secondDataItem.nativeIsSelected) {
-                0 -> {
-                    allData.forEachIndexed { index, child ->
-                        if (child.nativeIsSelected != 2) {
-                            if (child == secondDataItem) {
-                                child.nativeIsSelected = 1
-                            } else {
-                                child.nativeIsSelected = 0
-                            }
-                        }
+            if (secondDataItem.nativeEnable) {
+                allData.forEach {
+                    if (it == secondDataItem) {
+                        it.nativeSelected = !it.nativeSelected
+                    } else {
+                        it.nativeSelected = false
                     }
-                    secondAdapter.notifyDataSetChanged()
-                    targetGoodItemClickCallBack?.onAttrItemClick()
                 }
-                1 -> {
-                    allData.forEachIndexed { index, child ->
-                        if (child.nativeIsSelected != 2) {
-                            child.nativeIsSelected = 0
-                        }
-                    }
-                    secondAdapter.notifyDataSetChanged()
-
-                    targetGoodItemClickCallBack?.onAttrItemClick()
-                }
-                else -> {
-                }
+                secondAdapter.notifyDataSetChanged()
+                targetGoodItemClickCallBack?.onAttrItemClick2(secondDataItem)
             }
+
+
         }
 
         secondRv.apply {
@@ -70,7 +56,6 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
             layoutManager = MyLayoutManager()
         }
     }
-
 
 
     /**
@@ -97,5 +82,6 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
 
 interface TargetGoodItemClickCallBack {
     fun onAttrItemClick()
+    fun onAttrItemClick2(secondDataItem: MallAttributeValue?)
 
 }

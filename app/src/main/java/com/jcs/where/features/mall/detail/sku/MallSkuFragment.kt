@@ -113,7 +113,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             result = data.specs[0]
         }
         mAdapter.setNewInstance(data.attribute_list)
-        onAttrItemClick()
+        initDefault(null)
     }
 
     override fun bindListener() {
@@ -154,10 +154,10 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         val matchSpecsList: ArrayList<MallSpecs> = presenter.getTargetResult(data, allSelected)
 
         // 所有符合条件的SKU属性值   // h 45  k65
-        val selectedResultValues : ArrayList<String> = presenter.getResultValue(matchSpecsList)
+        val selectedResultValues: ArrayList<String> = presenter.getResultValue(matchSpecsList)
 
         // 默认所有SKU合集 值
-        val defaultResultValue  : ArrayList<String> = presenter.getDefaultResultValue(data)
+        val defaultResultValue: ArrayList<String> = presenter.getDefaultResultValue(data)
 
         // 根据存在的属性，匹配列表中的可选状态
         mAdapter.data.forEach { group ->
@@ -235,6 +235,47 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             }
         }
 
+    }
+
+    override fun onAttrItemClick2(secondDataItem: MallAttributeValue?) {
+        val resultSkuList: ArrayList<MallSpecs> = initDefault(secondDataItem)
+
+
+
+
+        if (resultSkuList.size == 1) {
+            val mallSpecs = resultSkuList[0]
+            result = mallSpecs
+            price_tv.text = getString(R.string.price_unit_format, mallSpecs.price.toPlainString())
+
+            val stock = mallSpecs.stock
+
+            stock_tv.text = StringUtils.getString(R.string.stock_format, stock)
+
+            number_view.apply {
+                if (stock <= 0) {
+                    MIN_GOOD_NUM = 0
+                }
+                MAX_GOOD_NUM = stock
+                updateNumber(MIN_GOOD_NUM)
+                cut_iv.isClickable = true
+                add_iv.isClickable = true
+                add_iv.setImageResource(R.mipmap.ic_add_blue)
+            }
+        }
+
+    }
+
+    private fun initDefault(secondDataItem: MallAttributeValue?): ArrayList<MallSpecs> {
+        // 用户选中属性
+        val allSelectedItem: ArrayList<MallAttributeValue> = presenter.getAllSelectedItem2(mAdapter)
+
+        // 所有条件的SKU
+        val resultSkuList: ArrayList<MallSpecs> = presenter.getSkuResultList(data.specs, allSelectedItem)
+
+        // 刷新列表选中状态
+        presenter.changeViewStatus(mAdapter, resultSkuList, secondDataItem)
+        return resultSkuList
     }
 
 }

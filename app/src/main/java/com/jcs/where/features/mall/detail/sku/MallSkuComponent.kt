@@ -160,7 +160,7 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
         }
 
         skuSource.forEach { sourceItem ->
-            if (sourceItem.specs.values.containsAll(getUserSelectedValues(allSelected)) && sourceItem.stock > 0){
+            if (sourceItem.specs.values.containsAll(getUserSelectedValues(allSelected)) && sourceItem.stock > 0) {
                 result.add(sourceItem)
             }
         }
@@ -183,7 +183,12 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
      * 刷新列表UI可用
      */
     @SuppressLint("NotifyDataSetChanged")
-    fun changeViewStatus(mAdapter: SkuFirstAdapter, resultSkuList: ArrayList<MallSpecs>, secondDataItem: MallAttributeValue?) {
+    fun changeViewStatus(
+        mAdapter: SkuFirstAdapter,
+        resultSkuList: ArrayList<MallSpecs>,
+        currentItem: MallAttributeValue?,
+        allSelectedItem: ArrayList<MallAttributeValue>
+    ) {
 
         mAdapter.data.forEach { uiGroup ->
 
@@ -202,10 +207,29 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
 
 
             // 筛选其他选中的组
-            if (secondDataItem!=null && uiGroup.key != secondDataItem.key  && hasSelectedGroup(uiGroup)){
+/*            if (secondDataItem!=null && uiGroup.key != secondDataItem.key  && hasSelectedGroup(uiGroup)){
                 uiGroup.value.forEachIndexed { index, value ->
                     var enabled = false
                     resultSkuList.forEach { sku ->
+                        sku.specs.forEach {
+                            if (it.key == value.key && it.value == value.name) {
+                                enabled = true
+                            }
+                        }
+                    }
+                    value.nativeEnable = enabled
+                }
+
+            }*/
+
+            if (currentItem != null && uiGroup.key != currentItem.key && hasSelectedGroup(uiGroup)) {
+                uiGroup.value.forEachIndexed { index, value ->
+                    var enabled = false
+
+                    // 获取去除当前选项的SKU结果集，用作互斥筛选
+                    val tempSkuResult = getSkuResultList(resultSkuList, getOtherSelectedItem(allSelectedItem, currentItem))
+
+                    tempSkuResult.forEach { sku ->
                         sku.specs.forEach {
                             if (it.key == value.key && it.value == value.name) {
                                 enabled = true
@@ -222,12 +246,23 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
     }
 
 
+    fun getOtherSelectedItem( allSelectedItem: ArrayList<MallAttributeValue>,currentItem : MallAttributeValue):ArrayList<MallAttributeValue>{
+
+        val temp = ArrayList<MallAttributeValue>()
+        temp.addAll(allSelectedItem)
+        temp.remove(currentItem)
+        return temp
+
+
+
+
+    }
 
 
     /**
      * 当前组是否有选中元素
      */
-    private fun hasSelectedGroup(uiGroup: MallAttribute) :Boolean{
+    private fun hasSelectedGroup(uiGroup: MallAttribute): Boolean {
         var hasSelected = false
         uiGroup.value.forEach {
             if (it.nativeSelected) {
@@ -238,7 +273,6 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
         return hasSelected
 
     }
-
 
 
 }

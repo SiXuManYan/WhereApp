@@ -266,7 +266,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     }
 
-    private fun initDefault(secondDataItem: MallAttributeValue?): ArrayList<MallSpecs> {
+    private fun initDefault(currentItem: MallAttributeValue?): ArrayList<MallSpecs> {
         // 用户选中属性
         val allSelectedItem: ArrayList<MallAttributeValue> = presenter.getAllSelectedItem2(mAdapter)
 
@@ -274,7 +274,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         val resultSkuList: ArrayList<MallSpecs> = presenter.getSkuResultList(data.specs, allSelectedItem)
 
         // 刷新列表选中状态
-        presenter.changeViewStatus(mAdapter, resultSkuList, secondDataItem)
+        presenter.changeViewStatus(mAdapter, resultSkuList, currentItem,allSelectedItem)
         return resultSkuList
     }
 

@@ -837,5 +837,7 @@ Gentleman must let go</string>
     <string name="search_keyword_2">搜索关键字</string>
     <string name="all_products">全部商品</string>
     <string name="view_category">查看分类</string>
+    <string name="mall_newest">上新</string>
+    <string name="mall_price">价格</string>
 
 </resources>

@@ -826,5 +826,8 @@ Gentleman must let go</string>
     <string name="expired_products">Expired Products</string>
     <string name="empty_data_cart">No data</string>
     <string name="inventory_shortage_select">Inventory shortage</string>
+    <string name="search_keyword_2">Search Keyword</string>
+    <string name="all_products">All products</string>
+    <string name="view_category">View Category</string>
 
 </resources>

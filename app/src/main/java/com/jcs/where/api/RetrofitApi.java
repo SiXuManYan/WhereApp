@@ -5,10 +5,11 @@ import androidx.annotation.Nullable;
 import com.google.gson.JsonElement;
 import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
-import com.jcs.where.api.request.CollectionRequest;
+import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelCollectionRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
+import com.jcs.where.api.request.MallShopUnCollection;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.StoreOrderCommit;
 import com.jcs.where.api.request.TravelCollectionRequest;
@@ -100,6 +101,7 @@ import com.jcs.where.api.response.mall.request.MallCommitResponse;
 import com.jcs.where.api.response.mall.request.MallDeliveryRequest;
 import com.jcs.where.api.response.mall.request.MallDeliveryResponse;
 import com.jcs.where.api.response.mall.request.MallOrderCommit;
+import com.jcs.where.api.response.mall.request.MallShop;
 import com.jcs.where.api.response.mall.request.UnCollection;
 import com.jcs.where.api.response.merchant.MerchantApplyRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
@@ -1197,7 +1199,7 @@ public interface RetrofitApi {
      */
     @POST("generalapi/v2/estore/collects")
     Observable<JcsResponse<JsonElement>> storeCollects(
-            @Body CollectionRequest request
+            @Body MallShopCollection request
     );
 
     /**
@@ -1205,7 +1207,7 @@ public interface RetrofitApi {
      */
     @HTTP(method = "DELETE", path = "generalapi/v2/estore/collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> StoreCancelCollects(
-            @Body CollectionRequest request
+            @Body MallShopCollection request
     );
 
 
@@ -1741,6 +1743,28 @@ public interface RetrofitApi {
      */
     @GET("estoreapi/v2/carts_efficacy")
     Observable<JcsResponse<ArrayList<MallExpired>>> expiredGoods();
+
+
+    /**
+     * mall店铺详情
+     */
+    @GET("estoreapi/v2/shop/{id}")
+    Observable<JcsResponse<MallShop>> mallShopDetail(@Path("id") int id);
+
+
+    /**
+     * 收藏 mall 店铺
+     */
+    @POST("estoreapi/v2/shop_collects")
+    Observable<JcsResponse<JsonElement>> mallShopCollection(@Body MallShopCollection collection);
+
+
+    /**
+     * 取消收藏 mall 店铺
+     */
+    @HTTP(method = "DELETE", path = "estoreapi/v2/shop_collects", hasBody = true)
+    Observable<JcsResponse<JsonElement>> mallShopUnCollection(@Body MallShopUnCollection collection);
+
 
 
 }

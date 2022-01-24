@@ -79,7 +79,6 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
 
     fun getRecommend(categoryId:Int) {
 
-        // 暂时用原有商城推荐替代
         requestApi(mRetrofit.getMallRecommendGood(categoryId), object : BaseMvpObserver<ArrayList<MallGood>>(view) {
             override fun onSuccess(response: ArrayList<MallGood>) {
                 view.bindRecommend(response)

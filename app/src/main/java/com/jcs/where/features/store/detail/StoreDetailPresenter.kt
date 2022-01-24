@@ -3,7 +3,7 @@ package com.jcs.where.features.store.detail
 import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
-import com.jcs.where.api.request.CollectionRequest
+import com.jcs.where.api.request.MallShopCollection
 import com.jcs.where.api.response.store.StoreDetail
 
 /**
@@ -25,7 +25,7 @@ class StoreDetailPresenter(val view: StoreDetailView) : BaseMvpPresenter(view) {
 
     fun collection(shopId: Int) {
 
-        val apply = CollectionRequest().apply {
+        val apply = MallShopCollection().apply {
             shop_id = shopId
         }
 
@@ -37,7 +37,7 @@ class StoreDetailPresenter(val view: StoreDetailView) : BaseMvpPresenter(view) {
     }
 
     fun unCollection(shopId: Int) {
-        val apply = CollectionRequest().apply {
+        val apply = MallShopCollection().apply {
             shop_id = shopId
         }
 

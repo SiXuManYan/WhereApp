@@ -206,22 +206,6 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
             }
 
 
-            // 筛选其他选中的组
-/*            if (secondDataItem!=null && uiGroup.key != secondDataItem.key  && hasSelectedGroup(uiGroup)){
-                uiGroup.value.forEachIndexed { index, value ->
-                    var enabled = false
-                    resultSkuList.forEach { sku ->
-                        sku.specs.forEach {
-                            if (it.key == value.key && it.value == value.name) {
-                                enabled = true
-                            }
-                        }
-                    }
-                    value.nativeEnable = enabled
-                }
-
-            }*/
-
             if (currentItem != null && uiGroup.key != currentItem.key && hasSelectedGroup(uiGroup)) {
                 uiGroup.value.forEachIndexed { index, value ->
                     var enabled = false
@@ -252,10 +236,6 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
         temp.addAll(allSelectedItem)
         temp.remove(currentItem)
         return temp
-
-
-
-
     }
 
 

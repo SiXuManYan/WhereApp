@@ -22,7 +22,6 @@ import com.jcs.where.utils.GlideUtil
 class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend), LoadMoreModule {
     override fun convert(holder: BaseViewHolder, item: MallGood) {
 
-
         val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
         val image = holder.getView<ImageView>(R.id.image_iv)
         val title = holder.getView<TextView>(R.id.title_tv)

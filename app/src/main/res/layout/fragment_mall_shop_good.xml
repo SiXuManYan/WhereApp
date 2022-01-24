@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -41,20 +41,20 @@
 
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center"
             android:id="@+id/price_rl"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5">
+            android:layout_weight="5"
+            android:gravity="center"
+            android:orientation="horizontal">
 
 
             <CheckedTextView
                 android:id="@+id/price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:layout_marginEnd="@dimen/dp_2"
+                android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="@string/mall_price"
@@ -65,8 +65,8 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/price_up_iv"

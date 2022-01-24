@@ -46,7 +46,6 @@ class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout
         title.text = item.title
         nowPrice.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
 
-
         container_ll.setOnClickListener {
             MallDetailActivity.navigation(context,item.id)
         }

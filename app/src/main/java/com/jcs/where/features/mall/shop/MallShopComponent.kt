@@ -25,7 +25,8 @@ class MallShopPresenter(private var view: MallShopView):BaseMvpPresenter(view){
             null,
             null,
             null,
-            shopId
+            shopId,
+            null
         ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
             override fun onSuccess(response: PageResponse<MallGood>) {
                 val isLastPage = response.lastPage == page

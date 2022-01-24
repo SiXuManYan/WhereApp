@@ -36,6 +36,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 5.商城
      * 6.新版商城
      * 7.美食地图
+     * 8.新版商城通过店铺搜索商品
      */
     private var type = 0
 
@@ -43,6 +44,9 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 分类id
      */
     private var categoryId: String? = ""
+
+    /** 商城店铺id */
+    private var shopId = 0
 
     private lateinit var mAdapter: SearchHistoryAdapter
 
@@ -54,6 +58,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
 
         type = intent.getIntExtra(Constant.PARAM_TYPE, 0)
         categoryId = intent.getStringExtra(Constant.PARAM_CATEGORY_ID)
+        shopId = intent.getIntExtra(Constant.PARAM_SHOP_ID , 0)
 
 
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
@@ -123,15 +128,19 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
                 startActivity(ConvenienceServiceSearchActivity::class.java, bundle)
                 finish()
             }
-            3, 4 ,7-> {
+            3, 4, 7 -> {
                 setResult(Activity.RESULT_OK, Intent().putExtras(bundle))
                 finish()
             }
             5 -> {
                 startActivity(StoreSearchActivity::class.java, bundle)
             }
-            6->{
+            6 -> {
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
+                startActivity(MallSearchResultActivity::class.java, bundle)
+            }
+            8->{
+                bundle.putInt(Constant.PARAM_SHOP_ID, shopId)
                 startActivity(MallSearchResultActivity::class.java, bundle)
             }
             else -> {

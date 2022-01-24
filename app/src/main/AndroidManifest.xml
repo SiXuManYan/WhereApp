@@ -549,6 +549,8 @@
         <activity android:name=".features.comment.CommentSuccessActivity" />
         <activity android:name=".features.daily.sign.SignInRuleActivity" />
         <activity android:name=".features.merchant.record.MerchantRecordActivity" />
+        <activity android:name=".features.mall.shop.home.MallShopHomeActivity" />
+        <activity android:name=".features.mall.shop.home.second.MallShopGoodActivity" />
 
 
     </application>

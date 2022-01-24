@@ -52,7 +52,7 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
-                android:textColor="@color/color_red_f64944"
+                android:textColor="@color/red_f64944"
                 android:textSize="@dimen/sp_22"
                 android:textStyle="bold"
                 tools:text="¥7878" />

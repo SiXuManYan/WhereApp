@@ -28,8 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_30"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_5"
-            android:layout_toStartOf="@+id/type_ll"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:layout_toStartOf="@+id/cart_iv"
             android:layout_toEndOf="@+id/back_iv"
             android:background="@drawable/bg_search">
 
@@ -75,28 +75,16 @@
         </RelativeLayout>
 
 
-        <LinearLayout
-            android:id="@+id/type_ll"
+        <ImageView
+            android:id="@+id/cart_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:orientation="horizontal">
-
-
-
-
-            <ImageView
-                android:id="@+id/cart_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/dp_10"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_type_cart" />
-
-        </LinearLayout>
-
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/dp_10"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_type_cart" />
 
     </RelativeLayout>
 

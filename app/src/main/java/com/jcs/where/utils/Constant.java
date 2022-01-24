@@ -56,6 +56,7 @@ public class Constant {
     public static final String PARAM_ORDER_COMMIT_DATA = "param_order_commit_data";
     public static final String PARAM_CHILD_CATEGORY_ID = "param_child_category_id";
     public static final String PARAM_CATEGORY_ID = "param_category_id";
+    public static final String PARAM_CATEGORY_NAME = "param_category_name";
 
 
     /**

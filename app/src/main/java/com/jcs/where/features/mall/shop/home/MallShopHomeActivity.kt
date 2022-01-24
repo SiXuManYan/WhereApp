@@ -13,6 +13,7 @@ import com.jcs.where.api.response.mall.request.MallShop
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.shop.home.category.MallShopCategoryFragment
 import com.jcs.where.features.mall.shop.home.good.MallShopGoodFragment
+import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -38,19 +39,20 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
 
     val tabTitle = arrayOf(StringUtils.getString(R.string.all_products), StringUtils.getString(R.string.view_category))
 
+    companion object {
+        fun navigation(context: Context, shopId: Int) {
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_SHOP_ID, shopId)
+            }
+            val intent = Intent(context, MallShopHomeActivity::class.java)
+                .putExtras(bundle)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-    fun navigation(context: Context, shopId: Int) {
-        val bundle = Bundle().apply {
-            putInt(Constant.PARAM_SHOP_ID, shopId)
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
         }
-        val intent = Intent(context, MallShopHomeActivity::class.java)
-            .putExtras(bundle)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-        if (context !is Activity) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        context.startActivity(intent)
     }
 
     override fun initView() {
@@ -63,6 +65,7 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
 
     override fun initData() {
         presenter = MallShopHomePresenter(this)
+        presenter.getDetail(shopId)
     }
 
     override fun bindListener() {
@@ -79,19 +82,25 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
             MobUtil.shareFacebookWebPage(url, this@MallShopHomeActivity)
         }
 
+        search_ll.setOnClickListener {
+            startActivity(SearchAllActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 8)
+                putInt(Constant.PARAM_SHOP_ID, shopId)
+            })
+
+        }
+
     }
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
-
         override fun getPageTitle(position: Int): CharSequence? = tabTitle[position]
-
 
         override fun getItem(position: Int): Fragment {
             return if (position == 0) {
-                MallShopGoodFragment()
+                MallShopGoodFragment.newInstance(shopId)
             } else {
-                MallShopCategoryFragment()
+                MallShopCategoryFragment.newInstance(shopId)
             }
 
         }
@@ -101,8 +110,8 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
 
 
     override fun bindDetail(response: MallShop) {
-        GlideUtil.load(this,response.image,shop_bg_iv)
-        GlideUtil.load(this,response.logo,shop_logo_iv,4)
+        GlideUtil.load(this, response.image, shop_bg_iv)
+        GlideUtil.load(this, response.logo, shop_logo_iv, 4)
         shop_name_tv.text = response.title
         collectStatus = response.collect_status
         setLikeImage()

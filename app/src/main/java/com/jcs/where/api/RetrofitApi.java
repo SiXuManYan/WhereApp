@@ -5,10 +5,10 @@ import androidx.annotation.Nullable;
 import com.google.gson.JsonElement;
 import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
-import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelCollectionRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
+import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.MallShopUnCollection;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.StoreOrderCommit;
@@ -95,6 +95,7 @@ import com.jcs.where.api.response.mall.MallExpired;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
 import com.jcs.where.api.response.mall.MallOrderDetail;
+import com.jcs.where.api.response.mall.MallShopCategory;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
@@ -1576,7 +1577,8 @@ public interface RetrofitApi {
             @Query("start") @Nullable String startPrice,
             @Query("end") @Nullable String endPrice,
             @Query("sold") @Nullable String sold,
-            @Query("shopId") @Nullable Integer shopId
+            @Query("shopId") @Nullable Integer shopId,
+            @Query("shop_categoryId") @Nullable Integer shop_categoryId
 
 
     );
@@ -1764,6 +1766,13 @@ public interface RetrofitApi {
      */
     @HTTP(method = "DELETE", path = "estoreapi/v2/shop_collects", hasBody = true)
     Observable<JcsResponse<JsonElement>> mallShopUnCollection(@Body MallShopUnCollection collection);
+
+
+    /**
+     * mall店铺详情
+     */
+    @GET("estoreapi/v2/shop_category")
+    Observable<JcsResponse<ArrayList<MallShopCategory>>> mallShopCategory(@Query("shop_id") int shop_id);
 
 
 

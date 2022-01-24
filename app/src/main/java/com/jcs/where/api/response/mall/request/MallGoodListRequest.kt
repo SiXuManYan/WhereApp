@@ -19,6 +19,9 @@ class MallGoodListRequest {
     /** 销量排序(desc,asc) */
     var sold: SortEnum? = null
     var shopId: Int? = null
+
+    /** 店铺分类id */
+    var shop_categoryId: Int? = null
 }
 
 enum class SortEnum {

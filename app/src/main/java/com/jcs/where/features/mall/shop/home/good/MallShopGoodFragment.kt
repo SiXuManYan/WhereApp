@@ -11,7 +11,6 @@ import com.jcs.where.api.response.mall.request.MallGoodListRequest
 import com.jcs.where.api.response.mall.request.SortEnum
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.mall.home.child.MallRecommendAdapter
-import com.jcs.where.features.store.detail.good.StoreGoodFragment
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -25,8 +24,8 @@ import kotlinx.android.synthetic.main.fragment_mall_shop_good.*
 class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopGoodView {
 
 
-    /** 当前页面使用的分类Id */
-    private var mCategoryId = 0
+    /** 店铺分类ID */
+    private var mShopCategoryId = 0
     private var mShopId = 0
 
     private var goodRequest = MallGoodListRequest()
@@ -38,12 +37,16 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
 
     companion object {
 
-        fun newInstance(shopId: Int, categoryId: Int? = null): StoreGoodFragment {
-            val fragment = StoreGoodFragment()
+        /**
+         * @param shopId 店铺id
+         * @param shopCategoryId 店铺分类Id (店铺详情跳转商品列表页)
+         */
+        fun newInstance(shopId: Int, shopCategoryId: Int? = null): MallShopGoodFragment {
+            val fragment = MallShopGoodFragment()
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_SHOP_ID, shopId)
-                categoryId?.let {
+                shopCategoryId?.let {
                     putInt(Constant.PARAM_CATEGORY_ID, it)
                 }
             }
@@ -56,8 +59,8 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
 
     override fun initView(view: View?) {
         arguments?.let {
-            mShopId  = it.getInt(Constant.PARAM_SHOP_ID)
-            mCategoryId = it.getInt(Constant.PARAM_CATEGORY_ID)
+            mShopId = it.getInt(Constant.PARAM_SHOP_ID)
+            mShopCategoryId = it.getInt(Constant.PARAM_CATEGORY_ID)
         }
         initContent()
     }
@@ -90,13 +93,12 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
         goodRequest.apply {
             page = Constant.DEFAULT_FIRST_PAGE
             shopId = mShopId
-            if (mCategoryId != 0) {
-                categoryId = mCategoryId
+            if (mShopCategoryId != 0) {
+                shop_categoryId = mShopCategoryId
             }
         }
         presenter.getMallList(goodRequest)
     }
-
 
 
     override fun bindData(data: MutableList<MallGood>, lastPage: Boolean) {
@@ -158,17 +160,23 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
             presenter.getMallList(goodRequest)
         }
 
-        price_tv.setOnClickListener {
+        price_rl.setOnClickListener {
             sales_tv.isChecked = false
             newest_tv.isChecked = false
-            price_tv.isChecked = true
+            price_tv.toggle()
             goodRequest.apply {
                 page = Constant.DEFAULT_FIRST_PAGE
                 sold = null
-                order = if (sales_tv.isChecked) {
-                    SortEnum.desc
+                if (price_tv.isChecked) {
+                    order = SortEnum.desc
+                    price_up_iv.setImageResource(R.mipmap.ic_up_store)
+                    price_down_iv.setImageResource(R.mipmap.ic_down_store_pre)
+                    price_tv.setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
                 } else {
-                    SortEnum.asc
+                    order = SortEnum.asc
+                    price_up_iv.setImageResource(R.mipmap.ic_up_store_pre)
+                    price_down_iv.setImageResource(R.mipmap.ic_down_store)
+                    price_tv.setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
                 }
             }
             presenter.getMallList(goodRequest)

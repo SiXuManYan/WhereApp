@@ -26,6 +26,7 @@ import com.jcs.where.features.mall.comment.MallCommentActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.MallShopActivity
+import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
@@ -158,7 +159,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
         }
         mall_shop_tv.setOnClickListener {
-            MallShopActivity.navigation(this, shopId, shopName)
+            MallShopHomeActivity.navigation(this, shopId)
         }
         like_iv.setOnClickListener {
             if (collect_status == 0) {

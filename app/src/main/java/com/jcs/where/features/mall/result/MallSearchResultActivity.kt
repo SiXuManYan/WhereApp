@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.result
 
+import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -20,12 +21,16 @@ import kotlinx.android.synthetic.main.activity_mall_search_result.*
 /**
  * Created by Wangsw  2021/12/10 10:16.
  * 商城搜索结果
+ * 商城首页、商城二级分类页、商城店铺页
  */
 class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSearchView {
 
     private var searchInput: String? = null
 
-    /** 商城二级页跳转搜索传递的分类di */
+    /** 商城店铺id(通过店铺详情进行搜索时) */
+    private var shopId: Int? = null
+
+    /** 商城二级页跳转搜索传递的分类id  */
     private var categoryId: String? = null
 
     /** 商品推荐 */
@@ -33,15 +38,23 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     private var page = Constant.DEFAULT_FIRST_PAGE
 
+
     override fun getLayoutId() = R.layout.activity_mall_search_result
 
     override fun isStatusDark() = true
 
     override fun initView() {
-        searchInput = intent.getStringExtra(Constant.PARAM_NAME)
-        categoryId = intent.getStringExtra(Constant.PARAM_CATEGORY_ID)
+        intent.extras?.let {
+            searchInput = it.getString(Constant.PARAM_NAME)
+            categoryId = it.getString(Constant.PARAM_CATEGORY_ID)
+            shopId = it.getInt(Constant.PARAM_SHOP_ID)
+        }
         search_tv.text = searchInput
         initContent()
+
+        if (shopId != null) {
+            cart_iv.visibility = View.GONE
+        }
     }
 
     private fun initContent() {
@@ -53,7 +66,7 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
             setEmptyView(emptyView)
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getMallList(page, searchInput, categoryId)
+                presenter.getMallList(page, searchInput, categoryId, shopId)
             }
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -67,7 +80,7 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     override fun initData() {
         presenter = MallSearchPresenter(this)
-        presenter.getMallList(page, searchInput, categoryId)
+        presenter.getMallList(page, searchInput, categoryId, shopId)
     }
 
     override fun bindListener() {
@@ -113,8 +126,7 @@ interface MallSearchView : BaseMvpView {
 
 class MallSearchPresenter(private var view: MallSearchView) : BaseMvpPresenter(view) {
 
-    fun getMallList(page: Int, title: String? = null, categoryId: String?) {
-
+    fun getMallList(page: Int, title: String? = null, categoryId: String? = null, shopId: Int? = null) {
 
         val secondCategoryId = if (categoryId.isNullOrBlank()) {
             null
@@ -130,6 +142,7 @@ class MallSearchPresenter(private var view: MallSearchView) : BaseMvpPresenter(v
             null,
             null,
             null,
+            shopId,
             null
         ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
             override fun onSuccess(response: PageResponse<MallGood>) {

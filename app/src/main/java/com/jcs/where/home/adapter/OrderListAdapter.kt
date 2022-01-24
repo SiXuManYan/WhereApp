@@ -472,8 +472,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             val goodImage = goods[0].good_image as String
             Glide.with(context).load(goodImage).apply(options).into(image_iv)
             first_tv.text = goods[0].good_title
+            second_tv.text = StringUtils.getString(R.string.quantity_format, goods[0].good_num)
         }
-        second_tv.text = StringUtils.getString(R.string.quantity_format, goods.size)
+
         third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部

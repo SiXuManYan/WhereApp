@@ -33,7 +33,6 @@ class SkuFirstAdapter : BaseQuickAdapter<MallAttribute, BaseViewHolder>(R.layout
 
         secondAdapter.setOnItemClickListener { _, _, position ->
 
-
             val allData = secondAdapter.data
             val secondDataItem = allData[position]
             if (secondDataItem.nativeEnable) {

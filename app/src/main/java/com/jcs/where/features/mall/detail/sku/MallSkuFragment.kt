@@ -128,12 +128,18 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             }
             // 判断是否所有必选都选中
             mAdapter.data.forEach {
+                var allSelected = 0
                 it.value.forEach { value ->
-                    if (value.nativeIsSelected == 0) {
-                        ToastUtils.showShort(getString(R.string.please_selected) + it.key)
-                        return@setOnClickListener
+                    if (value.nativeSelected) {
+                        allSelected ++
                     }
                 }
+                if (allSelected == 0){
+                    ToastUtils.showShort(getString(R.string.please_selected) + it.key)
+                    return@setOnClickListener
+                }
+
+
             }
             if (number_view.goodNum == 0) {
                 ToastUtils.showShort(getString(R.string.inventory_shortage_select))

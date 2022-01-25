@@ -24,16 +24,7 @@ import io.reactivex.functions.BiFunction;
  */
 public class ConvenienceServiceModel extends BaseModel {
 
-    /**
-     * @param categoryId 分类id集合
-     * @param search     查询字段
-     */
-    public void getMechanismList(String categoryId,
-                                 String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
 
-        dealResponse(mRetrofit.getMechanismListById(categoryId, search, Constant.LAT, Constant.LNG), observer);
-
-    }
 
     /**
      * 获得页面TabLayout展示的二级分类
@@ -44,18 +35,6 @@ public class ConvenienceServiceModel extends BaseModel {
 
     public void getAreaList(BaseObserver<List<CityResponse>> observer) {
         dealResponse(mRetrofit.getAreaForService(), observer);
-    }
-
-    public int getCityResponseIndexById(List<CityResponse> cityResponses) {
-        String cityId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID);
-        int size = cityResponses.size();
-        for (int i = 0; i < size; i++) {
-            CityResponse cityResponse = cityResponses.get(i);
-            if (cityResponse.getId().equals(cityId)) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     /**

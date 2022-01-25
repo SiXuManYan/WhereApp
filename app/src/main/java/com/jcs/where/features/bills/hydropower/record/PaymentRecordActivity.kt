@@ -44,10 +44,7 @@ class PaymentRecordActivity : BaseMvpActivity<PaymentRecordPresenter>(), Payment
 
         swipe_layout.setOnRefreshListener(this@PaymentRecordActivity)
 
-        emptyView = EmptyView(this).apply {
-            showEmptyNothing()
-        }
-
+        emptyView = EmptyView(this)
         mAdapter = PaymentAdapter().apply {
             setEmptyView(emptyView)
             loadMoreModule.isAutoLoadMore = true

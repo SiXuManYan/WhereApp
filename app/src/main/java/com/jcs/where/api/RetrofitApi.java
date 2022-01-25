@@ -242,19 +242,7 @@ public interface RetrofitApi {
     @GET("maps/api/geocode/json?key=AIzaSyDjaCnD0cWNtAOPiS_Kbb5FRZ4k4qyhayk")
     Observable<JcsResponse<String>> getLocation(@Query("latlng") String latlng);
 
-    /**
-     * 获得机构列表数据
-     *
-     * @param categoryId 机构分类
-     * @param search     查询字段
-     * @return
-     */
-    @GET("generalapi/v2/infos")
-    Observable<JcsResponse<PageResponse<MechanismResponse>>> getMechanismListById(
-            @Query("cate_id") String categoryId,
-            @Query("search_input") String search,
-            @Query("lat") double lat,
-            @Query("lng") double lng);
+
 
     /**
      * 获得机构列表数据
@@ -269,7 +257,30 @@ public interface RetrofitApi {
             @Query("cate_id") String categoryId,
             @Query("search_input") String search,
             @Query("lat") double lat,
-            @Query("lng") double lng);
+            @Query("lng") double lng
+
+
+    );
+
+
+    /**
+     * 获得机构列表数据
+     *
+     * @param categoryId 机构分类
+     * @param search     查询字段
+     * @return
+     */
+    @GET("generalapi/v2/infos")
+    Observable<JcsResponse<PageResponse<MechanismResponse>>> getMechanismListById3(
+            @Query("page") int page,
+            @Query("cate_id") String categoryId,
+            @Query("search_input") String search,
+            @Query("lat") double lat,
+            @Query("lng") double lng,
+            @Query("area_id") String area_id
+
+    );
+
 
 
     /**

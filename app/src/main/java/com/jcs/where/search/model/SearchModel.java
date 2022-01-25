@@ -1,14 +1,15 @@
 package com.jcs.where.search.model;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,8 +47,8 @@ public class SearchModel extends BaseModel {
      */
     public void getMechanismList(String categoryId,
                                  String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
-
-        dealResponse(mRetrofit.getMechanismListById(categoryId, search, Constant.LAT, Constant.LNG), observer);
+        LatLng latLng = CacheUtil.getSafeSelectLatLng();
+        dealResponse(mRetrofit.getMechanismListById2(1, categoryId, search, latLng.latitude, latLng.longitude), observer);
 
     }
 }

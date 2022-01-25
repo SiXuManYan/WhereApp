@@ -773,6 +773,7 @@ Gentleman must let go</string>
     <string name="selected_goods">已选商品</string>
     <string name="packaging_fee_format">包装费&#160;₱%1$s</string>
     <string name="delivery_price_format_2">配送费&#160;%1$s</string>
+    <string name="delivery_price_format_3">另需配送费&#160;%1$s</string>
     <string name="empty_cart">空</string>
     <string name="total_price">Total Price</string>
     <string name="add_new_address">添加新地址</string>
@@ -840,5 +841,11 @@ Gentleman must let go</string>
     <string name="mall_newest">上新</string>
     <string name="mall_price">价格</string>
     <string name="collection_tab_mall">线上商店</string>
+
+    <string name="estore_goods_removed">已下架</string>
+    <string name="estore_goods_expired">已失效</string>
+    <string name="estore_goods_removed_reason">商品已经下架</string>
+    <string name="estore_goods_expired_reason">商品已经失效</string>
+
 
 </resources>

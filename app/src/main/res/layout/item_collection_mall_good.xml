@@ -3,26 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/child_container_rl"
     android:layout_width="match_parent"
-    android:background="?android:attr/selectableItemBackground"
     android:layout_height="@dimen/dp_98"
+    android:background="?android:attr/selectableItemBackground"
     android:paddingStart="@dimen/dp_15"
     android:paddingEnd="@dimen/dp_15">
 
-    <ImageView
-        android:id="@+id/good_iv"
+
+    <FrameLayout
+        android:id="@+id/good_fl"
         android:layout_width="@dimen/dp_98"
         android:layout_height="@dimen/dp_98"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:scaleType="centerCrop"
-        tools:src="@tools:sample/avatars" />
+        android:layout_marginEnd="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/good_iv"
+            android:layout_width="@dimen/dp_98"
+            android:layout_height="@dimen/dp_98"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/invalid_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_21"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:background="@drawable/shape_black_radius_4"
+            android:gravity="center"
+            android:padding="@dimen/dp_4"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            android:visibility="gone"
+            tools:text="@string/invalid"
+            tools:visibility="visible" />
+
+
+    </FrameLayout>
 
 
     <TextView
         android:id="@+id/good_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/good_iv"
+        android:layout_toEndOf="@+id/good_fl"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="2"
@@ -31,17 +56,39 @@
         tools:text="@tools:sample/lorem/random" />
 
 
-    <TextView
-        android:id="@+id/now_price_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/good_iv"
-        android:textColor="@color/orange_FF5837"
-        android:textSize="@dimen/sp_14"
-        android:textStyle="bold"
-        tools:text="$1000.00" />
 
+
+    <ViewSwitcher
+        android:id="@+id/bottom_sw"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/good_fl"
+        android:layout_height="wrap_content">
+
+
+
+
+        <TextView
+            android:id="@+id/now_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange_FF5837"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold"
+            tools:text="$1000.00" />
+
+        <TextView
+            android:id="@+id/invalid_reason_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_13"
+            android:textStyle="bold"
+            tools:text="商品已经下架" />
+
+
+
+    </ViewSwitcher>
 
 
 </RelativeLayout>

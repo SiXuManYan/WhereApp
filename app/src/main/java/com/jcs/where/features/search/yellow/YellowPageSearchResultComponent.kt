@@ -5,7 +5,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.api.response.PageResponse
-import com.jcs.where.utils.Constant
+import com.jcs.where.utils.CacheUtil
 
 /**
  * Created by Wangsw  2021/9/3 15:02.
@@ -21,7 +21,8 @@ class YellowPageSearchResultPresenter(private var view: YellowPageSearchResultVi
 
     fun getData(page: Int, categoryId: String, search: String) {
 
-        requestApi(mRetrofit.getMechanismListById2(page, categoryId, search, Constant.LAT, Constant.LNG),
+        val latLng = CacheUtil.getSafeSelectLatLng()
+        requestApi(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude),
             object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
                 override fun onSuccess(response: PageResponse<MechanismResponse>) {
 

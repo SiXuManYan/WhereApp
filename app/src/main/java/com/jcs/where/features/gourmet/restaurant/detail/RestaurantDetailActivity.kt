@@ -317,9 +317,9 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         }
         like_iv.setOnClickListener {
             if (collect_status == 1) {
-                presenter.unCollection(mRestaurantId)
-            } else {
                 presenter.collection(mRestaurantId)
+            } else {
+                presenter.unCollection(mRestaurantId)
             }
         }
         back_iv.setOnClickListener {
@@ -430,9 +430,9 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
         collect_status = if (collectionStatus) {
-            1
-        } else {
             2
+        } else {
+            1
         }
         setLikeImage()
     }
@@ -442,15 +442,15 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         like_iv.setImageResource(
             if (collect_status == 1) {
                 if (isToolbarDark) {
-                    R.mipmap.ic_like_red_night
-                } else {
-                    R.mipmap.ic_like_red_light
-                }
-            } else {
-                if (isToolbarDark) {
                     R.mipmap.ic_like_normal_night
                 } else {
                     R.mipmap.ic_like_normal_light
+                }
+            } else {
+                if (isToolbarDark) {
+                    R.mipmap.ic_like_red_night
+                } else {
+                    R.mipmap.ic_like_red_light
                 }
             }
         )

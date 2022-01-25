@@ -43,6 +43,8 @@ public class NewsFragmentAdapter extends BaseMultiItemQuickAdapter<NewsResponse,
             case NewsType.SINGLE_IMAGE:
                 RoundedImageView riv = baseViewHolder.findView(R.id.newsIconIv);
                 GlideUtil.load(getContext(), images.get(0), riv);
+
+
                 break;
             case NewsType.THREE_IMAGE:
                 dealThreeImages(images, baseViewHolder);

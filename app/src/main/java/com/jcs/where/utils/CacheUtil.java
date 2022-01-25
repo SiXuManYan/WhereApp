@@ -12,7 +12,6 @@ import com.jcs.where.BuildConfig;
 public class CacheUtil {
 
 
-
     /**
      * 若不需要更新，返回存储的Json字符串
      * 否则返回 ""
@@ -41,10 +40,9 @@ public class CacheUtil {
         return "";
     }
 
-    public static void saveToken(String token){
-        SPUtils.getInstance().put(SPKey.K_TOKEN ,token);
+    public static void saveToken(String token) {
+        SPUtils.getInstance().put(SPKey.K_TOKEN, token);
     }
-
 
 
     public static void cacheWithCurrentTimeByLanguage(String key, Object value) {
@@ -72,7 +70,7 @@ public class CacheUtil {
     }
 
     public static String getToken() {
-        return SPUtils.getInstance().getString(SPKey.K_TOKEN,"");
+        return SPUtils.getInstance().getString(SPKey.K_TOKEN, "");
     }
 
     public static SPUtils getShareDefault() {
@@ -96,18 +94,17 @@ public class CacheUtil {
 
     /**
      * 获取选择城市的经纬度
+     *
      * @return
      */
-    public static LatLng getSafeSelectLatLng(){
+    public static LatLng getSafeSelectLatLng() {
 
         float selectLat = SPUtils.getInstance().getFloat(SPKey.SELECT_LAT, (float) Constant.LAT);
         float selectLng = SPUtils.getInstance().getFloat(SPKey.SELECT_LNG, (float) Constant.LNG);
 
-        return new  LatLng(selectLat, selectLng);
+        return new LatLng(selectLat, selectLng);
 
     }
-
-
 
 
 }

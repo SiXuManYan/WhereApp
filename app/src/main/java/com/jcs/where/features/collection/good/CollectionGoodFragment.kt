@@ -3,7 +3,6 @@ package com.jcs.where.features.collection.good
 import android.graphics.Color
 import android.view.View
 import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
@@ -100,21 +99,12 @@ class CollectionGoodFragment : BaseMvpFragment<CollectionGoodPresenter>(), Colle
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val itemData = mAdapter.data[position]
-        when (itemData.delete_status) {
-            0 -> {
-                if (itemData.good_status == 0) {
-                    ToastUtils.showShort(R.string.product_removed)
-                } else {
-                    MallDetailActivity.navigation(requireContext(), itemData.good_id)
-                }
-            }
-            1 -> {
-                ToastUtils.showShort(R.string.product_delete)
-            }
 
+        if (itemData.delete_status == 1 || itemData.good_status == 0) {
+            // 已删除或下架，不处理
+            return
         }
-
-
+        MallDetailActivity.navigation(requireContext(), itemData.good_id)
     }
 
 

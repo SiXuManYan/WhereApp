@@ -13,6 +13,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
+import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.empty.EmptyView
@@ -34,10 +35,10 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     private lateinit var restaurant_id: String
 
     /** 包装费 */
-    private var packing_charges = "0"
+    private var packing_charges: BigDecimal = BigDecimal.ZERO
 
     /** 配送费 */
-    private var delivery_cost = "0"
+    private var delivery_cost: BigDecimal = BigDecimal.ZERO
 
     /** 商家名称 */
     private var restaurant_name = ""
@@ -108,9 +109,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                     // 更新菜品列表数量
                     mDishAdapter.data.forEachIndexed { index, dishResponse ->
                         if (dishResponse.id == id) {
-                                dishResponse.nativeSelectCount = goodNum
-                                mDishAdapter.notifyItemChanged(index)
-                            }
+                            dishResponse.nativeSelectCount = goodNum
+                            mDishAdapter.notifyItemChanged(index)
+                        }
                     }
                     // 更新
                     handleBottom()
@@ -214,16 +215,17 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
                 ToastUtils.showShort(R.string.nothing_selected)
                 return@setOnClickListener
             }
-            val totalPrice = presenter.handlePrice(mDishAdapter).toPlainString()
+            val totalPrice = presenter.handlePrice(mDishAdapter)
             val selectedList = presenter.getSelectedList(mDishAdapter)
+            // 额外加上配送费
+            val finalTotalPrice = BigDecimalUtil.add(totalPrice, BigDecimalUtil.add(delivery_cost, packing_charges))
 
             startActivityAfterLogin(OrderSubmitTakeawayActivity::class.java, Bundle().apply {
                 putString(Constant.PARAM_ID, restaurant_id)
-                putString(Constant.PARAM_PACKING_CHARGES, packing_charges)
-                putString(Constant.PARAM_DELIVERY_COST, delivery_cost)
-                putString(Constant.PARAM_DELIVERY_COST, delivery_cost)
+                putString(Constant.PARAM_PACKING_CHARGES, packing_charges.toPlainString())
+                putString(Constant.PARAM_DELIVERY_COST, delivery_cost.toPlainString())
                 putString(Constant.PARAM_NAME, restaurant_name)
-                putString(Constant.PARAM_TOTAL_PRICE, totalPrice)
+                putString(Constant.PARAM_TOTAL_PRICE, finalTotalPrice.toPlainString())
                 putSerializable(Constant.PARAM_DATA, selectedList)
             })
         }
@@ -250,18 +252,17 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         time_tv.text = getString(R.string.delivery_time_format, data.delivery_time)
 
         // 配送费
-        val deliveryCost = data.delivery_cost
-        if (deliveryCost.compareTo(BigDecimal.ZERO) == 1) {
-            delivery_fee_tv.text = getString(R.string.delivery_price_format_2, deliveryCost.toPlainString())
+        delivery_cost = data.delivery_cost
+        if (delivery_cost.compareTo(BigDecimal.ZERO) == 1) {
+            delivery_fee_tv.text = getString(R.string.delivery_price_format_3, delivery_cost.toPlainString())
         } else {
             delivery_fee_tv.text = getString(R.string.free_delivery)
         }
-        delivery_cost = deliveryCost.toPlainString()
 
         // 包装费
-        val toPlainString = data.packing_charges.toPlainString()
-        packaging_fee_tv.text = getString(R.string.packaging_fee_format, toPlainString)
-        packing_charges = toPlainString
+        packing_charges = data.packing_charges
+        packaging_fee_tv.text = getString(R.string.packaging_fee_format, packing_charges.toPlainString())
+
 
         // 聊天
         im_status = data.im_status

@@ -216,8 +216,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
         get_location_tv.setOnClickListener(v -> initCity());
 
         // 存储当前位置
-
-
         location_tv.setOnClickListener(v -> {
             if (currentLat != 0) {
                 selectCity(currentAreaName, "0", currentLat, currentLng);

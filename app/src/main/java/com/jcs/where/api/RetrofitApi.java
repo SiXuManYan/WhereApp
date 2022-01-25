@@ -1775,5 +1775,11 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<MallShopCategory>>> mallShopCategory(@Query("shop_id") int shop_id);
 
 
+    /**
+     * 店铺收藏列表
+     */
+    @GET("estoreapi/v2/shop_collects")
+    Observable<JcsResponse<PageResponse<com.jcs.where.api.response.collection.MallShopCollection>>> collectionShopList(@Query("page") int page);
+
 
 }

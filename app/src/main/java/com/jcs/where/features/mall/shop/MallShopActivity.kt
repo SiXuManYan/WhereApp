@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_mall_shop.*
 /**
  * Created by Wangsw  2021/12/14 10:36.
  * 商城店铺
+ *
  */
 class MallShopActivity : BaseMvpActivity<MallShopPresenter>(), MallShopView {
 

@@ -46,7 +46,8 @@ class MallShopHomePresenter(private var view: MallShopHomeView):BaseMvpPresenter
     }
 
     fun unCollection(shopId: Int) {
-        val array = ArrayList<Int>(shopId)
+        val array = ArrayList<Int>()
+        array.add(shopId)
         val request = MallShopUnCollection().apply {
             shop_id = Gson().toJson(array)
         }

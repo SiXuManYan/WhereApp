@@ -127,6 +127,7 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
 
     override fun bindListener() {
         sales_tv.setOnClickListener {
+            price_tv.setTextColor(ColorUtils.getColor(R.color.selector_gray666_blue))
             sales_tv.toggle()
             newest_tv.isChecked = false
             price_tv.isChecked = false
@@ -147,6 +148,7 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
         }
 
         newest_tv.setOnClickListener {
+            price_tv.setTextColor(ColorUtils.getColor(R.color.selector_gray666_blue))
             sales_tv.isChecked = false
             newest_tv.toggle()
             price_tv.isChecked = false

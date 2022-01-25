@@ -110,6 +110,14 @@ class MallGoodCollection{
 
     /** 下架 0下架 1上架 */
     var good_status = 0
+}
+
+
+class MallShopCollection{
+    var id = 0
+    var shop_id = 0
+    var title = ""
+    var image = ""
 
 }
 

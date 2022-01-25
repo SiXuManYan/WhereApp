@@ -8,6 +8,7 @@ import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.collection.city.CollectionFragment
 import com.jcs.where.features.collection.good.CollectionGoodFragment
+import com.jcs.where.features.collection.shop.CollectionShopFragment
 import kotlinx.android.synthetic.main.actitiy_collection.*
 
 /**
@@ -21,7 +22,8 @@ class CollectionActivity : BaseMvpActivity<CollectionPresenter>(), CollectionVie
             StringUtils.getString(R.string.collection_tab_same_city),
             StringUtils.getString(R.string.collection_tab_article),
             StringUtils.getString(R.string.collection_tab_video),
-            StringUtils.getString(R.string.collection_tab_good)
+            StringUtils.getString(R.string.collection_tab_good),
+            StringUtils.getString(R.string.collection_tab_mall)
         )
 
     override fun isStatusDark() = true
@@ -46,13 +48,22 @@ class CollectionActivity : BaseMvpActivity<CollectionPresenter>(), CollectionVie
         override fun getPageTitle(position: Int): CharSequence = TAB_TITLES[position]
 
         override fun getItem(position: Int): Fragment {
-            return if (position <= 2) {
-                CollectionFragment().apply {
-                    type = position + 1
+
+            return when (position) {
+                0, 1, 2 -> {
+                    CollectionFragment().apply {
+                        type = position + 1
+                    }
                 }
-            } else {
-                CollectionGoodFragment()
+                3 -> {
+                    CollectionGoodFragment()
+                }
+                else -> {
+                    CollectionShopFragment()
+                }
             }
+
+
         }
 
         override fun getCount(): Int = TAB_TITLES.size

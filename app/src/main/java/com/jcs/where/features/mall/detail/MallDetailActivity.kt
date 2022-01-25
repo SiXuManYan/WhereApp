@@ -167,6 +167,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             } else {
                 presenter.unCollection(goodId)
             }
+
         }
 
         buy_after_tv.setOnClickListener {

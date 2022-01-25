@@ -21,11 +21,15 @@ import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
-import com.jcs.where.utils.*
+import com.jcs.where.utils.BusinessUtils
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 
@@ -455,9 +459,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
-//            startActivity(MallShopActivity::class.java, Bundle().apply {
-//                putInt(Constant.PARAM_ID, item.model_id)
-//            })
+            MallShopHomeActivity.navigation(context, item.model_id)
         }
 
         val options = RequestOptions.bitmapTransform(

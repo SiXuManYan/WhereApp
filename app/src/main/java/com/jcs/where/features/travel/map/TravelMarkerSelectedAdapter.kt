@@ -1,10 +1,12 @@
 package com.jcs.where.features.travel.map
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
@@ -32,8 +34,15 @@ class TravelMarkerSelectedAdapter :BaseQuickAdapter<TravelChild,BaseViewHolder>(
 
 
         // 距离 地点
+        val distance_tv = holder.getView<TextView>(R.id.distance_tv)
+        val distance = data.distance
+        if (distance == "0" || distance.isBlank()) {
+            distance_tv.visibility = View.GONE
+        } else {
+            distance_tv.visibility = View.VISIBLE
+            distance_tv.text = StringUtils.getString(R.string.distance_format, distance)
+        }
         holder.setText(R.id.location_tv, data.address.replace("\n", ""))
-        holder.setText(R.id.distance_tv, data.distance)
 
         // tag
         val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)

@@ -140,6 +140,9 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
         dismiss_view.setOnClickListener {
             filter_container_ll.visibility = View.GONE
+            if (sales_tv.isChecked ) {
+                complex_tv.isChecked = false
+            }
         }
 
         complex_ll.setOnClickListener {
@@ -158,11 +161,14 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
         }
 
+        // 综合
         filter_complex_ctv.setOnClickListener {
+            sales_tv.isChecked = false
 
             goodRequest.apply {
                 page = Constant.DEFAULT_FIRST_PAGE
                 order = null
+                sold = null
             }
             presenter.getMallList(goodRequest)
 
@@ -175,10 +181,14 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             complex_tv.isChecked = true
 
         }
+
+        // 价格降序
         filter_price_down_ctv.setOnClickListener {
+            sales_tv.isChecked = false
             goodRequest.apply {
                 page = Constant.DEFAULT_FIRST_PAGE
                 order = SortEnum.desc
+                sold = null
             }
             presenter.getMallList(goodRequest)
 
@@ -189,10 +199,14 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             filter_price_up_ctv.isChecked = false
             complex_tv.isChecked = true
         }
+
+        // 价格升序
         filter_price_up_ctv.setOnClickListener {
+            sales_tv.isChecked = false
             goodRequest.apply {
                 page = Constant.DEFAULT_FIRST_PAGE
                 order = SortEnum.asc
+                sold = null
             }
             presenter.getMallList(goodRequest)
 
@@ -204,11 +218,14 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             complex_tv.isChecked = true
         }
 
+        // 销量
         sales_tv.setOnClickListener {
+            complex_tv.isChecked = false
             filter_container_ll.visibility = View.GONE
             sales_tv.isChecked = !sales_tv.isChecked
             goodRequest.apply {
                 page = Constant.DEFAULT_FIRST_PAGE
+                order = null
                 sold = if (sales_tv.isChecked) {
                     SortEnum.desc
                 } else {

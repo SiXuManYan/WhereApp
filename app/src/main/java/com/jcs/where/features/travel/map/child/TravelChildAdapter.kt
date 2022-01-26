@@ -1,5 +1,6 @@
 package com.jcs.where.features.travel.map.child
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -29,6 +30,7 @@ class TravelChildAdapter : BaseQuickAdapter<TravelChild, BaseViewHolder>(R.layou
 
 
         val travel_container_ll = holder.getView<LinearLayout>(R.id.travel_container_ll)
+
         val layoutParams = travel_container_ll.layoutParams as RecyclerView.LayoutParams
         layoutParams.apply {
             topMargin = if (holder.adapterPosition == 0) {
@@ -54,8 +56,14 @@ class TravelChildAdapter : BaseQuickAdapter<TravelChild, BaseViewHolder>(R.layou
 
         // 距离 地点
         holder.setText(R.id.location_tv, data.address.replace("\n", ""))
-        holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance))
-
+        val distance_tv = holder.getView<TextView>(R.id.distance_tv)
+        val distance = data.distance
+        if (distance == "0" || distance.isBlank()) {
+            distance_tv.visibility = View.GONE
+        } else {
+            distance_tv.visibility = View.VISIBLE
+            distance_tv.text = StringUtils.getString(R.string.distance_format, distance)
+        }
 
         // tag
         val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)

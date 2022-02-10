@@ -1,4 +1,4 @@
-package com.jcs.where.features.footprint
+package com.jcs.where.features.footprint.good
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,40 +7,37 @@ import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
-import com.jcs.where.api.response.collection.MyCollection
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.footprint.Footprint
-import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.footprint.FootprintAdapter
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mechanism.MechanismActivity
-import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.activity_refresh_list.*
-import kotlinx.android.synthetic.main.activity_refresh_list.recycler
-import kotlinx.android.synthetic.main.activity_refresh_list.swipe_layout
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
 
 /**
- * Created by Wangsw  2021/11/18 16:41.
- * 我的足迹
+ * Created by Wangsw  2022/2/10 15:49.
+ *
  */
-class FootprintActivity : BaseMvpActivity<FootprintPresenter>(), FootprintView, OnItemClickListener {
+class GoodFootprintFragment : BaseMvpFragment<GoodFootprintPresenter>(), GoodFootprintView, OnItemClickListener {
 
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: FootprintAdapter
     private lateinit var emptyView: EmptyView
 
-    override fun isStatusDark() = true
+    override fun getLayoutId() = R.layout.fragment_refresh_list
 
-    override fun getLayoutId() = R.layout.activity_refresh_list
-
-    override fun initView() {
-        mJcsTitle.setMiddleTitle(getString(R.string.mine_footprint_title))
+    override fun initView(view: View) {
         swipe_layout.apply {
             setBackgroundColor(Color.WHITE)
             setOnRefreshListener {
@@ -49,13 +46,13 @@ class FootprintActivity : BaseMvpActivity<FootprintPresenter>(), FootprintView, 
             }
         }
 
-        emptyView = EmptyView(this).apply {
+        emptyView = EmptyView(requireContext()).apply {
             initEmpty(R.mipmap.ic_empty_card_coupon, R.string.no_content)
         }
 
         mAdapter = FootprintAdapter().apply {
             setEmptyView(emptyView)
-            setOnItemClickListener(this@FootprintActivity)
+            setOnItemClickListener(this@GoodFootprintFragment)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
@@ -70,14 +67,14 @@ class FootprintActivity : BaseMvpActivity<FootprintPresenter>(), FootprintView, 
 
 
     override fun initData() {
-        presenter = FootprintPresenter(this)
+        presenter = GoodFootprintPresenter(this)
         loadData()
     }
 
 
     override fun bindListener() = Unit
 
-    private fun loadData() = presenter.getData(page,0)
+    private fun loadData() = presenter.getData(page)
 
     override fun bindData(data: MutableList<Footprint>, lastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
@@ -115,17 +112,17 @@ class FootprintActivity : BaseMvpActivity<FootprintPresenter>(), FootprintView, 
         when (data.type) {
             Footprint.TYPE_HOTEL -> {
                 val dialog = JcsCalendarDialog()
-                dialog.initCalendar(this@FootprintActivity)
-                HotelDetailActivity2.navigation(this, module.id, dialog.startBean, dialog.endBean)
+                dialog.initCalendar(activity)
+                HotelDetailActivity2.navigation(requireContext(), module.id, dialog.startBean, dialog.endBean)
             }
             Footprint.TYPE_TRAVEL -> {
-                TravelDetailActivity.navigation(this@FootprintActivity, module.id)
+                TravelDetailActivity.navigation(requireContext(), module.id)
             }
             Footprint.TYPE_GENERAL -> {
-                MechanismActivity.navigation(this@FootprintActivity, module.id)
+                MechanismActivity.navigation(requireContext(), module.id)
             }
             Footprint.TYPE_RESTAURANT -> {
-                RestaurantDetailActivity.navigation(this@FootprintActivity, module.id)
+                RestaurantDetailActivity.navigation(requireContext(), module.id)
             }
             Footprint.TYPE_STORE -> {
                 // StoreDetailActivity.navigation(this@FootprintActivity, module.id)
@@ -141,3 +138,25 @@ class FootprintActivity : BaseMvpActivity<FootprintPresenter>(), FootprintView, 
 
     }
 }
+
+
+interface GoodFootprintView : BaseMvpView {
+    fun bindData(data: MutableList<Footprint>, lastPage: Boolean)
+
+}
+
+class GoodFootprintPresenter(private var view: GoodFootprintView) : BaseMvpPresenter(view) {
+    fun getData(page: Int) {
+
+        requestApi(mRetrofit.getGoodFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
+            override fun onSuccess(response: PageResponse<Footprint>) {
+
+                val isLastPage = response.lastPage == page
+                val data = response.data
+
+                view.bindData(data.toMutableList(), isLastPage)
+            }
+        })
+    }
+}
+

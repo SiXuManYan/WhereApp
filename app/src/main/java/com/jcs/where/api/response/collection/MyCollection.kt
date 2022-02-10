@@ -6,17 +6,16 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
  * Created by Wangsw  2021/11/16 16:32.
  *
  */
-class MyCollection  : MultiItemEntity{
+class MyCollection : MultiItemEntity {
 
     companion object {
 
-        var TYPE_HOTEL  = 1
-        var TYPE_TRAVEL  = 2
-        var TYPE_NEWS  = 3
-        var TYPE_GENERAL  = 11
-        var TYPE_RESTAURANT  = 12
-        var TYPE_STORE  = 13
-
+        var TYPE_HOTEL = 1
+        var TYPE_TRAVEL = 2
+        var TYPE_NEWS = 3
+        var TYPE_GENERAL = 11
+        var TYPE_RESTAURANT = 12
+        var TYPE_STORE = 13
     }
 
     /** 类型（1-酒店，2-旅游，3-新闻，11-综合服务，12-餐厅，13-eStore） */
@@ -76,28 +75,28 @@ class Publisher {
 
 }
 
-class GeneralCollection{
+class GeneralCollection {
     var id = 0
     var name = ""
     var address = ""
     var images: ArrayList<String> = ArrayList()
 }
 
-class RestaurantCollection{
+class RestaurantCollection {
     var id = 0
     var name = ""
     var address = ""
     var images: ArrayList<String> = ArrayList()
 }
 
-class StoreCollection{
+class StoreCollection {
     var id = 0
     var name = ""
     var address = ""
     var images: ArrayList<String> = ArrayList()
 }
 
-class MallGoodCollection{
+class MallGoodCollection {
     var id = 0
     var good_id = 0
     var title = ""
@@ -113,7 +112,7 @@ class MallGoodCollection{
 }
 
 
-class MallShopCollection{
+class MallShopCollection {
     var id = 0
     var shop_id = 0
     var title = ""

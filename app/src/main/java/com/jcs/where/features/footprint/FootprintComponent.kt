@@ -16,17 +16,56 @@ interface FootprintView : BaseMvpView {
 }
 
 class FootprintPresenter(private var view: FootprintView) : BaseMvpPresenter(view) {
-    fun getData(page: Int) {
 
-        requestApi(mRetrofit.getFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
-            override fun onSuccess(response: PageResponse<Footprint>) {
 
-                val isLastPage = response.lastPage == page
-                val data = response.data
+    fun getData(page: Int,type:Int) {
 
-                view.bindData(data.toMutableList(), isLastPage)
+
+        if (type == 0) {
+            requestApi(mRetrofit.getFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
+                override fun onSuccess(response: PageResponse<Footprint>) {
+
+                    val isLastPage = response.lastPage == page
+                    val data = response.data
+
+
+                    addTitle(data)
+
+
+
+                    view.bindData(data.toMutableList(), isLastPage)
+                }
+            })
+        }else {
+            requestApi(mRetrofit.getGoodFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
+                override fun onSuccess(response: PageResponse<Footprint>) {
+
+                    val isLastPage = response.lastPage == page
+                    val data = response.data
+                    addTitle(data)
+                    view.bindData(data.toMutableList(), isLastPage)
+                }
+            })
+        }
+
+    }
+
+    private fun addTitle(data: MutableList<Footprint>) {
+        val groupBy = data.groupBy { it.created_at }
+
+        groupBy.forEach { group ->
+            val titleEntity = Footprint().apply {
+                nativeTitle = group.key
+                this.type = Footprint.TYPE_TITLE
             }
-        })
+
+
+            val indexOfFirst = data.indexOfFirst {
+                it.created_at == group.key
+            }
+
+            data.add(indexOfFirst, titleEntity)
+        }
     }
 
 }

@@ -1792,5 +1792,11 @@ public interface RetrofitApi {
     @GET("estoreapi/v2/shop_collects")
     Observable<JcsResponse<PageResponse<com.jcs.where.api.response.collection.MallShopCollection>>> collectionShopList(@Query("page") int page);
 
+    /**
+     * 获得商品足迹列表
+     */
+    @GET("commonapi/v2/histories_goods")
+    Observable<JcsResponse<PageResponse<Footprint>>> getGoodFootprint(@Query("page") int page);
+
 
 }

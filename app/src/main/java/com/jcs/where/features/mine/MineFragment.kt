@@ -17,7 +17,7 @@ import com.jcs.where.features.collection.CollectionActivity
 import com.jcs.where.features.coupon.CardCouponActivity
 import com.jcs.where.features.daily.scoe.ScoreActivity
 import com.jcs.where.features.daily.sign.SignInActivity
-import com.jcs.where.features.footprint.FootprintUi
+import com.jcs.where.features.footprint.FootprintActivity
 import com.jcs.where.features.merchant.MerchantSettledActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
@@ -77,7 +77,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(CollectionActivity::class.java)
         }
         viewed_tv.setOnClickListener {
-            startActivityAfterLogin(FootprintUi::class.java)
+            startActivityAfterLogin(FootprintActivity::class.java)
         }
         vouchers_tv.setOnClickListener {
             startActivityAfterLogin(CardCouponActivity::class.java)

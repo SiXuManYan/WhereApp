@@ -1,4 +1,4 @@
-package com.jcs.where.features.footprint.good
+package com.jcs.where.features.footprint.child
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,15 +7,11 @@ import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
-import com.jcs.where.api.network.BaseMvpObserver
-import com.jcs.where.api.network.BaseMvpPresenter
-import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.footprint.Footprint
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.footprint.FootprintAdapter
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.news.NewsDetailActivity
@@ -26,10 +22,16 @@ import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
 
 /**
- * Created by Wangsw  2022/2/10 15:49.
+ * Created by Wangsw  2022/2/10 10:33.
  *
  */
-class GoodFootprintFragment : BaseMvpFragment<GoodFootprintPresenter>(), GoodFootprintView, OnItemClickListener {
+class CityFootprintFragment : BaseMvpFragment<FootprintPresenter>(), FootprintView, OnItemClickListener {
+
+    /**
+     * 0 普通收藏
+     * 1 商品收藏
+     */
+    var type = 0
 
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: FootprintAdapter
@@ -42,7 +44,7 @@ class GoodFootprintFragment : BaseMvpFragment<GoodFootprintPresenter>(), GoodFoo
             setBackgroundColor(Color.WHITE)
             setOnRefreshListener {
                 page = Constant.DEFAULT_FIRST_PAGE
-                loadData()
+                presenter.getData(page, type)
             }
         }
 
@@ -52,11 +54,11 @@ class GoodFootprintFragment : BaseMvpFragment<GoodFootprintPresenter>(), GoodFoo
 
         mAdapter = FootprintAdapter().apply {
             setEmptyView(emptyView)
-            setOnItemClickListener(this@GoodFootprintFragment)
+            setOnItemClickListener(this@CityFootprintFragment)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                loadData()
+                presenter.getData(page, type)
             }
         }
         recycler.apply {
@@ -67,14 +69,17 @@ class GoodFootprintFragment : BaseMvpFragment<GoodFootprintPresenter>(), GoodFoo
 
 
     override fun initData() {
-        presenter = GoodFootprintPresenter(this)
-        loadData()
+        presenter = FootprintPresenter(this)
+
+    }
+
+    override fun loadOnVisible() {
+        presenter.getData(page, type)
     }
 
 
     override fun bindListener() = Unit
 
-    private fun loadData() = presenter.getData(page)
 
     override fun bindData(data: MutableList<Footprint>, lastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
@@ -106,8 +111,14 @@ class GoodFootprintFragment : BaseMvpFragment<GoodFootprintPresenter>(), GoodFoo
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+
         val data = mAdapter.data[position]
         val module = data.module_data ?: return
+
+        val itemViewType = adapter.getItemViewType(position)
+        if (itemViewType == Footprint.TYPE_TITLE) {
+            return
+        }
 
         when (data.type) {
             Footprint.TYPE_HOTEL -> {
@@ -133,30 +144,15 @@ class GoodFootprintFragment : BaseMvpFragment<GoodFootprintPresenter>(), GoodFoo
                 })
             }
 
+            Footprint.TYPE_GOOD -> {
+                MallDetailActivity.navigation(requireContext(), module.id)
+            }
+
         }
 
 
     }
-}
-
-
-interface GoodFootprintView : BaseMvpView {
-    fun bindData(data: MutableList<Footprint>, lastPage: Boolean)
 
 }
 
-class GoodFootprintPresenter(private var view: GoodFootprintView) : BaseMvpPresenter(view) {
-    fun getData(page: Int) {
-
-        requestApi(mRetrofit.getGoodFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
-            override fun onSuccess(response: PageResponse<Footprint>) {
-
-                val isLastPage = response.lastPage == page
-                val data = response.data
-
-                view.bindData(data.toMutableList(), isLastPage)
-            }
-        })
-    }
-}
 

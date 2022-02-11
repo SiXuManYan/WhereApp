@@ -27,12 +27,12 @@ class Footprint : MultiItemEntity {
     var type = 0
 
     var created_at = ""
+    var date = ""
     var module_data: FootprintModule? = null
 
     override val itemType: Int
         get() = type
 
-    var nativeTitle = ""
 
 }
 

@@ -523,7 +523,6 @@
         <activity android:name=".features.travel.detail.TravelDetailActivity" />
         <activity android:name=".features.travel.comment.TravelCommentActivity" />
         <activity android:name=".features.collection.CollectionActivity" />
-        <activity android:name=".features.footprint.FootprintActivity" />
         <activity android:name=".features.merchant.MerchantSettledActivity" />
         <activity android:name=".features.daily.sign.SignInActivity" />
         <activity android:name=".features.daily.scoe.ScoreActivity" />
@@ -543,7 +542,7 @@
         <activity android:name=".features.merchant.record.MerchantRecordActivity" />
         <activity android:name=".features.mall.shop.home.MallShopHomeActivity" />
         <activity android:name=".features.mall.shop.home.second.MallShopGoodActivity" />
-        <activity android:name=".features.footprint.FootprintUi" />
+        <activity android:name=".features.footprint.FootprintActivity" />
 
 
     </application>

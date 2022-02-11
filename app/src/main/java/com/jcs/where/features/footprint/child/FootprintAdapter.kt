@@ -1,4 +1,4 @@
-package com.jcs.where.features.footprint
+package com.jcs.where.features.footprint.child
 
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,7 +17,7 @@ import com.jcs.where.utils.GlideUtil
  * Created by Wangsw  2021/11/18 16:48.
  * 我的足迹
  */
-class FootprintAdapter2 : BaseMultiItemQuickAdapter<Footprint, BaseViewHolder>(), LoadMoreModule {
+class FootprintAdapter : BaseMultiItemQuickAdapter<Footprint, BaseViewHolder>(), LoadMoreModule {
 
 
     init {
@@ -98,7 +98,7 @@ class FootprintAdapter2 : BaseMultiItemQuickAdapter<Footprint, BaseViewHolder>()
     }
 
     private fun bindTitle(holder: BaseViewHolder, item: Footprint) {
-        holder.setText(R.id.title_tv, item.nativeTitle)
+        holder.setText(R.id.title_tv, item.date)
     }
 
 

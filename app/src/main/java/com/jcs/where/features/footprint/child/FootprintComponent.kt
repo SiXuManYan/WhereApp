@@ -1,4 +1,4 @@
-package com.jcs.where.features.footprint
+package com.jcs.where.features.footprint.child
 
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -28,10 +28,7 @@ class FootprintPresenter(private var view: FootprintView) : BaseMvpPresenter(vie
                     val isLastPage = response.lastPage == page
                     val data = response.data
 
-
                     addTitle(data)
-
-
 
                     view.bindData(data.toMutableList(), isLastPage)
                 }
@@ -51,17 +48,19 @@ class FootprintPresenter(private var view: FootprintView) : BaseMvpPresenter(vie
     }
 
     private fun addTitle(data: MutableList<Footprint>) {
-        val groupBy = data.groupBy { it.created_at }
+
+        val groupBy = data.groupBy { it.date }
 
         groupBy.forEach { group ->
+
             val titleEntity = Footprint().apply {
-                nativeTitle = group.key
+                date = group.key
                 this.type = Footprint.TYPE_TITLE
             }
 
 
             val indexOfFirst = data.indexOfFirst {
-                it.created_at == group.key
+                it.date == group.key
             }
 
             data.add(indexOfFirst, titleEntity)

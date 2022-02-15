@@ -39,8 +39,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content))
         BarUtils.setNavBarVisibility(this, false)
 
-        // 通过网页打开
-        if (intent.hasCategory(Intent.CATEGORY_BROWSABLE)) {
+        // 通过网页打开 action.VIEW category.BROWSABLE
+        // 商店打开     action.MAIN category.LAUNCHER
+        if (intent.hasCategory(Intent.CATEGORY_BROWSABLE)  ||intent.hasCategory(Intent.CATEGORY_LAUNCHER) ) {
 
             val whereCode = intent.data?.getQueryParameter("whereCode")
             if (whereCode.isNullOrBlank()) {

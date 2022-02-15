@@ -102,6 +102,7 @@
             android:name=".features.splash.SplashActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/LaunchTheme"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -109,6 +110,24 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- 网页内打开 -->
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="hostsplash"
+                    android:scheme="schemewhereh5"
+                    android:pathPrefix="/openwith" />
+
+
+            </intent-filter>
+
+
         </activity>
 
 

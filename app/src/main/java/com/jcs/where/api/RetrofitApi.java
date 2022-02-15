@@ -1545,7 +1545,7 @@ public interface RetrofitApi {
      * 重新提交商家入驻信息
      */
     @PATCH("userapi/v2/merchants/{merchant_id}")
-    Observable<JcsResponse<JsonElement>> repostMerchantSettled(@Path("merchant_id") int merchant_id, @Body MerchantSettledPost request);
+    Observable<JcsResponse<JsonElement>> repostMerchantSettled(@Path("merchant_id")  int merchant_id, @Body MerchantSettledPost request);
 
 
     /**

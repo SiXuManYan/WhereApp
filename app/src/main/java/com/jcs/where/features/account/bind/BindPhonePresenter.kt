@@ -1,75 +1,59 @@
-package com.jcs.where.features.account.bind;
+package com.jcs.where.features.account.bind
 
-import android.text.TextUtils;
-import android.widget.TextView;
-
-import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.JsonElement;
-import com.jcs.where.R;
-import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.api.network.BaseMvpObserver;
-import com.jcs.where.api.network.BaseMvpPresenter;
-import com.jcs.where.api.request.SendCodeRequest;
-import com.jcs.where.api.request.account.BindPhoneRequest;
-import com.jcs.where.api.response.LoginResponse;
-import com.jcs.where.utils.CacheUtil;
-import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.FeaturesUtil;
-import com.jcs.where.utils.SPKey;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import android.text.TextUtils
+import com.jcs.where.api.network.BaseMvpPresenter
+import android.widget.TextView
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.api.request.SendCodeRequest
+import com.google.gson.JsonElement
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import com.jcs.where.api.request.account.BindPhoneRequest
+import com.jcs.where.api.response.LoginResponse
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.SPKey
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Wangsw  2021/2/1 16:14.
  */
-public class BindPhonePresenter extends BaseMvpPresenter {
-
-    private BindPhoneView mView;
-
-    public BindPhonePresenter(BindPhoneView baseMvpView) {
-        super(baseMvpView);
-        mView = baseMvpView;
-    }
-
-
+class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mView) {
     /**
      * 获取验证码
      *
      * @param account
      * @param getVerifyTv
      */
-    public void getVerifyCode(String prefix, String account, TextView getVerifyTv) {
+    fun getVerifyCode(prefix: String?, account: String?, getVerifyTv: TextView) {
         if (FeaturesUtil.isWrongPhoneNumber(prefix, account)) {
-            return;
+            return
+        }
+        val request = SendCodeRequest().apply {
+            phone = account
+            countryCode = prefix
+            type = Constant.VERIFY_CODE_TYPE_1_LOGIN
         }
 
-        SendCodeRequest request = new SendCodeRequest();
-        request.setPhone(account);
-        request.setCountryCode(prefix);
-        request.setType(Constant.VERIFY_CODE_TYPE_1_LOGIN);
-
-        requestApi(mRetrofit.getVerifyCode(request), new BaseMvpObserver<JsonElement>(mView) {
-            @Override
-            protected void onSuccess(JsonElement response) {
-
-                getVerifyTv.setClickable(false);
-                countdown(getVerifyTv, StringUtils.getString(R.string.get_again));
-                ToastUtils.showShort(R.string.verify_code_send_success);
+        requestApi(mRetrofit.getVerifyCode(request), object : BaseMvpObserver<JsonElement>(mView) {
+            override fun onSuccess(response: JsonElement) {
+                getVerifyTv.isClickable = false
+                countdown(getVerifyTv, StringUtils.getString(R.string.get_again))
+                ToastUtils.showShort(R.string.verify_code_send_success)
             }
 
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                super.onError(errorResponse);
-                getVerifyTv.setClickable(true);
-
+            override fun onError(errorResponse: ErrorResponse) {
+                super.onError(errorResponse)
+                getVerifyTv.isClickable = true
             }
-        });
+        })
     }
-
 
     /**
      * 倒计时
@@ -77,19 +61,18 @@ public class BindPhonePresenter extends BaseMvpPresenter {
      * @param countdownView 倒计时显示的view
      * @param defaultStr    默认显示的文字
      */
-    private void countdown(TextView countdownView, String defaultStr) {
+    private fun countdown(countdownView: TextView, defaultStr: String) {
         Flowable.intervalRange(0, Constant.WAIT_DELAYS, 0, 1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(aLong -> {
-                    String string = StringUtils.getString(R.string.count_down_format, Constant.WAIT_DELAYS - aLong);
-                    countdownView.setText(string);
-                })
-                .doOnComplete(() -> {
-                    countdownView.setText(defaultStr);
-                    countdownView.setClickable(true);
-                }).subscribe();
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { aLong: Long ->
+                val string = StringUtils.getString(R.string.count_down_format, Constant.WAIT_DELAYS - aLong)
+                countdownView.text = string
+            }
+            .doOnComplete {
+                countdownView.text = defaultStr
+                countdownView.isClickable = true
+            }.subscribe()
     }
-
 
     /**
      * 绑定手机号
@@ -103,42 +86,51 @@ public class BindPhonePresenter extends BaseMvpPresenter {
      * @param userIcon    第三方返回用户头像
      * @param loginType
      */
-    public void bindPhone(String countryCode, String account, String verifyCode, String password, String userName, String userId, String userIcon, int loginType) {
-
+    fun bindPhone(
+        countryCode: String?,
+        account: String?,
+        verifyCode: String?,
+        password: String?,
+        userName: String?,
+        userId: String?,
+        userIcon: String?,
+        loginType: Int
+    ) {
         if (FeaturesUtil.isWrongPhoneNumber(countryCode, account)) {
-            return;
+            return
         }
         if (TextUtils.isEmpty(verifyCode)) {
-            ToastUtils.showShort(StringUtils.getString(R.string.verify_code_hint));
-            return;
+            ToastUtils.showShort(StringUtils.getString(R.string.verify_code_hint))
+            return
         }
         if (FeaturesUtil.isWrongPasswordFormat(password)) {
-            return;
+            return
         }
 
-        BindPhoneRequest request = BindPhoneRequest.Builder.aBindPhoneRequest()
-                .type(loginType)
-                .nickname(userName)
-                .open_id(userId)
-                .avatar(userIcon)
-                .phone(account)
-                .password(password)
-                .verification_code(verifyCode)
-                .country_code(countryCode)
-                .build();
+        val inviteCode = SPUtils.getInstance().getString(SPKey.K_INVITE_CODE, null)
 
+        val request = BindPhoneRequest().apply {
+            type = loginType
+            nickname = userName
+            open_id = userId
+            avatar = userIcon
+            phone = account
+            this.password = password
+            verification_code = verifyCode
+            country_code = countryCode
+            invite_code = inviteCode
+        }
+        requestApi(mRetrofit.bindPhone(request), object : BaseMvpObserver<LoginResponse>(mView) {
 
-        requestApi(mRetrofit.bindPhone(request), new BaseMvpObserver<LoginResponse>(mView) {
-            @Override
-            protected void onSuccess(LoginResponse response) {
-                String token = response.getToken();
-                CacheUtil.saveToken(token);
-                mView.bindSuccess();
+            override fun onSuccess(response: LoginResponse) {
+                val token = response.token
+                CacheUtil.saveToken(token)
+
+                // 清空邀请码
+                SPUtils.getInstance().put(SPKey.K_INVITE_CODE , "")
+
+                mView.bindSuccess()
             }
-        });
-
-
+        })
     }
-
-
 }

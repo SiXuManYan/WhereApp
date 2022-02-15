@@ -63,6 +63,10 @@ public class UserInfoResponse {
     @SerializedName("rong_data")
     public UserRongyunData rongData;
 
+    /**
+     * 邀请链接，H5剪切板中数据格式（json字符串）：{"whereCode": "code"}
+     */
+    public String invite_link ;
 
     public Long getId() {
         return id;

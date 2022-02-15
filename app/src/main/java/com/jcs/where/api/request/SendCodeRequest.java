@@ -14,16 +14,16 @@ public class SendCodeRequest {
      */
 
     @SerializedName("phone")
-    private String phone;
+    public String phone;
 
 
     /**
      * 发送类型（1：登录，2：注册，3：忘记密码，4：更换手机号）
      */
     @SerializedName("type")
-    private int type;
+    public int type;
     @SerializedName("country_code")
-    private String countryCode;
+    public String countryCode;
 
     public final int TYPE_LOGIN = 1;
     public final int TYPE_REGISTER = 2;

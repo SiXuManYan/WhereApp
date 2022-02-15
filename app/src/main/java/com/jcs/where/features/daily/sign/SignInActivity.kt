@@ -4,11 +4,14 @@ import android.widget.CheckedTextView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatCheckBox
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.SignListResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.utils.LocalLanguageUtil
+import com.jcs.where.utils.MobUtil
+import com.jcs.where.utils.SPKey
 import kotlinx.android.synthetic.main.sign_in.*
 
 /**
@@ -17,11 +20,21 @@ import kotlinx.android.synthetic.main.sign_in.*
  */
 class SignInActivity : BaseMvpActivity<SignInPresenter>(), SignInView {
 
+    private var inviteLink = ""
+
     override fun getLayoutId() = R.layout.sign_in
 
     override fun initView() {
-
         initLanguage()
+        inviteLink = SPUtils.getInstance().getString(SPKey.K_INVITE_LINK, "")
+        if (inviteLink.isBlank()) {
+            invite_tv.isChecked = true
+            invite_tv.isClickable = false
+        } else {
+            invite_tv.isChecked = false
+            invite_tv.isClickable = true
+        }
+
     }
 
     private fun initLanguage() {
@@ -48,6 +61,9 @@ class SignInActivity : BaseMvpActivity<SignInPresenter>(), SignInView {
         }
         sign_in_tv.setOnClickListener {
             sign_in_now_tv.performClick()
+        }
+        invite_tv.setOnClickListener {
+            MobUtil.shareFacebookWebPage(inviteLink, this)
         }
     }
 
@@ -121,7 +137,7 @@ class SignInActivity : BaseMvpActivity<SignInPresenter>(), SignInView {
     }
 
 
-    override fun signInSuccess(){
+    override fun signInSuccess() {
         bindUserIntegral(true)
         presenter.getSignInList()
     }

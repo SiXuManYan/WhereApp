@@ -450,9 +450,11 @@
                         android:src="@mipmap/ic_task_invite" />
 
                     <LinearLayout
+                        android:id="@+id/invite_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/invite_tv"
                         android:layout_marginStart="@dimen/dp_55"
                         android:layout_marginEnd="@dimen/dp_15"
                         android:orientation="vertical">
@@ -478,6 +480,22 @@
 
 
                     </LinearLayout>
+
+
+                    <CheckedTextView
+                        android:id="@+id/invite_tv"
+                        android:layout_width="@dimen/dp_102"
+                        android:layout_height="@dimen/dp_28"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/selector_integral_sign_in_task"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/to_finish"
+                        android:textAlignment="center"
+                        android:textColor="@color/selector_white_blue"
+                        android:textSize="@dimen/sp_12"
+                        android:textStyle="bold" />
 
 
                 </RelativeLayout>

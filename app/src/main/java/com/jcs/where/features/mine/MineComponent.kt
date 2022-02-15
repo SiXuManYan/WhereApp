@@ -1,6 +1,7 @@
 package com.jcs.where.features.mine
 
 import android.util.Log
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.Utils
 import com.jcs.where.BaseApplication
 import com.jcs.where.api.network.BaseMvpObserver
@@ -10,6 +11,7 @@ import com.jcs.where.api.response.MerchantSettledInfoResponse
 import com.jcs.where.api.response.UnReadMessage
 import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.SPKey
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.RongIMClient.*
@@ -35,7 +37,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         }
         requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view) {
             override fun onSuccess(response: UnReadMessage) {
-                val apiUnreadMessageCount =  response.count
+                val apiUnreadMessageCount = response.count
 
                 RongIMClient.getInstance()
                     .getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
@@ -76,11 +78,12 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         })
     }
 
-     var alreadyConnectRongCloud = false
+    var alreadyConnectRongCloud = false
 
 
     /**
      * 保存用户数据
+     *
      */
     private fun saveData(response: UserInfoResponse) {
         val user = User.Builder.anUser()
@@ -108,14 +111,16 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         database.userDao().addUser(user)
         User.update()
 
+        SPUtils.getInstance().put(SPKey.K_INVITE_LINK, response.invite_link)
+
         connectRongCloud(response.rongData.token)
     }
 
     /**
      * 连接融云
      */
-     fun connectRongCloud(token: String) {
-        Log.e("融云", "alreadyConnectRongCloud == "+ alreadyConnectRongCloud)
+    fun connectRongCloud(token: String) {
+        Log.e("融云", "alreadyConnectRongCloud == " + alreadyConnectRongCloud)
         if (!User.isLogon()) {
             return
         }
@@ -151,7 +156,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
      */
     fun getMerchantSettledInfo() {
 
-        requestApi(mRetrofit.merchantSettledInfo , object : BaseMvpObserver<MerchantSettledInfoResponse>(view){
+        requestApi(mRetrofit.merchantSettledInfo, object : BaseMvpObserver<MerchantSettledInfoResponse>(view) {
             override fun onSuccess(response: MerchantSettledInfoResponse) {
                 view.handleMerchant(response)
 

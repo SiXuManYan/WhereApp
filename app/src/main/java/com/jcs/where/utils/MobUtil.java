@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -89,7 +90,7 @@ public class MobUtil {
     }
 
 
-    public static void shareFacebookWebPage(String webUrl, BaseActivity activity) {
+    public static void shareFacebookWebPage(String webUrl, FragmentActivity activity) {
         Platform plat = ShareSDK.getPlatform(Facebook.NAME);
         if (!plat.isClientValid()) {
             ToastUtils.showShort(R.string.is_client_valid_facebook);

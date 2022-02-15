@@ -50,4 +50,15 @@ public final class SPKey {
     public static final String K_SEARCH_HISTORY = "k_search_history";
     public static final String K_LANGUAGE_TAB = "k_language_tab";
 
+    /**
+     * 邀请链接
+     */
+    public static final String K_INVITE_LINK = "invite_link";
+
+    /**
+     * 从剪切板获取到的邀请码(注册成功后清除)
+     */
+    public static final String K_INVITE_CODE = "invite_code";
+
+
 }

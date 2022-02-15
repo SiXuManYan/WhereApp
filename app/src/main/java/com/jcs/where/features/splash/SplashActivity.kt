@@ -1,7 +1,10 @@
 package com.jcs.where.features.splash
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -11,9 +14,8 @@ import android.view.animation.Animation
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
+import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.SpanUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
@@ -36,6 +38,21 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         BarUtils.setStatusBarLightMode(this, false)
         BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content))
         BarUtils.setNavBarVisibility(this, false)
+
+        // 通过网页打开
+        if (intent.hasCategory(Intent.CATEGORY_BROWSABLE)) {
+
+            val whereCode = intent.data?.getQueryParameter("whereCode")
+            if (whereCode.isNullOrBlank()) {
+                // 参数为空，读取剪切板中的内容
+                Handler(Looper.myLooper()!!).postDelayed({
+                    presenter.handleClipboard()
+                }, 1000)
+            } else {
+                SPUtils.getInstance().put(SPKey.K_INVITE_CODE, whereCode)
+            }
+        }
+
         if (!isTaskRoot) {
             finish()
             return
@@ -212,10 +229,12 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             // 默认巴郎牙
             SPUtil.getInstance().saveString(SPKey.SELECT_AREA_ID, "3")
         }
-        presenter.getYellowPageAllCategories()
+        presenter.yellowPageAllCategories
     }
 
     override fun bindListener() {
         start_tv.setOnClickListener { toHome() }
     }
+
+
 }

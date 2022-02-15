@@ -13,6 +13,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.collection.CollectionActivity
 import com.jcs.where.features.coupon.CardCouponActivity
@@ -26,6 +27,7 @@ import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.MobUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
@@ -103,7 +105,11 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivity(AboutActivity::class.java)
         }
         share_rl.setOnClickListener {
-          val inviteLink = SPUtils.getInstance().getString(SPKey.K_INVITE_LINK, "")
+            if (!User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
+            val inviteLink = SPUtils.getInstance().getString(SPKey.K_INVITE_LINK, "")
             MobUtil.shareFacebookWebPage(inviteLink, activity)
         }
 

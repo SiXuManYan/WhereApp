@@ -34,14 +34,15 @@ class SetMealPresenter(private val view: SetMealView) : BaseMvpPresenter(view) {
 
     fun addCart(request: AddCartRequest?) {
         requestApi(mRetrofit.addCartNumber(request), object : BaseMvpObserver<JsonElement>(view) {
-            protected override fun onSuccess(response: JsonElement) {
+            override fun onSuccess(response: JsonElement) {
                 ToastUtils.showShort("add success")
+                getCartCount()
             }
         })
     }
 
     fun getCartCount(){
-        requestApi(mRetrofit.getFoodCartCount(), object : BaseMvpObserver<CartNumberResponse>(view) {
+        requestApi(mRetrofit.foodCartCount, object : BaseMvpObserver<CartNumberResponse>(view) {
             override fun onSuccess(response: CartNumberResponse) {
                 view.bindCartCount(response.nums)
             }

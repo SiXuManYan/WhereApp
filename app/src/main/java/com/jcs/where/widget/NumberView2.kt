@@ -203,5 +203,15 @@ class NumberView2 : LinearLayout {
         cut_iv.visibility = View.VISIBLE
     }
 
+    fun checkMax() {
+        if (MAX_GOOD_NUM <= 0) {
+            cut_iv.isClickable = false
+            add_iv.isClickable = false
+        } else {
+            cut_iv.isClickable = true
+            add_iv.isClickable = true
+        }
+    }
+
 
 }

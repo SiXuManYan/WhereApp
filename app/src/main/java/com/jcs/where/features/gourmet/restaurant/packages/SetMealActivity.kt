@@ -18,6 +18,7 @@ import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.utils.BigDecimalUtil
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_set_meal_2.*
@@ -70,7 +71,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
         shopping_cart.apply {
             setMessageImageResource(R.mipmap.ic_shopping_cart)
             changeContainerSize(50f, 50f)
-            changeMessageCountSize(16f,16f)
+            changeMessageCountSize(16f, 16f)
         }
     }
 
@@ -188,7 +189,8 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
         point_view.setPointCount(1)
         mInventory = inventoryValue
         number_view.MAX_GOOD_NUM = inventoryValue
-        name_tv.text = data.title
+        number_view.updateNumber(goodNumber)
+        number_view.checkMax()
 
         val price = data.price
         singlePrice = price
@@ -200,16 +202,16 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
         set_meal_content_tv.text = data.meals
         rule_tv.text = data.rule
         mData = data
-        data.inventory.apply {
-            if (!isNullOrBlank()) {
-                stock_tv.text = getString(R.string.stock_format_2, this)
-            }
+
+        if (data.inventory.isNotBlank()) {
+            stock_tv.text = getString(R.string.stock_format_2, data.inventory)
         }
+
         handlePrice()
     }
 
     override fun bindCartCount(nums: Int) {
-        shopping_cart. setMessageCount(nums)
+        shopping_cart.setMessageCount(nums)
     }
 
     private fun onBuyNow() {

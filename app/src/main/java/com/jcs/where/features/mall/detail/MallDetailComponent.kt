@@ -88,6 +88,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         }
         requestApi(mRetrofit.mallAddCart(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
+                getCartCount()
                 ToastUtils.showShort("add success")
             }
 

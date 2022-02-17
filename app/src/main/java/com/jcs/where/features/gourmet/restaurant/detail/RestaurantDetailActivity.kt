@@ -20,15 +20,12 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
-import com.jcs.where.api.response.gourmet.cart.Products
-import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.currency.WebViewActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentActivity
-import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
@@ -157,7 +154,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         shopping_cart.apply {
             setMessageImageResource(R.mipmap.ic_shopping_cart)
             changeContainerSize(50f, 50f)
-            changeMessageCountSize(16f,16f)
+            changeMessageCountSize(16f, 16f)
         }
     }
 
@@ -211,40 +208,59 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             addChildClickViewIds(R.id.buy_tv)
             setOnItemChildClickListener { _, _, position ->
                 // 直接购买
+                /*      val dish = mDishAdapter.data[position]
+                      val price = dish.price
+                      val product = Products().apply {
+                          good_data.id = dish.id
+                          good_data.title = dish.title
+                          good_data.image = dish.image
+                          good_data.price = price
+                          good_data.original_price = dish.original_price
+                          good_num = goodNumber
+                          nativeIsSelect = true
+                      }
+
+                      val response = ShoppingCartResponse().apply {
+                          restaurant_id = mRestaurantId.toString()
+                          nativeIsSelect = true
+                          restaurant_name = mRestaurantName
+                          products.add(product)
+                      }
+
+                      val value = ArrayList<ShoppingCartResponse>().apply {
+                          add(response)
+                      }
+
+                      startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
+                          putSerializable(Constant.PARAM_DATA, value)
+                          putString(Constant.PARAM_TOTAL_PRICE, price.toPlainString())
+                      })*/
+
                 val dish = mDishAdapter.data[position]
-                val price = dish.price
-                val product = Products().apply {
-                    good_data.id = dish.id
-                    good_data.title = dish.title
-                    good_data.image = dish.image
-                    good_data.price = price
-                    good_data.original_price = dish.original_price
-                    good_num = goodNumber
-                    nativeIsSelect = true
+                if ( BusinessUtils.getSafeStock( dish.inventory) > 0) {
+                    showCompanyDialog(dish)
+                } else {
+                    startActivity(SetMealActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ID, dish.id)
+                        putInt(Constant.PARAM_RESTAURANT_ID, mRestaurantId)
+                        putInt(Constant.PARAM_GOOD_NUMBER, this@RestaurantDetailActivity.goodNumber)
+                        putString(Constant.PARAM_RESTAURANT_NAME, mRestaurantName)
+                    })
                 }
-
-                val response = ShoppingCartResponse().apply {
-                    restaurant_id = mRestaurantId.toString()
-                    nativeIsSelect = true
-                    restaurant_name = mRestaurantName
-                    products.add(product)
-                }
-
-                val value = ArrayList<ShoppingCartResponse>().apply {
-                    add(response)
-                }
-
-                startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
-                    putSerializable(Constant.PARAM_DATA, value)
-                    putString(Constant.PARAM_TOTAL_PRICE, price.toPlainString())
-                })
-
             }
 
             setOnItemClickListener { _, view, position ->
 
                 val dish = mDishAdapter.data[position]
-                showCompanyDialog(dish)
+//                showCompanyDialog(dish)
+
+                startActivity(SetMealActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, dish.id)
+                    putInt(Constant.PARAM_RESTAURANT_ID, mRestaurantId)
+                    putInt(Constant.PARAM_GOOD_NUMBER, this@RestaurantDetailActivity.goodNumber)
+                    putString(Constant.PARAM_RESTAURANT_NAME, mRestaurantName)
+                })
+
             }
         }
         dish_rv.apply {
@@ -503,7 +519,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         }
 
         dish.inventory.apply {
-            if (!isNullOrBlank()) {
+            if (isNotBlank()) {
                 stockTv.text = getString(R.string.stock_format_2, this)
                 stockTv.visibility = View.VISIBLE
             } else {

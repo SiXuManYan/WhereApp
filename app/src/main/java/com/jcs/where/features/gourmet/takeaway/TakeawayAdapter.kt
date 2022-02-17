@@ -1,6 +1,5 @@
 package com.jcs.where.features.gourmet.takeaway
 
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.blankj.utilcode.util.SpanUtils
@@ -65,22 +64,14 @@ class TakeawayAdapter : BaseQuickAdapter<DishResponse, BaseViewHolder>(R.layout.
             valueChangeListener = object : NumberView2.OnValueChangeListener {
                 override fun onNumberChange(goodNum: Int, isAdd: Boolean) {
                     item.nativeSelectCount = goodNum
-                    onSelectCountChange?.selectCountChange(goodNum , item.id)
+                    onSelectCountChange?.selectCountChange(goodNum, item.id)
                 }
 
             }
         }
 
 
-
-
-
-
-
-
     }
-
-
 
 
 }

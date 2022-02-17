@@ -66,6 +66,12 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
             cut_iv.visibility = View.VISIBLE
             valueChangeListener = this@SetMealActivity
         }
+
+        shopping_cart.apply {
+            setMessageImageResource(R.mipmap.ic_shopping_cart)
+            changeContainerSize(50f, 50f)
+            changeMessageCountSize(16f,16f)
+        }
     }
 
 
@@ -137,6 +143,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
     override fun initData() {
         presenter = SetMealPresenter(this)
         presenter.getDetail(mEatInFoodId)
+        presenter.getCartCount()
     }
 
     override fun bindListener() {
@@ -160,6 +167,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
     override fun onResume() {
         super.onResume()
         GSYVideoManager.onResume()
+        presenter?.getCartCount()
     }
 
     override fun onDestroy() {
@@ -197,9 +205,11 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
                 stock_tv.text = getString(R.string.stock_format_2, this)
             }
         }
-
-
         handlePrice()
+    }
+
+    override fun bindCartCount(nums: Int) {
+        shopping_cart. setMessageCount(nums)
     }
 
     private fun onBuyNow() {

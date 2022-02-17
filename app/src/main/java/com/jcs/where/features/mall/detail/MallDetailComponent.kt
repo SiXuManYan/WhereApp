@@ -23,6 +23,7 @@ import com.jcs.where.api.response.mall.*
 import com.jcs.where.api.response.mall.request.MallAddCart
 import com.jcs.where.api.response.mall.request.MallCollection
 import com.jcs.where.api.response.mall.request.UnCollection
+import com.jcs.where.api.response.other.CartNumberResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ import kotlinx.coroutines.withContext
 interface MallDetailView : BaseMvpView {
     fun bindDetail(response: MallGoodDetail)
     fun collectionHandleSuccess(collectionStatus: Boolean)
+    fun bindCartCount(nums: Int)
 }
 
 class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(view) {
@@ -128,6 +130,14 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         return selectData
     }
 
+
+    fun getCartCount(){
+        requestApi(mRetrofit.mallCartCount, object : BaseMvpObserver<CartNumberResponse>(view) {
+            override fun onSuccess(response: CartNumberResponse) {
+                view.bindCartCount(response.nums)
+            }
+        })
+    }
 
 }
 

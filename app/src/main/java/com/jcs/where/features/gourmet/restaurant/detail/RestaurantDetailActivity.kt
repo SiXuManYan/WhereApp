@@ -32,7 +32,6 @@ import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
-import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
@@ -154,6 +153,12 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
                 }
             }
         })
+
+        shopping_cart.apply {
+            setMessageImageResource(R.mipmap.ic_shopping_cart)
+            changeContainerSize(50f, 50f)
+            changeMessageCountSize(16f,16f)
+        }
     }
 
 
@@ -259,6 +264,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     override fun initData() {
         presenter = RestaurantDetailPresenter(this)
         presenter.getDetail(mRestaurantId)
+        presenter.getCartCount()
     }
 
     override fun onBackPressed() {
@@ -276,6 +282,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     override fun onResume() {
         super.onResume()
         GSYVideoManager.onResume()
+        presenter?.getCartCount()
     }
 
     override fun onDestroy() {
@@ -532,6 +539,10 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         }
 
         addressDialog.show()
+    }
+
+    override fun bindCartCount(nums: Int) {
+        shopping_cart.setMessageCount(nums)
     }
 
 

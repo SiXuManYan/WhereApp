@@ -7,6 +7,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.AddCartRequest
 import com.jcs.where.api.response.gourmet.dish.DishDetailResponse
+import com.jcs.where.api.response.other.CartNumberResponse
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.widget.NumberView2
 
@@ -16,6 +17,7 @@ import com.jcs.where.widget.NumberView2
  */
 interface SetMealView : BaseMvpView, NumberView2.OnValueChangeListener {
     fun bindData(data: DishDetailResponse, inventoryValue: Int)
+    fun bindCartCount(nums: Int)
 }
 
 /**
@@ -34,6 +36,14 @@ class SetMealPresenter(private val view: SetMealView) : BaseMvpPresenter(view) {
         requestApi(mRetrofit.addCartNumber(request), object : BaseMvpObserver<JsonElement>(view) {
             protected override fun onSuccess(response: JsonElement) {
                 ToastUtils.showShort("add success")
+            }
+        })
+    }
+
+    fun getCartCount(){
+        requestApi(mRetrofit.getFoodCartCount(), object : BaseMvpObserver<CartNumberResponse>(view) {
+            override fun onSuccess(response: CartNumberResponse) {
+                view.bindCartCount(response.nums)
             }
         })
     }

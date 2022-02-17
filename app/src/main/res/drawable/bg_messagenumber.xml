@@ -3,17 +3,10 @@
     <!-- rectangle表示为矩形 -->
 
     <!-- 填充的颜色 -->
-    <solid android:color="@color/red_FF0000" />
+    <solid android:color="@color/red_FF4934" />
 
-    <!-- 边框的颜色和粗细 -->
-    <stroke
-        android:width="0.5dp"
-        android:color="@color/white"
-        />
 
     <!-- android:radius 圆角的半径 -->
-    <corners
-        android:radius="10dp"
-        />
+    <corners android:radius="20dp" />
 
 </shape>

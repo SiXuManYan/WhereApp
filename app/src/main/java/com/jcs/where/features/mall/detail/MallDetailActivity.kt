@@ -141,12 +141,19 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 }
             }
         })
+
+        shopping_cart.apply {
+            setMessageImageResource(R.mipmap.ic_shopping_cart)
+            changeContainerSize(50f, 50f)
+            changeMessageCountSize(16f,16f)
+        }
     }
 
 
     override fun initData() {
         presenter = MallDetailPresenter(this)
         presenter.getDetail(goodId)
+        presenter?.getCartCount()
     }
 
     override fun bindListener() {
@@ -261,8 +268,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 //                    this, Conversation.ConversationType.PRIVATE,
 //                    "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5", response.mer_name, null
 //                )
-
-
             }
         }
 
@@ -296,6 +301,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     override fun onResume() {
         super.onResume()
         GSYVideoManager.onResume()
+        presenter?.getCartCount()
     }
 
     override fun onDestroy() {
@@ -345,8 +351,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             1 -> addCart()
             2 -> buyNow()
         }
+    }
 
-
+    override fun bindCartCount(nums: Int) {
+        shopping_cart.setMessageCount(nums)
     }
 
 

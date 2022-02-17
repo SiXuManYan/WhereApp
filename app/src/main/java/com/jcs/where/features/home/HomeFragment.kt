@@ -37,7 +37,6 @@ import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
-import com.jcs.where.features.store.recommend.StoreRecommendActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.home.TravelHomeActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
@@ -112,6 +111,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     /** 轮播图 */
     private fun initBanner() {
+        message_view.setMessageImageResource(R.mipmap.ic_home_message)
         val bannerParams = ll_banner.layoutParams.apply {
             height = ScreenUtils.getScreenWidth() * 194 / 345
         }

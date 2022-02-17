@@ -113,6 +113,7 @@ import com.jcs.where.api.response.order.store.RefundDetail;
 import com.jcs.where.api.response.order.store.RefundDetailMall;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.order.tab.OrderTabResponse;
+import com.jcs.where.api.response.other.CartNumberResponse;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.PayChannel;
@@ -1798,5 +1799,18 @@ public interface RetrofitApi {
     @GET("commonapi/v2/histories_goods")
     Observable<JcsResponse<PageResponse<Footprint>>> getGoodFootprint(@Query("page") int page);
 
+
+    /**
+     * 商城购物车商品数量
+     */
+    @GET("estoreapi/v2/carts/cart_goods_nums")
+    Observable<JcsResponse<CartNumberResponse>> getMallCartCount();
+
+
+    /**
+     * 餐厅购物车商品数量
+     */
+    @GET("restaurantapi/v2/carts/cart_goods_nums")
+    Observable<JcsResponse<CartNumberResponse>> getFoodCartCount();
 
 }

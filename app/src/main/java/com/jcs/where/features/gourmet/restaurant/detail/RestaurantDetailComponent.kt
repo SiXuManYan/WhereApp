@@ -7,6 +7,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.CollectionRestaurantRequest
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
+import com.jcs.where.api.response.other.CartNumberResponse
 import com.jcs.where.utils.CacheUtil
 
 
@@ -18,6 +19,7 @@ interface RestaurantDetailView : BaseMvpView {
     fun bindData(response: RestaurantDetailResponse)
 
     fun collectionHandleSuccess(collectionStatus: Boolean)
+    fun bindCartCount(nums: Int)
 }
 
 /**
@@ -35,8 +37,6 @@ class RestaurantDetailPresenter(private val view: RestaurantDetailView) : BaseMv
                 }
             })
     }
-
-
 
 
     fun collection(restaurantId: Int) {
@@ -58,4 +58,13 @@ class RestaurantDetailPresenter(private val view: RestaurantDetailView) : BaseMv
             }
         })
     }
+
+    fun getCartCount(){
+        requestApi(mRetrofit.getFoodCartCount(), object : BaseMvpObserver<CartNumberResponse>(view) {
+            override fun onSuccess(response: CartNumberResponse) {
+                view.bindCartCount(response.nums)
+            }
+        })
+    }
+
 }

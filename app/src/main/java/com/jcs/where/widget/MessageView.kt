@@ -1,52 +1,51 @@
-package com.jcs.where.widget;
+package com.jcs.where.widget
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.Nullable;
-
-import com.jcs.where.R;
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.annotation.DrawableRes
+import com.blankj.utilcode.util.SizeUtils
+import com.jcs.where.R
 
 /**
  * Created by Wangsw  2021/2/23 10:40.
  */
-public class MessageView extends LinearLayout {
+class MessageView : LinearLayout {
 
-    private TextView message_count_tv;
-    private ImageView message_iv;
-    private int currentMessageCount = 0;
+    private var message_count_tv: TextView? = null
+    private var message_iv: ImageView? = null
+    private var message_container_rl: RelativeLayout? = null
+    private var currentMessageCount = 0
 
-    public MessageView(Context context) {
-        super(context);
-        initView();
+    constructor(context: Context?) : super(context) {
+        initView()
     }
 
-    public MessageView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initView();
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        initView()
     }
 
-    public MessageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView();
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initView()
     }
 
-    public MessageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView();
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context,
+        attrs,
+        defStyleAttr,
+        defStyleRes) {
+        initView()
     }
 
-
-    private void initView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_message_count, this, true);
-        message_count_tv = view.findViewById(R.id.message_count_tv);
-        message_iv = view.findViewById(R.id.message_iv);
+    private fun initView() {
+        val view = LayoutInflater.from(context).inflate(R.layout.widget_message_count, this, true)
+        message_count_tv = view.findViewById(R.id.message_count_tv)
+        message_iv = view.findViewById(R.id.message_iv)
+        message_container_rl = view.findViewById(R.id.message_container_rl)
     }
 
     /**
@@ -54,18 +53,37 @@ public class MessageView extends LinearLayout {
      *
      * @param count
      */
-    public void setMessageCount(int count) {
+    fun setMessageCount(count: Int) {
         if (count > 0) {
-            message_count_tv.setVisibility(View.VISIBLE);
+            message_count_tv!!.visibility = VISIBLE
+            if (count > 99) {
+                message_count_tv!!.text = "99+"
+            } else {
+                message_count_tv!!.text = count.toString()
+            }
         } else {
-            message_count_tv.setVisibility(View.GONE);
+            message_count_tv!!.visibility = GONE
         }
-        message_count_tv.setText(String.valueOf(count));
-        this.currentMessageCount = count;
+        currentMessageCount = count
     }
 
-    public void setMessageImageResource(@DrawableRes int resId) {
-
-        message_iv.setImageResource(resId);
+    fun setMessageImageResource(@DrawableRes resId: Int) {
+        message_iv!!.setImageResource(resId)
     }
+
+    fun changeContainerSize(width: Float, height: Float) {
+        val layoutParams = message_container_rl!!.layoutParams as ViewGroup.LayoutParams
+        layoutParams.width = SizeUtils.dp2px(width)
+        layoutParams.height = SizeUtils.dp2px(height)
+    }
+
+     fun changeMessageCountSize(width: Float, height: Float) {
+        val layoutParams = message_count_tv!!.layoutParams as ViewGroup.LayoutParams
+        layoutParams.width = SizeUtils.dp2px(width)
+        layoutParams.height = SizeUtils.dp2px(height)
+    }
+
+
+
+
 }

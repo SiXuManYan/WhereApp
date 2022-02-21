@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.FragmentActivity
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
@@ -49,5 +50,9 @@ class ConversationActivity : FragmentActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, conversationFragment)
         transaction.commit()
+
+        findViewById<ImageView>(R.id.back_iv).setOnClickListener {
+            finish()
+        }
     }
 }

@@ -71,7 +71,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
         shopping_cart.apply {
             setMessageImageResource(R.mipmap.ic_shopping_cart)
             changeContainerSize(50f, 50f)
-            changeMessageCountSize(16f, 16f)
+            changeMessageCountSize(14f, 14f)
         }
     }
 

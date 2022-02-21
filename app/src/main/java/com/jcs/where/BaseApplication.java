@@ -18,6 +18,7 @@ import com.jcs.where.api.RetrofitManager;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.message.cloud.ConversationActivity;
+import com.jcs.where.features.message.custom.CustomMessage;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.storage.entity.User;
@@ -27,12 +28,15 @@ import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
 
+import java.util.ArrayList;
+
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
 public class BaseApplication extends Application {
@@ -170,6 +174,12 @@ public class BaseApplication extends Application {
         // 设置融云用户信息提供者
         setUserInfoProvider();
 
+        // 在连接前，注册自定义消息
+        ArrayList<Class<? extends MessageContent>> myMessages = new ArrayList<>();
+        myMessages.add(CustomMessage.class);
+        RongIMClient.registerMessageType(myMessages);
+
+
         // 连接融云服务器
         connectRongCloud();
 
@@ -222,6 +232,9 @@ public class BaseApplication extends Application {
      * 连接融云服务器
      */
     public void connectRongCloud() {
+
+
+
         if (!User.isLogon()) {
             LogUtils.d("融云", "连接融云服务器，用户未登录");
             return;

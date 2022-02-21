@@ -14,6 +14,7 @@ import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity
 import com.jcs.where.utils.BigDecimalUtil
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.empty.EmptyView
@@ -181,7 +182,9 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
         service_iv.setOnClickListener {
             if (im_status == 1 && mer_uuid.isNotBlank()) {
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mer_uuid, restaurant_name, null)
+
+                BusinessUtils.startRongCloudConversationActivity(this,mer_uuid,restaurant_name)
+
             } else {
                 if (businessPhone.isNotBlank()) {
                     val data = Uri.parse("tel:$businessPhone")

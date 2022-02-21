@@ -21,10 +21,9 @@ import com.jcs.where.features.mall.refund.apply.MallRefundActivity
 import com.jcs.where.features.mall.refund.detail.MallRefundDetailActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_mall_order_detail.*
 import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
@@ -138,11 +137,8 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         // 商品信息
         if (data.im_status == 1 && !TextUtils.isEmpty(data.mer_uuid)) {
             im_ll.visibility = View.VISIBLE
-            im_ll.setOnClickListener { _ ->
-                RongIM.getInstance()
-                    .startConversation(this, Conversation.ConversationType.PRIVATE, data.mer_uuid, data.mer_name, Bundle().apply {
-                        putString(Constant.PARAM_PHONE, data.tel)
-                    })
+            im_ll.setOnClickListener {
+                BusinessUtils.startRongCloudConversationActivity(this, data.mer_uuid, data.mer_name, data.tel)
             }
         } else {
             im_ll.visibility = View.GONE

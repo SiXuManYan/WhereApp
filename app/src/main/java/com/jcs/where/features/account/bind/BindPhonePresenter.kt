@@ -1,24 +1,28 @@
 package com.jcs.where.features.account.bind
 
 import android.text.TextUtils
-import com.jcs.where.api.network.BaseMvpPresenter
 import android.widget.TextView
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.jcs.where.utils.FeaturesUtil
-import com.jcs.where.api.request.SendCodeRequest
+import com.blankj.utilcode.util.Utils
 import com.google.gson.JsonElement
-import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.BaseApplication
 import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.jcs.where.api.network.BaseMvpObserver
+import com.jcs.where.api.network.BaseMvpPresenter
+import com.jcs.where.api.request.SendCodeRequest
 import com.jcs.where.api.request.account.BindPhoneRequest
 import com.jcs.where.api.response.LoginResponse
+import com.jcs.where.api.response.UserInfoResponse
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.SPKey
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 /**
@@ -94,7 +98,7 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
         userName: String?,
         userId: String?,
         userIcon: String?,
-        loginType: Int
+        loginType: Int,
     ) {
         if (FeaturesUtil.isWrongPhoneNumber(countryCode, account)) {
             return
@@ -123,14 +127,64 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
         requestApi(mRetrofit.bindPhone(request), object : BaseMvpObserver<LoginResponse>(mView) {
 
             override fun onSuccess(response: LoginResponse) {
-                val token = response.token
-                CacheUtil.saveToken(token)
-
-                // 清空邀请码
-                SPUtils.getInstance().put(SPKey.K_INVITE_CODE , "")
+                handleThirdRegisterSuccess(response)
 
                 mView.bindSuccess()
             }
         })
     }
+
+    private fun handleThirdRegisterSuccess(response: LoginResponse) {
+        CacheUtil.saveToken(response.token)
+        // 清空邀请码
+        SPUtils.getInstance().put(SPKey.K_INVITE_CODE, "")
+        getUserInfo()
+
+    }
+
+    private fun getUserInfo() {
+        if (!User.isLogon()) {
+            return
+        }
+        requestApi(mRetrofit.userInfo, object : BaseMvpObserver<UserInfoResponse>(mView) {
+            override fun onSuccess(response: UserInfoResponse) {
+
+                // 邀请链接
+                SPUtils.getInstance().put(SPKey.K_INVITE_LINK, response.invite_link)
+
+                // 保存用户信息
+                val user = User.Builder.anUser()
+                    .id(response.id)
+                    .nickName(response.nickname)
+                    .phone(response.phone)
+                    .email(response.email)
+                    .avatar(response.avatar)
+                    .balance(response.balance)
+                    .createdAt(response.createdAt)
+                    .name(response.name)
+                    .type(response.type)
+                    .countryCode(response.countryCode)
+                    .merchantApplyStatus(response.merchantApplyStatus)
+                    .faceBookBindStatus(response.facebookBindStatus)
+                    .googleBindStatus(response.googleBindStatus)
+                    .twitterBindStatus(response.twitterBindStatus)
+                    .signStatus(response.signStatus)
+                    .integral(response.integral)
+                    .rongData(response.rongData).build()
+
+
+                val whereApp = Utils.getApp() as BaseApplication
+                whereApp.database.userDao().addUser(user)
+                User.update()
+
+                // 刷新融云用户信息
+                whereApp.refreshRongUserInfoCache(User.getInstance().rongData.uuid)
+
+                // 连接融云
+                whereApp.connectRongCloud()
+            }
+        })
+
+    }
+
 }

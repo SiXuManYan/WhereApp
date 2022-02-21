@@ -1,6 +1,5 @@
 package com.jcs.where.features.mine
 
-import android.util.Log
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.Utils
 import com.jcs.where.BaseApplication
@@ -12,9 +11,7 @@ import com.jcs.where.api.response.UnReadMessage
 import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.SPKey
-import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
-import io.rong.imlib.RongIMClient.*
 
 /**
  * Created by Wangsw  2021/8/13 14:14.
@@ -22,8 +19,7 @@ import io.rong.imlib.RongIMClient.*
  */
 interface MineView : BaseMvpView {
     fun bindUnreadMessageCount(totalCount: Int)
-    fun bindUserInfo(response: UserInfoResponse)
-    fun handleMerchant(response: MerchantSettledInfoResponse)
+    fun bindUserInfo(nickname: String, createdAt: String, avatar: String)
 }
 
 class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
@@ -72,7 +68,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         }
         requestApi(mRetrofit.userInfo, object : BaseMvpObserver<UserInfoResponse>(view) {
             override fun onSuccess(response: UserInfoResponse) {
-                view.bindUserInfo(response)
+                view.bindUserInfo(response.nickname, response.createdAt, response.avatar)
                 saveData(response)
             }
         })
@@ -86,6 +82,10 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
      *
      */
     private fun saveData(response: UserInfoResponse) {
+
+        // 邀请链接
+        SPUtils.getInstance().put(SPKey.K_INVITE_LINK, response.invite_link)
+
         val user = User.Builder.anUser()
             .id(response.id)
             .nickName(response.nickname)
@@ -106,64 +106,13 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
             .rongData(response.rongData).build()
 
 
-        val app = Utils.getApp() as BaseApplication
-        val database = app.database
-        database.userDao().addUser(user)
+        val whereApp = Utils.getApp() as BaseApplication
+        whereApp.database.userDao().addUser(user)
         User.update()
 
-        SPUtils.getInstance().put(SPKey.K_INVITE_LINK, response.invite_link)
+        // 刷新融云用户信息
+        whereApp.refreshRongUserInfoCache(User.getInstance().rongData.uuid)
 
-        connectRongCloud(response.rongData.token)
-    }
-
-    /**
-     * 连接融云
-     */
-    fun connectRongCloud(token: String) {
-        Log.e("融云", "alreadyConnectRongCloud == " + alreadyConnectRongCloud)
-        if (!User.isLogon()) {
-            return
-        }
-        if (alreadyConnectRongCloud) {
-            return
-        }
-        RongIM.connect(token, object : ConnectCallback() {
-            override fun onDatabaseOpened(code: DatabaseOpenStatus) {
-                //消息数据库打开，可以进入到主页面
-                Log.e("融云", "onDatabaseOpened")
-            }
-
-            override fun onSuccess(s: String) {
-                //连接成功
-                alreadyConnectRongCloud = true
-                Log.e("融云", "链接成功")
-            }
-
-            override fun onError(errorCode: ConnectionErrorCode) {
-                Log.e("融云", "链接失败 errorCode == $errorCode")
-                if (errorCode == ConnectionErrorCode.RC_CONN_TOKEN_INCORRECT) {
-                    //从 APP 服务获取新 token，并重连
-                    alreadyConnectRongCloud = false
-                } else {
-                    //无法连接 IM 服务器，请根据相应的错误码作出对应处理
-                }
-            }
-        })
-    }
-
-    /**
-     * 获取商家入驻信息
-     */
-    fun getMerchantSettledInfo() {
-
-        requestApi(mRetrofit.merchantSettledInfo, object : BaseMvpObserver<MerchantSettledInfoResponse>(view) {
-            override fun onSuccess(response: MerchantSettledInfoResponse) {
-                view.handleMerchant(response)
-
-            }
-
-
-        })
     }
 
 

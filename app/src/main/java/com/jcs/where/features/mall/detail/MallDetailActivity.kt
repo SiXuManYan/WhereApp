@@ -12,7 +12,6 @@ import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
@@ -25,17 +24,15 @@ import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.comment.MallCommentActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
-import com.jcs.where.features.mall.shop.MallShopActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
 import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
 import com.shuyu.gsyvideoplayer.GSYVideoManager
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
 import java.util.*
 
@@ -145,7 +142,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         shopping_cart.apply {
             setMessageImageResource(R.mipmap.ic_shopping_cart)
             changeContainerSize(50f, 50f)
-            changeMessageCountSize(14f,14f)
+            changeMessageCountSize(14f, 14f)
         }
     }
 
@@ -259,11 +256,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         collect_status = response.collect_status
         setLikeImage()
         if (response.im_status == 1 && !TextUtils.isEmpty(response.mer_uuid)) {
-            mall_service_tv.setOnClickListener { _ ->
-                RongIM.getInstance().startConversation(
-                    this, Conversation.ConversationType.PRIVATE,
-                    response.mer_uuid, response.mer_name, null
-                )
+            mall_service_tv.setOnClickListener {
+
+                BusinessUtils.startRongCloudConversationActivity(this, response.mer_uuid, response.mer_name)
+
 //                 RongIM.getInstance().startConversation(
 //                    this, Conversation.ConversationType.PRIVATE,
 //                    "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5", response.mer_name, null

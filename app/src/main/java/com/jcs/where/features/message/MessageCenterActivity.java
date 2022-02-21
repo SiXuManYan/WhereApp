@@ -14,8 +14,9 @@ import com.blankj.utilcode.util.StringUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.features.message.conversation.BusinessConversationFragment;
 import com.jcs.where.features.message.notice.SystemNoticeFragment;
+
+import io.rong.imkit.conversationlist.ConversationListFragment;
 
 /**
  * Created by Wangsw  2021/2/19 17:07.
@@ -46,12 +47,14 @@ public class MessageCenterActivity extends BaseActivity {
         pager = findViewById(R.id.pager);
         tabs_type = findViewById(R.id.tabs_type);
         pager.setOffscreenPageLimit(TAB_TITLES.length);
+
     }
 
     @Override
     protected void initData() {
         pager.setAdapter(new InnerPagerAdapter(getSupportFragmentManager(), 0));
         tabs_type.setViewPager(pager, TAB_TITLES);
+
 
     }
 
@@ -72,7 +75,7 @@ public class MessageCenterActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new BusinessConversationFragment();
+                return new ConversationListFragment();
             } else {
                 return new SystemNoticeFragment();
             }

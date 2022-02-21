@@ -35,6 +35,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
+import io.rong.imkit.RongIM;
+
 /**
  * Created by Wangsw  2021/1/28 15:13.
  * 设置
@@ -127,6 +129,8 @@ public class SettingActivity extends BaseActivity {
                 .setMessage(R.string.sign_out_hint)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
+                    // 断开融云连接
+                    RongIM.getInstance().logout();
                     User.clearAllUser();
                     CacheUtil.saveToken("");
 

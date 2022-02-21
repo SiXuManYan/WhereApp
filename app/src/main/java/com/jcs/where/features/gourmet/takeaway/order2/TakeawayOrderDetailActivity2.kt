@@ -21,8 +21,6 @@ import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_takeaway_order_detail_2.*
 import org.greenrobot.eventbus.EventBus
 
@@ -91,7 +89,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
             if (merUuid.isBlank()) {
                 return@setOnClickListener
             }
-            RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, merUuid, restaurantName, null)
+            BusinessUtils.startRongCloudConversationActivity(this, merUuid, restaurantName)
         }
     }
 
@@ -157,14 +155,14 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                 }
                 left_tv.setOnClickListener {
                     AlertDialog.Builder(this)
-                            .setTitle(R.string.prompt)
-                            .setMessage(R.string.cancel_order_confirm)
-                            .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-                                presenter.cancelOrder(orderId)
-                                dialogInterface.dismiss()
-                            }
-                            .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
-                            .create().show()
+                        .setTitle(R.string.prompt)
+                        .setMessage(R.string.cancel_order_confirm)
+                        .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                            presenter.cancelOrder(orderId)
+                            dialogInterface.dismiss()
+                        }
+                        .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                        .create().show()
 
                 }
                 right_tv.setOnClickListener {
@@ -191,14 +189,14 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                 }
                 left_tv.setOnClickListener {
                     AlertDialog.Builder(this)
-                            .setTitle(R.string.prompt)
-                            .setMessage(R.string.delicacy_return_hint)
-                            .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-                                presenter.refundOrder(orderId)
-                                dialogInterface.dismiss()
-                            }
-                            .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
-                            .create().show()
+                        .setTitle(R.string.prompt)
+                        .setMessage(R.string.delicacy_return_hint)
+                        .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                            presenter.refundOrder(orderId)
+                            dialogInterface.dismiss()
+                        }
+                        .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                        .create().show()
                 }
             }
             8 -> {
@@ -213,10 +211,10 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                         text = getString(R.string.evaluation)
                     }
                     right_tv.setOnClickListener {
-                        startActivity(FoodCommentPostActivity::class.java,Bundle().apply {
-                            putInt(Constant.PARAM_ORDER_ID , orderId)
-                            putInt(Constant.PARAM_RESTAURANT_ID , restaurantData.id)
-                            putInt(Constant.PARAM_TYPE , 2)
+                        startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_ORDER_ID, orderId)
+                            putInt(Constant.PARAM_RESTAURANT_ID, restaurantData.id)
+                            putInt(Constant.PARAM_TYPE, 2)
                         })
                     }
                 } else {

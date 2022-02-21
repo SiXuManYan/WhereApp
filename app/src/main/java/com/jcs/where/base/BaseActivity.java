@@ -407,4 +407,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.right_fade_in, R.anim.right_fade_out);
     }
+
+
+
+
 }

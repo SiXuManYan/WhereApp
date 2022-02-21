@@ -1,8 +1,14 @@
 package com.jcs.where.utils
 
-import android.widget.EditText
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
+import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.storage.entity.User
+import io.rong.imkit.utils.RouteUtils
+import io.rong.imlib.model.Conversation
 
 /**
  * Created by Wangsw  2021/7/21 17:10.
@@ -73,8 +79,8 @@ object BusinessUtils {
         else -> ""
     }
 
-    fun getSafeStock(inventory:String?):Int{
-      return  if (inventory.isNullOrBlank()) {
+    fun getSafeStock(inventory: String?): Int {
+        return if (inventory.isNullOrBlank()) {
             99
         } else {
             try {
@@ -92,7 +98,31 @@ object BusinessUtils {
     }
 
 
+    /**
+     * 启动融云会话页面(使用内置方法)
+     * ConversationActivity
+     */
+    fun startRongCloudConversationActivity(context: Context, targetId: String, title: String? = null, phone: String? = null) {
 
+        if (!User.isLogon()) {
+            context.startActivity(Intent(context, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            return
+        }
+
+        if (targetId.isBlank()) {
+            return
+        }
+
+        val bundle = Bundle().apply {
+            title?.let {
+                putString(Constant.PARAM_TITLE, title)
+            }
+            phone?.let {
+                putString(Constant.PARAM_PHONE, it)
+            }
+        }
+        RouteUtils.routeToConversationActivity(context, Conversation.ConversationType.PRIVATE, targetId, bundle)
+    }
 
 
 }

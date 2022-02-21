@@ -5,36 +5,34 @@ import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
+import android.text.TextUtils;
 
 import androidx.multidex.MultiDex;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.comm100.livechat.VisitorClientInterface;
-import com.jcs.where.api.BaseObserver;
-import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.RetrofitManager;
-import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.features.message.MessageCenterActivity;
+import com.jcs.where.features.message.cloud.ConversationActivity;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.storage.WhereDataBase;
+import com.jcs.where.storage.entity.User;
+import com.jcs.where.storage.entity.UserRongyunData;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
 
-import java.util.Locale;
-
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.userinfo.RongUserInfoManager;
+import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
 public class BaseApplication extends Application {
@@ -63,12 +61,11 @@ public class BaseApplication extends Application {
         LocationUtil.initInstance(this);
         SPUtil.initInstance(this);
         changeLanguage();
-//        setLanguage();
 
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
         initComm100();
-        initRongCloud();
+        handleRongCloud();
     }
 
 
@@ -163,72 +160,121 @@ public class BaseApplication extends Application {
 
 
     /**
+     * 融云相关
+     * 详见：https://doc.rongcloud.cn/im/Android/5.X/ui/quick_integration
+     */
+    private void handleRongCloud() {
+        // 初始化
+        initRongCloud();
+
+        // 设置融云用户信息提供者
+        setUserInfoProvider();
+
+        // 连接融云服务器
+        connectRongCloud();
+
+    }
+
+
+    /**
      * 初始化融云
      */
-    private void initRongCloud() {
-        RongIM.init(this, BuildConfig.RONG_CLOUD_APP_KEY);
+    private void initRongCloud(){
 
-        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageWrapperListener() {
+        RongIM.init(this, BuildConfig.RONG_CLOUD_APP_KEY, true);
 
-            /**
-             * 接收实时或者离线消息。
-             * 注意:
-             * 1. 针对接收离线消息时，服务端会将 200 条消息打成一个包发到客户端，客户端对这包数据进行解析。
-             * 2. hasPackage 标识是否还有剩余的消息包，left 标识这包消息解析完逐条抛送给 App 层后，剩余多少条。
-             * 如何判断离线消息收完：
-             * 1. hasPackage 和 left 都为 0；
-             * 2. hasPackage 为 0 标识当前正在接收最后一包（200条）消息，left 为 0 标识最后一包的最后一条消息也已接收完毕。
-             *
-             * @param message    接收到的消息对象
-             * @param left       每个数据包数据逐条上抛后，还剩余的条数
-             * @param hasPackage 是否在服务端还存在未下发的消息包
-             * @param offline    消息是否离线消息
-             * @return 是否处理消息。 如果 App 处理了此消息，返回 true; 否则返回 false 由 SDK 处理。
-             */
+        // 注册自定义的会话列表(此方法在应用生命周期内、主进程中注册一次即可。)
+        RouteUtils.registerActivity(RouteUtils.RongActivityType.ConversationListActivity, MessageCenterActivity.class);
 
-            @Override
-            public boolean onReceived(Message message, int left, boolean hasPackage, boolean offline) {
-                Log.e("融云","onReceived" );
-                return false;
-            }
-        });
+        // 注册自定义的会话 Activity( 生命周期内、主进程中调用一次即可。)
+        RouteUtils.registerActivity(RouteUtils.RongActivityType.ConversationActivity, ConversationActivity.class);
+
+    }
 
 
-        RongIM.setConnectionStatusListener(connectionStatus -> {
+    /**
+     * 设置融云用户信息提供者
+     */
+    private void setUserInfoProvider() {
 
-            if (connectionStatus == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTING) {
-                setUserInfoProvider();
-            }
-            Log.e("融云","connectionStatus == "+  connectionStatus);
-        });
+        RongUserInfoManager.getInstance().setUserInfoProvider(userId -> {
+            refreshRongUserInfoCache(userId);
+            return null;
+        },true);
 
     }
 
     /**
-     * 设置融云用户信息
+     * 刷新融云用户信息
+     * @param rongCloudUserId
      */
-    private void setUserInfoProvider() {
+    public void refreshRongUserInfoCache(String rongCloudUserId) {
+        if (User.isLogon()) {
+            User appUser = User.getInstance();
+            UserRongyunData rongData = appUser.rongData;
 
-        RongIM.setUserInfoProvider(userId -> {
-
-            mModel.getRongCloudUserInfo(new BaseObserver<RongCloudUserResponse>() {
-
-                @Override
-                protected void onError(ErrorResponse errorResponse) {
-                    Log.e("融云","setUserInfoProvider == onError");
-                }
-
-                @Override
-                protected void onSuccess(RongCloudUserResponse response) {
-                    UserInfo userInfo = new UserInfo(userId, response.name, Uri.parse(response.avatar));
-                    RongIM.getInstance().refreshUserInfoCache(userInfo);
-
-                    Log.e("融云","setUserInfoProvider == onSuccess");
-                }
-            }, userId);
-
-            return null;
-        }, true);
+            UserInfo userInfo = new UserInfo(rongCloudUserId, rongData.name, Uri.parse(rongData.avatar));
+            RongUserInfoManager.getInstance().refreshUserInfoCache(userInfo);
+        }
     }
+
+    /**
+     * 连接融云服务器
+     */
+    public void connectRongCloud() {
+        if (!User.isLogon()) {
+            LogUtils.d("融云", "连接融云服务器，用户未登录");
+            return;
+        }
+
+        UserRongyunData rongData = User.getInstance().rongData;
+        String rongToken = rongData.token;
+        if (TextUtils.isEmpty(rongToken)) {
+            LogUtils.d("融云", "连接融云服务器，用户已登录，融云token为空");
+            return;
+        }
+        RongIM.connect(rongToken, new RongIMClient.ConnectCallback() {
+
+            /**
+             * 连接成功的回调，返回当前连接的用户 ID。
+             * @param userId
+             */
+            @Override
+            public void onSuccess(String userId) {
+                // 登录成功
+                LogUtils.d("融云", "连接融云服务器成功，融云token == " + rongToken+"  当前连接的用户的融云id == " + "userId");
+            }
+
+            /**
+             * 连接失败并返回对应的连接错误码，开发者需要参考连接相关错误码进行不同业务处理。
+             * https://doc.rongcloud.cn/im/Android/5.X/ui/connect/connect#connectstatus
+             * @param e
+             */
+            @Override
+            public void onError(RongIMClient.ConnectionErrorCode e) {
+
+            }
+
+            /**
+             * 本地数据库打开状态回调。当回调 DATABASE_OPEN_SUCCESS 时，说明本地数据库打开，此时可以拉取本地历史会话及消息，适用于离线登录场景。
+             * @param code
+             */
+            @Override
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+
+            }
+        });
+
+
+        // 连接状态监听
+        RongIM.setConnectionStatusListener(status -> {
+            LogUtils.d("融云", "链接状态 status == "+ status.name());
+
+        });
+
+
+    }
+
+
 
 }

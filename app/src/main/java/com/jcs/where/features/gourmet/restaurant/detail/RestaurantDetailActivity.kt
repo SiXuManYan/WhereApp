@@ -349,9 +349,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             finish()
         }
         chat_iv.setOnClickListener {
-            if (mMerUuid.isNotBlank()) {
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, mMerUuid, mRestaurantName, null)
-            }
+            BusinessUtils.startRongCloudConversationActivity(this,mMerUuid,mRestaurantName)
         }
         findViewById<View>(R.id.more_comment_tv).setOnClickListener {
             val bundle = Bundle()

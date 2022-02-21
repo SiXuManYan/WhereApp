@@ -72,7 +72,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
             if (merUuid.isBlank()) {
                 return@setOnClickListener
             }
-            RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, merUuid, restaurantName, null)
+            BusinessUtils.startRongCloudConversationActivity(this,merUuid,restaurantName)
         }
 
     }

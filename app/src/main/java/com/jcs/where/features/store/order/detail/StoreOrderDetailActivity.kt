@@ -23,12 +23,10 @@ import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.features.store.refund.StoreRefundActivity
 import com.jcs.where.features.store.refund.detail.StoreRefundDetailActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_order_detail.*
-
 import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
 
@@ -160,7 +158,7 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
             if (it.im_status == 1 && !TextUtils.isEmpty(it.mer_uuid)) {
                 im_ll.visibility = View.VISIBLE
                 im_ll.setOnClickListener { _ ->
-                    RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, it.mer_uuid, it.mer_name, null)
+                    BusinessUtils.startRongCloudConversationActivity(this, it.mer_uuid, it.mer_name)
                 }
             } else {
                 im_ll.visibility = View.GONE

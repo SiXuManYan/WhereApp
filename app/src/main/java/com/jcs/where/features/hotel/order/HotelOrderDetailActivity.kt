@@ -77,7 +77,7 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
             if (merUuid.isBlank()) {
                 return@setOnClickListener
             }
-            RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, merUuid, merName, null)
+            BusinessUtils.startRongCloudConversationActivity(this, merUuid, merName)
         }
     }
 

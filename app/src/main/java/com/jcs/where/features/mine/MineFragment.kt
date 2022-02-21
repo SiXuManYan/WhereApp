@@ -7,8 +7,6 @@ import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.jcs.where.R
-import com.jcs.where.api.response.MerchantSettledInfoResponse
-import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
@@ -26,7 +24,6 @@ import com.jcs.where.features.setting.SettingActivity
 import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
-import com.jcs.where.mine.activity.merchant_settled.MerchantVerifyActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.MobUtil
 import com.jcs.where.utils.SPKey
@@ -56,8 +53,11 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
 
     override fun initData() {
         presenter = MinePresenter(this)
+    }
+
+
+    override fun loadOnVisible() {
         presenter.getUnreadMessageCount()
-        presenter.getUserInfo()
     }
 
     override fun bindListener() {
@@ -119,10 +119,10 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         message_view.setMessageCount(totalCount)
     }
 
-    override fun bindUserInfo(response: UserInfoResponse) {
-        name_tv.text = response.nickname
+    override fun bindUserInfo(nickname: String, createdAt: String, avatar: String) {
+        name_tv.text = nickname
         create_time_tv.apply {
-            text = response.createdAt
+            text = createdAt
             visibility = View.VISIBLE
         }
         val options = RequestOptions.bitmapTransform(GlideRoundedCornersTransform(30, GlideRoundedCornersTransform.CornerType.ALL))
@@ -130,19 +130,17 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             .fallback(R.drawable.ic_noheader)
             .placeholder(R.drawable.ic_noheader)
 
-        Glide.with(requireContext()).load(response.avatar).apply(options).into(avatar_iv)
+        Glide.with(requireContext()).load(avatar).apply(options).into(avatar_iv)
 
-    }
-
-    override fun handleMerchant(response: MerchantSettledInfoResponse) {
-        MerchantVerifyActivity.go(context, response.isVerify)
     }
 
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {
         super.onEventReceived(baseEvent)
         when (baseEvent!!.code) {
-            EventCode.EVENT_LOGIN_SUCCESS,
+            EventCode.EVENT_LOGIN_SUCCESS -> {
+                initDefaultUi()
+            }
             EventCode.EVENT_REFRESH_USER_INFO,
             EventCode.EVENT_SIGN_IN_CHANGE_STATUS,
             -> presenter.getUserInfo()
@@ -157,14 +155,16 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
     }
 
     private fun initDefaultUi() {
-        name_tv.text = getString(R.string.mine_login_register)
-        create_time_tv.apply {
-            text = ""
-            visibility = View.GONE
+        if (User.isLogon()) {
+            val user = User.getInstance()
+            bindUserInfo(user.nickName, user.createdAt, user.avatar)
+        } else {
+            bindUserInfo(getString(R.string.mine_login_register), "", "")
+            create_time_tv.visibility = View.GONE
+            message_view.setMessageCount(0)
         }
-        avatar_iv.setImageResource(R.drawable.ic_noheader)
         message_view.setMessageImageResource(R.mipmap.ic_mine_message)
-        message_view.setMessageCount(0)
+
     }
 
 
@@ -172,9 +172,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         super.onHiddenChanged(hidden)
         if (!hidden) {
             presenter.getUnreadMessageCount()
-//            if (User.isLogon()) {
-//                presenter?.connectRongCloud(User.getInstance().rongData.token)
-//            }
         }
     }
 

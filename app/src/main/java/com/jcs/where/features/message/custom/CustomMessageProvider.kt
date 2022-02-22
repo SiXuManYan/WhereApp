@@ -28,7 +28,6 @@ class CustomMessageProvider : BaseMessageItemProvider<CustomMessage>() {
     init {
         // 修改模版属性
         mConfig.apply {
-            showPortrait = false // 隐藏头像
             showSummaryWithName = false // 是否在会话的内容体里显示发送者名字
             showReadState = true // 显示已读回执状态。
             showContentBubble = false // 隐藏气泡

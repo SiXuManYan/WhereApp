@@ -56,6 +56,7 @@ class ConversationActivity : BaseActivity() {
     private fun initExtra() {
         intent.extras?.let {
 
+            conversationType = it.getInt(Constant.PARAM_TYPE, 0)
             targetId = it.getString("targetId", "")
 
             chat_title_tv.text = it.getString(Constant.PARAM_TITLE, "")
@@ -111,6 +112,7 @@ class ConversationActivity : BaseActivity() {
                     this.visibility = View.GONE
                     // 发送自定义消息
                     sendMallGoodMessage(mallGoodMessageData)
+
                 }
 
             }

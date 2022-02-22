@@ -19,6 +19,7 @@ import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.message.cloud.ConversationActivity;
 import com.jcs.where.features.message.custom.CustomMessage;
+import com.jcs.where.features.message.custom.CustomMessageProvider;
 import com.jcs.where.frams.common.Html5Url;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.storage.entity.User;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.RongIMClient;
@@ -174,11 +176,13 @@ public class BaseApplication extends Application {
         // 设置融云用户信息提供者
         setUserInfoProvider();
 
-        // 在连接前，注册自定义消息
+        // 注册自定义消息(在连接前)
         ArrayList<Class<? extends MessageContent>> myMessages = new ArrayList<>();
         myMessages.add(CustomMessage.class);
         RongIMClient.registerMessageType(myMessages);
 
+        // 注册自定义消息展示模版(adapter)
+        RongConfigCenter.conversationConfig().addMessageProvider(new CustomMessageProvider());
 
         // 连接融云服务器
         connectRongCloud();

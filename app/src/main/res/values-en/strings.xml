@@ -839,5 +839,6 @@ Gentleman must let go</string>
     <string name="estore_goods_removed_reason">Item has been discontinued</string>
     <string name="estore_goods_expired_reason">Item has expired</string>
     <string name="mine_share">Share Where</string>
+    <string name="send_mall_good">Send Good</string>
 
 </resources>

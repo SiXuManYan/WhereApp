@@ -23,6 +23,7 @@ import io.rong.imlib.model.UserInfo;
 public class CustomMessage extends MessageContent {
 
 
+
     public int ID = 0;
 
     /**
@@ -41,10 +42,17 @@ public class CustomMessage extends MessageContent {
     public String goodsPrice = "";
 
 
+    public CustomMessage(int ID, String goodsImage, String goodsName, String goodsPrice) {
+        this.ID = ID;
+        this.goodsImage = goodsImage;
+        this.goodsName = goodsName;
+        this.goodsPrice = goodsPrice;
+    }
+
     /**
      * 解析消息内容.
      */
-    public void MessageContent(byte[] data) {
+    public CustomMessage(byte[] data) {
         if (data == null) {
             return;
         }
@@ -85,7 +93,6 @@ public class CustomMessage extends MessageContent {
             if (jsonObj.has("goodsPrice")) {
                 goodsPrice = jsonObj.getString("goodsPrice");
             }
-
 
 
         } catch (JSONException e) {
@@ -168,7 +175,7 @@ public class CustomMessage extends MessageContent {
 
         @Override
         public CustomMessage createFromParcel(Parcel source) {
-            return null;
+            return new CustomMessage(source);
         }
 
         @Override

@@ -49,6 +49,7 @@ public class Constant {
     public static final String PARAM_DELIVERY_TYPE = "param_delivery_type";
     public static final String PARAM_DELIVERY_FEE = "param_delivery_fee";
     public static final String PARAM_GOOD_ID = "param_good_id";
+    public static final String PARAM_GOOD_DATA = "param_good_data";
     public static final String PARAM_GOOD_NUMBER = "param_good_number";
     public static final String PARAM_PRICE = "PARAM_PRICE";
     public static final String PARAM_GOOD_NAME = "param_good_name";

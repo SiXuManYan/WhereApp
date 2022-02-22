@@ -25,6 +25,7 @@ import com.jcs.where.features.mall.comment.MallCommentActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
+import com.jcs.where.features.message.custom.CustomMessage
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
 import com.jcs.where.hotel.activity.detail.MediaData
@@ -258,7 +259,12 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         if (response.im_status == 1 && !TextUtils.isEmpty(response.mer_uuid)) {
             mall_service_tv.setOnClickListener {
 
-                BusinessUtils.startRongCloudConversationActivity(this, response.mer_uuid, response.mer_name)
+                val customMessage = CustomMessage(goodId, response.main_image, response.title, response.min_price)
+
+                BusinessUtils.startRongCloudConversationActivity(this, response.mer_uuid, response.mer_name, null, Bundle().apply {
+                    putInt(Constant.PARAM_TYPE, 1)
+                    putParcelable(Constant.PARAM_GOOD_DATA, customMessage)
+                })
 
 //                 RongIM.getInstance().startConversation(
 //                    this, Conversation.ConversationType.PRIVATE,
@@ -272,6 +278,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         mCommentAdapter.setNewInstance(response.comments)
 
     }
+
 
     private fun disPlayHtml(html: String) {
         val imageGetter = ImageGetter(this, resources, html_tv)

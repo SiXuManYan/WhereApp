@@ -847,6 +847,7 @@ Gentleman must let go</string>
     <string name="estore_goods_removed_reason">商品已经下架</string>
     <string name="estore_goods_expired_reason">商品已经失效</string>
     <string name="mine_share">分享Where</string>
+    <string name="send_mall_good">发送商品</string>
 
 
 </resources>

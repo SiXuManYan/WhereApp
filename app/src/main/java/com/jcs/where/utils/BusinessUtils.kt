@@ -102,7 +102,7 @@ object BusinessUtils {
      * 启动融云会话页面(使用内置方法)
      * ConversationActivity
      */
-    fun startRongCloudConversationActivity(context: Context, targetId: String, title: String? = null, phone: String? = null) {
+    fun startRongCloudConversationActivity(context: Context, targetId: String, title: String? = null, phone: String? = null,  bd:Bundle? = null) {
 
         if (!User.isLogon()) {
             context.startActivity(Intent(context, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
@@ -113,7 +113,8 @@ object BusinessUtils {
             return
         }
 
-        val bundle = Bundle().apply {
+        val bundle = bd ?: Bundle()
+        bundle.apply {
             title?.let {
                 putString(Constant.PARAM_TITLE, title)
             }

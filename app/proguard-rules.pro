@@ -42,7 +42,10 @@
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
 
-# keep  RongCloud Location
+# 下方混淆使用了Location包时才需要配置, 可参考高德官网的混淆方式:https://lbs.amap.com/api/android-sdk/guide/create-project/dev-attention
 -keep class com.amap.api.**{*;}
 -keep class com.amap.api.services.**{*;}
+-keep class com.autonavi.**{*;}
+
+
 -ignorewarnings

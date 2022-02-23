@@ -54,8 +54,6 @@ public class MessageCenterActivity extends BaseActivity {
     protected void initData() {
         pager.setAdapter(new InnerPagerAdapter(getSupportFragmentManager(), 0));
         tabs_type.setViewPager(pager, TAB_TITLES);
-
-
     }
 
 

@@ -109,27 +109,22 @@ class ConversationActivity : BaseActivity() {
 
                 cancel_send_iv.setOnClickListener {
                     this.visibility = View.GONE
-
                 }
 
                 send_tv.setOnClickListener {
                     this.visibility = View.GONE
                     // 发送自定义消息
                     sendMallGoodMessage(mallGoodMessageData)
-
+                }
+                setOnClickListener {
+                    finish()
                 }
 
             }
 
             conversationFragment.addFooterView(footer)
 
-
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                KeyboardUtils.showSoftInput()
-
-            }, 1000)
-
+            KeyboardUtils.showSoftInput()
 
         }
 

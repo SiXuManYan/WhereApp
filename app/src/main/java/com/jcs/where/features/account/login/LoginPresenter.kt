@@ -82,7 +82,6 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
         requestApi(mRetrofit.login(loginRequest), object : BaseMvpObserver<LoginResponse>(mView) {
             override fun onSuccess(response: LoginResponse) {
                 handleLoginSuccess(response.token)
-                mView.LoginSuccess()
             }
 
             override fun onError(errorResponse: ErrorResponse) {
@@ -195,7 +194,7 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
         requestApi(mRetrofit.threePartyLogin(request), object : BaseMvpObserver<LoginResponse>(mView) {
             override fun onSuccess(response: LoginResponse) {
                 handleLoginSuccess(response.token)
-                mView.LoginSuccess()
+
             }
 
             override fun onError(errorResponse: ErrorResponse) {
@@ -215,9 +214,7 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
      * 获取用户信息
      */
     private fun getUserInfo() {
-        if (!User.isLogon()) {
-            return
-        }
+
         requestApi(mRetrofit.userInfo, object : BaseMvpObserver<UserInfoResponse>(mView) {
             override fun onSuccess(response: UserInfoResponse) {
 
@@ -250,11 +247,13 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
                 User.update()
 
                 // 刷新融云用户信息
-               whereApp.refreshRongUserInfoCache(User.getInstance().rongData.uuid)
+                whereApp.refreshRongUserInfoCache(User.getInstance().rongData.uuid)
 
                 // 连接融云
                 whereApp.connectRongCloud()
 
+                // 登录成功
+                mView.LoginSuccess()
             }
         })
     }

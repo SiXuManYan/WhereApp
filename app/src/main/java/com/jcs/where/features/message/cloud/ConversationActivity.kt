@@ -3,11 +3,14 @@ package com.jcs.where.features.message.cloud
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -16,6 +19,7 @@ import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.message.custom.CustomMessage
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
+import io.rong.imkit.IMCenter
 import io.rong.imkit.RongIM
 import io.rong.imkit.config.ConversationClickListener
 import io.rong.imkit.conversation.ConversationFragment
@@ -43,6 +47,7 @@ class ConversationActivity : BaseActivity() {
     private var targetId = ""
 
     private lateinit var mallGoodMessageData: CustomMessage
+    private lateinit var conversationFragment: ConversationFragment
 
 
     override fun isStatusDark() = true
@@ -85,12 +90,11 @@ class ConversationActivity : BaseActivity() {
 
     override fun initData() {
         // 添加会话界面
-        val conversationFragment = ConversationFragment()
+        conversationFragment = ConversationFragment()
+
         if (conversationType == 1) {
 
             val footer = LayoutInflater.from(this).inflate(R.layout.layout_rong_cloud_mall_footer, null)
-
-
             footer.apply {
                 val image_iv = findViewById<ImageView>(R.id.image_iv)
                 val title_tv = findViewById<TextView>(R.id.title_tv)
@@ -118,11 +122,21 @@ class ConversationActivity : BaseActivity() {
             }
 
             conversationFragment.addFooterView(footer)
+
+
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                KeyboardUtils.showSoftInput()
+
+            }, 1000)
+
+
         }
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, conversationFragment)
         transaction.commit()
+
 
     }
 
@@ -159,7 +173,7 @@ class ConversationActivity : BaseActivity() {
 
                     val customMessage = message.content as CustomMessage
 
-                    MallDetailActivity.navigation(context, customMessage.ID)
+                    MallDetailActivity.navigation(context, customMessage.goodsID)
 
                     return true
                 }
@@ -183,15 +197,16 @@ class ConversationActivity : BaseActivity() {
          * 如果发送的是自定义消息，该字段必须填写，否则无法收到远程推送消息。
          * 如果发送 sdk 中默认的消息类型，例如文本消息、图片消息等，则不需要填写，默认已经指定。
          */
-        var pushContent = "estore 商城"
-        var pushData = "estore 商品"
+        val pushContent = "estore 商城"
+        val pushData = "estore 商品"
 
         val message = Message.obtain(targetId, conversationType, messageContent)
-        RongIMClient.getInstance().sendMessage(message,pushContent,pushData,object : IRongCallback.ISendMessageCallback{
+        IMCenter.getInstance().sendMessage(message, pushContent, pushData, object : IRongCallback.ISendMessageCallback {
 
             override fun onAttached(message: Message?) = Unit
 
             override fun onSuccess(message: Message?) {
+
                 ToastUtils.showShort("send success ")
             }
 
@@ -200,8 +215,6 @@ class ConversationActivity : BaseActivity() {
             }
 
         })
-
-
 
 
     }

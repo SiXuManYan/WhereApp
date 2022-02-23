@@ -24,7 +24,7 @@ public class CustomMessage extends MessageContent {
 
 
 
-    public int ID = 0;
+    public int goodsID = 0;
 
     /**
      * 商品图片
@@ -42,8 +42,8 @@ public class CustomMessage extends MessageContent {
     public String goodsPrice = "";
 
 
-    public CustomMessage(int ID, String goodsImage, String goodsName, String goodsPrice) {
-        this.ID = ID;
+    public CustomMessage(int goodsID, String goodsImage, String goodsName, String goodsPrice) {
+        this.goodsID = goodsID;
         this.goodsImage = goodsImage;
         this.goodsName = goodsName;
         this.goodsPrice = goodsPrice;
@@ -81,8 +81,8 @@ public class CustomMessage extends MessageContent {
             }
 
             // 自定义消息, 定义的字段
-            if (jsonObj.has("ID")) {
-                ID = jsonObj.getInt("ID");
+            if (jsonObj.has("goodsID")) {
+                goodsID = jsonObj.getInt("goodsID");
             }
             if (jsonObj.has("goodsImage")) {
                 goodsImage = jsonObj.getString("goodsImage");
@@ -124,7 +124,7 @@ public class CustomMessage extends MessageContent {
 
 
             // 自定义消息, 定义的字段.
-            jsonObj.put("ID", ID);
+            jsonObj.put("goodsID", goodsID);
             jsonObj.put("goodsImage", goodsImage);
             jsonObj.put("goodsName", goodsName);
             jsonObj.put("goodsPrice", goodsPrice);
@@ -147,7 +147,7 @@ public class CustomMessage extends MessageContent {
         // 读取消息属性
         setExtra(ParcelUtils.readFromParcel(parcel));
         setUserInfo(ParcelUtils.readFromParcel(parcel, UserInfo.class));
-        ID = parcel.readInt();
+        goodsID = parcel.readInt();
         goodsImage = parcel.readString();
         goodsName = parcel.readString();
         goodsPrice = parcel.readString();
@@ -159,7 +159,7 @@ public class CustomMessage extends MessageContent {
         // 对消息属性进行序列化，将类的数据写入外部提供的 Parcel 中
         ParcelUtils.writeToParcel(parcel, getExtra());
         ParcelUtils.writeToParcel(parcel, getUserInfo());
-        parcel.writeInt(ID);
+        parcel.writeInt(goodsID);
         parcel.writeString(goodsImage);
         parcel.writeString(goodsName);
         parcel.writeString(goodsPrice);

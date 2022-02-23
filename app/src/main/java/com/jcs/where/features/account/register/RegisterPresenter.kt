@@ -56,7 +56,7 @@ class RegisterPresenter(private val mView: RegisterView) : BaseMvpPresenter(mVie
 
                 handleRegisterSuccess(response.token)
 
-                mView.registerSuccess()
+
             }
 
 
@@ -75,9 +75,7 @@ class RegisterPresenter(private val mView: RegisterView) : BaseMvpPresenter(mVie
      * 获取用户信息
      */
     private fun getUserInfo() {
-        if (!User.isLogon()) {
-            return
-        }
+
         requestApi(mRetrofit.userInfo, object : BaseMvpObserver<UserInfoResponse>(mView) {
             override fun onSuccess(response: UserInfoResponse) {
 
@@ -114,6 +112,9 @@ class RegisterPresenter(private val mView: RegisterView) : BaseMvpPresenter(mVie
 
                 // 连接融云
                 whereApp.connectRongCloud()
+
+                // 注册成功
+                mView.registerSuccess()
             }
         })
     }

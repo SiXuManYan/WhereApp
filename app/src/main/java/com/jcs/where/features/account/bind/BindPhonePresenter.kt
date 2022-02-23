@@ -129,7 +129,7 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
             override fun onSuccess(response: LoginResponse) {
                 handleThirdRegisterSuccess(response)
 
-                mView.bindSuccess()
+
             }
         })
     }
@@ -143,9 +143,7 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
     }
 
     private fun getUserInfo() {
-        if (!User.isLogon()) {
-            return
-        }
+
         requestApi(mRetrofit.userInfo, object : BaseMvpObserver<UserInfoResponse>(mView) {
             override fun onSuccess(response: UserInfoResponse) {
 
@@ -182,6 +180,9 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
 
                 // 连接融云
                 whereApp.connectRongCloud()
+
+                // 绑定成功
+                mView.bindSuccess()
             }
         })
 

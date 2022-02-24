@@ -13,6 +13,7 @@ import com.jcs.where.api.response.mall.request.MallShop
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.shop.home.category.MallShopCategoryFragment
 import com.jcs.where.features.mall.shop.home.good.MallShopGoodFragment
+import com.jcs.where.features.mall.shop.home.recommend.MallShopRecommendFragment
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.frams.common.Html5Url
 import com.jcs.where.utils.Constant
@@ -37,7 +38,10 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
 
     override fun getLayoutId() = R.layout.activity_mall_shop_home
 
-    val tabTitle = arrayOf(StringUtils.getString(R.string.all_products), StringUtils.getString(R.string.view_category))
+    val tabTitle = arrayOf(
+        StringUtils.getString(R.string.news_recommend),
+        StringUtils.getString(R.string.all_products),
+        StringUtils.getString(R.string.view_category))
 
     companion object {
         fun navigation(context: Context, shopId: Int) {
@@ -97,10 +101,16 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
         override fun getPageTitle(position: Int): CharSequence? = tabTitle[position]
 
         override fun getItem(position: Int): Fragment {
-            return if (position == 0) {
-                MallShopGoodFragment.newInstance(shopId)
-            } else {
-                MallShopCategoryFragment.newInstance(shopId)
+            return when (position) {
+                0 -> {
+                    MallShopRecommendFragment.newInstance(shopId)
+                }
+                1 -> {
+                    MallShopGoodFragment.newInstance(shopId)
+                }
+                else -> {
+                    MallShopCategoryFragment.newInstance(shopId)
+                }
             }
 
         }

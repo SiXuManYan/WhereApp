@@ -73,7 +73,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             }
             val intent = Intent(context, MallDetailActivity::class.java)
                 .putExtras(bundle)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             if (context !is Activity) {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }

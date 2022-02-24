@@ -531,7 +531,6 @@
         <activity android:name=".features.mall.second.MallSecondActivity" />
         <activity android:name=".features.mall.result.MallSearchResultActivity" />
         <activity android:name=".features.mall.detail.MallDetailActivity" />
-        <activity android:name=".features.mall.shop.MallShopActivity" />
         <activity android:name=".features.mall.buy.MallOrderCommitActivity" />
         <activity android:name=".features.mall.cart.MallCartActivity" />
         <activity android:name=".features.mall.order.MallOrderDetailActivity" />
@@ -542,7 +541,7 @@
         <activity android:name=".features.daily.sign.SignInRuleActivity" />
         <activity android:name=".features.merchant.record.MerchantRecordActivity" />
         <activity android:name=".features.mall.shop.home.MallShopHomeActivity" />
-        <activity android:name=".features.mall.shop.home.second.MallShopGoodActivity" />
+        <activity android:name=".features.mall.shop.home.filter.MallShopFilterGoodActivity" />
         <activity android:name=".features.footprint.FootprintActivity" />
 
 

@@ -22,6 +22,9 @@ class MallGoodListRequest {
 
     /** 店铺分类id */
     var shop_categoryId: Int? = null
+
+    /** 0未推荐 1查询推荐 */
+    var recommend: Int? = null
 }
 
 enum class SortEnum {

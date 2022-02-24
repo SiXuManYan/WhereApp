@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallShopCategory
-import com.jcs.where.features.mall.shop.home.second.MallShopGoodActivity
+import com.jcs.where.features.mall.shop.home.filter.MallShopFilterGoodActivity
 import com.jcs.where.widget.list.DividerDecoration
 
 /**
@@ -26,7 +26,7 @@ class MallShopCategoryAdapter : BaseQuickAdapter<MallShopCategory, BaseViewHolde
 
         holder.getView<RelativeLayout>(R.id.title_rl).setOnClickListener {
             // 店铺详情列表
-            MallShopGoodActivity.navigation(context, shopId = item.shop_id, categoryName = item.name, shopCategoryId = item.id)
+            MallShopFilterGoodActivity.navigation(context, shopId = item.shop_id, categoryName = item.name, shopCategoryId = item.id)
         }
 
         val childRv = holder.getView<RecyclerView>(R.id.child_category_rv)
@@ -56,7 +56,7 @@ class MallShopCategoryChildAdapter : BaseQuickAdapter<MallShopCategory, BaseView
         val nameTv = holder.getView<TextView>(R.id.name_tv)
         nameTv.text = item.name
         nameTv.setOnClickListener {
-            MallShopGoodActivity.navigation(context, shopId = item.shop_id, categoryName = item.name, shopCategoryId = item.id)
+            MallShopFilterGoodActivity.navigation(context, shopId = item.shop_id, categoryName = item.name, shopCategoryId = item.id)
         }
     }
 

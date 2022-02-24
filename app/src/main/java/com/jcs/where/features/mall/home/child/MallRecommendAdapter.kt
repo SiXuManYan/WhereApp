@@ -27,8 +27,6 @@ class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout
         val title = holder.getView<TextView>(R.id.title_tv)
         val nowPrice = holder.getView<TextView>(R.id.now_price_tv)
 
-
-
         val adapterPosition = holder.adapterPosition
         val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
 

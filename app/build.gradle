@@ -136,7 +136,7 @@ dependencies {
     implementation 'com.gongwen:marqueelibrary:1.1.3'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.jakewharton:butterknife:8.4.0'
+
     //拼音
     implementation 'com.belerweb:pinyin4j:2.5.0'
     //圆形头像
@@ -168,7 +168,7 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
 
     // Room db https://developer.android.google.cn/training/data-storage/room#java
-    def room_version = "2.3.0"
+    def room_version = "2.4.1"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -185,20 +185,13 @@ dependencies {
     // rx 权限申请
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
 
-    // 融云即时通讯基础能力库
-//    implementation 'cn.rongcloud.sdk:im_lib:4.0.3.14'
-//
-//    // 融云即时通讯 UI 基础组件
-//    implementation 'cn.rongcloud.sdk:im_kit:4.0.3.14'
-
     // 融云
     implementation 'cn.rongcloud.sdk:im_kit:5.1.8'
 
     // TabLayout
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2'
 
-    // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 
     // GSY video java
     implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.1.3-jitpack'
@@ -214,8 +207,15 @@ dependencies {
     implementation 'io.github.youth5201314:banner:2.2.2'
 
     implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1-x'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    // https://developer.android.com/jetpack/androidx/releases/navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+
+    // kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10'
+
+    // https://developer.android.com/jetpack/androidx/releases/core#core-1.7.0 ( targetSdkVersion 31)
     implementation 'androidx.core:core-ktx:1.6.0'
 
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'

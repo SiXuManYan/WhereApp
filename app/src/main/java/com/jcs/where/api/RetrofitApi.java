@@ -96,6 +96,7 @@ import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
 import com.jcs.where.api.response.mall.MallOrderDetail;
 import com.jcs.where.api.response.mall.MallShopCategory;
+import com.jcs.where.api.response.mall.MallShopRecommend;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
@@ -1579,6 +1580,7 @@ public interface RetrofitApi {
      * @param endPrice   最大价格 start和price同时进行传递
      * @param sold       销量排序(降序 desc, 升序 asc)
      * @param shopId     店铺id
+     * @param recommend  0未推荐 1查询推荐
      */
     @GET("estoreapi/v2/goods")
     Observable<JcsResponse<PageResponse<MallGood>>> getMallGoodList(
@@ -1590,7 +1592,8 @@ public interface RetrofitApi {
             @Query("end") @Nullable String endPrice,
             @Query("sold") @Nullable String sold,
             @Query("shopId") @Nullable Integer shopId,
-            @Query("shop_categoryId") @Nullable Integer shop_categoryId
+            @Query("shop_categoryId") @Nullable Integer shop_categoryId,
+            @Query("recommend") @Nullable Integer recommend
 
 
     );
@@ -1812,5 +1815,12 @@ public interface RetrofitApi {
      */
     @GET("restaurantapi/v2/carts/cart_goods_nums")
     Observable<JcsResponse<CartNumberResponse>> getFoodCartCount();
+
+
+    /**
+     * 店铺推荐
+     */
+    @GET("estoreapi/v2/recommend")
+    Observable<JcsResponse<ArrayList<ArrayList<MallShopRecommend>>>> recommendMallShop(@Query("shop_id") int shop_id);
 
 }

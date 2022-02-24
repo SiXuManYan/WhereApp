@@ -78,11 +78,11 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
                 presenter.getMallList(goodRequest)
             }
         }
-        val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
         content_rv.apply {
             adapter = mAdapter
-            layoutManager = gridLayoutManager
+            layoutManager = manager
             addItemDecoration(decoration)
         }
 
@@ -97,6 +97,10 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
                 shop_categoryId = mShopCategoryId
             }
         }
+
+    }
+
+    override fun loadOnVisible() {
         presenter.getMallList(goodRequest)
     }
 

@@ -1,4 +1,4 @@
-package com.jcs.where.features.mall.shop.home.second
+package com.jcs.where.features.mall.shop.home.filter
 
 import android.app.Activity
 import android.content.Context
@@ -11,9 +11,9 @@ import com.jcs.where.utils.Constant
 
 /**
  * Created by Wangsw  2022/1/24 15:26.
- * 商城店铺商品列表
+ * 商城店铺 筛选出商品列表
  */
-class MallShopGoodActivity : BaseActivity() {
+class MallShopFilterGoodActivity : BaseActivity() {
 
 
     /** 店铺分类Id */
@@ -30,7 +30,7 @@ class MallShopGoodActivity : BaseActivity() {
                 putString(Constant.PARAM_CATEGORY_NAME, categoryName)
                 putInt(Constant.PARAM_CATEGORY_ID, shopCategoryId)
             }
-            val intent = Intent(context, MallShopGoodActivity::class.java)
+            val intent = Intent(context, MallShopFilterGoodActivity::class.java)
                 .putExtras(bundle)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 

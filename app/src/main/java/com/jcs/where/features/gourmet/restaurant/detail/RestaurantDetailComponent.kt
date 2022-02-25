@@ -8,6 +8,7 @@ import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.CollectionRestaurantRequest
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.api.response.other.CartNumberResponse
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.CacheUtil
 
 
@@ -60,7 +61,10 @@ class RestaurantDetailPresenter(private val view: RestaurantDetailView) : BaseMv
     }
 
     fun getCartCount(){
-        requestApi(mRetrofit.getFoodCartCount(), object : BaseMvpObserver<CartNumberResponse>(view) {
+        if (!User.isLogon()) {
+            return
+        }
+        requestApi(mRetrofit.foodCartCount, object : BaseMvpObserver<CartNumberResponse>(view) {
             override fun onSuccess(response: CartNumberResponse) {
                 view.bindCartCount(response.nums)
             }

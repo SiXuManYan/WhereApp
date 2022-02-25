@@ -24,6 +24,7 @@ import com.jcs.where.api.response.mall.request.MallAddCart
 import com.jcs.where.api.response.mall.request.MallCollection
 import com.jcs.where.api.response.mall.request.UnCollection
 import com.jcs.where.api.response.other.CartNumberResponse
+import com.jcs.where.storage.entity.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -133,6 +134,9 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
 
 
     fun getCartCount(){
+        if (!User.isLogon()) {
+            return
+        }
         requestApi(mRetrofit.mallCartCount, object : BaseMvpObserver<CartNumberResponse>(view) {
             override fun onSuccess(response: CartNumberResponse) {
                 view.bindCartCount(response.nums)

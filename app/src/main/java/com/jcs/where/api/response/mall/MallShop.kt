@@ -22,7 +22,7 @@ class MallShopCategory {
 class MallShopRecommend {
 
     var img = ""
-    var goods_id = 0
+    var goods_id :Int ?= null
 
     /**
      * 跳转类型

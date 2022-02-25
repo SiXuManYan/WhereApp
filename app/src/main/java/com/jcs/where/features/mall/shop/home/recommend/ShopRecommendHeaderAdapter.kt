@@ -43,8 +43,9 @@ class ShopRecommendHeaderAdapter : BaseMultiItemQuickAdapter<ShopRecommend, Base
         val mMediaAdapter = ShopRecommendBannerAdapter()
         setOnItemClickListener { adapter, view, position ->
             val source = mMediaAdapter.data[position]
-            if (source.type == 1) {
-                MallDetailActivity.navigation(context, source.goods_id)
+            val goodsId = source.goods_id
+            if (source.type == 1 && goodsId != null && goodsId != 0) {
+                MallDetailActivity.navigation(context, goodsId)
             }
         }
 
@@ -85,9 +86,12 @@ class ShopRecommendHeaderAdapter : BaseMultiItemQuickAdapter<ShopRecommend, Base
             GlideUtil.load(context, imageData.img, card_iv)
 
             card_iv.setOnClickListener {
-                if (imageData.type == 1) {
-                    MallDetailActivity.navigation(context, imageData.goods_id)
+
+                val goodsId = imageData.goods_id
+                if (imageData.type == 1 && goodsId != null && goodsId != 0) {
+                    MallDetailActivity.navigation(context, goodsId)
                 }
+
             }
 
         }
@@ -105,8 +109,8 @@ class ShopRecommendBannerAdapter : BaseQuickAdapter<MallShopRecommend, BaseViewH
         Glide.with(context).load(item.img).into(image_iv)
 
         image_iv.setOnClickListener {
-            if (item.type == 1) {
-                MallDetailActivity.navigation(context, item.goods_id)
+            if (item.type == 1 && item.goods_id != null && item.goods_id != 0) {
+                MallDetailActivity.navigation(context, item.goods_id!!)
             }
         }
 

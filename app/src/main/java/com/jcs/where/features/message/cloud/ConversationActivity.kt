@@ -8,9 +8,9 @@ import android.os.Looper
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -92,6 +92,11 @@ class ConversationActivity : BaseActivity() {
         // 添加会话界面
         conversationFragment = ConversationFragment()
 
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, conversationFragment)
+        transaction.commit()
+
         if (conversationType == 1) {
 
             val footer = LayoutInflater.from(this).inflate(R.layout.layout_rong_cloud_mall_footer, null)
@@ -122,15 +127,26 @@ class ConversationActivity : BaseActivity() {
 
             }
 
-            conversationFragment.addFooterView(footer)
+            Handler(Looper.getMainLooper()).postDelayed({
 
-            KeyboardUtils.showSoftInput()
+                val rongExtension = conversationFragment.rongExtension
+                if (rongExtension != null) {
+                    val custom_fl = rongExtension.findViewById<FrameLayout>(R.id.custom_fl)
+                    if (custom_fl != null) {
+                        custom_fl.removeAllViews()
+                        custom_fl.addView(footer)
+                    } else {
+                        conversationFragment.addFooterView(footer)
+                    }
+
+                } else {
+                    conversationFragment.addFooterView(footer)
+                }
+
+            }, 1000)
+
 
         }
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, conversationFragment)
-        transaction.commit()
 
 
     }

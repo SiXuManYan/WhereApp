@@ -21,12 +21,9 @@ import com.jcs.where.convenience.model.ConvenienceServiceModel;
 import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.government.adapter.MapListFragmentAdapter;
 import com.jcs.where.government.fragment.MechanismListFragment;
-import com.jcs.where.search.SearchActivity;
-import com.jcs.where.search.tag.SearchTag;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.JsonUtil;
-import com.jcs.where.utils.RequestResultCode;
 import com.jcs.where.utils.SPKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -107,7 +104,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
             addCategoryNamedAll();
             mTabCategories.addAll(
                     JsonUtil.getInstance().fromJsonToList(
-                            jsonCategory, new TypeToken<List<CategoryResponse>>() {
+                            jsonCategory, new  TypeToken<List<CategoryResponse>>() {
                             }.getType()
                     )
             );

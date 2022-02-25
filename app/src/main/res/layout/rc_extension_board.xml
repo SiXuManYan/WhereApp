@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rc_ext_attached_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <!-- 自定义区域 -->
+
+    <FrameLayout
+        android:id="@+id/custom_fl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rc_divider_height"
+        android:background="@color/rc_divider_color" />
+
+    <!-- 输入区域 -->
+    <RelativeLayout
+        android:id="@+id/rc_ext_input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/rc_ext_board_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rc_extension_board_height"
+        android:visibility="gone"
+        tools:visibility="visible" />
+</LinearLayout>

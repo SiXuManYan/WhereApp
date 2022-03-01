@@ -511,7 +511,9 @@
         <activity android:name=".features.hotel.comment.HotelCommentActivity2" />
         <activity android:name=".features.comment.CommentPostActivity" />
         <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />
-        <activity android:name=".features.search.result.SearchAllResultActivity" />
+        <activity
+            android:name=".features.search.result.SearchAllResultActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".features.map.government.GovernmentActivity" />
         <activity android:name=".features.search.yellow.YellowPageSearchResultActivity" />
         <activity android:name=".features.mechanism.MechanismActivity" />

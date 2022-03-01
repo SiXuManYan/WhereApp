@@ -51,9 +51,9 @@
                 android:id="@+id/search_aet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:layout_toStartOf="@+id/delete_iv"
                 android:layout_toEndOf="@+id/search_iv"
+                android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_13" />

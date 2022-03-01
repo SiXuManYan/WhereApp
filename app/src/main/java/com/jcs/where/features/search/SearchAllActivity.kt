@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.KeyboardUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.result.MallSearchResultActivity
@@ -72,6 +73,9 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             adapter = mAdapter
             layoutManager = MyLayoutManager()
         }
+
+
+        KeyboardUtils.showSoftInput(search_aet)
 
     }
 
@@ -148,5 +152,10 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
         }
 
 
+    }
+
+    override fun onDestroy() {
+        KeyboardUtils.hideSoftInput(search_aet)
+        super.onDestroy()
     }
 }

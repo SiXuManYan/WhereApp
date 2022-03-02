@@ -1,5 +1,6 @@
 package com.jcs.where.features.message;
 
+import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.features.message.notice.SystemNoticeFragment;
+import com.jcs.where.view.empty.EmptyView;
 
 import io.rong.imkit.conversationlist.ConversationListFragment;
 
@@ -29,6 +31,7 @@ public class MessageCenterActivity extends BaseActivity {
     private SlidingTabLayout tabs_type;
     private final String[] TAB_TITLES = {StringUtils.getString(R.string.business_conversation), StringUtils.getString(R.string.system_notification)};
     private Uri mUri;
+
 
 
     @Override
@@ -48,11 +51,15 @@ public class MessageCenterActivity extends BaseActivity {
         tabs_type = findViewById(R.id.tabs_type);
         pager.setOffscreenPageLimit(TAB_TITLES.length);
 
+
     }
 
     @Override
     protected void initData() {
-        pager.setAdapter(new InnerPagerAdapter(getSupportFragmentManager(), 0));
+        InnerPagerAdapter adapter = new InnerPagerAdapter(getSupportFragmentManager(), 0);
+        adapter.emptyView = new EmptyView(this);
+        adapter.emptyView.showEmptyDefault();
+        pager.setAdapter(adapter);
         tabs_type.setViewPager(pager, TAB_TITLES);
     }
 
@@ -65,6 +72,9 @@ public class MessageCenterActivity extends BaseActivity {
 
     private static class InnerPagerAdapter extends FragmentPagerAdapter {
 
+
+        private EmptyView emptyView ;
+
         public InnerPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
         }
@@ -73,7 +83,10 @@ public class MessageCenterActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new ConversationListFragment();
+                ConversationListFragment listFragment = new ConversationListFragment();
+                listFragment.setEmptyView(emptyView);
+
+                return listFragment;
             } else {
                 return new SystemNoticeFragment();
             }

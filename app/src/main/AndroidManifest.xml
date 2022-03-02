@@ -507,7 +507,7 @@
         <activity android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2" />
         <activity android:name=".features.hotel.order.HotelOrderDetailActivity" />
         <activity android:name=".features.order.parent.OrderActivity" />
-        <activity android:name=".features.coupon.CardCouponActivity" />
+        <activity android:name=".features.coupon.user.MyCouponActivity" />
         <activity android:name=".features.hotel.comment.HotelCommentActivity2" />
         <activity android:name=".features.comment.CommentPostActivity" />
         <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />

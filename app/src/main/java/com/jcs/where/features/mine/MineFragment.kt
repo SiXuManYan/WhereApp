@@ -14,7 +14,7 @@ import com.jcs.where.customer.ExtendChatActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.collection.CollectionActivity
-import com.jcs.where.features.coupon.CardCouponActivity
+import com.jcs.where.features.coupon.user.MyCouponActivity
 import com.jcs.where.features.daily.scoe.ScoreActivity
 import com.jcs.where.features.daily.sign.SignInActivity
 import com.jcs.where.features.footprint.FootprintActivity
@@ -85,7 +85,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(FootprintActivity::class.java)
         }
         vouchers_tv.setOnClickListener {
-            startActivityAfterLogin(CardCouponActivity::class.java)
+            startActivityAfterLogin(MyCouponActivity::class.java)
         }
         merchant_rl.setOnClickListener {
             startActivityAfterLogin(MerchantSettledActivity::class.java)

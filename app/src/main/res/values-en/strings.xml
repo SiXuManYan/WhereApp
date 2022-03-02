@@ -169,7 +169,7 @@
     <string name="sign_in_type_3">Comment</string>
     <string name="sign_in_type_4">Sign in</string>
 
-    <string name="empty_data_default">Data Updating</string>
+    <string name="empty_data_default">No data</string>
     <string name="item_sign_in">Checked in</string>
     <string name="item_sign_in_content">Sign in and get 20 points</string>
     <string name="item_comment">Comment Merchant</string>
@@ -271,8 +271,8 @@
     <string name="share_success">Share success</string>
     <string name="install">Install</string>
     <string name="message_center">Message Center</string>
-    <string name="business_conversation">Business conversation</string>
-    <string name="system_notification">System notification</string>
+    <string name="business_conversation">Business Conversation</string>
+    <string name="system_notification">System Notification</string>
     <string name="to_refund">Apply Refund</string>
     <string name="place_order">Place Order</string>
     <string name="to_install">Do you want to install %1$s ?</string>
@@ -840,5 +840,6 @@ Gentleman must let go</string>
     <string name="estore_goods_expired_reason">Item has expired</string>
     <string name="mine_share">Share Where</string>
     <string name="send_mall_good">Send Good</string>
+    <string name="coupon_center">Coupon Center</string>
 
 </resources>

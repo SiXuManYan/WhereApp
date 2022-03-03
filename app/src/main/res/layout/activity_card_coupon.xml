@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/grey_F5F5F5"
     android:layout_height="match_parent"
+    android:background="@color/grey_F5F5F5"
     android:orientation="vertical">
 
 
@@ -11,6 +12,8 @@
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:background="@color/white"
-        android:backgroundTint="@color/orange_FF5837"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/jcsTitle"
+        app:layout_constraintVertical_bias="0.0"
         app:tl_indicator_color="@color/blue_377BFF"
         app:tl_indicator_corner_radius="1.5dp"
         app:tl_tab_space_equal="true"
@@ -34,17 +38,26 @@
         app:tl_textUnselectColor="@color/grey_666666"
         app:tl_textsize="@dimen/sp_14"
         app:tl_underline_color="@color/grey_F5F5F5"
-        app:tl_underline_height="1px" />
+        app:tl_underline_height="1px"
+        tools:layout_editor_absoluteX="0dp" />
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
     <LinearLayout
         android:id="@+id/coupon_center"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
-        android:gravity="center"
         android:background="@color/white"
+        android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp">
 
 
         <ImageView

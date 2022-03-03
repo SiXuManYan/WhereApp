@@ -850,6 +850,13 @@ Gentleman must let go</string>
     <string name="send_mall_good">发送商品</string>
 
     <string name="coupon_center">领券中心</string>
+    <string name="use_now">立即使用</string>
+    <string name="coupon_type_platform">平台券</string>
+    <string name="no_coupon">暂无优惠券</string>
+    <string name="sure">知道了</string>
+    <string name="coupon_unused">未使用</string>
+    <string name="coupon_used">已使用</string>
+    <string name="coupon_expired">已过期</string>
 
 
 </resources>

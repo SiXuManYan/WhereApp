@@ -1,145 +1,115 @@
-package com.jcs.where.features.integral.child.task;
+package com.jcs.where.features.integral.child.task
 
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.blankj.utilcode.util.ColorUtils;
-import com.blankj.utilcode.util.SizeUtils;
-import com.blankj.utilcode.util.SpanUtils;
-import com.blankj.utilcode.util.StringUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.module.LoadMoreModule;
-import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.jcs.where.R;
-import com.jcs.where.api.response.recommend.HomeRecommendResponse;
-import com.jcs.where.utils.FeaturesUtil;
-import com.jcs.where.utils.image.GlideRoundedCornersTransform;
-import com.jcs.where.widget.ratingstar.RatingStarView;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
+import android.text.TextUtils
+import android.view.View
+import android.widget.ImageView
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.jcs.where.api.response.recommend.HomeRecommendResponse
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.chad.library.adapter.base.module.LoadMoreModule
+import com.jcs.where.R
+import com.jcs.where.widget.ratingstar.RatingStarView
+import android.widget.TextView
+import android.widget.LinearLayout
+import com.blankj.utilcode.util.ColorUtils
+import com.jcs.where.utils.FeaturesUtil
+import com.blankj.utilcode.util.SpanUtils
+import com.bumptech.glide.request.RequestOptions
+import com.jcs.where.utils.image.GlideRoundedCornersTransform
+import com.bumptech.glide.Glide
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 
 /**
  * Created by Wangsw  2021/3/2 11:39.
  * 签到推荐列表
  */
-public class IntegralRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder> implements LoadMoreModule {
+class IntegralRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendResponse, BaseViewHolder>(), LoadMoreModule {
 
-
-    public IntegralRecommendAdapter() {
-        super();
-        addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel);
-        addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service);
-        addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food);
-        addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel);
-    }
-
-
-    @Override
-    protected void convert(@NotNull BaseViewHolder holder, HomeRecommendResponse data) {
-
-        int itemViewType = holder.getItemViewType();
-        switch (itemViewType) {
-            case HomeRecommendResponse.MODULE_TYPE_1_HOTEL:
-                bindHotelView(holder, data);
-                break;
-            case HomeRecommendResponse.MODULE_TYPE_2_SERVICE:
-                bindServiceView(holder, data);
-                break;
-            case HomeRecommendResponse.MODULE_TYPE_3_FOOD:
-                bindFoodView(holder, data);
-                break;
-            case HomeRecommendResponse.MODULE_TYPE_4_TRAVEL:
-                bindTraverView(holder, data);
-                break;
-            default:
-                break;
+    override fun convert(holder: BaseViewHolder, data: HomeRecommendResponse) {
+        val itemViewType = holder.itemViewType
+        when (itemViewType) {
+            HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> bindHotelView(holder, data)
+            HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> bindServiceView(holder, data)
+            HomeRecommendResponse.MODULE_TYPE_3_FOOD -> bindFoodView(holder, data)
+            HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> bindTraverView(holder, data)
+            else -> {}
         }
-
-
     }
 
     /**
      * 美食
      */
-    private void bindFoodView(BaseViewHolder holder, HomeRecommendResponse data) {
+    private fun bindFoodView(holder: BaseViewHolder, data: HomeRecommendResponse) {
 
         // 图片
-        ImageView image_iv = holder.getView(R.id.image_iv);
-        loadImage(data, image_iv);
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        loadImage(data, image_iv)
 
         // 标题
-        holder.setText(R.id.title_tv, data.title);
+        holder.setText(R.id.title_tv, data.title)
 
         // 星级
-        RatingStarView star_view = holder.getView(R.id.star_view);
-        TextView score_tv = holder.getView(R.id.score_tv);
-
-        float grade = data.grade;
+        val star_view = holder.getView<RatingStarView>(R.id.star_view)
+        val score_tv = holder.getView<TextView>(R.id.score_tv)
+        val grade = data.grade
         if (grade < 3.0) {
-            star_view.setVisibility(View.GONE);
-            score_tv.setVisibility(View.GONE);
+            star_view.visibility = View.GONE
+            score_tv.visibility = View.GONE
         } else {
-            star_view.setVisibility(View.VISIBLE);
-            score_tv.setVisibility(View.VISIBLE);
-            star_view.setRating(grade);
-            score_tv.setText(String.valueOf(grade));
+            star_view.visibility = View.VISIBLE
+            score_tv.visibility = View.VISIBLE
+            star_view.rating = grade
+            score_tv.text = grade.toString()
         }
 
         // 评论数
-        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format2, data.comment_num));
+        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format2, data.comment_num))
 
         // 地域 、 餐厅类型
-        holder.setText(R.id.area_name_tv, data.area_name);
-        holder.setText(R.id.restaurant_type_tv, data.restaurant_type);
+        holder.setText(R.id.area_name_tv, data.area_name)
+        holder.setText(R.id.restaurant_type_tv, data.restaurant_type)
 
         // tag
-        LinearLayout tag_ll = holder.getView(R.id.tag_ll);
-        initTag(data, tag_ll);
+        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
+        initTag(data, tag_ll)
 
         // 外卖
-        LinearLayout takeaway_ll = holder.getView(R.id.take_ll);
+        val takeaway_ll = holder.getView<LinearLayout>(R.id.take_ll)
         if (data.take_out_status == 2) {
-            takeaway_ll.setVisibility(View.VISIBLE);
+            takeaway_ll.visibility = View.VISIBLE
         } else {
-            takeaway_ll.setVisibility(View.GONE);
+            takeaway_ll.visibility = View.GONE
         }
 
         // 人均
-        TextView per_price_tv = holder.getView(R.id.per_price_tv);
-        per_price_tv.setText(StringUtils.getString(R.string.per_price_format, data.per_price));
+        val per_price_tv = holder.getView<TextView>(R.id.per_price_tv)
+        per_price_tv.text = StringUtils.getString(R.string.per_price_format, data.per_price)
     }
 
     /**
      * 旅游view
      */
-    private void bindTraverView(BaseViewHolder holder, HomeRecommendResponse data) {
+    private fun bindTraverView(holder: BaseViewHolder, data: HomeRecommendResponse) {
 
         // 图片
-        ImageView image_iv = holder.getView(R.id.image_iv);
-        loadImage(data, image_iv);
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        loadImage(data, image_iv)
 
         // 标题
-        holder.setText(R.id.title_tv, data.title);
+        holder.setText(R.id.title_tv, data.title)
 
         // 评分
-        holder.setText(R.id.score_tv, String.valueOf(data.grade));
-        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num));
+        holder.setText(R.id.score_tv, data.grade.toString())
+        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num))
 
         // tag
-        LinearLayout tag_ll = holder.getView(R.id.tag_ll);
-        initTag(data, tag_ll);
+        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
+        initTag(data, tag_ll)
 
         // 地址
-        holder.setText(R.id.address_name_tv, data.address);
-        holder.setText(R.id.food_distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
-
+        holder.setText(R.id.address_name_tv, data.address)
+        holder.setText(R.id.food_distance_tv, StringUtils.getString(R.string.distance_format, data.distance))
     }
 
     /**
@@ -148,131 +118,126 @@ public class IntegralRecommendAdapter extends BaseMultiItemQuickAdapter<HomeReco
      * @param holder
      * @param data
      */
-    private void bindServiceView(BaseViewHolder holder, HomeRecommendResponse data) {
+    private fun bindServiceView(holder: BaseViewHolder, data: HomeRecommendResponse) {
 
         // 图片
-        ImageView image_iv = holder.getView(R.id.image_iv);
-        loadImage(data, image_iv);
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        loadImage(data, image_iv)
 
         // 标题
-        holder.setText(R.id.title_tv, data.title);
+        holder.setText(R.id.title_tv, data.title)
 
         // tag
-        LinearLayout tag_ll = holder.getView(R.id.tag_ll);
-        initTag(data, tag_ll);
+        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
+        initTag(data, tag_ll)
 
         // 地址
-        holder.setText(R.id.address_name_tv, data.address);
+        holder.setText(R.id.address_name_tv, data.address)
     }
 
     /**
      * 酒店推荐
      */
-    private void bindHotelView(BaseViewHolder holder, HomeRecommendResponse data) {
+    private fun bindHotelView(holder: BaseViewHolder, data: HomeRecommendResponse) {
 
         // 图片
-        ImageView image_iv = holder.getView(R.id.image_iv);
-        loadImage(data, image_iv);
+        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        loadImage(data, image_iv)
 
         // 标题
-        TextView title_tv = holder.getView(R.id.title_tv);
-        title_tv.setText(data.title);
+        val title_tv = holder.getView<TextView>(R.id.title_tv)
+        title_tv.text = data.title
         if (!TextUtils.isEmpty(data.facebook_link)) {
-            title_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_facebook, 0);
+            title_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_facebook, 0)
         } else {
-            title_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            title_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
         }
 
 
         // 星级
-        TextView score_tv = holder.getView(R.id.score_tv);
-        TextView score_retouch_tv = holder.getView(R.id.score_retouch_tv);
-        RatingStarView star_view = holder.getView(R.id.star_view);
-
-        float starLevel = FeaturesUtil.getSafeStarLevel(data.star_level);
-        star_view.setRating(starLevel);
-
-        float grade = data.grade;
+        val score_tv = holder.getView<TextView>(R.id.score_tv)
+        val score_retouch_tv = holder.getView<TextView>(R.id.score_retouch_tv)
+        val star_view = holder.getView<RatingStarView>(R.id.star_view)
+        val starLevel = FeaturesUtil.getSafeStarLevel(data.star_level)
+        star_view.rating = starLevel
+        val grade = data.grade
         if (grade < 3.0) {
-            star_view.setVisibility(View.INVISIBLE);
-            score_tv.setVisibility(View.GONE);
-            score_retouch_tv.setVisibility(View.GONE);
+            star_view.visibility = View.INVISIBLE
+            score_tv.visibility = View.GONE
+            score_retouch_tv.visibility = View.GONE
         } else {
-            star_view.setVisibility(View.VISIBLE);
-            score_tv.setVisibility(View.VISIBLE);
-            score_tv.setText(String.valueOf(grade));
-            score_retouch_tv.setText(FeaturesUtil.getGradeRetouchString(grade));
+            star_view.visibility = View.VISIBLE
+            score_tv.visibility = View.VISIBLE
+            score_tv.text = grade.toString()
+            score_retouch_tv.text = FeaturesUtil.getGradeRetouchString(grade)
         }
 
         // 评论数量
-        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num));
+        holder.setText(R.id.comment_count_tv, StringUtils.getString(R.string.comment_count_format, data.comment_num))
 
         // 距离 地点
-        holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance));
-        holder.setText(R.id.location_tv, data.address);
+        holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance))
+        holder.setText(R.id.location_tv, data.address)
 
         // tag
-        LinearLayout tag_ll = holder.getView(R.id.tag_ll);
-        initTag(data, tag_ll);
+        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
+        initTag(data, tag_ll)
 
         // 价格
-        TextView price_tv = holder.getView(R.id.price_tv);
+        val price_tv = holder.getView<TextView>(R.id.price_tv)
         SpanUtils.with(price_tv)
-                .append(StringUtils.getString(R.string.price_unit))
-                .setFontSize(12, true)
-                .append(data.price)
-                .setFontSize(16, true)
-                .create();
+            .append(StringUtils.getString(R.string.price_unit))
+            .setFontSize(12, true)
+            .append(data.price)
+            .setFontSize(16, true)
+            .create()
     }
 
     /**
      * 图片
      */
-    private void loadImage(HomeRecommendResponse data, ImageView image_iv) {
-        RequestOptions options = RequestOptions.bitmapTransform(
-                new GlideRoundedCornersTransform(10, GlideRoundedCornersTransform.CornerType.LEFT))
-                .error(R.mipmap.ic_empty_gray)
-                .placeholder(R.mipmap.ic_empty_gray);
-
-        String image = "";
-
-
-        if (data.images != null && data.images.size() > 0) {
-            image = data.images.get(0);
-            Glide.with(getContext()).load(image).apply(options).into(image_iv);
+    private fun loadImage(data: HomeRecommendResponse, image_iv: ImageView) {
+        val options = RequestOptions.bitmapTransform(
+            GlideRoundedCornersTransform(10, GlideRoundedCornersTransform.CornerType.LEFT))
+            .error(R.mipmap.ic_empty_gray)
+            .placeholder(R.mipmap.ic_empty_gray)
+        var image: String? = ""
+        if (data.images != null && data.images.size > 0) {
+            image = data.images[0]
+            Glide.with(context).load(image).apply(options).into(image_iv)
         } else {
-            Glide.with(getContext()).load(R.mipmap.ic_empty_gray).apply(options).into(image_iv);
+            Glide.with(context).load(R.mipmap.ic_empty_gray).apply(options).into(image_iv)
         }
-
     }
 
     /**
      * tag
      */
-    private void initTag(HomeRecommendResponse data, LinearLayout tag_ll) {
-
-        tag_ll.removeAllViews();
-
-        ArrayList<String> tags = data.tags;
-        if (tags.size() <= 0) {
-            return;
+    private fun initTag(data: HomeRecommendResponse, tag_ll: LinearLayout) {
+        tag_ll.removeAllViews()
+        val tags = data.tags
+        if (tags.size <= 0) {
+            return
         }
-
-        for (String tag : tags) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMarginEnd(SizeUtils.dp2px(2));
-            TextView tv = new TextView(getContext());
-            tv.setLayoutParams(params);
-            tv.setPaddingRelative(SizeUtils.dp2px(4), SizeUtils.dp2px(1), SizeUtils.dp2px(4), SizeUtils.dp2px(1));
-            tv.setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2));
-            tv.setTextSize(11);
-            tv.setText(tag);
-            tv.setBackgroundResource(R.drawable.shape_blue_stoke_radius_1);
-            tv.setSingleLine(true);
-            tag_ll.addView(tv);
+        for (tag in tags) {
+            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.marginEnd = SizeUtils.dp2px(2f)
+            val tv = TextView(context)
+            tv.layoutParams = params
+            tv.setPaddingRelative(SizeUtils.dp2px(4f), SizeUtils.dp2px(1f), SizeUtils.dp2px(4f), SizeUtils.dp2px(1f))
+            tv.setTextColor(ColorUtils.getColor(R.color.blue_4C9EF2))
+            tv.textSize = 11f
+            tv.text = tag
+            tv.setBackgroundResource(R.drawable.shape_blue_stoke_radius_1)
+            tv.isSingleLine = true
+            tag_ll.addView(tv)
         }
-
     }
 
-
+    init {
+        addItemType(HomeRecommendResponse.MODULE_TYPE_1_HOTEL, R.layout.item_home_recommend_hotel)
+        addItemType(HomeRecommendResponse.MODULE_TYPE_2_SERVICE, R.layout.item_home_recommend_service)
+        addItemType(HomeRecommendResponse.MODULE_TYPE_3_FOOD, R.layout.item_home_recommend_food)
+        addItemType(HomeRecommendResponse.MODULE_TYPE_4_TRAVEL, R.layout.item_home_recommend_travel)
+    }
 }

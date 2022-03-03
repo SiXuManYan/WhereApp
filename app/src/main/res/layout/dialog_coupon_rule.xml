@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_white_radius_8"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold"
+        tools:text="使用规则" />
+
+
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_14"
+        tools:text="满 90.0 元可用。可与其他活动优惠同时享受，在线支付专享。" />
+
+
+    <Button
+        android:id="@+id/confirm_tv"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_height="@dimen/dp_44"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:background="@drawable/shape_blue_radius_22"
+        tools:text="知道了" />
+
+</LinearLayout>

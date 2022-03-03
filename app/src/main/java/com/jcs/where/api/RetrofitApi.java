@@ -60,6 +60,7 @@ import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.api.response.UnReadMessage;
 import com.jcs.where.api.response.UploadFileResponse;
 import com.jcs.where.api.response.UploadFileResponse2;
+import com.jcs.where.api.response.UserCoupon;
 import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
@@ -1822,5 +1823,18 @@ public interface RetrofitApi {
      */
     @GET("estoreapi/v2/recommend")
     Observable<JcsResponse<ArrayList<ArrayList<MallShopRecommend>>>> recommendMallShop(@Query("shop_id") int shop_id);
+
+    /**
+     * 获取券包
+     * @param type  1未使用 2 已使用 3已过期
+     */
+    @GET("estoreapi/v2/coupon_user")
+    Observable<JcsResponse<PageResponse<UserCoupon>>> userCoupon(
+            @Query("page") int page,
+            @Query("type") int type);
+
+
+
+
 
 }

@@ -2,6 +2,7 @@ package com.jcs.where.features.message;
 
 import android.content.Context;
 import android.net.Uri;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jcs.where.R;
@@ -56,9 +58,17 @@ public class MessageCenterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        EmptyView emptyView = new EmptyView(this);
+        ViewGroup.LayoutParams layoutParams = emptyView.parent_ll.getLayoutParams();
+        layoutParams.width = ScreenUtils.getScreenWidth();
+
         InnerPagerAdapter adapter = new InnerPagerAdapter(getSupportFragmentManager(), 0);
-        adapter.emptyView = new EmptyView(this);
+
+        adapter.emptyView = emptyView;
         adapter.emptyView.showEmptyDefault();
+
+
+
         pager.setAdapter(adapter);
         tabs_type.setViewPager(pager, TAB_TITLES);
     }

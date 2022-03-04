@@ -1582,6 +1582,7 @@ public interface RetrofitApi {
      * @param sold       销量排序(降序 desc, 升序 asc)
      * @param shopId     店铺id
      * @param recommend  0未推荐 1查询推荐
+     * @param coupon_id 优惠券id
      */
     @GET("estoreapi/v2/goods")
     Observable<JcsResponse<PageResponse<MallGood>>> getMallGoodList(
@@ -1594,7 +1595,8 @@ public interface RetrofitApi {
             @Query("sold") @Nullable String sold,
             @Query("shopId") @Nullable Integer shopId,
             @Query("shop_categoryId") @Nullable Integer shop_categoryId,
-            @Query("recommend") @Nullable Integer recommend
+            @Query("recommend") @Nullable Integer recommend,
+            @Query("coupon_id") @Nullable Integer coupon_id
 
 
     );

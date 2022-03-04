@@ -56,7 +56,8 @@ class MallSecondPresenter(private var view: MallSecondView) : BaseMvpPresenter(v
             request.sold?.name,
             request.shopId,
             request.shop_categoryId,
-            request.recommend
+            request.recommend,
+            request.coupon_id
         ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
             override fun onSuccess(response: PageResponse<MallGood>) {
                 val isLastPage = response.lastPage == request.page

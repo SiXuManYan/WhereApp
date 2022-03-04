@@ -138,4 +138,6 @@ class EmptyView : LinearLayout {
     fun hideEmptyContainer() {
         parent_ll!!.visibility = GONE
     }
+
+
 }

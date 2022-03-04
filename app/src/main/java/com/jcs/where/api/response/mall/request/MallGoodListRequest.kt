@@ -25,6 +25,9 @@ class MallGoodListRequest {
 
     /** 0未推荐 1查询推荐 */
     var recommend: Int? = null
+
+    /** 优惠券id */
+    var coupon_id :Int ? = null
 }
 
 enum class SortEnum {

@@ -144,6 +144,7 @@ class MallSearchPresenter(private var view: MallSearchView) : BaseMvpPresenter(v
             null,
             shopId,
             null,
+            null,
             null
         ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
             override fun onSuccess(response: PageResponse<MallGood>) {

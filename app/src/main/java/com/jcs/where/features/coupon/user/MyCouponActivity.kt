@@ -34,13 +34,9 @@ class MyCouponActivity : BaseActivity() {
         tabs.setViewPager(pager)
     }
 
-    override fun initData() {
+    override fun initData() = Unit
 
-    }
-
-    override fun bindListener() {
-
-    }
+    override fun bindListener() = Unit
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 

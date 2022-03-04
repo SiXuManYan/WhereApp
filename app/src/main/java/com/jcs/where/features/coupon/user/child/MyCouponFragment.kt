@@ -1,17 +1,20 @@
 package com.jcs.where.features.coupon.user.child
 
 import android.graphics.Color
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jcs.where.R
 import com.jcs.where.api.response.UserCoupon
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.coupon.good.CouponGoodActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -31,13 +34,11 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
     private lateinit var mAdapter: MyCouponAdapter
     private lateinit var emptyView: EmptyView
 
-
     override fun getLayoutId() = R.layout.fragment_refresh_list
-
 
     override fun initView(view: View?) {
         swipe_layout.apply {
-            setBackgroundColor(Color.WHITE)
+
             setOnRefreshListener {
                 page = Constant.DEFAULT_FIRST_PAGE
                 loadOnVisible()
@@ -62,7 +63,7 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
 
         recycler.apply {
             adapter = mAdapter
-            addItemDecoration(DividerDecoration(Color.WHITE, SizeUtils.dp2px(15f), 0, 0))
+            addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0))
         }
 
     }
@@ -114,7 +115,9 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
                 showRule(userCoupon.rule)
             }
             R.id.use_tv -> {
-
+                startActivity(CouponGoodActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, userCoupon.id)
+                })
             }
             else -> {}
         }
@@ -135,6 +138,6 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
             dialog.dismiss()
         }
         dialog.show()
-        dialog.window?.setLayout(ScreenUtils.getScreenWidth() / 4 * 3, LinearLayout.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(ScreenUtils.getScreenWidth() / 10 * 9, LinearLayout.LayoutParams.WRAP_CONTENT)
     }
 }

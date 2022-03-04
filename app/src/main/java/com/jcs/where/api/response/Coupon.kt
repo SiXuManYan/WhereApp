@@ -19,6 +19,8 @@ data class UserCoupon(
     /** 使用规则 */
     var rule: String = "",
 
-    var nativeType :Int= 0
+    var nativeType :Int= 0,
+
+    var  couponType :Int= 1
 
     )

@@ -546,6 +546,7 @@
         <activity android:name=".features.mall.shop.home.filter.MallShopFilterGoodActivity" />
         <activity android:name=".features.footprint.FootprintActivity" />
         <activity android:name=".features.coupon.good.CouponGoodActivity" />
+        <activity android:name=".features.coupon.center.CouponCenterActivity" />
 
 
     </application>

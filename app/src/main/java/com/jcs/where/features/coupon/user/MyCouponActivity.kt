@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
+import com.jcs.where.features.coupon.center.CouponCenterActivity
 import com.jcs.where.features.coupon.user.child.MyCouponFragment
 import kotlinx.android.synthetic.main.activity_card_coupon.*
 
@@ -36,7 +37,12 @@ class MyCouponActivity : BaseActivity() {
 
     override fun initData() = Unit
 
-    override fun bindListener() = Unit
+    override fun bindListener() {
+        coupon_center.setOnClickListener {
+            startActivity(CouponCenterActivity::class.java)
+        }
+
+    }
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 

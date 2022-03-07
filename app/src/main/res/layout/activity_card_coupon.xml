@@ -74,7 +74,7 @@
             android:drawablePadding="@dimen/dp_4"
             android:text="@string/coupon_center"
             android:textColor="@color/orange_FF5837"
-            app:drawableEndCompat="@mipmap/ic_coupon_right_orange" />
+            app:drawableEndCompat="@mipmap/ic_coupon_orange_arrow" />
 
 
     </LinearLayout>

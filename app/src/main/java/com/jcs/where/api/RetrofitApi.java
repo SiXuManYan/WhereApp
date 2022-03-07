@@ -40,7 +40,9 @@ import com.jcs.where.api.request.store.UpLoadPayAccountInfo;
 import com.jcs.where.api.response.BannerResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
+import com.jcs.where.api.response.Coupon;
 import com.jcs.where.api.response.FootprintResponse;
+import com.jcs.where.api.response.GetCouponResult;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
 import com.jcs.where.api.response.IntegralDetailResponse;
@@ -165,7 +167,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<List<ModulesResponse>>> getModules();
 
 
-
     /**
      * 获得分类列表
      *
@@ -246,7 +247,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<String>> getLocation(@Query("latlng") String latlng);
 
 
-
     /**
      * 获得机构列表数据
      *
@@ -283,7 +283,6 @@ public interface RetrofitApi {
             @Query("area_id") String area_id
 
     );
-
 
 
     /**
@@ -1548,7 +1547,7 @@ public interface RetrofitApi {
      * 重新提交商家入驻信息
      */
     @PATCH("userapi/v2/merchants/{merchant_id}")
-    Observable<JcsResponse<JsonElement>> repostMerchantSettled(@Path("merchant_id")  int merchant_id, @Body MerchantSettledPost request);
+    Observable<JcsResponse<JsonElement>> repostMerchantSettled(@Path("merchant_id") int merchant_id, @Body MerchantSettledPost request);
 
 
     /**
@@ -1582,7 +1581,7 @@ public interface RetrofitApi {
      * @param sold       销量排序(降序 desc, 升序 asc)
      * @param shopId     店铺id
      * @param recommend  0未推荐 1查询推荐
-     * @param coupon_id 优惠券id
+     * @param coupon_id  优惠券id
      */
     @GET("estoreapi/v2/goods")
     Observable<JcsResponse<PageResponse<MallGood>>> getMallGoodList(
@@ -1828,15 +1827,26 @@ public interface RetrofitApi {
 
     /**
      * 获取券包
-     * @param type  1未使用 2 已使用 3已过期
+     *
+     * @param type 1未使用 2 已使用 3已过期
      */
     @GET("estoreapi/v2/coupon_user")
-    Observable<JcsResponse<PageResponse<UserCoupon>>> userCoupon(
+    Observable<JcsResponse<PageResponse<UserCoupon>>> couponUser(
             @Query("page") int page,
             @Query("type") int type);
 
 
+    /**
+     * 领券中心
+     */
+    @GET("estoreapi/v2/coupon")
+    Observable<JcsResponse<ArrayList<Coupon>>> couponCenter(@Query("page") int page);
 
 
+    /**
+     * 领取优惠券
+     */
+    @POST("estoreapi/v2/coupon")
+    Observable<JcsResponse<GetCouponResult>> getCoupon(@Query("coupon_id") int coupon_id);
 
 }

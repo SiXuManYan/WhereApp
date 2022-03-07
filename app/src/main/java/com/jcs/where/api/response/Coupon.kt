@@ -19,8 +19,60 @@ data class UserCoupon(
     /** 使用规则 */
     var rule: String = "",
 
-    var nativeType :Int= 0,
+    /** 未使用已使用已过期 */
+    var nativeType: Int = 0,
 
-    var  couponType :Int= 1
+    /** 1平台券 */
+    var couponType: Int = 1,
+)
 
-    )
+/**
+ * 优惠券列表
+ */
+class Coupon {
+
+
+    companion object {
+        var TYPE_FINISH = 1
+        var TYPE_COMMON = 2
+
+    }
+
+
+    var id: Int = 0
+    var name: String = ""
+    var start_time: String = ""
+    var end_time: String = ""
+
+    /** 发行数量 */
+    var num = 0
+
+    /** 限制数量(每人领取数量) */
+    var limit = 0
+
+    /** 领取数量 */
+    var get_num = 0
+
+
+    /** 优惠券面值 */
+    var money: String = ""
+
+    /** 使用门槛金额 */
+    var doorsill: String = ""
+
+    /** 使用规则 */
+    var rule: String = ""
+
+    /** 1平台券 */
+    var couponType: Int = 1
+
+    /** 1 已抢光 2正常 */
+    var coupon_residue_type = 0
+
+
+}
+
+class GetCouponResult {
+    var message = ""
+}
+

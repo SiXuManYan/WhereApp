@@ -2,19 +2,14 @@ package com.jcs.where.features.coupon.user.child
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jcs.where.R
 import com.jcs.where.api.response.UserCoupon
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.coupon.good.CouponGoodActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -112,7 +107,7 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
 
         when (view.id) {
             R.id.rule_tv -> {
-                showRule(userCoupon.rule)
+                BusinessUtils.showRule(requireContext(), userCoupon.rule)
             }
             R.id.use_tv -> {
                 startActivity(CouponGoodActivity::class.java, Bundle().apply {
@@ -123,21 +118,5 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
         }
     }
 
-    private fun showRule(rule: String) {
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_coupon_rule, null, false)
-        val dialog = AlertDialog.Builder(requireContext()).setView(view).create()
 
-        val title_tv = view.findViewById<TextView>(R.id.title_tv)
-        val content_tv = view.findViewById<TextView>(R.id.content_tv)
-        val contconfirm_tvent_tv = view.findViewById<TextView>(R.id.confirm_tv)
-
-        title_tv.setText(R.string.rules_of_use)
-        content_tv.text = rule
-        contconfirm_tvent_tv.setText(R.string.sure)
-        contconfirm_tvent_tv.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-        dialog.window?.setLayout(ScreenUtils.getScreenWidth() / 10 * 9, LinearLayout.LayoutParams.WRAP_CONTENT)
-    }
 }

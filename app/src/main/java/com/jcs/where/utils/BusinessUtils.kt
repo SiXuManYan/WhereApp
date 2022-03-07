@@ -3,6 +3,11 @@ package com.jcs.where.utils
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.features.account.login.LoginActivity
@@ -125,5 +130,24 @@ object BusinessUtils {
         RouteUtils.routeToConversationActivity(context, Conversation.ConversationType.PRIVATE, targetId, bundle)
     }
 
+
+
+     fun showRule(context: Context ,rule: String) {
+        val view = LayoutInflater.from(context).inflate(R.layout.dialog_coupon_rule, null, false)
+        val dialog = AlertDialog.Builder(context).setView(view).create()
+
+        val title_tv = view.findViewById<TextView>(R.id.title_tv)
+        val content_tv = view.findViewById<TextView>(R.id.content_tv)
+        val contconfirm_tvent_tv = view.findViewById<TextView>(R.id.confirm_tv)
+
+        title_tv.setText(R.string.rules_of_use)
+        content_tv.text = rule
+        contconfirm_tvent_tv.setText(R.string.sure)
+        contconfirm_tvent_tv.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+        dialog.window?.setLayout(ScreenUtils.getScreenWidth() / 10 * 9, LinearLayout.LayoutParams.WRAP_CONTENT)
+    }
 
 }

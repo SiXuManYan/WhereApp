@@ -849,5 +849,8 @@ Gentleman must let go</string>
     <string name="coupon_used">Used</string>
     <string name="coupon_expired">Expired</string>
     <string name="coupon_good">Voucher Use</string>
+    <string name="get_now">Get Now</string>
+    <string name="robbed">No stock</string>
+    <string name="take_progress">%1$s%taken</string>
 
 </resources>

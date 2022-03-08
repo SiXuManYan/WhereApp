@@ -16,6 +16,8 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.Coupon
+import com.jcs.where.utils.BigDecimalUtil
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2022/3/5 14:52.
@@ -81,13 +83,14 @@ class CouponCenterAdapter : BaseQuickAdapter<Coupon, BaseViewHolder>(R.layout.it
                 schedule_pb.visibility = View.VISIBLE
                 schedule_tv.visibility = View.VISIBLE
 
-                val progress = item.get_num / item.num
+                val progress = BigDecimalUtil.mul( BigDecimalUtil.div(item.get_num , item.num), BigDecimal(100))
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    schedule_pb.setProgress(progress, true)
+                    schedule_pb.setProgress(progress.toInt(), true)
                 } else {
-                    schedule_pb.progress = progress
+                    schedule_pb.progress = progress.toInt()
                 }
-                schedule_tv.text = StringUtils.getString(R.string.take_progress, progress.toString())
+                schedule_tv.text = StringUtils.getString(R.string.take_progress, progress.toPlainString())
 
             }
             else -> {

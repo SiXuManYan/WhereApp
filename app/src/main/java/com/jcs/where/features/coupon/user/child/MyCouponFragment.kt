@@ -7,6 +7,8 @@ import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jcs.where.R
 import com.jcs.where.api.response.UserCoupon
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.coupon.good.CouponGoodActivity
 import com.jcs.where.utils.BusinessUtils
@@ -116,6 +118,18 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
             }
             else -> {}
         }
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_COUPON_GET -> {
+                loadOnVisible()
+            }
+            else -> {}
+        }
+
+
     }
 
 

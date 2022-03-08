@@ -860,7 +860,7 @@ Gentleman must let go</string>
     <string name="coupon_good">使用卡券列表</string>
     <string name="get_now">立即领取</string>
     <string name="robbed">已抢光</string>
-    <string name="take_progress">已抢%1$s %</string>
+    <string name="take_progress">已抢&#160;%1$s%%</string>
 
 
 </resources>

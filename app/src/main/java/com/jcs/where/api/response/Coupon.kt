@@ -1,5 +1,7 @@
 package com.jcs.where.api.response
 
+import java.math.BigDecimal
+
 /**
  * Created by Wangsw  2022/3/3 14:17.
  * 用户券包
@@ -45,13 +47,13 @@ class Coupon {
     var end_time: String = ""
 
     /** 发行数量 */
-    var num = 0
+    var num = BigDecimal.ZERO
 
     /** 限制数量(每人领取数量) */
-    var limit = 0
+    var limit = BigDecimal.ZERO
 
     /** 领取数量 */
-    var get_num = 0
+    var get_num = BigDecimal.ZERO
 
 
     /** 优惠券面值 */

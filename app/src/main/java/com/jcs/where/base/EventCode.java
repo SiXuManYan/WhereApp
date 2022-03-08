@@ -138,5 +138,10 @@ public class EventCode {
 
     public static final int EVENT_MERCHANT_COMMIT_NEW = 1032;
 
+    /**
+     * 领取优惠券
+     */
+    public static final int EVENT_COUPON_GET = 1033;
+
 
 }

@@ -6,8 +6,6 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.Coupon
 import com.jcs.where.api.response.GetCouponResult
-import com.jcs.where.api.response.PageResponse
-import java.util.ArrayList
 
 /**
  * Created by Wangsw  2022/3/5 14:42.
@@ -25,10 +23,7 @@ class CouponCenterPresenter(private var view: CouponCenterView) : BaseMvpPresent
     fun getData(page: Int) {
 
         requestApi(mRetrofit.couponCenter(page), object : BaseMvpObserver<ArrayList<Coupon>>(view) {
-
             override fun onSuccess(response: ArrayList<Coupon>) {
-
-
                 view.bindData(response.toMutableList(), true)
             }
         })
@@ -37,10 +32,10 @@ class CouponCenterPresenter(private var view: CouponCenterView) : BaseMvpPresent
 
 
     fun getCoupon(couponId: Int) {
-        requestApi(mRetrofit.getCoupon(couponId), object : BaseMvpObserver<GetCouponResult>(view) {
 
+        requestApi(mRetrofit.getCoupon(couponId), object : BaseMvpObserver<GetCouponResult>(view) {
             override fun onSuccess(response: GetCouponResult) {
-                    view.getCouponResult(response.message)
+                view.getCouponResult(response.message)
             }
 
         })

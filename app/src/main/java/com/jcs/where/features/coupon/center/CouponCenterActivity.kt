@@ -7,18 +7,21 @@ import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jcs.where.R
 import com.jcs.where.api.response.Coupon
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_refresh_list.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/3/5 14:42.
  * 领券中心
  */
-class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCenterView  {
+class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCenterView {
 
 
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -46,7 +49,7 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
 
         mAdapter = CouponCenterAdapter().apply {
             setEmptyView(emptyView)
-            addChildClickViewIds(R.id.rule_tv, R.id.use_tv)
+            addChildClickViewIds(R.id.rule_tv, R.id.get_tv)
             setOnItemChildClickListener(this@CouponCenterActivity)
         }
 
@@ -55,7 +58,6 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
             addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0))
         }
     }
-
 
 
     override fun initData() {
@@ -89,8 +91,8 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
             R.id.rule_tv -> {
                 BusinessUtils.showRule(this, userCoupon.rule)
             }
-            R.id.use_tv -> {
-                    presenter.getCoupon(userCoupon.id)
+            R.id.get_tv -> {
+                presenter.getCoupon(userCoupon.id)
             }
             else -> {}
         }
@@ -100,5 +102,7 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
         ToastUtils.showShort(message)
         page = Constant.DEFAULT_FIRST_PAGE
         loadData()
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_COUPON_GET))
+
     }
 }

@@ -861,6 +861,8 @@ Gentleman must let go</string>
     <string name="get_now">立即领取</string>
     <string name="robbed">已抢光</string>
     <string name="take_progress">已抢&#160;%1$s%%</string>
+    <string name="price_list">价格明细</string>
+    <string name="coupon">优惠券</string>
 
 
 </resources>

@@ -29,6 +29,7 @@ public class Constant {
 
     public static final String PARAM_POSITION = "position";
     public static final String PARAM_ID = "param_id";
+    public static final String PARAM_COUPON_ID = "param_coupon_id";
     public static final String PARAM_TYPE = "param_type";
     public static final String PARAM_TAB = "param_tab";
     public static final String PARAM_CHANGE_LANGUAGE = "param_change_language";

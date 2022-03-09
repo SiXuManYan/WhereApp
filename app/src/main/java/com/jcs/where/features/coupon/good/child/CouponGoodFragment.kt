@@ -60,6 +60,7 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
         emptyView.showEmptyDefault()
 
         mAdapter = MallRecommendAdapter().apply {
+            currentCouponId = mCouponId
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {

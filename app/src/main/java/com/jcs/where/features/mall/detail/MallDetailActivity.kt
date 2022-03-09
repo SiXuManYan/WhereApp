@@ -35,7 +35,6 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
-import java.util.*
 
 
 /**
@@ -44,6 +43,8 @@ import java.util.*
  */
 class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, MallSkuSelectResult {
 
+    /** 用户选中的优惠券id */
+    private var mCurrentCouponId = 0
     private var goodId = 0
     private var shopId = 0
     private var shopName: String? = ""
@@ -67,9 +68,12 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     companion object {
 
-        fun navigation(context: Context, goodId: Int) {
+        fun navigation(context: Context, goodId: Int, couponId: Int?) {
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ID, goodId)
+                couponId?.let {
+                    putInt(Constant.PARAM_COUPON_ID, couponId)
+                }
             }
             val intent = Intent(context, MallDetailActivity::class.java)
                 .putExtras(bundle)
@@ -87,6 +91,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     override fun initView() {
         goodId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        mCurrentCouponId = intent.getIntExtra(Constant.PARAM_COUPON_ID, 0)
+
         mSkuDialog = MallSkuFragment().apply {
             selectResult = this@MallDetailActivity
         }
@@ -212,8 +218,13 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private fun buyNow() {
         val selectedData = presenter.getSelectedData(mData!!, mallSpecs!!, goodNumber)
+
         startActivityAfterLogin(MallOrderCommitActivity::class.java, Bundle().apply {
             putSerializable(Constant.PARAM_DATA, selectedData)
+            if (mCurrentCouponId != 0) {
+                putInt(Constant.PARAM_COUPON_ID, mCurrentCouponId)
+            }
+
         })
     }
 

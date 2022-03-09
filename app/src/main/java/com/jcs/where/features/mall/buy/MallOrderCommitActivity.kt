@@ -66,6 +66,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         val bundle = intent.extras
         bundle?.let {
             data = it.getSerializable(Constant.PARAM_DATA) as ArrayList<MallCartGroup>
+            currentCouponId = it.getInt(Constant.PARAM_COUPON_ID, 0)
         }
         initContent()
     }

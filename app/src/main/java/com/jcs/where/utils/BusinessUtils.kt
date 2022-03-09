@@ -14,6 +14,7 @@ import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.storage.entity.User
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/7/21 17:10.
@@ -103,11 +104,44 @@ object BusinessUtils {
     }
 
 
+    fun getSafeInt(string: String?): Int {
+
+        return if (string.isNullOrBlank()) {
+            0
+        } else {
+            try {
+                string.toInt()
+            } catch (e: IllegalArgumentException) {
+                0
+            }
+        }
+    }
+
+    fun getSafeBigDecimal(string: String?): BigDecimal {
+
+        return if (string.isNullOrBlank()) {
+            BigDecimal.ZERO
+        } else {
+            try {
+                BigDecimal(string)
+            } catch (e: Exception) {
+                BigDecimal.ZERO
+            }
+        }
+    }
+
+
     /**
      * 启动融云会话页面(使用内置方法)
      * ConversationActivity
      */
-    fun startRongCloudConversationActivity(context: Context, targetId: String, title: String? = null, phone: String? = null,  bd:Bundle? = null) {
+    fun startRongCloudConversationActivity(
+        context: Context,
+        targetId: String,
+        title: String? = null,
+        phone: String? = null,
+        bd: Bundle? = null,
+    ) {
 
         if (!User.isLogon()) {
             context.startActivity(Intent(context, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
@@ -131,8 +165,7 @@ object BusinessUtils {
     }
 
 
-
-     fun showRule(context: Context ,rule: String) {
+    fun showRule(context: Context, rule: String) {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_coupon_rule, null, false)
         val dialog = AlertDialog.Builder(context).setView(view).create()
 

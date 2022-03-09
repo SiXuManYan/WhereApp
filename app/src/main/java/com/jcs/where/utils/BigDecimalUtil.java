@@ -33,11 +33,18 @@ public class BigDecimalUtil {
         return add(a, b, 2);
     }
 
+    public static BigDecimal add(BigDecimal... a) {
+
+        BigDecimal temp = BigDecimal.ZERO;
+        for (BigDecimal child : a) {
+            temp = add(temp, child);
+        }
+        return temp ;
+    }
+
     public static BigDecimal add(BigDecimal a, BigDecimal b, int len) {
         return a.add(b).setScale(len, BigDecimal.ROUND_HALF_UP);
     }
-
-
 
 
     public static BigDecimal sub(double a, double b) {
@@ -60,8 +67,7 @@ public class BigDecimalUtil {
     }
 
 
- //
-
+    //
 
 
     public static BigDecimal mul(double a, double b) {
@@ -87,8 +93,6 @@ public class BigDecimalUtil {
     }
 
 
-
-
     public static BigDecimal div(double a, double b) {
 
         return div(a, b, 2);
@@ -101,7 +105,6 @@ public class BigDecimalUtil {
     }
 
 
-
     public static BigDecimal div(BigDecimal a, BigDecimal b) {
         return div(a, b, 2);
     }
@@ -109,9 +112,6 @@ public class BigDecimalUtil {
     public static BigDecimal div(BigDecimal d1, BigDecimal d2, int len) {
         return d1.divide(d2, len, BigDecimal.ROUND_HALF_UP);
     }
-
-
-
 
 
 }

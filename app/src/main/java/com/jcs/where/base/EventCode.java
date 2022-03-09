@@ -143,5 +143,10 @@ public class EventCode {
      */
     public static final int EVENT_COUPON_GET = 1033;
 
+    /**
+     * 选择优惠券
+     */
+    public static final int EVENT_COUPON_SELECTED = 1034;
+
 
 }

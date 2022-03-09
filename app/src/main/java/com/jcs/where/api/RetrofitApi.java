@@ -42,6 +42,7 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.CityPickerResponse;
 import com.jcs.where.api.response.Coupon;
 import com.jcs.where.api.response.FootprintResponse;
+import com.jcs.where.api.response.GeCouponDefault;
 import com.jcs.where.api.response.GetCouponResult;
 import com.jcs.where.api.response.HotelResponse;
 import com.jcs.where.api.response.HotelRoomListResponse;
@@ -106,6 +107,8 @@ import com.jcs.where.api.response.mall.request.MallCommitResponse;
 import com.jcs.where.api.response.mall.request.MallDeliveryRequest;
 import com.jcs.where.api.response.mall.request.MallDeliveryResponse;
 import com.jcs.where.api.response.mall.request.MallOrderCommit;
+import com.jcs.where.api.response.mall.request.MallOrderCoupon;
+import com.jcs.where.api.response.mall.request.MallOrderDefaultCoupon;
 import com.jcs.where.api.response.mall.request.MallShop;
 import com.jcs.where.api.response.mall.request.UnCollection;
 import com.jcs.where.api.response.merchant.MerchantApplyRecord;
@@ -1848,5 +1851,19 @@ public interface RetrofitApi {
      */
     @POST("estoreapi/v2/coupon")
     Observable<JcsResponse<GetCouponResult>> getCoupon(@Query("coupon_id") int coupon_id);
+
+
+    /**
+     * 提交订单获取默认优惠券
+     */
+    @POST("estoreapi/v2/coupon")
+    Observable<JcsResponse<GeCouponDefault>> getDefaultCoupon(@Body MallOrderDefaultCoupon request);
+
+    /**
+     * 订单选择优惠券
+     */
+    @POST("estoreapi/v2/coupon")
+    Observable<JcsResponse<ArrayList<UserCoupon>>> getOrderCoupon(@Body MallOrderCoupon request);
+
 
 }

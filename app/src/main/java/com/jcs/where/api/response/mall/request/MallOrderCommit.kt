@@ -13,6 +13,9 @@ class MallOrderCommit {
     var specsIds = ""
     var goods = ""
 
+    /** 优惠券id */
+    var coupon_id: Int? = null
+
 }
 
 class MallOrderCommitGoodGroup {
@@ -41,6 +44,27 @@ class MallCommitResponse {
      * 总价
      */
     var total_price: BigDecimal = BigDecimal.ZERO
+}
+
+/**
+ * 提交订单获取默认优惠券
+ */
+class MallOrderDefaultCoupon {
+    var specsIds = ""
+    var goods = ""
+
+    /** 优惠券id */
+    var coupon_id: Int? = null
+}
+
+
+class MallOrderCoupon {
+    /** 1可用优惠券  2 不可用优惠券 */
+    var type  = 0
+
+    var specsIds = ""
+    var goods = ""
+
 }
 
 

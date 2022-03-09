@@ -32,6 +32,7 @@ class MallCartGroup : Serializable, MultiItemEntity {
     /** 本地记录，通过城市id额外获取的 当前店铺配送费 */
     var nativeShopDelivery: BigDecimal? = null
     var nativeRemark = ""
+    var nativeCouponPrice = BigDecimal.ZERO
     var delivery_fee: BigDecimal? = BigDecimal.ZERO
 
     /** 0 普通商品 1 失效商品 */

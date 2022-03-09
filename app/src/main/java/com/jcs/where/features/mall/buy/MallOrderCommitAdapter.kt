@@ -28,9 +28,10 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
 
         val delivery_price_tv = holder.getView<TextView>(R.id.delivery_price_tv)
         val remark_aet = holder.getView<AppCompatEditText>(R.id.remark_aet)
+        val discount_tv = holder.getView<TextView>(R.id.discount_tv)
 
         shop_name_tv.text = item.title
-
+        discount_tv.text = StringUtils.getString(R.string.price_unit_format,item.nativeCouponPrice.toPlainString())
 
         child_container_ll.removeAllViews()
 

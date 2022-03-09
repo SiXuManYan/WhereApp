@@ -863,6 +863,11 @@ Gentleman must let go</string>
     <string name="take_progress">已抢&#160;%1$s%%</string>
     <string name="price_list">价格明细</string>
     <string name="coupon">优惠券</string>
+    <string name="no_coupons_available">暂无可用优惠券</string>
+    <string name="available">可用优惠券</string>
+    <string name="unavailable">不可用优惠券</string>
+    <string name="coupon_price_format">您已选择一张优惠券，可抵用₱%1$s</string>
+    <string name="discount">优惠</string>
 
 
 </resources>

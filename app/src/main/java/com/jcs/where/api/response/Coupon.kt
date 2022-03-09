@@ -21,12 +21,17 @@ data class UserCoupon(
     /** 使用规则 */
     var rule: String = "",
 
+    /** 1平台券 */
+    var couponType: Int = 1,
+
     /** 未使用已使用已过期 */
     var nativeType: Int = 0,
 
-    /** 1平台券 */
-    var couponType: Int = 1,
-)
+    /** 是否选中 */
+    var nativeSelected: Boolean = false,
+
+
+    )
 
 /**
  * 优惠券列表
@@ -76,5 +81,18 @@ class Coupon {
 
 class GetCouponResult {
     var message = ""
+}
+
+class GeCouponDefault {
+    var coupon_id = ""
+    var money = ""
+    var data = ArrayList<GeCouponDefaultChild>()
+
+
+}
+
+class GeCouponDefaultChild {
+    var shop_id = 0
+    var price = BigDecimal.ZERO
 }
 

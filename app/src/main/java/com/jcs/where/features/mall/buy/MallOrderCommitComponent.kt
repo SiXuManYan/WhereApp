@@ -6,11 +6,12 @@ import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.GeCouponDefault
 import com.jcs.where.api.response.mall.MallCartGroup
 import com.jcs.where.api.response.mall.request.*
 import com.jcs.where.utils.BigDecimalUtil
+import com.jcs.where.utils.BusinessUtils
 import java.math.BigDecimal
-import java.util.*
 
 /**
  * Created by Wangsw  2021/12/15 13:57.
@@ -21,6 +22,8 @@ interface MallOrderCommitView : BaseMvpView {
 
     fun bindTotalDelivery(totalServiceDeliveryFee: BigDecimal?)
 
+    fun bindDefaultCoupon(couponId: Int, couponMoney: BigDecimal)
+
 }
 
 
@@ -29,8 +32,10 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
     /**
      * 计算价格
+     * @param totalServiceDeliveryFee 总配送费
+     * @param totalCouponMoney 总优惠金额
      */
-    fun handlePrice(adapter: MallOrderCommitAdapter, mTotalServiceDeliveryFee: BigDecimal?): BigDecimal {
+    fun handlePrice(adapter: MallOrderCommitAdapter, totalServiceDeliveryFee: BigDecimal?, totalCouponMoney: BigDecimal?): BigDecimal {
 
         val totalPrice: BigDecimal
 
@@ -38,11 +43,11 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
         var allGoodPrice = BigDecimal.ZERO
 
         // 所有店铺配送费
-        var allDeliveryFee = BigDecimal.ZERO
+        val allDeliveryFee = getTotalDeliveryFee(adapter)
 
         adapter.data.forEach { shop ->
 
-            allDeliveryFee = BigDecimalUtil.add(allDeliveryFee, shop.delivery_fee)
+            // allDeliveryFee = BigDecimalUtil.add(allDeliveryFee, shop.delivery_fee)
 
             shop.gwc.forEach { good ->
                 // 商品价格
@@ -51,15 +56,36 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             }
         }
 
-        totalPrice = BigDecimalUtil.add(allGoodPrice, allDeliveryFee)
+        totalPrice = BigDecimalUtil.add(allGoodPrice, allDeliveryFee, totalCouponMoney)
 
         return totalPrice
     }
 
     fun orderCommit(data: ArrayList<MallCartGroup>, addressId: String?) {
 
+        val bean = MallOrderCommit().apply {
+            address_id = addressId
+            specsIds = getSpecsIdsJsonString(data)
+            goods = getGoodsJsonString(data)
+
+        }
+
+        requestApi(mRetrofit.mallOrderCommit(bean), object : BaseMvpObserver<MallCommitResponse>(view) {
+            override fun onSuccess(response: MallCommitResponse) {
+                view.commitSuccess(response)
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                super.onError(errorResponse)
+            }
+
+        })
+    }
+
+
+    private fun getSpecsIdsJsonString(data: ArrayList<MallCartGroup>): String {
+
         val specsIdsArray = ArrayList<String>()
-        val goodsGroup = ArrayList<MallOrderCommitGoodGroup>()
 
         data.forEach { group ->
 
@@ -82,28 +108,37 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
                 itemGroup.goods.add(item)
             }
+        }
+
+        return Gson().toJson(specsIdsArray)
+    }
+
+
+    private fun getGoodsJsonString(data: ArrayList<MallCartGroup>): String {
+
+        val goodsGroup = ArrayList<MallOrderCommitGoodGroup>()
+        data.forEach { group ->
+
+            val itemGroup = MallOrderCommitGoodGroup().apply {
+                remark = group.nativeRemark
+                shop_id = group.shop_id
+            }
+
+            group.gwc.forEach { gwc ->
+
+
+                val item = MallOrderCommitGoodItem().apply {
+                    good_id = gwc.good_id
+                    num = gwc.good_num
+                    specs_id = gwc.specs_id
+                    cart_id = gwc.cart_id
+                }
+
+                itemGroup.goods.add(item)
+            }
             goodsGroup.add(itemGroup)
-
         }
-
-        val gson = Gson()
-        val bean = MallOrderCommit().apply {
-            address_id = addressId
-            specsIds = gson.toJson(specsIdsArray)
-            goods = gson.toJson(goodsGroup)
-
-        }
-
-        requestApi(mRetrofit.mallOrderCommit(bean), object : BaseMvpObserver<MallCommitResponse>(view) {
-            override fun onSuccess(response: MallCommitResponse) {
-                view.commitSuccess(response)
-            }
-
-            override fun onError(errorResponse: ErrorResponse?) {
-                super.onError(errorResponse)
-            }
-
-        })
+        return Gson().toJson(goodsGroup)
     }
 
 
@@ -167,6 +202,65 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             }
         })
 
+
+    }
+
+
+    /**
+     * 获取总配送费
+     */
+    fun getTotalDeliveryFee(adapter: MallOrderCommitAdapter): BigDecimal {
+
+        var allDeliveryFee = BigDecimal.ZERO
+
+        adapter.data.forEach { shop ->
+            allDeliveryFee = BigDecimalUtil.add(allDeliveryFee, shop.delivery_fee)
+
+        }
+
+        return allDeliveryFee
+    }
+
+    /**
+     * 获取默认优惠券,刷新各个店铺商品对应的优惠金额
+     */
+    @SuppressLint("NotifyDataSetChanged")
+    fun getDefaultCoupon(adapter: MallOrderCommitAdapter, data: ArrayList<MallCartGroup>, currentCouponId: Int) {
+
+        val apply = MallOrderDefaultCoupon().apply {
+            specsIds = getSpecsIdsJsonString(data)
+            goods = getGoodsJsonString(data)
+
+            if (currentCouponId != 0) {
+                coupon_id = currentCouponId
+            }
+        }
+
+        requestApi(mRetrofit.getDefaultCoupon(apply), object : BaseMvpObserver<GeCouponDefault>(view) {
+
+            override fun onSuccess(response: GeCouponDefault) {
+
+
+                if (response.data.isNotEmpty()) {
+
+                    // 刷新列表中的优惠金额
+                    response.data.forEachIndexed { index, child ->
+                        adapter.data.forEach {
+                            val shopIdKey = it.shop_id
+
+                            if (child.shop_id == shopIdKey) {
+                                it.nativeCouponPrice = child.price
+                            }
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged()
+                }
+
+                view.bindDefaultCoupon(BusinessUtils.getSafeInt(response.coupon_id), BusinessUtils.getSafeBigDecimal(response.money))
+            }
+
+        })
 
     }
 

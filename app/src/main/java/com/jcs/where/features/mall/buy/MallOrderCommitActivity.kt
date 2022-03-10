@@ -20,7 +20,6 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.mall.buy.coupon.OrderCouponHomeFragment
 import com.jcs.where.features.store.pay.StorePayActivity
-import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_mall_order_commit.*
@@ -122,6 +121,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     private fun handleTotalPrice() {
 
+        // 支付价格
         totalPrice = presenter.handlePrice(mAdapter, mTotalServiceDeliveryFee, mTotalCouponMoney)
 
 
@@ -129,8 +129,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         total_price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
 
         // ## 价格明细 ##
-        // 扣除优惠前的总价
-        val oldPrice = BigDecimalUtil.add(totalPrice, mTotalCouponMoney)
+        // 商品原价
+        val oldPrice = presenter.getAllGoodPrice(mAdapter)
         total_price_old_tv.text = getString(R.string.price_unit_format, oldPrice.toPlainString())
 
         // 总运费

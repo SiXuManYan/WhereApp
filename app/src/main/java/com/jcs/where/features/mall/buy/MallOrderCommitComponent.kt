@@ -31,7 +31,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
 
     /**
-     * 计算价格
+     * 获取支付价格
      * @param totalServiceDeliveryFee 总配送费
      * @param totalCouponMoney 总优惠金额
      */
@@ -60,6 +60,27 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
         val finalPrice = BigDecimalUtil.sub(oldPrice, totalCouponMoney)
 
         return finalPrice
+    }
+
+
+    fun getAllGoodPrice(adapter: MallOrderCommitAdapter): BigDecimal {
+
+
+        // 所有商品价格
+        var allGoodPrice = BigDecimal.ZERO
+
+        adapter.data.forEach { shop ->
+
+            // allDeliveryFee = BigDecimalUtil.add(allDeliveryFee, shop.delivery_fee)
+
+            shop.gwc.forEach { good ->
+                // 商品价格
+                val goodPrice = BigDecimalUtil.mul(good.specs_info!!.price, BigDecimal(good.good_num))
+                allGoodPrice = BigDecimalUtil.add(allGoodPrice, goodPrice)
+            }
+        }
+
+        return allGoodPrice
     }
 
     fun orderCommit(data: ArrayList<MallCartGroup>, addressId: String?, couponId: Int?) {

@@ -4,6 +4,7 @@ package com.jcs.where.features.mall.buy
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.util.ColorUtils
@@ -161,6 +162,10 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         selected_coupon.setOnClickListener {
             mSelectedCouponDialog.alreadySelectedCouponId = currentCouponId
             mSelectedCouponDialog.show(supportFragmentManager, mSelectedCouponDialog.tag)
+            selected_coupon.isClickable = false
+            Handler(mainLooper).postDelayed({
+                selected_coupon.isClickable = true
+            }, 1000)
         }
     }
 

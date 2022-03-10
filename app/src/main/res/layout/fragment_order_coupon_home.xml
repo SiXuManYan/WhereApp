@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,19 +9,32 @@
     android:paddingTop="@dimen/dp_0">
 
 
-    <com.jcs.where.widget.JcsTitle
-        android:id="@+id/title_jt"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:background="@color/white"
-        app:backIcon="@mipmap/ic_close"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:middleTitle="@string/coupon" />
+        android:layout_height="@dimen/dp_44"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15">
+
+
+        <ImageView
+            android:id="@+id/close_iv"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_close" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/coupon"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_17" />
+
+
+    </RelativeLayout>
 
 
     <com.flyco.tablayout.SlidingTabLayout
@@ -29,9 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_jt"
-        app:layout_constraintVertical_bias="0.0"
         app:tl_indicator_color="@color/blue_377BFF"
         app:tl_indicator_corner_radius="1.5dp"
         app:tl_tab_space_equal="true"
@@ -47,10 +57,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey_F5F5F5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabs"
-        app:layout_constraintVertical_bias="0.0" />
+        android:background="@color/grey_F5F5F5" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

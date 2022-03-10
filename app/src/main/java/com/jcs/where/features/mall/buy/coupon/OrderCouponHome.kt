@@ -33,7 +33,7 @@ class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePre
         arrayOf(StringUtils.getString(R.string.available), StringUtils.getString(R.string.unavailable))
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 8 / 10)
+        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 9 / 10)
 
     override fun getLayoutId() = R.layout.fragment_order_coupon_home
 
@@ -50,7 +50,7 @@ class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePre
     }
 
     override fun bindListener() {
-        title_jt.setBackIvClickListener {
+        close_iv.setOnClickListener {
             dismiss()
         }
     }

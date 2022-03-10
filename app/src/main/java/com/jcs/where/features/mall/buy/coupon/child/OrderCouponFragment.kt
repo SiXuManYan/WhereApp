@@ -59,6 +59,8 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
             addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0))
         }
         if (type == 1) {
+            mAdapter.addHeaderView(headerView)
+            headerView.visibility = View.GONE
             mAdapter.setOnItemClickListener(this@OrderCouponFragment)
             confirm_tv.visibility = View.VISIBLE
         } else {
@@ -91,21 +93,28 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
             return
         }
         mAdapter.setNewInstance(data)
+        data.forEach {
+            if (it.nativeSelected) {
+                headerView.visibility = View.VISIBLE
+                val hint = headerView.findViewById<TextView>(R.id.coupon_price_hint_tv)
+                hint.text = getString(R.string.coupon_price_format, it.money)
+            }
+        }
+
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
 
-        val userCoupon = mAdapter.data[position + mAdapter.headerLayoutCount]
+        val userCoupon = mAdapter.data[position]
         if (type == 1) {
             mAdapter.data.forEach {
                 it.nativeSelected = (it.id == userCoupon.id)
             }
             mAdapter.notifyDataSetChanged()
 
-            if (mAdapter.headerLayoutCount == 0) {
-                mAdapter.addHeaderView(headerView)
-            }
+            headerView.visibility = View.VISIBLE
             val hint = headerView.findViewById<TextView>(R.id.coupon_price_hint_tv)
             hint.text = getString(R.string.coupon_price_format, userCoupon.money)
 

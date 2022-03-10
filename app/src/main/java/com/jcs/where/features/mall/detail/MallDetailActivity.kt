@@ -68,7 +68,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     companion object {
 
-        fun navigation(context: Context, goodId: Int, couponId: Int?) {
+        fun navigation(context: Context, goodId: Int, couponId: Int? = 0) {
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ID, goodId)
                 couponId?.let {

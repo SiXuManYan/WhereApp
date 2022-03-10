@@ -68,6 +68,14 @@ class MallOrderDetail {
     /** 物流单号 */
     var logistics = ""
 
+    /** 减去优惠金额前的总价 */
+    var total_price = ""
+
+    /** 已优惠金额 */
+    var money = ""
+
+
+
 
 
 }

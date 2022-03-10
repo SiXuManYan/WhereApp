@@ -1856,13 +1856,13 @@ public interface RetrofitApi {
     /**
      * 提交订单获取默认优惠券
      */
-    @POST("estoreapi/v2/coupon")
+    @POST("estoreapi/v2/default_coupon")
     Observable<JcsResponse<GeCouponDefault>> getDefaultCoupon(@Body MallOrderDefaultCoupon request);
 
     /**
      * 订单选择优惠券
      */
-    @POST("estoreapi/v2/coupon")
+    @POST("estoreapi/v2/order_coupon")
     Observable<JcsResponse<ArrayList<UserCoupon>>> getOrderCoupon(@Body MallOrderCoupon request);
 
 

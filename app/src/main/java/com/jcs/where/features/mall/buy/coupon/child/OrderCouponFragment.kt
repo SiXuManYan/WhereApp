@@ -52,7 +52,6 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
 
         mAdapter = OrderCouponAdapter().apply {
             setEmptyView(emptyView)
-
         }
 
         recycler.apply {
@@ -74,7 +73,7 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
     }
 
     override fun loadOnVisible() {
-        presenter.getData(type, specsIdsJsonStr, goodsJsonStr)
+        presenter.getData(type, specsIdsJsonStr, goodsJsonStr, selectedCouponId)
     }
 
 
@@ -125,7 +124,7 @@ interface OrderCouponView : BaseMvpView, OnItemClickListener {
 class OrderCouponPresenter(private var view: OrderCouponView) : BaseMvpPresenter(view) {
 
 
-    fun getData(currentType: Int, specsIdsJson: String, goodsJson: String) {
+    fun getData(currentType: Int, specsIdsJson: String, goodsJson: String, selectedCouponId: Int) {
 
         val apply = MallOrderCoupon().apply {
             type = currentType
@@ -136,6 +135,16 @@ class OrderCouponPresenter(private var view: OrderCouponView) : BaseMvpPresenter
         requestApi(mRetrofit.getOrderCoupon(apply), object : BaseMvpObserver<ArrayList<UserCoupon>>(view) {
 
             override fun onSuccess(response: ArrayList<UserCoupon>) {
+
+                if (selectedCouponId != 0) {
+
+                    response.forEach {
+                        if (it.id == selectedCouponId) {
+                            it.nativeSelected = true
+                        }
+                    }
+                }
+
                 view.bindData(response.toMutableList())
             }
         })

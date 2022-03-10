@@ -21,6 +21,7 @@ import com.jcs.where.features.mall.refund.apply.MallRefundActivity
 import com.jcs.where.features.mall.refund.detail.MallRefundDetailActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
+import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -156,6 +157,20 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             logistics_container_ll.visibility = View.GONE
         }
 
+        // ## 价格明细 ##
+        // 优惠前的总价
+        total_price_old_tv.text = getString(R.string.price_unit_format, data.total_price)
+
+        // 总运费
+        total_delivery_fee_tv.text = getString(R.string.price_unit_format, data.delivery_fee)
+
+        // 优惠金额
+        coupon_tv.text = getString(R.string.price_unit_format, data.money)
+
+        // 合计
+        total_price_copy_tv.text = getString(R.string.price_unit_format, data.price.toPlainString())
+
+
         // 底部
         when (data.order_status) {
             1 -> {
@@ -272,7 +287,6 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             }
         }
         bottom_v.visibility = bottom_container_rl.visibility
-
 
     }
 

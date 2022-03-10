@@ -14,7 +14,7 @@ class MallOrderCommit {
     var goods = ""
 
     /** 优惠券id */
-    var coupon_id: Int? = null
+    var user_coupon_id: Int? = null
 
 }
 
@@ -54,7 +54,7 @@ class MallOrderDefaultCoupon {
     var goods = ""
 
     /** 优惠券id */
-    var coupon_id: Int? = null
+    var user_coupon_id: Int? = null
 }
 
 

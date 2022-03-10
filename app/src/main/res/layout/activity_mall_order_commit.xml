@@ -225,6 +225,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/selected_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48">
 

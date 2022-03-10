@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_order_coupon_home.*
  */
 class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePresenter>(), OrderCouponHomeView {
 
+    var alreadySelectedCouponId = 0
     var specsIdsJsonStr = ""
     var goodsJsonStr = ""
 
@@ -60,11 +61,13 @@ class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePre
 
         override fun getItem(position: Int): Fragment {
 
-            return OrderCouponFragment().apply {
+            val apply = OrderCouponFragment().apply {
                 type = position + 1
                 specsIdsJsonStr = this@OrderCouponHomeFragment.specsIdsJsonStr
                 goodsJsonStr = this@OrderCouponHomeFragment.goodsJsonStr
+                selectedCouponId = alreadySelectedCouponId
             }
+            return apply
 
         }
 

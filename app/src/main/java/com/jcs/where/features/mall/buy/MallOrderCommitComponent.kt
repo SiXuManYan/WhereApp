@@ -61,13 +61,16 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
         return totalPrice
     }
 
-    fun orderCommit(data: ArrayList<MallCartGroup>, addressId: String?) {
+    fun orderCommit(data: ArrayList<MallCartGroup>, addressId: String?, couponId: Int?) {
 
         val bean = MallOrderCommit().apply {
             address_id = addressId
             specsIds = getSpecsIdsJsonString(data)
             goods = getGoodsJsonString(data)
 
+            if (couponId!=0) {
+                user_coupon_id = couponId
+            }
         }
 
         requestApi(mRetrofit.mallOrderCommit(bean), object : BaseMvpObserver<MallCommitResponse>(view) {
@@ -83,7 +86,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
     }
 
 
-    private fun getSpecsIdsJsonString(data: ArrayList<MallCartGroup>): String {
+    fun getSpecsIdsJsonString(data: ArrayList<MallCartGroup>): String {
 
         val specsIdsArray = ArrayList<String>()
 
@@ -114,7 +117,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
     }
 
 
-    private fun getGoodsJsonString(data: ArrayList<MallCartGroup>): String {
+    fun getGoodsJsonString(data: ArrayList<MallCartGroup>): String {
 
         val goodsGroup = ArrayList<MallOrderCommitGoodGroup>()
         data.forEach { group ->
@@ -232,7 +235,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             goods = getGoodsJsonString(data)
 
             if (currentCouponId != 0) {
-                coupon_id = currentCouponId
+                user_coupon_id = currentCouponId
             }
         }
 

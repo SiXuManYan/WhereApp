@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.buy
 
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -16,13 +17,12 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressActivity
+import com.jcs.where.features.mall.buy.coupon.OrderCouponHomeFragment
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_mall_order_commit.*
-
-
 import java.math.BigDecimal
 
 /**
@@ -58,6 +58,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     private lateinit var mAdapter: MallOrderCommitAdapter
 
+    private lateinit var mSelectedCouponDialog: OrderCouponHomeFragment
+
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_mall_order_commit
@@ -78,6 +80,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(10f), 0, 0))
         }
         mAdapter.setNewInstance(data)
+
+
     }
 
     /** 处理选择地址 */
@@ -107,6 +111,12 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         presenter = MallOrderCommitPresenter(this)
         handleTotalPrice()
         presenter.getDefaultCoupon(mAdapter, data, currentCouponId)
+        mSelectedCouponDialog = OrderCouponHomeFragment().apply {
+            specsIdsJsonStr = this@MallOrderCommitActivity.presenter.getSpecsIdsJsonString(data)
+            goodsJsonStr = this@MallOrderCommitActivity.presenter.getGoodsJsonString(data)
+
+        }
+
     }
 
     private fun handleTotalPrice() {
@@ -146,7 +156,11 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
                 ToastUtils.showShort(R.string.address_edit_hint)
                 return@setOnClickListener
             }
-            presenter.orderCommit(data, mSelectAddressData?.id)
+            presenter.orderCommit(data, mSelectAddressData?.id, currentCouponId)
+        }
+        selected_coupon.setOnClickListener {
+            mSelectedCouponDialog.alreadySelectedCouponId = currentCouponId
+            mSelectedCouponDialog.show(supportFragmentManager, mSelectedCouponDialog.tag)
         }
     }
 

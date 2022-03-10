@@ -124,6 +124,7 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
             EventCode.EVENT_COUPON_GET -> {
+                page = Constant.DEFAULT_FIRST_PAGE
                 loadOnVisible()
             }
             else -> {}

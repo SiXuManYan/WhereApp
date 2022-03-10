@@ -503,6 +503,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                             putInt(Constant.PARAM_ID, data.target_id)
                         })
                         6 -> MallDetailActivity.navigation(requireContext(), data.target_id)
+                        //  7 -> startActivityAfterLogin(CouponCenterActivity::class.java)
                     }
                     return
                 }

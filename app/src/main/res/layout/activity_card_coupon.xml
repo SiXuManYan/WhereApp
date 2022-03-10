@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,14 +11,8 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:middleTitle="@string/vouchers" />
 
 
@@ -26,10 +20,8 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
+        android:layout_below="@+id/jcsTitle"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/jcsTitle"
-        app:layout_constraintVertical_bias="0.0"
         app:tl_indicator_color="@color/blue_377BFF"
         app:tl_indicator_corner_radius="1.5dp"
         app:tl_tab_space_equal="true"
@@ -43,21 +35,26 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
-        android:background="@color/grey_F5F5F5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tabs" />
+        android:layout_above="@+id/coupon_center"
+        android:layout_below="@+id/tabs"
+        android:background="@color/grey_F5F5F5" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/coupon_center"
+        android:background="@drawable/shape_navigation_bar_gray" />
 
     <LinearLayout
         android:id="@+id/coupon_center"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp">
 
 
@@ -79,4 +76,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

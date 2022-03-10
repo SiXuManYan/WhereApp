@@ -98,16 +98,16 @@
             tools:text="2018.04.11 至 2018.05.11" />
 
 
-        <com.google.android.material.checkbox.MaterialCheckBox
+        <ImageView
             android:id="@+id/checked_ck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="?android:attr/selectableItemBackground"
+            android:src="@mipmap/ic_un_checked"
+            android:scaleType="centerCrop"
             android:button="@drawable/selector_store_cart_select_all"
-            android:checked="true"
-            android:drawablePadding="0dp" />
+         />
 
 
     </RelativeLayout>

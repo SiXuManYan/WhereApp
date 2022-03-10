@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.UserCoupon
+import com.jcs.where.utils.BusinessUtils
 
 /**
  * Created by Wangsw  2022/3/3 14:49.
@@ -47,10 +48,8 @@ class MyCouponAdapter : BaseQuickAdapter<UserCoupon, BaseViewHolder>(R.layout.it
 
         name_tv.text = item.name
         time_tv.text = StringUtils.getString(R.string.hotel_date_format, item.start_time, item.end_time)
-        price_tv.apply {
-            text = StringUtils.getString(R.string.price_unit_format, item.money)
+        BusinessUtils.setFormatText(price_tv, StringUtils.getString(R.string.price_unit), item.money, 14, 24)
 
-        }
         threshold_tv.text = item.doorsill
 
         // style

@@ -18,6 +18,7 @@ import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.coupon.center.CouponCenterActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.detail.MallDetailActivity
@@ -125,7 +126,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {
-               loadMoreModule.loadMoreEnd()
+                loadMoreModule.loadMoreEnd()
             }
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -205,6 +206,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
                             putInt(Constant.PARAM_ID, data.target_id)
                         })
                         6 -> MallDetailActivity.navigation(requireContext(), data.target_id)
+//                        7 -> startActivityAfterLogin(CouponCenterActivity::class.java)
                     }
                     return
                 }
@@ -218,7 +220,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
         if (!isViewCreated) {
             return
         }
-        if (isVisibleToUser  ) {
+        if (isVisibleToUser) {
             top_banner.start()
         } else {
             top_banner.pause()

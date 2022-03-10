@@ -851,13 +851,13 @@ Gentleman must let go</string>
     <string name="coupon_good">Voucher Use</string>
     <string name="get_now">Get Now</string>
     <string name="robbed">No stock</string>
-    <string name="take_progress">%1$s&#160;%%Taken</string>
+    <string name="take_progress">%1$s&#160;%%&#160;Claimed</string>
     <string name="price_list">Price List</string>
     <string name="coupon">Coupon</string>
     <string name="no_coupons_available">No coupons available</string>
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
-    <string name="coupon_price_format">You have selected a coupon for ₱%1$s</string>
+    <string name="coupon_price_format">You have selected a coupon, worth ₱%1$s</string>
     <string name="discount">Discount</string>
 
 </resources>

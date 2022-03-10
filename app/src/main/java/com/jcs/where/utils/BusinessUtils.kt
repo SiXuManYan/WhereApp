@@ -3,6 +3,9 @@ package com.jcs.where.utils
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -181,6 +184,29 @@ object BusinessUtils {
         }
         dialog.show()
         dialog.window?.setLayout(ScreenUtils.getScreenWidth() / 10 * 9, LinearLayout.LayoutParams.WRAP_CONTENT)
+    }
+
+
+    /**
+     * 设置格式化金额
+     *
+     * @param textView
+     * @param text1       单位
+     * @param text2       金额
+     * @param text1DpSize 单位字体大小 dp
+     * @param text2DpSize 金额字体大小 dp
+     */
+    fun setFormatText(textView: TextView, text1: String, text2: String, text1DpSize: Int, text2DpSize: Int) {
+
+        val stringBuilder = SpannableStringBuilder(text1 + text2)
+        stringBuilder.setSpan(AbsoluteSizeSpan(text1DpSize, true), 0, text1.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        stringBuilder.setSpan(
+            AbsoluteSizeSpan(text2DpSize, true),
+            text1.length,
+            (text1 + text2).length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        textView.text = stringBuilder
     }
 
 }

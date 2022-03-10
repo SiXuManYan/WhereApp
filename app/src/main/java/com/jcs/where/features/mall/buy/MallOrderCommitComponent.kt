@@ -285,6 +285,8 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
                 view.bindDefaultCoupon(BusinessUtils.getSafeInt(response.coupon_id), BusinessUtils.getSafeBigDecimal(response.money))
             }
 
+            override fun onError(errorResponse: ErrorResponse?) = Unit
+
         })
 
     }

@@ -114,6 +114,8 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
             }
             mAdapter.notifyDataSetChanged()
 
+            selectedCouponId = userCoupon.id
+
             headerView.visibility = View.VISIBLE
             val hint = headerView.findViewById<TextView>(R.id.coupon_price_hint_tv)
             hint.text = getString(R.string.coupon_price_format, userCoupon.money)

@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.Coupon
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.api.response.mall.ShopRecommend
 import com.jcs.where.api.response.mall.request.MallGoodListRequest
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.coupon.center.CouponCenterAdapter
 import com.jcs.where.features.mall.home.child.MallRecommendAdapter
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -31,7 +35,10 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
     private var mPage = Constant.DEFAULT_FIRST_PAGE
 
     /** 轮播和推荐 */
-    private lateinit var mHeaderAdapter: ShopRecommendHeaderAdapter
+    private lateinit var mRecommendHeaderAdapter: ShopRecommendHeaderAdapter
+
+    /** 店铺优惠券 */
+    private lateinit var mCouponHeaderAdapter: CouponCenterAdapter
 
     /** 商品列表 */
     private lateinit var mAdapter: MallRecommendAdapter
@@ -62,23 +69,50 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
             mShopId = it.getInt(Constant.PARAM_SHOP_ID)
         }
         initContent()
-        initHeader()
+        initRecommendHeader()
+        initCouponHeader()
     }
 
-    private fun initHeader() {
+
+    private fun initRecommendHeader() {
 
         val header = LayoutInflater.from(requireContext()).inflate(R.layout.layout_mall_shop_recommend_header, null, false)
         mAdapter.addHeaderView(header)
 
 
-        mHeaderAdapter = ShopRecommendHeaderAdapter()
+        mRecommendHeaderAdapter = ShopRecommendHeaderAdapter()
 
         val header_rv = header.findViewById<RecyclerView>(R.id.header_rv)
-        val manager  = object :LinearLayoutManager(context, VERTICAL,false) {
+        val manager = object : LinearLayoutManager(context, VERTICAL, false) {
             override fun canScrollVertically() = false
         }
         header_rv.layoutManager = manager
-        header_rv.adapter = mHeaderAdapter
+        header_rv.adapter = mRecommendHeaderAdapter
+    }
+
+    private fun initCouponHeader() {
+
+        val header = LayoutInflater.from(requireContext()).inflate(R.layout.layout_mall_shop_recommend_header, null, false)
+        mAdapter.addHeaderView(header, 0)
+
+        mCouponHeaderAdapter = CouponCenterAdapter().apply {
+            addChildClickViewIds( R.id.get_tv)
+            setOnItemChildClickListener { adapter, view, position ->
+                val userCoupon = mCouponHeaderAdapter.data[position]
+
+                when (view.id) {
+                    R.id.get_tv -> presenter.getShopCoupon(userCoupon.id)
+                    else -> {}
+                }
+            }
+        }
+        val header_rv = header.findViewById<RecyclerView>(R.id.header_rv)
+        val manager = object : LinearLayoutManager(context, HORIZONTAL, false) {
+            override fun canScrollVertically() = false
+        }
+        header_rv.layoutManager = manager
+        header_rv.adapter = mRecommendHeaderAdapter
+
     }
 
 
@@ -121,9 +155,7 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         presenter.getMallList(goodRequest)
     }
 
-    override fun bindListener() {
-
-    }
+    override fun bindListener() = Unit
 
     override fun bindData(data: MutableList<MallGood>, lastPage: Boolean) {
         val loadMoreModule = mAdapter.loadMoreModule
@@ -150,9 +182,20 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         }
     }
 
-    override fun bindRecommend(response: ArrayList<ShopRecommend>) {
-        mHeaderAdapter.setNewInstance(response)
+    override fun bindCoupon(response: MutableList<Coupon>) {
+        mCouponHeaderAdapter.setNewInstance(response)
         content_rv.smoothScrollToPosition(0)
     }
+
+    override fun bindRecommend(response: ArrayList<ShopRecommend>) {
+        mRecommendHeaderAdapter.setNewInstance(response)
+        content_rv.smoothScrollToPosition(0)
+    }
+
+    override fun getCouponResult(message: String) {
+        ToastUtils.showShort(message)
+        presenter.requestShopCoupon(mShopId)
+    }
+
 
 }

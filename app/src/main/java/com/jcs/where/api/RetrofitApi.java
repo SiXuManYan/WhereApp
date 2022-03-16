@@ -1848,9 +1848,14 @@ public interface RetrofitApi {
 
     /**
      * 领取优惠券
+     * @param coupon_id  券id
+     * @param type 领取类型 1平台券 2商户券
      */
     @POST("estoreapi/v2/coupon")
-    Observable<JcsResponse<GetCouponResult>> getCoupon(@Query("coupon_id") int coupon_id);
+    Observable<JcsResponse<GetCouponResult>> getCoupon(
+            @Query("coupon_id") int coupon_id,
+            @Query("type") int type
+    );
 
 
     /**

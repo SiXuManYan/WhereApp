@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.*
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.Coupon
@@ -20,7 +21,7 @@ import java.math.BigDecimal
  * Created by Wangsw  2022/3/5 14:52.
  * 领券中心、店铺优惠券
  */
-class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() {
+class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() ,LoadMoreModule{
 
     init {
         addItemType(Coupon.TYPE_COMMON, R.layout.item_coupon_center)

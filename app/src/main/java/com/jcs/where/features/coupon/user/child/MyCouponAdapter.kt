@@ -9,21 +9,47 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.UserCoupon
+import com.jcs.where.api.response.footprint.Footprint
 import com.jcs.where.utils.BusinessUtils
 
 /**
  * Created by Wangsw  2022/3/3 14:49.
  * 用户券包
  */
-class MyCouponAdapter : BaseQuickAdapter<UserCoupon, BaseViewHolder>(R.layout.item_coupon_user), LoadMoreModule {
+class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(), LoadMoreModule {
 
+    init {
+
+        addItemType(UserCoupon.TYPE_COMMON,R.layout.item_coupon_user)
+        addItemType(UserCoupon.TYPE_TITLE,R.layout.item_foot_print_title)
+
+    }
 
     override fun convert(holder: BaseViewHolder, item: UserCoupon) {
+
+        when (holder.itemViewType) {
+            UserCoupon.TYPE_COMMON   -> {
+                bindCoupon(holder,item)
+            }
+            UserCoupon.TYPE_TITLE->{
+                bindTitle(holder, item)
+            }
+
+            else -> {}
+        }
+
+        bindCoupon(holder,item)
+
+    }
+
+    private fun bindCoupon(holder: BaseViewHolder, item: UserCoupon) {
+
         val container = holder.getView<ViewGroup>(R.id.container_view)
         val layoutParams = container.layoutParams as RecyclerView.LayoutParams
         layoutParams.apply {
@@ -82,8 +108,11 @@ class MyCouponAdapter : BaseQuickAdapter<UserCoupon, BaseViewHolder>(R.layout.it
                 price_tv.setTextColor(ColorUtils.getColor(R.color.white))
                 threshold_tv.setTextColor(ColorUtils.getColor(R.color.white))
             }
-
         }
+    }
 
+
+    private fun bindTitle(holder: BaseViewHolder, item: UserCoupon) {
+        holder.setText(R.id.title_tv, item.shopName)
     }
 }

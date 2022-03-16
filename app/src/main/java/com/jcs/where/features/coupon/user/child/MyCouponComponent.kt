@@ -27,13 +27,34 @@ class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view)
                 val isLastPage = response.lastPage == page
                 val data = response.data
                 data.forEach {
-
                     it.nativeType = type
                 }
-
+                addTitle(data)
                 view.bindData(data.toMutableList(), isLastPage)
             }
         })
+
+    }
+
+    /** 商家券按照商家名称分组 */
+    private fun addTitle(data: MutableList<UserCoupon>) {
+        val groupBy = data.groupBy { it.shopName }
+
+        groupBy.forEach {  group ->
+
+            val titleEntity = UserCoupon().apply {
+                shopName = group.key
+                this.nativeListType = UserCoupon.TYPE_TITLE
+            }
+
+            val indexOfFirst = data.indexOfFirst {
+                it.shopName == group.key
+            }
+
+            data.add(indexOfFirst,titleEntity)
+
+        }
+
 
     }
 

@@ -105,6 +105,10 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+
+        if (adapter.getItemViewType(position) != UserCoupon.TYPE_COMMON) {
+            return
+        }
         val userCoupon = mAdapter.data[position]
 
         when (view.id) {
@@ -116,7 +120,6 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
                     putInt(Constant.PARAM_ID, userCoupon.id)
                 })
             }
-            else -> {}
         }
     }
 

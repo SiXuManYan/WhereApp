@@ -18,7 +18,7 @@ interface FootprintView : BaseMvpView {
 class FootprintPresenter(private var view: FootprintView) : BaseMvpPresenter(view) {
 
 
-    fun getData(page: Int,type:Int) {
+    fun getData(page: Int, type: Int) {
 
 
         if (type == 0) {
@@ -33,7 +33,7 @@ class FootprintPresenter(private var view: FootprintView) : BaseMvpPresenter(vie
                     view.bindData(data.toMutableList(), isLastPage)
                 }
             })
-        }else {
+        } else {
             requestApi(mRetrofit.getGoodFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
                 override fun onSuccess(response: PageResponse<Footprint>) {
 

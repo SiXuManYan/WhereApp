@@ -1843,7 +1843,7 @@ public interface RetrofitApi {
      * 领券中心
      */
     @GET("estoreapi/v2/coupon")
-    Observable<JcsResponse<ArrayList<Coupon>>> couponCenter(@Query("page") int page);
+    Observable<JcsResponse<PageResponse<Coupon>>> couponCenter(@Query("page") int page);
 
 
     /**

@@ -76,12 +76,29 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
             swipe_layout.isRefreshing = false
         }
 
+        val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
-            mAdapter.setNewInstance(null)
-            emptyView.showEmptyContainer()
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                mAdapter.setNewInstance(null)
+                loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
+            } else {
+                loadMoreModule.loadMoreEnd()
+            }
             return
         }
-        mAdapter.setNewInstance(data)
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mAdapter.setNewInstance(data)
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
+        } else {
+            mAdapter.addData(data)
+            if (lastPage) {
+                loadMoreModule.loadMoreEnd()
+            } else {
+                loadMoreModule.loadMoreComplete()
+            }
+        }
+
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {

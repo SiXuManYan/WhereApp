@@ -111,7 +111,7 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
             override fun canScrollVertically() = false
         }
         header_rv.layoutManager = manager
-        header_rv.adapter = mRecommendHeaderAdapter
+        header_rv.adapter = mCouponHeaderAdapter
 
     }
 
@@ -151,6 +151,7 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
     }
 
     override fun loadOnVisible() {
+        presenter.requestShopCoupon(mShopId)
         presenter.getRecommend(mShopId)
         presenter.getMallList(goodRequest)
     }
@@ -189,7 +190,6 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
 
     override fun bindRecommend(response: ArrayList<ShopRecommend>) {
         mRecommendHeaderAdapter.setNewInstance(response)
-        content_rv.smoothScrollToPosition(0)
     }
 
     override fun getCouponResult(message: String) {

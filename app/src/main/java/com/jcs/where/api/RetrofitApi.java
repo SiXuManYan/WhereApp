@@ -1872,9 +1872,9 @@ public interface RetrofitApi {
 
 
     /**
-     * 店铺优惠券
+     * 获取当前店铺优惠券
      */
-    @POST("estoreapi/v2/shop_coupon")
+    @GET("estoreapi/v2/shop_coupon")
     Observable<JcsResponse<ArrayList<Coupon>>> mallShopCoupon(@Query("shop_id") int shop_id);
 
 

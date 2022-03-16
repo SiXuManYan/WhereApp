@@ -26,7 +26,6 @@ class CouponCenterPresenter(private var view: CouponCenterView) : BaseMvpPresent
         requestApi(mRetrofit.couponCenter(page), object : BaseMvpObserver<PageResponse<Coupon>>(view) {
             override fun onSuccess(response: PageResponse<Coupon>) {
 
-
                 val isLastPage = response.lastPage == page
                 val data = response.data
 

@@ -22,7 +22,13 @@ interface MallOrderCommitView : BaseMvpView {
 
     fun bindTotalDelivery(totalServiceDeliveryFee: BigDecimal?)
 
-    fun bindDefaultCoupon(couponId: Int, couponMoney: BigDecimal)
+    /**
+     * 设置优惠
+     * @param platformCouponId          平台优惠券id
+     * @param platformCouponTotalMoney  平台优惠券总金额
+     * @param shopCouponTotalMoney      所有店铺优惠券的总金额
+     */
+    fun bindDefaultCoupon(platformCouponId: Int, platformCouponTotalMoney: BigDecimal, shopCouponTotalMoney: BigDecimal)
 
 }
 
@@ -39,24 +45,16 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
 
         // 所有商品价格
-        var allGoodPrice = BigDecimal.ZERO
+        val allGoodPrice = getAllGoodPrice(adapter)
 
         // 所有店铺配送费
         val allDeliveryFee = getTotalDeliveryFee(adapter)
 
-        adapter.data.forEach { shop ->
 
-            // allDeliveryFee = BigDecimalUtil.add(allDeliveryFee, shop.delivery_fee)
-
-            shop.gwc.forEach { good ->
-                // 商品价格
-                val goodPrice = BigDecimalUtil.mul(good.specs_info!!.price, BigDecimal(good.good_num))
-                allGoodPrice = BigDecimalUtil.add(allGoodPrice, goodPrice)
-            }
-        }
-
+        // 原价（商品+配送费）
         val oldPrice = BigDecimalUtil.add(allGoodPrice, allDeliveryFee)
 
+        // 最终价格（原价-所有优惠价格）
         val finalPrice = BigDecimalUtil.sub(oldPrice, totalCouponMoney)
 
         return finalPrice
@@ -117,10 +115,10 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             val itemGroup = MallOrderCommitGoodGroup().apply {
                 remark = group.nativeRemark
                 shop_id = group.shop_id
+                coupon_id = group.nativeShopCouponId
             }
 
             group.gwc.forEach { gwc ->
-
 
                 specsIdsArray.add(gwc.specs_id.toString() + "," + gwc.good_num.toShort())
 
@@ -250,15 +248,12 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
      * 获取默认优惠券,刷新各个店铺商品对应的优惠金额
      */
     @SuppressLint("NotifyDataSetChanged")
-    fun getDefaultCoupon(adapter: MallOrderCommitAdapter, data: ArrayList<MallCartGroup>, currentCouponId: Int) {
+    fun getDefaultCoupon(adapter: MallOrderCommitAdapter, data: ArrayList<MallCartGroup>, currentPlatformCouponId: Int? = null) {
 
         val apply = MallOrderDefaultCoupon().apply {
             specsIds = getSpecsIdsJsonString(data)
             goods = getGoodsJsonString(data)
-
-            if (currentCouponId != 0) {
-                user_coupon_id = currentCouponId
-            }
+            platform_coupon_id = currentPlatformCouponId
         }
 
         requestApi(mRetrofit.getDefaultCoupon(apply), object : BaseMvpObserver<GeCouponDefault>(view) {
@@ -266,15 +261,16 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             override fun onSuccess(response: GeCouponDefault) {
 
 
-                if (response.data.isNotEmpty()) {
+                if (response.shop_coupon.isNotEmpty()) {
 
-                    // 刷新列表中的优惠金额
-                    response.data.forEachIndexed { index, child ->
+                    // 刷新列表中的各个店铺优惠券金额
+                    response.shop_coupon.forEachIndexed { index, child ->
                         adapter.data.forEach {
                             val shopIdKey = it.shop_id
 
                             if (child.shop_id == shopIdKey) {
-                                it.nativeCouponPrice = child.price
+                                it.nativeShopCouponPrice = BusinessUtils.getSafeBigDecimal(child.money)
+                                it.nativeShopCouponId = BusinessUtils.getSafeInt(child.coupon_id)
                             }
                         }
                     }
@@ -282,7 +278,12 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
                     adapter.notifyDataSetChanged()
                 }
 
-                view.bindDefaultCoupon(BusinessUtils.getSafeInt(response.coupon_id), BusinessUtils.getSafeBigDecimal(response.money))
+
+                view.bindDefaultCoupon(
+                    platformCouponId =  BusinessUtils.getSafeInt(response.order_coupon.coupon_id),
+                    platformCouponTotalMoney =  BusinessUtils.getSafeBigDecimal(response.order_coupon.money),
+                    shopCouponTotalMoney =  BusinessUtils.getSafeBigDecimal(response.shop_total_coupon)
+                )
             }
 
             override fun onError(errorResponse: ErrorResponse?) = Unit

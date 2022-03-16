@@ -237,7 +237,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="@string/coupon"
+                    android:text="@string/platform_coupon"
                     android:textColor="@color/black_333333"
                     android:textSize="@dimen/sp_14" />
 

@@ -114,15 +114,35 @@ class GetCouponResult {
 }
 
 class GeCouponDefault {
+    @Deprecated("")
     var coupon_id = ""
+    @Deprecated("")
     var money = ""
+    @Deprecated("")
     var data = ArrayList<GeCouponDefaultChild>()
+
+    /** 店铺优惠券总金额 */
+    var shop_total_coupon = ""
+    var shop_coupon = ArrayList<DefaultShopCoupon>()
+    var order_coupon = DefaultPlatformCoupon()
 
 
 }
-
 class GeCouponDefaultChild {
     var shop_id = 0
     var price = BigDecimal.ZERO
 }
+
+class DefaultShopCoupon {
+    var coupon_id = ""
+    var money = ""
+    var shop_id = 0
+}
+
+
+class DefaultPlatformCoupon {
+    var coupon_id = ""
+    var money = ""
+}
+
 

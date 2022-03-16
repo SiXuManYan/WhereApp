@@ -32,7 +32,8 @@ class MallCartGroup : Serializable, MultiItemEntity {
     /** 本地记录，通过城市id额外获取的 当前店铺配送费 */
     var nativeShopDelivery: BigDecimal? = null
     var nativeRemark = ""
-    var nativeCouponPrice = BigDecimal.ZERO
+
+
     var delivery_fee: BigDecimal? = BigDecimal.ZERO
 
     /** 0 普通商品 1 失效商品 */
@@ -44,6 +45,16 @@ class MallCartGroup : Serializable, MultiItemEntity {
 
     /** 失效商品 */
     var nativeExpiredData = ArrayList<MallExpired>()
+
+    /** 优惠的平台券金额 */
+    @Deprecated("")
+    var nativeCouponPrice = BigDecimal.ZERO
+
+    /** 优惠的店铺券金额 */
+    var nativeShopCouponPrice = BigDecimal.ZERO
+
+    /** 优惠的店铺券id */
+    var nativeShopCouponId: Int? = null
 
 
 }

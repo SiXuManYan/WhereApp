@@ -23,6 +23,9 @@ class MallOrderCommitGoodGroup {
     var goods = ArrayList<MallOrderCommitGoodItem>()
     var shop_id = 0
     var remark: String? = null
+
+    /** 店铺优惠券 */
+    var coupon_id :Int ? = null
 }
 
 class MallOrderCommitGoodItem {
@@ -30,6 +33,8 @@ class MallOrderCommitGoodItem {
     var num = 0
     var specs_id = 0
     var cart_id: Int? = null
+
+
 }
 
 
@@ -53,8 +58,8 @@ class MallOrderDefaultCoupon {
     var specsIds = ""
     var goods = ""
 
-    /** 优惠券id */
-    var user_coupon_id: Int? = null
+    /** 平台优惠券id */
+    var platform_coupon_id: Int? = null
 }
 
 

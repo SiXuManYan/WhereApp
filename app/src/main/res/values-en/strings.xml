@@ -860,5 +860,7 @@ Gentleman must let go</string>
     <string name="coupon_price_format">You have selected a coupon, worth ₱%1$s</string>
     <string name="discount">Discount</string>
     <string name="coupon_type_business">Business Coupon</string>
+    <string name="shop_discount">Shop Discount</string>
+    <string name="platform_coupon">platform_coupon</string>
 
 </resources>

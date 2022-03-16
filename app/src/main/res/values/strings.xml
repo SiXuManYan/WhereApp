@@ -869,6 +869,8 @@ Gentleman must let go</string>
     <string name="coupon_price_format">您已选择一张优惠券，可抵用₱%1$s</string>
     <string name="discount">优惠</string>
     <string name="coupon_type_business">商家券</string>
+    <string name="shop_discount">店铺优惠券</string>
+    <string name="platform_coupon">平台优惠券</string>
 
 
 </resources>

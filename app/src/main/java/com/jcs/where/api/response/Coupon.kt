@@ -1,5 +1,6 @@
 package com.jcs.where.api.response
 
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import java.math.BigDecimal
 
 /**
@@ -21,7 +22,7 @@ data class UserCoupon(
     /** 使用规则 */
     var rule: String = "",
 
-    /** 1平台券 */
+    /** 1平台券  2店铺券*/
     var couponType: Int = 1,
 
     /** 未使用已使用已过期 */
@@ -36,13 +37,20 @@ data class UserCoupon(
 /**
  * 优惠券列表
  */
-class Coupon {
+class Coupon : MultiItemEntity {
 
 
     companion object {
-        var TYPE_FINISH = 1
-        var TYPE_COMMON = 2
 
+        /**
+         * 领券中心
+         */
+        var TYPE_COMMON = 0
+
+        /***
+         * 店铺页横向优惠券
+         */
+        var TYPE_FOR_SHOP_PAGE = 1
     }
 
 
@@ -70,11 +78,17 @@ class Coupon {
     /** 使用规则 */
     var rule: String = ""
 
-    /** 1平台券 */
+    /** 1平台券  2店铺券*/
     var couponType: Int = 1
 
     /** 1 已抢光 2正常 */
     var coupon_residue_type = 0
+
+
+    var nativeListType = TYPE_COMMON
+
+    override val itemType: Int
+        get() = nativeListType
 
 
 }

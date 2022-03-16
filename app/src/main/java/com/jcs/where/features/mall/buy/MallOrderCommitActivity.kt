@@ -201,8 +201,6 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
                 presenter.getDefaultCoupon(adapter = mAdapter, data, selectedCouponId)
             }
         }
-
-
     }
 
 }

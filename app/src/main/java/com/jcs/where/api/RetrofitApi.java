@@ -1866,4 +1866,11 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<UserCoupon>>> getOrderCoupon(@Body MallOrderCoupon request);
 
 
+    /**
+     * 店铺优惠券
+     */
+    @POST("estoreapi/v2/shop_coupon")
+    Observable<JcsResponse<ArrayList<Coupon>>> mallShopCoupon(@Query("shop_id") int shop_id);
+
+
 }

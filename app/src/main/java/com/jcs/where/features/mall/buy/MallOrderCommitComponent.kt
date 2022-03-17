@@ -39,9 +39,15 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
     /**
      * 获取支付价格
      * @param totalServiceDeliveryFee 总配送费
-     * @param totalCouponMoney 总优惠金额
+     * @param totalPlatformCouponMoney 平台优惠券总金额
+     * @param totalShopCouponMoney 店铺优惠券总金额
+     *
      */
-    fun handlePrice(adapter: MallOrderCommitAdapter, totalServiceDeliveryFee: BigDecimal?, totalCouponMoney: BigDecimal?): BigDecimal {
+    fun handlePrice(
+        adapter: MallOrderCommitAdapter, totalServiceDeliveryFee: BigDecimal?,
+        totalPlatformCouponMoney: BigDecimal?,
+        totalShopCouponMoney: BigDecimal,
+    ): BigDecimal {
 
 
         // 所有商品价格
@@ -50,12 +56,14 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
         // 所有店铺配送费
         val allDeliveryFee = getTotalDeliveryFee(adapter)
 
-
         // 原价（商品+配送费）
         val oldPrice = BigDecimalUtil.add(allGoodPrice, allDeliveryFee)
 
+        // 所有优惠券总金额
+        val couponMoney = BigDecimalUtil.add(totalPlatformCouponMoney, totalShopCouponMoney)
+
         // 最终价格（原价-所有优惠价格）
-        val finalPrice = BigDecimalUtil.sub(oldPrice, totalCouponMoney)
+        val finalPrice = BigDecimalUtil.sub(oldPrice, couponMoney)
 
         return finalPrice
     }
@@ -280,9 +288,9 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
 
                 view.bindDefaultCoupon(
-                    platformCouponId =  BusinessUtils.getSafeInt(response.order_coupon.coupon_id),
-                    platformCouponTotalMoney =  BusinessUtils.getSafeBigDecimal(response.order_coupon.money),
-                    shopCouponTotalMoney =  BusinessUtils.getSafeBigDecimal(response.shop_total_coupon)
+                    platformCouponId = BusinessUtils.getSafeInt(response.order_coupon.coupon_id),
+                    platformCouponTotalMoney = BusinessUtils.getSafeBigDecimal(response.order_coupon.money),
+                    shopCouponTotalMoney = BusinessUtils.getSafeBigDecimal(response.shop_total_coupon)
                 )
             }
 

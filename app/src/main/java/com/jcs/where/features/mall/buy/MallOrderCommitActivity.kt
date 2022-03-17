@@ -42,8 +42,11 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     /** 总配送费 */
     var mTotalServiceDeliveryFee: BigDecimal? = BigDecimal.ZERO
 
-    /** 总优惠券金额 */
-    var mTotalCouponMoney: BigDecimal = BigDecimal.ZERO
+    /** 平台优惠券总金额 */
+    private var mPlatformCouponTotalMoney: BigDecimal = BigDecimal.ZERO
+
+    /** 店铺优惠券总金额 */
+    private var mShopCouponTotalMoney: BigDecimal = BigDecimal.ZERO
 
     /**
      * 当前优惠券id
@@ -135,15 +138,15 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     private fun handleTotalPrice() {
 
-        // 支付价格
-        totalPrice = presenter.handlePrice(mAdapter, mTotalServiceDeliveryFee, mTotalCouponMoney)
+        // 最终支付价格
+        totalPrice = presenter.handlePrice(mAdapter, mTotalServiceDeliveryFee, mPlatformCouponTotalMoney,mShopCouponTotalMoney)
 
 
         // 支付价格
         total_price_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
 
         // ## 价格明细 ##
-        // 商品原价
+        // 商品价格
         val oldPrice = presenter.getAllGoodPrice(mAdapter)
         total_price_old_tv.text = getString(R.string.price_unit_format, oldPrice.toPlainString())
 
@@ -152,10 +155,10 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         total_delivery_fee_tv.text = getString(R.string.price_unit_format, totalDeliveryFee.toPlainString())
 
         // 优惠金额
-        if (mTotalCouponMoney == BigDecimal.ZERO) {
+        if (mPlatformCouponTotalMoney == BigDecimal.ZERO) {
             coupon_tv.text = ""
         } else {
-            coupon_tv.text = getString(R.string.price_unit_format, mTotalCouponMoney.toPlainString())
+            coupon_tv.text = getString(R.string.price_unit_format, mPlatformCouponTotalMoney.toPlainString())
         }
         // 合计
         total_price_copy_tv.text = getString(R.string.price_unit_format, totalPrice.toPlainString())
@@ -201,7 +204,9 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     override fun bindDefaultCoupon(platformCouponId: Int, platformCouponTotalMoney: BigDecimal, shopCouponTotalMoney: BigDecimal) {
         currentPlatformCouponId = platformCouponId
-        mTotalCouponMoney = platformCouponTotalMoney
+        mPlatformCouponTotalMoney = platformCouponTotalMoney
+        mShopCouponTotalMoney = shopCouponTotalMoney
+
         handleTotalPrice()
     }
 

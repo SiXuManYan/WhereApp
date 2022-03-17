@@ -40,9 +40,9 @@ class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view)
     private fun addTitle(data: MutableList<UserCoupon>) {
         val groupBy = data.groupBy { it.shop_name }
 
-        groupBy.forEach {  group ->
+        groupBy.forEach { group ->
 
-            if (group.key.isNotBlank()){
+            if (group.key.isNotBlank()) {
                 val titleEntity = UserCoupon().apply {
                     shop_name = group.key
                     this.nativeListType = UserCoupon.TYPE_TITLE
@@ -52,7 +52,7 @@ class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view)
                     it.shop_name == group.key
                 }
 
-                data.add(indexOfFirst,titleEntity)
+                data.add(indexOfFirst, titleEntity)
             }
 
 

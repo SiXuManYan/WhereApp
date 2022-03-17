@@ -71,9 +71,11 @@ class MallOrderDetail {
     /** 减去优惠金额前的总价 */
     var total_price = ""
 
-    /** 已优惠金额 */
+    /** 平台优惠金额 */
     var money = ""
 
+    /** 商家优惠金额 */
+    var shop_coupon_money = ""
 
 
 

@@ -21,7 +21,6 @@ import com.jcs.where.features.mall.refund.apply.MallRefundActivity
 import com.jcs.where.features.mall.refund.detail.MallRefundDetailActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
-import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -164,7 +163,10 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         // 总运费
         total_delivery_fee_tv.text = getString(R.string.price_unit_format, data.delivery_fee)
 
-        // 优惠金额
+        // 商家优惠
+        shop_offers_tv.text = getString(R.string.price_unit_format, data.shop_coupon_money)
+
+        // 平台优惠
         coupon_tv.text = getString(R.string.price_unit_format, data.money)
 
         // 合计

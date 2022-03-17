@@ -17,7 +17,6 @@ import com.jcs.where.api.response.mall.request.MallGoodListRequest
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.coupon.center.CouponCenterAdapter
 import com.jcs.where.features.mall.home.child.MallRecommendAdapter
-import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -101,7 +100,7 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
                 val userCoupon = mCouponHeaderAdapter.data[position]
 
                 when (view.id) {
-                    R.id.get_tv -> presenter.getShopCoupon(userCoupon.id)
+                    R.id.get_tv -> presenter.getShopCoupon(userCoupon.id,userCoupon.couponType)
                     else -> {}
                 }
             }

@@ -32,7 +32,7 @@ interface ShopRecommendView : BaseMvpView {
 
 class ShopRecommendPresenter(private var view: ShopRecommendView) : BaseMvpPresenter(view) {
 
-
+    /** 获取商户优惠券 */
     fun requestShopCoupon(shopId: Int) {
 
         requestApi(mRetrofit.mallShopCoupon(shopId), object : BaseMvpObserver<ArrayList<Coupon>>(view) {
@@ -48,9 +48,10 @@ class ShopRecommendPresenter(private var view: ShopRecommendView) : BaseMvpPrese
     }
 
 
-    fun getShopCoupon(couponId: Int) {
+    /** 领取商户优惠券 */
+    fun getShopCoupon(couponId: Int, couponType: Int) {
 
-        requestApi(mRetrofit.getCoupon(couponId, 2), object : BaseMvpObserver<GetCouponResult>(view) {
+        requestApi(mRetrofit.getCoupon(couponId, couponType), object : BaseMvpObserver<GetCouponResult>(view) {
             override fun onSuccess(response: GetCouponResult) {
                 view.getCouponResult(response.message)
             }

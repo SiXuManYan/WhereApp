@@ -43,7 +43,10 @@ import java.math.BigDecimal
     var nativeSelected: Boolean = false
 
     /** 店铺券对应的分组名称 */
-    var shopName: String = ""
+    var shop_name: String = ""
+
+    /** 店铺券对应的店铺id */
+    var shop_id = 0
 
     /** 区分列表类型，标题或代金券 */
     var nativeListType = Coupon.TYPE_COMMON
@@ -65,7 +68,7 @@ class Coupon : MultiItemEntity {
         var TYPE_COMMON = 0
 
         /** 店铺页横向优惠券 */
-        var TYPE_FOR_SHOP_PAGE = 1
+        var TYPE_FOR_SHOP_HOME_PAGE = 1
     }
 
 
@@ -78,7 +81,7 @@ class Coupon : MultiItemEntity {
     var num = BigDecimal.ZERO
 
     /** 限制数量(每人领取数量) */
-    var limit = BigDecimal.ZERO
+    var limit = ""
 
     /** 领取数量 */
     var get_num = BigDecimal.ZERO

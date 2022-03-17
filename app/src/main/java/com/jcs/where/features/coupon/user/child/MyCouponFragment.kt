@@ -118,6 +118,7 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
             R.id.use_tv -> {
                 startActivity(CouponGoodActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_ID, userCoupon.id)
+                    putInt(Constant.PARAM_SHOP_ID, userCoupon.shop_id)
                 })
             }
         }

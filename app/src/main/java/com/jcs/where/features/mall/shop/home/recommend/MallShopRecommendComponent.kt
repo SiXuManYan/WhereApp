@@ -39,7 +39,7 @@ class ShopRecommendPresenter(private var view: ShopRecommendView) : BaseMvpPrese
 
             override fun onSuccess(response: ArrayList<Coupon>) {
                 response.forEach {
-                    it.nativeListType = Coupon.TYPE_FOR_SHOP_PAGE
+                    it.nativeListType = Coupon.TYPE_FOR_SHOP_HOME_PAGE
                 }
                 view.bindCoupon(response.toMutableList())
             }

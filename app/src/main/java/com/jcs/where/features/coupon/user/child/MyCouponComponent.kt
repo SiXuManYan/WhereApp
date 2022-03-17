@@ -38,20 +38,23 @@ class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view)
 
     /** 商家券按照商家名称分组 */
     private fun addTitle(data: MutableList<UserCoupon>) {
-        val groupBy = data.groupBy { it.shopName }
+        val groupBy = data.groupBy { it.shop_name }
 
         groupBy.forEach {  group ->
 
-            val titleEntity = UserCoupon().apply {
-                shopName = group.key
-                this.nativeListType = UserCoupon.TYPE_TITLE
+            if (group.key.isNotBlank()){
+                val titleEntity = UserCoupon().apply {
+                    shop_name = group.key
+                    this.nativeListType = UserCoupon.TYPE_TITLE
+                }
+
+                val indexOfFirst = data.indexOfFirst {
+                    it.shop_name == group.key
+                }
+
+                data.add(indexOfFirst,titleEntity)
             }
 
-            val indexOfFirst = data.indexOfFirst {
-                it.shopName == group.key
-            }
-
-            data.add(indexOfFirst,titleEntity)
 
         }
 

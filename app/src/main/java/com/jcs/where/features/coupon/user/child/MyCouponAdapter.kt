@@ -10,12 +10,10 @@ import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.UserCoupon
-import com.jcs.where.api.response.footprint.Footprint
 import com.jcs.where.utils.BusinessUtils
 
 /**
@@ -25,10 +23,8 @@ import com.jcs.where.utils.BusinessUtils
 class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(), LoadMoreModule {
 
     init {
-
         addItemType(UserCoupon.TYPE_COMMON,R.layout.item_coupon_user)
         addItemType(UserCoupon.TYPE_TITLE,R.layout.item_foot_print_title)
-
     }
 
     override fun convert(holder: BaseViewHolder, item: UserCoupon) {
@@ -40,12 +36,7 @@ class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(),
             UserCoupon.TYPE_TITLE->{
                 bindTitle(holder, item)
             }
-
-            else -> {}
         }
-
-        bindCoupon(holder,item)
-
     }
 
     private fun bindCoupon(holder: BaseViewHolder, item: UserCoupon) {
@@ -79,8 +70,9 @@ class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(),
         threshold_tv.text = item.doorsill
 
         // style
-        if (item.couponType == 1) {
-            type_tv.setText(R.string.coupon_type_platform)
+        when (item.couponType) {
+            1 -> type_tv.setText(R.string.coupon_type_platform)
+            2 -> type_tv.setText(R.string.coupon_type_business)
         }
 
         when (item.nativeType) {
@@ -113,6 +105,6 @@ class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(),
 
 
     private fun bindTitle(holder: BaseViewHolder, item: UserCoupon) {
-        holder.setText(R.id.title_tv, item.shopName)
+        holder.setText(R.id.title_tv, item.shop_name)
     }
 }

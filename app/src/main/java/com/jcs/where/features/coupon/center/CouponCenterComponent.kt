@@ -36,9 +36,9 @@ class CouponCenterPresenter(private var view: CouponCenterView) : BaseMvpPresent
     }
 
 
-    fun getCoupon(couponId: Int) {
+    fun getCoupon(couponId: Int, couponType: Int) {
 
-        requestApi(mRetrofit.getCoupon(couponId,1), object : BaseMvpObserver<GetCouponResult>(view) {
+        requestApi(mRetrofit.getCoupon(couponId,couponType), object : BaseMvpObserver<GetCouponResult>(view) {
             override fun onSuccess(response: GetCouponResult) {
                 view.getCouponResult(response.message)
             }

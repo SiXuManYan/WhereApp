@@ -22,13 +22,16 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
 
 
     /** 优惠券 id */
-     var mCouponId = 0
+    var mCouponId = 0
+
+    /** 店铺优惠券类型对应的店铺id */
+    var mShopId = 0
 
     /** 当前页面对应的分类 */
-     var mCategoryId = 0
+    var mCategoryId = 0
 
     /** 列表请求 */
-    private lateinit var  goodRequest :MallGoodListRequest
+    private lateinit var goodRequest: MallGoodListRequest
 
     /** 商品列表 */
     private lateinit var mAdapter: MallRecommendAdapter
@@ -43,6 +46,10 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
         goodRequest = MallGoodListRequest().apply {
             categoryId = mCategoryId
             coupon_id = mCouponId
+
+            if (mShopId!=0) {
+                shopId = mShopId
+            }
         }
 
         initContent()

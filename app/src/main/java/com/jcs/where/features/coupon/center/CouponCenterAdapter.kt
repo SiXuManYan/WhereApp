@@ -25,7 +25,7 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
 
     init {
         addItemType(Coupon.TYPE_COMMON, R.layout.item_coupon_center)
-        addItemType(Coupon.TYPE_FOR_SHOP_PAGE, R.layout.item_coupon_center_for_shop)
+        addItemType(Coupon.TYPE_FOR_SHOP_HOME_PAGE, R.layout.item_coupon_center_for_shop_home)
     }
 
 
@@ -41,7 +41,7 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
                 setCommonStyle(holder, item)
             }
 
-            Coupon.TYPE_FOR_SHOP_PAGE -> {
+            Coupon.TYPE_FOR_SHOP_HOME_PAGE -> {
                 resetWith(holder)
                 bindLeft(holder, item)
                 bindRight(holder, item)

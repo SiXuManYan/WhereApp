@@ -17,10 +17,14 @@ import kotlinx.android.synthetic.main.activity_mall_home.*
  * Created by Wangsw  2022/3/4 14:29.
  * 优惠券商品列表
  */
-class CouponGoodActivity :BaseMvpActivity<MallHomePresenter>(), MallHomeView {
+class CouponGoodActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
 
+    /** 代金券id */
     private var couponId = 0
+
+    /** 店铺券对应的店铺id */
+    private var shopId = 0
 
     private var firstCategory: ArrayList<MallCategory> = ArrayList()
 
@@ -30,6 +34,7 @@ class CouponGoodActivity :BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     override fun initView() {
         couponId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        shopId = intent.getIntExtra(Constant.PARAM_SHOP_ID, 0)
     }
 
     override fun initData() {
@@ -73,6 +78,7 @@ class CouponGoodActivity :BaseMvpActivity<MallHomePresenter>(), MallHomeView {
         override fun getItem(position: Int): Fragment = CouponGoodFragment().apply {
             mCategoryId = firstCategory[position].id
             mCouponId = couponId
+            mShopId = shopId
         }
 
         override fun getCount(): Int = firstCategory.size

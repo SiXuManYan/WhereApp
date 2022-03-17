@@ -48,6 +48,11 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
         }
 
         mAdapter = CouponCenterAdapter().apply {
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
+            loadMoreModule.setOnLoadMoreListener {
+                page++
+                loadData()
+            }
             setEmptyView(emptyView)
             addChildClickViewIds(R.id.rule_tv, R.id.get_tv)
             setOnItemChildClickListener(this@CouponCenterActivity)
@@ -109,7 +114,7 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
                 BusinessUtils.showRule(this, userCoupon.rule)
             }
             R.id.get_tv -> {
-                presenter.getCoupon(userCoupon.id)
+                presenter.getCoupon(userCoupon.id,userCoupon.couponType)
             }
             else -> {}
         }

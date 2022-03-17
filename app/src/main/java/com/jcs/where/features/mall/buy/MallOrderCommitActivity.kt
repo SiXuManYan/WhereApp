@@ -139,7 +139,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     private fun handleTotalPrice() {
 
         // 最终支付价格
-        totalPrice = presenter.handlePrice(mAdapter, mTotalServiceDeliveryFee, mPlatformCouponTotalMoney,mShopCouponTotalMoney)
+        totalPrice = presenter.handlePrice(mAdapter, mTotalServiceDeliveryFee, mPlatformCouponTotalMoney, mShopCouponTotalMoney)
 
 
         // 支付价格
@@ -154,7 +154,10 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         val totalDeliveryFee = presenter.getTotalDeliveryFee(mAdapter)
         total_delivery_fee_tv.text = getString(R.string.price_unit_format, totalDeliveryFee.toPlainString())
 
-        // 优惠金额
+        // 商家优惠券金额
+        shop_offers_tv.text = getString(R.string.price_unit_format, mShopCouponTotalMoney.toPlainString())
+
+        // 平台优惠券金额
         if (mPlatformCouponTotalMoney == BigDecimal.ZERO) {
             coupon_tv.text = ""
         } else {

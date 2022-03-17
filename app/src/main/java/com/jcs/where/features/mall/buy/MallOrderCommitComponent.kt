@@ -37,7 +37,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
 
     /**
-     * 获取支付价格
+     * 计算最终支付价格
      * @param totalServiceDeliveryFee 总配送费
      * @param totalPlatformCouponMoney 平台优惠券总金额
      * @param totalShopCouponMoney 店铺优惠券总金额
@@ -69,6 +69,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
     }
 
 
+    /** 获取所有商品的价格（除去配送费） */
     fun getAllGoodPrice(adapter: MallOrderCommitAdapter): BigDecimal {
 
 
@@ -89,6 +90,9 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
         return allGoodPrice
     }
 
+    /**
+     * 订单提交
+     */
     fun orderCommit(data: ArrayList<MallCartGroup>, addressId: String?, couponId: Int?) {
 
         val bean = MallOrderCommit().apply {
@@ -97,7 +101,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             goods = getGoodsJsonString(data)
 
             if (couponId != 0) {
-                user_coupon_id = couponId
+                platform_coupon_id = couponId
             }
         }
 
@@ -114,7 +118,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
     }
 
 
-    fun getSpecsIdsJsonString(data: ArrayList<MallCartGroup>): String {
+    private fun getSpecsIdsJsonString(data: ArrayList<MallCartGroup>): String {
 
         val specsIdsArray = ArrayList<String>()
 
@@ -123,7 +127,6 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             val itemGroup = MallOrderCommitGoodGroup().apply {
                 remark = group.nativeRemark
                 shop_id = group.shop_id
-                coupon_id = group.nativeShopCouponId
             }
 
             group.gwc.forEach { gwc ->
@@ -144,7 +147,6 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
         return Gson().toJson(specsIdsArray)
     }
 
-
     fun getGoodsJsonString(data: ArrayList<MallCartGroup>): String {
 
         val goodsGroup = ArrayList<MallOrderCommitGoodGroup>()
@@ -153,6 +155,7 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
             val itemGroup = MallOrderCommitGoodGroup().apply {
                 remark = group.nativeRemark
                 shop_id = group.shop_id
+                coupon_id = group.nativeShopCouponId
             }
 
             group.gwc.forEach { gwc ->
@@ -168,6 +171,41 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
                 itemGroup.goods.add(item)
             }
             goodsGroup.add(itemGroup)
+        }
+        return Gson().toJson(goodsGroup)
+    }
+
+    /** 具体店铺的 商品json */
+    fun getShopGoodsJsonString(data: ArrayList<MallCartGroup>, shopId: Int): String {
+
+        val goodsGroup = ArrayList<MallOrderCommitGoodGroup>()
+        data.forEach { group ->
+
+            if (group.shop_id == shopId) {
+                val itemGroup = MallOrderCommitGoodGroup().apply {
+                    remark = group.nativeRemark
+                    shop_id = group.shop_id
+                    coupon_id = group.nativeShopCouponId
+                }
+
+                group.gwc.forEach { gwc ->
+
+
+                    val item = MallOrderCommitGoodItem().apply {
+                        good_id = gwc.good_id
+                        num = gwc.good_num
+                        specs_id = gwc.specs_id
+                        cart_id = gwc.cart_id
+                    }
+
+                    itemGroup.goods.add(item)
+                }
+                goodsGroup.add(itemGroup)
+
+                return@forEach
+            }
+
+
         }
         return Gson().toJson(goodsGroup)
     }
@@ -254,12 +292,12 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
     /**
      * 获取默认优惠券,刷新各个店铺商品对应的优惠金额
+     * @param currentPlatformCouponId 当前最新平台优惠券id
      */
     @SuppressLint("NotifyDataSetChanged")
     fun getDefaultCoupon(adapter: MallOrderCommitAdapter, data: ArrayList<MallCartGroup>, currentPlatformCouponId: Int? = null) {
 
         val apply = MallOrderDefaultCoupon().apply {
-            specsIds = getSpecsIdsJsonString(data)
             goods = getGoodsJsonString(data)
             platform_coupon_id = currentPlatformCouponId
         }

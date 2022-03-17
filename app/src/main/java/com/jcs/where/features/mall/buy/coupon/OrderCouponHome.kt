@@ -24,9 +24,18 @@ import kotlinx.android.synthetic.main.fragment_order_coupon_home.*
  */
 class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePresenter>(), OrderCouponHomeView {
 
-    var alreadySelectedCouponId = 0
-    var specsIdsJsonStr = ""
-    var goodsJsonStr = ""
+    var alreadySelectedCouponId: Int? = 0
+
+
+    /** 所有商品(可用平台券) */
+    var goodsJsonStr :String?= null
+
+
+    /** 具体店铺商品(店铺券) */
+    var shopGoodsJson: String? = null
+
+    /** 店铺id (店铺券)*/
+    var shopId: Int? = null
 
 
     val titles =
@@ -62,10 +71,16 @@ class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePre
         override fun getItem(position: Int): Fragment {
 
             val apply = OrderCouponFragment().apply {
-                type = position + 1
-                specsIdsJsonStr = this@OrderCouponHomeFragment.specsIdsJsonStr
-                goodsJsonStr = this@OrderCouponHomeFragment.goodsJsonStr
+                listType = position + 1
                 selectedCouponId = alreadySelectedCouponId
+
+                // 获取平台券时使用
+                goodsJsonStr = this@OrderCouponHomeFragment.goodsJsonStr
+
+                // 获取店铺券时使用
+                shopGoodsJson = this@OrderCouponHomeFragment.shopGoodsJson
+                shopId = this@OrderCouponHomeFragment.shopId
+
             }
             return apply
 
@@ -77,12 +92,11 @@ class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePre
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_COUPON_SELECTED -> {
+            EventCode.EVENT_SELECTED_PLATFORM_COUPON -> {
                 dismiss()
             }
             else -> {}
         }
-
 
 
     }

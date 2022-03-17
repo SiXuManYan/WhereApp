@@ -26,16 +26,27 @@ import org.greenrobot.eventbus.EventBus
 /**
  * Created by Wangsw  2022/3/9 15:05.
  *  订单选择优惠券
+ *  平台优惠券或店铺优惠券
  */
 class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCouponView {
 
     /** type 类型  1可使用 2 不可使用  */
-    var type = 0
+    var listType = 0
 
-    var specsIdsJsonStr = ""
-    var goodsJsonStr = ""
+    /** 请求类型 */
+    private lateinit var requestType: OrderCouponRequestType
 
-    var selectedCouponId = 0
+    /** 所有商品json(平台券) */
+    var goodsJsonStr: String? = null
+
+    /** 具体店铺商品(店铺券) */
+    var shopGoodsJson: String? = null
+
+    /** 店铺id (店铺券)*/
+    var shopId: Int? = null
+
+
+    var selectedCouponId: Int? = 0
 
     private lateinit var mAdapter: OrderCouponAdapter
     private lateinit var emptyView: EmptyView
@@ -58,7 +69,9 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
             adapter = mAdapter
             addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0))
         }
-        if (type == 1) {
+
+        // 区分列表类型（可用、不可用）
+        if (listType == 1) {
             mAdapter.addHeaderView(headerView)
             headerView.visibility = View.GONE
             mAdapter.setOnItemClickListener(this@OrderCouponFragment)
@@ -67,6 +80,12 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
             confirm_tv.visibility = View.GONE
         }
 
+        // 区分请求类型 （平台券请求、店铺券请求）
+        requestType = if (goodsJsonStr != null) {
+            OrderCouponRequestType.TYPE_PLATFORM_COUPON
+        } else {
+            OrderCouponRequestType.TYPE_SHOP_COUPON
+        }
 
     }
 
@@ -75,13 +94,22 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
     }
 
     override fun loadOnVisible() {
-        presenter.getData(type, specsIdsJsonStr, goodsJsonStr, selectedCouponId)
+        presenter.getData(listType, goodsJsonStr, selectedCouponId, shopGoodsJson, shopId)
     }
 
 
     override fun bindListener() {
         confirm_tv.setOnClickListener {
-            EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_COUPON_SELECTED, selectedCouponId))
+
+            when (requestType) {
+                OrderCouponRequestType.TYPE_PLATFORM_COUPON -> {
+                    EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_SELECTED_PLATFORM_COUPON, selectedCouponId))
+                }
+                OrderCouponRequestType.TYPE_SHOP_COUPON->{
+                    EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_SELECTED_SHOP_COUPON))
+                }
+            }
+
         }
     }
 
@@ -90,8 +118,10 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
         if (data.isEmpty()) {
             mAdapter.setNewInstance(null)
             emptyView.showEmptyContainer()
+            confirm_tv.visibility = View.GONE
             return
         }
+        confirm_tv.visibility = View.VISIBLE
         mAdapter.setNewInstance(data)
         data.forEach {
             if (it.nativeSelected) {
@@ -108,7 +138,7 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
 
         val userCoupon = mAdapter.data[position]
-        if (type == 1) {
+        if (listType == 1) {
             mAdapter.data.forEach {
                 it.nativeSelected = (it.id == userCoupon.id)
             }
@@ -135,19 +165,30 @@ interface OrderCouponView : BaseMvpView, OnItemClickListener {
 class OrderCouponPresenter(private var view: OrderCouponView) : BaseMvpPresenter(view) {
 
 
-    fun getData(currentType: Int, specsIdsJson: String, goodsJson: String, selectedCouponId: Int) {
+    fun getData(
+        currentType: Int,
+        goodsJson: String? = null,
+        selectedCouponId: Int? = 0,
+        shopGoodsJson: String? = null,
+        shopId: Int? = null,
+    ) {
 
         val apply = MallOrderCoupon().apply {
             type = currentType
-            specsIds = specsIdsJson
+
+            // 平台券
             goods = goodsJson
+
+            // 店铺券
+            shop_goods = shopGoodsJson
+            shop_id = shopId
         }
 
         requestApi(mRetrofit.getOrderCoupon(apply), object : BaseMvpObserver<ArrayList<UserCoupon>>(view) {
 
             override fun onSuccess(response: ArrayList<UserCoupon>) {
 
-                if (selectedCouponId != 0) {
+                if (selectedCouponId != null && selectedCouponId != 0) {
 
                     response.forEach {
                         if (it.id == selectedCouponId) {
@@ -161,4 +202,12 @@ class OrderCouponPresenter(private var view: OrderCouponView) : BaseMvpPresenter
         })
     }
 
+}
+
+enum class OrderCouponRequestType {
+    /** 平台券请求 */
+    TYPE_PLATFORM_COUPON,
+
+    /** 店铺券请求 */
+    TYPE_SHOP_COUPON
 }

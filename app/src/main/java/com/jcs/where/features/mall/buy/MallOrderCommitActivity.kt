@@ -49,15 +49,14 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     private var mShopCouponTotalMoney: BigDecimal = BigDecimal.ZERO
 
     /**
-     * 当前优惠券id
+     * 当前平台优惠券id
      * 包含以下来源
-     *      1.用户从券包选择优惠券，
-     *      2.进入页面，请求到默认优惠券
-     *      3.从当前页弹窗选择优惠券
+     *      1.进入页面，请求到默认优惠券
+     *      2.从当前页弹窗选择优惠券
      *  值：
      *  0：未选择或没有匹配到优惠券
      */
-    var currentPlatformCouponId = 0
+    private var currentPlatformCouponId = 0
 
     private lateinit var mAdapter: MallOrderCommitAdapter
 
@@ -71,7 +70,6 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         val bundle = intent.extras
         bundle?.let {
             data = it.getSerializable(Constant.PARAM_DATA) as ArrayList<MallCartGroup>
-            currentPlatformCouponId = it.getInt(Constant.PARAM_COUPON_ID, 0)
         }
         initContent()
     }
@@ -84,7 +82,20 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
                 val mallCartGroup = mAdapter.data[position]
 
                 if (view.id == R.id.select_shop_coupon_rl) {
-                    // 选择店铺优惠券
+
+                    // 选择店铺优惠券 需要额外传 shop_goods shop_id
+                    mSelectedCouponDialog.apply {
+
+                        alreadySelectedCouponId = mallCartGroup.nativeShopCouponId
+                        goodsJsonStr = null
+
+                        shopId = mallCartGroup.shop_id
+                        shopGoodsJson =
+                            this@MallOrderCommitActivity.presenter.getShopGoodsJsonString(
+                                this@MallOrderCommitActivity.data,
+                                mallCartGroup.shop_id)
+
+                    }
 
 
                 }
@@ -129,10 +140,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         presenter = MallOrderCommitPresenter(this)
         handleTotalPrice()
         presenter.getDefaultCoupon(mAdapter, data)
-        mSelectedCouponDialog = OrderCouponHomeFragment().apply {
-            specsIdsJsonStr = this@MallOrderCommitActivity.presenter.getSpecsIdsJsonString(data)
-            goodsJsonStr = this@MallOrderCommitActivity.presenter.getGoodsJsonString(data)
-        }
+        mSelectedCouponDialog = OrderCouponHomeFragment()
 
     }
 
@@ -180,7 +188,13 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             presenter.orderCommit(data, mSelectAddressData?.id, currentPlatformCouponId)
         }
         selected_coupon.setOnClickListener {
-            mSelectedCouponDialog.alreadySelectedCouponId = currentPlatformCouponId
+            mSelectedCouponDialog.apply {
+                shopGoodsJson = null
+                shopId = null
+
+                goodsJsonStr = this@MallOrderCommitActivity.presenter.getGoodsJsonString(data)
+                alreadySelectedCouponId = currentPlatformCouponId
+            }
             mSelectedCouponDialog.show(supportFragmentManager, mSelectedCouponDialog.tag)
             selected_coupon.isClickable = false
             Handler(mainLooper).postDelayed({
@@ -217,11 +231,15 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_COUPON_SELECTED -> {
+            EventCode.EVENT_SELECTED_PLATFORM_COUPON -> {
                 val selectedCouponId = baseEvent.data as Int
                 currentPlatformCouponId = selectedCouponId
-                presenter.getDefaultCoupon(adapter = mAdapter, data, selectedCouponId)
+                presenter.getDefaultCoupon( mAdapter, data, selectedCouponId)
             }
+            EventCode.EVENT_SELECTED_SHOP_COUPON -> {
+                presenter.getDefaultCoupon(mAdapter, data, currentPlatformCouponId)
+            }
+
         }
     }
 

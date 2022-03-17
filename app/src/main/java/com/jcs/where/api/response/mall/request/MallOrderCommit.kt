@@ -14,7 +14,7 @@ class MallOrderCommit {
     var goods = ""
 
     /** 优惠券id */
-    var user_coupon_id: Int? = null
+    var platform_coupon_id: Int? = null
 
 }
 
@@ -25,7 +25,7 @@ class MallOrderCommitGoodGroup {
     var remark: String? = null
 
     /** 店铺优惠券 */
-    var coupon_id :Int ? = null
+    var coupon_id: Int? = null
 }
 
 class MallOrderCommitGoodItem {
@@ -55,7 +55,6 @@ class MallCommitResponse {
  * 提交订单获取默认优惠券
  */
 class MallOrderDefaultCoupon {
-    var specsIds = ""
     var goods = ""
 
     /** 平台优惠券id */
@@ -63,12 +62,30 @@ class MallOrderDefaultCoupon {
 }
 
 
+/**
+ * 获取订单关联的可用、不可用优惠券列表
+ */
 class MallOrderCoupon {
-    /** 1可用优惠券  2 不可用优惠券 */
-    var type  = 0
 
-    var specsIds = ""
-    var goods = ""
+    /** 1可用优惠券  2 不可用优惠券 */
+    var type = 0
+
+
+    /** 所有商品json (平台券时使用) */
+    var goods:String?=null
+
+    /**
+     * （店铺券时使用）
+     * 具体店铺的所有商品 json
+     * (当更换店铺优惠券时使用该字段)
+     */
+    var shop_goods: String? = null
+
+    /**
+     * （店铺券时使用）
+     * 店铺id
+     */
+    var shop_id: Int? = null
 
 }
 

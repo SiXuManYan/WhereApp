@@ -21,8 +21,6 @@ import com.jcs.where.utils.GlideUtil
  */
 class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend), LoadMoreModule {
 
-    var currentCouponId = 0
-
     override fun convert(holder: BaseViewHolder, item: MallGood) {
 
         val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
@@ -48,7 +46,7 @@ class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout
         nowPrice.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
 
         container_ll.setOnClickListener {
-            MallDetailActivity.navigation(context,item.id,currentCouponId)
+            MallDetailActivity.navigation(context,item.id)
         }
     }
 }

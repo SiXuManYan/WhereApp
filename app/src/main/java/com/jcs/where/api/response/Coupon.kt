@@ -42,7 +42,7 @@ import java.math.BigDecimal
     /** 是否选中 */
     var nativeSelected: Boolean = false
 
-    /** 店铺券对应的名称 */
+    /** 店铺券对应的分组名称 */
     var shopName: String = ""
 
     /** 区分列表类型，标题或代金券 */
@@ -114,12 +114,6 @@ class GetCouponResult {
 }
 
 class GeCouponDefault {
-    @Deprecated("")
-    var coupon_id = ""
-    @Deprecated("")
-    var money = ""
-    @Deprecated("")
-    var data = ArrayList<GeCouponDefaultChild>()
 
     /** 店铺优惠券总金额 */
     var shop_total_coupon = ""

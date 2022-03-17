@@ -97,6 +97,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
                     }
 
+                    mSelectedCouponDialog.show(supportFragmentManager, mSelectedCouponDialog.tag)
 
                 }
 
@@ -139,7 +140,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     override fun initData() {
         presenter = MallOrderCommitPresenter(this)
         handleTotalPrice()
-        presenter.getDefaultCoupon(mAdapter, data)
+        presenter.getDefaultCoupon(mAdapter, data,isFirstRequest = true)
         mSelectedCouponDialog = OrderCouponHomeFragment()
 
     }
@@ -234,7 +235,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             EventCode.EVENT_SELECTED_PLATFORM_COUPON -> {
                 val selectedCouponId = baseEvent.data as Int
                 currentPlatformCouponId = selectedCouponId
-                presenter.getDefaultCoupon( mAdapter, data, selectedCouponId)
+                presenter.getDefaultCoupon(mAdapter, data, selectedCouponId)
             }
             EventCode.EVENT_SELECTED_SHOP_COUPON -> {
                 presenter.getDefaultCoupon(mAdapter, data, currentPlatformCouponId)

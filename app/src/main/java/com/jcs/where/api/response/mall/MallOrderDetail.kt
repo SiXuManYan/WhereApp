@@ -72,7 +72,7 @@ class MallOrderDetail {
     var total_price = ""
 
     /** 平台优惠金额 */
-    var money = ""
+    var platform_coupon_money = ""
 
     /** 商家优惠金额 */
     var shop_coupon_money = ""

@@ -59,6 +59,8 @@ class MallOrderDefaultCoupon {
 
     /** 平台优惠券id */
     var platform_coupon_id: Int? = null
+
+    var status: Int? = null
 }
 
 
@@ -72,7 +74,7 @@ class MallOrderCoupon {
 
 
     /** 所有商品json (平台券时使用) */
-    var goods:String?=null
+    var goods: String? = null
 
     /**
      * （店铺券时使用）

@@ -171,6 +171,7 @@ object BusinessUtils {
     fun showRule(context: Context, rule: String) {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_coupon_rule, null, false)
         val dialog = AlertDialog.Builder(context).setView(view).create()
+        dialog.setCancelable(false)
 
         val title_tv = view.findViewById<TextView>(R.id.title_tv)
         val content_tv = view.findViewById<TextView>(R.id.content_tv)

@@ -75,9 +75,6 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
             mAdapter.addHeaderView(headerView)
             headerView.visibility = View.GONE
             mAdapter.setOnItemClickListener(this@OrderCouponFragment)
-            confirm_tv.visibility = View.VISIBLE
-        } else {
-            confirm_tv.visibility = View.GONE
         }
 
         // 区分请求类型 （平台券请求、店铺券请求）
@@ -105,7 +102,7 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
                 OrderCouponRequestType.TYPE_PLATFORM_COUPON -> {
                     EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_SELECTED_PLATFORM_COUPON, selectedCouponId))
                 }
-                OrderCouponRequestType.TYPE_SHOP_COUPON->{
+                OrderCouponRequestType.TYPE_SHOP_COUPON -> {
                     EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_SELECTED_SHOP_COUPON))
                 }
             }
@@ -121,17 +118,18 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
             confirm_tv.visibility = View.GONE
             return
         }
-        confirm_tv.visibility = View.VISIBLE
         mAdapter.setNewInstance(data)
-        data.forEach {
-            if (it.nativeSelected) {
-                headerView.visibility = View.VISIBLE
-                val hint = headerView.findViewById<TextView>(R.id.coupon_price_hint_tv)
-                hint.text = getString(R.string.coupon_price_format, it.money)
+        if (listType == 1) {
+            data.forEach {
+                if (it.nativeSelected) {
+                    headerView.visibility = View.VISIBLE
+                    val hint = headerView.findViewById<TextView>(R.id.coupon_price_hint_tv)
+                    hint.text = getString(R.string.coupon_price_format, it.money)
+                }
             }
+
+            confirm_tv.visibility = View.VISIBLE
         }
-
-
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -167,7 +167,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         shop_offers_tv.text = getString(R.string.price_unit_format, data.shop_coupon_money)
 
         // 平台优惠
-        coupon_tv.text = getString(R.string.price_unit_format, data.money)
+        coupon_tv.text = getString(R.string.price_unit_format, data.platform_coupon_money)
 
         // 合计
         total_price_copy_tv.text = getString(R.string.price_unit_format, data.price.toPlainString())

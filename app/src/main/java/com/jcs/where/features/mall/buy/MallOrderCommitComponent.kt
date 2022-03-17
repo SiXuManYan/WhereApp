@@ -295,11 +295,25 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
      * @param currentPlatformCouponId 当前最新平台优惠券id
      */
     @SuppressLint("NotifyDataSetChanged")
-    fun getDefaultCoupon(adapter: MallOrderCommitAdapter, data: ArrayList<MallCartGroup>, currentPlatformCouponId: Int? = null) {
+    fun getDefaultCoupon(
+        adapter: MallOrderCommitAdapter,
+        data: ArrayList<MallCartGroup>,
+        currentPlatformCouponId: Int? = null,
+        isFirstRequest: Boolean? = false,
+    ) {
 
         val apply = MallOrderDefaultCoupon().apply {
             goods = getGoodsJsonString(data)
             platform_coupon_id = currentPlatformCouponId
+            isFirstRequest?.let {
+                status = if (isFirstRequest) {
+                    null
+                } else {
+                    1
+                }
+
+
+            }
         }
 
         requestApi(mRetrofit.getDefaultCoupon(apply), object : BaseMvpObserver<GeCouponDefault>(view) {

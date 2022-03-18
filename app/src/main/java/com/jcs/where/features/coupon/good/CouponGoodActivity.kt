@@ -39,7 +39,7 @@ class CouponGoodActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     override fun initData() {
         presenter = MallHomePresenter(this)
-        presenter.getFirstCategory()
+        presenter.getFirstCategory(true)
     }
 
     override fun bindListener() {

@@ -155,10 +155,13 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
         when (baseEvent.code) {
             EventCode.EVENT_LOGIN_SUCCESS,
-            EventCode.EVENT_REFRESH_ORDER_LIST,
-            EventCode.EVENT_ORDER_COMMIT_SUCCESS
-            -> {
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS -> {
                 onRefresh()
+            }
+            EventCode.EVENT_REFRESH_ORDER_LIST->{
+                if (isViewCreated) {
+                    onRefresh()
+                }
             }
             EventCode.EVENT_SIGN_OUT->{
                 if (isViewCreated) {

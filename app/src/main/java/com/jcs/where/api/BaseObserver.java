@@ -3,6 +3,7 @@ package com.jcs.where.api;
 import android.util.Log;
 
 import com.jcs.where.BaseApplication;
+import com.jcs.where.utils.BusinessUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,6 +51,7 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
             errorResponse.errMsg = tJcsResponse.getMessage();
             onError(errorResponse);
             if (code == 401) {
+                BusinessUtils.INSTANCE.loginOut();
                 BaseApplication.toLogin();
             }
         }

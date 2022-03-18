@@ -1,6 +1,7 @@
 package com.jcs.where.api;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -77,7 +78,7 @@ public class RetrofitManager {
                 }
                 requestBuilder.header("Locale", language);
                 String jsonStr = CacheUtil.getToken();
-                if (!jsonStr.equals("")) {
+                if (!TextUtils.isEmpty(jsonStr)) {
                     requestBuilder.header("Authorization", "Bearer " + jsonStr);
                 }
 

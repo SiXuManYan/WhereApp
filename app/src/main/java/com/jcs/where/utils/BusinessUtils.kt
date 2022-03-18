@@ -13,10 +13,14 @@ import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.storage.entity.User
+import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
+import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
 
 /**
@@ -208,6 +212,16 @@ object BusinessUtils {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         textView.text = stringBuilder
+    }
+
+    fun loginOut(){
+
+        // 断开融云连接
+        RongIM.getInstance().logout()
+        User.clearAllUser()
+        CacheUtil.saveToken("")
+
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SIGN_OUT))
     }
 
 }

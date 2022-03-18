@@ -67,8 +67,6 @@ public class MessageCenterActivity extends BaseActivity {
         adapter.emptyView = emptyView;
         adapter.emptyView.showEmptyDefault();
 
-
-
         pager.setAdapter(adapter);
         tabs_type.setViewPager(pager, TAB_TITLES);
     }

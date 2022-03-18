@@ -6,6 +6,7 @@ import static com.jcs.where.utils.Constant.PARAM_VERIFY_CODE;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -324,6 +325,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      */
     private void onLoginClick(View view) {
 
+        login_tv.setClickable(false);
+
+        new Handler(getMainLooper()).postDelayed(() -> login_tv.setClickable(true), 1000);
+
         if (!rule_check_cb.isChecked()) {
             ToastUtils.showShort(R.string.agrees_rule_hint);
             return;
@@ -349,10 +354,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     private void onPasswordRuleClick(View view) {
         if (mIsCipherText) {
             // 切换至明文
-            FeaturesUtil.editOpen(password_aet, password_rule_iv,R.mipmap.ic_login_eye_open_white);
+            FeaturesUtil.editOpen(password_aet, password_rule_iv, R.mipmap.ic_login_eye_open_white);
         } else {
             // 切换至密文
-            FeaturesUtil.editDismiss(password_aet, password_rule_iv,R.mipmap.ic_login_eye_close_white);
+            FeaturesUtil.editDismiss(password_aet, password_rule_iv, R.mipmap.ic_login_eye_close_white);
         }
         mIsCipherText = !mIsCipherText;
     }
@@ -372,7 +377,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void LoginSuccess() {
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         ToastUtils.showShort(getString(R.string.login_success));
-//        startActivityClearTop(MainActivity.class, null);
         finish();
     }
 

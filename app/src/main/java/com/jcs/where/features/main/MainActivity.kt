@@ -63,7 +63,6 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
             tabs_navigator.currentTab = tabIndex
             if (tabIndex == 2) {
                 EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
-
             }
         }
     }

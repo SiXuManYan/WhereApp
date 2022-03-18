@@ -23,6 +23,7 @@ import com.jcs.where.features.setting.password.ModifyPasswordActivity;
 import com.jcs.where.features.setting.phone.ModifyPhoneActivity;
 import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.storage.entity.User;
+import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
@@ -130,11 +131,7 @@ public class SettingActivity extends BaseActivity {
                 .setCancelable(false)
                 .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
                     // 断开融云连接
-                    RongIM.getInstance().logout();
-                    User.clearAllUser();
-                    CacheUtil.saveToken("");
-
-                    EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_SIGN_OUT));
+                    BusinessUtils.INSTANCE.loginOut();
                     startActivity(LoginActivity.class);
                     finish();
                     dialogInterface.dismiss();

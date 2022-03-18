@@ -1,6 +1,7 @@
 package com.jcs.where.features.coupon.center
 
 import android.graphics.Color
+import android.os.Handler
 import android.view.View
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -107,6 +108,8 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        view.isClickable = false
+
         val userCoupon = mAdapter.data[position]
 
         when (view.id) {
@@ -114,10 +117,12 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
                 BusinessUtils.showRule(this, userCoupon.rule)
             }
             R.id.get_tv -> {
-                presenter.getCoupon(userCoupon.id,userCoupon.couponType)
+                presenter.getCoupon(userCoupon.id, userCoupon.couponType)
             }
             else -> {}
         }
+        Handler(mainLooper).postDelayed({ view.isClickable = true },2000)
+
     }
 
     override fun getCouponResult(message: String) {

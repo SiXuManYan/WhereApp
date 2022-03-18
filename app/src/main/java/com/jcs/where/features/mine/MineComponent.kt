@@ -49,11 +49,15 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
 
                         }
 
-                        override fun onError(errorCode: RongIMClient.ErrorCode) {
+                        override fun onError(errorCode: RongIMClient.ErrorCode){
                             view.bindUnreadMessageCount(0)
                         }
                     })
 
+            }
+
+            override fun onError(e: Throwable) {
+                view.bindUnreadMessageCount(0)
             }
 
         })

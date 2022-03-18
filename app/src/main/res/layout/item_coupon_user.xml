@@ -89,8 +89,6 @@
         android:layout_weight="139"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/dp_16"
-        android:paddingEnd="@dimen/dp_16"
         tools:background="@mipmap/ic_coupon_right_blue">
 
 
@@ -118,10 +116,13 @@
 
         <TextView
             android:id="@+id/threshold_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
+
             android:gravity="center_horizontal"
             android:maxLines="2"
             android:minHeight="@dimen/dp_30"

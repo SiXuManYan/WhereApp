@@ -143,20 +143,6 @@ public abstract class BaseFragment extends Fragment {
         startActivity(new Intent(getContext(), clazz));
     }
 
-    /**
-     * 如果用户已登录，则跳转到对应页面
-     * 否则跳转到登录页
-     *
-     * @param clazz
-     */
-    protected void toActivityIfSigned(Class<?> clazz) {
-        if (User.isLogon()) {
-            toActivity(clazz);
-        } else {
-            BaseApplication.toLogin();
-        }
-    }
-
     protected void toActivity(Class<?> clazz, IntentEntry... entrys) {
         Intent intent = new Intent(getContext(), clazz);
         int length = entrys.length;

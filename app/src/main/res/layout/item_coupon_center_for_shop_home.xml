@@ -97,16 +97,14 @@
         android:layout_weight="87"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/dp_8"
-        android:paddingEnd="@dimen/dp_8"
         tools:background="@mipmap/ic_coupon_right_orange_small">
 
 
         <TextView
             android:id="@+id/price_tv"
             android:layout_width="wrap_content"
-            android:includeFontPadding="false"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_19"
             android:textStyle="bold"
@@ -126,13 +124,15 @@
 
         <TextView
             android:id="@+id/threshold_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_4"
             android:ellipsize="end"
             android:gravity="center_horizontal"
             android:maxLines="2"
             android:minHeight="@dimen/dp_23"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_9"
             tools:text="Full 65 availableFull 65 available" />

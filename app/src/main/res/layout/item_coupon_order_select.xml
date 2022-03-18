@@ -16,9 +16,7 @@
         android:layout_weight="136"
         android:background="@mipmap/ic_coupon_left_blue_order"
         android:gravity="center"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15">
+        android:orientation="vertical">
 
 
         <TextView
@@ -26,7 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-
             android:textColor="@color/white"
             android:textSize="@dimen/sp_24"
             android:textStyle="bold"
@@ -40,6 +37,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_4"
             android:ellipsize="end"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
             android:maxLines="2"
             android:minHeight="@dimen/dp_25"
             android:textColor="@color/white"

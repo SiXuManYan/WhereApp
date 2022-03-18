@@ -7,18 +7,20 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16"
     tools:background="@color/grey_F5F5F5">
 
     <LinearLayout
         android:id="@+id/left_ll"
         android:layout_width="0dp"
+        android:gravity="center_vertical"
         android:layout_height="@dimen/dp_142"
         android:layout_weight="236"
         android:background="@mipmap/ic_coupon_left_pink"
         android:orientation="vertical"
-        android:paddingStart="@dimen/dp_30"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_15">
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16">
 
 
         <TextView
@@ -27,6 +29,7 @@
             android:layout_height="@dimen/dp_15"
             android:background="@drawable/shape_red_radius_2"
             android:ellipsize="end"
+            android:includeFontPadding="false"
             android:gravity="center"
             android:maxLines="1"
             android:paddingStart="@dimen/dp_4"
@@ -40,14 +43,14 @@
             android:id="@+id/name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_4"
             android:ellipsize="end"
             android:maxLines="2"
-            android:minHeight="@dimen/dp_32"
+            android:textStyle="bold"
+            android:minHeight="@dimen/dp_44"
             android:textColor="@color/black_333333"
             android:textSize="@dimen/sp_16"
-            tools:text="优惠券名称优惠券名称优
-优惠券名称优惠券名称…" />
+            tools:text="优惠券优惠券啊称优惠券称…" />
 
 
         <TextView
@@ -56,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_4"
             android:ellipsize="end"
+            android:includeFontPadding="false"
             android:maxLines="1"
             android:textColor="@color/grey_999999"
             android:textSize="@dimen/sp_12"
@@ -65,7 +69,8 @@
             android:id="@+id/rule_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_4"
+            android:includeFontPadding="false"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -73,6 +78,7 @@
             android:textColor="@color/grey_999999"
             android:textSize="@dimen/sp_12"
             android:visibility="gone"
+            tools:visibility="gone"
             app:drawableEndCompat="@mipmap/ic_coupon_next" />
 
         <ProgressBar
@@ -91,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_6"
-
+            android:includeFontPadding="false"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -109,8 +115,8 @@
         android:layout_weight="139"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/dp_0"
-        android:paddingEnd="@dimen/dp_15"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
         tools:background="@mipmap/ic_coupon_right_orange">
 
 
@@ -118,7 +124,9 @@
             android:id="@+id/price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:textSize="@dimen/sp_24"
             tools:text="$1000" />
 
@@ -140,7 +148,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
-            android:gravity="center"
+            android:minHeight="@dimen/dp_30"
+            android:gravity="center_horizontal"
             android:maxLines="2"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_11"

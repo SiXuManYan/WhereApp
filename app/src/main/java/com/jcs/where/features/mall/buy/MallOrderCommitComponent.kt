@@ -212,6 +212,20 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
 
     /**
+     * 刷新列表中的店铺券 id
+     */
+    fun updateItemShopCouponId (adapter: MallOrderCommitAdapter, shopId:Int , newShopCouponId: Int){
+        adapter.data.forEach {
+            if (it.shop_id == shopId) {
+                it.nativeShopCouponId = newShopCouponId
+            }
+        }
+        val index = adapter.data.indexOfFirst { it.shop_id == shopId }
+        adapter.notifyItemChanged(index)
+    }
+
+
+    /**
      * 通过城市id获取店铺配送费
      */
     fun getDelivery(adapter: MallOrderCommitAdapter, cityId: Int) {

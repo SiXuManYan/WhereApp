@@ -23,17 +23,17 @@ import com.jcs.where.utils.BusinessUtils
 class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(), LoadMoreModule {
 
     init {
-        addItemType(UserCoupon.TYPE_COMMON,R.layout.item_coupon_user)
-        addItemType(UserCoupon.TYPE_TITLE,R.layout.item_foot_print_title)
+        addItemType(UserCoupon.TYPE_COMMON, R.layout.item_coupon_user)
+        addItemType(UserCoupon.TYPE_TITLE, R.layout.item_shop_coupon_title)
     }
 
     override fun convert(holder: BaseViewHolder, item: UserCoupon) {
 
         when (holder.itemViewType) {
-            UserCoupon.TYPE_COMMON   -> {
-                bindCoupon(holder,item)
+            UserCoupon.TYPE_COMMON -> {
+                bindCoupon(holder, item)
             }
-            UserCoupon.TYPE_TITLE->{
+            UserCoupon.TYPE_TITLE -> {
                 bindTitle(holder, item)
             }
         }

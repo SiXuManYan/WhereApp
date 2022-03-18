@@ -58,6 +58,11 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
      */
     private var currentPlatformCouponId = 0
 
+    /** 当前进行更改店铺券的 店铺id */
+    private var currentHandleShopId = 0
+
+
+
     private lateinit var mAdapter: MallOrderCommitAdapter
 
     private lateinit var mSelectedCouponDialog: OrderCouponHomeFragment
@@ -80,6 +85,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             setOnItemChildClickListener { adapter, view, position ->
 
                 val mallCartGroup = mAdapter.data[position]
+
+                currentHandleShopId = mallCartGroup.shop_id
 
                 if (view.id == R.id.select_shop_coupon_rl) {
 
@@ -233,11 +240,15 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
             EventCode.EVENT_SELECTED_PLATFORM_COUPON -> {
-                val selectedCouponId = baseEvent.data as Int
-                currentPlatformCouponId = selectedCouponId
-                presenter.getDefaultCoupon(mAdapter, data, selectedCouponId)
+                val selectedPlatformCouponId = baseEvent.data as Int
+                currentPlatformCouponId = selectedPlatformCouponId
+                presenter.getDefaultCoupon(mAdapter, data, currentPlatformCouponId)
             }
             EventCode.EVENT_SELECTED_SHOP_COUPON -> {
+                val selectedShopCouponId = baseEvent.data as Int
+
+                // 更新店铺item中的 nativeShopCouponId
+                presenter.updateItemShopCouponId(mAdapter,currentHandleShopId,selectedShopCouponId)
                 presenter.getDefaultCoupon(mAdapter, data, currentPlatformCouponId)
             }
 

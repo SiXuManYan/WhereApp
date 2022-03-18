@@ -48,6 +48,7 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
 
     var selectedCouponId: Int? = 0
 
+
     private lateinit var mAdapter: OrderCouponAdapter
     private lateinit var emptyView: EmptyView
     private lateinit var headerView: View
@@ -62,6 +63,7 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
 
 
         mAdapter = OrderCouponAdapter().apply {
+            listType = this@OrderCouponFragment.listType
             setEmptyView(emptyView)
         }
 
@@ -103,7 +105,7 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
                     EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_SELECTED_PLATFORM_COUPON, selectedCouponId))
                 }
                 OrderCouponRequestType.TYPE_SHOP_COUPON -> {
-                    EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_SELECTED_SHOP_COUPON))
+                    EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_SELECTED_SHOP_COUPON, selectedCouponId))
                 }
             }
 

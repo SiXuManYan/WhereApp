@@ -128,8 +128,6 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
 
             override fun onSuccess(response: LoginResponse) {
                 handleThirdRegisterSuccess(response)
-
-
             }
         })
     }

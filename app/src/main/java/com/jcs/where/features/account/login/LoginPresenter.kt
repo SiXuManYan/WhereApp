@@ -149,6 +149,7 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
      */
     private fun handleLoginSuccess(token: String) {
         CacheUtil.saveToken(token)
+
         getUserInfo()
     }
 

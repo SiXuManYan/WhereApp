@@ -28,7 +28,7 @@ class OrderCouponAdapter : BaseQuickAdapter<UserCoupon, BaseViewHolder>(R.layout
         val container = holder.getView<ViewGroup>(R.id.container_view)
         val layoutParams = container.layoutParams as RecyclerView.LayoutParams
         layoutParams.apply {
-            topMargin = if (holder.adapterPosition == 0) {
+            topMargin = if ((holder.adapterPosition - headerLayoutCount) == 0) {
                 SizeUtils.dp2px(16f)
             } else {
                 0
@@ -63,9 +63,12 @@ class OrderCouponAdapter : BaseQuickAdapter<UserCoupon, BaseViewHolder>(R.layout
         }
 
         threshold_tv.text = item.doorsill
+
         // style
-        if (item.couponType == 1) {
-            type_tv.setText(R.string.coupon_type_platform)
+        // 券类型
+        when (item.couponType) {
+            1 -> type_tv.setText(R.string.coupon_type_platform)
+            2 -> type_tv.setText(R.string.coupon_type_business)
         }
 
     }

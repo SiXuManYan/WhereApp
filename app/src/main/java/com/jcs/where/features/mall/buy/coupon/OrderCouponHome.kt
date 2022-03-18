@@ -28,7 +28,7 @@ class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePre
 
 
     /** 所有商品(可用平台券) */
-    var goodsJsonStr :String?= null
+    var goodsJsonStr: String? = null
 
 
     /** 具体店铺商品(店铺券) */
@@ -92,7 +92,8 @@ class OrderCouponHomeFragment : BaseBottomSheetDialogFragment<OrderCouponHomePre
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_SELECTED_PLATFORM_COUPON -> {
+            EventCode.EVENT_SELECTED_PLATFORM_COUPON,
+            EventCode.EVENT_SELECTED_SHOP_COUPON, -> {
                 dismiss()
             }
             else -> {}

@@ -105,6 +105,18 @@ class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(),
 
 
     private fun bindTitle(holder: BaseViewHolder, item: UserCoupon) {
-        holder.setText(R.id.title_tv, item.shop_name)
+
+        val shopTitleTv = holder.getView<TextView>(R.id.shop_title_tv)
+
+        val container = holder.getView<View>(R.id.shop_title_tv)
+        val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+        layoutParams.apply {
+            topMargin = if (holder.adapterPosition == 0) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+        shopTitleTv.text = item.shop_name
     }
 }

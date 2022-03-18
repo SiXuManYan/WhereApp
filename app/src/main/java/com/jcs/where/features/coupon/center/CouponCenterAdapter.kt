@@ -43,6 +43,7 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
 
             Coupon.TYPE_FOR_SHOP_HOME_PAGE -> {
                 resetWith(holder)
+                addStartMargin(holder)
                 bindLeft(holder, item)
                 bindRight(holder, item)
                 setShopStyle(holder, item)
@@ -52,6 +53,8 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
 
 
     }
+
+
 
 
     private fun addTopMargin(holder: BaseViewHolder) {
@@ -66,11 +69,24 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
         }
     }
 
+    private fun addStartMargin(holder: BaseViewHolder) {
+        val container = holder.getView<ViewGroup>(R.id.container_view)
+        val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+        layoutParams.apply {
+            marginStart = if (holder.adapterPosition == 0) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+
+    }
+
 
     private fun resetWith(holder: BaseViewHolder) {
         val container = holder.getView<ViewGroup>(R.id.container_view)
         val layoutParams = container.layoutParams as RecyclerView.LayoutParams
-        layoutParams.width = ScreenUtils.getScreenWidth() * 4 / 5
+        layoutParams.width = ScreenUtils.getScreenWidth() * 240 / 376
 
     }
 
@@ -124,7 +140,11 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
         val threshold_tv = holder.getView<TextView>(R.id.threshold_tv)
 
         // 面值
-        BusinessUtils.setFormatText(price_tv, StringUtils.getString(R.string.price_unit), item.money, 14, 24)
+        if (holder.itemViewType == Coupon.TYPE_FOR_SHOP_HOME_PAGE) {
+            BusinessUtils.setFormatText(price_tv, StringUtils.getString(R.string.price_unit), item.money, 11, 19)
+        }else {
+            BusinessUtils.setFormatText(price_tv, StringUtils.getString(R.string.price_unit), item.money, 14, 24)
+        }
 
         // 领取限制
         threshold_tv.text = item.doorsill

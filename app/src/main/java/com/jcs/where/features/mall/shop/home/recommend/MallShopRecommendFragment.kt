@@ -109,9 +109,13 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         val manager = object : LinearLayoutManager(context, HORIZONTAL, false) {
             override fun canScrollVertically() = false
         }
-        header_rv.layoutManager = manager
-        header_rv.adapter = mCouponHeaderAdapter
+        val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(22f), 0, 0)
 
+        header_rv.apply {
+            layoutManager = manager
+            adapter = mCouponHeaderAdapter
+            addItemDecoration(decoration)
+        }
     }
 
 

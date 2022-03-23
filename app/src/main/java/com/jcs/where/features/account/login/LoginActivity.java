@@ -34,7 +34,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.features.account.bind.BindPhoneActivity;
 import com.jcs.where.features.account.password.PasswordResetActivity;
 import com.jcs.where.features.account.register.RegisterActivity;

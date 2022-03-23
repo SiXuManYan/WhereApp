@@ -4,7 +4,7 @@ import android.view.View
 import com.jcs.where.R
 import com.jcs.where.api.response.order.bill.BillOrderDetails
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_bills_detail.*
 

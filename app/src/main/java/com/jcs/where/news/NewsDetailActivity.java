@@ -1,7 +1,7 @@
 package com.jcs.where.news;
 
 import com.jcs.where.R;
-import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.frames.common.Html5Url;
 import com.jcs.where.utils.MobUtil;
 
 /**

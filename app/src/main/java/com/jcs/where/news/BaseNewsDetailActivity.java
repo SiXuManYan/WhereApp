@@ -17,7 +17,7 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.NewsDetailResponse;
 import com.jcs.where.api.response.SuccessResponse;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.frames.common.Html5Url;
 import com.jcs.where.news.model.NewsDetailModel;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.GlideUtil;

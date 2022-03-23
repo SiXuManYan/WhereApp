@@ -26,12 +26,10 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.detail.comment.chiild.StoreCommentChildFragment
 import com.jcs.where.features.store.detail.good.StoreGoodFragment
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
-import com.jcs.where.frams.common.Html5Url
+import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.utils.*
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_store_detail.*
 import kotlinx.android.synthetic.main.layout_store_good_detail_cart.*
 import org.greenrobot.eventbus.EventBus

@@ -93,7 +93,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     override fun initData() {
         presenter = MallHomePresenter(this)
-        presenter.getFirstCategory(true)
+        presenter.getFirstCategory(false)
     }
 
     override fun bindListener() {

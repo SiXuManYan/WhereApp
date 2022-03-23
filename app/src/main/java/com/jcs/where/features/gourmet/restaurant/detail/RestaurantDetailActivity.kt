@@ -23,21 +23,19 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentActivity
 import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
-import com.jcs.where.frams.common.Html5Url
-import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
-import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.utils.*
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_restaurant_detail_2.*
 import java.util.*
 

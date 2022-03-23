@@ -13,7 +13,7 @@ import com.blankj.utilcode.util.SpanUtils;
 import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
-import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.features.web.WebViewActivity;
 
 /**
  * Created by Wangsw  2021/2/3 16:48.

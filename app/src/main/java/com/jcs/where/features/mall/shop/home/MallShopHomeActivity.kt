@@ -15,7 +15,7 @@ import com.jcs.where.features.mall.shop.home.category.MallShopCategoryFragment
 import com.jcs.where.features.mall.shop.home.good.MallShopGoodFragment
 import com.jcs.where.features.mall.shop.home.recommend.MallShopRecommendFragment
 import com.jcs.where.features.search.SearchAllActivity
-import com.jcs.where.frams.common.Html5Url
+import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.MobUtil

@@ -14,7 +14,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.store.refund.StoreRefundAdapter
-import com.jcs.where.hotel.activity.CityPickerActivity
+import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.mine.activity.merchant_settled.SettledTypeActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil

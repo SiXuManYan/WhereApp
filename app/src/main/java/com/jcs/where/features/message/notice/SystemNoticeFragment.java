@@ -1,10 +1,8 @@
 package com.jcs.where.features.message.notice;
 
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -15,7 +13,7 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.base.mvp.BaseMvpFragment;
-import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.features.message.notice.detail.SystemMessageDetailActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;

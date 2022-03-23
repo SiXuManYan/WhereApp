@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,7 +27,6 @@ import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.IntentEntry;
 import com.jcs.where.features.mechanism.MechanismActivity;
-import com.jcs.where.hotel.watcher.AfterInputWatcher;
 import com.jcs.where.news.NewsSearchResultActivity;
 import com.jcs.where.search.adapter.HotSearchAdapter;
 import com.jcs.where.search.adapter.RecommendAdapter;
@@ -225,7 +225,17 @@ public class SearchActivity extends BaseActivity {
     protected void bindListener() {
         mCancelTv.setOnClickListener(view -> finish());
         mSearchEt.setOnEditorActionListener(this::onEditorActionClicked);
-        mSearchEt.addTextChangedListener(new AfterInputWatcher() {
+        mSearchEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (mSearchTag != SearchTag.CONVENIENCE_SERVICE) {

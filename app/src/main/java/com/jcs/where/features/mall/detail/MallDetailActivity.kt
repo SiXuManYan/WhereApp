@@ -26,9 +26,9 @@ import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.message.custom.CustomMessage
-import com.jcs.where.frams.common.Html5Url
-import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
-import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant

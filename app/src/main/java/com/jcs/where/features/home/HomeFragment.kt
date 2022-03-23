@@ -15,7 +15,6 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.google.android.material.appbar.AppBarLayout
 import com.jcs.where.R
-import com.jcs.where.adapter.ModulesAdapter
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.home.HomeNewsResponse
@@ -25,8 +24,8 @@ import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.convenience.activity.ConvenienceServiceActivity
-import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.complex.ConvenienceServiceActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
@@ -41,7 +40,7 @@ import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.home.TravelHomeActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
-import com.jcs.where.hotel.activity.CityPickerActivity
+import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.news.NewsActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity

@@ -17,8 +17,7 @@ import com.jcs.where.api.response.mall.MallBannerCategory
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.currency.WebViewActivity
-import com.jcs.where.features.coupon.center.CouponCenterActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.detail.MallDetailActivity

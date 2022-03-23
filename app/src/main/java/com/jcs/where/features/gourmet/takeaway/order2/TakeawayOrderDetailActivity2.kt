@@ -12,7 +12,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayGoodDataAdapter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailPresenter

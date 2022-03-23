@@ -13,9 +13,8 @@ import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.MechanismDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.currency.WebViewActivity
-import com.jcs.where.features.travel.detail.TravelDetailActivity
-import com.jcs.where.frams.common.Html5Url
+import com.jcs.where.features.web.WebViewActivity
+import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil

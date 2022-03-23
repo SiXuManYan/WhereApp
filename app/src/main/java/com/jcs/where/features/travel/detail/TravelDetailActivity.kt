@@ -15,9 +15,9 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.travel.comment.TravelCommentActivity
-import com.jcs.where.frams.common.Html5Url
-import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
-import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil

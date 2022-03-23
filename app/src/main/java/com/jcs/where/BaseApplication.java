@@ -20,7 +20,7 @@ import com.jcs.where.features.message.MessageCenterActivity;
 import com.jcs.where.features.message.cloud.ConversationActivity;
 import com.jcs.where.features.message.custom.CustomMessage;
 import com.jcs.where.features.message.custom.CustomMessageProvider;
-import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.frames.common.Html5Url;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.storage.entity.UserRongyunData;

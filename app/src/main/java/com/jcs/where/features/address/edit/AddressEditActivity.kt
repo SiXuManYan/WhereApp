@@ -14,7 +14,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.home.watcher.AfterTextChangeWatcher
-import com.jcs.where.hotel.activity.CityPickerActivity
+import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_address_edit.*
 import org.greenrobot.eventbus.EventBus

@@ -616,6 +616,7 @@
     <string name="upload_image">upload image</string>
     <string name="submit_application">submit application</string>
     <string name="refund_image_hint">Vouchers (up to 5)</string>
+    <string name="refund_image_hint_6">Vouchers (up to 6)</string>
     <string name="application_success">application success</string>
     <string name="contact_name_format">Contact：%1$s</string>
     <string name="contact_number_format">Contact number：%1$s</string>
@@ -864,5 +865,6 @@ Gentleman must let go</string>
     <string name="platform_coupon">Platform Coupon</string>
     <string name="shop_offers">Shop Offers</string>
     <string name="platform_offers">Platform Offers</string>
+    <string name="refund_picture">图片</string>
 
 </resources>

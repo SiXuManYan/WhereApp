@@ -31,11 +31,9 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <!--华为角标 common 100 中的jPush-->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
 
     <queries>
         <intent>
@@ -138,7 +136,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".hotel.activity.CityPickerActivity"
+            android:name=".features.city.CityPickerActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -155,7 +153,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".currency.WebViewActivity"
+            android:name=".features.web.WebViewActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -175,7 +173,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".convenience.activity.ConvenienceServiceActivity"
+            android:name=".features.complex.ConvenienceServiceActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
@@ -302,7 +300,7 @@
             android:exported="false" />
 
 
-        <activity android:name=".customer.ExtendChatActivity" />
+        <activity android:name=".features.com100.ExtendChatActivity" />
 
         <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
@@ -370,7 +368,7 @@
             android:exported="false" />
 
         <receiver
-            android:name=".customer.JPushReceiver"
+            android:name=".features.com100.JPushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

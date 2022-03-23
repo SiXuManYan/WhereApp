@@ -16,7 +16,7 @@ import com.jcs.where.api.request.bills.BillsOrderCommit
 import com.jcs.where.api.response.bills.BillsOrderInfo
 import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.store.pay.StorePayAdapter
 import com.jcs.where.features.store.pay.info.PayInfoActivity
 import com.jcs.where.utils.Constant

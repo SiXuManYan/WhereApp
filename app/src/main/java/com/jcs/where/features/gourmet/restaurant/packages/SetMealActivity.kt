@@ -15,10 +15,9 @@ import com.jcs.where.api.response.gourmet.dish.DishDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.order.OrderSubmitActivity
-import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
-import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.utils.BigDecimalUtil
-import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_set_meal_2.*

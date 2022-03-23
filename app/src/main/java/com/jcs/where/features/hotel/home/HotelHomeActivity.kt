@@ -14,7 +14,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.map.HotelMapActivity
 import com.jcs.where.home.dialog.HotelStarDialog
-import com.jcs.where.hotel.activity.CityPickerActivity
+import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
@@ -22,7 +22,6 @@ import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_hotel_home.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**

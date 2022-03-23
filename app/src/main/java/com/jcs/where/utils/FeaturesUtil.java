@@ -33,7 +33,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
-import com.jcs.where.frams.common.Html5Url;
+import com.jcs.where.frames.common.Html5Url;
 import com.jcs.where.utils.image.Glide4Engine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;

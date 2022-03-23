@@ -6,10 +6,8 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.TravelCollectionRequest
-import com.jcs.where.api.response.HotelRoomListResponse
-import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.api.response.travel.TravelDetail
-import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.features.hotel.detail.media.MediaData
 import java.util.ArrayList
 
 /**

@@ -629,6 +629,7 @@
     <string name="upload_image">上传图片</string>
     <string name="submit_application">提交申请</string>
     <string name="refund_image_hint">凭证（最多5张）</string>
+    <string name="refund_image_hint_6">凭证（最多6张）</string>
     <string name="application_success">申请成功</string>
     <string name="contact_name_format">联系人：%1$s</string>
     <string name="contact_number_format">联系电话：%1$s</string>
@@ -873,6 +874,7 @@ Gentleman must let go</string>
     <string name="platform_coupon">平台优惠券</string>
     <string name="shop_offers">商家优惠</string>
     <string name="platform_offers">平台优惠</string>
+    <string name="refund_picture">图片</string>
 
 
 </resources>

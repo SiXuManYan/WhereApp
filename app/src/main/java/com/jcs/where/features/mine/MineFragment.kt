@@ -10,7 +10,7 @@ import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.collection.CollectionActivity

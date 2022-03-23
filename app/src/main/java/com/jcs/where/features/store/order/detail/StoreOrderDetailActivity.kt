@@ -17,7 +17,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity

@@ -18,7 +18,7 @@ import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.AppUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.main.MainActivity
 import com.jcs.where.utils.*
 import com.mob.MobSDK

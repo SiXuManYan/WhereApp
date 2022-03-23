@@ -15,8 +15,8 @@ import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
 import com.jcs.where.features.hotel.book.HotelBookActivity
 import com.jcs.where.features.hotel.detail.HotelFacilitiesAdapter
-import com.jcs.where.hotel.activity.detail.DetailMediaAdapter
-import com.jcs.where.hotel.activity.detail.MediaData
+import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.shuyu.gsyvideoplayer.GSYVideoManager

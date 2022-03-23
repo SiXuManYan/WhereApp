@@ -13,14 +13,12 @@ import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.customer.ExtendChatActivity
+import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_delicacy_order_detail.*
 import org.greenrobot.eventbus.EventBus
 

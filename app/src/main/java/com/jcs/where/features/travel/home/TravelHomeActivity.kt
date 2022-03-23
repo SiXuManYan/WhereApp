@@ -17,7 +17,7 @@ import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.currency.WebViewActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.AppBarStateChangeListener
 import com.jcs.where.features.home.HomeRecommendAdapter
@@ -26,7 +26,7 @@ import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.map.TravelMapActivity
-import com.jcs.where.frams.common.Html5Url
+import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil

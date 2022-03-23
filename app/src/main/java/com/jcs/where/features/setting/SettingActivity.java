@@ -1,6 +1,5 @@
 package com.jcs.where.features.setting;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
-import com.jcs.where.currency.WebViewActivity;
+import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.features.setting.password.ModifyPasswordActivity;
@@ -24,19 +23,14 @@ import com.jcs.where.features.setting.phone.ModifyPhoneActivity;
 import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.BusinessUtils;
-import com.jcs.where.utils.CacheUtil;
-import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
-import com.jcs.where.utils.SPKey;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-
-import io.rong.imkit.RongIM;
 
 /**
  * Created by Wangsw  2021/1/28 15:13.

@@ -15,7 +15,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.gson.reflect.TypeToken
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
-import com.jcs.where.convenience.activity.ConvenienceServiceActivity
+import com.jcs.where.features.complex.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity

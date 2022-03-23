@@ -10,6 +10,7 @@ import android.os.Looper
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,15 +36,13 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
 import com.jcs.where.api.response.search.SearchResultResponse
 import com.jcs.where.api.response.search.SearchResultResponse.TYPE_4_RESTAURANT
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.map.HotelMapViewPagerTransformer
 import com.jcs.where.features.search.result.SearchAllAdapter
-import com.jcs.where.hotel.activity.map.HotelMapViewPagerTransformer
-import com.jcs.where.hotel.watcher.AfterInputWatcher
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocationUtil
 import com.jcs.where.utils.LocationUtil.AddressCallback
 import kotlinx.android.synthetic.main.activity_restaurant_map.*
-import java.util.*
 
 /**
  * Created by Wangsw  2021/5/14 15:18.
@@ -232,7 +231,11 @@ class RestaurantMapActivity : BaseMvpActivity<RestaurantMapPresenter>(), Restaur
 
         }
 
-        search_aet.addTextChangedListener(object : AfterInputWatcher() {
+        search_aet.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
             override fun afterTextChanged(s: Editable) {
                 val finalInput = s.toString().trim()
                 handleSearch(finalInput)

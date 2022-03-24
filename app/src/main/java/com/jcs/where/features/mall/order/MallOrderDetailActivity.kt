@@ -17,8 +17,6 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.mall.detail.MallDetailActivity
-import com.jcs.where.features.mall.refund.apply.MallRefundActivity
-import com.jcs.where.features.mall.refund.detail.MallRefundDetailActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
@@ -192,14 +190,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 }
             }
             3 -> {
-                bottom_container_rl.visibility = View.VISIBLE
-                left_tv.visibility = View.VISIBLE
-                left_tv.text = getString(R.string.to_refund)
-                left_tv.setOnClickListener {
-                    // 申请退款
-                    doRefund()
-                }
-                right_tv.visibility = View.GONE
+                bottom_container_rl.visibility = View.GONE
             }
             4 -> {
                 bottom_container_rl.visibility = View.VISIBLE
@@ -224,24 +215,13 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             5 -> {
 
                 val commentStatus = data.comment_status
-                val isCancel = data.is_cancel
-                if (isCancel == 2 && commentStatus == 3) {
+                if (commentStatus == 3) {
                     bottom_container_rl.visibility = View.GONE
                 } else {
                     bottom_container_rl.visibility = View.VISIBLE
                 }
 
-                if (isCancel == 1) {
-                    left_tv.visibility = View.VISIBLE
-                    left_tv.text = getString(R.string.apply_return)
-                    left_tv.setOnClickListener {
-                        // 申请退货
-                        doRefund()
-                    }
-                } else {
-                    left_tv.visibility = View.VISIBLE
-                }
-
+                left_tv.visibility = View.GONE
 
                 if (commentStatus == 3) {
                     right_tv.visibility = View.GONE
@@ -269,19 +249,9 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 }
             }
             8, 9, 10, 11, 12 -> {
-                //  查看售后详情
-                if (data.aftersale_status == 2) {
-                    bottom_container_rl.visibility = View.VISIBLE
-                    left_tv.visibility = View.VISIBLE
-                    left_tv.text = getString(R.string.after_sale_details)
-                    left_tv.setOnClickListener {
-                        // 查看售后详情
-                        viewRefundDetail()
-                    }
-                    right_tv.visibility = View.GONE
-                } else {
-                    bottom_container_rl.visibility = View.GONE
-                }
+                // 新增了单独的售后详情页，订单详情不处理售后相关
+
+                bottom_container_rl.visibility = View.GONE
 
             }
             else -> {
@@ -318,29 +288,6 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         })
     }
 
-
-    /**
-     * 申请售后
-     */
-    private fun doRefund() {
-
-        startActivity(MallRefundActivity::class.java, Bundle().apply {
-            putSerializable(Constant.PARAM_DATA, ArrayList(mAdapter.data))
-            putInt(Constant.PARAM_ORDER_ID, orderId)
-            putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
-        })
-
-    }
-
-
-    /**
-     * 查看售后详情
-     */
-    private fun viewRefundDetail() {
-        startActivity(MallRefundDetailActivity::class.java, Bundle().apply {
-            putInt(Constant.PARAM_ORDER_ID, orderId)
-        })
-    }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {
         super.onEventReceived(baseEvent)

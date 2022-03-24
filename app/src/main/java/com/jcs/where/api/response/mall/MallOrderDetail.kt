@@ -83,7 +83,6 @@ class MallOrderDetail {
 }
 
 class MallOrderGood :Serializable {
-    var id = 0
     var order_id = 0
     var good_id = 0
     var good_title = ""
@@ -98,6 +97,10 @@ class MallOrderGood :Serializable {
 
     /** 下架 0下架 1上架 */
     var good_status = 0
+
+    // 退款新增
+    var specs_id = 0
+
 
 
 }

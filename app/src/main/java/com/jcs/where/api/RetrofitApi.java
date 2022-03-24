@@ -99,6 +99,7 @@ import com.jcs.where.api.response.mall.MallExpired;
 import com.jcs.where.api.response.mall.MallGood;
 import com.jcs.where.api.response.mall.MallGoodDetail;
 import com.jcs.where.api.response.mall.MallOrderDetail;
+import com.jcs.where.api.response.mall.MallRefundInfo;
 import com.jcs.where.api.response.mall.MallShopCategory;
 import com.jcs.where.api.response.mall.MallShopRecommend;
 import com.jcs.where.api.response.mall.request.MallAddCart;
@@ -1848,8 +1849,9 @@ public interface RetrofitApi {
 
     /**
      * 领取优惠券
-     * @param coupon_id  券id
-     * @param type 领取类型 1平台券 2商户券
+     *
+     * @param coupon_id 券id
+     * @param type      领取类型 1平台券 2商户券
      */
     @POST("estoreapi/v2/coupon")
     Observable<JcsResponse<GetCouponResult>> getCoupon(
@@ -1876,6 +1878,17 @@ public interface RetrofitApi {
      */
     @GET("estoreapi/v2/shop_coupon")
     Observable<JcsResponse<ArrayList<Coupon>>> mallShopCoupon(@Query("shop_id") int shop_id);
+
+
+    /**
+     * 商品售后信息
+     * @param orderId 订单id
+     * @param order_good_id 订单商品id
+     */
+    @GET("estoreapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<MallRefundInfo>> mallRefundInfo(
+            @Path("orderId") int orderId,
+            @Query("order_good_id") int order_good_id);
 
 
 }

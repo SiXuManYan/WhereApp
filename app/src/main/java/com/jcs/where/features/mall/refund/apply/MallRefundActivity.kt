@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.EventBus
  * Created by Wangsw  2021/12/17 19:19.
  * 商城申请售后
  */
+@Deprecated("")
 class MallRefundActivity : BaseMvpActivity<MallRefundPresenter>(), StoreRefundView {
 
 

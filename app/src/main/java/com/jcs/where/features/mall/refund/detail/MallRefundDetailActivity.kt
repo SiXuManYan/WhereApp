@@ -12,6 +12,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.order.MallOrderDetailAdapter
+import com.jcs.where.features.mall.refund.MallRefundActivity2
 import com.jcs.where.features.mall.refund.apply.MallRefundActivity
 import com.jcs.where.features.store.refund.StoreRefundAdapter
 import com.jcs.where.features.store.refund.detail.MallRefundDetailPresenter
@@ -24,7 +25,7 @@ import org.greenrobot.eventbus.EventBus
  * Created by Wangsw  2021/12/17 19:38.
  * 新版商城售后详情
  */
-
+@Deprecated("废弃", replaceWith = ReplaceWith("MallRefundActivity2") )
 class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), MallRefundDetailView {
 
     private var orderId = 0

@@ -12,11 +12,9 @@ class StoreRefundRequest {
     /**
      * "["ssssss","xxxxx"]"
      */
-    var images:String? = null
+    var images: String? = null
 
 }
-
-
 
 
 /**
@@ -29,19 +27,18 @@ class StoreRefundModifyRequest {
     /**
      * "["ssssss","xxxxx"]"
      */
-    var images:String? = null
+    var images: String? = null
 }
 
 
-
-class MallRefundRequest{
+class MallRefundRequest {
 
     var cancel_reason = ""
 
     /**
      * "["ssssss","xxxxx"]"
      */
-    var cancel_images:String? = null
+    var cancel_images: String? = null
 }
 
 /**
@@ -54,5 +51,5 @@ class MallRefundModifyRequest {
     /**
      * "["ssssss","xxxxx"]"
      */
-    var images:String? = null
+    var images: String? = null
 }

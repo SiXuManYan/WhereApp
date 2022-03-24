@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/grey_F5F5F5"
     android:orientation="vertical">
 
     <com.jcs.where.widget.JcsTitle
@@ -27,71 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingTop="@dimen/dp_0"
             android:paddingBottom="@dimen/dp_200">
 
 
             <LinearLayout
-                android:id="@+id/address_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                android:paddingBottom="@dimen/dp_10"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
-                    android:gravity="center_vertical"
-                    android:text="@string/merchant_return_info"
-                    android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/contact_name_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="@string/contact_name_format"
-                    android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_12" />
-
-                <TextView
-                    android:id="@+id/contact_number_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:gravity="center_vertical"
-                    android:text="@string/contact_number_format"
-                    android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_12" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:gravity="center_vertical"
-                    android:text="@string/contact_address_format"
-                    android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_12" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dp_10">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -115,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:itemCount="1"
-                    tools:listitem="@layout/item_dishes_for_order_submit" />
+                    tools:listitem="@layout/item_dishes_for_order_submit_mall" />
 
 
             </LinearLayout>
@@ -171,16 +115,17 @@
                         android:paddingEnd="@dimen/dp_15"
                         android:textColor="@color/orange_FF5B1B"
                         android:textSize="@dimen/sp_14"
-                        tools:text="20200802" />
+                        tools:text="1000" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:background="@color/grey_F5F5F5" />
 
 
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:background="@color/grey_F5F5F5" />
 
 
                 <RelativeLayout
@@ -194,13 +139,13 @@
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/dp_15"
                         android:paddingEnd="@dimen/dp_15"
-                        android:text="申请时间"
+                        android:text="@string/total_price"
                         android:textColor="@color/grey_666666"
                         android:textSize="@dimen/sp_14" />
 
 
                     <TextView
-                        android:id="@+id/cancel_time_tv"
+                        android:id="@+id/good_price_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_47"
                         android:layout_alignParentEnd="true"
@@ -209,16 +154,17 @@
                         android:paddingEnd="@dimen/dp_15"
                         android:textColor="@color/black_333333"
                         android:textSize="@dimen/sp_14"
-                        tools:text="2021年7月1日 17:59:56" />
+                        tools:text="100" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:background="@color/grey_F5F5F5" />
 
 
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:background="@color/grey_F5F5F5" />
 
 
                 <RelativeLayout
@@ -232,13 +178,13 @@
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/dp_15"
                         android:paddingEnd="@dimen/dp_15"
-                        android:text="售后编号"
+                        android:text="@string/shop_offers"
                         android:textColor="@color/grey_666666"
                         android:textSize="@dimen/sp_14" />
 
 
                     <TextView
-                        android:id="@+id/trade_no_tv"
+                        android:id="@+id/shop_offers_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_47"
                         android:layout_alignParentEnd="true"
@@ -247,19 +193,66 @@
                         android:paddingEnd="@dimen/dp_15"
                         android:textColor="@color/black_333333"
                         android:textSize="@dimen/sp_14"
-                        tools:text="00000" />
+                        tools:text="100" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:background="@color/grey_F5F5F5" />
 
 
                 </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_47"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/dp_15"
+                        android:paddingEnd="@dimen/dp_15"
+                        android:text="@string/platform_offers"
+                        android:textColor="@color/grey_666666"
+                        android:textSize="@dimen/sp_14" />
+
+
+                    <TextView
+                        android:id="@+id/platform_offers_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_47"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/dp_15"
+                        android:paddingEnd="@dimen/dp_15"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/sp_14"
+                        tools:text="100" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:background="@color/grey_F5F5F5" />
+
+
+                </RelativeLayout>
+
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
+                android:background="@color/grey_F5F5F5"
                 android:gravity="center_vertical"
                 android:lineSpacingMultiplier="1.2"
-                android:background="@color/grey_F5F5F5"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="@string/refund_delivery_fee_hint"
@@ -286,33 +279,76 @@
                     android:textStyle="bold" />
 
 
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:background="@color/grey_F5F5F5" />
 
 
                 <TextView
-                    android:id="@+id/desc_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:text="@string/problem_description"
+                    android:textColor="@color/black_333333"
+                    android:textSize="@dimen/sp_17"
+                    android:textStyle="bold" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/desc_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_15"
                     android:layout_marginEnd="@dimen/dp_15"
-                    android:background="@drawable/stock_gray_radius_2_f5f5f5"
+                    android:background="@color/white"
                     android:gravity="top"
+                    android:hint="@string/refund_reason_input_hint"
                     android:lineSpacingMultiplier="1.2"
+                    android:minHeight="@dimen/dp_110"
                     android:padding="@dimen/dp_5"
                     android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_12"
-                    tools:text="sdasdasdaadsdsdasdaasdasdasjdasoidjasjoidjoaisjdjasoidjoajdsoasjdjasoidoaissdaadsd" />
+                    android:textColorHint="@color/grey_999999"
+                    android:textSize="@dimen/sp_14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity=""
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_48"
+                        android:gravity="center_vertical"
+                        android:text="@string/refund_picture"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/sp_17"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:text="@string/refund_image_hint_6"
+                        android:textColor="@color/grey_b7b7b7"
+                        android:textSize="@dimen/sp_11" />
+
+
+                </LinearLayout>
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/image_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    tools:itemCount="2"
+                    android:layout_marginStart="@dimen/dp_15"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_refund_image" />
 
 
@@ -325,57 +361,20 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <View
-        android:id="@+id/bottom_v"
+    <TextView
+        android:id="@+id/refund_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_4"
-        android:layout_above="@+id/bottom_rl"
-        android:background="@drawable/shape_navigation_bar_gray"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <RelativeLayout
-        android:id="@+id/bottom_rl"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="@dimen/dp_44"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-
-        <TextView
-            android:id="@+id/change_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_28"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/cancel_tv"
-            android:background="@drawable/stock_gray_radius_14"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_149"
-            android:text="@string/modify_application"
-            android:textSize="@dimen/sp_14"
-            android:visibility="invisible" />
-
-
-        <TextView
-            android:id="@+id/cancel_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_28"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_10"
-            android:background="@drawable/stock_orange_radius_14"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_149"
-            android:text="@string/cancel_application"
-            android:textColor="@color/orange_FF5837"
-            android:textSize="@dimen/sp_14" />
-
-
-    </RelativeLayout>
-
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/shape_blue_radius_25"
+        android:gravity="center"
+        android:text="@string/submit_application"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -888,6 +888,12 @@ Gentleman must let go</string>
 
     <string name="revise_refund">修改申请</string>
     <string name="cancel_refund">取消申请</string>
+    <string name="refund_time">退款时间</string>
+    <string name="refund_number">售后编号</string>
+
+    <string name="waiting_after_sales">待售后</string>
+    <string name="cancellation_after_sale">取消售后</string>
+    <string name="shops_to_receive_desc">商家已同意售后申请，需要您寄回商品给商家，请去售后页面查看商家地址</string>
 
 
 </resources>

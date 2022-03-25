@@ -621,7 +621,7 @@
     <string name="contact_name_format">Contact：%1$s</string>
     <string name="contact_number_format">Contact number：%1$s</string>
     <string name="contact_address_format">Contact address：%1$s</string>
-    <string name="merchant_return_info">Merchant return information</string>
+    <string name="merchant_return_info">Merchant Return Information</string>
     <string name="refund_cancel_request_success">The return request is cancelled successfully</string>
     <string name="take_carts">Take carts</string>
     <string name="delivery_carts">Delivery carts</string>
@@ -877,5 +877,10 @@ Gentleman must let go</string>
 
     <string name="revise_refund">Revise Refund</string>
     <string name="cancel_refund">Cancel Refund</string>
+    <string name="refund_time">Refund Time</string>
+    <string name="refund_number">After Sales Number</string>
+    <string name="waiting_after_sales">Waiting for after-sales</string>
+    <string name="cancellation_after_sale">Cancellation after-sales</string>
+    <string name="shops_to_receive_desc">The merchant has agreed to the after-sales application, and you need to send the goods back to the merchant. Please go to the after-sales page to check the merchant's address</string>
 
 </resources>

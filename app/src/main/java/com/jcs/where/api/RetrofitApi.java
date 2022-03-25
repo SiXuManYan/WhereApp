@@ -1882,7 +1882,8 @@ public interface RetrofitApi {
 
     /**
      * 商品售后信息
-     * @param orderId 订单id
+     *
+     * @param orderId   单个商品订单id
      * @param refund_id 售后id
      */
     @GET("estoreapi/v2/order/refunds/{orderId}")
@@ -1890,5 +1891,22 @@ public interface RetrofitApi {
             @Path("orderId") int orderId,
             @Query("refund_id") int refund_id);
 
+    /**
+     * 商品售后详情
+     * @param orderId   单个商品订单id
+     * @param refund_id 售后id
+     */
+    @GET("estoreapi/v2/order/refunds_info/{orderId}")
+    Observable<JcsResponse<MallRefundInfo>> mallRefundOrderDetail(
+            @Path("orderId") int orderId,
+            @Query("refund_id") int refund_id);
+
+    /**
+     * mall商城  取消 申请退款
+     */
+    @PATCH("estoreapi/v2/order/refunds/{orderId}")
+    Observable<JcsResponse<JsonElement>> cancelRefund(
+            @Path("orderId") int orderId
+    );
 
 }

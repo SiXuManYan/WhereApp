@@ -228,7 +228,7 @@ object BusinessUtils {
 
 
     /**
-     * 订单中的商品状态
+     * 售后状态
      * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
      */
     fun getMallGoodRefundStatusText(status: Int): String = when (status) {

@@ -107,13 +107,12 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
         // 相册
         mImageAdapter = StoreRefundAdapter2().apply {
             addChildClickViewIds(R.id.delete_iv, R.id.image_iv, R.id.image_add_iv)
-            addChildClickViewIds()
             setOnItemChildClickListener(this@MallRefundActivity2)
         }
 
         image_rv.apply {
             adapter = mImageAdapter
-            layoutManager = GridLayoutManager(context, 4, LinearLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(context, 4, GridLayoutManager.VERTICAL, false)
         }
 
         val addItem = RefundImage().apply {
@@ -224,7 +223,6 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
 
     override fun applicationSuccess() {
         ToastUtils.showShort(R.string.application_success)
-        // TODO 回到售后详情，刷新
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }

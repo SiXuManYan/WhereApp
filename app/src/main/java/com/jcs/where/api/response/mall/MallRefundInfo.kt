@@ -9,10 +9,6 @@ class MallRefundInfo {
     /** 订单id */
     var id = 0
 
-    /** 订单状态，自提时：（1：待付款，2：支付审核中，4：待使用，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货），配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货） */
-    var status = 0
-
-
     /** 单个商品所属订单id */
     var order_id = 0
 
@@ -23,6 +19,8 @@ class MallRefundInfo {
     var cancel_images = ArrayList<String>()
 
     var money_info = MallRefundMoneyInfo()
+
+    var address_info  = MallRefundAddressInfo()
 
 }
 
@@ -40,5 +38,18 @@ class MallRefundMoneyInfo {
     /** 平台优惠 */
     var order_coupon_money = ""
 
+    /** 退款时间 */
+    var refund_time: String? = ""
 
+    /** 售后编号 */
+    var serial_number: String? = ""
+
+
+}
+
+
+class MallRefundAddressInfo {
+    var name = ""
+    var tel = ""
+    var address = ""
 }

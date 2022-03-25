@@ -101,6 +101,15 @@ class MallOrderGood :Serializable {
     // 退款新增
     var specs_id = 0
 
+    /** 订单中的商品状态  1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后 */
+    var status = 0
+
+    /** 1代表可以进行操作 2不可进行操作 */
+    var order_good_status = 0
+
+    /** 售后ID */
+    var refund_id = 0
+
 
 
 }

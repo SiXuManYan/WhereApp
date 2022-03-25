@@ -31,8 +31,8 @@ interface MallRefundView2 : BaseMvpView {
 
 class MallRefundPresenter2(private var view: MallRefundView2) : BaseMvpPresenter(view) {
 
-    fun getData(orderId: Int, orderGoodId: Int) {
-        requestApi(mRetrofit.mallRefundInfo(orderId, orderGoodId), object : BaseMvpObserver<MallRefundInfo>(view) {
+    fun getData(orderId: Int, refund_id: Int) {
+        requestApi(mRetrofit.mallRefundInfo(orderId, refund_id), object : BaseMvpObserver<MallRefundInfo>(view) {
             override fun onSuccess(response: MallRefundInfo) {
                 view.bindDetail(response)
             }

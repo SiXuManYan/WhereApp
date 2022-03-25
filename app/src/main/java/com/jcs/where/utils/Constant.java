@@ -40,6 +40,7 @@ public class Constant {
     public static final String PARAM_RESTAURANT_NAME = "param_restaurant_name";
     public static final String PARAM_NUMBER = "param_number";
     public static final String PARAM_ORDER_ID = "param_order_id";
+    public static final String PARAM_REFUND_ID = "param_refund_id";
     public static final String PARAM_ORDER_GOOD_ID = "param_order_good_id";
     public static final String PARAM_COMMENT_ID = "param_comment_id";
     public static final String PARAM_HOTEL_ID = "param_hotel_id";

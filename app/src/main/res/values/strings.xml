@@ -876,5 +876,18 @@ Gentleman must let go</string>
     <string name="platform_offers">平台优惠</string>
     <string name="refund_picture">图片</string>
 
+    <!-- 售后 -->
+    <string name="apply_refund">申请售后</string>
+    <string name="refuses_to_return">商家拒绝售后</string>
+    <string name="under_review">商家审核中</string>
+    <string name="shops_to_receive">商家待收货</string>
+
+    <string name="refunded_success">退款成功</string>
+    <string name="refunded_canceled">取消售后</string>
+
+
+    <string name="revise_refund">修改申请</string>
+    <string name="cancel_refund">取消申请</string>
+
 
 </resources>

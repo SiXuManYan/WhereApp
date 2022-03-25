@@ -1883,12 +1883,12 @@ public interface RetrofitApi {
     /**
      * 商品售后信息
      * @param orderId 订单id
-     * @param order_good_id 订单商品id
+     * @param refund_id 售后id
      */
     @GET("estoreapi/v2/order/refunds/{orderId}")
     Observable<JcsResponse<MallRefundInfo>> mallRefundInfo(
             @Path("orderId") int orderId,
-            @Query("order_good_id") int order_good_id);
+            @Query("refund_id") int refund_id);
 
 
 }

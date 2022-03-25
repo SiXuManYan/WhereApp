@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.order
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -9,13 +10,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallOrderGood
+import com.jcs.where.features.mall.refund.MallRefundActivity2
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 
 /**
  * Created by Wangsw  2021/12/16 16:23.
  *
  */
-class MallOrderDetailAdapter : BaseQuickAdapter<MallOrderGood, BaseViewHolder>(R.layout.item_dishes_for_order_submit_mall) {
+class MallOrderDetailAdapter : BaseQuickAdapter<MallOrderGood, BaseViewHolder>(R.layout.item_dishes_for_order_detail) {
     override fun convert(holder: BaseViewHolder, item: MallOrderGood) {
         val image_iv = holder.getView<ImageView>(R.id.order_image_iv)
         val good_name_tv = holder.getView<TextView>(R.id.good_name_tv)
@@ -43,6 +46,23 @@ class MallOrderDetailAdapter : BaseQuickAdapter<MallOrderGood, BaseViewHolder>(R
         } else {
             param.topMargin = 0
         }
+
+        // 售后
+        val refundHandle = holder.getView<TextView>(R.id.refund_handle_tv)
+        if (item.order_good_status == 1) {
+            refundHandle.visibility = View.VISIBLE
+            refundHandle.text = BusinessUtils.getMallGoodRefundStatusText(item.status)
+
+            if (item.status == 1 || item.status == 7) {
+                refundHandle.setOnClickListener {
+                    MallRefundActivity2.navigation(context, item.order_id, item.refund_id, false)
+                }
+            }
+
+        } else {
+            refundHandle.visibility = View.GONE
+        }
+
 
     }
 }

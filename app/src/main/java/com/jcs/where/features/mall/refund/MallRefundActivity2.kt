@@ -1,7 +1,10 @@
 package com.jcs.where.features.mall.refund
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +20,7 @@ import com.jcs.where.api.response.mall.MallRefundInfo
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.order.MallOrderDetailAdapter
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
@@ -34,11 +38,11 @@ import org.greenrobot.eventbus.EventBus
  */
 class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundView2, OnItemChildClickListener {
 
-    /** 订单id */
+    /** 商品订单id */
     private var orderId = 0
 
-    /** 订单商品ID */
-    private var orderGoodId = 0
+    /** 售后ID */
+    private var refundId = 0
 
     /** 是否是修改申请内容 */
     private var isChange = false
@@ -50,12 +54,31 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
 
     override fun getLayoutId() = R.layout.activity_mall_refund
 
+
+    companion object {
+
+        fun navigation(context: Context, orderId: Int, refundId: Int, isChange: Boolean) {
+
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_ORDER_ID, orderId)
+                putInt(Constant.PARAM_REFUND_ID, refundId)
+                putBoolean(Constant.PARAM_BOOLEAN, isChange)
+            }
+            val intent = Intent(context, MallRefundActivity2::class.java)
+                .putExtras(bundle)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
+
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
         initExtra()
         initContent()
-
-
     }
 
 
@@ -63,7 +86,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
 
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
-            orderGoodId = it.getInt(Constant.PARAM_ORDER_GOOD_ID, 0)
+            refundId = it.getInt(Constant.PARAM_REFUND_ID, 0)
             isChange = it.getBoolean(Constant.PARAM_BOOLEAN, false)
         }
 
@@ -111,7 +134,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
 
     override fun initData() {
         presenter = MallRefundPresenter2(this)
-        presenter.getData(orderId, orderGoodId)
+        presenter.getData(orderId, refundId)
     }
 
 
@@ -213,9 +236,8 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
                 allAlreadyUploadImage.addAll(link)
             }
             val descImages = Gson().toJson(allAlreadyUploadImage)
-//            presenter.modifyRefundAgain(orderId, desc, descImages)
-
-        }else {
+            presenter.doRefund(orderId, desc, descImages)
+        } else {
             val descImages = Gson().toJson(link)
             presenter.doRefund(orderId, desc, descImages)
         }

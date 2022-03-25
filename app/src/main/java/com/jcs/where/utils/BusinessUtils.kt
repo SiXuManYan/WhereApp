@@ -224,4 +224,21 @@ object BusinessUtils {
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SIGN_OUT))
     }
 
+
+
+
+    /**
+     * 订单中的商品状态
+     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
+     */
+    fun getMallGoodRefundStatusText(status: Int): String = when (status) {
+        1 -> StringUtils.getString(R.string.apply_refund)
+        2 -> StringUtils.getString(R.string.under_review)
+        3 -> StringUtils.getString(R.string.shops_to_receive)
+        4 -> StringUtils.getString(R.string.refuses_to_return)
+        5 -> StringUtils.getString(R.string.refunding)
+        6 -> StringUtils.getString(R.string.refunded_success)
+        7 -> StringUtils.getString(R.string.apply_refund)
+        else -> ""
+    }
 }

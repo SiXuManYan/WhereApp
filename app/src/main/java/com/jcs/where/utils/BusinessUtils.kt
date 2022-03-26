@@ -228,10 +228,10 @@ object BusinessUtils {
 
 
     /**
-     * 售后状态
+     * 商城售后文案
      * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
      */
-    fun getMallGoodRefundStatusText(status: Int): String = when (status) {
+    fun getMallGoodRefundButtonText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.apply_refund)
         2 -> StringUtils.getString(R.string.under_review)
         3 -> StringUtils.getString(R.string.shops_to_receive)
@@ -241,4 +241,36 @@ object BusinessUtils {
         7 -> StringUtils.getString(R.string.apply_refund)
         else -> ""
     }
+
+    /**
+     * 商城商品后状态文案
+     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
+     */
+    fun getMallGoodRefundStatusText(status: Int): String = when (status) {
+        1 -> StringUtils.getString(R.string.waiting_after_sales)
+        2 -> StringUtils.getString(R.string.under_review)
+        3 -> StringUtils.getString(R.string.shops_to_receive)
+        4 -> StringUtils.getString(R.string.refuses_to_return)
+        5 -> StringUtils.getString(R.string.refunding)
+        6 -> StringUtils.getString(R.string.refunded_success)
+        7 -> StringUtils.getString(R.string.cancellation_after_sale)
+        else -> ""
+    }
+
+    /**
+     * 商品售后状态描述
+     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
+     */
+    fun getMallGoodRefundStatusDescText(status: Int): String = when (status) {
+        2 -> StringUtils.getString(R.string.store_status_desc_10)
+        3 -> StringUtils.getString(R.string.shops_to_receive_desc)
+        4 -> StringUtils.getString(R.string.store_status_desc_12)
+        5 -> StringUtils.getString(R.string.store_status_desc_8)
+        6 -> StringUtils.getString(R.string.store_status_desc_9)
+        else -> ""
+    }
+
+
+
+
 }

@@ -12,6 +12,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.order.OrderChildFragment
+import com.jcs.where.features.order.refund.RefundOrderFragment
 import com.jcs.where.storage.entity.User
 import kotlinx.android.synthetic.main.fragment_order_parent.*
 
@@ -76,7 +77,6 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
 
         tabs_type.setViewPager(viewpager, titles.toTypedArray())
-//        tabs_type.setViewPager(viewpager)
     }
 
 
@@ -91,7 +91,8 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
                 login_rl.visibility = View.VISIBLE
             }
             EventCode.EVENT_REFRESH_ORDER_LIST,
-            EventCode.EVENT_ORDER_COMMIT_SUCCESS->{
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS,
+            -> {
                 presenter.getTabs()
             }
             else -> {
@@ -104,7 +105,20 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
         override fun getPageTitle(position: Int): CharSequence = type[position].title
 
-        override fun getItem(position: Int): Fragment = OrderChildFragment.getInstance(type[position].type)
+        override fun getItem(position: Int): Fragment {
+
+
+            val typeValue = type[position].type
+
+            return if (typeValue == 6) {
+                // 商城售后
+                RefundOrderFragment()
+            } else {
+                OrderChildFragment.getInstance(typeValue)
+            }
+
+
+        }
 
         override fun getCount(): Int = type.size
     }

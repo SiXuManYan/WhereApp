@@ -52,7 +52,7 @@ class MallOrderDetailAdapter : BaseQuickAdapter<MallOrderGood, BaseViewHolder>(R
         val refundHandle = holder.getView<TextView>(R.id.refund_handle_tv)
         if (item.order_good_status == 1) {
             refundHandle.visibility = View.VISIBLE
-            refundHandle.text = BusinessUtils.getMallGoodRefundStatusText(item.status)
+            refundHandle.text = BusinessUtils.getMallGoodRefundButtonText(item.status)
 
             if (item.status == 1 || item.status == 7) {
                 refundHandle.setOnClickListener {

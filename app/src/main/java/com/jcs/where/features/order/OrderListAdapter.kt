@@ -1,4 +1,4 @@
-package com.jcs.where.home.adapter
+package com.jcs.where.features.order
 
 import android.content.Intent
 import android.os.Bundle

@@ -21,6 +21,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.refund.MallRefundActivity2
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_mall_refund_order_detail.*
@@ -112,8 +113,8 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
 
     override fun bindDetail(response: MallRefundInfo) {
         val goods = response.goods
-        status_tv.text = presenter.getMallGoodRefundStatusText(goods.status)
-        status_desc_tv.text = presenter.getStatusDescText(goods.status)
+        status_tv.text = BusinessUtils.getMallGoodRefundStatusText(goods.status)
+        status_desc_tv.text = BusinessUtils.getMallGoodRefundStatusDescText(goods.status)
 
         val moneyInfo = response.money_info
         price_tv.text = getString(R.string.price_unit_format, moneyInfo.refund_money)
@@ -228,33 +229,7 @@ class MallRefundDetailPresenter(private var view: MallRefundDetailView) : BaseMv
         })
     }
 
-    /**
-     * 售后状态
-     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
-     */
-    fun getMallGoodRefundStatusText(status: Int): String = when (status) {
-        1 -> StringUtils.getString(R.string.waiting_after_sales)
-        2 -> StringUtils.getString(R.string.under_review)
-        3 -> StringUtils.getString(R.string.shops_to_receive)
-        4 -> StringUtils.getString(R.string.refuses_to_return)
-        5 -> StringUtils.getString(R.string.refunding)
-        6 -> StringUtils.getString(R.string.refunded_success)
-        7 -> StringUtils.getString(R.string.cancellation_after_sale)
-        else -> ""
-    }
 
-    /**
-     * 订单中的商品状态
-     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
-     */
-    fun getStatusDescText(status: Int): String = when (status) {
-        2 -> StringUtils.getString(R.string.store_status_desc_10)
-        3 -> StringUtils.getString(R.string.shops_to_receive_desc)
-        4 -> StringUtils.getString(R.string.store_status_desc_12)
-        5 -> StringUtils.getString(R.string.store_status_desc_8)
-        6 -> StringUtils.getString(R.string.store_status_desc_9)
-        else -> ""
-    }
 
     fun cancelRefund(goodOrderId: Int) {
         requestApi(mRetrofit.cancelRefund(goodOrderId), object : BaseMvpObserver<JsonElement>(view) {

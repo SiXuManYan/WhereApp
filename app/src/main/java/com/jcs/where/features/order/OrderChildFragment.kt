@@ -14,22 +14,15 @@ import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
 import com.jcs.where.features.hotel.order.HotelOrderDetailActivity
 import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
-import com.jcs.where.home.adapter.ConfirmReceipt
-import com.jcs.where.home.adapter.OrderListAdapter
-import com.jcs.where.storage.entity.User
-import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
-import com.jcs.where.utils.SPKey
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_order_child.*
-import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/5/12 14:08.
@@ -67,7 +60,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.white))
-        val emptyView = EmptyView(context).apply {
+        val emptyView = EmptyView(requireContext()).apply {
             showEmptyDefault()
         }
         mAdapter = OrderListAdapter().apply {

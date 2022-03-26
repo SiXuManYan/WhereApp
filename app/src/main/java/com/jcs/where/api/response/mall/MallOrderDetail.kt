@@ -110,6 +110,8 @@ class MallOrderGood :Serializable {
     /** 售后ID */
     var refund_id = 0
 
+    /** 退款金额 */
+    var refund_money = ""
 
 
 }

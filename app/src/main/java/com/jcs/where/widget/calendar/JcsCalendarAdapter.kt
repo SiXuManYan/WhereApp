@@ -87,7 +87,7 @@ class JcsCalendarAdapter(sectionHeadResId: Int, layoutResId: Int, data: List<Cal
          * 中文：2021-01-10
          * en: 2021-10-11
          */
-        var showYearMonthDayDateWithSplit: String? = null
+        var showYearMonthDayDateWithSplit: String = ""
 
         /**
          * 中英文：Fri

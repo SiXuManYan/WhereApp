@@ -116,6 +116,7 @@ import com.jcs.where.api.response.merchant.MerchantApplyRecord;
 import com.jcs.where.api.response.message.RongCloudUserResponse;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.api.response.order.OrderListResponse;
+import com.jcs.where.api.response.order.RefundOrder;
 import com.jcs.where.api.response.order.bill.BillOrderDetails;
 import com.jcs.where.api.response.order.store.RefundDetail;
 import com.jcs.where.api.response.order.store.RefundDetailMall;
@@ -1908,5 +1909,14 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> cancelRefund(
             @Path("orderId") int orderId
     );
+
+
+    /**
+     * 售后订单列表
+     *
+     */
+    @GET("estoreapi/v2/order/refunds_list")
+    Observable<JcsResponse<PageResponse<RefundOrder>>> refundOrderList(
+            @Query("page") int page);
 
 }

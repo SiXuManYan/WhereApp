@@ -209,6 +209,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
                 username = resident
                 phone = userPhone
                 start_date = mStartDateBean.showYearMonthDayDateWithSplit
+
                 end_date = mEndDateBean.showYearMonthDayDateWithSplit
                 room_num = roomNumber.toString()
                 country_code = mCountryPrefix

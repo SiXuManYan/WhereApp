@@ -167,7 +167,7 @@ class OrderStoreGoods {
 /**
  * 商城商品信息
  */
-class OrderMallGoods {
+class OrderMallGoods  {
 
     /** 商品id */
     var id = 0

@@ -545,6 +545,7 @@
         <activity android:name=".features.coupon.center.CouponCenterActivity" />
         <activity android:name=".features.mall.refund.MallRefundActivity2" />
         <activity android:name=".features.mall.refund.order.MallRefundDetailActivity" />
+        <activity android:name=".features.comment.batch.BatchCommentActivity" />
 
 
     </application>

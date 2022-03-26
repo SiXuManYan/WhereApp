@@ -18,6 +18,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.order.OrderListResponse
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.comment.CommentPostActivity
+import com.jcs.where.features.comment.batch.BatchCommentActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
@@ -519,7 +520,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                         right_tv.text = context.getString(R.string.evaluation_go)
                         right_tv.setOnClickListener {
                             // 去评价
-                            CommentPostActivity.navigation(context, 2, null, item.id)
+//                            BatchCommentActivity.navigation(context, item.id, modelData.goods)
                         }
                     }
                 } else {

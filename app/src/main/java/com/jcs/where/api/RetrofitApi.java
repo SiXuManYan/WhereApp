@@ -22,6 +22,7 @@ import com.jcs.where.api.request.account.ThreePartyLoginRequest;
 import com.jcs.where.api.request.bills.BillsOrderCommit;
 import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.bills.UpLoadMallPayAccountInfo;
+import com.jcs.where.api.request.hotel.BatchComment;
 import com.jcs.where.api.request.hotel.FoodCommitComment;
 import com.jcs.where.api.request.hotel.HotelCommitComment;
 import com.jcs.where.api.request.hotel.TravelCommitComment;
@@ -1894,6 +1895,7 @@ public interface RetrofitApi {
 
     /**
      * 商品售后详情
+     *
      * @param orderId   单个商品订单id
      * @param refund_id 售后id
      */
@@ -1913,10 +1915,19 @@ public interface RetrofitApi {
 
     /**
      * 售后订单列表
-     *
      */
     @GET("estoreapi/v2/order/refunds_list")
     Observable<JcsResponse<PageResponse<RefundOrder>>> refundOrderList(
             @Query("page") int page);
+
+
+    /**
+     * 批量评价
+     */
+    @POST("estoreapi/v2/comments_order")
+    Observable<JcsResponse<JsonElement>> batchComment(@Body BatchComment batchComment);
+
+
+
 
 }

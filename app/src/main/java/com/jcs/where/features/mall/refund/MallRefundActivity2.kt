@@ -95,6 +95,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
     private fun initContent() {
 
         // 商品
+        mAdapter = MallOrderDetailAdapter()
         good_rv.apply {
             adapter = mAdapter
             isNestedScrollingEnabled = true
@@ -111,6 +112,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
         }
 
         image_rv.apply {
+            isNestedScrollingEnabled = true
             adapter = mImageAdapter
             layoutManager = GridLayoutManager(context, 4, GridLayoutManager.VERTICAL, false)
         }

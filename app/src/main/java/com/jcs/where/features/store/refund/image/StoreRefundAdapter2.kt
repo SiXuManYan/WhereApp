@@ -7,11 +7,12 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.utils.GlideUtil
+import java.io.Serializable
 
 /**
  * 图片选择、图片展示
  */
-class RefundImage : MultiItemEntity {
+class RefundImage : MultiItemEntity,Serializable {
 
 
     companion object {

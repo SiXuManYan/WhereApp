@@ -62,6 +62,7 @@ class BatchCommentAdapter : BaseQuickAdapter<BatchCommentItem, BaseViewHolder>(R
         comment_star_view.setStarCount(item.star)
         comment_star_view.setStoreItemOnClickListener {
             comment_value_tv.text = BusinessUtils.getCommentRatingText(it + 1)
+            item.star = it
         }
 
 

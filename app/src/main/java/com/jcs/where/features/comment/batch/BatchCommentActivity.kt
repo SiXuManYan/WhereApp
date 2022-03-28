@@ -55,7 +55,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             // 订单id
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ORDER_ID, orderId)
-                putSerializable(Constant.PARAM_DATA , arrayList)
+                putSerializable(Constant.PARAM_DATA, arrayList)
             }
             val intent = Intent(context, BatchCommentActivity::class.java)
                 .putExtras(bundle)
@@ -91,7 +91,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
         }
         batch_comment_rv.apply {
             adapter = mAdapter
-            layoutManager =  LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerDecoration(getColor(R.color.white), SizeUtils.dp2px(16f), 0, 0))
 
         }
@@ -110,8 +110,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
 
         commit_tv.setOnClickListener {
             commit_tv.isClickable = false
-            presenter.handleComment(mAdapter)
-
+            presenter.handleComment(mAdapter,orderId)
 
 
         }

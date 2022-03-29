@@ -36,7 +36,7 @@ class RefundOrderAdapter : BaseQuickAdapter<RefundOrder, BaseViewHolder>(R.layou
         holder.setText(R.id.good_sku_tv, goodInfo.good_specs)
 
 
-        holder.setText(R.id.total_tv , StringUtils.getString(R.string.pieces_format , goodInfo.good_num))
+        holder.setText(R.id.total_number_tv , StringUtils.getString(R.string.pieces_format , goodInfo.good_num))
         holder.setText(R.id.total_price_tv , StringUtils.getString(R.string.total_price_format , goodInfo.refund_money))
 
 

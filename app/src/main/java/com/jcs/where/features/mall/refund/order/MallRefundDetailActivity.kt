@@ -42,6 +42,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
     /** 售后ID */
     private var refundId = 0
 
+    override fun isStatusDark() = true
 
     private lateinit var mImageAdapter: StoreRefundAdapter2
 
@@ -87,6 +88,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
     private fun initExtra() {
         intent.extras?.let {
             goodOrderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
+            refundId = it.getInt(Constant.PARAM_REFUND_ID, 0)
         }
     }
 
@@ -171,7 +173,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
         desc_tv.text = response.cancel_reason
         response.cancel_images.forEach {
             val apply = RefundImage().apply {
-                type = RefundImage.TYPE_EDIT
+                type = RefundImage.TYPE_SHOW
                 imageSource = it
             }
             mImageAdapter.addData(apply)

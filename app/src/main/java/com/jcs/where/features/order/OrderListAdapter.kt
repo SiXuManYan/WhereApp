@@ -536,7 +536,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         child_good_rv.apply {
             adapter = goodAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(8f), 0, 0))
+
+            if (itemDecorationCount == 0) {
+                addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(8f), 0, 0))
+            }
         }
 
 

@@ -74,15 +74,15 @@
     <TextView
         android:id="@+id/refund_handle_tv"
         android:layout_width="@dimen/dp_140"
-        tools:visibility="visible"
-        android:visibility="gone"
         android:layout_height="@dimen/dp_28"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:background="@drawable/stock_gray_radius_14"
         android:gravity="center"
         android:text="@string/apply_refund"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
 </RelativeLayout>

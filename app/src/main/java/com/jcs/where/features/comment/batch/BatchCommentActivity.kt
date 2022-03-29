@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.request.hotel.BatchCommentItem
+import com.jcs.where.api.response.mall.MallOrderGood
 import com.jcs.where.api.response.order.OrderMallGoods
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -38,11 +39,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
 
     companion object {
 
-        /**
-         * @param orderId 订单id(如需要)
-         *
-         */
-        fun navigation(context: Context, orderId: Int, goods: ArrayList<OrderMallGoods>) {
+        fun navigation(context: Context, orderId: Int, goods: MutableList<OrderMallGoods>) {
 
             // 商品
             val arrayList = ArrayList<BatchCommentItem>()
@@ -56,6 +53,28 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
                 arrayList.add(apply)
             }
 
+            start(context, orderId, arrayList)
+        }
+
+        fun navigation2(context: Context, orderId: Int, goods: MutableList<MallOrderGood>) {
+
+            // 商品
+            val arrayList = ArrayList<BatchCommentItem>()
+            goods.forEach {
+                val apply = BatchCommentItem().apply {
+                    good_id = it.good_id
+                    nativeGoodImage = it.good_image
+                    nativeGoodName = it.good_title
+                    nativeGoodNumber = it.good_num
+                }
+                arrayList.add(apply)
+            }
+
+            start(context, orderId, arrayList)
+        }
+
+
+        private fun start(context: Context, orderId: Int, arrayList: ArrayList<BatchCommentItem>) {
             // 订单id
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ORDER_ID, orderId)

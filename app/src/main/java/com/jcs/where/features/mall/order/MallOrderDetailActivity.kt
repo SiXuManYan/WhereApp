@@ -15,9 +15,8 @@ import com.jcs.where.api.response.mall.MallOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.comment.CommentPostActivity
+import com.jcs.where.features.comment.batch.BatchCommentActivity
 import com.jcs.where.features.mall.detail.MallDetailActivity
-import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -215,38 +214,20 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             5 -> {
 
                 val commentStatus = data.comment_status
-                if (commentStatus == 3) {
-                    bottom_container_rl.visibility = View.GONE
-                } else {
+                if (commentStatus == 1) {
+                    // 去评价
                     bottom_container_rl.visibility = View.VISIBLE
-                }
+                    right_tv.visibility = View.VISIBLE
+                    right_tv.text = getString(R.string.evaluation_go)
+                    right_tv.setOnClickListener {
+                        BatchCommentActivity.navigation2(this, orderId, mAdapter.data)
+                    }
 
+                } else {
+                    bottom_container_rl.visibility = View.GONE
+                }
                 left_tv.visibility = View.GONE
 
-                if (commentStatus == 3) {
-                    right_tv.visibility = View.GONE
-                } else {
-                    right_tv.visibility = View.VISIBLE
-
-                    if (commentStatus == 1) {
-                        right_tv.text = getString(R.string.evaluation_go)
-                        right_tv.setOnClickListener {
-                            // 去评价
-                            CommentPostActivity.navigation(this, 2, null, orderId, shopName, shopImage)
-                        }
-                    }
-
-                    if (commentStatus == 2) {
-                        right_tv.text = getString(R.string.view_evaluation)
-                        right_tv.setOnClickListener {
-                            // 查看评价
-                            startActivity(StoreCommentDetailActivity::class.java, Bundle().apply {
-                                putInt(Constant.PARAM_COMMENT_ID, data.comments_id)
-                                putInt(Constant.PARAM_TYPE, 1)
-                            })
-                        }
-                    }
-                }
             }
             8, 9, 10, 11, 12 -> {
                 // 新增了单独的售后详情页，订单详情不处理售后相关

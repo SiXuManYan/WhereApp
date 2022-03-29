@@ -45,7 +45,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         addItemType(OrderListResponse.ORDER_TYPE_DINE_2, R.layout.item_order_list_food)
         addItemType(OrderListResponse.ORDER_TYPE_TAKEAWAY_3, R.layout.item_order_list_takeaway)
         addItemType(OrderListResponse.ORDER_TYPE_STORE_4, R.layout.item_order_list_store)
-        addItemType(OrderListResponse.ORDER_TYPE_STORE_MALL_5, R.layout.item_order_list_store)
+        addItemType(OrderListResponse.ORDER_TYPE_STORE_MALL_5, R.layout.item_order_list_mall)
     }
 
     /** mall 商城确认收货 */
@@ -438,6 +438,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
     /** mall 商城 */
     private fun bindMallItem(holder: BaseViewHolder, item: OrderListResponse) {
 
+        var goodAdapter = MallGoodAdapter()
+
         val modelData = item.model_data
         if (modelData == null) {
             return
@@ -457,7 +459,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val first_tv = holder.getView<TextView>(R.id.first_tv)
         val second_tv = holder.getView<TextView>(R.id.second_tv)
         val third_tv = holder.getView<TextView>(R.id.third_tv)
+
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
+
+
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
             MallShopHomeActivity.navigation(context, item.model_id)
@@ -465,20 +470,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         val options = RequestOptions.bitmapTransform(
             GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL)
-        )
-            .error(R.mipmap.ic_empty_gray)
+        ).error(R.mipmap.ic_empty_gray)
             .placeholder(R.mipmap.ic_empty_gray)
 
-
-
-        if (goods.isNotEmpty()) {
-            val goodImage = goods[0].good_image as String
-            Glide.with(context).load(goodImage).apply(options).into(image_iv)
-            first_tv.text = goods[0].good_title
-            second_tv.text = StringUtils.getString(R.string.quantity_format, goods[0].good_num)
-        }
-
-        third_tv.text = StringUtils.getString(R.string.total_price_format, item.price.toPlainString())
 
         // 底部
         val right_tv = holder.getView<TextView>(R.id.right_tv)
@@ -533,6 +527,20 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
 
         }
+
+        // 商品相关
+
+        val total_money_tv = holder.getView<TextView>(R.id.total_money_tv)
+        val total_count_tv = holder.getView<TextView>(R.id.total_count_tv)
+
+        total_money_tv.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
+        total_count_tv.text = StringUtils.getString(R.string.count_format, item.num)
+
+
+        goodAdapter.showSku = goods.size <= 1
+        goodAdapter.setNewInstance(goods)
+
+
     }
 
     private fun startActivity(target: Class<*>, bundle: Bundle?) {
@@ -558,3 +566,5 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 interface ConfirmReceipt {
     fun onConfirmReceiptClick(orderId: Int)
 }
+
+

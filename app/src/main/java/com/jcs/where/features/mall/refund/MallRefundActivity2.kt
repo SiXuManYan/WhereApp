@@ -20,7 +20,6 @@ import com.jcs.where.api.response.mall.MallRefundInfo
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.order.MallOrderDetailAdapter
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
@@ -46,6 +45,10 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
 
     /** 是否是修改申请内容 */
     private var isChange = false
+
+    /** 用于请求退款的订单id */
+    private var handleRefundOrderId = 0
+
 
     private lateinit var mAdapter: MallOrderDetailAdapter
     private lateinit var mImageAdapter: StoreRefundAdapter2
@@ -202,6 +205,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
             mImageAdapter.addData(apply)
         }
 
+        handleRefundOrderId = response.order_id
 
     }
 
@@ -213,11 +217,11 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
                 ToastUtils.showShort(R.string.refund_reason_input_hint)
                 return@setOnClickListener
             }
-            if (mImageAdapter.data.size > 2) {
+            if (mImageAdapter.data.size > 1) {
 
-                presenter.upLoadImage(mImageAdapter, orderId, desc)
+                presenter.upLoadImage(mImageAdapter, handleRefundOrderId, desc)
             } else {
-                presenter.doRefund(orderId, desc)
+                presenter.doRefund(handleRefundOrderId, desc)
             }
 
         }

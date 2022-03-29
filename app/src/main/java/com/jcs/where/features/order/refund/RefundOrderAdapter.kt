@@ -27,17 +27,14 @@ class RefundOrderAdapter : BaseQuickAdapter<RefundOrder, BaseViewHolder>(R.layou
         val view_detail_tv = holder.getView<TextView>(R.id.view_detail_tv)
 
         holder.setText(R.id.name_tv, item.shop_title)
+
         holder.setText(R.id.order_status_tv, BusinessUtils.getMallGoodRefundStatusText(item.status))
 
         val goodInfo = item.good_info
         holder.setText(R.id.good_name_tv, goodInfo.good_title)
-        val good_name_tv = holder.getView<TextView>(R.id.good_name_tv)
 
-        val buffer = StringBuffer()
-        goodInfo.good_specs.forEach {
-            buffer.append(it.key + ":" + it.value + "; ")
-        }
-        good_name_tv.text = buffer
+        holder.setText(R.id.good_sku_tv, goodInfo.good_specs)
+
 
         holder.setText(R.id.total_tv , StringUtils.getString(R.string.pieces_format , goodInfo.good_num))
         holder.setText(R.id.total_price_tv , StringUtils.getString(R.string.total_price_format , goodInfo.refund_money))

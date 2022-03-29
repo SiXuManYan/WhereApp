@@ -61,6 +61,9 @@ class OrderListResponse : MultiItemEntity {
 
     var shop_images = ArrayList<String>()
 
+    /** mall estore商城 商品总数*/
+    var num = 0
+
 
 
     companion object {

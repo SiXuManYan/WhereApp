@@ -21,14 +21,12 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.refund.MallRefundActivity2
 import com.jcs.where.features.mall.refund.complaint.ComplaintActivity
-import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_mall_refund_order_detail.*
-
 import kotlinx.android.synthetic.main.item_dishes_for_order_submit_mall.*
 import org.greenrobot.eventbus.EventBus
 
@@ -197,7 +195,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
         }
 
         // 投诉
-        if (response.complaint == 0) {
+        if (goodStatus == 4 && response.complaint == 0) {
             complaint_tv.visibility = View.VISIBLE
         } else {
             complaint_tv.visibility = View.GONE

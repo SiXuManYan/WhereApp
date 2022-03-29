@@ -122,7 +122,7 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
                 ToastUtils.showShort(R.string.refund_reason_input_hint)
                 return@setOnClickListener
             }
-            if (mImageAdapter.data.size > 2) {
+            if (mImageAdapter.data.size > 1) {
 
                 presenter.upLoadImage(mImageAdapter, orderId, desc)
             } else {

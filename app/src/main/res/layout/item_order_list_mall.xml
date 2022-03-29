@@ -67,54 +67,52 @@
     </RelativeLayout>
 
 
-    <LinearLayout
+    <!-- 多个商品 -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dp_75">
 
-        <ImageView
-            android:id="@+id/image_iv"
-            android:layout_width="@dimen/dp_56"
-            android:layout_height="@dimen/dp_56"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:scaleType="centerInside"
-            tools:src="@tools:sample/avatars" />
-
-
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/child_good_rv"
+            tools:listitem="@layout/item_order_list_mall_child"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_56"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:layout_width="@dimen/dp_87"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:alpha="0.8">
 
             <TextView
-                android:id="@+id/first_tv"
+                android:id="@+id/total_money_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:ellipsize="end"
-                android:maxLines="1"
+                android:gravity="center"
                 android:textColor="@color/black_333333"
                 android:textSize="@dimen/sp_14"
-                tools:text="2-3人夏日清爽套餐" />
+                android:textStyle="bold"
+                tools:text="$10000" />
 
             <TextView
-                android:id="@+id/second_tv"
-                android:layout_width="wrap_content"
+                android:id="@+id/total_count_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/grey_999999"
-                android:textSize="@dimen/sp_13"
-                tools:text="数量：1" />
+                android:layout_marginTop="@dimen/dp_4"
+                android:gravity="center"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                tools:text="$10000" />
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <RelativeLayout

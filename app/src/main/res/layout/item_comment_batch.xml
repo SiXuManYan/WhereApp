@@ -5,6 +5,8 @@
     android:id="@+id/container_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
 
@@ -73,6 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+
         android:layout_marginTop="@dimen/dp_12"
         app:checkStarDrawable="@mipmap/ic_comment_star_yellow"
         app:starCount="5"

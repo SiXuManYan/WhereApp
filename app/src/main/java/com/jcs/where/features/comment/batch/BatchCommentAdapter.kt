@@ -33,7 +33,7 @@ class BatchCommentAdapter : BaseQuickAdapter<BatchCommentItem, BaseViewHolder>(R
 
 
     override fun convert(holder: BaseViewHolder, item: BatchCommentItem) {
-        resetHeight(holder)
+//        resetHeight(holder)
         initDefault(holder, item)
         initEdit(holder, item)
         initMedia(holder, item)
@@ -59,10 +59,10 @@ class BatchCommentAdapter : BaseQuickAdapter<BatchCommentItem, BaseViewHolder>(R
         count_tv.text = StringUtils.getString(R.string.count_format, item.nativeGoodNumber)
 
         // 星级
-        comment_star_view.setStarCount(item.star)
+        comment_star_view.checkStarCount = item.star
         comment_star_view.setStoreItemOnClickListener {
             comment_value_tv.text = BusinessUtils.getCommentRatingText(it + 1)
-            item.star = it
+            item.star = it + 1
         }
 
 
@@ -123,16 +123,18 @@ class BatchCommentAdapter : BaseQuickAdapter<BatchCommentItem, BaseViewHolder>(R
         mImageAdapter.setNewInstance(item.nativeImage)
 
         // 添加默认
-        val addItem = RefundImage().apply {
-            type = RefundImage.TYPE_ADD
+        if (mImageAdapter.data.size == 0) {
+
+            val addItem = RefundImage().apply {
+                type = RefundImage.TYPE_ADD
+            }
+            mImageAdapter.addData(0, addItem)
         }
-        mImageAdapter.addData(0, addItem)
 
         image_rv.apply {
             adapter = mImageAdapter
             layoutManager = GridLayoutManager(context, 4, GridLayoutManager.VERTICAL, false)
         }
-
 
     }
 

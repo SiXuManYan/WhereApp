@@ -44,7 +44,10 @@ class BatchCommentPresenter(private var view: BatchCommentView) : BaseMvpPresent
 
                 imageList.forEach {
                     it.tempParentIndex = index
-                    imageData.add(it)
+                    if (it.type == RefundImage.TYPE_EDIT) {
+                        imageData.add(it)
+                    }
+
                 }
             }
 

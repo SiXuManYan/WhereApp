@@ -5,11 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.request.hotel.BatchCommentItem
 import com.jcs.where.api.response.order.OrderMallGoods
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.utils.Constant
@@ -17,6 +18,7 @@ import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.widget.list.DividerDecoration
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.activity_comment_post_batch.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/3/26 14:01.
@@ -29,6 +31,8 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
 
     /** 操作添加图片 的item坐标*/
     private var handleImageAddPosition = 0
+
+    override fun isStatusDark() = true
 
     private lateinit var mAdapter: BatchCommentAdapter
 
@@ -92,12 +96,12 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
         batch_comment_rv.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            addItemDecoration(DividerDecoration(getColor(R.color.white), SizeUtils.dp2px(16f), 0, 0))
+            addItemDecoration(DividerDecoration(getColor(R.color.grey_F5F5F5), SizeUtils.dp2px(16f), 0, 0))
 
         }
 
-        val helper = PagerSnapHelper()
-        helper.attachToRecyclerView(batch_comment_rv)
+//        val helper = PagerSnapHelper()
+//        helper.attachToRecyclerView(batch_comment_rv)
 
     }
 
@@ -110,7 +114,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
 
         commit_tv.setOnClickListener {
             commit_tv.isClickable = false
-            presenter.handleComment(mAdapter,orderId)
+            presenter.handleComment(mAdapter, orderId)
 
 
         }
@@ -137,13 +141,19 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             }
             newImageData.add(apply)
         }
-        mAdapter.data[handleImageAddPosition].nativeImage.addAll(newImageData)
+        val batchCommentItem = mAdapter.data[handleImageAddPosition]
+        batchCommentItem.nativeImage.addAll(newImageData)
+        batchCommentItem.star = batchCommentItem.star
+
         mAdapter.notifyItemChanged(handleImageAddPosition)
 
     }
 
     override fun commentSuccess() {
-
+        commit_tv.isClickable = true
+        ToastUtils.showShort(R.string.comment_success)
+        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        finish()
     }
 
 }

@@ -25,8 +25,8 @@ class MallGoodAdapter : BaseQuickAdapter<OrderMallGoods, BaseViewHolder>(R.layou
         val child_sku_tv = holder.getView<TextView>(R.id.child_sku_tv)
 
 
-        val goodImage = item.good_image
-        GlideUtil.load(context, (goodImage as String), child_image_iv, 4)
+        val goodImage = item.good_image as String
+        GlideUtil.load(context, goodImage, child_image_iv, 4)
 
         if (showSku) {
             child_name_tv.text = item.good_title

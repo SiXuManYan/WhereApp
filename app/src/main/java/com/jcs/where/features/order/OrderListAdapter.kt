@@ -1,13 +1,17 @@
 package com.jcs.where.features.order
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -33,6 +37,7 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.calendar.JcsCalendarDialog
+import com.jcs.where.widget.list.DividerDecoration
 
 /**
  * Created by Wangsw  2021/5/12 10:00.
@@ -438,7 +443,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
     /** mall 商城 */
     private fun bindMallItem(holder: BaseViewHolder, item: OrderListResponse) {
 
-        var goodAdapter = MallGoodAdapter()
+        val goodAdapter = MallGoodAdapter()
 
         val modelData = item.model_data
         if (modelData == null) {
@@ -456,22 +461,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         FeaturesUtil.bindStoreOrderStatus(modelData.order_status, modelData.delivery_type, order_status_tv)
 
         // 内容
-        val first_tv = holder.getView<TextView>(R.id.first_tv)
-        val second_tv = holder.getView<TextView>(R.id.second_tv)
-        val third_tv = holder.getView<TextView>(R.id.third_tv)
-
-        val image_iv = holder.getView<ImageView>(R.id.image_iv)
-
-
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
             MallShopHomeActivity.navigation(context, item.model_id)
         }
-
-        val options = RequestOptions.bitmapTransform(
-            GlideRoundedCornersTransform(4, GlideRoundedCornersTransform.CornerType.ALL)
-        ).error(R.mipmap.ic_empty_gray)
-            .placeholder(R.mipmap.ic_empty_gray)
 
 
         // 底部
@@ -529,9 +522,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
 
         // 商品相关
-
         val total_money_tv = holder.getView<TextView>(R.id.total_money_tv)
         val total_count_tv = holder.getView<TextView>(R.id.total_count_tv)
+        val child_good_rv = holder.getView<RecyclerView>(R.id.child_good_rv)
 
         total_money_tv.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
         total_count_tv.text = StringUtils.getString(R.string.count_format, item.num)
@@ -539,6 +532,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         goodAdapter.showSku = goods.size <= 1
         goodAdapter.setNewInstance(goods)
+
+        child_good_rv.apply {
+            adapter = goodAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(8f), 0, 0))
+        }
 
 
     }

@@ -2,15 +2,15 @@ package com.jcs.where.features.comment.batch
 
 import android.annotation.SuppressLint
 import com.blankj.utilcode.util.RegexUtils
-import com.jcs.where.api.JcsResponse
+import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
+import com.google.gson.JsonElement
+import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.hotel.BatchComment
-import com.jcs.where.api.request.hotel.BatchCommentItem
 import com.jcs.where.api.response.UploadFileResponse2
 import com.jcs.where.features.store.refund.image.RefundImage
-import io.reactivex.Observable
-import io.reactivex.functions.Function
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
@@ -20,6 +20,7 @@ import java.io.File
  *
  */
 interface BatchCommentView : BaseMvpView {
+    fun commentSuccess()
 
 }
 
@@ -27,27 +28,30 @@ class BatchCommentPresenter(private var view: BatchCommentView) : BaseMvpPresent
 
     fun handleComment(mAdapter: BatchCommentAdapter, orderId: Int) {
 
-
-        val body = BatchComment().apply {
+        val requestBody = BatchComment().apply {
             order_id = orderId
         }
 
-        val goods_comments_temp = ArrayList<BatchCommentItem>()
 
-
-        var imageObservable = ArrayList<Observable<JcsResponse<UploadFileResponse2>>>()
+        // 处理图片
+        val imageData = ArrayList<RefundImage>()
 
         mAdapter.data.forEachIndexed { index, item ->
-            goods_comments_temp.add(item)
 
-            if (item.nativeImageData.isNotEmpty()) {
+            val imageList = item.nativeImage
 
-                // 该组选中了图片
-                upLoadImage(item.nativeImageData)
+            if (imageList.isNotEmpty()) {
+
+                imageList.forEach {
+                    it.tempParentIndex = index
+                    imageData.add(it)
+                }
             }
 
+            requestBody.goods_comments_temp.add(item)
         }
 
+        upLoadImage(imageData, requestBody)
 
     }
 
@@ -56,67 +60,59 @@ class BatchCommentPresenter(private var view: BatchCommentView) : BaseMvpPresent
      * 多图上传
      */
     @SuppressLint("CheckResult")
-    fun upLoadImage(nativeImageData: ArrayList<RefundImage>) {
+    fun upLoadImage(nativeImageData: ArrayList<RefundImage>, requestBody: BatchComment) {
 
+        if (nativeImageData.isEmpty()) {
+
+            postComment(requestBody)
+            return
+        }
 
         val description = RequestBody.create(MediaType.parse("multipart/form-data"), "2")
 
         val partMap = getPartMap(nativeImageData)
 
-        val imageObservable = ArrayList<Observable<JcsResponse<UploadFileResponse2>>>()
+        requestApi(mRetrofit.uploadMultiImages(description, partMap), object : BaseMvpObserver<UploadFileResponse2>(view) {
+            override fun onSuccess(response: UploadFileResponse2) {
 
+                val link = response.link
+                if (link.size == nativeImageData.size) {
 
-        val uploadMultiImages: Observable<JcsResponse<UploadFileResponse2>> = mRetrofit.uploadMultiImages(description, partMap)
+                    nativeImageData.forEachIndexed { index, refundImage ->
+                        refundImage.tempRealImageUrl = link[index]
+                    }
 
-/*
-        Observable.zip(
-            uploadMultiImages,
-            uploadMultiImages,
-            uploadMultiImages,
-           object :Function3<
-                   JcsResponse<UploadFileResponse2>,
-                   JcsResponse<UploadFileResponse2>,
-                   JcsResponse<UploadFileResponse2>,
-                   JcsResponse<ImageZipResponse>>{
-               override fun apply(
-                   t1: JcsResponse<UploadFileResponse2>,
-                   t2: JcsResponse<UploadFileResponse2>,
-                   t3: JcsResponse<UploadFileResponse2>,
-               ): JcsResponse<ImageZipResponse> {
-                   TODO("Not yet implemented")
-               }
+                    nativeImageData.forEachIndexed { index, refundImage ->
+                        val tempParentIndex = refundImage.tempParentIndex
+                        requestBody.goods_comments_temp[tempParentIndex].image.add(refundImage.tempRealImageUrl)
+                    }
 
-           })
-*/
-
-
-        val listMerger2 = object :Function<Array<Any>, List<JcsResponse<UploadFileResponse2>>> {
-            override fun apply(it: Array<Any>): List<JcsResponse<UploadFileResponse2>> {
-                val flatMap = it.flatMap {
-                    it as List<JcsResponse<UploadFileResponse2>>
+                    // 发布
+                    postComment(requestBody)
                 }
-
-                return flatMap
             }
 
-        }
 
-
-        val listMerger = Function<Array<Any>, List<JcsResponse<UploadFileResponse2>>> {
-            it.flatMap {
-                it as List<JcsResponse<UploadFileResponse2>>
-            }
-        }
-
-        val zip = Observable.zip(imageObservable, listMerger)
+        })
 
 
     }
 
+    private fun postComment(requestBody: BatchComment) {
 
-    private fun getPartMap(nativeImageData: ArrayList<RefundImage>): Map<String, RequestBody> {
+        requestBody.goods_comments = Gson().toJson(requestBody.goods_comments_temp)
+
+        requestApi(mRetrofit.batchComment(requestBody), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                view.commentSuccess()
+            }
+        })
+    }
+
+
+    private fun getPartMap(imageData: ArrayList<RefundImage>): Map<String, RequestBody> {
         val map: HashMap<String, RequestBody> = HashMap()
-        val imageImageUrls = getImageImageUrls(nativeImageData)
+        val imageImageUrls = getImageImageUrls(imageData)
 
         imageImageUrls.forEach {
             // 只上传相册
@@ -127,7 +123,6 @@ class BatchCommentPresenter(private var view: BatchCommentView) : BaseMvpPresent
                 map["file[]\"; filename=\"" + file.name] = requestFile;
             }
         }
-
 
         return map
     }

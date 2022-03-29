@@ -120,7 +120,7 @@ class BatchCommentAdapter : BaseQuickAdapter<BatchCommentItem, BaseViewHolder>(R
         }
 
         // 添加数据
-        mImageAdapter.setNewInstance(item.nativeImageData)
+        mImageAdapter.setNewInstance(item.nativeImage)
 
         // 添加默认
         val addItem = RefundImage().apply {

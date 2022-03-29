@@ -12,7 +12,7 @@ import java.io.Serializable
 /**
  * 图片选择、图片展示
  */
-class RefundImage : MultiItemEntity,Serializable {
+class RefundImage : MultiItemEntity, Serializable {
 
 
     companion object {
@@ -36,6 +36,9 @@ class RefundImage : MultiItemEntity,Serializable {
     override val itemType: Int
         get() = type
 
+    var tempParentIndex = 0
+    var tempRealImageUrl = ""
+
 }
 
 /**
@@ -56,8 +59,8 @@ class StoreRefundAdapter2 : BaseMultiItemQuickAdapter<RefundImage, BaseViewHolde
             RefundImage.TYPE_EDIT, RefundImage.TYPE_SHOW -> {
                 bindImage(holder, item)
             }
-            RefundImage.TYPE_ADD ->{
-                bindAdd(holder,item)
+            RefundImage.TYPE_ADD -> {
+                bindAdd(holder, item)
             }
         }
 

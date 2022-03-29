@@ -34,16 +34,17 @@ class BatchComment {
 }
 
 
-class BatchCommentItem :Serializable{
+class BatchCommentItem : Serializable {
 
     // 提交
     var good_id = 0
     var star = 5
     var content: String? = null
-    var image: String? = null
+    var image = ArrayList<String>()
+
 
     // 数据
-    var nativeImageData = ArrayList<RefundImage>()
+    var nativeImage = ArrayList<RefundImage>()
     var nativeGoodImage = ""
     var nativeGoodName = ""
     var nativeGoodNumber = 0

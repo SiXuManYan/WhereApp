@@ -137,8 +137,12 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             }
             newImageData.add(apply)
         }
-        mAdapter.data[handleImageAddPosition].nativeImageData.addAll(newImageData)
+        mAdapter.data[handleImageAddPosition].nativeImage.addAll(newImageData)
         mAdapter.notifyItemChanged(handleImageAddPosition)
+
+    }
+
+    override fun commentSuccess() {
 
     }
 

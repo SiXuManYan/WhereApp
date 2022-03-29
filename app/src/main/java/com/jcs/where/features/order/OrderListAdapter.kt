@@ -507,11 +507,6 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             }
             5 -> {
                 right_tv.visibility = View.GONE
-                val shopName = item.title
-                var shopImage = ""
-                if (item.image.isNotEmpty()) {
-                    shopImage = item.image[0]
-                }
 
                 val commentStatus = modelData.comment_status
                 if (commentStatus == 1) {
@@ -520,7 +515,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                         right_tv.text = context.getString(R.string.evaluation_go)
                         right_tv.setOnClickListener {
                             // 去评价
-//                            BatchCommentActivity.navigation(context, item.id, modelData.goods)
+                            BatchCommentActivity.navigation(context, item.id, modelData.goods)
                         }
                     }
                 } else {

@@ -57,3 +57,12 @@ class BatchCommentGood {
     var nativeGoodName = ""
     var nativeGoodNumber = 0
 }
+
+class ComplaintRequest {
+    var order_id = 0
+    var content = ""
+    var image :String? = null
+
+
+
+}

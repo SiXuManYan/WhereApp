@@ -549,6 +549,7 @@
         <activity
             android:name=".features.comment.batch.BatchCommentActivity"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".features.mall.refund.complaint.ComplaintActivity" />
 
 
     </application>

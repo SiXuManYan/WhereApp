@@ -213,7 +213,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
                 ToastUtils.showShort(R.string.refund_reason_input_hint)
                 return@setOnClickListener
             }
-            if (mImageAdapter.data.size > 1) {
+            if (mImageAdapter.data.size > 2) {
 
                 presenter.upLoadImage(mImageAdapter, orderId, desc)
             } else {

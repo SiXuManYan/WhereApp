@@ -6,9 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonElement
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
@@ -19,6 +20,8 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.refund.MallRefundActivity2
+import com.jcs.where.features.mall.refund.complaint.ComplaintActivity
+import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
 import com.jcs.where.utils.BusinessUtils
@@ -64,6 +67,16 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
     }
 
 
+    /** 处理申诉 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            complaint_tv.visibility = View.GONE
+            ToastUtils.showShort(R.string.complained_success)
+
+        }
+    }
+
+
     override fun getLayoutId() = R.layout.activity_mall_refund_order_detail
 
     override fun initView() {
@@ -76,7 +89,6 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
     private fun initExtra() {
         intent.extras?.let {
             goodOrderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
-            refundId = it.getInt(Constant.PARAM_REFUND_ID, 0)
         }
     }
 
@@ -97,24 +109,29 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
     }
 
     override fun bindListener() {
+        // 取消申请
         left_tv.setOnClickListener {
-            // 取消申请
             presenter.cancelRefund(goodOrderId)
         }
 
+        // 修改申请
         right_tv.setOnClickListener {
-            // 修改申请
             MallRefundActivity2.navigation(this, goodOrderId, refundId, true)
         }
 
+        // 申诉
+        complaint_tv.setOnClickListener {
+            searchLauncher.launch(Intent(this, ComplaintActivity::class.java).putExtra(Constant.PARAM_ORDER_ID, goodOrderId))
+        }
 
     }
 
 
     override fun bindDetail(response: MallRefundInfo) {
         val goods = response.goods
-        status_tv.text = BusinessUtils.getMallGoodRefundStatusText(goods.status)
-        status_desc_tv.text = BusinessUtils.getMallGoodRefundStatusDescText(goods.status)
+        val goodStatus = goods.status
+        status_tv.text = BusinessUtils.getMallGoodRefundStatusText(goodStatus)
+        status_desc_tv.text = BusinessUtils.getMallGoodRefundStatusDescText(goodStatus)
 
         val moneyInfo = response.money_info
         price_tv.text = getString(R.string.price_unit_format, moneyInfo.refund_money)
@@ -163,7 +180,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
         }
 
         // 处理底部按钮
-        when (goods.status) {
+        when (goodStatus) {
             2 -> {
                 bottom_container_rl.visibility = View.VISIBLE
                 left_tv.visibility = View.VISIBLE
@@ -179,6 +196,12 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
             }
         }
 
+        // 投诉
+        if (response.complaint == 0) {
+            complaint_tv.visibility = View.VISIBLE
+        } else {
+            complaint_tv.visibility = View.GONE
+        }
 
     }
 
@@ -228,7 +251,6 @@ class MallRefundDetailPresenter(private var view: MallRefundDetailView) : BaseMv
 
         })
     }
-
 
 
     fun cancelRefund(goodOrderId: Int) {

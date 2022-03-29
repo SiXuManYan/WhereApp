@@ -23,6 +23,7 @@ import com.jcs.where.api.request.bills.BillsOrderCommit;
 import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.bills.UpLoadMallPayAccountInfo;
 import com.jcs.where.api.request.hotel.BatchComment;
+import com.jcs.where.api.request.hotel.ComplaintRequest;
 import com.jcs.where.api.request.hotel.FoodCommitComment;
 import com.jcs.where.api.request.hotel.HotelCommitComment;
 import com.jcs.where.api.request.hotel.TravelCommitComment;
@@ -1928,6 +1929,11 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> batchComment(@Body BatchComment batchComment);
 
 
+    /**
+     * 订单投诉
+     */
+    @POST("estoreapi/v2/order/complaint")
+    Observable<JcsResponse<JsonElement>> complaint(@Body ComplaintRequest batchComment);
 
 
 }

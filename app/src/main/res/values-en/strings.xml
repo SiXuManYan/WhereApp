@@ -884,5 +884,7 @@ Gentleman must let go</string>
     <string name="shops_to_receive_desc">The merchant has agreed to the after-sales application, and you need to send the goods back to the merchant. Please go to the after-sales page to check the merchant`s address</string>
     <string name="view_detail">View Detail</string>
     <string name="good_comment">Good Comment</string>
+    <string name="complaint">Complaint</string>
+    <string name="complained_success">You have complained, and the platform will deal with it as soon as possible.</string>
 
 </resources>

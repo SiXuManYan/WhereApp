@@ -22,6 +22,12 @@ class MallRefundInfo {
 
     var address_info  = MallRefundAddressInfo()
 
+    /**
+     * 0 可申诉
+     * 1 不可申诉
+     */
+    var complaint = 0
+
 }
 
 class MallRefundMoneyInfo {

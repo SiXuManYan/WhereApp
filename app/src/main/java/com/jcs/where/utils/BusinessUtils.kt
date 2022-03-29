@@ -16,6 +16,8 @@ import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.store.refund.image.RefundImage
+import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
 import com.jcs.where.storage.entity.User
 import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
@@ -268,6 +270,19 @@ object BusinessUtils {
         5 -> StringUtils.getString(R.string.store_status_desc_8)
         6 -> StringUtils.getString(R.string.store_status_desc_9)
         else -> ""
+    }
+
+    /**
+     * 获取相册内的图片资源
+     */
+     fun getImageImageUrls(adapter: StoreRefundAdapter2): ArrayList<String> {
+        val imageUrl = ArrayList<String>()
+        adapter.data.forEach {
+            if (it.type != RefundImage.TYPE_ADD) {
+                imageUrl.add(it.imageSource)
+            }
+        }
+        return imageUrl
     }
 
 

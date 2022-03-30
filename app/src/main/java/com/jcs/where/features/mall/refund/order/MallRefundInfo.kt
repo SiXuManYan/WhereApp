@@ -111,7 +111,7 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
     override fun bindListener() {
         // 取消申请
         left_tv.setOnClickListener {
-            presenter.cancelRefund(goodOrderId)
+            presenter.cancelRefund(refundId)
         }
 
         // 修改申请
@@ -255,8 +255,8 @@ class MallRefundInfoPresenter(private var view: MallRefundInfoIVniew) : BaseMvpP
     }
 
 
-    fun cancelRefund(goodOrderId: Int) {
-        requestApi(mRetrofit.cancelRefund(goodOrderId), object : BaseMvpObserver<JsonElement>(view) {
+    fun cancelRefund(refundId: Int) {
+        requestApi(mRetrofit.cancelRefund(refundId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement?) {
                 view.cancelSuccess()
             }

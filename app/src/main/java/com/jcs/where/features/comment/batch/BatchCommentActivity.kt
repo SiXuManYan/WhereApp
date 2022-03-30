@@ -136,8 +136,6 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
         commit_tv.setOnClickListener {
             commit_tv.isClickable = false
             presenter.handleComment(mAdapter, orderId)
-
-
         }
     }
 

@@ -1608,7 +1608,7 @@ public interface RetrofitApi {
     );
 
     /**
-     * 获取商城首页推荐商品
+     * 获取商品详情
      */
     @GET("estoreapi/v2/goods/{id}")
     Observable<JcsResponse<MallGoodDetail>> getMallGoodDetail(@Path("id") int goodId);

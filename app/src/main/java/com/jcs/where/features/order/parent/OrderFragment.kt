@@ -45,6 +45,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
         } else {
             View.GONE
         }
+        tabs_type.setSelectTextScale(1.0f)
 
 
     }
@@ -52,7 +53,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
     override fun initData() {
         presenter = OrderPresenter(this)
-        presenter.getTabs()
+        presenter.getTabs(true)
     }
 
     override fun bindListener() {
@@ -65,18 +66,22 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
         }
     }
 
-    override fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>) {
+    override fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>, isInit: Boolean) {
         type.clear()
         type.addAll(response)
 
+        if (isInit) {
+            viewpager.offscreenPageLimit = response.size
+            val innerPagerAdapter = InnerPagerAdapter(childFragmentManager, 0)
+            innerPagerAdapter.notifyDataSetChanged()
+            viewpager.adapter = innerPagerAdapter
+            tabs_type.setViewPager(viewpager, titles.toTypedArray())
+        } else {
+            tabs_type.mTitles.clear()
+            tabs_type.mTitles.addAll(titles)
+            tabs_type.notifyDataSetChanged()
+        }
 
-        viewpager.offscreenPageLimit = response.size
-        val innerPagerAdapter = InnerPagerAdapter(childFragmentManager, 0)
-        innerPagerAdapter.notifyDataSetChanged()
-        viewpager.adapter = innerPagerAdapter
-
-
-        tabs_type.setViewPager(viewpager, titles.toTypedArray())
     }
 
 
@@ -85,7 +90,9 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
         when (baseEvent.code) {
             EventCode.EVENT_LOGIN_SUCCESS -> {
                 login_rl.visibility = View.GONE
-                presenter.getTabs()
+                val isInit = type.isEmpty()
+
+                presenter.getTabs(isInit)
             }
             EventCode.EVENT_SIGN_OUT -> {
                 login_rl.visibility = View.VISIBLE
@@ -93,7 +100,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
             EventCode.EVENT_REFRESH_ORDER_LIST,
             EventCode.EVENT_ORDER_COMMIT_SUCCESS,
             -> {
-                presenter.getTabs()
+                presenter.getTabs(false)
             }
             else -> {
             }

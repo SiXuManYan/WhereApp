@@ -19,7 +19,7 @@ import java.io.File
  * Created by Wangsw  2022/3/24 15:47.
  *
  */
-interface MallRefundView2 : BaseMvpView {
+interface MallRefundEditView : BaseMvpView {
     fun bindDetail(response: MallRefundInfo)
 
     /** 申请退款提交成功 */
@@ -29,7 +29,7 @@ interface MallRefundView2 : BaseMvpView {
     fun upLoadImageSuccess(link:ArrayList<String>, orderId: Int, desc: String)
 }
 
-class MallRefundPresenter2(private var view: MallRefundView2) : BaseMvpPresenter(view) {
+class MallRefundEditPresenter(private var view: MallRefundEditView) : BaseMvpPresenter(view) {
 
     fun getData(orderId: Int, refund_id: Int) {
         requestApi(mRetrofit.mallRefundInfo(orderId, refund_id), object : BaseMvpObserver<MallRefundInfo>(view) {

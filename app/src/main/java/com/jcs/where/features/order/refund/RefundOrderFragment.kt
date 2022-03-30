@@ -12,7 +12,7 @@ import com.jcs.where.api.response.order.RefundOrder
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.mall.refund.order.MallRefundDetailActivity
+import com.jcs.where.features.mall.refund.order.MallRefundInfoActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -86,7 +86,7 @@ class RefundOrderFragment : BaseMvpFragment<RefundOrderPresenter>(), RefundOrder
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
         val goodInfo = data.good_info
-        MallRefundDetailActivity.navigation(requireContext(), goodInfo.order_id, goodInfo.refund_id)
+        MallRefundInfoActivity.navigation(requireContext(), goodInfo.order_id, goodInfo.refund_id)
     }
 
     override fun bindList(toMutableList: MutableList<RefundOrder>, lastPage: Boolean) {

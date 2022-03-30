@@ -10,8 +10,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallOrderGood
-import com.jcs.where.features.mall.refund.MallRefundActivity2
-import com.jcs.where.features.mall.refund.order.MallRefundDetailActivity
+import com.jcs.where.features.mall.refund.MallRefundEditActivity
+import com.jcs.where.features.mall.refund.order.MallRefundInfoActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 
@@ -56,11 +56,11 @@ class MallOrderDetailAdapter : BaseQuickAdapter<MallOrderGood, BaseViewHolder>(R
 
             if (item.status == 1 || item.status == 7) {
                 refundHandle.setOnClickListener {
-                    MallRefundActivity2.navigation(context, item.order_id, item.refund_id, false)
+                    MallRefundEditActivity.navigation(context, item.order_id, item.refund_id, false)
                 }
             } else {
                 refundHandle.setOnClickListener {
-                    MallRefundDetailActivity.navigation(context, item.order_id, item.refund_id)
+                    MallRefundInfoActivity.navigation(context, item.order_id, item.refund_id)
                 }
             }
 

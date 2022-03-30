@@ -19,7 +19,7 @@ import com.jcs.where.api.response.mall.MallRefundInfo
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.mall.refund.MallRefundActivity2
+import com.jcs.where.features.mall.refund.MallRefundEditActivity
 import com.jcs.where.features.mall.refund.complaint.ComplaintActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
@@ -32,9 +32,9 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/3/25 14:26.
- * 售后订单详情
+ * 商品售后详情
  */
-class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), MallRefundDetailView {
+class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallRefundInfoIVniew {
 
     /** 商品订单id */
     private var goodOrderId = 0
@@ -54,7 +54,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
                 putInt(Constant.PARAM_ORDER_ID, goodOrderId)
                 putInt(Constant.PARAM_REFUND_ID, refundId)
             }
-            val intent = Intent(context, MallRefundDetailActivity::class.java)
+            val intent = Intent(context, MallRefundInfoActivity::class.java)
                 .putExtras(bundle)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -104,7 +104,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
     }
 
     override fun initData() {
-        presenter = MallRefundDetailPresenter(this)
+        presenter = MallRefundInfoPresenter(this)
         presenter.getData(goodOrderId, refundId)
     }
 
@@ -116,7 +116,7 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
 
         // 修改申请
         right_tv.setOnClickListener {
-            MallRefundActivity2.navigation(this, goodOrderId, refundId, true)
+            MallRefundEditActivity.navigation(this, goodOrderId, refundId, true)
         }
 
         // 申诉
@@ -235,14 +235,14 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
 }
 
 
-interface MallRefundDetailView : BaseMvpView {
+interface MallRefundInfoIVniew : BaseMvpView {
     fun bindDetail(response: MallRefundInfo)
     fun cancelSuccess()
 
 }
 
 
-class MallRefundDetailPresenter(private var view: MallRefundDetailView) : BaseMvpPresenter(view) {
+class MallRefundInfoPresenter(private var view: MallRefundInfoIVniew) : BaseMvpPresenter(view) {
 
 
     fun getData(orderId: Int, refundId: Int) {

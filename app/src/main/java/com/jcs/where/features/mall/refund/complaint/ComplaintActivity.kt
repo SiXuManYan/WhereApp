@@ -29,6 +29,7 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
 
     private lateinit var mImageAdapter: StoreRefundAdapter2
 
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_complaint
 

@@ -456,16 +456,23 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
 
         // 标题
-        holder.setText(R.id.name_tv, item.title)
+        val name_tv = holder.getView<TextView>(R.id.name_tv)
+        name_tv.text = item.title
+        name_tv.setOnClickListener {
+            MallShopHomeActivity.navigation(context, item.model_id)
+        }
 
         // 状态
+
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
         FeaturesUtil.bindStoreOrderStatus(modelData.order_status, modelData.delivery_type, order_status_tv)
 
         // 内容
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
-            MallShopHomeActivity.navigation(context, item.model_id)
+            startActivity(MallOrderDetailActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ORDER_ID, item.id)
+            })
         }
 
 
@@ -497,14 +504,13 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             5 -> {
                 right_tv.visibility = View.GONE
                 val commentStatus = modelData.comment_status
-                if (commentStatus == 1) {
+                val orderCommentStatus = modelData.order_comment_status
+                if (commentStatus == 1 && orderCommentStatus == 1) {
                     right_tv.visibility = View.VISIBLE
-                    if (commentStatus == 1) {
-                        right_tv.text = context.getString(R.string.evaluation_go)
-                        right_tv.setOnClickListener {
-                            // 去评价
-                            BatchCommentActivity.navigation(context, item.id, modelData.goods)
-                        }
+                    right_tv.text = context.getString(R.string.evaluation_go)
+                    right_tv.setOnClickListener {
+                        // 去评价
+                        BatchCommentActivity.navigation(context, item.id, modelData.goods)
                     }
                 } else {
                     right_tv.visibility = View.GONE

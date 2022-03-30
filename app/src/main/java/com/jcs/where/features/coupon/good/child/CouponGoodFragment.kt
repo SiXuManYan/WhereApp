@@ -59,6 +59,7 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
         swipe_layout.apply {
             setOnRefreshListener {
                 page = Constant.DEFAULT_FIRST_PAGE
+                goodRequest.page = page
                 loadOnVisible()
             }
         }

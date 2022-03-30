@@ -11,13 +11,13 @@ import com.jcs.where.storage.entity.User
  *
  */
 interface OrderView : BaseMvpView {
-    fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>)
+    fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>, isInit: Boolean)
 }
 
 class OrderPresenter(private var view: OrderView) : BaseMvpPresenter(view) {
 
 
-    fun getTabs() {
+    fun getTabs(isInit: Boolean) {
         if (!User.isLogon()) {
             return
         }
@@ -29,7 +29,7 @@ class OrderPresenter(private var view: OrderView) : BaseMvpPresenter(view) {
                     it.title = it.title + "(" + it.count + ")"
                     titles.add( it.title)
                 }
-                view.bindTab(response, titles)
+                view.bindTab(response, titles,isInit)
             }
 
         })

@@ -214,7 +214,8 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             5 -> {
 
                 val commentStatus = data.comment_status
-                if (commentStatus == 1) {
+                val orderCommentStatus = data.order_comment_status
+                if (commentStatus == 1 && orderCommentStatus ==1) {
                     // 去评价
                     bottom_container_rl.visibility = View.VISIBLE
                     right_tv.visibility = View.VISIBLE

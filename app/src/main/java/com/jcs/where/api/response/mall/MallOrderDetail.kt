@@ -60,6 +60,9 @@ class MallOrderDetail {
     /** 评论状态（1-未评论，2-已评论，3-已超时） */
     var comment_status = 0
 
+    /** 1 可评价 */
+    var order_comment_status = 0
+
     var comments_id = 0
 
     /** 物流公司 */

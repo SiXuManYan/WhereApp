@@ -543,8 +543,8 @@
         <activity android:name=".features.footprint.FootprintActivity" />
         <activity android:name=".features.coupon.good.CouponGoodActivity" />
         <activity android:name=".features.coupon.center.CouponCenterActivity" />
-        <activity android:name=".features.mall.refund.MallRefundActivity2" />
-        <activity android:name=".features.mall.refund.order.MallRefundDetailActivity" />
+        <activity android:name=".features.mall.refund.MallRefundEditActivity" />
+        <activity android:name=".features.mall.refund.order.MallRefundInfoActivity" />
 
         <activity
             android:name=".features.comment.batch.BatchCommentActivity"

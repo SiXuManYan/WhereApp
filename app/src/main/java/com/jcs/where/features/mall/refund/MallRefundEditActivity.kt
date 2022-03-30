@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.EventBus
  * Created by Wangsw  2022/3/24 15:45.
  * 售后表单
  */
-class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundView2, OnItemChildClickListener {
+class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallRefundEditView, OnItemChildClickListener {
 
     /** 商品订单id */
     private var orderId = 0
@@ -67,7 +67,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
                 putInt(Constant.PARAM_REFUND_ID, refundId)
                 putBoolean(Constant.PARAM_BOOLEAN, isChange)
             }
-            val intent = Intent(context, MallRefundActivity2::class.java)
+            val intent = Intent(context, MallRefundEditActivity::class.java)
                 .putExtras(bundle)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -111,7 +111,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
         // 相册
         mImageAdapter = StoreRefundAdapter2().apply {
             addChildClickViewIds(R.id.delete_iv, R.id.image_iv, R.id.image_add_iv)
-            setOnItemChildClickListener(this@MallRefundActivity2)
+            setOnItemChildClickListener(this@MallRefundEditActivity)
         }
 
         image_rv.apply {
@@ -137,7 +137,7 @@ class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundV
 
 
     override fun initData() {
-        presenter = MallRefundPresenter2(this)
+        presenter = MallRefundEditPresenter(this)
         presenter.getData(orderId, refundId)
     }
 

@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.order.RefundOrder
-import com.jcs.where.features.mall.refund.order.MallRefundDetailActivity
+import com.jcs.where.features.mall.refund.order.MallRefundInfoActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
@@ -46,7 +46,7 @@ class RefundOrderAdapter : BaseQuickAdapter<RefundOrder, BaseViewHolder>(R.layou
         GlideUtil.load(context,goodInfo.good_image,image_iv)
 
         view_detail_tv.setOnClickListener {
-            MallRefundDetailActivity.navigation(context,goodInfo.order_id,goodInfo.refund_id)
+            MallRefundInfoActivity.navigation(context,goodInfo.order_id,goodInfo.refund_id)
         }
     }
 }

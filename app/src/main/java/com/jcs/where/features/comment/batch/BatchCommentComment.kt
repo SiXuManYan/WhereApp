@@ -66,7 +66,6 @@ class BatchCommentPresenter(private var view: BatchCommentView) : BaseMvpPresent
     fun upLoadImage(nativeImageData: ArrayList<RefundImage>, requestBody: BatchComment) {
 
         if (nativeImageData.isEmpty()) {
-
             postComment(requestBody)
             return
         }

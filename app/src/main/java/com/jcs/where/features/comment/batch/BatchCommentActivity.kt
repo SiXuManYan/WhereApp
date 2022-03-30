@@ -44,7 +44,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             // 商品
             val arrayList = ArrayList<BatchCommentItem>()
             goods.forEach {
-                if (it.status == 1) {
+                if (it.status == 1 || it.status == 7) {
                     val apply = BatchCommentItem().apply {
                         good_id = it.id
                         nativeGoodImage = it.good_image as String
@@ -62,7 +62,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             // 商品
             val arrayList = ArrayList<BatchCommentItem>()
             goods.forEach {
-                if (it.status == 1) {
+                if (it.status == 1 || it.status == 7) {
                     val apply = BatchCommentItem().apply {
                         good_id = it.good_id
                         nativeGoodImage = it.good_image
@@ -135,6 +135,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
 
         commit_tv.setOnClickListener {
             commit_tv.isClickable = false
+            ToastUtils.showLong(R.string.submitting)
             presenter.handleComment(mAdapter, orderId)
         }
     }

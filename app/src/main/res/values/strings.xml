@@ -898,6 +898,8 @@ Gentleman must let go</string>
     <string name="good_comment">商品评价</string>
     <string name="complaint">投诉</string>
     <string name="complained_success">您已投诉，平台会尽快处理。</string>
+    <string name="submitting">提交中…</string>
+    <string name="confirm_cancel_application">确定取消申请？</string>
 
 
 </resources>

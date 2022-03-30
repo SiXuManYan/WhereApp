@@ -39,7 +39,7 @@ class BatchCommentItem : Serializable {
     // 提交
     var good_id = 0
     var star = 5
-    var content: String? = null
+    var content = ""
     var image = ArrayList<String>()
 
 

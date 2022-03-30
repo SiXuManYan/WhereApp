@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -111,7 +112,18 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
     override fun bindListener() {
         // 取消申请
         left_tv.setOnClickListener {
-            presenter.cancelRefund(refundId)
+
+            AlertDialog.Builder(this@MallRefundInfoActivity)
+                .setTitle(R.string.prompt)
+                .setMessage(R.string.confirm_cancel_application)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ensure) { dialogInterface, i ->
+                    presenter.cancelRefund(refundId)
+                    dialogInterface.dismiss()
+                }
+                .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+                .create().show()
+
         }
 
         // 修改申请

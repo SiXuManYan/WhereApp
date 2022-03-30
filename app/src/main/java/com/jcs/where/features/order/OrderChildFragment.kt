@@ -75,9 +75,10 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
         recycler_view.apply {
             adapter = mAdapter
-
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(32f), SizeUtils.dp2px(15f),  SizeUtils.dp2px(15f)))
-
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white),
+                SizeUtils.dp2px(32f),
+                SizeUtils.dp2px(15f),
+                SizeUtils.dp2px(15f)))
         }
 
 
@@ -96,7 +97,9 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
     }
 
     override fun bindList(toMutableList: MutableList<OrderListResponse>, lastPage: Boolean) {
-        if (swipe_layout.isRefreshing) {
+
+
+        if (swipe_layout != null) {
             swipe_layout.isRefreshing = false
         }
 
@@ -148,15 +151,16 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
         when (baseEvent.code) {
             EventCode.EVENT_LOGIN_SUCCESS,
-            EventCode.EVENT_ORDER_COMMIT_SUCCESS -> {
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS,
+            -> {
                 onRefresh()
             }
-            EventCode.EVENT_REFRESH_ORDER_LIST->{
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
                 if (isViewCreated) {
                     onRefresh()
                 }
             }
-            EventCode.EVENT_SIGN_OUT->{
+            EventCode.EVENT_SIGN_OUT -> {
                 if (isViewCreated) {
                     mAdapter.setNewInstance(null)
                 }

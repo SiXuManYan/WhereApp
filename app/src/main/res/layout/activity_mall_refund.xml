@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_F5F5F5"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.jcs.where.widget.JcsTitle
@@ -310,7 +310,7 @@
                     android:lineSpacingMultiplier="1.2"
                     android:minHeight="@dimen/dp_110"
                     android:padding="@dimen/dp_5"
-                    android:textColor="@color/grey_666666"
+                    android:textColor="@color/grey_999999"
                     android:textColorHint="@color/grey_999999"
                     android:textSize="@dimen/sp_14" />
 

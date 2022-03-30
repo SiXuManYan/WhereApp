@@ -196,6 +196,8 @@ class MallRefundDetailActivity : BaseMvpActivity<MallRefundDetailPresenter>(), M
             }
         }
 
+        bottom_v.visibility = bottom_container_rl.visibility
+
         // 投诉
         if (goodStatus == 4 && response.complaint == 0) {
             complaint_tv.visibility = View.VISIBLE

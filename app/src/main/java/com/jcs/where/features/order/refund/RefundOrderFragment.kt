@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_order_child.*
  * Created by Wangsw  2022/3/26 10:41.
  *
  */
-class RefundOrderFragment  :BaseMvpFragment<RefundOrderPresenter>(),RefundOrderView, SwipeRefreshLayout.OnRefreshListener,
+class RefundOrderFragment : BaseMvpFragment<RefundOrderPresenter>(), RefundOrderView, SwipeRefreshLayout.OnRefreshListener,
     OnLoadMoreListener, OnItemClickListener {
 
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -52,7 +52,10 @@ class RefundOrderFragment  :BaseMvpFragment<RefundOrderPresenter>(),RefundOrderV
         recycler_view.apply {
             adapter = mAdapter
 
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(32f), SizeUtils.dp2px(15f),  SizeUtils.dp2px(15f)))
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white),
+                SizeUtils.dp2px(32f),
+                SizeUtils.dp2px(15f),
+                SizeUtils.dp2px(15f)))
 
         }
 
@@ -60,7 +63,7 @@ class RefundOrderFragment  :BaseMvpFragment<RefundOrderPresenter>(),RefundOrderV
     }
 
     override fun initData() {
-      presenter = RefundOrderPresenter(this)
+        presenter = RefundOrderPresenter(this)
 
     }
 
@@ -83,11 +86,12 @@ class RefundOrderFragment  :BaseMvpFragment<RefundOrderPresenter>(),RefundOrderV
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
         val goodInfo = data.good_info
-        MallRefundDetailActivity.navigation(requireContext(),goodInfo.order_id,goodInfo.refund_id)
+        MallRefundDetailActivity.navigation(requireContext(), goodInfo.order_id, goodInfo.refund_id)
     }
 
     override fun bindList(toMutableList: MutableList<RefundOrder>, lastPage: Boolean) {
-        if (swipe_layout.isRefreshing) {
+
+        if (swipe_layout != null) {
             swipe_layout.isRefreshing = false
         }
 
@@ -122,15 +126,16 @@ class RefundOrderFragment  :BaseMvpFragment<RefundOrderPresenter>(),RefundOrderV
 
         when (baseEvent.code) {
             EventCode.EVENT_LOGIN_SUCCESS,
-            EventCode.EVENT_ORDER_COMMIT_SUCCESS -> {
+            EventCode.EVENT_ORDER_COMMIT_SUCCESS,
+            -> {
                 onRefresh()
             }
-            EventCode.EVENT_REFRESH_ORDER_LIST->{
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
                 if (isViewCreated) {
                     onRefresh()
                 }
             }
-            EventCode.EVENT_SIGN_OUT->{
+            EventCode.EVENT_SIGN_OUT -> {
                 if (isViewCreated) {
                     mAdapter.setNewInstance(null)
                 }

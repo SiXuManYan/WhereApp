@@ -151,6 +151,9 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
 
     }
 
+    /**
+     * 确认收货
+     */
     fun confirmReceipt(orderId: Int) {
         requestApi(mRetrofit.confirmReceipt(orderId),object :BaseMvpObserver<JsonElement>(view){
             override fun onSuccess(response: JsonElement) {

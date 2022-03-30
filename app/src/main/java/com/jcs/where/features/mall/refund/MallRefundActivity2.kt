@@ -33,7 +33,7 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/3/24 15:45.
- * 售后信息页
+ * 售后表单
  */
 class MallRefundActivity2 : BaseMvpActivity<MallRefundPresenter2>(), MallRefundView2, OnItemChildClickListener {
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ import com.jcs.where.features.comment.batch.BatchCommentActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
@@ -494,7 +496,6 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
             }
             5 -> {
                 right_tv.visibility = View.GONE
-
                 val commentStatus = modelData.comment_status
                 if (commentStatus == 1) {
                     right_tv.visibility = View.VISIBLE
@@ -518,20 +519,29 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
             }
 
-
         }
 
         // 商品相关
         val total_money_tv = holder.getView<TextView>(R.id.total_money_tv)
         val total_count_tv = holder.getView<TextView>(R.id.total_count_tv)
         val child_good_rv = holder.getView<RecyclerView>(R.id.child_good_rv)
+        val price_ll = holder.getView<LinearLayout>(R.id.price_ll)
 
         total_money_tv.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
         total_count_tv.text = StringUtils.getString(R.string.count_format, item.num)
-
+        price_ll.setOnClickListener {
+            startActivity(MallOrderDetailActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ORDER_ID, item.id)
+            })
+        }
 
         goodAdapter.showSku = goods.size <= 1
         goodAdapter.setNewInstance(goods)
+        goodAdapter.setOnItemClickListener { _, _, _ ->
+            startActivity(MallOrderDetailActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ORDER_ID, item.id)
+            })
+        }
 
         child_good_rv.apply {
             adapter = goodAdapter

@@ -44,15 +44,16 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             // 商品
             val arrayList = ArrayList<BatchCommentItem>()
             goods.forEach {
-                val apply = BatchCommentItem().apply {
-                    good_id = it.id
-                    nativeGoodImage = it.good_image as String
-                    nativeGoodName = it.good_title
-                    nativeGoodNumber = it.good_num
+                if (it.status == 1) {
+                    val apply = BatchCommentItem().apply {
+                        good_id = it.id
+                        nativeGoodImage = it.good_image as String
+                        nativeGoodName = it.good_title
+                        nativeGoodNumber = it.good_num
+                    }
+                    arrayList.add(apply)
                 }
-                arrayList.add(apply)
             }
-
             start(context, orderId, arrayList)
         }
 
@@ -61,15 +62,16 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             // 商品
             val arrayList = ArrayList<BatchCommentItem>()
             goods.forEach {
-                val apply = BatchCommentItem().apply {
-                    good_id = it.good_id
-                    nativeGoodImage = it.good_image
-                    nativeGoodName = it.good_title
-                    nativeGoodNumber = it.good_num
+                if (it.status == 1) {
+                    val apply = BatchCommentItem().apply {
+                        good_id = it.good_id
+                        nativeGoodImage = it.good_image
+                        nativeGoodName = it.good_title
+                        nativeGoodNumber = it.good_num
+                    }
+                    arrayList.add(apply)
                 }
-                arrayList.add(apply)
             }
-
             start(context, orderId, arrayList)
         }
 

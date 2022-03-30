@@ -15,6 +15,7 @@ import com.jcs.where.utils.GlideUtil
  */
 class MallGoodAdapter : BaseQuickAdapter<OrderMallGoods, BaseViewHolder>(R.layout.item_order_list_mall_child) {
 
+    /** 单个商品展示SKU */
     var showSku = false
 
 

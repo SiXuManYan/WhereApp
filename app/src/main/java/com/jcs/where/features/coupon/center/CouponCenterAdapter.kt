@@ -21,7 +21,7 @@ import java.math.BigDecimal
  * Created by Wangsw  2022/3/5 14:52.
  * 领券中心、店铺优惠券
  */
-class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() ,LoadMoreModule{
+class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>(), LoadMoreModule {
 
     init {
         addItemType(Coupon.TYPE_COMMON, R.layout.item_coupon_center)
@@ -53,8 +53,6 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
 
 
     }
-
-
 
 
     private fun addTopMargin(holder: BaseViewHolder) {
@@ -106,6 +104,12 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
 
         // 名称
         name_tv.text = item.name
+        if (item.coupon_residue_type == 2) {
+            name_tv.setTextColor(ColorUtils.getColor(R.color.black_333333))
+        } else {
+            name_tv.setTextColor(ColorUtils.getColor(R.color.grey_b7b7b7))
+        }
+
 
         // 有效期
         val time_tv = holder.getView<TextView>(R.id.time_tv)
@@ -142,7 +146,7 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
         // 面值
         if (holder.itemViewType == Coupon.TYPE_FOR_SHOP_HOME_PAGE) {
             BusinessUtils.setFormatText(price_tv, StringUtils.getString(R.string.price_unit), item.money, 11, 19)
-        }else {
+        } else {
             BusinessUtils.setFormatText(price_tv, StringUtils.getString(R.string.price_unit), item.money, 14, 24)
         }
 
@@ -174,6 +178,7 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>() 
                 threshold_tv.setTextColor(ColorUtils.getColor(R.color.white))
             }
             1 -> {
+
 
                 right_ll.background = ResourceUtils.getDrawable(R.mipmap.ic_coupon_right_pink)
                 type_tv.background = ResourceUtils.getDrawable(R.drawable.shape_gray_radius_2)

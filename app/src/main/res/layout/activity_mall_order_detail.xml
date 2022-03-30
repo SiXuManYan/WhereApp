@@ -446,7 +446,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:itemCount="1"
-                tools:listitem="@layout/item_dishes_for_order_submit_mall" />
+                tools:listitem="@layout/item_dishes_for_order_detail" />
 
 
             <RelativeLayout

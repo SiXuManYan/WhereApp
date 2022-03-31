@@ -46,7 +46,7 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
      * 订单状态，
      *
      * 订单状态，
-     * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货）
+     * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货 13 交易失败）
      *
      * 配送方式（1:自提，2:商家配送）
      * */
@@ -74,7 +74,7 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
                 StringUtils.getString(R.string.store_status_6)
             }
             7 -> {
-                StringUtils.getString(R.string.store_status_7)
+                StringUtils.getString(R.string.store_status_7_2)
             }
             8 -> {
                 StringUtils.getString(R.string.store_status_8)
@@ -91,6 +91,9 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
             12 -> {
                 StringUtils.getString(R.string.store_status_12)
             }
+            13->{
+                StringUtils.getString(R.string.store_status_7)
+            }
 
             else -> ""
         }
@@ -102,13 +105,13 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
     /**
      *
      * 订单状态，
-     * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货）
+     * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货 13交易失败）
      *
      * */
     fun getStatusDescText(status_desc_tv: TextView, orderStatus: Int) {
         when (orderStatus) {
             7 -> {
-                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7)
+                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7_2)
                 status_desc_tv.visibility = View.VISIBLE
             }
             8 -> {
@@ -129,6 +132,10 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
             }
             12 -> {
                 status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_12)
+                status_desc_tv.visibility = View.VISIBLE
+            }
+            13->{
+                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7)
                 status_desc_tv.visibility = View.VISIBLE
             }
             else -> {

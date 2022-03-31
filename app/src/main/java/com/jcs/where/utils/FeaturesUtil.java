@@ -492,8 +492,8 @@ public class FeaturesUtil {
     /**
      * 获取商城订单状态
      *
-     * @param status        自提时：（1：待付款，2：支付审核中，           4：待使用，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货），
-     *                      配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货）
+     * @param status        自提时：（1：待付款，2：支付审核中，           4：待使用，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货 13交易失败），
+     *                      配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货 13交易失败）
      * @param delivery_type 配送方式（1:自提，2:商家配送）
      */
     public static void bindStoreOrderStatus(int status, int delivery_type, @NotNull TextView textView) {
@@ -529,7 +529,8 @@ public class FeaturesUtil {
                 text = StringUtils.getString(R.string.store_status_6);
                 break;
             case 7:
-                text = StringUtils.getString(R.string.store_status_7);
+//                text = StringUtils.getString(R.string.store_status_7);
+                text = StringUtils.getString(R.string.store_status_7_2);
                 break;
             case 8:
                 text = StringUtils.getString(R.string.store_status_8);
@@ -540,7 +541,6 @@ public class FeaturesUtil {
             case 10:
                 text = StringUtils.getString(R.string.store_status_10);
                 break;
-
             case 11:
                 // 商家待收货
                 text = StringUtils.getString(R.string.store_status_11);
@@ -549,6 +549,9 @@ public class FeaturesUtil {
                 // 商家拒绝退货
                 text = StringUtils.getString(R.string.store_status_12);
                 textColor = ColorUtils.getColor(R.color.orange_FD6431);
+                break;
+            case 13:
+                text = StringUtils.getString(R.string.store_status_7);
                 break;
             default:
                 break;

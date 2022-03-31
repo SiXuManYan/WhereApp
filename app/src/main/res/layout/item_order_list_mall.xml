@@ -85,7 +85,7 @@
             android:layout_width="@dimen/dp_87"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:alpha="0.8"
+            android:alpha="0.99"
             android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical">

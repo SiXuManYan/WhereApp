@@ -890,5 +890,6 @@ Gentleman must let go</string>
     <string name="complained_success">You have complained, and the platform will deal with it as soon as possible.</string>
     <string name="submitting">submitting…</string>
     <string name="confirm_cancel_application">Confirm cancellation of application ?</string>
+    <string name="line_split">____</string>
 
 </resources>

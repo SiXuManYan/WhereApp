@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.order
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.StringUtils
@@ -108,6 +109,7 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
      * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货 13交易失败）
      *
      * */
+    @SuppressLint("SetTextI18n")
     fun getStatusDescText(status_desc_tv: TextView, orderStatus: Int) {
         when (orderStatus) {
             7 -> {
@@ -139,7 +141,8 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
                 status_desc_tv.visibility = View.VISIBLE
             }
             else -> {
-                status_desc_tv.visibility = View.GONE
+                status_desc_tv.text = "__"
+                status_desc_tv.visibility = View.VISIBLE
             }
         }
 

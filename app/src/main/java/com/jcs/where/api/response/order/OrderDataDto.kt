@@ -174,7 +174,7 @@ class OrderStoreGoods {
 class OrderMallGoods  {
 
     /** 商品id */
-    var id = 0
+    var good_id = 0
 
     /** 商品名称 */
     var title = ""

@@ -46,7 +46,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             goods.forEach {
                 if (it.status == 1 || it.status == 7) {
                     val apply = BatchCommentItem().apply {
-                        good_id = it.id
+                        good_id = it.good_id
                         nativeGoodImage = it.good_image as String
                         nativeGoodName = it.good_title
                         nativeGoodNumber = it.good_num

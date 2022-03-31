@@ -83,9 +83,9 @@
                     android:layout_marginEnd="@dimen/dp_15"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
-                    android:visibility="gone"
-                    tools:text="交易关闭，平台未收到您的付款。"
-                    tools:visibility="visible" />
+                    android:text="@string/line_split"
+
+                 />
 
 
                 <TextView

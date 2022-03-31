@@ -126,6 +126,7 @@
             android:id="@+id/right_tv"
             android:layout_width="@dimen/dp_118"
             android:layout_height="@dimen/dp_28"
+            android:layout_marginTop="@dimen/dp_16"
             android:layout_gravity="end"
             android:background="@drawable/shape_white_radius_14_stroke_orange"
             android:ellipsize="end"

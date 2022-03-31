@@ -2,6 +2,9 @@ package com.jcs.where.features.store.refund.image
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -71,6 +74,9 @@ class StoreRefundAdapter2 : BaseMultiItemQuickAdapter<RefundImage, BaseViewHolde
 
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val delete_iv = holder.getView<ImageView>(R.id.delete_iv)
+        val image_show_rl = holder.getView<RelativeLayout>(R.id.image_show_rl)
+        val layoutParams = image_show_rl.layoutParams as RecyclerView.LayoutParams
+        layoutParams.bottomMargin = SizeUtils.dp2px(12f)
 
         GlideUtil.load(context, item.imageSource, image_iv, 8)
 
@@ -85,6 +91,9 @@ class StoreRefundAdapter2 : BaseMultiItemQuickAdapter<RefundImage, BaseViewHolde
 
     private fun bindAdd(holder: BaseViewHolder, item: RefundImage) {
         val imageAdd = holder.getView<ImageView>(R.id.image_add_iv)
+        val layoutParams = imageAdd.layoutParams as RecyclerView.LayoutParams
+        layoutParams.bottomMargin = SizeUtils.dp2px(12f)
+
         imageAdd.setImageResource(R.mipmap.ic_upload_image)
     }
 }

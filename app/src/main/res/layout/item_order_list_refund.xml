@@ -110,7 +110,6 @@
                 tools:text="sku sku sku" />
 
 
-
         </RelativeLayout>
 
     </LinearLayout>
@@ -154,19 +153,16 @@
     <TextView
         android:id="@+id/view_detail_tv"
         android:layout_width="@dimen/dp_118"
-        android:layout_gravity="end"
         android:layout_height="@dimen/dp_28"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/dp_2"
         android:background="@drawable/stock_gray_radius_14"
         android:ellipsize="end"
-        android:layout_marginTop="@dimen/dp_2"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="@color/grey_999999"
-        android:textSize="@dimen/sp_14"
-        android:visibility="gone"
         android:text="@string/view_detail"
-        tools:visibility="visible" />
-
+        android:textColor="@color/grey_999999"
+        android:textSize="@dimen/sp_14" />
 
 
 </LinearLayout>

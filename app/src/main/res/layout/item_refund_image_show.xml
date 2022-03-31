@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/dp_76"
+    android:id="@+id/image_show_rl"
     android:layout_height="@dimen/dp_76">
 
 
     <ImageView
         android:id="@+id/image_iv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/dp_76"
+        android:layout_height="@dimen/dp_76"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 

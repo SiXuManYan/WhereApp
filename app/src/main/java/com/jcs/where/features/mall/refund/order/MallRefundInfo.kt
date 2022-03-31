@@ -66,11 +66,13 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
         }
     }
 
+    private var alreadyComplaint = false
+
 
     /** 处理申诉 */
     private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
-            complaint_tv.visibility = View.GONE
+            alreadyComplaint = true
             ToastUtils.showShort(R.string.complained_success)
 
         }
@@ -133,7 +135,11 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
 
         // 申诉
         complaint_tv.setOnClickListener {
-            searchLauncher.launch(Intent(this, ComplaintActivity::class.java).putExtra(Constant.PARAM_ORDER_ID, goodOrderId))
+            if (alreadyComplaint) {
+                ToastUtils.showShort(R.string.complained_success)
+            }else {
+                searchLauncher.launch(Intent(this, ComplaintActivity::class.java).putExtra(Constant.PARAM_ORDER_ID, goodOrderId))
+            }
         }
 
     }

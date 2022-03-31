@@ -33,7 +33,7 @@ class BatchCommentAdapter : BaseQuickAdapter<BatchCommentItem, BaseViewHolder>(R
 
 
     override fun convert(holder: BaseViewHolder, item: BatchCommentItem) {
-//        resetHeight(holder)
+        resetHeight(holder)
         initDefault(holder, item)
         initEdit(holder, item)
         initMedia(holder, item)
@@ -134,6 +134,7 @@ class BatchCommentAdapter : BaseQuickAdapter<BatchCommentItem, BaseViewHolder>(R
         image_rv.apply {
             adapter = mImageAdapter
             layoutManager = GridLayoutManager(context, 4, GridLayoutManager.VERTICAL, false)
+
         }
 
     }

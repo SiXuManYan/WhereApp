@@ -86,7 +86,7 @@ class StoreOrderDetailPresenter(private var view: StoreOrderDetailView) : BaseMv
                 StringUtils.getString(R.string.store_status_6)
             }
             7 -> {
-                StringUtils.getString(R.string.store_status_7)
+                StringUtils.getString(R.string.store_status_13)
             }
             8 -> {
                 StringUtils.getString(R.string.store_status_8)
@@ -129,7 +129,7 @@ class StoreOrderDetailPresenter(private var view: StoreOrderDetailView) : BaseMv
     fun getStatusDescText(status_desc_tv: TextView, orderStatus: Int) {
         when (orderStatus) {
             7 -> {
-                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7)
+                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_13)
                 status_desc_tv.visibility = View.VISIBLE
             }
             8 -> {

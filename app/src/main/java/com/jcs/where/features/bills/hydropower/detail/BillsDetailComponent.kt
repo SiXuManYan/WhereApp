@@ -67,7 +67,7 @@ class BillsDetailPresenter(private var view: BillsDetailView) : BaseMvpPresenter
 
         when (status) {
             4 -> {
-                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7)
+                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_13)
                 status_desc_tv.visibility = View.VISIBLE
             }
             5 -> {

@@ -550,13 +550,13 @@
     <string name="store_status_4_2">To Receive</string>
     <string name="store_status_5">Successful</string>
     <string name="store_status_6">Canceled</string>
-    <string name="store_status_7">Closed</string>
-    <string name="store_status_7_2">Transaction Failed</string>
+    <string name="store_status_7">Failed</string>
     <string name="store_status_8">Refunding</string>
     <string name="store_status_9">Refunded</string>
     <string name="store_status_10">Shops confirming</string>
     <string name="store_status_11">Shops To Receive</string>
     <string name="store_status_12">Refuses to Return</string>
+    <string name="store_status_13">Closed</string>
     <string name="status_to_use">To use</string>
     <string name="status_shops_confirming">Shops Confirming</string>
 
@@ -564,8 +564,8 @@
 
 
     <!-- 状态描述文字 -->
-    <string name="store_status_desc_7">The transaction is closed and the platform has not received your payment.</string>
-    <string name="store_status_desc_7_2">The transaction is failed and the platform has not received your payment.</string>
+    <string name="store_status_desc_13">The transaction is closed and the platform has not received your payment.</string>
+    <string name="store_status_desc_7">The transaction is failed and the platform has not received your payment.</string>
     <string name="store_status_desc_8">The platform is refunding, please wait patiently for the refund.</string>
     <string name="store_status_desc_9">It has been refunded, please check it carefully.	</string>
     <string name="store_status_desc_10">You have successfully initiated a return request, please wait patiently for the merchant’s review.</string>

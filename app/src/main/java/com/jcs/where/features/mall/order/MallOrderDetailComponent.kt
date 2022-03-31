@@ -74,7 +74,7 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
                 StringUtils.getString(R.string.store_status_6)
             }
             7 -> {
-                StringUtils.getString(R.string.store_status_7_2)
+                StringUtils.getString(R.string.store_status_7)
             }
             8 -> {
                 StringUtils.getString(R.string.store_status_8)
@@ -92,7 +92,7 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
                 StringUtils.getString(R.string.store_status_12)
             }
             13->{
-                StringUtils.getString(R.string.store_status_7)
+                StringUtils.getString(R.string.store_status_13)
             }
 
             else -> ""
@@ -111,7 +111,7 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
     fun getStatusDescText(status_desc_tv: TextView, orderStatus: Int) {
         when (orderStatus) {
             7 -> {
-                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7_2)
+                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7)
                 status_desc_tv.visibility = View.VISIBLE
             }
             8 -> {
@@ -135,7 +135,7 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
                 status_desc_tv.visibility = View.VISIBLE
             }
             13->{
-                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7)
+                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_13)
                 status_desc_tv.visibility = View.VISIBLE
             }
             else -> {

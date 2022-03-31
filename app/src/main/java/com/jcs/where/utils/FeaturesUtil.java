@@ -529,8 +529,7 @@ public class FeaturesUtil {
                 text = StringUtils.getString(R.string.store_status_6);
                 break;
             case 7:
-//                text = StringUtils.getString(R.string.store_status_7);
-                text = StringUtils.getString(R.string.store_status_7_2);
+                text = StringUtils.getString(R.string.store_status_7);
                 break;
             case 8:
                 text = StringUtils.getString(R.string.store_status_8);
@@ -551,7 +550,7 @@ public class FeaturesUtil {
                 textColor = ColorUtils.getColor(R.color.orange_FD6431);
                 break;
             case 13:
-                text = StringUtils.getString(R.string.store_status_7);
+                text = StringUtils.getString(R.string.store_status_13);
                 break;
             default:
                 break;

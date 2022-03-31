@@ -17,8 +17,6 @@ import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
-import io.rong.imkit.RongIM
-import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_order_detail.*
 import org.greenrobot.eventbus.EventBus
 
@@ -168,7 +166,7 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
                     visibility = View.VISIBLE
                 }
                 7 -> {
-                    text = getString(R.string.store_status_desc_7)
+                    text = getString(R.string.store_status_desc_13)
                     visibility = View.VISIBLE
                 }
                 8 -> {

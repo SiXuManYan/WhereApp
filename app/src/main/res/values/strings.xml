@@ -559,19 +559,19 @@
     <string name="store_status_4_2">待收货</string>
     <string name="store_status_5">交易成功</string>
     <string name="store_status_6">交易取消</string>
-    <string name="store_status_7">交易关闭</string>
-    <string name="store_status_7_2">交易失败</string>
+    <string name="store_status_7">交易失败</string>
     <string name="store_status_8">退款中</string>
     <string name="store_status_9">退款成功</string>
     <string name="store_status_10">商家审核中</string>
     <string name="store_status_11">商家待收货</string>
     <string name="store_status_12">商家拒绝退货</string>
+    <string name="store_status_13">交易关闭</string>
     <string name="status_to_use">待使用</string>
     <string name="status_shops_confirming">商家待确认</string>
 
     <!-- 状态描述文字 -->
-    <string name="store_status_desc_7">交易关闭，平台未收到您的付款。</string>
-    <string name="store_status_desc_7_2">交易失败，平台未收到您的付款。</string>
+    <string name="store_status_desc_13">交易关闭，平台未收到您的付款。</string>
+    <string name="store_status_desc_7">交易失败，平台未收到您的付款。</string>
     <string name="store_status_desc_8">平台正在退款中，请耐心等待退款。</string>
     <string name="store_status_desc_9">已退款，请您注意查收。</string>
     <string name="store_status_desc_10">您已成功发起退货申请，请耐心等待商家审核。</string>

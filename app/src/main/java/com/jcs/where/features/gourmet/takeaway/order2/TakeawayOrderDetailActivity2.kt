@@ -231,7 +231,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
             4 -> {
                 status_desc_tv.apply {
                     visibility = View.VISIBLE
-                    text = getString(R.string.store_status_desc_7)
+                    text = getString(R.string.store_status_desc_13)
                 }
             }
             9 -> {

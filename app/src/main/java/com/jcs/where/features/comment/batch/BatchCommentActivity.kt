@@ -201,7 +201,18 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
 
             }
             .observeOn(AndroidSchedulers.mainThread()) // .subscribe()
-            .doOnError {}
+            .doOnError {
+
+                val newImageData = ArrayList<RefundImage>()
+                elements.forEach { file ->
+                    val apply = RefundImage().apply {
+                        type = RefundImage.TYPE_EDIT
+                        imageSource = file
+                    }
+                    newImageData.add(apply)
+                }
+                loadPicture(newImageData)
+            }
             .subscribe {
 
                 val newImageData = ArrayList<RefundImage>()
@@ -213,12 +224,16 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
                     newImageData.add(apply)
                 }
 
-                val batchCommentItem = mAdapter.data[handleImageAddPosition]
-                batchCommentItem.nativeImage.addAll(newImageData)
-                batchCommentItem.star = batchCommentItem.star
-
-                mAdapter.notifyItemChanged(handleImageAddPosition)
+                loadPicture(newImageData)
             }
+    }
+
+    private fun loadPicture(newImageData: ArrayList<RefundImage>) {
+        val batchCommentItem = mAdapter.data[handleImageAddPosition]
+        batchCommentItem.nativeImage.addAll(newImageData)
+        batchCommentItem.star = batchCommentItem.star
+
+        mAdapter.notifyItemChanged(handleImageAddPosition)
     }
 
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.request.hotel.BatchCommentItem
 import com.jcs.where.api.response.mall.MallOrderGood
 import com.jcs.where.api.response.order.OrderMallGoods
@@ -134,6 +135,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
     override fun bindListener() {
 
         commit_tv.setOnClickListener {
+            showLoadingDialog(false)
             commit_tv.isClickable = false
             ToastUtils.showLong(R.string.submitting)
             presenter.handleComment(mAdapter, orderId)
@@ -170,10 +172,18 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
     }
 
     override fun commentSuccess() {
+        dismissLoadingDialog()
         commit_tv.isClickable = true
         ToastUtils.showShort(R.string.comment_success)
         EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
         finish()
+    }
+
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        commit_tv.isClickable = true
+        dismissLoadingDialog()
     }
 
 }

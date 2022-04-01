@@ -25,6 +25,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.base.dialog.LoadingDialog;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.LocalLanguageUtil;
@@ -39,7 +40,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected JcsTitle mJcsTitle;
     private boolean mIsHasStatusBarColor = true;
-    private CustomProgressDialog mProgressDialog;
+//    private CustomProgressDialog mProgressDialog;
+    private LoadingDialog loadingDialog ;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -227,13 +230,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void showLoading(String msg) {
-//        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-//            mProgressDialog = new CustomProgressDialog(this, msg);
-//            mProgressDialog.show();
-//        }
-    }
-
     public void showLoading() {
 //        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
 //            mProgressDialog = new CustomProgressDialog(this, "");
@@ -252,6 +248,29 @@ public abstract class BaseActivity extends AppCompatActivity {
 //
 //        }
     }
+
+    protected void showLoadingDialog(){
+        dismissLoadingDialog();
+        loadingDialog = new  LoadingDialog.Builder(this).setCancelable(true).create();
+        loadingDialog.show();
+    }
+
+
+    protected void showLoadingDialog(boolean cancelable) {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+        } else {
+            loadingDialog = new LoadingDialog.Builder(this).setCancelable(cancelable).create();
+            loadingDialog.show();
+        }
+    }
+
+    protected void dismissLoadingDialog() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
+        loadingDialog = null;
+    }
+
 
     protected void showToast(String msg) {
         ToastUtils.showLong(this, msg);
@@ -408,7 +427,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.right_fade_in, R.anim.right_fade_out);
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (loadingDialog!=null) {
+            if (loadingDialog.isShowing()) {
+                loadingDialog.dismiss();
+            }
+        }
+    }
 }

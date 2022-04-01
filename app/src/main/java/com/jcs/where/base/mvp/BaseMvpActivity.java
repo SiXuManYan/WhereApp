@@ -1,7 +1,6 @@
 package com.jcs.where.base.mvp;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 
@@ -24,6 +23,7 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
 
 
     public T presenter;
+
 
 
     @Override

@@ -6,12 +6,13 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    android:paddingStart="@dimen/dp_15"
-    android:paddingEnd="@dimen/dp_15">
+   >
 
 
     <RelativeLayout
         android:id="@+id/title_rl"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48">
 
@@ -109,7 +110,7 @@
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_12"
                 android:textStyle="bold"
-                tools:text="$10000" />
+                tools:text="共1件" />
 
 
         </LinearLayout>
@@ -127,6 +128,7 @@
             android:layout_width="@dimen/dp_118"
             android:layout_height="@dimen/dp_28"
             android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_15"
             android:layout_gravity="end"
             android:background="@drawable/shape_white_radius_14_stroke_orange"
             android:ellipsize="end"

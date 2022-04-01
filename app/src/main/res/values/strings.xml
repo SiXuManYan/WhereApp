@@ -904,5 +904,7 @@ Gentleman must let go</string>
     <string name="confirm_cancel_application">确定取消申请？</string>
     <string name="line_split">____</string>
 
+    <string name="total_count_format">共%1$d件</string>
+
 
 </resources>

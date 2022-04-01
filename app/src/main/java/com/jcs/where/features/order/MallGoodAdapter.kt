@@ -35,10 +35,18 @@ class MallGoodAdapter : BaseQuickAdapter<OrderMallGoods, BaseViewHolder>(R.layou
         val goodImage = item.good_image as String
         GlideUtil.load(context, goodImage, child_image_iv, 4)
 
+        val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+        if (holder.adapterPosition == 0) {
+            layoutParams.marginStart = SizeUtils.dp2px(15f)
+        } else {
+            layoutParams.marginStart = SizeUtils.dp2px(0f)
+        }
+
+
         if (showSku) {
             // 重设宽度
-            val layoutParams = container.layoutParams as RecyclerView.LayoutParams
-            layoutParams.width = ScreenUtils.getScreenWidth() - SizeUtils.dp2px(32f)
+
+            layoutParams.width = ScreenUtils.getScreenWidth() - SizeUtils.dp2px(25f)
 
             temp_v.visibility = View.VISIBLE
 
@@ -55,7 +63,7 @@ class MallGoodAdapter : BaseQuickAdapter<OrderMallGoods, BaseViewHolder>(R.layou
             child_sku_tv.visibility = View.VISIBLE
 
         } else {
-            val layoutParams = container.layoutParams as RecyclerView.LayoutParams
+
             layoutParams.width = RecyclerView.LayoutParams.WRAP_CONTENT
 
             child_name_tv.visibility = View.GONE

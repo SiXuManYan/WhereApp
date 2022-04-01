@@ -534,7 +534,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val price_ll = holder.getView<LinearLayout>(R.id.price_ll)
 
         total_money_tv.text = StringUtils.getString(R.string.price_unit_format, item.price.toPlainString())
-        total_count_tv.text = StringUtils.getString(R.string.count_format, item.num)
+        total_count_tv.text = StringUtils.getString(R.string.total_count_format, item.num)
         price_ll.setOnClickListener {
             startActivity(MallOrderDetailActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_ORDER_ID, item.id)

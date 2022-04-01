@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
     android:id="@+id/mall_good_container_rl"
+    android:layout_width="wrap_content"
     android:layout_height="@dimen/dp_75">
 
 
@@ -19,13 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_9"
+        android:layout_marginEnd="@dimen/dp_9"
+        android:layout_toStartOf="@+id/temp_v"
         android:layout_toEndOf="@+id/child_image_iv"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/sp_14"
-        android:layout_toStartOf="@+id/temp_v"
-        android:layout_marginEnd="@dimen/dp_9"
         android:visibility="gone"
         tools:text="啃德起疯狂星期四鸡米花只要九块九"
         tools:visibility="visible" />
@@ -37,8 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/child_name_tv"
         android:layout_marginStart="@dimen/dp_9"
-        android:layout_marginEnd="@dimen/dp_9"
         android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_9"
         android:layout_toStartOf="@+id/temp_v"
         android:layout_toEndOf="@+id/child_image_iv"
         android:ellipsize="end"

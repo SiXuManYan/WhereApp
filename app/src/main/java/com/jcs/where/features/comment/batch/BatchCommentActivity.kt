@@ -157,31 +157,6 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
         FeaturesUtil.handleMediaSelect(this, Constant.IMG, max)
     }
 
-/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // 添加图片
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data == null) {
-            return
-        }
-        val elements = Matisse.obtainPathResult(data)
-
-        val newImageData = ArrayList<RefundImage>()
-        elements.forEach {
-            val apply = RefundImage().apply {
-                type = RefundImage.TYPE_EDIT
-                imageSource = it
-            }
-            newImageData.add(apply)
-        }
-
-        val batchCommentItem = mAdapter.data[handleImageAddPosition]
-        batchCommentItem.nativeImage.addAll(newImageData)
-        batchCommentItem.star = batchCommentItem.star
-
-        mAdapter.notifyItemChanged(handleImageAddPosition)
-
-    }*/
-
 
     @SuppressLint("CheckResult")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -195,12 +170,9 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
         Flowable.just(elements)
             .observeOn(Schedulers.io())
             .map {
-                Luban.with(this@BatchCommentActivity).load(elements)
-                    .ignoreBy(100)
-                    .get()
-
+                Luban.with(this@BatchCommentActivity).load(elements).ignoreBy(100).get()
             }
-            .observeOn(AndroidSchedulers.mainThread()) // .subscribe()
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnError {
 
                 val newImageData = ArrayList<RefundImage>()

@@ -892,5 +892,6 @@ Gentleman must let go</string>
     <string name="confirm_cancel_application">Confirm cancellation of application ?</string>
     <string name="line_split">____</string>
     <string name="total_count_format">%1$d&#160;Item(s)</string>
+    <string name="application_time">Application Time</string>
 
 </resources>

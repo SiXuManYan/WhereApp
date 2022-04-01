@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.order.store.StoreOrderShopGoods
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailAdapter
@@ -167,14 +168,14 @@ class StoreRefundActivity : BaseMvpActivity<StoreRefundPresenter>(), StoreRefund
     override fun applicationSuccess() {
         ToastUtils.showShort(R.string.application_success)
         // 回到商城订单详情，刷新
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }
 
     override fun modifyApplicationSuccess() {
         ToastUtils.showShort(R.string.modify_success)
         // 回到商城订单详情，刷新
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }
 

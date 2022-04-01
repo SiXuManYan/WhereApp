@@ -62,7 +62,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
             val tabIndex = bundle.getInt(Constant.PARAM_TAB, 0)
             tabs_navigator.currentTab = tabIndex
             if (tabIndex == 2) {
-                EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+                EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
             }
         }
     }

@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelOrderDetail
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.CommentPostActivity
@@ -272,13 +273,13 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
     }
 
     override fun cancelSuccess() {
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         presenter.getDetail(order_id)
     }
 
 
     override fun refundCommitSuccess() {
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         ToastUtils.showShort(getString(R.string.refund_commit_success))
         finish()
     }

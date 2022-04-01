@@ -29,7 +29,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private static final boolean DEBUG = true;
 
     private static final String PATH = Environment.getExternalStorageDirectory().getPath() + "/where/crash/";
-//    private static final String PATH = Utils.getApp().getExternalFilesDir(null) + "/crash/";
     private static final String FILE_NAME = "crash";
     private static final String FILE_NAME_SUFFIX = ".txt";
 

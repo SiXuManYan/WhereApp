@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.StoreRefundAdapter
@@ -113,7 +114,7 @@ class FoodCommentPostActivity : BaseMvpActivity<FoodCommentPostPresenter>(), Foo
     }
 
     override fun commitSuccess() {
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         ToastUtils.showShort(R.string.commit_success)
         finish()
     }

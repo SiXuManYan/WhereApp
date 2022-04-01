@@ -126,8 +126,7 @@ class StoreRefundDetailActivity : BaseMvpActivity<StoreRefundDetailPresenter>(),
 
         // 取消成功,刷新列表和商城订单详情
         ToastUtils.showShort(getString(R.string.refund_cancel_request_success))
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
-
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
 
     }

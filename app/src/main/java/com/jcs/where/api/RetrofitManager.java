@@ -56,12 +56,12 @@ public class RetrofitManager {
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
 
         // 连接超时
-        okBuilder.connectTimeout(30,TimeUnit.SECONDS);
-        okBuilder.readTimeout(30,TimeUnit.SECONDS);
-        okBuilder.writeTimeout(30,TimeUnit.SECONDS);
+        okBuilder.connectTimeout(60,TimeUnit.SECONDS);
+        okBuilder.readTimeout(60,TimeUnit.SECONDS);
+        okBuilder.writeTimeout(60,TimeUnit.SECONDS);
 
         // 请求超时
-        okBuilder.callTimeout(30, TimeUnit.SECONDS);
+        okBuilder.callTimeout(60, TimeUnit.SECONDS);
         // 添加请求头
         okBuilder.addInterceptor(new Interceptor() {
             @Override

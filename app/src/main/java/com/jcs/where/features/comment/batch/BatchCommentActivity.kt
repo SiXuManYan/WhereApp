@@ -1,5 +1,6 @@
 package com.jcs.where.features.comment.batch
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.request.hotel.BatchCommentItem
 import com.jcs.where.api.response.mall.MallOrderGood
 import com.jcs.where.api.response.order.OrderMallGoods
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.image.RefundImage
@@ -19,8 +21,13 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.widget.list.DividerDecoration
 import com.zhihu.matisse.Matisse
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_comment_post_batch.*
 import org.greenrobot.eventbus.EventBus
+import top.zibin.luban.Luban
+
 
 /**
  * Created by Wangsw  2022/3/26 14:01.
@@ -130,6 +137,8 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
     override fun initData() {
         presenter = BatchCommentPresenter(this)
 
+        Flowable.just("")
+
     }
 
     override fun bindListener() {
@@ -138,7 +147,8 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             showLoadingDialog(false)
             commit_tv.isClickable = false
             ToastUtils.showLong(R.string.submitting)
-            presenter.handleComment(mAdapter, orderId)
+//            presenter.handleComment(mAdapter, orderId)
+            presenter.handleComment2(mAdapter, orderId)
         }
     }
 
@@ -147,7 +157,7 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
         FeaturesUtil.handleMediaSelect(this, Constant.IMG, max)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // 添加图片
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
@@ -163,19 +173,60 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             }
             newImageData.add(apply)
         }
+
         val batchCommentItem = mAdapter.data[handleImageAddPosition]
         batchCommentItem.nativeImage.addAll(newImageData)
         batchCommentItem.star = batchCommentItem.star
 
         mAdapter.notifyItemChanged(handleImageAddPosition)
 
+    }*/
+
+
+    @SuppressLint("CheckResult")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // 添加图片
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            return
+        }
+        val elements = Matisse.obtainPathResult(data)
+
+        Flowable.just(elements)
+            .observeOn(Schedulers.io())
+            .map {
+                Luban.with(this@BatchCommentActivity).load(elements)
+                    .ignoreBy(100)
+                    .get()
+
+            }
+            .observeOn(AndroidSchedulers.mainThread()) // .subscribe()
+            .doOnError {}
+            .subscribe {
+
+                val newImageData = ArrayList<RefundImage>()
+                it.forEach { file ->
+                    val apply = RefundImage().apply {
+                        type = RefundImage.TYPE_EDIT
+                        imageSource = file.absolutePath
+                    }
+                    newImageData.add(apply)
+                }
+
+                val batchCommentItem = mAdapter.data[handleImageAddPosition]
+                batchCommentItem.nativeImage.addAll(newImageData)
+                batchCommentItem.star = batchCommentItem.star
+
+                mAdapter.notifyItemChanged(handleImageAddPosition)
+            }
     }
+
 
     override fun commentSuccess() {
         dismissLoadingDialog()
         commit_tv.isClickable = true
         ToastUtils.showShort(R.string.comment_success)
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }
 

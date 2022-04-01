@@ -199,7 +199,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
             }
         }
         // 支付成功
-        EventBus.getDefault().post(BaseEvent<Boolean>(EventCode.EVENT_REFRESH_ORDER_LIST))
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
 
         startActivityAfterLogin(StorePayResultActivity::class.java, Bundle().apply {
             putInt(Constant.PARAM_TYPE, useType)

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.*
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.com100.ExtendChatActivity
@@ -255,12 +256,12 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
     }
 
     override fun cancelSuccess() {
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         presenter.getDetail(orderId)
     }
 
     override fun refundSuccess() {
-        EventBus.getDefault().post(EventCode.EVENT_REFRESH_ORDER_LIST)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         ToastUtils.showShort(getString(R.string.refund_commit_toast))
         presenter.getDetail(orderId)
     }

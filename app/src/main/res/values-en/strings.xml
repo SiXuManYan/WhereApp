@@ -616,7 +616,7 @@
     <string name="problem_description">Problem Description</string>
     <string name="refund_reason_input_hint">Please enter a problem description</string>
     <string name="upload_image">upload image</string>
-    <string name="submit_application">submit application</string>
+    <string name="submit_application">Submit Application</string>
     <string name="refund_image_hint">Vouchers (up to 5)</string>
     <string name="refund_image_hint_6">Vouchers (up to 6)</string>
     <string name="application_success">application success</string>

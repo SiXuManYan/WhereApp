@@ -126,19 +126,11 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerDecoration(getColor(R.color.grey_F5F5F5), SizeUtils.dp2px(16f), 0, 0))
-
         }
-
-//        val helper = PagerSnapHelper()
-//        helper.attachToRecyclerView(batch_comment_rv)
-
     }
 
     override fun initData() {
         presenter = BatchCommentPresenter(this)
-
-        Flowable.just("")
-
     }
 
     override fun bindListener() {
@@ -147,7 +139,6 @@ class BatchCommentActivity : BaseMvpActivity<BatchCommentPresenter>(), BatchComm
             showLoadingDialog(false)
             commit_tv.isClickable = false
             ToastUtils.showLong(R.string.submitting)
-//            presenter.handleComment(mAdapter, orderId)
             presenter.handleComment2(mAdapter, orderId)
         }
     }

@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.refund.complaint
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.view.View
@@ -9,13 +10,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.google.gson.Gson
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.zhihu.matisse.Matisse
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_complaint.*
+import top.zibin.luban.Luban
 
 /**
  * Created by Wangsw  2022/3/29 14:45.
@@ -98,6 +104,7 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
         }
     }
 
+    @SuppressLint("CheckResult")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // 添加图片
         super.onActivityResult(requestCode, resultCode, data)
@@ -106,13 +113,31 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
         }
         val elements = Matisse.obtainPathResult(data)
 
-        elements.forEach {
-            val apply = RefundImage().apply {
-                type = RefundImage.TYPE_EDIT
-                imageSource = it
+        Flowable.just(elements)
+            .observeOn(Schedulers.io())
+            .map {
+                Luban.with(this@ComplaintActivity).load(elements).ignoreBy(100).get()
             }
-            mImageAdapter.addData(apply)
-        }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                elements.forEach {
+                    val apply = RefundImage().apply {
+                        type = RefundImage.TYPE_EDIT
+                        imageSource = it
+                    }
+                    mImageAdapter.addData(apply)
+                }
+            }
+            .subscribe {
+
+                it.forEach { file ->
+                    val apply = RefundImage().apply {
+                        type = RefundImage.TYPE_EDIT
+                        imageSource = file.absolutePath
+                    }
+                    mImageAdapter.addData(apply)
+                }
+            }
     }
 
 
@@ -123,8 +148,8 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
                 ToastUtils.showShort(R.string.refund_reason_input_hint)
                 return@setOnClickListener
             }
+            showLoadingDialog(false)
             if (mImageAdapter.data.size > 1) {
-
                 presenter.upLoadImage(mImageAdapter, orderId, desc)
             } else {
                 presenter.doComplaint(orderId, desc)
@@ -139,8 +164,14 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
     }
 
     override fun applicationSuccess() {
+        dismissLoadingDialog()
         setResult(Activity.RESULT_OK)
         finish()
+    }
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        dismissLoadingDialog()
     }
 
 

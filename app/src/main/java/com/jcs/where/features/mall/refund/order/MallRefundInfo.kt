@@ -189,13 +189,16 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
 
         // 售后原因
         desc_tv.text = response.cancel_reason
+        val photos = ArrayList<RefundImage>()
         response.cancel_images.forEach {
             val apply = RefundImage().apply {
                 type = RefundImage.TYPE_SHOW
                 imageSource = it
             }
-            mImageAdapter.addData(apply)
+            photos.add(apply)
+
         }
+        mImageAdapter.setNewInstance(photos)
 
         // 处理底部按钮
         when (goodStatus) {

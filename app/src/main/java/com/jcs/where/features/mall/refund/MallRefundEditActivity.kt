@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.refund
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -15,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.google.gson.Gson
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.mall.MallOrderGood
 import com.jcs.where.api.response.mall.MallRefundInfo
 import com.jcs.where.base.BaseEvent
@@ -27,8 +29,12 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.widget.list.DividerDecoration
 import com.zhihu.matisse.Matisse
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_mall_refund.*
 import org.greenrobot.eventbus.EventBus
+import top.zibin.luban.Luban
 
 
 /**
@@ -166,6 +172,7 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
     }
 
 
+    @SuppressLint("CheckResult")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // 添加图片
         super.onActivityResult(requestCode, resultCode, data)
@@ -174,13 +181,32 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
         }
         val elements = Matisse.obtainPathResult(data)
 
-        elements.forEach {
-            val apply = RefundImage().apply {
-                type = RefundImage.TYPE_EDIT
-                imageSource = it
+        Flowable.just(elements)
+            .observeOn(Schedulers.io())
+            .map {
+                Luban.with(this@MallRefundEditActivity).load(elements).ignoreBy(100).get()
             }
-            mImageAdapter.addData(apply)
-        }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+
+                elements.forEach {
+                    val apply = RefundImage().apply {
+                        type = RefundImage.TYPE_EDIT
+                        imageSource = it
+                    }
+                    mImageAdapter.addData(apply)
+                }
+
+            }
+            .subscribe {
+                it.forEach { file ->
+                    val apply = RefundImage().apply {
+                        type = RefundImage.TYPE_EDIT
+                        imageSource = file.absolutePath
+                    }
+                    mImageAdapter.addData(apply)
+                }
+            }
     }
 
 
@@ -197,6 +223,7 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
         }
 
         desc_et.setText(response.cancel_reason)
+
         response.cancel_images.forEach {
             val apply = RefundImage().apply {
                 type = RefundImage.TYPE_EDIT
@@ -212,13 +239,14 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
     override fun bindListener() {
 
         refund_tv.setOnClickListener {
+
             val desc = desc_et.text.toString().trim()
             if (desc.isEmpty()) {
                 ToastUtils.showShort(R.string.refund_reason_input_hint)
                 return@setOnClickListener
             }
+            showLoadingDialog(false)
             if (mImageAdapter.data.size > 1) {
-
                 presenter.upLoadImage(mImageAdapter, handleRefundOrderId, desc)
             } else {
                 presenter.doRefund(handleRefundOrderId, desc)
@@ -228,6 +256,7 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
     }
 
     override fun applicationSuccess() {
+        dismissLoadingDialog()
         ToastUtils.showShort(R.string.application_success)
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
@@ -245,6 +274,11 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
             val descImages = Gson().toJson(link)
             presenter.doRefund(orderId, desc, descImages)
         }
+    }
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        dismissLoadingDialog()
     }
 
 

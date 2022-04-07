@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.request.MallShop
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -133,6 +134,7 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
         } else {
             0
         }
+        ToastUtils.showShort(R.string.success)
         setLikeImage()
     }
 

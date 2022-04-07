@@ -21,8 +21,6 @@
             android:textSize="@dimen/sp_17" />
 
 
-
-
         <TextView
             android:id="@+id/more_category_tv"
             android:layout_width="wrap_content"

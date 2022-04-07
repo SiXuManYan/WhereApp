@@ -418,7 +418,7 @@
     <string name="select_all">Select All</string>
     <string name="total_cart_3">Total&#160;</string>
     <string name="settlement">Settlement</string>
-    <string name="edit">edit</string>
+    <string name="edit">Edit</string>
     <string name="prepaid_reload">Prepaid Reload</string>
     <string name="water_utilities">Water Utilities</string>
     <string name="electric_utilities">Electric Utilities</string>
@@ -893,5 +893,6 @@ Gentleman must let go</string>
     <string name="line_split">____</string>
     <string name="total_count_format">%1$d&#160;Item(s)</string>
     <string name="application_time">Application Time</string>
+    <string name="success">Success</string>
 
 </resources>

@@ -66,7 +66,7 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
 
     @Override
     protected void initView() {
-        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.back_iv));
         phone_aet = findViewById(R.id.phone_aet);
         verify_code_aet = findViewById(R.id.verify_code_aet);
         password_aet = findViewById(R.id.password_aet);

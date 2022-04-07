@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@android:color/white">
+
+    <View
+        android:id="@+id/toChooseDate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_52"
+        android:layout_marginEnd="@dimen/dp_130"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/enterStayPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_stay"
+        android:textColor="@color/grey_999999"
+        android:textSize="13sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_10"/>
+
+
+    <TextView
+        android:id="@+id/startDayTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/enterStayPrompt"
+        app:layout_constraintStart_toStartOf="@id/enterStayPrompt"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black_333333"
+        android:textSize="13sp" />
+
+
+    <TextView
+        android:id="@+id/totalStayDayTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_90"
+        android:layout_marginTop="@dimen/dp_15"
+        android:background="@drawable/bg_labelblack"
+        android:paddingLeft="20dp"
+        android:paddingTop="4dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/black_333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/leaveStayPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leave_stay"
+        app:layout_constraintTop_toTopOf="@id/enterStayPrompt"
+        app:layout_constraintStart_toEndOf="@id/totalStayDayTv"
+        android:layout_marginStart="@dimen/dp_30"
+        android:textColor="@color/grey_999999"
+        android:textSize="13sp" />
+
+
+    <TextView
+        android:id="@+id/endDayTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/startDayTv"
+        app:layout_constraintStart_toStartOf="@id/leaveStayPrompt"
+        android:textColor="@color/black_333333"
+        android:textSize="13sp" />
+
+
+    <TextView
+        android:id="@+id/roomNumPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/enterStayPrompt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:text="@string/prompt_room_num"
+        android:textColor="@color/black_333333"
+        android:textSize="14sp" />
+
+
+    <ImageView
+        android:id="@+id/roomReduceIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/roomNumPrompt"
+        app:layout_constraintTop_toTopOf="@id/roomNumPrompt"
+        app:layout_constraintBottom_toBottomOf="@id/roomNumPrompt"
+        android:src="@mipmap/ic_hotel_reduce"
+        android:layout_marginStart="@dimen/dp_18"/>
+
+    <TextView
+        android:id="@+id/roomNumTv"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textColor="@color/black_333333"
+        android:textSize="13sp"
+        app:layout_constraintTop_toTopOf="@id/roomNumPrompt"
+        app:layout_constraintBottom_toBottomOf="@id/roomNumPrompt"
+        app:layout_constraintStart_toEndOf="@id/roomReduceIv"/>
+
+    <ImageView
+        android:id="@+id/roomAddIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/roomNumTv"
+        app:layout_constraintTop_toTopOf="@id/roomReduceIv"
+        app:layout_constraintBottom_toBottomOf="@id/roomReduceIv"
+        android:src="@mipmap/ic_hotel_add" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

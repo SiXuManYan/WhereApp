@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/shape_white_top_radius_8" android:state_checked="true" />
+    <item android:drawable="@drawable/shape_white_top_radius_8_unchecked" android:state_checked="false" />
+    <item android:drawable="@drawable/shape_white_top_radius_8_unchecked" />
+</selector>

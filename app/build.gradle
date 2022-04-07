@@ -1,0 +1,233 @@
+apply plugin: 'com.android.application'
+apply from: './mob.gradle'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+    defaultConfig {
+        applicationId "com.jcs.where"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 28
+        versionName "0.2.15"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        flavorDimensions "versionCode"
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "dca78eb7c81e4244fb6254c0",
+                JPUSH_CHANNEL: "default_developer",
+        ]
+
+    }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+
+    signingConfigs {
+        debug { storeFile file("../keystore/debug.keystore") }
+        release {
+            storeFile file('../keystore/Where.jks')
+            storePassword "jcs12345678"
+            keyAlias "key0"
+            keyPassword "jcs12345678"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+        release {
+            debuggable false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Where_v${defaultConfig.versionCode}_(${defaultConfig.versionName})_${releaseTime()}.apk"
+        }
+    }
+
+    productFlavors {
+        dev {
+            buildConfigField "String", "SERVER_HOST", SERVER_HOST_TEST
+            buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_DEVELOP
+            buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
+            buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
+        }
+
+        formal {
+            buildConfigField "String", "SERVER_HOST", SERVER_HOST_RELEASE
+            buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_RELEASE
+            buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
+            buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
+        }
+
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.blankj:utilcodex:1.30.6'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.5.0-alpha01'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.12'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    annotationProcessor 'androidx.annotation:annotation:1.2.0'
+    implementation 'in.srain.cube:ptr-load-more:1.0.6'
+    implementation 'com.gongwen:marqueelibrary:1.1.3'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    //拼音
+    implementation 'com.belerweb:pinyin4j:2.5.0'
+    //圆形头像
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
+    // GMS
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+
+//    地图操作工具类，添加标记等
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    implementation 'com.facebook.rebound:rebound:0.3.8'
+    implementation 'com.github.chrisbanes.photoview:library:1.2.3'
+    implementation 'com.just.agentweb:agentweb:4.1.3'
+    implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.github.xiaohaibin:XBanner:androidx_v1.1.2'
+    implementation 'com.github.Jay-Goo:RangeSeekBar:3.0.0'
+    implementation 'com.haibin:calendarview:3.7.0'
+
+    //状态栏
+    implementation 'com.jaeger.statusbaruitl:library:1.3.2'
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.0.0'
+
+    //饺子播放器
+    implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
+
+    // Room db https://developer.android.google.cn/training/data-storage/room#java
+    def room_version = "2.4.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+
+    // comm 100
+    implementation files('libs/jpush-android-3.7.0-google_play.jar')
+    implementation files('libs/jcore-android-2.8.2-google_play.jar')
+    implementation(name: 'visitor-client-v1.0', ext: 'aar')
+
+    // 知乎相册选择器
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
+
+    // rx 权限申请
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
+
+    // 融云
+    implementation 'cn.rongcloud.sdk:im_kit:5.1.8'
+
+    // TabLayout
+//    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2'
+    implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
+
+
+
+    // GSY video java
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.1.3-jitpack'
+
+    // GSY video 是否需要ExoPlayer模式
+//    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-exo_player2:v8.1.3-jitpack'
+
+    // GSY video ijk模式的so
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv64:v8.1.3-jitpack'
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv7a:v8.1.3-jitpack'
+
+    // banner
+    implementation 'io.github.youth5201314:banner:2.2.2'
+
+    implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1-x'
+
+    // https://developer.android.com/jetpack/androidx/releases/navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+
+    // kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10'
+
+    // https://developer.android.com/jetpack/androidx/releases/core#core-1.7.0 ( targetSdkVersion 31)
+    implementation 'androidx.core:core-ktx:1.6.0'
+
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'
+
+    implementation 'com.google.maps.android:maps-ktx:2.3.0'
+    implementation 'com.google.maps.android:maps-utils-ktx:2.3.0'
+    implementation "biz.laenger.android:vpbs:0.0.6"
+
+    // rv 粘性标签 https://github.com/oubowu/PinnedSectionItemDecoration/blob/master/README-CN.md
+    implementation 'com.oushangfeng:PinnedSectionItemDecoration:1.3.2-androidx'
+
+    // 图片压缩
+    implementation 'top.zibin:Luban:1.1.8'
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:backIcon="@drawable/ic_back_black"
+        app:middleTitle="@string/pay_success"
+        app:middleTitleColor="@color/black_333333"
+        app:showBackIv="true"
+        app:showBottomLine="true" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_65"
+        android:src="@mipmap/ic_store_pay_success" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/dp_40"
+        android:paddingEnd="@dimen/dp_40"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_25"
+        android:text="@string/store_pay_success"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_20"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/check_order_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_61"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/shape_grey_radius_20"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_42"
+        android:paddingEnd="@dimen/dp_42"
+        android:text="@string/look_order"
+        android:textColor="@color/grey_999999"
+        android:textSize="@dimen/sp_17" />
+
+
+</LinearLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <HorizontalScrollView
+        android:id="@+id/radioScroll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioGroup
+            android:id="@+id/mechanismRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checkedButton="@id/allRadio"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/dp_15"
+            android:visibility="invisible"
+            tools:ignore="RtlSymmetry">
+
+            <RadioButton
+                android:id="@+id/allRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginStart="@dimen/dp_15"
+                android:background="@drawable/selector_store_third_category"
+                android:button="@null"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_50"
+                android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_12"
+                android:text="@string/all"
+                android:textColor="@color/selector_grey_blue"
+                android:textSize="@dimen/sp_12" />
+
+        </RadioGroup>
+    </HorizontalScrollView>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/mechanismRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioScroll">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mechanismRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="searchNoneIcon,searchNoneTitle,searchNoneView" />
+
+    <View
+        android:id="@+id/searchNoneView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mechanismRefresh" />
+
+    <ImageView
+        android:id="@+id/searchNoneIcon"
+        android:layout_width="@dimen/dp_162"
+        android:layout_height="@dimen/dp_162"
+        android:layout_marginTop="@dimen/dp_105"
+        android:src="@mipmap/ic_empty_earth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/searchNoneView" />
+
+    <TextView
+        android:id="@+id/searchNoneTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_18"
+        android:text="@string/empty_data_default"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchNoneIcon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

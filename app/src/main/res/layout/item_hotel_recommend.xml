@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hotel_recommend_container_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+
+    <FrameLayout
+        android:layout_width="@dimen/dp_109"
+        android:layout_height="@dimen/dp_112"
+        android:layout_marginEnd="@dimen/dp_8">
+
+
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+
+        <ImageView
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_hotel_recommend_facebook" />
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:drawablePadding="@dimen/dp_5"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_13"
+            android:textStyle="bold"
+            tools:text="James James James James James James " />
+
+
+        <com.jcs.where.widget.ratingstar.RatingStarView
+            android:id="@+id/star_view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_5"
+            app:rsv_cornerRadius="@dimen/dp_2"
+            app:rsv_drawStrokeForHalfStar="true"
+            app:rsv_enableSelectRating="false"
+            app:rsv_onlyHalfStar="true"
+            app:rsv_rating="1"
+            app:rsv_starBackgroundColor="@color/transplant"
+            app:rsv_starForegroundColor="@color/yellow_FEBA32"
+            app:rsv_starMargin="@dimen/dp_3"
+            app:rsv_starNum="5"
+            app:rsv_starThickness="0.7"
+            app:rsv_strokeColor="@color/transplant"
+            app:rsv_strokeWidth="0dp" />
+
+
+        <LinearLayout
+            android:id="@+id/score_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/score_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:background="@drawable/shape_blue_radius_2_377bff"
+                android:includeFontPadding="false"
+                android:paddingStart="@dimen/dp_4"
+                android:paddingTop="@dimen/dp_1"
+                android:paddingEnd="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_11"
+                tools:text="4.5" />
+
+
+            <TextView
+                android:id="@+id/score_retouch_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:includeFontPadding="false"
+                android:textColor="@color/blue_4C9EF2"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                tools:text="不错" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/distance_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/grey_999999"
+                android:textSize="@dimen/sp_12"
+                tools:text="Ivana,Cagayan Valley" />
+
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_2">
+
+            <LinearLayout
+                android:id="@+id/tag_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_2"
+                    android:background="@drawable/shape_blue_stoke_radius_1"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingTop="@dimen/dp_1"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:paddingBottom="@dimen/dp_1"
+                    android:textColor="@color/blue_4C9EF2"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="tab" />
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
+        <TextView
+            android:id="@+id/price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:textColor="@color/orange_FF5837"
+            android:textSize="@dimen/sp_14"
+            tools:text="6666666666666" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

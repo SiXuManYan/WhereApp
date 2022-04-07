@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/hydropower_banner_iv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_177"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_hydropower_en" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:background="@color/transparency"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="@dimen/dp_15"
+            app:contentInsetStart="@dimen/dp_15">
+
+
+            <ImageView
+                android:id="@+id/back_iv"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_gravity="start"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_back_light" />
+
+
+            <ImageView
+                android:id="@+id/record_iv"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_gravity="end"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_bills_record" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15">
+
+
+        <LinearLayout
+            android:id="@+id/prepaid_ll"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_160"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/shape_grey_radius_32"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="@dimen/dp_44"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_bills_prepaid" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:text="@string/prepaid_reload"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/water_ll"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_160"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/shape_grey_radius_32"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="@dimen/dp_44"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_bills_water" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:text="@string/water_utilities"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15">
+
+        <LinearLayout
+            android:id="@+id/electric_ll"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_160"
+            android:background="@drawable/shape_grey_radius_32"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="@dimen/dp_44"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_bills_electric" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:text="@string/electric_utilities"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/internet_ll"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_160"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/shape_grey_radius_32"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="@dimen/dp_44"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_bills_internet" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:text="@string/internet_billing"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

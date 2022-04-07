@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:backIcon="@drawable/ic_back_black"
+        app:middleTitle="@string/safety_verification"
+        app:middleTitleColor="@color/black_333333"
+        app:showBackIv="true" />
+
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/enter_verify_code"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/target_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/grey_979797"
+        android:textSize="@dimen/sp_12"
+        tools:text="@string/verify_code_send_to_format" />
+
+
+    <com.jcs.where.widget.verify.VerificationCodeView
+        android:id="@+id/captcha_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_42"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:vcv_et_bg="@drawable/et_login_code_2"
+        app:vcv_et_cursor="@drawable/et_cursor"
+        app:vcv_et_cursor_visible="true"
+        app:vcv_et_inputType="number"
+        app:vcv_et_number="4"
+        app:vcv_et_text_color="@color/black_333333"
+        app:vcv_et_text_size="@dimen/sp_6"
+        app:vcv_et_width="@dimen/dp_56" />
+
+
+    <TextView
+        android:id="@+id/resend_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:textColor="@color/selector_code_verify_resend"
+        tools:text="@string/resend_format" />
+
+
+</LinearLayout>

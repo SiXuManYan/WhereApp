@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_radius_10"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/dp_200"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingEnd="@dimen/dp_12"
+        android:paddingBottom="@dimen/dp_2"
+        android:singleLine="true"
+        android:textColor="@color/blue_377BFF"
+        android:textSize="@dimen/sp_11"
+        tools:text="信息标题" />
+
+
+    <ImageView
+        android:id="@+id/image_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_marker_common" />
+
+
+</LinearLayout>

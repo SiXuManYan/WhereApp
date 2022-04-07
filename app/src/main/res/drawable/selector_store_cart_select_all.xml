@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@mipmap/ic_checked_blue" android:state_checked="true" />
+
+    <item android:drawable="@mipmap/ic_un_checked" android:state_selected="false" />
+
+<!--
+
+    <item android:drawable="@mipmap/ic_checked_unavailable" android:state_enabled="false" />
+    <item android:drawable="@mipmap/ic_un_checked" android:state_enabled="true" />
+-->
+
+
+    <item android:drawable="@mipmap/ic_un_checked" />
+
+
+</selector>

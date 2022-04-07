@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 倒三角 -->
+    <item>
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="135%"
+            android:pivotY="15%">
+            <shape android:shape="rectangle">
+                <size
+                    android:width="@dimen/dp_10"
+                    android:height="@dimen/dp_10" />
+                <solid android:color="@color/white"  />
+                <stroke
+                    android:width="1px"
+                    android:color="@color/grey_F5F5F5" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>
+

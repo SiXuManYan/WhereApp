@@ -1,0 +1,49 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+
+        // Mob Maven地址
+        maven {url "https://mvn.mob.com/android"}
+
+        // banner maven
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+
+        // view pager bottom sheet
+        maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath 'com.google.gms:google-services:4.3.3'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        // share sdk
+//        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
+        classpath "com.mob.sdk:MobSDK:+"
+
+        // kotlin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:1.6.10"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        flatDir {
+            dirs 'libs'
+        }
+        maven {url "https://maven.rongcloud.cn/repository/maven-releases/"}// 融云
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

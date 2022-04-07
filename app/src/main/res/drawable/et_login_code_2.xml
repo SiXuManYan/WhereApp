@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item  android:state_window_focused="false" >
+        <shape>
+            <solid android:color="@color/grey_B5B5B5" />
+        </shape>
+
+    </item>
+
+    <item android:bottom="@dimen/dp_1">
+        <shape >
+            <solid android:color="@color/white" />
+        </shape>
+
+    </item>
+
+</layer-list>

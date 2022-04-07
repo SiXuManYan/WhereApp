@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jcs.where"
+    tools:ignore="ProtectedPermissions,LockedOrientationActivity">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- com 100 start ↓-->
+    <permission
+        android:name="com.jcs.where.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.jcs.where.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!--华为角标 common 100 中的jPush-->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
+
+    <queries>
+        <intent>
+            <action android:name="cn.jpush.android.intent.PushService" />
+        </intent>
+    </queries>
+
+    <!-- com 100 end ↑-->
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="com.jcs.where.permission.JPUSH_MESSAGE"
+        android:required="false" />
+    <uses-feature
+        android:name="android.permission.RECEIVE_USER_PRESENT"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.permission.WAKE_LOCK"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.permission.WRITE_SETTINGS"
+        android:required="false" />
+    <uses-feature
+        android:name="android.permission.VIBRATE"
+        android:required="false" />
+    <uses-feature
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        android:required="false" />
+
+
+    <!--允许程序打开网络套接字-->
+    <application
+        android:name=".BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_app"
+        android:label="@string/app_name"
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_app"
+        android:supportsRtl="true"
+        android:theme="@style/CommonActivityTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon, android:theme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/maps_api_key" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.jcs.where.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public" />
+        </provider>
+
+        <activity
+            android:name=".features.splash.SplashActivity"
+            android:exported="true"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- 网页内打开 -->
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="hostsplash"
+                    android:pathPrefix="/openwith"
+                    android:scheme="schemewhereh5" />
+
+
+            </intent-filter>
+
+
+        </activity>
+
+
+        <activity
+            android:name=".features.main.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".features.city.CityPickerActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <activity
+            android:name=".mango.ImageBrowseActivity"
+            android:theme="@style/mangoAppTheme" />
+
+        <activity
+            android:name=".search.SearchActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".features.web.WebViewActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <activity
+            android:name=".utils.ImagePreviewActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".yellow_page.activity.YellowPageActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".features.complex.ConvenienceServiceActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".news.NewsActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".mine.activity.LanguageActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".news.SelectNewsChannelActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".features.integral.IntegralActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".news.NewsDetailActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".news.NewsSearchResultActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".news.NewsVideoActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".features.setting.SettingActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".features.account.login.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.account.register.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.account.password.PasswordResetActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity android:name=".features.account.bind.BindPhoneActivity" />
+
+
+        <activity
+            android:name=".mine.activity.merchant_settled.SettledTypeActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".mine.activity.merchant_settled.MerchantVerifyActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".government.activity.ConvenienceServiceSearchActivity"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- ######## comm 100 start ↓ #############-->
+
+        <!-- Rich push 核心功能 since 2.0.6 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:exported="true"
+            android:theme="@style/MyDialogStyle">
+
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="cn.jpush.android.ui.PopWinActivity" />
+
+                <category android:name="${JPUSH_PKGNAME}" />
+            </intent-filter>
+
+        </activity>
+
+
+        <!-- Required 极光 SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="${JPUSH_PKGNAME}" />
+            </intent-filter>
+        </activity>
+
+        <!-- since 3.5.0 Required SDK 核心功能 -->
+        <!-- 3.5.0新增，用于定时展示功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.SchedulerReceiver"
+            android:exported="false" />
+
+
+        <activity android:name=".features.com100.ExtendChatActivity" />
+
+        <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!-- since 3.0.9 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="${JPUSH_PKGNAME}.DataProvider"
+            android:exported="false"
+            android:process=":pushcore" />
+
+
+        <!-- since 3.1.0 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DownloadProvider"
+            android:authorities="${JPUSH_PKGNAME}.DownloadProvider"
+            android:exported="true" />
+
+        <!-- since 3.3.0 Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.service.JNotifyActivity"
+            android:exported="true"
+            android:taskAffinity="jpush.custom"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.JNotifyActivity" />
+
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </activity>
+
+        <!-- since 3.5.6 新增华硕通道 -->
+        <receiver android:name="cn.jpush.android.asus.AsusPushMessageReceiver" />
+
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
+                <category android:name="${JPUSH_PKGNAME}" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".features.com100.JPushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+
+                <category android:name="com.jcs.where" />
+            </intent-filter>
+        </receiver>
+
+        <!--Required_config-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="${JPUSH_CHANNEL}" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="${JPUSH_APPKEY}" />
+        <!-- ######## comm 100 end ↑ #############-->
+
+        <activity
+            android:name=".mine.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.information.ModifyInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.password.ModifyPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.verify.password.PasswordVerifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.verify.code.CodeVerifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.confirm.NewPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.setting.phone.ModifyPhoneActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 自定义融云会话列表 -->
+        <activity
+            android:name=".features.message.MessageCenterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
+        <!-- 自定义融云会话页面 -->
+        <activity
+            android:name=".features.message.cloud.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
+        <activity
+            android:name=".features.message.notice.detail.SystemMessageDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.search.SearchAllActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.upgrade.UpgradeActivity"
+            android:theme="@style/upgrade"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".features.address.AddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.address.edit.AddressEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.restaurant.list.RestaurantHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.restaurant.packages.SetMealActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.cart.ShoppingCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.bills.PayBillsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.category.edit.CategoryEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.order.OrderSubmitActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".features.qr.QRActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.takeaway.TakeawayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.restaurant.map.RestaurantMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.gourmet.comment.FoodCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".features.store.recommend.StoreRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".features.store.search.StoreSearchActivity" />
+        <activity android:name=".features.store.filter.StoreFilterActivity" />
+        <activity android:name=".features.store.detail.StoreDetailActivity" />
+        <activity android:name=".features.store.good.StoreGoodDetailActivity" />
+        <activity android:name=".features.store.order.StoreOrderCommitActivity" />
+        <activity android:name=".features.store.pay.StorePayActivity" />
+        <activity android:name=".features.store.pay.info.PayInfoActivity" />
+        <activity android:name=".features.store.pay.result.StorePayResultActivity" />
+        <activity android:name=".features.store.order.detail.StoreOrderDetailActivity" />
+        <activity android:name=".features.bills.hydropower.record.PaymentRecordActivity" />
+        <activity android:name=".features.bills.hydropower.edit.PaymentEditActivity" />
+        <activity android:name=".features.bills.hydropower.pay.BillsPayActivity" />
+        <activity android:name=".features.store.refund.StoreRefundActivity" />
+        <activity android:name=".features.store.refund.detail.StoreRefundDetailActivity" />
+        <activity android:name=".features.store.cart.StoreCartActivity" />
+        <activity android:name=".features.store.comment.post.StoreCommentPostActivity" />
+        <activity android:name=".features.store.comment.detail.StoreCommentDetailActivity" />
+        <activity android:name=".features.store.detail.comment.StoreCommentActivity" />
+        <activity android:name=".features.bills.hydropower.detail.BillsDetailActivity" />
+        <activity android:name=".features.gourmet.order.detail2.DelicacyOrderDetailActivity" />
+        <activity android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2" />
+        <activity android:name=".features.hotel.order.HotelOrderDetailActivity" />
+        <activity android:name=".features.order.parent.OrderActivity" />
+        <activity android:name=".features.coupon.user.MyCouponActivity" />
+        <activity android:name=".features.hotel.comment.HotelCommentActivity2" />
+        <activity android:name=".features.comment.CommentPostActivity" />
+        <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />
+        <activity
+            android:name=".features.search.result.SearchAllResultActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".features.map.government.GovernmentActivity" />
+        <activity android:name=".features.search.yellow.YellowPageSearchResultActivity" />
+        <activity android:name=".features.mechanism.MechanismActivity" />
+        <activity android:name=".features.travel.home.TravelHomeActivity" />
+        <activity android:name=".features.hotel.home.HotelHomeActivity" />
+        <activity android:name=".features.hotel.map.HotelMapActivity" />
+        <activity android:name=".features.hotel.detail.HotelDetailActivity2" />
+        <activity android:name=".features.hotel.book.HotelBookActivity" />
+        <activity android:name=".features.travel.map.TravelMapActivity" />
+        <activity android:name=".features.travel.detail.TravelDetailActivity" />
+        <activity android:name=".features.travel.comment.TravelCommentActivity" />
+        <activity android:name=".features.collection.CollectionActivity" />
+        <activity android:name=".features.merchant.MerchantSettledActivity" />
+        <activity android:name=".features.daily.sign.SignInActivity" />
+        <activity android:name=".features.daily.scoe.ScoreActivity" />
+        <activity android:name=".features.mall.home.MallHomeActivity" />
+        <activity android:name=".features.mall.second.MallSecondActivity" />
+        <activity android:name=".features.mall.result.MallSearchResultActivity" />
+        <activity android:name=".features.mall.detail.MallDetailActivity" />
+        <activity android:name=".features.mall.buy.MallOrderCommitActivity" />
+        <activity android:name=".features.mall.cart.MallCartActivity" />
+        <activity android:name=".features.mall.order.MallOrderDetailActivity" />
+        <activity android:name=".features.mall.comment.MallCommentActivity" />
+        <activity android:name=".features.comment.CommentSuccessActivity" />
+        <activity android:name=".features.daily.sign.SignInRuleActivity" />
+        <activity android:name=".features.merchant.record.MerchantRecordActivity" />
+        <activity android:name=".features.mall.shop.home.MallShopHomeActivity" />
+        <activity android:name=".features.mall.shop.home.filter.MallShopFilterGoodActivity" />
+        <activity android:name=".features.footprint.FootprintActivity" />
+        <activity android:name=".features.coupon.good.CouponGoodActivity" />
+        <activity android:name=".features.coupon.center.CouponCenterActivity" />
+        <activity android:name=".features.mall.refund.MallRefundEditActivity" />
+        <activity android:name=".features.mall.refund.order.MallRefundInfoActivity" />
+
+        <activity
+            android:name=".features.comment.batch.BatchCommentActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".features.mall.refund.complaint.ComplaintActivity" />
+
+
+    </application>
+
+</manifest>

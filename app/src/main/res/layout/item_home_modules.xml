@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/moduleLayout"
+    android:layout_width="@dimen/dp_80"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/modules_icon"
+        android:layout_width="@dimen/dp_42"
+        android:layout_height="@dimen/dp_42"
+        tools:src="@mipmap/ic_tourism_sector" />
+
+    <TextView
+        android:id="@+id/modules_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_11"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_12"
+        tools:text="asdsdadasdasdasdas" />
+
+</LinearLayout>

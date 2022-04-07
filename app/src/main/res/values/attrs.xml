@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="text" format="string" />
+    <attr name="text_size" format="dimension" />
+    <attr name="text_unselected_color" format="color|reference" />
+    <attr name="text_selected_color" format="color|reference" />
+    <attr name="progress" format="float" />
+    <attr name="direction">
+        <enum name="left" value="0" />
+        <enum name="right" value="1" />
+        <enum name="top" value="2" />
+        <enum name="bottom" value="3" />
+    </attr>
+
+    <declare-styleable name="ColorClipView">
+        <attr name="text" />
+        <attr name="text_size" />
+        <attr name="text_unselected_color" />
+        <attr name="text_selected_color" />
+        <attr name="progress" />
+        <attr name="direction" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorClipTabLayout">
+        <attr name="text_size" />
+        <attr name="text_unselected_color" />
+        <attr name="text_selected_color" />
+    </declare-styleable>
+
+    <declare-styleable name="SideBar">
+        <attr name="letterColor" format="color" />
+        <attr name="selectColor" format="color" />
+        <attr name="letterSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RealtimeBlurView">
+        <attr name="realtimeBlurRadius" format="float" />
+        <attr name="realtimeDownsampleFactor" format="float" />
+        <attr name="realtimeOverlayColor" format="color" />
+        <attr name="realtimeBlurRoundCornerRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="JcsTitle">
+        <attr name="middleTitle" format="string|reference" />
+        <attr name="middleTitleColor" format="color|reference" />
+        <attr name="backIcon" format="reference" />
+        <attr name="backIconWidth" format="dimension|reference" />
+        <attr name="backIconHeight" format="dimension|reference" />
+        <attr name="rightFirstIcon" format="reference" />
+        <attr name="rightSecondIcon" format="reference" />
+        <attr name="backgroundRes" format="reference" />
+        <attr name="showBackIv" format="boolean" />
+        <attr name="showBottomLine" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="StarView">
+        <attr name="starNum" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="SelectStarView">
+        <attr name="selectStarNum" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="LabelView">
+        <attr name="labelNum" format="integer" />
+    </declare-styleable>
+
+
+    <declare-styleable name="DrawableTextView">
+        <attr name="leftDrawable" format="reference|color" />
+        <attr name="rightDrawable" format="reference|color" />
+        <attr name="topDrawable" format="reference|color" />
+        <attr name="bottomDrawable" format="reference|color" />
+
+        <attr name="leftDrawableWidth" format="reference|dimension" />
+        <attr name="rightDrawableWidth" format="reference|dimension" />
+        <attr name="topDrawableWidth" format="reference|dimension" />
+        <attr name="bottomDrawableWidth" format="reference|dimension" />
+
+        <attr name="leftDrawableHeight" format="reference|dimension" />
+        <attr name="rightDrawableHeight" format="reference|dimension" />
+        <attr name="topDrawableHeight" format="reference|dimension" />
+        <attr name="bottomDrawableHeight" format="reference|dimension" />
+
+        <attr name="rightDrawableList" format="reference" />
+        <attr name="rightDrawableListWidth" format="reference|dimension" />
+        <attr name="rightDrawableListHeight" format="reference|dimension" />
+    </declare-styleable>
+
+    <string-array name="sign_in_index">
+        <item>@string/day_1</item>
+        <item>@string/day_2</item>
+        <item>@string/day_3</item>
+        <item>@string/day_4</item>
+        <item>@string/day_5</item>
+        <item>@string/day_6</item>
+        <item>@string/day_7</item>
+    </string-array>
+
+
+    <string-array name="sign_in_type">
+        <item>@string/sign_in_type_0</item>
+        <item>@string/sign_in_type_1</item>
+        <item>@string/sign_in_type_2</item>
+        <item>@string/sign_in_type_3</item>
+        <item>@string/sign_in_type_4</item>
+    </string-array>
+
+    <string-array name="country_prefix">
+        <item>63</item>
+        <item>86</item>
+    </string-array>
+
+    <!-- 自定义验证码输入框-->
+    <declare-styleable name="vericationCodeView">
+        <!--输入框的数量-->
+        <attr name="vcv_et_number" format="integer" />
+        <!--输入类型-->
+        <attr name="vcv_et_inputType">
+            <enum name="number" value="0" />
+            <enum name="numberPassword" value="1" />
+            <enum name="text" value="2" />
+            <enum name="textPassword" value="3" />
+        </attr>
+        <!--输入框的宽度-->
+        <attr name="vcv_et_width" format="dimension|reference" />
+        <!--输入框文字颜色-->
+        <attr name="vcv_et_text_color" format="color|reference" />
+        <!--输入框文字大小-->
+        <attr name="vcv_et_text_size" format="dimension|reference" />
+        <!--输入框背景-->
+        <attr name="vcv_et_bg" format="reference" />
+        <!--光标样式-->
+        <attr name="vcv_et_cursor" format="reference" />
+        <!--是否隐藏光标-->
+        <attr name="vcv_et_cursor_visible" format="boolean" />
+        <!--输入框间距，如果不设置则会把输入框位置平分-->
+        <attr name="vcv_et_spacing" format="dimension|reference" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="RatingStarView">
+        <attr name="rsv_starMargin" format="integer|dimension" />
+        <attr name="rsv_cornerRadius" format="float|dimension" />
+        <attr name="rsv_starForegroundColor" format="color|reference" />
+        <attr name="rsv_starBackgroundColor" format="color|reference" />
+        <attr name="rsv_strokeColor" format="color|reference" />
+        <attr name="rsv_strokeWidth" format="float|dimension" />
+        <attr name="rsv_starNum" format="integer" />
+        <attr name="rsv_rating" format="float" />
+        <attr name="rsv_starThickness" format="float|fraction" />
+        <attr name="rsv_drawStrokeForEmptyStar" format="boolean" />
+        <attr name="rsv_drawStrokeForFullStar" format="boolean" />
+        <attr name="rsv_drawStrokeForHalfStar" format="boolean" />
+        <attr name="rsv_enableSelectRating" format="boolean" />
+        <attr name="rsv_onlyHalfStar" format="boolean" />
+    </declare-styleable>
+
+
+
+
+    <string-array name="weeks">
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+    </string-array>
+
+    <declare-styleable name="CommentView">
+
+        <attr name="starDrawable" format="reference" />
+        <attr name="checkStarDrawable" format="reference" />
+        <attr name="starCount" format="integer" />
+        <attr name="checkStarCount" format="integer" />
+        <attr name="starHorizontalSpace" format="dimension" />
+        <attr name="starHeight" format="dimension" />
+        <attr name="starWidth" format="dimension" />
+
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_80"
+    android:layout_height="@dimen/dp_30"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_d9e8fd_radius_4">
+
+    <ImageView
+        android:id="@+id/addIcon"
+        android:layout_width="@dimen/dp_13"
+        android:layout_height="@dimen/dp_13"
+        android:src="@mipmap/ic_news_add_black"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/channelTitleTv"/>
+
+    <TextView
+        android:id="@+id/channelTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/black_333333"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/dp_60"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_goneMarginStart="@dimen/dp_0"
+        android:layout_marginStart="@dimen/dp_2"
+        />
+
+    <ImageView
+        android:id="@+id/delChannelIv"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:src="@mipmap/ic_news_del_channel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:translationY="-5dp"
+        android:translationX="@dimen/dp_5"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

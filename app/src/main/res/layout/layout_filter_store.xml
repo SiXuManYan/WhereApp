@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/filter_container_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/category_ll"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:visibility="visible"
+    tools:showIn="@layout/activity_store_filer">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/filter_pager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_274"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/dismiss_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@color/grey_666666" />
+
+</LinearLayout>

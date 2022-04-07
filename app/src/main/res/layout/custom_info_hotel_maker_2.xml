@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+
+    <androidx.appcompat.widget.AppCompatCheckedTextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_24"
+        android:background="@drawable/selector_hotel_maker"
+        android:checked="false"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingEnd="@dimen/dp_12"
+        android:paddingBottom="@dimen/dp_2"
+        android:singleLine="true"
+        android:textColor="@color/selector_white_blue"
+        android:textSize="@dimen/sp_12"
+        tools:text="$10000" />
+
+    <ImageView
+        android:id="@+id/triangle_iv"
+        android:layout_below="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/shape_triangle_down_white"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
+
+
+
+

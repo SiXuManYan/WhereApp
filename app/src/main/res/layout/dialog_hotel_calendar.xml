@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="700dp"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/select_date"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_close_black" />
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/week_ll"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_rl"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/day_of_week"
+            android:text="@string/calendar_sunday" />
+
+        <TextView
+            style="@style/day_of_week"
+            android:text="@string/calendar_monday" />
+
+        <TextView
+            style="@style/day_of_week"
+            android:text="@string/calendar_tuesday" />
+
+        <TextView
+            style="@style/day_of_week"
+            android:text="@string/calendar_wednesday" />
+
+        <TextView
+            style="@style/day_of_week"
+            android:text="@string/calendar_thursday" />
+
+        <TextView
+            style="@style/day_of_week"
+            android:text="@string/calendar_friday" />
+
+        <TextView
+            style="@style/day_of_week"
+            android:text="@string/calendar_saturday" />
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendarRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@+id/week_ll"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/ensureBtn"
+        android:layout_width="@dimen/dp_270"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@+id/calendarRecycler"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/shape_blue_radius_24"
+        android:gravity="center"
+        android:text="@string/ensure"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_17" />
+
+
+
+
+
+
+
+</RelativeLayout>

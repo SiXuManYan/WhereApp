@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="statusbarutil_fake_status_bar_view" />
+    
+    <item name="tag_is_start_date" type="id"/>
+    <item name="tag_is_end_date" type="id"/>
+    <item name="tag_is_selected_date" type="id"/>
+</resources>

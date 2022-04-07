@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_12"
+    android:paddingBottom="@dimen/dp_12">
+
+
+    <TextView
+        android:id="@+id/sku_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold"
+        tools:text="颜色" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/second_rv"
+        tools:itemCount="1"
+        android:layout_marginTop="@dimen/dp_16"
+        tools:listitem="@layout/item_sku_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

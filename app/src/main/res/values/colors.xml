@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#F5F5F5</color>
+    <color name="colorPrimaryDark">#377bff</color>
+    <color name="colorAccent">#E6377BFF</color>
+
+    <color name="transparency">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue_5A9DFE">#5A9DFE</color>
+    <color name="black_333333">#333333</color>
+    <color name="black_33333360">#99333333</color>
+    <color name="black_000000">#000000</color>
+    <color name="grey_F5F5F5">#F5F5F5</color>
+    <color name="grey_E0E0E0">#E0E0E0</color>
+    <color name="white_FEFEFE">#FEFEFE</color>
+    <color name="grey_BFBFBF">#BFBFBF</color>
+    <color name="red_FF0000">#FF0000</color>
+    <color name="red_F93E3F">#F93E3F</color>
+    <color name="blue_CCE0F9">#CCE0F9</color>
+    <color name="blue_4C9EF2">#4C9EF2</color>
+    <color name="blue_72B9FF">#72B9FF</color>
+    <color name="grey_999999">#999999</color>
+    <color name="blue_9FC7F1">#9FC7F1</color>
+    <color name="orange_FD8181">#FD8181</color>
+    <color name="orange_FABBBB">#FABBBB</color>
+    <color name="grey_666666">#666666</color>
+    <color name="gray_e4e4e4">#e4e4e4</color>
+    <color name="grey_60666666">#96666666</color>
+    <color name="grey_EAEAEA">#EAEAEA</color>
+    <color name="grey_CCCCCC">#CCCCCC</color>
+    <color name="blue_E7F0FB">#E7F0FB</color>
+    <color name="orange_FF5B1B">#FF5B1B</color>
+    <color name="orange_FF6C00">#FF6C00</color>
+    <color name="grey_EEEEEE">#EEEEEE</color>
+    <color name="blue_4D9FF2">#4D9FF2</color>
+    <color name="grey_b7b7b7">#B7B7B7</color>
+    <color name="blue_4B9DF1">#4B9DF1</color>
+    <color name="blue_B9D5F9">#B9D5F9</color>
+    <color name="blue_D5EAFF">#D5EAFF</color>
+    <color name="blue_499cf2">#499cf2</color>
+    <color name="blue_489b58">#489BF8</color>
+    <color name="blue_90c6f8">#90c6f8</color>
+    <color name="blue_69AEF5">#69AEF5</color>
+    <color name="blue_ACD8FF">#ACD8FF</color>
+    <color name="blue_D9E8FD">#D9E8FD</color>
+    <color name="red_ACD8FF">#F64C09</color>
+    <color name="blue_5570FF">#5570FF</color>
+    <color name="blue_007AFF">#007AFF</color>
+    <color name="blue_9DC9F7">#9DC9F7</color>
+    <color name="yellow_FCE314">#FCE314</color>
+    <color name="red_FF5555">#FF5555</color>
+    <color name="orange_FD6431">#FD6431</color>
+    <color name="green_63C3A7">#63C3A7</color>
+    <color name="grey_979797">#979797</color>
+    <color name="grey_B5B5B5">#B5B5B5</color>
+    <color name="yellow_FEBA32">#FEBA32</color>
+    <color name="blue_007EFF">#007EFF</color>
+    <color name="blue_377BFF">#377BFF</color>
+    <color name="color_99333333">#99333333</color>
+    <color name="color_98bbff">#98BBFF</color>
+    <color name="orange_FF5837">#FF5837</color>
+    <color name="orange_FF5B3B">#FF5B3B</color>
+    <color name="blue_E8F0FF">#E8F0FF</color>
+    <color name="color_DCE8FF">#DCE8FF</color>
+    <color name="color_F64944">#F64944</color>
+    <color name="color_F12F2F">#F12F2F</color>
+    <color name="color_F0F0F0">#F0F0F0</color>
+    <color name="color_EC0000">#EC0000</color>
+    <color name="color_FF4F4F">#FF4F4F</color>
+    <color name="color_4966C1">#4966C1</color>
+    <color name="color_yellow_ffcc00">#FFCC00</color>
+    <color name="red_f64944">#F64944</color>
+    <color name="red_FF4934">#FF4934</color>
+    <color name="color_green_1edaab">#1EDAAB</color>
+
+    <!-- 页面背景色 -->
+    <color name="bg_color">#ffffff</color>
+
+    <!-- 透明颜色-->
+    <color name="transplant">#00000000</color>
+
+    <color name="lan">#4ebcfc</color>
+</resources>

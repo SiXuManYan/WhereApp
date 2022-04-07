@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/back_iv"
+        style="@style/TopButton"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_back_black" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_28"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_40">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_password"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_19"
+                />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_56"
+                android:layout_marginTop="@dimen/dp_64">
+
+                <ImageView
+                    android:id="@+id/tag_password_iv"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_login_password_gray" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/password_aet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toStartOf="@+id/password_rule_iv"
+                    android:layout_toEndOf="@id/tag_password_iv"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/input_password_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:textColor="@color/black_333333"
+                    android:textColorHint="@color/grey_B5B5B5"
+                    android:textSize="@dimen/sp_14" />
+
+                <ImageView
+                    android:id="@+id/password_rule_iv"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_login_eye_close_gray" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grey_B5B5B5" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_56">
+
+                <ImageView
+                    android:id="@+id/confirm_iv"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_confirm_password_gray" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/password_confirm_aet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toStartOf="@+id/password_confirm_rule_iv"
+                    android:layout_toEndOf="@id/confirm_iv"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/confirm_password_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:textColor="@color/black_333333"
+                    android:textColorHint="@color/grey_B5B5B5"
+                    android:textSize="@dimen/sp_14" />
+
+                <ImageView
+                    android:id="@+id/password_confirm_rule_iv"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_login_eye_close_gray" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grey_B5B5B5" />
+
+
+            <TextView
+                android:id="@+id/register_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginTop="@dimen/dp_44"
+                android:background="@drawable/shape_blue_radius_22"
+                android:gravity="center"
+                android:text="@string/login_in"
+                android:alpha="0.7"
+                android:textColor="@color/white_FEFEFE"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

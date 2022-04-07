@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:background="@color/blue_377BFF">
+
+
+
+    <RelativeLayout
+        android:id="@+id/title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44">
+
+
+        <ImageView
+            android:id="@+id/order_back_iv"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:padding="@dimen/dp_15"
+            android:src="@drawable/ic_back_white"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/main_tab_title_order"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_17" />
+
+
+    </RelativeLayout>
+
+
+    <com.jcs.where.widget.tabs.SlidingTabLayout
+        android:id="@+id/tabs_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_below="@+id/title_rl"
+        android:background="@color/white"
+        app:tl_indicator_color="@color/blue_377BFF"
+        app:tl_indicator_corner_radius="@dimen/dp_2"
+        app:tl_indicator_height="@dimen/dp_4"
+        app:tl_indicator_width="@dimen/dp_25"
+        app:tl_textBold="SELECT"
+        app:tl_textSelectColor="@color/blue_377BFF"
+        app:tl_textUnselectColor="@color/black_333333"
+        app:tl_textsize="@dimen/sp_14"
+        app:tl_underline_color="@color/transplant"
+        app:tl_underline_height="1px" />
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabs_type"
+        android:background="@color/white" />
+
+
+    <RelativeLayout
+        android:id="@+id/login_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_rl"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/login_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_white_radius_4_stroke_blue_1"
+            android:padding="@dimen/dp_10"
+            android:text="@string/to_login"
+            android:textColor="@color/blue_5A9DFE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

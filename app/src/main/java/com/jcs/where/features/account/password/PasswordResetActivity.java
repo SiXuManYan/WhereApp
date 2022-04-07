@@ -63,7 +63,7 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
 
     @Override
     protected void initView() {
-        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.back_iv));
         BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.grey_F5F5F5));
         phone_aet = findViewById(R.id.phone_aet);
         verify_code_aet = findViewById(R.id.verify_code_aet);
@@ -98,7 +98,6 @@ public class PasswordResetActivity extends BaseMvpActivity<PasswordResetPresente
         country_tv.setOnClickListener(this::onCountryPrefixClick);
         get_verify_tv.setOnClickListener(this::onVerifyGetClick);
         reset_tv.setOnClickListener(this::onResetClick);
-        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
 
         phone_aet.addTextChangedListener(new TextWatcher() {

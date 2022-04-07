@@ -63,7 +63,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     @Override
     protected void initView() {
-        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.back_iv));
         password_aet = findViewById(R.id.password_aet);
         password_confirm_aet = findViewById(R.id.password_confirm_aet);
         password_rule_iv = findViewById(R.id.password_rule_iv);
@@ -85,7 +85,6 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         password_confirm_rule_iv.setOnClickListener(this::onConfirmPasswordRuleClick);
 
         register_tv.setOnClickListener(this::onRegisterClick);
-        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
         password_aet.addTextChangedListener(new TextWatcher() {
             @Override

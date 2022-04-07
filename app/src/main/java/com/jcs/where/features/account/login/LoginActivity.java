@@ -109,11 +109,11 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         if (bundle != null) {
             boolean dismissBack = bundle.getBoolean(Constant.PARAM_DISMISS_BACK_ICON);
             if (dismissBack) {
-                findViewById(R.id.iv_back).setVisibility(View.INVISIBLE);
+                findViewById(R.id.back_iv).setVisibility(View.INVISIBLE);
             }
         }
 
-        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.iv_back));
+        BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.back_iv));
         BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.color_4966C1));
         login_rule_tv = findViewById(R.id.login_rule_tv);
         country_tv = findViewById(R.id.country_tv);
@@ -190,7 +190,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         login_tv.setOnClickListener(this::onLoginClick);
         findViewById(R.id.facebook_login_iv).setOnClickListener(this::onFacebookLoginClick);
         findViewById(R.id.google_login_iv).setOnClickListener(this::onGoogleLoginClick);
-        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+        findViewById(R.id.back_iv).setOnClickListener(v -> finish());
 
         clear_phone_iv.setOnClickListener(v -> phone_aet.setText(""));
         clear_verify_iv.setOnClickListener(v -> verify_code_aet.setText(""));

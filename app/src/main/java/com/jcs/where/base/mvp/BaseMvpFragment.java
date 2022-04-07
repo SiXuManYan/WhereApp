@@ -58,7 +58,7 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
         String errMsg = errorResponse.getErrMsg();
 
         if (errCode <= 0) {
-            ToastUtils.showShort(errMsg);
+            ToastUtils.showLong(errMsg);
             return;
         }
         if (errMsg.isEmpty()) {

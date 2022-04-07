@@ -15,6 +15,7 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.google.android.material.appbar.AppBarLayout
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.home.HomeNewsResponse
@@ -24,9 +25,9 @@ import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.complex.ConvenienceServiceActivity
-import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.bills.PayBillsActivity
+import com.jcs.where.features.city.CityPickerActivity
+import com.jcs.where.features.complex.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
@@ -39,8 +40,8 @@ import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.home.TravelHomeActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
-import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.news.NewsActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity
@@ -87,6 +88,9 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     /** 新闻列表数据 */
     private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
+
+
+    private lateinit var emptyView: EmptyView
 
     override fun getLayoutId() = R.layout.fragment_home3
 
@@ -276,7 +280,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                 })
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
-        val emptyView = EmptyView(context).apply {
+         emptyView = EmptyView(context).apply {
             showEmptyDefault()
         }
         mHomeRecommendAdapter.apply {
@@ -353,6 +357,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         presenter = HomePresenter(this)
         initCity()
         rxTimer = RxTimer()
+        requestData()
+    }
+
+    private fun requestData() {
+        recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
@@ -423,6 +432,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         val loadMoreModule = mHomeRecommendAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (recommedRequestPage == Constant.DEFAULT_FIRST_PAGE) {
+                emptyView.showEmptyDefault()
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()
@@ -580,6 +590,16 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             else -> {
             }
         }
+
+    }
+
+    override fun onError(errorResponse: ErrorResponse) {
+        val errCode = errorResponse.getErrCode()
+        if (errCode<=0){
+            ToastUtils.showLong(errorResponse.getErrMsg())
+            emptyView.showNetworkError { requestData() }
+        }
+
 
     }
 

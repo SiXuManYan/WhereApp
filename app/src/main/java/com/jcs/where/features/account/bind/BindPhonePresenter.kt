@@ -42,7 +42,7 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
         val request = SendCodeRequest().apply {
             phone = account
             countryCode = prefix
-            type = Constant.VERIFY_CODE_TYPE_1_LOGIN
+            type = Constant.VERIFY_CODE_TYPE_2_REGISTER
         }
 
         requestApi(mRetrofit.getVerifyCode(request), object : BaseMvpObserver<JsonElement>(mView) {

@@ -73,6 +73,8 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
         get_verify_tv = findViewById(R.id.get_verify_tv);
         password_rule_iv = findViewById(R.id.password_rule_iv);
         country_tv = findViewById(R.id.country_tv);
+        // 默认菲律宾前缀
+        country_tv.setText(getString(R.string.country_code_format, "63"));
     }
 
     @Override

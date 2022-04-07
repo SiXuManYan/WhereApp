@@ -199,7 +199,6 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
             }
 
             override fun onError(errorResponse: ErrorResponse) {
-                super.onError(errorResponse)
                 val errCode = errorResponse.getErrCode()
 
                 // 404：账号不存在，需要跳转绑定手机号界面

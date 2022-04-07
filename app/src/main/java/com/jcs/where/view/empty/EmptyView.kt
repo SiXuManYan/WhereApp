@@ -3,6 +3,7 @@ package com.jcs.where.view.empty
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -61,7 +62,17 @@ class EmptyView : LinearLayout {
         empty_message_tv.setText(emptyMessage)
     }
 
+    fun setEmptyMessage(emptyMessage: String) {
+        empty_message_tv.setText(emptyMessage)
+    }
+
     fun setEmptyHint(@StringRes hint: Int) {
+        empty_hint_tv.setText(hint)
+        empty_hint_tv.visibility = VISIBLE
+    }
+
+
+    fun setEmptyHint(hint: String) {
         empty_hint_tv.setText(hint)
         empty_hint_tv.visibility = VISIBLE
     }
@@ -71,15 +82,34 @@ class EmptyView : LinearLayout {
         action_tv.visibility = VISIBLE
     }
 
+    fun setEmptyActionText(text: String) {
+        action_tv.setText(text)
+        action_tv.visibility = VISIBLE
+    }
+
+
+
     /**
      * 网络错误
      */
-    fun showRetryDefault() {
+    fun showNetworkError(onClickListener: OnClickListener? = null) {
         empty_iv.setImageResource(R.mipmap.ic_empty_network_error)
         empty_message_tv.setText(R.string.empty_network_error)
         empty_hint_tv.setText(R.string.empty_network_error_hint)
-        action_tv!!.setText(R.string.empty_network_error_action)
+
+        empty_message_tv.visibility = View.VISIBLE
+        empty_hint_tv.visibility = View.VISIBLE
+
+        onClickListener?.let {
+            action_tv.setText(R.string.empty_network_error_action)
+            action_tv.visibility = View.VISIBLE
+            action_tv.setOnClickListener(it)
+        }
+
     }
+
+
+
 
     fun setEmptyActionOnClickListener(listener: OnClickListener?) {
         action_tv.setOnClickListener(listener)

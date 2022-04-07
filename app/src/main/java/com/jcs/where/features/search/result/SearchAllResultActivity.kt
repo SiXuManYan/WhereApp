@@ -2,9 +2,9 @@ package com.jcs.where.features.search.result
 
 import android.os.Bundle
 import android.view.View
+import android.widget.RelativeLayout
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.KeyboardUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
@@ -76,12 +76,7 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
     }
 
     override fun bindListener() {
-
-
-        back_iv.setOnClickListener {
-            finish()
-        }
-        delete_iv.setOnClickListener {
+        findViewById<RelativeLayout>(R.id.title_rl).setOnClickListener {
             finish()
         }
     }

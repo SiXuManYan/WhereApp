@@ -97,11 +97,8 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
                 shop_categoryId = mShopCategoryId
             }
         }
-
-    }
-
-    override fun loadOnVisible() {
         presenter.getMallList(goodRequest)
+
     }
 
 

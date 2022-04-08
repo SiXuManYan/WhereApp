@@ -113,3 +113,4 @@ lint/tmp/
 
 .idea/dev
 .idea/dev/release
+/tmpmob/

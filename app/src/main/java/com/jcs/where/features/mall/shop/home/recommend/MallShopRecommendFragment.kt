@@ -95,12 +95,12 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         mAdapter.addHeaderView(header, 0)
 
         mCouponHeaderAdapter = CouponCenterAdapter().apply {
-            addChildClickViewIds( R.id.get_tv)
+            addChildClickViewIds(R.id.get_tv)
             setOnItemChildClickListener { adapter, view, position ->
                 val userCoupon = mCouponHeaderAdapter.data[position]
 
                 when (view.id) {
-                    R.id.get_tv -> presenter.getShopCoupon(userCoupon.id,userCoupon.couponType)
+                    R.id.get_tv -> presenter.getShopCoupon(userCoupon.id, userCoupon.couponType)
                     else -> {}
                 }
             }
@@ -159,9 +159,19 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         presenter.getMallList(goodRequest)
     }
 
-    override fun bindListener() = Unit
+    override fun bindListener() {
+        swipe_layout.setOnRefreshListener {
+            goodRequest.apply {
+                page = Constant.DEFAULT_FIRST_PAGE
+                shopId = mShopId
+                recommend = 1
+            }
+            loadOnVisible()
+        }
+    }
 
     override fun bindData(data: MutableList<MallGood>, lastPage: Boolean) {
+        swipe_layout.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (mPage == Constant.DEFAULT_FIRST_PAGE) {
@@ -187,11 +197,13 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
     }
 
     override fun bindCoupon(response: MutableList<Coupon>) {
+        swipe_layout.isRefreshing = false
         mCouponHeaderAdapter.setNewInstance(response)
         content_rv.smoothScrollToPosition(0)
     }
 
     override fun bindRecommend(response: ArrayList<ShopRecommend>) {
+        swipe_layout.isRefreshing = false
         mRecommendHeaderAdapter.setNewInstance(response)
     }
 

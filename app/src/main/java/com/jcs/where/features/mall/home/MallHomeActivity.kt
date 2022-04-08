@@ -155,7 +155,6 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
         override fun getPageTitle(position: Int): CharSequence = firstCategory[position].name
 
-
         override fun getItem(position: Int): Fragment = MallHomeChildFragment().apply {
             targetFirstCategory = firstCategory[position]
         }

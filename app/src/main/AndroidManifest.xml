@@ -160,12 +160,6 @@
 
 
         <activity
-            android:name=".utils.ImagePreviewActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
             android:name=".yellow_page.activity.YellowPageActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"

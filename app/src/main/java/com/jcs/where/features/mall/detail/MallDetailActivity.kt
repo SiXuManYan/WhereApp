@@ -12,6 +12,7 @@ import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
@@ -19,6 +20,8 @@ import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
+import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.comment.MallCommentActivity
@@ -27,8 +30,6 @@ import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.message.custom.CustomMessage
 import com.jcs.where.frames.common.Html5Url
-import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
-import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -336,6 +337,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             0
         }
         setLikeImage()
+        ToastUtils.showShort(R.string.success)
     }
 
     override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {

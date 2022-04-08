@@ -7,10 +7,7 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.MallShopCollection
 import com.jcs.where.api.request.MallShopUnCollection
-import com.jcs.where.api.response.mall.request.MallCollection
 import com.jcs.where.api.response.mall.request.MallShop
-import com.jcs.where.api.response.mall.request.UnCollection
-import com.jcs.where.utils.ToastUtils
 
 /**
  * Created by Wangsw  2022/1/19 17:22.

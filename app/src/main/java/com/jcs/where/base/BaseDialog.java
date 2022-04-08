@@ -13,13 +13,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.jcs.where.R;
-import com.jcs.where.utils.ToastUtils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.jcs.where.R;
 
 public abstract class BaseDialog extends DialogFragment {
 
@@ -103,10 +102,6 @@ public abstract class BaseDialog extends DialogFragment {
 
     public void show(FragmentManager fm) {
         this.show(fm, getDialogTag());
-    }
-
-    protected void showToast(String msg) {
-        ToastUtils.showLong(getContext(), msg);
     }
 
     protected boolean isBottom() {

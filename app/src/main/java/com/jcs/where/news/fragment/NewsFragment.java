@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
@@ -202,7 +203,6 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
         if (view.getId() == R.id.newsVideoDurationView) {
             NewsResponse item = mAdapter.getItem(position);
             int itemViewType = mAdapter.getItemViewType(position);
-            showToast("播放视频：" + item.getTitle());
         }
     }
 

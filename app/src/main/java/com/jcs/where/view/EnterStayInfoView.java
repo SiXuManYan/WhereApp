@@ -8,15 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jcs.where.R;
-import com.jcs.where.widget.calendar.JcsCalendarAdapter;
-import com.jcs.where.utils.ToastUtils;
-
-import java.util.concurrent.TimeUnit;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.jcs.where.R;
+import com.jcs.where.widget.calendar.JcsCalendarAdapter;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * create by zyf on 2020/12/26 12:28 PM
@@ -135,7 +134,7 @@ public class EnterStayInfoView extends ConstraintLayout {
     }
 
     protected void showToast(String msg) {
-        ToastUtils.showLong(getContext(), msg);
+        com.blankj.utilcode.util.ToastUtils.showShort(msg);
     }
 
     public interface EnterStayInfoAdapter {

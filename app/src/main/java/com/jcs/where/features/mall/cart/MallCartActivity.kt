@@ -42,7 +42,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     override fun initView() {
         swipe_layout.apply {
-//            setOnRefreshListener(this@MallCartActivity)
+            setOnRefreshListener(this@MallCartActivity)
             swipe_layout.isEnabled = false
             setColorSchemeColors(ColorUtils.getColor(R.color.blue_4C9EF2))
         }
@@ -59,8 +59,6 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             onChildReselectSkuClick = this@MallCartActivity
             onDeleteExpiredClick = View.OnClickListener {
                 presenter.clearStoreCart(1)
-
-
             }
 
         }

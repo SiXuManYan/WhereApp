@@ -126,6 +126,10 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             layoutManager = gridLayoutManager
             addItemDecoration(decoration)
         }
+        swipe_layout.setOnRefreshListener {
+            goodRequest.page = Constant.DEFAULT_FIRST_PAGE
+            presenter.getMallList(goodRequest)
+        }
     }
 
     override fun initData() {
@@ -261,6 +265,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
     }
 
     override fun bindData(data: MutableList<MallGood>, lastPage: Boolean) {
+        swipe_layout.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {

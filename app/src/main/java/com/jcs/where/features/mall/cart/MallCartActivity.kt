@@ -48,6 +48,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         }
         emptyView = EmptyView(this).apply {
             showEmptyDefault()
+            setEmptyImage(R.mipmap.ic_empty_search)
             this.empty_message_tv.text = StringUtils.getString(R.string.empty_data_cart)
         }
         mAdapter = MallCartAdapter().apply {
@@ -168,6 +169,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
                 select_all_tv.visibility = View.GONE
+                bottom_rl.visibility = View.GONE
             } else {
                 loadMoreModule.loadMoreEnd()
             }
@@ -175,6 +177,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             return
         }
         select_all_tv.visibility = View.VISIBLE
+        bottom_rl.visibility =View.VISIBLE
         if (page == Constant.DEFAULT_FIRST_PAGE) {
             mAdapter.setNewInstance(data)
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()

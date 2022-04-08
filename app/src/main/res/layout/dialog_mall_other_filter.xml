@@ -94,17 +94,41 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/confirm_tv"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/dp_40"
-        android:background="@drawable/shape_blue_radius_20"
-        android:gravity="center"
-        android:text="@string/confirm"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_14"
-        android:textStyle="bold" />
+        android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/dp_40">
+
+        <TextView
+            android:id="@+id/reset_tv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dp_40"
+            android:background="@drawable/stock_blue_radius_20"
+            android:gravity="center"
+            android:text="@string/reset"
+            android:layout_marginEnd="@dimen/dp_7"
+            android:textColor="@color/blue_377BFF"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/confirm_tv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dp_40"
+            android:background="@drawable/shape_blue_radius_20"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

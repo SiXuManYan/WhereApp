@@ -30,7 +30,6 @@ import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_mall_second.*
 import kotlinx.android.synthetic.main.layout_mall_filter.*
-import java.util.*
 
 /**
  * Created by Wangsw  2021/12/3 15:30.
@@ -144,7 +143,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
         dismiss_view.setOnClickListener {
             filter_container_ll.visibility = View.GONE
-            if (sales_tv.isChecked ) {
+            if (sales_tv.isChecked) {
                 complex_tv.isChecked = false
             }
         }
@@ -290,39 +289,51 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
     }
 
 
+    private lateinit var filterDialog: FixedHeightBottomSheetDialog
+
     private fun showOtherFilterDialog() {
-        val addressDialog = FixedHeightBottomSheetDialog(this, R.style.bottom_sheet_edit, SizeUtils.dp2px(500f))
-        val view = LayoutInflater.from(this).inflate(R.layout.dialog_mall_other_filter, null)
-        addressDialog.setContentView(view)
-        try {
-            val parent = view.parent as ViewGroup
-            parent.setBackgroundResource(android.R.color.transparent)
-        } catch (e: Exception) {
-        }
 
-        val min_et = view.findViewById<AppCompatEditText>(R.id.min_et)
-        val max_et = view.findViewById<AppCompatEditText>(R.id.max_et)
+        if (!::filterDialog.isInitialized) {
+            filterDialog = FixedHeightBottomSheetDialog(this, R.style.bottom_sheet_edit, SizeUtils.dp2px(500f))
+            val view = LayoutInflater.from(this).inflate(R.layout.dialog_mall_other_filter, null)
+            filterDialog.setContentView(view)
 
+            try {
+                val parent = view.parent as ViewGroup
+                parent.setBackgroundResource(android.R.color.transparent)
+            } catch (e: Exception) {
+            }
 
+            val min_et = view.findViewById<AppCompatEditText>(R.id.min_et)
+            val max_et = view.findViewById<AppCompatEditText>(R.id.max_et)
 
-        view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
-            addressDialog.dismiss()
-        }
+            view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
+                filterDialog.dismiss()
+            }
 
+            view.findViewById<TextView>(R.id.confirm_tv).setOnClickListener {
+                if (!min_et.text.isNullOrBlank() && !max_et.text.isNullOrBlank()) {
+                    goodRequest.apply {
+                        page = Constant.DEFAULT_FIRST_PAGE
+                        startPrice = min_et.text.toString()
+                        endPrice = max_et.text.toString()
+                    }
+                    presenter.getMallList(goodRequest)
+                }
+                filterDialog.dismiss()
+            }
 
-        view.findViewById<TextView>(R.id.confirm_tv).setOnClickListener {
-            if (!min_et.text.isNullOrBlank() && !max_et.text.isNullOrBlank()) {
+            view.findViewById<TextView>(R.id.reset_tv).setOnClickListener {
                 goodRequest.apply {
                     page = Constant.DEFAULT_FIRST_PAGE
-                    startPrice = min_et.text.toString()
-                    endPrice = max_et.text.toString()
+                    startPrice = null
+                    endPrice = null
                 }
                 presenter.getMallList(goodRequest)
+                filterDialog.dismiss()
             }
-            addressDialog.dismiss()
         }
-
-        addressDialog.show()
+        filterDialog.show()
     }
 
 

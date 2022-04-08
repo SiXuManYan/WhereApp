@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallShopCategory
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.fragment_refresh_list_no_refresh.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_refresh_list.*
 
 /**
  * Created by Wangsw  2022/1/24 10:31.
@@ -37,7 +35,7 @@ class MallShopCategoryFragment : BaseMvpFragment<MallShopCategoryPresenter>(), M
         }
     }
 
-    override fun getLayoutId() = R.layout.fragment_refresh_list_no_refresh
+    override fun getLayoutId() = R.layout.fragment_refresh_list
 
     override fun initView(view: View) {
 
@@ -63,10 +61,13 @@ class MallShopCategoryFragment : BaseMvpFragment<MallShopCategoryPresenter>(), M
     }
 
     override fun bindListener() {
-
+        swipe_layout.setOnClickListener {
+            presenter.getCategory(mShopId)
+        }
     }
 
     override fun bindCategory(response: ArrayList<MallShopCategory>) {
+        swipe_layout.isRefreshing = false
         mAdapter.setNewInstance(response)
     }
 }

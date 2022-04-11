@@ -11,10 +11,10 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 28,
-      "versionName": "0.2.15",
+      "versionCode": 29,
+      "versionName": "0.2.16 test",
       "enabled": true,
-      "outputFile": "Where_v28_(0.2.15)_20220406.apk"
+      "outputFile": "Where_v29_(0.2.16 test)_20220411.apk"
     }
   ]
 }

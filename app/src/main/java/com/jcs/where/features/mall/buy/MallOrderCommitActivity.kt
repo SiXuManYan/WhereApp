@@ -246,9 +246,11 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             }
             EventCode.EVENT_SELECTED_SHOP_COUPON -> {
                 val selectedShopCouponId = baseEvent.data as Int
-
+                // 更换店铺优惠券后，将平台券置空
+                currentPlatformCouponId = 0
                 // 更新店铺item中的 nativeShopCouponId
                 presenter.updateItemShopCouponId(mAdapter,currentHandleShopId,selectedShopCouponId)
+                // 获取默认优惠券
                 presenter.getDefaultCoupon(mAdapter, data, currentPlatformCouponId)
             }
 

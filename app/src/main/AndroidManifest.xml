@@ -523,7 +523,9 @@
         <activity android:name=".features.daily.scoe.ScoreActivity" />
         <activity android:name=".features.mall.home.MallHomeActivity" />
         <activity android:name=".features.mall.second.MallSecondActivity" />
-        <activity android:name=".features.mall.result.MallSearchResultActivity" />
+        <activity android:name=".features.mall.result.MallSearchResultActivity"
+            android:windowSoftInputMode="stateHidden"
+            />
         <activity
             android:name=".features.mall.detail.MallDetailActivity"
             android:windowSoftInputMode="stateHidden" />

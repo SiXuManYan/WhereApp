@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.http.SslError
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
+import android.view.KeyEvent
+import android.webkit.*
+import android.widget.LinearLayout
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,11 +33,17 @@ import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.message.custom.CustomMessage
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
+import com.jcs.where.view.WebLayout
+import com.just.agentweb.AgentWeb
+import com.just.agentweb.DefaultWebClient
+import com.just.agentweb.WebChromeClient
+import com.just.agentweb.WebViewClient
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
 
@@ -97,7 +107,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         initMedia()
         initComment()
+        initWeb()
     }
+
+
 
     private fun initComment() {
         mCommentAdapter = HotelCommentAdapter()
@@ -152,6 +165,22 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
     }
 
+
+
+    private var  mWebViewClient = object : WebViewClient(){
+    }
+
+    private var  mWebChromeClient = object : WebChromeClient(){
+
+    }
+
+    private fun initWeb() {
+
+
+
+
+
+    }
 
     override fun initData() {
         presenter = MallDetailPresenter(this)
@@ -244,10 +273,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         title_tv.text = response.title
 
 
-        response.desc?.let {
-            disPlayHtml(it)
-        }
+//        response.desc?.let {
+//            disPlayHtml(it)
+//        }
 
+        jsweb.loadUrl(response.website)
 
         mSkuDialog.data = SkuDataSource().apply {
             main_image = response.main_image
@@ -271,11 +301,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                     putInt(Constant.PARAM_TYPE, 1)
                     putParcelable(Constant.PARAM_GOOD_DATA, customMessage)
                 })
-
-//                 RongIM.getInstance().startConversation(
-//                    this, Conversation.ConversationType.PRIVATE,
-//                    "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5", response.mer_name, null
-//                )
             }
         }
 
@@ -287,7 +312,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
 
     private fun disPlayHtml(html: String) {
-        val imageGetter = ImageGetter(this, resources, html_tv)
+        val imageGetter = ImageGetter2(this, resources, html_tv)
         val styledText = fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY, imageGetter, null)
         html_tv.text = styledText
 
@@ -303,17 +328,21 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
     override fun onPause() {
+//        mAgentWeb.webLifeCycle.onPause()
         super.onPause()
         GSYVideoManager.onPause()
     }
 
     override fun onResume() {
+//        mAgentWeb.webLifeCycle.onResume()
         super.onResume()
         GSYVideoManager.onResume()
         presenter?.getCartCount()
     }
 
     override fun onDestroy() {
+
+//        mAgentWeb.webLifeCycle.onDestroy()
         super.onDestroy()
         GSYVideoManager.releaseAllVideos()
     }
@@ -366,6 +395,13 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     override fun bindCartCount(nums: Int) {
         shopping_cart.setMessageCount(nums)
     }
+
+/*    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return if (mAgentWeb.handleKeyEvent(keyCode, event)) {
+            true
+        } else super.onKeyDown(keyCode, event)
+
+    }*/
 
 
 }

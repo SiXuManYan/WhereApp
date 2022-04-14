@@ -129,12 +129,14 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
     }
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
-        collectStatus = if (collectionStatus) {
-            1
+        if (collectionStatus) {
+            collectStatus =  1
+            ToastUtils.showShort(R.string.collection_success)
         } else {
-            0
+            collectStatus =  0
+            ToastUtils.showShort(R.string.cancel_collection_success)
         }
-        ToastUtils.showShort(R.string.success)
+
         setLikeImage()
     }
 

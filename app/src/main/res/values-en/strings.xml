@@ -894,5 +894,7 @@ Gentleman must let go</string>
     <string name="total_count_format">%1$d&#160;Item(s)</string>
     <string name="application_time">Application Time</string>
     <string name="success">Success</string>
+    <string name="collection_success">Collection Success</string>
+    <string name="cancel_collection_success">Cancel Success</string>
 
 </resources>

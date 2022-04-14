@@ -130,9 +130,26 @@ class CouponCenterAdapter : BaseMultiItemQuickAdapter<Coupon, BaseViewHolder>(),
             }
             schedule_tv.text = StringUtils.getString(R.string.take_progress, progress.toPlainString())
         } else {
-            rule_tv?.visibility = View.VISIBLE
-            schedule_pb.visibility = View.GONE
-            schedule_tv.visibility = View.GONE
+
+
+
+
+
+            when (holder.itemViewType) {
+
+                Coupon.TYPE_COMMON -> {
+                    rule_tv?.visibility = View.VISIBLE
+                    schedule_pb.visibility = View.GONE
+                    schedule_tv.visibility = View.INVISIBLE
+                }
+
+                Coupon.TYPE_FOR_SHOP_HOME_PAGE -> {
+                    schedule_pb.visibility = View.GONE
+                    schedule_tv.visibility = View.GONE
+                }
+
+            }
+
         }
 
 

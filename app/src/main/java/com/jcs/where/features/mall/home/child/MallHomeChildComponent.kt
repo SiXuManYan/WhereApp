@@ -4,12 +4,10 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.BannerResponse
-import com.jcs.where.api.response.category.Category
-import com.jcs.where.api.response.category.StoryBannerCategory
+import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.mall.MallBannerCategory
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
-import com.jcs.where.api.response.store.StoreRecommend
 
 /**
  * Created by Wangsw  2021/11/30 17:01.
@@ -17,8 +15,8 @@ import com.jcs.where.api.response.store.StoreRecommend
  */
 interface MallHomeChildView : BaseMvpView {
     fun bindBannerData(result: ArrayList<MallBannerCategory>)
-    fun bindRecommend(response:ArrayList<MallGood>)
     fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>)
+    fun bindRecommend(response: MutableList<MallGood>, isLastPage: Boolean)
 
 }
 
@@ -77,11 +75,17 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
 
     }
 
-    fun getRecommend(categoryId:Int) {
+    fun getRecommend(categoryId:Int,page:Int) {
 
-        requestApi(mRetrofit.getMallRecommendGood(categoryId), object : BaseMvpObserver<ArrayList<MallGood>>(view) {
-            override fun onSuccess(response: ArrayList<MallGood>) {
-                view.bindRecommend(response)
+        requestApi(mRetrofit.getMallRecommendGood(page,categoryId), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+            override fun onSuccess(response: PageResponse<MallGood>) {
+
+                val isLastPage = response.lastPage == page
+                val data = response.data
+
+                view.bindRecommend(data.toMutableList(), isLastPage)
+
+
             }
         })
     }

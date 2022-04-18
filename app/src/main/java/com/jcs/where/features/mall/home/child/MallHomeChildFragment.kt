@@ -50,6 +50,8 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
     /** 商品推荐 */
     private lateinit var mAdapter: MallRecommendAdapter
 
+    private var page = Constant.DEFAULT_FIRST_PAGE
+
     override fun getLayoutId() = R.layout.fragment_mall_home_child
 
     override fun initView(view: View) {
@@ -125,7 +127,8 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {
-                loadMoreModule.loadMoreEnd()
+                page ++
+                presenter.getRecommend(targetFirstCategory.id,page)
             }
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -134,7 +137,6 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
             adapter = mAdapter
             layoutManager = gridLayoutManager
             addItemDecoration(decoration)
-
         }
     }
 
@@ -147,8 +149,9 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
     override fun loadOnVisible() {
         if (!::targetFirstCategory.isInitialized) return
 
+        page = Constant.DEFAULT_FIRST_PAGE
         presenter.handleBanner(targetFirstCategory)
-        presenter.getRecommend(targetFirstCategory.id)
+        presenter.getRecommend(targetFirstCategory.id,page)
         presenter.getTopBanner()
     }
 
@@ -170,10 +173,32 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
         point_view.setPointCount(result.size)
     }
 
-    override fun bindRecommend(response: ArrayList<MallGood>) {
-        swipe_layout.isRefreshing = false
-        mAdapter.setNewInstance(response)
-        mAdapter.loadMoreModule.loadMoreEnd()
+    override fun bindRecommend(data: MutableList<MallGood>,lastPage: Boolean) {
+        if (swipe_layout.isRefreshing) {
+            swipe_layout.isRefreshing = false
+        }
+        val loadMoreModule = mAdapter.loadMoreModule
+        if (data.isEmpty()) {
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                mAdapter.setNewInstance(null)
+                loadMoreModule.loadMoreComplete()
+            } else {
+                loadMoreModule.loadMoreEnd()
+            }
+            return
+        }
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mAdapter.setNewInstance(data)
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
+        } else {
+            mAdapter.addData(data)
+            if (lastPage) {
+                loadMoreModule.loadMoreEnd()
+            } else {
+                loadMoreModule.loadMoreComplete()
+            }
+        }
+
     }
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {

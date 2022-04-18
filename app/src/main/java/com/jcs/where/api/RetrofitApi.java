@@ -1567,7 +1567,9 @@ public interface RetrofitApi {
      * 获取商城首页推荐商品
      */
     @GET("estoreapi/v2/goods/rand")
-    Observable<JcsResponse<ArrayList<MallGood>>> getMallRecommendGood(@Query("categoryId") int categoryId);
+    Observable<JcsResponse<PageResponse<MallGood>>> getMallRecommendGood(
+            @Query("page") int page,
+            @Query("categoryId") int categoryId);
 
 
     /**

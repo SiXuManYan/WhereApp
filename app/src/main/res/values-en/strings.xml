@@ -896,5 +896,6 @@ Gentleman must let go</string>
     <string name="success">Success</string>
     <string name="collection_success">Collection Success</string>
     <string name="cancel_collection_success">Cancel Success</string>
+    <string name="order_time_out">订单超时</string>
 
 </resources>

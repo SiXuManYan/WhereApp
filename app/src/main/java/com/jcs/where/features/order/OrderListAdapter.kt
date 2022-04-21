@@ -145,6 +145,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                         })
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
                     }
 
 
@@ -234,6 +235,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                         })
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
                     }
 
                 }
@@ -321,6 +323,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                         })
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
                     }
 
 
@@ -528,6 +531,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                         })
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
                     }
 
                 }

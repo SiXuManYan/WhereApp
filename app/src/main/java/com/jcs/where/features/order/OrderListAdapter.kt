@@ -134,7 +134,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.text = StringUtils.getString(R.string.to_pay_2)
                 right_tv.setOnClickListener {
                     // 立即支付
-                    val payTime = item.pay_time
+                    val payTime = item.pay_time * 1000
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
@@ -224,7 +224,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
                 right_tv.setOnClickListener {
                     // 立即支付
-                    val payTime = item.pay_time
+                    val payTime = item.pay_time * 1000
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
@@ -312,7 +312,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.setOnClickListener {
 
                     // 立即支付
-                    val payTime = item.pay_time
+                    val payTime = item.pay_time * 1000
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
@@ -520,7 +520,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.visibility = View.VISIBLE
 
                 right_tv.setOnClickListener {
-                    val payTime = item.pay_time
+                    val payTime = item.pay_time * 1000
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)

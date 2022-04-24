@@ -18,6 +18,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.com100.ExtendChatActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.pay.StorePayActivity
@@ -296,11 +297,12 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
     private fun handlePay(orderId: Int, price: BigDecimal) {
         val orderIds = ArrayList<Int>()
         orderIds.add(orderId)
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-            putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
-            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
-        })
+//        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+//            putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
+//            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
+//        })
+        WebPayActivity.navigation(this, Constant.PAY_INFO_ESTORE, orderIds)
     }
 
 

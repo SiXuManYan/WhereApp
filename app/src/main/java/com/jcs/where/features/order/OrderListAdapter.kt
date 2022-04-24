@@ -30,6 +30,7 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -138,11 +139,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
-                        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+              /*          startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
                             putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
                             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
                             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
-                        })
+                        })*/
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_HOTEL, orderIds)
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
                         orderTimeOut?.timeOutRefresh()
@@ -228,11 +230,14 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
-                        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
-                        })
+//                        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+//                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
+//                        })
+
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_FOOD, orderIds)
+
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
                         orderTimeOut?.timeOutRefresh()
@@ -316,11 +321,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
-                        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
-                        })
+//                        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+//                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
+//                        })
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_TAKEAWAY, orderIds)
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
                         orderTimeOut?.timeOutRefresh()
@@ -411,11 +417,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.setOnClickListener {
                     val orderIds = ArrayList<Int>()
                     orderIds.add(item.id)
-                    startActivity(StorePayActivity::class.java, Bundle().apply {
-                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
-                    })
+//                    startActivity(StorePayActivity::class.java, Bundle().apply {
+//                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
+//                    })
+                    WebPayActivity.navigation(context, Constant.PAY_INFO_ESTORE, orderIds)
                 }
             }
             5 -> {
@@ -524,11 +531,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
-                        startActivity(StorePayActivity::class.java, Bundle().apply {
-                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
-                        })
+//                        startActivity(StorePayActivity::class.java, Bundle().apply {
+//                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
+//                        })
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_MALL, orderIds)
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
                         orderTimeOut?.timeOutRefresh()

@@ -16,6 +16,7 @@ import com.jcs.where.api.request.bills.BillsOrderCommit
 import com.jcs.where.api.response.bills.BillsOrderInfo
 import com.jcs.where.api.response.store.PayChannel
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.store.pay.StorePayAdapter
 import com.jcs.where.features.store.pay.info.PayInfoActivity
@@ -164,8 +165,10 @@ class BillsPayActivity : BaseMvpActivity<BillsPayPresenter>(), BillsPayView, OnI
             putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
             putSerializable(Constant.PARAM_DATA, selectedChannel)
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, ids)
-            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE_BILLS)
+            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_BILLS)
         })
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS,ids)
+
         finish()
     }
 

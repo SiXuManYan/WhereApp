@@ -17,6 +17,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.batch.BatchCommentActivity
 import com.jcs.where.features.mall.detail.MallDetailActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -263,11 +264,12 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
     private fun handlePay(orderId: Int, price: BigDecimal) {
         val orderIds = ArrayList<Int>()
         orderIds.add(orderId)
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+       /* startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
             putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
-        })
+            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
+        })*/
+        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, orderIds)
     }
 
 

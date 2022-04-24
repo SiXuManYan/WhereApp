@@ -28,6 +28,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.bean.OrderSubmitChildRequest
 import com.jcs.where.bean.OrderSubmitTakeawayRequest
 import com.jcs.where.features.address.AddressActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.time.TimeUtil
@@ -263,11 +264,13 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         val orderIds = ArrayList<Int>()
         orderIds.add(response.order.id)
 
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+/*        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
             putDouble(Constant.PARAM_TOTAL_PRICE, total_price.toDouble())
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
-        })
+        })*/
+
+        WebPayActivity.navigation(this, Constant.PAY_INFO_TAKEAWAY, orderIds)
 
         finish()
     }

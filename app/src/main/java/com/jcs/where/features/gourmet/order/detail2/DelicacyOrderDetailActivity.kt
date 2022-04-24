@@ -15,6 +15,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -149,12 +150,15 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
 
                     val orderIds = ArrayList<Int>()
                     orderIds.add(orderData.id)
+/*
                     startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
                         putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
                         putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
                         putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
                     })
+*/
 
+                    WebPayActivity.navigation(this, Constant.PAY_INFO_FOOD, orderIds)
 
                 }
             }

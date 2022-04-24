@@ -14,6 +14,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BigDecimalUtil
@@ -232,11 +233,14 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
         val orderIds = ArrayList<Int>()
         val order = response.order
         orderIds.add(order!!.id)
-        val bundle = Bundle()
+/*        val bundle = Bundle()
         bundle.putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())
         bundle.putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
         bundle.putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
-        startActivityAfterLogin(StorePayActivity::class.java, bundle)
+        startActivityAfterLogin(StorePayActivity::class.java, bundle)*/
+
+        WebPayActivity.navigation(this, Constant.PAY_INFO_HOTEL, orderIds)
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

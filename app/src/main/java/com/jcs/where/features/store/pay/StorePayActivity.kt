@@ -17,6 +17,7 @@ import com.jcs.where.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivit
 import com.jcs.where.features.hotel.book.HotelBookActivity
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.order.parent.OrderActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.order.StoreOrderCommitActivity
 import com.jcs.where.features.store.pay.info.PayInfoActivity
 import com.jcs.where.utils.Constant
@@ -119,14 +120,13 @@ class StorePayActivity : BaseMvpActivity<StorePayPresenter>(), StorePayView, OnI
                 ToastUtils.showShort(getString(R.string.select_pay_way))
                 return@setOnClickListener
             }
-
             startActivityAfterLogin(PayInfoActivity::class.java, Bundle().apply {
                 putDouble(Constant.PARAM_TOTAL_PRICE, totalPrice)
                 putSerializable(Constant.PARAM_DATA, selectedChannel)
                 putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
                 putInt(Constant.PARAM_TYPE, useType)
             })
-            finish()
+
         }
 
         mJcsTitle.setBackIvClickListener {

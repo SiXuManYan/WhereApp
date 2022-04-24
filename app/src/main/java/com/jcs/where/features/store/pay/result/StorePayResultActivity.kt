@@ -52,14 +52,14 @@ class StorePayResultActivity : BaseActivity() {
             if (useType == Constant.PAY_INFO_ESTORE ||
                 useType == Constant.PAY_INFO_FOOD ||
                 useType == Constant.PAY_INFO_TAKEAWAY ||
-                useType == Constant.PAY_INFO_HOTEL ||
+                 useType == Constant.PAY_INFO_HOTEL ||
                 useType == Constant.PAY_INFO_MALL
             ) {
                 startActivityClearTop(MainActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_TAB, 2)
                 })
             }
-            if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
+            if (useType == Constant.PAY_INFO_BILLS) {
                 startActivityClearTop(PaymentRecordActivity::class.java, null)
             }
             finish()

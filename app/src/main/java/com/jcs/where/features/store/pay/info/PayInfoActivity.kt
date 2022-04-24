@@ -165,7 +165,7 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
                 Constant.PAY_INFO_ESTORE -> {
                     presenter.upLoadPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
                 }
-                Constant.PAY_INFO_ESTORE_BILLS -> {
+                Constant.PAY_INFO_BILLS -> {
                     presenter.upLoadBillsPayAccountInfo(orderIds, accountName, accountNumber, selectedChannel!!.id)
                 }
                 Constant.PAY_INFO_FOOD -> {

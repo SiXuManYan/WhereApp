@@ -40,7 +40,7 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var alertBoxBlock = true
     private var javascriptCloseWindowListener: JavascriptCloseWindowListener? = null
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var chromeClient: WebChromeClient? = null
+    private var mChromeClient: WebChromeClient? = null
 
     private var handlerList = SparseArray<JsHandler<*>>()
 
@@ -65,48 +65,48 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
         webChromeClient = object : WebChromeClient() {
 
             override fun onProgressChanged(view: WebView, newProgress: Int) {
-                if (chromeClient != null) {
-                    chromeClient!!.onProgressChanged(view, newProgress)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onProgressChanged(view, newProgress)
                 } else {
                     super.onProgressChanged(view, newProgress)
                 }
             }
 
             override fun onReceivedTitle(view: WebView, title: String) {
-                if (chromeClient != null) {
-                    chromeClient!!.onReceivedTitle(view, title)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onReceivedTitle(view, title)
                 } else {
                     super.onReceivedTitle(view, title)
                 }
             }
 
             override fun onReceivedIcon(view: WebView, icon: Bitmap) {
-                if (chromeClient != null) {
-                    chromeClient!!.onReceivedIcon(view, icon)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onReceivedIcon(view, icon)
                 } else {
                     super.onReceivedIcon(view, icon)
                 }
             }
 
             override fun onReceivedTouchIconUrl(view: WebView, url: String, precomposed: Boolean) {
-                if (chromeClient != null) {
-                    chromeClient!!.onReceivedTouchIconUrl(view, url, precomposed)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onReceivedTouchIconUrl(view, url, precomposed)
                 } else {
                     super.onReceivedTouchIconUrl(view, url, precomposed)
                 }
             }
 
             override fun onShowCustomView(view: View, callback: WebChromeClient.CustomViewCallback) {
-                if (chromeClient != null) {
-                    chromeClient!!.onShowCustomView(view, callback)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onShowCustomView(view, callback)
                 } else {
                     super.onShowCustomView(view, callback)
                 }
             }
 
             override fun onHideCustomView() {
-                if (chromeClient != null) {
-                    chromeClient!!.onHideCustomView()
+                if (mChromeClient != null) {
+                    mChromeClient!!.onHideCustomView()
                 } else {
                     super.onHideCustomView()
                 }
@@ -114,23 +114,23 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             override fun onCreateWindow(view: WebView, isDialog: Boolean,
                                         isUserGesture: Boolean, resultMsg: Message): Boolean {
-                return if (chromeClient != null) {
-                    chromeClient!!.onCreateWindow(view, isDialog,
+                return if (mChromeClient != null) {
+                    mChromeClient!!.onCreateWindow(view, isDialog,
                             isUserGesture, resultMsg)
                 } else super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
             }
 
             override fun onRequestFocus(view: WebView) {
-                if (chromeClient != null) {
-                    chromeClient!!.onRequestFocus(view)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onRequestFocus(view)
                 } else {
                     super.onRequestFocus(view)
                 }
             }
 
             override fun onCloseWindow(window: WebView) {
-                if (chromeClient != null) {
-                    chromeClient!!.onCloseWindow(window)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onCloseWindow(window)
                 } else {
                     super.onCloseWindow(window)
                 }
@@ -140,8 +140,8 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (!alertBoxBlock) {
                     result.confirm()
                 }
-                if (chromeClient != null) {
-                    if (chromeClient!!.onJsAlert(view, url, message, result)) {
+                if (mChromeClient != null) {
+                    if (mChromeClient!!.onJsAlert(view, url, message, result)) {
                         return true
                     }
                 }
@@ -160,7 +160,7 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (!alertBoxBlock) {
                     result.confirm()
                 }
-                if (chromeClient != null && chromeClient!!.onJsConfirm(view, url, message, result)) {
+                if (mChromeClient != null && mChromeClient!!.onJsConfirm(view, url, message, result)) {
                     return true
                 } else {
                     val listener = DialogInterface.OnClickListener { dialog, which ->
@@ -189,7 +189,7 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
                     result.confirm()
                 }
 
-                if (chromeClient != null && chromeClient!!.onJsPrompt(view, url, message, defaultValue, result)) {
+                if (mChromeClient != null && mChromeClient!!.onJsPrompt(view, url, message, defaultValue, result)) {
                     return true
                 } else {
                     val editText = EditText(getContext())
@@ -229,22 +229,22 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             override fun onJsBeforeUnload(view: WebView, url: String, message: String, result: JsResult): Boolean {
-                return if (chromeClient != null) {
-                    chromeClient!!.onJsBeforeUnload(view, url, message, result)
+                return if (mChromeClient != null) {
+                    mChromeClient!!.onJsBeforeUnload(view, url, message, result)
                 } else super.onJsBeforeUnload(view, url, message, result)
             }
 
             override fun onGeolocationPermissionsShowPrompt(origin: String, callback: GeolocationPermissions.Callback) {
-                if (chromeClient != null) {
-                    chromeClient!!.onGeolocationPermissionsShowPrompt(origin, callback)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onGeolocationPermissionsShowPrompt(origin, callback)
                 } else {
                     super.onGeolocationPermissionsShowPrompt(origin, callback)
                 }
             }
 
             override fun onGeolocationPermissionsHidePrompt() {
-                if (chromeClient != null) {
-                    chromeClient!!.onGeolocationPermissionsHidePrompt()
+                if (mChromeClient != null) {
+                    mChromeClient!!.onGeolocationPermissionsHidePrompt()
                 } else {
                     super.onGeolocationPermissionsHidePrompt()
                 }
@@ -252,8 +252,8 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onPermissionRequest(request: PermissionRequest) {
-                if (chromeClient != null) {
-                    chromeClient!!.onPermissionRequest(request)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onPermissionRequest(request)
                 } else {
                     super.onPermissionRequest(request)
                 }
@@ -261,35 +261,35 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onPermissionRequestCanceled(request: PermissionRequest) {
-                if (chromeClient != null) {
-                    chromeClient!!.onPermissionRequestCanceled(request)
+                if (mChromeClient != null) {
+                    mChromeClient!!.onPermissionRequestCanceled(request)
                 } else {
                     super.onPermissionRequestCanceled(request)
                 }
             }
 
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
-                return if (chromeClient != null) {
-                    chromeClient!!.onConsoleMessage(consoleMessage)
+                return if (mChromeClient != null) {
+                    mChromeClient!!.onConsoleMessage(consoleMessage)
                 } else super.onConsoleMessage(consoleMessage)
             }
 
             override fun getDefaultVideoPoster(): Bitmap? {
 
-                return if (chromeClient != null) {
-                    chromeClient!!.defaultVideoPoster
+                return if (mChromeClient != null) {
+                    mChromeClient!!.defaultVideoPoster
                 } else super.getDefaultVideoPoster()
             }
 
             override fun getVideoLoadingProgressView(): View? {
-                return if (chromeClient != null) {
-                    chromeClient!!.videoLoadingProgressView
+                return if (mChromeClient != null) {
+                    mChromeClient!!.videoLoadingProgressView
                 } else super.getVideoLoadingProgressView()
             }
 
             override fun getVisitedHistory(callback: ValueCallback<Array<String>>) {
-                if (chromeClient != null) {
-                    chromeClient!!.getVisitedHistory(callback)
+                if (mChromeClient != null) {
+                    mChromeClient!!.getVisitedHistory(callback)
                 } else {
                     super.getVisitedHistory(callback)
                 }
@@ -298,8 +298,8 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onShowFileChooser(webView: WebView, filePathCallback: ValueCallback<Array<Uri>>,
                                            fileChooserParams: WebChromeClient.FileChooserParams): Boolean {
-                return if (chromeClient != null) {
-                    chromeClient!!.onShowFileChooser(webView, filePathCallback, fileChooserParams)
+                return if (mChromeClient != null) {
+                    mChromeClient!!.onShowFileChooser(webView, filePathCallback, fileChooserParams)
                 } else super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
             }
         }
@@ -490,6 +490,6 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     companion object {
-        const val BRIDGE_NAME = "yihuaapp"
+        const val BRIDGE_NAME = "whereapp"
     }
 }

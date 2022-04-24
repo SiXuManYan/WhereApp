@@ -19,6 +19,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.mall.buy.coupon.OrderCouponHomeFragment
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -213,11 +214,15 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     override fun commitSuccess(response: MallCommitResponse) {
 
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+/*        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
             putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, response.orders)
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
-        })
+        })*/
+
+        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, response.orders)
+
+
     }
 
 

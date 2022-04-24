@@ -3,6 +3,7 @@ package com.jcs.where.api;
 import androidx.annotation.Nullable;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
@@ -32,6 +33,8 @@ import com.jcs.where.api.request.merchant.MerchantSettledPost;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.payment.PayUrl;
+import com.jcs.where.api.request.payment.PayUrlGet;
 import com.jcs.where.api.request.store.MallRefundModifyRequest;
 import com.jcs.where.api.request.store.MallRefundRequest;
 import com.jcs.where.api.request.store.StoreAddCart;
@@ -1936,6 +1939,13 @@ public interface RetrofitApi {
      */
     @POST("estoreapi/v2/order/complaint")
     Observable<JcsResponse<JsonElement>> complaint(@Body ComplaintRequest batchComment);
+
+
+    /**
+     * 获取 web收银台url
+     */
+    @POST("commonapi/v2/payment")
+    Observable<JcsResponse<PayUrl>> getWebPayUrl(@Body PayUrlGet payUrlGet);
 
 
 }

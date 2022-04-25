@@ -14,11 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:backIcon="@drawable/ic_back_black"
-        app:middleTitle="@string/shipping_address"
+        app:middleTitle="@string/refund_method"
         app:middleTitleColor="@color/black_333333"
-        app:showBackIv="true"
-        app:showBottomLine="true" />
+      />
 
 
     <androidx.recyclerview.widget.RecyclerView

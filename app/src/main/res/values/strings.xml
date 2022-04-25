@@ -918,6 +918,9 @@ Gentleman must let go</string>
     <string name="add_refund_methods">添加退款方式</string>
     <string name="refund_method_empty">暂无退款方式</string>
     <string name="refund_method_empty_hint">请添加新退款方式</string>
+    <string name="refund_method">退款方式</string>
+    <string name="selected_refund_channel">选择退款渠道</string>
+    <string name="please_selected_channel">请选择退款渠道</string>
 
 
 </resources>

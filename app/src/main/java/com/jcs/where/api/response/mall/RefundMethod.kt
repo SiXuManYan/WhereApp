@@ -6,9 +6,14 @@ package com.jcs.where.api.response.mall
  */
 class RefundMethod {
 
-    var id  =  0
+    var id = 0
     var user_name = ""
     var channel_name = ""
     var account = ""
     var bank_name = ""
+}
+
+class RefundChannel {
+    var isSelected = false
+    var name = ""
 }

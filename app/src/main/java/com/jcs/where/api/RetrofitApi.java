@@ -1975,6 +1975,12 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> unbindRefundMethod(@Body IdRequest idRequest);
 
 
+    /**
+     * 获取 web 支付状态
+     */
+    @GET("commonapi/v2/channel")
+    Observable<JcsResponse<ArrayList<String>>> getRefundChannel();
+
 
 
 }

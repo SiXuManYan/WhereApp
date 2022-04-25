@@ -115,6 +115,9 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.about_rl).setOnClickListener(v -> {
             startActivity(AboutActivity.class);
         });
+        findViewById(R.id.refund_rl).setOnClickListener(v -> {
+
+        });
 
     }
 

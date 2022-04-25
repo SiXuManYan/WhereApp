@@ -8,6 +8,7 @@ import com.jcs.where.api.request.CartDeleteRequest;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelCollectionRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
+import com.jcs.where.api.request.IdRequest;
 import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.MallShopUnCollection;
 import com.jcs.where.api.request.SendCodeRequest;
@@ -107,6 +108,7 @@ import com.jcs.where.api.response.mall.MallOrderDetail;
 import com.jcs.where.api.response.mall.MallRefundInfo;
 import com.jcs.where.api.response.mall.MallShopCategory;
 import com.jcs.where.api.response.mall.MallShopRecommend;
+import com.jcs.where.api.response.mall.RefundMethod;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
@@ -1957,5 +1959,22 @@ public interface RetrofitApi {
             @Query("module") String module,
             @Query("id") int orderId
     );
+
+    /**
+     * 获取 web 支付状态
+     */
+    @GET("commonapi/v2/order_status")
+    Observable<JcsResponse<ArrayList<RefundMethod>>> getRefundMethod();
+
+
+
+    /**
+     * 取消绑定支付方式
+     */
+    @HTTP(method = "DELETE", path = "commonapi/v2/unbundle", hasBody = true)
+    Observable<JcsResponse<JsonElement>> unbindRefundMethod(@Body IdRequest idRequest);
+
+
+
 
 }

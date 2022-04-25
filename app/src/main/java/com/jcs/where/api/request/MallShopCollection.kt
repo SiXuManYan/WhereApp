@@ -15,3 +15,4 @@ class MallShopUnCollection {
     // [1,2]
     var shop_id = ""
 }
+

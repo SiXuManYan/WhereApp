@@ -550,6 +550,7 @@
         <activity android:name=".features.mall.refund.complaint.ComplaintActivity" />
         <activity android:name=".features.payment.WebPayActivity" />
         <activity android:name=".features.payment.result.WebPayResultActivity" />
+        <activity android:name=".features.refund.method.RefundMethodActivity" />
 
 
     </application>

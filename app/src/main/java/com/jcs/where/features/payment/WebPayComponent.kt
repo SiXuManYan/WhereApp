@@ -20,7 +20,7 @@ interface WebPayView : BaseMvpView {
 
 class WebParPresenter(private var view: WebPayView) : BaseMvpPresenter(view) {
 
-    fun getPayUrl(useType: Int, orderIds: ArrayList<Int>) {
+    fun getPayUrl(moduleType: String, orderIds: ArrayList<Int>) {
 
         /**
          * 0 商城订单
@@ -33,14 +33,7 @@ class WebParPresenter(private var view: WebPayView) : BaseMvpPresenter(view) {
 
         val apply = PayUrlGet().apply {
             order_ids = Gson().toJson(orderIds)
-            module =   when (useType) {
-                Constant.PAY_INFO_BILLS -> PayUrlGet.BILL_PAY
-                Constant.PAY_INFO_FOOD -> PayUrlGet.RESTAURANT
-                Constant.PAY_INFO_TAKEAWAY -> PayUrlGet.TAKEAWAY
-                Constant.PAY_INFO_HOTEL -> PayUrlGet.HOTEL
-                Constant.PAY_INFO_MALL -> PayUrlGet.MALL
-                else -> ""
-            }
+            module =   moduleType
 
         }
         requestApi(mRetrofit.getWebPayUrl(apply),object :BaseMvpObserver<PayUrl>(view){

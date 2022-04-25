@@ -549,6 +549,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".features.mall.refund.complaint.ComplaintActivity" />
         <activity android:name=".features.payment.WebPayActivity" />
+        <activity android:name=".features.payment.result.WebPayResultActivity" />
 
 
     </application>

@@ -18,7 +18,7 @@ class PayUrlGet {
     }
 
 
-    var module :String = ""
+    var module: String = ""
 
     var order_ids = ""
 
@@ -27,4 +27,9 @@ class PayUrlGet {
 
 class PayUrl {
     var redirectUrl = ""
+}
+
+
+class PayStatus {
+    var pay_status = false
 }

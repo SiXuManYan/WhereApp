@@ -31,6 +31,7 @@ public class Constant {
     public static final String PARAM_ID = "param_id";
     public static final String PARAM_COUPON_ID = "param_coupon_id";
     public static final String PARAM_TYPE = "param_type";
+    public static final String PARAM_MODULE_TYPE = "param_module_type";
     public static final String PARAM_TAB = "param_tab";
     public static final String PARAM_CHANGE_LANGUAGE = "param_change_language";
     public static final String PARAM_ID_2 = "id";
@@ -61,6 +62,7 @@ public class Constant {
     public static final String PARAM_CHILD_CATEGORY_ID = "param_child_category_id";
     public static final String PARAM_CATEGORY_ID = "param_category_id";
     public static final String PARAM_CATEGORY_NAME = "param_category_name";
+    public static final String PARAM_LAST_PAY_URL = "param_last_pay_url";
 
 
     /**

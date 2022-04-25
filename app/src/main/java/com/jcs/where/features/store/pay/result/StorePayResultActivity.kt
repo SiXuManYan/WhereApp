@@ -52,7 +52,7 @@ class StorePayResultActivity : BaseActivity() {
             if (useType == Constant.PAY_INFO_ESTORE ||
                 useType == Constant.PAY_INFO_FOOD ||
                 useType == Constant.PAY_INFO_TAKEAWAY ||
-                 useType == Constant.PAY_INFO_HOTEL ||
+                useType == Constant.PAY_INFO_HOTEL ||
                 useType == Constant.PAY_INFO_MALL
             ) {
                 startActivityClearTop(MainActivity::class.java, Bundle().apply {

@@ -3,7 +3,6 @@ package com.jcs.where.api;
 import androidx.annotation.Nullable;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.jcs.where.api.request.AddCartRequest;
 import com.jcs.where.api.request.CartDeleteRequest;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
@@ -33,6 +32,7 @@ import com.jcs.where.api.request.merchant.MerchantSettledPost;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.payment.PayStatus;
 import com.jcs.where.api.request.payment.PayUrl;
 import com.jcs.where.api.request.payment.PayUrlGet;
 import com.jcs.where.api.request.store.MallRefundModifyRequest;
@@ -1571,6 +1571,7 @@ public interface RetrofitApi {
      */
     @GET("estoreapi/v2/goods/rand")
     Observable<JcsResponse<PageResponse<MallGood>>> getMallRecommendGood(
+            @Query("version") int version,
             @Query("page") int page,
             @Query("categoryId") int categoryId);
 
@@ -1947,5 +1948,14 @@ public interface RetrofitApi {
     @POST("commonapi/v2/payment")
     Observable<JcsResponse<PayUrl>> getWebPayUrl(@Body PayUrlGet payUrlGet);
 
+
+    /**
+     * 获取 web 支付状态
+     */
+    @GET("commonapi/v2/order_status")
+    Observable<JcsResponse<PayStatus>> getPayStatus(
+            @Query("module") String module,
+            @Query("id") int orderId
+    );
 
 }

@@ -917,7 +917,7 @@ Gentleman must let go</string>
     <string name="bank_account_number_hint">Please enter the recipient`s bank card number</string>
     <string name="selected_bank_title">Selected Bank</string>
     <string name="refund_method_add_success">Added Successfully</string>
-    <string name="unbind_refund_mothod_hint">确定解绑该退款方式？</string>
+    <string name="unbind_refund_mothod_hint">Are you sure you want to unbind this refund method ?</string>
     <string name="payee_account">AccountNo</string>
     <string name="enter_account_number_hint">Please enter AccountNo</string>
 

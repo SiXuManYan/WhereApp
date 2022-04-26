@@ -7,9 +7,14 @@ import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.features.refund.add.edit.bank.list.BankListActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_refund_channel_bank_edit.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by Wangsw  2022/4/26 9:37.
@@ -49,6 +54,7 @@ class BankChannelEditActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_refund_channel_bank_edit
 
     override fun initView() {
+
         initExtra()
         user_name_et.addTextChangedListener(
             afterTextChanged = {
@@ -66,10 +72,14 @@ class BankChannelEditActivity : BaseActivity() {
     }
 
     private fun initExtra() {
+        val eventBus = EventBus.getDefault()
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this)
+        }
+
         intent.extras?.let {
             channelName = it.getString(Constant.PARAM_REFUND_CHANNEL_NAME, "")
         }
-
     }
 
     private fun handleAlpha() {
@@ -106,4 +116,22 @@ class BankChannelEditActivity : BaseActivity() {
 
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val eventBus = EventBus.getDefault()
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this)
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventReceived(baseEvent: BaseEvent<*>) {
+        when (baseEvent.code) {
+            EventCode.EVENT_REFUND_METHOD_ADD_SUCCESS -> {
+                finish()
+            }
+        }
+    }
+
 }

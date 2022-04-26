@@ -3,15 +3,20 @@ package com.jcs.where.features.refund.method
 import android.view.View
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.RefundMethod
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_refund_method_list.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by Wangsw  2022/4/25 16:11.
@@ -81,4 +86,15 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
     override fun unBindSuccess() {
         presenter.getRefundMethod()
     }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_REFUND_METHOD_ADD_SUCCESS -> {
+                ToastUtils.showShort(R.string.refund_method_add_success)
+                presenter.getRefundMethod()
+            }
+        }
+    }
+
 }

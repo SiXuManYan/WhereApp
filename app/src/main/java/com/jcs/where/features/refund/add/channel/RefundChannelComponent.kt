@@ -1,4 +1,4 @@
-package com.jcs.where.features.refund.add.selected
+package com.jcs.where.features.refund.add.channel
 
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter

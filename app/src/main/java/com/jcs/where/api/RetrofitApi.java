@@ -109,6 +109,7 @@ import com.jcs.where.api.response.mall.MallRefundInfo;
 import com.jcs.where.api.response.mall.MallShopCategory;
 import com.jcs.where.api.response.mall.MallShopRecommend;
 import com.jcs.where.api.response.mall.RefundBankSelected;
+import com.jcs.where.api.response.mall.RefundBindRequest;
 import com.jcs.where.api.response.mall.RefundMethod;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
@@ -1969,7 +1970,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<RefundMethod>>> getRefundMethod();
 
 
-
     /**
      * 取消绑定支付方式
      */
@@ -1989,6 +1989,29 @@ public interface RetrofitApi {
     @GET("commonapi/v2/bank")
     Observable<JcsResponse<ArrayList<RefundBankSelected>>> getBankList();
 
+
+    /**
+     * 校验验证码
+     *
+     * @param type              1手机号 2 邮箱
+     * @param verification_code 验证码
+     * @param phone             手机号
+     * @param email             邮箱
+     */
+    @POST("userapi/v2/mobile/auth/code")
+    Observable<JcsResponse<JsonElement>> checkVerifyCode(
+            @Query("type") int type,
+            @Query("verification_code") String verification_code,
+            @Query("phone") @Nullable String phone,
+            @Query("email") @Nullable String email
+    );
+
+
+    /**
+     * 绑定用户退款账户信息
+     */
+    @POST("commonapi/v2/payment")
+    Observable<JcsResponse<JsonElement>> bindRefundInfo(@Body RefundBindRequest request);
 
 
 }

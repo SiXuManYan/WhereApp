@@ -1,9 +1,11 @@
-package com.jcs.where.features.refund.add.selected
+package com.jcs.where.features.refund.add.channel
 
 import android.annotation.SuppressLint
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.RefundChannel
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import kotlinx.android.synthetic.main.activity_refund_channel_selected.*
 
@@ -58,5 +60,15 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
 
 
         }
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_REFUND_METHOD_ADD_SUCCESS -> {
+                finish()
+            }
+        }
+
     }
 }

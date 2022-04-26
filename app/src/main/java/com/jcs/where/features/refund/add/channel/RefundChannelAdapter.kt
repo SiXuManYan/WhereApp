@@ -1,4 +1,4 @@
-package com.jcs.where.features.refund.add.selected
+package com.jcs.where.features.refund.add.channel
 
 import android.widget.CheckedTextView
 import com.chad.library.adapter.base.BaseQuickAdapter

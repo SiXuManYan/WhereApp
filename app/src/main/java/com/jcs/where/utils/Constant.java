@@ -145,6 +145,11 @@ public class Constant {
     public static final int VERIFY_CODE_TYPE_4_CHANGE_PHONE = 4;
 
     /**
+     * 验证码类型 5 其他
+     */
+    public static final int VERIFY_CODE_TYPE_5 = 5;
+
+    /**
      * 验证码登录
      */
     public static final int LOGIN_TYPE_VERIFY_CODE = 1;

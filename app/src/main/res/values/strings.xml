@@ -929,5 +929,6 @@ Gentleman must let go</string>
     <string name="payee_bank_card_number">收款人银行卡号</string>
     <string name="bank_account_number_hint">请输入收款人银行卡号</string>
     <string name="selected_bank_title">选择银行</string>
+    <string name="refund_method_add_success">退款方式添加成功</string>
 
 </resources>

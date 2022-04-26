@@ -1,4 +1,4 @@
-package com.jcs.where.features.refund.add.edit.bank.list
+package com.jcs.where.features.refund.add.form.bank.list
 
 import android.content.Intent
 import com.jcs.where.R
@@ -49,7 +49,7 @@ class BankListActivity : BaseMvpActivity<BankListPresenter>(), BankListView {
             setEmptyView(emptyView)
             setOnItemClickListener { _, _, position ->
                 val bank = mAdapter.data[position]
-                setResult(RESULT_OK, Intent().putExtra(Constant.PARAM_BANK_NAME, bank.all))
+                setResult(RESULT_OK, Intent().putExtra(Constant.PARAM_BANK_ALL_NAME, bank.all))
                 setResult(RESULT_OK, Intent().putExtra(Constant.PARAM_BANK_SHORT_NAME, bank.abbr))
                 finish()
 

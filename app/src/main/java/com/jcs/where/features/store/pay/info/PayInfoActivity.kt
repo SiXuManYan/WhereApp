@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -115,32 +116,25 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
         val clear_name_iv = view.findViewById<ImageView>(R.id.clear_name_iv)
         val clear_account_iv = view.findViewById<ImageView>(R.id.clear_account_iv)
 
-        name_aet.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-
-            override fun afterTextChanged(s: Editable) {
-                val result = s.toString().trim()
+        name_aet.addTextChangedListener(
+            afterTextChanged = {
+                val result = it.toString().trim()
 
                 if (result.isEmpty()) {
                     clear_name_iv.visibility = View.VISIBLE
                 }
             }
-        })
-        account_aet.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+        )
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-
-            override fun afterTextChanged(s: Editable) {
-                val result = s.toString().trim()
+        account_aet.addTextChangedListener(
+            afterTextChanged = {
+                val result = it.toString().trim()
 
                 if (result.isEmpty()) {
                     clear_account_iv.visibility = View.VISIBLE
                 }
             }
-        })
+        )
 
         clear_name_iv.setOnClickListener {
             name_aet.setText("")

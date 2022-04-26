@@ -911,11 +911,14 @@ Gentleman must let go</string>
     <string name="bind_refund_bank_card">Bind Refund Bank Card</string>
     <string name="selected_bank"><font color='#FF0000'>*&#160;</font><font color='#666666'>Selected Bank</font></string>
     <string name="please_selected_bank_hint">Please select a bank</string>
-    <string name="edit_account_name_hint">please Enter accountName</string>
+    <string name="edit_account_name_hint">please enter accountName</string>
     <string name="bank_account_name">Account Name</string>
     <string name="payee_bank_card_number">Bank Card Number</string>
     <string name="bank_account_number_hint">Please enter the recipient`s bank card number</string>
     <string name="selected_bank_title">Selected Bank</string>
     <string name="refund_method_add_success">Added Successfully</string>
+    <string name="unbind_refund_mothod_hint">确定解绑该退款方式？</string>
+    <string name="payee_account">AccountNo</string>
+    <string name="enter_account_number_hint">Please enter AccountNo</string>
 
 </resources>

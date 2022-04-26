@@ -97,7 +97,7 @@ public class Constant {
     public static final String PARAM_TOTAL_PRICE = "param_total_price";
     public static final String PARAM_NAME = "param_name";
     public static final String PARAM_BANK_SHORT_NAME = "param_bank_short_name";
-    public static final String PARAM_BANK_NAME = "param_bank_name";
+    public static final String PARAM_BANK_ALL_NAME = "param_bank_name";
     public static final String PARAM_AVATAR = "param_avatar";
     public static final String PARAM_BOOLEAN = "param_boolean";
     public static final String PARAM_DESCRIPTION = "param_description";

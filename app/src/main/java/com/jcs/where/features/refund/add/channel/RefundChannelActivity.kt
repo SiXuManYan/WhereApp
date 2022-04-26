@@ -1,17 +1,21 @@
 package com.jcs.where.features.refund.add.channel
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.RefundChannel
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.refund.add.form.bank.BankChannelFormActivity
+import com.jcs.where.features.refund.add.form.third.ThirdChannelFormActivity
+import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_refund_channel_selected.*
 
 /**
  * Created by Wangsw  2022/4/25 19:03.
- *
+ * 退款渠道
  */
 class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundChannelView {
 
@@ -45,7 +49,6 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
     }
 
 
-
     override fun bindChanel(data: ArrayList<RefundChannel>) {
         mAdapter.setNewInstance(data)
     }
@@ -57,8 +60,13 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
                 return@setOnClickListener
             }
 
-
-
+            val intent = Intent().putExtra(Constant.PARAM_REFUND_CHANNEL_NAME, "")
+            if (isBankChannel) {
+                intent.setClass(this, BankChannelFormActivity::class.java)
+            } else {
+                intent.setClass(this, ThirdChannelFormActivity::class.java)
+            }
+            startActivity(intent)
         }
     }
 

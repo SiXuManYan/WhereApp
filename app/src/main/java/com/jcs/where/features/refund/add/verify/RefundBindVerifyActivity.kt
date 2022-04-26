@@ -36,16 +36,25 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
     /** 当为【银行】渠道时，为银行缩写，【第三方渠道】为空 */
     private var bankShortName: String? = null
 
+    private var bankAllName: String? = null
+
     private var verifyCode = ""
 
     companion object {
-        fun navigation(context: Context, channelName: String, userName: String, accountNumber: String, bankShortName: String? = null) {
+        fun navigation(
+            context: Context, channelName: String, userName: String, accountNumber: String,
+            bankShortName: String? = null,
+            bankAllName: String? = null,
+        ) {
             val bundle = Bundle().apply {
                 putString(Constant.PARAM_REFUND_CHANNEL_NAME, channelName)
                 putString(Constant.PARAM_USER_NAME, userName)
                 putString(Constant.PARAM_ACCOUNT, accountNumber)
                 bankShortName?.let {
                     putString(Constant.PARAM_BANK_SHORT_NAME, bankShortName)
+                }
+                bankAllName?.let {
+                    putString(Constant.PARAM_BANK_ALL_NAME, bankAllName)
                 }
             }
 
@@ -84,6 +93,7 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
             userName = it.getString(Constant.PARAM_USER_NAME, "")
             accountNumber = it.getString(Constant.PARAM_ACCOUNT, "")
             bankShortName = it.getString(Constant.PARAM_BANK_SHORT_NAME)
+            bankAllName = it.getString(Constant.PARAM_BANK_ALL_NAME)
         }
 
     }
@@ -106,7 +116,7 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
 
 
     override fun verified() {
-        presenter.bindRefundMethod(channelName,userName,accountNumber,bankShortName)
+        presenter.bindRefundMethod(channelName, userName, accountNumber, bankShortName,bankAllName)
     }
 
     override fun bindSuccess() {

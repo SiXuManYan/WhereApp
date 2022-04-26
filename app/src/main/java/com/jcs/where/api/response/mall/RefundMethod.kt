@@ -36,6 +36,9 @@ class RefundBindRequest {
     /** 账号 */
     var account = ""
 
-    /** 银行(渠道名是银行 添银行缩写，第三方传空) */
+    /** 银行缩写 */
     var bank_name: String? = null
+
+    /** 银行全名 */
+    var bank_all_name: String? = null
 }

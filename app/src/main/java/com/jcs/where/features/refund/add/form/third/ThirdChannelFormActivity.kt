@@ -1,32 +1,27 @@
-package com.jcs.where.features.refund.add.edit.bank
+package com.jcs.where.features.refund.add.form.third
 
-import android.app.Activity
-import android.content.Intent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
-import com.jcs.where.features.refund.add.edit.bank.list.BankListActivity
+import com.jcs.where.features.refund.add.verify.RefundBindVerifyActivity
 import com.jcs.where.utils.Constant
-import kotlinx.android.synthetic.main.activity_refund_channel_bank_edit.*
+import kotlinx.android.synthetic.main.activity_refund_channel_third_form.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by Wangsw  2022/4/26 9:37.
- * 绑定退款银行卡
+ * 绑定第三方退款渠道
  */
-class BankChannelEditActivity : BaseActivity() {
+class ThirdChannelFormActivity : BaseActivity() {
 
     /** 渠道名 */
     private var channelName = ""
 
-    /** 银行(渠道名是银行 添银行缩写，第三方传空) */
-    private var bankShortName = ""
 
     /**  用户名 */
     private var userName = ""
@@ -35,23 +30,10 @@ class BankChannelEditActivity : BaseActivity() {
     private var accountNumber = ""
 
 
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        val bundle = it.data?.extras ?: return@registerForActivityResult
-        when (it.resultCode) {
-            Activity.RESULT_OK -> {
-                bankShortName = bundle.getString(Constant.PARAM_BANK_SHORT_NAME, "")
-                val bankName = bundle.getString(Constant.PARAM_BANK_NAME, "")
-                select_bank_tv.text = bankName
-            }
-
-        }
-
-    }
-
 
     override fun isStatusDark() = true
 
-    override fun getLayoutId() = R.layout.activity_refund_channel_bank_edit
+    override fun getLayoutId() = R.layout.activity_refund_channel_third_form
 
     override fun initView() {
 
@@ -62,6 +44,7 @@ class BankChannelEditActivity : BaseActivity() {
                 handleAlpha()
             }
         )
+
         bank_account_et.addTextChangedListener(
             afterTextChanged = {
                 accountNumber = it.toString().trim()
@@ -83,7 +66,7 @@ class BankChannelEditActivity : BaseActivity() {
     }
 
     private fun handleAlpha() {
-        if (userName.isNotBlank() && accountNumber.isNotBlank() && bankShortName.isNotBlank()) {
+        if (userName.isNotBlank() && accountNumber.isNotBlank()) {
             next_tv.alpha = 1.0f
         } else {
             next_tv.alpha = 0.5f
@@ -94,26 +77,20 @@ class BankChannelEditActivity : BaseActivity() {
     override fun initData() = Unit
 
     override fun bindListener() {
-        select_bank_tv.setOnClickListener {
-            launcher.launch(Intent(this, BankListActivity::class.java).putExtra(Constant.PARAM_BANK_SHORT_NAME, bankShortName))
-        }
+
 
         next_tv.setOnClickListener {
-            if (bankShortName.isBlank()) {
-                ToastUtils.showShort(R.string.please_selected_bank_hint)
-                return@setOnClickListener
-            }
+
             if (userName.isBlank()) {
                 ToastUtils.showShort(R.string.edit_account_name_hint)
                 return@setOnClickListener
             }
             if (accountNumber.isBlank()) {
-                ToastUtils.showShort(R.string.bank_account_number_hint)
+                ToastUtils.showShort(R.string.enter_account_number_hint)
                 return@setOnClickListener
             }
             // 跳转至短信验证
-
-
+            RefundBindVerifyActivity.navigation(this,channelName,userName , accountNumber)
         }
     }
 

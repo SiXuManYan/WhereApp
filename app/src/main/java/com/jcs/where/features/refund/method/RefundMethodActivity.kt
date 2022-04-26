@@ -1,6 +1,7 @@
 package com.jcs.where.features.refund.method
 
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -12,6 +13,8 @@ import com.jcs.where.api.response.mall.RefundMethod
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.refund.add.channel.RefundChannelActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_refund_method_list.*
@@ -59,7 +62,7 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
 
     override fun bindListener() {
         add_tv.setOnClickListener {
-
+            startActivity(RefundChannelActivity::class.java)
         }
     }
 
@@ -73,8 +76,20 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
 
         when (view.id) {
             R.id.unbind_iv -> {
-                // 解绑
-                presenter.unBind(refundMethod.id)
+                AlertDialog.Builder(this)
+                    .setMessage(R.string.unbind_refund_mothod_hint)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.confirm) { dialogInterface, _ ->
+                        // 解绑
+                        presenter.unBind(refundMethod.id)
+                        dialogInterface.dismiss()
+                    }
+                    .setNegativeButton(R.string.cancel) { dialogInterface, _ ->
+                        dialogInterface.dismiss()
+                    }
+                    .create().show()
+
+
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.jcs.where.features.refund.add.edit.bank.list
+package com.jcs.where.features.refund.add.form.bank.list
 
 import android.widget.CheckedTextView
 import com.chad.library.adapter.base.BaseQuickAdapter

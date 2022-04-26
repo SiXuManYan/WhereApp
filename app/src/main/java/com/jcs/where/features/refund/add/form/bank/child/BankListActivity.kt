@@ -1,4 +1,4 @@
-package com.jcs.where.features.refund.add.form.bank.list
+package com.jcs.where.features.refund.add.form.bank.child
 
 import android.content.Intent
 import com.jcs.where.R
@@ -22,6 +22,7 @@ class BankListActivity : BaseMvpActivity<BankListPresenter>(), BankListView {
     private lateinit var mAdapter: BankAdapter
     private lateinit var emptyView: EmptyView
 
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_bank_list
 
@@ -49,8 +50,9 @@ class BankListActivity : BaseMvpActivity<BankListPresenter>(), BankListView {
             setEmptyView(emptyView)
             setOnItemClickListener { _, _, position ->
                 val bank = mAdapter.data[position]
-                setResult(RESULT_OK, Intent().putExtra(Constant.PARAM_BANK_ALL_NAME, bank.all))
-                setResult(RESULT_OK, Intent().putExtra(Constant.PARAM_BANK_SHORT_NAME, bank.abbr))
+                setResult(RESULT_OK, Intent()
+                    .putExtra(Constant.PARAM_BANK_ALL_NAME, bank.all)
+                    .putExtra(Constant.PARAM_BANK_SHORT_NAME, bank.abbr))
                 finish()
 
             }

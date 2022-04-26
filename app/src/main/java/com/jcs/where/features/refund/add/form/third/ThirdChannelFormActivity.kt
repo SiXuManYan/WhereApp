@@ -22,14 +22,11 @@ class ThirdChannelFormActivity : BaseActivity() {
     /** 渠道名 */
     private var channelName = ""
 
-
     /**  用户名 */
     private var userName = ""
 
     /** 账号 */
     private var accountNumber = ""
-
-
 
     override fun isStatusDark() = true
 

@@ -26,7 +26,6 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
     /** 渠道名 */
     private var channelName = ""
 
-
     /**  用户名 */
     private var userName = ""
 

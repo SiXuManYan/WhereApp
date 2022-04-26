@@ -11,6 +11,8 @@ class RefundMethod {
     var channel_name = ""
     var account = ""
     var bank_name = ""
+    var bank_all_name = ""
+
 }
 
 class RefundChannel {

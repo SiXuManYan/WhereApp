@@ -26,9 +26,6 @@ class RefundChannelPresenter(private var view: RefundChannelView):BaseMvpPresent
                     }
                     data.add(apply)
                 }
-
-
-
                 view.bindChanel(data)
             }
 

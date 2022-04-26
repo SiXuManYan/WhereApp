@@ -9,7 +9,7 @@ import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
-import com.jcs.where.features.refund.add.form.bank.list.BankListActivity
+import com.jcs.where.features.refund.add.form.bank.child.BankListActivity
 import com.jcs.where.features.refund.add.verify.RefundBindVerifyActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_refund_channel_bank_form.*
@@ -115,7 +115,7 @@ class BankChannelFormActivity : BaseActivity() {
                 return@setOnClickListener
             }
             // 跳转至短信验证
-            RefundBindVerifyActivity.navigation(this, channelName, accountNumber, bankShortName, bankAllName)
+            RefundBindVerifyActivity.navigation(this, channelName, userName, accountNumber, bankShortName, bankAllName)
         }
     }
 

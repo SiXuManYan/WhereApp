@@ -1964,9 +1964,9 @@ public interface RetrofitApi {
     );
 
     /**
-     * 获取 web 支付状态
+     * 用户退款账号列表
      */
-    @GET("commonapi/v2/order_status")
+    @GET("commonapi/v2/account")
     Observable<JcsResponse<ArrayList<RefundMethod>>> getRefundMethod();
 
 
@@ -2008,9 +2008,9 @@ public interface RetrofitApi {
 
 
     /**
-     * 绑定用户退款账户信息
+     * 保存用户退款账户信息
      */
-    @POST("commonapi/v2/payment")
+    @POST("commonapi/v2/remit_account")
     Observable<JcsResponse<JsonElement>> bindRefundInfo(@Body RefundBindRequest request);
 
 

@@ -216,7 +216,7 @@ object BusinessUtils {
         textView.text = stringBuilder
     }
 
-    fun loginOut(){
+    fun loginOut() {
 
         // 断开融云连接
         RongIM.getInstance().logout()
@@ -225,8 +225,6 @@ object BusinessUtils {
 
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SIGN_OUT))
     }
-
-
 
 
     /**
@@ -275,7 +273,7 @@ object BusinessUtils {
     /**
      * 获取相册内的图片资源
      */
-     fun getImageImageUrls(adapter: StoreRefundAdapter2): ArrayList<String> {
+    fun getImageImageUrls(adapter: StoreRefundAdapter2): ArrayList<String> {
         val imageUrl = ArrayList<String>()
         adapter.data.forEach {
             if (it.type != RefundImage.TYPE_ADD) {
@@ -285,7 +283,6 @@ object BusinessUtils {
         return imageUrl
     }
 
-
-
+    fun isBankChannel(channel: String): Boolean = channel == "BANK"
 
 }

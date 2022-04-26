@@ -19,10 +19,11 @@ import kotlinx.android.synthetic.main.activity_refund_channel_selected.*
  */
 class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundChannelView {
 
-    private lateinit var mAdapter: RefundChannelAdapter
-
     private var isBankChannel = false
+
     private var selectedChannel = ""
+    private lateinit var mAdapter: RefundChannelAdapter
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_refund_channel_selected
 
@@ -60,7 +61,7 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
                 return@setOnClickListener
             }
 
-            val intent = Intent().putExtra(Constant.PARAM_REFUND_CHANNEL_NAME, "")
+            val intent = Intent().putExtra(Constant.PARAM_REFUND_CHANNEL_NAME, selectedChannel)
             if (isBankChannel) {
                 intent.setClass(this, BankChannelFormActivity::class.java)
             } else {

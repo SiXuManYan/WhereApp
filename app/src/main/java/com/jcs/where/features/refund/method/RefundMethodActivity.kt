@@ -14,21 +14,21 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.refund.add.channel.RefundChannelActivity
-import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_refund_method_list.*
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by Wangsw  2022/4/25 16:11.
  * 退款方式列表
  */
-class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMethodView, OnItemChildClickListener, OnItemClickListener {
+class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMethodView, OnItemChildClickListener,
+    OnItemClickListener {
 
     private lateinit var emptyView: EmptyView
     private lateinit var mAdapter: RefundMethodAdapter
+
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_refund_method_list
 
@@ -77,6 +77,7 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
         when (view.id) {
             R.id.unbind_iv -> {
                 AlertDialog.Builder(this)
+                    .setTitle(R.string.hint)
                     .setMessage(R.string.unbind_refund_mothod_hint)
                     .setCancelable(false)
                     .setPositiveButton(R.string.confirm) { dialogInterface, _ ->

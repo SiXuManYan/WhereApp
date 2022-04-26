@@ -1,4 +1,4 @@
-package com.jcs.where.features.refund.selected
+package com.jcs.where.features.refund.add.selected
 
 import android.annotation.SuppressLint
 import com.blankj.utilcode.util.ToastUtils
@@ -54,6 +54,9 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
                 ToastUtils.showShort(R.string.please_selected_channel)
                 return@setOnClickListener
             }
+
+
+
         }
     }
 }

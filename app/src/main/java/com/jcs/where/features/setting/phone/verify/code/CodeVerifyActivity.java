@@ -28,7 +28,9 @@ import org.greenrobot.eventbus.EventBus;
 public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> implements CodeVerifyView {
 
     /**
-     * 0 验证旧版手机号 1 验证新手机号
+     * 0 验证旧版手机号
+     * 1 验证新手机号
+     *
      */
     private int mUseMode = 0;
     private String mNewAccount = "";

@@ -96,6 +96,8 @@ public class Constant {
     public static final String PARAM_DATA = "param_data";
     public static final String PARAM_TOTAL_PRICE = "param_total_price";
     public static final String PARAM_NAME = "param_name";
+    public static final String PARAM_BANK_SHORT_NAME = "param_bank_short_name";
+    public static final String PARAM_BANK_NAME = "param_bank_name";
     public static final String PARAM_AVATAR = "param_avatar";
     public static final String PARAM_BOOLEAN = "param_boolean";
     public static final String PARAM_DESCRIPTION = "param_description";
@@ -223,6 +225,7 @@ public class Constant {
     public static final String PARAM_AREA_ID = "param_area_id";
     public static final String PARAM_AREA_NAME = "param_area_name";
     public static final String PARAM_HIDE_CURRENT_LOCATION = "param_hide_current_location";
+    public static final String PARAM_REFUND_CHANNEL_NAME = "param_refund_channel_name";
 
 
 }

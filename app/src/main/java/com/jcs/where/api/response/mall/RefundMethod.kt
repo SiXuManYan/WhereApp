@@ -17,3 +17,11 @@ class RefundChannel {
     var isSelected = false
     var name = ""
 }
+
+
+class RefundBankSelected {
+    var abbr = ""
+    var all = ""
+    var isSelected = false
+
+}

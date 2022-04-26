@@ -108,6 +108,7 @@ import com.jcs.where.api.response.mall.MallOrderDetail;
 import com.jcs.where.api.response.mall.MallRefundInfo;
 import com.jcs.where.api.response.mall.MallShopCategory;
 import com.jcs.where.api.response.mall.MallShopRecommend;
+import com.jcs.where.api.response.mall.RefundBankSelected;
 import com.jcs.where.api.response.mall.RefundMethod;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
@@ -446,6 +447,7 @@ public interface RetrofitApi {
 
     /**
      * 获取验证码
+     * 发送类型（1：登录，2：注册，3：忘记密码，4：更换手机号，5:其他）
      */
     @POST("userapi/v2/mobile/auth/code")
     Observable<JcsResponse<JsonElement>> getVerifyCode(@Body SendCodeRequest sendCodeRequest);
@@ -1976,10 +1978,16 @@ public interface RetrofitApi {
 
 
     /**
-     * 获取 web 支付状态
+     * 获取 退款渠道
      */
     @GET("commonapi/v2/channel")
     Observable<JcsResponse<ArrayList<String>>> getRefundChannel();
+
+    /**
+     * 获取 退款银行列表
+     */
+    @GET("commonapi/v2/bank")
+    Observable<JcsResponse<ArrayList<RefundBankSelected>>> getBankList();
 
 
 

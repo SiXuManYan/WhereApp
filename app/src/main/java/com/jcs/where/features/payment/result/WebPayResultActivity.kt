@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.View
 import com.jcs.where.R
 import com.jcs.where.api.request.payment.PayStatus
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.main.MainActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocalLanguageUtil
 import kotlinx.android.synthetic.main.activity_web_pay_result.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/4/24 17:11.
@@ -90,10 +93,12 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
         if (payStatus) {
             if (languageLocale.language == "zh") {
                 pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success)
-            }else {
+            } else {
                 pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success_en)
             }
             continue_pay_tv.visibility = View.GONE
+            // 支付成功
+            EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         }
 
     }

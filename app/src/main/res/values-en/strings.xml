@@ -908,5 +908,13 @@ Gentleman must let go</string>
     <string name="refund_method">Refund Methods</string>
     <string name="selected_refund_channel">Choose a Refund Channel</string>
     <string name="please_selected_channel">Please choose a Refund Channel</string>
+    <string name="bind_refund_bank_card">Bind Refund Bank Card</string>
+    <string name="selected_bank"><font color='#FF0000'>*&#160;</font><font color='#666666'>Selected Bank</font></string>
+    <string name="please_selected_bank_hint">Please select a bank</string>
+    <string name="edit_account_name_hint">please Enter accountName</string>
+    <string name="bank_account_name">Account Name</string>
+    <string name="payee_bank_card_number">Bank Card Number</string>
+    <string name="bank_account_number_hint">Please enter the recipient`s bank card number</string>
+    <string name="selected_bank_title">Selected Bank</string>
 
 </resources>

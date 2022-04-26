@@ -10,7 +10,6 @@
         android:id="@+id/channel_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_59"
-        android:drawableEnd="@mipmap/ic_un_checked"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15"
@@ -22,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginStart="@dimen/dp_15"
-        android:background="@color/black_333333" />
+        android:background="@color/color_F0F0F0" />
 
 
 </LinearLayout>

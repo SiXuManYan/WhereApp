@@ -239,6 +239,7 @@ object BusinessUtils {
         5 -> StringUtils.getString(R.string.refunding)
         6 -> StringUtils.getString(R.string.refunded_success)
         7 -> StringUtils.getString(R.string.apply_refund)
+        8 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
     }
 

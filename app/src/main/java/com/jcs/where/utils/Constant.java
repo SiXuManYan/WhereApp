@@ -103,7 +103,13 @@ public class Constant {
     public static final String PARAM_DESCRIPTION = "param_description";
     public static final String PARAM_SELECT_IMAGE = "param_select_image";
     public static final String PARAM_CANCELABLE = "param_cancelable";
-    public static final String PARAM_HANDLE_ADDRESS_SELECT = "param_handle_address_select";
+    public static final String PARAM_HANDLE_SELECT = "param_handle_select";
+    public static final String PARAM_REFUND_METHOD = "param_refund_method";
+
+    /**
+     * 打款id
+     */
+    public static final String PARAM_REMIT_ID = "param_remit_id";
 
     /**
      * 包装费

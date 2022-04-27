@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
@@ -19,12 +20,15 @@ import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.mall.MallOrderGood
 import com.jcs.where.api.response.mall.MallRefundInfo
+import com.jcs.where.api.response.mall.RefundMethod
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.order.MallOrderDetailAdapter
+import com.jcs.where.features.refund.method.RefundMethodActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.widget.list.DividerDecoration
@@ -55,6 +59,9 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
     /** 用于请求退款的订单id */
     private var handleRefundOrderId = 0
 
+    /** 打款id */
+    private var remitId = 0
+
 
     private lateinit var mAdapter: MallOrderDetailAdapter
     private lateinit var mImageAdapter: StoreRefundAdapter2
@@ -62,7 +69,6 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_mall_refund
-
 
     companion object {
 
@@ -84,6 +90,27 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
         }
     }
 
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        val bundle = it.data?.extras ?: return@registerForActivityResult
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
+                val refundMethod = bundle.getParcelable<RefundMethod>(Constant.PARAM_REFUND_METHOD)!!
+                remitId = refundMethod.id
+
+                val bankChannel = BusinessUtils.isBankChannel(refundMethod.channel_name)
+                if (bankChannel) {
+                    refund_name_tv.text = refundMethod.bank_all_name
+                } else {
+                    refund_name_tv.text = refundMethod.channel_name
+                }
+                refund_user_name_tv.text = refundMethod.user_name
+                refund_account_tv.text = refundMethod.account
+                refund_method_rl.visibility = View.VISIBLE
+            }
+        }
+
+    }
+
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
         initExtra()
@@ -92,13 +119,11 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
 
 
     private fun initExtra() {
-
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
             refundId = it.getInt(Constant.PARAM_REFUND_ID, 0)
             isChange = it.getBoolean(Constant.PARAM_BOOLEAN, false)
         }
-
     }
 
     private fun initContent() {
@@ -171,7 +196,6 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
         }
     }
 
-
     @SuppressLint("CheckResult")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // 添加图片
@@ -209,7 +233,6 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
             }
     }
 
-
     override fun bindDetail(response: MallRefundInfo) {
         val goods = ArrayList<MallOrderGood>()
         goods.add(response.goods)
@@ -239,7 +262,10 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
     override fun bindListener() {
 
         refund_tv.setOnClickListener {
-
+            if (refundId == 0) {
+                ToastUtils.showShort(R.string.please_add_refund_methods)
+                return@setOnClickListener
+            }
             val desc = desc_et.text.toString().trim()
             if (desc.isEmpty()) {
                 ToastUtils.showShort(R.string.refund_reason_input_hint)
@@ -247,12 +273,17 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
             }
             showLoadingDialog(false)
             if (mImageAdapter.data.size > 1) {
-                presenter.upLoadImage(mImageAdapter, handleRefundOrderId, desc)
+                presenter.upLoadImage(mImageAdapter, handleRefundOrderId, remitId, desc)
             } else {
-                presenter.doRefund(handleRefundOrderId, desc)
+                presenter.doRefund(handleRefundOrderId, remitId, desc)
             }
-
         }
+
+        refund_method_tv.setOnClickListener {
+            launcher.launch(Intent(this, RefundMethodActivity::class.java)
+                .putExtra(Constant.PARAM_HANDLE_SELECT, true))
+        }
+
     }
 
     override fun applicationSuccess() {
@@ -262,17 +293,17 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
         finish()
     }
 
-    override fun upLoadImageSuccess(link: ArrayList<String>, orderId: Int, desc: String) {
+    override fun upLoadImageSuccess(link: ArrayList<String>, orderId: Int, remitId: Int, desc: String) {
         if (isChange) {
             val allAlreadyUploadImage = presenter.getAllAlreadyUploadImage(mImageAdapter)
             if (link.isNotEmpty()) {
                 allAlreadyUploadImage.addAll(link)
             }
             val descImages = Gson().toJson(allAlreadyUploadImage)
-            presenter.doRefund(orderId, desc, descImages)
+            presenter.doRefund(orderId, remitId, desc, descImages)
         } else {
             val descImages = Gson().toJson(link)
-            presenter.doRefund(orderId, desc, descImages)
+            presenter.doRefund(orderId, remitId, desc, descImages)
         }
     }
 

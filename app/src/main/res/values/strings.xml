@@ -930,8 +930,8 @@ Gentleman must let go</string>
     <string name="bank_account_number_hint">请输入收款人银行卡号</string>
     <string name="selected_bank_title">选择银行</string>
     <string name="refund_method_add_success">退款方式添加成功</string>
-    <string name="unbind_refund_mothod_hint">确定解绑该退款方式？</string>
+    <string name="unbind_refund_method_hint">确定解绑该退款方式？</string>
     <string name="payee_account">收款人账号</string>
     <string name="enter_account_number_hint">请输入收款人账号</string>
-
+    <string name="please_add_refund_methods">请选择退款方式</string>
 </resources>

@@ -28,6 +28,11 @@ class MallRefundInfo {
      */
     var complaint = 0
 
+    /**
+     * 退款账户详情
+     */
+    var remit_info = RefundMethod()
+
 }
 
 class MallRefundMoneyInfo {

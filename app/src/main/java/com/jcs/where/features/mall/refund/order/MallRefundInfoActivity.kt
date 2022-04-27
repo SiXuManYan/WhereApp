@@ -226,6 +226,21 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
             complaint_tv.visibility = View.GONE
         }
 
+        // 退款方式
+        val refundMethod = response.remit_info
+        val bankChannel = BusinessUtils.isBankChannel(refundMethod.channel_name)
+        if (bankChannel) {
+            refund_name_tv.text = refundMethod.bank_all_name
+        } else {
+            refund_name_tv.text = refundMethod.channel_name
+        }
+        refund_user_name_tv.text = refundMethod.user_name
+        refund_account_tv.text = refundMethod.account
+        refund_method_rl.visibility = View.VISIBLE
+
+
+
+
     }
 
     override fun cancelSuccess() {

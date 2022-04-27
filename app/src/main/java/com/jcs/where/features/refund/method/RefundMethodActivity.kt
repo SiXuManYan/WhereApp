@@ -1,5 +1,6 @@
 package com.jcs.where.features.refund.method
 
+import android.content.Intent
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.ColorUtils
@@ -14,6 +15,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.refund.add.channel.RefundChannelActivity
+import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_refund_method_list.*
@@ -27,12 +29,15 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
 
     private lateinit var emptyView: EmptyView
     private lateinit var mAdapter: RefundMethodAdapter
+    private var handleSelected = false
 
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_refund_method_list
 
     override fun initView() {
+
+        handleSelected = intent.getBooleanExtra(Constant.PARAM_HANDLE_SELECT, false)
 
         emptyView = EmptyView(this).apply {
             setEmptyImage(R.mipmap.ic_empty_card_coupon)
@@ -78,7 +83,7 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
             R.id.unbind_iv -> {
                 AlertDialog.Builder(this)
                     .setTitle(R.string.hint)
-                    .setMessage(R.string.unbind_refund_mothod_hint)
+                    .setMessage(R.string.unbind_refund_method_hint)
                     .setCancelable(false)
                     .setPositiveButton(R.string.confirm) { dialogInterface, _ ->
                         // 解绑
@@ -96,7 +101,13 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        if (!handleSelected) {
+            return
+        }
         // 选中
+        val refundMethod = mAdapter.data[position]
+        setResult(RESULT_OK, Intent().putExtra(Constant.PARAM_REFUND_METHOD, refundMethod))
+        finish()
     }
 
     override fun unBindSuccess() {

@@ -37,7 +37,7 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
 
     override fun initView() {
 
-        handleItemClick = intent.getBooleanExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, false)
+        handleItemClick = intent.getBooleanExtra(Constant.PARAM_HANDLE_SELECT, false)
 
         emptyView = EmptyView(this).apply {
             initEmpty(R.mipmap.ic_empty_card_coupon, R.string.no_address, R.string.add_new_address_hint)

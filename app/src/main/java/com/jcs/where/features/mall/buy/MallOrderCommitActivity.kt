@@ -3,7 +3,6 @@ package com.jcs.where.features.mall.buy
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,7 +19,6 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.mall.buy.coupon.OrderCouponHomeFragment
 import com.jcs.where.features.payment.WebPayActivity
-import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_mall_order_commit.*
@@ -187,7 +185,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     override fun bindListener() {
         address_ll.setOnClickListener {
             searchLauncher.launch(Intent(this, AddressActivity::class.java)
-                .putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
+                .putExtra(Constant.PARAM_HANDLE_SELECT, true))
         }
         submit_tv.setOnClickListener {
             if (mSelectAddressData == null) {

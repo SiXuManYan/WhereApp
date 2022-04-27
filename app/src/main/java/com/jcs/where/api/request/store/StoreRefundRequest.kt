@@ -39,6 +39,9 @@ class MallRefundRequest {
      * "["ssssss","xxxxx"]"
      */
     var cancel_images: String? = null
+
+    /** 打款id */
+    var remit_id = 0
 }
 
 /**

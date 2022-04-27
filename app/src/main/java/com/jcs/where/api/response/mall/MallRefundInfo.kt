@@ -31,8 +31,7 @@ class MallRefundInfo {
     /**
      * 退款账户详情
      */
-    var remit_info = RefundMethod()
-
+    var remit_info :RefundMethod? = null
 }
 
 class MallRefundMoneyInfo {

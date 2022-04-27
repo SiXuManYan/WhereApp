@@ -89,7 +89,7 @@
                 android:background="@color/grey_F5F5F5" />
 
             <LinearLayout
-                android:id="@+id/refund_method_rl"
+                android:id="@+id/refund_method_ll"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:visibility="gone"

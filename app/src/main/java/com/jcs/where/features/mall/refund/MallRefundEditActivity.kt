@@ -105,7 +105,7 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
                 }
                 refund_user_name_tv.text = refundMethod.user_name
                 refund_account_tv.text = refundMethod.account
-                refund_method_rl.visibility = View.VISIBLE
+                refund_method_ll.visibility = View.VISIBLE
             }
         }
 

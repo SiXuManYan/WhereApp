@@ -362,7 +362,6 @@
                         android:layout_height="@dimen/dp_48"
                         android:gravity="center_vertical"
                         android:text="@string/payment_method"
-                        android:textStyle="bold"
                         android:textColor="@color/black_333333"
                         android:textSize="@dimen/sp_14" />
 

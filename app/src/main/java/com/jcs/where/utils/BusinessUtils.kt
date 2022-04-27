@@ -244,7 +244,7 @@ object BusinessUtils {
 
     /**
      * 商城商品后状态文案
-     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
+     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后 8 退款失败
      */
     fun getMallGoodRefundStatusText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.waiting_after_sales)
@@ -254,12 +254,13 @@ object BusinessUtils {
         5 -> StringUtils.getString(R.string.refunding)
         6 -> StringUtils.getString(R.string.refunded_success)
         7 -> StringUtils.getString(R.string.cancellation_after_sale)
+        8 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
     }
 
     /**
      * 商品售后状态描述
-     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后
+     * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后 8 退款失败
      */
     fun getMallGoodRefundStatusDescText(status: Int): String = when (status) {
         2 -> StringUtils.getString(R.string.store_status_desc_10)
@@ -267,6 +268,7 @@ object BusinessUtils {
         4 -> StringUtils.getString(R.string.store_status_desc_12)
         5 -> StringUtils.getString(R.string.store_status_desc_8)
         6 -> StringUtils.getString(R.string.store_status_desc_9)
+        8->StringUtils.getString(R.string.refund_fail_desc)
         else -> ""
     }
 

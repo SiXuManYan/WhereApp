@@ -934,4 +934,5 @@ Gentleman must let go</string>
     <string name="payee_account">收款人账号</string>
     <string name="enter_account_number_hint">请输入收款人账号</string>
     <string name="please_add_refund_methods">请选择退款方式</string>
+    <string name="refund_fail_desc">需要您再次发起售后退款，并再次确认退款方式，平台会尽快处理。</string>
 </resources>

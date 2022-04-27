@@ -32,6 +32,9 @@ class MallRefundInfo {
      * 退款账户详情
      */
     var remit_info :RefundMethod? = null
+
+    /** 退款失败原因 */
+    var error_reason = ""
 }
 
 class MallRefundMoneyInfo {

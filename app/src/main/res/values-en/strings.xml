@@ -106,12 +106,12 @@
     <string name="main_tab_title_order">Order</string>
     <string name="main_tab_title_mine">Me</string>
     <string name="to_login">Sign In</string>
-    <string name="mine_about_us">About us</string>
+    <string name="mine_about_us">About Us</string>
     <string name="to_review">To review</string>
-    <string name="payment_failed">Payment failed</string>
+    <string name="payment_failed">Payment Failed</string>
     <string name="refunding">refunding</string>
     <string name="refunded">refunded</string>
-    <string name="refund_failed">Refund failed</string>
+    <string name="refund_failed">Refund Failed</string>
     <string name="position">Position</string>
     <string name="loading">Loading</string>
     <string name="close_page_prompt">Are you sure you want to close this page?</string>
@@ -921,4 +921,5 @@ Gentleman must let go</string>
     <string name="payee_account">AccountNo</string>
     <string name="enter_account_number_hint">Please enter AccountNo</string>
     <string name="please_add_refund_methods">Please choose a Refund Method</string>
+    <string name="refund_fail_desc">Please initiate an after-sale refund again and confirm the refund method, the platform will process it as soon as possible.</string>
 </resources>

@@ -240,8 +240,15 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
             refund_method_ll.visibility = View.VISIBLE
         }
 
-
-
+        // 退款失败
+        if (goodStatus == 8) {
+            logistics_container_ll.visibility = View.VISIBLE
+            reason_split_v.visibility = View.VISIBLE
+            fail_reason_tv.text =response.error_reason
+        }else {
+            logistics_container_ll.visibility = View.GONE
+            reason_split_v.visibility = View.GONE
+        }
 
 
 

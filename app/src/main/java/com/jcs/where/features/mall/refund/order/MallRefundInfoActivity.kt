@@ -242,7 +242,7 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
 
         // 退款失败
         if (goodStatus == 8) {
-            logistics_container_ll.visibility = View.VISIBLE
+            fail_reason_rl.visibility = View.VISIBLE
             reason_split_v.visibility = View.VISIBLE
             fail_reason_tv.text =response.error_reason
         }else {

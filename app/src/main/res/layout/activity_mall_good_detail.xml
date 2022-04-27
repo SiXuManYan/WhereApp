@@ -184,13 +184,6 @@
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15" />
 
-          <com.jcs.where.features.web.JsWebView
-              android:id="@+id/jsweb"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
-
-
-
 
 
         </LinearLayout>

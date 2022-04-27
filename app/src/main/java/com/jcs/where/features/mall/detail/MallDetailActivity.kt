@@ -4,13 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.http.SslError
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
-import android.view.KeyEvent
-import android.webkit.*
-import android.widget.LinearLayout
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,15 +29,11 @@ import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.message.custom.CustomMessage
-import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
-import com.jcs.where.view.WebLayout
-import com.just.agentweb.AgentWeb
-import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
 import com.shuyu.gsyvideoplayer.GSYVideoManager
@@ -176,10 +168,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private fun initWeb() {
 
-
-
-
-
     }
 
     override fun initData() {
@@ -273,11 +261,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         title_tv.text = response.title
 
 
-//        response.desc?.let {
-//            disPlayHtml(it)
-//        }
+        response.desc?.let {
+            disPlayHtml(it)
+        }
 
-        jsweb.loadUrl(response.website)
+//        jsweb.loadUrl(response.website)
 
         mSkuDialog.data = SkuDataSource().apply {
             main_image = response.main_image

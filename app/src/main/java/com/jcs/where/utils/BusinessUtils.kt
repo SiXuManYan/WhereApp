@@ -286,6 +286,6 @@ object BusinessUtils {
         return imageUrl
     }
 
-    fun isBankChannel(channel: String): Boolean = channel == "BANK"
+    fun isBankChannel(channel: String?): Boolean = channel == "BANK"
 
 }

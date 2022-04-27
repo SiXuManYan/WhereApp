@@ -59,7 +59,7 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
         settings.loadWithOverviewMode = true
         settings.blockNetworkImage = false
         settings.setAppCachePath(appCacheDirName)
-        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+//        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
 
         //        settings.setUseWideViewPort(true);
         webChromeClient = object : WebChromeClient() {

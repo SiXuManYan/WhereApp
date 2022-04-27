@@ -203,34 +203,37 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
         if (data == null) {
             return
         }
-        val elements = Matisse.obtainPathResult(data)
+        if (requestCode == Constant.REQUEST_MEDIA) {
+            val elements = Matisse.obtainPathResult(data)
 
-        Flowable.just(elements)
-            .observeOn(Schedulers.io())
-            .map {
-                Luban.with(this@MallRefundEditActivity).load(elements).ignoreBy(100).get()
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-
-                elements.forEach {
-                    val apply = RefundImage().apply {
-                        type = RefundImage.TYPE_EDIT
-                        imageSource = it
-                    }
-                    mImageAdapter.addData(apply)
+            Flowable.just(elements)
+                .observeOn(Schedulers.io())
+                .map {
+                    Luban.with(this@MallRefundEditActivity).load(elements).ignoreBy(100).get()
                 }
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError {
 
-            }
-            .subscribe {
-                it.forEach { file ->
-                    val apply = RefundImage().apply {
-                        type = RefundImage.TYPE_EDIT
-                        imageSource = file.absolutePath
+                    elements.forEach {
+                        val apply = RefundImage().apply {
+                            type = RefundImage.TYPE_EDIT
+                            imageSource = it
+                        }
+                        mImageAdapter.addData(apply)
                     }
-                    mImageAdapter.addData(apply)
+
                 }
-            }
+                .subscribe {
+                    it.forEach { file ->
+                        val apply = RefundImage().apply {
+                            type = RefundImage.TYPE_EDIT
+                            imageSource = file.absolutePath
+                        }
+                        mImageAdapter.addData(apply)
+                    }
+                }
+        }
+
     }
 
     override fun bindDetail(response: MallRefundInfo) {

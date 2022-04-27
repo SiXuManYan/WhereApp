@@ -921,5 +921,5 @@ Gentleman must let go</string>
     <string name="payee_account">AccountNo</string>
     <string name="enter_account_number_hint">Please enter AccountNo</string>
     <string name="please_add_refund_methods">Please choose a Refund Method</string>
-    <string name="refund_fail_desc">Please initiate an after-sale refund again and confirm the refund method, the platform will process it as soon as possible.</string>
+    <string name="refund_fail_desc">You need to initiate a post-sale refund again and confirm the refund method again.</string>
 </resources>

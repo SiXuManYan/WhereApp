@@ -21,7 +21,7 @@
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginStart="@dimen/dp_13"
             android:background="?android:attr/selectableItemBackground"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_back_black"

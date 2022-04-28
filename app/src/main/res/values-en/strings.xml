@@ -872,7 +872,7 @@ Gentleman must let go</string>
     <!-- 售后 -->
     <string name="apply_refund">Apply Refund</string>
     <string name="refuses_to_return">Refuses to Return</string>
-    <string name="under_review">Refunding</string>
+    <string name="under_review">Shops Confirming</string>
     <string name="shops_to_receive">Shops to Receive</string>
     <string name="refunded_success">Refunded</string>
     <string name="refunded_canceled">Refunded Canceled</string>

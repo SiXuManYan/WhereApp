@@ -1998,7 +1998,7 @@ public interface RetrofitApi {
      * @param phone             手机号
      * @param email             邮箱
      */
-    @POST("userapi/v2/mobile/auth/code")
+    @POST("userapi/v2/verify/code")
     Observable<JcsResponse<JsonElement>> checkVerifyCode(
             @Query("type") int type,
             @Query("verification_code") String verification_code,

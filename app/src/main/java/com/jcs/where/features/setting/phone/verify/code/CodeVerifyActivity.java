@@ -11,12 +11,8 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
-import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.phone.confirm.NewPhoneActivity;
-import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
-import com.jcs.where.utils.SPKey;
-import com.jcs.where.widget.JcsTitle;
 import com.jcs.where.widget.verify.VerificationCodeView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,7 +26,6 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
     /**
      * 0 验证旧版手机号
      * 1 验证新手机号
-     *
      */
     private int mUseMode = 0;
     private String mNewAccount = "";
@@ -38,7 +33,7 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
 
 
     private VerificationCodeView captcha_view;
-    private TextView resend_tv,target_tv;
+    private TextView resend_tv, target_tv;
 
     @Override
     protected int getLayoutId() {
@@ -72,7 +67,7 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
     }
 
     private void getVerifyCode() {
-        presenter.getVerifyCode(resend_tv,target_tv);
+        presenter.getVerifyCode(resend_tv, target_tv);
     }
 
     @Override
@@ -80,27 +75,15 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
         captcha_view.setOnCodeFinishListener(new VerificationCodeView.OnCodeFinishListener() {
 
             @Override
-            public void onTextChange(View view, String content) { }
+            public void onTextChange(View view, String content) {
+            }
 
             @Override
             public void onComplete(View view, String content) {
                 if (TextUtils.isEmpty(content)) {
                     return;
                 }
-                switch (mUseMode) {
-                    case 0:
-                        startActivity(NewPhoneActivity.class);
-                        finish();
-                        break;
-                    case 1:
-                        // 进行手机号更换
-                        presenter.modifyPhone(mNewAccount, mNewAccountCountryCode);
-                        break;
-                    default:
-                        break;
-                }
-
-
+                presenter.chekVerifyCode(content);
             }
         });
         resend_tv.setOnClickListener(v -> {
@@ -114,5 +97,21 @@ public class CodeVerifyActivity extends BaseMvpActivity<CodeVerifyPresenter> imp
         ToastUtils.showShort(R.string.phone_reset_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_USER_INFO));
         finish();
+    }
+
+    @Override
+    public void verified() {
+        switch (mUseMode) {
+            case 0:
+                startActivity(NewPhoneActivity.class);
+                finish();
+                break;
+            case 1:
+                // 进行手机号更换
+                presenter.modifyPhone(mNewAccount, mNewAccountCountryCode);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -92,7 +92,6 @@ public class CodeVerifyPresenter extends BaseMvpPresenter {
                 .country_code(countryCode)
                 .build();
 
-
         requestApi(mRetrofit.modifyPhone(request), new BaseMvpObserver<JsonElement>(mView) {
             @Override
             protected void onSuccess(JsonElement response) {
@@ -101,4 +100,19 @@ public class CodeVerifyPresenter extends BaseMvpPresenter {
         });
 
     }
+
+
+
+    public void chekVerifyCode(String verifyCode){
+        User user = User.getInstance();
+        requestApi(mRetrofit.checkVerifyCode(1,verifyCode,user.phone,null),new BaseMvpObserver<JsonElement>(mView){
+
+            @Override
+            protected void onSuccess(JsonElement response) {
+                mView.verified();
+            }
+        });
+
+    }
+
 }

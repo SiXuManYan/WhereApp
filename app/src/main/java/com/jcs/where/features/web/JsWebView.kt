@@ -40,7 +40,7 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var alertBoxBlock = true
     private var javascriptCloseWindowListener: JavascriptCloseWindowListener? = null
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var mChromeClient: WebChromeClient? = null
+    public var mChromeClient: WebChromeClient? = null
 
     private var handlerList = SparseArray<JsHandler<*>>()
 

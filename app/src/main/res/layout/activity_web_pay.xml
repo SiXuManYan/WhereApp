@@ -7,11 +7,13 @@
     android:orientation="vertical">
 
 
+
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
+        app:backIcon="@mipmap/ic_back_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:middleTitle="@string/place_order" />
+        app:middleTitle="@string/pay_order_title" />
 
 
     <com.jcs.where.features.web.JsWebView

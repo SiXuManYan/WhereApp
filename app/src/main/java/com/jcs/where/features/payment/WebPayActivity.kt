@@ -22,9 +22,7 @@ import kotlinx.android.synthetic.main.activity_web_pay.*
  */
 class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
 
-
     private var orderIds = java.util.ArrayList<Int>()
-
 
     private var moduleType = ""
     private var useType = 0
@@ -63,6 +61,7 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
     override fun getLayoutId() = R.layout.activity_web_pay
 
     override fun initView() {
+        overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent)
         initExtra()
         empty_view.apply {
             setEmptyImage(R.mipmap.ic_pay_info_error)
@@ -127,7 +126,20 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
     }
 
     override fun bindListener() {
+        web_view.webChromeClient = object :WebChromeClient(){
+            override fun onReceivedTitle(view: WebView?, title: String?) {
+                super.onReceivedTitle(view, title)
+                if (!title.isNullOrBlank()) {
+                    mJcsTitle.setMiddleTitle(title)
+                }else {
+                    mJcsTitle.setMiddleTitle(getString(R.string.pay_order_title))
+                }
+            }
+        }
 
+        mJcsTitle.setBackIvClickListener {
+            onBackPressed()
+        }
     }
 
     override fun bindUrl(redirectUrl: String) {
@@ -137,7 +149,6 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
     }
 
     override fun onBackPressed() {
-
         startActivity(WebPayResultActivity::class.java, Bundle().apply {
             putInt(Constant.PARAM_TYPE, useType)
             putString(Constant.PARAM_MODULE_TYPE, moduleType)
@@ -146,5 +157,12 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
         })
         super.onBackPressed()
     }
+
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.bottom_silent, R.anim.bottom_out)
+    }
+
 
 }

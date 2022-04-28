@@ -60,12 +60,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         mJcsTitle = findViewById(R.id.jcsTitle);
         if (mJcsTitle != null) {
             setMarginTopForStatusBar(mJcsTitle);
-            mJcsTitle.setBackIvClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                    afterJcsBack();
-                }
+            mJcsTitle.setBackIvClickListener(view -> {
+                finish();
+                afterJcsBack();
             });
         }
         View view = findViewById(R.id.back_iv);

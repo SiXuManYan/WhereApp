@@ -275,7 +275,7 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
     override fun bindListener() {
 
         refund_tv.setOnClickListener {
-            if (refundId == 0) {
+            if (remitId == 0) {
                 ToastUtils.showShort(R.string.please_add_refund_methods)
                 return@setOnClickListener
             }

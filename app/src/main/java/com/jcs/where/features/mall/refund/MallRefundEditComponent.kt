@@ -26,7 +26,7 @@ interface MallRefundEditView : BaseMvpView {
     fun applicationSuccess()
 
     /** 图片上传成功 */
-    fun upLoadImageSuccess(link:ArrayList<String>, orderId: Int, desc: String)
+    fun upLoadImageSuccess(link: ArrayList<String>, orderId: Int, remitId: Int, desc: String)
 }
 
 class MallRefundEditPresenter(private var view: MallRefundEditView) : BaseMvpPresenter(view) {
@@ -44,11 +44,12 @@ class MallRefundEditPresenter(private var view: MallRefundEditView) : BaseMvpPre
     /**
      * 申请售后
      */
-    fun doRefund(orderId: Int, cancelReason: String, cancelImages: String? = null) {
+    fun doRefund(orderId: Int, remitId: Int, cancelReason: String, cancelImages: String? = null) {
 
         val apply = MallRefundRequest().apply {
             cancel_reason = cancelReason
             cancel_images = cancelImages
+            remit_id = remitId
         }
 
         requestApi(mRetrofit.mallRefund(orderId, apply), object : BaseMvpObserver<JsonElement>(view) {
@@ -75,7 +76,7 @@ class MallRefundEditPresenter(private var view: MallRefundEditView) : BaseMvpPre
     /**
      * 获取所有已经上传过的图片
      */
-    fun getAllAlreadyUploadImage(mImageAdapter: StoreRefundAdapter2):java.util.ArrayList<String>{
+    fun getAllAlreadyUploadImage(mImageAdapter: StoreRefundAdapter2): java.util.ArrayList<String> {
 
         val link = java.util.ArrayList<String>()
         mImageAdapter.data.forEach {
@@ -90,7 +91,7 @@ class MallRefundEditPresenter(private var view: MallRefundEditView) : BaseMvpPre
     /**
      * 多图上传
      */
-    fun upLoadImage(adapter: StoreRefundAdapter2, orderId: Int, desc: String) {
+    fun upLoadImage(adapter: StoreRefundAdapter2, orderId: Int, remitId: Int, desc: String) {
 
         val map: HashMap<String, RequestBody> = HashMap()
         val imageImageUrls = getImageImageUrls(adapter)
@@ -109,14 +110,14 @@ class MallRefundEditPresenter(private var view: MallRefundEditView) : BaseMvpPre
         val description = RequestBody.create(MediaType.parse("multipart/form-data"), type)
 
         if (map.isEmpty()) {
-            view.upLoadImageSuccess(ArrayList<String>(), orderId, desc)
+            view.upLoadImageSuccess(ArrayList<String>(), orderId, remitId, desc)
             return
         }
 
         requestApi(mRetrofit.uploadMultiImages(description, map), object : BaseMvpObserver<UploadFileResponse2>(view) {
             override fun onSuccess(response: UploadFileResponse2) {
 
-                view.upLoadImageSuccess(response.link, orderId, desc)
+                view.upLoadImageSuccess(response.link, orderId, remitId, desc)
             }
 
             override fun onError(errorResponse: ErrorResponse?) {

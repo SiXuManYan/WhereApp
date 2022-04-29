@@ -32,11 +32,14 @@ class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout
         val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
 
         layoutParams.apply {
-            topMargin = if (adapterPosition < 2) {
+            topMargin = if (adapterPosition < (2+ headerLayoutCount)) {
                 SizeUtils.dp2px(16f)
             } else {
                 0
             }
+
+
+
         }
         container_ll.layoutParams = layoutParams
 

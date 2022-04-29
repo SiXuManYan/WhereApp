@@ -42,6 +42,12 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
     /** 商品列表 */
     private lateinit var mAdapter: MallRecommendAdapter
 
+    /** 店铺券header */
+    private lateinit var couponHeader: View
+
+    /** 推荐header */
+    private lateinit var recommendHeader: View
+
     companion object {
 
         /**
@@ -75,13 +81,12 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
 
     private fun initRecommendHeader() {
 
-        val header = LayoutInflater.from(requireContext()).inflate(R.layout.layout_mall_shop_recommend_header, null, false)
-        mAdapter.addHeaderView(header)
-
+        recommendHeader = LayoutInflater.from(requireContext()).inflate(R.layout.layout_mall_shop_recommend_header, null, false)
+        mAdapter.addHeaderView(recommendHeader)
 
         mRecommendHeaderAdapter = ShopRecommendHeaderAdapter()
 
-        val header_rv = header.findViewById<RecyclerView>(R.id.header_rv)
+        val header_rv = recommendHeader.findViewById<RecyclerView>(R.id.header_rv)
         val manager = object : LinearLayoutManager(context, VERTICAL, false) {
             override fun canScrollVertically() = false
         }
@@ -89,23 +94,24 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         header_rv.adapter = mRecommendHeaderAdapter
     }
 
+
     private fun initCouponHeader() {
 
-        val header = LayoutInflater.from(requireContext()).inflate(R.layout.layout_mall_shop_recommend_header, null, false)
-        mAdapter.addHeaderView(header, 0)
+        couponHeader = LayoutInflater.from(requireContext()).inflate(R.layout.layout_mall_shop_recommend_header, null, false)
+        mAdapter.addHeaderView(couponHeader, 0)
 
         mCouponHeaderAdapter = CouponCenterAdapter().apply {
-            addChildClickViewIds( R.id.get_tv)
+            addChildClickViewIds(R.id.get_tv)
             setOnItemChildClickListener { adapter, view, position ->
                 val userCoupon = mCouponHeaderAdapter.data[position]
 
                 when (view.id) {
-                    R.id.get_tv -> presenter.getShopCoupon(userCoupon.id,userCoupon.couponType)
+                    R.id.get_tv -> presenter.getShopCoupon(userCoupon.id, userCoupon.couponType)
                     else -> {}
                 }
             }
         }
-        val header_rv = header.findViewById<RecyclerView>(R.id.header_rv)
+        val header_rv = couponHeader.findViewById<RecyclerView>(R.id.header_rv)
         val manager = object : LinearLayoutManager(context, HORIZONTAL, false) {
             override fun canScrollVertically() = false
         }
@@ -159,9 +165,19 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         presenter.getMallList(goodRequest)
     }
 
-    override fun bindListener() = Unit
+    override fun bindListener() {
+        swipe_layout.setOnRefreshListener {
+            goodRequest.apply {
+                page = Constant.DEFAULT_FIRST_PAGE
+                shopId = mShopId
+                recommend = 1
+            }
+            loadOnVisible()
+        }
+    }
 
     override fun bindData(data: MutableList<MallGood>, lastPage: Boolean) {
+        swipe_layout.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (mPage == Constant.DEFAULT_FIRST_PAGE) {
@@ -187,11 +203,24 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
     }
 
     override fun bindCoupon(response: MutableList<Coupon>) {
+
+        if (response.size > 0) {
+            couponHeader.visibility = View.VISIBLE
+        } else {
+            couponHeader.visibility = View.GONE
+        }
+        swipe_layout.isRefreshing = false
         mCouponHeaderAdapter.setNewInstance(response)
         content_rv.smoothScrollToPosition(0)
     }
 
     override fun bindRecommend(response: ArrayList<ShopRecommend>) {
+        if (response.size > 0) {
+            recommendHeader.visibility = View.VISIBLE
+        } else {
+            recommendHeader.visibility = View.GONE
+        }
+        swipe_layout.isRefreshing = false
         mRecommendHeaderAdapter.setNewInstance(response)
     }
 

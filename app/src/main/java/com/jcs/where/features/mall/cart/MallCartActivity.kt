@@ -8,7 +8,6 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
-import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
 import com.jcs.where.api.response.mall.MallCartItem
@@ -42,12 +41,13 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
 
     override fun initView() {
         swipe_layout.apply {
-//            setOnRefreshListener(this@MallCartActivity)
+            setOnRefreshListener(this@MallCartActivity)
             swipe_layout.isEnabled = false
             setColorSchemeColors(ColorUtils.getColor(R.color.blue_4C9EF2))
         }
         emptyView = EmptyView(this).apply {
             showEmptyDefault()
+            setEmptyImage(R.mipmap.ic_empty_search)
             this.empty_message_tv.text = StringUtils.getString(R.string.empty_data_cart)
         }
         mAdapter = MallCartAdapter().apply {
@@ -59,8 +59,6 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             onChildReselectSkuClick = this@MallCartActivity
             onDeleteExpiredClick = View.OnClickListener {
                 presenter.clearStoreCart(1)
-
-
             }
 
         }
@@ -170,6 +168,8 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
                 select_all_tv.visibility = View.GONE
+                bottom_rl.visibility = View.GONE
+                bottom_v.visibility = View.GONE
             } else {
                 loadMoreModule.loadMoreEnd()
             }
@@ -177,6 +177,8 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             return
         }
         select_all_tv.visibility = View.VISIBLE
+        bottom_rl.visibility = View.VISIBLE
+        bottom_v.visibility = View.VISIBLE
         if (page == Constant.DEFAULT_FIRST_PAGE) {
             mAdapter.setNewInstance(data)
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()
@@ -190,6 +192,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             loadMoreModule.loadMoreComplete()
         }
         getNowPrice()
+
     }
 
     override fun onRefresh() {

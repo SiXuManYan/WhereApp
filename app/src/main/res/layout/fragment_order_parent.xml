@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:visibility="gone"
             tools:visibility="visible"
-            android:padding="@dimen/dp_15"
+            android:padding="@dimen/dp_13"
             android:src="@drawable/ic_back_white"
             android:layout_height="wrap_content"/>
 

@@ -11,18 +11,19 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.google.android.material.appbar.AppBarLayout
 import com.jcs.where.R
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.mall.MallBannerCategory
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -31,7 +32,6 @@ import com.jcs.where.view.XBanner.XBanner
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
-
 import kotlinx.android.synthetic.main.fragment_mall_home_child.*
 import pl.droidsonroids.gif.GifImageView
 
@@ -49,6 +49,8 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     /** 商品推荐 */
     private lateinit var mAdapter: MallRecommendAdapter
+
+    private var page = Constant.DEFAULT_FIRST_PAGE
 
     override fun getLayoutId() = R.layout.fragment_mall_home_child
 
@@ -125,7 +127,8 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {
-                loadMoreModule.loadMoreEnd()
+                page ++
+                presenter.getRecommend(targetFirstCategory.id,page)
             }
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -134,7 +137,6 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
             adapter = mAdapter
             layoutManager = gridLayoutManager
             addItemDecoration(decoration)
-
         }
     }
 
@@ -146,27 +148,61 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     override fun loadOnVisible() {
         if (!::targetFirstCategory.isInitialized) return
+
+        page = Constant.DEFAULT_FIRST_PAGE
         presenter.handleBanner(targetFirstCategory)
-        presenter.getRecommend(targetFirstCategory.id)
+        presenter.getRecommend(targetFirstCategory.id,page)
         presenter.getTopBanner()
     }
 
 
     override fun bindListener() {
 
+        swipe_layout.setOnRefreshListener {
+            loadOnVisible()
+        }
+
+        top_abl.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            swipe_layout.isEnabled = verticalOffset >= 0
+        })
     }
 
     override fun bindBannerData(result: ArrayList<MallBannerCategory>) {
+        swipe_layout.isRefreshing = false
         mBannerAdapter.setNewInstance(result)
         point_view.setPointCount(result.size)
     }
 
-    override fun bindRecommend(response: ArrayList<MallGood>) {
-        mAdapter.setNewInstance(response)
-        mAdapter.loadMoreModule.loadMoreEnd()
+    override fun bindRecommend(data: MutableList<MallGood>,lastPage: Boolean) {
+        if (swipe_layout.isRefreshing) {
+            swipe_layout.isRefreshing = false
+        }
+        val loadMoreModule = mAdapter.loadMoreModule
+        if (data.isEmpty()) {
+            if (page == Constant.DEFAULT_FIRST_PAGE) {
+                mAdapter.setNewInstance(null)
+                loadMoreModule.loadMoreComplete()
+            } else {
+                loadMoreModule.loadMoreEnd()
+            }
+            return
+        }
+        if (page == Constant.DEFAULT_FIRST_PAGE) {
+            mAdapter.setNewInstance(data)
+            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
+        } else {
+            mAdapter.addData(data)
+            if (lastPage) {
+                loadMoreModule.loadMoreEnd()
+            } else {
+                loadMoreModule.loadMoreComplete()
+            }
+        }
+
     }
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {
+        swipe_layout.isRefreshing = false
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
 

@@ -3,7 +3,6 @@ package com.jcs.where.features.mall.buy
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,7 +18,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.mall.buy.coupon.OrderCouponHomeFragment
-import com.jcs.where.features.store.pay.StorePayActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_mall_order_commit.*
@@ -186,7 +185,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     override fun bindListener() {
         address_ll.setOnClickListener {
             searchLauncher.launch(Intent(this, AddressActivity::class.java)
-                .putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
+                .putExtra(Constant.PARAM_HANDLE_SELECT, true))
         }
         submit_tv.setOnClickListener {
             if (mSelectAddressData == null) {
@@ -213,11 +212,15 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     override fun commitSuccess(response: MallCommitResponse) {
 
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+/*        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
             putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, response.orders)
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
-        })
+        })*/
+
+        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, response.orders)
+
+
     }
 
 
@@ -246,9 +249,11 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             }
             EventCode.EVENT_SELECTED_SHOP_COUPON -> {
                 val selectedShopCouponId = baseEvent.data as Int
-
+                // 更换店铺优惠券后，将平台券置空
+                currentPlatformCouponId = 0
                 // 更新店铺item中的 nativeShopCouponId
                 presenter.updateItemShopCouponId(mAdapter,currentHandleShopId,selectedShopCouponId)
+                // 获取默认优惠券
                 presenter.getDefaultCoupon(mAdapter, data, currentPlatformCouponId)
             }
 

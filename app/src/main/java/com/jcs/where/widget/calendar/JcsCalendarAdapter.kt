@@ -2,17 +2,16 @@ package com.jcs.where.widget.calendar
 
 import android.graphics.Color
 import android.view.View
-import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean
-import com.chad.library.adapter.base.BaseSectionQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.jcs.where.R
 import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
-import com.chad.library.adapter.base.entity.JSectionEntity
+import com.chad.library.adapter.base.BaseSectionQuickAdapter
+import com.chad.library.adapter.base.entity.SectionEntity
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.jcs.where.R
+import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean
 import java.io.Serializable
 
-class JcsCalendarAdapter(sectionHeadResId: Int, layoutResId: Int, data: List<CalendarBean>) :
-    BaseSectionQuickAdapter<CalendarBean, BaseViewHolder>(sectionHeadResId, layoutResId, data.toMutableList()) {
+class JcsCalendarAdapter(sectionHeadResId: Int, layoutResId: Int, data: List<CalendarBean>) : BaseSectionQuickAdapter<CalendarBean, BaseViewHolder>(sectionHeadResId, layoutResId, data.toMutableList()) {
     var isEndSelected = false
 
     override fun convertHeader(helper: BaseViewHolder, item: CalendarBean) {
@@ -22,7 +21,7 @@ class JcsCalendarAdapter(sectionHeadResId: Int, layoutResId: Int, data: List<Cal
     override fun convert(holder: BaseViewHolder, item: CalendarBean) {
 
 
-        var dateView = holder.getView<View>( R.id.dateView)
+        val dateView = holder.getView<View>( R.id.dateView)
         val leftView = holder.getView<View>( R.id.leftView)
         val rightView = holder.getView<View>( R.id.rightView)
         val actionTv = holder.getView<TextView>( R.id.actionTv)
@@ -62,7 +61,7 @@ class JcsCalendarAdapter(sectionHeadResId: Int, layoutResId: Int, data: List<Cal
         }
     }
 
-    class CalendarBean : JSectionEntity(), Serializable {
+    class CalendarBean : SectionEntity, Serializable {
         var time: Long = 0
 
         /**
@@ -100,8 +99,17 @@ class JcsCalendarAdapter(sectionHeadResId: Int, layoutResId: Int, data: List<Cal
         var isStartDay = false
         var isEndDay = false
         var isToday = false
-        override var itemType = 0
-        override var isHeader = false
+        var mIsHeader = false
+
+
+        override val isHeader: Boolean
+            get() = mIsHeader
+
+
+//
+//        override var itemType = 0
+//
+//        override var isHeader = false
 
     }
 }

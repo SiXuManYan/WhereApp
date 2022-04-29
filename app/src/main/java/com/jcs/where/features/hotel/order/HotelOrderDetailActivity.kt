@@ -13,6 +13,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.CommentPostActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -199,11 +200,13 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
                             // 立即支付
                             val orderIds = ArrayList<Int>()
                             orderIds.add(order_id)
-                            startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+        /*                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
                                 putDouble(Constant.PARAM_TOTAL_PRICE, order_data.price.toDouble())
                                 putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
                                 putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
-                            })
+                            })*/
+                            WebPayActivity.navigation(this@HotelOrderDetailActivity, Constant.PAY_INFO_HOTEL, orderIds)
+
                         }
                     }
 

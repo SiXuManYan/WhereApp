@@ -31,6 +31,7 @@ public class Constant {
     public static final String PARAM_ID = "param_id";
     public static final String PARAM_COUPON_ID = "param_coupon_id";
     public static final String PARAM_TYPE = "param_type";
+    public static final String PARAM_MODULE_TYPE = "param_module_type";
     public static final String PARAM_TAB = "param_tab";
     public static final String PARAM_CHANGE_LANGUAGE = "param_change_language";
     public static final String PARAM_ID_2 = "id";
@@ -61,6 +62,7 @@ public class Constant {
     public static final String PARAM_CHILD_CATEGORY_ID = "param_child_category_id";
     public static final String PARAM_CATEGORY_ID = "param_category_id";
     public static final String PARAM_CATEGORY_NAME = "param_category_name";
+    public static final String PARAM_LAST_PAY_URL = "param_last_pay_url";
 
 
     /**
@@ -94,12 +96,20 @@ public class Constant {
     public static final String PARAM_DATA = "param_data";
     public static final String PARAM_TOTAL_PRICE = "param_total_price";
     public static final String PARAM_NAME = "param_name";
+    public static final String PARAM_BANK_SHORT_NAME = "param_bank_short_name";
+    public static final String PARAM_BANK_ALL_NAME = "param_bank_name";
     public static final String PARAM_AVATAR = "param_avatar";
     public static final String PARAM_BOOLEAN = "param_boolean";
     public static final String PARAM_DESCRIPTION = "param_description";
     public static final String PARAM_SELECT_IMAGE = "param_select_image";
     public static final String PARAM_CANCELABLE = "param_cancelable";
-    public static final String PARAM_HANDLE_ADDRESS_SELECT = "param_handle_address_select";
+    public static final String PARAM_HANDLE_SELECT = "param_handle_select";
+    public static final String PARAM_REFUND_METHOD = "param_refund_method";
+
+    /**
+     * 打款id
+     */
+    public static final String PARAM_REMIT_ID = "param_remit_id";
 
     /**
      * 包装费
@@ -139,6 +149,11 @@ public class Constant {
      * 验证码类型 4 更换手机号
      */
     public static final int VERIFY_CODE_TYPE_4_CHANGE_PHONE = 4;
+
+    /**
+     * 验证码类型 5 其他
+     */
+    public static final int VERIFY_CODE_TYPE_5 = 5;
 
     /**
      * 验证码登录
@@ -196,7 +211,7 @@ public class Constant {
 
 
     public static final int PAY_INFO_ESTORE = 0;
-    public static final int PAY_INFO_ESTORE_BILLS = 1;
+    public static final int PAY_INFO_BILLS = 1;
     public static final int PAY_INFO_FOOD = 2;
     public static final int PAY_INFO_TAKEAWAY = 3;
     public static final int PAY_INFO_HOTEL = 4;
@@ -221,6 +236,7 @@ public class Constant {
     public static final String PARAM_AREA_ID = "param_area_id";
     public static final String PARAM_AREA_NAME = "param_area_name";
     public static final String PARAM_HIDE_CURRENT_LOCATION = "param_hide_current_location";
+    public static final String PARAM_REFUND_CHANNEL_NAME = "param_refund_channel_name";
 
 
 }

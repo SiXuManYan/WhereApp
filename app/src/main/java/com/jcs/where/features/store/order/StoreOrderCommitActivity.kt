@@ -2,7 +2,6 @@ package com.jcs.where.features.store.order
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,7 +16,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressActivity
-import com.jcs.where.features.store.pay.StorePayActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_order_commit.*
@@ -113,7 +112,7 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 
     override fun bindListener() {
         address_ll.setOnClickListener {
-            searchLauncher.launch(Intent(this, AddressActivity::class.java).putExtra(Constant.PARAM_HANDLE_ADDRESS_SELECT, true))
+            searchLauncher.launch(Intent(this, AddressActivity::class.java).putExtra(Constant.PARAM_HANDLE_SELECT, true))
         }
 
         submit_tv.setOnClickListener {
@@ -145,11 +144,13 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
             orderIds.add(it.id)
         }
 
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-            putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())
-            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
-        })
+//        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+//            putDouble(Constant.PARAM_TOTAL_PRICE, response.total_price.toDouble())
+//            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
+//        })
+
+        WebPayActivity.navigation(this, Constant.PAY_INFO_ESTORE, orderIds)
     }
 
 

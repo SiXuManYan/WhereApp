@@ -17,6 +17,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.batch.BatchCommentActivity
 import com.jcs.where.features.mall.detail.MallDetailActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -116,8 +117,8 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         // 支付信息
         if (data.order_status != 1 && data.order_status != 6) {
             pay_way_tv.text = data.pay_channel
-            payment_name_tv.text = getString(R.string.payment_name_format, data.bank_card_account)
-            payment_account_tv.text = getString(R.string.payment_account_format, data.bank_card_number)
+//            payment_name_tv.text = getString(R.string.payment_name_format, data.bank_card_account)
+//            payment_account_tv.text = getString(R.string.payment_account_format, data.bank_card_number)
             pay_container_ll.visibility = View.VISIBLE
         } else {
             pay_container_ll.visibility = View.GONE
@@ -263,11 +264,12 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
     private fun handlePay(orderId: Int, price: BigDecimal) {
         val orderIds = ArrayList<Int>()
         orderIds.add(orderId)
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+       /* startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
             putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
-        })
+            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
+        })*/
+        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, orderIds)
     }
 
 

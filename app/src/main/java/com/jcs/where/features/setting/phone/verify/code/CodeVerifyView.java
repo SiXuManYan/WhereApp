@@ -7,4 +7,6 @@ import com.jcs.where.api.network.BaseMvpView;
  */
 public interface CodeVerifyView extends BaseMvpView {
     void modifyPhoneSuccess();
+
+    void verified();
 }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:middleTitle="@string/bind_refund_bank_card"
+        app:middleTitleColor="@color/black_333333" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:text="@string/selected_bank"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_13" />
+
+
+    <TextView
+        android:id="@+id/select_bank_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_41"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/please_selected_bank_hint"
+        android:maxLines="1"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:textColor="@color/black_333333"
+        android:textColorHint="@color/grey_B5B5B5"
+        android:textSize="@dimen/sp_14"
+        app:drawableEndCompat="@mipmap/ic_setting_right" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5" />
+
+
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_16"
+        android:gravity="center_vertical"
+        android:text="@string/bank_account_name"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_13" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/user_name_et"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_41"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/edit_account_name_hint"
+        android:imeOptions="actionNext"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:inputType="text"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textColorHint="@color/grey_B5B5B5"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grey_F5F5F5" />
+
+
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_16"
+        android:gravity="center_vertical"
+        android:text="@string/payee_bank_card_number"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_13" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/bank_account_et"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_41"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/bank_account_number_hint"
+        android:imeOptions="actionDone"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:inputType="number"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textColorHint="@color/grey_B5B5B5"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="@dimen/dp_15"
+        android:background="@color/grey_F5F5F5" />
+
+
+
+
+    <TextView
+        android:id="@+id/next_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginTop="@dimen/dp_41"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@drawable/shape_blue_radius_25"
+        android:gravity="center"
+        android:text="@string/next"
+        android:alpha="0.5"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_17"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

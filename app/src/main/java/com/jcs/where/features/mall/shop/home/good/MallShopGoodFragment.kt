@@ -97,15 +97,13 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
                 shop_categoryId = mShopCategoryId
             }
         }
-
-    }
-
-    override fun loadOnVisible() {
         presenter.getMallList(goodRequest)
+
     }
 
 
     override fun bindData(data: MutableList<MallGood>, lastPage: Boolean) {
+        swipe_layout.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (mPage == Constant.DEFAULT_FIRST_PAGE) {
@@ -130,6 +128,14 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
     }
 
     override fun bindListener() {
+        swipe_layout.setOnRefreshListener {
+            goodRequest.apply {
+                page = Constant.DEFAULT_FIRST_PAGE
+                shopId = mShopId
+            }
+            presenter.getMallList(goodRequest)
+        }
+
         sales_tv.setOnClickListener {
             price_tv.setTextColor(ColorUtils.getColor(R.color.selector_gray666_blue))
             sales_tv.toggle()

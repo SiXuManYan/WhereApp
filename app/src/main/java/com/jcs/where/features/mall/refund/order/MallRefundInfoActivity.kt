@@ -137,7 +137,7 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
         complaint_tv.setOnClickListener {
             if (alreadyComplaint) {
                 ToastUtils.showShort(R.string.complained_success)
-            }else {
+            } else {
                 searchLauncher.launch(Intent(this, ComplaintActivity::class.java).putExtra(Constant.PARAM_ORDER_ID, goodOrderId))
             }
         }
@@ -182,7 +182,7 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
             amount_tv.text = getString(R.string.price_unit_format, it.refund_money)
             good_price_tv.text = getString(R.string.price_unit_format, it.goods_total)
             shop_offers_tv.text = getString(R.string.price_unit_format, it.shop_coupon_money)
-            platform_offers_tv.text = getString(R.string.price_unit_format, it.shop_coupon_money)
+            platform_offers_tv.text = getString(R.string.price_unit_format, it.order_coupon_money)
             refund_time_tv.text = it.refund_time
             refund_number_tv.text = it.serial_number
         }
@@ -212,6 +212,11 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
                 left_tv.visibility = View.VISIBLE
                 right_tv.visibility = View.VISIBLE
             }
+            8 -> {
+                bottom_container_rl.visibility = View.VISIBLE
+                left_tv.visibility = View.GONE
+                right_tv.visibility = View.VISIBLE
+            }
             else -> {
                 bottom_container_rl.visibility = View.GONE
             }
@@ -225,6 +230,31 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
         } else {
             complaint_tv.visibility = View.GONE
         }
+
+        // 退款方式
+        val refundMethod = response.remit_info
+        refundMethod?.let {
+            val bankChannel = BusinessUtils.isBankChannel(refundMethod.channel_name)
+            if (bankChannel) {
+                refund_name_tv.text = refundMethod.bank_all_name
+            } else {
+                refund_name_tv.text = refundMethod.channel_name
+            }
+            refund_user_name_tv.text = refundMethod.user_name
+            refund_account_tv.text = refundMethod.account
+            refund_method_ll.visibility = View.VISIBLE
+        }
+
+        // 退款失败
+        if (goodStatus == 8) {
+            fail_reason_rl.visibility = View.VISIBLE
+            reason_split_v.visibility = View.VISIBLE
+            fail_reason_tv.text = response.error_reason
+        } else {
+            logistics_container_ll.visibility = View.GONE
+            reason_split_v.visibility = View.GONE
+        }
+
 
     }
 

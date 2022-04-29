@@ -85,7 +85,6 @@ public class WebViewActivity extends BaseActivity {
 
         //mAgentWeb.getUrlLoader().loadUrl(getUrl());
 
-        long n = System.currentTimeMillis();
     }
 
     @Override

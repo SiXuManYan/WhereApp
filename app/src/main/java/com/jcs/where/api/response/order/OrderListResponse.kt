@@ -65,6 +65,8 @@ class OrderListResponse : MultiItemEntity {
     var num = 0
 
 
+    var pay_time  = 0L
+
 
     companion object {
         /**

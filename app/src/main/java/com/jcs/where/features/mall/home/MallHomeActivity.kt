@@ -93,7 +93,7 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
 
     override fun initData() {
         presenter = MallHomePresenter(this)
-        presenter.getFirstCategory(false)
+        presenter.getFirstCategory(true)
     }
 
     override fun bindListener() {
@@ -154,7 +154,6 @@ class MallHomeActivity : BaseMvpActivity<MallHomePresenter>(), MallHomeView {
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
         override fun getPageTitle(position: Int): CharSequence = firstCategory[position].name
-
 
         override fun getItem(position: Int): Fragment = MallHomeChildFragment().apply {
             targetFirstCategory = firstCategory[position]

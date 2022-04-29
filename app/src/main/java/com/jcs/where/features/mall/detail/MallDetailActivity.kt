@@ -12,6 +12,7 @@ import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
@@ -19,6 +20,8 @@ import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
+import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.comment.MallCommentActivity
@@ -27,12 +30,12 @@ import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.message.custom.CustomMessage
 import com.jcs.where.frames.common.Html5Url
-import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
-import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
+import com.just.agentweb.WebChromeClient
+import com.just.agentweb.WebViewClient
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
 
@@ -96,7 +99,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         initMedia()
         initComment()
+        initWeb()
     }
+
+
 
     private fun initComment() {
         mCommentAdapter = HotelCommentAdapter()
@@ -151,6 +157,18 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
     }
 
+
+
+    private var  mWebViewClient = object : WebViewClient(){
+    }
+
+    private var  mWebChromeClient = object : WebChromeClient(){
+
+    }
+
+    private fun initWeb() {
+
+    }
 
     override fun initData() {
         presenter = MallDetailPresenter(this)
@@ -247,6 +265,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             disPlayHtml(it)
         }
 
+//        jsweb.loadUrl(response.website)
 
         mSkuDialog.data = SkuDataSource().apply {
             main_image = response.main_image
@@ -270,11 +289,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                     putInt(Constant.PARAM_TYPE, 1)
                     putParcelable(Constant.PARAM_GOOD_DATA, customMessage)
                 })
-
-//                 RongIM.getInstance().startConversation(
-//                    this, Conversation.ConversationType.PRIVATE,
-//                    "7b416fe9-6bf4-439e-bd2d-c63542dd5ad5", response.mer_name, null
-//                )
             }
         }
 
@@ -286,7 +300,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
 
     private fun disPlayHtml(html: String) {
-        val imageGetter = ImageGetter(this, resources, html_tv)
+        val imageGetter = ImageGetter2(this, resources, html_tv)
         val styledText = fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY, imageGetter, null)
         html_tv.text = styledText
 
@@ -302,17 +316,21 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
     override fun onPause() {
+//        mAgentWeb.webLifeCycle.onPause()
         super.onPause()
         GSYVideoManager.onPause()
     }
 
     override fun onResume() {
+//        mAgentWeb.webLifeCycle.onResume()
         super.onResume()
         GSYVideoManager.onResume()
         presenter?.getCartCount()
     }
 
     override fun onDestroy() {
+
+//        mAgentWeb.webLifeCycle.onDestroy()
         super.onDestroy()
         GSYVideoManager.releaseAllVideos()
     }
@@ -336,6 +354,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             0
         }
         setLikeImage()
+        ToastUtils.showShort(R.string.success)
     }
 
     override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {
@@ -364,6 +383,13 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     override fun bindCartCount(nums: Int) {
         shopping_cart.setMessageCount(nums)
     }
+
+/*    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return if (mAgentWeb.handleKeyEvent(keyCode, event)) {
+            true
+        } else super.onKeyDown(keyCode, event)
+
+    }*/
 
 
 }

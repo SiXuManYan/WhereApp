@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -256,6 +257,7 @@ public class VerificationCodeView extends LinearLayout implements TextWatcher, V
         editText.addTextChangedListener(this);
         editText.setOnKeyListener(this);
         editText.setOnFocusChangeListener(this);
+        editText.setTypeface(null, Typeface.BOLD);
     }
 
     /**
@@ -285,11 +287,12 @@ public class VerificationCodeView extends LinearLayout implements TextWatcher, V
         return layoutParams;
     }
 
+    @SuppressLint("SoonBlockedPrivateApi")
     public void setEditTextCursorDrawable(EditText editText) {
         //修改光标的颜色（反射）
         if (cursorVisible) {
             try {
-                Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
+               Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
                 f.setAccessible(true);
                 f.set(editText, mCursorDrawable);
             } catch (Exception ignored) {

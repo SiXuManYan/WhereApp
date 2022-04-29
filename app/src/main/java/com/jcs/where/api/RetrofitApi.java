@@ -8,6 +8,7 @@ import com.jcs.where.api.request.CartDeleteRequest;
 import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelCollectionRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
+import com.jcs.where.api.request.IdRequest;
 import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.MallShopUnCollection;
 import com.jcs.where.api.request.SendCodeRequest;
@@ -32,6 +33,9 @@ import com.jcs.where.api.request.merchant.MerchantSettledPost;
 import com.jcs.where.api.request.message.MessageStatusRequest;
 import com.jcs.where.api.request.modify.ModifyPasswordRequest;
 import com.jcs.where.api.request.modify.ModifyPhoneRequest;
+import com.jcs.where.api.request.payment.PayStatus;
+import com.jcs.where.api.request.payment.PayUrl;
+import com.jcs.where.api.request.payment.PayUrlGet;
 import com.jcs.where.api.request.store.MallRefundModifyRequest;
 import com.jcs.where.api.request.store.MallRefundRequest;
 import com.jcs.where.api.request.store.StoreAddCart;
@@ -104,6 +108,9 @@ import com.jcs.where.api.response.mall.MallOrderDetail;
 import com.jcs.where.api.response.mall.MallRefundInfo;
 import com.jcs.where.api.response.mall.MallShopCategory;
 import com.jcs.where.api.response.mall.MallShopRecommend;
+import com.jcs.where.api.response.mall.RefundBankSelected;
+import com.jcs.where.api.response.mall.RefundBindRequest;
+import com.jcs.where.api.response.mall.RefundMethod;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
@@ -441,6 +448,7 @@ public interface RetrofitApi {
 
     /**
      * 获取验证码
+     * 发送类型（1：登录，2：注册，3：忘记密码，4：更换手机号，5:其他）
      */
     @POST("userapi/v2/mobile/auth/code")
     Observable<JcsResponse<JsonElement>> getVerifyCode(@Body SendCodeRequest sendCodeRequest);
@@ -1567,7 +1575,10 @@ public interface RetrofitApi {
      * 获取商城首页推荐商品
      */
     @GET("estoreapi/v2/goods/rand")
-    Observable<JcsResponse<ArrayList<MallGood>>> getMallRecommendGood(@Query("categoryId") int categoryId);
+    Observable<JcsResponse<PageResponse<MallGood>>> getMallRecommendGood(
+            @Query("version") int version,
+            @Query("page") int page,
+            @Query("categoryId") int categoryId);
 
 
     /**
@@ -1934,6 +1945,73 @@ public interface RetrofitApi {
      */
     @POST("estoreapi/v2/order/complaint")
     Observable<JcsResponse<JsonElement>> complaint(@Body ComplaintRequest batchComment);
+
+
+    /**
+     * 获取 web收银台url
+     */
+    @POST("commonapi/v2/payment")
+    Observable<JcsResponse<PayUrl>> getWebPayUrl(@Body PayUrlGet payUrlGet);
+
+
+    /**
+     * 获取 web 支付状态
+     */
+    @GET("commonapi/v2/order_status")
+    Observable<JcsResponse<PayStatus>> getPayStatus(
+            @Query("module") String module,
+            @Query("id") int orderId
+    );
+
+    /**
+     * 用户退款账号列表
+     */
+    @GET("commonapi/v2/account")
+    Observable<JcsResponse<ArrayList<RefundMethod>>> getRefundMethod();
+
+
+    /**
+     * 取消绑定支付方式
+     */
+    @HTTP(method = "DELETE", path = "commonapi/v2/unbundle", hasBody = true)
+    Observable<JcsResponse<JsonElement>> unbindRefundMethod(@Body IdRequest idRequest);
+
+
+    /**
+     * 获取 退款渠道
+     */
+    @GET("commonapi/v2/channel")
+    Observable<JcsResponse<ArrayList<String>>> getRefundChannel();
+
+    /**
+     * 获取 退款银行列表
+     */
+    @GET("commonapi/v2/bank")
+    Observable<JcsResponse<ArrayList<RefundBankSelected>>> getBankList();
+
+
+    /**
+     * 校验验证码
+     *
+     * @param type              1手机号 2 邮箱
+     * @param verification_code 验证码
+     * @param phone             手机号
+     * @param email             邮箱
+     */
+    @POST("userapi/v2/verify/code")
+    Observable<JcsResponse<JsonElement>> checkVerifyCode(
+            @Query("type") int type,
+            @Query("verification_code") String verification_code,
+            @Query("phone") @Nullable String phone,
+            @Query("email") @Nullable String email
+    );
+
+
+    /**
+     * 保存用户退款账户信息
+     */
+    @POST("commonapi/v2/remit_account")
+    Observable<JcsResponse<JsonElement>> bindRefundInfo(@Body RefundBindRequest request);
 
 
 }

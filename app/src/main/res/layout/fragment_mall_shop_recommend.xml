@@ -7,6 +7,11 @@
     android:orientation="vertical">
 
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content_rv"
         android:layout_width="match_parent"
@@ -17,5 +22,6 @@
         tools:itemCount="2"
         tools:listitem="@layout/item_mall_recommend" />
 
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

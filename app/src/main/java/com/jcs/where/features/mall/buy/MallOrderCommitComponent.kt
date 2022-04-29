@@ -324,7 +324,13 @@ class MallOrderCommitPresenter(private var view: MallOrderCommitView) : BaseMvpP
 
         val apply = MallOrderDefaultCoupon().apply {
             goods = getGoodsJsonString(data)
-            platform_coupon_id = currentPlatformCouponId
+
+            platform_coupon_id = if (currentPlatformCouponId == 0) {
+                null
+            } else {
+                currentPlatformCouponId
+            }
+
             isFirstRequest?.let {
                 status = if (isFirstRequest) {
                     null

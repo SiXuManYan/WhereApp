@@ -11,6 +11,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartAdapter
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_order_submit.*
@@ -81,11 +82,14 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
             orderIds.add(it.id)
         }
 
-        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-            putDouble(Constant.PARAM_TOTAL_PRICE, mTotalPrice.toDouble())
-            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
-        })
+//        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+//            putDouble(Constant.PARAM_TOTAL_PRICE, mTotalPrice.toDouble())
+//            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
+//        })
+        WebPayActivity.navigation(this, Constant.PAY_INFO_FOOD, orderIds)
+        finish()
+
         finish()
     }
 

@@ -160,12 +160,6 @@
 
 
         <activity
-            android:name=".utils.ImagePreviewActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
             android:name=".yellow_page.activity.YellowPageActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
@@ -529,8 +523,12 @@
         <activity android:name=".features.daily.scoe.ScoreActivity" />
         <activity android:name=".features.mall.home.MallHomeActivity" />
         <activity android:name=".features.mall.second.MallSecondActivity" />
-        <activity android:name=".features.mall.result.MallSearchResultActivity" />
-        <activity android:name=".features.mall.detail.MallDetailActivity" />
+        <activity android:name=".features.mall.result.MallSearchResultActivity"
+            android:windowSoftInputMode="stateHidden"
+            />
+        <activity
+            android:name=".features.mall.detail.MallDetailActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".features.mall.buy.MallOrderCommitActivity" />
         <activity android:name=".features.mall.cart.MallCartActivity" />
         <activity android:name=".features.mall.order.MallOrderDetailActivity" />
@@ -550,6 +548,14 @@
             android:name=".features.comment.batch.BatchCommentActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".features.mall.refund.complaint.ComplaintActivity" />
+        <activity android:name=".features.payment.WebPayActivity" />
+        <activity android:name=".features.payment.result.WebPayResultActivity" />
+        <activity android:name=".features.refund.method.RefundMethodActivity" />
+        <activity android:name=".features.refund.add.form.bank.child.BankListActivity" />
+        <activity android:name=".features.refund.add.form.bank.BankChannelFormActivity" />
+        <activity android:name=".features.refund.add.verify.RefundBindVerifyActivity" />
+        <activity android:name=".features.refund.add.form.third.ThirdChannelFormActivity" />
+        <activity android:name=".features.refund.add.channel.RefundChannelActivity" />
 
 
     </application>

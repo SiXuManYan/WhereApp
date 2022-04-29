@@ -15,6 +15,7 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
+import com.jcs.where.features.refund.method.RefundMethodActivity;
 import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
@@ -114,6 +115,9 @@ public class SettingActivity extends BaseActivity {
         });
         findViewById(R.id.about_rl).setOnClickListener(v -> {
             startActivity(AboutActivity.class);
+        });
+        findViewById(R.id.refund_rl).setOnClickListener(v -> {
+            startActivityAfterLogin(RefundMethodActivity.class);
         });
 
     }

@@ -18,6 +18,7 @@ import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayGoodDataAdapter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailPresenter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailView
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -171,11 +172,13 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
 
                     val orderIds = ArrayList<Int>()
                     orderIds.add(orderId)
-                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+              /*      startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
                         putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
                         putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
                         putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
-                    })
+                    })*/
+
+                    WebPayActivity.navigation(this, Constant.PAY_INFO_TAKEAWAY, orderIds)
 
                 }
             }

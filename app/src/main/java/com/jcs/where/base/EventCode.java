@@ -153,4 +153,9 @@ public class EventCode {
      */
     public static final int EVENT_SELECTED_SHOP_COUPON = 1035;
 
+    /**
+     * 退款方式添加成功
+     */
+    public static final int EVENT_REFUND_METHOD_ADD_SUCCESS = 1036;
+
 }

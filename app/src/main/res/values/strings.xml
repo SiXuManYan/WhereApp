@@ -906,6 +906,35 @@ Gentleman must let go</string>
 
     <string name="total_count_format">共%1$d件</string>
     <string name="application_time">申请时间</string>
-
-
+    <string name="success">成功</string>
+    <string name="collection_success">收藏成功</string>
+    <string name="cancel_collection_success">取消收藏成功</string>
+    <string name="order_time_out">支付超时</string>
+    <string name="payment_hint">如支付中断，请继续完成支付</string>
+    <string name="pay_error_title">支付异常</string>
+    <string name="pay_error_hint">请您退出重新发起支付</string>
+    <string name="bind_refund_method">绑定退款方式</string>
+    <string name="unbind">解绑</string>
+    <string name="add_refund_methods">添加退款方式</string>
+    <string name="refund_method_empty">暂无退款方式</string>
+    <string name="refund_method_empty_hint">请添加新退款方式</string>
+    <string name="refund_method">退款方式</string>
+    <string name="selected_refund_channel">选择退款渠道</string>
+    <string name="please_selected_channel">请选择退款渠道</string>
+    <string name="bind_refund_bank_card">绑定退款银行卡</string>
+    <string name="selected_bank"><font color='#FF0000'>*&#160;</font><font color='#666666'>选择银行</font></string>
+    <string name="please_selected_bank_hint">请选择银行</string>
+    <string name="edit_account_name_hint">请输入收款人姓名</string>
+    <string name="bank_account_name">收款人姓名</string>
+    <string name="payee_bank_card_number">收款人银行卡号</string>
+    <string name="bank_account_number_hint">请输入收款人银行卡号</string>
+    <string name="selected_bank_title">选择银行</string>
+    <string name="refund_method_add_success">退款方式添加成功</string>
+    <string name="unbind_refund_method_hint">确定解绑该退款方式？</string>
+    <string name="payee_account">收款人账号</string>
+    <string name="enter_account_number_hint">请输入收款人账号</string>
+    <string name="please_add_refund_methods">请选择退款方式</string>
+    <string name="refund_fail_desc">需要您再次发起售后退款，并再次确认退款方式。</string>
+    <string name="bind_refund_third_method">绑定退款渠道</string>
+    <string name="check_return">查看详情</string>
 </resources>

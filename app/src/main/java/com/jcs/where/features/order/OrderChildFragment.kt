@@ -70,6 +70,11 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             loadMoreModule.setOnLoadMoreListener(this@OrderChildFragment)
             setOnItemClickListener(this@OrderChildFragment)
             confirmReceipt = this@OrderChildFragment
+            orderTimeOut = object : OrderTimeOut {
+                override fun timeOutRefresh() {
+                    onRefresh()
+                }
+            }
         }
 
 

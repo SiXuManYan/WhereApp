@@ -2,8 +2,6 @@ package com.jcs.where.base;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,22 +9,16 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import com.jcs.where.BaseApplication;
+import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.features.account.login.LoginActivity;
-import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.CacheUtil;
-import com.jcs.where.utils.SPKey;
-import com.jcs.where.utils.ToastUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -154,7 +146,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showToast(String msg) {
-        ToastUtils.showLong(getContext(), msg);
+        ToastUtils.showShort(msg);
     }
 
     public void showComing() {
@@ -178,7 +170,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected void showNetError(ErrorResponse errorResponse) {
         if (errorResponse.getErrCode() != 401) {
-//            ToastUtils.showLong(getContext(), getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
             Log.e("BaseFragment", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
         }
     }

@@ -59,7 +59,7 @@ class StorePayResultActivity : BaseActivity() {
                     putInt(Constant.PARAM_TAB, 2)
                 })
             }
-            if (useType == Constant.PAY_INFO_ESTORE_BILLS) {
+            if (useType == Constant.PAY_INFO_BILLS) {
                 startActivityClearTop(PaymentRecordActivity::class.java, null)
             }
             finish()

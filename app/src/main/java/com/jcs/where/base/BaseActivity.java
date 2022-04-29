@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -21,7 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
@@ -29,8 +28,6 @@ import com.jcs.where.base.dialog.LoadingDialog;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.LocalLanguageUtil;
-import com.jcs.where.utils.SPKey;
-import com.jcs.where.utils.ToastUtils;
 import com.jcs.where.widget.JcsTitle;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,8 +37,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected JcsTitle mJcsTitle;
     private boolean mIsHasStatusBarColor = true;
-//    private CustomProgressDialog mProgressDialog;
-    private LoadingDialog loadingDialog ;
+    //    private CustomProgressDialog mProgressDialog;
+    private LoadingDialog loadingDialog;
 
 
     @Override
@@ -63,16 +60,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         mJcsTitle = findViewById(R.id.jcsTitle);
         if (mJcsTitle != null) {
             setMarginTopForStatusBar(mJcsTitle);
-            mJcsTitle.setBackIvClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                    afterJcsBack();
-                }
+            mJcsTitle.setBackIvClickListener(view -> {
+                finish();
+                afterJcsBack();
             });
         }
         View view = findViewById(R.id.back_iv);
-        if (view!=null) {
+        if (view != null) {
             view.setOnClickListener(v -> finish());
         }
         initView();
@@ -225,7 +219,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void showNetError(ErrorResponse errorResponse) {
         if (errorResponse.getErrCode() != 401) {
-//            ToastUtils.showLong(this, getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
             Log.e("BaseActivity", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
         }
     }
@@ -249,9 +242,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        }
     }
 
-    protected void showLoadingDialog(){
+    protected void showLoadingDialog() {
         dismissLoadingDialog();
-        loadingDialog = new  LoadingDialog.Builder(this).setCancelable(true).create();
+        loadingDialog = new LoadingDialog.Builder(this).setCancelable(true).create();
         loadingDialog.show();
     }
 
@@ -273,7 +266,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected void showToast(String msg) {
-        ToastUtils.showLong(this, msg);
+        ToastUtils.showLong(msg);
     }
 
     public void showComing() {
@@ -310,8 +303,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocalLanguageUtil.getInstance().setLocal(newBase));
     }
-
-
 
 
     protected final void startActivity(@NotNull Class<?> target) {
@@ -362,7 +353,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected final void startActivityAfterLogin(@NotNull Class<?> target,  Bundle bundle) {
+    protected final void startActivityAfterLogin(@NotNull Class<?> target, Bundle bundle) {
         String token = CacheUtil.getToken();
         if (TextUtils.isEmpty(token)) {
             startActivity(LoginActivity.class);
@@ -430,7 +421,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (loadingDialog!=null) {
+        if (loadingDialog != null) {
             if (loadingDialog.isShowing()) {
                 loadingDialog.dismiss();
             }

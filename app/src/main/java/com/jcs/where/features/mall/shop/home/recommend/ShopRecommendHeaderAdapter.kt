@@ -73,7 +73,9 @@ class ShopRecommendHeaderAdapter : BaseMultiItemQuickAdapter<ShopRecommend, Base
 
         })
 
-        PagerSnapHelper().attachToRecyclerView(media_rv)
+        val pagerSnapHelper = PagerSnapHelper()
+        media_rv.onFlingListener = null
+        pagerSnapHelper.attachToRecyclerView(media_rv)
 
         mMediaAdapter.setNewInstance(item.recommend)
         point_view.setPointCount(item.recommend.size)

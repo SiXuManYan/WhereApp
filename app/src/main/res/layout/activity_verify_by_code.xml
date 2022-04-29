@@ -42,8 +42,8 @@
     <com.jcs.where.widget.verify.VerificationCodeView
         android:id="@+id/captcha_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_56"
-        android:layout_marginTop="@dimen/dp_42"
+        android:layout_height="@dimen/dp_84"
+        android:layout_marginTop="@dimen/dp_24"
         android:gravity="center"
         android:orientation="horizontal"
         app:vcv_et_bg="@drawable/et_login_code_2"
@@ -52,8 +52,8 @@
         app:vcv_et_inputType="number"
         app:vcv_et_number="4"
         app:vcv_et_text_color="@color/black_333333"
-        app:vcv_et_text_size="@dimen/sp_6"
-        app:vcv_et_width="@dimen/dp_56" />
+        app:vcv_et_text_size="@dimen/sp_9"
+        app:vcv_et_width="@dimen/dp_84" />
 
 
     <TextView

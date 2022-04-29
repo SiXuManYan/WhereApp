@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
@@ -29,6 +30,7 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
@@ -57,6 +59,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
     /** mall 商城确认收货 */
     var confirmReceipt: ConfirmReceipt? = null
+
+    /** 订单超时，刷新列表 */
+    var orderTimeOut: OrderTimeOut? = null
 
 
     override fun convert(holder: BaseViewHolder, item: OrderListResponse) {
@@ -130,13 +135,22 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.text = StringUtils.getString(R.string.to_pay_2)
                 right_tv.setOnClickListener {
                     // 立即支付
-                    val orderIds = ArrayList<Int>()
-                    orderIds.add(item.id)
-                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
-                    })
+                    val payTime = item.pay_time * 1000
+                    if (System.currentTimeMillis() <= payTime) {
+                        val orderIds = ArrayList<Int>()
+                        orderIds.add(item.id)
+              /*          startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
+                        })*/
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_HOTEL, orderIds)
+                    } else {
+                        ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
+                    }
+
+
                 }
             }
             5 -> {
@@ -212,13 +226,23 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
                 right_tv.setOnClickListener {
                     // 立即支付
-                    val orderIds = ArrayList<Int>()
-                    orderIds.add(item.id)
-                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
-                    })
+                    val payTime = item.pay_time * 1000
+                    if (System.currentTimeMillis() <= payTime) {
+                        val orderIds = ArrayList<Int>()
+                        orderIds.add(item.id)
+//                        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+//                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
+//                        })
+
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_FOOD, orderIds)
+
+                    } else {
+                        ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
+                    }
+
                 }
             }
 
@@ -291,14 +315,24 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.text = StringUtils.getString(R.string.to_pay_2)
 
                 right_tv.setOnClickListener {
+
                     // 立即支付
-                    val orderIds = ArrayList<Int>()
-                    orderIds.add(item.id)
-                    startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
-                    })
+                    val payTime = item.pay_time * 1000
+                    if (System.currentTimeMillis() <= payTime) {
+                        val orderIds = ArrayList<Int>()
+                        orderIds.add(item.id)
+//                        startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+//                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
+//                        })
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_TAKEAWAY, orderIds)
+                    } else {
+                        ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
+                    }
+
+
                 }
             }
 
@@ -383,11 +417,12 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 right_tv.setOnClickListener {
                     val orderIds = ArrayList<Int>()
                     orderIds.add(item.id)
-                    startActivity(StorePayActivity::class.java, Bundle().apply {
-                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
-                    })
+//                    startActivity(StorePayActivity::class.java, Bundle().apply {
+//                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
+//                    })
+                    WebPayActivity.navigation(context, Constant.PAY_INFO_ESTORE, orderIds)
                 }
             }
             5 -> {
@@ -478,19 +513,35 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         // 底部
         val right_tv = holder.getView<TextView>(R.id.right_tv)
+        /**
+         * 订单状态，
+         *
+         * 订单状态，
+         * 自提时：（1：待付款，2：支付审核中，           4：待使用，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10：退款审核中（商家），11:商家待收货，12：商家拒绝退货，13交易关闭），
+         * 配送时：（1：待付款，2：支付审核中，3：待发货，4：待收货，5：交易成功，6：订单取消（未支付时取消），7：交易关闭，8：退款中，9：退款成功，10:退款审核中（商家），11：商家待收货，12：商家拒绝退货，13交易关闭）
+         *
+         * */
         when (modelData.order_status) {
             1 -> {
                 right_tv.text = context.getString(R.string.to_pay_2)
                 right_tv.visibility = View.VISIBLE
 
                 right_tv.setOnClickListener {
-                    val orderIds = ArrayList<Int>()
-                    orderIds.add(item.id)
-                    startActivity(StorePayActivity::class.java, Bundle().apply {
-                        putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
-                    })
+                    val payTime = item.pay_time * 1000
+                    if (System.currentTimeMillis() <= payTime) {
+                        val orderIds = ArrayList<Int>()
+                        orderIds.add(item.id)
+//                        startActivity(StorePayActivity::class.java, Bundle().apply {
+//                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+//                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+//                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
+//                        })
+                        WebPayActivity.navigation(context, Constant.PAY_INFO_MALL, orderIds)
+                    } else {
+                        ToastUtils.showShort(R.string.order_time_out)
+                        orderTimeOut?.timeOutRefresh()
+                    }
+
                 }
             }
             4 -> {
@@ -583,6 +634,10 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
 interface ConfirmReceipt {
     fun onConfirmReceiptClick(orderId: Int)
+}
+
+interface OrderTimeOut {
+    fun timeOutRefresh()
 }
 
 

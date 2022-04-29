@@ -25,11 +25,6 @@ public class SendCodeRequest {
     @SerializedName("country_code")
     public String countryCode;
 
-    public final int TYPE_LOGIN = 1;
-    public final int TYPE_REGISTER = 2;
-    public final int TYPE_FORGET_PASSWORD = 3;
-    public final int TYPE_CHANGE_PHONE_NUMBER = 4;
-
     public String getPhone() {
         return phone;
     }

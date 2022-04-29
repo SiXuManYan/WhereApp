@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.request.MallShop
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -128,11 +129,14 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
     }
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
-        collectStatus = if (collectionStatus) {
-            1
+        if (collectionStatus) {
+            collectStatus =  1
+            ToastUtils.showShort(R.string.collection_success)
         } else {
-            0
+            collectStatus =  0
+            ToastUtils.showShort(R.string.cancel_collection_success)
         }
+
         setLikeImage()
     }
 

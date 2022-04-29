@@ -98,6 +98,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <View
+        android:id="@+id/bottom_v"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_4"
         android:layout_above="@+id/bottom_rl"

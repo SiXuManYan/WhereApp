@@ -9,7 +9,7 @@
 
     </item>
 
-    <item android:bottom="@dimen/dp_1">
+    <item android:bottom="1px">
         <shape >
             <solid android:color="@color/white" />
         </shape>

@@ -302,7 +302,7 @@ public class JcsCalendarDialog extends BaseBottomDialog {
                 tempYear = start.get(Calendar.YEAR);
                 CalendarBean header = new CalendarBean();
                 header.setShowYearMonthDate(mYearMonthSF.format(start.getTime()));
-                header.setHeader(true);
+                header.setMIsHeader(true);
                 mBeans.add(header);
 
                 int dayOfWeek = start.get(Calendar.DAY_OF_WEEK);

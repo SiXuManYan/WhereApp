@@ -43,7 +43,7 @@ object BusinessUtils {
 
     /**
      * 美食订单状态文案
-     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功）
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功 9-商家审核中 10-拒绝售后 11-退款失败）
      */
     fun getDelicacyOrderStatusText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.store_status_1)
@@ -54,8 +54,26 @@ object BusinessUtils {
         6 -> StringUtils.getString(R.string.store_status_5)
         7 -> StringUtils.getString(R.string.store_status_8)
         8 -> StringUtils.getString(R.string.store_status_9)
+        9 -> StringUtils.getString(R.string.under_review)
+        10 -> StringUtils.getString(R.string.refuses_to_return)
+        11 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
     }
+
+    /**
+     * 美食描述文案
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功 9-商家审核中 10-拒绝售后 11-退款失败）
+     */
+    fun getDelicacyOrderStatusDesc(status: Int): String = when (status) {
+        4 -> StringUtils.getString(R.string.store_status_desc_13)
+        7 -> StringUtils.getString(R.string.store_status_desc_8)
+        8 -> StringUtils.getString(R.string.store_status_desc_9)
+        9 -> StringUtils.getString(R.string.store_status_desc_10)
+        10 -> StringUtils.getString(R.string.store_status_desc_12)
+        11 -> StringUtils.getString(R.string.refund_fail_desc)
+        else -> StringUtils.getString(R.string.line_split)
+    }
+
 
     /**
      * 外卖订单状态文案
@@ -269,7 +287,7 @@ object BusinessUtils {
         4 -> StringUtils.getString(R.string.store_status_desc_12)
         5 -> StringUtils.getString(R.string.store_status_desc_8)
         6 -> StringUtils.getString(R.string.store_status_desc_9)
-        8->StringUtils.getString(R.string.refund_fail_desc)
+        8 -> StringUtils.getString(R.string.refund_fail_desc)
         else -> ""
     }
 

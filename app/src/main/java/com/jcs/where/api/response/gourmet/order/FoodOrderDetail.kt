@@ -47,7 +47,10 @@ data class OrderData(
         var coupon_qr_code: String,
 
         /** 评论状态（1：未评论，2：已评论） */
-        var comment_status: Int = 0
+        var comment_status: Int = 0,
+
+        /** 退款失败原因 */
+        var error_reason:String = ""
 
 )
 

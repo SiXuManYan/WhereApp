@@ -924,4 +924,7 @@ Gentleman must let go</string>
     <string name="refund_fail_desc">You need to initiate a post-sale refund again and confirm the refund method again.</string>
     <string name="bind_refund_third_method">Bind the Refund Channel</string>
     <string name="check_return">Check Return</string>
+    <string name="order_code_information">Coupon code information</string>
+    <string name="refund_information">Refund Info</string>
+    <string name="apply_again">Apply Again</string>
 </resources>

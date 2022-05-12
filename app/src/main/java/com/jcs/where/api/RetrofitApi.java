@@ -98,6 +98,7 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.hydropower.PaymentRecord;
+import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallCommentCount;
@@ -2025,5 +2026,16 @@ public interface RetrofitApi {
             @Body RemitId request
     );
 
+
+
+    /**
+     * 获取 美食外卖退款信息详情
+     * @param type 1美食 2外卖
+     */
+    @GET("restaurantapi/v2/refunds/{order_id}")
+    Observable<JcsResponse<FoodRefundInfo>> getFoodRefundInfo(
+            @Path("order_id") int order_id,
+            @Query("type") int type
+    );
 
 }

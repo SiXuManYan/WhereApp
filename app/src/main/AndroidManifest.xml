@@ -557,6 +557,7 @@
         <activity android:name=".features.refund.add.form.third.ThirdChannelFormActivity" />
         <activity android:name=".features.refund.add.channel.RefundChannelActivity" />
         <activity android:name=".features.gourmet.refund.ComplexRefundActivity" />
+        <activity android:name=".features.gourmet.refund.detail.FoodRefundInfoActivity" />
 
 
     </application>

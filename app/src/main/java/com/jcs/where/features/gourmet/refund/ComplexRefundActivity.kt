@@ -47,7 +47,7 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
                 putString(Constant.PARAM_REFUND_PRICE, refundPrice)
                 putString(Constant.PARAM_TOTAL_PRICE, totalPrice)
             }
-            val intent = Intent(context, MallRefundEditActivity::class.java)
+            val intent = Intent(context, ComplexRefundActivity::class.java)
                 .putExtras(bundle)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 

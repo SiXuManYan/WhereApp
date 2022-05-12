@@ -83,3 +83,23 @@ class RefundBindRequest {
 class RemitId{
     var remit_id = 0
 }
+
+class FoodRefundInfo {
+
+    companion object {
+        var TYPE_FOOD = 1
+        var TYPE_TAKEAWAY = 2
+    }
+
+    var price = ""
+    var total_price = ""
+    var cancel_time = ""
+
+    /**
+     * 退款账户详情
+     */
+    var remit_info :RefundMethod? = null
+
+
+
+}

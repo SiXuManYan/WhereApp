@@ -20,6 +20,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
+import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoActivity
 import com.jcs.where.features.mall.refund.complaint.ComplaintActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.BusinessUtils
@@ -27,6 +28,7 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_delicacy_order_detail.*
 import org.greenrobot.eventbus.EventBus
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/7/23 15:59.
@@ -95,7 +97,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
             } else {
                 val intent = Intent(this, ComplaintActivity::class.java)
                     .putExtra(Constant.PARAM_ORDER_ID, orderId)
-                    .putExtra(Constant.PARAM_TYPE , ComplaintRequest.TYPE_MALL)
+                    .putExtra(Constant.PARAM_TYPE, ComplaintRequest.TYPE_MALL)
                 searchLauncher.launch(intent)
             }
         }
@@ -220,7 +222,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     visibility = View.GONE
                 }
                 left_tv.setOnClickListener {
-                    ComplexRefundActivity.navigation(this, orderId, orderData.refund_price, price.toPlainString())
+                    doRefund(price)
                 }
             }
             6 -> {
@@ -253,7 +255,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     text = StringUtils.getString(R.string.refund_information)
                     setOnClickListener {
                         // 查看退款信息
-
+                        viewRefundInfo()
                     }
                 }
                 right_tv.visibility = View.GONE
@@ -264,7 +266,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     text = StringUtils.getString(R.string.refund_information)
                     setOnClickListener {
                         // 查看退款信息
-
+                        viewRefundInfo()
                     }
                 }
                 right_tv.apply {
@@ -272,7 +274,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     text = StringUtils.getString(R.string.apply_again)
                     setOnClickListener {
                         // 再次申请
-                        ComplexRefundActivity.navigation(this@DelicacyOrderDetailActivity, orderId, orderData.refund_price, price.toPlainString())
+                        doRefund(price)
                     }
                 }
             }
@@ -284,6 +286,12 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
 
 
     }
+
+    private fun doRefund(price: BigDecimal) {
+        ComplexRefundActivity.navigation(this, orderId, price.toPlainString(), price.toPlainString())
+    }
+
+    private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, orderId, FoodRefundInfoActivity.TYPE_FOOD)
 
     override fun cancelSuccess() {
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))

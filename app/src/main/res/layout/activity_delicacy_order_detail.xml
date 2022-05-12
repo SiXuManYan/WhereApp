@@ -459,12 +459,14 @@
                     tools:text="asdasdOJOIAJDOJIO" />
 
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_16"
+                    android:background="@color/grey_F5F5F5" />
+
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_16"
-                android:background="@color/grey_F5F5F5" />
+
 
             <TextView
                 android:id="@+id/business_name_tv"
@@ -595,10 +597,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_10"
-                android:background="@drawable/shape_orange_radius_14"
+                android:background="@drawable/stock_orange_radius_14"
                 android:gravity="center"
                 android:minWidth="@dimen/dp_149"
-                android:textColor="@color/white"
+                android:textColor="@color/orange_FF5837"
                 android:textSize="@dimen/sp_14"
                 android:visibility="gone"
                 tools:text="@string/to_pay_2"

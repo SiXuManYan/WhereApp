@@ -1,37 +1,44 @@
 package com.jcs.where.features.gourmet.takeaway.order2
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.*
 import com.jcs.where.R
+import com.jcs.where.api.request.hotel.ComplaintRequest
 import com.jcs.where.api.response.gourmet.order.TakeawayOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
+import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
+import com.jcs.where.features.gourmet.refund.ComplexRefundPresenter
+import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoActivity
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayGoodDataAdapter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailPresenter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailView
+import com.jcs.where.features.mall.refund.complaint.ComplaintActivity
 import com.jcs.where.features.payment.WebPayActivity
-import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_takeaway_order_detail_2.*
 import org.greenrobot.eventbus.EventBus
+import java.math.BigDecimal
 
 
 /**
  * Created by Wangsw  2021/7/28 16:12.
  * 美食外卖模块订单详情
  */
-class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresenter>(), TakeawayOrderDetailView {
+class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter>(), TakeawayOrderDetailView {
 
     private var orderId = 0;
     private var contactNumber = "";
@@ -39,8 +46,17 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
     private var restaurantName = "";
     private lateinit var mAdapter: TakeawayGoodDataAdapter
     private var tel = ""
+    private var alreadyComplaint = false
 
     override fun getLayoutId() = R.layout.activity_takeaway_order_detail_2
+
+    /** 处理申诉 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            alreadyComplaint = true
+            ToastUtils.showShort(R.string.complained_success)
+        }
+    }
 
     override fun isStatusDark() = true
 
@@ -93,6 +109,18 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
             }
             BusinessUtils.startRongCloudConversationActivity(this, merUuid, restaurantName)
         }
+        complaint_tv.setOnClickListener {
+            // 投诉
+            if (alreadyComplaint) {
+                ToastUtils.showShort(R.string.complained_success)
+            } else {
+                val intent = Intent(this, ComplaintActivity::class.java)
+                    .putExtra(Constant.PARAM_ORDER_ID, orderId)
+                    .putExtra(Constant.PARAM_TYPE, ComplaintRequest.TYPE_FOOD_TAKEAWAY)
+                searchLauncher.launch(intent)
+            }
+        }
+
     }
 
     override fun bindDetail(it: TakeawayOrderDetail) {
@@ -105,8 +133,10 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         tel = restaurantData.tel
 
 
-        //
-        status_tv.text = BusinessUtils.getTakeawayStatusText(orderData.status)
+        /** 1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功 11-商家审核中 12-拒绝售后 13-退款失败 */
+        val status = orderData.status
+        status_tv.text = BusinessUtils.getTakeawayStatusText(status)
+        status_desc_tv.text = BusinessUtils.getTakeawayOrderStatusDesc(status)
 
         price_tv.text = getString(R.string.price_unit_format, orderData.price.toPlainString())
         order_number_tv.text = orderData.trade_no
@@ -125,11 +155,9 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         contact_name_tv.text = getString(R.string.address_name_format, contactName, contactNumber)
 
 
-        if (orderData.status != 1 && orderData.status != 3) {
+        if (status != 1 && status != 3) {
             payment_container_ll.visibility = View.VISIBLE
             pay_way_tv.text = paymentChannel.payment_channel
-            payment_name_tv.text = getString(R.string.payment_name_format, paymentChannel.bank_card_account)
-            payment_account_tv.text = getString(R.string.payment_account_format, paymentChannel.bank_card_account)
         } else {
             payment_container_ll.visibility = View.GONE
 
@@ -144,7 +172,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
 
         val price = orderData.price
         // 处理底部
-        when (orderData.status) {
+        when (status) {
             1 -> {
                 bottom_container_rl.visibility = View.VISIBLE
                 left_tv.apply {
@@ -168,15 +196,13 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
 
                 }
                 right_tv.setOnClickListener {
-
-
                     val orderIds = ArrayList<Int>()
                     orderIds.add(orderId)
-              /*      startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-                        putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
-                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
-                    })*/
+                    /*      startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                              putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
+                              putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                              putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
+                          })*/
 
                     WebPayActivity.navigation(this, Constant.PAY_INFO_TAKEAWAY, orderIds)
 
@@ -192,15 +218,7 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                     visibility = View.GONE
                 }
                 left_tv.setOnClickListener {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.prompt)
-                        .setMessage(R.string.delicacy_return_hint)
-                        .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-                            presenter.refundOrder(orderId)
-                            dialogInterface.dismiss()
-                        }
-                        .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
-                        .create().show()
+                    doRefund(price)
                 }
             }
             8 -> {
@@ -225,36 +243,61 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
                     bottom_container_rl.visibility = View.GONE
                 }
             }
+            9, 11, 12 -> {
+                left_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.refund_information)
+                    setOnClickListener {
+                        // 查看退款信息
+                        viewRefundInfo()
+                    }
+                }
+                right_tv.visibility = View.GONE
+            }
+            13 -> {
+                left_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.refund_information)
+                    setOnClickListener {
+                        // 查看退款信息
+                        viewRefundInfo()
+                    }
+                }
+                right_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.apply_again)
+                    setOnClickListener {
+                        // 再次申请
+                        doRefund(price)
+                    }
+                }
+            }
             else -> {
                 bottom_container_rl.visibility = View.GONE
             }
         }
         bottom_v.visibility = bottom_container_rl.visibility
-        // 处理状态描述文案
-        when (orderData.status) {
-            4 -> {
-                status_desc_tv.apply {
-                    visibility = View.VISIBLE
-                    text = getString(R.string.store_status_desc_13)
-                }
-            }
-            9 -> {
-                status_desc_tv.apply {
-                    visibility = View.VISIBLE
-                    text = getString(R.string.store_status_desc_8)
-                }
-            }
-            10 -> {
-                status_desc_tv.apply {
-                    visibility = View.VISIBLE
-                    text = getString(R.string.store_status_desc_9)
-                }
-            }
-            else -> {
-                status_desc_tv.visibility = View.GONE
-            }
+
+        order_code_information.text = orderData.coupon_no
+
+        // 投诉
+        if (status == 12) {
+            service_iv.visibility = View.GONE
+            complaint_tv.visibility = View.VISIBLE
+        } else {
+            service_iv.visibility = View.VISIBLE
+            complaint_tv.visibility = View.GONE
         }
 
+        // 退款失败
+        if (status == 12) {
+            fail_reason_rl.visibility = View.VISIBLE
+            reason_split_v.visibility = View.VISIBLE
+            fail_reason_tv.text = orderData.error_reason
+        } else {
+            fail_reason_rl.visibility = View.GONE
+            reason_split_v.visibility = View.GONE
+        }
 
     }
 
@@ -269,11 +312,16 @@ class TakeawayOrderDetailActivity2 : BaseMvpActivity<TakeawayOrderDetailPresente
         presenter.getDetail(orderId)
     }
 
-//    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-//        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
-//            finish()
-//        }
-//    }
+
+    private fun doRefund(price: BigDecimal) {
+        ComplexRefundActivity.navigation(this,
+            orderId,
+            price.toPlainString(),
+            price.toPlainString(),
+            ComplexRefundPresenter.TYPE_TAKEAWAY)
+    }
+
+    private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, orderId, FoodRefundInfoActivity.TYPE_TAKEAWAY)
 
 
 }

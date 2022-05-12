@@ -77,7 +77,9 @@ object BusinessUtils {
 
     /**
      * 外卖订单状态文案
-     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功）
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功
+     *        11-商家审核中 12-拒绝售后 13-退款失败
+     * ）
      */
     fun getTakeawayStatusText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.store_status_1)
@@ -90,7 +92,25 @@ object BusinessUtils {
         8 -> StringUtils.getString(R.string.store_status_5)
         9 -> StringUtils.getString(R.string.store_status_8)
         10 -> StringUtils.getString(R.string.store_status_9)
+        11 -> StringUtils.getString(R.string.under_review)
+        12 -> StringUtils.getString(R.string.refuses_to_return)
+        13 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
+    }
+
+
+    /**
+     * 外卖描述文案
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功 11-商家审核中 12-拒绝售后 13-退款失败
+     */
+    fun getTakeawayOrderStatusDesc(status: Int): String = when (status) {
+        4 -> StringUtils.getString(R.string.store_status_desc_13)
+        9 -> StringUtils.getString(R.string.store_status_desc_8)
+        10 -> StringUtils.getString(R.string.store_status_desc_9)
+        11 -> StringUtils.getString(R.string.store_status_desc_10)
+        12 -> StringUtils.getString(R.string.store_status_desc_12)
+        13 -> StringUtils.getString(R.string.refund_fail_desc)
+        else -> StringUtils.getString(R.string.line_split)
     }
 
 

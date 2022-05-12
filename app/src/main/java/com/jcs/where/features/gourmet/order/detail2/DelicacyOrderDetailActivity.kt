@@ -97,7 +97,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
             } else {
                 val intent = Intent(this, ComplaintActivity::class.java)
                     .putExtra(Constant.PARAM_ORDER_ID, orderId)
-                    .putExtra(Constant.PARAM_TYPE, ComplaintRequest.TYPE_MALL)
+                    .putExtra(Constant.PARAM_TYPE, ComplaintRequest.TYPE_FOOD)
                 searchLauncher.launch(intent)
             }
         }

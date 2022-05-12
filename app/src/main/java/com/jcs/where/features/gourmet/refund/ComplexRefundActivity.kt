@@ -13,7 +13,6 @@ import com.jcs.where.api.response.mall.RefundMethod
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.mall.refund.MallRefundEditActivity
 import com.jcs.where.features.refund.method.RefundMethodActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -33,6 +32,9 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
     /** 打款id */
     private var remitId = 0
 
+    /** 0美食 1外卖 */
+    private var type = 0
+
 
     override fun isStatusDark() = true
 
@@ -40,12 +42,13 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
 
     companion object {
 
-        fun navigation(context: Context, orderId: Int, refundPrice: String, totalPrice: String) {
+        fun navigation(context: Context, orderId: Int, refundPrice: String, totalPrice: String, useType: Int = ComplexRefundPresenter.TYPE_FOOD) {
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ORDER_ID, orderId)
                 putString(Constant.PARAM_REFUND_PRICE, refundPrice)
                 putString(Constant.PARAM_TOTAL_PRICE, totalPrice)
+                putInt(Constant.PARAM_TYPE, useType)
             }
             val intent = Intent(context, ComplexRefundActivity::class.java)
                 .putExtras(bundle)
@@ -78,17 +81,19 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
     private fun initExtra() {
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
+            type = it.getInt(Constant.PARAM_TYPE, 0)
+
             val refundPrice = it.getString(Constant.PARAM_REFUND_PRICE, "")
             val totalPrice = it.getString(Constant.PARAM_TOTAL_PRICE, "")
 
-            refund_price_tv.text = StringUtils.getString(R.string.price_unit_format , refundPrice)
-            total_price_tv.text = StringUtils.getString(R.string.price_unit_format , totalPrice)
+            refund_price_tv.text = StringUtils.getString(R.string.price_unit_format, refundPrice)
+            total_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalPrice)
 
         }
     }
 
     override fun initData() {
-       presenter = ComplexRefundPresenter(this)
+        presenter = ComplexRefundPresenter(this)
     }
 
     override fun bindListener() {
@@ -102,7 +107,7 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
                 ToastUtils.showShort(R.string.please_add_refund_methods)
                 return@setOnClickListener
             }
-            presenter.refundOrder(orderId,remitId)
+            presenter.refundOrder(orderId, remitId, type)
         }
     }
 

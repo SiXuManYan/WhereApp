@@ -27,11 +27,19 @@ data class TakeawayOrderData(
         var packing_charges: BigDecimal =BigDecimal.ZERO,
         var price: BigDecimal = BigDecimal.ZERO,
 
-        /** 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功）	 */
+        /** 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功   11-商家审核中 12-拒绝售后 13-退款失败	 */
         var status: Int,
 
         /** 评论状态（1：未评论，2：已评论） */
-        var comment_status: Int = 0
+        var comment_status: Int = 0,
+
+
+
+        /** 退款失败原因 */
+        var error_reason: String = "",
+
+        /** 券码号 */
+        var coupon_no: String,
 
 )
 

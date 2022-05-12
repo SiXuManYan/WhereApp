@@ -927,4 +927,5 @@ Gentleman must let go</string>
     <string name="order_code_information">Coupon code information</string>
     <string name="refund_information">Refund Info</string>
     <string name="apply_again">Apply Again</string>
+    <string name="refund_application">Refund Application</string>
 </resources>

@@ -79,3 +79,7 @@ class RefundBindRequest {
     /** 银行全名 */
     var bank_all_name: String? = null
 }
+
+class RemitId{
+    var remit_id = 0
+}

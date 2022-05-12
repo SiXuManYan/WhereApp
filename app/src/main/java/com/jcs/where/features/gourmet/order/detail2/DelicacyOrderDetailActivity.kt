@@ -16,6 +16,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
+import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -197,15 +198,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     visibility = View.GONE
                 }
                 left_tv.setOnClickListener {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.prompt)
-                        .setMessage(R.string.delicacy_return_hint)
-                        .setPositiveButton(R.string.ensure) { dialogInterface, i ->
-                            presenter.refundOrder(orderId)
-                            dialogInterface.dismiss()
-                        }
-                        .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
-                        .create().show()
+                    ComplexRefundActivity.navigation(this, orderId, orderData.refund_price, price.toPlainString())
                 }
             }
             6 -> {
@@ -283,9 +276,16 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        if (baseEvent.code == EventCode.EVENT_CANCEL_PAY) {
-            finish()
+        when (baseEvent.code) {
+            EventCode.EVENT_CANCEL_PAY -> finish()
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+                // 退款成功
+                presenter.getDetail(orderId)
+            }
+            else -> {}
         }
+
+
     }
 
 }

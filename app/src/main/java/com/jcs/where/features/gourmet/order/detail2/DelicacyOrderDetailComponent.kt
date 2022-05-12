@@ -52,16 +52,6 @@ class DelicacyOrderDetailPresenter(private var view: DelicacyOrderDetailView) : 
         })
     }
 
-    /**
-     * 申请退款
-     */
-    fun refundOrder(orderId: Int) {
-        requestApi(mRetrofit.delicacyOrderRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement?) {
-                view.refundSuccess()
-            }
 
-        })
-    }
 
 }

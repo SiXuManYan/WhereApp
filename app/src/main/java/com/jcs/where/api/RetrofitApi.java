@@ -1936,10 +1936,17 @@ public interface RetrofitApi {
 
 
     /**
-     * 订单投诉
+     * estore订单投诉
      */
     @POST("estoreapi/v2/order/complaint")
     Observable<JcsResponse<JsonElement>> complaint(@Body ComplaintRequest batchComment);
+
+
+    /**
+     * 美食外卖订单投诉
+     */
+    @POST("restaurantapi/v2/order/complaint")
+    Observable<JcsResponse<JsonElement>> complaintFood(@Body ComplaintRequest batchComment);
 
 
     /**

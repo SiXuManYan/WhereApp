@@ -1,15 +1,18 @@
 package com.jcs.where.features.gourmet.order.detail2
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.request.hotel.ComplaintRequest
 import com.jcs.where.api.response.gourmet.order.FoodOrderDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -17,6 +20,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
+import com.jcs.where.features.mall.refund.complaint.ComplaintActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -34,8 +38,18 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
     private var merUuid = ""
     private var restaurantName = ""
     private var tel = ""
+    private var alreadyComplaint = false
 
     override fun getLayoutId() = R.layout.activity_delicacy_order_detail
+
+
+    /** 处理申诉 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            alreadyComplaint = true
+            ToastUtils.showShort(R.string.complained_success)
+        }
+    }
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
@@ -76,6 +90,14 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         }
         complaint_tv.setOnClickListener {
             // 投诉
+            if (alreadyComplaint) {
+                ToastUtils.showShort(R.string.complained_success)
+            } else {
+                val intent = Intent(this, ComplaintActivity::class.java)
+                    .putExtra(Constant.PARAM_ORDER_ID, orderId)
+                    .putExtra(Constant.PARAM_TYPE , ComplaintRequest.TYPE_MALL)
+                searchLauncher.launch(intent)
+            }
         }
 
     }
@@ -250,7 +272,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     text = StringUtils.getString(R.string.apply_again)
                     setOnClickListener {
                         // 再次申请
-
+                        ComplexRefundActivity.navigation(this@DelicacyOrderDetailActivity, orderId, orderData.refund_price, price.toPlainString())
                     }
                 }
             }

@@ -59,10 +59,24 @@ class BatchCommentGood {
 }
 
 class ComplaintRequest {
+
+
+    companion object {
+
+        /** estore 投诉 */
+        var TYPE_MALL = 0
+
+        /** 美食投诉 */
+        var TYPE_FOOD = 1
+
+        /** 外卖投诉 */
+        var TYPE_FOOD_TAKEAWAY = 2
+    }
+
     var order_id = 0
     var content = ""
     var image :String? = null
-
+    var type :Int? = null
 
 
 }

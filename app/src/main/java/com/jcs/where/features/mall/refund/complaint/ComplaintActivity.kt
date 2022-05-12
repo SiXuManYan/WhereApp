@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
+import com.jcs.where.api.request.hotel.ComplaintRequest
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
@@ -33,7 +34,10 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
     /** 商品订单id */
     private var orderId = 0
 
+    private var type = 0
+
     private lateinit var mImageAdapter: StoreRefundAdapter2
+
 
     override fun isStatusDark() = true
 
@@ -49,6 +53,7 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
 
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
+            type = it.getInt(Constant.PARAM_TYPE, ComplaintRequest. TYPE_MALL)
         }
 
     }
@@ -72,12 +77,12 @@ class ComplaintActivity : BaseMvpActivity<ComplaintPresenter>(), ComplaintView, 
         }
         mImageAdapter.addData(addItem)
 
-
     }
 
 
     override fun initData() {
         presenter = ComplaintPresenter(this)
+        presenter.complaintType = type
     }
 
 

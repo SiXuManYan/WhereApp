@@ -110,10 +110,7 @@
                     android:layout_marginEnd="@dimen/dp_15"
                     android:text="@string/line_split"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
-                    android:visibility="gone"
-
-                    tools:visibility="visible" />
+                    android:textSize="@dimen/sp_12" />
 
 
                 <TextView
@@ -465,7 +462,6 @@
                     android:background="@color/grey_F5F5F5" />
 
             </LinearLayout>
-
 
 
             <TextView

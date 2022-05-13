@@ -127,7 +127,7 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
     }
 
     override fun refundSuccess() {
-        ToastUtils.showShort(R.string.application_success)
+        ToastUtils.showShort(getString(R.string.refund_commit_toast))
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
         finish()
     }

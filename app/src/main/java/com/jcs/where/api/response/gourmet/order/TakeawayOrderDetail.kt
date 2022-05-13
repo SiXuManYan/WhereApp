@@ -36,10 +36,7 @@ data class TakeawayOrderData(
 
 
         /** 退款失败原因 */
-        var error_reason: String = "",
-
-        /** 券码号 */
-        var coupon_no: String,
+        var error_reason: String = ""
 
 )
 

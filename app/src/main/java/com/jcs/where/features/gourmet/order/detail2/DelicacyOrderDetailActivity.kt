@@ -299,12 +299,6 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
 
     }
 
-    override fun refundSuccess() {
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
-        ToastUtils.showShort(getString(R.string.refund_commit_toast))
-        presenter.getDetail(orderId)
-    }
-
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         when (baseEvent.code) {
             EventCode.EVENT_CANCEL_PAY -> finish()

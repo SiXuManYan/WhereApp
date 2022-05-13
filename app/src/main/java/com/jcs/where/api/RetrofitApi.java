@@ -2020,7 +2020,7 @@ public interface RetrofitApi {
     /**
      * 美食-餐厅退款
      */
-    @DELETE("restaurantapi/v2/eat_in/orders/refund/{order_id}")
+    @HTTP(method = "DELETE", path = "restaurantapi/v2/eat_in/orders/refund/{order_id}", hasBody = true)
     Observable<JcsResponse<JsonElement>> delicacyOrderRefund(
             @Path("order_id") int order_id,
             @Body RemitId request

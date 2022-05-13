@@ -278,7 +278,6 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         }
         bottom_v.visibility = bottom_container_rl.visibility
 
-        order_code_information.text = orderData.coupon_no
 
         // 投诉
         if (status == 12) {
@@ -306,11 +305,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         presenter.getDetail(orderId)
     }
 
-    override fun refundSuccess() {
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
-        ToastUtils.showShort(getString(R.string.refund_commit_toast))
-        presenter.getDetail(orderId)
-    }
+
 
 
     private fun doRefund(price: BigDecimal) {
@@ -323,5 +318,18 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
 
     private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, orderId, FoodRefundInfoActivity.TYPE_TAKEAWAY)
 
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        when (baseEvent.code) {
+            EventCode.EVENT_CANCEL_PAY -> finish()
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+                // 退款成功
+                presenter.getDetail(orderId)
+            }
+            else -> {}
+        }
+
+
+    }
 
 }

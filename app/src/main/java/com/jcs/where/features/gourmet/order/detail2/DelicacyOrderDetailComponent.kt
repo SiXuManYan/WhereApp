@@ -19,10 +19,6 @@ interface DelicacyOrderDetailView : BaseMvpView {
      */
     fun cancelSuccess()
 
-    /**
-     * 退款成功
-     */
-    fun refundSuccess()
 
 
 }

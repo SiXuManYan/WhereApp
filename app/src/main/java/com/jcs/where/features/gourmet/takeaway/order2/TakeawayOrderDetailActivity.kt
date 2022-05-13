@@ -138,7 +138,8 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         status_tv.text = BusinessUtils.getTakeawayStatusText(status)
         status_desc_tv.text = BusinessUtils.getTakeawayOrderStatusDesc(status)
 
-        price_tv.text = getString(R.string.price_unit_format, orderData.price.toPlainString())
+        val orderPrice = orderData.price
+        price_tv.text = getString(R.string.price_unit_format, orderPrice.toPlainString())
         order_number_tv.text = orderData.trade_no
         created_date_tv.text = orderData.created_at
 
@@ -170,7 +171,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
 
         mAdapter.setNewInstance(goodData)
 
-        val price = orderData.price
+
         // 处理底部
         when (status) {
             1 -> {
@@ -218,7 +219,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
                     visibility = View.GONE
                 }
                 left_tv.setOnClickListener {
-                    doRefund(price)
+                    doRefund(orderPrice)
                 }
             }
             8 -> {
@@ -268,7 +269,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
                     text = StringUtils.getString(R.string.apply_again)
                     setOnClickListener {
                         // 再次申请
-                        doRefund(price)
+                        doRefund(orderPrice)
                     }
                 }
             }

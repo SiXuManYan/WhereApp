@@ -7,12 +7,12 @@ import java.math.BigDecimal
  * 美食订单详情
  */
 data class FoodOrderDetail(
-        var order_data: OrderData,
-        var restaurant_data: RestaurantData,
-        var good_data: GoodData,
-        var payment_data: PaymentData,
+    var order_data: OrderData,
+    var restaurant_data: RestaurantData,
+    var good_data: GoodData,
+    var payment_data: PaymentData,
 
-        )
+    )
 
 data class OrderData(
 
@@ -52,9 +52,8 @@ data class OrderData(
         /** 退款失败原因 */
         var error_reason: String = "",
 
-
-        /** 退款金额 */
-        var refund_price: String = "",
+        /** 订单总价格 */
+        var price: BigDecimal = BigDecimal.ZERO,
 
         )
 
@@ -78,6 +77,9 @@ data class RestaurantData(
 
         var tel: String = "",
 
+        /** 订单总价格 */
+        var price: BigDecimal = BigDecimal.ZERO,
+
         )
 
 data class GoodData(
@@ -94,19 +96,19 @@ data class GoodData(
         /** 商品图片 */
         var good_image: String,
 
-        /** 订单总价格 */
+        /** 商品价格 */
         var price: BigDecimal = BigDecimal.ZERO,
 
         )
 
 data class PaymentData(
-        /** 支付渠道 */
-        var payment_channel: String = "",
+    /** 支付渠道 */
+    var payment_channel: String = "",
 
-        /** 支付银行户头 */
-        var bank_card_account: String = "",
+    /** 支付银行户头 */
+    var bank_card_account: String = "",
 
-        /** 支付银行卡号 */
-        var bank_card_number: String = "",
+    /** 支付银行卡号 */
+    var bank_card_number: String = "",
 )
 

@@ -120,9 +120,11 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
          */
         val status = orderData.status
         status_tv.text = BusinessUtils.getDelicacyOrderStatusText(status)
-        val price = goodData.price
 
-        price_tv.text = getString(R.string.price_unit_format, price.toPlainString())
+        val orderPrice = orderData.price
+        val goodPrice = goodData.price
+
+        price_tv.text = getString(R.string.price_unit_format, orderPrice.toPlainString())
         order_number_tv.text = orderData.trade_no
         created_date_tv.text = orderData.created_at
         phone_tv.text = orderData.phone
@@ -146,9 +148,17 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         GlideUtil.load(this, goodData.good_image, image_iv, 4)
         good_name_tv.text = goodData.name
         good_count_tv.text = getString(R.string.quantity_format, goodData.good_num)
-        good_price_tv.text = getString(R.string.price_unit_format, price.toPlainString())
+        good_price_tv.text = getString(R.string.price_unit_format, goodPrice.toPlainString())
 
-        order_code_information.text = orderData.coupon_no
+        if (status == 5) {
+            coupon_info_ll.visibility = View.VISIBLE
+            order_code_information.text = orderData.coupon_no
+        }else {
+            coupon_info_ll.visibility = View.GONE
+        }
+
+
+
         if (status == 10) {
             service_iv.visibility = View.GONE
             complaint_tv.visibility = View.VISIBLE
@@ -222,7 +232,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     visibility = View.GONE
                 }
                 left_tv.setOnClickListener {
-                    doRefund(price)
+                    doRefund(orderPrice)
                 }
             }
             6 -> {
@@ -274,7 +284,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     text = StringUtils.getString(R.string.apply_again)
                     setOnClickListener {
                         // 再次申请
-                        doRefund(price)
+                        doRefund(orderPrice)
                     }
                 }
             }

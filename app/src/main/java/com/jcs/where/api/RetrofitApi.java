@@ -1265,8 +1265,12 @@ public interface RetrofitApi {
     /**
      * 美食-外卖退款
      */
-    @DELETE("restaurantapi/v2/take_out/orders/refund/{order_id}")
-    Observable<JcsResponse<JsonElement>> takeawayOrderRefund(@Path("order_id") int order_id);
+    @HTTP(method = "DELETE", path = "restaurantapi/v2/take_out/orders/refund/{order_id}", hasBody = true)
+    Observable<JcsResponse<JsonElement>> takeawayOrderRefund(
+            @Path("order_id") int order_id,
+            @Body RemitId request
+
+    );
 
 
     /**
@@ -1308,8 +1312,9 @@ public interface RetrofitApi {
     /**
      * 酒店订单申请退款
      */
-    @DELETE("hotelapi/v2/orders/refund/{order_id}")
-    Observable<JcsResponse<JsonElement>> refundHotelOrder(@Path("order_id") int order_id);
+    @HTTP(method = "DELETE", path = "hotelapi/v2/orders/refund/{order_id}", hasBody = true)
+    Observable<JcsResponse<JsonElement>> refundHotelOrder(@Path("order_id") int order_id,
+                                                          @Body RemitId request);
 
 
     /**
@@ -1940,7 +1945,7 @@ public interface RetrofitApi {
      * estore订单投诉
      */
     @POST("estoreapi/v2/order/complaint")
-    Observable<JcsResponse<JsonElement>> complaint(@Body ComplaintRequest batchComment);
+    Observable<JcsResponse<JsonElement>> mallComplaint(@Body ComplaintRequest batchComment);
 
 
     /**
@@ -1949,6 +1954,12 @@ public interface RetrofitApi {
     @POST("restaurantapi/v2/order/complaint")
     Observable<JcsResponse<JsonElement>> complaintFood(@Body ComplaintRequest batchComment);
 
+
+    /**
+     * 酒店订单投诉
+     */
+    @POST("hotelapi/v2/order/complaint")
+    Observable<JcsResponse<JsonElement>> complaintHotel(@Body ComplaintRequest batchComment);
 
     /**
      * 获取 web收银台url
@@ -2027,15 +2038,25 @@ public interface RetrofitApi {
     );
 
 
-
     /**
      * 获取 美食外卖退款信息详情
+     *
      * @param type 1美食 2外卖
      */
     @GET("restaurantapi/v2/refunds/{order_id}")
     Observable<JcsResponse<FoodRefundInfo>> getFoodRefundInfo(
             @Path("order_id") int order_id,
             @Query("type") int type
+    );
+
+
+    /**
+     * 获取 酒店外卖退款信息详情
+     *
+     */
+    @GET("restaurantapi/v2/refunds/{order_id}")
+    Observable<JcsResponse<FoodRefundInfo>> getHotelRefundInfo(
+            @Path("order_id") int order_id
     );
 
 }

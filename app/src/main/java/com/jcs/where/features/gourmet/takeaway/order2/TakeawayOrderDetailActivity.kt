@@ -21,6 +21,7 @@ import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundPresenter
 import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoActivity
+import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoPresenter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayGoodDataAdapter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailPresenter
 import com.jcs.where.features.gourmet.takeaway.order.TakeawayOrderDetailView
@@ -132,6 +133,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         restaurantName = restaurantData.name
         tel = restaurantData.tel
 
+        alreadyComplaint = orderData.complaint_status == 1
 
         /** 1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功 11-商家审核中 12-拒绝售后 13-退款失败 */
         val status = orderData.status
@@ -245,6 +247,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
                 }
             }
             9, 11, 12 -> {
+                bottom_container_rl.visibility = View.VISIBLE
                 left_tv.apply {
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.refund_information)
@@ -256,6 +259,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
                 right_tv.visibility = View.GONE
             }
             13 -> {
+                bottom_container_rl.visibility = View.VISIBLE
                 left_tv.apply {
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.refund_information)
@@ -290,7 +294,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
         }
 
         // 退款失败
-        if (status == 12) {
+        if (status == 13) {
             fail_reason_rl.visibility = View.VISIBLE
             reason_split_v.visibility = View.VISIBLE
             fail_reason_tv.text = orderData.error_reason
@@ -307,8 +311,6 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
     }
 
 
-
-
     private fun doRefund(price: BigDecimal) {
         ComplexRefundActivity.navigation(this,
             orderId,
@@ -317,7 +319,7 @@ class TakeawayOrderDetailActivity : BaseMvpActivity<TakeawayOrderDetailPresenter
             ComplexRefundPresenter.TYPE_TAKEAWAY)
     }
 
-    private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, orderId, FoodRefundInfoActivity.TYPE_TAKEAWAY)
+    private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, orderId, FoodRefundInfoPresenter.TYPE_TAKEAWAY)
 
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {

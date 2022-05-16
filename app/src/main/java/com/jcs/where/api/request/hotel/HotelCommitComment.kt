@@ -71,6 +71,9 @@ class ComplaintRequest {
 
         /** 外卖投诉 */
         var TYPE_FOOD_TAKEAWAY = 2
+
+        /** 酒店投诉 */
+        var TYPE_HOTEL = 3
     }
 
     var order_id = 0

@@ -31,10 +31,6 @@ class FoodRefundInfoActivity : BaseMvpActivity<FoodRefundInfoPresenter>(), FoodR
 
     companion object {
 
-        var TYPE_FOOD = 1
-        var TYPE_TAKEAWAY = 2
-
-
         fun navigation(context: Context, orderId: Int, type: Int) {
 
             val bundle = Bundle().apply {
@@ -89,8 +85,8 @@ class FoodRefundInfoActivity : BaseMvpActivity<FoodRefundInfoPresenter>(), FoodR
             refund_user_name_tv.text = refundMethod.user_name
             refund_account_tv.text = refundMethod.account
         }
-        refund_price_tv.text = StringUtils.getString(R.string.price_unit_format,response.price)
-        total_price_tv.text = StringUtils.getString(R.string.price_unit_format,response.total_price)
+        refund_price_tv.text = StringUtils.getString(R.string.price_unit_format, response.price)
+        total_price_tv.text = StringUtils.getString(R.string.price_unit_format, response.total_price)
         time_tv.text = response.cancel_time
     }
 
@@ -107,12 +103,32 @@ interface FoodRefundInfoView : BaseMvpView {
 class FoodRefundInfoPresenter(var view: FoodRefundInfoView) : BaseMvpPresenter(view) {
 
 
+    companion object {
+
+        var TYPE_FOOD = 1
+        var TYPE_TAKEAWAY = 2
+        var TYPE_HOTEL = 3
+    }
+
     fun getData(orderId: Int, type: Int) {
-        requestApi(mRetrofit.getFoodRefundInfo(orderId, type), object : BaseMvpObserver<FoodRefundInfo>(view) {
-            override fun onSuccess(response: FoodRefundInfo) {
-                view.bindData(response)
+        when (type) {
+            TYPE_FOOD, TYPE_TAKEAWAY -> {
+                requestApi(mRetrofit.getFoodRefundInfo(orderId, type), object : BaseMvpObserver<FoodRefundInfo>(view) {
+                    override fun onSuccess(response: FoodRefundInfo) {
+                        view.bindData(response)
+                    }
+                })
             }
-        })
+            TYPE_HOTEL -> {
+                requestApi(mRetrofit.getHotelRefundInfo(orderId), object : BaseMvpObserver<FoodRefundInfo>(view) {
+                    override fun onSuccess(response: FoodRefundInfo) {
+                        view.bindData(response)
+                    }
+                })
+            }
+            else -> {}
+        }
+
 
     }
 

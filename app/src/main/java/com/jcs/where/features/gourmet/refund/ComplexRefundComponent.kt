@@ -22,6 +22,7 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
 
         var TYPE_FOOD = 0
         var TYPE_TAKEAWAY = 1
+        var TYPE_HOTEL = 2
     }
 
 
@@ -30,9 +31,12 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
      */
     fun refundOrder(orderId: Int, remitId: Int, type: Int) {
 
+        val remitId = RemitId().apply { remit_id = remitId }
+
         when (type) {
             TYPE_FOOD -> {
-                requestApi(mRetrofit.delicacyOrderRefund(orderId, RemitId().apply { remit_id = remitId }),
+
+                requestApi(mRetrofit.delicacyOrderRefund(orderId, remitId),
                     object : BaseMvpObserver<JsonElement>(view) {
                         override fun onSuccess(response: JsonElement?) {
                             view.refundSuccess()
@@ -40,14 +44,21 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
                     })
             }
             TYPE_TAKEAWAY -> {
-                requestApi(mRetrofit.takeawayOrderRefund(orderId), object : BaseMvpObserver<JsonElement>(view) {
+                requestApi(mRetrofit.takeawayOrderRefund(orderId, remitId), object : BaseMvpObserver<JsonElement>(view) {
                     override fun onSuccess(response: JsonElement?) {
                         view.refundSuccess()
                     }
 
                 })
-
             }
+            TYPE_HOTEL -> {
+                requestApi(mRetrofit.refundHotelOrder(orderId, remitId), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement) {
+                        view.refundSuccess()
+                    }
+                })
+            }
+
             else -> {}
         }
     }

@@ -21,6 +21,7 @@ import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.gourmet.comment.post.FoodCommentPostActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
 import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoActivity
+import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoPresenter
 import com.jcs.where.features.mall.refund.complaint.ComplaintActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.BusinessUtils
@@ -115,6 +116,8 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         restaurantName = restaurantData.name
         tel = restaurantData.tel
 
+        alreadyComplaint = orderData.complaint_status == 1
+
         /**
          * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功 9-商家审核中 10-拒绝售后 11-退款失败）
          */
@@ -153,7 +156,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         if (status == 5) {
             coupon_info_ll.visibility = View.VISIBLE
             order_code_information.text = orderData.coupon_no
-        }else {
+        } else {
             coupon_info_ll.visibility = View.GONE
         }
 
@@ -260,6 +263,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
 
             }
             7, 8, 9, 10 -> {
+                bottom_container_rl.visibility = View.VISIBLE
                 left_tv.apply {
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.refund_information)
@@ -271,6 +275,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                 right_tv.visibility = View.GONE
             }
             11 -> {
+                bottom_container_rl.visibility = View.VISIBLE
                 left_tv.apply {
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.refund_information)
@@ -301,7 +306,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
         ComplexRefundActivity.navigation(this, orderId, price.toPlainString(), price.toPlainString())
     }
 
-    private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, orderId, FoodRefundInfoActivity.TYPE_FOOD)
+    private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, orderId, FoodRefundInfoPresenter.TYPE_FOOD)
 
     override fun cancelSuccess() {
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))

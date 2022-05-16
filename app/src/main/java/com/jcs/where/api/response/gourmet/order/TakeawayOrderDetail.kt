@@ -36,7 +36,10 @@ data class TakeawayOrderData(
 
 
         /** 退款失败原因 */
-        var error_reason: String = ""
+        var error_reason: String = "",
+
+        /** 0 未投诉 */
+        var complaint_status :Int = 0
 
 )
 

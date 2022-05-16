@@ -3,6 +3,6 @@
 
     <corners android:radius="@dimen/dp_20"/>
     <solid android:color="@color/transplant"/>
-    <stroke android:color="@color/white" android:width="@dimen/dp_1"/>
+    <stroke android:color="@color/white" android:width="1px"/>
 
 </shape>

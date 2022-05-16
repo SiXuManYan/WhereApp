@@ -71,21 +71,36 @@ class ComplaintPresenter(private var view: ComplaintView) : BaseMvpPresenter(vie
             image = descImages
         }
 
-        if (complaintType == 0) {
-            requestApi(mRetrofit.complaint(apply), object : BaseMvpObserver<JsonElement>(view) {
-                override fun onSuccess(response: JsonElement?) {
-                    view.applicationSuccess()
-                }
-            })
-        } else {
-            apply.type = complaintType
-            requestApi(mRetrofit.complaintFood(apply), object : BaseMvpObserver<JsonElement>(view) {
-                override fun onSuccess(response: JsonElement?) {
-                    view.applicationSuccess()
-                }
-            })
+        when (complaintType) {
 
+            ComplaintRequest.TYPE_MALL -> {
+                requestApi(mRetrofit.mallComplaint(apply), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement?) {
+                        view.applicationSuccess()
+                    }
+                })
+
+            }
+            ComplaintRequest.TYPE_FOOD,
+            ComplaintRequest.TYPE_FOOD_TAKEAWAY ->{
+                apply.type = complaintType
+                requestApi(mRetrofit.complaintFood(apply), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement?) {
+                        view.applicationSuccess()
+                    }
+                })
+            }
+            ComplaintRequest.TYPE_HOTEL->{
+                requestApi(mRetrofit.complaintHotel(apply), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement?) {
+                        view.applicationSuccess()
+                    }
+                })
+            }
+            else -> {}
         }
+
+
 
 
     }

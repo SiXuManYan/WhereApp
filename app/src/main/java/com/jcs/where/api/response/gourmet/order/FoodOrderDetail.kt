@@ -55,6 +55,9 @@ data class OrderData(
         /** 订单总价格 */
         var price: BigDecimal = BigDecimal.ZERO,
 
+        /** 0 未投诉 */
+        var complaint_status :Int = 0
+
         )
 
 

@@ -116,8 +116,7 @@ object BusinessUtils {
 
     /**
      * 酒店订单状态文案
-     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功）
-     *
+     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功, 10-商家审核中, 11-商家拒绝售后, 12-退款失败）
      */
     fun getHotelStatusText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.store_status_1)
@@ -129,8 +128,29 @@ object BusinessUtils {
         7 -> StringUtils.getString(R.string.store_status_13)
         8 -> StringUtils.getString(R.string.store_status_8)
         9 -> StringUtils.getString(R.string.store_status_9)
+        10 -> StringUtils.getString(R.string.store_status_10)
+        11 -> StringUtils.getString(R.string.refuses_to_return)
+        12 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
     }
+
+
+    /**
+     * 酒店售后状态描述
+     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功, 10-商家审核中, 11-商家拒绝售后, 12-退款失败）
+     */
+    fun getHotelStatusDescText(status: Int): String = when (status) {
+        1 -> StringUtils.getString(R.string.hotel_order_status_1)
+        3 -> StringUtils.getString(R.string.hotel_order_status_3)
+        4 -> StringUtils.getString(R.string.hotel_order_status_4)
+        5 -> StringUtils.getString(R.string.hotel_order_status_5)
+        6 -> StringUtils.getString(R.string.hotel_order_status_6)
+        7 -> StringUtils.getString(R.string.store_status_desc_13)
+        8 -> StringUtils.getString(R.string.store_status_desc_8)
+        9 -> StringUtils.getString(R.string.store_status_desc_9)
+        else -> StringUtils.getString(R.string.line_split)
+    }
+
 
     fun getSafeStock(inventory: String?): Int {
         return if (inventory.isNullOrBlank()) {

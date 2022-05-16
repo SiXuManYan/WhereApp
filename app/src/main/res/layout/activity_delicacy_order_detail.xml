@@ -268,14 +268,15 @@
                     android:textSize="@dimen/sp_14"
                     tools:text="2020-08-02 至 2021-05-19" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/grey_F5F5F5" />
+
 
             </RelativeLayout>
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grey_F5F5F5" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -307,6 +308,10 @@
             <!-- 收货人信息 -->
 
 
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/grey_F5F5F5"
+                android:layout_height="1px"/>
             <!---->
 
 

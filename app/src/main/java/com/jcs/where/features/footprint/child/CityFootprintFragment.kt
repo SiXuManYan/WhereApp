@@ -28,8 +28,8 @@ import kotlinx.android.synthetic.main.fragment_refresh_list.*
 class CityFootprintFragment : BaseMvpFragment<FootprintPresenter>(), FootprintView, OnItemClickListener {
 
     /**
-     * 0 普通收藏
-     * 1 商品收藏
+     * 0 普通足迹
+     * 1 商品足迹
      */
     var type = 0
 

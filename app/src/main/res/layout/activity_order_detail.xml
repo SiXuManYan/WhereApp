@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_gradient_hotel_detail"
+
         app:backIcon="@drawable/ic_back_white"
         app:backgroundRes="@drawable/shape_gradient_hotel_detail"
         app:middleTitleColor="@color/white_FEFEFE"
@@ -102,7 +103,7 @@
                     <TextView
                         android:id="@+id/left_tv"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_28"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_marginEnd="@dimen/dp_15"
                         android:background="@drawable/shape_white_radius_20"
                         android:gravity="center"
@@ -117,7 +118,7 @@
                     <TextView
                         android:id="@+id/right_tv"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_28"
+                        android:layout_height="@dimen/dp_40"
                         android:background="@drawable/shape_stroke_white_20"
                         android:gravity="center"
                         android:minWidth="@dimen/dp_149"

@@ -13,9 +13,10 @@ class MallGood {
     var main_image = ""
     var sub_images = ArrayList<String>()
     var price = BigDecimal.ZERO
-    var oldPrice = BigDecimal.ZERO
     var stock = 0
     var sold = ""
     var category_id = ""
+
+    var original_cost = BigDecimal.ZERO
 
 }

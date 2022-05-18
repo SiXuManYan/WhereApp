@@ -5,12 +5,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.footprint.Footprint
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 
 /**
@@ -79,6 +79,8 @@ class FootprintAdapter : BaseMultiItemQuickAdapter<Footprint, BaseViewHolder>(),
     private fun bindGoodCollection(holder: BaseViewHolder, item: Footprint) {
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val title_tv = holder.getView<TextView>(R.id.title_tv)
+        val original_price_tv = holder.getView<TextView>(R.id.original_price_tv)
+        val price_tv = holder.getView<TextView>(R.id.price_tv)
         val container = holder.getView<ViewGroup>(R.id.container_view)
         val layoutParams = container.layoutParams as RecyclerView.LayoutParams
         layoutParams.apply {
@@ -94,7 +96,10 @@ class FootprintAdapter : BaseMultiItemQuickAdapter<Footprint, BaseViewHolder>(),
         loadImage(module.images, image_iv)
         title_tv.text = module.title
 
-        holder.setText(R.id.price_tv, StringUtils.getString(R.string.price_unit_format, module.price))
+        // 价格
+        val nowPrice = module.price
+        val originalPrice = module.original_cost
+        BusinessUtils.setNowPriceAndOldPrice(nowPrice, originalPrice, price_tv, original_price_tv)
     }
 
     private fun bindTitle(holder: BaseViewHolder, item: Footprint) {

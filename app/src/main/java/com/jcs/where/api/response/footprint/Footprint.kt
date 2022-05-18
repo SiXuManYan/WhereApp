@@ -1,6 +1,7 @@
 package com.jcs.where.api.response.footprint
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/11/18 16:45.
@@ -40,7 +41,9 @@ class FootprintModule {
     var id = 0
     var title = ""
     var images: ArrayList<String> = ArrayList()
-    var price = ""
+    var price  = BigDecimal.ZERO
+    var original_cost  = BigDecimal.ZERO
+
 }
 
 

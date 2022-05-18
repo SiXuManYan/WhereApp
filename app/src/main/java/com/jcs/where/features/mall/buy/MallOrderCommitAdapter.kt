@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCartGroup
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 
 /**
@@ -50,6 +51,7 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
             val good_count_tv = child.findViewById<TextView>(R.id.count_tv)
             val attr_tv = child.findViewById<TextView>(R.id.attr_tv)
             val price_tv = child.findViewById<TextView>(R.id.now_price_tv)
+            val original_price_tv = child.findViewById<TextView>(R.id.original_price_tv)
 
 
             it.goods_info?.let { mgi ->
@@ -61,7 +63,10 @@ class MallOrderCommitAdapter : BaseQuickAdapter<MallCartGroup, BaseViewHolder>(R
 
 
             it.specs_info?.let { msi ->
-                price_tv.text = StringUtils.getString(R.string.price_unit_format, msi.price.toPlainString())
+                // 价格
+                val nowPrice = msi.price
+                val originalPrice = msi.original_cost
+                BusinessUtils.setNowPriceAndOldPrice(nowPrice, originalPrice, price_tv, original_price_tv)
 
                 val attr = StringBuffer()
                 msi.specs.forEach { spec ->

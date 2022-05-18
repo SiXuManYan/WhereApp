@@ -5,16 +5,16 @@
     "kind": "Directory"
   },
   "applicationId": "com.jcs.where",
-  "variantName": "devRelease",
+  "variantName": "formalRelease",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 30,
+      "versionCode": 31,
       "versionName": "0.2.17",
       "enabled": true,
-      "outputFile": "Where_v30_(0.2.17)_20220513.apk"
+      "outputFile": "Where_v31_(0.2.17)_20220513.apk"
     }
   ]
 }

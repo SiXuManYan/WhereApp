@@ -7,10 +7,12 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
@@ -24,6 +26,7 @@ import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
 import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
+import java.text.DecimalFormat
 
 /**
  * Created by Wangsw  2021/7/21 17:10.
@@ -345,5 +348,30 @@ object BusinessUtils {
     }
 
     fun isBankChannel(channel: String?): Boolean = channel == "BANK"
+
+
+    fun setNowPriceAndOldPrice(price: BigDecimal, oldPrice: BigDecimal,
+                               priceTv: TextView, oldPriceTv: TextView) {
+
+        price.setScale(2, BigDecimal.ROUND_HALF_UP)
+        oldPrice.setScale(2, BigDecimal.ROUND_HALF_UP)
+        val decimalFormat = DecimalFormat("0.00#")
+
+        val nowPriceStr = StringUtils.getString(R.string.price_unit_format, decimalFormat.format(price))
+        val oldPriceStr = StringUtils.getString(R.string.price_unit_format, decimalFormat.format(oldPrice))
+
+        // 现价
+        priceTv.text = nowPriceStr
+
+        // 原价
+        if (price != oldPrice) {
+            SpanUtils.with(oldPriceTv).append(oldPriceStr).setStrikethrough().create()
+            oldPriceTv.visibility = View.VISIBLE
+        } else {
+            oldPriceTv.visibility = View.GONE
+        }
+
+
+    }
 
 }

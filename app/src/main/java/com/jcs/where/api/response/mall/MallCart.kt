@@ -99,7 +99,7 @@ class MallGoodInfo : Serializable {
 //   var good_stock = 1
     /** 商品属性 */
     var attribute_list = ArrayList<MallAttribute>()
-    var min_price = ""
+    var min_price  = BigDecimal.ZERO
     var max_price = ""
     var main_image = ""
     var good_stock = 0
@@ -109,6 +109,7 @@ class MallGoodInfo : Serializable {
 class MallSpecsInfo : Serializable {
     var specs: HashMap<String, String> = HashMap()
     var price: BigDecimal = BigDecimal.ZERO
+    var original_cost: BigDecimal = BigDecimal.ZERO
     var stock = 0
 
 

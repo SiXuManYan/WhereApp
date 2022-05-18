@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
@@ -16,6 +15,7 @@ import com.jcs.where.features.store.cart.child.OnChildReselectSkuClick
 import com.jcs.where.features.store.cart.child.OnChildSelectClick
 import com.jcs.where.features.store.cart.child.OnGroupSelectClick
 import com.jcs.where.features.store.cart.child.StoreCartValueChangeListener
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.NumberView2
 
@@ -183,6 +183,7 @@ class MallCartAdapter : BaseMultiItemQuickAdapter<MallCartGroup, BaseViewHolder>
         val now_price_tv = child.findViewById<TextView>(R.id.now_price_tv)
         val good_attr_tv = child.findViewById<TextView>(R.id.good_attr_tv)
         val number_view = child.findViewById<NumberView2>(R.id.number_view)
+        val original_price_tv = child.findViewById<TextView>(R.id.original_price_tv)
 
 
         // SKU已被删除
@@ -223,9 +224,11 @@ class MallCartAdapter : BaseMultiItemQuickAdapter<MallCartGroup, BaseViewHolder>
             sku_sw.displayedChild = 0
             good_name.setTextColor(ColorUtils.getColor(R.color.black_333333))
 
+            // 价格
+            val nowPrice = it.price
+            val originalPrice = it.original_cost
+            BusinessUtils.setNowPriceAndOldPrice(nowPrice, originalPrice, now_price_tv, original_price_tv)
 
-            val nowPrice: String = StringUtils.getString(R.string.price_unit_format, it.price.toPlainString())
-            now_price_tv.text = nowPrice
 
             // 数量
             number_view.apply {

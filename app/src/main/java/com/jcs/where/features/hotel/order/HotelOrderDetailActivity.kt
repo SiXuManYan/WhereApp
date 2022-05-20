@@ -312,4 +312,22 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
     private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, order_id, FoodRefundInfoPresenter.TYPE_HOTEL)
 
 
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+                presenter.getDetail(order_id)
+            }
+            else -> {
+
+            }
+        }
+    }
+
+
 }

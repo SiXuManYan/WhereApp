@@ -222,8 +222,6 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
                         setOnClickListener {
                             doRefund(price)
                         }
-                        doRefund(price)
-
                     } else {
                         visibility = View.GONE
                     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -166,22 +165,43 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.jcs.where.widget.ratingstar.RatingStarView
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_2"
-                app:rsv_cornerRadius="@dimen/dp_2"
-                app:rsv_drawStrokeForHalfStar="true"
-                app:rsv_enableSelectRating="false"
-                app:rsv_onlyHalfStar="false"
-                app:rsv_rating="5"
-                app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-                app:rsv_starForegroundColor="@color/yellow_FEBA32"
-                app:rsv_starMargin="@dimen/dp_3"
-                app:rsv_starNum="5"
-                app:rsv_starThickness="0.5"
-                app:rsv_strokeColor="@color/transplant"
-                app:rsv_strokeWidth="0dp" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+            </LinearLayout>
+
 
             <CheckedTextView
                 android:id="@+id/star_five_num_tv"
@@ -206,22 +226,36 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.jcs.where.widget.ratingstar.RatingStarView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_2"
-                app:rsv_cornerRadius="@dimen/dp_2"
-                app:rsv_drawStrokeForHalfStar="true"
-                app:rsv_enableSelectRating="false"
-                app:rsv_onlyHalfStar="false"
-                app:rsv_rating="4"
-                app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-                app:rsv_starForegroundColor="@color/yellow_FEBA32"
-                app:rsv_starMargin="@dimen/dp_3"
-                app:rsv_starNum="4"
-                app:rsv_starThickness="0.5"
-                app:rsv_strokeColor="@color/transplant"
-                app:rsv_strokeWidth="0dp" />
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+            </LinearLayout>
 
             <CheckedTextView
                 android:id="@+id/star_four_num_tv"
@@ -246,22 +280,30 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.jcs.where.widget.ratingstar.RatingStarView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_2"
-                app:rsv_cornerRadius="@dimen/dp_2"
-                app:rsv_drawStrokeForHalfStar="true"
-                app:rsv_enableSelectRating="false"
-                app:rsv_onlyHalfStar="false"
-                app:rsv_rating="3"
-                app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-                app:rsv_starForegroundColor="@color/yellow_FEBA32"
-                app:rsv_starMargin="@dimen/dp_3"
-                app:rsv_starNum="3"
-                app:rsv_starThickness="0.5"
-                app:rsv_strokeColor="@color/transplant"
-                app:rsv_strokeWidth="0dp" />
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+            </LinearLayout>
 
             <CheckedTextView
                 android:id="@+id/star_three_num_tv"
@@ -286,22 +328,24 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.jcs.where.widget.ratingstar.RatingStarView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_2"
-                app:rsv_cornerRadius="@dimen/dp_2"
-                app:rsv_drawStrokeForHalfStar="true"
-                app:rsv_enableSelectRating="false"
-                app:rsv_onlyHalfStar="false"
-                app:rsv_rating="2"
-                app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-                app:rsv_starForegroundColor="@color/yellow_FEBA32"
-                app:rsv_starMargin="@dimen/dp_3"
-                app:rsv_starNum="2"
-                app:rsv_starThickness="0.5"
-                app:rsv_strokeColor="@color/transplant"
-                app:rsv_strokeWidth="0dp" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+
+            </LinearLayout>
 
             <CheckedTextView
                 android:id="@+id/star_two_num_tv"
@@ -324,22 +368,17 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.jcs.where.widget.ratingstar.RatingStarView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_2"
-                app:rsv_cornerRadius="@dimen/dp_2"
-                app:rsv_drawStrokeForHalfStar="true"
-                app:rsv_enableSelectRating="false"
-                app:rsv_onlyHalfStar="false"
-                app:rsv_rating="1"
-                app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-                app:rsv_starForegroundColor="@color/yellow_FEBA32"
-                app:rsv_starMargin="@dimen/dp_3"
-                app:rsv_starNum="1"
-                app:rsv_starThickness="0.5"
-                app:rsv_strokeColor="@color/transplant"
-                app:rsv_strokeWidth="0dp" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_11"
+                    android:layout_height="@dimen/dp_11"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_comment_star_yellow" />
+
+            </LinearLayout>
 
             <CheckedTextView
                 android:id="@+id/star_one_num_tv"

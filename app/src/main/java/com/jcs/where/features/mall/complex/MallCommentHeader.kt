@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckedTextView
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.forEach
@@ -22,6 +23,7 @@ class MallCommentHeader(context: Context?) : LinearLayout(context) {
     }
 
     private var containerList = ArrayList<LinearLayout>()
+    private var starContainerList = ArrayList<LinearLayout>()
 
     var containerClickListener: CommentHeaderClickListener? = null
 
@@ -73,7 +75,7 @@ class MallCommentHeader(context: Context?) : LinearLayout(context) {
 
     }
 
-     fun initData(){
+    fun initData(isDiamond: Boolean) {
 
         containerList.add(all_ll)
         containerList.add(newest_ll)
@@ -84,7 +86,31 @@ class MallCommentHeader(context: Context?) : LinearLayout(context) {
         containerList.add(star_two_ll)
         containerList.add(star_one_ll)
 
+        // star
+        starContainerList.add(star_five_ll)
+        starContainerList.add(star_four_ll)
+        starContainerList.add(star_three_ll)
+        starContainerList.add(star_two_ll)
+        starContainerList.add(star_one_ll)
+
         setClick()
+        if (isDiamond) {
+            starContainerList.forEach {
+                it.forEach { child->
+                    if (child is LinearLayout) {
+                        child.forEach { image->
+                            if (image is ImageView) {
+                                image.setImageResource(R.mipmap.ic_comment_diamond_yellow)
+                            }
+                        }
+
+
+
+                    }
+                }
+            }
+        }
+
     }
 
     private fun setClick() {

@@ -70,7 +70,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey_b7b7b7"
                     android:textSize="@dimen/sp_12"
-                    android:textStyle="bold"
                     tools:text="¥7878" />
 
             </LinearLayout>

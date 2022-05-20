@@ -108,6 +108,8 @@ class CommentComplexActivity : BaseMvpActivity<CommentComplexPresenter>(), Comme
             footerWithEmptyEnable = true
             headerWithEmptyEnable = true
             singleLineImage = false
+            isDiamond = (useType == USE_TYPE_HOTEL)
+
             loadMoreModule.isAutoLoadMore = true
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener(this@CommentComplexActivity)
@@ -117,10 +119,12 @@ class CommentComplexActivity : BaseMvpActivity<CommentComplexPresenter>(), Comme
 
 
         header = MallCommentHeader(this).apply {
-            initData()
+            initData((useType == USE_TYPE_HOTEL))
             containerClickListener = this@CommentComplexActivity
         }
         mAdapter.addHeaderView(header)
+
+
     }
 
     private fun initExtra() {

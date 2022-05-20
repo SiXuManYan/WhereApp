@@ -2064,7 +2064,7 @@ public interface RetrofitApi {
     /**
      * 获取 酒店外卖退款信息详情
      */
-    @GET("restaurantapi/v2/refunds/{order_id}")
+    @GET("hotelapi/v2/refunds/{order_id}")
     Observable<JcsResponse<FoodRefundInfo>> getHotelRefundInfo(
             @Path("order_id") int order_id
     );

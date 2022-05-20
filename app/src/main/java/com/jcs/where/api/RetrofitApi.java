@@ -1705,7 +1705,9 @@ public interface RetrofitApi {
     /**
      * 新版商城评论列表
      *
-     * @param type 列表类型（0：全部，1：有图，2：最新，3：低分）
+     * @param type 列表类型
+     *             1 2 3 4 5
+     *             6最新 7有图 8低分 0全部
      */
     @GET("estoreapi/v2/comments")
     Observable<JcsResponse<PageResponse<HotelComment>>> getMallCommentList(
@@ -1727,6 +1729,15 @@ public interface RetrofitApi {
      */
     @GET("estoreapi/v2/comments/num")
     Observable<JcsResponse<MallCommentCount>> mallCommentCount(@Query("goods_id") int goods_id);
+
+    /**
+     * 酒店评价数量
+     */
+    @GET("hotelapi/v2/hotel/{hotel_id}/comment/nums")
+    Observable<JcsResponse<MallCommentCount>> hotelCommentCount(
+            @Path("hotel_id") int hotel_id,
+            @Query("version") String version
+    );
 
     /**
      * 商城评价详情
@@ -2052,7 +2063,6 @@ public interface RetrofitApi {
 
     /**
      * 获取 酒店外卖退款信息详情
-     *
      */
     @GET("restaurantapi/v2/refunds/{order_id}")
     Observable<JcsResponse<FoodRefundInfo>> getHotelRefundInfo(

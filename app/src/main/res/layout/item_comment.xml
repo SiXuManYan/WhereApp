@@ -50,7 +50,7 @@
             app:rsv_onlyHalfStar="false"
             app:rsv_rating="1"
             app:rsv_starBackgroundColor="@color/grey_F5F5F5"
-            app:rsv_starForegroundColor="@color/yellow_FCE314"
+            app:rsv_starForegroundColor="@color/yellow_FEBA32"
             app:rsv_starMargin="@dimen/dp_3"
             app:rsv_starNum="5"
             app:rsv_starThickness="0.5"

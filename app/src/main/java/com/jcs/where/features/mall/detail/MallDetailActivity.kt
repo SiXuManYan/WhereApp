@@ -24,7 +24,7 @@ import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
-import com.jcs.where.features.mall.comment.MallCommentActivity
+import com.jcs.where.features.mall.complex.CommentComplexActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
@@ -224,9 +224,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
 
         more_comment_tv.setOnClickListener {
-            startActivity(MallCommentActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_ID, goodId)
-            })
+            CommentComplexActivity.navigation(this, goodId, CommentComplexActivity.USE_TYPE_STORE)
         }
     }
 

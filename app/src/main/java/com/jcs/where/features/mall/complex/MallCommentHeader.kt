@@ -96,16 +96,13 @@ class MallCommentHeader(context: Context?) : LinearLayout(context) {
         setClick()
         if (isDiamond) {
             starContainerList.forEach {
-                it.forEach { child->
+                it.forEach { child ->
                     if (child is LinearLayout) {
-                        child.forEach { image->
+                        child.forEach { image ->
                             if (image is ImageView) {
                                 image.setImageResource(R.mipmap.ic_comment_diamond_yellow)
                             }
                         }
-
-
-
                     }
                 }
             }

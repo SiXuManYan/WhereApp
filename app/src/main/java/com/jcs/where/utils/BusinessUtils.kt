@@ -350,23 +350,38 @@ object BusinessUtils {
     fun isBankChannel(channel: String?): Boolean = channel == "BANK"
 
 
-    fun setNowPriceAndOldPrice(price: BigDecimal, oldPrice: BigDecimal,
-                               priceTv: TextView, oldPriceTv: TextView) {
+    fun setNowPriceAndOldPrice(
+        price: BigDecimal, oldPrice: BigDecimal,
+        priceTv: TextView, oldPriceTv: TextView,
+    ) {
 
         price.setScale(2, BigDecimal.ROUND_HALF_UP)
         oldPrice.setScale(2, BigDecimal.ROUND_HALF_UP)
         val decimalFormat = DecimalFormat("0.00#")
 
-        val nowPriceStr = StringUtils.getString(R.string.price_unit_format, decimalFormat.format(price))
-        val oldPriceStr = StringUtils.getString(R.string.price_unit_format, decimalFormat.format(oldPrice))
+        val nowPriceStr = decimalFormat.format(price)
+        val oldPriceStr = decimalFormat.format(oldPrice)
+
 
         // 现价
-        priceTv.text = nowPriceStr
+        SpanUtils.with(priceTv)
+            .append(StringUtils.getString(R.string.price_unit))
+            .setFontSize(12, true)
+            .append(nowPriceStr)
+            .setFontSize(14, true)
+            .create()
 
         // 原价
         if (price != oldPrice) {
-            SpanUtils.with(oldPriceTv).append(oldPriceStr).setStrikethrough().create()
             oldPriceTv.visibility = View.VISIBLE
+
+            SpanUtils.with(oldPriceTv)
+                .append(StringUtils.getString(R.string.price_unit))
+                .setFontSize(10, true)
+                .append(oldPriceStr)
+                .setFontSize(11, true)
+                .setStrikethrough()
+                .create()
         } else {
             oldPriceTv.visibility = View.GONE
         }

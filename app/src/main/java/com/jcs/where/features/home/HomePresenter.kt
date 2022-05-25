@@ -44,6 +44,10 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
                     view.bindRecommendData(data, isLastPage)
                 }
+
+                override fun onError(errorResponse: ErrorResponse?) {
+                    super.onError(errorResponse)
+                }
             })
     }
 

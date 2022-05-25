@@ -26,6 +26,7 @@ class HotelHomeRecommend : MultiItemEntity {
     var lat = 0.0
     var lng = 0.0
     var price: BigDecimal = BigDecimal.ZERO
+    var original_cost: BigDecimal = BigDecimal.ZERO
     var distance = ""
     var remain_room_num = ""
     var facebook_link = ""

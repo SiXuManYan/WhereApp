@@ -5,14 +5,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
-import com.jcs.where.api.response.recommend.HomeRecommendResponse.*
+import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_1_HOTEL
+import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_2_SERVICE
+import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_3_FOOD
+import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_4_TRAVEL
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
@@ -77,14 +80,12 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
 
         // 价格
         val price_tv = holder.getView<TextView>(R.id.price_tv)
-        SpanUtils.with(price_tv)
-                .append(StringUtils.getString(R.string.price_unit))
-                .setFontSize(12, true)
-                .append(data.price)
-                .setFontSize(14, true)
-                .create()
+        val original_price_tv = holder.getView<TextView>(R.id.original_price_tv)
 
 
+        val price = data.price
+        val originalPrice = data.original_cost
+        BusinessUtils.setNowPriceAndOldPrice(price, originalPrice, price_tv, original_price_tv)
     }
 
 

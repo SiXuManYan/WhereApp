@@ -224,7 +224,7 @@ public class NewsActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RequestResultCode.RESULT_FOLLOW_TO_NEWS) {
-            Log.e("NewsActivity", "onActivityResult: " + "");
+
             if (data != null) {
                 Serializable serializable = data.getSerializableExtra("dto");
                 if (serializable instanceof FollowAndUnfollowDTO) {

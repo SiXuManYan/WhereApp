@@ -21,7 +21,7 @@ public class NewsDetailActivity extends BaseNewsDetailActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_news_detail;
+        return R.layout.activity_news_detail2;
     }
 
 

@@ -29,11 +29,9 @@ import com.jcs.where.widget.JcsTitle;
  */
 public abstract class BaseNewsDetailActivity extends BaseActivity {
     protected NewsDetailModel mModel;
-    protected ImageView mAuthorIcon, mToFollowIv;
+    protected ImageView mAuthorIcon;
     protected TextView mNewsTitleTv, mAuthorNameTv, mNewsTimeTv, mToFollowTv;
     protected WebView mWebView;
-    protected Group mToFollowGroup;
-    protected View mToFollowView;
     protected JcsTitle jcsTitle;
     protected NewsDetailResponse mNewsDetailResponse;
     protected final int STATUS_UNFOLLOWED_UNCOLLECTED = 1;
@@ -47,10 +45,7 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mAuthorIcon = findViewById(R.id.authorIcon);
         mAuthorNameTv = findViewById(R.id.authorNameTv);
         mNewsTimeTv = findViewById(R.id.newsTimeTv);
-        mToFollowView = findViewById(R.id.toFollowView);
         mToFollowTv = findViewById(R.id.toFollowTv);
-        mToFollowIv = findViewById(R.id.toFollowIcon);
-        mToFollowGroup = findViewById(R.id.toFollowGroup);
         mWebView = findViewById(R.id.webView);
         jcsTitle = findViewById(R.id.jcsTitle);
         mWebView.setWebViewClient(new WebViewClient());
@@ -84,7 +79,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
             protected void onSuccess(NewsDetailResponse response) {
                 stopLoading();
                 mNewsDetailResponse = response;
-                mToFollowGroup.setVisibility(View.VISIBLE);
                 NewsDetailResponse.PublisherDTO publisher = response.getPublisher();
                 mFollowStatus = response.getFollowStatus();
                 // 根据收藏状态设置 JcsTitle 右侧第二个 icon
@@ -114,7 +108,9 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        mToFollowView.setOnClickListener(this::onFollowedClicked);
+        mToFollowTv.setOnClickListener(this::onFollowedClicked);
+
+
         mJcsTitle.setSecondRightIvClickListener(this::onCollectClicked);
         mJcsTitle.setFirstRightIvClickListener(v -> {
             String url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_NEWS, mNewsId) + "&extra=news_video";
@@ -218,14 +214,12 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     protected void showToFollow() {
         mToFollowTv.setText(getString(R.string.news_follow));
         mToFollowTv.setTextColor(getColor(R.color.white));
-        mToFollowIv.setImageResource(R.mipmap.ic_add_white);
-        mToFollowView.setBackgroundResource(R.drawable.shape_489bf8_radius_4);
+        mToFollowTv.setBackgroundResource(R.drawable.shape_blue_radius_16);
     }
 
     protected void showFollowed() {
         mToFollowTv.setText(getString(R.string.news_followed));
-        mToFollowTv.setTextColor(getColor(R.color.blue_489b58));
-        mToFollowIv.setImageResource(R.mipmap.ic_right_checked_blue);
-        mToFollowView.setBackgroundResource(R.drawable.shape_white_radius_4_stroke_blue_1);
+        mToFollowTv.setTextColor(getColor(R.color.blue_377BFF));
+        mToFollowTv.setBackgroundResource(R.drawable.stock_blue_radius_16);
     }
 }

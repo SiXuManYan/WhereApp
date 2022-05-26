@@ -48,7 +48,7 @@ public class AboutActivity extends BaseActivity {
 
                     @Override
                     public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(getColor(R.color.blue_4C9EF2));
+                        ds.setColor(getColor(R.color.blue_377BFF));
                         ds.setUnderlineText(false);
                     }
                 })

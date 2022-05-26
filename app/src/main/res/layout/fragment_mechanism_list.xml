@@ -77,7 +77,7 @@
         android:layout_width="@dimen/dp_162"
         android:layout_height="@dimen/dp_162"
         android:layout_marginTop="@dimen/dp_105"
-        android:src="@mipmap/ic_empty_earth"
+        android:src="@mipmap/ic_empty_card_coupon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/searchNoneView" />

@@ -928,4 +928,6 @@ Gentleman must let go</string>
     <string name="refund_information">Refund Info</string>
     <string name="apply_again">Apply Again</string>
     <string name="refund_application">Refund Application</string>
+    <string name="login_to_view_order">Login to view order</string>
+    <string name="no_order_yet">No order yet</string>
 </resources>

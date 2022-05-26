@@ -101,7 +101,8 @@ class CommentComplexActivity : BaseMvpActivity<CommentComplexPresenter>(), Comme
     private fun initList() {
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(this).apply {
-            showEmptyDefault()
+            setEmptyImage(R.mipmap.ic_empty_card_coupon)
+            setEmptyMessage(R.string.no_order_yet)
         }
 
         mAdapter = HotelCommentAdapter().apply {

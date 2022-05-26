@@ -61,7 +61,8 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.white))
         val emptyView = EmptyView(requireContext()).apply {
-            showEmptyDefault()
+            setEmptyImage(R.mipmap.ic_empty_card_coupon)
+            setEmptyMessage(R.string.no_order_yet)
         }
         mAdapter = OrderListAdapter().apply {
             setEmptyView(emptyView)

@@ -943,4 +943,14 @@ Gentleman must let go</string>
     <string name="refund_application">退款申请</string>
     <string name="login_to_view_order">登录后查看订单</string>
     <string name="no_order_yet">暂无订单</string>
+    <string name="latest">最新</string>
+    <string name="following">已关注</string>
+    <string name="shop_info">店铺信息</string>
+    <string name="basic_information">基础信息</string>
+    <string name="chat_name">客服名称</string>
+    <string name="city">所在地</string>
+    <string name="qualification">企业资质</string>
+    <string name="shop_follow">收藏</string>
+    <string name="shop_following">已收藏</string>
+    <string name="fans_format">粉丝数: %1$s</string>
 </resources>

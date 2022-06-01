@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.home.child
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,6 +12,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.features.mall.detail.MallDetailActivity
+import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 
@@ -21,6 +23,8 @@ import com.jcs.where.utils.GlideUtil
  */
 class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend), LoadMoreModule {
 
+    var hideShopName = false
+
     override fun convert(holder: BaseViewHolder, item: MallGood) {
 
         val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
@@ -28,6 +32,12 @@ class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout
         val title = holder.getView<TextView>(R.id.title_tv)
         val nowPriceTv = holder.getView<TextView>(R.id.now_price_tv)
         val originalPriceTv = holder.getView<TextView>(R.id.original_price_tv)
+        val shop_name_tv = holder.getView<TextView>(R.id.shop_name_tv)
+
+        if (hideShopName) {
+            shop_name_tv.visibility = View.GONE
+        }
+        shop_name_tv.text = item.shop_name
 
         val adapterPosition = holder.adapterPosition
         val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
@@ -55,5 +65,10 @@ class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout
         val originalCost = item.original_cost
 
         BusinessUtils.setNowPriceAndOldPrice(price, originalCost, nowPriceTv, originalPriceTv)
+
+        // 店铺入口
+        shop_name_tv.setOnClickListener {
+            MallShopHomeActivity.navigation(context, item.shop_id)
+        }
     }
 }

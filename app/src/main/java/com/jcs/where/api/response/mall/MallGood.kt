@@ -19,4 +19,8 @@ class MallGood {
 
     var original_cost = BigDecimal.ZERO
 
+    var shop_name = ""
+    var shop_id = 0
+
+
 }

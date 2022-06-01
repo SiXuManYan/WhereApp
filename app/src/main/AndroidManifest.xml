@@ -553,6 +553,8 @@
         <activity android:name=".features.gourmet.refund.ComplexRefundActivity" />
         <activity android:name=".features.gourmet.refund.detail.FoodRefundInfoActivity" />
         <activity android:name=".features.mall.complex.CommentComplexActivity" />
+        <activity android:name=".features.mall.shop.home.info.MallShopInfoActivity" />
+        <activity android:name=".features.mall.shop.home.info.QualificationActivity" />
 
 
     </application>

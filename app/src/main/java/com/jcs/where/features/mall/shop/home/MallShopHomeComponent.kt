@@ -14,13 +14,16 @@ import com.jcs.where.api.response.mall.request.MallShop
  *
  */
 interface MallShopHomeView :BaseMvpView {
-    fun bindDetail(response: MallShop)
+    fun bindDetail(response: MallShop){}
     fun collectionHandleSuccess(collectionStatus: Boolean)
 
 }
 
 class MallShopHomePresenter(private var view: MallShopHomeView):BaseMvpPresenter(view){
 
+    /**
+     * 店铺详情
+     */
     fun getDetail(shopId :Int){
         requestApi(mRetrofit.mallShopDetail(shopId),object :BaseMvpObserver<MallShop>(view){
             override fun onSuccess(response: MallShop) {

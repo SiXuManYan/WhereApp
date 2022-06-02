@@ -952,5 +952,5 @@ Gentleman must let go</string>
     <string name="qualification">企业资质</string>
     <string name="shop_follow">收藏</string>
     <string name="shop_following">已收藏</string>
-    <string name="fans_format">粉丝数: %1$s</string>
+    <string name="fans_format">粉丝数: %1$d</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.jcs.where.features.mall.shop.home
 
+import android.widget.Button
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -34,7 +36,8 @@ class MallShopHomePresenter(private var view: MallShopHomeView):BaseMvpPresenter
 
 
 
-    fun collection(shopId: Int) {
+    fun collection(shopId: Int, follow_bt: Button) {
+        follow_bt.isClickable = false
         val request = MallShopCollection().apply {
             shop_id = shopId
         }
@@ -42,11 +45,18 @@ class MallShopHomePresenter(private var view: MallShopHomeView):BaseMvpPresenter
         requestApi(mRetrofit.mallShopCollection(request), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.collectionHandleSuccess(true)
+                follow_bt.isClickable = true
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                super.onError(errorResponse)
+                follow_bt.isClickable = true
             }
         })
     }
 
-    fun unCollection(shopId: Int) {
+    fun unCollection(shopId: Int, follow_bt: Button) {
+        follow_bt.isClickable = false
         val array = ArrayList<Int>()
         array.add(shopId)
         val request = MallShopUnCollection().apply {
@@ -55,9 +65,20 @@ class MallShopHomePresenter(private var view: MallShopHomeView):BaseMvpPresenter
         requestApi(mRetrofit.mallShopUnCollection(request), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.collectionHandleSuccess(false)
+                follow_bt.isClickable = true
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                super.onError(errorResponse)
+                follow_bt.isClickable = true
             }
         })
     }
+}
 
+class CollectionHandle{
+    var fansCount = 0
 
+    /** 收藏状态（0：未收藏，1：已收藏） */
+    var status = 0
 }

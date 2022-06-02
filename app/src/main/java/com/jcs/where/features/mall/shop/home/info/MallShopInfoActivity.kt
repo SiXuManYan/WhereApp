@@ -13,6 +13,7 @@ import com.jcs.where.api.response.mall.request.MallShop
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.mall.shop.home.CollectionHandle
 import com.jcs.where.features.mall.shop.home.MallShopHomePresenter
 import com.jcs.where.features.mall.shop.home.MallShopHomeView
 import com.jcs.where.utils.Constant
@@ -29,6 +30,8 @@ class MallShopInfoActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
 
     /** 收藏状态（0：未收藏，1：已收藏） */
     private var collectStatus = 0
+
+    private var collectCount = 0
 
     private lateinit var data: MallShop
 
@@ -57,10 +60,11 @@ class MallShopInfoActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
     override fun initView() {
         intent.extras?.let {
             data = it.getParcelable<MallShop>(Constant.PARAM_DATA)!!
+            collectCount = data.collect_count
         }
         GlideUtil.load(this, data.logo, shop_logo_iv)
         shop_name_tv.text = data.title
-        fans_number_tv.text = getString(R.string.fans_format, data.collect_count)
+        updateFanCount(collectCount)
 
 
         collectStatus = data.collect_status
@@ -69,11 +73,15 @@ class MallShopInfoActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
         address_tv.text = data.address
         if (TextUtils.isEmpty(data.qualification)) {
             qualification_rl.visibility = View.GONE
-        }else {
+        } else {
             qualification_rl.visibility = View.VISIBLE
         }
 
 
+    }
+
+    private fun updateFanCount(count: Int) {
+        fans_number_tv.text = getString(R.string.fans_format, count)
     }
 
     override fun initData() {
@@ -83,26 +91,36 @@ class MallShopInfoActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
     override fun bindListener() {
         follow_bt.setOnClickListener {
             if (collectStatus == 0) {
-                presenter.collection(data.id)
+                presenter.collection(data.id, follow_bt)
             } else {
-                presenter.unCollection(data.id)
+                presenter.unCollection(data.id, follow_bt)
             }
         }
 
         qualification_rl.setOnClickListener {
-            QualificationActivity.navigation(this,data.qualification)
+            QualificationActivity.navigation(this, data.qualification)
         }
     }
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
         if (collectionStatus) {
-            collectStatus =  1
+            collectStatus = 1
             ToastUtils.showShort(R.string.collection_success)
+            collectCount++
+            updateFanCount(collectCount)
         } else {
-            collectStatus =  0
+            collectStatus = 0
             ToastUtils.showShort(R.string.cancel_collection_success)
+            collectCount--
+            if (collectCount < 0) collectCount = 0
+            updateFanCount(collectCount)
         }
-        EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_REFRESH_FOLLOW , collectStatus))
+
+        val apply = CollectionHandle().apply {
+            fansCount = collectCount
+            status = collectStatus
+        }
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_REFRESH_FOLLOW, apply))
         setLikeImage()
     }
 

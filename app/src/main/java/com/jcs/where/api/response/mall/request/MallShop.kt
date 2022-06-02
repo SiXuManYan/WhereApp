@@ -31,7 +31,7 @@ class MallShop(): Parcelable {
     var nickname = ""
 
     /** 收藏数量 */
-    var collect_count = ""
+    var collect_count = 0
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
@@ -44,7 +44,7 @@ class MallShop(): Parcelable {
         address = parcel.readString().toString()
         qualification = parcel.readString()
         nickname = parcel.readString().toString()
-        collect_count = parcel.readString().toString()
+        collect_count = parcel.readInt()
     }
 
     override fun describeContents(): Int {
@@ -62,7 +62,7 @@ class MallShop(): Parcelable {
         dest.writeString(address)
         dest.writeString(qualification)
         dest.writeString(nickname)
-        dest.writeString(collect_count)
+        dest.writeInt(collect_count)
     }
 
     companion object CREATOR : Parcelable.Creator<MallShop> {

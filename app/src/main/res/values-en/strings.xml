@@ -939,5 +939,5 @@ Gentleman must let go</string>
     <string name="qualification">Qualification</string>
     <string name="shop_follow">Follow</string>
     <string name="shop_following">Following</string>
-    <string name="fans_format">Followers: %1$s</string>
+    <string name="fans_format">Followers: %1$d</string>
 </resources>

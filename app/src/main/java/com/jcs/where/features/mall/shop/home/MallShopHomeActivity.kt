@@ -79,9 +79,9 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
 
         follow_bt.setOnClickListener {
             if (mData.collect_status == 0) {
-                presenter.collection(shopId)
+                presenter.collection(shopId, follow_bt)
             } else {
-                presenter.unCollection(shopId)
+                presenter.unCollection(shopId, follow_bt)
             }
         }
 
@@ -131,7 +131,7 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
         GlideUtil.load(this, response.image, shop_bg_iv)
         GlideUtil.load(this, response.logo, shop_logo_iv, 4)
         shop_name_tv.text = response.title
-        setLikeImage()
+        setLikeImage(false)
     }
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
@@ -143,27 +143,38 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
             ToastUtils.showShort(R.string.cancel_collection_success)
         }
 
-        setLikeImage()
+        setLikeImage(true)
     }
 
-    private fun setLikeImage() {
-
+    private fun setLikeImage(handleCount: Boolean) {
         if (mData.collect_status == 0) {
             follow_bt.setBackgroundResource(R.drawable.shape_blue_radius_16)
             follow_bt.text = getString(R.string.shop_follow)
+            if (handleCount) {
+                mData.collect_count--
+                if (mData.collect_count < 0) {
+                    mData.collect_count = 0
+                }
+            }
+
         } else {
             follow_bt.setBackgroundResource(R.drawable.stock_white_radius_16)
             follow_bt.text = getString(R.string.shop_following)
+            if (handleCount) {
+                mData.collect_count++
+            }
         }
-
     }
+
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_FOLLOW -> {
-                mData.collect_status = baseEvent.data as Int
-                setLikeImage()
+                val collectionHandle = baseEvent.data as CollectionHandle
+                mData.collect_status = collectionHandle.status
+                mData.collect_count = collectionHandle.fansCount
+                setLikeImage(false)
             }
             else -> {}
         }

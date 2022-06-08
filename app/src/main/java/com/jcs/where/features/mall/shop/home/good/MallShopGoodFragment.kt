@@ -28,6 +28,9 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
     private var mShopCategoryId = 0
     private var mShopId = 0
 
+    /** 是否需要隐藏店铺名 */
+    private var mHideListShopName = false
+
     private var goodRequest = MallGoodListRequest()
     private var mPage = Constant.DEFAULT_FIRST_PAGE
 
@@ -41,13 +44,17 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
          * @param shopId 店铺id
          * @param shopCategoryId 店铺分类Id (店铺详情跳转商品列表页)
          */
-        fun newInstance(shopId: Int, shopCategoryId: Int? = null): MallShopGoodFragment {
+        fun newInstance(shopId: Int, shopCategoryId: Int? = null, hideListShopName: Boolean? = false): MallShopGoodFragment {
             val fragment = MallShopGoodFragment()
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_SHOP_ID, shopId)
+
                 shopCategoryId?.let {
                     putInt(Constant.PARAM_CATEGORY_ID, it)
+                }
+                hideListShopName?.let {
+                    putBoolean(Constant.PARAM_TYPE,hideListShopName)
                 }
             }
             fragment.arguments = bundle
@@ -61,6 +68,7 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
         arguments?.let {
             mShopId = it.getInt(Constant.PARAM_SHOP_ID)
             mShopCategoryId = it.getInt(Constant.PARAM_CATEGORY_ID)
+            mHideListShopName = it.getBoolean(Constant.PARAM_TYPE)
         }
         initContent()
     }
@@ -70,6 +78,7 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
         emptyView.showEmptyDefault()
 
         mAdapter = MallRecommendAdapter().apply {
+            hideShopName = mHideListShopName
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {

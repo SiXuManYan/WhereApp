@@ -11,9 +11,12 @@ import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.request.MallShop
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.shop.home.category.MallShopCategoryFragment
 import com.jcs.where.features.mall.shop.home.good.MallShopGoodFragment
+import com.jcs.where.features.mall.shop.home.info.MallShopInfoActivity
 import com.jcs.where.features.mall.shop.home.recommend.MallShopRecommendFragment
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.frames.common.Html5Url
@@ -30,10 +33,9 @@ import kotlinx.android.synthetic.main.activity_mall_shop_home.*
  */
 class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopHomeView {
 
+    private lateinit var mData: MallShop
     private var shopId = 0
 
-    /** 收藏状态（0：未收藏，1：已收藏） */
-    private var collectStatus = 0
 
     override fun isStatusDark() = true
 
@@ -74,11 +76,12 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
     }
 
     override fun bindListener() {
-        like_iv.setOnClickListener {
-            if (collectStatus == 0) {
-                presenter.collection(shopId)
+
+        follow_bt.setOnClickListener {
+            if (mData.collect_status == 0) {
+                presenter.collection(shopId, follow_bt)
             } else {
-                presenter.unCollection(shopId)
+                presenter.unCollection(shopId, follow_bt)
             }
         }
 
@@ -92,7 +95,10 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
                 putInt(Constant.PARAM_TYPE, 8)
                 putInt(Constant.PARAM_SHOP_ID, shopId)
             })
+        }
 
+        shop_name_tv.setOnClickListener {
+            MallShopInfoActivity.navigation(this, mData)
         }
 
     }
@@ -107,7 +113,7 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
                     MallShopRecommendFragment.newInstance(shopId)
                 }
                 1 -> {
-                    MallShopGoodFragment.newInstance(shopId)
+                    MallShopGoodFragment.newInstance(shopId, hideListShopName = true)
                 }
                 else -> {
                     MallShopCategoryFragment.newInstance(shopId)
@@ -121,33 +127,59 @@ class MallShopHomeActivity : BaseMvpActivity<MallShopHomePresenter>(), MallShopH
 
 
     override fun bindDetail(response: MallShop) {
+        this.mData = response
         GlideUtil.load(this, response.image, shop_bg_iv)
         GlideUtil.load(this, response.logo, shop_logo_iv, 4)
         shop_name_tv.text = response.title
-        collectStatus = response.collect_status
-        setLikeImage()
+        setLikeImage(false)
     }
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
         if (collectionStatus) {
-            collectStatus =  1
+            mData.collect_status = 1
             ToastUtils.showShort(R.string.collection_success)
         } else {
-            collectStatus =  0
+            mData.collect_status = 0
             ToastUtils.showShort(R.string.cancel_collection_success)
         }
 
-        setLikeImage()
+        setLikeImage(true)
     }
 
-    private fun setLikeImage() {
-        like_iv.setImageResource(
-            if (collectStatus == 0) {
-                R.mipmap.ic_like_normal_night
-            } else {
-                R.mipmap.ic_like_red_night
+    private fun setLikeImage(handleCount: Boolean) {
+        if (mData.collect_status == 0) {
+            follow_bt.setBackgroundResource(R.drawable.shape_blue_radius_16)
+            follow_bt.text = getString(R.string.shop_follow)
+            if (handleCount) {
+                mData.collect_count--
+                if (mData.collect_count < 0) {
+                    mData.collect_count = 0
+                }
             }
-        )
+
+        } else {
+            follow_bt.setBackgroundResource(R.drawable.stock_white_radius_16)
+            follow_bt.text = getString(R.string.shop_following)
+            if (handleCount) {
+                mData.collect_count++
+            }
+        }
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_FOLLOW -> {
+                val collectionHandle = baseEvent.data as CollectionHandle
+                mData.collect_status = collectionHandle.status
+                mData.collect_count = collectionHandle.fansCount
+                setLikeImage(false)
+            }
+            else -> {}
+        }
+
+
     }
 
 }

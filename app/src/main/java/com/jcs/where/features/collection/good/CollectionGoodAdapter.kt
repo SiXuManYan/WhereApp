@@ -8,12 +8,14 @@ import android.widget.ViewSwitcher
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.collection.MallGoodCollection
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 
 /**
@@ -24,7 +26,6 @@ class CollectionGoodAdapter : BaseQuickAdapter<MallGoodCollection, BaseViewHolde
     LoadMoreModule {
 
     override fun convert(holder: BaseViewHolder, item: MallGoodCollection) {
-        holder.setText(R.id.now_price_tv, StringUtils.getString(R.string.price_unit_format, item.price))
 
         val container = holder.getView<RelativeLayout>(R.id.child_container_rl)
         val goodIv = holder.getView<ImageView>(R.id.good_iv)
@@ -32,6 +33,8 @@ class CollectionGoodAdapter : BaseQuickAdapter<MallGoodCollection, BaseViewHolde
         val invalid_tv = holder.getView<TextView>(R.id.invalid_tv)
         val invalid_reason_tv = holder.getView<TextView>(R.id.invalid_reason_tv)
         val bottom_sw = holder.getView<ViewSwitcher>(R.id.bottom_sw)
+        val original_price_tv = holder.getView<TextView>(R.id.original_price_tv)
+        val now_price_tv = holder.getView<TextView>(R.id.now_price_tv)
 
         good_name_tv.text =  item.title
 
@@ -67,6 +70,10 @@ class CollectionGoodAdapter : BaseQuickAdapter<MallGoodCollection, BaseViewHolde
             }
         }
 
+        // 价格
+        val nowPrice = item.price
+        val originalPrice = item.original_cost
+        BusinessUtils.setNowPriceAndOldPrice(nowPrice, originalPrice, now_price_tv, original_price_tv)
 
     }
 }

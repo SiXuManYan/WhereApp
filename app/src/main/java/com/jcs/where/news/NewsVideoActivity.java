@@ -91,7 +91,7 @@ public class NewsVideoActivity extends BaseNewsDetailActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_news_video;
+        return R.layout.activity_news_video2;
     }
 
     @Override

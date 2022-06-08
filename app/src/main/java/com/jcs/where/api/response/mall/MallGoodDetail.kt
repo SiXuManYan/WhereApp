@@ -14,8 +14,6 @@ class MallGoodDetail {
     var title = ""
     var main_image = ""
     var sub_images = ArrayList<String>()
-    var min_price:String? = ""
-    var max_price = ""
     var stock = 0
     var sold = 0
     var category_id = 0
@@ -45,6 +43,9 @@ class MallGoodDetail {
     var count = 0
     var comments = ArrayList<HotelComment>()
 
+
+    var price = BigDecimal.ZERO
+    var original_cost = BigDecimal.ZERO
 
 }
 
@@ -98,7 +99,7 @@ class MallSpecs : Serializable{
 
 class SkuDataSource {
     var main_image = ""
-    var min_price :String?= ""
+    var min_price = BigDecimal.ZERO
     var stock = 0
 
     /** 商品属性 */
@@ -106,6 +107,9 @@ class SkuDataSource {
 
     /** 商品属性组合信息 */
     var specs = ArrayList<MallSpecs>()
+
+
+    var original_cost = BigDecimal.ZERO
 
 
 }

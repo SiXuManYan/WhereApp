@@ -158,4 +158,9 @@ public class EventCode {
      */
     public static final int EVENT_REFUND_METHOD_ADD_SUCCESS = 1036;
 
+    /**
+     * 刷新关注状态
+     */
+    public static final int EVENT_REFRESH_FOLLOW = 1037;
+
 }

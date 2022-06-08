@@ -42,6 +42,7 @@ public class Constant {
     public static final String PARAM_NUMBER = "param_number";
     public static final String PARAM_ORDER_ID = "param_order_id";
     public static final String PARAM_REFUND_ID = "param_refund_id";
+    public static final String PARAM_REFUND_PRICE = "param_refund_price";
     public static final String PARAM_ORDER_GOOD_ID = "param_order_good_id";
     public static final String PARAM_COMMENT_ID = "param_comment_id";
     public static final String PARAM_HOTEL_ID = "param_hotel_id";
@@ -58,6 +59,7 @@ public class Constant {
     public static final String PARAM_PRICE = "PARAM_PRICE";
     public static final String PARAM_GOOD_NAME = "param_good_name";
     public static final String PARAM_GOOD_IMAGE = "param_good_image";
+    public static final String PARAM_IMAGE = "param_image";
     public static final String PARAM_ORDER_COMMIT_DATA = "param_order_commit_data";
     public static final String PARAM_CHILD_CATEGORY_ID = "param_child_category_id";
     public static final String PARAM_CATEGORY_ID = "param_category_id";

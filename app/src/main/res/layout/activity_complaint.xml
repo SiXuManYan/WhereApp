@@ -13,9 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:backIcon="@drawable/ic_back_black"
-        app:middleTitle="@string/title_store_refund"
-        app:showBackIv="true"
-        app:showBottomLine="true" />
+        app:middleTitle="@string/complaint"
+        app:showBackIv="true" />
 
 
     <androidx.core.widget.NestedScrollView

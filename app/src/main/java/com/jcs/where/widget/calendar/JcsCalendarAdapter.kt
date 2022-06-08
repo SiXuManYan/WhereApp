@@ -31,7 +31,7 @@ class JcsCalendarAdapter(sectionHeadResId: Int, layoutResId: Int, data: List<Cal
         if (item.day != 0) {
             holder.setText(R.id.dayTv, item.day.toString())
             val itemView = holder.itemView
-            if (item.isStartDay) {
+            if (item.isStartDay)  {
                 if (isEndSelected) {
                     rightView.setBackgroundColor(ColorUtils.getColor(R.color.color_DCE8FF))
                 }

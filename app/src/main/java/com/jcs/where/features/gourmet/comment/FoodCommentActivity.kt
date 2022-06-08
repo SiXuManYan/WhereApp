@@ -24,8 +24,8 @@ class FoodCommentActivity : BaseActivity() {
             arrayOf(
                     StringUtils.getString(R.string.all),
                     StringUtils.getString(R.string.picture),
-                    StringUtils.getString(R.string.high_option),
-                    StringUtils.getString(R.string.bad_reviews),
+                    StringUtils.getString(R.string.latest),
+                    StringUtils.getString(R.string.low_rating),
             )
 
     private var restaurantId: String = ""

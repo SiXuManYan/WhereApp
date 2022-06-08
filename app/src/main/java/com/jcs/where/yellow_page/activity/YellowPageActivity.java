@@ -211,7 +211,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
 
         mThirdCateTv.setText(selectThirdCate.getName());
         changeLevelTitleStatus(mSecondCateTv, R.color.black_333333, mSecondArrowIv, R.mipmap.ic_store_down);
-        changeLevelTitleStatus(mThirdCateTv, R.color.blue_4B9DF1, mThirdArrowIv, R.mipmap.ic_store_down);
+        changeLevelTitleStatus(mThirdCateTv, R.color.blue_377BFF, mThirdArrowIv, R.mipmap.ic_store_down);
     }
 
     private void changeLevelTitleStatus(TextView cateTv, int colorRes, ImageView arrowIv, int iconRes) {

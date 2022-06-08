@@ -25,7 +25,7 @@
             android:layout_height="@dimen/dp_30"
             android:layout_toStartOf="@+id/addTabView"
             android:background="@drawable/shape_news_tab_layout"
-            app:tabIndicatorColor="@color/blue_4C9EF2"
+            app:tabIndicatorColor="@color/blue_377BFF"
             app:tabIndicatorFullWidth="false"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabNormalText" />

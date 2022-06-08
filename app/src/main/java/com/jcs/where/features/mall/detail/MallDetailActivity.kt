@@ -24,7 +24,7 @@ import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
-import com.jcs.where.features.mall.comment.MallCommentActivity
+import com.jcs.where.features.mall.complex.CommentComplexActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
@@ -103,7 +103,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
 
-
     private fun initComment() {
         mCommentAdapter = HotelCommentAdapter()
         comment_rv.isNestedScrollingEnabled = true
@@ -158,11 +157,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
 
-
-    private var  mWebViewClient = object : WebViewClient(){
+    private var mWebViewClient = object : WebViewClient() {
     }
 
-    private var  mWebChromeClient = object : WebChromeClient(){
+    private var mWebChromeClient = object : WebChromeClient() {
 
     }
 
@@ -226,9 +224,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
 
         more_comment_tv.setOnClickListener {
-            startActivity(MallCommentActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_ID, goodId)
-            })
+            CommentComplexActivity.navigation(this, goodId, CommentComplexActivity.USE_TYPE_STORE)
         }
     }
 
@@ -257,7 +253,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         mMediaAdapter.setNewInstance(mediaList)
         point_view.setPointCount(mediaList.size)
 
-        price_tv.text = getString(R.string.price_unit_format, response.min_price)
+        val nowPrice = response.price
+        val originalPrice = response.original_cost
+        BusinessUtils.setNowPriceAndOldPrice(nowPrice, originalPrice, price_tv, original_price_tv)
+
+
         title_tv.text = response.title
 
 
@@ -269,7 +269,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
         mSkuDialog.data = SkuDataSource().apply {
             main_image = response.main_image
-            min_price = response.min_price
+            min_price = nowPrice
+            original_cost = originalPrice
             stock = response.stock
             attribute_list.clear()
             attribute_list.addAll(response.attribute_list)
@@ -283,7 +284,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         if (response.im_status == 1 && !TextUtils.isEmpty(response.mer_uuid)) {
             mall_service_tv.setOnClickListener {
 
-                val customMessage = CustomMessage(goodId, response.main_image, response.title, response.min_price)
+                val customMessage = CustomMessage(goodId, response.main_image, response.title, nowPrice.toPlainString())
 
                 BusinessUtils.startRongCloudConversationActivity(this, response.mer_uuid, response.mer_name, null, Bundle().apply {
                     putInt(Constant.PARAM_TYPE, 1)

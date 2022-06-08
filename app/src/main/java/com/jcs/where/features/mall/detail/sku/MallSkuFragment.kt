@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -13,6 +14,7 @@ import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.NumberView2
@@ -51,7 +53,11 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     private fun initOther() {
 
-        price_tv.text = getString(R.string.price_unit_format, data.min_price)
+        // 原价
+        val minPrice = data.min_price
+        val originalCost = data.original_cost
+        BusinessUtils.setNowPriceAndOldPrice(minPrice, originalCost, price_tv, original_price_tv)
+
         GlideUtil.load(requireContext(), data.main_image, good_iv, 4)
 
         number_view.apply {
@@ -92,6 +98,9 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
             }
         }
         stock_tv.text = StringUtils.getString(R.string.stock_format, data.stock)
+
+
+
     }
 
     private fun initSkuLayout() {
@@ -131,10 +140,10 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
                 var allSelected = 0
                 it.value.forEach { value ->
                     if (value.nativeSelected) {
-                        allSelected ++
+                        allSelected++
                     }
                 }
-                if (allSelected == 0){
+                if (allSelected == 0) {
                     ToastUtils.showShort(getString(R.string.please_selected) + it.key)
                     return@setOnClickListener
                 }
@@ -279,7 +288,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         val resultSkuList: ArrayList<MallSpecs> = presenter.getSkuResultList(data.specs, allSelectedItem)
 
         // 刷新列表选中状态
-        presenter.changeViewStatus(mAdapter, resultSkuList, currentItem,allSelectedItem)
+        presenter.changeViewStatus(mAdapter, resultSkuList, currentItem, allSelectedItem)
         return resultSkuList
     }
 

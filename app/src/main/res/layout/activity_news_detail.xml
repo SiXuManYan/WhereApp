@@ -104,7 +104,7 @@
                     android:id="@+id/toFollowIcon"
                     android:layout_width="@dimen/dp_12"
                     android:layout_height="@dimen/dp_12"
-                    android:src="@mipmap/ic_add_white"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/toFollowView"
                     app:layout_constraintEnd_toStartOf="@id/toFollowTv"
                     app:layout_constraintHorizontal_chainStyle="packed"

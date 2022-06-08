@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
@@ -76,12 +77,9 @@ class HotelHomeRecommendAdapter : BaseMultiItemQuickAdapter<HotelHomeRecommend, 
 
         // 价格
         val price_tv = holder.getView<TextView>(R.id.price_tv)
-        SpanUtils.with(price_tv)
-            .append(StringUtils.getString(R.string.price_unit))
-            .setFontSize(12, true)
-            .append(data.price.toPlainString())
-            .setFontSize(14, true)
-            .create()
+        val original_price_tv = holder.getView<TextView>(R.id.original_price_tv)
+
+        BusinessUtils.setNowPriceAndOldPrice(data.price,data.original_cost,price_tv,original_price_tv)
     }
 
     /**

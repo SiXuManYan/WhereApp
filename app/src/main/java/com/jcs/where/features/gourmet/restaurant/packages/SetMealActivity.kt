@@ -206,6 +206,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
             stock_tv.text = getString(R.string.stock_format_2, data.inventory)
         }
 
+        name_tv.text = data.title
         handlePrice()
     }
 

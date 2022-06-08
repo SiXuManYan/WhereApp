@@ -130,6 +130,7 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         emptyView.showEmptyDefault()
 
         mAdapter = MallRecommendAdapter().apply {
+            hideShopName = true
             headerWithEmptyEnable = true
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false

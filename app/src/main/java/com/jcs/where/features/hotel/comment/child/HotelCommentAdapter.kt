@@ -81,7 +81,9 @@ class HotelCommentAdapter : BaseQuickAdapter<HotelComment, BaseViewHolder>(R.lay
                 layoutManager = liner
             } else {
                 layoutManager = grid
-                addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0))
+                if (itemDecorationCount == 0) {
+                    addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0))
+                }
             }
             adapter = imageAdapter
         }

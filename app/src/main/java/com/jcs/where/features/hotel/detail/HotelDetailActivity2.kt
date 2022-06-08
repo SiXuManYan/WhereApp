@@ -17,14 +17,14 @@ import com.jcs.where.R
 import com.jcs.where.api.response.HotelRoomListResponse
 import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.hotel.book.HotelBookActivity
-import com.jcs.where.features.hotel.comment.HotelCommentActivity2
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
-import com.jcs.where.features.hotel.detail.room.RoomDetailFragment
-import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
+import com.jcs.where.features.hotel.detail.room.RoomDetailFragment
+import com.jcs.where.features.mall.complex.CommentComplexActivity
+import com.jcs.where.features.web.WebViewActivity
+import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
@@ -32,9 +32,7 @@ import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
-
 import kotlinx.android.synthetic.main.activity_hotel_detail_new_2.*
-import java.util.*
 
 
 /**
@@ -104,7 +102,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             starLevel: String? = null,
             priceRange: String? = null,
             grade: String? = null,
-            roomNumber: Int? = 1
+            roomNumber: Int? = 1,
         ) {
 
             val bundle = Bundle().apply {
@@ -209,14 +207,14 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                     else -> ""
                 }
 
-              val cancelable =   if (roomData.is_cancel == 1) {
+                val cancelable = if (roomData.is_cancel == 1) {
                     getString(R.string.cancelable)
                 } else {
                     getString(R.string.not_cancelable)
                 }
                 val imageStr = if (roomData.images.isNotEmpty()) {
                     roomData.images[0]
-                }else{
+                } else {
                     ""
                 }
 
@@ -230,8 +228,8 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                     breakFastType = breakfast_type,
                     roomArea = roomData.room_area,
                     roomPeople = getString(R.string.people_number_format, roomData.people),
-                    hotelName =  name_tv.text.toString(),
-                    cancelable =cancelable,
+                    hotelName = name_tv.text.toString(),
+                    cancelable = cancelable,
                     roomNumber = roomNumber,
                     roomImage = imageStr,
                     startDate = mStartDateBean,
@@ -360,10 +358,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             finish()
         }
         more_comment_tv.setOnClickListener {
-
-            startActivityAfterLogin(HotelCommentActivity2::class.java, Bundle().apply {
-                putInt(Constant.PARAM_ID, hotelId);
-            })
+            CommentComplexActivity.navigation(this, hotelId, CommentComplexActivity.USE_TYPE_HOTEL)
         }
         right_date_tv.setOnClickListener {
             mJcsCalendarDialog.show(supportFragmentManager)

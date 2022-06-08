@@ -31,7 +31,7 @@
             android:layout_height="@dimen/dp_30"
             android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/dp_10"
-            android:layout_toStartOf="@+id/like_iv"
+            android:layout_toStartOf="@+id/share_iv"
             android:layout_toEndOf="@+id/back_iv"
             android:background="@drawable/bg_search"
             android:orientation="horizontal"
@@ -63,19 +63,6 @@
 
 
         <ImageView
-            android:id="@+id/like_iv"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_centerVertical="true"
-            android:layout_gravity="end"
-            android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginEnd="@dimen/dp_15"
-            android:layout_toStartOf="@+id/share_iv"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_like_normal_night" />
-
-
-        <ImageView
             android:id="@+id/share_iv"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
@@ -101,31 +88,61 @@
 
 
         <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_shop_bg" />
+
+
+        <ImageView
             android:id="@+id/shop_logo_iv"
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginBottom="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_22"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars[12]" />
 
 
         <TextView
             android:id="@+id/shop_name_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/shop_logo_iv"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_toEndOf="@+id/shop_logo_iv"
+            android:drawablePadding="@dimen/dp_4"
             android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
             android:lineSpacingMultiplier="1.2"
-            android:maxLines="2"
+            android:maxLines="1"
             android:paddingStart="@dimen/dp_12"
-            android:paddingEnd="@dimen/dp_12"
+            android:paddingEnd="@dimen/dp_15"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16"
+            app:drawableEndCompat="@mipmap/ic_arrow_right_white"
             tools:text="Happy New Year" />
+
+
+        <!--
+        shape_blue_radius_16
+        -->
+
+        <Button
+            android:id="@+id/follow_bt"
+            android:textAllCaps="false"
+            android:layout_width="@dimen/dp_94"
+            android:layout_height="@dimen/dp_28"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:background="@drawable/shape_blue_radius_16"
+            android:text="@string/news_follow"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
 
 
     </RelativeLayout>

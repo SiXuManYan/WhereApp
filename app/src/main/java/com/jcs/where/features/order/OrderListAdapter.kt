@@ -278,7 +278,15 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         // 状态
         val order_status_tv = holder.getView<TextView>(R.id.order_status_tv)
-        order_status_tv.text = BusinessUtils.getTakeawayStatusText(modelData.order_status)
+        val status = modelData.order_status
+
+        order_status_tv.text = BusinessUtils.getTakeawayStatusText(status)
+
+        if (status == 1 || status == 8) {
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.orange_FF5837))
+        } else {
+            order_status_tv.setTextColor(ColorUtils.getColor(R.color.black_333333))
+        }
 
         // 内容
         val first_tv = holder.getView<TextView>(R.id.first_tv)
@@ -308,7 +316,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         // 底部
         val right_tv = holder.getView<TextView>(R.id.right_tv)
 
-        when (modelData.order_status) {
+        when (status) {
 
             1 -> {
                 right_tv.visibility = View.VISIBLE

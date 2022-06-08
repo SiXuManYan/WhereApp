@@ -22,10 +22,7 @@ interface HotelOrderDetailView : BaseMvpView {
      */
     fun cancelSuccess()
 
-    /**
-     * 申请退款
-     */
-    fun refundCommitSuccess()
+
 
 }
 
@@ -52,14 +49,6 @@ class HotelOrderDetailPresenter(private var viewHotel: HotelOrderDetailView) : B
 
 
 
-    /**
-     * 申请退款
-     */
-    fun refundOrder(orderId: Int) {
-        requestApi(mRetrofit.refundHotelOrder(orderId), object : BaseMvpObserver<JsonElement>(viewHotel) {
-            override fun onSuccess(response: JsonElement) = viewHotel.refundCommitSuccess()
-        })
-    }
 
 
 

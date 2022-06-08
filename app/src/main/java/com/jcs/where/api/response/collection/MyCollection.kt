@@ -1,6 +1,7 @@
 package com.jcs.where.api.response.collection
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/11/16 16:32.
@@ -101,7 +102,8 @@ class MallGoodCollection {
     var good_id = 0
     var title = ""
     var image = ""
-    var price = ""
+    var price = BigDecimal.ZERO
+    var original_cost = BigDecimal.ZERO
 
 
     /** 删除状态1已删除 0未删除 */

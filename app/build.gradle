@@ -16,8 +16,8 @@ android {
         applicationId "com.jcs.where"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 29
-        versionName "0.2.16"
+        versionCode 33
+        versionName "0.2.19"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"
@@ -103,6 +103,8 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+//    ndkVersion "21.1.6352462"
 
 }
 

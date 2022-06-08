@@ -377,7 +377,7 @@
     <string name="sales_priority">Sales Priority</string>
     <string name="nearest_first">Nearest</string>
     <string name="dine_in_dishes">Dine-in dishes</string>
-    <string name="panic_buying">Span Up</string>
+    <string name="panic_buying">Buy Now</string>
     <string name="sale_format">Sold&#160;%1$s</string>
     <string name="unfold_more">Unfold More</string>
     <string name="fold">Fold</string>
@@ -924,4 +924,20 @@ Gentleman must let go</string>
     <string name="refund_fail_desc">You need to initiate a post-sale refund again and confirm the refund method again.</string>
     <string name="bind_refund_third_method">Bind the Refund Channel</string>
     <string name="check_return">Check Return</string>
+    <string name="order_code_information">Coupon code information</string>
+    <string name="refund_information">Refund Info</string>
+    <string name="apply_again">Apply Again</string>
+    <string name="refund_application">Refund Application</string>
+    <string name="login_to_view_order">Login to view order</string>
+    <string name="no_order_yet">No order yet</string>
+    <string name="latest">Latest</string>
+    <string name="following">Following</string>
+    <string name="shop_info">Shop Information</string>
+    <string name="basic_information">Basic Information</string>
+    <string name="chat_name">Chat Name</string>
+    <string name="city">City</string>
+    <string name="qualification">Qualification</string>
+    <string name="shop_follow">Follow</string>
+    <string name="shop_following">Following</string>
+    <string name="fans_format">Followers: %1$d</string>
 </resources>

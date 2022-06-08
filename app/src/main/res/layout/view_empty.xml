@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:scaleType="centerInside"
-        android:src="@mipmap/ic_empty_earth" />
+        android:src="@mipmap/ic_empty_card_coupon" />
 
 
     <TextView

@@ -15,7 +15,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
-import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2
+import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity
 import com.jcs.where.features.hotel.order.HotelOrderDetailActivity
 import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
@@ -61,7 +61,8 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.white))
         val emptyView = EmptyView(requireContext()).apply {
-            showEmptyDefault()
+            setEmptyImage(R.mipmap.ic_empty_card_coupon)
+            setEmptyMessage(R.string.no_order_yet)
         }
         mAdapter = OrderListAdapter().apply {
             setEmptyView(emptyView)
@@ -191,7 +192,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             }
 
             OrderListResponse.ORDER_TYPE_TAKEAWAY_3 -> {
-                startActivity(TakeawayOrderDetailActivity2::class.java, Bundle().apply {
+                startActivity(TakeawayOrderDetailActivity::class.java, Bundle().apply {
                     putInt(Constant.PARAM_ORDER_ID, data.id)
                 })
             }

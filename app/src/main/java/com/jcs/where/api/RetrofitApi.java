@@ -98,6 +98,7 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.hydropower.PaymentRecord;
+import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
 import com.jcs.where.api.response.mall.MallCommentCount;
@@ -111,6 +112,7 @@ import com.jcs.where.api.response.mall.MallShopRecommend;
 import com.jcs.where.api.response.mall.RefundBankSelected;
 import com.jcs.where.api.response.mall.RefundBindRequest;
 import com.jcs.where.api.response.mall.RefundMethod;
+import com.jcs.where.api.response.mall.RemitId;
 import com.jcs.where.api.response.mall.request.MallAddCart;
 import com.jcs.where.api.response.mall.request.MallCollection;
 import com.jcs.where.api.response.mall.request.MallCommitResponse;
@@ -761,7 +763,8 @@ public interface RetrofitApi {
     /**
      * 餐厅评论列表
      *
-     * @param type 列表类型（0：全部，1：有图，2：好评，3：差评）
+     * @param type
+     *             列表类型（0：全部，1：有图，2：最新，3：低分）
      */
     @GET("restaurantapi/v2/comments")
     Observable<JcsResponse<PageResponse<HotelComment>>> getFoodCommentList(
@@ -1255,12 +1258,6 @@ public interface RetrofitApi {
 
 
     /**
-     * 美食-餐厅退款
-     */
-    @DELETE("restaurantapi/v2/eat_in/orders/refund/{order_id}")
-    Observable<JcsResponse<JsonElement>> delicacyOrderRefund(@Path("order_id") int order_id);
-
-    /**
      * 美食-外卖取消订单
      */
     @DELETE("restaurantapi/v2/take_out/orders/{order_id}")
@@ -1269,8 +1266,12 @@ public interface RetrofitApi {
     /**
      * 美食-外卖退款
      */
-    @DELETE("restaurantapi/v2/take_out/orders/refund/{order_id}")
-    Observable<JcsResponse<JsonElement>> takeawayOrderRefund(@Path("order_id") int order_id);
+    @HTTP(method = "DELETE", path = "restaurantapi/v2/take_out/orders/refund/{order_id}", hasBody = true)
+    Observable<JcsResponse<JsonElement>> takeawayOrderRefund(
+            @Path("order_id") int order_id,
+            @Body RemitId request
+
+    );
 
 
     /**
@@ -1312,8 +1313,9 @@ public interface RetrofitApi {
     /**
      * 酒店订单申请退款
      */
-    @DELETE("hotelapi/v2/orders/refund/{order_id}")
-    Observable<JcsResponse<JsonElement>> refundHotelOrder(@Path("order_id") int order_id);
+    @HTTP(method = "DELETE", path = "hotelapi/v2/orders/refund/{order_id}", hasBody = true)
+    Observable<JcsResponse<JsonElement>> refundHotelOrder(@Path("order_id") int order_id,
+                                                          @Body RemitId request);
 
 
     /**
@@ -1704,7 +1706,9 @@ public interface RetrofitApi {
     /**
      * 新版商城评论列表
      *
-     * @param type 列表类型（0：全部，1：有图，2：最新，3：低分）
+     * @param type 列表类型
+     *             1 2 3 4 5
+     *             6最新 7有图 8低分 0全部
      */
     @GET("estoreapi/v2/comments")
     Observable<JcsResponse<PageResponse<HotelComment>>> getMallCommentList(
@@ -1726,6 +1730,15 @@ public interface RetrofitApi {
      */
     @GET("estoreapi/v2/comments/num")
     Observable<JcsResponse<MallCommentCount>> mallCommentCount(@Query("goods_id") int goods_id);
+
+    /**
+     * 酒店评价数量
+     */
+    @GET("hotelapi/v2/hotel/{hotel_id}/comment/nums")
+    Observable<JcsResponse<MallCommentCount>> hotelCommentCount(
+            @Path("hotel_id") int hotel_id,
+            @Query("version") String version
+    );
 
     /**
      * 商城评价详情
@@ -1941,11 +1954,24 @@ public interface RetrofitApi {
 
 
     /**
-     * 订单投诉
+     * estore订单投诉
      */
     @POST("estoreapi/v2/order/complaint")
-    Observable<JcsResponse<JsonElement>> complaint(@Body ComplaintRequest batchComment);
+    Observable<JcsResponse<JsonElement>> mallComplaint(@Body ComplaintRequest batchComment);
 
+
+    /**
+     * 美食外卖订单投诉
+     */
+    @POST("restaurantapi/v2/order/complaint")
+    Observable<JcsResponse<JsonElement>> complaintFood(@Body ComplaintRequest batchComment);
+
+
+    /**
+     * 酒店订单投诉
+     */
+    @POST("hotelapi/v2/order/complaint")
+    Observable<JcsResponse<JsonElement>> complaintHotel(@Body ComplaintRequest batchComment);
 
     /**
      * 获取 web收银台url
@@ -2013,5 +2039,35 @@ public interface RetrofitApi {
     @POST("commonapi/v2/remit_account")
     Observable<JcsResponse<JsonElement>> bindRefundInfo(@Body RefundBindRequest request);
 
+
+    /**
+     * 美食-餐厅退款
+     */
+    @HTTP(method = "DELETE", path = "restaurantapi/v2/eat_in/orders/refund/{order_id}", hasBody = true)
+    Observable<JcsResponse<JsonElement>> delicacyOrderRefund(
+            @Path("order_id") int order_id,
+            @Body RemitId request
+    );
+
+
+    /**
+     * 获取 美食外卖退款信息详情
+     *
+     * @param type 1美食 2外卖
+     */
+    @GET("restaurantapi/v2/refunds/{order_id}")
+    Observable<JcsResponse<FoodRefundInfo>> getFoodRefundInfo(
+            @Path("order_id") int order_id,
+            @Query("type") int type
+    );
+
+
+    /**
+     * 获取 酒店外卖退款信息详情
+     */
+    @GET("hotelapi/v2/refunds/{order_id}")
+    Observable<JcsResponse<FoodRefundInfo>> getHotelRefundInfo(
+            @Path("order_id") int order_id
+    );
 
 }

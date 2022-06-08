@@ -2,7 +2,6 @@ package com.jcs.where.features.mall.refund.complaint
 
 import com.blankj.utilcode.util.RegexUtils
 import com.google.gson.JsonElement
-import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -27,6 +26,8 @@ interface ComplaintView : BaseMvpView {
 
 class ComplaintPresenter(private var view: ComplaintView) : BaseMvpPresenter(view) {
 
+
+    var complaintType = 0
 
     fun upLoadImage(mImageAdapter: StoreRefundAdapter2, orderId: Int, desc: String) {
         val map: HashMap<String, RequestBody> = HashMap()
@@ -55,7 +56,6 @@ class ComplaintPresenter(private var view: ComplaintView) : BaseMvpPresenter(vie
             }
 
 
-
         })
 
 
@@ -71,12 +71,38 @@ class ComplaintPresenter(private var view: ComplaintView) : BaseMvpPresenter(vie
             image = descImages
         }
 
-        requestApi(mRetrofit.complaint( apply), object : BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement?) {
-                view.applicationSuccess()
-            }
+        when (complaintType) {
 
-        })
+            ComplaintRequest.TYPE_MALL -> {
+                requestApi(mRetrofit.mallComplaint(apply), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement?) {
+                        view.applicationSuccess()
+                    }
+                })
+
+            }
+            ComplaintRequest.TYPE_FOOD,
+            ComplaintRequest.TYPE_FOOD_TAKEAWAY ->{
+                apply.type = complaintType
+                requestApi(mRetrofit.complaintFood(apply), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement?) {
+                        view.applicationSuccess()
+                    }
+                })
+            }
+            ComplaintRequest.TYPE_HOTEL->{
+                requestApi(mRetrofit.complaintHotel(apply), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement?) {
+                        view.applicationSuccess()
+                    }
+                })
+            }
+            else -> {}
+        }
+
+
+
+
     }
 
 }

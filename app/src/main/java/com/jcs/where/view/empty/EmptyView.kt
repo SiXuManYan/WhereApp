@@ -63,7 +63,7 @@ class EmptyView : LinearLayout {
     }
 
     fun setEmptyMessage(emptyMessage: String) {
-        empty_message_tv.setText(emptyMessage)
+        empty_message_tv.text = emptyMessage
     }
 
     fun setEmptyHint(@StringRes hint: Int) {
@@ -93,7 +93,7 @@ class EmptyView : LinearLayout {
      * 网络错误
      */
     fun showNetworkError(onClickListener: OnClickListener? = null) {
-        empty_iv.setImageResource(R.mipmap.ic_empty_network_error)
+        empty_iv.setImageResource(R.mipmap.ic_empty_card_coupon)
         empty_message_tv.setText(R.string.empty_network_error)
         empty_hint_tv.setText(R.string.empty_network_error_hint)
 
@@ -130,7 +130,7 @@ class EmptyView : LinearLayout {
      * 设置空布局
      */
     fun showEmptyDefault() {
-        setEmptyImage(R.mipmap.ic_empty_earth)
+        setEmptyImage(R.mipmap.ic_empty_card_coupon)
         setEmptyMessage(R.string.empty_data_default)
     }
 

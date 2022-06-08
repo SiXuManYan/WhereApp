@@ -74,7 +74,6 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
         if (it.resultCode == Activity.RESULT_OK) {
             alreadyComplaint = true
             ToastUtils.showShort(R.string.complained_success)
-
         }
     }
 
@@ -138,7 +137,8 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
             if (alreadyComplaint) {
                 ToastUtils.showShort(R.string.complained_success)
             } else {
-                searchLauncher.launch(Intent(this, ComplaintActivity::class.java).putExtra(Constant.PARAM_ORDER_ID, goodOrderId))
+                val intent = Intent(this, ComplaintActivity::class.java).putExtra(Constant.PARAM_ORDER_ID, goodOrderId)
+                searchLauncher.launch(intent)
             }
         }
 

@@ -7,10 +7,12 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
@@ -24,6 +26,7 @@ import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
 import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
+import java.text.DecimalFormat
 
 /**
  * Created by Wangsw  2021/7/21 17:10.
@@ -43,7 +46,7 @@ object BusinessUtils {
 
     /**
      * 美食订单状态文案
-     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功）
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功 9-商家审核中 10-拒绝售后 11-退款失败）
      */
     fun getDelicacyOrderStatusText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.store_status_1)
@@ -54,12 +57,32 @@ object BusinessUtils {
         6 -> StringUtils.getString(R.string.store_status_5)
         7 -> StringUtils.getString(R.string.store_status_8)
         8 -> StringUtils.getString(R.string.store_status_9)
+        9 -> StringUtils.getString(R.string.under_review)
+        10 -> StringUtils.getString(R.string.refuses_to_return)
+        11 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
     }
 
     /**
+     * 美食描述文案
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待使用，6-交易成功，7-退款中，8-退款成功 9-商家审核中 10-拒绝售后 11-退款失败）
+     */
+    fun getDelicacyOrderStatusDesc(status: Int): String = when (status) {
+        4 -> StringUtils.getString(R.string.store_status_desc_13)
+        7 -> StringUtils.getString(R.string.store_status_desc_8)
+        8 -> StringUtils.getString(R.string.store_status_desc_9)
+        9 -> StringUtils.getString(R.string.store_status_desc_10)
+        10 -> StringUtils.getString(R.string.store_status_desc_12)
+        11 -> StringUtils.getString(R.string.refund_fail_desc)
+        else -> StringUtils.getString(R.string.line_split)
+    }
+
+
+    /**
      * 外卖订单状态文案
-     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功）
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功
+     *        11-商家审核中 12-拒绝售后 13-退款失败
+     * ）
      */
     fun getTakeawayStatusText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.store_status_1)
@@ -72,14 +95,31 @@ object BusinessUtils {
         8 -> StringUtils.getString(R.string.store_status_5)
         9 -> StringUtils.getString(R.string.store_status_8)
         10 -> StringUtils.getString(R.string.store_status_9)
+        11 -> StringUtils.getString(R.string.under_review)
+        12 -> StringUtils.getString(R.string.refuses_to_return)
+        13 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
     }
 
 
     /**
+     * 外卖描述文案
+     * 订单状态（1-待支付，2-支付审核中，3-交易取消，4-交易关闭，5-待接单，6-已接单，7-待收货，8-交易成功，9-退款中，10-退款成功 11-商家审核中 12-拒绝售后 13-退款失败
+     */
+    fun getTakeawayOrderStatusDesc(status: Int): String = when (status) {
+        4 -> StringUtils.getString(R.string.store_status_desc_13)
+        9 -> StringUtils.getString(R.string.store_status_desc_8)
+        10 -> StringUtils.getString(R.string.store_status_desc_9)
+        11 -> StringUtils.getString(R.string.store_status_desc_10)
+        12 -> StringUtils.getString(R.string.store_status_desc_12)
+        13 -> StringUtils.getString(R.string.refund_fail_desc)
+        else -> StringUtils.getString(R.string.line_split)
+    }
+
+
+    /**
      * 酒店订单状态文案
-     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功）
-     *
+     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功, 10-商家审核中, 11-商家拒绝售后, 12-退款失败）
      */
     fun getHotelStatusText(status: Int): String = when (status) {
         1 -> StringUtils.getString(R.string.store_status_1)
@@ -91,8 +131,29 @@ object BusinessUtils {
         7 -> StringUtils.getString(R.string.store_status_13)
         8 -> StringUtils.getString(R.string.store_status_8)
         9 -> StringUtils.getString(R.string.store_status_9)
+        10 -> StringUtils.getString(R.string.store_status_10)
+        11 -> StringUtils.getString(R.string.refuses_to_return)
+        12 -> StringUtils.getString(R.string.refund_failed)
         else -> ""
     }
+
+
+    /**
+     * 酒店售后状态描述
+     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功, 10-商家审核中, 11-商家拒绝售后, 12-退款失败）
+     */
+    fun getHotelStatusDescText(status: Int): String = when (status) {
+        1 -> StringUtils.getString(R.string.hotel_order_status_1)
+        3 -> StringUtils.getString(R.string.hotel_order_status_3)
+        4 -> StringUtils.getString(R.string.hotel_order_status_4)
+        5 -> StringUtils.getString(R.string.hotel_order_status_5)
+        6 -> StringUtils.getString(R.string.hotel_order_status_6)
+        7 -> StringUtils.getString(R.string.store_status_desc_13)
+        8 -> StringUtils.getString(R.string.store_status_desc_8)
+        9 -> StringUtils.getString(R.string.store_status_desc_9)
+        else -> StringUtils.getString(R.string.line_split)
+    }
+
 
     fun getSafeStock(inventory: String?): Int {
         return if (inventory.isNullOrBlank()) {
@@ -269,7 +330,7 @@ object BusinessUtils {
         4 -> StringUtils.getString(R.string.store_status_desc_12)
         5 -> StringUtils.getString(R.string.store_status_desc_8)
         6 -> StringUtils.getString(R.string.store_status_desc_9)
-        8->StringUtils.getString(R.string.refund_fail_desc)
+        8 -> StringUtils.getString(R.string.refund_fail_desc)
         else -> ""
     }
 
@@ -287,5 +348,45 @@ object BusinessUtils {
     }
 
     fun isBankChannel(channel: String?): Boolean = channel == "BANK"
+
+
+    fun setNowPriceAndOldPrice(
+        price: BigDecimal, oldPrice: BigDecimal,
+        priceTv: TextView, oldPriceTv: TextView,
+    ) {
+
+        price.setScale(2, BigDecimal.ROUND_HALF_UP)
+        oldPrice.setScale(2, BigDecimal.ROUND_HALF_UP)
+        val decimalFormat = DecimalFormat("0.00#")
+
+        val nowPriceStr = decimalFormat.format(price)
+        val oldPriceStr = decimalFormat.format(oldPrice)
+
+
+        // 现价
+        SpanUtils.with(priceTv)
+            .append(StringUtils.getString(R.string.price_unit))
+            .setFontSize(12, true)
+            .append(nowPriceStr)
+            .setFontSize(14, true)
+            .create()
+
+        // 原价
+        if (price != oldPrice) {
+            oldPriceTv.visibility = View.VISIBLE
+
+            SpanUtils.with(oldPriceTv)
+                .append(StringUtils.getString(R.string.price_unit))
+                .setFontSize(10, true)
+                .append(oldPriceStr)
+                .setFontSize(11, true)
+                .setStrikethrough()
+                .create()
+        } else {
+            oldPriceTv.visibility = View.GONE
+        }
+
+
+    }
 
 }

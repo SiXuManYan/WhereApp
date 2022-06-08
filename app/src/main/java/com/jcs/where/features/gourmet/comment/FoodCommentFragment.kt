@@ -35,7 +35,7 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
         /**
          * 美食评论
          * @param restaurantId 餐厅id
-         * @param listType  列表类型（0：全部，1：有图，2：好评，3：差评）
+         * @param listType   列表类型（0：全部，1：有图，2：最新，3：低分）
          */
         fun newInstance(restaurantId: String, listType: Int): FoodCommentFragment {
             val fragment = FoodCommentFragment()

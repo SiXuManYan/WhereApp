@@ -34,13 +34,13 @@ class HotelOrderDetail {
 
 class HotelOrderData {
 
+    val error_reason = ""
     var id = 0
     var trade_no = ""
-    var price :BigDecimal = BigDecimal.ZERO
+    var price: BigDecimal = BigDecimal.ZERO
 
     /**
-     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功）
-     *
+     * 订单状态（1-待付款，2-支付审核中，3-商家待确认，4-待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功, 10-商家审核中, 11-商家拒绝售后, 12-退款失败）
      */
     var order_status = 0
 
@@ -60,16 +60,16 @@ class HotelData {
 
     var id = 0
     var name = ""
-    var images :ArrayList<String> = ArrayList()
+    var images: ArrayList<String> = ArrayList()
     var address = ""
     var mer_uuid = ""
     var mer_name = ""
     var tel = ""
-    var lat  = 0f
-    var lng  = 0f
+    var lat = 0f
+    var lng = 0f
 
     /** IM开启状态（1：开启，2：关闭） */
-    var im_status  = 0
+    var im_status = 0
 
 }
 
@@ -101,8 +101,6 @@ class HotelRoomData {
 
     /** 入住天数 */
     var days = 0
-
-
 
 
 }

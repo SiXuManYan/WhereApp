@@ -23,6 +23,7 @@ class HotelRoomListResponse {
      */
     var remain_room_num = 0
     var price :BigDecimal = BigDecimal.ZERO
+    var original_cost :BigDecimal = BigDecimal.ZERO
 
     /** 是否可取消（1：可取消，2：不可取消） */
     var is_cancel = 0

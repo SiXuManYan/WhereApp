@@ -193,10 +193,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity
-            android:name=".features.integral.IntegralActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".news.NewsDetailActivity"
@@ -496,11 +492,10 @@
         <activity android:name=".features.store.detail.comment.StoreCommentActivity" />
         <activity android:name=".features.bills.hydropower.detail.BillsDetailActivity" />
         <activity android:name=".features.gourmet.order.detail2.DelicacyOrderDetailActivity" />
-        <activity android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity2" />
+        <activity android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity" />
         <activity android:name=".features.hotel.order.HotelOrderDetailActivity" />
         <activity android:name=".features.order.parent.OrderActivity" />
         <activity android:name=".features.coupon.user.MyCouponActivity" />
-        <activity android:name=".features.hotel.comment.HotelCommentActivity2" />
         <activity android:name=".features.comment.CommentPostActivity" />
         <activity android:name=".features.gourmet.comment.post.FoodCommentPostActivity" />
         <activity
@@ -532,7 +527,6 @@
         <activity android:name=".features.mall.buy.MallOrderCommitActivity" />
         <activity android:name=".features.mall.cart.MallCartActivity" />
         <activity android:name=".features.mall.order.MallOrderDetailActivity" />
-        <activity android:name=".features.mall.comment.MallCommentActivity" />
         <activity android:name=".features.comment.CommentSuccessActivity" />
         <activity android:name=".features.daily.sign.SignInRuleActivity" />
         <activity android:name=".features.merchant.record.MerchantRecordActivity" />
@@ -556,6 +550,11 @@
         <activity android:name=".features.refund.add.verify.RefundBindVerifyActivity" />
         <activity android:name=".features.refund.add.form.third.ThirdChannelFormActivity" />
         <activity android:name=".features.refund.add.channel.RefundChannelActivity" />
+        <activity android:name=".features.gourmet.refund.ComplexRefundActivity" />
+        <activity android:name=".features.gourmet.refund.detail.FoodRefundInfoActivity" />
+        <activity android:name=".features.mall.complex.CommentComplexActivity" />
+        <activity android:name=".features.mall.shop.home.info.MallShopInfoActivity" />
+        <activity android:name=".features.mall.shop.home.info.QualificationActivity" />
 
 
     </application>

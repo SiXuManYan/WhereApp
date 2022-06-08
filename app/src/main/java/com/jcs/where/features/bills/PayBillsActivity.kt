@@ -3,6 +3,7 @@ package com.jcs.where.features.bills
 import android.os.Bundle
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
+import com.jcs.where.features.bills.channel.BillsChannelActivity
 import com.jcs.where.features.bills.hydropower.edit.PaymentEditActivity
 import com.jcs.where.features.bills.hydropower.record.PaymentRecordActivity
 import com.jcs.where.utils.Constant
@@ -24,7 +25,7 @@ class PayBillsActivity : BaseActivity() {
         val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this)
         if (languageLocale.language == "zh") {
             hydropower_banner_iv.setImageResource(R.mipmap.ic_hydropower_chn)
-        }else{
+        } else {
             hydropower_banner_iv.setImageResource(R.mipmap.ic_hydropower_en)
         }
 
@@ -34,29 +35,28 @@ class PayBillsActivity : BaseActivity() {
 
     }
 
+
     override fun bindListener() {
         prepaid_ll.setOnClickListener {
             showComing()
         }
         water_ll.setOnClickListener {
-            startActivityAfterLogin(PaymentEditActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_TYPE, 1)
-            })
-        }
-
-        electric_ll.setOnClickListener {
-            startActivityAfterLogin(PaymentEditActivity::class.java, Bundle().apply {
+            startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_TYPE, 2)
             })
         }
-
+        electric_ll.setOnClickListener {
+            startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 3)
+            })
+        }
         internet_ll.setOnClickListener {
-            showComing()
+            startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 4)
+            })
         }
         record_iv.setOnClickListener {
-            startActivityAfterLogin(PaymentRecordActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_TYPE, 2)
-            })
+            showComing()
         }
 
     }

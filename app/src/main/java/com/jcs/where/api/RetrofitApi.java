@@ -74,6 +74,7 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
+import com.jcs.where.api.response.bills.BillsChannel;
 import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
@@ -763,8 +764,7 @@ public interface RetrofitApi {
     /**
      * 餐厅评论列表
      *
-     * @param type
-     *             列表类型（0：全部，1：有图，2：最新，3：低分）
+     * @param type 列表类型（0：全部，1：有图，2：最新，3：低分）
      */
     @GET("restaurantapi/v2/comments")
     Observable<JcsResponse<PageResponse<HotelComment>>> getFoodCommentList(
@@ -2068,6 +2068,15 @@ public interface RetrofitApi {
     @GET("hotelapi/v2/refunds/{order_id}")
     Observable<JcsResponse<FoodRefundInfo>> getHotelRefundInfo(
             @Path("order_id") int order_id
+    );
+
+    /**
+     * 获取 酒店外卖退款信息详情
+     * @param bill_type 账单类型（1-话费，2-水费，3-电费，4-网费）
+     */
+    @GET("billsapi/v2/bills")
+    Observable<JcsResponse<ArrayList<BillsChannel>>> payBillsList(
+            @Query("bill_type") int bill_type
     );
 
 }

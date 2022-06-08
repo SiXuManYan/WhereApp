@@ -555,6 +555,7 @@
         <activity android:name=".features.mall.complex.CommentComplexActivity" />
         <activity android:name=".features.mall.shop.home.info.MallShopInfoActivity" />
         <activity android:name=".features.mall.shop.home.info.QualificationActivity" />
+        <activity android:name=".features.bills.channel.BillsChannelActivity" />
 
 
     </application>

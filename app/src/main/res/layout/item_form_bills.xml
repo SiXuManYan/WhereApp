@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingStart="@dimen/dp_15"
+    android:paddingEnd="@dimen/dp_15"
+    android:gravity="center_vertical"
+    android:layout_height="@dimen/dp_72">
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_14"
+        tools:text="渠道名称" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/content_et"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_41"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/enter_hint"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:textColor="@color/black_333333"
+        android:textColorHint="@color/grey_B5B5B5"
+        android:textSize="@dimen/sp_14" />
+
+
+</LinearLayout>

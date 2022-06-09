@@ -940,4 +940,11 @@ Gentleman must let go</string>
     <string name="shop_follow">Follow</string>
     <string name="shop_following">Following</string>
     <string name="fans_format">Followers: %1$d</string>
+    <string name="pay_bills">Pay Bills</string>
+    <string name="php">PHP</string>
+    <string name="service_charge_format">You will be charged a service fee of PHP %1$s</string>
+    <string name="payment_channels">Payment Channels</string>
+    <string name="billing_information">Billing Information</string>
+    <string name="place_money_title">Confirm that your payment amount is:</string>
+    <string name="bills_place_order_hint">Some payment amounts include service charges. After clicking OK, the content will not be editable.</string>
 </resources>

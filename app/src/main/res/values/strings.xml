@@ -671,7 +671,7 @@ Gentleman must let go</string>
     <string name="merchant_reply">商家回复</string>
     <string name="comment_format">评价&#160;&#160;%1$d</string>
 
-    <string name="bills_payment">Bills Payment</string>
+    <string name="bills_payment">缴费账单</string>
     <string name="bill_status_1">支付审核中</string>
     <string name="bill_status_2">缴费中</string>
     <string name="bill_status_3">缴费成功</string>
@@ -953,4 +953,11 @@ Gentleman must let go</string>
     <string name="shop_follow">收藏</string>
     <string name="shop_following">已收藏</string>
     <string name="fans_format">粉丝数: %1$d</string>
+    <string name="pay_bills">缴费账单</string>
+    <string name="php">PHP</string>
+    <string name="service_charge_format">您将被收取PHP %1$s 手续费</string>
+    <string name="payment_channels">缴费渠道</string>
+    <string name="billing_information">账单信息</string>
+    <string name="place_money_title">确认您的付款金额为：</string>
+    <string name="bills_place_order_hint">一些支付金额包含服务费。点击确定后，内容将不可修改。</string>
 </resources>

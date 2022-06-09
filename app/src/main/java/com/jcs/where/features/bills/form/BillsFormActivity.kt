@@ -8,17 +8,22 @@ import com.jcs.where.base.mvp.BaseMvpActivity
  * 水电表单
  */
 class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
+
+
+    private lateinit var mAdapter: BillsFormAdapter
+
     override fun getLayoutId() = R.layout.activity_bills_form
 
     override fun initView() {
-        TODO("Not yet implemented")
+
     }
 
     override fun initData() {
-        TODO("Not yet implemented")
+        presenter = BillsFormPresenter(this)
+
     }
 
     override fun bindListener() {
-        TODO("Not yet implemented")
+
     }
 }

@@ -556,6 +556,8 @@
         <activity android:name=".features.mall.shop.home.info.MallShopInfoActivity" />
         <activity android:name=".features.mall.shop.home.info.QualificationActivity" />
         <activity android:name=".features.bills.channel.BillsChannelActivity" />
+        <activity android:name=".features.bills.preview.BillsPlaceOrderActivity" />
+        <activity android:name=".features.bills.form.BillsFormActivity" />
 
 
     </application>

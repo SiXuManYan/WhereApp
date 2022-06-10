@@ -1,10 +1,10 @@
 package com.jcs.where.features.bills.form
 
-import android.R.attr.maxLength
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -25,6 +25,10 @@ class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.
         title.text = item.Tag
         form.hint = StringUtils.getString(R.string.please_enter) + item.Tag
         form.filters = arrayOf<InputFilter>(LengthFilter(item.Width))
-
+        form.addTextChangedListener(
+            afterTextChanged = {
+                item.nativeUserInput = it.toString().trim()
+            }
+        )
     }
 }

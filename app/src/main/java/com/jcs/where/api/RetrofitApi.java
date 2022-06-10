@@ -76,6 +76,7 @@ import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.bills.BillsChannel;
 import com.jcs.where.api.response.bills.BillsOrderInfo;
+import com.jcs.where.api.response.bills.BillsPlaceOrder;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MallGoodCollection;
@@ -2071,12 +2072,21 @@ public interface RetrofitApi {
     );
 
     /**
-     * 获取 酒店外卖退款信息详情
+     * 缴费渠道列表
+     *
      * @param bill_type 账单类型（1-话费，2-水费，3-电费，4-网费）
      */
     @GET("billsapi/v2/bills")
     Observable<JcsResponse<ArrayList<BillsChannel>>> payBillsList(
             @Query("bill_type") int bill_type
     );
+
+
+    /**
+     * 缴费账单统一下单
+     */
+    @POST("billsapi/v2/bills/orders")
+    Observable<JcsResponse<JsonElement>> billsPlaceOrder(@Body BillsPlaceOrder request);
+
 
 }

@@ -1,5 +1,10 @@
 package com.jcs.where.api.response.bills
 
+import android.os.Parcel
+import android.os.Parcelable
+import java.io.Serializable
+import java.math.BigDecimal
+
 /**
  * Created by Wangsw  2022/6/8 16:08.
  *
@@ -47,11 +52,11 @@ class BillsChannel {
     var Status = false
 
     /** 渠道服务费（加上充值费用为支付费用） */
-    var ServiceCharge = ""
+    var ServiceCharge = BigDecimal.ZERO
 
 }
 
-class FieldDetail {
+class FieldDetail() :Parcelable {
 
     /** 字段 */
     var Tag = ""
@@ -67,5 +72,44 @@ class FieldDetail {
 
     /** 记录用户输入 */
     var nativeUserInput = ""
+
+    constructor(parcel: Parcel) : this() {
+        Tag = parcel.readString().toString()
+        Caption = parcel.readString().toString()
+        Format = parcel.readString().toString()
+        Width = parcel.readInt()
+        nativeUserInput = parcel.readString().toString()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(Tag)
+        parcel.writeString(Caption)
+        parcel.writeString(Format)
+        parcel.writeInt(Width)
+        parcel.writeString(nativeUserInput)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<FieldDetail> {
+        override fun createFromParcel(parcel: Parcel): FieldDetail {
+            return FieldDetail(parcel)
+        }
+
+        override fun newArray(size: Int): Array<FieldDetail?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
+
+
+class BillsPlaceOrder{
+
+    var biller_tag = ""
+    var first_field = ""
+    var second_field = ""
+    var amount = ""
 }
 

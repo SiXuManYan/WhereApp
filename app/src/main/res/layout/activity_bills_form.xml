@@ -18,7 +18,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/pay_tv"
+        android:layout_above="@+id/next_tv"
         android:layout_below="@+id/jcsTitle">
 
         <LinearLayout
@@ -71,10 +71,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:digits="01234567890."
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColor="@color/black_333333"
                         android:textColorHint="@color/grey_B5B5B5"
@@ -160,6 +159,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/channel_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

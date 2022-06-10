@@ -239,6 +239,12 @@ public class Constant {
     public static final String PARAM_AREA_NAME = "param_area_name";
     public static final String PARAM_HIDE_CURRENT_LOCATION = "param_hide_current_location";
     public static final String PARAM_REFUND_CHANNEL_NAME = "param_refund_channel_name";
+    public static final String PARAM_TAG = "param_tag";
+    public static final String PARAM_FIRST_FIELD = "param_first_field";
+    public static final String PARAM_SECOND_FIELD = "param_second_field";
+    public static final String PARAM_AMOUNT = "param_amount";
+    public static final String PARAM_SERVICE_CHARGE = "param_service_charge";
+
 
 
 }

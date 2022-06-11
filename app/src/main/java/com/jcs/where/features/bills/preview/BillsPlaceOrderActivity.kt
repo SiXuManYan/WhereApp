@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.activity_bills_place_order.*
 class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), BillsPlaceOrderView {
 
 
+    /** 账单类型 */
+    private var billsType = 0
     private var billerTag = ""
     private var firstField = ""
     private var secondField = ""
@@ -37,8 +39,9 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
 
     companion object {
 
-        fun navigation(context: Context, billerTag: String, money: Double, fieldDetail: ArrayList<FieldDetail>) {
+        fun navigation(context: Context, billerTag: String, money: Double, fieldDetail: ArrayList<FieldDetail>, billsType: Int) {
             val bundle = Bundle().apply {
+                putInt(Constant.PARAM_TYPE, billsType)
                 putString(Constant.PARAM_TAG, billerTag)
                 putDouble(Constant.PARAM_AMOUNT, money)
                 putParcelableArrayList(Constant.PARAM_DATA, fieldDetail)
@@ -63,6 +66,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
 
     private fun initExtra() {
         intent.extras?.let {
+            billsType = it.getInt(Constant.PARAM_TYPE, 0)
             billerTag = it.getString(Constant.PARAM_TAG, "")
             money = it.getDouble(Constant.PARAM_AMOUNT, 0.0)
             val parcelableArrayList = it.getParcelableArrayList<FieldDetail>(Constant.PARAM_DATA)
@@ -102,7 +106,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
                     }
                 }
             }
-            presenter.placeOrder(billerTag, firstField, secondField, money)
+            presenter.placeOrder(billerTag, firstField, secondField, money,billsType)
         }
     }
 

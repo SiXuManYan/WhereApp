@@ -18,13 +18,14 @@ interface BillsPlaceOrderView : BaseMvpView {
 class BillsPlaceOrderPresenter(private var view: BillsPlaceOrderView) : BaseMvpPresenter(view) {
 
 
-    fun placeOrder(billerTag: String, firstField: String, secondField: String, money: Double) {
+    fun placeOrder(billerTag: String, firstField: String, secondField: String, money: Double, billType: Int) {
 
         val apply = BillsPlaceOrder().apply {
             biller_tag = billerTag
             first_field = firstField
             second_field = secondField
             amount = money.toString()
+            bill_type = billType
         }
 
 

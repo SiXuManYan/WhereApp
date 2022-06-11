@@ -75,6 +75,8 @@ import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.bills.BillCancelOrder;
+import com.jcs.where.api.response.bills.BillRecommit;
+import com.jcs.where.api.response.bills.BillStatus;
 import com.jcs.where.api.response.bills.BillsChannel;
 import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.bills.BillsPlaceOrder;
@@ -2101,8 +2103,21 @@ public interface RetrofitApi {
     /**
      * 缴费取消订单（退款）
      */
-    @GET("resubmit_tv")
+    @GET("billsapi/v2/bills/orders/cancel")
     Observable<JcsResponse<JsonElement>> billsCancelOrder(
             @Body BillCancelOrder request);
+
+    /**
+     * 执行账单交易(重新提交)
+     */
+    @POST("billsapi/v2/bills/transaction")
+    Observable<JcsResponse<JsonElement>> billsRecommit(
+            @Body BillRecommit request);
+
+    /**
+     * 账单缴费状态
+     */
+    @GET("billsapi/v2/bills/transaction/status")
+    Observable<JcsResponse<BillStatus>> billsStatus(@Query("order_id") int order_id);
 
 }

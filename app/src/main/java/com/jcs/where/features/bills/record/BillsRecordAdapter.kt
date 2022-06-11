@@ -62,6 +62,7 @@ class BillsRecordAdapter : BaseQuickAdapter<BillsRecord, BaseViewHolder>(R.layou
 
 
         return when (orderStatus) {
+            0 -> context.getString(R.string.bills_status_0)
             1 -> context.getString(R.string.bills_status_1)
             2 -> context.getString(R.string.bills_status_2)
             3 -> context.getString(R.string.bills_status_3)

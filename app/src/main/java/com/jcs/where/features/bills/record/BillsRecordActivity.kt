@@ -1,5 +1,6 @@
 package com.jcs.where.features.bills.record
 
+import android.os.Bundle
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
@@ -13,9 +14,9 @@ import com.jcs.where.api.response.bills.BillsRecord
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.record.result.BillsRecommitResultActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundPresenter
-import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -58,13 +59,17 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
         }
         recycler.apply {
             adapter = mAdapter
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(1f), SizeUtils.dp2px(15f), 0))
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary),
+                SizeUtils.dp2px(1f),
+                SizeUtils.dp2px(15f),
+                0))
         }
 
     }
 
     override fun initData() {
         presenter = BillsRecordPresenter(this)
+        onRefresh()
     }
 
     override fun bindListener() {
@@ -128,9 +133,7 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
                     ComplexRefundPresenter.TYPE_BILL)
             }
             R.id.resubmit_tv -> {
-                val orderIds = ArrayList<Int>()
-                orderIds.add(orderId)
-                WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
+                presenter.recommit(orderId)
             }
             else -> {}
         }
@@ -151,6 +154,12 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
             }
         }
 
+    }
+
+    override fun recommitSuccess(orderId: Int) {
+        startActivity(BillsRecommitResultActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ORDER_ID, orderId)
+        })
     }
 
 

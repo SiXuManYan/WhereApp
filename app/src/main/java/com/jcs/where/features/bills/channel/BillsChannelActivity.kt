@@ -25,7 +25,7 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
     /**
      * 账单类型（1-话费，2-水费，3-电费，4-网费）
      */
-    private var type = 0
+    private var billsType = 0
 
     private lateinit var mAdapter: BillsChannelAdapter
 
@@ -34,9 +34,9 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
     override fun isStatusDark() = true
 
     override fun initView() {
-        type = intent.getIntExtra(Constant.PARAM_TYPE, 0)
+        billsType = intent.getIntExtra(Constant.PARAM_TYPE, 0)
 
-        val title = when (type) {
+        val title = when (billsType) {
             1 -> getString(R.string.prepaid_reload)
             2 -> getString(R.string.water_utilities)
             3 -> getString(R.string.electric_utilities)
@@ -68,7 +68,7 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
 
     override fun initData() {
         presenter = BillsChannelPresenter(this)
-        presenter.getData(type)
+        presenter.getData(billsType)
     }
 
     override fun bindListener() {
@@ -85,7 +85,7 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
             ToastUtils.showShort("Channel not available")
             return
         }
-        BillsFormActivity.navigation(this, data.BillerTag, data.Description, data.ServiceCharge.toDouble(), data.FieldDetails)
+        BillsFormActivity.navigation(this, data.BillerTag, data.Description, data.ServiceCharge.toDouble(), data.FieldDetails,billsType)
     }
 
 

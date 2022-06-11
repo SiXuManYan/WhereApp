@@ -32,6 +32,9 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     /** 渠道名称 */
     private var billerTag = ""
 
+    /** 账单类型 */
+    private var billsType = 0
+
     /** 渠道描述 */
     private var description = ""
 
@@ -54,8 +57,10 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
             description: String,
             serviceCharge: Double,
             fieldDetail: ArrayList<FieldDetail>,
+            billsType: Int,
         ) {
             val bundle = Bundle().apply {
+                putInt(Constant.PARAM_TYPE, billsType)
                 putString(Constant.PARAM_TAG, billerTag)
                 putString(Constant.PARAM_DESCRIPTION, description)
                 putDouble(Constant.PARAM_SERVICE_CHARGE, serviceCharge)
@@ -82,6 +87,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
     private fun initExtra() {
         intent.extras?.let {
+            billsType = it.getInt(Constant.PARAM_TYPE, 0)
             billerTag = it.getString(Constant.PARAM_TAG, "")
             description = it.getString(Constant.PARAM_DESCRIPTION, "")
 
@@ -132,7 +138,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
         next_tv.setOnClickListener {
             val finalMoney = BigDecimalUtil.add(userInputMoney, serviceCharge)
-            BillsPlaceOrderActivity.navigation(this, billerTag, finalMoney.toDouble(), fieldDetail)
+            BillsPlaceOrderActivity.navigation(this, billerTag, finalMoney.toDouble(), fieldDetail, billsType)
         }
 
     }

@@ -1,9 +1,11 @@
 package com.jcs.where.features.bills.record
 
+import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.PageResponse
+import com.jcs.where.api.response.bills.BillRecommit
 import com.jcs.where.api.response.bills.BillsRecord
 
 /**
@@ -12,6 +14,7 @@ import com.jcs.where.api.response.bills.BillsRecord
  */
 interface BillsRecordView : BaseMvpView {
     fun bindList(toMutableList: MutableList<BillsRecord>, lastPage: Boolean)
+    fun recommitSuccess(orderId: Int)
 
 }
 
@@ -27,7 +30,20 @@ class BillsRecordPresenter(private var view: BillsRecordView) : BaseMvpPresenter
             }
 
         })
+    }
 
+
+    fun recommit(orderId:Int ){
+        val apply = BillRecommit().apply {
+            order_id = orderId
+        }
+
+        requestApi(mRetrofit.billsRecommit(apply),object :BaseMvpObserver<JsonElement>(view){
+            override fun onSuccess(response: JsonElement) {
+                view.recommitSuccess(orderId)
+            }
+
+        })
     }
 
 }

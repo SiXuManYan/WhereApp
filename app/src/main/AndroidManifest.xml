@@ -562,6 +562,7 @@
             android:name=".features.bills.record.BillsRecordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity android:name=".features.bills.record.result.BillsRecommitResultActivity" />
 
 
     </application>

@@ -111,6 +111,9 @@ class BillsPlaceOrder{
     var first_field = ""
     var second_field = ""
     var amount = ""
+
+    /** 账单类型（1-话费，2-水费，3-电费，4-网费） */
+    var bill_type = 0
 }
 
 class BillsRecord {
@@ -148,5 +151,15 @@ class BillCancelOrder {
     var order_id = 0
 
     var remit_id = 0
+}
+
+class BillRecommit {
+    var order_id = 0
+}
+
+class BillStatus {
+
+    /** 缴费状态 */
+    var transaction_status = false
 }
 

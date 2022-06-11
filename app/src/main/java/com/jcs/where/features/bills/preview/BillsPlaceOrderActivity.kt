@@ -132,7 +132,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     }
 
     override fun commitSuccess(response: HotelOrderCommitResponse) {
-
+        dismissLoadingDialog()
         val orderIds = ArrayList<Int>()
         val order = response.order
         orderIds.add(order!!.id)

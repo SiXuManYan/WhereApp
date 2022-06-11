@@ -244,6 +244,8 @@ public class Constant {
     public static final String PARAM_SECOND_FIELD = "param_second_field";
     public static final String PARAM_AMOUNT = "param_amount";
     public static final String PARAM_SERVICE_CHARGE = "param_service_charge";
+    public static final String PARAM_USER_MONEY = "PARAM_USER_MONEY";
+    public static final String PARAM_SERVICE_MONEY = "PARAM_SERVICE_MONEY";
 
 
 

@@ -5,17 +5,20 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.bills.FieldDetail
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.payment.WebPayActivity
+import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_bills_place_order.*
@@ -32,20 +35,30 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     private var billerTag = ""
     private var firstField = ""
     private var secondField = ""
-    private var money: Double = 0.0
+    private var userInputMoney: Double = 0.0
+    private var serviceCharge: Double = 0.0
     private var fieldDetail = ArrayList<FieldDetail>()
 
     private lateinit var mAdapter: BillsPlaceOrderAdapter
 
     override fun isStatusDark() = true
 
+
     companion object {
 
-        fun navigation(context: Context, billerTag: String, money: Double, fieldDetail: ArrayList<FieldDetail>, billsType: Int) {
+        fun navigation(
+            context: Context,
+            billerTag: String,
+            userInputMoney: Double,
+            serviceMoney: Double,
+            fieldDetail: ArrayList<FieldDetail>,
+            billsType: Int,
+        ) {
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_TYPE, billsType)
                 putString(Constant.PARAM_TAG, billerTag)
-                putDouble(Constant.PARAM_AMOUNT, money)
+                putDouble(Constant.PARAM_USER_MONEY, userInputMoney)
+                putDouble(Constant.PARAM_SERVICE_MONEY, serviceMoney)
                 putParcelableArrayList(Constant.PARAM_DATA, fieldDetail)
             }
             val intent = Intent(context, BillsPlaceOrderActivity::class.java).putExtras(bundle)
@@ -70,7 +83,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
         intent.extras?.let {
             billsType = it.getInt(Constant.PARAM_TYPE, 0)
             billerTag = it.getString(Constant.PARAM_TAG, "")
-            money = it.getDouble(Constant.PARAM_AMOUNT, 0.0)
+            userInputMoney = it.getDouble(Constant.PARAM_USER_MONEY, 0.0)
+            serviceCharge = it.getDouble(Constant.PARAM_SERVICE_MONEY, 0.0)
             val parcelableArrayList = it.getParcelableArrayList<FieldDetail>(Constant.PARAM_DATA)
             fieldDetail.addAll(parcelableArrayList!!)
 
@@ -78,7 +92,10 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     }
 
     private fun initList() {
-        total_money_tv.text = money.toString()
+
+
+        val totalMoney = BigDecimalUtil.add(userInputMoney, serviceCharge)
+        total_money_tv.text = totalMoney.toPlainString()
 
         mAdapter = BillsPlaceOrderAdapter().apply {
             setNewInstance(fieldDetail)
@@ -98,7 +115,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
 
     override fun bindListener() {
         confirm_tv.setOnClickListener {
-            confirm_tv.isClickable = false
+            showLoadingDialog(false)
             mAdapter.data.forEachIndexed { index, fieldDetail ->
                 when (index) {
                     0 -> {
@@ -109,8 +126,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
                     }
                 }
             }
-            presenter.placeOrder(billerTag, firstField, secondField, money, billsType)
-            confirm_tv.postDelayed({ confirm_tv.isClickable = true }, 2000)
+            presenter.placeOrder(billerTag, firstField, secondField, userInputMoney, billsType)
+
         }
     }
 
@@ -129,11 +146,23 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
         }
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_ORDER_LIST -> {
-              finish()
+                finish()
             }
         }
 
     }
 
+
+    override fun onError(errorResponse: ErrorResponse) {
+        dismissLoadingDialog()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.prompt)
+            .setMessage(errorResponse.getErrMsg())
+            .setCancelable(false)
+            .setPositiveButton(R.string.i_know) { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }
+            .create().show()
+    }
 
 }

@@ -17,7 +17,6 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.preview.BillsPlaceOrderActivity
-import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -139,8 +138,12 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
         }
 
         next_tv.setOnClickListener {
-            val finalMoney = BigDecimalUtil.add(userInputMoney, serviceCharge)
-            BillsPlaceOrderActivity.navigation(this, billerTag, finalMoney.toDouble(), fieldDetail, billsType)
+            BillsPlaceOrderActivity.navigation(this,
+                billerTag,
+                userInputMoney.toDouble(),
+                serviceCharge.toDouble(),
+                fieldDetail,
+                billsType)
         }
 
     }

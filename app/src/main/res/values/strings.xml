@@ -969,4 +969,5 @@ Gentleman must let go</string>
     <string name="send_money">缴费金额</string>
     <string name="create_time">下单时间</string>
     <string name="resubmit">重新提交</string>
+    <string name="i_know">我知道了</string>
 </resources>

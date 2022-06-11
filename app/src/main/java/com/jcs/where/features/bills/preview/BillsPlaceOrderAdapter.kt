@@ -11,6 +11,7 @@ import com.jcs.where.api.response.bills.FieldDetail
  */
 class BillsPlaceOrderAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.item_bills_place_order) {
     override fun convert(holder: BaseViewHolder, item: FieldDetail) {
-
+        holder.setText(R.id.title_tv, item.Tag)
+        holder.setText(R.id.content_et, item.nativeUserInput)
     }
 }

@@ -3,10 +3,12 @@ package com.jcs.where.features.bills.form
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
@@ -30,6 +32,9 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     /** 渠道名称 */
     private var billerTag = ""
 
+    /** 渠道描述 */
+    private var description = ""
+
     /** 渠道服务费（加上充值费用为支付费用） */
     private var serviceCharge = BigDecimal.ZERO
 
@@ -39,12 +44,20 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
     private lateinit var mAdapter: BillsFormAdapter
 
+    override fun isStatusDark() = true
 
     companion object {
 
-        fun navigation(context: Context, billerTag: String, serviceCharge: Double, fieldDetail: ArrayList<FieldDetail>) {
+        fun navigation(
+            context: Context,
+            billerTag: String,
+            description: String,
+            serviceCharge: Double,
+            fieldDetail: ArrayList<FieldDetail>,
+        ) {
             val bundle = Bundle().apply {
                 putString(Constant.PARAM_TAG, billerTag)
+                putString(Constant.PARAM_DESCRIPTION, description)
                 putDouble(Constant.PARAM_SERVICE_CHARGE, serviceCharge)
                 putParcelableArrayList(Constant.PARAM_DATA, fieldDetail)
             }
@@ -61,6 +74,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     override fun getLayoutId() = R.layout.activity_bills_form
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         initExtra()
         initList()
     }
@@ -69,6 +83,9 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     private fun initExtra() {
         intent.extras?.let {
             billerTag = it.getString(Constant.PARAM_TAG, "")
+            description = it.getString(Constant.PARAM_DESCRIPTION, "")
+
+
             val parcelableArrayList = it.getParcelableArrayList<FieldDetail>(Constant.PARAM_DATA)
             fieldDetail.addAll(parcelableArrayList!!)
             serviceCharge = BigDecimal(it.getDouble(Constant.PARAM_SERVICE_CHARGE, 0.0))
@@ -78,6 +95,10 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
 
     private fun initList() {
+
+        channel_tv.text = billerTag
+        desc_tv.text = description
+
         mAdapter = BillsFormAdapter().apply {
             setNewInstance(fieldDetail)
         }
@@ -88,7 +109,6 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                 SizeUtils.dp2px(1f),
                 SizeUtils.dp2px(15f),
                 0))
-
         }
 
     }

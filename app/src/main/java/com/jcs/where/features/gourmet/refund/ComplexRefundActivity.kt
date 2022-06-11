@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/5/10 15:44.
- * 美食外卖申请退款
+ * 美食、外卖、酒店、账单申请退款
  */
 class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), ComplexRefundView {
 
@@ -32,7 +32,7 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
     /** 打款id */
     private var remitId = 0
 
-    /** 0美食 1外卖 */
+    /** 0美食 1外卖 2缴费账单*/
     private var type = 0
 
 

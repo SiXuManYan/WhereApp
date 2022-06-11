@@ -422,7 +422,7 @@
     <string name="prepaid_reload">Prepaid Reload</string>
     <string name="water_utilities">Water Utilities</string>
     <string name="electric_utilities">Electric Utilities</string>
-    <string name="internet_billing">Internet Billing</string>
+    <string name="internet_billing">Cable/Internet</string>
     <string name="finish_edit_category">Finished</string>
     <string name="selected_category">Selected Category</string>
     <string name="unselected_category">Unselected Category</string>
@@ -581,12 +581,17 @@
     <string name="order_time">Order Time</string>
 
     <!-- 水电缴费状态 -->
-    <string name="bills_status_1">Confirming</string>
-    <string name="bills_status_2">Paying</string>
-    <string name="bills_status_3">Successful payment</string>
-    <string name="bills_status_4">Trading closed</string>
-    <string name="bills_status_5">Refunding</string>
-    <string name="bills_status_6">Refund successfully</string>
+    <string name="bills_status_0">To Be Paid</string>
+    <string name="bills_status_1">Paying</string>
+    <string name="bills_status_2">Successful</string>
+    <string name="bills_status_3">Failed</string>
+    <string name="bills_status_4">Order closed</string>
+    <string name="bills_status_5">In Review</string>
+    <string name="bills_status_6">Refused to Refund</string>
+    <string name="bills_status_7">Refunding</string>
+    <string name="bills_status_8">Refunded</string>
+    <string name="bills_status_9">Refund Failed</string>
+
     <string name="payment_details">Payment details</string>
     <string name="enter_hint">Enter</string>
     <string name="bills_account_name">Account Name</string>
@@ -948,4 +953,8 @@ Gentleman must let go</string>
     <string name="place_money_title">Confirm that your payment amount is:</string>
     <string name="bills_place_order_hint">Some payment amounts include service charges. After clicking OK, the content will not be editable.</string>
     <string name="give_up_bills_payment_hint">The payment has not been completed, sure you leave?</string>
+
+    <string name="send_money">Send Money</string>
+    <string name="create_time">Order Time</string>
+    <string name="resubmit">Resubmit</string>
 </resources>

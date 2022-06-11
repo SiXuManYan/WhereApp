@@ -4,8 +4,7 @@ import android.os.Bundle
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.features.bills.channel.BillsChannelActivity
-import com.jcs.where.features.bills.hydropower.edit.PaymentEditActivity
-import com.jcs.where.features.bills.hydropower.record.PaymentRecordActivity
+import com.jcs.where.features.bills.record.BillsRecordActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocalLanguageUtil
 import kotlinx.android.synthetic.main.activity_pay_bills.*
@@ -56,7 +55,7 @@ class PayBillsActivity : BaseActivity() {
             })
         }
         record_iv.setOnClickListener {
-            showComing()
+            startActivityAfterLogin(BillsRecordActivity::class.java)
         }
 
     }

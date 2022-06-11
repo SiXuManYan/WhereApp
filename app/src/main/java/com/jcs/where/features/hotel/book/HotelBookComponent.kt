@@ -17,15 +17,14 @@ interface HotelBookView : BaseMvpView {
 class HotelBookPresenter(private var view: HotelBookView) : BaseMvpPresenter(view) {
 
 
-
     fun commitOrder(apply: HotelOrderRequest) {
 
-    requestApi(mRetrofit.commitHotelOrder(apply),object :BaseMvpObserver<HotelOrderCommitResponse>(view){
-        override fun onSuccess(response: HotelOrderCommitResponse) {
-            view.commitSuccess(response)
-        }
+        requestApi(mRetrofit.commitHotelOrder(apply), object : BaseMvpObserver<HotelOrderCommitResponse>(view) {
+            override fun onSuccess(response: HotelOrderCommitResponse) {
+                view.commitSuccess(response)
+            }
 
-    })
+        })
 
     }
 

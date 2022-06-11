@@ -113,3 +113,40 @@ class BillsPlaceOrder{
     var amount = ""
 }
 
+class BillsRecord {
+
+
+    companion object {
+
+        // 账单类型
+        val TYPE_PHONE = 1
+        val TYPE_WATER = 2
+        val TYPE_ELECTRICITY = 3
+        val TYPE_NET = 4
+
+    }
+
+    var id = 0
+
+    /** 账单类型（1-话费，2-水费，3-电费，4-网费） */
+    var order_type = 0
+
+
+    var total_price = BigDecimal.ZERO
+
+    /** 订单状态（0-待支付，1-缴费中，2-缴费成功，3-缴费失败，4-订单关闭，5-退款审核中，6-拒绝退款，7-退款中，8-退款成功，9-退款失败） */
+    var order_status = 0
+
+    var created_at = ""
+
+    /** 退款价格 */
+    var refund_price = BigDecimal.ZERO
+
+}
+
+class BillCancelOrder {
+    var order_id = 0
+
+    var remit_id = 0
+}
+

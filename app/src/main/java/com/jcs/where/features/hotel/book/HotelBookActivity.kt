@@ -15,7 +15,6 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.payment.WebPayActivity
-import com.jcs.where.features.store.pay.StorePayActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.Constant
@@ -27,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_hotel_boolk.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.math.BigDecimal
-import java.util.*
 
 /**
  * Created by Wangsw  2021/10/13 15:17.
@@ -77,7 +75,7 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
             roomNumber: Int? = 1,
             roomImage: String,
             startDate: JcsCalendarAdapter.CalendarBean,
-            endDate: JcsCalendarAdapter.CalendarBean
+            endDate: JcsCalendarAdapter.CalendarBean,
         ) {
 
             val bundle = Bundle().apply {

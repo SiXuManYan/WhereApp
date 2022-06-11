@@ -62,7 +62,6 @@ class PaymentAdapter : BaseQuickAdapter<PaymentRecord, BaseViewHolder>(R.layout.
             else -> ""
         }
 
-
     }
 
 }

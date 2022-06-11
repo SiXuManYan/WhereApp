@@ -31,6 +31,7 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
 
     override fun getLayoutId() = R.layout.activity_no_refresh_list
 
+    override fun isStatusDark() = true
 
     override fun initView() {
         type = intent.getIntExtra(Constant.PARAM_TYPE, 0)
@@ -84,7 +85,7 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
             ToastUtils.showShort("Channel not available")
             return
         }
-        BillsFormActivity.navigation(this, data.BillerTag,data.ServiceCharge.toDouble(), data.FieldDetails)
+        BillsFormActivity.navigation(this, data.BillerTag, data.Description, data.ServiceCharge.toDouble(), data.FieldDetails)
     }
 
 

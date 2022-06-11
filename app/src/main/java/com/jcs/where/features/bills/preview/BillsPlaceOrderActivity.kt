@@ -3,13 +3,17 @@ package com.jcs.where.features.bills.preview
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.bills.FieldDetail
+import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_bills_place_order.*
@@ -28,6 +32,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     private var fieldDetail = ArrayList<FieldDetail>()
 
     private lateinit var mAdapter: BillsPlaceOrderAdapter
+
+    override fun isStatusDark() = true
 
     companion object {
 
@@ -49,6 +55,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     override fun getLayoutId() = R.layout.activity_bills_place_order
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         initExtra()
         initList()
     }
@@ -65,6 +72,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     }
 
     private fun initList() {
+        total_money_tv.text = money.toString()
+
         mAdapter = BillsPlaceOrderAdapter().apply {
             setNewInstance(fieldDetail)
         }
@@ -93,7 +102,17 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
                     }
                 }
             }
-            presenter.placeOrder(billerTag,firstField,secondField,money)
+            presenter.placeOrder(billerTag, firstField, secondField, money)
         }
     }
+
+    override fun commitSuccess(response: HotelOrderCommitResponse) {
+
+        val orderIds = ArrayList<Int>()
+        val order = response.order
+        orderIds.add(order!!.id)
+        WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
+    }
+
+
 }

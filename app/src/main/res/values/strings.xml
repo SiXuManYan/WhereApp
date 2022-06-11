@@ -588,12 +588,17 @@
     <string name="order_time">订单时间</string>
 
     <!-- 水电缴费状态 -->
-    <string name="bills_status_1">支付审核中</string>
-    <string name="bills_status_2">缴费中</string>
-    <string name="bills_status_3">缴费成功</string>
+    <!--订单状态（0-待支付，1-缴费中，2-缴费成功，3-缴费失败，4-订单关闭，5-退款审核中，6-拒绝退款，7-退款中，8-退款成功，9-退款失败）-->
+    <string name="bills_status_0">待支付</string>
+    <string name="bills_status_1">缴费中</string>
+    <string name="bills_status_2">缴费成功</string>
+    <string name="bills_status_3">缴费失败</string>
     <string name="bills_status_4">订单关闭</string>
-    <string name="bills_status_5">退款中</string>
-    <string name="bills_status_6">退款成功</string>
+    <string name="bills_status_5">退款审核中</string>
+    <string name="bills_status_6">拒绝退款</string>
+    <string name="bills_status_7">退款中</string>
+    <string name="bills_status_8">退款成功</string>
+    <string name="bills_status_9">退款失败</string>
 
 
     <!-- 账单表单 -->
@@ -961,4 +966,7 @@ Gentleman must let go</string>
     <string name="place_money_title">确认您的付款金额为：</string>
     <string name="bills_place_order_hint">一些支付金额包含服务费。点击确定后，内容将不可修改。</string>
     <string name="give_up_bills_payment_hint">缴费未完成，确定要离开？</string>
+    <string name="send_money">缴费金额</string>
+    <string name="create_time">下单时间</string>
+    <string name="resubmit">重新提交</string>
 </resources>

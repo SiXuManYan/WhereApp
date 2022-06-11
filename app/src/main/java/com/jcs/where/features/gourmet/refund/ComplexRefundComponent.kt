@@ -4,6 +4,7 @@ import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.bills.BillCancelOrder
 import com.jcs.where.api.response.mall.RemitId
 
 /**
@@ -23,6 +24,7 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
         var TYPE_FOOD = 0
         var TYPE_TAKEAWAY = 1
         var TYPE_HOTEL = 2
+        var TYPE_BILL = 3
     }
 
 
@@ -31,12 +33,12 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
      */
     fun refundOrder(orderId: Int, remitId: Int, type: Int) {
 
-        val remitId = RemitId().apply { remit_id = remitId }
+        val remitIdBody = RemitId().apply { remit_id = remitId }
 
         when (type) {
             TYPE_FOOD -> {
 
-                requestApi(mRetrofit.delicacyOrderRefund(orderId, remitId),
+                requestApi(mRetrofit.delicacyOrderRefund(orderId, remitIdBody),
                     object : BaseMvpObserver<JsonElement>(view) {
                         override fun onSuccess(response: JsonElement?) {
                             view.refundSuccess()
@@ -44,7 +46,7 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
                     })
             }
             TYPE_TAKEAWAY -> {
-                requestApi(mRetrofit.takeawayOrderRefund(orderId, remitId), object : BaseMvpObserver<JsonElement>(view) {
+                requestApi(mRetrofit.takeawayOrderRefund(orderId, remitIdBody), object : BaseMvpObserver<JsonElement>(view) {
                     override fun onSuccess(response: JsonElement?) {
                         view.refundSuccess()
                     }
@@ -52,7 +54,21 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
                 })
             }
             TYPE_HOTEL -> {
-                requestApi(mRetrofit.refundHotelOrder(orderId, remitId), object : BaseMvpObserver<JsonElement>(view) {
+                requestApi(mRetrofit.refundHotelOrder(orderId, remitIdBody), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement) {
+                        view.refundSuccess()
+                    }
+                })
+            }
+
+            TYPE_BILL -> {
+                val apply = BillCancelOrder().apply {
+                    order_id = orderId
+                    remit_id = remitId
+                }
+
+
+                requestApi(mRetrofit.billsCancelOrder(apply), object : BaseMvpObserver<JsonElement>(view) {
                     override fun onSuccess(response: JsonElement) {
                         view.refundSuccess()
                     }

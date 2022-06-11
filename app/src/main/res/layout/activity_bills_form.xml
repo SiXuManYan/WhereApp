@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="@dimen/dp_20"
-            android:paddingBottom="@dimen/dp_20">
+            android:paddingBottom="@dimen/dp_300">
 
 
             <LinearLayout
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_4"
                     android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_14"
+                    android:textSize="@dimen/sp_12"
                     tools:text="asdajdiojaodj ajsdiajdoo" />
 
             </LinearLayout>

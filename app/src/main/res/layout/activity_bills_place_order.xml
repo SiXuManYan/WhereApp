@@ -55,6 +55,7 @@
 
 
         <TextView
+            android:id="@+id/total_money_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

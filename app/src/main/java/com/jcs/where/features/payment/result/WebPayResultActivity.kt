@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import com.jcs.where.R
 import com.jcs.where.api.request.payment.PayStatus
+import com.jcs.where.api.request.payment.PayUrlGet
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.record.BillsRecordActivity
 import com.jcs.where.features.main.MainActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
@@ -40,12 +42,32 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
     }
 
     private fun initDefaultUI() {
+
         val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this)
-        if (languageLocale.language == "zh") {
-            pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete)
-        } else {
-            pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete_en)
+
+        when (moduleType) {
+            PayUrlGet.BILL_PAY -> {
+                if (languageLocale.language == "zh") {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill)
+                } else {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill_en)
+                }
+                payment_hint.visibility = View.GONE
+                pay_info_iv.setImageResource(R.mipmap.ic_paying_bill_logo)
+            }
+            else -> {
+                if (languageLocale.language == "zh") {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete)
+                } else {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete_en)
+                }
+
+            }
+
+
         }
+
+
     }
 
     private fun initExtra() {
@@ -69,9 +91,19 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
 
     override fun bindListener() {
         finish_tv.setOnClickListener {
-            startActivityClearTop(MainActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_TAB, 2)
-            })
+            when (moduleType) {
+                PayUrlGet.BILL_PAY -> {
+                    // 跳转至水电列表
+                    startActivityClearTop(BillsRecordActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_TAB, 2)
+                    })
+                }
+                else -> {
+                    startActivityClearTop(MainActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_TAB, 2)
+                    })
+                }
+            }
             finish()
         }
         view_order_tv.setOnClickListener {
@@ -87,19 +119,34 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
     override fun bindPayStatus(response: PayStatus) {
 
         val payStatus = response.pay_status
+
+        if (!payStatus) {
+            return
+        }
+
         val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this)
 
+        when (moduleType) {
+            PayUrlGet.BILL_PAY -> {
+                if (languageLocale.language == "zh") {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill)
+                } else {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill_en)
+                }
 
-        if (payStatus) {
-            if (languageLocale.language == "zh") {
-                pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success)
-            } else {
-                pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success_en)
             }
-            continue_pay_tv.visibility = View.GONE
-            // 支付成功
-            EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
+            else -> {
+                if (languageLocale.language == "zh") {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success)
+                } else {
+                    pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success_en)
+                }
+            }
+
         }
+        continue_pay_tv.visibility = View.GONE
+        // 支付成功
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
 
     }
 

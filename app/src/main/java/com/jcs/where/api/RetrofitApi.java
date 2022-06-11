@@ -74,9 +74,11 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
+import com.jcs.where.api.response.bills.BillCancelOrder;
 import com.jcs.where.api.response.bills.BillsChannel;
 import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.bills.BillsPlaceOrder;
+import com.jcs.where.api.response.bills.BillsRecord;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MallGoodCollection;
@@ -2086,7 +2088,21 @@ public interface RetrofitApi {
      * 缴费账单统一下单
      */
     @POST("billsapi/v2/bills/orders")
-    Observable<JcsResponse<JsonElement>> billsPlaceOrder(@Body BillsPlaceOrder request);
+    Observable<JcsResponse<HotelOrderCommitResponse>> billsPlaceOrder(@Body BillsPlaceOrder request);
 
+
+    /**
+     * 缴费记录
+     */
+    @GET("billsapi/v2/bills/orders")
+    Observable<JcsResponse<PageResponse<BillsRecord>>> billsRecord(
+            @Query("page") int page);
+
+    /**
+     * 缴费取消订单（退款）
+     */
+    @GET("resubmit_tv")
+    Observable<JcsResponse<JsonElement>> billsCancelOrder(
+            @Body BillCancelOrder request);
 
 }

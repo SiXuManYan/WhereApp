@@ -518,9 +518,9 @@
         <activity android:name=".features.daily.scoe.ScoreActivity" />
         <activity android:name=".features.mall.home.MallHomeActivity" />
         <activity android:name=".features.mall.second.MallSecondActivity" />
-        <activity android:name=".features.mall.result.MallSearchResultActivity"
-            android:windowSoftInputMode="stateHidden"
-            />
+        <activity
+            android:name=".features.mall.result.MallSearchResultActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".features.mall.detail.MallDetailActivity"
             android:windowSoftInputMode="stateHidden" />
@@ -558,6 +558,10 @@
         <activity android:name=".features.bills.channel.BillsChannelActivity" />
         <activity android:name=".features.bills.preview.BillsPlaceOrderActivity" />
         <activity android:name=".features.bills.form.BillsFormActivity" />
+        <activity
+            android:name=".features.bills.record.BillsRecordActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
 
     </application>

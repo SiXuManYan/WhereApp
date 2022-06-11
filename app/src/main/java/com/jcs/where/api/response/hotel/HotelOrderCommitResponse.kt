@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/8/5 15:42.
- *
+ * 酒店准备下单
  */
 class HotelOrderCommitResponse {
 

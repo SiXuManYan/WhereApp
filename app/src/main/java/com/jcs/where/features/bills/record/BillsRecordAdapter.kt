@@ -20,7 +20,7 @@ class BillsRecordAdapter : BaseQuickAdapter<BillsRecord, BaseViewHolder>(R.layou
     override fun convert(holder: BaseViewHolder, item: BillsRecord) {
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         val title_tv = holder.getView<TextView>(R.id.title_tv)
-        val status_tv = holder.getView<TextView>(R.id.status_tv)
+        val billsStatusTv = holder.getView<TextView>(R.id.bills_status_tv)
         val money_tv = holder.getView<TextView>(R.id.money_tv)
         val time_tv = holder.getView<TextView>(R.id.time_tv)
 
@@ -46,7 +46,7 @@ class BillsRecordAdapter : BaseQuickAdapter<BillsRecord, BaseViewHolder>(R.layou
             }
         }
         val orderStatus = item.order_status
-        status_tv.text = getStatusText(orderStatus)
+        billsStatusTv.text = getStatusText(orderStatus)
         money_tv.text = StringUtils.getString(R.string.price_unit_format, item.total_price.stripTrailingZeros().toPlainString())
         time_tv.text = item.created_at
 

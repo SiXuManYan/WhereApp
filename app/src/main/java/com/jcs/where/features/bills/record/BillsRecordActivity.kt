@@ -40,7 +40,6 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
     override fun initView() {
         mJcsTitle.setMiddleTitle(getString(R.string.payment_record))
         initList()
-
     }
 
     private fun initList() {
@@ -142,12 +141,9 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {
         super.onEventReceived(baseEvent)
-
-
         if (baseEvent == null) {
             return
         }
-
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_ORDER_LIST -> {
                 onRefresh()

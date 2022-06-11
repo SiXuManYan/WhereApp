@@ -94,9 +94,8 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
             when (moduleType) {
                 PayUrlGet.BILL_PAY -> {
                     // 跳转至水电列表
-                    startActivityClearTop(BillsRecordActivity::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_TAB, 2)
-                    })
+                    EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
+                    startActivity(BillsRecordActivity::class.java)
                 }
                 else -> {
                     startActivityClearTop(MainActivity::class.java, Bundle().apply {

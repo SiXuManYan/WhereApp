@@ -8,6 +8,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.bills.BillsChannel
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.form.BillsFormActivity
 import com.jcs.where.utils.Constant
@@ -86,6 +88,21 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
             return
         }
         BillsFormActivity.navigation(this, data.BillerTag, data.Description, data.ServiceCharge.toDouble(), data.FieldDetails,billsType)
+    }
+
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+                finish()
+            }
+        }
+
     }
 
 

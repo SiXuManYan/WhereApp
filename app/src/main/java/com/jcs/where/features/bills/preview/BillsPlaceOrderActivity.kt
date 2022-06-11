@@ -12,6 +12,8 @@ import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.bills.FieldDetail
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
@@ -96,6 +98,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
 
     override fun bindListener() {
         confirm_tv.setOnClickListener {
+            confirm_tv.isClickable = false
             mAdapter.data.forEachIndexed { index, fieldDetail ->
                 when (index) {
                     0 -> {
@@ -106,7 +109,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
                     }
                 }
             }
-            presenter.placeOrder(billerTag, firstField, secondField, money,billsType)
+            presenter.placeOrder(billerTag, firstField, secondField, money, billsType)
+            confirm_tv.postDelayed({ confirm_tv.isClickable = true }, 2000)
         }
     }
 
@@ -116,6 +120,19 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
         val order = response.order
         orderIds.add(order!!.id)
         WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+              finish()
+            }
+        }
+
     }
 
 

@@ -13,6 +13,8 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.bills.FieldDetail
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.preview.BillsPlaceOrderActivity
 import com.jcs.where.utils.BigDecimalUtil
@@ -152,14 +154,28 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
             .setTitle(R.string.prompt)
             .setMessage(R.string.give_up_bills_payment_hint)
             .setCancelable(false)
-            .setPositiveButton(R.string.cancel) { dialogInterface, i ->
+            .setPositiveButton(R.string.confirm) { dialogInterface, i ->
                 dialogInterface.dismiss()
             }
-            .setNegativeButton(R.string.confirm) { dialogInterface, i ->
+            .setNegativeButton(R.string.cancel) { dialogInterface, i ->
                 dialogInterface.dismiss()
                 finish()
             }
             .create().show()
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent == null) {
+            return
+        }
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+                finish()
+            }
+        }
+
     }
 
 }

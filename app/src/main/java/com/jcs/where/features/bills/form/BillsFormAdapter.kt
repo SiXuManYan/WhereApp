@@ -5,7 +5,6 @@ import android.text.InputFilter.LengthFilter
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
-import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
@@ -23,7 +22,7 @@ class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.
         val form = holder.getView<AppCompatEditText>(R.id.content_et)
 
         title.text = item.Tag
-        form.hint = StringUtils.getString(R.string.please_enter) + item.Tag
+        form.hint = item.Caption
         form.filters = arrayOf<InputFilter>(LengthFilter(item.Width))
         form.addTextChangedListener(
             afterTextChanged = {

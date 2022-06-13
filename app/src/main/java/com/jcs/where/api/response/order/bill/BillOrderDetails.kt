@@ -15,73 +15,48 @@ class BillOrderDetails {
 
 
     /**
-     * 订单状态（1-支付审核中，2-缴费中，3-缴费成功，4-订单关闭，5-退款中，6-退款成功）
+     * 订单状态（0-待支付，1-缴费中，2-缴费成功，3-缴费失败，4-订单关闭，5-退款审核中，6-拒绝退款，7-退款中，8-退款成功，9-退款失败）
      */
     var order_status = 0
 
+    /**
+     * 总价
+     */
+    var total_price = BigDecimal.ZERO
+
+    /**
+     * 账单价
+     */
+    var bills_price = BigDecimal.ZERO
+
+    /**
+     * 退款价格
+     */
+    var refund_price = BigDecimal.ZERO
+
+    /** 服务费 */
+    var service_price = BigDecimal.ZERO
+
+    /** 订单号 */
     var trade_no = ""
 
-    /** 订单总额 */
-    var price = BigDecimal.ZERO
-
-    /** 订单时间 */
+    /** 创建时间 */
     var created_at = ""
 
-    /** 支付类型 */
-    var pay_type = ""
+    /** 支付方式 */
+    var payment_method = ""
 
-    /**
-     * 银行卡户头
-     */
-    var bank_card_account = ""
+    /** 失败原因 */
+    var refund_refuse_reason = ""
 
-    var bank_card_number = ""
+    var bills_params = ArrayList<BillsField>()
 
-    var account_name = ""
-
-    var present_address = ""
-    var contact_no = ""
-
-    /** 到期金额 */
-    var amount_due = ""
+}
 
 
-    var bills_payment :String? = ""
-
-    /**
-     * 开账单的人
-     */
-    var biller = ""
-
-    /**
-     * 账户号
-     */
-    var account_number = ""
-
-    /**
-     * 发票编号
-     */
-    var invoice_no = ""
-
-    /**
-     * 账单日期
-     */
-    var date = ""
-
-    /**
-     * 到期日
-     */
-    var due_date = ""
-
-    /**
-     * 报告期
-     */
-    var statement_date = ""
-
-    /**
-     * 电力公司
-     */
-    var electricity_company = ""
 
 
+class BillsField {
+    var key = ""
+    var value = ""
 }

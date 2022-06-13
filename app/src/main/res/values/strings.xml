@@ -970,4 +970,10 @@ Gentleman must let go</string>
     <string name="create_time">下单时间</string>
     <string name="resubmit">重新提交</string>
     <string name="i_know">我知道了</string>
+    <string name="bills_desc_1">平台正在缴费中，请您稍等</string>
+    <string name="bills_desc_3">请您重新发起缴费，或取消缴费订单。</string>
+    <string name="bills_desc_5">您已成功发起退款申请，请耐心等待平台审核。</string>
+    <string name="bills_desc_8">已退款，请您注意查收。</string>
+    <string name="bills_desc_9">需要您再次发起退款，并再次确认退款方式。</string>
+    <string name="bills_desc_6">平台拒绝了您的退款申请，有疑问请您联系客服。</string>
 </resources>

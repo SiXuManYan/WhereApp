@@ -1,11 +1,22 @@
 package com.jcs.where.features.bills.hydropower.detail
 
+import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.order.bill.BillOrderDetails
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.record.result.BillsRecommitResultActivity
 import com.jcs.where.features.com100.ExtendChatActivity
+import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
+import com.jcs.where.features.gourmet.refund.ComplexRefundPresenter
+import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoActivity
+import com.jcs.where.features.gourmet.refund.detail.FoodRefundInfoPresenter
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
+import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_bills_detail.*
 
 
@@ -17,6 +28,8 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
 
     private var orderId = 0
 
+    private lateinit var mAdapter: BillDetailAdapter
+
     override fun getLayoutId() = R.layout.activity_bills_detail
 
     override fun isStatusDark() = true
@@ -27,6 +40,15 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
         }
 
+        mAdapter = BillDetailAdapter()
+        content_rv.apply {
+            adapter = mAdapter
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary),
+                SizeUtils.dp2px(1f),
+                SizeUtils.dp2px(15f),
+                0))
+
+        }
     }
 
     override fun initData() {
@@ -47,40 +69,113 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
     override fun bindDetail(data: BillOrderDetails) {
 
 
-        price_tv.text = getString(R.string.price_unit_format, data.price.toPlainString())
+        /**
+         * 订单状态（0-待支付，1-缴费中，2-缴费成功，3-缴费失败，4-订单关闭，5-退款审核中，6-拒绝退款，7-退款中，8-退款成功，9-退款失败）
+         */
+        val orderStatus = data.order_status
+        status_tv.text = BusinessUtils.getBillsStatusText(orderStatus)
+        status_desc_tv.text = BusinessUtils.getBillsStatusDesc(orderStatus)
+        price_tv.text = data.total_price.toPlainString()
+
+
+        // 退款失败
+        if (orderStatus == 9) {
+            fail_reason_rl.visibility = View.VISIBLE
+            fail_reason_tv.text = data.refund_refuse_reason
+        } else {
+            fail_reason_rl.visibility = View.GONE
+        }
+
         order_number_tv.text = data.trade_no
         created_date_tv.text = data.created_at
-        pay_way_tv.text = data.pay_type
 
-        payment_name_tv.text = getString(R.string.payment_name_format, data.bank_card_account)
-        payment_account_tv.text = getString(R.string.payment_account_format, data.bank_card_number)
-        account_name_tv.text = data.account_name
-        present_address_tv.text = data.present_address
-        contact_no_tv.text = data.contact_no
-        amount_tv.text = getString(R.string.price_unit_format, data.amount_due)
-
-        val billsPayment = data.bills_payment
-        if (!billsPayment.isNullOrBlank()) {
-            bills_payment_tv.text = billsPayment
-        }
-        biller_tv.text = data.biller
-        account_number_tv.text = data.account_number
-        soa_invoice_no_tv.text = data.invoice_no
-        date_tv.text = data.date
-        due_date_tv.text = data.due_date
-        input_date_tv.text = data.statement_date
-        status_tv.text = presenter.getStatus(data.order_status)
-
-        presenter.getStatusDescText(status_desc_tv, data.order_status)
-        val electricityCompany = data.electricity_company
-        if (electricityCompany.isEmpty()) {
-            company_ll.visibility = View.GONE
+        // 支付方式
+        if (orderStatus == 0) {
+            payment_container_ll.visibility = View.GONE
         } else {
-            company_ll.visibility = View.VISIBLE
-            company_tv.text = electricityCompany
+            payment_container_ll.visibility = View.VISIBLE
+            pay_way_tv.text = data.payment_method
+        }
+
+        // 联系客服
+        if (orderStatus == 3) {
+            service_ll.visibility = View.VISIBLE
+        } else {
+            service_ll.visibility = View.GONE
         }
 
 
+        // 字段
+        val billsParams = data.bills_params
+        mAdapter.setNewInstance(billsParams)
+
+        when (orderStatus) {
+            3 -> {
+                bottom_container_rl.visibility = View.VISIBLE
+                left_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.to_cancel_order)
+                    setOnClickListener {
+                        ComplexRefundActivity.navigation(this@BillsDetailActivity,
+                            orderId,
+                            data.refund_price.toPlainString(),
+                            data.total_price.toPlainString(),
+                            ComplexRefundPresenter.TYPE_BILL)
+                    }
+                }
+                right_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.resubmit)
+                    setOnClickListener {
+                        presenter.recommit(orderId)
+                    }
+                }
+            }
+            5, 6, 7, 8 -> {
+                bottom_container_rl.visibility = View.VISIBLE
+                left_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.refund_information)
+                    setOnClickListener {
+                        FoodRefundInfoActivity.navigation(this@BillsDetailActivity,
+                            orderId, FoodRefundInfoPresenter.TYPE_BILL)
+                    }
+                }
+                right_tv.visibility = View.GONE
+            }
+            9 -> {
+                bottom_container_rl.visibility = View.VISIBLE
+                left_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.refund_information)
+                    setOnClickListener {
+                        FoodRefundInfoActivity.navigation(this@BillsDetailActivity,
+                            orderId, FoodRefundInfoPresenter.TYPE_BILL)
+                    }
+                }
+                right_tv.apply {
+                    visibility = View.VISIBLE
+                    text = StringUtils.getString(R.string.apply_again)
+                    setOnClickListener {
+                        ComplexRefundActivity.navigation(this@BillsDetailActivity,
+                            orderId,
+                            data.refund_price.toPlainString(),
+                            data.total_price.toPlainString(),
+                            ComplexRefundPresenter.TYPE_BILL)
+                    }
+                }
+            }
+            else -> {
+                bottom_container_rl.visibility = View.GONE
+            }
+        }
+
+    }
+
+    override fun recommitSuccess(orderId: Int) {
+        startActivity(BillsRecommitResultActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ORDER_ID, orderId)
+        })
     }
 
 }

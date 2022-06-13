@@ -25,7 +25,7 @@ class FoodRefundInfoActivity : BaseMvpActivity<FoodRefundInfoPresenter>(), FoodR
 
     private var orderId = 0
 
-    /** 1 美食 2外卖 */
+    /** 1 美食 2外卖 3酒店 4账单*/
     private var type = 0
 
 
@@ -108,11 +108,14 @@ class FoodRefundInfoPresenter(var view: FoodRefundInfoView) : BaseMvpPresenter(v
         var TYPE_FOOD = 1
         var TYPE_TAKEAWAY = 2
         var TYPE_HOTEL = 3
+        var TYPE_BILL = 4
     }
 
     fun getData(orderId: Int, type: Int) {
         when (type) {
-            TYPE_FOOD, TYPE_TAKEAWAY -> {
+            TYPE_FOOD,
+            TYPE_TAKEAWAY,
+            -> {
                 requestApi(mRetrofit.getFoodRefundInfo(orderId, type), object : BaseMvpObserver<FoodRefundInfo>(view) {
                     override fun onSuccess(response: FoodRefundInfo) {
                         view.bindData(response)
@@ -126,6 +129,14 @@ class FoodRefundInfoPresenter(var view: FoodRefundInfoView) : BaseMvpPresenter(v
                     }
                 })
             }
+            TYPE_BILL -> {
+                requestApi(mRetrofit.getBillRefundInfo(orderId), object : BaseMvpObserver<FoodRefundInfo>(view) {
+                    override fun onSuccess(response: FoodRefundInfo) {
+                        view.bindData(response)
+                    }
+                })
+            }
+
             else -> {}
         }
 

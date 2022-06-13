@@ -958,4 +958,10 @@ Gentleman must let go</string>
     <string name="create_time">Order Time</string>
     <string name="resubmit">Resubmit</string>
     <string name="i_know">I Know</string>
+    <string name="bills_desc_1">The platform is in the process of payment, please wait a moment.</string>
+    <string name="bills_desc_3">Please re-initiate the payment, or cancel the payment order.</string>
+    <string name="bills_desc_5">You have successfully initiated a refund request, please wait patiently for the platform to review.</string>
+    <string name="bills_desc_8">Refunded, please pay attention to check.</string>
+    <string name="bills_desc_9">You need to initiate a refund again and confirm the refund method again.</string>
+    <string name="bills_desc_6">The platform has rejected your refund request.If you have any questions, please contact customer service.</string>
 </resources>

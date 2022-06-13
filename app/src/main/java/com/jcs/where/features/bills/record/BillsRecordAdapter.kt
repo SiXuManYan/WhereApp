@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.bills.BillsRecord
+import com.jcs.where.utils.BusinessUtils
 
 /**
  * Created by Wangsw  2022/6/11 13:44.
@@ -46,7 +47,7 @@ class BillsRecordAdapter : BaseQuickAdapter<BillsRecord, BaseViewHolder>(R.layou
             }
         }
         val orderStatus = item.order_status
-        billsStatusTv.text = getStatusText(orderStatus)
+        billsStatusTv.text = BusinessUtils.getBillsStatusText(orderStatus)
         money_tv.text = StringUtils.getString(R.string.price_unit_format, item.total_price.stripTrailingZeros().toPlainString())
         time_tv.text = item.created_at
 
@@ -58,23 +59,6 @@ class BillsRecordAdapter : BaseQuickAdapter<BillsRecord, BaseViewHolder>(R.layou
 
     }
 
-    fun getStatusText(orderStatus: Int): String {
 
-
-        return when (orderStatus) {
-            0 -> context.getString(R.string.bills_status_0)
-            1 -> context.getString(R.string.bills_status_1)
-            2 -> context.getString(R.string.bills_status_2)
-            3 -> context.getString(R.string.bills_status_3)
-            4 -> context.getString(R.string.bills_status_4)
-            5 -> context.getString(R.string.bills_status_5)
-            6 -> context.getString(R.string.bills_status_6)
-            7 -> context.getString(R.string.bills_status_7)
-            8 -> context.getString(R.string.bills_status_8)
-            9 -> context.getString(R.string.bills_status_9)
-            else -> ""
-        }
-
-    }
 
 }

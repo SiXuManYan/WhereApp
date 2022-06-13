@@ -1249,13 +1249,6 @@ public interface RetrofitApi {
 
 
     /**
-     * 水电订单详情
-     */
-    @GET("generalapi/v2/pay_bills/orders/{order_id}")
-    Observable<JcsResponse<BillOrderDetails>> billOrderDetail(@Path("order_id") int order_id);
-
-
-    /**
      * 商城评价列表数量
      */
     @GET("generalapi/v2/comments/numbers/{shop_id}")
@@ -2119,5 +2112,22 @@ public interface RetrofitApi {
      */
     @GET("billsapi/v2/bills/transaction/status")
     Observable<JcsResponse<BillStatus>> billsStatus(@Query("order_id") int order_id);
+
+
+    /**
+     * 水电订单详情
+     */
+    @GET("billsapi/v2/bills/orders/{order_id}")
+    Observable<JcsResponse<BillOrderDetails>> billOrderDetail(@Path("order_id") int order_id);
+
+
+    /**
+     * 获取 账单退款信息详情
+     */
+    @GET("billsapi/v2/bills/orders/refund")
+    Observable<JcsResponse<FoodRefundInfo>> getBillRefundInfo(
+            @Path("order_id") int order_id
+    );
+
 
 }

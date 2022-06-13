@@ -385,7 +385,49 @@ object BusinessUtils {
         } else {
             oldPriceTv.visibility = View.GONE
         }
+    }
 
+    /**
+     * 支付账单订单状态
+     */
+    fun getBillsStatusText(orderStatus: Int): String {
+
+        return when (orderStatus) {
+            0 -> StringUtils.getString(R.string.bills_status_0)
+            1 -> StringUtils.getString(R.string.bills_status_1)
+            2 -> StringUtils.getString(R.string.bills_status_2)
+            3 -> StringUtils.getString(R.string.bills_status_3)
+            4 -> StringUtils.getString(R.string.bills_status_4)
+            5 -> StringUtils.getString(R.string.bills_status_5)
+            6 -> StringUtils.getString(R.string.bills_status_6)
+            7 -> StringUtils.getString(R.string.bills_status_7)
+            8 -> StringUtils.getString(R.string.bills_status_8)
+            9 -> StringUtils.getString(R.string.bills_status_9)
+            else -> ""
+        }
+
+    }
+
+
+
+    /**
+     * 支付账单订单描述
+     *
+     * 订单状态（0-待支付，1-缴费中，2-缴费成功，3-缴费失败，4-订单关闭，5-退款审核中，6-拒绝退款，7-退款中，8-退款成功，9-退款失败）
+     */
+    fun getBillsStatusDesc(orderStatus: Int): String {
+
+        return when (orderStatus) {
+            1 -> StringUtils.getString(R.string.bills_desc_1)
+            3 -> StringUtils.getString(R.string.bills_desc_3)
+            5 -> StringUtils.getString(R.string.bills_desc_5)
+            6 -> StringUtils.getString(R.string.bills_desc_6)
+
+            7 -> StringUtils.getString(R.string.store_status_desc_8)
+            8 -> StringUtils.getString(R.string.bills_desc_8)
+            9 -> StringUtils.getString(R.string.bills_desc_9)
+            else -> StringUtils.getString(R.string.line_split)
+        }
 
     }
 

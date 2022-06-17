@@ -350,6 +350,7 @@ object BusinessUtils {
     fun isBankChannel(channel: String?): Boolean = channel == "BANK"
 
 
+
     fun setNowPriceAndOldPrice(
         price: BigDecimal, oldPrice: BigDecimal,
         priceTv: TextView, oldPriceTv: TextView,
@@ -409,7 +410,6 @@ object BusinessUtils {
     }
 
 
-
     /**
      * 支付账单订单描述
      *
@@ -431,4 +431,10 @@ object BusinessUtils {
 
     }
 
+
+    fun formatPrice(price: BigDecimal): String {
+        price.setScale(2, BigDecimal.ROUND_HALF_UP)
+        val decimalFormat = DecimalFormat("0.00#")
+        return decimalFormat.format(price)
+    }
 }

@@ -1,4 +1,4 @@
-package com.jcs.where.features.bills.hydropower.detail
+package com.jcs.where.features.bills.order
 
 import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver

@@ -3,7 +3,6 @@ package com.jcs.where.features.store.pay.result
 import android.os.Bundle
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
-import com.jcs.where.features.bills.hydropower.record.PaymentRecordActivity
 import com.jcs.where.features.main.MainActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_pay_result.*

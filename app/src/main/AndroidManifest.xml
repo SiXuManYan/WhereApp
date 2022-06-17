@@ -481,15 +481,13 @@
         <activity android:name=".features.store.pay.info.PayInfoActivity" />
         <activity android:name=".features.store.pay.result.StorePayResultActivity" />
         <activity android:name=".features.store.order.detail.StoreOrderDetailActivity" />
-        <activity android:name=".features.bills.hydropower.record.PaymentRecordActivity" />
-        <activity android:name=".features.bills.hydropower.pay.BillsPayActivity" />
         <activity android:name=".features.store.refund.StoreRefundActivity" />
         <activity android:name=".features.store.refund.detail.StoreRefundDetailActivity" />
         <activity android:name=".features.store.cart.StoreCartActivity" />
         <activity android:name=".features.store.comment.post.StoreCommentPostActivity" />
         <activity android:name=".features.store.comment.detail.StoreCommentDetailActivity" />
         <activity android:name=".features.store.detail.comment.StoreCommentActivity" />
-        <activity android:name=".features.bills.hydropower.detail.BillsDetailActivity" />
+        <activity android:name=".features.bills.order.BillsOrderDetailActivity" />
         <activity android:name=".features.gourmet.order.detail2.DelicacyOrderDetailActivity" />
         <activity android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity" />
         <activity android:name=".features.hotel.order.HotelOrderDetailActivity" />
@@ -562,6 +560,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".features.bills.record.result.BillsRecommitResultActivity" />
+        <activity android:name=".features.bills.charges.CallChargesActivity" />
 
 
     </application>

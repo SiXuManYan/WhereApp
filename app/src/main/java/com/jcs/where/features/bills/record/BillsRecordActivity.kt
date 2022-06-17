@@ -14,7 +14,7 @@ import com.jcs.where.api.response.bills.BillsRecord
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.bills.hydropower.detail.BillsDetailActivity
+import com.jcs.where.features.bills.order.BillsOrderDetailActivity
 import com.jcs.where.features.bills.record.result.BillsRecommitResultActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundPresenter
@@ -89,7 +89,7 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         // 跳转至详情
         val billsRecord = mAdapter.data[position]
-        startActivity(BillsDetailActivity::class.java, Bundle().apply {
+        startActivity(BillsOrderDetailActivity::class.java, Bundle().apply {
             putInt(Constant.PARAM_ORDER_ID, billsRecord.id)
         })
 

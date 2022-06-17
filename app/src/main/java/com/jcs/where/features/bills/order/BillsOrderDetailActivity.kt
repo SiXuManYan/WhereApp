@@ -1,7 +1,9 @@
-package com.jcs.where.features.bills.hydropower.detail
+package com.jcs.where.features.bills.order
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
@@ -24,23 +26,23 @@ import kotlinx.android.synthetic.main.activity_bills_detail.*
  * Created by Wangsw  2021/7/20 10:49.
  * 水电订单详情
  */
-class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetailView {
+class BillsOrderDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetailView {
 
     private var orderId = 0
 
-    private lateinit var mAdapter: BillDetailAdapter
+    private lateinit var mAdapter: BillOrderDetailAdapter
 
     override fun getLayoutId() = R.layout.activity_bills_detail
 
     override fun isStatusDark() = true
 
     override fun initView() {
-
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         intent.extras?.let {
             orderId = it.getInt(Constant.PARAM_ORDER_ID, 0)
         }
 
-        mAdapter = BillDetailAdapter()
+        mAdapter = BillOrderDetailAdapter()
         content_rv.apply {
             adapter = mAdapter
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary),
@@ -75,7 +77,7 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
         val orderStatus = data.order_status
         status_tv.text = BusinessUtils.getBillsStatusText(orderStatus)
         status_desc_tv.text = BusinessUtils.getBillsStatusDesc(orderStatus)
-        price_tv.text = data.total_price.toPlainString()
+        price_tv.text = getString(R.string.price_unit_format, data.total_price.toPlainString())
 
 
         // 退款失败
@@ -116,7 +118,7 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.to_cancel_order)
                     setOnClickListener {
-                        ComplexRefundActivity.navigation(this@BillsDetailActivity,
+                        ComplexRefundActivity.navigation(this@BillsOrderDetailActivity,
                             orderId,
                             data.refund_price.toPlainString(),
                             data.total_price.toPlainString(),
@@ -137,7 +139,7 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.refund_information)
                     setOnClickListener {
-                        FoodRefundInfoActivity.navigation(this@BillsDetailActivity,
+                        FoodRefundInfoActivity.navigation(this@BillsOrderDetailActivity,
                             orderId, FoodRefundInfoPresenter.TYPE_BILL)
                     }
                 }
@@ -149,7 +151,7 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.refund_information)
                     setOnClickListener {
-                        FoodRefundInfoActivity.navigation(this@BillsDetailActivity,
+                        FoodRefundInfoActivity.navigation(this@BillsOrderDetailActivity,
                             orderId, FoodRefundInfoPresenter.TYPE_BILL)
                     }
                 }
@@ -157,7 +159,7 @@ class BillsDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsDetail
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.apply_again)
                     setOnClickListener {
-                        ComplexRefundActivity.navigation(this@BillsDetailActivity,
+                        ComplexRefundActivity.navigation(this@BillsOrderDetailActivity,
                             orderId,
                             data.refund_price.toPlainString(),
                             data.total_price.toPlainString(),

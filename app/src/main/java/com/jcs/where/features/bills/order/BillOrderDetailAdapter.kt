@@ -1,4 +1,4 @@
-package com.jcs.where.features.bills.hydropower.detail
+package com.jcs.where.features.bills.order
 
 import android.view.View
 import android.widget.ImageView
@@ -11,7 +11,7 @@ import com.jcs.where.api.response.order.bill.BillsField
  * Created by Wangsw  2022/6/13 16:14.
  *
  */
-class BillDetailAdapter : BaseQuickAdapter<BillsField, BaseViewHolder>(R.layout.item_bill_channel) {
+class BillOrderDetailAdapter : BaseQuickAdapter<BillsField, BaseViewHolder>(R.layout.item_bill_channel) {
 
 
     override fun convert(holder: BaseViewHolder, item: BillsField) {

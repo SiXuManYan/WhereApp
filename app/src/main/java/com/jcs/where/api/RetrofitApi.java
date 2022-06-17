@@ -2124,7 +2124,7 @@ public interface RetrofitApi {
     /**
      * 获取 账单退款信息详情
      */
-    @GET("billsapi/v2/bills/orders/refund")
+    @GET("billsapi/v2/bills/refund")
     Observable<JcsResponse<FoodRefundInfo>> getBillRefundInfo(
             @Path("order_id") int order_id
     );

@@ -159,10 +159,10 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
             .setCancelable(false)
             .setPositiveButton(R.string.confirm) { dialogInterface, i ->
                 dialogInterface.dismiss()
+                finish()
             }
             .setNegativeButton(R.string.cancel) { dialogInterface, i ->
                 dialogInterface.dismiss()
-                finish()
             }
             .create().show()
     }

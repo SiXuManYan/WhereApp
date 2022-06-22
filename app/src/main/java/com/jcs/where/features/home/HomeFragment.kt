@@ -3,12 +3,16 @@ package com.jcs.where.features.home
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.*
 import com.flyco.tablayout.listener.CustomTabEntity
@@ -18,9 +22,9 @@ import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.ModulesResponse
+import com.jcs.where.api.response.home.HomeChild
 import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.home.TabEntity
-import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -30,6 +34,7 @@ import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.features.complex.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
+import com.jcs.where.features.home.child.ComplexChildFragment
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.home.MallHomeActivity
@@ -50,13 +55,10 @@ import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
-import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.calendar.JcsCalendarDialog
-import com.jcs.where.widget.list.DividerDecoration
 import com.jcs.where.yellow_page.activity.YellowPageActivity
-import kotlinx.android.synthetic.main.fragment_home3.*
+import kotlinx.android.synthetic.main.fragment_home4.*
 import pl.droidsonroids.gif.GifImageView
-import java.util.*
 
 
 /**
@@ -66,8 +68,6 @@ import java.util.*
  */
 class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLayout.OnRefreshListener {
 
-    /** 推荐列表请求 */
-    private var recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
 
     /** 选择城市 */
     private val REQ_SELECT_CITY = 100
@@ -75,8 +75,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     /** 功能区(金刚区) */
     private lateinit var mModulesAdapter: ModulesAdapter
 
-    /** 首页推荐 */
-    private lateinit var mHomeRecommendAdapter: HomeRecommendAdapter
 
     /** 首页新闻 */
     private lateinit var mNewsAdapter: HomeNewsAdapter
@@ -90,18 +88,17 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
 
 
-    private lateinit var emptyView: EmptyView
+    private var mType: ArrayList<HomeChild> = ArrayList()
 
-    override fun getLayoutId() = R.layout.fragment_home3
+    override fun getLayoutId() = R.layout.fragment_home4
 
     override fun initView(view: View) {
-        view?.let {
-            BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.swipeLayout))
+        view.let {
+            BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.parent_abl))
         }
         initBanner()
         initPlate()
         initNews()
-        initRecommend()
         initScroll()
     }
 
@@ -261,81 +258,23 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     }
 
 
-    /** 推荐列表 */
-    private fun initRecommend() {
+    private fun initScroll() {
+
         swipeLayout.setOnRefreshListener(this)
         swipeLayout.setColorSchemeColors(ColorUtils.getColor(R.color.blue_377BFF))
 
-        mHomeRecommendAdapter = HomeRecommendAdapter()
-        rv_home.apply {
-            adapter = mHomeRecommendAdapter
-            addItemDecoration(
-                DividerDecoration(
-                    Color.TRANSPARENT,
-                    SizeUtils.dp2px(16f),
-                    SizeUtils.dp2px(8f),
-                    SizeUtils.dp2px(8f)
-                ).apply {
-                    setDrawHeaderFooter(false)
-                })
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        }
-         emptyView = EmptyView(context).apply {
-            showEmptyDefault()
-        }
-        mHomeRecommendAdapter.apply {
-            setEmptyView(emptyView)
-            loadMoreModule.isAutoLoadMore = true
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
-            loadMoreModule.setOnLoadMoreListener {
-                recommedRequestPage++
-                presenter.getRecommendList(recommedRequestPage)
-            }
-            setOnItemClickListener { _, _, position ->
-                val data = mHomeRecommendAdapter.data[position]
-                val itemViewType = mHomeRecommendAdapter.getItemViewType(position + mHomeRecommendAdapter.headerLayoutCount)
-                when (itemViewType) {
-                    HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
-                        val dialog = JcsCalendarDialog()
-                        dialog.initCalendar(this@HomeFragment.activity)
-                        HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean)
-                    }
-                    HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {
-                        startActivity(MechanismActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.id)
-                        })
-                    }
-                    HomeRecommendResponse.MODULE_TYPE_3_FOOD -> {
-                        startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.id)
-                        })
-                    }
-                    HomeRecommendResponse.MODULE_TYPE_4_TRAVEL -> {
-                        TravelDetailActivity.navigation(requireContext(), data.id)
-                    }
-                }
-
-            }
-        }
-    }
-
-
-    private fun initScroll() {
-
         moduleRecycler.isNestedScrollingEnabled = false
-        rv_home.isNestedScrollingEnabled = true
-        bottom_cl.isNestedScrollingEnabled = true
 
         child_abl.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout, expanded: State, verticalOffset: Int) {
                 when (expanded) {
                     State.EXPANDED -> {
-                        parent_abl.setExpanded(true)
+
                         swipeLayout.isEnabled = true
                     }
 
                     State.COLLAPSED -> {
-                        parent_abl.setExpanded(false)
+
                         swipeLayout.isEnabled = false
                     }
 
@@ -343,8 +282,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         swipeLayout.isEnabled = false
                     }
                 }
-                Log.d("verticalOffset", "expanded == " + expanded.name + "    verticalOffset == $verticalOffset")
-
             }
         })
 
@@ -361,12 +298,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     }
 
     private fun requestData() {
-        recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
         presenter.getNewsList()
-        presenter.getRecommendList(recommedRequestPage)
+        presenter.getHomeChild()
         presenter.checkAppVersion()
         presenter.connectRongCloud()
     }
@@ -413,12 +349,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         rxTimer.cancel()
         top_banner.pause()
         swipeLayout.isRefreshing = true
-        recommedRequestPage = Constant.DEFAULT_FIRST_PAGE
-        presenter.getRecommendList(recommedRequestPage)
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
         presenter.getNewsList()
+        presenter.getHomeChild()
     }
 
     override fun onPause() {
@@ -427,30 +362,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         super.onPause()
     }
 
-    override fun bindRecommendData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean) {
-        swipeLayout.isRefreshing = false
-        val loadMoreModule = mHomeRecommendAdapter.loadMoreModule
-        if (data.isEmpty()) {
-            if (recommedRequestPage == Constant.DEFAULT_FIRST_PAGE) {
-                emptyView.showEmptyDefault()
-                loadMoreModule.loadMoreComplete()
-            } else {
-                loadMoreModule.loadMoreEnd()
-            }
-            return
-        }
-        if (recommedRequestPage == Constant.DEFAULT_FIRST_PAGE) {
-            mHomeRecommendAdapter.setNewInstance(data)
-            loadMoreModule.checkDisableLoadMoreIfNotFullPage()
-        } else {
-            mHomeRecommendAdapter.addData(data)
-            if (lastPage) {
-                loadMoreModule.loadMoreEnd()
-            } else {
-                loadMoreModule.loadMoreComplete()
-            }
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -467,7 +378,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             else -> {
             }
         }
-
     }
 
     override fun setMessageCount(i: Int) = message_view.setMessageCount(i)
@@ -593,14 +503,59 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     }
 
-    override fun onError(errorResponse: ErrorResponse) {
-        val errCode = errorResponse.getErrCode()
-        if (errCode<=0){
-            ToastUtils.showLong(errorResponse.getErrMsg())
-            emptyView.showNetworkError { requestData() }
+    var isInit = true
+
+    override fun bindHomeChild(response: ArrayList<HomeChild>, titles: ArrayList<String>) {
+        swipeLayout.isRefreshing = false
+        isInit = when {
+            mType.isEmpty() -> {
+                true
+            }
+            mType == response -> {
+                false
+            }
+            else -> {
+                true
+            }
+        }
+        mType.clear()
+        mType.addAll(response)
+
+
+        if (isInit) {
+            home_vp.offscreenPageLimit = response.size
+            val innerPagerAdapter = InnerPagerAdapter(childFragmentManager, 0)
+            innerPagerAdapter.notifyDataSetChanged()
+            home_vp.adapter = innerPagerAdapter
+            recommend_tabs.setViewPager(home_vp, titles.toTypedArray())
+            recommend_tabs.currentTab = 0
+        }
+    }
+
+
+    private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
+
+        override fun getPageTitle(position: Int): CharSequence = mType[position].name
+
+        override fun getItem(position: Int): Fragment {
+
+            val homeChild = mType[position]
+            val typeValue = homeChild.type
+
+            return if (typeValue == 1) {
+                ComplexChildFragment.newInstance(homeChild.banner, homeChild.category)
+            } else {
+                HomeMallFragment.newInstance(homeChild.banner, homeChild.category)
+            }
         }
 
-
+        override fun getCount(): Int = mType.size
     }
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        swipeLayout.isRefreshing = false
+    }
+
 
 }

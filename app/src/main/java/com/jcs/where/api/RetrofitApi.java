@@ -97,6 +97,7 @@ import com.jcs.where.api.response.gourmet.qr.QrResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse;
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse;
 import com.jcs.where.api.response.gourmet.takeaway.TakeawayDetailResponse;
+import com.jcs.where.api.response.home.HomeChild;
 import com.jcs.where.api.response.hotel.HotelComment;
 import com.jcs.where.api.response.hotel.HotelDetail;
 import com.jcs.where.api.response.hotel.HotelHomeRecommend;
@@ -621,7 +622,8 @@ public interface RetrofitApi {
             @Query("page") int page,
             @Query("lat") String lat,
             @Query("lng") String lng,
-            @Query("area_id") String area_id
+            @Query("area_id") String area_id,
+            @Query("categoryId") @Nullable Integer categoryId
     );
 
 
@@ -2128,6 +2130,16 @@ public interface RetrofitApi {
     Observable<JcsResponse<FoodRefundInfo>> getBillRefundInfo(
             @Path("order_id") int order_id
     );
+
+
+
+    /**
+     * 获取 首页推荐数据
+     */
+    @GET("commonapi/v2/recommends/models")
+    Observable<JcsResponse<ArrayList<HomeChild>>> getHomeChild();
+
+
 
 
 }

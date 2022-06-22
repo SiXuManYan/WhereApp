@@ -6,18 +6,13 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.ModulesResponse
-import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.UnReadMessage
+import com.jcs.where.api.response.home.HomeChild
 import com.jcs.where.api.response.home.HomeNewsResponse
-import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.storage.entity.User
-import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.SPKey
-import com.jcs.where.utils.SPUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
-import java.util.*
 
 /**
  * Created by Wangsw  2021/4/12 13:53.
@@ -25,31 +20,6 @@ import java.util.*
  */
 class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
-    
-    /**
-     * 推荐列表
-     */
-    fun getRecommendList(page: Int) {
-        val areaId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID)
-
-        val selectLatLng = CacheUtil.getSafeSelectLatLng()
-
-
-        requestApi(
-            mRetrofit.getRecommends(page, selectLatLng.latitude.toString(), selectLatLng.longitude.toString(), areaId),
-            object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view) {
-                override fun onSuccess(response: PageResponse<HomeRecommendResponse>) {
-                    val isLastPage = response.lastPage == page
-                    val data = response.data.toMutableList()
-
-                    view.bindRecommendData(data, isLastPage)
-                }
-
-                override fun onError(errorResponse: ErrorResponse?) {
-                    super.onError(errorResponse)
-                }
-            })
-    }
 
     /**
      * 获取未读消息数量
@@ -169,8 +139,21 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
             override fun onSuccess(p0: String?) = Unit
 
         })
+    }
 
+    fun getHomeChild() {
 
+        requestApi(mRetrofit.homeChild, object : BaseMvpObserver<ArrayList<HomeChild>>(view) {
+            override fun onSuccess(response: ArrayList<HomeChild>) {
+
+                val titles: ArrayList<String> = ArrayList()
+                response.forEach {
+                    titles.add(it.name)
+                }
+                view.bindHomeChild(response,titles)
+            }
+
+        })
     }
 
 

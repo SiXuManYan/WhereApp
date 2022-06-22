@@ -1,6 +1,10 @@
 package com.jcs.where.api.response.home
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.flyco.tablayout.listener.CustomTabEntity
+import com.jcs.where.api.response.BannerResponse
+import com.jcs.where.api.response.mall.MallCategory
 
 /**
  * Created by Wangsw  2021/4/14 13:47.
@@ -44,7 +48,7 @@ class Publisher {
 }
 
 
-class TabEntity(var title: String, var selectedIcon: Int, var unSelectedIcon: Int) : CustomTabEntity{
+class TabEntity(var title: String, var selectedIcon: Int, var unSelectedIcon: Int) : CustomTabEntity {
 
     override fun getTabTitle() = title
 
@@ -52,4 +56,20 @@ class TabEntity(var title: String, var selectedIcon: Int, var unSelectedIcon: In
 
     override fun getTabUnselectedIcon() = unSelectedIcon
 
+}
+
+
+
+class HomeChild {
+    var id = 0
+
+    /** 模块名称 */
+    var name = ""
+
+    /** 1 附近商家 2 推荐商品 */
+    var type = 0
+    var banner = ArrayList<BannerResponse>()
+
+    /** 子分类 */
+    var category = ArrayList<MallCategory>()
 }

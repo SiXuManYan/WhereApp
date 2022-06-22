@@ -24,7 +24,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
     var needBack = false
 
-    private var type: ArrayList<OrderTabResponse> = ArrayList()
+    private var mType: ArrayList<OrderTabResponse> = ArrayList()
 
     override fun getLayoutId() = R.layout.fragment_order_parent
 
@@ -67,8 +67,8 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
     }
 
     override fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>, isInit: Boolean) {
-        type.clear()
-        type.addAll(response)
+        mType.clear()
+        mType.addAll(response)
 
         if (isInit) {
             viewpager.offscreenPageLimit = response.size
@@ -90,7 +90,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
         when (baseEvent.code) {
             EventCode.EVENT_LOGIN_SUCCESS -> {
                 login_rl.visibility = View.GONE
-                val isInit = type.isEmpty()
+                val isInit = mType.isEmpty()
 
                 presenter.getTabs(isInit)
             }
@@ -110,12 +110,12 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
-        override fun getPageTitle(position: Int): CharSequence = type[position].title
+        override fun getPageTitle(position: Int): CharSequence = mType[position].title
 
         override fun getItem(position: Int): Fragment {
 
 
-            val typeValue = type[position].type
+            val typeValue = mType[position].type
 
             return if (typeValue == 6) {
                 // 商城售后
@@ -127,7 +127,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
         }
 
-        override fun getCount(): Int = type.size
+        override fun getCount(): Int = mType.size
     }
 
 

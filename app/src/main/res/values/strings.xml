@@ -375,7 +375,7 @@
     <string name="merchant_service">商家服务</string>
     <string name="smart_sorting">智能排序</string>
     <string name="praise_first">好评优先</string>
-    <string name="sales_priority">销量优先</string>
+    <string name="sales_priority">销量最高</string>
     <string name="nearest_first">距离最近</string>
     <string name="dine_in_dishes">堂食菜品</string>
     <string name="panic_buying">抢购</string>
@@ -960,7 +960,9 @@ Gentleman must let go</string>
     <string name="fans_format">粉丝数: %1$d</string>
     <string name="pay_bills">缴费账单</string>
     <string name="php">PHP</string>
-    <string name="service_charge_format">您将被收取PHP %1$s 手续费</string>
+
+    <string name="service_charge_format"><font color='#666666'>您将被收取&#160;PHP</font><font color='#333333'>&#160;%1$s&#160;</font><font color='#666666'>手续费</font></string>
+
     <string name="payment_channels">缴费渠道</string>
     <string name="billing_information">账单信息</string>
     <string name="place_money_title">确认您的付款金额为：</string>

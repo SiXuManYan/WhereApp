@@ -356,8 +356,8 @@
     <string name="address_edit_hint">Please fill in the detailed delivery address</string>
     <string name="recipient_edit_hint">Please fill in the name of the consignee</string>
     <string name="recipient">Contact</string>
-    <string name="sir">Men</string>
-    <string name="lady">Lady</string>
+    <string name="sir">Mr.</string>
+    <string name="lady">Ms.</string>
     <string name="contact_number">Contact number</string>
     <string name="address_phone_edit">Please fill in the receiving phone number</string>
     <string name="edit_address">Edit address</string>
@@ -369,13 +369,13 @@
     <string name="filter_food">All Food</string>
     <string name="filter_other">Filter</string>
     <string name="reset">Reset</string>
-    <string name="average_price">Per Capita price</string>
+    <string name="average_price">Price Range</string>
     <string name="to">&#160;-&#160;</string>
     <string name="merchant_service">Merchant Service</string>
     <string name="smart_sorting">Smart Sorting</string>
-    <string name="praise_first">Praise first</string>
-    <string name="sales_priority">Sales Priority</string>
-    <string name="nearest_first">Nearest</string>
+    <string name="praise_first">Highest Rating</string>
+    <string name="sales_priority">High Sales</string>
+    <string name="nearest_first">Distance Closest</string>
     <string name="dine_in_dishes">Dine-in dishes</string>
     <string name="panic_buying">Buy Now</string>
     <string name="sale_format">Sold&#160;%1$s</string>
@@ -764,7 +764,7 @@ Gentleman must let go</string>
     <string name="total_date_format">%1$s&#160;night total</string>
     <string name="children_format">Children&#160;%1$s</string>
     <string name="take_away_support_text">Support delivery</string>
-    <string name="minimum">Minimum</string>
+    <string name="minimum">Min</string>
     <string name="max">Max</string>
     <string name="store_introduction">Store Introduction</string>
     <string name="empty_dish_hint">There are no dine-in dishes at this restaurant</string>
@@ -947,7 +947,7 @@ Gentleman must let go</string>
     <string name="fans_format">Followers: %1$d</string>
     <string name="pay_bills">Pay Bills</string>
     <string name="php">PHP</string>
-    <string name="service_charge_format">You will be charged a service fee of PHP %1$s</string>
+    <string name="service_charge_format"><font color='#666666'>You will be charged a service fee of PHP </font><font color='#333333'>&#160;%1$s&#160;</font></string>
     <string name="payment_channels">Payment Channels</string>
     <string name="billing_information">Billing Information</string>
     <string name="place_money_title">Confirm that your payment amount is:</string>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.bills.FieldDetail
 import com.jcs.where.base.BaseEvent
@@ -128,7 +129,16 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     override fun bindListener() {
         amount_et.addTextChangedListener(
             afterTextChanged = {
-                userInputMoney = BusinessUtils.getSafeBigDecimal(it.toString())
+                val input = it.toString()
+                userInputMoney = BusinessUtils.getSafeBigDecimal(input)
+                amount_et.setText(BusinessUtils.formatPrice(userInputMoney))
+
+                if (input.isBlank()) {
+                    next_tv.alpha = 0.6f
+                } else {
+                    next_tv.alpha = 1.0f
+                }
+
             }
         )
 
@@ -138,6 +148,20 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
         }
 
         next_tv.setOnClickListener {
+
+            if (amount_et.text.isNullOrBlank()) {
+                ToastUtils.showShort("Please enter the amount.")
+                return@setOnClickListener
+            }
+
+            val data = mAdapter.data
+            data.forEach {
+                if (it.nativeUserInput.isBlank()) {
+                    ToastUtils.showShort("Please enter " + it.Tag)
+                    return@setOnClickListener
+                }
+            }
+
             BillsPlaceOrderActivity.navigation(this,
                 billerTag,
                 userInputMoney.toDouble(),

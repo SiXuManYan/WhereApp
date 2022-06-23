@@ -22,6 +22,8 @@ class PayUrlGet {
 
     var order_ids = ""
 
+
+    var payment_channel = "Xendit"
 }
 
 

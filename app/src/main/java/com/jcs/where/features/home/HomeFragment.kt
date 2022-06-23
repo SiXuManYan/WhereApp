@@ -35,6 +35,7 @@ import com.jcs.where.features.complex.ConvenienceServiceActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.home.child.ComplexChildFragment
+import com.jcs.where.features.home.child.HomeMallFragment
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.home.MallHomeActivity

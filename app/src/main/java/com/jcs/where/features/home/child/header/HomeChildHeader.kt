@@ -19,7 +19,6 @@ import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mall.detail.MallDetailActivity
-import com.jcs.where.features.mall.second.ThirdCategoryFilterAdapter
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.web.WebViewActivity
@@ -50,7 +49,7 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
 
     lateinit var bannerContainer: LinearLayout
     lateinit var categoryRv: RecyclerView
-    private lateinit var mAdapter: ThirdCategoryFilterAdapter
+    private lateinit var mAdapter: HomeChildHeaderAdapter
 
     private fun initView() {
 
@@ -101,7 +100,7 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
     /** 分类 */
     @SuppressLint("NotifyDataSetChanged")
     private fun initCategory() {
-        mAdapter = ThirdCategoryFilterAdapter().apply {
+        mAdapter = HomeChildHeaderAdapter().apply {
             setOnItemClickListener { _, _, position ->
                 // 筛选
                 val datas = mAdapter.data
@@ -195,11 +194,14 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
 
 
     fun bindCategory(category: ArrayList<MallCategory>) {
+
         mAdapter.setNewInstance(category)
+        if (category.isNotEmpty()) {
+            mAdapter.data[0].nativeIsSelected = true
+            mAdapter.notifyItemChanged(0)
+        }
+
         val layoutParams = categoryRv.layoutParams as LinearLayout.LayoutParams
-
-
-
 
         categoryRv.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -207,10 +209,10 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
                 val height = categoryRv.height //height is ready
 
 
-                if (height < SizeUtils.dp2px(88f)) {
+                if (height < SizeUtils.dp2px(64f)) {
                     layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
                 } else {
-                    layoutParams.height = SizeUtils.dp2px(88f)
+                    layoutParams.height = SizeUtils.dp2px(64f)
                 }
                 categoryRv.layoutParams = layoutParams
 

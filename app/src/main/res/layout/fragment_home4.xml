@@ -184,7 +184,7 @@
                                 app:tl_tab_space_equal="false"
                                 app:tl_textBold="NONE"
                                 app:tl_textSelectColor="@color/blue_377BFF"
-                                app:tl_textUnselectColor="@color/grey_999999"
+                                app:tl_textUnselectColor="@color/grey_666666"
                                 app:tl_textsize="@dimen/sp_16"
                                 app:tl_underline_color="@color/transplant"
                                 app:tl_underline_height="1px" />
@@ -239,11 +239,11 @@
                     app:tl_indicator_color="@color/blue_377BFF"
                     app:tl_indicator_corner_radius="@dimen/dp_2"
                     app:tl_indicator_height="@dimen/dp_4"
-                    app:tl_indicator_width="@dimen/dp_44"
+                    app:tl_indicator_width="@dimen/dp_28"
                     app:tl_textBold="SELECT"
                     app:tl_textSelectColor="@color/blue_377BFF"
                     app:tl_textUnselectColor="@color/black_333333"
-                    app:tl_textsize="@dimen/sp_17"
+                    app:tl_textsize="@dimen/sp_14"
                     app:tl_underline_color="@color/transplant"
                     app:tl_underline_height="1px" />
 

@@ -1,4 +1,4 @@
-package com.jcs.where.features.home
+package com.jcs.where.features.home.child
 
 import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -9,8 +9,6 @@ import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.home.child.HomeChildPresenter
-import com.jcs.where.features.home.child.HomeChildView
 import com.jcs.where.features.home.child.header.HomeChildHeader
 import com.jcs.where.features.home.child.header.OnChildCategoryClick
 import com.jcs.where.features.mall.home.child.MallRecommendAdapter

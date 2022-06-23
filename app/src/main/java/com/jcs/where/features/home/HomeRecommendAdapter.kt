@@ -3,6 +3,7 @@ package com.jcs.where.features.home
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
@@ -35,6 +36,9 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
 
 
     override fun convert(holder: BaseViewHolder, item: HomeRecommendResponse) {
+
+
+
         when (holder.itemViewType) {
             MODULE_TYPE_1_HOTEL -> bindHotelView(holder, item)
             MODULE_TYPE_2_SERVICE -> bindServiceView(holder, item)
@@ -50,6 +54,19 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
      * 酒店
      */
     private fun bindHotelView(holder: BaseViewHolder, data: HomeRecommendResponse) {
+
+        val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
+        val adapterPosition = holder.adapterPosition
+        val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
+
+        layoutParams.apply {
+            topMargin = if (adapterPosition < (2 + headerLayoutCount)) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+        container_ll.layoutParams = layoutParams
 
 
         // 图片
@@ -94,6 +111,19 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
      */
     private fun bindServiceView(holder: BaseViewHolder, data: HomeRecommendResponse) {
 
+        val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
+        val adapterPosition = holder.adapterPosition
+        val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
+
+        layoutParams.apply {
+            topMargin = if (adapterPosition < (2 + headerLayoutCount)) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+        container_ll.layoutParams = layoutParams
+
         // 图片
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
         loadImage(data, image_iv)
@@ -115,6 +145,19 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
      * 餐厅
      */
     private fun bindFoodView(holder: BaseViewHolder, data: HomeRecommendResponse) {
+
+        val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
+        val adapterPosition = holder.adapterPosition
+        val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
+
+        layoutParams.apply {
+            topMargin = if (adapterPosition < (2 + headerLayoutCount)) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+        container_ll.layoutParams = layoutParams
 
         // 图片
         val image_iv = holder.getView<ImageView>(R.id.image_iv)
@@ -144,6 +187,21 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
      * 旅游
      */
     private fun bindTraverView(holder: BaseViewHolder, data: HomeRecommendResponse) {
+
+
+        val container_ll = holder.getView<LinearLayout>(R.id.travel_container_ll)
+        val adapterPosition = holder.adapterPosition
+        val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
+
+        layoutParams.apply {
+            topMargin = if (adapterPosition < (2 + headerLayoutCount)) {
+                SizeUtils.dp2px(16f)
+            } else {
+                0
+            }
+        }
+        container_ll.layoutParams = layoutParams
+
 
         // 图片
         val image_iv = holder.getView<ImageView>(R.id.image_iv)

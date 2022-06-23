@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dp_8"
-    android:paddingTop="@dimen/dp_0"
-    android:paddingBottom="@dimen/dp_4"
     android:layout_marginEnd="@dimen/dp_8"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_0"
+    android:paddingBottom="@dimen/dp_4">
 
 
     <FrameLayout
@@ -50,12 +50,11 @@
         tools:text="@tools:sample/lorem/random" />
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/dp_4">
+        android:layout_marginTop="@dimen/dp_4"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/score_tv"
@@ -83,15 +82,14 @@
             tools:text="Ivana,Cagayan Valley" />
 
 
-
     </LinearLayout>
 
 
     <TextView
         android:id="@+id/distance_tv"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/dp_4"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
         android:textColor="@color/grey_999999"
         android:textSize="@dimen/sp_11"
         tools:text="@string/distance_format" />
@@ -123,8 +121,6 @@
 
         </LinearLayout>
     </HorizontalScrollView>
-
-
 
 
 </LinearLayout>

@@ -234,7 +234,7 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
         // 退款方式
         val refundMethod = response.remit_info
         refundMethod?.let {
-
+            //
             refund_name_tv.text = refundMethod.name
             refund_user_name_tv.text = refundMethod.user_name
             refund_account_tv.text = refundMethod.account

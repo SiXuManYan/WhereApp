@@ -234,12 +234,8 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
         // 退款方式
         val refundMethod = response.remit_info
         refundMethod?.let {
-            val bankChannel = BusinessUtils.isBankChannel(refundMethod.channel_name)
-            if (bankChannel) {
-                refund_name_tv.text = refundMethod.bank_all_name
-            } else {
-                refund_name_tv.text = refundMethod.channel_name
-            }
+
+            refund_name_tv.text = refundMethod.name
             refund_user_name_tv.text = refundMethod.user_name
             refund_account_tv.text = refundMethod.account
             refund_method_ll.visibility = View.VISIBLE

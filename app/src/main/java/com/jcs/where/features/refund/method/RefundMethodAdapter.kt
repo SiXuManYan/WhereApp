@@ -17,13 +17,7 @@ class RefundMethodAdapter :BaseQuickAdapter<RefundMethod, BaseViewHolder>(R.layo
         val address_name_tv = holder.getView<TextView>(R.id.address_name_tv)
         holder.setText(R.id.name_tv ,item.user_name)
         holder.setText(R.id.phone_tv ,item.account)
-
-        val bankChannel = BusinessUtils.isBankChannel(item.channel_name)
-        if (bankChannel) {
-            address_name_tv.text = item.bank_all_name
-        }else {
-            address_name_tv.text = item.channel_name
-        }
+        address_name_tv.text = item.name
 
     }
 }

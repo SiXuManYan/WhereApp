@@ -11,27 +11,24 @@ class RefundMethod() : Parcelable {
 
     var id = 0
     var user_name: String? = ""
-    var channel_name: String? = ""
     var account: String? = ""
-    var bank_name: String? = ""
-    var bank_all_name: String? = ""
+    var channel_category: String? = ""
+    var name: String? = ""
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         user_name = parcel.readString()
-        channel_name = parcel.readString()
         account = parcel.readString()
-        bank_name = parcel.readString()
-        bank_all_name = parcel.readString()
+        channel_category = parcel.readString()
+        name = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(user_name)
-        parcel.writeString(channel_name)
         parcel.writeString(account)
-        parcel.writeString(bank_name)
-        parcel.writeString(bank_all_name)
+        parcel.writeString(channel_category)
+        parcel.writeString(name)
     }
 
     override fun describeContents(): Int {
@@ -47,6 +44,7 @@ class RefundMethod() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 
 }
 

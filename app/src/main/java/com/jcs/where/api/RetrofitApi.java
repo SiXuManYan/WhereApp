@@ -2007,7 +2007,7 @@ public interface RetrofitApi {
     /**
      * 获取 退款渠道
      */
-    @GET("commonapi/v2/channel")
+    @GET("commonapi/v2/x_channel")
     Observable<JcsResponse<ArrayList<RefundChannel>>> getRefundChannel();
 
     /**

@@ -100,7 +100,7 @@
                 android:gravity="center"
                 android:minWidth="@dimen/dp_129"
                 android:text="@string/support_delivery"
-                android:textColor="@color/selector_black_blue"
+                android:textColor="@color/selector_gray666_blue"
                 android:textSize="@dimen/sp_13"
                 tools:checked="false" />
 
@@ -130,7 +130,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="@string/praise_first"
-                    android:textColor="@color/selector_black_blue"
+                    android:textColor="@color/selector_gray666_blue"
                     android:textSize="@dimen/sp_13"
                     tools:checked="true" />
 
@@ -145,7 +145,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="@string/sales_priority"
-                    android:textColor="@color/selector_black_blue"
+                    android:textColor="@color/selector_gray666_blue"
                     android:textSize="@dimen/sp_13" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
@@ -160,7 +160,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:text="@string/nearest_first"
-                    android:textColor="@color/selector_black_blue"
+                    android:textColor="@color/selector_gray666_blue"
                     android:textSize="@dimen/sp_13" />
 
 

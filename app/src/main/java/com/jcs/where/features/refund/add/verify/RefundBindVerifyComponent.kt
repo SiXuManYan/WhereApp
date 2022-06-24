@@ -89,14 +89,14 @@ class RefundBindVerifyPresenter(private var view: RefundBindVerifyView) : BaseMv
         })
     }
 
-    fun bindRefundMethod(channelName: String, userName: String, accountNumber: String, bankShortName: String? = null, bankAllName: String? = null) {
+    fun bindRefundMethod(channelName: String, userName: String, accountNumber: String, channelCode: String , channelCategory: String) {
 
         val apply = RefundBindRequest().apply {
-            channel_name = channelName
+            name = channelName
             user_name = userName
             account = accountNumber
-            bank_name = bankShortName
-            bank_all_name = bankAllName
+            channel_code = channelCode
+            channel_category = channelCategory
         }
         requestApi(mRetrofit.bindRefundInfo(apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {

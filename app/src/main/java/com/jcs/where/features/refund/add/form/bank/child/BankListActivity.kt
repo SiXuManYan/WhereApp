@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_bank_list.*
  * Created by Wangsw  2022/4/26 10:25.
  * 选择银行卡
  */
+@Deprecated("新版绑定退款渠道不必区分银行和第三方")
 class BankListActivity : BaseMvpActivity<BankListPresenter>(), BankListView {
 
 
@@ -79,11 +80,12 @@ class BankListActivity : BaseMvpActivity<BankListPresenter>(), BankListView {
 
 }
 
+@Deprecated("新版绑定退款渠道不必区分银行和第三方")
 interface BankListView : BaseMvpView {
     fun bindBank(response: ArrayList<RefundBankSelected>)
 }
 
-
+@Deprecated("新版绑定退款渠道不必区分银行和第三方")
 class BankListPresenter(private var view: BankListView) : BaseMvpPresenter(view) {
     fun getBankList(lastSelectedBankShortName: String) {
         requestApi(mRetrofit.bankList, object : BaseMvpObserver<ArrayList<RefundBankSelected>>(view) {

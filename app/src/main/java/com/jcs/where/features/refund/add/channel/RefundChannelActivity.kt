@@ -1,14 +1,13 @@
 package com.jcs.where.features.refund.add.channel
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.RefundChannel
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.refund.add.form.bank.BankChannelFormActivity
 import com.jcs.where.features.refund.add.form.third.ThirdChannelFormActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_refund_channel_selected.*
@@ -19,9 +18,12 @@ import kotlinx.android.synthetic.main.activity_refund_channel_selected.*
  */
 class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundChannelView {
 
-    private var isBankChannel = false
 
-    private var selectedChannel = ""
+    private var channelCode = ""
+    private var channelCategory = ""
+    private var channelName = ""
+
+
     private lateinit var mAdapter: RefundChannelAdapter
     override fun isStatusDark() = true
 
@@ -32,11 +34,14 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
         mAdapter = RefundChannelAdapter().apply {
 
             setOnItemClickListener { _, _, position ->
-                selectedChannel = mAdapter.data[position].name
-                isBankChannel = position == mAdapter.data.size - 1 || selectedChannel == "BANK"
+                val refundChannel = mAdapter.data[position]
 
-                mAdapter.data.forEachIndexed { index, refundChannel ->
-                    refundChannel.isSelected = index == position
+                channelCode = refundChannel.channel_code
+                channelCategory = refundChannel.channel_category
+                channelName = refundChannel.name
+
+                mAdapter.data.forEachIndexed { index, item ->
+                    item.isSelected = index == position
                     mAdapter.notifyDataSetChanged()
                 }
             }
@@ -56,18 +61,15 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
 
     override fun bindListener() {
         next_tv.setOnClickListener {
-            if (selectedChannel.isBlank()) {
+            if (channelCode.isBlank()) {
                 ToastUtils.showShort(R.string.please_selected_channel)
                 return@setOnClickListener
             }
-
-            val intent = Intent().putExtra(Constant.PARAM_REFUND_CHANNEL_NAME, selectedChannel)
-            if (isBankChannel) {
-                intent.setClass(this, BankChannelFormActivity::class.java)
-            } else {
-                intent.setClass(this, ThirdChannelFormActivity::class.java)
-            }
-            startActivity(intent)
+            startActivity(ThirdChannelFormActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_REFUND_CHANNEL_NAME, channelName)
+                putString(Constant.PARAM_REFUND_CHANNEL_CODE, channelCode)
+                putString(Constant.PARAM_REFUND_CHANNEL_CATEGORY, channelCategory)
+            })
         }
     }
 

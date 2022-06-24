@@ -9,24 +9,33 @@ import com.jcs.where.api.response.mall.RefundChannel
  * Created by Wangsw  2022/4/25 19:03.
  *
  */
-interface RefundChannelView:BaseMvpView {
+interface RefundChannelView : BaseMvpView {
     fun bindChanel(data: ArrayList<RefundChannel>)
 
 }
 
-class RefundChannelPresenter(private var view: RefundChannelView):BaseMvpPresenter(view) {
+class RefundChannelPresenter(private var view: RefundChannelView) : BaseMvpPresenter(view) {
     fun getChannel() {
 
-        requestApi(mRetrofit.refundChannel , object :BaseMvpObserver<ArrayList<String>>(view){
-            override fun onSuccess(response: ArrayList<String>) {
-                val data = ArrayList<RefundChannel>()
-                response.forEach {
-                    val apply = RefundChannel().apply {
-                        name = it
+        requestApi(mRetrofit.refundChannel, object : BaseMvpObserver<ArrayList<RefundChannel>>(view) {
+            override fun onSuccess(response: ArrayList<RefundChannel>) {
+
+                val responseData = ArrayList<RefundChannel>()
+
+                val groupBy = response.groupBy { it.channel_category == "BANK" }
+
+                groupBy.forEach {
+
+                    if (it.key) {
+                        val indexOfFirst = it.value.indexOfFirst {
+                            it.channel_category == "BANK"
+                        }
+                        it.value[indexOfFirst].isWidthSplit = true
                     }
-                    data.add(apply)
+                    responseData.addAll(it.value)
                 }
-                view.bindChanel(data)
+
+                view.bindChanel(responseData)
             }
 
         })

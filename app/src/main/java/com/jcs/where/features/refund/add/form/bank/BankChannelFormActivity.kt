@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by Wangsw  2022/4/26 9:37.
  * 绑定银行卡退款渠道
  */
+@Deprecated("新版绑定退款渠道不必区分银行和第三方")
 class BankChannelFormActivity : BaseActivity() {
 
     /** 渠道名 */

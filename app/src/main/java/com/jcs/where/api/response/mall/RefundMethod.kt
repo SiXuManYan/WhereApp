@@ -10,11 +10,11 @@ import android.os.Parcelable
 class RefundMethod() : Parcelable {
 
     var id = 0
-    var user_name :String?=""
-    var channel_name :String?=""
-    var account :String?=""
-    var bank_name :String?=""
-    var bank_all_name :String?=""
+    var user_name: String? = ""
+    var channel_name: String? = ""
+    var account: String? = ""
+    var bank_name: String? = ""
+    var bank_all_name: String? = ""
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
@@ -52,7 +52,25 @@ class RefundMethod() : Parcelable {
 
 class RefundChannel {
     var isSelected = false
+    var isWidthSplit = false
+
+
+    var channel_code = ""
+    var channel_category = ""
+    var currency = ""
     var name = ""
+
+    var amount_limits: AmountLimits? = null
+
+
+}
+
+
+class AmountLimits {
+    var minimum = ""
+    var maximum = ""
+    var minimum_increment = ""
+
 }
 
 
@@ -67,20 +85,21 @@ class RefundBindRequest {
     /** 用户名 */
     var user_name = ""
 
-    /** 渠道名 */
-    var channel_name = ""
 
     /** 账号 */
     var account = ""
 
-    /** 银行缩写 */
-    var bank_name: String? = null
+    /** 渠道码 */
+    var channel_code = ""
 
-    /** 银行全名 */
-    var bank_all_name: String? = null
+    /** 渠道分类 */
+    var channel_category = ""
+
+    /** 银行全拼 */
+    var name: String = ""
 }
 
-class RemitId{
+class RemitId {
     var remit_id = 0
 }
 
@@ -98,8 +117,7 @@ class FoodRefundInfo {
     /**
      * 退款账户详情
      */
-    var remit_info :RefundMethod? = null
-
+    var remit_info: RefundMethod? = null
 
 
 }

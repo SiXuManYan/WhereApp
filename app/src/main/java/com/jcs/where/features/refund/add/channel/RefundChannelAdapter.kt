@@ -28,7 +28,7 @@ class RefundChannelAdapter : BaseQuickAdapter<RefundChannel, BaseViewHolder>(R.l
 
 
         val layoutParams = line.layoutParams as LinearLayout.LayoutParams
-        if (holder.adapterPosition == data.size - 2) {
+        if (item.isWidthSplit) {
             layoutParams.height = SizeUtils.dp2px(16f)
             layoutParams.marginStart = 0
         } else {

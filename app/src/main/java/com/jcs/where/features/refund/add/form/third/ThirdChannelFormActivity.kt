@@ -21,6 +21,8 @@ class ThirdChannelFormActivity : BaseActivity() {
 
     /** 渠道名 */
     private var channelName = ""
+    private var channelCode = ""
+    private var channelCategory = ""
 
     /**  用户名 */
     private var userName = ""
@@ -59,6 +61,8 @@ class ThirdChannelFormActivity : BaseActivity() {
 
         intent.extras?.let {
             channelName = it.getString(Constant.PARAM_REFUND_CHANNEL_NAME, "")
+            channelCode = it.getString(Constant.PARAM_REFUND_CHANNEL_CODE, "")
+            channelCategory = it.getString(Constant.PARAM_REFUND_CHANNEL_CATEGORY, "")
         }
     }
 
@@ -87,7 +91,7 @@ class ThirdChannelFormActivity : BaseActivity() {
                 return@setOnClickListener
             }
             // 跳转至短信验证
-            RefundBindVerifyActivity.navigation(this,channelName,userName , accountNumber)
+            RefundBindVerifyActivity.navigation(this, channelName, userName, accountNumber,channelCode,channelCategory)
         }
     }
 

@@ -118,6 +118,7 @@ import com.jcs.where.api.response.mall.MallShopCategory;
 import com.jcs.where.api.response.mall.MallShopRecommend;
 import com.jcs.where.api.response.mall.RefundBankSelected;
 import com.jcs.where.api.response.mall.RefundBindRequest;
+import com.jcs.where.api.response.mall.RefundChannel;
 import com.jcs.where.api.response.mall.RefundMethod;
 import com.jcs.where.api.response.mall.RemitId;
 import com.jcs.where.api.response.mall.request.MallAddCart;
@@ -2007,7 +2008,7 @@ public interface RetrofitApi {
      * 获取 退款渠道
      */
     @GET("commonapi/v2/channel")
-    Observable<JcsResponse<ArrayList<String>>> getRefundChannel();
+    Observable<JcsResponse<ArrayList<RefundChannel>>> getRefundChannel();
 
     /**
      * 获取 退款银行列表

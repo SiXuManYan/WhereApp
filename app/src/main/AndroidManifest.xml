@@ -543,7 +543,6 @@
         <activity android:name=".features.payment.result.WebPayResultActivity" />
         <activity android:name=".features.refund.method.RefundMethodActivity" />
         <activity android:name=".features.refund.add.form.bank.child.BankListActivity" />
-        <activity android:name=".features.refund.add.form.bank.BankChannelFormActivity" />
         <activity android:name=".features.refund.add.verify.RefundBindVerifyActivity" />
         <activity android:name=".features.refund.add.form.third.ThirdChannelFormActivity" />
         <activity android:name=".features.refund.add.channel.RefundChannelActivity" />

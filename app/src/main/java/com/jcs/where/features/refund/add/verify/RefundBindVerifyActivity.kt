@@ -32,29 +32,28 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
     /** 账号 */
     private var accountNumber = ""
 
-    /** 当为【银行】渠道时，为银行缩写，【第三方渠道】为空 */
-    private var bankShortName: String? = null
 
-    private var bankAllName: String? = null
+    private var channelCode = ""
+    private var channelCategory = ""
 
     private var verifyCode = ""
 
     companion object {
+
         fun navigation(
-            context: Context, channelName: String, userName: String, accountNumber: String,
-            bankShortName: String? = null,
-            bankAllName: String? = null,
+            context: Context,
+            channelName: String,
+            userName: String,
+            accountNumber: String,
+            channelCode: String,
+            channelCategory: String,
         ) {
             val bundle = Bundle().apply {
                 putString(Constant.PARAM_REFUND_CHANNEL_NAME, channelName)
+                putString(Constant.PARAM_REFUND_CHANNEL_CODE, channelCode)
+                putString(Constant.PARAM_REFUND_CHANNEL_CATEGORY, channelCategory)
                 putString(Constant.PARAM_USER_NAME, userName)
                 putString(Constant.PARAM_ACCOUNT, accountNumber)
-                bankShortName?.let {
-                    putString(Constant.PARAM_BANK_SHORT_NAME, bankShortName)
-                }
-                bankAllName?.let {
-                    putString(Constant.PARAM_BANK_ALL_NAME, bankAllName)
-                }
             }
 
             val intent = if (User.isLogon()) {
@@ -91,8 +90,8 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
             channelName = it.getString(Constant.PARAM_REFUND_CHANNEL_NAME, "")
             userName = it.getString(Constant.PARAM_USER_NAME, "")
             accountNumber = it.getString(Constant.PARAM_ACCOUNT, "")
-            bankShortName = it.getString(Constant.PARAM_BANK_SHORT_NAME)
-            bankAllName = it.getString(Constant.PARAM_BANK_ALL_NAME)
+            channelCode = it.getString(Constant.PARAM_REFUND_CHANNEL_CODE, "")
+            channelCategory = it.getString(Constant.PARAM_REFUND_CHANNEL_CATEGORY, "")
         }
 
     }
@@ -115,7 +114,7 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
 
 
     override fun verified() {
-        presenter.bindRefundMethod(channelName, userName, accountNumber, bankShortName,bankAllName)
+        presenter.bindRefundMethod(channelName, userName, accountNumber, channelCode, channelCategory)
     }
 
     override fun bindSuccess() {

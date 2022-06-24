@@ -19,26 +19,37 @@ class RefundChannelPresenter(private var view: RefundChannelView) : BaseMvpPrese
 
         requestApi(mRetrofit.refundChannel, object : BaseMvpObserver<ArrayList<RefundChannel>>(view) {
             override fun onSuccess(response: ArrayList<RefundChannel>) {
-
-                val responseData = ArrayList<RefundChannel>()
-
-                val groupBy = response.groupBy { it.channel_category == "BANK" }
-
-                groupBy.forEach {
-
-                    if (it.key) {
-                        val indexOfFirst = it.value.indexOfFirst {
-                            it.channel_category == "BANK"
-                        }
-                        it.value[indexOfFirst].isWidthSplit = true
-                    }
-                    responseData.addAll(it.value)
-                }
-
-                view.bindChanel(responseData)
+                val addTitle = addTitle(response)
+                view.bindChanel(addTitle)
             }
 
         })
+    }
+
+    private fun addTitle(response: ArrayList<RefundChannel>) :ArrayList<RefundChannel>{
+
+        val finalData  = ArrayList<RefundChannel>()
+
+        val groupBy = response.groupBy { it.channel_category  }
+
+        groupBy.forEach { group->
+            finalData.addAll(group.value)
+        }
+
+        // add title
+        groupBy.forEach { group->
+
+            val titleEntity = RefundChannel().apply {
+                channel_category = group.key
+                this.type = RefundChannel.TYPE_TITLE
+            }
+
+            val indexOfFirst = finalData.indexOfFirst {
+                it.channel_category == group.key
+            }
+            finalData.add(indexOfFirst, titleEntity)
+        }
+        return finalData
     }
 
 }

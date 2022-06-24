@@ -2,6 +2,7 @@ package com.jcs.where.api.response.mall
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.chad.library.adapter.base.entity.MultiItemEntity
 
 /**
  * Created by Wangsw  2022/4/25 16:35.
@@ -48,9 +49,17 @@ class RefundMethod() : Parcelable {
 
 }
 
-class RefundChannel {
+class RefundChannel  : MultiItemEntity {
+
+    companion object {
+
+        var TYPE_NORMAL  = 0
+
+        var TYPE_TITLE = 1000
+
+    }
+
     var isSelected = false
-    var isWidthSplit = false
 
 
     var channel_code = ""
@@ -59,6 +68,13 @@ class RefundChannel {
     var name = ""
 
     var amount_limits: AmountLimits? = null
+
+
+    /** 类型 0普通 1 分割线  */
+    var type = 0
+
+    override val itemType: Int
+        get() = type
 
 
 }

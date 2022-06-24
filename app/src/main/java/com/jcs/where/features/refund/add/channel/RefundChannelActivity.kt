@@ -2,8 +2,12 @@ package com.jcs.where.features.refund.add.channel
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import com.blankj.utilcode.util.ToastUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
+import com.jcs.where.api.response.footprint.Footprint
 import com.jcs.where.api.response.mall.RefundChannel
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -16,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_refund_channel_selected.*
  * Created by Wangsw  2022/4/25 19:03.
  * 退款渠道
  */
-class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundChannelView {
+class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundChannelView, OnItemClickListener {
 
 
     private var channelCode = ""
@@ -33,18 +37,7 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
     override fun initView() {
         mAdapter = RefundChannelAdapter().apply {
 
-            setOnItemClickListener { _, _, position ->
-                val refundChannel = mAdapter.data[position]
-
-                channelCode = refundChannel.channel_code
-                channelCategory = refundChannel.channel_category
-                channelName = refundChannel.name
-
-                mAdapter.data.forEachIndexed { index, item ->
-                    item.isSelected = index == position
-                    mAdapter.notifyDataSetChanged()
-                }
-            }
+            setOnItemClickListener(this@RefundChannelActivity)
         }
         channel_rv.adapter = mAdapter
     }
@@ -80,6 +73,29 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
                 finish()
             }
         }
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+
+
+        val itemViewType = adapter.getItemViewType(position)
+        if (itemViewType == Footprint.TYPE_TITLE) {
+            return
+        }
+
+        val refundChannel = mAdapter.data[position]
+
+        channelCode = refundChannel.channel_code
+        channelCategory = refundChannel.channel_category
+        channelName = refundChannel.name
+
+        mAdapter.data.forEachIndexed { index, item ->
+            item.isSelected = index == position
+            mAdapter.notifyDataSetChanged()
+        }
+
 
     }
 }

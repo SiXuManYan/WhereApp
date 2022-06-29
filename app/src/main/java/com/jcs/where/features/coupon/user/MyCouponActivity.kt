@@ -51,7 +51,7 @@ class MyCouponActivity : BaseActivity() {
         override fun getItem(position: Int): Fragment {
 
             return MyCouponFragment().apply {
-                type = position+1
+                type = position + 1
             }
 
         }

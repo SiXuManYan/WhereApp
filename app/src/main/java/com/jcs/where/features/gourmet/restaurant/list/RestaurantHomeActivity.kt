@@ -138,8 +138,9 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
 
         // 列表
         emptyView = EmptyView(this).apply {
-            initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint, R.string.back) {}
-            action_tv.visibility = View.GONE
+            setEmptyImage(R.mipmap.ic_empty_search)
+            setEmptyMessage(R.string.empty_search_message)
+            setEmptyHint(R.string.empty_search_hint)
         }
 
         mAdapter = DelicacyAdapter().apply {

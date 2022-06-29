@@ -57,7 +57,8 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
 
     override fun initView(view: View?) {
         emptyView = EmptyView(requireContext()).apply {
-            initEmpty(R.mipmap.ic_empty_card_coupon, R.string.no_coupons_available)
+            setEmptyImage(R.mipmap.ic_empty_coupon)
+            setEmptyHint(R.string.no_coupon)
         }
         headerView = LayoutInflater.from(requireContext()).inflate(R.layout.layout_order_coupon_header, null, false)
 

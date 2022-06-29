@@ -983,4 +983,5 @@ Gentleman must let go</string>
     <string name="empty_search_message">无相关结果</string>
     <string name="no_address_yet">暂无地址</string>
     <string name="please_add_shipping_address">请添加收货地址</string>
+    <string name="no_notice_yet">暂无通知</string>
 </resources>

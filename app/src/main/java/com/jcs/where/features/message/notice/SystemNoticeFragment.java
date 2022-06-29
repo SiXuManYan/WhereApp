@@ -13,8 +13,8 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.jcs.where.R;
 import com.jcs.where.api.response.message.SystemMessageResponse;
 import com.jcs.where.base.mvp.BaseMvpFragment;
-import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.features.message.notice.detail.SystemMessageDetailActivity;
+import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.list.DividerDecoration;
@@ -47,9 +47,13 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
     protected void initView(View view) {
         swipe_layout = view.findViewById(R.id.swipe_layout);
         recycler = view.findViewById(R.id.recycler);
-        recycler.addItemDecoration(new DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), SizeUtils.dp2px(1f),SizeUtils.dp2px(15f),0));
+        recycler.addItemDecoration(new DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), SizeUtils.dp2px(1f), SizeUtils.dp2px(15f), 0));
         emptyView = new EmptyView(requireContext());
         emptyView.showEmptyDefault();
+
+        emptyView.setEmptyImage(R.mipmap.ic_empty_un_notice);
+        emptyView.setEmptyHint(R.string.no_notice_yet);
+
     }
 
     @Override

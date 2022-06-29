@@ -851,7 +851,7 @@ Gentleman must let go</string>
     <string name="coupon_center">Coupon Center</string>
     <string name="use_now">Use Now</string>
     <string name="coupon_type_platform">Platform Coupon</string>
-    <string name="no_coupon">No coupons</string>
+    <string name="no_coupon">No Coupons Yet</string>
     <string name="sure">Sure</string>
     <string name="coupon_unused">Unused</string>
     <string name="coupon_used">Used</string>
@@ -969,4 +969,5 @@ Gentleman must let go</string>
     <string name="empty_search_message">No related results</string>
     <string name="no_address_yet">No address yet</string>
     <string name="please_add_shipping_address">Please add shipping address</string>
+    <string name="no_notice_yet">No Notice Yet</string>
 </resources>

@@ -59,8 +59,11 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     private fun initContent() {
 
-        val emptyView = EmptyView(this)
-        emptyView.showEmptyDefault()
+        val emptyView = EmptyView(this).apply {
+            setEmptyImage(R.mipmap.ic_empty_search)
+            setEmptyMessage(R.string.empty_search_message)
+            setEmptyHint(R.string.empty_search_hint)
+        }
 
         mAdapter = MallRecommendAdapter().apply {
             setEmptyView(emptyView)

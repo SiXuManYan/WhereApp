@@ -46,7 +46,8 @@ class CollectionFragment : BaseMvpFragment<CollectionPresenter>(), CollectionVie
             }
         }
         emptyView = EmptyView(requireContext()).apply {
-            initEmpty(R.mipmap.ic_empty_card_coupon, R.string.no_content)
+            setEmptyImage(R.mipmap.ic_empty_favorite)
+            setEmptyHint(R.string.empty_favorite)
         }
 
         mAdapter = CollectionAdapter().apply {

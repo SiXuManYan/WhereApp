@@ -4,7 +4,9 @@ import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
@@ -137,5 +139,17 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
         page = Constant.DEFAULT_FIRST_PAGE
         categoryId = category.id
         loadData()
+    }
+
+
+    override fun onError(errorResponse: ErrorResponse) {
+        val errCode = errorResponse.getErrCode()
+        if (errCode <= 0) {
+            ToastUtils.showLong(errorResponse.getErrMsg())
+            emptyView.showNetworkError {
+                page = Constant.DEFAULT_FIRST_PAGE
+                loadData()
+            }
+        }
     }
 }

@@ -169,7 +169,7 @@
     <string name="sign_in_type_3">Comment</string>
     <string name="sign_in_type_4">Sign in</string>
 
-    <string name="empty_data_default">No data</string>
+    <string name="empty_data_default">No related content yet</string>
     <string name="item_sign_in">Checked in</string>
     <string name="item_sign_in_content">Sign in and get 20 points</string>
     <string name="item_comment">Comment Merchant</string>
@@ -344,9 +344,9 @@
     <string name="new_version_found_format">New version found!(%1$s)</string>
     <string name="upgrade">Upgrade</string>
 
-    <string name="empty_network_error">Network problem</string>
+    <string name="empty_network_error">Network Error</string>
     <string name="empty_network_error_hint">Please check network settings or try again later</string>
-    <string name="empty_network_error_action">Try again</string>
+    <string name="empty_network_error_action">Reload</string>
     <string name="confirm_password_hint">Please confirm your password</string>
     <string name="password_not_same_hint">Please enter the same password twice</string>
     <string name="tourism_management">Tourism Sector</string>

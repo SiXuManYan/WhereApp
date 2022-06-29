@@ -93,12 +93,9 @@ class EmptyView : LinearLayout {
      * 网络错误
      */
     fun showNetworkError(onClickListener: OnClickListener? = null) {
-        empty_iv.setImageResource(R.mipmap.ic_empty_card_coupon)
+        empty_iv.setImageResource(R.mipmap.ic_empty_net)
         empty_message_tv.setText(R.string.empty_network_error)
-        empty_hint_tv.setText(R.string.empty_network_error_hint)
-
         empty_message_tv.visibility = View.VISIBLE
-        empty_hint_tv.visibility = View.VISIBLE
 
         onClickListener?.let {
             action_tv.setText(R.string.empty_network_error_action)
@@ -131,7 +128,7 @@ class EmptyView : LinearLayout {
      */
     fun showEmptyDefault() {
         setEmptyImage(R.mipmap.ic_empty_card_coupon)
-        setEmptyMessage(R.string.empty_data_default)
+        setEmptyHint(R.string.empty_data_default)
     }
 
     fun showEmptyNothing() {

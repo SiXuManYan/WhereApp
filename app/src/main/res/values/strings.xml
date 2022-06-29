@@ -167,7 +167,7 @@
     <string name="sign_in_type_2">消费</string>
     <string name="sign_in_type_3">评论</string>
     <string name="sign_in_type_4">签到</string>
-    <string name="empty_data_default">暂无数据</string>
+    <string name="empty_data_default">暂无相关数据</string>
     <string name="item_sign_in">签到</string>
     <string name="item_sign_in_content">成功签到可获得20积分</string>
     <string name="item_comment">评论商家</string>
@@ -345,7 +345,7 @@
     <string name="upgrade">更新</string>
     <string name="empty_network_error">网络出问题了~</string>
     <string name="empty_network_error_hint">请检查网络设置或稍后重试</string>
-    <string name="empty_network_error_action">再试一次</string>
+    <string name="empty_network_error_action">重新加载</string>
     <string name="confirm_password_hint">请确认密码</string>
     <string name="password_not_same_hint">请输入两次相同密码</string>
     <string name="tourism_management">旅游管理</string>

@@ -177,7 +177,7 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
 
 
     override fun onChildCategoryClick(category: MallCategory) {
-        page =  Constant.DEFAULT_FIRST_PAGE
+        page = Constant.DEFAULT_FIRST_PAGE
         categoryId = category.id
         getData()
     }
@@ -185,9 +185,9 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
 
     override fun onError(errorResponse: ErrorResponse) {
         val errCode = errorResponse.getErrCode()
-        if (errCode<=0){
+        if (errCode <= 0) {
             ToastUtils.showLong(errorResponse.getErrMsg())
-            emptyView.showNetworkError {   getData() }
+            emptyView.showNetworkError { getData() }
         }
     }
 

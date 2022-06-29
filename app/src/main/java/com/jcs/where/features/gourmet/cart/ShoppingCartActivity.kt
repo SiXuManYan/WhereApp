@@ -40,7 +40,9 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
         BarUtils.setStatusBarColor(this, getColor(R.color.white))
 
         val emptyView = EmptyView(this).apply {
-            showEmptyDefault()
+
+            setEmptyImage(R.mipmap.ic_empty_cart)
+            setEmptyHint(R.string.cart_is_empty)
         }
 
         mAdapter = ShoppingCartAdapter().apply {

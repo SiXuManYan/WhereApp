@@ -908,8 +908,8 @@ Gentleman must let go</string>
     <string name="bind_refund_method">Bind the Refund Methods</string>
     <string name="unbind">Unbind</string>
     <string name="add_refund_methods">Add Refund Methods</string>
-    <string name="refund_method_empty">No Refund Available Yet</string>
-    <string name="refund_method_empty_hint">Please add a new refund method</string>
+    <string name="refund_method_empty">No refund available yet</string>
+    <string name="refund_method_empty_hint">Please add a refund method</string>
     <string name="refund_method">Refund Methods</string>
     <string name="selected_refund_channel">Choose a Refund Channel</string>
     <string name="please_selected_channel">Please choose a Refund Channel</string>
@@ -971,4 +971,8 @@ Gentleman must let go</string>
     <string name="please_add_shipping_address">Please add shipping address</string>
     <string name="no_notice_yet">No Notice Yet</string>
     <string name="empty_favorite">No favorite content yet</string>
+    <string name="empty_history_hint">No browsing history yet</string>
+    <string name="empty_points">No Points Yet</string>
+    <string name="no_cmments_yet">No Cmments Yet</string>
+    <string name="cart_is_empty">Your shopping cart is empty</string>
 </resources>

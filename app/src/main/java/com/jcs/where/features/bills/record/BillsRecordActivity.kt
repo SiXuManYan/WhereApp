@@ -46,7 +46,7 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
     private fun initList() {
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(this).apply {
-            setEmptyMessage(R.string.empty_data_cart)
+         showEmptyDefault()
         }
         mAdapter = BillsRecordAdapter().apply {
             setEmptyView(emptyView)

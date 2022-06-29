@@ -49,7 +49,9 @@ class CityFootprintFragment : BaseMvpFragment<FootprintPresenter>(), FootprintVi
         }
 
         emptyView = EmptyView(requireContext()).apply {
-            initEmpty(R.mipmap.ic_empty_card_coupon, R.string.no_content)
+
+            setEmptyImage(R.mipmap.ic_empty_card_coupon)
+            setEmptyHint(R.string.empty_history_hint)
         }
 
         mAdapter = FootprintAdapter().apply {

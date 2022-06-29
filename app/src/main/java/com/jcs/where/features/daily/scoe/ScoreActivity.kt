@@ -8,7 +8,9 @@ import com.jcs.where.api.response.IntegralDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.daily.sign.SignInRuleActivity
 import com.jcs.where.features.integral.child.detail.IntegralChildAdapter
+import com.jcs.where.features.main.MainActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_score.*
 
@@ -21,6 +23,8 @@ class ScoreActivity : BaseMvpActivity<ScorePresenter>(), ScoreView {
     private var isToolbarDark = false
 
     private var page = Constant.DEFAULT_FIRST_PAGE
+
+    private lateinit var emptyView: EmptyView
 
     private lateinit var mAdapter: IntegralChildAdapter
 
@@ -47,6 +51,11 @@ class ScoreActivity : BaseMvpActivity<ScorePresenter>(), ScoreView {
     }
 
     private fun initScroll() {
+        emptyView = EmptyView(this).apply {
+            setEmptyImage(R.mipmap.ic_empty_points)
+            setEmptyHint(R.string.empty_points)
+        }
+
         mAdapter = IntegralChildAdapter().apply {
             setEmptyView(R.layout.view_empty_data_brvah_default)
             loadMoreModule.isAutoLoadMore = true

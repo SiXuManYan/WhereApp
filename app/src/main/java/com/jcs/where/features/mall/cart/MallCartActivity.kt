@@ -46,9 +46,8 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             setColorSchemeColors(ColorUtils.getColor(R.color.blue_4C9EF2))
         }
         emptyView = EmptyView(this).apply {
-            showEmptyDefault()
-            setEmptyImage(R.mipmap.ic_empty_search)
-            this.empty_message_tv.text = StringUtils.getString(R.string.empty_data_cart)
+            setEmptyImage(R.mipmap.ic_empty_cart)
+            setEmptyHint(R.string.cart_is_empty)
         }
         mAdapter = MallCartAdapter().apply {
             setEmptyView(emptyView)

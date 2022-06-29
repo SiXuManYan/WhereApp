@@ -40,9 +40,9 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
         handleSelected = intent.getBooleanExtra(Constant.PARAM_HANDLE_SELECT, false)
 
         emptyView = EmptyView(this).apply {
-            setEmptyImage(R.mipmap.ic_empty_card_coupon)
+            setEmptyImage(R.mipmap.ic_empty_refund)
             setEmptyMessage(R.string.refund_method_empty)
-            setEmptyMessage(R.string.refund_method_empty_hint)
+            setEmptyHint(R.string.refund_method_empty_hint)
         }
 
         mAdapter = RefundMethodAdapter().apply {

@@ -93,7 +93,6 @@ class CommentComplexActivity : BaseMvpActivity<CommentComplexPresenter>(), Comme
         initExtra()
         mJcsTitle.setMiddleTitle(getString(R.string.evaluation))
 
-
         initList()
 
     }
@@ -101,8 +100,8 @@ class CommentComplexActivity : BaseMvpActivity<CommentComplexPresenter>(), Comme
     private fun initList() {
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(this).apply {
-            setEmptyImage(R.mipmap.ic_empty_card_coupon)
-            setEmptyMessage(R.string.no_order_yet)
+            setEmptyImage(R.mipmap.ic_empty_refund_comment)
+            setEmptyHint(R.string.no_cmments_yet)
         }
 
         mAdapter = HotelCommentAdapter().apply {

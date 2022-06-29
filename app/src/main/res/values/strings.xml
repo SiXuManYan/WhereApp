@@ -737,7 +737,7 @@ Gentleman must let go</string>
     <string name="empty_card_coupon">暂无卡券</string>
     <string name="current_location_title">当前城市</string>
     <string name="empty_search">无结果</string>
-    <string name="empty_search_hint">尝试搜索其他词试试</string>
+    <string name="empty_search_hint">请尝试其他结果</string>
     <string name="back_home">返回首页</string>
     <string name="history_record">搜索历史</string>
     <string name="back">返回</string>
@@ -980,4 +980,5 @@ Gentleman must let go</string>
     <string name="bills_desc_6">平台拒绝了您的退款申请，有疑问请您联系客服。</string>
     <string name="enter_the_phone_number">输入电话号码</string>
     <string name="recharge_amount">充值金额</string>
+    <string name="empty_search_message">无相关结果</string>
 </resources>

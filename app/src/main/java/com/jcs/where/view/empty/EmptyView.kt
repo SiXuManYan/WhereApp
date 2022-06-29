@@ -60,10 +60,12 @@ class EmptyView : LinearLayout {
 
     fun setEmptyMessage(@StringRes emptyMessage: Int) {
         empty_message_tv.setText(emptyMessage)
+        empty_message_tv.visibility = View.VISIBLE
     }
 
     fun setEmptyMessage(emptyMessage: String) {
         empty_message_tv.text = emptyMessage
+        empty_message_tv.visibility = View.VISIBLE
     }
 
     fun setEmptyHint(@StringRes hint: Int) {

@@ -471,7 +471,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         if (mNewsAdapter.data.size <= 1) {
             return
         }
-        rxTimer.interval(3000) {
+        rxTimer.interval(5000) {
             scrollPosition++
             if (scrollPosition <= mNewsAdapter.data.size - 1) {
                 news_rv?.smoothScrollToPosition(scrollPosition)

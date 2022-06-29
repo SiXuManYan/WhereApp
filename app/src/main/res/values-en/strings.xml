@@ -729,7 +729,7 @@ Gentleman must let go</string>
     <string name="empty_card_coupon">No coupons</string>
     <string name="current_location_title">Current Location</string>
     <string name="empty_search">No results found</string>
-    <string name="empty_search_hint">Try searching different keywords</string>
+    <string name="empty_search_hint">Please try another result</string>
     <string name="back_home">Back to home</string>
     <string name="history_record">History Record</string>
     <string name="back">Back</string>
@@ -966,4 +966,5 @@ Gentleman must let go</string>
     <string name="bills_desc_6">The platform has rejected your refund request.If you have any questions, please contact customer service.</string>
     <string name="enter_the_phone_number">Enter the phone number</string>
     <string name="recharge_amount">Recharge Amount</string>
+    <string name="empty_search_message">No related results</string>
 </resources>

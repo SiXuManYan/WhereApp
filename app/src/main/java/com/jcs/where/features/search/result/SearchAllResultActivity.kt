@@ -51,13 +51,13 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
 
     private fun initList() {
         emptyView = EmptyView(this).apply {
-            initEmpty(
-                R.mipmap.ic_empty_search, R.string.empty_search,
-                R.string.empty_search_hint, R.string.back_home
-            ) {
+            setEmptyImage(R.mipmap.ic_empty_search)
+            setEmptyMessage(R.string.empty_search_message)
+            setEmptyHint(R.string.empty_search_hint)
+            setEmptyActionText(R.string.back_home)
+            setEmptyActionOnClickListener {
                 startActivityClearTop(MainActivity::class.java, null)
             }
-
         }
 
         mAdapter = SearchAllAdapter().apply {

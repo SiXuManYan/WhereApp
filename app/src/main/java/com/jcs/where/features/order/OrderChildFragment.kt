@@ -17,6 +17,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity
 import com.jcs.where.features.hotel.order.HotelOrderDetailActivity
+import com.jcs.where.features.main.MainActivity
 import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
 import com.jcs.where.utils.Constant
@@ -61,8 +62,8 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.white))
         val emptyView = EmptyView(requireContext()).apply {
-            setEmptyImage(R.mipmap.ic_empty_card_coupon)
-            setEmptyMessage(R.string.no_order_yet)
+            setEmptyImage(R.mipmap.ic_empty_un_order)
+            setEmptyHint(R.string.no_order_yet)
         }
         mAdapter = OrderListAdapter().apply {
             setEmptyView(emptyView)

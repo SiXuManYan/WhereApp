@@ -37,7 +37,9 @@ class PayBillsActivity : BaseActivity() {
 
     override fun bindListener() {
         prepaid_ll.setOnClickListener {
-            showComing()
+            startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 1)
+            })
         }
         water_ll.setOnClickListener {
             startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {

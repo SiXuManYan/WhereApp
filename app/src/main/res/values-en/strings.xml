@@ -964,7 +964,7 @@ Gentleman must let go</string>
     <string name="bills_desc_8">Refunded, please pay attention to check.</string>
     <string name="bills_desc_9">You need to initiate a refund again and confirm the refund method again.</string>
     <string name="bills_desc_6">The platform has rejected your refund request.If you have any questions, please contact customer service.</string>
-    <string name="enter_the_phone_number">Enter the phone number</string>
+    <string name="enter_the_phone_number">Buy Load</string>
     <string name="recharge_amount">Recharge Amount</string>
     <string name="empty_search_message">No related results</string>
     <string name="no_address_yet">No address yet</string>
@@ -975,4 +975,8 @@ Gentleman must let go</string>
     <string name="empty_points">No Points Yet</string>
     <string name="no_cmments_yet">No Cmments Yet</string>
     <string name="cart_is_empty">Your shopping cart is empty</string>
+    <string name="recharge_phone_format">Please enter an 11-digit number starting with 0</string>
+    <string name="select_money">Please select the payment amount from the list below</string>
+    <string name="bills_place_order_hint_phone">After clicking OK, the content will not be editable.</string>
+    <string name="buy_load">Buy Load</string>
 </resources>

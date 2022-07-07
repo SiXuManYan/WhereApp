@@ -60,7 +60,7 @@ class ThirdChannelFormActivity : BaseActivity() {
         }
 
         intent.extras?.let {
-            channelName = it.getString(Constant.PARAM_REFUND_CHANNEL_NAME, "")
+            channelName = it.getString(Constant.PARAM_CHANNEL_NAME, "")
             channelCode = it.getString(Constant.PARAM_REFUND_CHANNEL_CODE, "")
             channelCategory = it.getString(Constant.PARAM_REFUND_CHANNEL_CATEGORY, "")
         }

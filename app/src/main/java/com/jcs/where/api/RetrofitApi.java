@@ -81,6 +81,7 @@ import com.jcs.where.api.response.bills.BillsChannel;
 import com.jcs.where.api.response.bills.BillsOrderInfo;
 import com.jcs.where.api.response.bills.BillsPlaceOrder;
 import com.jcs.where.api.response.bills.BillsRecord;
+import com.jcs.where.api.response.bills.CallChargeChannel;
 import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MallGoodCollection;
@@ -2107,8 +2108,14 @@ public interface RetrofitApi {
      * 执行账单交易(重新提交)
      */
     @POST("billsapi/v2/bills/transaction")
-    Observable<JcsResponse<JsonElement>> billsRecommit(
-            @Body BillRecommit request);
+    Observable<JcsResponse<JsonElement>> billsRecommit(@Body BillRecommit request);
+
+    /**
+     * 手机充值执行账单交易(重新提交)
+     */
+    @POST("billsapi/v2/topups/transaction")
+    Observable<JcsResponse<JsonElement>> billsRecommit4Phone(@Body BillRecommit request);
+
 
     /**
      * 账单缴费状态
@@ -2133,7 +2140,6 @@ public interface RetrofitApi {
     );
 
 
-
     /**
      * 获取 首页推荐数据
      */
@@ -2141,6 +2147,11 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<HomeChild>>> getHomeChild();
 
 
+    /**
+     * 话费充值渠道列表
+     */
+    @GET("billsapi/v2/topups")
+    Observable<JcsResponse<ArrayList<CallChargeChannel>>> callChargesPayBillsList();
 
 
 }

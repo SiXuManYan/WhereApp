@@ -13,6 +13,7 @@
     <!--允许程序读写手机状态和身份-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -552,7 +553,7 @@
         <activity android:name=".features.mall.shop.home.info.MallShopInfoActivity" />
         <activity android:name=".features.mall.shop.home.info.QualificationActivity" />
         <activity android:name=".features.bills.channel.BillsChannelActivity" />
-        <activity android:name=".features.bills.preview.BillsPlaceOrderActivity" />
+        <activity android:name=".features.bills.place.BillsPlaceOrderActivity" />
         <activity android:name=".features.bills.form.BillsFormActivity" />
         <activity
             android:name=".features.bills.record.BillsRecordActivity"
@@ -560,6 +561,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".features.bills.record.result.BillsRecommitResultActivity" />
         <activity android:name=".features.bills.charges.CallChargesActivity" />
+        <activity android:name=".features.bills.place.phone.PhonePlaceOrderActivity" />
 
 
     </application>

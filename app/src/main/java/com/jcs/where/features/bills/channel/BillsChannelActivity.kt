@@ -8,9 +8,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.bills.BillsChannel
+import com.jcs.where.api.response.bills.CallChargeChannel
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.charges.CallChargesActivity
 import com.jcs.where.features.bills.form.BillsFormActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -19,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_no_refresh_list.*
 
 /**
  * Created by Wangsw  2022/6/8 15:28.
- * 缴费渠道列表
+ * 水电网费缴费渠道列表
  */
 class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChannelView, OnItemClickListener {
 
@@ -29,7 +31,12 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
      */
     private var billsType = 0
 
-    private lateinit var mAdapter: BillsChannelAdapter
+
+    /** 水电网费 */
+    private lateinit var mCommonAdapter: BillsChannelAdapter
+
+    /** 话费 */
+    private lateinit var mCallAdapter: CallChargesChannelAdapter
 
     override fun getLayoutId() = R.layout.activity_no_refresh_list
 
@@ -54,18 +61,31 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
         val emptyView = EmptyView(this).apply {
             showEmptyDefault()
         }
-        mAdapter = BillsChannelAdapter().apply {
-            setEmptyView(emptyView)
+
+        mCommonAdapter = BillsChannelAdapter().apply {
             setOnItemClickListener(this@BillsChannelActivity)
         }
+
+        mCallAdapter = CallChargesChannelAdapter().apply {
+            setOnItemClickListener(this@BillsChannelActivity)
+        }
+
         recycler.apply {
-            adapter = mAdapter
+
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary),
                 SizeUtils.dp2px(1f),
                 SizeUtils.dp2px(15f),
                 0))
         }
 
+        if (billsType == 1) {
+            recycler.adapter = mCallAdapter
+            mCallAdapter.setEmptyView(emptyView)
+
+        } else {
+            recycler. adapter = mCommonAdapter
+            mCommonAdapter.setEmptyView(emptyView)
+        }
     }
 
     override fun initData() {
@@ -77,19 +97,31 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
 
     }
 
-    override fun bindData(response: ArrayList<BillsChannel>) {
-        mAdapter.setNewInstance(response)
-    }
+    override fun bindCommonData(response: ArrayList<BillsChannel>) = mCommonAdapter.setNewInstance(response)
+
+    override fun bindCallData(response: ArrayList<CallChargeChannel>) = mCallAdapter.setNewInstance(response)
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val data = mAdapter.data[position]
-        if (!data.Status) {
-            ToastUtils.showShort("Channel not available")
-            return
-        }
-        BillsFormActivity.navigation(this, data.BillerTag, data.Description, data.ServiceCharge.toDouble(), data.FieldDetails,billsType)
-    }
 
+        if (billsType == 1) {
+
+            val data = mCallAdapter.data[position]
+            CallChargesActivity.navigation(this, data)
+        } else {
+
+            val data = mCommonAdapter.data[position]
+            if (!data.Status) {
+                ToastUtils.showShort("Channel not available")
+                return
+            }
+            BillsFormActivity.navigation(this,
+                data.BillerTag, data.Description,
+                data.ServiceCharge.toDouble(), data.FieldDetails,
+                billsType)
+        }
+
+
+    }
 
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {

@@ -1,4 +1,4 @@
-package com.jcs.where.features.bills.preview
+package com.jcs.where.features.bills.place
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder

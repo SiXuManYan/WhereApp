@@ -10,6 +10,9 @@ import java.math.BigDecimal
 class BillOrderDetails {
 
 
+    /** 账单类型（1-话费，2-水费，3-电费，4-网费） */
+    var order_type = 0
+
     /** 订单ID */
     var id = 0
 

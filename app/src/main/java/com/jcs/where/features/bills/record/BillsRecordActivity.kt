@@ -138,7 +138,8 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
                     ComplexRefundPresenter.TYPE_BILL)
             }
             R.id.resubmit_tv -> {
-                presenter.recommit(orderId)
+
+                presenter.recommit(orderId,billsRecord.order_type)
             }
             else -> {}
         }

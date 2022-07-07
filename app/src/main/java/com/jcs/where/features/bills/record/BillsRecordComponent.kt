@@ -33,17 +33,34 @@ class BillsRecordPresenter(private var view: BillsRecordView) : BaseMvpPresenter
     }
 
 
-    fun recommit(orderId:Int ){
+    fun recommit(orderId: Int, orderType: Int){
+
+
+
         val apply = BillRecommit().apply {
             order_id = orderId
         }
 
-        requestApi(mRetrofit.billsRecommit(apply),object :BaseMvpObserver<JsonElement>(view){
-            override fun onSuccess(response: JsonElement) {
-                view.recommitSuccess(orderId)
+        when (orderType) {
+            BillsRecord.TYPE_PHONE -> {
+                requestApi(mRetrofit.billsRecommit4Phone(apply), object : BaseMvpObserver<JsonElement>(view) {
+                    override fun onSuccess(response: JsonElement) {
+                        view.recommitSuccess(orderId)
+                    }
+                })
             }
+            else -> {
+                requestApi(mRetrofit.billsRecommit(apply),object :BaseMvpObserver<JsonElement>(view){
+                    override fun onSuccess(response: JsonElement) {
+                        view.recommitSuccess(orderId)
+                    }
 
-        })
+                })
+            }
+        }
+
+
+
     }
 
 }

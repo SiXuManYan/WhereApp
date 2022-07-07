@@ -1,4 +1,4 @@
-package com.jcs.where.features.bills.preview
+package com.jcs.where.features.bills.place
 
 import android.app.Activity
 import android.content.Context

@@ -17,7 +17,7 @@ import com.jcs.where.api.response.bills.FieldDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.bills.preview.BillsPlaceOrderActivity
+import com.jcs.where.features.bills.place.BillsPlaceOrderActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration

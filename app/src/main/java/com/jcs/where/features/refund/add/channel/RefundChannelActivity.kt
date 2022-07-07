@@ -59,7 +59,7 @@ class RefundChannelActivity : BaseMvpActivity<RefundChannelPresenter>(), RefundC
                 return@setOnClickListener
             }
             startActivity(ThirdChannelFormActivity::class.java, Bundle().apply {
-                putString(Constant.PARAM_REFUND_CHANNEL_NAME, channelName)
+                putString(Constant.PARAM_CHANNEL_NAME, channelName)
                 putString(Constant.PARAM_REFUND_CHANNEL_CODE, channelCode)
                 putString(Constant.PARAM_REFUND_CHANNEL_CATEGORY, channelCategory)
             })

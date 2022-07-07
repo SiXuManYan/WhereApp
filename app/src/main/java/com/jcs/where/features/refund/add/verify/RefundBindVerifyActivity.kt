@@ -49,7 +49,7 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
             channelCategory: String,
         ) {
             val bundle = Bundle().apply {
-                putString(Constant.PARAM_REFUND_CHANNEL_NAME, channelName)
+                putString(Constant.PARAM_CHANNEL_NAME, channelName)
                 putString(Constant.PARAM_REFUND_CHANNEL_CODE, channelCode)
                 putString(Constant.PARAM_REFUND_CHANNEL_CATEGORY, channelCategory)
                 putString(Constant.PARAM_USER_NAME, userName)
@@ -87,7 +87,7 @@ class RefundBindVerifyActivity : BaseMvpActivity<RefundBindVerifyPresenter>(), R
 
     private fun initExtra() {
         intent.extras?.let {
-            channelName = it.getString(Constant.PARAM_REFUND_CHANNEL_NAME, "")
+            channelName = it.getString(Constant.PARAM_CHANNEL_NAME, "")
             userName = it.getString(Constant.PARAM_USER_NAME, "")
             accountNumber = it.getString(Constant.PARAM_ACCOUNT, "")
             channelCode = it.getString(Constant.PARAM_REFUND_CHANNEL_CODE, "")

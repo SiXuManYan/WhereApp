@@ -32,7 +32,7 @@ class CallChargesAdapter :BaseQuickAdapter<FaceValue,BaseViewHolder>(R.layout.it
         }else {
             container.setBackgroundResource(R.drawable.shape_gray_radius_8)
         }
-
-
     }
 }
+
+

@@ -1,6 +1,5 @@
-package com.jcs.where.features.bills.preview
+package com.jcs.where.features.bills.place
 
-import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -29,13 +28,10 @@ class BillsPlaceOrderPresenter(private var view: BillsPlaceOrderView) : BaseMvpP
             bill_type = billType
         }
 
-
         requestApi(mRetrofit.billsPlaceOrder(apply), object : BaseMvpObserver<HotelOrderCommitResponse>(view) {
             override fun onSuccess(response: HotelOrderCommitResponse) {
                 view.commitSuccess(response)
             }
-
-
 
         })
 

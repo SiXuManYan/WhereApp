@@ -107,13 +107,22 @@ class FieldDetail() :Parcelable {
 
 class BillsPlaceOrder{
 
-    var biller_tag = ""
-    var first_field = ""
-    var second_field = ""
-    var amount = ""
 
     /** 账单类型（1-话费，2-水费，3-电费，4-网费） */
     var bill_type = 0
+    var amount = ""
+
+    // 水电网费
+    var biller_tag :String ?= null
+    var first_field :String ?= null
+    var second_field :String ?= null
+
+    // 话费
+    var telco :String ?= null
+    var cellphone_no :String ?= null
+    var ext_tag :String ?= null
+
+
 }
 
 class BillsRecord {

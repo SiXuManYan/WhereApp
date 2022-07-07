@@ -1,25 +1,32 @@
 package com.jcs.where.features.bills.charges
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.View
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
-import com.jcs.where.api.response.bills.FieldDetail
+import com.jcs.where.api.response.bills.CallChargeChannel
+import com.jcs.where.api.response.bills.CallChargeChannelItem
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.bean.FaceValue
-import com.jcs.where.features.bills.form.BillsFormActivity
-import com.jcs.where.utils.BusinessUtils
+import com.jcs.where.features.bills.place.phone.PhonePlaceOrderActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_call_charges.*
-import java.math.BigDecimal
+
 
 /**
  * Created by Wangsw  2022/6/15 16:55.
@@ -28,42 +35,16 @@ import java.math.BigDecimal
 class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallChargesView, OnItemClickListener {
 
 
+    lateinit var mAdapter: CallChargesChanelItemAdapter
 
-    /** 渠道名称 */
-    private var billerTag = ""
-
-    /** 账单类型 */
-    private var billsType = 0
-
-    /** 渠道描述 */
-    private var description = ""
-
-    /** 渠道服务费（加上充值费用为支付费用） */
-    private var serviceCharge = BigDecimal.ZERO
-
-    private var userInputMoney = BigDecimal.ZERO
-
-    private var fieldDetail = ArrayList<FieldDetail>()
-
-    lateinit var mAdapter: CallChargesAdapter
+    private lateinit var selectItem: CallChargeChannelItem
 
 
     companion object {
 
-        fun navigation(
-            context: Context,
-            billerTag: String,
-            description: String,
-            serviceCharge: Double,
-            fieldDetail: ArrayList<FieldDetail>,
-            billsType: Int,
-        ) {
+        fun navigation(context: Context, data: CallChargeChannel) {
             val bundle = Bundle().apply {
-                putInt(Constant.PARAM_TYPE, billsType)
-                putString(Constant.PARAM_TAG, billerTag)
-                putString(Constant.PARAM_DESCRIPTION, description)
-                putDouble(Constant.PARAM_SERVICE_CHARGE, serviceCharge)
-                putParcelableArrayList(Constant.PARAM_DATA, fieldDetail)
+                putParcelable(Constant.PARAM_DATA, data)
             }
             val intent = Intent(context, CallChargesActivity::class.java).putExtras(bundle)
 
@@ -74,64 +55,152 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
         }
     }
 
+    override fun isStatusDark() = true
+
     override fun getLayoutId() = R.layout.activity_call_charges
 
     override fun initView() {
-        initExtra()
         initList()
+        initExtra()
     }
 
     private fun initExtra() {
         intent.extras?.let {
+            val data = it.getParcelable<CallChargeChannel>(Constant.PARAM_DATA)
 
-            billsType = it.getInt(Constant.PARAM_TYPE, 0)
-            billerTag = it.getString(Constant.PARAM_TAG, "")
-            description = it.getString(Constant.PARAM_DESCRIPTION, "")
-
-            val parcelableArrayList = it.getParcelableArrayList<FieldDetail>(Constant.PARAM_DATA)
-            fieldDetail.addAll(parcelableArrayList!!)
-            serviceCharge = BigDecimal(it.getDouble(Constant.PARAM_SERVICE_CHARGE, 0.0))
+            data?.let {
+                channel_tv.text = it.channelName
+                mAdapter.setNewInstance(it.channelItem)
+            }
         }
-        rule_tv.text = getString(R.string.service_charge_format, serviceCharge)
     }
 
 
     private fun initList() {
 
-        mAdapter = CallChargesAdapter().apply {
+        mAdapter = CallChargesChanelItemAdapter().apply {
             setOnItemClickListener(this@CallChargesActivity)
         }
 
-        val gridLayoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
-        val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(10f), 0, 0)
+        val decoration = DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), 1, SizeUtils.dp2px(15f), 0)
         face_value_rv.apply {
             adapter = mAdapter
-            layoutManager = gridLayoutManager
+            layoutManager = LinearLayoutManager(this@CallChargesActivity, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(decoration)
         }
 
-        // 输入
+        phone_et.addTextChangedListener(
+            afterTextChanged = {
+                val trim = it.toString().trim()
+                if (trim.isNotBlank()) {
+                    next_tv.alpha = 1.0f
+                } else {
+                    next_tv.alpha = 0.5f
+                }
+            }
+        )
 
     }
 
     override fun initData() {
-        presenter =  CallChargesPresenter(this)
-        presenter.getFakerData()
+        presenter = CallChargesPresenter(this)
+
     }
 
     override fun bindListener() {
+        connect_iv.setOnClickListener {
 
+            PermissionUtils.permissionAny(this, {
+                if (it) {
+                    val uri: Uri = ContactsContract.Contacts.CONTENT_URI
+                    val intent = Intent(Intent.ACTION_PICK, uri)
+                    startActivityForResult(intent, 0)
+                } else {
+                    AppUtils.launchAppDetailsSettings()
+                }
+
+
+            }, Manifest.permission.READ_CONTACTS)
+
+        }
+
+        next_tv.setOnClickListener {
+            val phone = phone_et.text.toString().trim()
+            if (phone.isBlank() || !phone.startsWith("0") || phone.length != 11) {
+                ToastUtils.showShort(R.string.recharge_phone_format)
+                return@setOnClickListener
+            }
+
+            if (!::selectItem.isInitialized) {
+                ToastUtils.showShort(R.string.select_money)
+                return@setOnClickListener
+            }
+
+            PhonePlaceOrderActivity.navigation(this, phone, selectItem)
+        }
     }
 
-    override fun bindFakerData(data: ArrayList<FaceValue>) {
-        mAdapter.setNewInstance(data)
-    }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val faceValue = mAdapter.data[position]
-        userInputMoney = BigDecimal(faceValue.value)
-        amount_et.setText(BusinessUtils.formatPrice(userInputMoney))
+        val data = mAdapter.data[position]
+        selectItem = data
+
+
+        mAdapter.data.forEach {
+            it.isChecked = it == data
+        }
+        mAdapter.notifyDataSetChanged()
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        if (requestCode == 0) {
+            if (intent == null) return
+            val uri = intent.data
+            val contacts = getPhoneContacts(uri!!)
+
+            contacts?.let {
+
+                val replace = contacts[1]?.replace(" ","")
+                phone_et.setText(replace)
+            }
+
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, intent)
+        }
+    }
+
+    private fun getPhoneContacts(uri: Uri): Array<String?>? {
+
+        val contact = arrayOfNulls<String>(2)
+        val cr = contentResolver
+        // 取得电话本中开始一项的光标
+        val cursor = cr.query(uri, null, null, null, null)
+        if (cursor != null) {
+            cursor.moveToFirst()
+            // 姓名
+            val nameFieldColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+            contact[0] = cursor.getString(nameFieldColumnIndex)
+            // 号码
+            val ContactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+            val phone = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + ContactId,
+                null,
+                null)
+            if (phone != null) {
+                phone.moveToFirst()
+                contact[1] = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+            }
+            phone!!.close()
+            cursor.close()
+        } else {
+            return null
+        }
+        return contact
     }
 
 
-}     
+}

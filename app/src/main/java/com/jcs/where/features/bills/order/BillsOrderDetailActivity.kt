@@ -129,7 +129,7 @@ class BillsOrderDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsD
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.resubmit)
                     setOnClickListener {
-                        presenter.recommit(orderId)
+                        presenter.recommit(orderId,data.order_type)
                     }
                 }
             }

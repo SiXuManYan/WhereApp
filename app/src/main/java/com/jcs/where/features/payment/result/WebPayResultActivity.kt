@@ -47,26 +47,23 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
 
         when (moduleType) {
             PayUrlGet.BILL_PAY -> {
+
                 if (languageLocale.language == "zh") {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill)
                 } else {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill_en)
                 }
                 payment_hint.visibility = View.GONE
-                pay_info_iv.setImageResource(R.mipmap.ic_paying_bill_logo)
             }
             else -> {
+
                 if (languageLocale.language == "zh") {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete)
                 } else {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete_en)
                 }
-
             }
-
-
         }
-
 
     }
 
@@ -127,22 +124,28 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
 
         when (moduleType) {
             PayUrlGet.BILL_PAY -> {
+                // 缴费中
                 if (languageLocale.language == "zh") {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill)
                 } else {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill_en)
                 }
-
+                pay_info_iv.setImageResource(R.mipmap.ic_paying_bills)
             }
             else -> {
+                // 支付成功
                 if (languageLocale.language == "zh") {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success)
                 } else {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success_en)
                 }
+                pay_info_iv.setImageResource(R.mipmap.ic_pay_success_common)
             }
 
         }
+
+
+
         continue_pay_tv.visibility = View.GONE
         // 支付成功
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))

@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_32"
         android:scaleType="centerInside"
-        android:src="@mipmap/ic_pay_info" />
+        android:src="@mipmap/ic_paying_loading" />
 
 
     <TextView

@@ -63,14 +63,14 @@ class BillsRecommitResultActivity : BaseMvpActivity<BillsRecommitResultPresenter
             } else {
                 pay_status_title_iv.setImageResource(R.mipmap.ic_pay_success_bill_en)
             }
-            pay_info_iv.setImageResource(R.mipmap.ic_pay_success_bill_logo)
+            pay_info_iv.setImageResource(R.mipmap.ic_pay_success_bill2)
         } else {
             if (languageLocale.language == "zh") {
                 pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill_fail)
             } else {
                 pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill_fail_en)
             }
-            pay_info_iv.setImageResource(R.mipmap.ic_paying_bill_fail_logo)
+            pay_info_iv.setImageResource(R.mipmap.ic_pay_fail_bill)
         }
 
     }

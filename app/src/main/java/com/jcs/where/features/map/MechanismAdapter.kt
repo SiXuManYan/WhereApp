@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.MechanismResponse
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 
 /**
@@ -57,8 +58,8 @@ class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.l
         holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, item.distance))
 
         // tag
-        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        initTag(item, tag_ll)
+        val home_tag_rv = holder.getView<RecyclerView>(R.id.home_tag_rv)
+        BusinessUtils.initTag(item.tags, home_tag_rv)
 
     }
 
@@ -74,38 +75,6 @@ class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.l
     }
 
 
-    private fun initTag(data: MechanismResponse, tag_ll: LinearLayout) {
-        tag_ll.removeAllViews()
-        if (data.tags.isEmpty()) {
-            return
-        }
-
-        data.tags.forEach {
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.marginEnd = SizeUtils.dp2px(2f)
-            val tv = TextView(context).apply {
-                layoutParams = params
-                setPaddingRelative(SizeUtils.dp2px(4f), SizeUtils.dp2px(2f), SizeUtils.dp2px(4f), SizeUtils.dp2px(2f))
-                setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
-                textSize = 11f
-                text = it
-                setBackgroundResource(R.drawable.shape_blue_stoke_radius_2_98bbff);
-                isSingleLine = true
-            }
-            tag_ll.addView(tv)
-        }
-    }
-
-
-    public fun getSelectDataIndex(item: MechanismResponse): Int {
-        val indexOf = data.indexOf(item)
-        return if (indexOf == -1) {
-            0
-        } else {
-            indexOf
-        }
-
-    }
 
 
 }

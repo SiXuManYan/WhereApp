@@ -1,10 +1,10 @@
 package com.jcs.where.features.home
 
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
@@ -16,9 +16,11 @@ import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODU
 import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_2_SERVICE
 import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_3_FOOD
 import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_4_TRAVEL
+import com.jcs.where.features.home.tag.HomeTagAdapter
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
+import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.ratingstar.RatingStarView
 
 /**
@@ -36,7 +38,6 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
 
 
     override fun convert(holder: BaseViewHolder, item: HomeRecommendResponse) {
-
 
 
         when (holder.itemViewType) {
@@ -92,8 +93,8 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
 
 
         // tag
-        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        initTag(data, tag_ll)
+        val home_tag_rv = holder.getView<RecyclerView>(R.id.home_tag_rv)
+        BusinessUtils.initTag(data.tags, home_tag_rv)
 
         // 价格
         val price_tv = holder.getView<TextView>(R.id.price_tv)
@@ -137,8 +138,8 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
         holder.setText(R.id.distance_tv, StringUtils.getString(R.string.distance_format, data.distance))
 
         // tag
-        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        initTag(data, tag_ll)
+        val home_tag_rv = holder.getView<RecyclerView>(R.id.home_tag_rv)
+        BusinessUtils.initTag(data.tags, home_tag_rv)
     }
 
     /**
@@ -178,8 +179,8 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
 
 
         // tag
-        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        initTag(data, tag_ll)
+        val home_tag_rv = holder.getView<RecyclerView>(R.id.home_tag_rv)
+        BusinessUtils.initTag(data.tags, home_tag_rv)
 
     }
 
@@ -222,8 +223,8 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
 
 
         // tag
-        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        initTag(data, tag_ll)
+        val home_tag_rv = holder.getView<RecyclerView>(R.id.home_tag_rv)
+        BusinessUtils.initTag(data.tags, home_tag_rv)
 
     }
 
@@ -240,26 +241,5 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
     }
 
 
-    private fun initTag(data: HomeRecommendResponse, tag_ll: LinearLayout) {
-        tag_ll.removeAllViews()
-        if (data.tags.isEmpty()) {
-            return
-        }
-
-        data.tags.forEach {
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.marginEnd = SizeUtils.dp2px(2f)
-            val tv = TextView(context).apply {
-                layoutParams = params
-                setPaddingRelative(SizeUtils.dp2px(4f), SizeUtils.dp2px(2f), SizeUtils.dp2px(4f), SizeUtils.dp2px(2f))
-                setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
-                textSize = 11f
-                text = it
-                setBackgroundResource(R.drawable.shape_blue_stoke_radius_2_98bbff);
-                isSingleLine = true
-            }
-            tag_ll.addView(tv)
-        }
-    }
 
 }

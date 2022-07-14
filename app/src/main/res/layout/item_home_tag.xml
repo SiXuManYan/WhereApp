@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:id="@+id/home_tag_item"
+    android:layout_height="@dimen/dp_20"
+    android:layout_marginEnd="@dimen/dp_2"
+    android:gravity="center"
+    android:paddingStart="@dimen/dp_4"
+    android:paddingEnd="@dimen/dp_4"
+    android:background="@drawable/shape_blue_stoke_radius_2_98bbff"
+    android:includeFontPadding="false"
+    android:textColor="@color/blue_377BFF"
+    android:textSize="@dimen/sp_11"
+    tools:text="tab" />

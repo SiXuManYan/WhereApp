@@ -206,12 +206,13 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
         categoryRv.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 categoryRv.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val height = categoryRv.height //height is ready
+                val height = categoryRv.height
 
 
                 if (height < SizeUtils.dp2px(64f)) {
                     layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
                 } else {
+                    // 多行只展示两行
                     layoutParams.height = SizeUtils.dp2px(64f)
                 }
                 categoryRv.layoutParams = layoutParams

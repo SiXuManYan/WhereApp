@@ -8,19 +8,24 @@ import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.home.tag.HomeTagAdapter
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
 import com.jcs.where.storage.entity.User
+import com.jcs.where.view.MyLayoutManager
 import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
@@ -350,7 +355,6 @@ object BusinessUtils {
     fun isBankChannel(channel: String?): Boolean = channel == "BANK"
 
 
-
     fun setNowPriceAndOldPrice(
         price: BigDecimal, oldPrice: BigDecimal,
         priceTv: TextView, oldPriceTv: TextView,
@@ -437,4 +441,32 @@ object BusinessUtils {
         val decimalFormat = DecimalFormat("0.00#")
         return decimalFormat.format(price)
     }
+
+
+    fun initTag(tags: ArrayList<String>, tagRv: RecyclerView) {
+
+
+        val tagAdapter = HomeTagAdapter()
+        tagAdapter.setNewInstance(tags)
+
+        val manager = object : MyLayoutManager() {
+            override fun canScrollVertically() = false
+        }
+
+        val params = tagRv.layoutParams
+        if (tags.isNullOrEmpty()) {
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        } else {
+            params.height = SizeUtils.dp2px(20f)
+        }
+
+        tagRv.apply {
+            adapter = tagAdapter
+            layoutManager = manager
+            layoutParams = params
+        }
+
+    }
+
+
 }

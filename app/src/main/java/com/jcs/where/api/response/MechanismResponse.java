@@ -30,7 +30,7 @@ public class MechanismResponse implements ISearchResponse, MapMarkerUtil.IMapDat
     public double lng;
     public Double distance;
     public List<String> images;
-    public List<String> tags = new ArrayList();
+    public ArrayList<String> tags = new ArrayList();
 
     /**
      * 是否选中

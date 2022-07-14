@@ -23,6 +23,7 @@ import com.jcs.where.utils.GlideUtil
  */
 class MallRecommendAdapter : BaseQuickAdapter<MallGood, BaseViewHolder>(R.layout.item_mall_recommend), LoadMoreModule {
 
+    /** 是否需要隐藏店铺名称 */
     var hideShopName = false
 
     override fun convert(holder: BaseViewHolder, item: MallGood) {

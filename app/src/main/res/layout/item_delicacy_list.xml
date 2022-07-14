@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/delicacy_container_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="@dimen/dp_8"
-    android:id="@+id/delicacy_container_ll"
     android:layout_marginEnd="@dimen/dp_8"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical"
@@ -99,32 +99,14 @@
         android:textSize="@dimen/sp_11"
         tools:text="Ivana,Cagayan Valley" />
 
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_tag_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_4"
-        android:scrollbars="none">
-
-
-        <LinearLayout
-            android:id="@+id/tag_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_2"
-                android:background="@drawable/shape_blue_stoke_radius_2_98bbff"
-                android:includeFontPadding="false"
-                android:padding="@dimen/dp_4"
-                android:textColor="@color/blue_377BFF"
-                android:textSize="@dimen/sp_11"
-                tools:text="tab" />
-
-        </LinearLayout>
-    </HorizontalScrollView>
+        android:background="@color/white"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_home_tag" />
 
 
     <TextView
@@ -133,18 +115,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_8"
         android:background="@drawable/shape_orange_radius_15"
+        android:drawablePadding="@dimen/dp_4"
+        android:gravity="center"
         android:paddingStart="@dimen/dp_8"
         android:paddingTop="@dimen/dp_4"
-        android:gravity="center"
         android:paddingEnd="@dimen/dp_8"
         android:paddingBottom="@dimen/dp_4"
-        android:drawablePadding="@dimen/dp_4"
         android:text="@string/take_away_support_text"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_11"
         android:visibility="gone"
-        tools:visibility="visible"
-        app:drawableStartCompat="@mipmap/ic_support_takeaway_white" />
+        app:drawableStartCompat="@mipmap/ic_support_takeaway_white"
+        tools:visibility="visible" />
 
 
 </LinearLayout>

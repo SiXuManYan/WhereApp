@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
 
@@ -53,10 +54,9 @@ class DelicacyAdapter : BaseMultiItemQuickAdapter<RestaurantResponse, BaseViewHo
         // 人均
         holder.setText(R.id.per_price_tv, StringUtils.getString(R.string.per_price_format, item.per_price))
 
-
         // tag
-        val tag_ll = holder.getView<LinearLayout>(R.id.tag_ll)
-        initTag(item, tag_ll)
+        val home_tag_rv = holder.getView<RecyclerView>(R.id.home_tag_rv)
+        BusinessUtils.initTag(item.tags, home_tag_rv)
 
         when (holder.itemViewType) {
             RestaurantResponse.CONTENT_TYPE_COMMON -> {
@@ -108,27 +108,5 @@ class DelicacyAdapter : BaseMultiItemQuickAdapter<RestaurantResponse, BaseViewHo
         GlideUtil.load(context, image, image_iv, 4)
     }
 
-
-    private fun initTag(data: RestaurantResponse, tag_ll: LinearLayout) {
-        tag_ll.removeAllViews()
-        if (data.tags.isEmpty()) {
-            return
-        }
-
-        data.tags.forEach {
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.marginEnd = SizeUtils.dp2px(2f)
-            val tv = TextView(context).apply {
-                layoutParams = params
-                setPaddingRelative(SizeUtils.dp2px(4f), SizeUtils.dp2px(2f), SizeUtils.dp2px(4f), SizeUtils.dp2px(2f))
-                setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
-                textSize = 11f
-                text = it
-                setBackgroundResource(R.drawable.shape_blue_stoke_radius_2_98bbff);
-                isSingleLine = true
-            }
-            tag_ll.addView(tv)
-        }
-    }
 
 }

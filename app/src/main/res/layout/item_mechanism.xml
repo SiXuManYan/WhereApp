@@ -84,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/dp_4"
             android:background="@color/white"
             tools:itemCount="1"
             tools:listitem="@layout/item_home_tag" />

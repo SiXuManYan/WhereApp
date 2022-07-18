@@ -49,8 +49,6 @@ public class SystemNoticeFragment extends BaseMvpFragment<SystemNoticePresenter>
         recycler = view.findViewById(R.id.recycler);
         recycler.addItemDecoration(new DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), SizeUtils.dp2px(1f), SizeUtils.dp2px(15f), 0));
         emptyView = new EmptyView(requireContext());
-        emptyView.showEmptyDefault();
-
         emptyView.setEmptyImage(R.mipmap.ic_empty_un_notice);
         emptyView.setEmptyHint(R.string.no_notice_yet);
 

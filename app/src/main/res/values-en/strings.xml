@@ -722,8 +722,8 @@ Gentleman must let go</string>
     <string name="hotel">Hotel</string>
     <string name="food">Food</string>
     <string name="travel">Travel</string>
-    <string name="my_likes">My conis</string>
-    <string name="my_conis">My likes</string>
+    <string name="my_likes">My coins</string>
+    <string name="my_coins">My likes</string>
     <string name="viewed">Viewed</string>
     <string name="vouchers">Vouchers</string>
     <string name="empty_card_coupon">No coupons</string>
@@ -973,7 +973,7 @@ Gentleman must let go</string>
     <string name="empty_favorite">No favorite content yet</string>
     <string name="empty_history_hint">No browsing history yet</string>
     <string name="empty_points">No Points Yet</string>
-    <string name="no_cmments_yet">No Cmments Yet</string>
+    <string name="no_comments_yet">No Comments Yet</string>
     <string name="cart_is_empty">Your shopping cart is empty</string>
     <string name="recharge_phone_format">Please enter an 11-digit number starting with 0</string>
     <string name="select_money">Please select the payment amount from the list below</string>

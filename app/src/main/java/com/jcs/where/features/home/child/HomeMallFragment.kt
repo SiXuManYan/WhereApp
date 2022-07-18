@@ -103,6 +103,9 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
 
     }
 
+
+
+
     override fun bindListener() = Unit
 
 

@@ -2,6 +2,7 @@ package com.jcs.where.features.home
 
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.BannerResponse
+import com.jcs.where.api.response.CityPickerResponse
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.home.HomeChild
 import com.jcs.where.api.response.home.HomeNewsResponse
@@ -45,5 +46,7 @@ interface HomeView : BaseMvpView {
      *
      */
     fun bindHomeChild(response: ArrayList<HomeChild>, titles: ArrayList<String>)
+
+    fun bindDefaultCity(cityName:String)
 
 }

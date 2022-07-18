@@ -731,7 +731,7 @@ Gentleman must let go</string>
     <string name="food">餐厅</string>
     <string name="travel">旅游</string>
     <string name="my_likes">我的积分</string>
-    <string name="my_conis">我的收藏</string>
+    <string name="my_coins">我的收藏</string>
     <string name="viewed">我的足迹</string>
     <string name="vouchers">我的卡券</string>
     <string name="empty_card_coupon">暂无卡券</string>
@@ -987,7 +987,7 @@ Gentleman must let go</string>
     <string name="empty_favorite">暂无收藏内容</string>
     <string name="empty_history_hint">暂无浏览历史</string>
     <string name="empty_points">暂无积分</string>
-    <string name="no_cmments_yet">暂无评价</string>
+    <string name="no_comments_yet">暂无评价</string>
     <string name="cart_is_empty">您的购物车暂无商品</string>
     <string name="recharge_phone_format">请输入0开头11位数号码</string>
     <string name="select_money">请在下方列表中选择缴费金额</string>

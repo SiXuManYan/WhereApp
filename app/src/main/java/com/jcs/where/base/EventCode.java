@@ -163,6 +163,6 @@ public class EventCode {
      */
     public static final int EVENT_REFRESH_FOLLOW = 1037;
 
-    public static final int EVENT_REFRESH_HOME_CHILD = 1038;
+    public static final int EVENT_REFRESH_HOME_NEARBY = 1038;
 
 }

@@ -1,5 +1,7 @@
 package com.jcs.where.api.response;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,10 @@ public class CityPickerResponse {
     public List<CityChild> lists;
 
 
+    @SerializedName("default")
+    public CityChild  defaultCity ;
+
+
     public static class CityChild {
 
         public String id;
@@ -18,4 +24,6 @@ public class CityPickerResponse {
         public Double lng;
 
     }
+
+
 }

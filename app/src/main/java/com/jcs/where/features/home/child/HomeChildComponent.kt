@@ -33,14 +33,14 @@ class HomeChildPresenter(private var view: HomeChildView) : BaseMvpPresenter(vie
     /**
      * 推荐列表
      */
-    fun getComplexRecommend(page: Int, categoryId:Int ?=null) {
+    fun getComplexRecommend(page: Int, categoryId: Int? = null) {
         val areaId = SPUtil.getInstance().getString(SPKey.SELECT_AREA_ID)
 
         val selectLatLng = CacheUtil.getSafeSelectLatLng()
 
 
         requestApi(
-            mRetrofit.getRecommends(page, selectLatLng.latitude.toString(), selectLatLng.longitude.toString(), areaId,categoryId),
+            mRetrofit.getRecommends(page, selectLatLng.latitude.toString(), selectLatLng.longitude.toString(), areaId, categoryId),
             object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view) {
                 override fun onSuccess(response: PageResponse<HomeRecommendResponse>) {
                     val isLastPage = response.lastPage == page
@@ -56,10 +56,9 @@ class HomeChildPresenter(private var view: HomeChildView) : BaseMvpPresenter(vie
     }
 
 
+    fun getMallRecommend(categoryId: Int, page: Int) {
 
-    fun getMallRecommend(categoryId:Int, page:Int) {
-
-        requestApi(mRetrofit.getMallRecommendGood(1,page,categoryId), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+        requestApi(mRetrofit.getMallRecommendGood(1, page, categoryId), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
             override fun onSuccess(response: PageResponse<MallGood>) {
 
                 val isLastPage = response.lastPage == page

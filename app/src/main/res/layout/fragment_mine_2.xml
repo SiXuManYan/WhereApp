@@ -115,7 +115,7 @@
                         android:background="?android:attr/selectableItemBackground"
                         android:drawablePadding="@dimen/dp_8"
                         android:gravity="center"
-                        android:text="@string/my_conis"
+                        android:text="@string/my_coins"
                         android:textColor="@color/black_333333"
                         android:textSize="@dimen/sp_13"
                         app:drawableTopCompat="@mipmap/ic_mine_coins" />

@@ -11,6 +11,8 @@ import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.HomeRecommendAdapter
@@ -140,7 +142,10 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
     override fun initData() {
         presenter = HomeChildPresenter(this)
         getData()
+
     }
+
+
 
     private fun getData() = presenter.getComplexRecommend(page, categoryId)
 
@@ -191,5 +196,12 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
         }
     }
 
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent.code == EventCode.EVENT_REFRESH_HOME_NEARBY) {
+            getData()
+        }
+    }
 
 }

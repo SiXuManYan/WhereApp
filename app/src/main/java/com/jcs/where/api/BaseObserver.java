@@ -48,7 +48,13 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
             if (errorResponse == null){
                 errorResponse = new ErrorResponse();
             }
-            errorResponse.errMsg = tJcsResponse.getMessage();
+            if (code == 500) {
+                errorResponse.errMsg = "system error(500)";
+            }else{
+                errorResponse.errMsg = tJcsResponse.getMessage();
+            }
+
+
             onError(errorResponse);
             if (code == 401) {
                 BusinessUtils.INSTANCE.loginOut();
@@ -72,7 +78,7 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
     private ErrorResponse deployErrorResponse(String message) {
         ErrorResponse errorResponse = new ErrorResponse();
         if (message == null) {
-            errorResponse.errMsg = "空的错误信息";
+            errorResponse.errMsg = "";
             onError(errorResponse);
             return null;
         }

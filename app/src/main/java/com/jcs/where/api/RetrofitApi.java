@@ -1582,7 +1582,7 @@ public interface RetrofitApi {
     Observable<JcsResponse<PageResponse<MallGood>>> getMallRecommendGood(
             @Query("version") int version,
             @Query("page") int page,
-            @Query("categoryId") int categoryId);
+            @Query("categoryId") Integer categoryId);
 
 
     /**

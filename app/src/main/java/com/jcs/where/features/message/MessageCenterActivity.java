@@ -91,6 +91,9 @@ public class MessageCenterActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
+                emptyView.setEmptyImage(R.mipmap.ic_empty_un_notice);
+                emptyView.setEmptyHint(R.string.no_notice_yet);
+
                 ConversationListFragment listFragment = new ConversationListFragment();
                 listFragment.setEmptyView(emptyView);
 

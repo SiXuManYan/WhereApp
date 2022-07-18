@@ -59,6 +59,7 @@ import com.jcs.where.view.XBanner.XBanner
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.yellow_page.activity.YellowPageActivity
 import kotlinx.android.synthetic.main.fragment_home4.*
+import org.greenrobot.eventbus.EventBus
 import pl.droidsonroids.gif.GifImageView
 
 
@@ -103,11 +104,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         initScroll()
     }
 
-
-    private fun initCity() {
-        val cityName = SPUtils.getInstance().getString(SPKey.SELECT_AREA_NAME, StringUtils.getString(R.string.default_city_name))
-        city_tv.text = cityName
-    }
 
 
     /** 轮播图 */
@@ -299,6 +295,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     }
 
     private fun requestData() {
+        presenter.getCityData()
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
@@ -306,6 +303,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         presenter.getHomeChild()
         presenter.checkAppVersion()
         presenter.connectRongCloud()
+
+
     }
 
     override fun bindListener() {
@@ -556,6 +555,18 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     override fun onError(errorResponse: ErrorResponse?) {
         super.onError(errorResponse)
         swipeLayout.isRefreshing = false
+    }
+
+
+    private fun initCity() {
+        val cityName = SPUtils.getInstance().getString(SPKey.SELECT_AREA_NAME, StringUtils.getString(R.string.default_city_name))
+        city_tv.text = cityName
+    }
+
+
+    override fun bindDefaultCity(cityName : String) {
+        city_tv.text = cityName
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_HOME_NEARBY))
     }
 
 

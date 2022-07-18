@@ -1,16 +1,21 @@
 package com.jcs.where.features.home
 
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.BuildConfig
+import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.BannerResponse
+import com.jcs.where.api.response.CityPickerResponse
 import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.UnReadMessage
 import com.jcs.where.api.response.home.HomeChild
 import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.SPKey
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 
@@ -150,11 +155,36 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
                 response.forEach {
                     titles.add(it.name)
                 }
-                view.bindHomeChild(response,titles)
+                view.bindHomeChild(response, titles)
             }
 
         })
     }
 
+    /**
+     * 无城市信息缓存时，获取默认城市信息
+     */
+    fun getCityData() {
+
+        val instance = SPUtils.getInstance()
+        val cityName = instance.getString(SPKey.SELECT_AREA_NAME, "")
+        val areaId = instance.getString(SPKey.SELECT_AREA_ID, "")
+
+        if (!cityName.isNullOrBlank() || !areaId.isNullOrBlank()) {
+            return
+        }
+
+        requestApi(mRetrofit.getCityPickers("list"), object : BaseMvpObserver<CityPickerResponse>(view) {
+            override fun onSuccess(response: CityPickerResponse) {
+
+                val defaultCity = response.defaultCity
+                instance.put(SPKey.SELECT_AREA_ID, defaultCity.id)
+                instance.put(SPKey.SELECT_AREA_NAME, defaultCity.name)
+                instance.put(SPKey.SELECT_LAT, defaultCity.lat.toFloat())
+                instance.put(SPKey.SELECT_LNG, defaultCity.lng.toFloat())
+                view.bindDefaultCity(defaultCity.name)
+            }
+        })
+    }
 
 }

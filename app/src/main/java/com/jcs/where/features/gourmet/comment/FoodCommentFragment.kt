@@ -62,7 +62,8 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
         // list
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(context).apply {
-            showEmptyNothing()
+            setEmptyImage(R.mipmap.ic_empty_refund_comment)
+            setEmptyActionText(R.string.no_comments_yet)
         }
         mAdapter = HotelCommentAdapter().apply {
             loadMoreModule.isAutoLoadMore = true

@@ -65,9 +65,9 @@ public class ConvenienceServiceSearchActivity extends BaseActivity implements On
         mSwipeLayout = findViewById(R.id.mechanismRefresh);
 
         emptyView = new EmptyView(this);
-        emptyView.initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint, R.string.back, v -> {
-        });
-        emptyView.action_tv.setVisibility(View.GONE);
+        emptyView.setEmptyImage(R.mipmap.ic_empty_search);
+        emptyView.setEmptyMessage( R.string.empty_search);
+        emptyView.setEmptyHint( R.string.empty_search_hint);
 
         mRecycler = findViewById(R.id.recycler);
         mRecycler.addItemDecoration(new DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0));

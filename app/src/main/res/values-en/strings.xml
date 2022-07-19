@@ -234,7 +234,7 @@
     <string name="is_client_valid_facebook">Facebook client is not installed. Whether to go to install ?</string>
     <string name="authorization_failed">Authorization failed</string>
     <string name="authorization_cancel">Authorization cancel</string>
-    <string name="mine_footprint_title">Footprint</string>
+    <string name="mine_footprint_title">History</string>
     <string name="about_app_title">About Where</string>
     <string name="version_format">Version&#160;%1$s</string>
     <string name="clear_success">Clear success</string>
@@ -354,10 +354,10 @@
     <string name="shipping_address_edit">Shipping address：</string>
     <string name="delete">Delete</string>
     <string name="address_edit_hint">Please fill in the detailed delivery address</string>
-    <string name="recipient_edit_hint">Please fill in the name of the consignee</string>
+    <string name="recipient_edit_hint">Please fill in the name of the recipient</string>
     <string name="recipient">Contact</string>
-    <string name="sir">Mr.</string>
-    <string name="lady">Ms.</string>
+    <string name="sir">Men</string>
+    <string name="lady">Female</string>
     <string name="contact_number">Contact number</string>
     <string name="address_phone_edit">Please fill in the receiving phone number</string>
     <string name="edit_address">Edit address</string>
@@ -417,7 +417,7 @@
     <string name="shopping_cart">Shopping Cart</string>
     <string name="select_all">Select All</string>
     <string name="total_cart_3">Total&#160;</string>
-    <string name="settlement">Settlement</string>
+    <string name="settlement">Order Now</string>
     <string name="edit">Edit</string>
     <string name="prepaid_reload">Prepaid Reload</string>
     <string name="water_utilities">Water Utilities</string>

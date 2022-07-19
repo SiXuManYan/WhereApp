@@ -49,12 +49,10 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
                 errorResponse = new ErrorResponse();
             }
             if (code == 500) {
-                errorResponse.errMsg = "system error(500)";
+                errorResponse.errMsg = "System Error(500)";
             }else{
                 errorResponse.errMsg = tJcsResponse.getMessage();
             }
-
-
             onError(errorResponse);
             if (code == 401) {
                 BusinessUtils.INSTANCE.loginOut();

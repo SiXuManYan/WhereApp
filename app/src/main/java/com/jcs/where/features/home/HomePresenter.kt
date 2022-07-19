@@ -23,7 +23,7 @@ import io.rong.imlib.RongIMClient
  * Created by Wangsw  2021/4/12 13:53.
  *
  */
-class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
+class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
 
     /**

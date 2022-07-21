@@ -125,7 +125,6 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             1 -> {
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
                 startActivity(YellowPageSearchResultActivity::class.java, bundle)
-                finish()
             }
             2 -> {
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)

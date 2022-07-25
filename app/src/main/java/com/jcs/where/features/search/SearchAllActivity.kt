@@ -129,7 +129,6 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             2 -> {
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
                 startActivity(ConvenienceServiceSearchActivity::class.java, bundle)
-                finish()
             }
             3, 4, 7 -> {
                 setResult(Activity.RESULT_OK, Intent().putExtras(bundle))

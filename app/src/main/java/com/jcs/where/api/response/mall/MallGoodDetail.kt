@@ -64,7 +64,7 @@ class MallAttributeValue : Serializable{
      * 0 未选中
      * 1 选中
      * 2 不可选
-     *
+     * （0代表者正常，1代表选中，2代表不可选（库存为0||无规格））
      */
     var nativeIsSelected = 2
 

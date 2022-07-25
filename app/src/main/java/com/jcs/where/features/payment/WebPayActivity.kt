@@ -86,8 +86,21 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
                 empty_view.visibility = View.VISIBLE
             }
 
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                empty_view.visibility = View.GONE
 
+            }
         }
+        web_view.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                super.onProgressChanged(view, newProgress)
+                if (newProgress == 100) {
+                    empty_view.visibility = View.GONE
+                }
+            }
+        }
+
     }
 
     private fun initExtra() {

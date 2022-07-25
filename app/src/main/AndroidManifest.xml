@@ -40,6 +40,14 @@
         <intent>
             <action android:name="cn.jpush.android.intent.PushService" />
         </intent>
+
+        <!-- Android 11 限制 QUERY_ALL_PACKAGES ，显示声明可见性包名-->
+        <!-- https://developer.android.com/training/package-visibility/declaring -->
+        <package android:name="com.android.settings"/>
+        <package android:name="com.android.vending"/>
+        <package android:name="com.facebook.katana"/>
+        <package android:name="com.google.android.apps.maps"/>
+
     </queries>
 
     <!-- com 100 end ↑-->

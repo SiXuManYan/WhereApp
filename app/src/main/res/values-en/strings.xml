@@ -225,10 +225,10 @@
     <string name="password_format_error_hint">The password format is wrong, please enter a combination of letters and numbers.</string>
     <string name="main_back_hint">Press again to exit the application.</string>
     <string name="sign_out_hint">Are you sure to log out ？</string>
-    <string name="collection_tab_same_city">Local</string>
+    <string name="collection_tab_same_city">Agency/Shop</string>
     <string name="collection_tab_article">Article</string>
     <string name="collection_tab_video">Video</string>
-    <string name="collection_tab_good">Good</string>
+    <string name="collection_tab_good">Goods</string>
     <string name="bind_phone">Bind phone</string>
     <string name="is_client_valid">Client does not exist</string>
     <string name="is_client_valid_facebook">Facebook client is not installed. Whether to go to install ?</string>

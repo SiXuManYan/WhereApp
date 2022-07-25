@@ -1,5 +1,6 @@
 apply plugin: 'com.mob.sdk'
 
+
 MobSDK {
     appKey "m323e22bbc612c"
     appSecret "cd85d45317ccf5bb3f52746d8278de23"
@@ -59,5 +60,11 @@ MobSDK {
             */
 
         }
+    }
+
+    permissions {
+        // ShareSDK可选权限说明 https://www.mob.com/wiki/detailed?wiki=238&id=172
+        // 除Gradle自动加载的可选权限方法
+        exclude "android.permission.QUERY_ALL_PACKAGES"
     }
 }

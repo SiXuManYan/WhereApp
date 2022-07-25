@@ -47,7 +47,7 @@ class MallSkuPresenter(private var view: MallSkuView) : BaseMvpPresenter(view) {
 
 
     /**
-     * 筛选出复合条件的SKU集合
+     * 筛选出符合条件的SKU集合
      * // 当前行
      */
     fun getTargetResult(source: SkuDataSource, alreadySelect: ArrayList<MallAttributeValue>): ArrayList<MallSpecs> {

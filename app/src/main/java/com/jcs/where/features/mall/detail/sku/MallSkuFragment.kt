@@ -281,6 +281,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
     }
 
     private fun initDefault(currentItem: MallAttributeValue?): ArrayList<MallSpecs> {
+
         // 用户选中属性
         val allSelectedItem: ArrayList<MallAttributeValue> = presenter.getAllSelectedItem2(mAdapter)
 

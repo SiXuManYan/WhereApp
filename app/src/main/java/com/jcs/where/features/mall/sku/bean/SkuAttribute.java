@@ -7,8 +7,8 @@ import android.os.Parcelable;
  * Created by wuhenzhizao on 2017/7/20.
  */
 public class SkuAttribute implements Parcelable {
-    private String key;
-    private String value;
+    public String key;
+    public String value;
 
     public SkuAttribute() {
     }

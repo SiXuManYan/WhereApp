@@ -28,14 +28,15 @@ import com.jcs.where.features.mall.complex.CommentComplexActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
+import com.jcs.where.features.mall.sku.bean.Sku
+import com.jcs.where.features.mall.sku.other.Product
+import com.jcs.where.features.mall.sku.other.SkuFragment
 import com.jcs.where.features.message.custom.CustomMessage
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
-import com.just.agentweb.WebChromeClient
-import com.just.agentweb.WebViewClient
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
 
@@ -44,7 +45,7 @@ import kotlinx.android.synthetic.main.activity_mall_good_detail.*
  * Created by Wangsw  2021/12/10 14:57.
  * 商品详情
  */
-class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, MallSkuSelectResult {
+class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, MallSkuSelectResult, SkuFragment.Callback {
 
 
     private var goodId = 0
@@ -65,7 +66,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private lateinit var mSkuDialog: MallSkuFragment
 
-//    private var dialog :ProductSkuDialog?=null
+    private lateinit var skuDialog2: SkuFragment
 
 
     /** 评价 */
@@ -100,6 +101,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         mSkuDialog = MallSkuFragment().apply {
             selectResult = this@MallDetailActivity
         }
+
+        skuDialog2 = SkuFragment().apply {
+            callback = this@MallDetailActivity
+        }
+
         initMedia()
         initComment()
         initWeb()
@@ -160,12 +166,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
 
-    private var mWebViewClient = object : WebViewClient() {
-    }
-
-    private var mWebChromeClient = object : WebChromeClient() {
-
-    }
 
     private fun initWeb() {
 
@@ -177,6 +177,9 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         presenter?.getCartCount()
     }
 
+
+    private var shoppingCartNum = 0
+
     override fun bindListener() {
         share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_MALL, goodId)
@@ -184,7 +187,11 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         select_attr_tv.setOnClickListener {
             dialogHandle = 0
-            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+//            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+
+            skuDialog2?.show(supportFragmentManager, mSkuDialog.tag)
+
+
         }
         mall_shop_tv.setOnClickListener {
             MallShopHomeActivity.navigation(this, shopId)
@@ -280,6 +287,12 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             specs.clear()
             specs.addAll(response.specs)
         }
+
+
+
+//        dialog.setData()
+
+
         shopId = response.shop_id
         shopName = response.shop_name
         collect_status = response.collect_status
@@ -388,12 +401,18 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         shopping_cart.setMessageCount(nums)
     }
 
-/*    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return if (mAgentWeb.handleKeyEvent(keyCode, event)) {
-            true
-        } else super.onKeyDown(keyCode, event)
+    override fun bindSkuProduct(product: Product) {
+        skuDialog2.setData(product)
+//        skuDialog2.setData(Product.get(this))
 
-    }*/
+    }
+
+    override fun onAdded(sku: Sku?, quantity: Int) {
+        // 数量
+        shoppingCartNum += quantity
+    }
+
+
 
 
 }

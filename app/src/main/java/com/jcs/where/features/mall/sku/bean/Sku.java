@@ -3,19 +3,21 @@ package com.jcs.where.features.mall.sku.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by wuhenzhizao on 2017/3/6.
  */
 public class Sku implements Parcelable {
-    private String id;
-    private String mainImage;
-    private int stockQuantity;
-    private boolean inStock;
-    private long originPrice;
-    private long sellingPrice;
-    private List<SkuAttribute> attributes;
+    public String id;
+    public String goods_id;
+    public String mainImage;
+    public int stockQuantity;
+    public boolean inStock;
+    public long originPrice;
+    public long sellingPrice;
+    public List<SkuAttribute> attributes = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -77,6 +79,7 @@ public class Sku implements Parcelable {
     public String toString() {
         return "Sku{" +
                 "id='" + id + '\'' +
+                ", goods_id='" + goods_id + '\'' +
                 ", mainImage='" + mainImage + '\'' +
                 ", stockQuantity=" + stockQuantity +
                 ", inStock=" + inStock +
@@ -97,6 +100,7 @@ public class Sku implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
+        dest.writeString(this.goods_id);
         dest.writeString(this.mainImage);
         dest.writeInt(this.stockQuantity);
         dest.writeByte(this.inStock ? (byte) 1 : (byte) 0);
@@ -107,6 +111,7 @@ public class Sku implements Parcelable {
 
     protected Sku(Parcel in) {
         this.id = in.readString();
+        this.goods_id = in.readString();
         this.mainImage = in.readString();
         this.stockQuantity = in.readInt();
         this.inStock = in.readByte() != 0;

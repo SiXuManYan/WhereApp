@@ -38,6 +38,8 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
     /** 话费 */
     private lateinit var mCallAdapter: CallChargesChannelAdapter
 
+    private lateinit var emptyView:EmptyView
+
     override fun getLayoutId() = R.layout.activity_no_refresh_list
 
     override fun isStatusDark() = true
@@ -58,8 +60,8 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
 
     private fun initContent() {
 
-        val emptyView = EmptyView(this).apply {
-            showEmptyDefault()
+        emptyView = EmptyView(this).apply {
+            showEmptyNothing()
         }
 
         mCommonAdapter = BillsChannelAdapter().apply {
@@ -97,9 +99,19 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
 
     }
 
-    override fun bindCommonData(response: ArrayList<BillsChannel>) = mCommonAdapter.setNewInstance(response)
+    override fun bindCommonData(response: ArrayList<BillsChannel>) {
+        mCommonAdapter.setNewInstance(response)
+        if (response.isNullOrEmpty()) {
+            emptyView.showEmptyDefault()
+        }
+    }
 
-    override fun bindCallData(response: ArrayList<CallChargeChannel>) = mCallAdapter.setNewInstance(response)
+    override fun bindCallData(response: ArrayList<CallChargeChannel>) {
+        mCallAdapter.setNewInstance(response)
+        if (response.isNullOrEmpty()) {
+            emptyView.showEmptyDefault()
+        }
+    }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
 

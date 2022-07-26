@@ -111,9 +111,11 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
                 selectedSku = null
                 GlideUtil.load(context, product!!.main_image, iv_sku_logo)
                 tv_sku_quantity.setText(String.format(stockQuantityFormat!!, product!!.stock))
+
                 val firstUnselectedAttributeName = scroll_sku_list.getFirstUnelectedAttributeName()
                 tv_sku_info.setText("请选择：$firstUnselectedAttributeName")
-                btn_submit.setEnabled(false)
+                confirm_tv.setEnabled(false)
+
                 val quantity = et_sku_quantity_input.getText().toString()
                 if (!TextUtils.isEmpty(quantity)) {
                     updateQuantityOperator(Integer.valueOf(quantity))
@@ -129,6 +131,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
             override fun onSkuSelected(sku: Sku?) {
                 selectedSku = sku
+
                 GlideUtil.load(context, selectedSku!!.mainImage, iv_sku_logo)
                 val attributeList = selectedSku!!.attributes
                 val builder = StringBuilder()
@@ -141,7 +144,17 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
                 }
                 tv_sku_info.setText("已选：$builder")
                 tv_sku_quantity.setText(String.format(stockQuantityFormat!!, selectedSku!!.stockQuantity))
-                btn_submit.setEnabled(true)
+
+
+
+                val sellingPrice = selectedSku!!.sellingPrice
+                tv_sku_selling_price.text = StringUtils.getString(R.string.price_unit_format, sellingPrice.toString())
+
+                val originPrice = selectedSku!!.originPrice
+                original_price_tv.text = StringUtils.getString(R.string.price_unit_format, originPrice.toString())
+
+
+                confirm_tv.setEnabled(true)
                 val quantity = et_sku_quantity_input.getText().toString()
                 if (!TextUtils.isEmpty(quantity)) {
                     updateQuantityOperator(Integer.valueOf(quantity))
@@ -152,7 +165,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
         })
 
-        btn_submit.setOnClickListener {
+        confirm_tv.setOnClickListener {
             val quantity = et_sku_quantity_input.getText().toString()
             if (TextUtils.isEmpty(quantity)) {
                 return@setOnClickListener
@@ -186,14 +199,17 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
             // 选中第一个sku
             scroll_sku_list.selectedSku = selectedSku
             GlideUtil.load(context, selectedSku?.mainImage, iv_sku_logo)
-//            tv_sku_selling_price.text = String.format(priceFormat!!, NumberUtils.formatNumber((selectedSku!!.sellingPrice / 100).toDouble()))
-            tv_sku_selling_price.text = String.format(priceFormat!!, NumberUtils.formatNumber((selectedSku!!.sellingPrice ).toDouble()))
+
+            val sellingPrice = selectedSku!!.sellingPrice
+            tv_sku_selling_price.text = StringUtils.getString(R.string.price_unit_format, sellingPrice.toString())
+
+            val originPrice = selectedSku!!.originPrice
+            original_price_tv.text = StringUtils.getString(R.string.price_unit_format, originPrice.toString())
 
 
 
-            tv_sku_selling_price_unit.text = "/" + product!!.measurementUnit
             tv_sku_quantity.text = String.format(stockQuantityFormat!!, selectedSku!!.stockQuantity)
-            btn_submit.isEnabled = selectedSku!!.stockQuantity > 0
+            confirm_tv.isEnabled = selectedSku!!.stockQuantity > 0
             val attributeList = selectedSku!!.attributes
             val builder = StringBuilder()
             for (i in attributeList.indices) {
@@ -206,16 +222,17 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
             tv_sku_info.text = "已选：$builder"
         } else {
             GlideUtil.load(context, selectedSku!!.mainImage, iv_sku_logo)
-//            tv_sku_selling_price.text = String.format(priceFormat!!, NumberUtils.formatNumber((product!!.price / 100).toDouble()))
-            tv_sku_selling_price.text = String.format(priceFormat!!, NumberUtils.formatNumber((product!!.price ).toDouble()))
 
 
-            tv_sku_selling_price_unit.text = "/" + product!!.measurementUnit
+            tv_sku_selling_price.text = StringUtils.getString(R.string.price_unit_format, product!!.price.toString())
+
+            original_price_tv.text = StringUtils.getString(R.string.price_unit_format, product!!.original_cost.toString())
+
+
             tv_sku_quantity.text = String.format(stockQuantityFormat!!, product!!.stock)
-            btn_submit.isEnabled = false
+            confirm_tv.isEnabled = false
             tv_sku_info.text = "请选择：" + skuList!![0].attributes[0].key
         }
-
 
 
     }

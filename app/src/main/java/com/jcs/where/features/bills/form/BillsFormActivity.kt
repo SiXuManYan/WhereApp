@@ -131,8 +131,6 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
             afterTextChanged = {
                 val input = it.toString()
                 userInputMoney = BusinessUtils.getSafeBigDecimal(input)
-                amount_et.setText(BusinessUtils.formatPrice(userInputMoney))
-
                 if (input.isBlank()) {
                     next_tv.alpha = 0.6f
                 } else {
@@ -141,6 +139,8 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
             }
         )
+
+//        amount_et.setText(BusinessUtils.formatPrice(userInputMoney))
 
 
         mJcsTitle.setBackIvClickListener {

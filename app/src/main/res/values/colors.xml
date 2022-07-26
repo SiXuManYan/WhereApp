@@ -77,4 +77,7 @@
     <color name="transplant">#00000000</color>
 
     <color name="lan">#4ebcfc</color>
+
+
+    <color name="comm_line">#dddddd</color>
 </resources>

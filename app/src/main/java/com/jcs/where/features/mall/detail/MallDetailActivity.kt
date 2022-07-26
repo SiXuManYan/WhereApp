@@ -65,6 +65,9 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private lateinit var mSkuDialog: MallSkuFragment
 
+//    private var dialog :ProductSkuDialog?=null
+
+
     /** 评价 */
     private lateinit var mCommentAdapter: HotelCommentAdapter
 

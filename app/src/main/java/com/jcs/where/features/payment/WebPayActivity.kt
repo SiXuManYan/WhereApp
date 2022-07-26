@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.*
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.request.payment.PayUrlGet
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
@@ -70,26 +71,9 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
         }
 
         web_view.webViewClient = object : WebViewClient() {
-
-            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                super.onReceivedError(view, request, error)
-                empty_view.visibility = View.VISIBLE
-            }
-
-            override fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?) {
-                super.onReceivedHttpError(view, request, errorResponse)
-                empty_view.visibility = View.VISIBLE
-            }
-
-            override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-                super.onReceivedSslError(view, handler, error)
-                empty_view.visibility = View.VISIBLE
-            }
-
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 empty_view.visibility = View.GONE
-
             }
         }
         web_view.webChromeClient = object : WebChromeClient() {
@@ -128,7 +112,6 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
     override fun initData() {
 
         presenter = WebParPresenter(this)
-
 
         if (lastPayUrl.isBlank()) {
             showLoadingDialog()
@@ -175,6 +158,12 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.bottom_silent, R.anim.bottom_out)
+    }
+
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        empty_view.visibility = View.VISIBLE
     }
 
 

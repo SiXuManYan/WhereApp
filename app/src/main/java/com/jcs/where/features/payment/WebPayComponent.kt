@@ -41,6 +41,8 @@ class WebParPresenter(private var view: WebPayView) : BaseMvpPresenter(view) {
 
                 view.bindUrl(response.redirectUrl)
             }
+
+
         })
     }
 

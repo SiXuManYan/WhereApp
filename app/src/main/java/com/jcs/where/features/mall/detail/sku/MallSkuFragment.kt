@@ -231,8 +231,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         if (matchSpecsList.size == 1) {
             val mallSpecs = matchSpecsList[0]
             result = mallSpecs
-            price_tv.text = getString(R.string.price_unit_format, mallSpecs.price.toPlainString())
-
+            BusinessUtils.setNowPriceAndOldPrice(mallSpecs.price, mallSpecs.original_cost, price_tv, original_price_tv)
             val stock = mallSpecs.stock
 
             stock_tv.text = StringUtils.getString(R.string.stock_format, stock)
@@ -260,7 +259,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
         if (resultSkuList.size == 1) {
             val mallSpecs = resultSkuList[0]
             result = mallSpecs
-            price_tv.text = getString(R.string.price_unit_format, mallSpecs.price.toPlainString())
+            BusinessUtils.setNowPriceAndOldPrice(mallSpecs.price, mallSpecs.original_cost, price_tv, original_price_tv)
 
             val stock = mallSpecs.stock
 

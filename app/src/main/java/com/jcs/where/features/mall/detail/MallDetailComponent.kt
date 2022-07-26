@@ -109,7 +109,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         val msi = MallSpecsInfo().apply {
             specs = mallSpecs.specs
             price = mallSpecs.price
-
+            original_cost = mallSpecs.original_cost
         }
 
         val item = MallCartItem().apply {

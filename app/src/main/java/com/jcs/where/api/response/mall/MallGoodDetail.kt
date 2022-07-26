@@ -49,14 +49,14 @@ class MallGoodDetail {
 
 }
 
-class MallAttribute: Serializable {
+class MallAttribute : Serializable {
     var key = ""
     var value = ArrayList<MallAttributeValue>()
     var nativeSelectedValue = ""
 }
 
 
-class MallAttributeValue : Serializable{
+class MallAttributeValue : Serializable {
     var key = ""
     var name = ""
 
@@ -81,7 +81,7 @@ class MallAttributeValue : Serializable{
 
 }
 
-class MallSpecs : Serializable{
+class MallSpecs : Serializable {
 
     var id = 0
     var goods_id = 0
@@ -90,6 +90,7 @@ class MallSpecs : Serializable{
     var stock = 0
     var image = ""
     var specs: HashMap<String, String> = HashMap()
+    var original_cost = BigDecimal.ZERO
 
     /**
      * sku 属性集合

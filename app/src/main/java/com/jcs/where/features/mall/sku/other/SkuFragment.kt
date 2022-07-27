@@ -230,21 +230,43 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
             }
             tv_sku_info.text = "已选：$builder"
         } else {
-            GlideUtil.load(context, selectedSku!!.mainImage, iv_sku_logo)
-
+            GlideUtil.load(context, product!!.main_image, iv_sku_logo)
 
             val sellingPrice = product!!.price
             val originalCost = product!!.original_cost
 
-
             BusinessUtils.setNowPriceAndOldPrice(sellingPrice, originalCost, tv_sku_selling_price, original_price_tv)
-
 
             tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
 
             confirm_tv.isEnabled = false
             tv_sku_info.text = "请选择：" + skuList!![0].attributes[0].key
         }
+
+
+    }
+
+
+    public fun updateSkuData2() {
+        if (product == null) {
+            return
+        }
+
+        scroll_sku_list.setSkuList(product!!.skus)
+        if (product!!.skus.isEmpty()) {
+            return
+        }
+        GlideUtil.load(context, product!!.main_image, iv_sku_logo)
+
+        val sellingPrice = product!!.price
+        val originalCost = product!!.original_cost
+
+        BusinessUtils.setNowPriceAndOldPrice(sellingPrice, originalCost, tv_sku_selling_price, original_price_tv)
+
+        tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
+
+        confirm_tv.isEnabled = false
+        tv_sku_info.text = "请选择：" + skuList!![0].attributes[0].key
 
 
     }

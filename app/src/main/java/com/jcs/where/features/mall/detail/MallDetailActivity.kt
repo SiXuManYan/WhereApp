@@ -44,7 +44,7 @@ import kotlinx.android.synthetic.main.activity_mall_good_detail.*
  * Created by Wangsw  2021/12/10 14:57.
  * 商品详情
  */
-class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, MallSkuSelectResult, SkuFragment.Callback {
+class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, SkuFragment.Callback {
 
 
     private var goodId = 0
@@ -340,29 +340,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         setLikeImage()
         ToastUtils.showShort(R.string.success)
-    }
-
-    override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {
-
-        this.mallSpecs = mallSpecs
-        goodNumber = goodNum
-
-        val buff = StringBuffer()
-        mallSpecs.specs.values.forEach {
-            buff.append("$it, ")
-        }
-        buff.append(" " + getString(R.string.quantity_format, goodNumber))
-
-        select_attr_tv.text = buff
-
-        if (!User.isLogon()) {
-            startActivity(LoginActivity::class.java)
-            return
-        }
-        when (dialogHandle) {
-            1 -> addCart()
-            2 -> buyNow()
-        }
     }
 
     override fun bindCartCount(nums: Int) {

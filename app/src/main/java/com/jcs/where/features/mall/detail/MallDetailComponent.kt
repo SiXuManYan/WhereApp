@@ -64,8 +64,8 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
                         id = it.id.toString()
                         this.goods_id = it.goods_id.toString()
                         mainImage = it.image
-                        originPrice = it.original_cost.toLong()
-                        sellingPrice = it.price.toLong()
+                        originPrice = it.original_cost
+                        sellingPrice = it.price
                         stockQuantity = it.stock
                     }
 
@@ -77,6 +77,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
                         }
                         apply.attributes.add(attr)
                     }
+                    apply.attributes.reverse()
                     specs.add(apply)
                 }
 

@@ -8,8 +8,9 @@ import android.view.Gravity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.jcs.where.R;
-import com.jcs.where.features.mall.sku.utils.ScreenUtils;
 
 
 /**
@@ -21,29 +22,28 @@ public class SkuItemView extends AppCompatTextView {
 
     public SkuItemView(Context context) {
         super(context);
-        init(context);
+        init();
     }
 
     public SkuItemView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init();
     }
 
     public SkuItemView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init();
     }
 
-    private void init(Context context) {
+    private void init() {
         setBackgroundResource(R.drawable.sku_item_selector);
-        setTextColor(getResources().getColorStateList(R.color.sku_item_text_selector));
-        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
+        setTextColor(getResources().getColorStateList(R.color.sku_item_text_selector,null));
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         setSingleLine();
         setGravity(Gravity.CENTER);
-        setPadding(ScreenUtils.dp2PxInt(context, 10), 0, ScreenUtils.dp2PxInt(context, 10), 0);
-
-        setMinWidth(ScreenUtils.dp2PxInt(context, 45));
-        setMaxWidth(ScreenUtils.dp2PxInt(context, 200));
+        setPadding(SizeUtils.dp2px(18f), 0, SizeUtils.dp2px(18f), 0);
+        setMinWidth(SizeUtils.dp2px(45f));
+        setMaxWidth(SizeUtils.dp2px(200f));
     }
 
     public String getAttributeValue() {

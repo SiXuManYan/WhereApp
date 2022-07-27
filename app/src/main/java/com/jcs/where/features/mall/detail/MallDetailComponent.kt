@@ -24,6 +24,9 @@ import com.jcs.where.api.response.mall.request.MallAddCart
 import com.jcs.where.api.response.mall.request.MallCollection
 import com.jcs.where.api.response.mall.request.UnCollection
 import com.jcs.where.api.response.other.CartNumberResponse
+import com.jcs.where.features.mall.sku.bean.Sku
+import com.jcs.where.features.mall.sku.bean.SkuAttribute
+import com.jcs.where.features.mall.sku.other.Product
 import com.jcs.where.storage.entity.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -38,6 +41,7 @@ interface MallDetailView : BaseMvpView {
     fun bindDetail(response: MallGoodDetail)
     fun collectionHandleSuccess(collectionStatus: Boolean)
     fun bindCartCount(nums: Int)
+    fun bindSkuProduct(product: Product)
 }
 
 class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(view) {
@@ -50,6 +54,45 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
                     it.nativeSpecsValues.addAll(it.specs.values)
                 }
                 view.bindDetail(response)
+
+
+
+                // sku
+                val specs = ArrayList<Sku>()
+                response.specs.forEach {
+                    val apply = Sku().apply {
+                        id = it.id.toString()
+                        this.goods_id = it.goods_id.toString()
+                        mainImage = it.image
+                        originPrice = it.original_cost
+                        sellingPrice = it.price
+                        stockQuantity = it.stock
+                    }
+
+                    // attr
+                    it.specs.forEach { group ->
+                        val attr = SkuAttribute().apply {
+                            key = group.key
+                            value = group.value
+                        }
+                        apply.attributes.add(attr)
+                    }
+                    apply.attributes.reverse()
+                    specs.add(apply)
+                }
+
+
+                val product = Product().apply {
+                    id = response.id
+                    title = response.title
+                    main_image = response.main_image
+                    original_cost = response.original_cost
+                    sold = response.sold
+                    stock = response.stock
+                    skus.addAll(specs)
+                }
+                view.bindSkuProduct(product)
+
             }
         })
     }
@@ -124,7 +167,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
         val group = MallCartGroup().apply {
             shop_id = mData.shop_id
             title = mData.shop_name
-            delivery_fee =  mData.delivery_fee
+            delivery_fee = mData.delivery_fee
         }
 
         group.gwc.add(item)
@@ -133,7 +176,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
     }
 
 
-    fun getCartCount(){
+    fun getCartCount() {
         if (!User.isLogon()) {
             return
         }
@@ -149,7 +192,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
 class ImageGetter(
     private var context: Context,
     private val res: Resources,
-    private val htmlTextView: TextView
+    private val htmlTextView: TextView,
 ) : Html.ImageGetter {
 
     // Function needs to overridden when extending [Html.ImageGetter] , which will download the image
@@ -206,7 +249,7 @@ class ImageGetter(
 class ImageGetter2(
     private var context: Context,
     private val res: Resources,
-    private val htmlTextView: TextView
+    private val htmlTextView: TextView,
 ) : Html.ImageGetter {
 
     // Function needs to overridden when extending [Html.ImageGetter] , which will download the image
@@ -264,7 +307,7 @@ class QuoteSpanClass(
     private val backgroundColor: Int,
     private val stripeColor: Int,
     private val stripeWidth: Float,
-    private val gap: Float
+    private val gap: Float,
 ) : LeadingMarginSpan, LineBackgroundSpan {
 
     // Margin for the block quote tag
@@ -285,7 +328,7 @@ class QuoteSpanClass(
         start: Int,
         end: Int,
         first: Boolean,
-        layout: Layout
+        layout: Layout,
     ) {
 
         val style = p.style
@@ -311,7 +354,7 @@ class QuoteSpanClass(
         text: CharSequence,
         start: Int,
         end: Int,
-        lnum: Int
+        lnum: Int,
     ) {
         val paintColor = p.color
         p.color = backgroundColor

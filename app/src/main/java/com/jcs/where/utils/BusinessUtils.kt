@@ -193,7 +193,6 @@ object BusinessUtils {
     }
 
     fun getSafeBigDecimal(string: String?): BigDecimal {
-
         return if (string.isNullOrBlank()) {
             BigDecimal.ZERO
         } else {
@@ -202,6 +201,16 @@ object BusinessUtils {
             } catch (e: Exception) {
                 BigDecimal.ZERO
             }
+        }
+    }
+
+
+    fun getSafeBigDecimalString(price: BigDecimal?): String {
+
+        return if (price == null) {
+            "0"
+        } else {
+            price.toPlainString()
         }
     }
 

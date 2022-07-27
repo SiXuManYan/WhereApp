@@ -1,6 +1,7 @@
 package com.jcs.where.features.mall.sku.view;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.jcs.where.R;
 import com.jcs.where.features.mall.sku.bean.SkuAttribute;
 import com.jcs.where.features.mall.sku.utils.ScreenUtils;
@@ -18,13 +21,14 @@ import com.jcs.where.features.mall.sku.widget.FlowLayout;
 
 import java.util.List;
 
-/**
- * Created by wuhenzhizao on 2017/7/31.
- */
 
 public class SkuItemLayout extends LinearLayout {
-    private TextView attributeNameTv;
-    private FlowLayout attributeValueLayout;
+
+    /**
+     * 组标题
+     */
+    private TextView attrNameTv;
+    private FlowLayout attrValueLayout;
     private OnSkuItemSelectListener listener;
 
     public SkuItemLayout(Context context) {
@@ -45,38 +49,44 @@ public class SkuItemLayout extends LinearLayout {
     private void init(Context context) {
         setOrientation(VERTICAL);
 
-        attributeNameTv = new TextView(context);
-        attributeNameTv.setId(ViewUtils.generateViewId());
-        attributeNameTv.setTextColor(context.getResources().getColor(R.color.black_333333));
-        attributeNameTv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        attributeNameTv.setIncludeFontPadding(false);
+        attrNameTv = new TextView(context);
+        attrNameTv.setId(ViewUtils.generateViewId());
+        attrNameTv.setTextColor(ColorUtils.getColor(R.color.black_333333));
+        attrNameTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        attrNameTv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        attrNameTv.setIncludeFontPadding(false);
+
+
         LayoutParams attributeNameParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         attributeNameParams.leftMargin = ScreenUtils.dp2PxInt(context, 15);
         attributeNameParams.topMargin = ScreenUtils.dp2PxInt(context, 15);
-        attributeNameTv.setLayoutParams(attributeNameParams);
-        addView(attributeNameTv);
+        attrNameTv.setLayoutParams(attributeNameParams);
+        addView(attrNameTv);
 
-        attributeValueLayout = new FlowLayout(context);
-        attributeValueLayout.setId(ViewUtils.generateViewId());
-        attributeValueLayout.setMinimumHeight(ScreenUtils.dp2PxInt(context, 25));
-        attributeValueLayout.setChildSpacing(ScreenUtils.dp2PxInt(context, 15));
-        attributeValueLayout.setRowSpacing(ScreenUtils.dp2PxInt(context, 15));
+        attrValueLayout = new FlowLayout(context);
+        attrValueLayout.setId(ViewUtils.generateViewId());
+        attrValueLayout.setMinimumHeight(ScreenUtils.dp2PxInt(context, 25));
+
+        attrValueLayout.setChildSpacing(ScreenUtils.dp2PxInt(context, 8));
+        attrValueLayout.setRowSpacing(ScreenUtils.dp2PxInt(context, 12));
+
         LayoutParams attributeValueParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         attributeValueParams.leftMargin = ScreenUtils.dp2PxInt(context, 15);
         attributeValueParams.rightMargin = ScreenUtils.dp2PxInt(context, 15);
         attributeValueParams.topMargin = ScreenUtils.dp2PxInt(context, 15);
         attributeValueParams.bottomMargin = ScreenUtils.dp2PxInt(context, 10);
-        attributeValueLayout.setLayoutParams(attributeValueParams);
-        addView(attributeValueLayout);
+        attrValueLayout.setLayoutParams(attributeValueParams);
+        addView(attrValueLayout);
 
-        View line = new View(context);
-        line.setBackgroundResource(R.color.comm_line);
-        LayoutParams lineParams = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
-        lineParams.leftMargin = ScreenUtils.dp2PxInt(context, 15);
-        lineParams.rightMargin = ScreenUtils.dp2PxInt(context, 15);
-        lineParams.topMargin = ScreenUtils.dp2PxInt(context, 5);
-        line.setLayoutParams(lineParams);
-        addView(line);
+        // 分割线
+//        View line = new View(context);
+//        line.setBackgroundResource(R.color.comm_line);
+//        LayoutParams lineParams = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
+//        lineParams.leftMargin = ScreenUtils.dp2PxInt(context, 15);
+//        lineParams.rightMargin = ScreenUtils.dp2PxInt(context, 15);
+//        lineParams.topMargin = ScreenUtils.dp2PxInt(context, 5);
+//        line.setLayoutParams(lineParams);
+//        addView(line);
     }
 
     public void setListener(OnSkuItemSelectListener listener) {
@@ -84,8 +94,8 @@ public class SkuItemLayout extends LinearLayout {
     }
 
     public void buildItemLayout(int position, String attributeName, List<String> attributeValueList) {
-        attributeNameTv.setText(attributeName);
-        attributeValueLayout.removeAllViewsInLayout();
+        attrNameTv.setText(attributeName);
+        attrValueLayout.removeAllViewsInLayout();
         for (int i = 0; i < attributeValueList.size(); i++) {
         SkuItemView itemView = new SkuItemView(getContext());
             itemView.setId(ViewUtils.generateViewId());
@@ -93,8 +103,8 @@ public class SkuItemLayout extends LinearLayout {
             itemView.setOnClickListener(new ItemClickListener(position, itemView));
             itemView.setLayoutParams(new FlowLayout.LayoutParams(
                     FlowLayout.LayoutParams.WRAP_CONTENT,
-                    ScreenUtils.dp2PxInt(getContext(), 25)));
-            attributeValueLayout.addView(itemView);
+                    SizeUtils.dp2px(28f)));
+            attrValueLayout.addView(itemView);
         }
     }
 
@@ -102,8 +112,8 @@ public class SkuItemLayout extends LinearLayout {
      * 清空是否可点击，选中状态
      */
     public void clearItemViewStatus() {
-        for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
-     SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
+        for (int i = 0; i < attrValueLayout.getChildCount(); i++) {
+     SkuItemView itemView = (SkuItemView) attrValueLayout.getChildAt(i);
             itemView.setSelected(false);
             itemView.setEnabled(false);
         }
@@ -115,8 +125,8 @@ public class SkuItemLayout extends LinearLayout {
      * @param attributeValue
      */
     public void optionItemViewEnableStatus(String attributeValue) {
-        for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
-          SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
+        for (int i = 0; i < attrValueLayout.getChildCount(); i++) {
+          SkuItemView itemView = (SkuItemView) attrValueLayout.getChildAt(i);
             if (attributeValue.equals(itemView.getAttributeValue())) {
                 itemView.setEnabled(true);
             }
@@ -129,8 +139,8 @@ public class SkuItemLayout extends LinearLayout {
      * @param selectValue
      */
     public void optionItemViewSelectStatus(SkuAttribute selectValue) {
-        for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
-         SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
+        for (int i = 0; i < attrValueLayout.getChildCount(); i++) {
+         SkuItemView itemView = (SkuItemView) attrValueLayout.getChildAt(i);
             if (selectValue.getValue().equals(itemView.getAttributeValue())) {
                 itemView.setEnabled(true);
                 itemView.setSelected(true);
@@ -143,8 +153,8 @@ public class SkuItemLayout extends LinearLayout {
      * @return
      */
     public boolean isSelected() {
-        for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
-        SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
+        for (int i = 0; i < attrValueLayout.getChildCount(); i++) {
+        SkuItemView itemView = (SkuItemView) attrValueLayout.getChildAt(i);
             if (itemView.isSelected()) {
                 return true;
             }
@@ -157,13 +167,13 @@ public class SkuItemLayout extends LinearLayout {
      * @return
      */
     public String getAttributeName() {
-        return attributeNameTv.getText().toString();
+        return attrNameTv.getText().toString();
     }
 
     private void onSkuItemClicked(int position,SkuItemView view) {
         boolean selected = !view.isSelected();
         SkuAttribute attribute = new SkuAttribute();
-        attribute.setKey(attributeNameTv.getText().toString());
+        attribute.setKey(attrNameTv.getText().toString());
         attribute.setValue(view.getAttributeValue());
         listener.onSelect(position, selected, attribute);
     }

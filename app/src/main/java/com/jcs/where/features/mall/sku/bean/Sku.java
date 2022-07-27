@@ -3,80 +3,30 @@ package com.jcs.where.features.mall.sku.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.jcs.where.utils.BusinessUtils;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by wuhenzhizao on 2017/3/6.
  */
 public class Sku implements Parcelable {
-    private String id;
-    private String mainImage;
-    private int stockQuantity;
-    private boolean inStock;
-    private long originPrice;
-    private long sellingPrice;
-    private List<SkuAttribute> attributes;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMainImage() {
-        return mainImage;
-    }
-
-    public void setMainImage(String mainImage) {
-        this.mainImage = mainImage;
-    }
-
-    public int getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
-    }
-
-    public boolean isInStock() {
-        return inStock;
-    }
-
-    public void setInStock(boolean inStock) {
-        this.inStock = inStock;
-    }
-
-    public long getOriginPrice() {
-        return originPrice;
-    }
-
-    public void setOriginPrice(long originPrice) {
-        this.originPrice = originPrice;
-    }
-
-    public long getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(long sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public List<SkuAttribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(List<SkuAttribute> attributes) {
-        this.attributes = attributes;
-    }
+    public String id;
+    public String goods_id;
+    public String mainImage;
+    public int stockQuantity;
+    public boolean inStock;
+    public BigDecimal originPrice = BigDecimal.ZERO;
+    public BigDecimal sellingPrice= BigDecimal.ZERO;
+    public List<SkuAttribute> attributes = new ArrayList<>();
 
     @Override
     public String toString() {
         return "Sku{" +
                 "id='" + id + '\'' +
+                ", goods_id='" + goods_id + '\'' +
                 ", mainImage='" + mainImage + '\'' +
                 ", stockQuantity=" + stockQuantity +
                 ", inStock=" + inStock +
@@ -97,21 +47,23 @@ public class Sku implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
+        dest.writeString(this.goods_id);
         dest.writeString(this.mainImage);
         dest.writeInt(this.stockQuantity);
         dest.writeByte(this.inStock ? (byte) 1 : (byte) 0);
-        dest.writeLong(this.originPrice);
-        dest.writeLong(this.sellingPrice);
+        dest.writeString(BusinessUtils.INSTANCE.getSafeBigDecimalString(this.originPrice));
+        dest.writeString(BusinessUtils.INSTANCE.getSafeBigDecimalString(this.sellingPrice));
         dest.writeTypedList(this.attributes);
     }
 
     protected Sku(Parcel in) {
         this.id = in.readString();
+        this.goods_id = in.readString();
         this.mainImage = in.readString();
         this.stockQuantity = in.readInt();
         this.inStock = in.readByte() != 0;
-        this.originPrice = in.readLong();
-        this.sellingPrice = in.readLong();
+        this.originPrice = BusinessUtils.INSTANCE.getSafeBigDecimal(in.readString());
+        this.sellingPrice = BusinessUtils.INSTANCE.getSafeBigDecimal(in.readString());
         this.attributes = in.createTypedArrayList(SkuAttribute.CREATOR);
     }
 

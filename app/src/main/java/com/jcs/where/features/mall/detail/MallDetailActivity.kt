@@ -16,7 +16,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
-import com.jcs.where.api.response.mall.SkuDataSource
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
@@ -28,14 +27,15 @@ import com.jcs.where.features.mall.complex.CommentComplexActivity
 import com.jcs.where.features.mall.detail.sku.MallSkuFragment
 import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
+import com.jcs.where.features.mall.sku.bean.Sku
+import com.jcs.where.features.mall.sku.other.Product
+import com.jcs.where.features.mall.sku.other.SkuFragment
 import com.jcs.where.features.message.custom.CustomMessage
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
-import com.just.agentweb.WebChromeClient
-import com.just.agentweb.WebViewClient
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
 
@@ -44,7 +44,7 @@ import kotlinx.android.synthetic.main.activity_mall_good_detail.*
  * Created by Wangsw  2021/12/10 14:57.
  * 商品详情
  */
-class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, MallSkuSelectResult {
+class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailView, SkuFragment.Callback {
 
 
     private var goodId = 0
@@ -63,7 +63,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private lateinit var mMediaAdapter: DetailMediaAdapter
 
-    private lateinit var mSkuDialog: MallSkuFragment
+    private lateinit var skuDialog2: SkuFragment
+
 
     /** 评价 */
     private lateinit var mCommentAdapter: HotelCommentAdapter
@@ -93,9 +94,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     override fun initView() {
         goodId = intent.getIntExtra(Constant.PARAM_ID, 0)
-
-        mSkuDialog = MallSkuFragment().apply {
-            selectResult = this@MallDetailActivity
+        skuDialog2 = SkuFragment().apply {
+            callback = this@MallDetailActivity
         }
         initMedia()
         initComment()
@@ -157,13 +157,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
 
-    private var mWebViewClient = object : WebViewClient() {
-    }
-
-    private var mWebChromeClient = object : WebChromeClient() {
-
-    }
-
     private fun initWeb() {
 
     }
@@ -174,6 +167,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         presenter?.getCartCount()
     }
 
+
     override fun bindListener() {
         share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_MALL, goodId)
@@ -181,7 +175,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         select_attr_tv.setOnClickListener {
             dialogHandle = 0
-            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+            skuDialog2.show(supportFragmentManager, skuDialog2.tag)
         }
         mall_shop_tv.setOnClickListener {
             MallShopHomeActivity.navigation(this, shopId)
@@ -204,7 +198,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 return@setOnClickListener
             }
             dialogHandle = 1
-            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+            skuDialog2.show(supportFragmentManager, skuDialog2.tag)
         }
 
         buy_now_tv.setOnClickListener {
@@ -216,7 +210,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 return@setOnClickListener
             }
             dialogHandle = 2
-            mSkuDialog.show(supportFragmentManager, mSkuDialog.tag)
+            skuDialog2.show(supportFragmentManager, skuDialog2.tag)
         }
 
         shopping_cart.setOnClickListener {
@@ -267,16 +261,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
 //        jsweb.loadUrl(response.website)
 
-        mSkuDialog.data = SkuDataSource().apply {
-            main_image = response.main_image
-            min_price = nowPrice
-            original_cost = originalPrice
-            stock = response.stock
-            attribute_list.clear()
-            attribute_list.addAll(response.attribute_list)
-            specs.clear()
-            specs.addAll(response.specs)
-        }
         shopId = response.shop_id
         shopName = response.shop_name
         collect_status = response.collect_status
@@ -358,18 +342,38 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         ToastUtils.showShort(R.string.success)
     }
 
-    override fun selectResult(mallSpecs: MallSpecs, goodNum: Int) {
+    override fun bindCartCount(nums: Int) {
+        shopping_cart.setMessageCount(nums)
+    }
 
-        this.mallSpecs = mallSpecs
-        goodNumber = goodNum
+    override fun bindSkuProduct(product: Product) {
+        skuDialog2.setData(product)
+    }
 
-        val buff = StringBuffer()
-        mallSpecs.specs.values.forEach {
-            buff.append("$it, ")
+    override fun onAdded(sku: Sku?, quantity: Int) {
+        // 数量
+        goodNumber = quantity
+        // 获取选中sku
+        if (mData == null || sku == null) {
+            return
         }
-        buff.append(" " + getString(R.string.quantity_format, goodNumber))
 
-        select_attr_tv.text = buff
+        val skuId = sku.id
+
+        mData!!.specs.forEach {
+            if (it.id.toString() == skuId) {
+                this.mallSpecs = it
+                return@forEach
+            }
+        }
+        if (mallSpecs != null) {
+            val buff = StringBuffer()
+            mallSpecs!!.specs.values.forEach {
+                buff.append("$it, ")
+            }
+            buff.append(" " + getString(R.string.quantity_format, goodNumber))
+            select_attr_tv.text = buff
+        }
 
         if (!User.isLogon()) {
             startActivity(LoginActivity::class.java)
@@ -379,18 +383,9 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             1 -> addCart()
             2 -> buyNow()
         }
+
+
     }
-
-    override fun bindCartCount(nums: Int) {
-        shopping_cart.setMessageCount(nums)
-    }
-
-/*    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return if (mAgentWeb.handleKeyEvent(keyCode, event)) {
-            true
-        } else super.onKeyDown(keyCode, event)
-
-    }*/
 
 
 }

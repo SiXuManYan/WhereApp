@@ -355,6 +355,7 @@
     <string name="delete">删除</string>
     <string name="address_edit_hint">请填写详细地址</string>
     <string name="recipient">联系人</string>
+    <string name="recipient_2">联系人</string>
     <string name="sir">先生</string>
     <string name="lady">女士</string>
     <string name="contact_number">联系电话</string>

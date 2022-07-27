@@ -45,7 +45,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
     override fun initData() {
         presenter = SkuPresenter(this)
-        updateSkuData()
+        updateSkuData2()
 //        updateQuantityOperator(1)
     }
 
@@ -68,7 +68,8 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
         }
 
         number_add_iv.setOnClickListener {
-            val quantity = number_value_et.getText().toString()
+            val quantity = number_value_et.text.toString()
+
             if (TextUtils.isEmpty(quantity) || selectedSku == null) {
                 return@setOnClickListener
             }
@@ -81,7 +82,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
             }
         }
 
-        number_value_et.setOnEditorActionListener { v, actionId, event ->
+        number_value_et.setOnEditorActionListener { _, actionId, _ ->
             if (actionId != EditorInfo.IME_ACTION_DONE || selectedSku == null) {
                 return@setOnEditorActionListener false
             }
@@ -114,15 +115,19 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
         scroll_sku_list.setListener(object : OnSkuListener {
             override fun onUnselected(unselectedAttribute: SkuAttribute?) {
                 selectedSku = null
-                GlideUtil.load(context, product!!.main_image, iv_sku_logo)
-                tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
 
-                val firstUnselectedAttributeName = scroll_sku_list.getFirstUnelectedAttributeName()
-                tv_sku_info.setText("请选择：$firstUnselectedAttributeName")
+                product?.let {
+                    GlideUtil.load(context, it.main_image, iv_sku_logo)
+                    tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, it.stock)
+                }
+
+
+                val firstUnselectedAttributeName = scroll_sku_list.firstUnelectedAttributeName
+                tv_sku_info.text = "请选择：$firstUnselectedAttributeName"
                 confirm_tv.isEnabled = false
 
 
-                val quantity = number_value_et.getText().toString()
+                val quantity = number_value_et.text.toString()
                 if (!TextUtils.isEmpty(quantity)) {
                     updateQuantityOperator(Integer.valueOf(quantity))
                 } else {
@@ -137,6 +142,9 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
             override fun onSkuSelected(sku: Sku?) {
                 selectedSku = sku
+                if (selectedSku == null) {
+                    return
+                }
 
                 GlideUtil.load(context, selectedSku!!.mainImage, iv_sku_logo)
                 val attributeList = selectedSku!!.attributes
@@ -148,7 +156,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
                     val attribute = attributeList[i]
                     builder.append("\"" + attribute.value + "\"")
                 }
-                tv_sku_info.setText("已选：$builder")
+                tv_sku_info.text = "已选：$builder"
 
                 tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, selectedSku!!.stockQuantity)
 

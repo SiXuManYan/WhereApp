@@ -24,8 +24,6 @@ import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.mall.buy.MallOrderCommitActivity
 import com.jcs.where.features.mall.cart.MallCartActivity
 import com.jcs.where.features.mall.complex.CommentComplexActivity
-import com.jcs.where.features.mall.detail.sku.MallSkuFragment
-import com.jcs.where.features.mall.detail.sku.MallSkuSelectResult
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.mall.sku.bean.Sku
 import com.jcs.where.features.mall.sku.other.Product
@@ -63,7 +61,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private lateinit var mMediaAdapter: DetailMediaAdapter
 
-    private lateinit var skuDialog2: SkuFragment
+    private lateinit var skuDialog: SkuFragment
 
 
     /** 评价 */
@@ -94,7 +92,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     override fun initView() {
         goodId = intent.getIntExtra(Constant.PARAM_ID, 0)
-        skuDialog2 = SkuFragment().apply {
+        skuDialog = SkuFragment().apply {
             callback = this@MallDetailActivity
         }
         initMedia()
@@ -175,7 +173,10 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         select_attr_tv.setOnClickListener {
             dialogHandle = 0
-            skuDialog2.show(supportFragmentManager, skuDialog2.tag)
+            skuDialog.selectedSku = lastSelectedSku
+            skuDialog.show(supportFragmentManager, skuDialog.tag)
+
+
         }
         mall_shop_tv.setOnClickListener {
             MallShopHomeActivity.navigation(this, shopId)
@@ -198,7 +199,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 return@setOnClickListener
             }
             dialogHandle = 1
-            skuDialog2.show(supportFragmentManager, skuDialog2.tag)
+            skuDialog.selectedSku = lastSelectedSku
+            skuDialog.show(supportFragmentManager, skuDialog.tag)
         }
 
         buy_now_tv.setOnClickListener {
@@ -210,7 +212,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 return@setOnClickListener
             }
             dialogHandle = 2
-            skuDialog2.show(supportFragmentManager, skuDialog2.tag)
+            skuDialog.selectedSku = lastSelectedSku
+            skuDialog.show(supportFragmentManager, skuDialog.tag)
         }
 
         shopping_cart.setOnClickListener {
@@ -347,10 +350,13 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     }
 
     override fun bindSkuProduct(product: Product) {
-        skuDialog2.setData(product)
+        skuDialog.setData(product)
     }
 
+    var lastSelectedSku: Sku? = null
+
     override fun onAdded(sku: Sku?, quantity: Int) {
+        lastSelectedSku = sku
         // 数量
         goodNumber = quantity
         // 获取选中sku

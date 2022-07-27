@@ -28,7 +28,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
     private var product: Product? = null
     private var skuListData: List<Sku>? = null
     var callback: Callback? = null
-    private var selectedSku: Sku? = null
+    var selectedSku: Sku? = null
 
     var mustSelectedAttrSize = 0
 
@@ -49,6 +49,9 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
         presenter = SkuPresenter(this)
         updateSkuData2()
 //        updateQuantityOperator(1)
+
+        showLastSku(selectedSku)
+
     }
 
     override fun bindListener() {
@@ -191,7 +194,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
                 return@setOnClickListener
             }
 
-            if (selectedSku!!.stockQuantity <= 0){
+            if (selectedSku!!.stockQuantity <= 0) {
                 ToastUtils.showShort(R.string.inventory_shortage_select)
                 return@setOnClickListener
             }
@@ -267,6 +270,42 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
 //            confirm_tv.isEnabled = false
             tv_sku_info.text = "请选择：" + skuListData!![0].attributes[0].key
+        }
+
+
+    }
+
+
+    public fun showLastSku(lastSku: Sku?) {
+        if (product == null || lastSku == null) {
+            return
+        }
+        if (lastSku.stockQuantity > 0) {
+            selectedSku = lastSku
+            // 选中第一个sku
+            scroll_sku_list.selectedSku = selectedSku
+            GlideUtil.load(context, selectedSku?.mainImage, iv_sku_logo)
+
+            val sellingPrice = selectedSku!!.sellingPrice
+            val originPrice = selectedSku!!.originPrice
+
+            BusinessUtils.setNowPriceAndOldPrice(sellingPrice, originPrice, tv_sku_selling_price, original_price_tv)
+
+
+            tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, selectedSku!!.stockQuantity)
+
+//            confirm_tv.isEnabled = selectedSku!!.stockQuantity > 0
+            val attributeList = selectedSku!!.attributes
+            val builder = StringBuilder()
+            for (i in attributeList.indices) {
+                if (i != 0) {
+                    builder.append("　")
+                }
+                val attribute = attributeList[i]
+                builder.append("\"" + attribute.value + "\"")
+            }
+            tv_sku_info.text = "已选：$builder"
+
         }
 
 

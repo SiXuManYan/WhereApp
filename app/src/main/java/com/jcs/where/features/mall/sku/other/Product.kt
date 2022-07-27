@@ -22,10 +22,4 @@ class Product {
     var stock = 0
     var skus = ArrayList<Sku>()
 
-    companion object {
-        operator fun get(context: Context): Product {
-            val json = context.getString(R.string.product)
-            return Gson().fromJson(json, object : TypeToken<Product?>() {}.type)
-        }
-    }
 }

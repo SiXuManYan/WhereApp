@@ -26,9 +26,11 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
 
     private var product: Product? = null
-    private var skuList: List<Sku>? = null
+    private var skuListData: List<Sku>? = null
     var callback: Callback? = null
     private var selectedSku: Sku? = null
+
+    var mustSelectedAttrSize = 0
 
     override fun getLayoutId() = R.layout.dialog_product_sku
 
@@ -51,7 +53,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
     override fun bindListener() {
         back_iv.setOnClickListener {
-            dismiss()
+            dismissAllowingStateLoss()
         }
         number_cut_iv.setOnClickListener {
             val quantity = number_value_et.getText().toString()
@@ -124,7 +126,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
                 val firstUnselectedAttributeName = scroll_sku_list.firstUnelectedAttributeName
                 tv_sku_info.text = "请选择：$firstUnselectedAttributeName"
-                confirm_tv.isEnabled = false
+//                confirm_tv.isEnabled = false
 
 
                 val quantity = number_value_et.text.toString()
@@ -165,7 +167,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
                 BusinessUtils.setNowPriceAndOldPrice(sellingPrice, originPrice, tv_sku_selling_price, original_price_tv)
 
-                confirm_tv.isEnabled = true
+//                confirm_tv.isEnabled = true
                 val quantity = number_value_et.text.toString()
                 if (!TextUtils.isEmpty(quantity)) {
                     updateQuantityOperator(Integer.valueOf(quantity))
@@ -183,6 +185,18 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
                 return@setOnClickListener
             }
 
+            val size = selectedSku!!.attributes.size
+            if (size != mustSelectedAttrSize) {
+                ToastUtils.showShort(R.string.please_selected)
+                return@setOnClickListener
+            }
+
+            if (selectedSku!!.stockQuantity <= 0){
+                ToastUtils.showShort(R.string.inventory_shortage_select)
+                return@setOnClickListener
+            }
+
+
             val quantity = number_value_et.text.toString()
 
             if (TextUtils.isEmpty(quantity)) {
@@ -190,8 +204,8 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
             }
             val quantityInt = quantity.toInt()
             if (quantityInt > 0 && quantityInt <= selectedSku!!.stockQuantity) {
-                callback!!.onAdded(selectedSku, quantityInt)
-                dismiss()
+                callback?.onAdded(selectedSku, quantityInt)
+                dismissAllowingStateLoss()
             } else {
                 ToastUtils.showShort("The quantity is out of stock, please revise")
             }
@@ -201,7 +215,11 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
     fun setData(product: Product) {
         this.product = product
-        skuList = product.skus
+        skuListData = product.skus
+        if (product.skus.isNotEmpty()) {
+            mustSelectedAttrSize = product.skus[0].attributes.size
+        }
+
     }
 
 
@@ -226,7 +244,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
             tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, selectedSku!!.stockQuantity)
 
-            confirm_tv.isEnabled = selectedSku!!.stockQuantity > 0
+//            confirm_tv.isEnabled = selectedSku!!.stockQuantity > 0
             val attributeList = selectedSku!!.attributes
             val builder = StringBuilder()
             for (i in attributeList.indices) {
@@ -247,15 +265,15 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
             tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
 
-            confirm_tv.isEnabled = false
-            tv_sku_info.text = "请选择：" + skuList!![0].attributes[0].key
+//            confirm_tv.isEnabled = false
+            tv_sku_info.text = "请选择：" + skuListData!![0].attributes[0].key
         }
 
 
     }
 
 
-    public fun updateSkuData2() {
+    private fun updateSkuData2() {
         if (product == null) {
             return
         }
@@ -273,8 +291,8 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
         tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
 
-        confirm_tv.isEnabled = false
-        tv_sku_info.text = "请选择：" + skuList!![0].attributes[0].key
+//        confirm_tv.isEnabled = false
+        tv_sku_info.text = "请选择：" + skuListData!![0].attributes[0].key
 
 
     }

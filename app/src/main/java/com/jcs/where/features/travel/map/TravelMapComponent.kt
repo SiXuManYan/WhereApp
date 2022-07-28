@@ -3,29 +3,33 @@ package com.jcs.where.features.travel.map
 import com.blankj.utilcode.util.StringUtils
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.CityPickerResponse
+import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.travel.TravelChild
 import com.jcs.where.utils.CacheUtil
-import java.util.ArrayList
 
 /**
  * Created by Wangsw  2021/10/18 9:38.
  *
  */
-interface TravelMapView : BaseMvpView , OnMapReadyCallback,
+interface TravelMapView : BaseMvpView, OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener,
     GoogleMap.OnMarkerClickListener,
-    GoogleMap.OnInfoWindowClickListener{
+    GoogleMap.OnInfoWindowClickListener {
     /**
      * 分类
      */
     fun bindSecondCategory(response: ArrayList<Category>)
     fun bindMakerList(response: MutableList<TravelChild>)
+    fun bindContentList(toMutableList: MutableList<TravelChild>, lastPage: Boolean)
+    fun bindCityList(cityList: MutableList<CityPickerResponse.CityChild>)
 }
 
 
@@ -35,7 +39,7 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
     /**
      * 获取二级分类
      */
-    fun getGovernmentChildCategory(firstCategoryId:Int) {
+    fun getGovernmentChildCategory(firstCategoryId: Int) {
         requestApi(mRetrofit.getCategoriesList(3, firstCategoryId.toString(), 2), object : BaseMvpObserver<ArrayList<Category>>(view) {
             override fun onSuccess(response: ArrayList<Category>) {
 
@@ -70,9 +74,9 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
 
     }
 
-    fun getMakerData(categoryId: Int, searchInput: String? =null) {
+    fun getMakerData(categoryId: Int, searchInput: String? = null, requestLatitude: Double, requestLongitude: Double) {
 
-        val safeSelectLatLng = CacheUtil.getSafeSelectLatLng()
+        val safeSelectLatLng = LatLng(requestLatitude, requestLongitude)
 
         requestApi(mRetrofit.getTravelMarker(
             categoryId,
@@ -84,6 +88,50 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
                 view.bindMakerList(response.toMutableList())
             }
         })
+
+    }
+
+    fun getContentList(page: Int, categoryId: Int, searchInput: String?, requestLatitude: Double, requestLongitude: Double) {
+        val safeSelectLatLng = LatLng(requestLatitude, requestLongitude)
+
+        requestApi(mRetrofit.getTravelChildList(
+            page,
+            categoryId,
+            searchInput,
+            safeSelectLatLng.latitude,
+            safeSelectLatLng.longitude
+        ), object : BaseMvpObserver<PageResponse<TravelChild>>(view) {
+            override fun onSuccess(response: PageResponse<TravelChild>) {
+
+                val isLastPage = response.lastPage == page
+                val data = response.data
+                view.bindContentList(data.toMutableList(), isLastPage)
+            }
+        })
+    }
+
+
+    fun getCityList() {
+
+        requestApi(mRetrofit.getCityPickers("list"), object : BaseMvpObserver<CityPickerResponse>(view) {
+            override fun onSuccess(response: CityPickerResponse) {
+                val cityList = response.lists
+
+                val all = CityPickerResponse.CityChild().apply {
+                    id = "0"
+                    name = StringUtils.getString(R.string.all)
+                    lat = 0.0
+                    lng = 0.0
+                    nativeIsSelected = false
+                }
+
+                cityList.add(0, all)
+                view.bindCityList(cityList.toMutableList())
+
+            }
+
+        })
+
 
     }
 }

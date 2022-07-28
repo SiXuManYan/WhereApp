@@ -23,8 +23,8 @@ import kotlinx.android.synthetic.main.single_recycler_view.*
  */
 class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChildView, OnLoadMoreListener, OnItemClickListener {
 
-
     var categoryId = 0
+
     var searchInput: String? = null
     private var page = Constant.DEFAULT_FIRST_PAGE
 
@@ -144,6 +144,9 @@ class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChild
                     needRefresh = true
                 }
             }
+            // 更新
+
+
         }
     }
 

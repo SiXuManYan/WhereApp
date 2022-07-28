@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_ll"
@@ -11,6 +11,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/search_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:background="@color/white_FEFEFE"
@@ -69,12 +70,12 @@
                 android:id="@+id/delete_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/dp_8"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_close_circle" />
+                android:src="@mipmap/ic_close_circle"
+                android:visibility="gone" />
 
 
         </RelativeLayout>
@@ -93,25 +94,88 @@
 
     </RelativeLayout>
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/tabs_type"
+
+    <LinearLayout
+        android:id="@+id/category_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@+id/search_rl"
         android:background="@color/white"
-        app:tl_indicator_color="@color/transplant"
-        app:tl_indicator_corner_radius="1.5dp"
-        app:tl_indicator_width="@dimen/dp_25"
-        app:tl_textBold="NONE"
-        app:tl_textSelectColor="@color/blue_377BFF"
-        app:tl_textUnselectColor="@color/grey_666666"
-        app:tl_textsize="@dimen/sp_14"
-        app:tl_underline_color="@color/white"
-        app:tl_underline_height="1px" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
 
+        <LinearLayout
+            android:id="@+id/select_category_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_0">
+
+            <CheckedTextView
+                android:id="@+id/select_category_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/category_selected"
+                android:textColor="@color/selector_black_blue"
+                android:textSize="@dimen/sp_13" />
+
+            <ImageView
+                android:id="@+id/select_category_iv"
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_4"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_arrow_filter_black" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/selected_city_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckedTextView
+                android:id="@+id/selected_city_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/city_selected"
+                android:textColor="@color/selector_black_blue"
+                android:textSize="@dimen/sp_13" />
+
+            <ImageView
+                android:id="@+id/selected_city_iv"
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_4"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_arrow_filter_black" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!-- 地图和列表 -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/category_ll">
 
 
         <fragment
@@ -121,23 +185,15 @@
             android:layout_height="match_parent" />
 
 
-        <LinearLayout
-            android:id="@+id/bottom_sheet_ll"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bottom_sheet_content_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical"
             app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/dp_15"
-            app:layout_behavior="@string/view_pager_bottom_sheet_behavior">
-
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/content_vp"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
+            app:layout_behavior="@string/bottom_sheet_behavior" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -156,4 +212,8 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-</LinearLayout>
+    <!-- 筛选 -->
+    <include layout="@layout/layout_travel_filter_content" />
+
+
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.jcs.where.api.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,8 @@ import java.util.List;
  */
 public class CityPickerResponse {
 
-    public List<CityChild> lists;
+    public List<CityChild> lists = new ArrayList<>();
+
 
 
     @SerializedName("default")
@@ -22,6 +24,7 @@ public class CityPickerResponse {
         public String name;
         public Double lat;
         public Double lng;
+        public boolean nativeIsSelected = false ;
 
     }
 

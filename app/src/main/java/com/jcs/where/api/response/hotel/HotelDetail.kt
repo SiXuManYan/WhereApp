@@ -47,7 +47,7 @@ class HotelDetail {
     /**
      * 酒店星级
      */
-    var star_level = 0f
+    var star_level =""
 
 
     var uuid = ""

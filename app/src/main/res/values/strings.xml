@@ -994,4 +994,6 @@ Gentleman must let go</string>
     <string name="select_money">请在下方列表中选择缴费金额</string>
     <string name="bills_place_order_hint_phone">点击确定后，内容将不可修改。</string>
     <string name="buy_load">电话号码</string>
+    <string name="category_selected">类型</string>
+    <string name="city_selected">城市</string>
 </resources>

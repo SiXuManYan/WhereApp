@@ -980,4 +980,6 @@ Gentleman must let go</string>
     <string name="select_money">Please select the payment amount from the list below</string>
     <string name="bills_place_order_hint_phone">After clicking OK, the content will not be editable.</string>
     <string name="buy_load">Buy Load</string>
+    <string name="category_selected">Category</string>
+    <string name="city_selected">City</string>
 </resources>

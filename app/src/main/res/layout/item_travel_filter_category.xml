@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content">
+
+    <CheckedTextView
+        android:id="@+id/item_text_tv"
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/sp_14"
+        tools:text="@tools:sample/cities"
+        android:textColor="@color/selector_gray666_blue"
+        android:layout_height="@dimen/dp_48"/>
+
+</LinearLayout>

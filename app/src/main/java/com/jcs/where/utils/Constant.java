@@ -227,6 +227,7 @@ public class Constant {
     public static final String PARAM_START_DATE = "param_start_date";
     public static final String PARAM_END_DATE = "param_end_date";
     public static final String PARAM_ROOM_NUMBER = "param_room_number";
+    public static final String PARAM_STATUS = "param_status";
     public static final String PARAM_ROOM_IMAGE = "PARAM_ROOM_IMAGE";
 
     public static final String PARAM_ROOM_TYPE = "param_room_type";

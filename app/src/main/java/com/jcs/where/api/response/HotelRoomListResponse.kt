@@ -32,6 +32,11 @@ class HotelRoomListResponse {
 
     var tags: ArrayList<TagsBean> = ArrayList()
 
+    /**
+     * 房间状态 1 显示 其他隐藏
+     */
+    var room_show_status = 0
+
     class TagsBean {
 
         var zh_cn_name = ""

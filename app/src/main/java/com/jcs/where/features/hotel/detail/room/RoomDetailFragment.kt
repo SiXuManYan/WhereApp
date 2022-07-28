@@ -53,6 +53,9 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
     /** 房间数量 */
     private var roomNumber = 1
 
+    /** 房间类型 1展示 其他隐藏 */
+    private var roomStatus = 0
+
     private lateinit var mStartDateBean: JcsCalendarAdapter.CalendarBean
     private lateinit var mEndDateBean: JcsCalendarAdapter.CalendarBean
 
@@ -76,11 +79,11 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
             starLevel: String? = null,
             priceRange: String? = null,
             grade: String? = null,
-            roomNumber: Int? = 1
+            roomNumber: Int? = 1,
+            roomShowStatus:Int?=0
         ): RoomDetailFragment {
 
             val fragment = RoomDetailFragment()
-
 
             val apply = Bundle().apply {
                 putString(Constant.PARAM_NAME, hotelName)
@@ -91,7 +94,13 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
                 putString(Constant.PARAM_GRADE, grade)
                 putSerializable(Constant.PARAM_START_DATE, startDate)
                 putSerializable(Constant.PARAM_END_DATE, endDate)
-                putInt(Constant.PARAM_ROOM_NUMBER, roomNumber!!)
+
+                roomNumber?.let {
+                    putInt(Constant.PARAM_ROOM_NUMBER, it)
+                }
+                roomShowStatus?.let {
+                    putInt(Constant.PARAM_STATUS, it)
+                }
             }
             fragment.arguments = apply
 
@@ -132,10 +141,17 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
             roomNumber = getInt(Constant.PARAM_ROOM_NUMBER)
             mStartDateBean = getSerializable(Constant.PARAM_START_DATE) as JcsCalendarAdapter.CalendarBean
             mEndDateBean = getSerializable(Constant.PARAM_END_DATE) as JcsCalendarAdapter.CalendarBean
-
+            roomStatus =  getInt(Constant.PARAM_STATUS,0)
         }
         name_tv.text = hotelName
         title_name_tv.text = hotelName
+
+        booking_tv.visibility = if (roomStatus == 1) {
+            View.VISIBLE
+        }else {
+            View.GONE
+        }
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.jcs.where.features.hotel.detail
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -40,6 +41,14 @@ class HotelRoomAdapter : BaseQuickAdapter<HotelRoomListResponse, BaseViewHolder>
         room_desc_tv.text = item.hotel_room_type
         BusinessUtils.setNowPriceAndOldPrice(item.price,item.original_cost,price_tv,original_price_tv)
         inventory_tv.text = context.getString(R.string.surplus_format , item.remain_room_num)
+
+
+        booking_tv.visibility =   if (item.room_show_status == 1) {
+            View.VISIBLE
+        }else {
+            View.GONE
+        }
+
 
         initTag(item,tag_ll)
     }

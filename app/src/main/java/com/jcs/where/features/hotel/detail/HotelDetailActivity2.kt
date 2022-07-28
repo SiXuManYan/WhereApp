@@ -180,6 +180,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         mRoomAdapter.addChildClickViewIds(R.id.booking_tv)
         mRoomAdapter.setOnItemClickListener { _, _, position ->
             val data = mRoomAdapter.data[position]
+            val roomShowStatus = data.room_show_status
             RoomDetailFragment.newInstance(
                 name_tv.text.toString(),
                 hotelId,
@@ -189,7 +190,8 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
                 starLevel,
                 priceRange,
                 grade,
-                roomNumber
+                roomNumber,
+                roomShowStatus
             ).apply {
                 show(supportFragmentManager, this.tag)
             }

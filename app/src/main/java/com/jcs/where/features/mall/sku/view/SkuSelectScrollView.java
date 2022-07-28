@@ -161,32 +161,46 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
         for (int i = 0; i < skuList.size(); i++) {
             // 属性值是否可点击flag
             Sku sku = skuList.get(i);
-            List<SkuAttribute> attributeBeanList = skuList.get(i).attributes;
-            if (sku.stockQuantity > 0) {
-                String attributeValue = attributeBeanList.get(0).getValue();
-                itemLayout.optionItemViewEnableStatus(attributeValue);
+            List<SkuAttribute> attrList = skuList.get(i).attributes;
+
+            if (!attrList.isEmpty()) {
+                if (sku.stockQuantity > 0) {
+                    String attributeValue = attrList.get(0).getValue();
+                    itemLayout.optionItemViewEnableStatus(attributeValue);
+                }
             }
+
+
         }
     }
 
     private void optionLayoutEnableStatusMultipleProperties() {
         for (int i = 0; i < skuContainerLayout.getChildCount(); i++) {
+
             SkuItemLayout itemLayout = (SkuItemLayout) skuContainerLayout.getChildAt(i);
             // 遍历sku列表
             for (int j = 0; j < skuList.size(); j++) {
                 // 属性值是否可点击flag
                 boolean flag = false;
                 Sku sku = skuList.get(j);
-                List<SkuAttribute> attributeBeanList = sku.attributes;
+                List<SkuAttribute> attrList = sku.attributes;
+
+                if (attrList.isEmpty()) {
+                    return;
+                }
+
+
                 // 遍历选中信息列表
                 for (int k = 0; k < selectedAttributeList.size(); k++) {
                     // i = k，跳过当前属性，避免多次设置是否可点击
                     if (i == k) continue;
+
                     // 选中信息为空，则说明未选中，无法判断是否有不可点击的情形，跳过
                     if ("".equals(selectedAttributeList.get(k).getValue())) continue;
+
                     // 选中信息列表中不包含当前sku的属性，则sku组合不存在，设置为不可点击
                     // 库存为0，设置为不可点击
-                    if (!selectedAttributeList.get(k).getValue().equals(attributeBeanList.get(k).getValue())
+                    if (!selectedAttributeList.get(k).getValue().equals(attrList.get(k).getValue())
                             || sku.stockQuantity == 0) {
                         flag = true;
                         break;
@@ -194,7 +208,7 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
                 }
                 // flag 为false时，可点击
                 if (!flag) {
-                    String attributeValue = attributeBeanList.get(i).getValue();
+                    String attributeValue = attrList.get(i).getValue();
                     itemLayout.optionItemViewEnableStatus(attributeValue);
                 }
             }

@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.mall.MallAttribute
 import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
 import com.jcs.where.features.mall.sku.bean.Sku
@@ -30,7 +31,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
     var callback: Callback? = null
     var selectedSku: Sku? = null
 
-    var mustSelectedAttrSize = 0
+    var allAttrList = ArrayList<MallAttribute>()
 
     override fun getLayoutId() = R.layout.dialog_product_sku
 
@@ -189,7 +190,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
             }
 
             val size = selectedSku!!.attributes.size
-            if (size != mustSelectedAttrSize) {
+            if (size != allAttrList.size) {
                 ToastUtils.showShort(R.string.please_selected)
                 return@setOnClickListener
             }
@@ -216,13 +217,10 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
     }
 
 
-    fun setData(product: Product) {
+    fun setData(product: Product, attributeList: ArrayList<MallAttribute>) {
         this.product = product
         skuListData = product.skus
-        if (product.skus.isNotEmpty()) {
-            mustSelectedAttrSize = product.skus[0].attributes.size
-        }
-
+        allAttrList.addAll(attributeList)
     }
 
 
@@ -317,7 +315,6 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
             return
         }
 
-        scroll_sku_list.setSkuList(product!!.skus)
         if (product!!.skus.isEmpty()) {
             return
         }
@@ -331,7 +328,18 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
         tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
 
 //        confirm_tv.isEnabled = false
-        tv_sku_info.text = "请选择：" + skuListData!![0].attributes[0].key
+
+        if (!skuListData.isNullOrEmpty() && !skuListData!![0].attributes.isNullOrEmpty()) {
+            tv_sku_info.text = "请选择：" + skuListData!![0].attributes[0].key
+        }
+
+        // 处理sku 属性为空
+        if (allAttrList.isEmpty() && product!!.skus.isNotEmpty()) {
+            selectedSku = product!!.skus[0]
+            updateQuantityOperator(0)
+
+        }
+        scroll_sku_list.setSkuList(product!!.skus)
 
 
     }

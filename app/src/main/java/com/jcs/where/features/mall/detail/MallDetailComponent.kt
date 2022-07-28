@@ -41,7 +41,7 @@ interface MallDetailView : BaseMvpView {
     fun bindDetail(response: MallGoodDetail)
     fun collectionHandleSuccess(collectionStatus: Boolean)
     fun bindCartCount(nums: Int)
-    fun bindSkuProduct(product: Product)
+    fun bindSkuProduct(product: Product, attributeList: ArrayList<MallAttribute>)
 }
 
 class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(view) {
@@ -64,6 +64,7 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
                         id = it.id.toString()
                         this.goods_id = it.goods_id.toString()
                         mainImage = it.image
+
                         originPrice = it.original_cost
                         sellingPrice = it.price
                         stockQuantity = it.stock
@@ -86,12 +87,13 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
                     id = response.id
                     title = response.title
                     main_image = response.main_image
+                    price = response.price
                     original_cost = response.original_cost
                     sold = response.sold
                     stock = response.stock
                     skus.addAll(specs)
                 }
-                view.bindSkuProduct(product)
+                view.bindSkuProduct(product , response.attribute_list)
 
             }
         })

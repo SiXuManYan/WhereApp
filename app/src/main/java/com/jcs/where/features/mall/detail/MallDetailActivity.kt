@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.mall.MallAttribute
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -349,8 +350,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         shopping_cart.setMessageCount(nums)
     }
 
-    override fun bindSkuProduct(product: Product) {
-        skuDialog.setData(product)
+    override fun bindSkuProduct(product: Product, attributeList: ArrayList<MallAttribute>) {
+        skuDialog.setData(product, attributeList)
     }
 
     var lastSelectedSku: Sku? = null

@@ -441,7 +441,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
         mMediaAdapter.setNewInstance(mediaList)
         point_view.setPointCount(mediaList.size)
 
-        star_view.rating = response.grade
+        star_view.rating = FeaturesUtil.getSafeStarLevel(response.star_level)
         name_tv.text = response.name
         score_tv.text = response.grade.toString()
         score_retouch_tv.text = FeaturesUtil.getGradeRetouchString(response.grade)

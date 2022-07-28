@@ -118,6 +118,7 @@ class MallSkuFragment : BaseBottomSheetDialogFragment<MallSkuPresenter>(), MallS
 
     override fun initData() {
         presenter = MallSkuPresenter(this)
+        // 处理无sku
         if (data.attribute_list.isEmpty() && data.specs.isNotEmpty()) {
             result = data.specs[0]
         }

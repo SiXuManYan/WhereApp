@@ -595,7 +595,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     }
 
     override fun onMyLocationClick(location: Location) {
-        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
+//        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
     }
 
     override fun onInfoWindowClick(marker: Marker) = Unit

@@ -85,6 +85,8 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     /** 经度筛选 */
     var requestLongitude = 0.0
 
+    var requestAreaId = ""
+
     /** 内容列表空view */
     private lateinit var emptyView: EmptyView
 
@@ -181,6 +183,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
             selected_city_tv.text = item.name
             requestLatitude = item.lat
             requestLongitude = item.lng
+            requestAreaId = item.id
             page = Constant.DEFAULT_FIRST_PAGE
             travel_filter_ll.visibility = View.GONE
             requestContentList()
@@ -241,6 +244,8 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
         }
 
         dismiss_view.setOnClickListener {
+            select_category_iv.rotation = 0f
+            selected_city_iv.rotation = 0f
             travel_filter_ll.visibility = View.GONE
         }
 
@@ -430,7 +435,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
     /** 请求内容列表  */
     private fun requestContentList() =
-        presenter.getContentList(page, currentRequestCategoryId, searchInput, requestLatitude, requestLongitude)
+        presenter.getContentList(page, currentRequestCategoryId, searchInput, requestLatitude, requestLongitude,requestAreaId)
 
 
     // #############  地图相关 ####################
@@ -657,7 +662,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     }
 
     override fun onMyLocationClick(location: Location) {
-        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
+//        ToastUtils.showShort("Current location : \nlatitude:${location.latitude}" + "\nlongitude:${location.longitude}  ")
     }
 
 

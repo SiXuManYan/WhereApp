@@ -211,6 +211,7 @@ public class CategoryToSelectedListFragment extends BaseFragment {
      * @return 分类id字符串，可能是 "1" "[1,2,3]"
      */
     public String getCurrentCategoryId() {
+
         switch (mLevel) {
             case LEVEL_FIRST:
                 if (getSelectFirstCate() == null) {
@@ -218,9 +219,22 @@ public class CategoryToSelectedListFragment extends BaseFragment {
                 }
                 return String.valueOf(getSelectFirstCate().getId());
             case LEVEL_SECOND:
-                return String.valueOf(getSelectSecondCate().getId());
+
+
+                CategoryResponse selectSecondCate = getSelectSecondCate();
+                if (selectSecondCate!=null) {
+                    return String.valueOf(selectSecondCate.getId());
+                }else  {
+                    return "";
+                }
+
             case LEVEL_THIRD:
-                return String.valueOf(getSelectThirdCate().getId());
+                CategoryResponse selectThirdCate = getSelectThirdCate();
+                if (selectThirdCate!=null) {
+                    return String.valueOf(selectThirdCate.getId());
+                }else {
+                    return "";
+                }
         }
 
         return mFirstLevelTotalIds;

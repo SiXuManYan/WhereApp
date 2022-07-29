@@ -3,6 +3,7 @@ package com.jcs.where.yellow_page.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -279,7 +280,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
 
     @Override
     protected void bindListener() {
-        mFirstCateTv.setOnClickListener(this::onFirstCateClicked);
+        findViewById(R.id.first_ll).setOnClickListener(this::onFirstCateClicked);
 
         mSwipeLayout.setOnRefreshListener(this::onSwipeRefresh);
 
@@ -317,7 +318,11 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         } else {
             // 根据当前分类id刷新数据
             String id = mToSelectedListFragment.getCurrentCategoryId();
-            getMechanismDataFromNet(page, id, "");
+            if (!TextUtils.isEmpty(id)) {
+                getMechanismDataFromNet(page, id, "");
+            }else  {
+                mAdapter.getLoadMoreModule().loadMoreEnd();
+            }
         }
     }
 
@@ -404,10 +409,11 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mSecondCateTv.setText(getString(R.string.all));
         if (b) {
             mSecondCateTv.setTextColor(getColor(R.color.black_333333));
-            mSecondCateTv.setOnClickListener(this::onSecondCateClicked);
+            findViewById(R.id.second_ll).setOnClickListener(this::onSecondCateClicked);
+
         } else {
             mSecondCateTv.setTextColor(getColor(R.color.grey_BFBFBF));
-            mSecondCateTv.setOnClickListener(null);
+            findViewById(R.id.second_ll).setOnClickListener(null);
             mSecondArrowIv.setImageResource(R.mipmap.ic_store_down);
         }
 
@@ -422,10 +428,10 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mThirdCateTv.setText(getString(R.string.all));
         if (b) {
             mThirdCateTv.setTextColor(getColor(R.color.black_333333));
-            mThirdCateTv.setOnClickListener(this::onThirdCateClicked);
+            findViewById(R.id.third_ll).setOnClickListener(this::onThirdCateClicked);
         } else {
             changeLevelTitleStatus(mThirdCateTv, R.color.grey_BFBFBF, mThirdArrowIv, R.mipmap.ic_store_down);
-            mThirdCateTv.setOnClickListener(null);
+            findViewById(R.id.third_ll).setOnClickListener(null);
         }
 
         if (mToSelectedListFragment != null) {

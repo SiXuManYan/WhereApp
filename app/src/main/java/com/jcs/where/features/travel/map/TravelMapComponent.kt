@@ -90,7 +90,15 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
 
     }
 
-    fun getContentList(page: Int, categoryId: Int, searchInput: String?, requestLatitude: Double, requestLongitude: Double) {
+    fun getContentList(
+        page: Int,
+        categoryId: Int,
+        searchInput: String?,
+        requestLatitude: Double,
+        requestLongitude: Double,
+        requestAreaId: String
+    ) {
+
         val safeSelectLatLng = LatLng(requestLatitude, requestLongitude)
 
         requestApi(mRetrofit.getTravelChildList(
@@ -98,7 +106,8 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
             categoryId,
             searchInput,
             safeSelectLatLng.latitude,
-            safeSelectLatLng.longitude
+            safeSelectLatLng.longitude,
+            requestAreaId
         ), object : BaseMvpObserver<PageResponse<TravelChild>>(view) {
             override fun onSuccess(response: PageResponse<TravelChild>) {
 
@@ -121,7 +130,7 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
                     name = StringUtils.getString(R.string.all_city_selected)
                     lat = 0.0
                     lng = 0.0
-                    nativeIsSelected = false
+                    nativeIsSelected = true
                 }
 
                 cityList.add(0, all)

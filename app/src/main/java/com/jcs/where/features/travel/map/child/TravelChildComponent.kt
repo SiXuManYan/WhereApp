@@ -30,7 +30,8 @@ class TravelChildPresenter(private var view: TravelChildView) : BaseMvpPresenter
             categoryId,
             searchInput,
             safeSelectLatLng.latitude,
-            safeSelectLatLng.longitude
+            safeSelectLatLng.longitude,
+            ""
         ), object : BaseMvpObserver<PageResponse<TravelChild>>(view) {
             override fun onSuccess(response: PageResponse<TravelChild>) {
 

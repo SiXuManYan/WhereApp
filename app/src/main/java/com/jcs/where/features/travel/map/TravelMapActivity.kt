@@ -556,7 +556,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
             bounds.include(LatLng(it.lat, it.lng))
         }
 
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+//        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
 
 
         // 在地图上添加大量Marker

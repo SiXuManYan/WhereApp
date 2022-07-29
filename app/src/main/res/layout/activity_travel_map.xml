@@ -122,7 +122,7 @@
                 android:layout_marginEnd="@dimen/dp_4"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/category_selected"
+                android:text="@string/all_category_selected"
                 android:textColor="@color/selector_black_blue"
                 android:textSize="@dimen/sp_13" />
 
@@ -153,7 +153,7 @@
                 android:layout_marginEnd="@dimen/dp_4"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/city_selected"
+                android:text="@string/all_city_selected"
                 android:textColor="@color/selector_black_blue"
                 android:textSize="@dimen/sp_13" />
 

@@ -1,10 +1,15 @@
 package com.jcs.where.features.bills
 
 import android.os.Bundle
+import android.view.View
+import androidx.viewpager.widget.ViewPager
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
 import com.jcs.where.features.bills.channel.BillsChannelActivity
+import com.jcs.where.features.bills.guide.BillGuideAdapter
+import com.jcs.where.features.bills.guide.GuideItemClickListener
 import com.jcs.where.features.bills.record.BillsRecordActivity
+import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocalLanguageUtil
 import kotlinx.android.synthetic.main.activity_pay_bills.*
@@ -27,12 +32,47 @@ class PayBillsActivity : BaseActivity() {
         } else {
             hydropower_banner_iv.setImageResource(R.mipmap.ic_hydropower_en)
         }
+        initPager()
 
     }
 
-    override fun initData() {
+    private fun initPager() {
+        val alreadyShow = CacheUtil.getShareDefault().getBoolean(Constant.SP_ALREADY_SHOW_BILLS_GUIDE, false)
+        if (alreadyShow) {
+            real_content_ll.visibility = View.VISIBLE
+            pager_vp.visibility = View.GONE
+            return
+        }
+
+        real_content_ll.visibility = View.GONE
+        pager_vp.visibility = View.VISIBLE
+
+        val adapter = BillGuideAdapter()
+        adapter.itemClickListener = object : GuideItemClickListener {
+            override fun pagerItemClick(position: Int) {
+                if (position == adapter.count - 1) {
+                    CacheUtil.getShareDefault().put(Constant.SP_ALREADY_SHOW_BILLS_GUIDE, true)
+                    real_content_ll.visibility = View.VISIBLE
+                    pager_vp.visibility = View.GONE
+                }else {
+                    pager_vp.setCurrentItem(position + 1, true)
+                }
+            }
+        }
+        pager_vp.adapter = adapter
+        pager_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+
+            override fun onPageScrollStateChanged(state: Int) = Unit
+
+            override fun onPageSelected(position: Int) {
+
+            }
+        })
 
     }
+
+    override fun initData() = Unit
 
 
     override fun bindListener() {
@@ -61,6 +101,8 @@ class PayBillsActivity : BaseActivity() {
         }
 
     }
+
+
 
 
 }

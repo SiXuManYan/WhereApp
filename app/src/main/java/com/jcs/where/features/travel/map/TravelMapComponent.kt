@@ -12,7 +12,6 @@ import com.jcs.where.api.response.CityPickerResponse
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.travel.TravelChild
-import com.jcs.where.utils.CacheUtil
 
 /**
  * Created by Wangsw  2021/10/18 9:38.
@@ -45,7 +44,7 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
 
                 // 当前二级分类全部
                 val secondAll = Category().apply {
-                    name = StringUtils.getString(R.string.all)
+                    name = StringUtils.getString(R.string.all_category_selected)
                     id = 0
                     has_children = 1
                     nativeIsSelected = true
@@ -119,7 +118,7 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
 
                 val all = CityPickerResponse.CityChild().apply {
                     id = "0"
-                    name = StringUtils.getString(R.string.all)
+                    name = StringUtils.getString(R.string.all_city_selected)
                     lat = 0.0
                     lng = 0.0
                     nativeIsSelected = false

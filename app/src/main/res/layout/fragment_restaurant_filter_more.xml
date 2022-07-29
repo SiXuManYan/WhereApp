@@ -153,7 +153,6 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/dp_28"
-                    android:layout_marginEnd="@dimen/dp_30"
                     android:background="@drawable/selector_restaurant_filter_2"
                     android:button="@null"
                     android:ellipsize="end"

@@ -374,9 +374,9 @@
     <string name="to">&#160;-&#160;</string>
     <string name="merchant_service">Merchant Service</string>
     <string name="smart_sorting">Smart Sorting</string>
-    <string name="praise_first">Ratings</string>
+    <string name="praise_first">Highest Rating</string>
     <string name="sales_priority">High Sales</string>
-    <string name="nearest_first">Distance</string>
+    <string name="nearest_first">Distance Closest</string>
     <string name="dine_in_dishes">Dine-in dishes</string>
     <string name="panic_buying">Buy Now</string>
     <string name="sale_format">Sold&#160;%1$s</string>

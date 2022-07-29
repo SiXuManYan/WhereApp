@@ -12,6 +12,7 @@ import com.jcs.where.api.response.CityPickerResponse
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.travel.TravelChild
+import com.jcs.where.utils.CacheUtil
 
 /**
  * Created by Wangsw  2021/10/18 9:38.
@@ -96,18 +97,29 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
         searchInput: String?,
         requestLatitude: Double,
         requestLongitude: Double,
-        requestAreaId: String
+        requestAreaId: String,
     ) {
 
-        val safeSelectLatLng = LatLng(requestLatitude, requestLongitude)
+        var areaId: String? = null
+        var lat: Double? = null
+        var lng: Double? = null
 
+        if (requestAreaId.isBlank() || requestAreaId == "0") {
+            areaId = null
+            lat = requestLatitude
+            lng = requestLongitude
+        } else {
+            areaId = requestAreaId
+            lat = null
+            lng = null
+        }
         requestApi(mRetrofit.getTravelChildList(
             page,
             categoryId,
             searchInput,
-            safeSelectLatLng.latitude,
-            safeSelectLatLng.longitude,
-            requestAreaId
+            lat,
+            lng,
+            areaId
         ), object : BaseMvpObserver<PageResponse<TravelChild>>(view) {
             override fun onSuccess(response: PageResponse<TravelChild>) {
 
@@ -124,12 +136,13 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
         requestApi(mRetrofit.getCityPickers("list"), object : BaseMvpObserver<CityPickerResponse>(view) {
             override fun onSuccess(response: CityPickerResponse) {
                 val cityList = response.lists
+                val safeSelectLatLng = CacheUtil.getSafeSelectLatLng()
 
                 val all = CityPickerResponse.CityChild().apply {
                     id = "0"
                     name = StringUtils.getString(R.string.all_city_selected)
-                    lat = 0.0
-                    lng = 0.0
+                    lat = safeSelectLatLng.latitude
+                    lng = safeSelectLatLng.longitude
                     nativeIsSelected = true
                 }
 

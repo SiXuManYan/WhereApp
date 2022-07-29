@@ -19,7 +19,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -48,8 +51,11 @@ import kotlinx.android.synthetic.main.layout_travel_filter_content.*
 /**
  * Created by Wangsw  2021/10/18 9:37.
  *  旅游地图
- *  默认用第一次当前定位，请求列表数据和marker数据
- *  点击城市的筛选all，以经纬度0，请求数据
+    区域Id 优先级最高，
+    首次进来用经纬度请求，值为用户手动选择的经纬度（未选择时取默认值）
+    选择全部城市时，（用经纬度请求）
+    区域id为0 ，经纬度使用手动选择经纬度
+    选择其他城市时，用区域id请求
  */
 class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
@@ -85,7 +91,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     /** 经度筛选 */
     var requestLongitude = 0.0
 
-    var requestAreaId = ""
+    var requestAreaId = "0"
 
     /** 内容列表空view */
     private lateinit var emptyView: EmptyView
@@ -281,13 +287,9 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     private fun initContentList() {
 
         emptyView = EmptyView(this).apply {
-            initEmpty(
-                R.mipmap.ic_empty_search, R.string.empty_search,
-                R.string.empty_search_hint, R.string.back
-            ) {
-
-            }
-            action_tv.visibility = View.GONE
+            setEmptyImage(R.mipmap.ic_empty_search)
+            setEmptyMessage(R.string.empty_search_message)
+            setEmptyHint(R.string.empty_search_hint)
         }
 
         mAdapter = TravelChildAdapter().apply {
@@ -323,6 +325,12 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
         bundle.apply {
             travelCategoryId = getInt(Constant.PARAM_CATEGORY_ID)
         }
+
+        // 首次进来，不传区域id ，只传经纬度（取上次选择）
+        val safeSelectLatLng = CacheUtil.getSafeSelectLatLng()
+        requestAreaId = "0"
+        requestLatitude = safeSelectLatLng.latitude
+        requestLongitude = safeSelectLatLng.longitude
     }
 
 
@@ -435,7 +443,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
     /** 请求内容列表  */
     private fun requestContentList() =
-        presenter.getContentList(page, currentRequestCategoryId, searchInput, requestLatitude, requestLongitude,requestAreaId)
+        presenter.getContentList(page, currentRequestCategoryId, searchInput, requestLatitude, requestLongitude, requestAreaId)
 
 
     // #############  地图相关 ####################
@@ -486,19 +494,18 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     private fun enableMyLocation() {
         if (!::map.isInitialized) return
 
-        // 检测位置权限
+        // 在地图上显示当前位置，镜头移动到当前位置
         PermissionUtils.permissionAny(
             this, {
                 if (it) {
                     map.isMyLocationEnabled = true
                     getMyLocationInfo()
-                } else {
-                    // 未授权位置，所有数据是 0.0 经纬度请求结果
-                    requestMakerList()
                 }
             }, Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
+
+        requestMakerList()
     }
 
 
@@ -525,20 +532,13 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
                 CacheUtil.getShareDefault().put(Constant.SP_MY_LATITUDE, lat.toFloat())
                 CacheUtil.getShareDefault().put(Constant.SP_MY_LONGITUDE, lng.toFloat())
 
-
+                // 镜头移动到当前位置
                 myLocation = CameraPosition.Builder().target(LatLng(lat, lng))
                     .zoom(20f)
                     .bearing(0f)
                     .tilt(0f)
                     .build()
-                animateCamera(LatLng(lat,lng))
-
-                requestLatitude = lat
-                requestLongitude = lng
-                page = Constant.DEFAULT_FIRST_PAGE
-                requestContentList()
-                requestMakerList()
-
+                animateCamera(LatLng(lat, lng))
 
             }
         }
@@ -646,7 +646,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     private fun animateCamera(location: LatLng) {
         Handler(mainLooper).postDelayed({
             val targetCamera = CameraPosition.Builder().target(location)
-                .zoom(15.5f)
+                .zoom(13f)
                 .bearing(0f)
                 .tilt(0f)
                 .build()

@@ -952,7 +952,7 @@ Gentleman must let go</string>
     <string name="payment_channels">Payment Channels</string>
     <string name="billing_information">Billing Information</string>
     <string name="place_money_title">Confirm that your payment amount is:</string>
-    <string name="bills_place_order_hint">Some payment amounts include service charges. After clicking OK, the content will not be editable.</string>
+    <string name="bills_place_order_hint">Some payment amounts include service charges. After clicking Confirm, the content will not be editable.</string>
     <string name="give_up_bills_payment_hint">The payment has not been completed, sure you leave?</string>
 
     <string name="send_money">Send Money</string>
@@ -978,7 +978,7 @@ Gentleman must let go</string>
     <string name="cart_is_empty">Your shopping cart is empty</string>
     <string name="recharge_phone_format">Please enter an 11-digit number starting with 0</string>
     <string name="select_money">Please select the payment amount from the list below</string>
-    <string name="bills_place_order_hint_phone">After clicking OK, the content will not be editable.</string>
+    <string name="bills_place_order_hint_phone">After clicking Confirm, the content will not be editable.</string>
     <string name="buy_load">Buy Load</string>
     <string name="all_category_selected">All Category</string>
     <string name="all_city_selected">All City</string>

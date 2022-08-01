@@ -22,6 +22,8 @@ class CallChargesChanelItemAdapter : BaseQuickAdapter<CallChargeChannelItem, Bas
             check.setImageResource(R.mipmap.ic_un_checked)
         }
 
+        holder.setText(R.id.item_name_tv ,item.TelcoTag)
+
     }
 
 }

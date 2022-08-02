@@ -35,6 +35,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
                 val apiUnreadMessageCount = response.count
 
                 try {
+                    // 捕获融云SKD 5.2.3.3 获取消息数量时， 在Android 12 上出现的 UnsatisfiedLinkError 异常
                     RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
                         override fun onSuccess(rongMessageCount: Int?) {
 

@@ -35,10 +35,10 @@ class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
         }
         requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view) {
             override fun onSuccess(response: UnReadMessage) {
+
                 val apiUnreadMessageCount = response.count
-
-
                 try {
+                    // 捕获融云SKD 5.2.3.3 获取消息数量时， 在Android 12 上出现的 UnsatisfiedLinkError 异常
                     RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
                         override fun onSuccess(rongMessageCount: Int?) {
 

@@ -8,8 +8,6 @@
     android:orientation="vertical">
 
 
-
-
     <RelativeLayout
         android:id="@+id/title_rl"
         android:layout_width="match_parent"
@@ -19,10 +17,10 @@
 
         <ImageView
             android:id="@+id/back_iv"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginStart="@dimen/dp_10"
             android:background="?android:attr/selectableItemBackground"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_back_black" />

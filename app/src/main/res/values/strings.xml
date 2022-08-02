@@ -771,7 +771,7 @@ Gentleman must let go</string>
     <string name="more_comment">更多评价</string>
     <string name="please_choose_the_city">请选择城市</string>
     <string name="total_date_format">共&#160;%1$s&#160;晚</string>
-    <string name="children_format">儿童&#160;%1$s</string>
+    <string name="children_format">儿童：%1$s</string>
     <string name="take_away_support_text">支持外卖</string>
     <string name="minimum">最小值</string>
     <string name="max">最大值</string>

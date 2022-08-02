@@ -15,13 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:background="@color/white_FEFEFE"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15">
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10">
 
         <ImageView
             android:id="@+id/back_iv"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_8"
             android:scaleType="centerInside"
@@ -83,8 +83,8 @@
 
         <ImageView
             android:id="@+id/type_iv"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_15"

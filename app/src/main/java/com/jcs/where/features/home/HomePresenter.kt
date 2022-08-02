@@ -36,20 +36,27 @@ class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
         requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view) {
             override fun onSuccess(response: UnReadMessage) {
                 val apiUnreadMessageCount = response.count
-                RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
-                    override fun onSuccess(rongMessageCount: Int?) {
 
-                        if (rongMessageCount == null) {
-                            view.setMessageCount(apiUnreadMessageCount)
-                        } else {
-                            view.setMessageCount(apiUnreadMessageCount + rongMessageCount)
+
+                try {
+                    RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
+                        override fun onSuccess(rongMessageCount: Int?) {
+
+                            if (rongMessageCount == null) {
+                                view.setMessageCount(apiUnreadMessageCount)
+                            } else {
+                                view.setMessageCount(apiUnreadMessageCount + rongMessageCount)
+                            }
                         }
-                    }
 
-                    override fun onError(errorCode: RongIMClient.ErrorCode) {
-                        view.setMessageCount(0)
-                    }
-                })
+                        override fun onError(errorCode: RongIMClient.ErrorCode) {
+                            view.setMessageCount(apiUnreadMessageCount)
+                        }
+                    })
+                } catch (e:Exception) {
+                    view.setMessageCount(apiUnreadMessageCount)
+                }
+
             }
 
             override fun onError(errorResponse: ErrorResponse?) {

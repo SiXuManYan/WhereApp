@@ -6,7 +6,6 @@ import com.jcs.where.BaseApplication
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.api.response.MerchantSettledInfoResponse
 import com.jcs.where.api.response.UnReadMessage
 import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.storage.entity.User
@@ -35,8 +34,8 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
             override fun onSuccess(response: UnReadMessage) {
                 val apiUnreadMessageCount = response.count
 
-                RongIMClient.getInstance()
-                    .getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
+                try {
+                    RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
                         override fun onSuccess(rongMessageCount: Int?) {
 
                             var rongCount = 0
@@ -49,10 +48,14 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
 
                         }
 
-                        override fun onError(errorCode: RongIMClient.ErrorCode){
-                            view.bindUnreadMessageCount(0)
+                        override fun onError(errorCode: RongIMClient.ErrorCode) {
+                            view.bindUnreadMessageCount(apiUnreadMessageCount)
                         }
                     })
+                } catch (e: Exception) {
+                    view.bindUnreadMessageCount(apiUnreadMessageCount)
+                }
+
 
             }
 

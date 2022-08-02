@@ -7,9 +7,10 @@
 
     <ImageView
         android:id="@+id/cut_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
         android:background="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
         android:src="@mipmap/ic_cut" />
 
     <TextView
@@ -27,9 +28,10 @@
 
     <ImageView
         android:id="@+id/add_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
         android:background="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
         android:src="@mipmap/ic_add" />
 
 </LinearLayout>

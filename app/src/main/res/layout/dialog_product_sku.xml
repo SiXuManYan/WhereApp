@@ -132,9 +132,10 @@
 
             <ImageView
                 android:id="@+id/number_cut_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
                 android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
                 android:src="@mipmap/ic_cut_blue_transparent" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -159,9 +160,10 @@
 
             <ImageView
                 android:id="@+id/number_add_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
                 android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
                 android:src="@mipmap/ic_add_blue_transparent" />
 
         </LinearLayout>

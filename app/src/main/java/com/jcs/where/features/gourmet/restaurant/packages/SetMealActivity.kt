@@ -23,7 +23,6 @@ import com.jcs.where.utils.Constant
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_set_meal_2.*
 import java.math.BigDecimal
-import java.util.*
 
 /**
  * Created by Wangsw  2021/4/6 14:38.
@@ -82,7 +81,6 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
             mEatInFoodId = it.getInt(Constant.PARAM_ID, 0)
             mRestaurantId = it.getInt(Constant.PARAM_RESTAURANT_ID, 0)
             goodNumber = it.getInt(Constant.PARAM_GOOD_NUMBER, 1)
-            goodNumber = it.getInt(Constant.PARAM_STOCK, 0)
             mRestaurantName = it.getString(Constant.PARAM_RESTAURANT_NAME, "")
         }
     }
@@ -217,7 +215,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
     }
 
     private fun onBuyNow() {
-        if (mInventory<goodNumber){
+        if (mInventory < goodNumber) {
             ToastUtils.showShort(R.string.out_of_stock)
             return
         }
@@ -248,7 +246,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
     }
 
     private fun onBuyAfter() {
-        if (mInventory<goodNumber){
+        if (mInventory < goodNumber) {
             ToastUtils.showShort(R.string.out_of_stock)
             return
         }

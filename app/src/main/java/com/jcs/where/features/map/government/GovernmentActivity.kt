@@ -479,6 +479,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         if (!::map.isInitialized ) return
 
         if (response.isEmpty()) {
+            ToastUtils.showShort(R.string.search_result_empty_hint)
             map.clear()
             makers.clear()
             return

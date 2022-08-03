@@ -19,10 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -549,6 +546,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
         if (!::map.isInitialized) return
 
         if (response.isEmpty()) {
+            ToastUtils.showShort(R.string.search_result_empty_hint)
             map.clear()
             makers.clear()
             return

@@ -460,6 +460,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         if (!::map.isInitialized) return
 
         if (response.isEmpty()) {
+            ToastUtils.showShort(R.string.search_result_empty_hint)
             map.clear()
             makers.clear()
             return

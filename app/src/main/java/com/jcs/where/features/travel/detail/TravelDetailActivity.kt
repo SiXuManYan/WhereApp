@@ -6,27 +6,31 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.travel.TravelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
-import com.jcs.where.features.travel.comment.TravelCommentActivity
-import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
+import com.jcs.where.features.travel.comment.TravelCommentActivity
+import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
+import com.jcs.where.view.empty.EmptyView
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_travel_detail.*
-import java.util.*
 
 
-/**
+/**comment_rv
  * Created by Wangsw  2021/10/18 16:16.
  *  旅游详情
  */
@@ -54,6 +58,9 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
 
     /** 轮播 */
     private lateinit var mMediaAdapter: DetailMediaAdapter
+
+
+    private lateinit var emptyView: EmptyView
 
     /** 评价 */
     private lateinit var mCommentAdapter: HotelCommentAdapter
@@ -92,6 +99,7 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
         bundle.apply {
             travelId = getInt(Constant.PARAM_ID)
         }
+
     }
 
 
@@ -122,7 +130,11 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
         }
 
 
-
+        emptyView = EmptyView(this).apply {
+            empty_iv.visibility = View.GONE
+            parent_ll.layoutParams.height = SizeUtils.dp2px(92f)
+            setEmptyHint(R.string.no_content)
+        }
 
         mCommentAdapter = HotelCommentAdapter()
         comment_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
@@ -306,11 +318,28 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
         address_name_tv.text = response.address
 
         // 评价
-        mCommentAdapter.setNewInstance(response.comments)
+        val list = response.comments
+        mCommentAdapter.setNewInstance(list)
+        if (list.isEmpty()) {
+            mCommentAdapter.setEmptyView(emptyView)
+        }
 
         // 介绍
-        desc_tv.text = response.content
-        notice_tv.text = response.notice
+        val content = response.content
+        if (content.isBlank()) {
+            desc_tv.text = StringUtils.getString(R.string.no_content)
+            desc_tv.gravity = Gravity.CENTER
+        } else {
+            desc_tv.text = content
+        }
+
+        val notice = response.notice
+        if (notice.isBlank()) {
+            notice_tv.text = StringUtils.getString(R.string.no_content)
+            notice_tv.gravity = Gravity.CENTER
+        } else {
+            notice_tv.text = notice
+        }
 
         comment_count_tv.text = getString(R.string.comment_format, response.comments_count)
 

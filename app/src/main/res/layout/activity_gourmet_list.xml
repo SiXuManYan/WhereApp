@@ -109,8 +109,6 @@
     </RelativeLayout>
 
 
-
-
     <LinearLayout
         android:id="@+id/category_ll"
         android:layout_width="match_parent"
@@ -132,10 +130,12 @@
 
             <CheckedTextView
                 android:id="@+id/area_tv"
+                android:paddingStart="@dimen/dp_2"
+                android:paddingEnd="@dimen/dp_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:layout_marginEnd="@dimen/dp_4"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/filter_city"
                 android:textColor="@color/selector_black_blue"
@@ -165,9 +165,12 @@
                 android:id="@+id/food_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:layout_marginEnd="@dimen/dp_4"
+                android:ellipsize="end"
+                tools:text="asdasdaasdasdsadsdadaasd"
+                android:maxLines="1"
+                android:paddingStart="@dimen/dp_2"
+                android:paddingEnd="@dimen/dp_2"
                 android:text="@string/filter_food"
                 android:textColor="@color/selector_black_blue"
                 android:textSize="@dimen/sp_13" />
@@ -198,7 +201,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_4"
                 android:ellipsize="end"
+                android:paddingStart="@dimen/dp_2"
+                android:paddingEnd="@dimen/dp_2"
                 android:maxLines="1"
+                tools:text="asdasdaasdasdsadsdadaasd"
                 android:text="@string/filter_other"
                 android:textColor="@color/selector_black_blue"
                 android:textSize="@dimen/sp_13" />

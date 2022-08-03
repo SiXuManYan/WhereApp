@@ -169,16 +169,18 @@
                 android:id="@+id/set_meal_content_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_92"
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="center_vertical"
                 android:lineSpacingMultiplier="1.2"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_15"
+                android:text="@string/no_content"
                 android:paddingBottom="@dimen/dp_10"
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_14"
-                tools:text="@string/test_hint" />
+              />
 
 
             <TextView
@@ -198,15 +200,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_5"
+                android:minHeight="@dimen/dp_92"
                 android:gravity="center_vertical"
                 android:lineSpacingMultiplier="1.2"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_15"
+                android:text="@string/no_content"
                 android:paddingBottom="@dimen/dp_10"
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_14"
-                tools:text="@string/test_hint" />
+                />
 
 
         </LinearLayout>

@@ -2,6 +2,7 @@ package com.jcs.where.features.gourmet.restaurant.packages
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -198,8 +199,20 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
         val builder = SpanUtils().append(oldPrice).setStrikethrough().create()
         old_price_tv.text = builder
         sales_tv.text = getString(R.string.sale_format, data.sale_num)
-        set_meal_content_tv.text = data.meals
-        rule_tv.text = data.rule
+        data.meals.apply {
+            if (isNotBlank()) {
+                set_meal_content_tv.text = this
+            } else {
+                set_meal_content_tv.gravity = Gravity.CENTER
+            }
+        }
+        data.rule.apply {
+            if (isNotBlank()) {
+                rule_tv.text = this
+            } else {
+                rule_tv.gravity = Gravity.CENTER
+            }
+        }
         mData = data
 
         if (data.inventory.isNotBlank()) {

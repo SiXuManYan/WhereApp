@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
+import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
@@ -86,6 +88,9 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     private lateinit var mDishAdapter: DishAdapter
     private lateinit var mMediaAdapter: DetailMediaAdapter
     private lateinit var mCommentAdapter: HotelCommentAdapter
+
+    private lateinit var emptyView: EmptyView
+    private lateinit var emptyView2: EmptyView
 
 
     companion object {
@@ -184,11 +189,27 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             changeStatusTextColor()
         }
 
+
+        emptyView = EmptyView(this).apply {
+            empty_iv.visibility = View.GONE
+            parent_ll.layoutParams.height = SizeUtils.dp2px(92f)
+            setEmptyHint(R.string.no_content)
+        }
+
+        emptyView2 = EmptyView(this).apply {
+            empty_iv.visibility = View.GONE
+            parent_ll.layoutParams.height = SizeUtils.dp2px(92f)
+            setEmptyHint(R.string.no_content)
+        }
+
     }
 
 
     private fun initComment() {
-        mCommentAdapter = HotelCommentAdapter()
+        mCommentAdapter = HotelCommentAdapter().apply {
+            setEmptyView(emptyView)
+        }
+
         comment_rv.apply {
             isNestedScrollingEnabled = true
             adapter = mCommentAdapter
@@ -204,7 +225,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     private fun initDish() {
 
         mDishAdapter = DishAdapter().apply {
-            setEmptyView(R.layout.view_empty_text)
+            setEmptyView(emptyView2)
             addChildClickViewIds(R.id.buy_tv)
             setOnItemChildClickListener { _, _, position ->
                 // 直接购买
@@ -415,6 +436,8 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         data.introduction.apply {
             if (isNotBlank()) {
                 desc_tv.text = this
+            }else {
+                desc_tv.gravity = Gravity.CENTER
             }
         }
         data.email.apply {

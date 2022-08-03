@@ -331,6 +331,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
         if (!rule_check_cb.isChecked()) {
             error_hint_tv.setText(R.string.agrees_rule_hint);
+            error_hint_tv.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -394,6 +395,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void onError(ErrorResponse errorResponse) {
         super.onError(errorResponse);
         error_hint_tv.setText(errorResponse.getErrMsg());
+        error_hint_tv.setVisibility(View.VISIBLE);
     }
 
     @Override

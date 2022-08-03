@@ -32,8 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/set_password"
                 android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_19"
-                />
+                android:textSize="@dimen/sp_19" />
 
 
             <RelativeLayout
@@ -57,8 +56,9 @@
                     android:layout_toStartOf="@+id/password_rule_iv"
                     android:layout_toEndOf="@id/tag_password_iv"
                     android:background="@null"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:hint="@string/input_password_hint"
+                    android:hint="@string/input_password_hint_3"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLength="20"
@@ -108,7 +108,7 @@
                     android:layout_toEndOf="@id/confirm_iv"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="@string/confirm_password_hint"
+                    android:hint="@string/confirm_password_hint_2"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLength="20"
@@ -142,10 +142,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_44"
                 android:layout_marginTop="@dimen/dp_44"
+                android:alpha="0.7"
                 android:background="@drawable/shape_blue_radius_22"
                 android:gravity="center"
                 android:text="@string/register"
-                android:alpha="0.7"
                 android:textColor="@color/white_FEFEFE"
                 android:textSize="@dimen/sp_17"
                 android:textStyle="bold" />

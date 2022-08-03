@@ -204,7 +204,8 @@
     <string name="login_rule_keyword_0">《用户协议》</string>
     <string name="login_rule_default_and">&#160;和&#160;</string>
     <string name="login_rule_keyword_1">《隐私政策》</string>
-    <string name="input_password_hint">8&#8211;16位数字字母组合</string>
+    <string name="input_password_hint">密码8&#8211;16位数字字母组合</string>
+    <string name="input_password_hint_3">请输入8–16位字母和数字组合</string>
     <string name="input_password_hint_2">请输入密码</string>
     <string name="confirm">确定</string>
     <string name="philippines_63">菲律宾 +63</string>
@@ -240,6 +241,7 @@
     <string name="avatar">头像</string>
     <string name="empty_nick_name_hint">昵称还是空空的</string>
     <string name="old_password">原密码</string>
+    <string name="old_password_2">原密码</string>
     <string name="required_items">必填</string>
     <string name="nick_name">昵称</string>
     <string name="new_password">新密码</string>
@@ -347,6 +349,7 @@
     <string name="empty_network_error_hint">请检查网络设置或稍后重试</string>
     <string name="empty_network_error_action">重新加载</string>
     <string name="confirm_password_hint">请确认密码</string>
+    <string name="confirm_password_hint_2">请再次确认您的密码</string>
     <string name="password_not_same_hint">请输入两次相同密码</string>
     <string name="tourism_management">旅游管理</string>
     <string name="shipping_address">收货地址</string>

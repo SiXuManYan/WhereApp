@@ -206,7 +206,8 @@
     <string name="login_rule_keyword_0">\n&#34;User Agreement&#34;</string>
     <string name="login_rule_default_and">&#160;and the &#160;</string>
     <string name="login_rule_keyword_1">&#34;Privacy Policy&#34;</string>
-    <string name="input_password_hint">Password 8&#8211;16 digit and letters combination</string>
+    <string name="input_password_hint">Password 8&#8211;16 digits and letters combination</string>
+    <string name="input_password_hint_3">Please enter a password with 8–16 digits and letters</string>
     <string name="input_password_hint_2">Please enter the password</string>
     <string name="confirm">Confirm</string>
     <string name="philippines_63">Philippines +63</string>
@@ -216,7 +217,7 @@
     <string name="get_again">Resend</string>
     <string name="count_down_format">Resend(%1$d)s</string>
     <string name="verify_code_send_success">Code send success</string>
-    <string name="set_password">Password set</string>
+    <string name="set_password">Password Set</string>
     <string name="register_success">Register success</string>
     <string name="forgot_password">Forget password</string>
     <string name="password_reset">To reset your password</string>
@@ -241,7 +242,8 @@
     <string name="personal_info">My Profile</string>
     <string name="avatar">Profile Photo</string>
     <string name="empty_nick_name_hint">nickname is empty</string>
-    <string name="old_password">Old password</string>
+    <string name="old_password">Old Password</string>
+    <string name="old_password_2">Current Password</string>
     <string name="required_items">Required items</string>
     <string name="nick_name">Nick name</string>
     <string name="new_password">New password</string>
@@ -260,7 +262,7 @@
     <string name="resend_format">Resend(%1$s)</string>
     <string name="phone_reset_success">Phone reset success</string>
     <string name="modify_phone">Modify phone</string>
-    <string name="modify_password">Reset password</string>
+    <string name="modify_password">Reset Password</string>
     <string name="open_permission">Please open permission</string>
     <string name="modify_none">You did not make any changes</string>
     <string name="modify_success">Modify success</string>
@@ -348,6 +350,7 @@
     <string name="empty_network_error_hint">Please check network settings or try again later</string>
     <string name="empty_network_error_action">Reload</string>
     <string name="confirm_password_hint">Please confirm your password</string>
+    <string name="confirm_password_hint_2">Please confirm your password</string>
     <string name="password_not_same_hint">Please enter the same password twice</string>
     <string name="tourism_management">Tourism Sector</string>
     <string name="shipping_address">Shipping Address</string>

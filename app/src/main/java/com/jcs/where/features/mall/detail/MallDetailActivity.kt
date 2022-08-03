@@ -7,11 +7,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
+import android.view.Gravity
+import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallAttribute
@@ -35,6 +38,7 @@ import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.MobUtil
+import com.jcs.where.view.empty.EmptyView
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
 
@@ -67,6 +71,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     /** 评价 */
     private lateinit var mCommentAdapter: HotelCommentAdapter
+
+    private lateinit var emptyView: EmptyView
 
     companion object {
 
@@ -103,7 +109,15 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
 
     private fun initComment() {
-        mCommentAdapter = HotelCommentAdapter()
+        emptyView = EmptyView(this).apply {
+            empty_iv.visibility = View.GONE
+            parent_ll.layoutParams.height = SizeUtils.dp2px(92f)
+            setEmptyHint(R.string.no_content)
+        }
+
+        mCommentAdapter = HotelCommentAdapter().apply {
+            setEmptyView(emptyView)
+        }
         comment_rv.isNestedScrollingEnabled = true
         comment_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
             override fun canScrollVertically(): Boolean = false
@@ -289,12 +303,21 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
 
     private fun disPlayHtml(html: String) {
-        val imageGetter = ImageGetter2(this, resources, html_tv)
-        val styledText = fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY, imageGetter, null)
-        html_tv.text = styledText
 
-        // 图片链接可点击
-        html_tv.movementMethod = LinkMovementMethod.getInstance()
+        if (html.isNotBlank()) {
+
+            val imageGetter = ImageGetter2(this, resources, html_tv)
+            val styledText = fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY, imageGetter, null)
+            html_tv.text = styledText
+
+            // 图片链接可点击
+            html_tv.movementMethod = LinkMovementMethod.getInstance()
+
+        } else {
+            html_tv.setText(R.string.no_content)
+            html_tv.gravity = Gravity.CENTER
+        }
+
     }
 
     override fun onBackPressed() {

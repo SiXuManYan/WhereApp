@@ -206,7 +206,7 @@
     <string name="login_rule_keyword_0">\n&#34;User Agreement&#34;</string>
     <string name="login_rule_default_and">&#160;and the &#160;</string>
     <string name="login_rule_keyword_1">&#34;Privacy Policy&#34;</string>
-    <string name="input_password_hint">6~20 digit letter combination</string>
+    <string name="input_password_hint">Password 8&#8211;16 digit and letters combination</string>
     <string name="input_password_hint_2">Please enter the password</string>
     <string name="confirm">Confirm</string>
     <string name="philippines_63">Philippines +63</string>
@@ -221,7 +221,7 @@
     <string name="forgot_password">Forget password</string>
     <string name="password_reset">To reset your password</string>
     <string name="password_reset_success">Password reset success</string>
-    <string name="password_length_error_hint">The password length is wrong, please enter a password of 6~20 characters.</string>
+    <string name="password_length_error_hint">The password length is wrong, please enter a password of 8~16 characters.</string>
     <string name="password_format_error_hint">The password format is wrong, please enter a combination of letters and numbers.</string>
     <string name="main_back_hint">Press again to exit the application.</string>
     <string name="sign_out_hint">Are you sure to log out ？</string>
@@ -260,7 +260,7 @@
     <string name="resend_format">Resend(%1$s)</string>
     <string name="phone_reset_success">Phone reset success</string>
     <string name="modify_phone">Modify phone</string>
-    <string name="modify_password">Modify password</string>
+    <string name="modify_password">Reset password</string>
     <string name="open_permission">Please open permission</string>
     <string name="modify_none">You did not make any changes</string>
     <string name="modify_success">Modify success</string>

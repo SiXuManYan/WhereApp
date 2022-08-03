@@ -103,10 +103,10 @@ public class FeaturesUtil {
     public static boolean isWrongPasswordFormat(String password) {
 
         if (TextUtils.isEmpty(password)) {
-            ToastUtils.showShort(StringUtils.getString(R.string.input_password_hint));
+            ToastUtils.showShort(StringUtils.getString(R.string.password_length_error_hint));
             return true;
         }
-        if (password.length() < 6 || password.length() > 20) {
+        if (password.length() < 8 || password.length() > 16) {
             ToastUtils.showShort(R.string.password_length_error_hint);
             return true;
         }

@@ -37,7 +37,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 8 / 10)
+        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 85 / 100)
 
     override fun initView(parent: View) {
         // 不可编辑

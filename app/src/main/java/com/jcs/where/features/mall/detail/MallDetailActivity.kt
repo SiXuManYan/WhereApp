@@ -337,13 +337,15 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
 
-        collect_status = if (collectionStatus) {
-            1
+        if (collectionStatus) {
+            collect_status = 1
+            ToastUtils.showShort(R.string.collection_success)
         } else {
-            0
+            collect_status = 0
+            ToastUtils.showShort(R.string.cancel_collection_success)
         }
         setLikeImage()
-        ToastUtils.showShort(R.string.success)
+
     }
 
     override fun bindCartCount(nums: Int) {

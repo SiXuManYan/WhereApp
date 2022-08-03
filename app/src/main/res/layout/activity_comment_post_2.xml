@@ -131,6 +131,7 @@
                     android:layout_below="@+id/satisfaction_tv"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/dp_12"
+                    app:checkStarCount="5"
                     app:checkStarDrawable="@mipmap/ic_comment_star_yellow"
                     app:starCount="5"
                     app:starDrawable="@mipmap/ic_comment_star_gray"

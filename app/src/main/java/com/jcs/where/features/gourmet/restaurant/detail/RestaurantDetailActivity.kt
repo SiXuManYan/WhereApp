@@ -21,11 +21,14 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
+import com.jcs.where.api.response.gourmet.cart.Products
+import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentActivity
+import com.jcs.where.features.gourmet.order.OrderSubmitActivity
 import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
@@ -33,15 +36,13 @@ import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
-import com.jcs.where.utils.BusinessUtils
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.FeaturesUtil
-import com.jcs.where.utils.MobUtil
+import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_restaurant_detail_2.*
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/4/1 10:28.
@@ -436,7 +437,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         data.introduction.apply {
             if (isNotBlank()) {
                 desc_tv.text = this
-            }else {
+            } else {
                 desc_tv.gravity = Gravity.CENTER
             }
         }
@@ -568,13 +569,40 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         }
 
         view.findViewById<TextView>(R.id.confirm_tv).setOnClickListener {
-            startActivity(SetMealActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_ID, dish.id)
-                putInt(Constant.PARAM_RESTAURANT_ID, mRestaurantId)
-                putInt(Constant.PARAM_GOOD_NUMBER, this@RestaurantDetailActivity.goodNumber)
-                putString(Constant.PARAM_RESTAURANT_NAME, mRestaurantName)
-            })
+//            startActivity(SetMealActivity::class.java, Bundle().apply {
+//                putInt(Constant.PARAM_ID, dish.id)
+//                putInt(Constant.PARAM_RESTAURANT_ID, mRestaurantId)
+//                putInt(Constant.PARAM_GOOD_NUMBER, this@RestaurantDetailActivity.goodNumber)
+//                putString(Constant.PARAM_RESTAURANT_NAME, mRestaurantName)
+//            })
 
+            // 直接购买
+            val price = dish.price
+            val product = Products().apply {
+                good_data.id = dish.id
+                good_data.title = dish.title
+                good_data.image = dish.image
+                good_data.price = price
+                good_data.original_price = dish.original_price
+                good_num = goodNumber
+                nativeIsSelect = true
+            }
+
+            val response = ShoppingCartResponse().apply {
+                restaurant_id = mRestaurantId.toString()
+                nativeIsSelect = true
+                restaurant_name = mRestaurantName
+                products.add(product)
+            }
+            val value = ArrayList<ShoppingCartResponse>().apply {
+                add(response)
+            }
+
+            startActivityAfterLogin(OrderSubmitActivity::class.java, Bundle().apply {
+                putSerializable(Constant.PARAM_DATA, value)
+                val totalPrice = BigDecimalUtil.mul(price, BigDecimal(goodNumber))
+                putString(Constant.PARAM_TOTAL_PRICE, totalPrice.toEngineeringString())
+            })
             addressDialog.dismiss()
         }
 

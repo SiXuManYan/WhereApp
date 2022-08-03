@@ -5,17 +5,13 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.Utils;
-import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
-import com.jcs.where.base.EventCode;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,9 +57,7 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
             ToastUtils.showLong(errMsg);
             return;
         }
-        if (errMsg.isEmpty()) {
-            ToastUtils.showShort(getString(R.string.request_error, errCode));
-        } else {
+        if (!errMsg.isEmpty()) {
             ToastUtils.showShort(errMsg);
         }
 

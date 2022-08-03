@@ -18,6 +18,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.HotelRoomListResponse
 import com.jcs.where.api.response.hotel.HotelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.hotel.book.HotelBookActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
@@ -26,6 +27,7 @@ import com.jcs.where.features.hotel.detail.room.RoomDetailFragment
 import com.jcs.where.features.mall.complex.CommentComplexActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
@@ -351,6 +353,10 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             MobUtil.shareFacebookWebPage(url, this@HotelDetailActivity2)
         }
         like_iv.setOnClickListener {
+            if (!User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             if (collect_status == 1) {
                 presenter.unCollection(hotelId)
             } else {

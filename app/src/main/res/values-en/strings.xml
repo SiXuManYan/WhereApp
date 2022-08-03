@@ -792,7 +792,7 @@ Gentleman must let go</string>
     <string name="no_content">No content yet</string>
     <string name="please_selected">please selected</string>
     <string name="please_upload">Please upload</string>
-    <string name="agrees_rule_hint">Please agrees to the \n "User Agreement" and "Privacy Policy"</string>
+    <string name="agrees_rule_hint">Please read and agree to the agreement</string>
     <string name="daily_sign_in">Daily Sign In</string>
     <string name="sign_in_rewards">Sign in and receive rewards</string>
     <string name="score_rule">Integral Rule</string>

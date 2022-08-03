@@ -17,12 +17,14 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.travel.TravelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.comment.CommentPostActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
 import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.travel.comment.TravelCommentActivity
 import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.MobUtil
@@ -278,6 +280,10 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
             MobUtil.shareFacebookWebPage(url, this@TravelDetailActivity)
         }
         like_iv.setOnClickListener {
+            if (!User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             if (collect_status == 1) {
                 presenter.collection(travelId)
             } else {

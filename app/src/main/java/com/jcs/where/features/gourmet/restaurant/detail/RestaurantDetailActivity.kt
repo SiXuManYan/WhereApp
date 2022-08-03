@@ -26,6 +26,7 @@ import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentActivity
 import com.jcs.where.features.gourmet.order.OrderSubmitActivity
@@ -36,6 +37,7 @@ import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.*
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
@@ -362,6 +364,10 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             MobUtil.shareFacebookWebPage(url, this@RestaurantDetailActivity)
         }
         like_iv.setOnClickListener {
+            if (!User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             if (collect_status == 1) {
                 presenter.collection(mRestaurantId)
             } else {

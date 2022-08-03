@@ -61,9 +61,7 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
             return;
         }
 
-        if (errMsg.isEmpty()) {
-            ToastUtils.showShort(getString(R.string.request_error, errCode));
-        } else {
+        if (!errMsg.isEmpty()) {
             ToastUtils.showShort(errMsg);
         }
 //        if (errCode == 401) {

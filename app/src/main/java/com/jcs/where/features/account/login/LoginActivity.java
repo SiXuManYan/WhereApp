@@ -330,7 +330,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         new Handler(getMainLooper()).postDelayed(() -> login_tv.setClickable(true), 1000);
 
         if (!rule_check_cb.isChecked()) {
-            ToastUtils.showShort(R.string.agrees_rule_hint);
+            error_hint_tv.setText(R.string.agrees_rule_hint);
             return;
         }
 

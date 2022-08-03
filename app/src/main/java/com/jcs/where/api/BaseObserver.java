@@ -45,26 +45,27 @@ public abstract class BaseObserver<T> implements Observer<JcsResponse<T>> {
             onSuccess(tJcsResponse.getData());
         } else {
             ErrorResponse errorResponse = deployErrorResponse(String.valueOf(code));
-            if (errorResponse == null){
+            if (errorResponse == null) {
                 errorResponse = new ErrorResponse();
             }
             if (code == 500) {
                 errorResponse.errMsg = "System Error(500)";
-            }else{
+            } else if (code == 401) {
+                errorResponse.errMsg = "";
+                BusinessUtils.INSTANCE.loginOut();
+                BaseApplication.toLogin();
+            } else {
                 errorResponse.errMsg = tJcsResponse.getMessage();
             }
             onError(errorResponse);
-            if (code == 401) {
-                BusinessUtils.INSTANCE.loginOut();
-                BaseApplication.toLogin();
-            }
+
         }
     }
 
     @Override
     public void onError(@NonNull Throwable e) {
         String message = e.getMessage();
-        if (e instanceof UnknownHostException){
+        if (e instanceof UnknownHostException) {
             message = "Please check your network";
         }
         ErrorResponse errorResponse = deployErrorResponse(message);

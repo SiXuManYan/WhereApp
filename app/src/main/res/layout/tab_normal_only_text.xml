@@ -8,7 +8,7 @@
         android:id="@+id/tabTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/selector_home_tab_tv"
+        android:textColor="@color/selector_gray666_blue"
         android:textSize="@dimen/sp_13"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"

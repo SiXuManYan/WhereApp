@@ -10,9 +10,9 @@
     <com.jcs.where.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
-        app:rightFirstIcon="@mipmap/ic_search_black"
         android:layout_height="wrap_content"
-        app:middleTitle="@string/title_convenience_service" />
+        app:middleTitle="@string/title_convenience_service"
+        app:rightFirstIcon="@mipmap/ic_search_black" />
 
 
     <com.google.android.material.tabs.TabLayout
@@ -22,7 +22,9 @@
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/transplant"
         app:tabIndicatorFullWidth="false"
-        app:tabMode="scrollable" />
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/blue_377BFF"
+        app:tabTextColor="@color/grey_666666" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"

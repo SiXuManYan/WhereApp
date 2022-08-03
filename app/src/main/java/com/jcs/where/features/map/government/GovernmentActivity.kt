@@ -305,6 +305,21 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             searchInput = null
             search()
         }
+
+        top_drag_ll.setOnClickListener {
+            when (pagerBehavior.state) {
+
+                ViewPagerBottomSheetBehavior.STATE_COLLAPSED  -> {
+                    pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_EXPANDED
+                }
+                ViewPagerBottomSheetBehavior.STATE_EXPANDED->{
+                    pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_COLLAPSED
+                }
+                else -> {}
+            }
+
+
+        }
     }
 
 

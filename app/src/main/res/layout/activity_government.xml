@@ -52,8 +52,8 @@
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/delete_iv"
                 android:layout_toEndOf="@+id/search_iv"
-                android:gravity="center_vertical"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:hint="@string/search_all_hint"
                 android:singleLine="true"
                 android:textColor="@color/black_333333"
@@ -95,11 +95,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/child_tag_rv"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:background="@color/white"
         android:paddingTop="@dimen/dp_2"
         android:paddingBottom="@dimen/dp_2"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
         tools:itemCount="1"
         tools:listitem="@layout/item_store_third_category" />
 
@@ -132,23 +132,32 @@
             app:behavior_peekHeight="@dimen/dp_50"
             app:layout_behavior="@string/view_pager_bottom_sheet_behavior">
 
-            <View
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_5"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_8"
-                android:background="@drawable/shape_gray_radius_3" />
-
-            <TextView
-                android:id="@+id/total_count_tv"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/top_drag_ll"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_12"
-                android:layout_marginBottom="@dimen/dp_12"
-                android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_12"
-                tools:text="@string/total_list_count_format" />
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="@dimen/dp_35"
+                    android:layout_height="@dimen/dp_5"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:background="@drawable/shape_gray_radius_3" />
+
+                <TextView
+                    android:id="@+id/total_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_12"
+                    android:textColor="@color/grey_666666"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="@string/total_list_count_format" />
+
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
@@ -161,7 +170,6 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-
 
 
         <androidx.recyclerview.widget.RecyclerView

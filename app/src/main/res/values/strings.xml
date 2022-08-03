@@ -219,7 +219,7 @@
     <string name="forgot_password">忘记密码</string>
     <string name="password_reset">重置密码</string>
     <string name="password_reset_success">密码修改成功</string>
-    <string name="password_length_error_hint">密码长度错误，请输入8~16位字符的密码。</string>
+    <string name="password_length_error_hint">密码长度错误，请输入8–16位字符的密码。</string>
     <string name="password_format_error_hint">密码格式错误，请输入字母+数字组合。</string>
     <string name="main_back_hint">再按一次退出app。</string>
     <string name="sign_out_hint">确定退出登录吗？</string>

@@ -49,8 +49,11 @@
                     android:id="@+id/country_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
                     android:layout_centerVertical="true"
                     android:textColor="@color/white"
+                    android:gravity="center"
                     android:textSize="@dimen/sp_16"
                     tools:text="@string/country_code_format" />
 

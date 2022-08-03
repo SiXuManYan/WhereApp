@@ -221,7 +221,7 @@
     <string name="forgot_password">Forget password</string>
     <string name="password_reset">To reset your password</string>
     <string name="password_reset_success">Password reset success</string>
-    <string name="password_length_error_hint">The password length is wrong, please enter a password of 8~16 characters.</string>
+    <string name="password_length_error_hint">The password length is wrong, please enter a password of 8–16 characters.</string>
     <string name="password_format_error_hint">The password format is wrong, please enter a combination of letters and numbers.</string>
     <string name="main_back_hint">Press again to exit the application.</string>
     <string name="sign_out_hint">Are you sure to log out ？</string>

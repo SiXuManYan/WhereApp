@@ -102,19 +102,14 @@ public class FeaturesUtil {
      */
     public static boolean isWrongPasswordFormat(String password) {
 
-        if (TextUtils.isEmpty(password)) {
-            ToastUtils.showShort(StringUtils.getString(R.string.password_length_error_hint));
-            return true;
-        }
-        if (password.length() < 8 || password.length() > 16) {
+        if (TextUtils.isEmpty(password)||
+                password.length() < 8 || password.length() > 16 ||
+                !RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", password)) {
+
             ToastUtils.showShort(R.string.password_length_error_hint);
             return true;
         }
 
-        if (!RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", password)) {
-            ToastUtils.showShort(R.string.password_format_error_hint);
-            return true;
-        }
         return false;
     }
 

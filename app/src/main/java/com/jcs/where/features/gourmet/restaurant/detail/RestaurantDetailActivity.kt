@@ -237,7 +237,8 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
                       })*/
 
                 val dish = mDishAdapter.data[position]
-                if (BusinessUtils.getSafeStock(dish.inventory) > 0) {
+                val safeStock = BusinessUtils.getSafeStock(dish.inventory)
+                if (safeStock > 0) {
                     showCompanyDialog(dish)
                 } else {
                     startActivity(SetMealActivity::class.java, Bundle().apply {

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SpanUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.request.AddCartRequest
 import com.jcs.where.api.response.gourmet.cart.Products
@@ -81,6 +82,7 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
             mEatInFoodId = it.getInt(Constant.PARAM_ID, 0)
             mRestaurantId = it.getInt(Constant.PARAM_RESTAURANT_ID, 0)
             goodNumber = it.getInt(Constant.PARAM_GOOD_NUMBER, 1)
+            goodNumber = it.getInt(Constant.PARAM_STOCK, 0)
             mRestaurantName = it.getString(Constant.PARAM_RESTAURANT_NAME, "")
         }
     }
@@ -215,6 +217,10 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
     }
 
     private fun onBuyNow() {
+        if (mInventory<goodNumber){
+            ToastUtils.showShort(R.string.out_of_stock)
+            return
+        }
         val product = Products().apply {
             good_data.id = mData!!.id
             good_data.title = mData!!.title
@@ -242,6 +248,10 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
     }
 
     private fun onBuyAfter() {
+        if (mInventory<goodNumber){
+            ToastUtils.showShort(R.string.out_of_stock)
+            return
+        }
         val request = AddCartRequest().apply {
             good_id = mData!!.id
             good_num = goodNumber

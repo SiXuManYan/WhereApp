@@ -983,4 +983,5 @@ Gentleman must let go</string>
     <string name="all_category_selected">All Category</string>
     <string name="all_city_selected">All City</string>
     <string name="search_result_empty_hint">No results, try searching for other words</string>
+    <string name="out_of_stock">Out of stock</string>
 </resources>

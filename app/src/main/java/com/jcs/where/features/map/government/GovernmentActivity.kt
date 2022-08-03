@@ -276,6 +276,8 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
             override fun onPageSelected(position: Int) {
 
                 mChildTagAdapter.setNewInstance(null)
+                child_tag_rv.visibility = View.GONE
+
                 val category = mPagerAdapter.category
                 if (category.isEmpty()) {
                     return
@@ -285,6 +287,9 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                 val child = category[position]
                 if (child.has_children == 2 && child.child_categories.isNotEmpty()) {
                     mChildTagAdapter.setNewInstance(child.child_categories)
+                    child_tag_rv.visibility = View.VISIBLE
+                }else {
+                    child_tag_rv.visibility = View.GONE
                 }
 
                 // 获得展示在地图上的数据

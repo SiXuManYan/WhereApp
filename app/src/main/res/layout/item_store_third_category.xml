@@ -12,6 +12,6 @@
     android:paddingEnd="@dimen/dp_12"
     android:paddingBottom="@dimen/dp_4"
     android:text="@string/classification"
-    android:textColor="@color/selector_black_blue"
+    android:textColor="@color/selector_gray666_blue"
     android:textSize="@dimen/sp_12" />
 

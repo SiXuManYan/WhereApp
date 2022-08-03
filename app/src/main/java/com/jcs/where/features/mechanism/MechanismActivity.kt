@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.MechanismDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -22,7 +23,6 @@ import com.jcs.where.widget.JcsBanner
 import kotlinx.android.synthetic.main.activity_mechanism.*
 
 
-
 /**
  * Created by Wangsw  2021/9/4 15:08.
  *  机构详情
@@ -31,7 +31,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
 
     private var infoId = 0
 
-    /** 是否收藏 */
+    /** 是否收藏  2 已收藏*/
     private var collect_status = 1
 
 
@@ -43,7 +43,6 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
     private var facebook = ""
     private var mLat = 0.0
     private var mLng = 0.0
-
 
 
     companion object {
@@ -223,7 +222,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
             text = businessPhone
             visibility = if (businessPhone.isBlank()) {
                 View.GONE
-            }else{
+            } else {
                 View.VISIBLE
             }
 
@@ -232,7 +231,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
             text = data.email
             visibility = if (data.email.isBlank()) {
                 View.GONE
-            }else{
+            } else {
                 View.VISIBLE
             }
         }
@@ -240,7 +239,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
             text = data.web_site
             visibility = if (data.web_site.isBlank()) {
                 View.GONE
-            }else{
+            } else {
                 View.VISIBLE
             }
         }
@@ -248,7 +247,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
             text = data.facebook
             visibility = if (data.facebook.isBlank()) {
                 View.GONE
-            }else{
+            } else {
                 View.VISIBLE
             }
 
@@ -272,6 +271,13 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
 
     override fun collectionHandleSuccess(collectionStatus: Int) {
         collect_status = collectionStatus
+
+        if (collectionStatus == 2) {
+            ToastUtils.showShort(R.string.collection_success)
+        } else {
+            ToastUtils.showShort(R.string.cancel_collection_success)
+        }
+
         setLikeImage()
     }
 

@@ -23,21 +23,23 @@ import com.jcs.where.R
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
 import com.jcs.where.features.gourmet.comment.FoodCommentActivity
 import com.jcs.where.features.gourmet.restaurant.packages.SetMealActivity
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
-import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
-import com.jcs.where.utils.*
+import com.jcs.where.features.web.WebViewActivity
+import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.utils.BusinessUtils
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.FeaturesUtil
+import com.jcs.where.utils.MobUtil
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.list.DividerDecoration
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_restaurant_detail_2.*
-import java.util.*
 
 /**
  * Created by Wangsw  2021/4/1 10:28.
@@ -235,7 +237,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
                       })*/
 
                 val dish = mDishAdapter.data[position]
-                if ( BusinessUtils.getSafeStock( dish.inventory) > 0) {
+                if (BusinessUtils.getSafeStock(dish.inventory) > 0) {
                     showCompanyDialog(dish)
                 } else {
                     startActivity(SetMealActivity::class.java, Bundle().apply {
@@ -347,7 +349,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             finish()
         }
         chat_iv.setOnClickListener {
-            BusinessUtils.startRongCloudConversationActivity(this,mMerUuid,mRestaurantName)
+            BusinessUtils.startRongCloudConversationActivity(this, mMerUuid, mRestaurantName)
         }
         findViewById<View>(R.id.more_comment_tv).setOnClickListener {
             val bundle = Bundle()
@@ -448,10 +450,12 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
 
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
-        collect_status = if (collectionStatus) {
-            2
+        if (collectionStatus) {
+            collect_status = 2
+            ToastUtils.showShort(R.string.collection_success)
         } else {
-            1
+            collect_status = 1
+            ToastUtils.showShort(R.string.cancel_collection_success)
         }
         setLikeImage()
     }

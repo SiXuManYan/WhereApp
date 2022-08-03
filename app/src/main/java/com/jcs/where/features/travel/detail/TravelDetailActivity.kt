@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.travel.TravelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -346,10 +347,12 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
     }
 
     override fun collectionHandleSuccess(collectionStatus: Boolean) {
-        collect_status = if (collectionStatus) {
-            2
+        if (collectionStatus) {
+            collect_status = 2
+            ToastUtils.showShort(R.string.collection_success)
         } else {
-            1
+            collect_status = 1
+            ToastUtils.showShort(R.string.cancel_collection_success)
         }
         setLikeImage()
     }

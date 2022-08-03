@@ -900,8 +900,8 @@ Gentleman must let go</string>
     <string name="total_count_format">%1$d&#160;Item(s)</string>
     <string name="application_time">Application Time</string>
     <string name="success">Success</string>
-    <string name="collection_success">Collection Success</string>
-    <string name="cancel_collection_success">Cancel Success</string>
+    <string name="collection_success">collection success</string>
+    <string name="cancel_collection_success">cancel collection success</string>
     <string name="order_time_out">Payment timed out.</string>
     <string name="payment_hint">If payment is interrupted, please continue to complete the payment</string>
     <string name="pay_error_title">Payment Error</string>

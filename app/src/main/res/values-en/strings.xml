@@ -985,4 +985,5 @@ Gentleman must let go</string>
     <string name="search_result_empty_hint">No results, try searching for other words</string>
     <string name="out_of_stock">Out of stock</string>
     <string name="submit_orders">Submit Orders</string>
+    <string name="register">Sign Up</string>
 </resources>

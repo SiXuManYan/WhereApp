@@ -999,4 +999,5 @@ Gentleman must let go</string>
     <string name="search_result_empty_hint">无结果，尝试搜索其他词试试</string>
     <string name="out_of_stock">暂无库存</string>
     <string name="submit_orders">提交订单</string>
+    <string name="register">注册</string>
 </resources>

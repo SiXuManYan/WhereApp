@@ -144,7 +144,7 @@
                 android:layout_marginTop="@dimen/dp_44"
                 android:background="@drawable/shape_blue_radius_22"
                 android:gravity="center"
-                android:text="@string/login_in"
+                android:text="@string/register"
                 android:alpha="0.7"
                 android:textColor="@color/white_FEFEFE"
                 android:textSize="@dimen/sp_17"

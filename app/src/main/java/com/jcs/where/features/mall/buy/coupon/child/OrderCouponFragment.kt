@@ -185,10 +185,12 @@ class OrderCouponPresenter(private var view: OrderCouponView) : BaseMvpPresenter
             shop_id = shopId
         }
 
-        requestApi(mRetrofit.getOrderCoupon(apply), object : BaseMvpObserver<ArrayList<UserCoupon>>(view) {
+        requestApi(mRetrofit.getOrderCoupon(apply), object : BaseMvpObserver<ArrayList<UserCoupon>?>(view) {
 
-            override fun onSuccess(response: ArrayList<UserCoupon>) {
-
+            override fun onSuccess(response: ArrayList<UserCoupon>?) {
+                if (response.isNullOrEmpty()){
+                    return
+                }
                 if (selectedCouponId != null && selectedCouponId != 0) {
 
                     response.forEach {

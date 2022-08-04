@@ -160,16 +160,23 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
         val tel = addressInfo.tel
         val address = addressInfo.address
 
-        if (name.isNotBlank() || tel.isNotBlank() || address.isNotBlank()) {
-            logistics_container_ll.visibility = View.VISIBLE
+        // 3~8 状态显示收货地址 2022-08-04
+        if (goodStatus >= 3 || goodStatus <= 8) {
+            if (name.isNotBlank() || tel.isNotBlank() || address.isNotBlank()) {
+                logistics_container_ll.visibility = View.VISIBLE
 
-            logistics_info_tv.text = StringBuilder()
-                .append(getString(R.string.contact_name_format, name)).append("\r\n")
-                .append(getString(R.string.contact_number_format, tel)).append("\r\n")
-                .append(getString(R.string.contact_address_format, address))
+                logistics_info_tv.text = StringBuilder()
+                    .append(getString(R.string.contact_name_format, name)).append("\r\n")
+                    .append(getString(R.string.contact_number_format, tel)).append("\r\n")
+                    .append(getString(R.string.contact_address_format, address))
+            } else {
+                logistics_container_ll.visibility = View.GONE
+            }
+
         } else {
             logistics_container_ll.visibility = View.GONE
         }
+
 
         // 售后商品
         GlideUtil.load(this, goods.good_image, order_image_iv, 4)
@@ -247,7 +254,6 @@ class MallRefundInfoActivity : BaseMvpActivity<MallRefundInfoPresenter>(), MallR
             reason_split_v.visibility = View.VISIBLE
             fail_reason_tv.text = response.error_reason
         } else {
-            logistics_container_ll.visibility = View.GONE
             reason_split_v.visibility = View.GONE
         }
 

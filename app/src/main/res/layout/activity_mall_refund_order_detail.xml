@@ -64,7 +64,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_91">
+                android:layout_height="@dimen/dp_94">
 
 
                 <ImageView
@@ -96,7 +96,7 @@
                     android:layout_marginEnd="@dimen/dp_15"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
-                    tools:text="@string/refund_fail_desc" />
+                    tools:text="@string/shops_to_receive_desc_2" />
 
 
                 <TextView

@@ -339,8 +339,8 @@ object BusinessUtils {
      * 1 待售后 2 商家审核中 3商家待收货 4商家拒绝退货 5退款中 6退款成功 7取消售后 8 退款失败
      */
     fun getMallGoodRefundStatusDescText(status: Int): String = when (status) {
-        2 -> StringUtils.getString(R.string.store_status_desc_10)
-        3 -> StringUtils.getString(R.string.shops_to_receive_desc)
+        2 -> StringUtils.getString(R.string.merchant_under_review)
+        3 -> StringUtils.getString(R.string.shops_to_receive_desc_2)
         4 -> StringUtils.getString(R.string.store_status_desc_12)
         5 -> StringUtils.getString(R.string.store_status_desc_8)
         6 -> StringUtils.getString(R.string.store_status_desc_9)

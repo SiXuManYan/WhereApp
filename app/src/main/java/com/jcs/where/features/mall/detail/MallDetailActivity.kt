@@ -186,7 +186,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_MALL, goodId)
             MobUtil.shareFacebookWebPage(url, this@MallDetailActivity)
         }
-        select_attr_tv.setOnClickListener {
+        sku_rl.setOnClickListener {
             dialogHandle = 0
             skuDialog.selectedSku = lastSelectedSku
             skuDialog.show(supportFragmentManager, skuDialog.tag)

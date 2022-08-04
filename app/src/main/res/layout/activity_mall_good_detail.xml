@@ -89,6 +89,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/sku_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_59"
                 android:paddingStart="@dimen/dp_15"

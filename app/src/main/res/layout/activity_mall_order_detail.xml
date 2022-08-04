@@ -50,7 +50,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_91">
+                android:layout_height="@dimen/dp_94">
 
 
                 <ImageView
@@ -81,11 +81,12 @@
                     android:layout_marginStart="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginEnd="@dimen/dp_15"
+                    android:ellipsize="end"
+                    android:maxLines="3"
                     android:text="@string/line_split"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
-
-                    />
+                    tools:text="asdiajdoaj asjidjasoijd aojsdioasjio oaijdiajsiodj aoisjdiao iasojd isajddjoisjdiasioj dioasj  jdijasid aoi aiosjdio jaij dioaj j ioajidj  aiosjdiao dioajdiajd iaj aiojd aoi aosidjiao jiaosjdiaj siodj aiosjd oiaj daoisjd iaoj doaioj doj ioasjdia iojji oi" />
 
 
                 <TextView

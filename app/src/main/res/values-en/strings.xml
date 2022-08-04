@@ -368,7 +368,7 @@
     <string name="add_address">Add address</string>
     <string name="confirm_delete_address">Confirm delete address？</string>
     <string name="take_away_support">Support Takeaway&#160;&#62;</string>
-    <string name="per_price_format">₱%1$s&#160;/&#160;Person</string>
+    <string name="per_price_format">₱%1$s&#160;/&#160;Pax</string>
     <string name="filter_city">All City</string>
     <string name="filter_food">All Food</string>
     <string name="filter_other">Filter</string>
@@ -891,7 +891,7 @@ Gentleman must let go</string>
     <string name="refund_time">Refund Time</string>
     <string name="refund_number">After Sales Number</string>
     <string name="waiting_after_sales">Waiting for after-sales</string>
-    <string name="cancellation_after_sale">Cancellation after-sales</string>
+    <string name="cancellation_after_sale">Canceled Return</string>
     <string name="shops_to_receive_desc">The merchant has agreed to the after-sales application, and you need to send the goods back to the merchant. Please go to the after-sales page to check the merchant`s address</string>
     <string name="view_detail">View Detail</string>
     <string name="good_comment">Good Comment</string>
@@ -990,4 +990,6 @@ Gentleman must let go</string>
     <string name="submit_orders">Submit Orders</string>
     <string name="register">Sign Up</string>
     <string name="clear_history_hint">Are you sure you want to clear the history?</string>
+    <string name="shops_to_receive_desc_2">The merchant has agreed to the after-sales application, and you need to send the product back to the merchant.</string>
+    <string name="merchant_under_review">You have successfully initiated an after-sales application, please wait patiently for the merchant to review it.</string>
 </resources>

@@ -169,6 +169,8 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
                 select_all_tv.visibility = View.GONE
                 bottom_rl.visibility = View.GONE
                 bottom_v.visibility = View.GONE
+                right_vs.visibility = View.GONE
+
             } else {
                 loadMoreModule.loadMoreEnd()
             }
@@ -178,6 +180,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         select_all_tv.visibility = View.VISIBLE
         bottom_rl.visibility = View.VISIBLE
         bottom_v.visibility = View.VISIBLE
+        right_vs.visibility = View.VISIBLE
         if (page == Constant.DEFAULT_FIRST_PAGE) {
             mAdapter.setNewInstance(data)
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()

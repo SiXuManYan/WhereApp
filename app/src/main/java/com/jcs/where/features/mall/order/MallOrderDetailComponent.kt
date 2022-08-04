@@ -112,10 +112,6 @@ class MallOrderDetailPresenter(private var view: MallOrderDetailView) : BaseMvpP
     @SuppressLint("SetTextI18n")
     fun getStatusDescText(status_desc_tv: TextView, orderStatus: Int) {
         when (orderStatus) {
-            7 -> {
-                status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_7)
-                status_desc_tv.visibility = View.VISIBLE
-            }
             8 -> {
                 status_desc_tv.text = StringUtils.getString(R.string.store_status_desc_8)
                 status_desc_tv.visibility = View.VISIBLE

@@ -42,11 +42,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:maxWidth="@dimen/dp_100"
+                android:paddingStart="@dimen/dp_2"
+                android:paddingEnd="@dimen/dp_2"
                 android:maxLines="1"
                 android:text="@string/all"
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_14"
-                tools:text="" />
+                tools:text="asdsadasasdaddas" />
 
             <ImageView
                 android:id="@+id/firstArrowIv"
@@ -72,12 +75,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:maxWidth="@dimen/dp_100"
                 android:maxLines="1"
+                android:paddingStart="@dimen/dp_2"
+                android:paddingEnd="@dimen/dp_2"
                 android:text="@string/all"
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_14"
                 app:layout_constraintWidth_max="@dimen/dp_105"
-                tools:text="" />
+                tools:text="adasdasdasd" />
 
             <ImageView
                 android:id="@+id/secondArrowIv"
@@ -100,14 +106,17 @@
             <TextView
                 android:id="@+id/thirdCateTv"
                 android:layout_width="wrap_content"
+                android:maxWidth="@dimen/dp_100"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_4"
+                android:paddingStart="@dimen/dp_2"
+                android:paddingEnd="@dimen/dp_2"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/all"
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_14"
-                tools:text="" />
+                tools:text="asdasdasdsa" />
 
 
             <ImageView

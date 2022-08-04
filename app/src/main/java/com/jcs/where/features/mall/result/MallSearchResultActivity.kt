@@ -51,10 +51,6 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
         }
         search_tv.text = searchInput
         initContent()
-
-        if (shopId != null) {
-            cart_iv.visibility = View.GONE
-        }
     }
 
     private fun initContent() {

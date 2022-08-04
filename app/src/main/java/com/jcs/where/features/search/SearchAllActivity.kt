@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.KeyboardUtils
@@ -59,7 +60,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
 
         type = intent.getIntExtra(Constant.PARAM_TYPE, 0)
         categoryId = intent.getStringExtra(Constant.PARAM_CATEGORY_ID)
-        shopId = intent.getIntExtra(Constant.PARAM_SHOP_ID , 0)
+        shopId = intent.getIntExtra(Constant.PARAM_SHOP_ID, 0)
 
 
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
@@ -107,7 +108,25 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
         })
 
         delete_iv.setOnClickListener {
-            mAdapter.setNewInstance(null)
+
+            val create = AlertDialog.Builder(this)
+                .setTitle(R.string.hint)
+                .setCancelable(false)
+                .setMessage(getString(R.string.clear_history_hint))
+                .setPositiveButton(R.string.confirm) { dialog, _ ->
+                    mAdapter.setNewInstance(null)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.confirm) { dialog, _ ->
+                    dialog.dismiss()
+                }
+
+                .create()
+            create
+
+                .show()
+
+
         }
     }
 
@@ -141,7 +160,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
                 bundle.putString(Constant.PARAM_CATEGORY_ID, categoryId)
                 startActivity(MallSearchResultActivity::class.java, bundle)
             }
-            8->{
+            8 -> {
                 bundle.putInt(Constant.PARAM_SHOP_ID, shopId)
                 startActivity(MallSearchResultActivity::class.java, bundle)
             }

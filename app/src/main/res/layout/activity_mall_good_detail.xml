@@ -202,6 +202,7 @@
                 android:layout_height="match_parent"
                 android:minHeight="@dimen/dp_92"
                 android:text="@string/no_content"
+                android:textSize="@dimen/sp_14"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15" />
 

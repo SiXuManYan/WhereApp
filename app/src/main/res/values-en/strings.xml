@@ -517,6 +517,7 @@
     <string name="collapse_details">Collapse Details</string>
     <string name="product_details">Product details</string>
     <string name="number">Number</string>
+    <string name="stock">Stock</string>
     <string name="stock_format">Stock&#160;%1$d</string>
     <string name="stock_format_2">Stock&#160;%1$s</string>
     <string name="delivery_method_none">Please choose a delivery method</string>

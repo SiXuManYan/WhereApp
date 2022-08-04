@@ -95,12 +95,12 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
             selectedAttributeList.add(new SkuAttribute(entry.getKey(), ""));
         }
         // 一个sku时，默认选中
-        if (skuList.size() == 1) {
-            selectedAttributeList.clear();
-            for (SkuAttribute attribute : this.skuList.get(0).attributes) {
-                selectedAttributeList.add(new SkuAttribute(attribute.getKey(), attribute.getValue()));
-            }
-        }
+//        if (skuList.size() == 1) {
+//            selectedAttributeList.clear();
+//            for (SkuAttribute attribute : this.skuList.get(0).attributes) {
+//                selectedAttributeList.add(new SkuAttribute(attribute.getKey(), attribute.getValue()));
+//            }
+//        }
         // 清除所有选中状态
         clearAllLayoutStatus();
         // 设置是否可点击

@@ -223,58 +223,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
         allAttrList.addAll(attributeList)
     }
 
-
-    public fun updateSkuData() {
-        scroll_sku_list.setSkuList(product!!.skus)
-        if (product!!.skus.isEmpty()) {
-            return
-        }
-
-        val firstSku = product!!.skus[0]
-        if (firstSku.stockQuantity > 0) {
-            selectedSku = firstSku
-            // 选中第一个sku
-            scroll_sku_list.selectedSku = selectedSku
-            GlideUtil.load(context, selectedSku?.mainImage, iv_sku_logo)
-
-            val sellingPrice = selectedSku!!.sellingPrice
-            val originPrice = selectedSku!!.originPrice
-
-            BusinessUtils.setNowPriceAndOldPrice(sellingPrice, originPrice, tv_sku_selling_price, original_price_tv)
-
-
-            tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, selectedSku!!.stockQuantity)
-
-//            confirm_tv.isEnabled = selectedSku!!.stockQuantity > 0
-            val attributeList = selectedSku!!.attributes
-            val builder = StringBuilder()
-            for (i in attributeList.indices) {
-                if (i != 0) {
-                    builder.append("　")
-                }
-                val attribute = attributeList[i]
-                builder.append("\"" + attribute.value + "\"")
-            }
-            tv_sku_info.text = "已选：$builder"
-        } else {
-            GlideUtil.load(context, product!!.main_image, iv_sku_logo)
-
-            val sellingPrice = product!!.price
-            val originalCost = product!!.original_cost
-
-            BusinessUtils.setNowPriceAndOldPrice(sellingPrice, originalCost, tv_sku_selling_price, original_price_tv)
-
-            tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
-
-//            confirm_tv.isEnabled = false
-            tv_sku_info.text = "请选择：" + skuListData!![0].attributes[0].key
-        }
-
-
-    }
-
-
-    public fun showLastSku(lastSku: Sku?) {
+    private fun showLastSku(lastSku: Sku?) {
         if (product == null || lastSku == null) {
             return
         }
@@ -325,7 +274,7 @@ class SkuFragment : BaseBottomSheetDialogFragment<SkuPresenter>(), SkuView {
 
         BusinessUtils.setNowPriceAndOldPrice(sellingPrice, originalCost, tv_sku_selling_price, original_price_tv)
 
-        tv_sku_quantity.text = StringUtils.getString(R.string.stock_format, product!!.stock)
+        tv_sku_quantity.text = StringUtils.getString(R.string.stock)
 
 //        confirm_tv.isEnabled = false
 

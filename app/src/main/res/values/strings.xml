@@ -525,6 +525,7 @@
     <string name="collapse_details">收起详情</string>
     <string name="product_details">商品详情</string>
     <string name="number">数量</string>
+    <string name="stock">库存</string>
     <string name="stock_format">库存&#160;%1$d</string>
     <string name="stock_format_2">库存&#160;%1$s</string>
     <string name="delivery_method_none">请选择配送方式</string>

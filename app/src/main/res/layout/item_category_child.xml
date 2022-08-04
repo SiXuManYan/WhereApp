@@ -22,8 +22,11 @@
         android:layout_height="wrap_content"
         android:minHeight="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_3"
+        android:maxLines="3"
+        android:paddingStart="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_5"
+        android:ellipsize="end"
         android:gravity="center_horizontal"
-        android:lineSpacingMultiplier="1.2"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/sp_12"
         tools:text="@tools:sample/full_names" />

@@ -121,8 +121,13 @@ class CategoryAdapter2 : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.ite
             layoutManager = object : GridLayoutManager(context, 4, VERTICAL, false) {
                 override fun canScrollVertically() = false
             }
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(8f), 0, 0))
+            if (itemDecorationCount == 0) {
+                addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(8f), 0, 0))
+            }
+
         }
+
+
         childAdapter.setNewInstance(parent.child_categories)
         childAdapter.setOnItemClickListener { _, _, position ->
             val childCategory = childAdapter.data[position]

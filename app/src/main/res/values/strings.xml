@@ -1007,4 +1007,5 @@ Gentleman must let go</string>
     <string name="clear_history_hint">确定清空历史记录？</string>
     <string name="shops_to_receive_desc_2">商家已同意售后申请，需要您寄回商品给商家。</string>
     <string name="merchant_under_review">您已成功发起售后申请，请耐心等待商家审核。</string>
+    <string name="food_wrong_number">请输入正确联系电话</string>
 </resources>

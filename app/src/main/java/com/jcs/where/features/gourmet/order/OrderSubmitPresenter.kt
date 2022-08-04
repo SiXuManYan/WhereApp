@@ -1,6 +1,8 @@
 package com.jcs.where.features.gourmet.order
 
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
+import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.response.gourmet.cart.Products
@@ -24,9 +26,12 @@ class OrderSubmitPresenter(val view: OrderSubmitView) : BaseMvpPresenter(view) {
         val allProduct = getAllProduct(allCart)
 
 
-        if (FeaturesUtil.isWrongPhoneNumber("63", phoneStr)) {
+
+        if (phoneStr.length < 9 || phoneStr.length>15) {
+            ToastUtils.showShort(R.string.food_wrong_number)
             return
         }
+
 
         val goodIds = ArrayList<OrderSubmitChildRequest>()
 

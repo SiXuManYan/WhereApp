@@ -3,6 +3,9 @@ package com.jcs.where.yellow_page;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jcs.where.R;
@@ -13,9 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 选择分类的列表
@@ -112,33 +112,33 @@ public class CategoryToSelectedListFragment extends BaseFragment {
             CategoryResponse first = mTotalCategories.get(i);
             if (first.getId().equals(defaultChildCategoryId)) {
                 mSelectPosition.set(0, i);
-                mLevel= LEVEL_FIRST;
+                mLevel = LEVEL_FIRST;
                 return;
             }
             List<CategoryResponse> secondCategories = first.getChild_categories();
             for (int j = 0; j < secondCategories.size(); j++) {
                 CategoryResponse second = secondCategories.get(j);
                 if (second.getId().equals(defaultChildCategoryId)) {
-                    mSelectPosition.set(0,i);
-                    mSelectPosition.set(1,j);
-                    mLevel= LEVEL_SECOND;
+                    mSelectPosition.set(0, i);
+                    mSelectPosition.set(1, j);
+                    mLevel = LEVEL_SECOND;
                     return;
                 }
                 List<CategoryResponse> thirdCategories = second.getChild_categories();
                 for (int k = 0; k < thirdCategories.size(); k++) {
                     CategoryResponse third = thirdCategories.get(k);
                     if (third.getId().equals(defaultChildCategoryId)) {
-                        mSelectPosition.set(0,i);
-                        mSelectPosition.set(1,j);
-                        mSelectPosition.set(2,k);
-                        mLevel= LEVEL_THIRD;
+                        mSelectPosition.set(0, i);
+                        mSelectPosition.set(1, j);
+                        mSelectPosition.set(2, k);
+                        mLevel = LEVEL_THIRD;
                         return;
                     }
                 }
             }
         }
 
-        Log.e("CategoryFragment", "setDefaultChildCategoryId: "+"");
+        Log.e("CategoryFragment", "setDefaultChildCategoryId: " + "");
     }
 
 
@@ -193,7 +193,13 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         if (selectFirstCate == null || selectSecondPosition == null) {
             return null;
         }
-        return selectFirstCate.getChild_categories().get(selectSecondPosition);
+        List<CategoryResponse> child_categories = selectFirstCate.getChild_categories();
+
+        if (child_categories.isEmpty() || selectSecondPosition >= child_categories.size()) {
+            return null;
+        }
+
+        return child_categories.get(selectSecondPosition);
     }
 
     public CategoryResponse getSelectThirdCate() {
@@ -202,7 +208,12 @@ public class CategoryToSelectedListFragment extends BaseFragment {
         if (selectSecondCate == null || selectThirdPosition == null) {
             return null;
         }
-        return selectSecondCate.getChild_categories().get(selectThirdPosition);
+        List<CategoryResponse> child_categories = selectSecondCate.getChild_categories();
+        if (child_categories.isEmpty() || selectThirdPosition >= child_categories.size()) {
+            return null;
+        }
+
+        return child_categories.get(selectThirdPosition);
     }
 
     /**
@@ -222,17 +233,17 @@ public class CategoryToSelectedListFragment extends BaseFragment {
 
 
                 CategoryResponse selectSecondCate = getSelectSecondCate();
-                if (selectSecondCate!=null) {
+                if (selectSecondCate != null) {
                     return String.valueOf(selectSecondCate.getId());
-                }else  {
+                } else {
                     return "";
                 }
 
             case LEVEL_THIRD:
                 CategoryResponse selectThirdCate = getSelectThirdCate();
-                if (selectThirdCate!=null) {
+                if (selectThirdCate != null) {
                     return String.valueOf(selectThirdCate.getId());
-                }else {
+                } else {
                     return "";
                 }
         }

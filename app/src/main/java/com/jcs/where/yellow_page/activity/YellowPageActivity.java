@@ -121,7 +121,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mIntent = getIntent();
         mDefaultChildCategoryId = mIntent.getStringExtra(K_DEFAULT_CHILD_CATEGORY_ID);
         // 获取企业黄页的下级分类id
-        initCategories();
+        mCategories = mIntent.getIntegerArrayListExtra(K_CATEGORIES);
 
         // 从本地或网络获取数据
         getData();
@@ -275,7 +275,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
     }
 
     private void initCategories() {
-        mCategories = mIntent.getIntegerArrayListExtra(K_CATEGORIES);
+
     }
 
     @Override
@@ -362,21 +362,33 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
             hideCategoryListFragment();
         } else {
             // 如果选项列表未显示
-            if (!mToSelectedListFragment.isSecondLevel()) {
-                // 如果选项列表数据不是二级分类数据，则设置为二级分类数据
-                CategoryResponse firstSelected = mFirstLevelCategories.get(mToSelectedListFragment.getSelectFirstPosition());
-                mToSelectedListFragment.setData(firstSelected.getChild_categories(), CategoryToSelectedListFragment.LEVEL_SECOND);
-                changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_store_down);
-                CategoryResponse selectSecondCate = mToSelectedListFragment.getSelectSecondCate();
-                if (selectSecondCate != null && selectSecondCate.getChild_categories().size() > 0) {
-                    changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_store_down);
-                } else {
-                    setThirdLevelEnable(false);
-                }
+//            if (!mToSelectedListFragment.isSecondLevel()) {
+//                // 如果选项列表数据不是二级分类数据，则设置为二级分类数据
+//                CategoryResponse firstSelected = mFirstLevelCategories.get(mToSelectedListFragment.getSelectFirstPosition());
+//                mToSelectedListFragment.setData(firstSelected.getChild_categories(), CategoryToSelectedListFragment.LEVEL_SECOND);
+//                changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_store_down);
+//                CategoryResponse selectSecondCate = mToSelectedListFragment.getSelectSecondCate();
+//                if (selectSecondCate != null && selectSecondCate.getChild_categories().size() > 0) {
+//                    changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_store_down);
+//                } else {
+//                    setThirdLevelEnable(false);
+//                }
+//            } else {
+//                // 不刷新的话，选中状态的 对勾 icon 无法显示
+//                mToSelectedListFragment.notifyAdapter();
+//            }
+            // 如果选项列表数据不是二级分类数据，则设置为二级分类数据
+            CategoryResponse firstSelected = mFirstLevelCategories.get(mToSelectedListFragment.getSelectFirstPosition());
+            mToSelectedListFragment.setData(firstSelected.getChild_categories(), CategoryToSelectedListFragment.LEVEL_SECOND);
+            changeLevelTitleStatus(mFirstCateTv, R.color.black_333333, mFirstArrowIv, R.mipmap.ic_store_down);
+            CategoryResponse selectSecondCate = mToSelectedListFragment.getSelectSecondCate();
+            if (selectSecondCate != null && selectSecondCate.getChild_categories().size() > 0) {
+                changeLevelTitleStatus(mThirdCateTv, R.color.black_333333, mThirdArrowIv, R.mipmap.ic_store_down);
             } else {
-                // 不刷新的话，选中状态的 对勾 icon 无法显示
-                mToSelectedListFragment.notifyAdapter();
+                setThirdLevelEnable(false);
             }
+            mToSelectedListFragment.notifyAdapter();
+
             changeLevelTitleStatus(mSecondCateTv, R.color.blue_4D9FF2, mSecondArrowIv, R.mipmap.ic_store_up);
             showCategoryListFragment();
         }

@@ -7,7 +7,6 @@ import com.jcs.where.api.response.category.Category
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.category.CategoryAdapter
 import com.jcs.where.features.category.CategoryAdapter2
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration

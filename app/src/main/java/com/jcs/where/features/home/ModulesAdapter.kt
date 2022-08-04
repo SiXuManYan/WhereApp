@@ -22,6 +22,7 @@ class ModulesAdapter : BaseQuickAdapter<ModulesResponse, BaseViewHolder>(R.layou
         view.layoutParams = params
         GlideUtil.load(context, item.icon, holder.getView(R.id.modules_icon))
         holder.setText(R.id.modules_name, item.name)
+
         if (item.id == 2 && CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID) == "") {
             // 存储企业黄页的一级分类id
             CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID, item.categories)

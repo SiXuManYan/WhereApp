@@ -237,7 +237,7 @@ class MallRefundEditActivity : BaseMvpActivity<MallRefundEditPresenter>(), MallR
             amount_tv.text = getString(R.string.price_unit_format, it.refund_money)
             good_price_tv.text = getString(R.string.price_unit_format, it.goods_total)
             shop_offers_tv.text = getString(R.string.price_unit_format, it.shop_coupon_money)
-            platform_offers_tv.text = getString(R.string.price_unit_format, it.shop_coupon_money)
+            platform_offers_tv.text = getString(R.string.price_unit_format, it.order_coupon_money)
         }
 
         desc_et.setText(response.cancel_reason)

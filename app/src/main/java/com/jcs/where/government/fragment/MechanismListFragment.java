@@ -225,7 +225,7 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
                 boolean isLastPage = response.getLastPage() == page;
 
                 BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
-                if (data.isEmpty()) {
+                if (data.isEmpty() || data == null) {
                     if (page == Constant.DEFAULT_FIRST_PAGE) {
                         mAdapter.setNewInstance(null);
                         loadMoreModule.loadMoreComplete();

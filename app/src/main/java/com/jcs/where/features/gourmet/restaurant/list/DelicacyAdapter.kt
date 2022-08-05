@@ -5,7 +5,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
@@ -16,6 +15,7 @@ import com.jcs.where.api.response.gourmet.restaurant.RestaurantResponse
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/10/28 13:53.
@@ -52,7 +52,15 @@ class DelicacyAdapter : BaseMultiItemQuickAdapter<RestaurantResponse, BaseViewHo
         holder.setText(R.id.location_tv, item.trading_area.replace("\n", ""))
 
         // 人均
-        holder.setText(R.id.per_price_tv, StringUtils.getString(R.string.per_price_format, item.per_price))
+        val perPrice = item.per_price
+        val per_price_tv = holder.getView<TextView>(R.id.per_price_tv)
+        if (perPrice == BigDecimal.ZERO) {
+            per_price_tv.visibility = View.GONE
+        } else {
+            per_price_tv.visibility = View.VISIBLE
+            per_price_tv.setText(StringUtils.getString(R.string.per_price_format, perPrice))
+        }
+
 
         // tag
         val home_tag_rv = holder.getView<RecyclerView>(R.id.home_tag_rv)

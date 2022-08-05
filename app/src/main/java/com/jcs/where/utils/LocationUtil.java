@@ -91,6 +91,14 @@ public class LocationUtil {
     }
 
     private void getLocation() {
+        try {
+            handleLocation();
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    private void handleLocation() {
         //1.获取位置管理器
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         //添加用户权限申请判断

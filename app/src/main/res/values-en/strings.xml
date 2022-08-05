@@ -207,7 +207,7 @@
     <string name="login_rule_default_and">&#160;and the &#160;</string>
     <string name="login_rule_keyword_1">&#34;Privacy Policy&#34;</string>
     <string name="input_password_hint">Password 8&#8211;16 digits and letters combination</string>
-    <string name="input_password_hint_3">Please enter a password with 8–16 digits and letters</string>
+    <string name="input_password_hint_3">Please enter 8–16 digits and letters</string>
     <string name="input_password_hint_2">Please enter the password</string>
     <string name="confirm">Confirm</string>
     <string name="philippines_63">Philippines +63</string>

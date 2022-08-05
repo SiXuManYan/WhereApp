@@ -248,15 +248,21 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
             6 -> {
                 // 交易成功待评价
-                right_tv.visibility = View.VISIBLE
-                right_tv.text = StringUtils.getString(R.string.to_review)
-                right_tv.setOnClickListener {
-                    startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_ORDER_ID, item.id)
-                        putInt(Constant.PARAM_RESTAURANT_ID, item.model_id)
-                        putInt(Constant.PARAM_TYPE, 1)
-                    })
+                if (modelData.comment_status == 1){
+                    right_tv.visibility = View.VISIBLE
+                    right_tv.text = StringUtils.getString(R.string.to_review)
+                    right_tv.setOnClickListener {
+                        startActivity(FoodCommentPostActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_ORDER_ID, item.id)
+                            putInt(Constant.PARAM_RESTAURANT_ID, item.model_id)
+                            putInt(Constant.PARAM_TYPE, 1)
+                        })
+                    }
+                }else {
+                    right_tv.visibility = View.GONE
                 }
+
+
             }
             else -> {
                 right_tv.visibility = View.GONE

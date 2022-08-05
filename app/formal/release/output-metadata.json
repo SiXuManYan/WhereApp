@@ -5,16 +5,16 @@
     "kind": "Directory"
   },
   "applicationId": "com.jcs.where",
-  "variantName": "devRelease",
+  "variantName": "formalRelease",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "properties": [],
       "versionCode": 44,
-      "versionName": "0.3.2_beta4",
+      "versionName": "0.3.2_beta5",
       "enabled": true,
-      "outputFile": "Where_v44_(0.3.2_beta4)_20220804.apk"
+      "outputFile": "Where_v44_(0.3.2_beta5)_20220804.apk"
     }
   ]
 }

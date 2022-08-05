@@ -248,7 +248,7 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                     }
                     right_tv.apply {
                         visibility = View.VISIBLE
-                        text = getString(R.string.evaluation)
+                        text = getString(R.string.evaluation_go)
                     }
                     right_tv.setOnClickListener {
                         startActivity(FoodCommentPostActivity::class.java, Bundle().apply {

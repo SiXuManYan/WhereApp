@@ -2103,7 +2103,7 @@ public interface RetrofitApi {
     /**
      * 缴费取消订单（退款）
      */
-    @GET("billsapi/v2/bills/orders/cancel")
+    @PUT("billsapi/v2/bills/orders/cancel")
     Observable<JcsResponse<JsonElement>> billsCancelOrder(
             @Body BillCancelOrder request);
 

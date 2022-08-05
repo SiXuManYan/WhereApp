@@ -409,8 +409,10 @@
     </androidx.appcompat.widget.Toolbar>
 
 
+    <!-- 2022-08-05 隐藏购物车 -->
     <com.jcs.where.widget.MessageView
         android:id="@+id/shopping_cart"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

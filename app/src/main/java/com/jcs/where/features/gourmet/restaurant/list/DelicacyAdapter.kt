@@ -67,7 +67,7 @@ class DelicacyAdapter : BaseMultiItemQuickAdapter<RestaurantResponse, BaseViewHo
 
                 layoutParams.apply {
                     topMargin = if (adapterPosition < 2) {
-                        SizeUtils.dp2px(16f)
+                        SizeUtils.dp2px(20f)
                     } else {
                         0
                     }

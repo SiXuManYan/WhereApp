@@ -68,8 +68,10 @@
         tools:text="$1000.00" />
 
 
+    <!-- 2022-08-05 隐藏美食下单 -->
     <TextView
         android:id="@+id/buy_tv"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_28"
         android:layout_alignParentEnd="true"

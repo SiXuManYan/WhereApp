@@ -220,8 +220,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         when (status) {
             1 -> {
-                // 1：待付款
-                right_tv.visibility = View.VISIBLE
+                // 1：待付款 2022-08-05 隐藏所有美食支付入口
+                right_tv.visibility = View.GONE
+    /*            right_tv.visibility = View.VISIBLE
                 right_tv.text = StringUtils.getString(R.string.to_pay_2)
 
                 right_tv.setOnClickListener {
@@ -243,7 +244,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                         orderTimeOut?.timeOutRefresh()
                     }
 
-                }
+                }*/
             }
 
             6 -> {

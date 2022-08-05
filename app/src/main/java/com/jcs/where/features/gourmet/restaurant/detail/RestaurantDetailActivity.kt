@@ -409,7 +409,14 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         name_tv.text = mRestaurantName
         score_tv.text = data.grade.toString()
         star_view.rating = data.grade
-        per_price_tv.text = getString(R.string.per_price_format, data.per_price)
+        val perPrice = data.per_price
+        if (perPrice.isNullOrBlank() || BusinessUtils.getSafeBigDecimal(perPrice) == BigDecimal.ZERO) {
+            per_price_tv.visibility = View.GONE
+        }else {
+            per_price_tv.visibility = View.VISIBLE
+            per_price_tv.text = getString(R.string.per_price_format, perPrice)
+        }
+
         address_name_tv.text = data.address
         time_tv.text = getString(R.string.time_format, data.start_time, data.end_time)
         if (data.take_out_status == 2) {

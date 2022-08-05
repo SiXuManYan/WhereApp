@@ -177,7 +177,7 @@
                         android:layout_toStartOf="@+id/password_rule_iv"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:hint="@string/input_password_hint_2"
+                        android:hint="@string/input_password_hint"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
                         android:lines="1"

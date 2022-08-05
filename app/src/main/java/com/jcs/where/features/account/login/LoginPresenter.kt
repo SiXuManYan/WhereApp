@@ -55,7 +55,7 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
         } else {
             // 密码
             if (TextUtils.isEmpty(password)) {
-                ToastUtils.showShort(StringUtils.getString(R.string.input_password_hint_2))
+                ToastUtils.showShort(StringUtils.getString(R.string.input_password_hint))
                 return
             }
             login(Constant.LOGIN_TYPE_PASSWORD, account, verifyCode, password)

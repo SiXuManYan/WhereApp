@@ -204,9 +204,7 @@
     <string name="login_rule_keyword_0">《用户协议》</string>
     <string name="login_rule_default_and">&#160;和&#160;</string>
     <string name="login_rule_keyword_1">《隐私政策》</string>
-    <string name="input_password_hint">密码8&#8211;16位数字字母组合</string>
-    <string name="input_password_hint_3">请输入8–16位字母和数字组合</string>
-    <string name="input_password_hint_2">请输入密码</string>
+    <string name="input_password_hint">请输入8–16位字母和数字组合</string>
     <string name="confirm">确定</string>
     <string name="philippines_63">菲律宾 +63</string>
     <string name="china_86">中国 +86</string>

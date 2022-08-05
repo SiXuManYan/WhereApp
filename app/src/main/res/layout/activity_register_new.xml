@@ -58,7 +58,7 @@
                     android:background="@null"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:hint="@string/input_password_hint_3"
+                    android:hint="@string/input_password_hint"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLength="20"

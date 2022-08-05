@@ -146,11 +146,12 @@ class RoomDetailFragment : BaseBottomSheetDialogFragment<RoomDetailPresenter>(),
         name_tv.text = hotelName
         title_name_tv.text = hotelName
 
-        booking_tv.visibility = if (roomStatus == 1) {
-            View.VISIBLE
-        }else {
-            View.GONE
-        }
+//        booking_tv.visibility = if (roomStatus == 1) {
+//            View.VISIBLE
+//        }else {
+//            View.GONE
+//        }
+        // 2022-08-05 物理隐藏预订按钮
 
     }
 

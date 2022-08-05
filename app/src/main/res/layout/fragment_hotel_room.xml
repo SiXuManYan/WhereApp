@@ -236,7 +236,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp_17"
             android:visibility="gone"
-            tools:visibility="visible" />
+           />
 
 
     </RelativeLayout>

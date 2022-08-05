@@ -1,6 +1,6 @@
 package com.jcs.where.features.home
 
-import android.view.ViewGroup
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,12 +16,11 @@ import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODU
 import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_2_SERVICE
 import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_3_FOOD
 import com.jcs.where.api.response.recommend.HomeRecommendResponse.Companion.MODULE_TYPE_4_TRAVEL
-import com.jcs.where.features.home.tag.HomeTagAdapter
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
-import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.ratingstar.RatingStarView
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/8/12 11:12.
@@ -97,6 +96,7 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
         BusinessUtils.initTag(data.tags, home_tag_rv)
 
         // 价格
+        val price_ll = holder.getView<LinearLayout>(R.id.price_ll)
         val price_tv = holder.getView<TextView>(R.id.price_tv)
         val original_price_tv = holder.getView<TextView>(R.id.original_price_tv)
 
@@ -104,6 +104,27 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
         val price = data.price
         val originalPrice = data.original_cost
         BusinessUtils.setNowPriceAndOldPrice(price, originalPrice, price_tv, original_price_tv)
+
+        // 2022-08-05 处理价格隐藏和显示
+        if (price == BigDecimal.ZERO) {
+            price_tv.visibility = View.GONE
+        } else {
+            price_tv.visibility = View.VISIBLE
+        }
+
+        if (originalPrice == BigDecimal.ZERO) {
+            original_price_tv.visibility = View.GONE
+        } else {
+            original_price_tv.visibility = View.VISIBLE
+        }
+
+        if (price_tv.visibility == View.GONE && original_price_tv.visibility == View.GONE) {
+            price_ll.visibility = View.GONE
+        }else {
+            price_ll.visibility = View.VISIBLE
+        }
+
+
     }
 
 
@@ -239,7 +260,6 @@ open class HomeRecommendAdapter : BaseMultiItemQuickAdapter<HomeRecommendRespons
         }
         GlideUtil.load(context, image, image_iv, 4)
     }
-
 
 
 }

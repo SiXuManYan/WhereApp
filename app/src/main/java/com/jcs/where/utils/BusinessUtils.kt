@@ -386,7 +386,7 @@ object BusinessUtils {
             .create()
 
         // 原价
-        if (price != oldPrice) {
+        if (price != oldPrice  ) {
             oldPriceTv.visibility = View.VISIBLE
 
             SpanUtils.with(oldPriceTv)

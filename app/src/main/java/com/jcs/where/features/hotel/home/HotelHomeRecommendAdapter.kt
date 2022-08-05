@@ -1,13 +1,12 @@
 package com.jcs.where.features.hotel.home
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.SpanUtils
-import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -17,6 +16,7 @@ import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.ratingstar.RatingStarView
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2021/9/23 10:12.
@@ -76,10 +76,33 @@ class HotelHomeRecommendAdapter : BaseMultiItemQuickAdapter<HotelHomeRecommend, 
         initTag(data, tag_ll)
 
         // 价格
+        val price_ll = holder.getView<LinearLayout>(R.id.price_ll)
         val price_tv = holder.getView<TextView>(R.id.price_tv)
         val original_price_tv = holder.getView<TextView>(R.id.original_price_tv)
 
-        BusinessUtils.setNowPriceAndOldPrice(data.price,data.original_cost,price_tv,original_price_tv)
+        val price = data.price
+        val originalPrice = data.original_cost
+        BusinessUtils.setNowPriceAndOldPrice(price, originalPrice, price_tv, original_price_tv)
+
+        // 2022-08-05 处理价格隐藏和显示
+        if (price == BigDecimal.ZERO) {
+            price_tv.visibility = View.GONE
+        } else {
+            price_tv.visibility = View.VISIBLE
+        }
+
+        if (originalPrice == BigDecimal.ZERO) {
+            original_price_tv.visibility = View.GONE
+        } else {
+            original_price_tv.visibility = View.VISIBLE
+        }
+
+        if (price_tv.visibility == View.GONE && original_price_tv.visibility == View.GONE) {
+            price_ll.visibility = View.GONE
+        } else {
+            price_ll.visibility = View.VISIBLE
+        }
+
     }
 
     /**

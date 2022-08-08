@@ -52,6 +52,7 @@ class CityFootprintFragment : BaseMvpFragment<FootprintPresenter>(), FootprintVi
 
             setEmptyImage(R.mipmap.ic_empty_card_coupon)
             setEmptyHint(R.string.empty_history_hint)
+            addEmptyList(this)
         }
 
         mAdapter = FootprintAdapter().apply {

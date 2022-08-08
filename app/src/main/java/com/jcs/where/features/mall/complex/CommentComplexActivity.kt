@@ -102,6 +102,7 @@ class CommentComplexActivity : BaseMvpActivity<CommentComplexPresenter>(), Comme
         emptyView = EmptyView(this).apply {
             setEmptyImage(R.mipmap.ic_empty_refund_comment)
             setEmptyHint(R.string.no_comments_yet)
+            addEmptyList(this)
         }
 
         mAdapter = HotelCommentAdapter().apply {
@@ -183,6 +184,7 @@ class CommentComplexActivity : BaseMvpActivity<CommentComplexPresenter>(), Comme
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

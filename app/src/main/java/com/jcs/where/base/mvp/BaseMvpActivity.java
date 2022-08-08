@@ -11,6 +11,7 @@ import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
+import com.jcs.where.view.empty.EmptyView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,10 +22,7 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseActivity implements BaseMvpView {
 
-
     public T presenter;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +50,15 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
 
     @Override
     public void onError(ErrorResponse errorResponse) {
-        stopLoading();
+        dismissLoadingDialog();
         int errCode = errorResponse.getErrCode();
         String errMsg = errorResponse.getErrMsg();
+
+        if (!emptyViewList.isEmpty()) {
+            for (EmptyView emptyView : emptyViewList) {
+                emptyView.showNetworkError(null);
+            }
+        }
 
         if (errCode <= 0) {
             ToastUtils.showShort(errMsg);
@@ -64,19 +68,8 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
         if (!errMsg.isEmpty()) {
             ToastUtils.showShort(errMsg);
         }
-//        if (errCode == 401) {
-//            new AlertDialog.Builder(this)
-//                    .setTitle(R.string.hint)
-//                    .setCancelable(false)
-//                    .setMessage(R.string.login_expired_hint)
-//                    .setPositiveButton(R.string.login_again, (dialogInterface, i) -> {
-//                        // todo 跳转至登录页
-//                    })
-//                    .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
-//                        dialogInterface.dismiss();
-//                    }).create().show();
-//
-//        }
+
+
     }
 
 
@@ -84,6 +77,7 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
     public void onEventReceived(BaseEvent<?> baseEvent) {
 
     }
+
 
 
 }

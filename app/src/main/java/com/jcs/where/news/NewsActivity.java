@@ -146,17 +146,14 @@ public class NewsActivity extends BaseActivity {
     private void updateFollow() {
         String followIds = getChannelIds(mFollowChannels);
         String moreIds = getChannelIds(mMoreChannels);
-        showLoading();
         mModel.updateFollow(followIds, moreIds, new BaseObserver<NewsAtyModel.UpdateFollowZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 showNetError(errorResponse);
-                stopLoading();
             }
 
             @Override
             public void onSuccess(@NotNull NewsAtyModel.UpdateFollowZipResponse updateFollowZipResponse) {
-                stopLoading();
 
                 // 清空缓存数据
                 mNewsFragments.clear();

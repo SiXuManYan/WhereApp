@@ -56,6 +56,8 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecyclerView;
 
+
+    private EmptyView emptyView ;
     private MechanismAdapter mAdapter;
 
     private YellowPageModel mModel;
@@ -92,8 +94,9 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        EmptyView emptyView = new EmptyView(this);
+        emptyView = new EmptyView(this);
         emptyView.showEmptyDefault();
+        addEmptyList(emptyView);
 
         // adapter
         mAdapter = new MechanismAdapter();
@@ -152,7 +155,6 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
      * 分类，对应企业黄页下所有分类的数据列表
      */
     private void getInitYellowPage() {
-        showLoading();
         String categoryIds = mCategories.toString();
         if (mDefaultChildCategoryId != null) {
             categoryIds = mDefaultChildCategoryId;
@@ -160,13 +162,15 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mModel.getInitData(categoryIds, new BaseObserver<YellowPageModel.YellowPageZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-                showNetError(errorResponse);
+                if (!emptyViewList.isEmpty()) {
+                    for (EmptyView emptyView : emptyViewList) {
+                        emptyView.showNetworkError(null);
+                    }
+                }
             }
 
             @Override
             public void onSuccess(@NonNull YellowPageModel.YellowPageZipResponse yellowPageZipResponse) {
-                stopLoading();
                 mFirstLevelCategories = yellowPageZipResponse.getCategories();
                 // 将分类数据注入分类选择Fragment中
                 injectToSelectFragment();
@@ -235,7 +239,11 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
-                showNetError(errorResponse);
+                if (!emptyViewList.isEmpty()) {
+                    for (EmptyView emptyView : emptyViewList) {
+                        emptyView.showNetworkError(null);
+                    }
+                }
             }
 
             @Override
@@ -254,6 +262,8 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 loadMoreModule.loadMoreComplete();
+                mAdapter.setNewInstance(null);
+                emptyView.showEmptyContainer();
             } else {
                 loadMoreModule.loadMoreEnd();
             }

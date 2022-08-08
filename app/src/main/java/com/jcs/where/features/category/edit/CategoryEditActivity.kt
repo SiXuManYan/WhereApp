@@ -3,6 +3,7 @@ package com.jcs.where.features.category.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.*
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -42,9 +43,14 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
 
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.blue_377BFF))
 
+        swipe_layout.setOnRefreshListener {
+            presenter.getEditableCategory()
+        }
+
         mSelectedAdapter = CategoryAdapter2().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
                 showEmptyNothing()
+                addEmptyList(this)
             })
             showEditButton(true)
             addChildClickViewIds(R.id.cut_iv)
@@ -69,6 +75,7 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
         mUnSelectedAdapter = CategoryAdapter2().apply {
             setEmptyView(EmptyView(this@CategoryEditActivity).apply {
                 showEmptyNothing()
+                addEmptyList(this)
             })
             showEditButton(true)
             addChildClickViewIds(R.id.add_iv)
@@ -139,11 +146,16 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
         }
     }
 
-    override fun bindFollowData(follow: ArrayList<Category>) =
-            mSelectedAdapter.setNewInstance(follow)
+    override fun bindFollowData(follow: ArrayList<Category>){
+        mSelectedAdapter.setNewInstance(follow)
+        swipe_layout.isRefreshing = false
+    }
 
-    override fun bindUnFollowData(unFollow: ArrayList<Category>) =
-            mUnSelectedAdapter.setNewInstance(unFollow)
+
+    override fun bindUnFollowData(unFollow: ArrayList<Category>) {
+        mUnSelectedAdapter.setNewInstance(unFollow)
+        swipe_layout.isRefreshing = false
+    }
 
     override fun followSuccess() {
         ToastUtils.showShort("Successful operation")
@@ -157,5 +169,9 @@ class CategoryEditActivity : BaseMvpActivity<CategoryEditPresenter>(), CategoryE
         finish()
     }
 
+    override fun onError(errorResponse: ErrorResponse?) {
+        swipe_layout.isRefreshing = false
+        super.onError(errorResponse)
+    }
 
 }

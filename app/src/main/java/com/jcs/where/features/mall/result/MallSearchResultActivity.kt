@@ -1,6 +1,5 @@
 package com.jcs.where.features.mall.result
 
-import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -38,6 +37,7 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     private var page = Constant.DEFAULT_FIRST_PAGE
 
+    private lateinit var emptyView: EmptyView
 
     override fun getLayoutId() = R.layout.activity_mall_search_result
 
@@ -55,10 +55,11 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
 
     private fun initContent() {
 
-        val emptyView = EmptyView(this).apply {
+        emptyView = EmptyView(this).apply {
             setEmptyImage(R.mipmap.ic_empty_search)
             setEmptyMessage(R.string.empty_search_message)
             setEmptyHint(R.string.empty_search_hint)
+            addEmptyList(this)
         }
 
         mAdapter = MallRecommendAdapter().apply {
@@ -97,6 +98,7 @@ class MallSearchResultActivity : BaseMvpActivity<MallSearchPresenter>(), MallSea
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

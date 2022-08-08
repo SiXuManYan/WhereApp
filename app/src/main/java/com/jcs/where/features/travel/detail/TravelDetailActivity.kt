@@ -139,7 +139,9 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
             setEmptyHint(R.string.no_content)
         }
 
-        mCommentAdapter = HotelCommentAdapter()
+        mCommentAdapter = HotelCommentAdapter().apply {
+            setEmptyView(emptyView)
+        }
         comment_rv.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
             override fun canScrollVertically(): Boolean = false
         }
@@ -326,10 +328,10 @@ class TravelDetailActivity : BaseMvpActivity<TravelDetailPresenter>(), TravelDet
 
         // 评价
         val list = response.comments
-        mCommentAdapter.setNewInstance(list)
         if (list.isEmpty()) {
-            mCommentAdapter.setEmptyView(emptyView)
+            emptyView.showEmptyContainer()
         }
+        mCommentAdapter.setNewInstance(list)
 
         // 介绍
         val content = response.content

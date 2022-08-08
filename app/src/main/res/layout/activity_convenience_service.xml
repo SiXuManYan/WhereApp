@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -17,6 +18,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
+        android:layout_below="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_35"
         app:tabGravity="fill"
@@ -27,9 +29,19 @@
         app:tabTextColor="@color/grey_666666" />
 
     <androidx.viewpager.widget.ViewPager
+        android:layout_below="@+id/tabLayout"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <com.jcs.where.view.empty.EmptyView
+        android:id="@+id/service_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/jcsTitle"
+        android:background="@color/white"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
-</LinearLayout>
+
+</RelativeLayout>

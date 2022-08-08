@@ -412,7 +412,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         val perPrice = data.per_price
         if (perPrice.isNullOrBlank() || BusinessUtils.getSafeBigDecimal(perPrice) == BigDecimal.ZERO) {
             per_price_tv.visibility = View.GONE
-        }else {
+        } else {
             per_price_tv.visibility = View.VISIBLE
             per_price_tv.text = getString(R.string.per_price_format, perPrice)
         }
@@ -481,9 +481,18 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
                 facebook_tv.visibility = View.GONE
             }
         }
-        mCommentAdapter.setNewInstance(data.comments)
-        mDishAdapter.setNewInstance(data.goods)
+        val comments = data.comments
+        if (comments.isNullOrEmpty()) {
+            emptyView.showEmptyContainer()
+        }
+        mCommentAdapter.setNewInstance(comments)
 
+
+        val goods = data.goods
+        if (goods.isNullOrEmpty()) {
+            emptyView2.showEmptyContainer()
+        }
+        mDishAdapter.setNewInstance(goods)
     }
 
 

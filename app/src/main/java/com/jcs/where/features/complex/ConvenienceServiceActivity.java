@@ -17,7 +17,6 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.bean.CityResponse;
-import com.jcs.where.features.complex.ConvenienceServiceModel;
 import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.government.adapter.MapListFragmentAdapter;
 import com.jcs.where.government.fragment.MechanismListFragment;
@@ -25,6 +24,7 @@ import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
+import com.jcs.where.view.empty.EmptyView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -61,6 +61,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
 
     private int mDefaultIndex;
+    private EmptyView service_empty;
 
     @Override
     protected void initView() {
@@ -70,6 +71,8 @@ public class ConvenienceServiceActivity extends BaseActivity {
         mViewPagerAdapter = new MapListFragmentAdapter(getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
+        service_empty = findViewById(R.id.service_empty);
+        service_empty.hideEmptyContainer();
 
     }
 
@@ -104,7 +107,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
             addCategoryNamedAll();
             mTabCategories.addAll(
                     JsonUtil.getInstance().fromJsonToList(
-                            jsonCategory, new  TypeToken<List<CategoryResponse>>() {
+                            jsonCategory, new TypeToken<List<CategoryResponse>>() {
                             }.getType()
                     )
             );
@@ -112,68 +115,51 @@ public class ConvenienceServiceActivity extends BaseActivity {
             injectTabDataToView();
         }
 
-        if (jsonCity.isEmpty()) {
-            // 获取 或 更新 city 数据
-            getCitiesFromNet();
-        } else {
-            List<CityResponse> cities = JsonUtil.getInstance().fromJsonToList(
-                    jsonCity, new TypeToken<List<CityResponse>>() {
-                    }.getType()
-            );
-        }
-
 
     }
 
     private void getCategoriesFromNet() {
-        showLoading();
         mModel.getCategories(mCategoryId, new BaseObserver<List<CategoryResponse>>() {
-            @Override
-            protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-                showNetError(errorResponse);
-            }
+
 
             @Override
             public void onSuccess(@NotNull List<CategoryResponse> categoryResponses) {
-                stopLoading();
+                service_empty.setVisibility(View.GONE);
                 addCategoryNamedAll();
                 mTabCategories.addAll(categoryResponses);
                 // 展示数据
                 injectTabDataToView();
             }
-        });
-    }
 
-    private void getCitiesFromNet() {
-        showLoading();
-        mModel.getAreaList(new BaseObserver<List<CityResponse>>() {
+
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-                showNetError(errorResponse);
-            }
+                if (service_empty.getVisibility() != View.VISIBLE) {
+                    service_empty.setVisibility(View.VISIBLE);
+                    service_empty.showNetworkError(v -> {
+                        getCategoriesFromNet();
+                        service_empty.setVisibility(View.GONE);
+                    });
 
-            @Override
-            public void onSuccess(@NotNull List<CityResponse> cityResponses) {
-                stopLoading();
+                }
             }
         });
     }
 
 
     private void getInitConvenienceService() {
-        showLoading();
         mModel.getInitData(mCategoryId, new BaseObserver<ConvenienceServiceModel.ConvenienceServiceZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
-                showNetError(errorResponse);
+                if (!emptyViewList.isEmpty()) {
+                    for (EmptyView emptyView : emptyViewList) {
+                        emptyView.showNetworkError(null);
+                    }
+                }
             }
 
             @Override
             public void onSuccess(@NotNull ConvenienceServiceModel.ConvenienceServiceZipResponse convenienceServiceZipResponse) {
-                stopLoading();
                 mTabCategories.clear();
                 mMechanismListFragments.clear();
 
@@ -254,9 +240,9 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
         mJcsTitle.setFirstRightIvClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putInt(Constant.PARAM_TYPE , 2);
-            bundle.putString(Constant.PARAM_CATEGORY_ID ,mCategoryId );
-            startActivity(SearchAllActivity.class ,bundle);
+            bundle.putInt(Constant.PARAM_TYPE, 2);
+            bundle.putString(Constant.PARAM_CATEGORY_ID, mCategoryId);
+            startActivity(SearchAllActivity.class, bundle);
         });
     }
 
@@ -282,5 +268,6 @@ public class ConvenienceServiceActivity extends BaseActivity {
     protected int getLayoutId() {
         return R.layout.activity_convenience_service;
     }
+
 
 }

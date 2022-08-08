@@ -1,9 +1,7 @@
 package com.jcs.where.features.home
 
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.BuildConfig
-import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -23,8 +21,17 @@ import io.rong.imlib.RongIMClient
  * Created by Wangsw  2021/4/12 13:53.
  *
  */
-class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
+class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
+
+    /** 轮播图是否请求失败 */
+    var isTopBannerError = false
+
+    /** 金刚区是否请求失败 */
+    var isPlateDataError = false
+
+    /** 子列表分类是否请求失败 */
+    var isChildError = false
 
     /**
      * 获取未读消息数量
@@ -53,7 +60,7 @@ class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
                             view.setMessageCount(apiUnreadMessageCount)
                         }
                     })
-                } catch (e:Exception) {
+                } catch (e: Exception) {
                     view.setMessageCount(apiUnreadMessageCount)
                 }
 
@@ -71,6 +78,7 @@ class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
     fun getTopBanner() {
         requestApi(mRetrofit.getBanners(1), object : BaseMvpObserver<List<BannerResponse>>(view) {
             override fun onSuccess(response: List<BannerResponse>?) {
+                isTopBannerError = false
                 if (response == null || response.isEmpty()) {
                     return
                 }
@@ -81,6 +89,12 @@ class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
                 }
                 view.bindTopBannerData(bannerUrls, response)
             }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                isTopBannerError = true
+                super.onError(errorResponse)
+
+            }
         })
     }
 
@@ -90,8 +104,14 @@ class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
     fun getPlateData() {
         requestApi(mRetrofit.modules, object : BaseMvpObserver<List<ModulesResponse>>(view) {
             override fun onSuccess(response: List<ModulesResponse>) {
+                isPlateDataError = false
                 val toMutableList = response.toMutableList()
                 view.bindPlateData(toMutableList)
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                isPlateDataError = true
+                super.onError(errorResponse)
             }
         })
 
@@ -157,12 +177,17 @@ class  HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
         requestApi(mRetrofit.homeChild, object : BaseMvpObserver<ArrayList<HomeChild>>(view) {
             override fun onSuccess(response: ArrayList<HomeChild>) {
-
+                isChildError = false
                 val titles: ArrayList<String> = ArrayList()
                 response.forEach {
                     titles.add(it.name)
                 }
                 view.bindHomeChild(response, titles)
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                isChildError = true
+                super.onError(errorResponse)
             }
 
         })

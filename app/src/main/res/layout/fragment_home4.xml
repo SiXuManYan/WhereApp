@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -103,7 +103,8 @@
     <com.jcs.where.features.home.HomeSwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/parent_abl">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/bottom_cl"
@@ -264,4 +265,14 @@
     </com.jcs.where.features.home.HomeSwipeRefreshLayout>
 
 
-</LinearLayout>
+    <com.jcs.where.view.empty.EmptyView
+        android:id="@+id/home_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/parent_abl"
+        android:background="@color/white"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+</RelativeLayout>

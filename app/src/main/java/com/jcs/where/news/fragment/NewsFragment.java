@@ -107,7 +107,6 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
     public void onResume() {
         super.onResume();
         if (!mIsFirst && !mIsLoaded) {
-            showLoading();
             getNewsList(page);
             mIsLoaded = true;
         }
@@ -123,7 +122,6 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
 
                 @Override
                 public void onSuccess(@NotNull PageResponse<NewsResponse> response) {
-                    stopLoading();
                     List<NewsResponse> data = response.getData();
                     boolean lastPage = response.getLastPage() == page;
                     mSwipeLayout.setRefreshing(false);
@@ -161,7 +159,6 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
 
                 @Override
                 public void onSuccess(@NotNull PageResponse<NewsResponse> response) {
-                    stopLoading();
                     List<NewsResponse> data = response.getData();
                     boolean lastPage = response.getLastPage() == page;
                     mSwipeLayout.setRefreshing(false);

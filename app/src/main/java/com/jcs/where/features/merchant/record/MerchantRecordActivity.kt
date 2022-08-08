@@ -36,6 +36,7 @@ class MerchantRecordActivity :BaseMvpActivity<MerchantRecordPresenter>(),Merchan
         }
         emptyView = EmptyView(this).apply {
             showEmptyDefault()
+            addEmptyList(this)
         }
         mAdapter = MerchantRecordAdapter().apply {
             setEmptyView(emptyView)
@@ -67,6 +68,7 @@ class MerchantRecordActivity :BaseMvpActivity<MerchantRecordPresenter>(),Merchan
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

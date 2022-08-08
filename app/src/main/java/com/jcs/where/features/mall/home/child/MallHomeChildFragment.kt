@@ -50,6 +50,8 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
     /** 商品推荐 */
     private lateinit var mAdapter: MallRecommendAdapter
 
+    private lateinit var emptyView: EmptyView
+
     private var page = Constant.DEFAULT_FIRST_PAGE
 
     override fun getLayoutId() = R.layout.fragment_mall_home_child
@@ -120,15 +122,16 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     private fun initContent() {
 
-        val emptyView = EmptyView(requireContext())
+        emptyView = EmptyView(requireContext())
         emptyView.showEmptyDefault()
+        addEmptyList(emptyView)
 
         mAdapter = MallRecommendAdapter().apply {
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener {
-                page ++
-                presenter.getRecommend(targetFirstCategory.id,page)
+                page++
+                presenter.getRecommend(targetFirstCategory.id, page)
             }
         }
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -151,7 +154,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
         page = Constant.DEFAULT_FIRST_PAGE
         presenter.handleBanner(targetFirstCategory)
-        presenter.getRecommend(targetFirstCategory.id,page)
+        presenter.getRecommend(targetFirstCategory.id, page)
         presenter.getTopBanner()
     }
 
@@ -173,7 +176,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
         point_view.setPointCount(result.size)
     }
 
-    override fun bindRecommend(data: MutableList<MallGood>,lastPage: Boolean) {
+    override fun bindRecommend(data: MutableList<MallGood>, lastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
             swipe_layout.isRefreshing = false
         }
@@ -182,6 +185,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

@@ -75,6 +75,7 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
     private fun initContent() {
         emptyView = EmptyView(context).apply {
             showEmptyDefault()
+            addEmptyList(this)
         }
         mAdapter = HomeRecommendAdapter().apply {
             setEmptyView(emptyView)
@@ -159,7 +160,7 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()

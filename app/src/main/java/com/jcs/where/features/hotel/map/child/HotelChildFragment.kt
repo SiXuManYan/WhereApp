@@ -53,13 +53,8 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
 
     private fun initList() {
         emptyView = EmptyView(context).apply {
-            initEmpty(
-                R.mipmap.ic_empty_search, R.string.empty_search,
-                R.string.empty_search_hint, R.string.back
-            ) {
-
-            }
-            action_tv.visibility = View.GONE
+            initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint)
+            addEmptyList(this)
         }
 
 
@@ -166,11 +161,11 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
                 }
             }
             EventCode.EVENT_REFRESH_CHILD_START_DATE -> {
-                mStartDateBean  = baseEvent.data as JcsCalendarAdapter.CalendarBean
+                mStartDateBean = baseEvent.data as JcsCalendarAdapter.CalendarBean
 
             }
             EventCode.EVENT_REFRESH_CHILD_END_DATE -> {
-                mEndDateBean  = baseEvent.data as JcsCalendarAdapter.CalendarBean
+                mEndDateBean = baseEvent.data as JcsCalendarAdapter.CalendarBean
             }
 
         }

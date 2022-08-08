@@ -5,6 +5,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -22,6 +23,7 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
 
     private lateinit var mAdapter: CategoryAdapter2
+
     private lateinit var emptyView: EmptyView
 
     override fun getLayoutId() = R.layout.fragment_category_2
@@ -31,15 +33,23 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
             BarUtils.addMarginTopEqualStatusBarHeight(view.findViewById(R.id.title_rl))
         }
 
-        mAdapter = CategoryAdapter2()
+        swipe_layout.setOnRefreshListener {
+            presenter.getCategoryList()
+        }
+
+        emptyView = EmptyView(requireContext()).apply {
+            showEmptyDefault()
+        }
+
+        mAdapter = CategoryAdapter2().apply {
+            setEmptyView(emptyView)
+        }
+
         recycler_view.apply {
             adapter = mAdapter
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.white), SizeUtils.dp2px(5f), 0, 0))
         }
 
-        emptyView = EmptyView(context).apply {
-            showEmptyNothing()
-        }
 
     }
 
@@ -55,6 +65,10 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
     }
 
     override fun bindData(response: ArrayList<Category>) {
+        swipe_layout.isRefreshing = false
+        if (response.isEmpty()) {
+            emptyView.showEmptyContainer()
+        }
         mAdapter.setNewInstance(response)
     }
 
@@ -84,13 +98,21 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
                         mAdapter.remove(it)
                     }
                 }
-
             }
             else -> {
             }
         }
 
 
+    }
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        swipe_layout.isRefreshing = false
+        super.onError(errorResponse)
+        emptyView.showNetworkError {
+            swipe_layout.isRefreshing = true
+            presenter.getCategoryList()
+        }
     }
 
 

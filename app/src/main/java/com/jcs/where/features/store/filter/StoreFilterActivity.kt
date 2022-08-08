@@ -148,7 +148,8 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
 
     private fun initContent() {
         emptyView = EmptyView(this).apply {
-            showEmptyNothing()
+            showEmptyDefault()
+            addEmptyList(this)
         }
 
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -283,7 +284,7 @@ class StoreFilterActivity : BaseMvpActivity<StoreFilterPresenter>(), StoreFilter
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 loadMoreModule.loadMoreComplete()
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

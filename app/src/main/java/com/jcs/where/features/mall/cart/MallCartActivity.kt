@@ -48,6 +48,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
         emptyView = EmptyView(this).apply {
             setEmptyImage(R.mipmap.ic_empty_cart)
             setEmptyHint(R.string.cart_is_empty)
+            addEmptyList(this)
         }
         mAdapter = MallCartAdapter().apply {
             setEmptyView(emptyView)
@@ -166,6 +167,7 @@ class MallCartActivity : BaseMvpActivity<MallCartPresenter>(), MallCartView, Mal
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
                 select_all_tv.visibility = View.GONE
                 bottom_rl.visibility = View.GONE
                 bottom_v.visibility = View.GONE

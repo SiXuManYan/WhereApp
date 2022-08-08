@@ -141,6 +141,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             setEmptyImage(R.mipmap.ic_empty_search)
             setEmptyMessage(R.string.empty_search_message)
             setEmptyHint(R.string.empty_search_hint)
+            addEmptyList(this)
         }
 
         mAdapter = DelicacyAdapter().apply {

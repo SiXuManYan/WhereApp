@@ -39,13 +39,8 @@ class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChild
 
     override fun initView(view: View) {
         emptyView = EmptyView(context).apply {
-            initEmpty(
-                R.mipmap.ic_empty_search, R.string.empty_search,
-                R.string.empty_search_hint, R.string.back
-            ) {
-
-            }
-            action_tv.visibility = View.GONE
+            initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint)
+            addEmptyList(this)
         }
         mAdapter = TravelChildAdapter().apply {
             setEmptyView(emptyView)
@@ -100,7 +95,6 @@ class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChild
         if (page == Constant.DEFAULT_FIRST_PAGE) {
             mAdapter.setNewInstance(response)
             loadMoreModule.checkDisableLoadMoreIfNotFullPage()
-
         } else {
             mAdapter.addData(response)
             if (lastPage) {
@@ -113,9 +107,8 @@ class TravelChildFragment : BaseMvpFragment<TravelChildPresenter>(), TravelChild
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = mAdapter.data[position]
-        TravelDetailActivity.navigation(requireContext(),data.id)
+        TravelDetailActivity.navigation(requireContext(), data.id)
     }
-
 
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

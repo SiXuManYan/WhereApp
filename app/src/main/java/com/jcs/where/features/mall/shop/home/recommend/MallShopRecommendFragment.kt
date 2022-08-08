@@ -48,6 +48,8 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
     /** 推荐header */
     private lateinit var recommendHeader: View
 
+    private lateinit var emptyView: EmptyView
+
     companion object {
 
         /**
@@ -126,8 +128,9 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
 
 
     private fun initContent() {
-        val emptyView = EmptyView(requireContext())
+        emptyView = EmptyView(requireContext())
         emptyView.showEmptyDefault()
+        addEmptyList(emptyView)
 
         mAdapter = MallRecommendAdapter().apply {
             hideShopName = true
@@ -183,8 +186,8 @@ class MallShopRecommendFragment : BaseMvpFragment<ShopRecommendPresenter>(), Sho
         if (data.isEmpty()) {
             if (mPage == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
-
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

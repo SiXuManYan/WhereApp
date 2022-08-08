@@ -65,6 +65,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
         }
     }
 
+    private lateinit var emptyView: EmptyView
 
     override fun isStatusDark() = true
 
@@ -106,8 +107,9 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
 
     private fun initContent() {
 
-        val emptyView = EmptyView(this)
+        emptyView = EmptyView(this)
         emptyView.showEmptyDefault()
+        addEmptyList(emptyView)
 
         mAdapter = MallRecommendAdapter().apply {
             setEmptyView(emptyView)
@@ -270,6 +272,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

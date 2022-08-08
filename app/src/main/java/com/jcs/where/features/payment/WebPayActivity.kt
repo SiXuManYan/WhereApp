@@ -164,6 +164,7 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
     override fun onError(errorResponse: ErrorResponse?) {
         super.onError(errorResponse)
         empty_view.visibility = View.VISIBLE
+        empty_view.showEmptyContainer()
     }
 
 

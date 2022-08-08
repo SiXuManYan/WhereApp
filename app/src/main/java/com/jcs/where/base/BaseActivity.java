@@ -28,18 +28,20 @@ import com.jcs.where.base.dialog.LoadingDialog;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.LocalLanguageUtil;
+import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.JcsTitle;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected JcsTitle mJcsTitle;
     private boolean mIsHasStatusBarColor = true;
-    //    private CustomProgressDialog mProgressDialog;
     private LoadingDialog loadingDialog;
-
+    protected ArrayList<EmptyView> emptyViewList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,15 +117,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void changeStatusTextColor() {
         View decor = getWindow().getDecorView();
         if (isStatusDark()) {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
-    }
-
-    protected void changeStatusTextColor(boolean isDark) {
-        View decor = getWindow().getDecorView();
-        if (isDark) {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -221,25 +214,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (errorResponse.getErrCode() != 401) {
             Log.e("BaseActivity", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
         }
-    }
-
-    public void showLoading() {
-//        if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-//            mProgressDialog = new CustomProgressDialog(this, "");
-//            mProgressDialog.show();
-//        }
-    }
-
-    public void stopLoading() {
-//        try {
-//            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//                mProgressDialog.dismiss();
-//                mProgressDialog = null;
-//            }
-//
-//        } catch (Exception e) {
-//
-//        }
     }
 
     protected void showLoadingDialog() {
@@ -405,11 +379,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 默认不弹出软键盘
-     */
-    protected void defaultSoftInputHidden() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+    protected void addEmptyList(EmptyView view){
+        this.emptyViewList.add(view);
     }
 
     @Override

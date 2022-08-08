@@ -44,6 +44,7 @@ class TravelCommentActivity : BaseMvpActivity<TravelCommentPresenter>(), TravelC
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(this).apply {
             showEmptyDefault()
+            addEmptyList(this)
         }
 
         mAdapter = HotelCommentAdapter().apply {
@@ -86,7 +87,7 @@ class TravelCommentActivity : BaseMvpActivity<TravelCommentPresenter>(), TravelC
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

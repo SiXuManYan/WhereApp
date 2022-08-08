@@ -992,4 +992,5 @@ Gentleman must let go</string>
     <string name="shops_to_receive_desc_2">The merchant has agreed to the after-sales application, and you need to send the product back to the merchant.</string>
     <string name="merchant_under_review">You have successfully initiated an after-sales application, please wait patiently for the merchant to review it.</string>
     <string name="food_wrong_number">Please enter the correct contact number</string>
+    <string name="empty_view_default_message">Loading…</string>
 </resources>

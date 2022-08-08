@@ -108,7 +108,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     private fun initList() {
         emptyView = EmptyView(this).apply {
             showEmptyDefault()
-            hideEmptyContainer()
+            addEmptyList(this)
         }
 
         mAdapter = HotelHomeRecommendAdapter().apply {

@@ -61,7 +61,8 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
     private fun initContent() {
 
         emptyView = EmptyView(this).apply {
-            showEmptyNothing()
+            showEmptyDefault()
+            addEmptyList(this)
         }
 
         mCommonAdapter = BillsChannelAdapter().apply {
@@ -102,14 +103,14 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
     override fun bindCommonData(response: ArrayList<BillsChannel>) {
         mCommonAdapter.setNewInstance(response)
         if (response.isNullOrEmpty()) {
-            emptyView.showEmptyDefault()
+            emptyView.showEmptyContainer()
         }
     }
 
     override fun bindCallData(response: ArrayList<CallChargeChannel>) {
         mCallAdapter.setNewInstance(response)
         if (response.isNullOrEmpty()) {
-            emptyView.showEmptyDefault()
+            emptyView.showEmptyContainer()
         }
     }
 

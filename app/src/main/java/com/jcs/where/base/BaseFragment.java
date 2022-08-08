@@ -19,17 +19,19 @@ import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.view.empty.EmptyView;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public abstract class BaseFragment extends Fragment {
 
     public CustomProgressDialog dialog;
-
-
     protected boolean isViewCreated = false;
     protected boolean isViewVisible = false;
     protected boolean hasLoad = false;
+    protected ArrayList<EmptyView> emptyViewList = new ArrayList<>();
 
 
     @Nullable
@@ -99,37 +101,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void bindListener();
 
-
-
-
-
-    public void showLoading(String msg) {
-/*        if (dialog != null && dialog.isShowing()) {
-        } else {
-            dialog = new CustomProgressDialog(getContext(), msg);
-            dialog.show();
-        }*/
-    }
-
-    public void showLoading() {
-  /*      if (dialog != null && dialog.isShowing()) {
-        } else {
-            dialog = new CustomProgressDialog(getContext(), "");
-            dialog.show();
-        }*/
-    }
-
-    public void stopLoading() {
-/*        try {
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-                dialog = null;
-            }
-
-        } catch (Exception e) {
-
-        }*/
-    }
 
     protected void toActivity(Class<?> clazz) {
         startActivity(new Intent(getContext(), clazz));
@@ -203,7 +174,7 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    protected final void startActivityAfterLogin(@NotNull Class<?> target,  Bundle bundle) {
+    protected final void startActivityAfterLogin(@NotNull Class<?> target, Bundle bundle) {
         String token = CacheUtil.getToken();
         if (TextUtils.isEmpty(token)) {
             startActivity(LoginActivity.class);
@@ -243,5 +214,10 @@ public abstract class BaseFragment extends Fragment {
         }
 
     }
+
+    protected void addEmptyList(EmptyView view){
+        this.emptyViewList.add(view);
+    }
+
 
 }

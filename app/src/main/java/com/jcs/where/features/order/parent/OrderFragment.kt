@@ -47,6 +47,10 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
         }
         tabs_type.setSelectTextScale(1.0f)
 
+        order_empty.apply {
+            hideEmptyContainer()
+        }
+
 
     }
 
@@ -67,6 +71,7 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
     }
 
     override fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>, isInit: Boolean) {
+        order_empty.visibility = View.GONE
         mType.clear()
         mType.addAll(response)
 
@@ -128,6 +133,17 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
         }
 
         override fun getCount(): Int = mType.size
+    }
+
+    override fun getTabError() {
+        if (order_empty.visibility != View.VISIBLE) {
+            order_empty.visibility = View.VISIBLE
+            order_empty.showNetworkError {
+                presenter.getTabs(true)
+                order_empty.visibility = View.GONE
+            }
+
+        }
     }
 
 

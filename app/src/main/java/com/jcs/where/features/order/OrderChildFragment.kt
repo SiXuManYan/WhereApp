@@ -17,7 +17,6 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.order.detail2.DelicacyOrderDetailActivity
 import com.jcs.where.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity
 import com.jcs.where.features.hotel.order.HotelOrderDetailActivity
-import com.jcs.where.features.main.MainActivity
 import com.jcs.where.features.mall.order.MallOrderDetailActivity
 import com.jcs.where.features.store.order.detail.StoreOrderDetailActivity
 import com.jcs.where.utils.Constant
@@ -54,6 +53,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
      */
     var orderType: Int = 0
 
+    private lateinit var emptyView: EmptyView
 
     override fun getLayoutId() = R.layout.fragment_order_child
 
@@ -61,9 +61,10 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
 
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.white))
-        val emptyView = EmptyView(requireContext()).apply {
+        emptyView = EmptyView(requireContext()).apply {
             setEmptyImage(R.mipmap.ic_empty_un_order)
             setEmptyHint(R.string.no_order_yet)
+            addEmptyList(this)
         }
         mAdapter = OrderListAdapter().apply {
             setEmptyView(emptyView)
@@ -115,6 +116,7 @@ class OrderChildFragment : BaseMvpFragment<OrderChildPresenter>(), OrderChildVie
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

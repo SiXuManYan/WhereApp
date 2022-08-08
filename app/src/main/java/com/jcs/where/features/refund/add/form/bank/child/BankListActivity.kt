@@ -46,6 +46,7 @@ class BankListActivity : BaseMvpActivity<BankListPresenter>(), BankListView {
     private fun initContent() {
         emptyView = EmptyView(this).apply {
             showEmptyDefault()
+            addEmptyList(this)
         }
         mAdapter = BankAdapter().apply {
             setEmptyView(emptyView)
@@ -75,6 +76,9 @@ class BankListActivity : BaseMvpActivity<BankListPresenter>(), BankListView {
     }
 
     override fun bindBank(response: ArrayList<RefundBankSelected>) {
+        if (response.isNullOrEmpty()) {
+            emptyView.showEmptyContainer()
+        }
         mAdapter.setNewInstance(response)
     }
 

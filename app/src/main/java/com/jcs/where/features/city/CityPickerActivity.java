@@ -141,17 +141,14 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
     }
 
     public void getCityData() {
-        showLoading();
         mModel.getCityPickers(new BaseObserver<CityPickerResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             public void onSuccess(@NotNull CityPickerResponse response) {
-                stopLoading();
                 HashSet<CityResponse> cityResponses = new HashSet<>();
 
                 List<CityPickerResponse.CityChild> lists = response.lists;

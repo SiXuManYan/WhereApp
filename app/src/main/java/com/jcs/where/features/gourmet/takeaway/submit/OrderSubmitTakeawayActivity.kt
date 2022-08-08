@@ -70,6 +70,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     /** 配送时间 */
     private var mDeliveryTime = ""
 
+    private lateinit var emptyView: EmptyView
 
     private lateinit var mAdapter: OrderSubmitTakeawayAdapter
 
@@ -104,10 +105,13 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecyclerView() {
+
+        emptyView = EmptyView(this).apply{
+            showEmptyDefault()
+        }
+
         mAdapter = OrderSubmitTakeawayAdapter().apply {
-            setEmptyView(EmptyView(this@OrderSubmitTakeawayActivity).apply {
-                showEmptyDefault()
-            })
+            setEmptyView(emptyView)
         }
 
         dish_rv.apply {
@@ -153,6 +157,9 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     }
 
     override fun initData() {
+        if (dish_list.isEmpty()) {
+            emptyView.showEmptyContainer()
+        }
         mAdapter.setNewInstance(dish_list)
         presenter = OrderSubmitTakeawayPresenter(this)
         presenter.getTimeList(mRestaurantId)

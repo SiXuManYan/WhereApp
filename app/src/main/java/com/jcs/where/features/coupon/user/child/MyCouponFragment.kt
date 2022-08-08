@@ -45,6 +45,7 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
         emptyView = EmptyView(requireContext()).apply {
             setEmptyImage(R.mipmap.ic_empty_coupon)
             setEmptyHint(R.string.no_coupon)
+            addEmptyList(this)
         }
 
         mAdapter = MyCouponAdapter().apply {

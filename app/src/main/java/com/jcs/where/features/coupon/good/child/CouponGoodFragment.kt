@@ -38,6 +38,8 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
 
     private var page = Constant.DEFAULT_FIRST_PAGE
 
+    private lateinit var emptyView: EmptyView
+
 
     override fun getLayoutId() = R.layout.fragment_refresh_list
 
@@ -47,7 +49,7 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
             categoryId = mCategoryId
             coupon_id = mCouponId
 
-            if (mShopId!=0) {
+            if (mShopId != 0) {
                 shopId = mShopId
             }
         }
@@ -64,8 +66,10 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
             }
         }
 
-        val emptyView = EmptyView(requireContext())
-        emptyView.showEmptyDefault()
+        emptyView = EmptyView(requireContext()).apply {
+            showEmptyDefault()
+            addEmptyList(this)
+        }
 
         mAdapter = MallRecommendAdapter().apply {
             setEmptyView(emptyView)
@@ -105,6 +109,7 @@ class CouponGoodFragment : BaseMvpFragment<CouponGoodPresenter>(), CouponGoodVie
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

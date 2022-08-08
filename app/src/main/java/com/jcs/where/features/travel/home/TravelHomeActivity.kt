@@ -17,7 +17,6 @@ import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.recommend.HomeRecommendResponse
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.AppBarStateChangeListener
 import com.jcs.where.features.home.HomeRecommendAdapter
@@ -26,6 +25,7 @@ import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.map.TravelMapActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.Constant
@@ -37,7 +37,6 @@ import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_travel_home.*
 import pl.droidsonroids.gif.GifImageView
-import java.util.*
 
 /**
  * Created by Wangsw  2021/9/13 11:14.
@@ -143,6 +142,8 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
             })
     }
 
+    private lateinit var emptyView: EmptyView
+
     /** 推荐列表 */
     private fun initRecommend() {
         swipeLayout.setOnRefreshListener(this)
@@ -162,8 +163,9 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                 })
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
-        val emptyView = EmptyView(this).apply {
+        emptyView = EmptyView(this).apply {
             showEmptyDefault()
+            addEmptyList(this)
         }
         mRecommendAdapter.apply {
             setEmptyView(emptyView)
@@ -286,6 +288,9 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
     override fun bindRecommendData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean) {
         swipeLayout.isRefreshing = false
         val loadMoreModule = mRecommendAdapter.loadMoreModule
+        if (data.isNullOrEmpty()) {
+            emptyView.showEmptyContainer()
+        }
         mRecommendAdapter.setNewInstance(data)
         loadMoreModule.loadMoreEnd()
     }

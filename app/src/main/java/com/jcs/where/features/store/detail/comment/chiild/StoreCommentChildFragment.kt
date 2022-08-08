@@ -87,6 +87,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
 
         emptyView = EmptyView(context).apply {
             showEmptyDefault()
+            addEmptyList(this)
         }
 
 
@@ -158,7 +159,7 @@ class StoreCommentChildFragment : BaseMvpFragment<StoreCommentPresenter>(), Stor
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

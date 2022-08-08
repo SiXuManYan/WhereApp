@@ -102,8 +102,14 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         initPlate()
         initNews()
         initScroll()
+        initEmpty()
     }
 
+    private fun initEmpty() {
+        home_empty.apply {
+            hideEmptyContainer()
+        }
+    }
 
 
     /** 轮播图 */
@@ -383,7 +389,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     override fun setMessageCount(i: Int) = message_view.setMessageCount(i)
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {
-
+        home_empty.visibility = View.GONE
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
 
@@ -433,12 +439,14 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     }
 
     override fun bindPlateData(toMutableList: MutableList<ModulesResponse>) {
+        home_empty.visibility = View.GONE
         mModulesAdapter.setNewInstance(toMutableList)
     }
 
     var scrollPosition = 0
 
     override fun bindNewsData(newsData: List<HomeNewsResponse>?) {
+        home_empty.visibility = View.GONE
         scrollPosition = 0
         if (newsData.isNullOrEmpty()) {
             news_rl.visibility = View.GONE
@@ -507,6 +515,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     override fun bindHomeChild(response: ArrayList<HomeChild>, titles: ArrayList<String>) {
         swipeLayout.isRefreshing = false
+        home_empty.visibility = View.GONE
         isInit = when {
             mType.isEmpty() -> {
                 true
@@ -552,11 +561,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         override fun getCount(): Int = mType.size
     }
 
-    override fun onError(errorResponse: ErrorResponse?) {
-        super.onError(errorResponse)
-        swipeLayout.isRefreshing = false
-    }
-
 
     private fun initCity() {
         val cityName = SPUtils.getInstance().getString(SPKey.SELECT_AREA_NAME, StringUtils.getString(R.string.default_city_name))
@@ -564,9 +568,27 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     }
 
 
-    override fun bindDefaultCity(cityName : String) {
+    override fun bindDefaultCity(cityName: String) {
         city_tv.text = cityName
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_HOME_NEARBY))
+    }
+
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        swipeLayout.isRefreshing = false
+        if (presenter.isChildError && presenter.isPlateDataError && presenter.isTopBannerError) {
+            if (home_empty.visibility != View.VISIBLE) {
+                home_empty.visibility = View.VISIBLE
+                home_empty.showNetworkError {
+                    requestData()
+                    home_empty.visibility = View.GONE
+                    swipeLayout.isRefreshing = true
+                }
+            }
+
+        }
+
     }
 
 

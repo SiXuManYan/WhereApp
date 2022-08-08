@@ -113,12 +113,12 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
 
         emptyView = new EmptyView(getActivity());
         emptyView.showEmptyDefault();
+        addEmptyList(emptyView);
 
 
         mAdapter = new MechanismAdapter();
         mAdapter.setEmptyView(emptyView);
         mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
-        mAdapter.setEmptyView(emptyView);
         mRecycler.setAdapter(mAdapter);
         mRecycler.addItemDecoration(new DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0));
 
@@ -229,7 +229,7 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
                     if (page == Constant.DEFAULT_FIRST_PAGE) {
                         mAdapter.setNewInstance(null);
                         loadMoreModule.loadMoreComplete();
-                        emptyView.showEmptyDefault();
+                        emptyView.showEmptyContainer();
                     } else {
                         loadMoreModule.loadMoreEnd();
                     }

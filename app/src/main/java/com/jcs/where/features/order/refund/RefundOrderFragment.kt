@@ -25,6 +25,9 @@ import kotlinx.android.synthetic.main.fragment_order_child.*
 class RefundOrderFragment : BaseMvpFragment<RefundOrderPresenter>(), RefundOrderView, SwipeRefreshLayout.OnRefreshListener,
     OnLoadMoreListener, OnItemClickListener {
 
+
+    private lateinit var emptyView: EmptyView
+
     private var page = Constant.DEFAULT_FIRST_PAGE
 
     private lateinit var mAdapter: RefundOrderAdapter
@@ -34,8 +37,9 @@ class RefundOrderFragment : BaseMvpFragment<RefundOrderPresenter>(), RefundOrder
     override fun initView(view: View) {
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.white))
-        val emptyView = EmptyView(requireContext()).apply {
+        emptyView = EmptyView(requireContext()).apply {
             showEmptyDefault()
+            addEmptyList(this)
         }
 
 
@@ -100,6 +104,7 @@ class RefundOrderFragment : BaseMvpFragment<RefundOrderPresenter>(), RefundOrder
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

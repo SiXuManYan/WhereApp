@@ -37,6 +37,7 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
     /** 商品列表 */
     private lateinit var mAdapter: MallRecommendAdapter
 
+    private lateinit var emptyView: EmptyView
 
     companion object {
 
@@ -54,7 +55,7 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
                     putInt(Constant.PARAM_CATEGORY_ID, it)
                 }
                 hideListShopName?.let {
-                    putBoolean(Constant.PARAM_TYPE,hideListShopName)
+                    putBoolean(Constant.PARAM_TYPE, hideListShopName)
                 }
             }
             fragment.arguments = bundle
@@ -74,8 +75,9 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
     }
 
     private fun initContent() {
-        val emptyView = EmptyView(requireContext())
+        emptyView = EmptyView(requireContext())
         emptyView.showEmptyDefault()
+        addEmptyList(emptyView)
 
         mAdapter = MallRecommendAdapter().apply {
             hideShopName = mHideListShopName
@@ -118,6 +120,7 @@ class MallShopGoodFragment : BaseMvpFragment<MallShopGoodPresenter>(), MallShopG
             if (mPage == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

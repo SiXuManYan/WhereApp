@@ -119,7 +119,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
             if (select_all_tv.isChecked) {
                 presenter.clearStoreCart()
                 mAdapter.setNewInstance(null)
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
             } else {
 
                 presenter.deleteCart(mAdapter)
@@ -187,7 +187,7 @@ class StoreCartFragment : BaseMvpFragment<StoreCartPresenter>(), StoreCartView,
 
         if (data.isEmpty()) {
             mAdapter.setNewInstance(null)
-            emptyView.showEmptyDefault()
+            emptyView.showEmptyContainer()
             select_all_tv.visibility = View.GONE
             return
         }

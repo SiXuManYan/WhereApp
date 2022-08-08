@@ -48,6 +48,7 @@ class CollectionFragment : BaseMvpFragment<CollectionPresenter>(), CollectionVie
         emptyView = EmptyView(requireContext()).apply {
             setEmptyImage(R.mipmap.ic_empty_favorite)
             setEmptyHint(R.string.empty_favorite)
+            addEmptyList(this)
         }
 
         mAdapter = CollectionAdapter().apply {

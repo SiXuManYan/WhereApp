@@ -67,17 +67,14 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     protected void initData() {
         mModel = new NewsDetailModel();
         mNewsId = getIntent().getStringExtra(Constant.PARAM_NEWS_ID);
-        showLoading();
         mModel.getNewsDetail(mNewsId, new BaseObserver<NewsDetailResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             protected void onSuccess(NewsDetailResponse response) {
-                stopLoading();
                 mNewsDetailResponse = response;
                 NewsDetailResponse.PublisherDTO publisher = response.getPublisher();
                 mFollowStatus = response.getFollowStatus();
@@ -119,19 +116,16 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
     }
 
     private void onCollectClicked(View view) {
-        showLoading();
         // 如果已收藏
         if (mNewsDetailResponse.getCollectStatus() == STATUS_FOLLOWED_COLLECTED) {
             mModel.delCollectNews(String.valueOf(mNewsDetailResponse.getId()), new BaseObserver<SuccessResponse>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    stopLoading();
                     showNetError(errorResponse);
                 }
 
                 @Override
                 protected void onSuccess(SuccessResponse response) {
-                    stopLoading();
                     mNewsDetailResponse.setCollectStatus(STATUS_UNFOLLOWED_UNCOLLECTED);
                     showUncollected();
                 }
@@ -142,13 +136,11 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
             mModel.postCollectNews(String.valueOf(mNewsDetailResponse.getId()), new BaseObserver<SuccessResponse>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    stopLoading();
                     showNetError(errorResponse);
                 }
 
                 @Override
                 protected void onSuccess(SuccessResponse response) {
-                    stopLoading();
                     mNewsDetailResponse.setCollectStatus(STATUS_FOLLOWED_COLLECTED);
                     showCollected();
                 }
@@ -158,7 +150,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
 
     private void onFollowedClicked(View view) {
         Integer publisherId = mNewsDetailResponse.getPublisher().getId();
-        showLoading();
         if (mFollowStatus == STATUS_FOLLOWED_COLLECTED) {
             toCancelFollow(publisherId);
         } else {
@@ -171,13 +162,11 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mModel.delFollowPublish(id, new BaseObserver<SuccessResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             protected void onSuccess(SuccessResponse response) {
-                stopLoading();
                 showToFollow();
                 mFollowStatus = STATUS_UNFOLLOWED_UNCOLLECTED;
             }
@@ -188,13 +177,11 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mModel.postFollowPublish(id, new BaseObserver<SuccessResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             protected void onSuccess(SuccessResponse response) {
-                stopLoading();
                 showFollowed();
                 mFollowStatus = STATUS_FOLLOWED_COLLECTED;
             }

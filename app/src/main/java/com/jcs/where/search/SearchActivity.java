@@ -149,17 +149,14 @@ public class SearchActivity extends BaseActivity {
      */
     private void getHotSearchFromNet() {
         if (mSearchTag == SearchTag.HOTEL) {
-            showLoading();
             mModel.getHotHotelList(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    stopLoading();
                     showNetError(errorResponse);
                 }
 
                 @Override
                 protected void onSuccess(List<String> response) {
-                    stopLoading();
                     mHotSearchAdapter.getData().clear();
                     mHotSearchAdapter.addData(response);
                 }
@@ -167,17 +164,14 @@ public class SearchActivity extends BaseActivity {
         }
 
         if (mSearchTag == SearchTag.NEWS) {
-            showLoading();
             mModel.getHotNewsList(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    stopLoading();
                     showNetError(errorResponse);
                 }
 
                 @Override
                 protected void onSuccess(List<String> response) {
-                    stopLoading();
                     mHotSearchAdapter.getData().clear();
                     mHotSearchAdapter.addData(response);
                 }
@@ -185,17 +179,14 @@ public class SearchActivity extends BaseActivity {
         }
 
         if (mSearchTag == SearchTag.CONVENIENCE_SERVICE) {
-            showLoading();
             mModel.getHotConvenienceServiceListAtSearch(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    stopLoading();
                     showNetError(errorResponse);
                 }
 
                 @Override
                 protected void onSuccess(List<String> response) {
-                    stopLoading();
                     mHotSearchAdapter.getData().clear();
                     mHotSearchAdapter.addData(response);
                 }
@@ -343,13 +334,11 @@ public class SearchActivity extends BaseActivity {
         mModel.getMechanismList(mAreaId, text, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             protected void onSuccess(PageResponse<MechanismResponse> response) {
-                stopLoading();
                 mSearchResultAdapter.getData().clear();
                 mSearchResultAdapter.addData(response.getData());
             }
@@ -360,13 +349,11 @@ public class SearchActivity extends BaseActivity {
         mModel.getNewsListByInput(text, new BaseObserver<PageResponse<NewsResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             protected void onSuccess(PageResponse<NewsResponse> response) {
-                stopLoading();
                 mSearchResultAdapter.getData().clear();
                 mSearchResultAdapter.addData(response.getData());
             }
@@ -377,13 +364,11 @@ public class SearchActivity extends BaseActivity {
         mModel.getHotelListByInput(mAreaId, text, new BaseObserver<PageResponse<HotelResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 
             @Override
             protected void onSuccess(PageResponse<HotelResponse> response) {
-                stopLoading();
                 mSearchResultAdapter.getData().clear();
                 mSearchResultAdapter.addData(response.getData());
             }

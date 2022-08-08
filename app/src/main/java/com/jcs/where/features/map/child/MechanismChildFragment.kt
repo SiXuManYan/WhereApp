@@ -45,13 +45,8 @@ class MechanismChildFragment : BaseMvpFragment<MechanismChildPresenter>(), Mecha
     override fun initView(view: View?) {
 
         emptyView = EmptyView(context).apply {
-            initEmpty(
-                R.mipmap.ic_empty_search, R.string.empty_search,
-                R.string.empty_search_hint, R.string.back
-            ) {
-
-            }
-            action_tv.visibility = View.GONE
+            initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint)
+            addEmptyList(this)
         }
         mAdapter = MechanismAdapter().apply {
             setEmptyView(emptyView)

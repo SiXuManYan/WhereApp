@@ -57,6 +57,8 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
     private var mer_uuid = ""
     private var mer_name = ""
 
+    private lateinit var emptyView: EmptyView
+
     override fun getLayoutId() = R.layout.activity_take_away_2
 
     override fun isStatusDark() = isToolbarDark
@@ -97,12 +99,14 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
         }
 
 
+        emptyView = EmptyView(this).apply {
+            showEmptyDefault()
+            setEmptyMessage(R.string.empty_cart)
+        }
+
         // 购物车列表
         mCartAdapter = TakeawayAdapter().apply {
-            setEmptyView(EmptyView(this@TakeawayActivity).apply {
-                showEmptyDefault()
-                empty_message_tv.text = StringUtils.getString(R.string.empty_cart)
-            })
+            setEmptyView(emptyView)
             onSelectCountChange = object : TakeawayAdapter.OnSelectCountChange {
 
                 override fun selectCountChange(goodNum: Int, id: Int) {
@@ -199,6 +203,10 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
         cart_iv.setOnClickListener {
             val selectedList = presenter.getSelectedList(mDishAdapter)
+            if (selectedList.isNullOrEmpty()) {
+                emptyView.showEmptyContainer()
+            }
+
             mCartAdapter.setNewInstance(selectedList)
 
             if (cart_ll.visibility != View.VISIBLE) {
@@ -235,6 +243,7 @@ class TakeawayActivity : BaseMvpActivity<TakeawayPresenter>(), TakeawayView, Tak
 
         clear_cart_tv.setOnClickListener {
             mCartAdapter.setNewInstance(null)
+            emptyView.showEmptyContainer()
             presenter.clearCart(mDishAdapter)
             handleBottom()
         }

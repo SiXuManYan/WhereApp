@@ -55,7 +55,6 @@ public class SettledTypeActivity extends BaseActivity {
         mModel.getMerchantType(typeLevel, parentId, new BaseObserver<List<MerchantTypeResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                stopLoading();
                 showNetError(errorResponse);
             }
 

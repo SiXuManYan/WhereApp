@@ -36,13 +36,15 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
 
     override fun getLayoutId() = R.layout.activity_shopping_cart
 
+    private lateinit var emptyView: EmptyView
+
     override fun initView() {
         BarUtils.setStatusBarColor(this, getColor(R.color.white))
 
-        val emptyView = EmptyView(this).apply {
-
+        emptyView = EmptyView(this).apply {
             setEmptyImage(R.mipmap.ic_empty_cart)
             setEmptyHint(R.string.cart_is_empty)
+            addEmptyList(this)
         }
 
         mAdapter = ShoppingCartAdapter().apply {
@@ -199,6 +201,7 @@ class ShoppingCartActivity : BaseMvpActivity<ShoppingCartPresenter>(), ShoppingC
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

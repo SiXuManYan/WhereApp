@@ -59,6 +59,7 @@ class OrderCouponFragment : BaseMvpFragment<OrderCouponPresenter>(), OrderCoupon
         emptyView = EmptyView(requireContext()).apply {
             setEmptyImage(R.mipmap.ic_empty_coupon)
             setEmptyHint(R.string.no_coupon)
+            addEmptyList(this)
         }
         headerView = LayoutInflater.from(requireContext()).inflate(R.layout.layout_order_coupon_header, null, false)
 

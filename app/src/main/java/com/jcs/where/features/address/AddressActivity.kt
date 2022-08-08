@@ -43,6 +43,7 @@ class AddressActivity : BaseMvpActivity<AddressPresenter>(), AddressView, OnItem
             setEmptyImage(R.mipmap.ic_empty_un_address)
             setEmptyMessage(R.string.no_address_yet)
             setEmptyHint(R.string.please_add_shipping_address)
+            addEmptyList(this)
         }
 
         mAdapter = AddressAdapter().apply {

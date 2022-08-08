@@ -58,6 +58,8 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
             setEmptyActionOnClickListener {
                 startActivityClearTop(MainActivity::class.java, null)
             }
+            addEmptyList(this)
+
         }
 
         mAdapter = SearchAllAdapter().apply {

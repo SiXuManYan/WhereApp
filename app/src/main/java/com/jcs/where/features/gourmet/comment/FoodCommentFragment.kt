@@ -63,7 +63,8 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(context).apply {
             setEmptyImage(R.mipmap.ic_empty_refund_comment)
-            setEmptyActionText(R.string.no_comments_yet)
+            setEmptyMessage(R.string.no_comments_yet)
+            addEmptyList(this)
         }
         mAdapter = HotelCommentAdapter().apply {
             loadMoreModule.isAutoLoadMore = true
@@ -112,7 +113,7 @@ class FoodCommentFragment : BaseMvpFragment<FoodCommentPresenter>(), FoodComment
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

@@ -43,6 +43,7 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
             setEmptyImage(R.mipmap.ic_empty_refund)
             setEmptyMessage(R.string.refund_method_empty)
             setEmptyHint(R.string.refund_method_empty_hint)
+            addEmptyList(this)
         }
 
         mAdapter = RefundMethodAdapter().apply {
@@ -73,6 +74,9 @@ class RefundMethodActivity : BaseMvpActivity<RefundMethodPresenter>(), RefundMet
 
 
     override fun bindData(toMutableList: MutableList<RefundMethod>) {
+        if (toMutableList.isNullOrEmpty()) {
+            emptyView.showEmptyContainer()
+        }
         mAdapter.setNewInstance(toMutableList)
     }
 

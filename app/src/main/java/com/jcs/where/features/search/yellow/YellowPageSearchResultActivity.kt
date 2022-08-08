@@ -48,13 +48,8 @@ class YellowPageSearchResultActivity : BaseMvpActivity<YellowPageSearchResultPre
         //
         search_tv.text = search
         emptyView = EmptyView(this).apply {
-            initEmpty(
-                R.mipmap.ic_empty_search, R.string.empty_search,
-                R.string.empty_search_hint, R.string.back
-            ) {
-
-            }
-            action_tv.visibility = View.GONE
+            initEmpty(R.mipmap.ic_empty_search, R.string.empty_search, R.string.empty_search_hint)
+            addEmptyList(this)
         }
         mAdapter = MechanismAdapter().apply {
             setEmptyView(emptyView)

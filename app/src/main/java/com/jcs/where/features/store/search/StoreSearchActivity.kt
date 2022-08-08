@@ -43,7 +43,8 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
             search_aet.text = it
         }
         emptyView = EmptyView(this).apply {
-            showEmptyNothing()
+            showEmptyDefault()
+            addEmptyList(this)
         }
         mAdapter = StoreSearchAdapter().apply {
             setEmptyView(emptyView)
@@ -61,7 +62,10 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
         recycler_view.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), SizeUtils.dp2px(1f),SizeUtils.dp2px(15f) , 0))
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary),
+                SizeUtils.dp2px(1f),
+                SizeUtils.dp2px(15f),
+                0))
         }
     }
 
@@ -80,7 +84,7 @@ class StoreSearchActivity : BaseMvpActivity<StoreSearchPresenter>(), StoreSearch
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 loadMoreModule.loadMoreComplete()
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

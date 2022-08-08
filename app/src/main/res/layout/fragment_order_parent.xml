@@ -87,8 +87,7 @@
             android:layout_marginBottom="@dimen/dp_16"
             android:text="@string/login_to_view_order"
             android:textColor="@color/black_333333"
-            android:textSize="@dimen/sp_14"
-         />
+            android:textSize="@dimen/sp_14" />
 
 
         <TextView
@@ -102,5 +101,15 @@
             android:textSize="@dimen/sp_14" />
 
     </LinearLayout>
+
+
+    <com.jcs.where.view.empty.EmptyView
+        android:id="@+id/order_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_rl"
+        android:background="@color/white"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </RelativeLayout>

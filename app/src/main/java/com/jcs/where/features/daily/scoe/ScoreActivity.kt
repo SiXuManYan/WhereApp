@@ -54,6 +54,7 @@ class ScoreActivity : BaseMvpActivity<ScorePresenter>(), ScoreView {
         emptyView = EmptyView(this).apply {
             setEmptyImage(R.mipmap.ic_empty_points)
             setEmptyHint(R.string.empty_points)
+            addEmptyList(this)
         }
 
         mAdapter = IntegralChildAdapter().apply {
@@ -114,6 +115,7 @@ class ScoreActivity : BaseMvpActivity<ScorePresenter>(), ScoreView {
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 loadMoreModule.loadMoreComplete()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

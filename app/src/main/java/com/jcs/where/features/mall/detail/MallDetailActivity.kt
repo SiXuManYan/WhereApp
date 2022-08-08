@@ -113,6 +113,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             empty_iv.visibility = View.GONE
             parent_ll.layoutParams.height = SizeUtils.dp2px(92f)
             setEmptyHint(R.string.no_content)
+            addEmptyList(this)
         }
 
         mCommentAdapter = HotelCommentAdapter().apply {
@@ -297,7 +298,12 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
         // 评价
         comment_count_tv.text = getString(R.string.comment_format, response.count)
-        mCommentAdapter.setNewInstance(response.comments)
+
+        val list = response.comments
+        if (list.isNullOrEmpty()) {
+            emptyView.showEmptyContainer()
+        }
+        mCommentAdapter.setNewInstance(list)
 
     }
 

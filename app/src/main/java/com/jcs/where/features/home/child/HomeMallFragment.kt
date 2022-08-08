@@ -65,8 +65,11 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
 
     private fun initContent() {
 
-        emptyView = EmptyView(requireContext())
-        emptyView.showEmptyDefault()
+        emptyView = EmptyView(requireContext()).apply {
+            showEmptyDefault()
+            addEmptyList(this)
+        }
+
 
         mAdapter = MallRecommendAdapter().apply {
             setEmptyView(emptyView)
@@ -117,7 +120,7 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()
@@ -146,6 +149,7 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
 
 
     override fun onError(errorResponse: ErrorResponse) {
+
         val errCode = errorResponse.getErrCode()
         if (errCode <= 0) {
             ToastUtils.showLong(errorResponse.getErrMsg())

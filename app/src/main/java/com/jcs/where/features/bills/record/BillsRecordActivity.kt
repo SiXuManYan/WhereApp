@@ -46,7 +46,8 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
     private fun initList() {
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(this).apply {
-         showEmptyDefault()
+            showEmptyDefault()
+            addEmptyList(this)
         }
         mAdapter = BillsRecordAdapter().apply {
             setEmptyView(emptyView)
@@ -104,7 +105,7 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
         if (toMutableList.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
-                emptyView.showEmptyDefault()
+                emptyView.showEmptyContainer()
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()
@@ -139,7 +140,7 @@ class BillsRecordActivity : BaseMvpActivity<BillsRecordPresenter>(), BillsRecord
             }
             R.id.resubmit_tv -> {
 
-                presenter.recommit(orderId,billsRecord.order_type)
+                presenter.recommit(orderId, billsRecord.order_type)
             }
             else -> {}
         }

@@ -1,5 +1,6 @@
 package com.jcs.where.view.empty
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import com.jcs.where.R
+import com.jcs.where.base.BaseActivity
 
 /**
  * Created by Wangsw  2021/3/11 10:56.
@@ -27,6 +30,7 @@ class EmptyView : LinearLayout {
     constructor(context: Context?) : super(context) {
         initView()
     }
+
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         initView()
@@ -52,52 +56,67 @@ class EmptyView : LinearLayout {
         empty_hint_tv = view.findViewById(R.id.empty_hint_tv)
         action_tv = view.findViewById(R.id.action_tv)
         parent_ll = view.findViewById(R.id.parent_ll)
+
     }
+
+
+
+
 
     fun setEmptyImage(@DrawableRes imageId: Int) {
         empty_iv.setImageResource(imageId)
+        hideEmptyContainer()
     }
 
     fun setEmptyMessage(@StringRes emptyMessage: Int) {
         empty_message_tv.setText(emptyMessage)
         empty_message_tv.visibility = View.VISIBLE
+        hideEmptyContainer()
     }
 
     fun setEmptyMessage(emptyMessage: String) {
         empty_message_tv.text = emptyMessage
         empty_message_tv.visibility = View.VISIBLE
+        hideEmptyContainer()
     }
 
     fun setEmptyHint(@StringRes hint: Int) {
         empty_hint_tv.setText(hint)
         empty_hint_tv.visibility = VISIBLE
+        hideEmptyContainer()
     }
 
 
     fun setEmptyHint(hint: String) {
         empty_hint_tv.setText(hint)
         empty_hint_tv.visibility = VISIBLE
+        hideEmptyContainer()
     }
 
     fun setEmptyActionText(@StringRes text: Int) {
         action_tv.setText(text)
         action_tv.visibility = VISIBLE
+        hideEmptyContainer()
     }
 
     fun setEmptyActionText(text: String) {
         action_tv.setText(text)
         action_tv.visibility = VISIBLE
+        hideEmptyContainer()
     }
-
 
 
     /**
      * 网络错误
      */
     fun showNetworkError(onClickListener: OnClickListener? = null) {
+        showEmptyContainer()
         empty_iv.setImageResource(R.mipmap.ic_empty_net)
+        empty_iv.visibility = View.VISIBLE
         empty_message_tv.setText(R.string.empty_network_error)
         empty_message_tv.visibility = View.VISIBLE
+
+        empty_hint_tv.visibility = View.GONE
 
         onClickListener?.let {
             action_tv.setText(R.string.empty_network_error_action)
@@ -108,21 +127,8 @@ class EmptyView : LinearLayout {
     }
 
 
-
-
     fun setEmptyActionOnClickListener(listener: OnClickListener?) {
         action_tv.setOnClickListener(listener)
-    }
-
-    /**
-     * 设置空布局
-     *
-     * @param imageId      空数据图片
-     * @param emptyMessage 提示文案
-     */
-    fun showEmpty(@DrawableRes imageId: Int, @StringRes emptyMessage: Int) {
-        setEmptyImage(imageId)
-        setEmptyMessage(emptyMessage)
     }
 
     /**
@@ -131,10 +137,12 @@ class EmptyView : LinearLayout {
     fun showEmptyDefault() {
         setEmptyImage(R.mipmap.ic_empty_card_coupon)
         setEmptyHint(R.string.empty_data_default)
+        hideEmptyContainer()
     }
 
     fun showEmptyNothing() {
-        empty_iv.imageAlpha = 0
+        showEmptyContainer()
+        empty_iv.visibility = View.INVISIBLE
         empty_message_tv.visibility = GONE
         empty_hint_tv.visibility = GONE
         action_tv.visibility = GONE
@@ -142,31 +150,45 @@ class EmptyView : LinearLayout {
 
     fun initEmpty(
         @DrawableRes imageId: Int,
-        @StringRes emptyMessage: Int,
-        @StringRes emptyHint: Int?=null,
+        @StringRes emptyMessage: Int? = null,
+        @StringRes emptyHint: Int? = null,
         @StringRes actionString: Int? = null,
-        listener: OnClickListener?  = null
+        listener: OnClickListener? = null,
     ) {
-        parent_ll.visibility = GONE
         empty_iv.setImageResource(imageId)
-        empty_message_tv.setText(emptyMessage)
+        emptyMessage?.let {
+            empty_message_tv.setText(it)
+            empty_message_tv.visibility = View.VISIBLE
+        }
         emptyHint?.let {
             empty_hint_tv.setText(it)
+            empty_hint_tv.visibility = View.VISIBLE
         }
         actionString?.let {
             action_tv.setText(it)
+            action_tv.visibility = View.VISIBLE
         }
         action_tv.setOnClickListener(listener)
+        hideEmptyContainer()
     }
+
 
     fun showEmptyContainer() {
-        parent_ll!!.visibility = VISIBLE
-        empty_hint_tv!!.visibility = VISIBLE
+        parent_ll.visibility = VISIBLE
     }
 
-    fun hideEmptyContainer() {
-        parent_ll!!.visibility = GONE
+     fun hideEmptyContainer() {
+        parent_ll.visibility = GONE
     }
 
+
+    private fun showEmptyLoading() {
+        empty_iv.setImageResource(R.mipmap.ic_empty_card_coupon)
+        empty_message_tv.visibility = View.INVISIBLE
+        empty_hint_tv.visibility = View.VISIBLE
+        empty_hint_tv.setText(R.string.empty_view_default_message)
+        action_tv.visibility = View.GONE
+
+    }
 
 }

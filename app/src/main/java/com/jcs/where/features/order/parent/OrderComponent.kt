@@ -1,5 +1,6 @@
 package com.jcs.where.features.order.parent
 
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
@@ -12,6 +13,7 @@ import com.jcs.where.storage.entity.User
  */
 interface OrderView : BaseMvpView {
     fun bindTab(response: ArrayList<OrderTabResponse>, titles: ArrayList<String>, isInit: Boolean)
+    fun getTabError()
 }
 
 class OrderPresenter(private var view: OrderView) : BaseMvpPresenter(view) {
@@ -30,6 +32,12 @@ class OrderPresenter(private var view: OrderView) : BaseMvpPresenter(view) {
                     titles.add( it.title)
                 }
                 view.bindTab(response, titles,isInit)
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                super.onError(errorResponse)
+                view.getTabError()
+
             }
 
         })

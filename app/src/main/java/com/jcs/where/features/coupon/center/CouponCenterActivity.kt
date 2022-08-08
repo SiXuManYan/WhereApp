@@ -46,6 +46,7 @@ class CouponCenterActivity : BaseMvpActivity<CouponCenterPresenter>(), CouponCen
 
         emptyView = EmptyView(this).apply {
             initEmpty(R.mipmap.ic_empty_card_coupon, R.string.no_coupon)
+            addEmptyList(this)
         }
 
         mAdapter = CouponCenterAdapter().apply {

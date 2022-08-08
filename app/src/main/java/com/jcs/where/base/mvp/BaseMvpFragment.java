@@ -12,6 +12,7 @@ import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.network.BaseMvpView;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.view.empty.EmptyView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,9 +50,16 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
 
     @Override
     public void onError(ErrorResponse errorResponse) {
-        stopLoading();
+
         int errCode = errorResponse.getErrCode();
         String errMsg = errorResponse.getErrMsg();
+
+        if (!emptyViewList.isEmpty()) {
+            for (EmptyView emptyView : emptyViewList) {
+                emptyView.showNetworkError(null);
+            }
+        }
+
 
         if (errCode <= 0) {
             ToastUtils.showLong(errMsg);
@@ -60,6 +68,8 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
         if (!errMsg.isEmpty()) {
             ToastUtils.showShort(errMsg);
         }
+
+
 
     }
 

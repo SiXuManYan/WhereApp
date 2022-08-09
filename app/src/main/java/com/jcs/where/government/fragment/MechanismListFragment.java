@@ -167,7 +167,6 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
         mModel.getChildCategories(3, mCategoryResponse.getId(), new BaseObserver<List<CategoryResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override
@@ -215,7 +214,6 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
-                showNetError(errorResponse);
             }
 
             @Override

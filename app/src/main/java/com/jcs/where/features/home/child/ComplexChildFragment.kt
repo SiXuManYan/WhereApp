@@ -189,10 +189,10 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
     }
 
 
-    override fun onError(errorResponse: ErrorResponse) {
-        val errCode = errorResponse.getErrCode()
-        if (errCode <= 0) {
-            ToastUtils.showLong(errorResponse.getErrMsg())
+    override fun onError(errorResponse: ErrorResponse?) {
+        val errCode = errorResponse?.getErrCode()
+        if (errCode == null || errCode <= 0) {
+            ToastUtils.showLong(errorResponse?.getErrMsg())
             emptyView.showNetworkError { getData() }
         }
     }

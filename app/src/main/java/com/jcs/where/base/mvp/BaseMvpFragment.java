@@ -70,7 +70,6 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
         }
 
 
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -79,4 +78,13 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends BaseFr
     }
 
 
+    @Override
+    public void showLoading() {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        dismissLoadingDialog();
+    }
 }

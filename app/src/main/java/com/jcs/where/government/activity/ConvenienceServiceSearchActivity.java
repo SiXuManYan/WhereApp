@@ -115,7 +115,6 @@ public class ConvenienceServiceSearchActivity extends BaseActivity implements On
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
-                showNetError(errorResponse);
             }
 
             @Override

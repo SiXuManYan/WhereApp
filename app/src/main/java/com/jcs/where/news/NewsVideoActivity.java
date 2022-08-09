@@ -54,7 +54,6 @@ public class NewsVideoActivity extends BaseNewsDetailActivity {
         mModel.getRecommendNews(new BaseObserver<List<NewsResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override

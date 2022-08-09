@@ -19,7 +19,6 @@ class AddressPresenter(private val view: AddressView) : BaseMvpPresenter(view) {
     val list: Unit
         get() {
             requestApi(mRetrofit.addressList(), object : BaseMvpObserver<ArrayList<AddressResponse>>(view) {
-
                 override fun onSuccess(response: ArrayList<AddressResponse>) {
                     view.bindList(response)
                 }

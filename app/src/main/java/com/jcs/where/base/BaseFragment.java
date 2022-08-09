@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jcs.where.R;
-import com.jcs.where.api.ErrorResponse;
+import com.jcs.where.base.dialog.LoadingView;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.view.empty.EmptyView;
@@ -27,11 +25,11 @@ import java.util.ArrayList;
 
 public abstract class BaseFragment extends Fragment {
 
-    public CustomProgressDialog dialog;
     protected boolean isViewCreated = false;
     protected boolean isViewVisible = false;
     protected boolean hasLoad = false;
     protected ArrayList<EmptyView> emptyViewList = new ArrayList<>();
+    private LoadingView loadingDialog;
 
 
     @Nullable
@@ -139,15 +137,6 @@ public abstract class BaseFragment extends Fragment {
         return false;
     }
 
-    protected void showNetError(ErrorResponse errorResponse) {
-        if (errorResponse.getErrCode() != 401) {
-            Log.e("BaseFragment", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
-        }
-    }
-
-    protected int getPxFromDp(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
-    }
 
     /**
      * 延时加载
@@ -215,8 +204,50 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    protected void addEmptyList(EmptyView view){
+    protected void addEmptyList(EmptyView view) {
         this.emptyViewList.add(view);
+    }
+
+    protected void showLoadingDialog() {
+
+        try {
+            if (loadingDialog == null) {
+                loadingDialog = new LoadingView.Builder(getContext()).setCancelable(true).create();
+            }
+
+            if (!loadingDialog.isShowing()) {
+                loadingDialog.show();
+            }
+        } catch (Exception e) {
+
+        }
+
+
+    }
+
+
+    protected void showLoadingDialog(boolean cancelable) {
+        try {
+            if (loadingDialog == null) {
+                loadingDialog = new LoadingView.Builder(getContext()).setCancelable(cancelable).create();
+            }
+            if (!loadingDialog.isShowing()) {
+                loadingDialog.show();
+            }
+        } catch (Exception ignored) {
+
+        }
+
+    }
+
+    protected void dismissLoadingDialog() {
+        try {
+            if (loadingDialog != null && loadingDialog.isShowing()) {
+                loadingDialog.dismiss();
+            }
+        } catch (Exception e) {
+
+        }
     }
 
 

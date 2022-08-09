@@ -148,11 +148,11 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
     }
 
 
-    override fun onError(errorResponse: ErrorResponse) {
+    override fun onError(errorResponse: ErrorResponse?) {
 
-        val errCode = errorResponse.getErrCode()
-        if (errCode <= 0) {
-            ToastUtils.showLong(errorResponse.getErrMsg())
+        val errCode = errorResponse?.getErrCode()
+        if (errCode == null || errCode <= 0) {
+            ToastUtils.showLong(errorResponse?.getErrMsg())
             emptyView.showNetworkError {
                 page = Constant.DEFAULT_FIRST_PAGE
                 loadData()

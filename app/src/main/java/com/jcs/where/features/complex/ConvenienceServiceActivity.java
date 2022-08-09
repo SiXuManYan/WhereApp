@@ -119,11 +119,13 @@ public class ConvenienceServiceActivity extends BaseActivity {
     }
 
     private void getCategoriesFromNet() {
+        showLoadingDialog();
         mModel.getCategories(mCategoryId, new BaseObserver<List<CategoryResponse>>() {
 
 
             @Override
             public void onSuccess(@NotNull List<CategoryResponse> categoryResponses) {
+                dismissLoadingDialog();
                 service_empty.setVisibility(View.GONE);
                 addCategoryNamedAll();
                 mTabCategories.addAll(categoryResponses);
@@ -134,6 +136,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
             @Override
             protected void onError(ErrorResponse errorResponse) {
+                dismissLoadingDialog();
                 if (service_empty.getVisibility() != View.VISIBLE) {
                     service_empty.setVisibility(View.VISIBLE);
                     service_empty.showNetworkError(v -> {
@@ -148,9 +151,11 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
 
     private void getInitConvenienceService() {
+        showLoadingDialog();
         mModel.getInitData(mCategoryId, new BaseObserver<ConvenienceServiceModel.ConvenienceServiceZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
+                dismissLoadingDialog();
                 if (!emptyViewList.isEmpty()) {
                     for (EmptyView emptyView : emptyViewList) {
                         emptyView.showNetworkError(null);
@@ -160,6 +165,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
             @Override
             public void onSuccess(@NotNull ConvenienceServiceModel.ConvenienceServiceZipResponse convenienceServiceZipResponse) {
+                dismissLoadingDialog();
                 mTabCategories.clear();
                 mMechanismListFragments.clear();
 

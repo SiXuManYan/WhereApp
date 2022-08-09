@@ -1,14 +1,11 @@
-package com.jcs.where.features.message.notice;
+package com.jcs.where.features.message.notice
 
-import com.jcs.where.api.network.BaseMvpView;
-import com.jcs.where.api.response.message.SystemMessageResponse;
-
-import java.util.List;
+import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.message.SystemMessageResponse
 
 /**
  * Created by Wangsw  2021/2/20 15:39.
  */
-public interface SystemNoticeView extends BaseMvpView {
-
-    void bindList(List<SystemMessageResponse> data, boolean isLastPage);
+interface SystemNoticeView : BaseMvpView {
+    fun bindList(data: List<SystemMessageResponse>, isLastPage: Boolean)
 }

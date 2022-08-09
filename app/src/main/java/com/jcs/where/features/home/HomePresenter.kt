@@ -40,7 +40,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
         if (!User.isLogon()) {
             return
         }
-        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view) {
+        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view, false) {
             override fun onSuccess(response: UnReadMessage) {
 
                 val apiUnreadMessageCount = response.count
@@ -76,7 +76,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      * 获取顶部轮播图
      */
     fun getTopBanner() {
-        requestApi(mRetrofit.getBanners(1), object : BaseMvpObserver<List<BannerResponse>>(view) {
+        requestApi(mRetrofit.getBanners(1), object : BaseMvpObserver<List<BannerResponse>>(view, false) {
             override fun onSuccess(response: List<BannerResponse>?) {
                 isTopBannerError = false
                 if (response == null || response.isEmpty()) {
@@ -102,7 +102,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      * 金刚区数据
      */
     fun getPlateData() {
-        requestApi(mRetrofit.modules, object : BaseMvpObserver<List<ModulesResponse>>(view) {
+        requestApi(mRetrofit.modules, object : BaseMvpObserver<List<ModulesResponse>>(view, false) {
             override fun onSuccess(response: List<ModulesResponse>) {
                 isPlateDataError = false
                 val toMutableList = response.toMutableList()
@@ -121,16 +121,17 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      * 检查版本更新
      */
     fun checkAppVersion() {
-        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_NAME, "Android"), object : BaseMvpObserver<VersionResponse>(view) {
-            override fun onSuccess(response: VersionResponse) {
-                if (!response.status) {
-                    return
+        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_NAME, "Android"),
+            object : BaseMvpObserver<VersionResponse>(view, false) {
+                override fun onSuccess(response: VersionResponse) {
+                    if (!response.status) {
+                        return
+                    }
+                    view.checkAppVersion(response)
                 }
-                view.checkAppVersion(response)
-            }
 
-            override fun onError(errorResponse: ErrorResponse?) = Unit
-        })
+                override fun onError(errorResponse: ErrorResponse?) = Unit
+            })
 
     }
 
@@ -138,7 +139,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      * 新闻列表
      */
     fun getNewsList() {
-        requestApi(mRetrofit.homeNewsList, object : BaseMvpObserver<List<HomeNewsResponse>>(view) {
+        requestApi(mRetrofit.homeNewsList, object : BaseMvpObserver<List<HomeNewsResponse>>(view, false) {
             override fun onSuccess(response: List<HomeNewsResponse>?) {
                 view.bindNewsData(response)
             }
@@ -206,7 +207,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
             return
         }
 
-        requestApi(mRetrofit.getCityPickers("list"), object : BaseMvpObserver<CityPickerResponse>(view) {
+        requestApi(mRetrofit.getCityPickers("list"), object : BaseMvpObserver<CityPickerResponse>(view,false) {
             override fun onSuccess(response: CityPickerResponse) {
 
                 val defaultCity = response.defaultCity

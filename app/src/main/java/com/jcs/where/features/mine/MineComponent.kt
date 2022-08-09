@@ -30,7 +30,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         if (!User.isLogon()) {
             return
         }
-        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view) {
+        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view,false) {
             override fun onSuccess(response: UnReadMessage) {
                 val apiUnreadMessageCount = response.count
 

@@ -144,7 +144,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickerPresenter> imp
         mModel.getCityPickers(new BaseObserver<CityPickerResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override

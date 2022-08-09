@@ -30,7 +30,7 @@ class SplashPresenter(private val view: SplashView) : BaseMvpPresenter(view) {
 
 
             requestApi(mRetrofit.getAllChildCategories(1, categoryIds.toString()),
-                object : BaseMvpObserver<List<CategoryResponse>>(view) {
+                object : BaseMvpObserver<List<CategoryResponse>>(view,false) {
                     override fun onSuccess(response: List<CategoryResponse>) {
                         if (CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES) == "" && response.size > 0) {
                             CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_YELLOW_PAGE_CATEGORIES, response)

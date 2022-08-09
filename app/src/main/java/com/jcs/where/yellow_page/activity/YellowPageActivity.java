@@ -155,6 +155,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
      * 分类，对应企业黄页下所有分类的数据列表
      */
     private void getInitYellowPage() {
+        showLoadingDialog();
         String categoryIds = mCategories.toString();
         if (mDefaultChildCategoryId != null) {
             categoryIds = mDefaultChildCategoryId;
@@ -162,6 +163,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
         mModel.getInitData(categoryIds, new BaseObserver<YellowPageModel.YellowPageZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
+                dismissLoadingDialog();
                 if (!emptyViewList.isEmpty()) {
                     for (EmptyView emptyView : emptyViewList) {
                         emptyView.showNetworkError(null);
@@ -171,6 +173,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
 
             @Override
             public void onSuccess(@NonNull YellowPageModel.YellowPageZipResponse yellowPageZipResponse) {
+                dismissLoadingDialog();
                 mFirstLevelCategories = yellowPageZipResponse.getCategories();
                 // 将分类数据注入分类选择Fragment中
                 injectToSelectFragment();
@@ -235,9 +238,11 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
     }
 
     private void getMechanismDataFromNet(int page, String categoryId, String search) {
+        showLoadingDialog();
         mModel.getMechanismList2(page, categoryId, search, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
+                dismissLoadingDialog();
                 mSwipeLayout.setRefreshing(false);
                 if (!emptyViewList.isEmpty()) {
                     for (EmptyView emptyView : emptyViewList) {
@@ -248,6 +253,7 @@ public class YellowPageActivity extends BaseActivity implements OnLoadMoreListen
 
             @Override
             public void onSuccess(@NonNull PageResponse<MechanismResponse> mechanismPageResponse) {
+                dismissLoadingDialog();
                 mSwipeLayout.setRefreshing(false);
                 updateAdapter(mechanismPageResponse);
             }

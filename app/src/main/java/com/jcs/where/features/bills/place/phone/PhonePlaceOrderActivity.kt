@@ -111,11 +111,11 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
     }
 
 
-    override fun onError(errorResponse: ErrorResponse) {
+    override fun onError(errorResponse: ErrorResponse?) {
         dismissLoadingDialog()
         AlertDialog.Builder(this)
             .setTitle(R.string.prompt)
-            .setMessage(errorResponse.getErrMsg())
+            .setMessage(errorResponse?.getErrMsg())
             .setCancelable(false)
             .setPositiveButton(R.string.i_know) { dialogInterface, i ->
                 dialogInterface.dismiss()

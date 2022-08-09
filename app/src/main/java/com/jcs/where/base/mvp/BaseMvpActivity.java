@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.jcs.where.R;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.network.BaseMvpPresenter;
 import com.jcs.where.api.network.BaseMvpView;
@@ -50,7 +49,6 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
 
     @Override
     public void onError(ErrorResponse errorResponse) {
-        dismissLoadingDialog();
         int errCode = errorResponse.getErrCode();
         String errMsg = errorResponse.getErrMsg();
 
@@ -78,6 +76,13 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends BaseAc
 
     }
 
+    @Override
+    public void showLoading() {
+        showLoadingDialog();
+    }
 
-
+    @Override
+    public void hideLoading() {
+        dismissLoadingDialog();
+    }
 }

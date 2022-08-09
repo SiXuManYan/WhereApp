@@ -149,7 +149,6 @@ public class NewsActivity extends BaseActivity {
         mModel.updateFollow(followIds, moreIds, new BaseObserver<NewsAtyModel.UpdateFollowZipResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override

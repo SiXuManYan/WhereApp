@@ -152,7 +152,6 @@ public class SearchActivity extends BaseActivity {
             mModel.getHotHotelList(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    showNetError(errorResponse);
                 }
 
                 @Override
@@ -167,7 +166,6 @@ public class SearchActivity extends BaseActivity {
             mModel.getHotNewsList(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    showNetError(errorResponse);
                 }
 
                 @Override
@@ -182,7 +180,6 @@ public class SearchActivity extends BaseActivity {
             mModel.getHotConvenienceServiceListAtSearch(new BaseObserver<List<String>>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    showNetError(errorResponse);
                 }
 
                 @Override
@@ -334,7 +331,6 @@ public class SearchActivity extends BaseActivity {
         mModel.getMechanismList(mAreaId, text, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override
@@ -349,7 +345,6 @@ public class SearchActivity extends BaseActivity {
         mModel.getNewsListByInput(text, new BaseObserver<PageResponse<NewsResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override
@@ -364,7 +359,6 @@ public class SearchActivity extends BaseActivity {
         mModel.getHotelListByInput(mAreaId, text, new BaseObserver<PageResponse<HotelResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override

@@ -70,7 +70,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mModel.getNewsDetail(mNewsId, new BaseObserver<NewsDetailResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override
@@ -121,7 +120,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
             mModel.delCollectNews(String.valueOf(mNewsDetailResponse.getId()), new BaseObserver<SuccessResponse>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    showNetError(errorResponse);
                 }
 
                 @Override
@@ -136,7 +134,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
             mModel.postCollectNews(String.valueOf(mNewsDetailResponse.getId()), new BaseObserver<SuccessResponse>() {
                 @Override
                 protected void onError(ErrorResponse errorResponse) {
-                    showNetError(errorResponse);
                 }
 
                 @Override
@@ -162,7 +159,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mModel.delFollowPublish(id, new BaseObserver<SuccessResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override
@@ -177,7 +173,6 @@ public abstract class BaseNewsDetailActivity extends BaseActivity {
         mModel.postFollowPublish(id, new BaseObserver<SuccessResponse>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
-                showNetError(errorResponse);
             }
 
             @Override

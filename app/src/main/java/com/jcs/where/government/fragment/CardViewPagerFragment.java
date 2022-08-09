@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.features.travel.detail.TravelDetailActivity;
@@ -73,7 +74,7 @@ public class CardViewPagerFragment extends BaseFragment {
         mAdapter.addAllData(mapData);
         mPageAnimation = new PageAnimation();
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setPageMargin(getPxFromDp(15));
+        mViewPager.setPageMargin(SizeUtils.dp2px(15f));
         mViewPager.setPageTransformer(false, mPageAnimation);
         mViewPager.setOffscreenPageLimit(3);
         if (mapData != null && mapData.size() > 1) {
@@ -162,7 +163,7 @@ public class CardViewPagerFragment extends BaseFragment {
             TextView nameTv = view.findViewById(R.id.mechanismTitleTv);
             nameTv.setText(mechanismResponse.getName());
             RoundedImageView photoIv = view.findViewById(R.id.mechanismIconIv);
-            photoIv.setCornerRadius(getPxFromDp(4), 0, getPxFromDp(4), 0);
+            photoIv.setCornerRadius(SizeUtils.dp2px(4f), 0, SizeUtils.dp2px(4f), 0);
             List<String> images = mechanismResponse.getImages();
             if (images != null && !TextUtils.isEmpty(images.get(0))) {
                 GlideUtil.load(mContext, images.get(0), photoIv);

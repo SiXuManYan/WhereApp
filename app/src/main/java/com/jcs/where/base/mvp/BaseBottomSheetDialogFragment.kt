@@ -13,6 +13,7 @@ import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.dialog.LoadingView
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
@@ -35,6 +36,8 @@ abstract class BaseBottomSheetDialogFragment<T : BaseMvpPresenter> : BottomSheet
     private var lastClickTime = 0L
     private var clicked: HashSet<Int>? = null
 
+
+    private  var loadingDialog: LoadingView? = null
 
     abstract fun getLayoutId(): Int
     abstract fun initView(parent: View)
@@ -171,29 +174,68 @@ abstract class BaseBottomSheetDialogFragment<T : BaseMvpPresenter> : BottomSheet
         }
     }
 
-    override fun onError(errorResponse: ErrorResponse) {
-        stopLoading()
-        val errCode = errorResponse.errCode
-        val errMsg = errorResponse.errMsg
-        if (errCode <= 0) {
+    override fun onError(errorResponse: ErrorResponse?) {
+        val errCode = errorResponse?.errCode
+        val errMsg = errorResponse?.errMsg
+        if (errCode!! <= 0) {
             ToastUtils.showShort(errMsg)
             return
         }
-        if (errMsg.isEmpty()) {
+        if (errMsg.isNullOrBlank()) {
             ToastUtils.showShort(getString(R.string.request_error, errCode))
         } else {
             ToastUtils.showShort(errMsg)
         }
     }
 
-    open fun showLoading() = Unit
 
-    open fun stopLoading() = Unit
+    protected open fun showLoadingDialog() {
+        if (loadingDialog == null) {
+            loadingDialog = LoadingView.Builder(context).setCancelable(true).create()
+        }
+        loadingDialog?.let {
+            if (it.isShowing) {
+                it.show()
+            }
+        }
+
+
+    }
+
+
+    protected open fun showLoadingDialog(cancelable: Boolean) {
+        if (loadingDialog == null) {
+            loadingDialog = LoadingView.Builder(context).setCancelable(true).create()
+        }
+        loadingDialog?.let {
+            if (it.isShowing) {
+                it.show()
+            }
+        }
+    }
+
+    protected open fun dismissLoadingDialog() {
+        loadingDialog?.let {
+            if (it.isShowing) {
+                it.dismiss()
+            }
+        }
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     open fun onEventReceived(baseEvent: BaseEvent<*>) {
 
 
+    }
+
+
+    override fun showLoading() {
+        showLoadingDialog()
+    }
+
+    override fun hideLoading() {
+        dismissLoadingDialog()
     }
 
 

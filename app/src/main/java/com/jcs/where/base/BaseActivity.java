@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
-import com.jcs.where.api.ErrorResponse;
-import com.jcs.where.base.dialog.LoadingDialog;
+import com.jcs.where.base.dialog.LoadingView;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.LocalLanguageUtil;
@@ -40,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected JcsTitle mJcsTitle;
     private boolean mIsHasStatusBarColor = true;
-    private LoadingDialog loadingDialog;
+    private LoadingView loadingDialog;
     protected ArrayList<EmptyView> emptyViewList = new ArrayList<>();
 
     @Override
@@ -202,76 +198,54 @@ public abstract class BaseActivity extends AppCompatActivity {
         setMargins(view, 0, getStatusBarHeight(), 0, 0);
     }
 
-    protected void setAndroidNativeLightStatusBar(boolean dark) {
-
-    }
 
     protected boolean isStatusDark() {
         return false;
     }
 
-    protected void showNetError(ErrorResponse errorResponse) {
-        if (errorResponse.getErrCode() != 401) {
-            Log.e("BaseActivity", getClass().getSimpleName() + ":" + errorResponse.getErrMsg());
-        }
-    }
 
     protected void showLoadingDialog() {
-        dismissLoadingDialog();
-        loadingDialog = new LoadingDialog.Builder(this).setCancelable(true).create();
-        loadingDialog.show();
+        try {
+            if (loadingDialog == null) {
+                loadingDialog = new LoadingView.Builder(this).setCancelable(true).create();
+            }
+            if (!loadingDialog.isShowing()) {
+                loadingDialog.show();
+            }
+        } catch (Exception ignored) {
+
+        }
+
     }
 
 
     protected void showLoadingDialog(boolean cancelable) {
-        if (loadingDialog != null && loadingDialog.isShowing()) {
-        } else {
-            loadingDialog = new LoadingDialog.Builder(this).setCancelable(cancelable).create();
-            loadingDialog.show();
+
+        try {
+            if (loadingDialog == null) {
+                loadingDialog = new LoadingView.Builder(this).setCancelable(true).create();
+            }
+            if (!loadingDialog.isShowing()) {
+                loadingDialog.show();
+            }
+        } catch (Exception ignored) {
+
         }
+
     }
 
     protected void dismissLoadingDialog() {
-        if (loadingDialog != null && loadingDialog.isShowing()) {
-            loadingDialog.dismiss();
+
+        try {
+            if (loadingDialog != null && loadingDialog.isShowing()) {
+                loadingDialog.dismiss();
+            }
+        } catch (Exception ignored) {
+
         }
-        loadingDialog = null;
+
     }
 
-
-    protected void showToast(String msg) {
-        ToastUtils.showLong(msg);
-    }
-
-    public void showComing() {
-        com.blankj.utilcode.util.ToastUtils.showShort(getString(R.string.coming_soon));
-    }
-
-    protected int getPxFromDp(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
-    }
-
-    /**
-     * 隐藏键盘
-     */
-    protected void hideInput() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        View v = getWindow().peekDecorView();
-        if (null != v) {
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        }
-    }
-
-    /**
-     * 显示键盘
-     *
-     * @param et 输入焦点
-     */
-    public void showInput(final EditText et) {
-        et.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
-    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -380,7 +354,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void addEmptyList(EmptyView view){
+    protected void addEmptyList(EmptyView view) {
         this.emptyViewList.add(view);
     }
 

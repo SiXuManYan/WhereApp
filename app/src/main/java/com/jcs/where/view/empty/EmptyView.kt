@@ -182,7 +182,7 @@ class EmptyView : LinearLayout {
     }
 
 
-    private fun showEmptyLoading() {
+     fun showEmptyLoading() {
         empty_iv.setImageResource(R.mipmap.ic_empty_card_coupon)
         empty_message_tv.visibility = View.INVISIBLE
         empty_hint_tv.visibility = View.VISIBLE

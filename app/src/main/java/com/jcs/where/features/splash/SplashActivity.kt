@@ -3,18 +3,21 @@ package com.jcs.where.features.splash
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
+import bolts.AppLinks
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
@@ -26,7 +29,7 @@ import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.main.MainActivity
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
-import com.jcs.where.features.map.government.GovernmentActivity
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
@@ -38,6 +41,9 @@ import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
  * Created by Wangsw  2021/3/18 15:36.
+ *
+ * Facebook 深度链接 App Link 打开app
+ * https://github.com/BoltsFramework/Bolts-Android?fbclid=IwAR2UEuo8f3OCQHvVnWtzbkgI-SpiacW6Dt24ZVHPPXaNVTUodH4tstKvpmA
  */
 class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
@@ -47,6 +53,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
     override fun getLayoutId() = R.layout.activity_splash
 
     override fun initView() {
+
 
         // 状态栏透明
         BarUtils.setStatusBarColor(this, Color.TRANSPARENT, true)
@@ -58,6 +65,10 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         handleWebOpen()
 
         if (!isTaskRoot) {
+            // 栈底为MainActivity ，如为facebook启动，打开目标页面
+            if (facebookIntent != null) {
+                startActivity(facebookIntent)
+            }
             finish()
             return
         }
@@ -72,22 +83,26 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
     private fun handleWebOpen() {
 
-        // 通过网页打开 action.VIEW category.BROWSABLE
-        // 商店打开     action.MAIN category.LAUNCHER
+        // 处理 Facebook AppLink
+        val targetUrl: Uri? = AppLinks.getTargetUrlFromInboundIntent(this, intent)
+        if (targetUrl != null) {
+            // 被app link启动
 
-        if (intent.hasCategory(Intent.CATEGORY_BROWSABLE) || intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+            Log.d("AppLink", "targetUrl == $targetUrl")
+            val module = targetUrl.getQueryParameter("module")
+            val moduleId = targetUrl.getQueryParameter("id")
 
-
-            val uri = intent.data ?: return
-
-            // 网页打开
-            val module = uri.getQueryParameter("module")
-            val moduleId = uri.getQueryParameter("id")
             if (!module.isNullOrBlank()) {
-                // facebook 深度链接
+
                 handleFaceBookIntent(module, moduleId)
-            } else {
-                // 获取邀请码
+            }
+        } else {
+
+            // 不是 applink启动. 获取邀请码
+            if (intent.hasCategory(Intent.CATEGORY_BROWSABLE) || intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+
+                val uri = intent.data ?: return
+
                 val whereCode = uri.getQueryParameter("whereCode")
                 if (whereCode.isNullOrBlank()) {
                     // 参数为空，读取剪切板中的内容
@@ -100,6 +115,8 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             }
 
         }
+
+
     }
 
 
@@ -276,6 +293,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         start_tv.setOnClickListener { toHome() }
     }
 
+    /**
+     *   通过Facebook 深度链接打开 ，处理目标页面
+     */
     private fun handleFaceBookIntent(module: String?, moduleId: String?) {
         if (module.isNullOrBlank() || moduleId.isNullOrBlank()) {
             return
@@ -308,9 +328,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
             Html5Url.MODEL_GENERAL -> {
                 val bundle = Bundle().apply {
-                    putInt(Constant.PARAM_CHILD_CATEGORY_ID, moduleId.toInt())
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
                 }
-                facebookIntent = Intent(this, GovernmentActivity::class.java).putExtras(bundle)
+                facebookIntent = Intent(this, MechanismActivity::class.java).putExtras(bundle)
             }
 
             Html5Url.MODEL_RESTAURANT -> {
@@ -341,7 +361,6 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
             else -> {}
         }
-
     }
 
 

@@ -95,6 +95,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/maps_api_key" />
 
+        <!-- facebook sdk -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <!-- facebook 分享 -->
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider642165667008627"
+            android:exported="true" />
+
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.jcs.where.fileprovider"
@@ -126,14 +138,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
+       <!--         <data
                     android:host="hostsplash"
                     android:pathPrefix="/openwith"
-                    android:scheme="schemewhereh5" />
+                    android:scheme="schemewhereh5" />-->
+                <data android:scheme="schemewhereh5" />
 
 
             </intent-filter>
-
 
 
         </activity>

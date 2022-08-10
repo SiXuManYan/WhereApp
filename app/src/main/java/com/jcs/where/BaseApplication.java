@@ -14,6 +14,7 @@ import androidx.multidex.MultiDex;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.comm100.livechat.VisitorClientInterface;
+import com.facebook.FacebookSdk;
 import com.jcs.where.api.RetrofitManager;
 import com.jcs.where.features.account.login.LoginActivity;
 import com.jcs.where.features.message.MessageCenterActivity;
@@ -59,7 +60,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        FacebookSdk.sdkInitialize(this);
         mApplicationContext = this;
         database = WhereDataBase.get(this);
         RetrofitManager.getManager().initRetrofit(this);

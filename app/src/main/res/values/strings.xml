@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Where</string>
 
+    <string name="facebook_app_id">642165667008627</string>
+
     <!--<string name="maps_api_key">AIzaSyCDraLDHx2io0NePlvh5fyR87718XEHe2Q</string>-->
     <string name="maps_api_key">AIzaSyDK-oIzSIMe0a-PEV8R2SYtMoQK2E8CwQA</string>
     <!--<string name="maps_api_id">559147655288-ugkgp9fg2cf4h3u9icerjapfrn8ndu57.apps.googleusercontent.com</string>-->

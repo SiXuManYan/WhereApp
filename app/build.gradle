@@ -235,4 +235,9 @@ dependencies {
 
     // 图片压缩
     implementation 'top.zibin:Luban:1.1.8'
+
+    // facebook 深度链接
+    implementation 'com.facebook.android:facebook-applinks:[4,5)'
+//    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+
 }

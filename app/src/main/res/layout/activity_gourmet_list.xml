@@ -222,6 +222,12 @@
     </LinearLayout>
 
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/category_ll">
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -242,9 +248,6 @@
             android:background="@color/white"
             android:paddingStart="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_8"
-            app:behavior_hideable="false"
-            app:behavior_peekHeight="@dimen/dp_20"
-            app:layout_behavior="@string/bottom_sheet_behavior"
             tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             tools:listitem="@layout/item_delicacy_list" />
 
@@ -264,6 +267,8 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/layout_filter" />
 

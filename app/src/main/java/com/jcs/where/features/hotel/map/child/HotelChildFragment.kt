@@ -15,7 +15,8 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.single_recycler_view.*
+import kotlinx.android.synthetic.main.single_recycler_view.content_rv
+import kotlinx.android.synthetic.main.single_recycler_view_with_refresh.*
 
 /**
  * Created by Wangsw  2021/9/27 15:48.
@@ -44,7 +45,7 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
     private lateinit var mAdapter: HotelHomeRecommendAdapter
     private lateinit var emptyView: EmptyView
 
-    override fun getLayoutId() = R.layout.single_recycler_view
+    override fun getLayoutId() = R.layout.single_recycler_view_with_refresh
 
 
     override fun initView(view: View) {
@@ -62,7 +63,7 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
             setEmptyView(emptyView)
             setOnItemClickListener(this@HotelChildFragment)
             loadMoreModule.isAutoLoadMore = true
-            loadMoreModule.isEnableLoadMoreIfNotFullPage = true
+            loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             loadMoreModule.setOnLoadMoreListener(this@HotelChildFragment)
         }
 
@@ -87,7 +88,12 @@ class HotelChildFragment : BaseMvpFragment<HotelChildPresenter>(), HotelChildVie
         }
     }
 
-    override fun bindListener() = Unit
+    override fun bindListener() {
+        swipe_layout.setOnRefreshListener {
+            page = Constant.DEFAULT_FIRST_PAGE
+            loadOnVisible()
+        }
+    }
 
     override fun onLoadMore() {
         page++

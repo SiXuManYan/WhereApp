@@ -72,8 +72,6 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     /** marker 选中后弹出的 item */
     private lateinit var mMarkerContentAdapter: DelicacyAdapter
 
-    /** pager Behavior */
-    private lateinit var pagerBehavior: BottomSheetBehavior<RecyclerView>
 
     /** maker  Behavior */
     private lateinit var makerBehavior: BottomSheetBehavior<RecyclerView>
@@ -183,18 +181,27 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
 
     private fun initBehavior() {
 
-        pagerBehavior = BottomSheetBehavior.from(recycler)
-        pagerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-
         makerBehavior = BottomSheetBehavior.from(bottom_sheet_rv)
         makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         makerBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
             override fun onStateChanged(bottomSheet: View, newState: Int) = when (newState) {
-                BottomSheetBehavior.STATE_EXPANDED -> pagerBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                BottomSheetBehavior.STATE_HIDDEN -> pagerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    recycler.visibility = View.GONE
+                    swipe_layout.isEnabled = false
+                }
+                BottomSheetBehavior.STATE_HIDDEN ->{
+                    recycler.visibility = View.VISIBLE
+                    swipe_layout.isEnabled =!recycler.canScrollVertically(-1)
+                }
                 else -> {
                 }
+            }
+        })
+
+        recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                swipe_layout.isEnabled = (!recycler.canScrollVertically(-1) && !contentIsMap)
             }
         })
     }
@@ -250,6 +257,18 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     }
 
     override fun bindListener() {
+
+        swipe_layout.setOnRefreshListener {
+
+            when {
+                mMarkerContentAdapter.data.isEmpty() ->{
+                    presenter.getMakerData(mRequest)
+                }
+            }
+            page = Constant.DEFAULT_FIRST_PAGE
+            presenter.getList(page, mRequest)
+        }
+
         back_iv.setOnClickListener { finish() }
         delete_iv.setOnClickListener { onClearSearchClick() }
         area_filter_ll.setOnClickListener { onAreaFilterClick() }
@@ -332,7 +351,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
     }
 
     override fun bindList(data: MutableList<RestaurantResponse>, isLastPage: Boolean) {
-
+        swipe_layout.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {

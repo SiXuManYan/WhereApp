@@ -93,9 +93,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
     /** marker 选中后，对应的列表内容 */
     private lateinit var mMarkerContentAdapter: HotelHomeRecommendAdapter
 
-    /** pager Behavior */
-    private lateinit var pagerBehavior: ViewPagerBottomSheetBehavior<LinearLayout>
-
     /** maker  Behavior */
     private lateinit var makerBehavior: BottomSheetBehavior<RecyclerView>
 
@@ -165,7 +162,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         search_tv.text = searchInput
         EventBus.getDefault().post(BaseEvent<String?>(EventCode.EVENT_REFRESH_CHILD, searchInput))
         // todo marker
-        presenter.getMakerData(search_input = searchInput, star_level = starLevel, price_range = priceRange, currentRequestCategoryId)
+        requestMarkerList()
     }
 
 
@@ -204,18 +201,18 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
     }
 
     private fun initBehavior() {
-        BottomSheetUtils.setupViewPager(content_vp)
-
-        pagerBehavior = ViewPagerBottomSheetBehavior.from(bottom_sheet_ll)
-        pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_EXPANDED
 
         makerBehavior = BottomSheetBehavior.from(bottom_sheet_rv)
         makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         makerBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
             override fun onStateChanged(bottomSheet: View, newState: Int) = when (newState) {
-                BottomSheetBehavior.STATE_EXPANDED -> pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_COLLAPSED
-                BottomSheetBehavior.STATE_HIDDEN -> pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_EXPANDED
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    content_vp.visibility = View.GONE
+                }
+                BottomSheetBehavior.STATE_HIDDEN -> {
+                    content_vp.visibility = View.VISIBLE
+                }
                 else -> {
                 }
             }
@@ -308,12 +305,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
                 val category = mPagerAdapter.category[position]
                 currentRequestCategoryId = category.id
-                presenter.getMakerData(
-                    search_input = searchInput,
-                    star_level = starLevel,
-                    price_range = priceRange,
-                    currentRequestCategoryId
-                )
+                requestMarkerList()
                 makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
 
@@ -400,7 +392,11 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         // 当前位置
         enableMyLocation()
 
-        // 获得展示在地图上的数据
+
+    }
+
+    private fun requestMarkerList() {
+        if (!::map.isInitialized) return
         presenter.getMakerData(search_input = searchInput, star_level = starLevel, price_range = priceRange, currentRequestCategoryId)
     }
 
@@ -418,6 +414,9 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             }, Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
+
+        // 获得展示在地图上的数据
+        requestMarkerList()
     }
 
 
@@ -426,26 +425,34 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
      */
     private fun getMyLocationInfo() {
         LocationUtil.getInstance().addressCallback = object : LocationUtil.AddressCallback {
-            override fun onGetAddress(address: Address) {
-                val countryName = address.countryName //国家
-                val adminArea = address.adminArea //省
-                val locality = address.locality //市
-                val subLocality = address.subLocality //区
-                val featureName = address.featureName //街道
-            }
+            override fun onGetAddress(address: Address) = Unit
 
             override fun onGetLocation(lat: Double, lng: Double) {
                 CacheUtil.getShareDefault().put(Constant.SP_MY_LATITUDE, lat.toFloat())
                 CacheUtil.getShareDefault().put(Constant.SP_MY_LONGITUDE, lng.toFloat())
 
 
+                // 镜头移动到当前位置
                 myLocation = CameraPosition.Builder().target(LatLng(lat, lng))
                     .zoom(20f)
                     .bearing(0f)
                     .tilt(0f)
                     .build()
+                animateCamera(LatLng(lat, lng))
             }
         }
+    }
+
+    private fun animateCamera(location: LatLng) {
+        Handler(mainLooper).postDelayed({
+            val targetCamera = CameraPosition.Builder().target(location)
+                .zoom(13f)
+                .bearing(0f)
+                .tilt(0f)
+                .build()
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(targetCamera))
+
+        }, 10)
     }
 
     /**
@@ -482,7 +489,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             bounds.include(LatLng(it.lat, it.lng))
         }
 
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100))
 
 
         // 在地图上添加大量Marker

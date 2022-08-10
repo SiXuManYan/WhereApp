@@ -43,8 +43,8 @@
             <LinearLayout
                 android:id="@+id/date_ll"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:minWidth="@dimen/dp_26"
                 android:orientation="vertical">
 
@@ -117,10 +117,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:visibility="gone"
                 android:padding="@dimen/dp_8"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_close_circle" />
+                android:src="@mipmap/ic_close_circle"
+                android:visibility="gone" />
 
 
         </RelativeLayout>
@@ -167,24 +167,11 @@
             android:layout_height="match_parent" />
 
 
-        <LinearLayout
-            android:id="@+id/bottom_sheet_ll"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/content_vp"
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/shape_white_top_radius_8"
-            android:orientation="vertical"
-            app:behavior_hideable="false"
-            app:behavior_peekHeight="@dimen/dp_15"
-            app:layout_behavior="@string/view_pager_bottom_sheet_behavior">
-
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/content_vp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
 
         <androidx.recyclerview.widget.RecyclerView

@@ -48,11 +48,11 @@ import kotlinx.android.synthetic.main.layout_travel_filter_content.*
 /**
  * Created by Wangsw  2021/10/18 9:37.
  *  旅游地图
-    区域Id 优先级最高，
-    首次进来用经纬度请求，值为用户手动选择的经纬度（未选择时取默认值）
-    选择全部城市时，（用经纬度请求）
-    区域id为0 ，经纬度使用手动选择经纬度
-    选择其他城市时，用区域id请求
+区域Id 优先级最高，
+首次进来用经纬度请求，值为用户手动选择的经纬度（未选择时取默认值）
+选择全部城市时，（用经纬度请求）
+区域id为0 ，经纬度使用手动选择经纬度
+选择其他城市时，用区域id请求
  */
 class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
@@ -66,9 +66,6 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
     /** marker 选中后弹出的 item */
     private lateinit var mMarkerContentAdapter: TravelMarkerSelectedAdapter
-
-    /** pager Behavior */
-    private lateinit var pagerBehavior: BottomSheetBehavior<RecyclerView>
 
     /** maker  Behavior */
     private lateinit var makerBehavior: BottomSheetBehavior<RecyclerView>
@@ -340,18 +337,31 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
     private fun initBehavior() {
 
-        pagerBehavior = BottomSheetBehavior.from(bottom_sheet_content_rv)
-        pagerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         makerBehavior = BottomSheetBehavior.from(bottom_sheet_rv)
         makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         makerBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
             override fun onStateChanged(bottomSheet: View, newState: Int) = when (newState) {
-                BottomSheetBehavior.STATE_EXPANDED -> pagerBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                BottomSheetBehavior.STATE_HIDDEN -> pagerBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    bottom_sheet_content_rv.visibility = View.GONE
+                    swipe_layout.isEnabled = false
+                }
+                BottomSheetBehavior.STATE_HIDDEN -> {
+                    bottom_sheet_content_rv.visibility = View.VISIBLE
+
+                    swipe_layout.isEnabled = !bottom_sheet_content_rv.canScrollVertically(-1)
+                }
                 else -> {
                 }
+            }
+        })
+
+        bottom_sheet_content_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                swipe_layout.isEnabled = (!bottom_sheet_content_rv.canScrollVertically(-1) && !contentIsMap)
+
             }
         })
 
@@ -392,6 +402,22 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     }
 
     override fun bindListener() {
+        swipe_layout.setOnRefreshListener {
+            when {
+                cityFilterAdapter.data.isEmpty() -> {
+                    presenter.getCityList()
+                }
+                categoryFilterAdapter.data.isEmpty() -> {
+                    presenter.getCityList()
+                }
+                mMarkerContentAdapter.data.isEmpty() -> {
+                    requestMakerList()
+                }
+            }
+            page = Constant.DEFAULT_FIRST_PAGE
+            requestContentList()
+        }
+
         search_tv.setOnClickListener {
             searchLauncher.launch(Intent(this, SearchAllActivity::class.java).putExtra(Constant.PARAM_TYPE, 4))
             //  makerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
@@ -672,6 +698,7 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
 
 
     override fun bindContentList(response: MutableList<TravelChild>, lastPage: Boolean) {
+        swipe_layout.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (response.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -700,5 +727,6 @@ class TravelMapActivity : BaseMvpActivity<TravelMapPresenter>(), TravelMapView {
     override fun bindCityList(cityList: MutableList<CityPickerResponse.CityChild>) {
         cityFilterAdapter.setNewInstance(cityList)
     }
+
 
 }

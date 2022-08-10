@@ -41,7 +41,7 @@ class HomeChildPresenter(private var view: HomeChildView) : BaseMvpPresenter(vie
 
         requestApi(
             mRetrofit.getRecommends(page, selectLatLng.latitude.toString(), selectLatLng.longitude.toString(), areaId, categoryId),
-            object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view) {
+            object : BaseMvpObserver<PageResponse<HomeRecommendResponse>>(view, page) {
                 override fun onSuccess(response: PageResponse<HomeRecommendResponse>) {
                     val isLastPage = response.lastPage == page
                     val data = response.data.toMutableList()
@@ -58,15 +58,12 @@ class HomeChildPresenter(private var view: HomeChildView) : BaseMvpPresenter(vie
 
     fun getMallRecommend(categoryId: Int, page: Int) {
 
-        requestApi(mRetrofit.getMallRecommendGood(1, page, categoryId), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+        requestApi(mRetrofit.getMallRecommendGood(1, page, categoryId), object : BaseMvpObserver<PageResponse<MallGood>>(view,page) {
             override fun onSuccess(response: PageResponse<MallGood>) {
 
                 val isLastPage = response.lastPage == page
                 val data = response.data
-
                 view.bindMallRecommend(data.toMutableList(), isLastPage)
-
-
             }
         })
     }

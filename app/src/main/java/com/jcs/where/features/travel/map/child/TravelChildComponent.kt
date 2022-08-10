@@ -32,7 +32,7 @@ class TravelChildPresenter(private var view: TravelChildView) : BaseMvpPresenter
             safeSelectLatLng.latitude,
             safeSelectLatLng.longitude,
             ""
-        ), object : BaseMvpObserver<PageResponse<TravelChild>>(view) {
+        ), object : BaseMvpObserver<PageResponse<TravelChild>>(view,page) {
             override fun onSuccess(response: PageResponse<TravelChild>) {
 
                 val isLastPage = response.lastPage == page

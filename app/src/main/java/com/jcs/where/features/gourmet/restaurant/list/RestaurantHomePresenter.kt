@@ -24,7 +24,7 @@ class RestaurantHomePresenter(private val view: RestaurantHomeView) : BaseMvpPre
             request.lng,
             request.category_id
         ), object : BaseMvpObserver<PageResponse<RestaurantResponse>>(
-            view
+            view,page
         ) {
             override fun onSuccess(response: PageResponse<RestaurantResponse>) {
                 val isLastPage = response.lastPage == page

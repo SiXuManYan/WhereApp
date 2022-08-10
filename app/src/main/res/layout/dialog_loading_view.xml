@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_100"
-    android:layout_height="@dimen/dp_100"
-    android:background="@drawable/shape_bg_loading_dialog2">
+    android:layout_width="@dimen/dp_50"
+    android:layout_height="@dimen/dp_50"
+   >
 
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/ic_loading_giv"
         android:src="@mipmap/ic_loading"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_100"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
         android:layout_gravity="center" />
 
 </FrameLayout>

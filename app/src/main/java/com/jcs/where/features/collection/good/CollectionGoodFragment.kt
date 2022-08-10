@@ -119,7 +119,7 @@ interface CollectionGoodView : BaseMvpView {
 class CollectionGoodPresenter(private var view: CollectionGoodView) : BaseMvpPresenter(view) {
 
     fun getData(page: Int) {
-        requestApi(mRetrofit.collectionGoodList(page), object : BaseMvpObserver<PageResponse<MallGoodCollection>>(view) {
+        requestApi(mRetrofit.collectionGoodList(page), object : BaseMvpObserver<PageResponse<MallGoodCollection>>(view,page) {
             override fun onSuccess(response: PageResponse<MallGoodCollection>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

@@ -23,14 +23,14 @@ class YellowPageSearchResultPresenter(private var view: YellowPageSearchResultVi
 
         val latLng = CacheUtil.getSafeSelectLatLng()
         requestApi(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude),
-            object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
+            object : BaseMvpObserver<PageResponse<MechanismResponse>>(view, page) {
                 override fun onSuccess(response: PageResponse<MechanismResponse>) {
 
                     val total = response.total
                     val isLastPage = response.lastPage == page
                     val data = response.data
 
-                    view.bindData(data , isLastPage)
+                    view.bindData(data, isLastPage)
                 }
             })
     }

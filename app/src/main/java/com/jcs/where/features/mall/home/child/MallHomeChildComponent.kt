@@ -77,7 +77,7 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
 
     fun getRecommend(categoryId:Int,page:Int) {
 
-        requestApi(mRetrofit.getMallRecommendGood(1,page,categoryId), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+        requestApi(mRetrofit.getMallRecommendGood(1,page,categoryId), object : BaseMvpObserver<PageResponse<MallGood>>(view,page) {
             override fun onSuccess(response: PageResponse<MallGood>) {
 
                 val isLastPage = response.lastPage == page

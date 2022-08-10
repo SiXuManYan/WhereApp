@@ -26,7 +26,7 @@ class HotelChildPresenter(private var view: HotelChildView) : BaseMvpPresenter(v
         val areaId = instance.getString(SPKey.SELECT_AREA_ID, "")
 
         requestApi(mRetrofit.hotelChildList(page, areaId, null, null, search_input, star_level, hotel_type_ids, price_range, grade),
-            object : BaseMvpObserver<PageResponse<HotelHomeRecommend>>(view) {
+            object : BaseMvpObserver<PageResponse<HotelHomeRecommend>>(view,page) {
                 override fun onSuccess(response: PageResponse<HotelHomeRecommend>) {
                     val isLastPage = response.lastPage == page
                     val data = response.data

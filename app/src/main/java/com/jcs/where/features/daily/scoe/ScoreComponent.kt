@@ -39,7 +39,7 @@ class ScorePresenter(private var view: ScoreView) : BaseMvpPresenter(view) {
      * 积分明细列表
      */
     fun getIntegralDetailList(page: Int) {
-        requestApi(mRetrofit.getIntegralsDetailList(page), object : BaseMvpObserver<PageResponse<IntegralDetailResponse>>(view) {
+        requestApi(mRetrofit.getIntegralsDetailList(page), object : BaseMvpObserver<PageResponse<IntegralDetailResponse>>(view,page) {
             override fun onSuccess(response: PageResponse<IntegralDetailResponse>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

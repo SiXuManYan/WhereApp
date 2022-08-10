@@ -117,7 +117,7 @@ interface TravelCommentView : BaseMvpView, SwipeRefreshLayout.OnRefreshListener,
 
 class TravelCommentPresenter(private var view: TravelCommentView) : BaseMvpPresenter(view) {
     fun getDetail(page: Int, travelId: Int) {
-        requestApi(mRetrofit.travelComment(travelId, page), object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
+        requestApi(mRetrofit.travelComment(travelId, page), object : BaseMvpObserver<PageResponse<HotelComment>>(view,page) {
 
             override fun onSuccess(response: PageResponse<HotelComment>) {
                 val isLastPage = response.lastPage == page

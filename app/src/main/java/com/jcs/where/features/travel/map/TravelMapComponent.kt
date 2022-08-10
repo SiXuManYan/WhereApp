@@ -120,7 +120,7 @@ class TravelMapPresenter(private var view: TravelMapView) : BaseMvpPresenter(vie
             lat,
             lng,
             areaId
-        ), object : BaseMvpObserver<PageResponse<TravelChild>>(view) {
+        ), object : BaseMvpObserver<PageResponse<TravelChild>>(view,page) {
             override fun onSuccess(response: PageResponse<TravelChild>) {
 
                 val isLastPage = response.lastPage == page

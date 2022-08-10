@@ -18,7 +18,7 @@ interface RefundOrderView : BaseMvpView {
 
 class RefundOrderPresenter(private var view: RefundOrderView) : BaseMvpPresenter(view) {
     fun getList(page: Int) {
-        requestApi(mRetrofit.refundOrderList(  page), object : BaseMvpObserver<PageResponse<RefundOrder>>(view) {
+        requestApi(mRetrofit.refundOrderList(  page), object : BaseMvpObserver<PageResponse<RefundOrder>>(view,page) {
             override fun onSuccess(response: PageResponse<RefundOrder>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

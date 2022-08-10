@@ -9,7 +9,6 @@ import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.api.response.mall.request.MallGoodListRequest
-import java.util.*
 
 /**
  * Created by Wangsw  2021/12/3 15:30.
@@ -58,7 +57,7 @@ class MallSecondPresenter(private var view: MallSecondView) : BaseMvpPresenter(v
             request.shop_categoryId,
             request.recommend,
             request.coupon_id
-        ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+        ), object : BaseMvpObserver<PageResponse<MallGood>>(view, request.page) {
             override fun onSuccess(response: PageResponse<MallGood>) {
                 val isLastPage = response.lastPage == request.page
                 val data = response.data

@@ -20,7 +20,7 @@ class CollectionPresenter(private var view: CollectionView) : BaseMvpPresenter(v
 
 
     fun getData(page: Int, type: Int) {
-        requestApi(mRetrofit.getCollection(page, type), object : BaseMvpObserver<PageResponse<MyCollection>>(view) {
+        requestApi(mRetrofit.getCollection(page, type), object : BaseMvpObserver<PageResponse<MyCollection>>(view,page) {
             override fun onSuccess(response: PageResponse<MyCollection>) {
 
                 val isLastPage = response.lastPage == page

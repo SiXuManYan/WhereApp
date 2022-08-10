@@ -3,6 +3,7 @@ package com.jcs.where.features.splash
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextPaint
@@ -14,13 +15,24 @@ import android.view.animation.Animation
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
-import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.web.WebViewActivity
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.main.MainActivity
+import com.jcs.where.features.mall.detail.MallDetailActivity
+import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
+import com.jcs.where.features.map.government.GovernmentActivity
+import com.jcs.where.features.travel.detail.TravelDetailActivity
+import com.jcs.where.features.web.WebViewActivity
+import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.*
+import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.mob.MobSDK
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -28,6 +40,9 @@ import kotlinx.android.synthetic.main.activity_splash.*
  * Created by Wangsw  2021/3/18 15:36.
  */
 class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
+
+
+    private var facebookIntent: Intent? = null
 
     override fun getLayoutId() = R.layout.activity_splash
 
@@ -39,20 +54,8 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         BarUtils.subtractMarginTopEqualStatusBarHeight(findViewById(android.R.id.content))
         BarUtils.setNavBarVisibility(this, false)
 
-        // 通过网页打开 action.VIEW category.BROWSABLE
-        // 商店打开     action.MAIN category.LAUNCHER
-        if (intent.hasCategory(Intent.CATEGORY_BROWSABLE)  ||intent.hasCategory(Intent.CATEGORY_LAUNCHER) ) {
 
-            val whereCode = intent.data?.getQueryParameter("whereCode")
-            if (whereCode.isNullOrBlank()) {
-                // 参数为空，读取剪切板中的内容
-                Handler(Looper.myLooper()!!).postDelayed({
-                    presenter.handleClipboard()
-                }, 1000)
-            } else {
-                SPUtils.getInstance().put(SPKey.K_INVITE_CODE, whereCode)
-            }
-        }
+        handleWebOpen()
 
         if (!isTaskRoot) {
             finish()
@@ -66,6 +69,39 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         initPager()
         initAnimation()
     }
+
+    private fun handleWebOpen() {
+
+        // 通过网页打开 action.VIEW category.BROWSABLE
+        // 商店打开     action.MAIN category.LAUNCHER
+
+        if (intent.hasCategory(Intent.CATEGORY_BROWSABLE) || intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+
+
+            val uri = intent.data ?: return
+
+            // 网页打开
+            val module = uri.getQueryParameter("module")
+            val moduleId = uri.getQueryParameter("id")
+            if (!module.isNullOrBlank()) {
+                // facebook 深度链接
+                handleFaceBookIntent(module, moduleId)
+            } else {
+                // 获取邀请码
+                val whereCode = uri.getQueryParameter("whereCode")
+                if (whereCode.isNullOrBlank()) {
+                    // 参数为空，读取剪切板中的内容
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        presenter.handleClipboard()
+                    }, 1000)
+                } else {
+                    SPUtils.getInstance().put(SPKey.K_INVITE_CODE, whereCode)
+                }
+            }
+
+        }
+    }
+
 
     private fun initPager() {
         val adapter = SplashAdapter()
@@ -220,6 +256,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
     private fun toHome() {
         startActivity(MainActivity::class.java)
+        facebookIntent?.let {
+            startActivity(facebookIntent)
+        }
         finish()
     }
 
@@ -235,6 +274,74 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
     override fun bindListener() {
         start_tv.setOnClickListener { toHome() }
+    }
+
+    private fun handleFaceBookIntent(module: String?, moduleId: String?) {
+        if (module.isNullOrBlank() || moduleId.isNullOrBlank()) {
+            return
+        }
+
+        when (module) {
+            Html5Url.MODEL_HOTEL -> {
+                val dialog = JcsCalendarDialog()
+                dialog.initCalendar(this)
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_HOTEL_ID, moduleId.toInt())
+                    putSerializable(Constant.PARAM_START_DATE, dialog.startBean)
+                    putSerializable(Constant.PARAM_END_DATE, dialog.endBean)
+                }
+                facebookIntent = Intent(this, HotelDetailActivity2::class.java).putExtras(bundle)
+            }
+            Html5Url.MODEL_NEWS -> {
+                val bundle = Bundle().apply {
+                    putString(Constant.PARAM_NEWS_ID, moduleId)
+                }
+                facebookIntent = Intent(this, NewsDetailActivity::class.java).putExtras(bundle)
+
+            }
+            Html5Url.MODEL_TRAVEL -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(this, TravelDetailActivity::class.java).putExtras(bundle)
+            }
+
+            Html5Url.MODEL_GENERAL -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_CHILD_CATEGORY_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(this, GovernmentActivity::class.java).putExtras(bundle)
+            }
+
+            Html5Url.MODEL_RESTAURANT -> {
+
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(this, RestaurantDetailActivity::class.java).putExtras(bundle)
+
+            }
+
+            Html5Url.MODEL_MALL -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+
+                }
+                facebookIntent = Intent(this, MallDetailActivity::class.java).putExtras(bundle)
+            }
+
+            Html5Url.MODEL_MALL_SHOP -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_SHOP_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(this, MallShopHomeActivity::class.java)
+                    .putExtras(bundle)
+            }
+
+
+            else -> {}
+        }
+
     }
 
 

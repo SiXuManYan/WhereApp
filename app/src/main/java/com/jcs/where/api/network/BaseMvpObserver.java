@@ -15,29 +15,40 @@ public abstract class BaseMvpObserver<T> extends BaseObserver<T> {
 
     private final BaseMvpView view;
 
-    public boolean showLoading = true;
+    public boolean needShowLoading = true;
+
+    private int page = 1;
 
     public BaseMvpObserver(BaseMvpView view) {
         this.view = view;
     }
 
 
-
-    public BaseMvpObserver(BaseMvpView view ,Boolean showLoading) {
+    public BaseMvpObserver(BaseMvpView view, Boolean showLoading) {
         this.view = view;
-        this.showLoading = showLoading;
+        this.needShowLoading = showLoading;
+    }
+
+    public BaseMvpObserver(BaseMvpView view, Integer page) {
+        this.view = view;
+        this.page = page;
+    }
+
+
+    public BaseMvpObserver(BaseMvpView view, Boolean showLoading, Integer page) {
+        this.view = view;
+        this.needShowLoading = showLoading;
+        this.page = page;
     }
 
 
     @Override
     public void onSubscribe(Disposable d) {
         super.onSubscribe(d);
-        if (showLoading){
+        if (needShowLoading && page <= 1) {
             view.showLoading();
         }
     }
-
-
 
 
     @Override
@@ -55,7 +66,7 @@ public abstract class BaseMvpObserver<T> extends BaseObserver<T> {
     @Override
     protected void onError(ErrorResponse errorResponse) {
         view.onError(errorResponse);
-        if (showLoading) {
+        if (needShowLoading && page <= 1) {
             view.showLoading();
         }
     }

@@ -103,7 +103,7 @@ interface MerchantRecordView:BaseMvpView{
 class MerchantRecordPresenter(private var view:MerchantRecordView):BaseMvpPresenter(view){
 
     fun getData(page: Int) {
-        requestApi(mRetrofit.merchantApplyRecord(page), object : BaseMvpObserver<PageResponse<MerchantApplyRecord>>(view){
+        requestApi(mRetrofit.merchantApplyRecord(page), object : BaseMvpObserver<PageResponse<MerchantApplyRecord>>(view,page){
             override fun onSuccess(response: PageResponse<MerchantApplyRecord>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

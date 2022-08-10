@@ -34,7 +34,7 @@ class MechanismChildPresenter(private var view: MechanismChildView) : BaseMvpPre
             search,
             safeSelectLatLng.latitude,
             safeSelectLatLng.longitude
-        ), object : BaseMvpObserver<PageResponse<MechanismResponse>>(view) {
+        ), object : BaseMvpObserver<PageResponse<MechanismResponse>>(view,page) {
             override fun onSuccess(response: PageResponse<MechanismResponse>) {
                 val total = response.total
                 val isLastPage = response.lastPage == page

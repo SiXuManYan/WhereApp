@@ -1052,22 +1052,6 @@ public interface RetrofitApi {
 
 
     /**
-     * 水电缴费记录
-     */
-    @GET("generalapi/v2/pay_bills/orders")
-    Observable<JcsResponse<PageResponse<PaymentRecord>>> getPaymentRecord(@Query("page") int page);
-
-
-    /**
-     * 水电统一下单
-     */
-    @POST("generalapi/v2/pay_bills/orders")
-    Observable<JcsResponse<BillsOrderInfo>> billsCommitOrder(
-            @Body BillsOrderCommit request
-    );
-
-
-    /**
      * 水电银行卡转账支付（上传支付信息）
      */
     @POST("generalapi/v2/pay_bills/bank_card/pay")

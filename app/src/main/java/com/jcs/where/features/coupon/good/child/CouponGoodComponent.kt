@@ -12,12 +12,12 @@ import com.jcs.where.api.response.mall.request.MallGoodListRequest
  *
  */
 
-interface CouponGoodView :BaseMvpView{
+interface CouponGoodView : BaseMvpView {
     fun bindData(data: MutableList<MallGood>, lastPage: Boolean)
 }
 
 
-class CouponGoodPresenter(private var view:CouponGoodView):BaseMvpPresenter(view){
+class CouponGoodPresenter(private var view: CouponGoodView) : BaseMvpPresenter(view) {
 
 
     fun getMallList(request: MallGoodListRequest) {
@@ -33,7 +33,7 @@ class CouponGoodPresenter(private var view:CouponGoodView):BaseMvpPresenter(view
             request.shop_categoryId,
             request.recommend,
             request.coupon_id
-        ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+        ), object : BaseMvpObserver<PageResponse<MallGood>>(view, request.page) {
             override fun onSuccess(response: PageResponse<MallGood>) {
                 val isLastPage = response.lastPage == request.page
                 val data = response.data

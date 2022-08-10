@@ -29,7 +29,7 @@ class CommentComplexPresenter(private var view: CommentComplexView) : BaseMvpPre
         when (useType) {
             0 -> {
                 requestApi(mRetrofit.getMallCommentList(businessId, type, page),
-                    object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
+                    object : BaseMvpObserver<PageResponse<HotelComment>>(view, page) {
 
                         override fun onSuccess(response: PageResponse<HotelComment>) {
                             val isLastPage = response.lastPage == page
@@ -40,7 +40,7 @@ class CommentComplexPresenter(private var view: CommentComplexView) : BaseMvpPre
             }
             1 -> {
                 requestApi(mRetrofit.getHotelCommentList(businessId, type, page),
-                    object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
+                    object : BaseMvpObserver<PageResponse<HotelComment>>(view, page) {
 
                         override fun onSuccess(response: PageResponse<HotelComment>) {
                             val isLastPage = response.lastPage == page

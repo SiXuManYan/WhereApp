@@ -20,7 +20,7 @@ interface BillsRecordView : BaseMvpView {
 
 class BillsRecordPresenter(private var view: BillsRecordView) : BaseMvpPresenter(view) {
     fun getData(page: Int) {
-        requestApi(mRetrofit.billsRecord(page),object : BaseMvpObserver<PageResponse<BillsRecord>>(view){
+        requestApi(mRetrofit.billsRecord(page), object : BaseMvpObserver<PageResponse<BillsRecord>>(view, page) {
             override fun onSuccess(response: PageResponse<BillsRecord>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data
@@ -33,8 +33,7 @@ class BillsRecordPresenter(private var view: BillsRecordView) : BaseMvpPresenter
     }
 
 
-    fun recommit(orderId: Int, orderType: Int){
-
+    fun recommit(orderId: Int, orderType: Int) {
 
 
         val apply = BillRecommit().apply {
@@ -50,7 +49,7 @@ class BillsRecordPresenter(private var view: BillsRecordView) : BaseMvpPresenter
                 })
             }
             else -> {
-                requestApi(mRetrofit.billsRecommit(apply),object :BaseMvpObserver<JsonElement>(view){
+                requestApi(mRetrofit.billsRecommit(apply), object : BaseMvpObserver<JsonElement>(view) {
                     override fun onSuccess(response: JsonElement) {
                         view.recommitSuccess(orderId)
                     }
@@ -58,7 +57,6 @@ class BillsRecordPresenter(private var view: BillsRecordView) : BaseMvpPresenter
                 })
             }
         }
-
 
 
     }

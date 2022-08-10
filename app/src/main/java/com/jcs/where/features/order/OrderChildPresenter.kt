@@ -14,19 +14,20 @@ class OrderChildPresenter(val view: OrderChildView) : BaseMvpPresenter(view) {
 
 
     fun getList(orderType: Int, page: Int) {
-        requestApi(mRetrofit.getOrderList(orderType, null, page), object : BaseMvpObserver<PageResponse<OrderListResponse>>(view) {
-            override fun onSuccess(response: PageResponse<OrderListResponse>) {
-                val isLastPage = response.lastPage == page
-                val data = response.data
-                val toMutableList = data.toMutableList()
-                view.bindList(toMutableList, isLastPage)
-            }
-        })
+        requestApi(mRetrofit.getOrderList(orderType, null, page),
+            object : BaseMvpObserver<PageResponse<OrderListResponse>>(view, page) {
+                override fun onSuccess(response: PageResponse<OrderListResponse>) {
+                    val isLastPage = response.lastPage == page
+                    val data = response.data
+                    val toMutableList = data.toMutableList()
+                    view.bindList(toMutableList, isLastPage)
+                }
+            })
     }
 
 
     fun confirmReceipt(orderId: Int) {
-        requestApi(mRetrofit.confirmReceipt(orderId),object :BaseMvpObserver<JsonElement>(view){
+        requestApi(mRetrofit.confirmReceipt(orderId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.confirmReceipt()
             }

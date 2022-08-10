@@ -55,7 +55,7 @@ interface MallCartView : BaseMvpView,
 class MallCartPresenter(private var view: MallCartView) : BaseMvpPresenter(view) {
 
     fun getData(page: Int) {
-        requestApi(mRetrofit.mallCartList(page), object : BaseMvpObserver<PageResponse<MallCartGroup>>(view) {
+        requestApi(mRetrofit.mallCartList(page), object : BaseMvpObserver<PageResponse<MallCartGroup>>(view,page) {
             override fun onSuccess(response: PageResponse<MallCartGroup>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

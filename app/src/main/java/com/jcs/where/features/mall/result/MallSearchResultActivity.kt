@@ -147,7 +147,7 @@ class MallSearchPresenter(private var view: MallSearchView) : BaseMvpPresenter(v
             null,
             null,
             null
-        ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+        ), object : BaseMvpObserver<PageResponse<MallGood>>(view,page) {
             override fun onSuccess(response: PageResponse<MallGood>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

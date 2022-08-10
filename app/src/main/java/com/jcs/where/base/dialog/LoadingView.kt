@@ -7,7 +7,7 @@ import com.jcs.where.R
 import pl.droidsonroids.gif.GifImageView
 
 
-class LoadingView private constructor(context: Context) : BaseDialog(context, R.style.Dialog) {
+class LoadingView private constructor(context: Context) : BaseDialog(context, R.style.DialogLight) {
 
     init {
         window!!.attributes.gravity = Gravity.CENTER

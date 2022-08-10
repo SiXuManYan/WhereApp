@@ -117,7 +117,7 @@ interface CollectionShopView : BaseMvpView {
 class CollectionShopPresenter(private var view: CollectionShopView) : BaseMvpPresenter(view) {
 
     fun getData(page: Int) {
-        requestApi(mRetrofit.collectionShopList(page), object : BaseMvpObserver<PageResponse<MallShopCollection>>(view) {
+        requestApi(mRetrofit.collectionShopList(page), object : BaseMvpObserver<PageResponse<MallShopCollection>>(view,page) {
             override fun onSuccess(response: PageResponse<MallShopCollection>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

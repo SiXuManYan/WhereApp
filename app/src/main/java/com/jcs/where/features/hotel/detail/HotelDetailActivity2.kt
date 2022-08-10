@@ -96,7 +96,6 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
 
 
     companion object {
-
         fun navigation(
             context: Context,
             hotelId: Int,

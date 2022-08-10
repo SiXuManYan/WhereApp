@@ -20,7 +20,7 @@ class ShoppingCartPresenter(val view: ShoppingCartView) : BaseMvpPresenter(view)
 
 
     fun getData(page: Int) {
-        requestApi(mRetrofit.getShoppingCartList(page), object : BaseMvpObserver<PageResponse<ShoppingCartResponse>>(view) {
+        requestApi(mRetrofit.getShoppingCartList(page), object : BaseMvpObserver<PageResponse<ShoppingCartResponse>>(view,page) {
             override fun onSuccess(response: PageResponse<ShoppingCartResponse>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

@@ -46,7 +46,7 @@ class StoreFilterPresenter(val view: StoreFilterView) : BaseMvpPresenter(view) {
                 null,
                 moreFilter?.delivery_type,
                 moreFilter?.sort_type),
-                object : BaseMvpObserver<PageResponse<StoreRecommend>>(view) {
+                object : BaseMvpObserver<PageResponse<StoreRecommend>>(view,page) {
                     override fun onSuccess(response: PageResponse<StoreRecommend>) {
                         val isLastPage = response.lastPage == page
                         val data = response.data.toMutableList()

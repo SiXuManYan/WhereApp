@@ -1,6 +1,5 @@
 package com.jcs.where.features.message.notice;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.jcs.where.api.ErrorResponse;
@@ -29,7 +28,7 @@ public class SystemNoticePresenter extends BaseMvpPresenter {
 
     public void getMessageList(int page) {
 
-        requestApi(mRetrofit.getSystemMessage(page), new BaseMvpObserver<PageResponse<SystemMessageResponse>>(mView) {
+        requestApi(mRetrofit.getSystemMessage(page), new BaseMvpObserver<PageResponse<SystemMessageResponse>>(mView, page) {
             @Override
             protected void onSuccess(PageResponse<SystemMessageResponse> response) {
                 boolean isLastPage = response.getLastPage() == page;

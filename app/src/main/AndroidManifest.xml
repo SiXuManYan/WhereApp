@@ -43,10 +43,10 @@
 
         <!-- Android 11 限制 QUERY_ALL_PACKAGES ，显示声明可见性包名-->
         <!-- https://developer.android.com/training/package-visibility/declaring -->
-        <package android:name="com.android.settings"/>
-        <package android:name="com.android.vending"/>
-        <package android:name="com.facebook.katana"/>
-        <package android:name="com.google.android.apps.maps"/>
+        <package android:name="com.android.settings" />
+        <package android:name="com.android.vending" />
+        <package android:name="com.facebook.katana" />
+        <package android:name="com.google.android.apps.maps" />
 
     </queries>
 
@@ -133,6 +133,7 @@
 
 
             </intent-filter>
+
 
 
         </activity>
@@ -510,7 +511,10 @@
         <activity android:name=".features.travel.home.TravelHomeActivity" />
         <activity android:name=".features.hotel.home.HotelHomeActivity" />
         <activity android:name=".features.hotel.map.HotelMapActivity" />
-        <activity android:name=".features.hotel.detail.HotelDetailActivity2" />
+        <activity
+            android:name=".features.hotel.detail.HotelDetailActivity2"
+            android:screenOrientation="portrait"></activity>
+
         <activity android:name=".features.hotel.book.HotelBookActivity" />
         <activity android:name=".features.travel.map.TravelMapActivity" />
         <activity android:name=".features.travel.detail.TravelDetailActivity" />

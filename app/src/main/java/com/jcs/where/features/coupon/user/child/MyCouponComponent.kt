@@ -20,7 +20,7 @@ interface MyCouponView : BaseMvpView, OnItemChildClickListener {
 class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view) {
     fun getData(page: Int, type: Int) {
 
-        requestApi(mRetrofit.couponUser(page, type), object : BaseMvpObserver<PageResponse<UserCoupon>>(view) {
+        requestApi(mRetrofit.couponUser(page, type), object : BaseMvpObserver<PageResponse<UserCoupon>>(view,page) {
 
             override fun onSuccess(response: PageResponse<UserCoupon>) {
 

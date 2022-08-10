@@ -24,7 +24,7 @@ class StoreCommentPresenter(private var view: StoreCommentView) : BaseMvpPresent
      */
     fun getStoreCommentList(shop_id: Int, page: Int, showAll: Boolean, type: Int) {
 
-        requestApi(mRetrofit.getStoreCommentList2(page, shop_id.toString(), type), object : BaseMvpObserver<PageResponse<HotelComment>>(view) {
+        requestApi(mRetrofit.getStoreCommentList2(page, shop_id.toString(), type), object : BaseMvpObserver<PageResponse<HotelComment>>(view,page) {
             override fun onSuccess(response: PageResponse<HotelComment>) {
                 val isLastPage = response.lastPage == page
                 val data = response.data

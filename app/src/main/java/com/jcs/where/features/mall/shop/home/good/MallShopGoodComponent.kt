@@ -33,7 +33,7 @@ class MallShopGoodPresenter(private var view: MallShopGoodView) : BaseMvpPresent
             request.shop_categoryId,
             request.recommend,
             request.coupon_id
-        ), object : BaseMvpObserver<PageResponse<MallGood>>(view) {
+        ), object : BaseMvpObserver<PageResponse<MallGood>>(view, request.page) {
             override fun onSuccess(response: PageResponse<MallGood>) {
                 val isLastPage = response.lastPage == request.page
                 val data = response.data

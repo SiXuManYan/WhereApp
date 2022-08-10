@@ -22,7 +22,7 @@ class FootprintPresenter(private var view: FootprintView) : BaseMvpPresenter(vie
 
 
         if (type == 0) {
-            requestApi(mRetrofit.getFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
+            requestApi(mRetrofit.getFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view, page) {
                 override fun onSuccess(response: PageResponse<Footprint>) {
 
                     val isLastPage = response.lastPage == page
@@ -34,7 +34,7 @@ class FootprintPresenter(private var view: FootprintView) : BaseMvpPresenter(vie
                 }
             })
         } else {
-            requestApi(mRetrofit.getGoodFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view) {
+            requestApi(mRetrofit.getGoodFootprint(page), object : BaseMvpObserver<PageResponse<Footprint>>(view, page) {
                 override fun onSuccess(response: PageResponse<Footprint>) {
 
                     val isLastPage = response.lastPage == page

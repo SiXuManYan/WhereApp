@@ -112,10 +112,9 @@
     </RelativeLayout>
 
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager_vp"
@@ -128,8 +127,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:behavior_peekHeight="0dp"
-            app:layout_behavior=".view.sheet.TopSheetBehavior">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/top_category_rv"
@@ -148,7 +147,7 @@
         </LinearLayout>
 
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </FrameLayout>
 
 
 </LinearLayout>

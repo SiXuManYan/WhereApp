@@ -84,7 +84,7 @@
         android:layout_width="@dimen/dp_270"
         android:layout_height="@dimen/dp_40"
         android:layout_below="@+id/calendarRecycler"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/shape_blue_radius_24"
         android:gravity="center"

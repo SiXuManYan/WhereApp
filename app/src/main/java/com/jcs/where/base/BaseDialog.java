@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.jcs.where.R;
 
 public abstract class BaseDialog extends DialogFragment {
@@ -65,8 +66,8 @@ public abstract class BaseDialog extends DialogFragment {
         if (isBottom()) {
             wlp.gravity = Gravity.BOTTOM;
         }
-        wlp.width = getWidth() == 0 ? WindowManager.LayoutParams.MATCH_PARENT : getDp(getWidth());
-        wlp.height = getDp(getHeight());
+        wlp.width = getWidth() == 0 ? WindowManager.LayoutParams.MATCH_PARENT : SizeUtils.dp2px(getWidth());
+        wlp.height = SizeUtils.dp2px(getHeight());
         window.setAttributes(wlp);
         //以下三句代码等价于在theme中配置<item name="android:windowBackground">@null</item><item name="android:backgroundDimEnabled">true</item>
         window.setBackgroundDrawable(null);

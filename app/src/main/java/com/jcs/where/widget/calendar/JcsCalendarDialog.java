@@ -1,21 +1,22 @@
 package com.jcs.where.widget.calendar;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ScreenUtils;
-import com.blankj.utilcode.util.SizeUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
-import com.jcs.where.base.BaseBottomDialog;
+import com.jcs.where.base.BaseDialog;
+import com.jcs.where.home.decoration.HotelCalendarItemDecoration;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.widget.calendar.JcsCalendarAdapter.CalendarBean;
-import com.jcs.where.home.decoration.HotelCalendarItemDecoration;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,11 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class JcsCalendarDialog extends BaseBottomDialog {
+public class JcsCalendarDialog extends BaseDialog {
 
     private ImageView mCloseIv;
     private RecyclerView mRecycler;
@@ -46,6 +43,11 @@ public class JcsCalendarDialog extends BaseBottomDialog {
     private SimpleDateFormat mMonthDayWithSplitSF;
     private SimpleDateFormat mYearMonthDayWithSplitSF;
     private SimpleDateFormat mWeekdaySF;
+
+    @Override
+    protected boolean isBottom() {
+        return false;
+    }
 
     @Override
     protected int getLayout() {
@@ -85,6 +87,23 @@ public class JcsCalendarDialog extends BaseBottomDialog {
         mRecycler.setLayoutManager(gridLayoutManager);
         mItemDecoration = new HotelCalendarItemDecoration(getContext());
         mRecycler.addItemDecoration(mItemDecoration);
+
+
+        // 默认选中
+
+        int start = mStartAndEndItemPosition[0];
+        int end = mStartAndEndItemPosition[1];
+
+        if (start == 0 && end == 0) {
+            try {
+                performItemClick(getBeanPosition(mStartBean));
+                performItemClick(getBeanPosition(mEndBean));
+            } catch (Exception ignored) {
+
+            }
+
+        }
+
     }
 
     @Override
@@ -112,6 +131,10 @@ public class JcsCalendarDialog extends BaseBottomDialog {
     }
 
     public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+        performItemClick(position);
+    }
+
+    private void performItemClick(int position) {
         CalendarBean item = mAdapter.getItem(position);
         if (position == mStartAndEndItemPosition[0]) {
             //点击位置是已保存的开始日期，什么都不做
@@ -285,14 +308,16 @@ public class JcsCalendarDialog extends BaseBottomDialog {
         int max = instance.getActualMaximum(Calendar.DATE);
 
 
+        // 开始日期
         int nowYear = Calendar.getInstance().get(Calendar.YEAR);
-        int nowMonth =  Calendar.getInstance().get(Calendar.MONTH);
-        int nowDay =  Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        int nowMonth = Calendar.getInstance().get(Calendar.MONTH);
+        int nowDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
         start.set(Calendar.YEAR, nowYear);
         start.set(Calendar.MONTH, nowMonth);
         start.set(Calendar.DAY_OF_MONTH, nowDay);
 
+        // 结束日期
         end.set(Calendar.YEAR, instance.get(Calendar.YEAR));
         end.set(Calendar.MONTH, instance.get(Calendar.MONTH));
         end.set(Calendar.DAY_OF_MONTH, max);
@@ -322,11 +347,31 @@ public class JcsCalendarDialog extends BaseBottomDialog {
             mBeans.add(day);
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
+
+
     }
+
+
+    private int getBeanPosition(CalendarBean bean) {
+        int startDay = bean.getDay();
+        int position = 0;
+
+        for (int i = 0; i < mAdapter.getData().size(); i++) {
+            CalendarBean item = mAdapter.getData().get(i);
+            if (item.getDay() == startDay) {
+                position = i;
+                break;
+            }
+        }
+        return position;
+    }
+
 
     private void deployCalendarBean(CalendarBean calendarBean, Calendar instance) {
         calendarBean.setTime(instance.getTime().getTime());
         calendarBean.setDay(instance.get(Calendar.DAY_OF_MONTH));
+        calendarBean.setMonth(instance.get(Calendar.MONTH));
+        calendarBean.setYear(instance.get(Calendar.YEAR));
         calendarBean.setShowYearMonthDate(mYearMonthSF.format(instance.getTime()));
         calendarBean.setShowMonthDayDate(mMonthDaySF.format(instance.getTime()));
         calendarBean.setShowMonthDayDateWithSplit(mMonthDayWithSplitSF.format(instance.getTime()));
@@ -351,5 +396,12 @@ public class JcsCalendarDialog extends BaseBottomDialog {
 
     public interface OnDateSelectedListener {
         void onDateSelected(CalendarBean startDate, CalendarBean endDate);
+    }
+
+    @Override
+    public void show(FragmentManager fm) {
+        super.show(fm);
+
+
     }
 }

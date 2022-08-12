@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.TextView
 import cn.sharesdk.facebook.Facebook
+import cn.sharesdk.framework.Platform
 import cn.sharesdk.framework.PlatformDb
 import cn.sharesdk.framework.ShareSDK
 import cn.sharesdk.google.GooglePlus
@@ -163,16 +164,34 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
      * @see cn.sharesdk.google.GooglePlus
      */
     fun threePartyAuthorize(platformName: String) {
-        MobUtil.authorize(ShareSDK.getPlatform(platformName)) { db: PlatformDb ->
-            // 授权成功
-            val userName = db.userName
-            val userId = db.userId
-            val userIcon = db.userIcon
-            Log.d("第三方登录", "userName == $userName")
-            Log.d("第三方登录", "userId == $userId")
-            Log.d("第三方登录", "userIcon == $userIcon")
-            threePartyLogin(platformName, db)
-        }
+
+        MobUtil.authorize(ShareSDK.getPlatform(platformName),object :WherePlatformAuthorizeListener{
+            override fun onComplete(db: PlatformDb) {
+                // 授权成功
+                val userName = db.userName
+                val userId = db.userId
+                val userIcon = db.userIcon
+                Log.d("第三方登录", "userName == $userName")
+                Log.d("第三方登录", "userId == $userId")
+                Log.d("第三方登录", "userIcon == $userIcon")
+                threePartyLogin(platformName, db)
+            }
+
+            override fun onCancel(platform: Platform, i: Int) {
+                super.onCancel(platform, i)
+                mView.authorizeCancel()
+
+            }
+
+            override fun onError(platform: Platform, i: Int) {
+                super.onError(platform, i)
+                mView.authorizeError()
+            }
+
+
+
+        })
+
     }
 
     /**
@@ -196,7 +215,6 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
         requestApi(mRetrofit.threePartyLogin(request), object : BaseMvpObserver<LoginResponse>(mView) {
             override fun onSuccess(response: LoginResponse) {
                 handleLoginSuccess(response.token)
-
             }
 
             override fun onError(errorResponse: ErrorResponse) {

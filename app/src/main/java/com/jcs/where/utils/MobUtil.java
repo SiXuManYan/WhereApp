@@ -38,18 +38,6 @@ import cn.sharesdk.framework.ShareSDK;
 public class MobUtil {
 
 
-    /**
-     * 授权回调，只处理成功情况
-     */
-    public interface WherePlatformAuthorizeListener {
-
-        /**
-         * 授权成功
-         *
-         * @param db 平台用户信息
-         */
-        void onComplete(PlatformDb db);
-    }
 
 
     public static void authorize(Platform plat, WherePlatformAuthorizeListener listener) {
@@ -70,11 +58,13 @@ public class MobUtil {
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
                 ToastUtils.showShort(R.string.authorization_failed);
+                listener.onError(platform , i );
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
                 ToastUtils.showShort(R.string.authorization_cancel);
+                listener.onCancel(platform , i );
             }
 
             @Override

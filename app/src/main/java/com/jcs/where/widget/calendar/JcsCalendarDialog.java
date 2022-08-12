@@ -94,7 +94,7 @@ public class JcsCalendarDialog extends BaseDialog {
         int start = mStartAndEndItemPosition[0];
         int end = mStartAndEndItemPosition[1];
 
-        if (start == 0 && end == 0) {
+        if (start == 0 &&   end == 0) {
             try {
                 performItemClick(getBeanPosition(mStartBean));
                 performItemClick(getBeanPosition(mEndBean));

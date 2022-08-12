@@ -30,4 +30,7 @@ public interface LoginView extends BaseMvpView {
      */
     void guideToAccountBind(PlatformDb platformData, int loginType);
 
+    void authorizeCancel();
+
+    void authorizeError();
 }

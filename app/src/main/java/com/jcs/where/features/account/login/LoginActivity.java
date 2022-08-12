@@ -411,10 +411,12 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
     private void onFacebookLoginClick(View view) {
+        showLoading();
         presenter.threePartyAuthorize(Facebook.NAME);
     }
 
     private void onGoogleLoginClick(View view) {
+        showLoading();
         presenter.threePartyAuthorize(GooglePlus.NAME);
     }
 
@@ -432,5 +434,15 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         bundle.putString(Constant.PARAM_USER_ICON, userIcon);
         bundle.putInt(Constant.PARAM_THREE_PARTY_LOGIN_TYPE, loginType);
         startActivity(BindPhoneActivity.class, bundle);
+    }
+
+    @Override
+    public void authorizeCancel() {
+        hideLoading();
+    }
+
+    @Override
+    public void authorizeError() {
+        hideLoading();
     }
 }

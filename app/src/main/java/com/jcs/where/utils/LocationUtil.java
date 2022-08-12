@@ -93,8 +93,8 @@ public class LocationUtil {
     private void getLocation() {
         try {
             handleLocation();
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

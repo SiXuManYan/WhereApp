@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseBottomDialog;
@@ -283,12 +284,17 @@ public class JcsCalendarDialog extends BaseBottomDialog {
 
         int max = instance.getActualMaximum(Calendar.DATE);
 
-        start.set(Calendar.YEAR, 2022);
-        start.set(Calendar.MONTH, 4);
-        start.set(Calendar.DAY_OF_MONTH, 1);
 
-        end.set(Calendar.YEAR, 2023);
-        end.set(Calendar.MONTH, 11);
+        int nowYear = Calendar.getInstance().get(Calendar.YEAR);
+        int nowMonth =  Calendar.getInstance().get(Calendar.MONTH);
+        int nowDay =  Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
+        start.set(Calendar.YEAR, nowYear);
+        start.set(Calendar.MONTH, nowMonth);
+        start.set(Calendar.DAY_OF_MONTH, nowDay);
+
+        end.set(Calendar.YEAR, instance.get(Calendar.YEAR));
+        end.set(Calendar.MONTH, instance.get(Calendar.MONTH));
         end.set(Calendar.DAY_OF_MONTH, max);
 
         mBeans = new ArrayList<>();

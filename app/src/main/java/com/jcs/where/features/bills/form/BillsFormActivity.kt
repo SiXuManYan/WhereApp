@@ -149,8 +149,35 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
         next_tv.setOnClickListener {
 
-            if (amount_et.text.isNullOrBlank()) {
+            val text = amount_et.text.toString().trim()
+            if (text.isNullOrBlank()) {
                 ToastUtils.showShort("Please enter the amount.")
+                return@setOnClickListener
+            }
+
+            if (text.contains(".")) {
+                // 多个小数点
+                if (text.split(".").size > 2) {
+                    ToastUtils.showShort(R.string.please_input_right_amount)
+                    return@setOnClickListener
+                }
+                val lastIndexOf = text.lastIndexOf(".")
+                if (lastIndexOf > -1) {
+                    val length = text.substring(lastIndexOf + 1).length
+                    // 小数点后位数超过2
+                    if (length > 2) {
+                        ToastUtils.showShort(R.string.please_input_right_amount)
+                        return@setOnClickListener
+                    }
+                }
+            }
+
+            // ^[0-9]+(.[0-9]{2})?\$ 保留两位小数
+            // ^[0-9]{6}(.[0-9]{2})?$    金额输入规则：0.00 ～ 999999.99
+            val safeBigDecimal = BusinessUtils.getSafeBigDecimal(text)
+            if (safeBigDecimal.compareTo(BigDecimal.ZERO) != 1 || safeBigDecimal.compareTo(BigDecimal(999999.99)) == 1) {
+                // 0.00 ～ 999999.99
+                ToastUtils.showShort(R.string.please_input_right_amount)
                 return@setOnClickListener
             }
 
@@ -171,6 +198,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
         }
 
     }
+
 
     override fun onBackPressed() {
         onBackClick()

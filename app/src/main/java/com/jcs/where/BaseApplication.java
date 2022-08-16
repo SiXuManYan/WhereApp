@@ -25,10 +25,14 @@ import com.jcs.where.frames.common.Html5Url;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.storage.entity.UserRongyunData;
+import com.jcs.where.utils.BusinessUtils;
+import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.util.ArrayList;
 
@@ -73,6 +77,7 @@ public class BaseApplication extends Application {
         crashHandler.init(this);
         initComm100();
         handleRongCloud();
+        handleUmeng();
     }
 
 
@@ -194,7 +199,7 @@ public class BaseApplication extends Application {
     /**
      * 初始化融云
      */
-    private void initRongCloud(){
+    private void initRongCloud() {
 
         RongIM.init(this, BuildConfig.RONG_CLOUD_APP_KEY, true);
 
@@ -215,12 +220,13 @@ public class BaseApplication extends Application {
         RongUserInfoManager.getInstance().setUserInfoProvider(userId -> {
             refreshRongUserInfoCache(userId);
             return null;
-        },true);
+        }, true);
 
     }
 
     /**
      * 刷新融云用户信息
+     *
      * @param rongCloudUserId
      */
     public void refreshRongUserInfoCache(String rongCloudUserId) {
@@ -237,7 +243,6 @@ public class BaseApplication extends Application {
      * 连接融云服务器
      */
     public void connectRongCloud() {
-
 
 
         if (!User.isLogon()) {
@@ -260,7 +265,7 @@ public class BaseApplication extends Application {
             @Override
             public void onSuccess(String userId) {
                 // 登录成功
-                LogUtils.d("融云", "连接融云服务器成功，融云token == " + rongToken+"  当前连接的用户的融云id == " + "userId");
+                LogUtils.d("融云", "连接融云服务器成功，融云token == " + rongToken + "  当前连接的用户的融云id == " + "userId");
             }
 
             /**
@@ -286,13 +291,35 @@ public class BaseApplication extends Application {
 
         // 连接状态监听
         RongIM.setConnectionStatusListener(status -> {
-            LogUtils.d("融云", "链接状态 status == "+ status.name());
+            LogUtils.d("融云", "链接状态 status == " + status.name());
 
         });
+    }
 
+
+    /**
+     * 友盟预初始化
+     * https://developer.umeng.com/docs/119267/detail/118588
+     */
+    private void handleUmeng() {
+        // 预注册
+        // log
+        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
+        UMConfigure.preInit(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel());
+
+        // 用户同意协议后的真正注册
+        boolean isAgree = CacheUtil.isAgreeUserAgreement();
+        if (isAgree) {
+            UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "");
+        }
 
     }
 
 
+    @Override
+    public void onTerminate() {
 
+        MobclickAgent.onKillProcess(this);
+        super.onTerminate();
+    }
 }

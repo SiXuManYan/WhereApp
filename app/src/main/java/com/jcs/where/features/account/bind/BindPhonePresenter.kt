@@ -17,10 +17,7 @@ import com.jcs.where.api.request.account.BindPhoneRequest
 import com.jcs.where.api.response.LoginResponse
 import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.storage.entity.User
-import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.FeaturesUtil
-import com.jcs.where.utils.SPKey
+import com.jcs.where.utils.*
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
@@ -29,6 +26,10 @@ import java.util.concurrent.TimeUnit
  * Created by Wangsw  2021/2/1 16:14.
  */
 class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mView) {
+
+
+    lateinit var platformName: String
+
     /**
      * 获取验证码
      *
@@ -178,6 +179,9 @@ class BindPhonePresenter(private val mView: BindPhoneView) : BaseMvpPresenter(mV
 
                 // 连接融云
                 whereApp.connectRongCloud()
+
+                // 友盟
+                BusinessUtils.umengOnProfileSignIn(platformName, response.id)
 
                 // 绑定成功
                 mView.bindSuccess()

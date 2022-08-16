@@ -87,6 +87,10 @@ android {
             buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_DEVELOP
             buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
             buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
+            buildConfigField "String", "UMENG_APP_KEY", UMENG_APP_KEY
+            buildConfigField "String", "UMENG_APP_CHANNEL", UMENG_APP_CHANNEL_DEV
+            buildConfigField "String", "UMENG_APP_CHANNEL_DEV", UMENG_APP_CHANNEL_DEV
+            buildConfigField "String", "UMENG_APP_CHANNEL_FORMAL", UMENG_APP_CHANNEL_FORMAL
         }
 
         formal {
@@ -94,6 +98,10 @@ android {
             buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_RELEASE
             buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
             buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
+            buildConfigField "String", "UMENG_APP_KEY", UMENG_APP_KEY
+            buildConfigField "String", "UMENG_APP_CHANNEL", UMENG_APP_CHANNEL_FORMAL
+            buildConfigField "String", "UMENG_APP_CHANNEL_DEV", UMENG_APP_CHANNEL_DEV
+            buildConfigField "String", "UMENG_APP_CHANNEL_FORMAL", UMENG_APP_CHANNEL_FORMAL
         }
 
     }
@@ -239,5 +247,11 @@ dependencies {
     // facebook 深度链接
     implementation 'com.facebook.android:facebook-applinks:[4,5)'
 //    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+
+    // 友盟
+    implementation  'com.umeng.umsdk:common:9.4.7'// 必选
+    implementation  'com.umeng.umsdk:asms:1.4.1'// 必选
+    implementation 'com.umeng.umsdk:apm:1.7.0' // 错误分析模块改为独立库，看crash和性能数据请一定集成
+    // implementation  'com.umeng.umsdk:abtest:1.0.0'//使用U-App中ABTest能力，可选
 
 }

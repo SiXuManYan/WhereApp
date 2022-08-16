@@ -12,6 +12,7 @@ import com.jcs.where.api.request.account.RegisterRequest
 import com.jcs.where.api.response.LoginResponse
 import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.SPKey
@@ -112,6 +113,9 @@ class RegisterPresenter(private val mView: RegisterView) : BaseMvpPresenter(mVie
 
                 // 连接融云
                 whereApp.connectRongCloud()
+
+                // 友盟
+                BusinessUtils.umengOnProfileSignIn(userId = response.id)
 
                 // 注册成功
                 mView.registerSuccess()

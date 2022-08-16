@@ -13,6 +13,7 @@ import io.reactivex.functions.Consumer
  */
 open class BaseMvpPresenter(private var mBaseMvpView: BaseMvpView?) : BaseModel() {
 
+
     protected fun <T> requestApi(observable: Observable<JcsResponse<T>>, observer: BaseMvpObserver<T>) {
         dealResponse(observable, observer)
     }

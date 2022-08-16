@@ -131,7 +131,6 @@
             </intent-filter>
 
             <!-- 网页内打开 -->
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -147,6 +146,15 @@
 
             </intent-filter>
 
+            <!-- 友盟集成测试，手机已注册的测试设备发送的日志，避免数据污染 -->
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="um.62fb010b88ccdf4b7e049847" />
+            </intent-filter>
 
         </activity>
 

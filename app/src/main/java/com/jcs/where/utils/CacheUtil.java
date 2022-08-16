@@ -77,6 +77,23 @@ public class CacheUtil {
         return SPUtils.getInstance(Constant.PR_DEFAULT);
     }
 
+    /**
+     * 是否授权用户协议
+     * @return
+     */
+    public static boolean isAgreeUserAgreement(){
+        return getShareDefault().getBoolean(Constant.SP_IS_AGREE_USER_AGREEMENT, false);
+    }
+
+    /**
+     * 授权用户协议
+     * @param isAgree
+     */
+    public static void putIsAgreeUserAgreement(boolean isAgree){
+        getShareDefault().put(Constant.SP_IS_AGREE_USER_AGREEMENT, isAgree);
+    }
+
+
 
     public static LatLng getMyCacheLocation() {
 

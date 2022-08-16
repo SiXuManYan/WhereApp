@@ -108,6 +108,7 @@ public class Constant {
     public static final String PARAM_CANCELABLE = "param_cancelable";
     public static final String PARAM_HANDLE_SELECT = "param_handle_select";
     public static final String PARAM_REFUND_METHOD = "param_refund_method";
+    public static final String PARAM_PLATFORM_NAME = "param_platform_name";
 
     /**
      * 打款id

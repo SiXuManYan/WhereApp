@@ -17,6 +17,7 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.StringUtils
+import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -26,6 +27,7 @@ import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
 import com.jcs.where.storage.entity.User
 import com.jcs.where.view.MyLayoutManager
+import com.umeng.analytics.MobclickAgent
 import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
@@ -386,7 +388,7 @@ object BusinessUtils {
             .create()
 
         // 原价
-        if (price != oldPrice  ) {
+        if (price != oldPrice) {
             oldPriceTv.visibility = View.VISIBLE
 
             SpanUtils.with(oldPriceTv)
@@ -475,6 +477,36 @@ object BusinessUtils {
             layoutParams = params
         }
 
+    }
+
+
+    /**
+     * 获取友盟app渠道
+     */
+    fun getUmengAppChannel(): String {
+        val channel =
+            if (BuildConfig.FLAVOR == "dev" || BuildConfig.VERSION_NAME.contains("beta") || BuildConfig.VERSION_NAME.contains("alpha")) {
+                BuildConfig.UMENG_APP_CHANNEL_DEV
+            } else {
+                BuildConfig.UMENG_APP_CHANNEL_FORMAL
+            }
+
+        return channel
+    }
+
+    /**
+     *  【友盟+】在统计用户时以设备为标准，此处切换统计标准为自身账号
+     *  @param platformName 账号来源。
+     *                      如果用户通过第三方账号登陆，则为具体平台名称，如Facebook googlePlus+
+     *                      app本身登录 可传空
+     *
+     */
+    fun umengOnProfileSignIn(platformName: String? = null, userId: Long) {
+        if (platformName.isNullOrBlank()) {
+            MobclickAgent.onProfileSignIn(userId.toString())
+        } else {
+            MobclickAgent.onProfileSignIn(platformName, userId.toString())
+        }
     }
 
 

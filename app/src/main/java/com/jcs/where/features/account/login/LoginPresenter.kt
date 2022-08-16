@@ -148,11 +148,12 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
      * 保存token
      *
      * @param token
+     * @param platformName 账号来源。如果用户通过第三方账号登陆，则为具体平台名称，
      */
-    private fun handleLoginSuccess(token: String) {
+    private fun handleLoginSuccess(token: String, platformName: String? = null) {
         CacheUtil.saveToken(token)
 
-        getUserInfo()
+        getUserInfo(platformName)
     }
 
     /**
@@ -165,7 +166,7 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
      */
     fun threePartyAuthorize(platformName: String) {
 
-        MobUtil.authorize(ShareSDK.getPlatform(platformName),object :WherePlatformAuthorizeListener{
+        MobUtil.authorize(ShareSDK.getPlatform(platformName), object : WherePlatformAuthorizeListener {
             override fun onComplete(db: PlatformDb) {
                 // 授权成功
                 val userName = db.userName
@@ -187,7 +188,6 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
                 super.onError(platform, i)
                 mView.authorizeError()
             }
-
 
 
         })
@@ -214,7 +214,7 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
 
         requestApi(mRetrofit.threePartyLogin(request), object : BaseMvpObserver<LoginResponse>(mView) {
             override fun onSuccess(response: LoginResponse) {
-                handleLoginSuccess(response.token)
+                handleLoginSuccess(response.token, platformName)
             }
 
             override fun onError(errorResponse: ErrorResponse) {
@@ -232,7 +232,7 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
     /**
      * 获取用户信息
      */
-    private fun getUserInfo() {
+    private fun getUserInfo(platformName: String?) {
 
         requestApi(mRetrofit.userInfo, object : BaseMvpObserver<UserInfoResponse>(mView) {
             override fun onSuccess(response: UserInfoResponse) {
@@ -270,6 +270,10 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
 
                 // 连接融云
                 whereApp.connectRongCloud()
+
+                // 友盟
+                BusinessUtils.umengOnProfileSignIn(platformName, response.id)
+
 
                 // 登录成功
                 mView.LoginSuccess()

@@ -16,6 +16,7 @@ import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.base.mvp.BaseMvpActivity;
 import com.jcs.where.features.main.MainActivity;
+import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 
@@ -84,6 +85,8 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
         mUserName = bundle.getString(Constant.PARAM_USER_NAME);
         mUserId = bundle.getString(Constant.PARAM_USER_ID);
         mUserIcon = bundle.getString(Constant.PARAM_USER_ICON);
+
+        presenter.platformName = bundle.getString(Constant.PARAM_PLATFORM_NAME);
         mLoginType = bundle.getInt(Constant.PARAM_THREE_PARTY_LOGIN_TYPE);
     }
 
@@ -138,6 +141,8 @@ public class BindPhoneActivity extends BaseMvpActivity<BindPhonePresenter> imple
 
     @Override
     public void bindSuccess() {
+
+
         ToastUtils.showShort(R.string.login_success);
         EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_LOGIN_SUCCESS));
         finish();

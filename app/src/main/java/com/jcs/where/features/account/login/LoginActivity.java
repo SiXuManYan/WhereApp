@@ -422,16 +422,18 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
 
     @Override
-    public void guideToAccountBind(PlatformDb platformData, int loginType) {
+    public void guideToAccountBind(PlatformDb platformData, int loginType ) {
 
         String userName = platformData.getUserName();
         String userId = platformData.getUserId();
         String userIcon = platformData.getUserIcon();
+        String platformName = platformData.getPlatformNname();
 
         Bundle bundle = new Bundle();
         bundle.putString(Constant.PARAM_USER_NAME, userName);
         bundle.putString(Constant.PARAM_USER_ID, userId);
         bundle.putString(Constant.PARAM_USER_ICON, userIcon);
+        bundle.putString(Constant.PARAM_PLATFORM_NAME, platformName);
         bundle.putInt(Constant.PARAM_THREE_PARTY_LOGIN_TYPE, loginType);
         startActivity(BindPhoneActivity.class, bundle);
     }

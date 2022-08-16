@@ -26,6 +26,7 @@ import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -128,6 +129,9 @@ public class SettingActivity extends BaseActivity {
                 .setMessage(R.string.sign_out_hint)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
+                    // 登出友盟
+                    MobclickAgent.onProfileSignOff();
+
                     // 断开融云连接
                     BusinessUtils.INSTANCE.loginOut();
                     startActivity(LoginActivity.class);

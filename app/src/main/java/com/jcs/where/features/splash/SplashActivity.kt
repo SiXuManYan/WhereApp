@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SpanUtils
+import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
@@ -37,6 +38,7 @@ import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.*
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.mob.MobSDK
+import com.umeng.commonsdk.UMConfigure
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -83,7 +85,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
     private fun handleWebOpen() {
 
-        // 处理 Facebook AppLink
+        // 处理 Facebook DeepAppLink
         val targetUrl: Uri? = AppLinks.getTargetUrlFromInboundIntent(this, intent)
         if (targetUrl != null) {
             // 被app link启动
@@ -209,9 +211,26 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
                     ds.isUnderlineText = true
                 }
             })
-            .append(getString(R.string.use_agreement_content_7))
+
+            .append(getString(R.string.use_agreement_content_12))
+            .append(getString(R.string.use_agreement_content_13))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    WebViewActivity.goTo(this@SplashActivity, "https://www.umeng.com/page/policy")
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            })
+
+
+
+
+            .append(getString(R.string.use_agreement_content_last))
             .create()
-        val isAgreeUserAgreement = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_AGREE_USER_AGREEMENT, false)
+        val isAgreeUserAgreement = CacheUtil.isAgreeUserAgreement()
         if (isAgreeUserAgreement) {
             afterAnimation()
         } else {
@@ -236,6 +255,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             if (message != null) {
                 message.movementMethod = LinkMovementMethod.getInstance()
                 message.setLineSpacing(0f, 1.2f)
+                message.textSize = 14f
             }
         }
     }
@@ -250,6 +270,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
                 dialog.dismiss()
             }
             .setNegativeButton(getString(R.string.not_yet)) { dialog: DialogInterface, which: Int ->
+
+                // 友盟隐私合规授权结果上传
+                UMConfigure.submitPolicyGrantResult(applicationContext, false);
                 dialog.dismiss()
                 AppUtils.exitApp()
             }
@@ -258,8 +281,15 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
     }
 
     private fun afterAnimation() {
-        CacheUtil.getShareDefault().put(Constant.SP_IS_AGREE_USER_AGREEMENT, true)
-        MobSDK.submitPolicyGrantResult(true, null)
+        CacheUtil.putIsAgreeUserAgreement(true);
+        // mob share sdk
+        MobSDK.submitPolicyGrantResult(true)
+
+        // 友盟隐私合规授权结果上传
+        UMConfigure.submitPolicyGrantResult(applicationContext, true)
+        // 友盟真正注册
+        UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "")
+
         val isFirstOpen = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_FIRST_OPEN, true)
         if (isFirstOpen) {
             pager_vp.visibility = View.VISIBLE

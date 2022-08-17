@@ -55,7 +55,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     public void uncaughtException(Thread thread, Throwable ex) {
         try {
             dumpExceptionToSDCard(ex);
-            uploadExceptionToServer();
+            uploadExceptionToServer()
+
+            ;
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -71,3 +71,7 @@
 -keep public class com.jcs.where.R$*{
     public static final int *;
 }
+
+# 友盟 U-APM 性能监控
+-keep class com.uc.** { *; }
+-keep class com.efs.** { *; }

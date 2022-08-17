@@ -33,6 +33,8 @@ import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.umcrash.UMCrash;
+import com.umeng.umcrash.UMCrashCallback;
 
 import java.util.ArrayList;
 
@@ -312,6 +314,14 @@ public class BaseApplication extends Application {
         if (isAgree) {
             UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "");
         }
+
+        // 崩溃回调，拼接自定义字段
+        UMCrash.registerUMCrashCallback(() ->
+                BuildConfig.FLAVOR + BuildConfig.VERSION_CODE + BuildConfig.VERSION_NAME
+        );
+
+        // 自动采集选择
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
 
     }
 

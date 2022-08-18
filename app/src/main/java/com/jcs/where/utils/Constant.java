@@ -7,6 +7,8 @@ package com.jcs.where.utils;
 public class Constant {
 
 
+    public static final String PUSH_RECEIVER_ACTION = "com.jcs.where.push";
+
     /**
      * 防连点时间间隔
      **/
@@ -252,6 +254,8 @@ public class Constant {
     public static final String PARAM_SERVICE_CHARGE = "param_service_charge";
     public static final String PARAM_USER_MONEY = "PARAM_USER_MONEY";
     public static final String PARAM_SERVICE_MONEY = "PARAM_SERVICE_MONEY";
+
+
 
 
 

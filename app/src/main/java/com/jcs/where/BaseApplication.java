@@ -102,7 +102,11 @@ public class BaseApplication extends Application {
 
         VisitorClientInterface.setChatUrl(Html5Url.COMM100_CHAT_URL);
 
-        JPushInterface.setDebugMode(true);
+
+        // 极光推送
+        if (BuildConfig.DEBUG) {
+            JPushInterface.setDebugMode(true);
+        }
         JPushInterface.init(this);
 
         BasicPushNotificationBuilder builder =

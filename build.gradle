@@ -17,20 +17,33 @@ buildscript {
 
         // 友盟
         maven { url 'https://repo1.maven.org/maven2/' }
+
+        // ## 极光推送 ##
+        // hms
+        maven { url 'http://developer.huawei.com/repo/'}
+        // fcm
+        maven { url "https://maven.google.com" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.google.gms:google-services:4.3.3'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+
+        // GooglePlay服务
+        classpath 'com.google.gms:google-services:4.3.13'
+        // NOTE: Do not place your application dependencies here; they belong in the individual module build.gradle files
+
         // share sdk
-//        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
         classpath "com.mob.sdk:MobSDK:+"
 
         // kotlin
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:1.6.10"
+
+        // 极光推送
+        // fcm
+        // classpath 'com.google.gms:google-services:4.3.8'
+        // hms 华为渠道推送
+//        classpath 'com.huawei.agconnect:agcp:1.6.0.300'
     }
 }
 

@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+// 极光推送使用
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.huawei.agconnect' // 使用华为渠道推送时打开
+
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
@@ -22,11 +26,39 @@ android {
         multiDexEnabled true
         flavorDimensions "versionCode"
 
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。（极光推送使用）
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "dca78eb7c81e4244fb6254c0",
-                JPUSH_CHANNEL: "default_developer",
+                JPUSH_APPKEY : "c1845048016655585610609e",
+                JPUSH_CHANNEL: "default_developer"
+
+                /*
+                申请各个厂商推送通道后可填入
+                MEIZU_APPKEY : "MZ-魅族的APPKEY",
+                MEIZU_APPID : "MZ-魅族的APPID",
+                XIAOMI_APPID : "MI-小米的APPID",
+                XIAOMI_APPKEY : "MI-小米的APPKEY",
+                OPPO_APPKEY : "OP-oppo的APPKEY",
+                OPPO_APPID : "OP-oppo的APPID",
+                OPPO_APPSECRET : "OP-oppo的APPSECRET",
+                VIVO_APPKEY : "vivo的APPKEY",
+                VIVO_APPID : "vivo的APPID"
+                HONOR_APPID : "Honor的APP ID"
+                */
         ]
+
+        // 极光推送
+        // 使用 NDK r17 时，可能 Android Studio 的报错
+        packagingOptions {
+            doNotStrip '*/mips/*.so'
+            doNotStrip '*/mips64/*.so'
+        }
 
     }
 
@@ -186,9 +218,29 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
 
+    // 极光推送核心包(GooglePlay 版)
+    implementation 'cn.jiguang.sdk:jpush-google:4.8.0'  // 此处以JPush 4.8.0 Google Play版本为例
+    implementation 'cn.jiguang.sdk:jcore-google:3.3.1'  // 此处以JCore 3.3.1 Google Play 版本为例。
+
+    // 极光推送厂商渠道包，逐个申请appKey后，在需要时打开
+//     接入华为厂商
+//    implementation 'com.huawei.hms:push:6.3.0.304'
+//    implementation 'cn.jiguang.sdk.plugin:huawei:4.7.2'// 极光厂商插件版本与接入 JPush 版本保持一致，下同
+//     接入荣耀厂商
+//    implementation 'cn.jiguang.sdk.plugin:honor:4.7.2'
+//     接入 FCM 厂商
+//    implementation 'com.google.firebase:firebase-messaging:23.0.5'
+//    implementation 'cn.jiguang.sdk.plugin:fcm:4.7.2'
+//     接入魅族厂商
+//    implementation 'cn.jiguang.sdk.plugin:meizu:4.7.2'
+//     接入 VIVO 厂商
+//    implementation 'cn.jiguang.sdk.plugin:vivo:4.7.2'
+//     接入 OPPO 厂商
+//    implementation 'cn.jiguang.sdk.plugin:oppo:4.7.2'
+//     接入小米厂商
+//    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.7.2'
+
     // comm 100
-    implementation files('libs/jpush-android-3.7.0-google_play.jar')
-    implementation files('libs/jcore-android-2.8.2-google_play.jar')
     implementation(name: 'visitor-client-v1.0', ext: 'aar')
 
     // 知乎相册选择器

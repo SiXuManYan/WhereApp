@@ -29,7 +29,7 @@
 -dontwarn com.sina.**
 -dontwarn com.mob.**
 
-# keep  RongCloud
+# keep  融云
 -keepattributes Exceptions,InnerClasses
 
 -keepattributes Signature
@@ -75,3 +75,14 @@
 # 友盟 U-APM 性能监控
 -keep class com.uc.** { *; }
 -keep class com.efs.** { *; }
+
+# 极光推送
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+#-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }

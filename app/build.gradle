@@ -249,7 +249,7 @@ dependencies {
 //    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 
     // 友盟
-    implementation  'com.umeng.umsdk:common:9.4.7'// 必选
+    implementation  'com.umeng.umsdk:common:9.5.1'// 必选
     implementation  'com.umeng.umsdk:asms:1.4.1'// 必选
     implementation 'com.umeng.umsdk:apm:1.7.0' // 错误分析模块改为独立库，看crash和性能数据请一定集成
 

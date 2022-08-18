@@ -224,10 +224,6 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
                     ds.isUnderlineText = true
                 }
             })
-
-
-
-
             .append(getString(R.string.use_agreement_content_last))
             .create()
         val isAgreeUserAgreement = CacheUtil.isAgreeUserAgreement()

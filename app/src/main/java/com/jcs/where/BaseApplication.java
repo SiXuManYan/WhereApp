@@ -34,7 +34,6 @@ import com.jcs.where.utils.SPUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.umcrash.UMCrash;
-import com.umeng.umcrash.UMCrashCallback;
 
 import java.util.ArrayList;
 

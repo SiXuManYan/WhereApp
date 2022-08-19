@@ -18,6 +18,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
 import bolts.AppLinks
+import cn.jiguang.api.utils.JCollectionAuth
+import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
@@ -269,6 +271,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
                 // 友盟隐私合规授权结果上传
                 UMConfigure.submitPolicyGrantResult(applicationContext, false);
+
+                // 极光推送隐私确认
+                JCollectionAuth.setAuth(this, false)
                 dialog.dismiss()
                 AppUtils.exitApp()
             }
@@ -285,6 +290,11 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         UMConfigure.submitPolicyGrantResult(applicationContext, true)
         // 友盟真正注册
         UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "")
+
+        // 极光推送隐私确认
+        JCollectionAuth.setAuth(this, true)
+        JPushInterface.init(this)
+
 
         val isFirstOpen = CacheUtil.getShareDefault().getBoolean(Constant.SP_IS_FIRST_OPEN, true)
         if (isFirstOpen) {
@@ -326,67 +336,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         if (module.isNullOrBlank() || moduleId.isNullOrBlank()) {
             return
         }
-
-        when (module) {
-            Html5Url.MODEL_HOTEL -> {
-                val dialog = JcsCalendarDialog()
-                dialog.initCalendar(this)
-                val bundle = Bundle().apply {
-                    putInt(Constant.PARAM_HOTEL_ID, moduleId.toInt())
-                    putSerializable(Constant.PARAM_START_DATE, dialog.startBean)
-                    putSerializable(Constant.PARAM_END_DATE, dialog.endBean)
-                }
-                facebookIntent = Intent(this, HotelDetailActivity2::class.java).putExtras(bundle)
-            }
-            Html5Url.MODEL_NEWS -> {
-                val bundle = Bundle().apply {
-                    putString(Constant.PARAM_NEWS_ID, moduleId)
-                }
-                facebookIntent = Intent(this, NewsDetailActivity::class.java).putExtras(bundle)
-
-            }
-            Html5Url.MODEL_TRAVEL -> {
-                val bundle = Bundle().apply {
-                    putInt(Constant.PARAM_ID, moduleId.toInt())
-                }
-                facebookIntent = Intent(this, TravelDetailActivity::class.java).putExtras(bundle)
-            }
-
-            Html5Url.MODEL_GENERAL -> {
-                val bundle = Bundle().apply {
-                    putInt(Constant.PARAM_ID, moduleId.toInt())
-                }
-                facebookIntent = Intent(this, MechanismActivity::class.java).putExtras(bundle)
-            }
-
-            Html5Url.MODEL_RESTAURANT -> {
-
-                val bundle = Bundle().apply {
-                    putInt(Constant.PARAM_ID, moduleId.toInt())
-                }
-                facebookIntent = Intent(this, RestaurantDetailActivity::class.java).putExtras(bundle)
-
-            }
-
-            Html5Url.MODEL_MALL -> {
-                val bundle = Bundle().apply {
-                    putInt(Constant.PARAM_ID, moduleId.toInt())
-
-                }
-                facebookIntent = Intent(this, MallDetailActivity::class.java).putExtras(bundle)
-            }
-
-            Html5Url.MODEL_MALL_SHOP -> {
-                val bundle = Bundle().apply {
-                    putInt(Constant.PARAM_SHOP_ID, moduleId.toInt())
-                }
-                facebookIntent = Intent(this, MallShopHomeActivity::class.java)
-                    .putExtras(bundle)
-            }
-
-
-            else -> {}
-        }
+        facebookIntent = BusinessUtils.getDeepLinksTargetIntent(module,moduleId,this)
     }
 
 

@@ -37,6 +37,8 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!--振动器权限，JPUSH支持通知开启振动功能，小米推送必须-->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
@@ -431,6 +433,11 @@
             android:exported="false" />
 
         <!--Required_config-->
+
+        <!-- JPUSH_CHANNEL 是为了方便开发者统计 APK 分发渠道。-->
+        <!-- 例如: -->
+        <!-- 发到 Google Play 的 APK 可以设置为 google-play; -->
+        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="${JPUSH_CHANNEL}" />
@@ -442,17 +449,6 @@
         <activity android:name=".features.com100.ExtendChatActivity" />
 
 
-        <receiver
-            android:name=".features.com100.JPushReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-
-                <category android:name="com.jcs.where" />
-            </intent-filter>
-        </receiver>
 
 
         <!-- ######## comm 100 end ↑ #############-->
@@ -582,7 +578,7 @@
         <activity android:name=".features.hotel.map.HotelMapActivity" />
         <activity
             android:name=".features.hotel.detail.HotelDetailActivity2"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".features.hotel.book.HotelBookActivity" />
         <activity android:name=".features.travel.map.TravelMapActivity" />

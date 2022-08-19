@@ -37,6 +37,7 @@ import com.umeng.umcrash.UMCrash;
 
 import java.util.ArrayList;
 
+import cn.jiguang.api.JCoreManager;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -107,7 +108,13 @@ public class BaseApplication extends Application {
         if (BuildConfig.DEBUG) {
             JPushInterface.setDebugMode(true);
         }
-        JPushInterface.init(this);
+
+
+        // 用户同意协议后的真正注册
+        boolean isAgree = CacheUtil.isAgreeUserAgreement();
+        if (isAgree) {
+            JPushInterface.init(this);
+        }
 
         BasicPushNotificationBuilder builder =
                 new BasicPushNotificationBuilder(this.getApplicationContext());
@@ -121,7 +128,12 @@ public class BaseApplication extends Application {
         JPushInterface.setDefaultPushNotificationBuilder(builder);
 
         if (Build.VERSION.SDK_INT > 23) {
+            // 设置保留最近通知条数 API
             JPushInterface.setLatestNotificationNumber(this.getApplicationContext(), 1);
+        }
+
+        if (BuildConfig.DEBUG) {
+            JPushInterface.getConnectionState(this);
         }
 
         String regId = JPushInterface.getRegistrationID(this);

@@ -1,5 +1,6 @@
 package com.jcs.where.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,20 +14,27 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.SpanUtils
-import com.blankj.utilcode.util.StringUtils
+import cn.jpush.android.api.JPushInterface
+import com.blankj.utilcode.util.*
 import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.tag.HomeTagAdapter
+import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.mall.detail.MallDetailActivity
+import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
+import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
+import com.jcs.where.features.travel.detail.TravelDetailActivity
+import com.jcs.where.frames.common.Html5Url
+import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.view.MyLayoutManager
+import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.umeng.analytics.MobclickAgent
 import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
@@ -494,6 +502,8 @@ object BusinessUtils {
         return channel
     }
 
+    private var sequence = 1
+
     /**
      *  【友盟+】在统计用户时以设备为标准，此处切换统计标准为自身账号
      *  @param platformName 账号来源。
@@ -507,6 +517,91 @@ object BusinessUtils {
         } else {
             MobclickAgent.onProfileSignIn(platformName, userId.toString())
         }
+
+        // 注册极光推送Alias
+        // sequence 用户自定义的操作序列号，同操作结果一起返回，用来标识一次操作的唯一性。
+        JPushInterface.setAlias(Utils.getApp().applicationContext, sequence++, userId.toString())
+        // 保存极光推送
+        SPUtils.getInstance().put(Constant.SP_PUSH_SEQUENCE, sequence)
+
+    }
+
+
+    fun getDeepLinksTargetIntent(module: String?, moduleId: String?, context: Context): Intent? {
+
+        var facebookIntent: Intent? = null
+
+        if (module.isNullOrBlank() || moduleId.isNullOrBlank()) {
+            return facebookIntent
+        }
+
+        when (module) {
+            Html5Url.MODEL_HOTEL -> {
+                val dialog = JcsCalendarDialog()
+                dialog.initCalendar(context)
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_HOTEL_ID, moduleId.toInt())
+                    putSerializable(Constant.PARAM_START_DATE, dialog.startBean)
+                    putSerializable(Constant.PARAM_END_DATE, dialog.endBean)
+                }
+                facebookIntent = Intent(context, HotelDetailActivity2::class.java).putExtras(bundle)
+            }
+            Html5Url.MODEL_NEWS -> {
+                val bundle = Bundle().apply {
+                    putString(Constant.PARAM_NEWS_ID, moduleId)
+                }
+                facebookIntent = Intent(context, NewsDetailActivity::class.java).putExtras(bundle)
+
+            }
+            Html5Url.MODEL_TRAVEL -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(context, TravelDetailActivity::class.java).putExtras(bundle)
+            }
+
+            Html5Url.MODEL_GENERAL -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(context, MechanismActivity::class.java).putExtras(bundle)
+            }
+
+            Html5Url.MODEL_RESTAURANT -> {
+
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(context, RestaurantDetailActivity::class.java).putExtras(bundle)
+
+            }
+
+            Html5Url.MODEL_MALL -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(context, MallDetailActivity::class.java).putExtras(bundle)
+            }
+
+            Html5Url.MODEL_MALL_SHOP -> {
+                val bundle = Bundle().apply {
+                    putInt(Constant.PARAM_SHOP_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(context, MallShopHomeActivity::class.java)
+                    .putExtras(bundle)
+            }
+
+
+            else -> {}
+        }
+
+
+        facebookIntent?.let {
+            if (context !is Activity) {
+                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        }
+        return facebookIntent
     }
 
 

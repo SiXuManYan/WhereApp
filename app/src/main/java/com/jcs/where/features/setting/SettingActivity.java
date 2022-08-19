@@ -8,10 +8,13 @@ import androidx.appcompat.app.AlertDialog;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
 import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
+import com.jcs.where.api.push.ExampleUtil;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
@@ -24,6 +27,7 @@ import com.jcs.where.features.setting.phone.ModifyPhoneActivity;
 import com.jcs.where.mine.activity.AboutActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.BusinessUtils;
+import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -34,6 +38,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Wangsw  2021/1/28 15:13.
  * 设置
@@ -41,6 +47,7 @@ import java.io.File;
 public class SettingActivity extends BaseActivity {
 
     private TextView phone_tv, clear_cache_tv;
+    private int sequence;
 
     @Override
     protected int getLayoutId() {
@@ -55,6 +62,7 @@ public class SettingActivity extends BaseActivity {
         clear_cache_tv = findViewById(R.id.clear_cache_tv);
         TextView version_name_tv = findViewById(R.id.version_name_tv);
         version_name_tv.setText(BuildConfig.VERSION_NAME);
+        sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE);
     }
 
 
@@ -115,7 +123,8 @@ public class SettingActivity extends BaseActivity {
             WebViewActivity.goTo(this, FeaturesUtil.getPrivacyPolicy());
         });
         findViewById(R.id.about_rl).setOnClickListener(v -> {
-            startActivity(AboutActivity.class);
+//            startActivity(AboutActivity.class);
+            ExampleUtil.buildLocalNotification(Utils.getApp().getApplicationContext(), getString(R.string.app_name), "这是一条测试消息。");
         });
         findViewById(R.id.refund_rl).setOnClickListener(v -> {
             startActivityAfterLogin(RefundMethodActivity.class);
@@ -134,6 +143,10 @@ public class SettingActivity extends BaseActivity {
 
                     // 断开融云连接
                     BusinessUtils.INSTANCE.loginOut();
+
+                    // 删除极光推送别名
+                    JPushInterface.deleteAlias(this,sequence);
+
                     startActivity(LoginActivity.class);
                     finish();
                     dialogInterface.dismiss();

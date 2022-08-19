@@ -207,6 +207,7 @@ public class Constant {
     public static final String SP_PRICE_SELECTED = "SP_PRICE_SELECTED";
     public static final String SP_STAR_SELECTED = "SP_STAR_SELECTED";
     public static final String SP_SCORE_SELECTED = "SP_SCORE_SELECTED";
+    public static final String SP_PUSH_SEQUENCE = "sp_push_sequence";
 
 
     public static final String PARAM_ADDRESS_ID = "param_address_id";

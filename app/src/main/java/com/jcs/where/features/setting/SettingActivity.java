@@ -123,8 +123,7 @@ public class SettingActivity extends BaseActivity {
             WebViewActivity.goTo(this, FeaturesUtil.getPrivacyPolicy());
         });
         findViewById(R.id.about_rl).setOnClickListener(v -> {
-//            startActivity(AboutActivity.class);
-            ExampleUtil.buildLocalNotification(Utils.getApp().getApplicationContext(), getString(R.string.app_name), "这是一条测试消息。");
+            startActivity(AboutActivity.class);
         });
         findViewById(R.id.refund_rl).setOnClickListener(v -> {
             startActivityAfterLogin(RefundMethodActivity.class);

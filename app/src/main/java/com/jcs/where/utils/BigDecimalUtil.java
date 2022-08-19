@@ -29,6 +29,18 @@ public class BigDecimalUtil {
     }
 
 
+    /**
+     * 保留两位不四舍五入
+     * @param a
+     * @param b
+     * @return
+     */
+    public static BigDecimal addUnNecessary(double a, double b) {
+        BigDecimal b1 = new BigDecimal(a);
+        BigDecimal b2 = new BigDecimal(b);
+        return b1.add(b2).setScale(2, BigDecimal.ROUND_DOWN);
+    }
+
     public static BigDecimal add(BigDecimal a, BigDecimal b) {
         return add(a, b, 2);
     }
@@ -39,7 +51,7 @@ public class BigDecimalUtil {
         for (BigDecimal child : a) {
             temp = add(temp, child);
         }
-        return temp ;
+        return temp;
     }
 
     public static BigDecimal add(BigDecimal a, BigDecimal b, int len) {
@@ -65,7 +77,6 @@ public class BigDecimalUtil {
     public static BigDecimal sub(BigDecimal d1, BigDecimal d2, int len) {
         return d1.subtract(d2).setScale(len, BigDecimal.ROUND_HALF_UP);
     }
-
 
 
     //

@@ -94,7 +94,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     private fun initList() {
 
 
-        val totalMoney = BigDecimalUtil.add(userInputMoney, serviceCharge)
+        val totalMoney = BigDecimalUtil.addUnNecessary(userInputMoney, serviceCharge)
         total_money_tv.text = totalMoney.toPlainString()
 
         mAdapter = BillsPlaceOrderAdapter().apply {

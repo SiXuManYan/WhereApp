@@ -512,17 +512,26 @@ object BusinessUtils {
      *
      */
     fun umengOnProfileSignIn(platformName: String? = null, userId: Long) {
-        if (platformName.isNullOrBlank()) {
-            MobclickAgent.onProfileSignIn(userId.toString())
-        } else {
-            MobclickAgent.onProfileSignIn(platformName, userId.toString())
-        }
 
-        // 注册极光推送Alias
-        // sequence 用户自定义的操作序列号，同操作结果一起返回，用来标识一次操作的唯一性。
-        JPushInterface.setAlias(Utils.getApp().applicationContext, sequence++, userId.toString())
-        // 保存极光推送
-        SPUtils.getInstance().put(Constant.SP_PUSH_SEQUENCE, sequence)
+        try {
+            // 友盟登录
+            if (platformName.isNullOrBlank()) {
+                MobclickAgent.onProfileSignIn(userId.toString())
+            } else {
+                MobclickAgent.onProfileSignIn(platformName, userId.toString())
+            }
+
+            // 注册极光推送Alias
+            // sequence 用户自定义的操作序列号，同操作结果一起返回，用来标识一次操作的唯一性。
+            JPushInterface.setAlias(Utils.getApp().applicationContext, sequence++, userId.toString())
+            // 保存极光推送 sequence
+            SPUtils.getInstance().put(Constant.SP_PUSH_SEQUENCE, sequence)
+            val tags: HashSet<String> = HashSet()
+            tags.add("Android")
+            JPushInterface.setTags(Utils.getApp(), 0, tags)
+        } catch (e: Exception) {
+
+        }
 
     }
 

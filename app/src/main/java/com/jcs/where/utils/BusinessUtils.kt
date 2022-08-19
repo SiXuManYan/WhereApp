@@ -303,12 +303,25 @@ object BusinessUtils {
 
     fun loginOut() {
 
-        // 断开融云连接
-        RongIM.getInstance().logout()
-        User.clearAllUser()
-        CacheUtil.saveToken("")
+        try {
 
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SIGN_OUT))
+            // 断开融云连接
+            RongIM.getInstance().logout()
+            User.clearAllUser()
+            CacheUtil.saveToken("")
+
+            // 登出友盟
+            MobclickAgent.onProfileSignOff()
+
+            // 删除极光推送别名
+            val sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE, 0)
+            JPushInterface.deleteAlias(Utils.getApp().applicationContext, sequence)
+
+            EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SIGN_OUT))
+        } catch (e: Exception) {
+
+        }
+
     }
 
 

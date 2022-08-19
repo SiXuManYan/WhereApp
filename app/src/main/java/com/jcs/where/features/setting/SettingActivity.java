@@ -62,7 +62,7 @@ public class SettingActivity extends BaseActivity {
         clear_cache_tv = findViewById(R.id.clear_cache_tv);
         TextView version_name_tv = findViewById(R.id.version_name_tv);
         version_name_tv.setText(BuildConfig.VERSION_NAME);
-        sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE);
+        sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE,0);
     }
 
 

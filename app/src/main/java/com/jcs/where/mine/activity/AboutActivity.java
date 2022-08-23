@@ -32,7 +32,7 @@ public class AboutActivity extends BaseActivity {
         TextView version_tv = (TextView) findViewById(R.id.version_tv);
         StringBuffer buffer = new StringBuffer(BuildConfig.VERSION_NAME);
         if (BuildConfig.FLAVOR.equals("dev")) {
-            buffer.append(" TestVersion");
+            buffer.append("_测试服务器");
         }
         version_tv.setText(getString(R.string.version_format, buffer.toString()));
 

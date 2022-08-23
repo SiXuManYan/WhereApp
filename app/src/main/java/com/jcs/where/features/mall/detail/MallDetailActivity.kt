@@ -20,6 +20,8 @@ import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallAttribute
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.hotel.comment.child.HotelCommentAdapter
@@ -133,6 +135,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             commonDrawableResId = R.drawable.shape_point_selected_d8d8d8
         }
         mMediaAdapter = DetailMediaAdapter()
+        mMediaAdapter.needImageControl = true
+
         PagerSnapHelper().attachToRecyclerView(media_rv)
         media_rv.apply {
             layoutManager = LinearLayoutManager(this@MallDetailActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -421,7 +425,17 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             1 -> addCart()
             2 -> buyNow()
         }
+    }
 
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_POSITION  -> {
+                val position = baseEvent.data as Int
+                media_rv.scrollToPosition(position)
+            }
+            else -> {}
+        }
 
     }
 

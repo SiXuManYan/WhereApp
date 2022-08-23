@@ -1,46 +1,41 @@
-package com.jcs.where.mine.adapter;
+package com.jcs.where.mine.adapter
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.jcs.where.R;
 
-import org.jetbrains.annotations.NotNull;
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.jcs.where.R
+import com.jcs.where.mine.adapter.LanguageAdapter.LanguageBean
 
 /**
  * create by zyf on 2021/1/10 8:07 下午
  */
-public class LanguageAdapter extends BaseQuickAdapter<LanguageAdapter.LanguageBean, BaseViewHolder> {
-
-    public LanguageAdapter() {
-        super(R.layout.item_language);
-    }
-
-    @Override
-    protected void convert(@NotNull BaseViewHolder holder, LanguageBean languageBean) {
-        holder.setText(R.id.languageTitleTv, languageBean.title);
+class LanguageAdapter : BaseQuickAdapter<LanguageBean, BaseViewHolder>(R.layout.item_language) {
+    override fun convert(holder: BaseViewHolder, languageBean: LanguageBean) {
+        holder.setText(R.id.languageTitleTv, languageBean.title)
         if (languageBean.isSelected) {
-            holder.setGone(R.id.languageCheckedIcon, false);
+            holder.setGone(R.id.languageCheckedIcon, false)
         } else {
-            holder.setGone(R.id.languageCheckedIcon, true);
+            holder.setGone(R.id.languageCheckedIcon, true)
         }
-
-        if (holder.getAdapterPosition() == getItemCount() - 1) {
-            holder.setGone(R.id.bottomLine, true);
+        if (holder.adapterPosition == itemCount - 1) {
+            holder.setGone(R.id.bottomLine, true)
         }
     }
 
-    public static class LanguageBean {
-        public String title;
-        public String local;
-        public boolean isSelected;
+    class LanguageBean {
+        var title: String? = null
 
-        public LanguageBean() {
-        }
+        @JvmField
+        var local: String? = null
 
-        public LanguageBean(String title, String local, boolean isSelected) {
-            this.title = title;
-            this.local = local;
-            this.isSelected = isSelected;
+        @JvmField
+        var isSelected = false
+
+        constructor() {}
+        constructor(title: String?, local: String?, isSelected: Boolean) {
+            this.title = title
+            this.local = local
+            this.isSelected = isSelected
         }
     }
 }

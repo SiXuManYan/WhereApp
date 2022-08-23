@@ -23,7 +23,6 @@ import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import kotlinx.android.synthetic.main.activity_store_good_detail.*
 import kotlinx.android.synthetic.main.layout_store_good_detail_cart.*
-import kotlinx.android.synthetic.main.vp_item_image.*
 import pl.droidsonroids.gif.GifImageView
 import java.math.BigDecimal
 

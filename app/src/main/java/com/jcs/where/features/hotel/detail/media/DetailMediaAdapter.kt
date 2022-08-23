@@ -5,7 +5,10 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.github.chrisbanes.photoview.PhotoView
 import com.jcs.where.R
+import com.jcs.where.features.media.MediaDetailActivity
+import com.jcs.where.utils.GlideUtil
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 
 /**
@@ -13,10 +16,12 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
  */
 class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>() {
 
+     var needImageControl = false
 
     init {
         addItemType(MediaData.VIDEO, R.layout.media_item_video)
         addItemType(MediaData.IMAGE, R.layout.media_item_image)
+        addItemType(MediaData.CONTROLLABLE_IMAGE, R.layout.media_item_image_controllable)
     }
 
     companion object {
@@ -34,16 +39,30 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
             MediaData.IMAGE -> {
                 initImage(holder, item)
             }
+            MediaData.CONTROLLABLE_IMAGE ->{
+                initImageControllable(holder, item)
+            }
+
         }
 
     }
 
     private fun initImage(holder: BaseViewHolder, item: MediaData) {
-//
-        val image_iv = holder.getView<ImageView>(R.id.image_iv)
+        val imageIv = holder.getView<ImageView>(R.id.image_iv)
+        GlideUtil.load(context,item.cover,imageIv)
+        imageIv.setOnClickListener {
+            if (needImageControl) {
+                MediaDetailActivity.navigation(context ,holder.adapterPosition , data)
+            }
+        }
 
-        Glide.with(context).load(item.cover).into(image_iv)
     }
+
+    private fun initImageControllable(holder: BaseViewHolder, item: MediaData) {
+        val imagePv = holder.getView<PhotoView>(R.id.image_pv)
+        Glide.with(context).load(item.cover).into(imagePv)
+    }
+
 
     private fun initVideo(holder: BaseViewHolder, item: MediaData) {
         val video_gsy = holder.getView<StandardGSYVideoPlayer>(R.id.video_gsy)

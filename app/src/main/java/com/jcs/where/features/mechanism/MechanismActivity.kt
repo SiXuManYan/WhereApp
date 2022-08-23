@@ -13,8 +13,11 @@ import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.MechanismDetailResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.media.MediaDetailActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
@@ -92,8 +95,9 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
                     }
                 }
             })
-
-
+        }
+        mAdapter.setOnItemClickListener { _, _, position ->
+            MediaDetailActivity.navigationOnlyImage(this, position, mAdapter.data)
         }
 
     }
@@ -285,6 +289,18 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
         }
 
         setLikeImage()
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_POSITION  -> {
+                val position = baseEvent.data as Int
+                media_rv.scrollToPosition(position)
+            }
+            else -> {}
+        }
+
     }
 
 }

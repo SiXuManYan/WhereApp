@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:background="@color/black_000000"
+    android:orientation="vertical">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/media_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <com.jcs.where.widget.pager.IndicatorView2
+        android:id="@+id/point_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dp_60" />
+
+    <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:layout_gravity="top"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_close_preview" />
+
+
+</FrameLayout>

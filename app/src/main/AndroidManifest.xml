@@ -177,11 +177,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
-
-        <activity
-            android:name=".mango.ImageBrowseActivity"
-            android:theme="@style/mangoAppTheme" />
-
         <activity
             android:name=".search.SearchActivity"
             android:fitsSystemWindows="true"
@@ -270,12 +265,6 @@
 
         <activity
             android:name=".mine.activity.merchant_settled.SettledTypeActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".mine.activity.merchant_settled.MerchantVerifyActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -449,8 +438,6 @@
         <activity android:name=".features.com100.ExtendChatActivity" />
 
 
-
-
         <!-- ######## comm 100 end ↑ #############-->
 
         <activity
@@ -578,7 +565,7 @@
         <activity android:name=".features.hotel.map.HotelMapActivity" />
         <activity
             android:name=".features.hotel.detail.HotelDetailActivity2"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity android:name=".features.hotel.book.HotelBookActivity" />
         <activity android:name=".features.travel.map.TravelMapActivity" />
@@ -636,6 +623,10 @@
         <activity android:name=".features.bills.record.result.BillsRecommitResultActivity" />
         <activity android:name=".features.bills.charges.CallChargesActivity" />
         <activity android:name=".features.bills.place.phone.PhonePlaceOrderActivity" />
+
+        <activity
+            android:name=".features.media.MediaDetailActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

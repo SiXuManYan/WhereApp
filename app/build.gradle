@@ -196,7 +196,6 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     implementation 'com.facebook.rebound:rebound:0.3.8'
-    implementation 'com.github.chrisbanes.photoview:library:1.2.3'
     implementation 'com.just.agentweb:agentweb:4.1.3'
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
@@ -304,5 +303,8 @@ dependencies {
     implementation  'com.umeng.umsdk:common:9.5.1'// 必选
     implementation  'com.umeng.umsdk:asms:1.4.1'// 必选
     implementation 'com.umeng.umsdk:apm:1.7.0' // 错误分析模块改为独立库，看crash和性能数据请一定集成
+
+    // photoview
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
 }

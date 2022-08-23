@@ -433,6 +433,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             EventCode.EVENT_POSITION  -> {
                 val position = baseEvent.data as Int
                 media_rv.scrollToPosition(position)
+                point_view.onPageSelected(position)
             }
             else -> {}
         }

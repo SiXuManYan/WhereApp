@@ -25,6 +25,8 @@ import com.jcs.where.api.response.gourmet.cart.Products
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse
 import com.jcs.where.api.response.gourmet.dish.DishResponse
 import com.jcs.where.api.response.gourmet.restaurant.RestaurantDetailResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.cart.ShoppingCartActivity
@@ -635,5 +637,18 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         shopping_cart.setMessageCount(nums)
     }
 
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_POSITION  -> {
+                val position = baseEvent.data as Int
+                media_rv.scrollToPosition(position)
+                point_view.onPageSelected(position)
+            }
+            else -> {}
+        }
+
+    }
 
 }

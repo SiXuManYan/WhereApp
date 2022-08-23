@@ -10,10 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.SpanUtils;
+import com.google.gson.Gson;
 import com.jcs.where.BuildConfig;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.features.web.WebViewActivity;
+import com.jcs.where.storage.entity.User;
+import com.jcs.where.utils.BusinessUtils;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Wangsw  2021/2/3 16:48.
@@ -55,6 +60,35 @@ public class AboutActivity extends BaseActivity {
                 .create();
         home_page_tv.setMovementMethod(LinkMovementMethod.getInstance());
         home_page_tv.setText(builder);
+
+        if (BuildConfig.FLAVOR.equals("dev")) {
+            findViewById(R.id.debug_into_ll).setVisibility(View.VISIBLE);
+            TextView user_id_tv = findViewById(R.id.user_id_tv);
+            TextView user_phone_tv = findViewById(R.id.user_phone_tv);
+            TextView user_all_tv = findViewById(R.id.user_all_tv);
+            TextView rong_uuid_tv = findViewById(R.id.rong_uuid_tv);
+            TextView rong_token_tv = findViewById(R.id.rong_token_tv);
+            TextView push_id_tv = findViewById(R.id.push_id_tv);
+            TextView umeng_channel_tv = findViewById(R.id.umeng_channel_tv);
+
+            if (User.isLogon()) {
+                User instance = User.getInstance();
+                user_id_tv.append(String.valueOf(instance.id));
+                user_phone_tv.append(instance.phone);
+                if (instance.rongData != null) {
+                    rong_uuid_tv.append(instance.rongData.uuid);
+                    rong_token_tv.append(instance.rongData.token);
+                }
+                Gson gson = new Gson();
+                user_all_tv.append("\r\n" + gson.toJson(instance));
+            } else {
+                user_id_tv.append("未登录");
+            }
+            String registrationID = JPushInterface.getRegistrationID(this);
+            push_id_tv.append(registrationID);
+            umeng_channel_tv.append(BusinessUtils.INSTANCE.getUmengAppChannel());
+        }
+
     }
 
     @Override

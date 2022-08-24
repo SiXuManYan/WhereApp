@@ -309,6 +309,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
         mCommentAdapter.setNewInstance(list)
 
+        // 预估配送费
+        estimated_shipping_tv.text = getString(R.string.price_unit_format, response.estimated_delivery_fee)
     }
 
 
@@ -430,7 +432,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_POSITION  -> {
+            EventCode.EVENT_POSITION -> {
                 val position = baseEvent.data as Int
                 media_rv.scrollToPosition(position)
                 point_view.onPageSelected(position)

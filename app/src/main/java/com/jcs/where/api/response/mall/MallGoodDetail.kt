@@ -46,6 +46,8 @@ class MallGoodDetail {
 
     var price = BigDecimal.ZERO
     var original_cost = BigDecimal.ZERO
+    /** 预估配送费 */
+    var estimated_delivery_fee = ""
 
 }
 

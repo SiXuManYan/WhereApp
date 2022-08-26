@@ -150,6 +150,7 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
             setPointCount(source.size)
         }
         media_rv.scrollToPosition(selectedPosition)
+        point_view.onPageSelected(selectedPosition)
     }
 
 

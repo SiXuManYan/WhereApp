@@ -24,6 +24,7 @@ import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.tag.HomeTagAdapter
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
+import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.mechanism.MechanismActivity
@@ -624,6 +625,27 @@ object BusinessUtils {
             }
         }
         return facebookIntent
+    }
+
+    fun getAllImage(data: MutableList<MediaData>): ArrayList<MediaData> {
+        val source = ArrayList<MediaData>()
+        data.forEach {
+            if (it.type == MediaData.IMAGE) {
+                source.add(it)
+            }
+        }
+        return source
+    }
+
+    fun getFirstVideo(data: MutableList<MediaData>): ArrayList<MediaData> {
+        val source = ArrayList<MediaData>()
+        data.forEach {
+            if (it.type == MediaData.VIDEO) {
+                source.add(it)
+                return@forEach
+            }
+        }
+        return source
     }
 
 

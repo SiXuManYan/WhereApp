@@ -8,20 +8,19 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.github.chrisbanes.photoview.PhotoView
 import com.jcs.where.R
 import com.jcs.where.features.media.MediaDetailActivity
+import com.jcs.where.features.media.video.WhereVideo
 import com.jcs.where.utils.GlideUtil
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 
 /**
  * Created by Wangsw  2021/5/19 14:44.
  */
 class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>() {
 
-     var needImageControl = false
-
     init {
         addItemType(MediaData.VIDEO, R.layout.media_item_video)
         addItemType(MediaData.IMAGE, R.layout.media_item_image)
-        addItemType(MediaData.CONTROLLABLE_IMAGE, R.layout.media_item_image_controllable)
+        addItemType(MediaData.IMAGE_FOR_MEDIA_DETAIL, R.layout.media_item_image_4_media_detail)
+        addItemType(MediaData.VIDEO_FOR_MEDIA_DETAIL, R.layout.media_item_video)
     }
 
     companion object {
@@ -33,65 +32,87 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
     override fun convert(holder: BaseViewHolder, item: MediaData) {
 
         when (holder.itemViewType) {
-            MediaData.VIDEO -> {
-                initVideo(holder, item)
-            }
-            MediaData.IMAGE -> {
-                initImage(holder, item)
-            }
-            MediaData.CONTROLLABLE_IMAGE ->{
-                initImageControllable(holder, item)
-            }
+            MediaData.VIDEO -> initVideo(holder, item)
+            MediaData.IMAGE -> initImage(holder, item)
+            MediaData.IMAGE_FOR_MEDIA_DETAIL -> initMediaImage(holder, item)
+            MediaData.VIDEO_FOR_MEDIA_DETAIL -> initMediaVideo(holder, item)
 
         }
 
     }
 
+    /**
+     * 详情页图片
+     */
     private fun initImage(holder: BaseViewHolder, item: MediaData) {
         val imageIv = holder.getView<ImageView>(R.id.image_iv)
-        GlideUtil.load(context,item.cover,imageIv)
+        GlideUtil.load(context, item.cover, imageIv)
         imageIv.setOnClickListener {
-            if (needImageControl) {
-                MediaDetailActivity.navigation(context ,holder.adapterPosition , data)
-            }
+            MediaDetailActivity.navigationOnlyImage(context, holder.adapterPosition, data)
         }
 
     }
 
-    private fun initImageControllable(holder: BaseViewHolder, item: MediaData) {
+    /**
+     * 媒体页图片
+     */
+    private fun initMediaImage(holder: BaseViewHolder, item: MediaData) {
         val imagePv = holder.getView<PhotoView>(R.id.image_pv)
         Glide.with(context).load(item.cover).into(imagePv)
     }
 
 
+    /**
+     * 详情页视频
+     */
     private fun initVideo(holder: BaseViewHolder, item: MediaData) {
-        val video_gsy = holder.getView<StandardGSYVideoPlayer>(R.id.video_gsy)
+        val video_gsy = holder.getView<WhereVideo>(R.id.video_gsy)
 
-        // 增加封面
-        val image = ImageView(context).apply {
-            scaleType = ImageView.ScaleType.CENTER_CROP
+        video_gsy.apply {
+            loadCoverImage(item.cover,R.mipmap.ic_empty_gray)
+            setUpLazy(item.src, false, null, null, "")
+            titleTextView.visibility = View.GONE
+            backButton.visibility = View.GONE
+            playTag = TAG
+            playPosition = 0
+            isAutoFullWithSize = false
+            isReleaseWhenLossAudio = false
+            startButton.setOnClickListener {
+                MediaDetailActivity.navigationOnlyVideo(context, data)
+            }
+            fullscreenButton.visibility = View.GONE
+
         }
-        Glide.with(context).load(item.cover).into(image)
-        video_gsy.thumbImageView = image
-
-        video_gsy.setUpLazy(item.src, false, null, null, "")
-
-        video_gsy.titleTextView.visibility = View.GONE
-        video_gsy.backButton.visibility = View.GONE
-        video_gsy.fullscreenButton.visibility = View.GONE
-        video_gsy.playTag = TAG
-        video_gsy.playPosition = 0
-        video_gsy.isAutoFullWithSize = false
-        video_gsy.isReleaseWhenLossAudio = false
-
-
         // 增加圆角
-//        video_gsy.outlineProvider = object : ViewOutlineProvider() {
-//            override fun getOutline(view: View, outline: Outline) {
-//                outline.setRoundRect(0, 0, view.width, view.height, 8f)
-//            }
-//        }
-
+        /*  video_gsy.outlineProvider = object : ViewOutlineProvider() {
+            override fun getOutline(view: View, outline: Outline) {
+                outline.setRoundRect(0, 0, view.width, view.height, 8f)
+            }
+        }*/
 
     }
+
+
+    /**
+     * 媒体页视频
+     */
+    private fun initMediaVideo(holder: BaseViewHolder, item: MediaData) {
+        val video_gsy = holder.getView<WhereVideo>(R.id.video_gsy)
+
+        video_gsy.apply {
+            loadCoverImage(item.cover,R.mipmap.ic_empty_gray)
+            setUpLazy(item.src, false, null, null, "")
+            titleTextView.visibility = View.GONE
+            backButton.visibility = View.GONE
+            playTag = TAG
+            playPosition = 0
+            isAutoFullWithSize = false
+            isReleaseWhenLossAudio = false
+            fullscreenButton.visibility = View.GONE
+//            startButton.performClick()
+        }
+
+    }
+
+
 }

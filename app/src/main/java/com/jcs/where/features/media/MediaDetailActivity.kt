@@ -16,6 +16,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
 import com.jcs.where.features.hotel.detail.media.MediaData
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_media_detail.*
@@ -23,7 +24,7 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/8/23 14:13.
- *
+ * 媒体详情页
  */
 class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetailView {
 
@@ -36,7 +37,7 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
 
     companion object {
 
-        fun navigationOnlyImage(context: Context, currentPosition: Int, data: MutableList<String>) {
+        fun navigationOnlyStringImage(context: Context, currentPosition: Int, data: MutableList<String>) {
             if (data.isEmpty()) {
                 return
             }
@@ -45,7 +46,7 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
                 val mediaList = ArrayList<MediaData>()
                 data.forEach {
                     val media = MediaData()
-                    media.type = MediaData.CONTROLLABLE_IMAGE
+                    media.type = MediaData.IMAGE_FOR_MEDIA_DETAIL
                     media.cover = it
                     media.src = it
                     mediaList.add(media)
@@ -62,7 +63,10 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
         }
 
 
-        fun navigation(context: Context, currentPosition: Int, data: MutableList<MediaData>) {
+        /**
+         * 视频 + 图片
+         */
+        fun navigationAllMediaType(context: Context, currentPosition: Int, data: MutableList<MediaData>) {
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_POSITION, currentPosition)
                 putSerializable(Constant.PARAM_DATA, ArrayList<MediaData>(data))
@@ -75,12 +79,61 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
             }
             context.startActivity(intent)
         }
+
+        /**
+         * 只展示图片
+         */
+        fun navigationOnlyImage(context: Context, currentPosition: Int, data: MutableList<MediaData>) {
+
+            // 去除视频，调整坐标
+            var position = currentPosition
+
+            val allImage = BusinessUtils.getAllImage(data)
+            if (allImage.size < data.size) {
+                // 去除了视频
+                position -= 1
+            }
+
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_POSITION, position)
+                putSerializable(Constant.PARAM_DATA, allImage)
+            }
+            val intent = Intent(context, MediaDetailActivity::class.java)
+                .putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+
+
+        /**
+         * 只展示视频
+         */
+        fun navigationOnlyVideo(context: Context, data: MutableList<MediaData>) {
+
+            val allImage = BusinessUtils.getFirstVideo(data)
+
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_POSITION, 0)
+                putSerializable(Constant.PARAM_DATA, allImage)
+            }
+            val intent = Intent(context, MediaDetailActivity::class.java)
+                .putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+
     }
 
     override fun initView() {
         overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent)
         BarUtils.setStatusBarVisibility(this, false)
-        BarUtils.setNavBarColor(this,ColorUtils.getColor(R.color.black_000000))
+        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.black_000000))
         initExtra()
         initMedia()
     }
@@ -90,8 +143,12 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
             val arrayList = bundle.getSerializable(Constant.PARAM_DATA) as ArrayList<MediaData>
             arrayList.forEach {
                 if (it.type == MediaData.IMAGE) {
-                    it.type = MediaData.CONTROLLABLE_IMAGE
+                    it.type = MediaData.IMAGE_FOR_MEDIA_DETAIL
                 }
+                if (it.type == MediaData.VIDEO) {
+                    it.type = MediaData.VIDEO_FOR_MEDIA_DETAIL
+                }
+
             }
             source.addAll(arrayList)
 
@@ -173,7 +230,7 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
     }
 
     override fun onDestroy() {
-        EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_POSITION , selectedPosition))
+        EventBus.getDefault().post(BaseEvent<Int>(EventCode.EVENT_POSITION, selectedPosition))
         super.onDestroy()
         GSYVideoManager.releaseAllVideos()
     }

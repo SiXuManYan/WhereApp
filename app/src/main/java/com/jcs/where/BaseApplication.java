@@ -75,8 +75,8 @@ public class BaseApplication extends Application {
         SPUtil.initInstance(this);
         changeLanguage();
 
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init(this);
+//        CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.init(this);
         initComm100();
         handleRongCloud();
         handleUmeng();

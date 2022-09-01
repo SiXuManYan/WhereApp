@@ -22,6 +22,7 @@ public class IndicatorView2 extends LinearLayout {
     public int selectedDrawableResId = R.drawable.shape_point_selected_9999;
     public int commonDrawableResId = R.drawable.shape_point_normal_ffffff;
 
+
     public IndicatorView2(Context context) {
         super(context);
         initView();
@@ -58,7 +59,10 @@ public class IndicatorView2 extends LinearLayout {
                 imageView.setImageResource(commonDrawableResId);
             }
             container_ll.addView(imageView);
+        }
 
+        if (totalCount <= 1) {
+            setVisibility(View.GONE);
         }
 
     }

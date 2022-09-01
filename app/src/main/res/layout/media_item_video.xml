@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+    <com.jcs.where.features.media.video.WhereVideo
         android:id="@+id/video_gsy"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -97,7 +97,7 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
             })
         }
         mAdapter.setOnItemClickListener { _, _, position ->
-            MediaDetailActivity.navigationOnlyImage(this, position, mAdapter.data)
+            MediaDetailActivity.navigationOnlyStringImage(this, position, mAdapter.data)
         }
 
     }

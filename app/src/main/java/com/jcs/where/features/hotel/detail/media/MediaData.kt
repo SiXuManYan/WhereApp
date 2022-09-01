@@ -39,7 +39,10 @@ class MediaData : MultiItemEntity, Serializable {
         val IMAGE = 1
 
         @kotlin.jvm.JvmField
-        val CONTROLLABLE_IMAGE = 2
+        val IMAGE_FOR_MEDIA_DETAIL = 2
+
+        @kotlin.jvm.JvmField
+        val VIDEO_FOR_MEDIA_DETAIL = 3
 
     }
 

@@ -35,7 +35,7 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_travel_detail.*
 
 
-/**comment_rv
+/**
  * Created by Wangsw  2021/10/18 16:16.
  *  旅游详情
  */

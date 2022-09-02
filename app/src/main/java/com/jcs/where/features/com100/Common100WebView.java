@@ -87,7 +87,7 @@ public class Common100WebView extends WebView {
         settings.setAllowFileAccessFromFileURLs(true);
 
         settings.setAllowContentAccess(true);
-        settings.setDomStorageEnabled(true);
+//        settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
 
         WebView.setWebContentsDebuggingEnabled(true);

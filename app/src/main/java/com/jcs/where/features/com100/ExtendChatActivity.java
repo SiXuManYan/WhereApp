@@ -2,21 +2,15 @@ package com.jcs.where.features.com100;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.comm100.livechat.core.VisitorClientCore;
-import com.comm100.livechat.view.ChatWindowWebView;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.frames.common.Html5Url;
 
 /**
  * Created by allon on 5/31/2018.
@@ -24,9 +18,8 @@ import com.jcs.where.base.BaseActivity;
  */
 public class ExtendChatActivity extends BaseActivity {
 
-    private ChatWindowWebView web_view;
+    private Common100WebView web_view;
     private ImageView chat_iv;
-    private LinearLayout web_container_ll;
     private ImageView back_iv;
     private ImageView close_iv;
     private RelativeLayout phone_rl;
@@ -44,19 +37,14 @@ public class ExtendChatActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        if (Build.VERSION.SDK_INT >= 23 && (ContextCompat.checkSelfPermission(this, "android.permission.WRITE_EXTERNAL_STORAGE") != 0 || ContextCompat.checkSelfPermission(this, "android.permission.CAMERA") != 0)) {
-            ActivityCompat.requestPermissions(this, new String[]{"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"}, 1);
-        }
+
+        web_view = findViewById(R.id.web_view);
         chat_iv = findViewById(R.id.chat_iv);
-        web_container_ll = findViewById(R.id.web_container_ll);
         back_iv = findViewById(R.id.back_iv);
         close_iv = findViewById(R.id.close_iv);
         phone_rl = findViewById(R.id.phone_rl);
         call_tv = findViewById(R.id.call_tv);
-        web_view = new ChatWindowWebView(this);
-        web_container_ll.removeAllViews();
-        web_container_ll.addView(web_view);
-        web_view.loadUrl(VisitorClientCore.getInstance().getChatUrl());
+        web_view.loadUrl(Html5Url.COMM100_CHAT_URL);
         CookieManager.getInstance().setAcceptCookie(true);
     }
 
@@ -93,14 +81,6 @@ public class ExtendChatActivity extends BaseActivity {
         if (web_view != null) {
             web_view.onPause();
         }
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (web_view != null) {
-            web_view.onActivityResult(requestCode, resultCode, data);
-        }
-
     }
 
 

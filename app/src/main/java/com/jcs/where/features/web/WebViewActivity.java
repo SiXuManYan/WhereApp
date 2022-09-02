@@ -74,7 +74,7 @@ public class WebViewActivity extends BaseActivity {
                 .useDefaultIndicator()
                 .setWebChromeClient(mWebChromeClient)
                 .setWebViewClient(mWebViewClient)
-                .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
+//                .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
                 .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
                 .setWebLayout(new WebLayout(this))
                 .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)//打开其他应用时，弹窗咨询用户是否前往其他应用
@@ -96,37 +96,8 @@ public class WebViewActivity extends BaseActivity {
     protected void bindListener() {
     }
 
-    private void onBackClicked(View view) {
-//        showDialog();
-    }
 
-    private void showDialog() {
 
-        if (mAlertDialog == null) {
-            mAlertDialog = new AlertDialog.Builder(this)
-                    .setMessage(R.string.close_page_prompt)
-                    .setNegativeButton("再逛逛", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (mAlertDialog != null) {
-                                mAlertDialog.dismiss();
-                            }
-                        }
-                    })//
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            if (mAlertDialog != null) {
-                                mAlertDialog.dismiss();
-                            }
-                            WebViewActivity.this.finish();
-                        }
-                    }).create();
-        }
-        mAlertDialog.show();
-
-    }
 
     @Override
     protected int getLayoutId() {

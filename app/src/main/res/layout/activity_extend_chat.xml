@@ -51,12 +51,11 @@
         android:background="@color/grey_F5F5F5" />
 
 
-    <LinearLayout
-        android:id="@+id/web_container_ll"
+    <com.jcs.where.features.com100.Common100WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/split_v"
-        android:orientation="vertical" />
+        android:layout_below="@+id/split_v" />
 
 
     <RelativeLayout

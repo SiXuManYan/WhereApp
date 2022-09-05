@@ -1,5 +1,7 @@
 package com.jcs.where.government.model;
 
+import android.text.TextUtils;
+
 import com.blankj.utilcode.util.SPUtils;
 import com.google.android.gms.maps.model.LatLng;
 import com.jcs.where.api.BaseModel;
@@ -19,10 +21,22 @@ public class MechanismListModel extends BaseModel {
     /**
      * 获得综合服务、政府机构列表数据
      */
-    public void getMechanismList(int page ,String categoryId, BaseObserver<PageResponse<MechanismResponse>> observer) {
+    public void getMechanismList(int page, String categoryId, BaseObserver<PageResponse<MechanismResponse>> observer) {
+
         LatLng latLng = CacheUtil.getSafeSelectLatLng();
-        String areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "0");
-        dealResponse(mRetrofit.getMechanismListById3(page ,categoryId, "", latLng.latitude, latLng.longitude,areaId), observer);
+        String areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "");
+
+        Double lat = latLng.latitude;
+        Double lng = latLng.longitude;
+
+        if (TextUtils.isEmpty(areaId)) {
+            areaId = null;
+        } else {
+            lat = null;
+            lng = null;
+        }
+
+        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, "", lat, lng, areaId), observer);
     }
 
     /**

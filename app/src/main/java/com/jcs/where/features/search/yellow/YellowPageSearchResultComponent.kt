@@ -1,11 +1,13 @@
 package com.jcs.where.features.search.yellow
 
+import com.blankj.utilcode.util.SPUtils
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.MechanismResponse
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.SPKey
 
 /**
  * Created by Wangsw  2021/9/3 15:02.
@@ -22,7 +24,18 @@ class YellowPageSearchResultPresenter(private var view: YellowPageSearchResultVi
     fun getData(page: Int, categoryId: String, search: String) {
 
         val latLng = CacheUtil.getSafeSelectLatLng()
-        requestApi(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude),
+        var areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "")
+
+        var lat: Double? = latLng.latitude
+        var lng: Double? = latLng.longitude
+
+        if (areaId.isNullOrBlank()) {
+            areaId = null
+        } else {
+            lat = null
+            lng = null
+        }
+        requestApi(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId),
             object : BaseMvpObserver<PageResponse<MechanismResponse>>(view, page) {
                 override fun onSuccess(response: PageResponse<MechanismResponse>) {
 

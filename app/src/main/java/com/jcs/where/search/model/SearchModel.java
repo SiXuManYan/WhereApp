@@ -1,5 +1,8 @@
 package com.jcs.where.search.model;
 
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.gms.maps.model.LatLng;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
@@ -9,6 +12,7 @@ import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.SPKey;
 
 import java.util.List;
 
@@ -47,8 +51,21 @@ public class SearchModel extends BaseModel {
      */
     public void getMechanismList(String categoryId,
                                  String search, BaseObserver<PageResponse<MechanismResponse>> observer) {
+
+
         LatLng latLng = CacheUtil.getSafeSelectLatLng();
-        dealResponse(mRetrofit.getMechanismListById2(1, categoryId, search, latLng.latitude, latLng.longitude), observer);
+        String areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "");
+
+        Double lat = latLng.latitude;
+        Double lng = latLng.longitude;
+
+        if (TextUtils.isEmpty(areaId)) {
+            areaId = null;
+        } else {
+            lat = null;
+            lng = null;
+        }
+        dealResponse(mRetrofit.getMechanismListById3(1, categoryId, search, lat, lng, areaId), observer);
 
     }
 }

@@ -280,25 +280,6 @@ public interface RetrofitApi {
      * @return
      */
     @GET("generalapi/v2/infos")
-    Observable<JcsResponse<PageResponse<MechanismResponse>>> getMechanismListById2(
-            @Query("page") int page,
-            @Query("cate_id") String categoryId,
-            @Query("search_input") String search,
-            @Query("lat") double lat,
-            @Query("lng") double lng
-
-
-    );
-
-
-    /**
-     * 获得机构列表数据
-     *
-     * @param categoryId 机构分类
-     * @param search     查询字段
-     * @return
-     */
-    @GET("generalapi/v2/infos")
     Observable<JcsResponse<PageResponse<MechanismResponse>>> getMechanismListById3(
             @Query("page") int page,
             @Query("cate_id") String categoryId,

@@ -42,17 +42,14 @@ public class YellowPageModel extends BaseModel {
         Double lat = latLng.latitude;
         Double lng = latLng.longitude;
 
-
         if (TextUtils.isEmpty(areaId)) {
             areaId = null;
         } else {
             lat = null;
             lng = null;
         }
-
 //        dealResponse(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude), observer);
         dealResponse(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId), observer);
-
     }
 
 
@@ -76,9 +73,24 @@ public class YellowPageModel extends BaseModel {
 
     public void getInitData(String categoryIds, BaseObserver<YellowPageZipResponse> observer) {
 
+
         LatLng latLng = CacheUtil.getSafeSelectLatLng();
+        String areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "");
+
+        Double lat = latLng.latitude;
+        Double lng = latLng.longitude;
+
+        if (TextUtils.isEmpty(areaId)) {
+            areaId = null;
+        } else {
+            lat = null;
+            lng = null;
+        }
+
+
         // 获取机构列表
-        Observable<JcsResponse<PageResponse<MechanismResponse>>> mechanismListByIdObservable = mRetrofit.getMechanismListById2(1, categoryIds, "", latLng.latitude, latLng.longitude);
+        Observable<JcsResponse<PageResponse<MechanismResponse>>> mechanismListByIdObservable
+                = mRetrofit.getMechanismListById3(1, categoryIds, "", lat, lng, areaId);
         // 获取一级分类
         Observable<JcsResponse<List<CategoryResponse>>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
         Observable<JcsResponse<YellowPageZipResponse>> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<JcsResponse<PageResponse<MechanismResponse>>, JcsResponse<List<CategoryResponse>>, JcsResponse<YellowPageZipResponse>>() {

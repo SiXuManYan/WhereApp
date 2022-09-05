@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_yellow_page_search_result.*
 
 /**
  * Created by Wangsw  2021/9/3 14:57.
- *
+ * 企业黄页搜索结果
  */
 class YellowPageSearchResultActivity : BaseMvpActivity<YellowPageSearchResultPresenter>(), YellowPageSearchResultView,
     OnItemClickListener, OnLoadMoreListener {

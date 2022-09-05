@@ -1,5 +1,8 @@
 package com.jcs.where.yellow_page.model;
 
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.gms.maps.model.LatLng;
 import com.jcs.where.api.BaseModel;
 import com.jcs.where.api.BaseObserver;
@@ -8,7 +11,7 @@ import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.utils.CacheUtil;
-import com.jcs.where.utils.Constant;
+import com.jcs.where.utils.SPKey;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,8 +37,21 @@ public class YellowPageModel extends BaseModel {
             BaseObserver<PageResponse<MechanismResponse>> observer) {
 
         LatLng latLng = CacheUtil.getSafeSelectLatLng();
+        String areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "");
 
-        dealResponse(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude), observer);
+        Double lat = latLng.latitude;
+        Double lng = latLng.longitude;
+
+
+        if (TextUtils.isEmpty(areaId)) {
+            areaId = null;
+        } else {
+            lat = null;
+            lng = null;
+        }
+
+//        dealResponse(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude), observer);
+        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId), observer);
 
     }
 

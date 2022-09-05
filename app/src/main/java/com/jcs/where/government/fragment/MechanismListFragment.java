@@ -163,7 +163,6 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
      * 获得当前分类下的子分类
      */
     private void getChildCategory() {
-        Log.e("MechanismListFragment", "getChildCategory: " + "mCurrentCategoryId=" + mCurrentCategoryId + "----mCategoryResponse.getId()=" + mCategoryResponse.getId());
         mModel.getChildCategories(3, mCategoryResponse.getId(), new BaseObserver<List<CategoryResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {

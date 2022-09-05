@@ -303,8 +303,8 @@ public interface RetrofitApi {
             @Query("page") int page,
             @Query("cate_id") String categoryId,
             @Query("search_input") String search,
-            @Query("lat") double lat,
-            @Query("lng") double lng,
+            @Query("lat") @Nullable Double lat,
+            @Query("lng")  @Nullable Double lng,
             @Query("area_id") String area_id
 
     );

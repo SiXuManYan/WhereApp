@@ -32,8 +32,8 @@ class YellowPageSearchResultPresenter(private var view: YellowPageSearchResultVi
         if (areaId.isNullOrBlank()) {
             areaId = null
         } else {
-            lat = null
-            lng = null
+//            lat = null
+//            lng = null
         }
         requestApi(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId),
             object : BaseMvpObserver<PageResponse<MechanismResponse>>(view, page) {

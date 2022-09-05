@@ -27,8 +27,8 @@ public class ConvenienceServiceSearchModel extends BaseModel {
         if (TextUtils.isEmpty(areaId)) {
             areaId = null;
         } else {
-            lat = null;
-            lng = null;
+//            lat = null;
+//            lng = null;
         }
         dealResponse(mRetrofit.getMechanismListById3(page, categoryId, searchInput, lat, lng, areaId), observer);
     }

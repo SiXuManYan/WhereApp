@@ -45,8 +45,8 @@ public class YellowPageModel extends BaseModel {
         if (TextUtils.isEmpty(areaId)) {
             areaId = null;
         } else {
-            lat = null;
-            lng = null;
+//            lat = null;
+//            lng = null;
         }
 //        dealResponse(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude), observer);
         dealResponse(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId), observer);
@@ -83,8 +83,8 @@ public class YellowPageModel extends BaseModel {
         if (TextUtils.isEmpty(areaId)) {
             areaId = null;
         } else {
-            lat = null;
-            lng = null;
+//            lat = null;
+//            lng = null;
         }
 
 

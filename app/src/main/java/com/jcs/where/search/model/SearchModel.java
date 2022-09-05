@@ -62,8 +62,8 @@ public class SearchModel extends BaseModel {
         if (TextUtils.isEmpty(areaId)) {
             areaId = null;
         } else {
-            lat = null;
-            lng = null;
+//            lat = null;
+//            lng = null;
         }
         dealResponse(mRetrofit.getMechanismListById3(1, categoryId, search, lat, lng, areaId), observer);
 

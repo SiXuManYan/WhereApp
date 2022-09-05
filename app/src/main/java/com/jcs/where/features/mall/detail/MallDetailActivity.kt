@@ -259,6 +259,17 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     override fun bindDetail(response: MallGoodDetail) {
         mData = response
         val mediaList = ArrayList<MediaData>()
+
+        response.video?.let {
+            val media = MediaData()
+            media.type = MediaData.VIDEO
+            if (!response.video_image.isNullOrBlank()) {
+                media.cover = response.video_image!!
+            }
+            media.src = it
+            mediaList.add(media)
+        }
+
         for (image in response.sub_images) {
             val media = MediaData()
             media.type = MediaData.IMAGE
@@ -266,6 +277,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             media.src = image
             mediaList.add(media)
         }
+
         mMediaAdapter.setNewInstance(mediaList)
         point_view.setPointCount(mediaList.size)
 

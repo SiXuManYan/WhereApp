@@ -52,10 +52,11 @@ class MallDetailPresenter(private var view: MallDetailView) : BaseMvpPresenter(v
             override fun onSuccess(response: MallGoodDetail) {
                 response.specs.forEach {
                     it.nativeSpecsValues.addAll(it.specs.values)
+
+
+
                 }
                 view.bindDetail(response)
-
-
 
                 // sku
                 val specs = ArrayList<Sku>()

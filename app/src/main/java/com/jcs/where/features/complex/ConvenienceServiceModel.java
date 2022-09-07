@@ -29,10 +29,6 @@ public class ConvenienceServiceModel extends BaseModel {
         dealResponse(mRetrofit.getCategories(2, categoryIds), observer);
     }
 
-    public void getAreaList(BaseObserver<List<CityResponse>> observer) {
-        dealResponse(mRetrofit.getAreaForService(), observer);
-    }
-
     /**
      * 是否需要更新城市数据
      *
@@ -80,10 +76,6 @@ public class ConvenienceServiceModel extends BaseModel {
             }
         });
         dealResponse(zip, observer);
-    }
-
-    public void saveCities(List<CityResponse> cityResponses) {
-        CacheUtil.cacheWithCurrentTimeByLanguage(SPKey.K_ALL_CITIES, cityResponses);
     }
 
     public static class ConvenienceServiceZipResponse {

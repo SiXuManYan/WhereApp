@@ -166,4 +166,6 @@ public class EventCode {
     public static final int EVENT_REFRESH_HOME_NEARBY = 1038;
     public static final int EVENT_POSITION = 1039;
 
+    public static final int EVENT_REFRESH_CONVENIENCE_CHILD = 1040;
+
 }

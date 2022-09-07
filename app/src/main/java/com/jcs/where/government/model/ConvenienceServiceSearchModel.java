@@ -30,6 +30,6 @@ public class ConvenienceServiceSearchModel extends BaseModel {
 //            lat = null;
 //            lng = null;
         }
-        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, searchInput, lat, lng, areaId), observer);
+        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, searchInput, lat, lng, areaId,null), observer);
     }
 }

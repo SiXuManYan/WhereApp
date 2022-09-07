@@ -277,6 +277,7 @@ public interface RetrofitApi {
      *
      * @param categoryId 机构分类
      * @param search     查询字段
+     * @param recommend 1推荐 0距离最近 不传为默认
      * @return
      */
     @GET("generalapi/v2/infos")
@@ -286,7 +287,8 @@ public interface RetrofitApi {
             @Query("search_input") String search,
             @Query("lat") @Nullable Double lat,
             @Query("lng")  @Nullable Double lng,
-            @Query("area_id") String area_id
+            @Query("area_id") String area_id,
+            @Query("recommend") @Nullable Integer recommend
 
     );
 

@@ -65,7 +65,7 @@ public class SearchModel extends BaseModel {
 //            lat = null;
 //            lng = null;
         }
-        dealResponse(mRetrofit.getMechanismListById3(1, categoryId, search, lat, lng, areaId), observer);
+        dealResponse(mRetrofit.getMechanismListById3(1, categoryId, search, lat, lng, areaId,null), observer);
 
     }
 }

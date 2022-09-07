@@ -21,7 +21,7 @@ public class MechanismListModel extends BaseModel {
     /**
      * 获得综合服务、政府机构列表数据
      */
-    public void getMechanismList(int page, String categoryId, BaseObserver<PageResponse<MechanismResponse>> observer) {
+    public void getMechanismList(int page, String categoryId, Integer recommend, BaseObserver<PageResponse<MechanismResponse>> observer) {
 
         LatLng latLng = CacheUtil.getSafeSelectLatLng();
         String areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "");
@@ -36,7 +36,7 @@ public class MechanismListModel extends BaseModel {
 //            lng = null;
         }
 
-        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, "", lat, lng, areaId), observer);
+        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, "", lat, lng, areaId, recommend), observer);
     }
 
     /**

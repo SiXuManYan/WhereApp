@@ -35,7 +35,7 @@ class YellowPageSearchResultPresenter(private var view: YellowPageSearchResultVi
 //            lat = null
 //            lng = null
         }
-        requestApi(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId),
+        requestApi(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId,null),
             object : BaseMvpObserver<PageResponse<MechanismResponse>>(view, page) {
                 override fun onSuccess(response: PageResponse<MechanismResponse>) {
 

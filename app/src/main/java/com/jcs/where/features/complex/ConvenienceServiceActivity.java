@@ -1,9 +1,13 @@
 package com.jcs.where.features.complex;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -16,6 +20,8 @@ import com.jcs.where.api.BaseObserver;
 import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.base.BaseActivity;
+import com.jcs.where.base.BaseEvent;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.bean.CityResponse;
 import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.government.adapter.MapListFragmentAdapter;
@@ -26,6 +32,9 @@ import com.jcs.where.utils.JsonUtil;
 import com.jcs.where.utils.SPKey;
 import com.jcs.where.view.empty.EmptyView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -62,9 +71,25 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
     private int mDefaultIndex;
     private EmptyView service_empty;
+    private ImageView filer_iv;
+    private RadioGroup sort_rg;
+    private TextView reset_tv;
+    private TextView confirm_tv;
+
+    /**
+     * 1 推荐
+     * 0 距离最近
+     */
+    private Integer recommend = null;
+    private LinearLayout filter_ll;
 
     @Override
     protected void initView() {
+
+        EventBus eventBus = EventBus.getDefault();
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this);
+        }
 
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
@@ -73,6 +98,23 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
         service_empty = findViewById(R.id.service_empty);
         service_empty.hideEmptyContainer();
+
+        filter_ll = findViewById(R.id.filter_ll);
+        filer_iv = findViewById(R.id.filer_iv);
+        sort_rg = findViewById(R.id.sort_rg);
+        reset_tv = findViewById(R.id.reset_tv);
+        confirm_tv = findViewById(R.id.confirm_tv);
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this);
+        }
 
     }
 
@@ -240,6 +282,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
         mMechanismListFragments.add(MechanismListFragment.newInstance(allCategory, true));
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void bindListener() {
 
@@ -250,6 +293,53 @@ public class ConvenienceServiceActivity extends BaseActivity {
             bundle.putString(Constant.PARAM_CATEGORY_ID, mCategoryId);
             startActivity(SearchAllActivity.class, bundle);
         });
+        filer_iv.setOnClickListener(v -> {
+            handleFilterVisibility();
+        });
+
+        sort_rg.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.praise_rb:
+                    recommend = 1;
+                    break;
+                case R.id.sales_rb:
+                    recommend = 0;
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+
+        reset_tv.setOnClickListener(v -> {
+            recommend = null;
+            handleFilterVisibility();
+
+        });
+        confirm_tv.setOnClickListener(v -> {
+            EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_CONVENIENCE_CHILD, recommend));
+            handleFilterVisibility();
+        });
+
+        findViewById(R.id.filter_content_rl).setOnClickListener(v -> {
+
+        });
+        findViewById(R.id.dismiss_view).setOnClickListener(v -> {
+            handleFilterVisibility();
+        });
+
+
+    }
+
+    private void handleFilterVisibility() {
+        if (filter_ll.getVisibility() == View.GONE) {
+            filter_ll.setVisibility(View.VISIBLE);
+            filer_iv.setImageResource(R.mipmap.ic_filter_blue);
+        } else {
+            filter_ll.setVisibility(View.GONE);
+            filer_iv.setImageResource(R.mipmap.ic_filter_gray);
+        }
     }
 
 
@@ -275,5 +365,10 @@ public class ConvenienceServiceActivity extends BaseActivity {
         return R.layout.activity_convenience_service;
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+
+    }
 
 }

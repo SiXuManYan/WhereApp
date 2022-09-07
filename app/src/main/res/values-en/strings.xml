@@ -1004,4 +1004,5 @@ Gentleman must let go</string>
     <string name="please_input_right_amount">Please enter an amount within 0.00 – 999,999.99</string>
     <string name="estimated_shipping">Estimated Shipping</string>
     <string name="filter">Filter</string>
+    <string name="nearest">Nearest</string>
 </resources>

@@ -198,7 +198,6 @@
 
         <activity
             android:name=".features.complex.ConvenienceServiceActivity"
-            android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />

@@ -4,7 +4,6 @@ import static com.jcs.where.utils.Constant.PARAM_ID;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -25,13 +24,19 @@ import com.jcs.where.api.ErrorResponse;
 import com.jcs.where.api.response.CategoryResponse;
 import com.jcs.where.api.response.MechanismResponse;
 import com.jcs.where.api.response.PageResponse;
+import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.BaseFragment;
+import com.jcs.where.base.EventCode;
 import com.jcs.where.features.map.MechanismAdapter;
 import com.jcs.where.features.mechanism.MechanismActivity;
 import com.jcs.where.government.model.MechanismListModel;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.view.empty.EmptyView;
 import com.jcs.where.widget.list.DividerDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +48,7 @@ import io.reactivex.annotations.NonNull;
  * create by zyf on 2020/12/28 9:07 PM
  */
 public class MechanismListFragment extends BaseFragment implements OnLoadMoreListener {
+
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecycler;
     private RadioGroup mRadioGroup;
@@ -77,6 +83,13 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
 
     private int page = Constant.DEFAULT_FIRST_PAGE;
 
+    /**
+     * 1 推荐
+     * 0 距离最近
+     */
+    private Integer recommend = null;
+
+
     public static MechanismListFragment newInstance(CategoryResponse category) {
         Bundle args = new Bundle();
         return deployArgs(category, args);
@@ -97,6 +110,12 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
 
     @Override
     protected void initView(View view) {
+        EventBus eventBus = EventBus.getDefault();
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this);
+        }
+
+
         mSwipeLayout = view.findViewById(R.id.mechanismRefresh);
         mRecycler = view.findViewById(R.id.mechanismRecycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -104,6 +123,16 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
         mHScrollView = view.findViewById(R.id.radioScroll);
         mHScrollView.setVisibility(View.GONE);
 
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this);
+        }
 
     }
 
@@ -209,7 +238,7 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
     private void getMechanismList(String categoryId) {
         mCurrentCategoryId = categoryId;
 
-        mModel.getMechanismList(page, categoryId, new BaseObserver<PageResponse<MechanismResponse>>() {
+        mModel.getMechanismList(page, categoryId, recommend, new BaseObserver<PageResponse<MechanismResponse>>() {
             @Override
             protected void onError(ErrorResponse errorResponse) {
                 mSwipeLayout.setRefreshing(false);
@@ -308,4 +337,17 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
         page++;
         getMechanismList(mCurrentCategoryId);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventReceived(BaseEvent<?> baseEvent) {
+
+        if (baseEvent.code == EventCode.EVENT_REFRESH_CONVENIENCE_CHILD) {
+            recommend = (int) baseEvent.data;
+            onSwipeRefresh();
+        }
+
+    }
+
+
 }
+

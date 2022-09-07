@@ -49,7 +49,7 @@ public class YellowPageModel extends BaseModel {
 //            lng = null;
         }
 //        dealResponse(mRetrofit.getMechanismListById2(page, categoryId, search, latLng.latitude, latLng.longitude), observer);
-        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId), observer);
+        dealResponse(mRetrofit.getMechanismListById3(page, categoryId, search, lat, lng, areaId, null), observer);
     }
 
 
@@ -90,7 +90,7 @@ public class YellowPageModel extends BaseModel {
 
         // 获取机构列表
         Observable<JcsResponse<PageResponse<MechanismResponse>>> mechanismListByIdObservable
-                = mRetrofit.getMechanismListById3(1, categoryIds, "", lat, lng, areaId);
+                = mRetrofit.getMechanismListById3(1, categoryIds, "", lat, lng, areaId, null);
         // 获取一级分类
         Observable<JcsResponse<List<CategoryResponse>>> categoriesObservable = mRetrofit.getAllChildCategories(1, categoryIds);
         Observable<JcsResponse<YellowPageZipResponse>> zip = Observable.zip(mechanismListByIdObservable, categoriesObservable, new BiFunction<JcsResponse<PageResponse<MechanismResponse>>, JcsResponse<List<CategoryResponse>>, JcsResponse<YellowPageZipResponse>>() {

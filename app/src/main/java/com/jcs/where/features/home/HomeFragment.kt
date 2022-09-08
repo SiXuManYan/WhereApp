@@ -32,31 +32,25 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.features.complex.ConvenienceServiceActivity
-import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.home.child.ComplexChildFragment
 import com.jcs.where.features.home.child.HomeMallFragment
-import com.jcs.where.features.hotel.detail.HotelDetailActivity2
-import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.home.MallHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity
-import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
-import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.home.TravelHomeActivity
 import com.jcs.where.features.upgrade.UpgradeActivity
-import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
 import com.jcs.where.news.NewsActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
-import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.yellow_page.activity.YellowPageActivity
 import kotlinx.android.synthetic.main.fragment_home4.*
 import org.greenrobot.eventbus.EventBus
@@ -337,10 +331,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         super.onHiddenChanged(hidden)
         if (hidden) {
             rxTimer.cancel()
-            top_banner.pause()
+            top_banner?.pause()
         } else {
             startScroll()
-            top_banner.start()
+            top_banner?.start()
             presenter.getMessageCount()
         }
     }
@@ -388,7 +382,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     override fun setMessageCount(i: Int) = message_view.setMessageCount(i)
 
-    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {
+    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
         home_empty.visibility = View.GONE
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
@@ -399,39 +393,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
             override fun onBannerClick(item: Int) {
                 val data = response[item]
-
-
-                if (data.redirect_type == 0) {
-                    return
-                }
-                if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
-                    WebViewActivity.goTo(this@HomeFragment.activity, data.h5_link)
-                    return
-                }
-
-                if (data.redirect_type == 2) {
-
-                    when (data.target_type) {
-                        1 -> {
-                            val dialog = JcsCalendarDialog()
-                            dialog.initCalendar(this@HomeFragment.activity)
-                            HotelDetailActivity2.navigation(requireContext(), data.target_id, dialog.startBean, dialog.endBean)
-                        }
-                        2 -> TravelDetailActivity.navigation(requireContext(), data.target_id)
-                        3 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {
-                            putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
-                        })
-                        4 -> startActivity(MechanismActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.target_id)
-                        })
-                        5 -> startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.target_id)
-                        })
-                        6 -> MallDetailActivity.navigation(requireContext(), data.target_id)
-                        //  7 -> startActivityAfterLogin(CouponCenterActivity::class.java)
-                    }
-                    return
-                }
+                BusinessUtils.handleBannerClick(context, data)
             }
 
         }).start()

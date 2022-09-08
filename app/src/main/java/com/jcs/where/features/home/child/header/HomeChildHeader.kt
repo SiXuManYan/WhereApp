@@ -160,7 +160,7 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
                     when (data.target_type) {
                         1 -> {
                             val dialog = JcsCalendarDialog()
-                            dialog.initCalendar(mActContext)
+                            dialog.initCalendar()
                             HotelDetailActivity2.navigation(mActContext, data.target_id, dialog.startBean, dialog.endBean)
                         }
                         2 -> TravelDetailActivity.navigation(mActContext, data.target_id)

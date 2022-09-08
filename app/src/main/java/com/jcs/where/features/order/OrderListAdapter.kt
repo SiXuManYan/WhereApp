@@ -90,7 +90,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         val title_rl = holder.getView<RelativeLayout>(R.id.title_rl)
         title_rl.setOnClickListener {
             val dialog = JcsCalendarDialog()
-            dialog.initCalendar(context)
+            dialog.initCalendar()
 
             HotelDetailActivity2.navigation(context, item.model_id, dialog.startBean, dialog.endBean)
         }

@@ -15,7 +15,7 @@ import com.jcs.where.api.response.mall.MallGood
  */
 interface MallHomeChildView : BaseMvpView {
     fun bindBannerData(result: ArrayList<MallBannerCategory>)
-    fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>)
+    fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>)
     fun bindRecommend(response: MutableList<MallGood>, isLastPage: Boolean)
 
 }
@@ -95,8 +95,8 @@ class MallHomeChildPresenter(private var view: MallHomeChildView) : BaseMvpPrese
      * 获取顶部轮播图
      */
     fun getTopBanner() {
-        requestApi(mRetrofit.getBanners(4), object : BaseMvpObserver<List<BannerResponse>>(view) {
-            override fun onSuccess(response: List<BannerResponse>?) {
+        requestApi(mRetrofit.getBanners(4), object : BaseMvpObserver<ArrayList<BannerResponse>>(view) {
+            override fun onSuccess(response: ArrayList<BannerResponse>?) {
                 if (response == null || response.isEmpty()) {
                     return
                 }

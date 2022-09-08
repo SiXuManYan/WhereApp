@@ -28,6 +28,7 @@ import com.jcs.where.features.travel.map.TravelMapActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.news.NewsDetailActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
@@ -181,7 +182,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                 when (itemViewType) {
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
                         val dialog = JcsCalendarDialog()
-                        dialog.initCalendar(this@TravelHomeActivity)
+                        dialog.initCalendar()
                         HotelDetailActivity2.navigation(this@TravelHomeActivity, data.id, dialog.startBean, dialog.endBean)
 
                     }
@@ -218,7 +219,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
     }
 
 
-    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {
+    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
 
@@ -229,53 +230,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
 
             override fun onBannerClick(item: Int) {
                 val data = response[item]
-
-
-                if (data.redirect_type == 0) {
-                    return
-                }
-                if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
-                    WebViewActivity.goTo(this@TravelHomeActivity, data.h5_link)
-                    return
-                }
-
-                if (data.redirect_type == 2) {
-                    when (data.target_type) {
-                        1 -> {
-                            val dialog = JcsCalendarDialog()
-                            dialog.initCalendar(this@TravelHomeActivity)
-//                            HotelDetailActivity.goTo(
-//                                this@TravelHomeActivity,
-//                                data.target_id,
-//                                dialog.startBean,
-//                                dialog.endBean,
-//                                1,
-//                                "",
-//                                "",
-//                                1
-//                            )
-                            HotelDetailActivity2.navigation(
-                                this@TravelHomeActivity,
-                                data.id,
-                                dialog.startBean,
-                                dialog.endBean
-                            )
-                        }
-                        2 -> {
-                            TravelDetailActivity.navigation(this@TravelHomeActivity, data.target_id)
-                        }
-                        3 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {
-                            putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
-                        })
-                        4 -> startActivity(MechanismActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.target_id)
-                        })
-                        5 -> startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.target_id)
-                        })
-                    }
-                    return
-                }
+                BusinessUtils.handleBannerClick(this@TravelHomeActivity, data)
             }
 
         }).start()

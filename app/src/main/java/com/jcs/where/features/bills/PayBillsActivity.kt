@@ -1,24 +1,33 @@
 package com.jcs.where.features.bills
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.viewpager.widget.ViewPager
+import com.blankj.utilcode.util.ScreenUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.base.BaseActivity
+import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.channel.BillsChannelActivity
 import com.jcs.where.features.bills.guide.BillGuideAdapter
 import com.jcs.where.features.bills.guide.GuideItemClickListener
 import com.jcs.where.features.bills.record.BillsRecordActivity
-import com.jcs.where.utils.CacheUtil
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.LocalLanguageUtil
+import com.jcs.where.utils.*
+import com.jcs.where.view.XBanner.AbstractUrlLoader
+import com.jcs.where.view.XBanner.XBanner
 import kotlinx.android.synthetic.main.activity_pay_bills.*
+import kotlinx.android.synthetic.main.activity_pay_bills.ll_banner
+import kotlinx.android.synthetic.main.activity_pay_bills.top_banner
+import kotlinx.android.synthetic.main.fragment_home4.*
+import pl.droidsonroids.gif.GifImageView
 
 /**
  * Created by Wangsw  2021/4/15 14:12.
  * 水电缴费
  */
-class PayBillsActivity : BaseActivity() {
+class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(),PayBillsView {
 
 
     override fun getLayoutId() = R.layout.activity_pay_bills
@@ -26,14 +35,33 @@ class PayBillsActivity : BaseActivity() {
     override fun isStatusDark() = true
 
     override fun initView() {
-        val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this)
-        if (languageLocale.language == "zh") {
-            hydropower_banner_iv.setImageResource(R.mipmap.ic_hydropower_chn)
-        } else {
-            hydropower_banner_iv.setImageResource(R.mipmap.ic_hydropower_en)
-        }
+        initBanner()
         initPager()
 
+    }
+
+    private fun initBanner() {
+        val bannerParams = ll_banner.layoutParams.apply {
+            height = ScreenUtils.getScreenWidth() * 177 / 345
+        }
+        ll_banner.layoutParams = bannerParams
+
+        top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
+            .setTitleHeight(50)
+            .isAutoPlay(true)
+            .setDelay(5000)
+            .setUpIndicators(R.drawable.ic_selected, R.drawable.ic_unselected)
+            .setUpIndicatorSize(6, 6)
+            .setIndicatorGravity(XBanner.INDICATOR_CENTER)
+            .setImageLoader(object : AbstractUrlLoader() {
+                override fun loadImages(context: Context, url: String, image: ImageView) {
+                    GlideUtil.load(context, url, image, 4)
+                }
+
+                override fun loadGifs(context: Context, url: String, gifImageView: GifImageView, scaleType: ImageView.ScaleType) {
+                    GlideUtil.load(context, url, gifImageView, 4)
+                }
+            })
     }
 
     private fun initPager() {
@@ -72,7 +100,9 @@ class PayBillsActivity : BaseActivity() {
 
     }
 
-    override fun initData() = Unit
+    override fun initData() {
+        presenter = PayBillsPresenter(this)
+    }
 
 
     override fun bindListener() {
@@ -102,7 +132,38 @@ class PayBillsActivity : BaseActivity() {
 
     }
 
+    override fun onDestroy() {
+        top_banner?.releaseBanner()
+        super.onDestroy()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        top_banner?.start()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        top_banner?.pause()
+    }
+
+    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
+
+        top_banner.setImageUrls(bannerUrls)
+        top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
+
+            override fun onBannerDragging(item: Int) = Unit
+
+            override fun onBannerIdle(item: Int) = Unit
+
+            override fun onBannerClick(item: Int) {
+                val data = response[item]
+                BusinessUtils.handleBannerClick(this@PayBillsActivity, data)
+            }
+
+        }).start()
+    }
 
 
 }

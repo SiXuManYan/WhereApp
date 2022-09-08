@@ -324,7 +324,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
     override fun initData() {
         presenter = HotelDetailPresenter(this)
         mJcsCalendarDialog = JcsCalendarDialog().apply {
-            initCalendar(this@HotelDetailActivity2)
+            initCalendar()
             setOnDateSelectedListener(this@HotelDetailActivity2)
         }
         presenter.getData(hotelId)

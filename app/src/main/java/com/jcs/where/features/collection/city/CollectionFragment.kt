@@ -12,7 +12,6 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.mechanism.MechanismActivity
-import com.jcs.where.features.store.detail.StoreDetailActivity
 import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity
@@ -115,7 +114,7 @@ class CollectionFragment : BaseMvpFragment<CollectionPresenter>(), CollectionVie
             MyCollection.TYPE_HOTEL -> {
                 collection.hotel?.let {
                     val dialog = JcsCalendarDialog()
-                    dialog.initCalendar(this@CollectionFragment.activity)
+                    dialog.initCalendar()
                     HotelDetailActivity2.navigation(requireContext(), it.id, dialog.startBean, dialog.endBean)
                 }
             }

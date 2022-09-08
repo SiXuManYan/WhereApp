@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jcs.where.R;
 import com.jcs.where.base.BaseDialog;
@@ -274,14 +275,14 @@ public class JcsCalendarDialog extends BaseDialog {
         return true;
     }
 
-    public void initCalendar(Context context) {
+    public void initCalendar() {
 
         Locale languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(getContext());
 
-        mYearMonthSF = new SimpleDateFormat(context.getString(R.string.date_format_year_month), languageLocale);
-        mMonthDaySF = new SimpleDateFormat(context.getString(R.string.date_format_month_day), languageLocale);
-        mMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_mm_dd), languageLocale);
-        mYearMonthDayWithSplitSF = new SimpleDateFormat(context.getString(R.string.date_format_yyyy_mm_dd), languageLocale);
+        mYearMonthSF = new SimpleDateFormat(StringUtils.getString(R.string.date_format_year_month), languageLocale);
+        mMonthDaySF = new SimpleDateFormat(StringUtils.getString(R.string.date_format_month_day), languageLocale);
+        mMonthDayWithSplitSF = new SimpleDateFormat(StringUtils.getString(R.string.date_format_mm_dd), languageLocale);
+        mYearMonthDayWithSplitSF = new SimpleDateFormat(StringUtils.getString(R.string.date_format_yyyy_mm_dd), languageLocale);
         mWeekdaySF = new SimpleDateFormat("E", languageLocale);
 
         Calendar instance = Calendar.getInstance();

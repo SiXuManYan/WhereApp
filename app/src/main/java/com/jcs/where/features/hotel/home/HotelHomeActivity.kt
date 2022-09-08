@@ -187,7 +187,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         presenter = HotelDetailPresenter(this)
         presenter.getData()
         mJcsCalendarDialog = JcsCalendarDialog().apply {
-            initCalendar(this@HotelHomeActivity)
+            initCalendar()
             setOnDateSelectedListener(this@HotelHomeActivity)
         }
 

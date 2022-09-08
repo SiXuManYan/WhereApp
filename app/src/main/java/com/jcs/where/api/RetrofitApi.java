@@ -240,10 +240,10 @@ public interface RetrofitApi {
      * 获得轮播图
      *
      * @param type 区分是哪个页面的轮播图
-     * @return 轮播图  1：首页顶部，2：旅游住宿，3：首页 ， 4 mall版 estor商城
+     * @return 轮播图  1：首页顶部，2：旅游住宿，3：首页 ， 4 mall版 estor商城 7. 水电缴费轮播图
      */
     @GET("commonapi/v2/banners")
-    Observable<JcsResponse<List<BannerResponse>>> getBanners(@Query("type") int type);
+    Observable<JcsResponse<ArrayList<BannerResponse>>> getBanners(@Query("type") int type);
 
     /**
      * 收藏酒店

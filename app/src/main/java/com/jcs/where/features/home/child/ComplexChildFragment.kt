@@ -109,7 +109,7 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
                 when (itemViewType) {
                     HomeRecommendResponse.MODULE_TYPE_1_HOTEL -> {
                         val dialog = JcsCalendarDialog()
-                        dialog.initCalendar(this@ComplexChildFragment.activity)
+                        dialog.initCalendar()
                         HotelDetailActivity2.navigation(requireContext(), data.id, dialog.startBean, dialog.endBean)
                     }
                     HomeRecommendResponse.MODULE_TYPE_2_SERVICE -> {

@@ -20,7 +20,7 @@ import java.util.*
  */
 
 interface TravelHomeView : BaseMvpView {
-    fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>)
+    fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>)
     fun bindPlateData(toMutableList: MutableList<Category>)
     fun bindRecommendData(data: MutableList<HomeRecommendResponse>, lastPage: Boolean)
 
@@ -33,8 +33,8 @@ class TravelHomePresenter(private var view: TravelHomeView) : BaseMvpPresenter(v
      * 获取顶部轮播图
      */
     fun getTopBanner() {
-        requestApi(mRetrofit.getBanners(2), object : BaseMvpObserver<List<BannerResponse>>(view) {
-            override fun onSuccess(response: List<BannerResponse>?) {
+        requestApi(mRetrofit.getBanners(2), object : BaseMvpObserver<ArrayList<BannerResponse>>(view) {
+            override fun onSuccess(response: ArrayList<BannerResponse>?) {
                 if (response == null || response.isEmpty()) {
                     return
                 }

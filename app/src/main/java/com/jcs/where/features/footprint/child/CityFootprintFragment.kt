@@ -126,7 +126,7 @@ class CityFootprintFragment : BaseMvpFragment<FootprintPresenter>(), FootprintVi
         when (data.type) {
             Footprint.TYPE_HOTEL -> {
                 val dialog = JcsCalendarDialog()
-                dialog.initCalendar(activity)
+                dialog.initCalendar()
                 HotelDetailActivity2.navigation(requireContext(), module.id, dialog.startBean, dialog.endBean)
             }
             Footprint.TYPE_TRAVEL -> {

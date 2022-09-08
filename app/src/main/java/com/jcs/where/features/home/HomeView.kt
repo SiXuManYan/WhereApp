@@ -24,7 +24,7 @@ interface HomeView : BaseMvpView {
     /**
      * 轮播图数据
      */
-    fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>)
+    fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>)
 
     /**
      * 金刚区数据

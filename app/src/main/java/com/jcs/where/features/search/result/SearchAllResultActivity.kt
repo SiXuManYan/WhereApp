@@ -97,7 +97,7 @@ class SearchAllResultActivity : BaseMvpActivity<SearchAllResultPresenter>(), Sea
         when (data.type) {
             SearchResultResponse.TYPE_1_HOTEL -> {
                 val dialog = JcsCalendarDialog()
-                dialog.initCalendar(this)
+                dialog.initCalendar()
 //                HotelDetailActivity.goTo(this, data.id, dialog.startBean, dialog.endBean, 1, "", "", 1)
                 HotelDetailActivity2.navigation(this, data.id, dialog.startBean, dialog.endBean)
             }

@@ -12,15 +12,12 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import biz.laenger.android.vpbs.BottomSheetUtils
-import biz.laenger.android.vpbs.ViewPagerBottomSheetBehavior
 import com.blankj.utilcode.util.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -262,7 +259,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
     override fun initData() {
         mJcsCalendarDialog = JcsCalendarDialog().apply {
-            initCalendar(this@HotelMapActivity)
+            initCalendar()
             setOnDateSelectedListener(this@HotelMapActivity)
 
         }

@@ -76,8 +76,8 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      * 获取顶部轮播图
      */
     fun getTopBanner() {
-        requestApi(mRetrofit.getBanners(1), object : BaseMvpObserver<List<BannerResponse>>(view, false) {
-            override fun onSuccess(response: List<BannerResponse>?) {
+        requestApi(mRetrofit.getBanners(1), object : BaseMvpObserver<ArrayList<BannerResponse>>(view, false) {
+            override fun onSuccess(response: ArrayList<BannerResponse>?) {
                 isTopBannerError = false
                 if (response == null || response.isEmpty()) {
                     return

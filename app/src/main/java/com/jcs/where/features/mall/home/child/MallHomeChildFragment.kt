@@ -1,7 +1,6 @@
 package com.jcs.where.features.mall.home.child
 
 import android.content.Context
-import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,19 +17,12 @@ import com.jcs.where.api.response.mall.MallBannerCategory
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.features.hotel.detail.HotelDetailActivity2
-import com.jcs.where.features.mall.detail.MallDetailActivity
-import com.jcs.where.features.mechanism.MechanismActivity
-import com.jcs.where.features.travel.detail.TravelDetailActivity
-import com.jcs.where.features.web.WebViewActivity
-import com.jcs.where.news.NewsDetailActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import com.jcs.where.view.empty.EmptyView
-import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_mall_home_child.*
 import pl.droidsonroids.gif.GifImageView
@@ -205,7 +197,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     }
 
-    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: List<BannerResponse>) {
+    override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
         swipe_layout.isRefreshing = false
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
@@ -216,39 +208,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
             override fun onBannerClick(item: Int) {
                 val data = response[item]
-
-
-                if (data.redirect_type == 0) {
-                    return
-                }
-                if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
-                    WebViewActivity.goTo(this@MallHomeChildFragment.activity, data.h5_link)
-                    return
-                }
-
-                if (data.redirect_type == 2) {
-
-                    when (data.target_type) {
-                        1 -> {
-                            val dialog = JcsCalendarDialog()
-                            dialog.initCalendar(this@MallHomeChildFragment.activity)
-                            HotelDetailActivity2.navigation(requireContext(), data.target_id, dialog.startBean, dialog.endBean)
-                        }
-                        2 -> TravelDetailActivity.navigation(requireContext(), data.target_id)
-                        3 -> startActivity(NewsDetailActivity::class.java, Bundle().apply {
-                            putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
-                        })
-                        4 -> startActivity(MechanismActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.target_id)
-                        })
-                        5 -> startActivity(RestaurantDetailActivity::class.java, Bundle().apply {
-                            putInt(Constant.PARAM_ID, data.target_id)
-                        })
-                        6 -> MallDetailActivity.navigation(requireContext(), data.target_id)
-//                        7 -> startActivityAfterLogin(CouponCenterActivity::class.java)
-                    }
-                    return
-                }
+                BusinessUtils.handleBannerClick(context, data)
             }
 
         }).start()

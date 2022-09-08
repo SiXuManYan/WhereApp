@@ -18,6 +18,7 @@ import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.*
 import com.jcs.where.BuildConfig
 import com.jcs.where.R
+import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.features.account.login.LoginActivity
@@ -31,6 +32,7 @@ import com.jcs.where.features.mechanism.MechanismActivity
 import com.jcs.where.features.store.refund.image.RefundImage
 import com.jcs.where.features.store.refund.image.StoreRefundAdapter2
 import com.jcs.where.features.travel.detail.TravelDetailActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.storage.entity.User
@@ -561,7 +563,7 @@ object BusinessUtils {
         when (module) {
             Html5Url.MODEL_HOTEL -> {
                 val dialog = JcsCalendarDialog()
-                dialog.initCalendar(context)
+                dialog.initCalendar()
                 val bundle = Bundle().apply {
                     putInt(Constant.PARAM_HOTEL_ID, moduleId.toInt())
                     putSerializable(Constant.PARAM_START_DATE, dialog.startBean)
@@ -646,6 +648,52 @@ object BusinessUtils {
             }
         }
         return source
+    }
+
+
+    /**
+     * 轮播图点击处理
+     */
+    fun handleBannerClick(context: Context?, data: BannerResponse?) {
+        if (data == null || context == null) {
+            return
+        }
+        if (data.redirect_type == 0) {
+            return
+        }
+        if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
+            WebViewActivity.goTo(context, data.h5_link)
+            return
+        }
+
+        if (data.redirect_type == 2) {
+
+            when (data.target_type) {
+                1 -> {
+                    val dialog = JcsCalendarDialog()
+                    dialog.initCalendar()
+                    HotelDetailActivity2.navigation(context, data.target_id, dialog.startBean, dialog.endBean)
+                }
+                2 -> TravelDetailActivity.navigation(context, data.target_id)
+                3 -> {
+                    val intent = Intent(context, NewsDetailActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtras(Bundle().apply {
+                            putString(Constant.PARAM_NEWS_ID, data.target_id.toString())
+                        })
+
+                    context.startActivity(intent)
+                }
+                4 -> MechanismActivity.navigation(context, data.target_id)
+                5 -> RestaurantDetailActivity.navigation(context, data.target_id)
+                6 -> MallDetailActivity.navigation(context, data.target_id)
+                //  7 -> startActivityAfterLogin(CouponCenterActivity::class.java)
+                else -> {
+
+                }
+            }
+            return
+        }
     }
 
 

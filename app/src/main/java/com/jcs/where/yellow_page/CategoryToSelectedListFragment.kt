@@ -27,8 +27,8 @@ class CategoryToSelectedListFragment : BaseFragment() {
      * index = 2：三级分类选中的item
      */
     private var mSelectPosition: ArrayList<Int?> = ArrayList<Int?>()
-    private var mTotalCategories: List<CategoryResponse>? = null
-    private var mFirstLevelTotalIds = ""
+    private var mTotalCategories: ArrayList<CategoryResponse> = ArrayList()
+    private var mFirstLevelTotalIds: String? = ""
     val defaultChildCategoryId: String? = null
 
     /**
@@ -86,14 +86,16 @@ class CategoryToSelectedListFragment : BaseFragment() {
     }
 
     fun setTotalCategories(totalCategories: List<CategoryResponse>?) {
-        mTotalCategories = totalCategories
+        totalCategories?.let {
+            mTotalCategories.addAll(it)
+        }
     }
 
-    fun setFirstLevelTotalIds(firstLevelTotalIds: String) {
+    fun setFirstLevelTotalIds(firstLevelTotalIds: String?) {
         mFirstLevelTotalIds = firstLevelTotalIds
     }
 
-    fun setDefaultChildCategoryId(defaultChildCategoryId: String) {
+    fun setDefaultChildCategoryId(defaultChildCategoryId: String?) {
         val size = mTotalCategories!!.size
         for (i in 0 until size) {
             val first = mTotalCategories!![i]
@@ -186,7 +188,7 @@ class CategoryToSelectedListFragment : BaseFragment() {
      *
      * @return 分类id字符串，可能是 "1" "[1,2,3]"
      */
-    val currentCategoryId: String
+    val currentCategoryId: String?
         get() {
             when (mLevel) {
                 LEVEL_FIRST -> {

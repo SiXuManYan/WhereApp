@@ -145,6 +145,7 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.jcs.where.yellow_page.CategoryToSelectedListFragment"

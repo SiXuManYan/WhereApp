@@ -87,7 +87,7 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
      * 1 推荐
      * 0 距离最近
      */
-    private Integer recommend = null;
+    private Integer recommend = 1;
 
 
     public static MechanismListFragment newInstance(CategoryResponse category) {

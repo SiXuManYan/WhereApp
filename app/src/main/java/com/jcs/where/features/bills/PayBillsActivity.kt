@@ -8,26 +8,25 @@ import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ScreenUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.BannerResponse
-import com.jcs.where.base.BaseActivity
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.channel.BillsChannelActivity
 import com.jcs.where.features.bills.guide.BillGuideAdapter
 import com.jcs.where.features.bills.guide.GuideItemClickListener
 import com.jcs.where.features.bills.record.BillsRecordActivity
-import com.jcs.where.utils.*
+import com.jcs.where.utils.BusinessUtils
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import kotlinx.android.synthetic.main.activity_pay_bills.*
-import kotlinx.android.synthetic.main.activity_pay_bills.ll_banner
-import kotlinx.android.synthetic.main.activity_pay_bills.top_banner
-import kotlinx.android.synthetic.main.fragment_home4.*
 import pl.droidsonroids.gif.GifImageView
 
 /**
  * Created by Wangsw  2021/4/15 14:12.
  * 水电缴费
  */
-class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(),PayBillsView {
+class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(), PayBillsView {
 
 
     override fun getLayoutId() = R.layout.activity_pay_bills
@@ -82,7 +81,7 @@ class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(),PayBillsView {
                     CacheUtil.getShareDefault().put(Constant.SP_ALREADY_SHOW_BILLS_GUIDE, true)
                     real_content_ll.visibility = View.VISIBLE
                     pager_vp.visibility = View.GONE
-                }else {
+                } else {
                     pager_vp.setCurrentItem(position + 1, true)
                 }
             }
@@ -102,6 +101,7 @@ class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(),PayBillsView {
 
     override fun initData() {
         presenter = PayBillsPresenter(this)
+        presenter.getTopBanner()
     }
 
 
@@ -132,21 +132,6 @@ class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(),PayBillsView {
 
     }
 
-    override fun onDestroy() {
-        top_banner?.releaseBanner()
-        super.onDestroy()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        top_banner?.start()
-    }
-
-
-    override fun onPause() {
-        super.onPause()
-        top_banner?.pause()
-    }
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
 
@@ -165,5 +150,21 @@ class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(),PayBillsView {
         }).start()
     }
 
+
+    override fun onDestroy() {
+        top_banner?.releaseBanner()
+        super.onDestroy()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        top_banner?.start()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        top_banner?.pause()
+    }
 
 }

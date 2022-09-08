@@ -80,25 +80,29 @@
             android:id="@+id/sort_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/praise_rb"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
+                android:background="@null"
                 android:button="@null"
+                android:checked="true"
                 android:paddingStart="@dimen/dp_16"
                 android:paddingEnd="@dimen/dp_16"
                 android:text="@string/news_recommend"
                 android:textColor="@color/selector_black_blue"
-                android:textSize="@dimen/sp_13"
-                tools:checked="true" />
+                android:textSize="@dimen/sp_13" />
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_split"
+                android:layout_marginStart="@dimen/dp_16"
+                android:backgroundTint="@null"
                 android:button="@null"
                 android:paddingStart="@dimen/dp_16"
                 android:paddingEnd="@dimen/dp_16" />
@@ -108,6 +112,7 @@
                 android:id="@+id/sales_rb"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
+                android:background="@null"
                 android:button="@null"
                 android:paddingStart="@dimen/dp_16"
                 android:paddingEnd="@dimen/dp_16"

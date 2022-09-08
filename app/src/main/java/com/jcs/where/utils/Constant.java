@@ -255,6 +255,8 @@ public class Constant {
     public static final String PARAM_SERVICE_CHARGE = "param_service_charge";
     public static final String PARAM_USER_MONEY = "PARAM_USER_MONEY";
     public static final String PARAM_SERVICE_MONEY = "PARAM_SERVICE_MONEY";
+    public static final String KEY_CATEGORY_RESPONSE = "categoryResponse";
+    public static final String KEY_IS_FIRST_FRAGMENT = "isFirstFragment";
 
 
 

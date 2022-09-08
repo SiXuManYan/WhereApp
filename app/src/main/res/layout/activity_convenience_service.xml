@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toStartOf="@+id/filer_iv"
+            app:tabBackground="@null"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/transplant"
             app:tabIndicatorFullWidth="false"
@@ -100,8 +101,8 @@
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@drawable/shape_split"
                 android:layout_marginStart="@dimen/dp_16"
+                android:background="@drawable/shape_split"
                 android:backgroundTint="@null"
                 android:button="@null"
                 android:paddingStart="@dimen/dp_16"

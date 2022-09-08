@@ -4,7 +4,6 @@ import static com.jcs.where.utils.Constant.PARAM_ID;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.RadioButton;
@@ -89,6 +88,8 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
      */
     private Integer recommend = 1;
 
+    private boolean needRefresh = false;
+
 
     public static MechanismListFragment newInstance(CategoryResponse category) {
         Bundle args = new Bundle();
@@ -147,7 +148,11 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
 
         mAdapter = new MechanismAdapter();
         mAdapter.setEmptyView(emptyView);
-        mAdapter.getLoadMoreModule().setOnLoadMoreListener(this);
+        BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
+        loadMoreModule.setAutoLoadMore(true);
+        loadMoreModule.setEnableLoadMoreIfNotFullPage(false);
+        loadMoreModule.setOnLoadMoreListener(this);
+
         mRecycler.setAdapter(mAdapter);
         mRecycler.addItemDecoration(new DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(15f), 0, 0));
 
@@ -183,10 +188,6 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
     /**
      * 获得当前分类下的子分类
@@ -215,7 +216,6 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
                         temp.setBackgroundResource(R.drawable.selector_store_third_category);
                         temp.setText(categoryResponse.getName());
                         temp.setTextColor(getResources().getColorStateList(R.color.selector_grey_blue, null));
-                        temp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
                         temp.setLayoutParams(allRadio.getLayoutParams());
                         // 使用分类id作为RadioButton的id
                         temp.setId(Integer.parseInt(categoryResponse.getId()));
@@ -296,13 +296,13 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
     /**
      * radioButton 的选择事件
      *
-     * @param i radioButton 的id
+     * @param checkedId radioButton 的id
      */
-    private void onRadioChecked(RadioGroup radioGroup, int i) {
+    private void onRadioChecked(RadioGroup radioGroup, int checkedId) {
         // 当前不处于刷新状态才可以执行操作
         // 防止连续多次点击或者网速慢在刷新的点击
         if (!mSwipeLayout.isRefreshing()) {
-            if (i == R.id.allRadio) {
+            if (checkedId == R.id.allRadio) {
                 // 选择了全部
                 mCurrentCategoryId = String.valueOf(mCategoryResponse.getId());
                 onSwipeRefresh();
@@ -312,7 +312,7 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
                 for (int j = 0; j < size; j++) {
                     CategoryResponse categoryResponse = mChildCategories.get(j);
                     int categoryId = Integer.parseInt(categoryResponse.getId());
-                    if (i == categoryId) {
+                    if (checkedId == categoryId) {
                         mCurrentCategoryId = String.valueOf(categoryResponse.getId());
                         onSwipeRefresh();
                     }
@@ -325,6 +325,7 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
     private void onSwipeRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE;
         getMechanismList(mCurrentCategoryId);
+        needRefresh = false;
     }
 
     @Override
@@ -342,12 +343,29 @@ public class MechanismListFragment extends BaseFragment implements OnLoadMoreLis
     public void onEventReceived(BaseEvent<?> baseEvent) {
 
         if (baseEvent.code == EventCode.EVENT_REFRESH_CONVENIENCE_CHILD) {
-            recommend = (int) baseEvent.data;
-            onSwipeRefresh();
+
+            int newRecommend = (int) baseEvent.data;
+
+            if (recommend != newRecommend) {
+                recommend = newRecommend;
+                needRefresh = true;
+                if (isViewVisible) {
+                    onSwipeRefresh();
+                }
+            }
+
         }
 
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && needRefresh) {
+            onSwipeRefresh();
+        }
+    }
 
 }
 

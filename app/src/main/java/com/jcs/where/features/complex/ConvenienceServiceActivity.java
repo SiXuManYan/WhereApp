@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -23,6 +22,7 @@ import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
 import com.jcs.where.bean.CityResponse;
+import com.jcs.where.features.complex.child.ConvenienceChildFragment;
 import com.jcs.where.features.search.SearchAllActivity;
 import com.jcs.where.government.adapter.MapListFragmentAdapter;
 import com.jcs.where.government.fragment.MechanismListFragment;
@@ -61,7 +61,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
     /**
      * 展示机构列表的Fragment集合
      */
-    private List<MechanismListFragment> mMechanismListFragments;
+    private List<ConvenienceChildFragment> mMechanismListFragments;
 
     /**
      * 机构列表分类数据，展示在TabLayout上
@@ -91,8 +91,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
-        mViewPagerAdapter = new MapListFragmentAdapter(getSupportFragmentManager(),
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mViewPagerAdapter = new MapListFragmentAdapter(getSupportFragmentManager(), 0);
 
         service_empty = findViewById(R.id.service_empty);
         service_empty.hideEmptyContainer();
@@ -100,7 +99,6 @@ public class ConvenienceServiceActivity extends BaseActivity {
         filter_ll = findViewById(R.id.filter_ll);
         filer_iv = findViewById(R.id.filer_iv);
         sort_rg = findViewById(R.id.sort_rg);
-
 
 
     }
@@ -241,7 +239,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
             CategoryResponse categoryResponse = mTabCategories.get(i);
             // 0 位置对应的是全部，已经在循环外添加过了
             if (i != 0) {
-                mMechanismListFragments.add(MechanismListFragment.newInstance(categoryResponse));
+                mMechanismListFragments.add(ConvenienceChildFragment.Companion.newInstance(categoryResponse));
             }
         }
         mViewPagerAdapter.setListFragments(mMechanismListFragments);
@@ -276,7 +274,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
         mTabCategories.add(allCategory);
 
         // 0 表示要获得全部的信息，添加全部对应的ListFragment
-        mMechanismListFragments.add(MechanismListFragment.newInstance(allCategory, true));
+        mMechanismListFragments.add(ConvenienceChildFragment.Companion.newInstance(allCategory));
     }
 
     @SuppressLint("NonConstantResourceId")

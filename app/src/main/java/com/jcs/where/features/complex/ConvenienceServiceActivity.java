@@ -73,14 +73,12 @@ public class ConvenienceServiceActivity extends BaseActivity {
     private EmptyView service_empty;
     private ImageView filer_iv;
     private RadioGroup sort_rg;
-    private TextView reset_tv;
-    private TextView confirm_tv;
 
     /**
      * 1 推荐
      * 0 距离最近
      */
-    private Integer recommend = null;
+    private Integer recommend = 1;
     private LinearLayout filter_ll;
 
     @Override
@@ -102,8 +100,7 @@ public class ConvenienceServiceActivity extends BaseActivity {
         filter_ll = findViewById(R.id.filter_ll);
         filer_iv = findViewById(R.id.filer_iv);
         sort_rg = findViewById(R.id.sort_rg);
-        reset_tv = findViewById(R.id.reset_tv);
-        confirm_tv = findViewById(R.id.confirm_tv);
+
 
 
     }
@@ -301,9 +298,13 @@ public class ConvenienceServiceActivity extends BaseActivity {
             switch (checkedId) {
                 case R.id.praise_rb:
                     recommend = 1;
+                    EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_CONVENIENCE_CHILD, recommend));
+                    handleFilterVisibility();
                     break;
                 case R.id.sales_rb:
                     recommend = 0;
+                    EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_CONVENIENCE_CHILD, recommend));
+                    handleFilterVisibility();
                     break;
 
                 default:
@@ -312,19 +313,6 @@ public class ConvenienceServiceActivity extends BaseActivity {
         });
 
 
-        reset_tv.setOnClickListener(v -> {
-            recommend = null;
-            handleFilterVisibility();
-
-        });
-        confirm_tv.setOnClickListener(v -> {
-            EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_CONVENIENCE_CHILD, recommend));
-            handleFilterVisibility();
-        });
-
-        findViewById(R.id.filter_content_rl).setOnClickListener(v -> {
-
-        });
         findViewById(R.id.dismiss_view).setOnClickListener(v -> {
             handleFilterVisibility();
         });
@@ -335,10 +323,8 @@ public class ConvenienceServiceActivity extends BaseActivity {
     private void handleFilterVisibility() {
         if (filter_ll.getVisibility() == View.GONE) {
             filter_ll.setVisibility(View.VISIBLE);
-            filer_iv.setImageResource(R.mipmap.ic_filter_blue);
         } else {
             filter_ll.setVisibility(View.GONE);
-            filer_iv.setImageResource(R.mipmap.ic_filter_gray);
         }
     }
 

@@ -157,16 +157,12 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             if (data.dev_status == 1) {
                 when (data.id) {
                     1 -> startActivity(GovernmentActivity::class.java)
-//                    1 -> startActivity(GovernmentMapActivity::class.java)
                     2 -> {
                         startActivity(YellowPageActivity::class.java, Bundle().apply {
                             putIntegerArrayList(YellowPageActivity.K_CATEGORIES, data.categories as (ArrayList<Int>))
                         })
                     }
                     3 -> {
-//                        startActivity(TravelStayActivity::class.java, Bundle().apply {
-//                            putIntegerArrayList(TravelStayActivity.K_CATEGORY_IDS, data.categories as (ArrayList<Int>))
-//                        })
                         startActivity(TravelHomeActivity::class.java, Bundle().apply {
                             putIntegerArrayList(Constant.PARAM_CATEGORY_ID, data.categories as (ArrayList<Int>))
                         })
@@ -187,7 +183,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         })
                     }
                     10 -> {
-//                        startActivity(StoreRecommendActivity::class.java)
                         startActivity(MallHomeActivity::class.java)
                     }
 

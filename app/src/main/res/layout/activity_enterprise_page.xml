@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:middleTitle="@string/enterprise_yellow_page"
+        app:rightFirstIcon="@mipmap/ic_search_black" />
+
+    <LinearLayout
+        android:id="@+id/category_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_below="@+id/jcsTitle"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/category_filter_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckedTextView
+                android:id="@+id/category_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:ellipsize="end"
+                android:maxWidth="@dimen/dp_100"
+                android:maxLines="1"
+                android:paddingStart="@dimen/dp_2"
+                android:paddingEnd="@dimen/dp_2"
+                android:text="@string/all"
+                android:textColor="@color/selector_black_blue"
+                android:textSize="@dimen/sp_13" />
+
+            <ImageView
+                android:id="@+id/firstArrowIv"
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_4"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_arrow_filter_black" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/other_filter_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:ellipsize="end"
+                android:maxWidth="@dimen/dp_100"
+                android:maxLines="1"
+                android:text="@string/recommend_home"
+                android:textColor="@color/selector_black_blue"
+                android:textSize="@dimen/sp_13" />
+
+
+            <ImageView
+                android:id="@+id/thirdArrowIv"
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_4"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_arrow_filter_black" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/third_category_rv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_below="@+id/category_ll"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/mechanismRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/third_category_rv">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mechanismRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_mechanism" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/filter_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/category_ll"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+
+        <ViewSwitcher
+            android:id="@+id/filter_content_sw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <!-- 分类 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_400"
+                android:orientation="horizontal">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/first_category_rv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@color/white" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/second_category_rv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@color/grey_F5F5F5"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+
+            </LinearLayout>
+
+
+            <!-- 其他 -->
+            <RadioGroup
+                android:id="@+id/sort_rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/praise_rb"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:background="@null"
+                    android:button="@null"
+                    android:checked="true"
+                    android:paddingStart="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_16"
+                    android:text="@string/news_recommend"
+                    android:textColor="@color/selector_black_blue"
+                    android:textSize="@dimen/sp_13" />
+
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:background="@drawable/shape_split"
+                    android:backgroundTint="@null"
+                    android:button="@null"
+                    android:paddingStart="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_16" />
+
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sales_rb"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:background="@null"
+                    android:button="@null"
+                    android:paddingStart="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_16"
+                    android:text="@string/nearest"
+                    android:textColor="@color/selector_black_blue"
+                    android:textSize="@dimen/sp_13" />
+
+
+            </RadioGroup>
+
+
+        </ViewSwitcher>
+
+
+        <View
+            android:id="@+id/dismiss_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:background="@color/grey_666666" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

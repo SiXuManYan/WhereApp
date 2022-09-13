@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/third_category"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:paddingStart="@dimen/dp_12"
+    android:background="@drawable/selector_store_third_category"
+    android:paddingTop="@dimen/dp_4"
+    android:gravity="center"
+    android:paddingEnd="@dimen/dp_12"
+    android:paddingBottom="@dimen/dp_4"
+    android:text="@string/classification"
+    android:textColor="@color/selector_grey_blue"
+    android:textSize="@dimen/sp_12" />
+

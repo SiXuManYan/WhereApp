@@ -21,7 +21,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 49
-        versionName "0.3.7.alpha.05"
+        versionName "0.3.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"
@@ -48,7 +48,7 @@ android {
                 OPPO_APPID : "OP-oppo的APPID",
                 OPPO_APPSECRET : "OP-oppo的APPSECRET",
                 VIVO_APPKEY : "vivo的APPKEY",
-                VIVO_APPID : "vivo的APPID"
+                VIVO_APPID: "vivo的APPID"
                 HONOR_APPID : "Honor的APP ID"
                 */
         ]

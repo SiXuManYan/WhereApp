@@ -39,9 +39,9 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_layout"
-        android:layout_below="@+id/title_rl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_rl">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

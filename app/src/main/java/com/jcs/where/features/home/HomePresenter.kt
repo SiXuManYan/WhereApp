@@ -1,6 +1,7 @@
 package com.jcs.where.features.home
 
 import com.blankj.utilcode.util.SPUtils
+import com.google.gson.Gson
 import com.jcs.where.BuildConfig
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -13,6 +14,8 @@ import com.jcs.where.api.response.home.HomeChild
 import com.jcs.where.api.response.home.HomeNewsResponse
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
 import com.jcs.where.utils.SPKey
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
@@ -107,6 +110,19 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
                 isPlateDataError = false
                 val toMutableList = response.toMutableList()
                 view.bindPlateData(toMutableList)
+
+                // 存储企业黄页所有一级分类id
+                val allYellowCategoryIds = CacheUtil.getShareDefault().getString(Constant.SP_YELLOW_PAGE_ALL_FIRST_CATEGORY_ID, "")
+                if (allYellowCategoryIds.isNullOrBlank()) {
+                    response.forEach {
+                        if (it.id == 2) {
+                            val yellowPageAllFirstCategoryId = Gson().toJson(it.categories)
+                            CacheUtil.getShareDefault()
+                                .put(Constant.SP_YELLOW_PAGE_ALL_FIRST_CATEGORY_ID, yellowPageAllFirstCategoryId)
+                            return@forEach
+                        }
+                    }
+                }
             }
 
             override fun onError(errorResponse: ErrorResponse?) {
@@ -207,7 +223,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
             return
         }
 
-        requestApi(mRetrofit.getCityPickers("list"), object : BaseMvpObserver<CityPickerResponse>(view,false) {
+        requestApi(mRetrofit.getCityPickers("list"), object : BaseMvpObserver<CityPickerResponse>(view, false) {
             override fun onSuccess(response: CityPickerResponse) {
 
                 val defaultCity = response.defaultCity

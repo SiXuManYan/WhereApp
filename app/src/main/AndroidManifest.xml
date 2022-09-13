@@ -625,6 +625,7 @@
         <activity
             android:name=".features.media.MediaDetailActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".features.enterprise.EnterprisePageActivity" />
 
 
     </application>

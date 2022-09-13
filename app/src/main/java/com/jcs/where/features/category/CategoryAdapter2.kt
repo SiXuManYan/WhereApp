@@ -167,9 +167,10 @@ class CategoryAdapter2 : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.ite
                     // 传递企业黄页一级分类id
                     val jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID)
                     if (!jsonStr.isNullOrBlank()) {
-                        val categoryIds =
-                            JsonUtil.getInstance().fromJsonToList<Int>(jsonStr, object : TypeToken<List<Int>>() {}.type)
+
+                        val categoryIds = JsonUtil.getInstance().fromJsonToList<Int>(jsonStr, object : TypeToken<List<Int>>() {}.type)
                         val categories = categoryIds as ArrayList<Int>
+
                         startActivity(YellowPageActivity::class.java, Bundle().apply {
                             putIntegerArrayList(YellowPageActivity.K_CATEGORIES, categories)
                             putString(YellowPageActivity.K_DEFAULT_CHILD_CATEGORY_ID, childCategory.id.toString())

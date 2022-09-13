@@ -1,16 +1,24 @@
 package com.jcs.where.features.enterprise
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.enterprise.adapter.EnterpriseCategoryAdapter
+import com.jcs.where.features.enterprise.adapter.EnterpriseThirdCategoryAdapter
+import com.jcs.where.features.map.MechanismAdapter
+import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
+import kotlinx.android.synthetic.main.activity_enterprise_page.*
 
 /**
  * Created by Wangsw  2022/9/13 16:20.
@@ -24,6 +32,11 @@ class EnterprisePageActivity : BaseMvpActivity<EnterprisePagePresenter>(), Enter
 
     /** 用户当前选中的 分类id */
     var currentCategoryId = 0
+
+    private lateinit var mFirstAdapter: EnterpriseCategoryAdapter
+    private lateinit var mSecondAdapter: EnterpriseCategoryAdapter
+    private lateinit var mThirdAdapter: EnterpriseThirdCategoryAdapter
+    private lateinit var mAdapter: MechanismAdapter
 
 
     companion object {
@@ -75,7 +88,9 @@ class EnterprisePageActivity : BaseMvpActivity<EnterprisePagePresenter>(), Enter
     override fun initView() {
 
         initExtra()
+        initFilter()
     }
+
 
     private fun initExtra() {
 
@@ -88,16 +103,101 @@ class EnterprisePageActivity : BaseMvpActivity<EnterprisePagePresenter>(), Enter
         }
     }
 
+    /** 筛选项相关 */
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initFilter() {
+
+        // 一、二、三级分类列表
+        mFirstAdapter = EnterpriseCategoryAdapter().apply {
+            isFirstCategoryList = true
+        }
+        mSecondAdapter = EnterpriseCategoryAdapter()
+        mThirdAdapter = EnterpriseThirdCategoryAdapter()
+        first_category_rv.apply {
+            adapter = mFirstAdapter
+            layoutManager = LinearLayoutManager(this@EnterprisePageActivity, LinearLayoutManager.VERTICAL, false)
+        }
+
+        second_category_rv.apply {
+            adapter = mSecondAdapter
+            layoutManager = LinearLayoutManager(this@EnterprisePageActivity, LinearLayoutManager.VERTICAL, false)
+        }
+
+        third_category_rv.apply {
+            adapter = mThirdAdapter
+            layoutManager = LinearLayoutManager(this@EnterprisePageActivity, LinearLayoutManager.VERTICAL, false)
+        }
+
+        // 处理点击交互
+        // 一级
+        mFirstAdapter.setOnItemClickListener { _, _, position ->
+            val data = mFirstAdapter.data
+            val category = data[position]
+
+            data.forEach {
+                it.nativeIsSelected = it.id == category.id
+            }
+            mFirstAdapter.notifyDataSetChanged()
+
+            // 填充二级
+            mSecondAdapter.setNewInstance(category.child_categories)
+            // todo 刷新列表
+        }
+
+        // 二级
+        mSecondAdapter.setOnItemClickListener { _, _, position ->
+            val data = mSecondAdapter.data
+            val category = data[position]
+
+            data.forEach {
+                it.nativeIsSelected = it.id == category.id
+            }
+            mSecondAdapter.notifyDataSetChanged()
+
+            // 填充三级
+            mThirdAdapter.setNewInstance(category.child_categories)
+            // todo 刷新列表
+        }
+
+        // 三级
+        mThirdAdapter.setOnItemClickListener { _, _, position ->
+            val data = mThirdAdapter.data
+            val category = data[position]
+
+            data.forEach {
+                it.nativeIsSelected = it.id == category.id
+            }
+            mThirdAdapter.notifyDataSetChanged()
+            // todo 刷新列表
+        }
+
+
+
+
+        // 筛选事件
+
+        // 内容列表
+    }
+
+
+
+
     override fun initData() {
         presenter = EnterprisePagePresenter(this)
-        presenter.getAllCategory(firstCategoryIds,currentCategoryId)
+        presenter.getAllCategory(firstCategoryIds, currentCategoryId)
     }
 
     override fun bindListener() {
-
+        mJcsTitle.setFirstRightIvClickListener {
+            val bundle = Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 1)
+                putString(Constant.PARAM_CATEGORY_ID, currentCategoryId.toString())
+            }
+            startActivity(SearchAllActivity::class.java, bundle)
+        }
     }
 
-    override fun bindCategory(response:ArrayList<Category>) {
+    override fun bindCategory(response: ArrayList<Category>) {
 
     }
 }

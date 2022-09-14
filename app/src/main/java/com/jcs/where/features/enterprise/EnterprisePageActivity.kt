@@ -309,12 +309,15 @@ class EnterprisePageActivity : BaseMvpActivity<EnterprisePagePresenter>(), Enter
             when (checkedId) {
                 R.id.recommend_rb -> {
                     recommend = TYPE_RECOMMEND
-
-                    handleFilterVisibility(1)
+                    dismiss_view.performClick()
+                    category_tv.setText(R.string.recommend_home)
+                    onRefresh()
                 }
                 R.id.distance_rb -> {
                     recommend = TYPE_DISTANCE
-                    handleFilterVisibility(1)
+                    dismiss_view.performClick()
+                    category_tv.setText(R.string.nearest)
+                    onRefresh()
                 }
                 else -> {}
             }

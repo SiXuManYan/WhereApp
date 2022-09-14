@@ -188,14 +188,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
-
-        <activity
-            android:name=".yellow_page.activity.YellowPageActivity"
-            android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".features.complex.ConvenienceServiceActivity"
             android:screenOrientation="portrait"
@@ -625,7 +617,9 @@
         <activity
             android:name=".features.media.MediaDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".features.enterprise.EnterprisePageActivity" />
+        <activity
+            android:name=".features.enterprise.EnterprisePageActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

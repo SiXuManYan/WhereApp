@@ -85,7 +85,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/praise_rb"
+                android:id="@+id/recommend_rb"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:background="@null"
@@ -110,7 +110,7 @@
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/sales_rb"
+                android:id="@+id/distance_rb"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:background="@null"

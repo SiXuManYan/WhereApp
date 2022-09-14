@@ -67,9 +67,11 @@
             android:orientation="horizontal">
 
             <CheckedTextView
+                android:id="@+id/other_filter_content_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_4"
+                android:checked="true"
                 android:ellipsize="end"
                 android:maxWidth="@dimen/dp_100"
                 android:maxLines="1"
@@ -94,8 +96,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/third_category_rv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/category_ll"
+        android:background="@color/white"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
         android:visibility="gone"
         tools:visibility="visible" />
 
@@ -124,16 +129,17 @@
         tools:visibility="visible">
 
 
-        <ViewSwitcher
+        <FrameLayout
             android:id="@+id/filter_content_sw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <!-- 分类 -->
             <LinearLayout
+                android:id="@+id/category_parent_ll"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_400"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
 
@@ -142,7 +148,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
-                    android:background="@color/white" />
+                    android:background="@color/white"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_enterprise_category" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/second_category_rv"
@@ -150,7 +158,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:background="@color/grey_F5F5F5"
-                    android:visibility="gone"
+                    android:visibility="invisible"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/item_enterprise_category"
                     tools:visibility="visible" />
 
 
@@ -163,10 +173,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/praise_rb"
+                    android:id="@+id/recommend_rb"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_48"
                     android:background="@null"
@@ -191,7 +202,7 @@
 
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/sales_rb"
+                    android:id="@+id/distance_rb"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_48"
                     android:background="@null"
@@ -206,7 +217,7 @@
             </RadioGroup>
 
 
-        </ViewSwitcher>
+        </FrameLayout>
 
 
         <View

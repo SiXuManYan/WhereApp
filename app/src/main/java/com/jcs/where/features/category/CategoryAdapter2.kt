@@ -10,21 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.google.gson.reflect.TypeToken
 import com.jcs.where.R
 import com.jcs.where.api.response.category.Category
 import com.jcs.where.features.complex.ConvenienceServiceActivity
+import com.jcs.where.features.enterprise.EnterprisePageActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.hotel.home.HotelHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.travel.map.TravelMapActivity
-import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
-import com.jcs.where.utils.JsonUtil
-import com.jcs.where.utils.SPKey
 import com.jcs.where.widget.list.DividerDecoration
-import com.jcs.where.yellow_page.activity.YellowPageActivity
-import java.util.*
 
 /**
  * Created by Wangsw  2021/11/12 16:01.
@@ -132,51 +127,25 @@ class CategoryAdapter2 : BaseQuickAdapter<Category, BaseViewHolder>(R.layout.ite
         childAdapter.setOnItemClickListener { _, _, position ->
             val childCategory = childAdapter.data[position]
             when (childCategory.type) {
-                TYPE_SERVICE -> {
-                    startActivity(ConvenienceServiceActivity::class.java, Bundle().apply {
-                        putString(ConvenienceServiceActivity.K_SERVICE_NAME, parent.name)
-                        putString(ConvenienceServiceActivity.K_CATEGORIES, parent.id.toString())
-                        putString(ConvenienceServiceActivity.K_CHILD_CATEGORY_ID, childCategory.id.toString())
-                    })
-                }
-                TYPE_HOTEL -> {
-                    startActivity(HotelHomeActivity::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_CATEGORY_ID, childCategory.id)
-                    })
+                TYPE_SERVICE -> startActivity(ConvenienceServiceActivity::class.java, Bundle().apply {
+                    putString(ConvenienceServiceActivity.K_SERVICE_NAME, parent.name)
+                    putString(ConvenienceServiceActivity.K_CATEGORIES, parent.id.toString())
+                    putString(ConvenienceServiceActivity.K_CHILD_CATEGORY_ID, childCategory.id.toString())
+                })
+                TYPE_HOTEL -> startActivity(HotelHomeActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_CATEGORY_ID, childCategory.id)
+                })
+                TYPE_TOURISM -> TravelMapActivity.navigation(context, childCategory.id)
+                TYPE_GOVERNMENT -> startActivity(GovernmentActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_CHILD_CATEGORY_ID, childCategory.id)
+                })
 
-                }
-                TYPE_TOURISM -> {
-                    TravelMapActivity.navigation(context, childCategory.id)
-                }
-                TYPE_GOVERNMENT -> {
-                    startActivity(GovernmentActivity::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_CHILD_CATEGORY_ID, childCategory.id)
-                    })
-                }
-
-                TYPE_TRAVEL -> {
-                    startActivity(TravelMapActivity::class.java,null)
-                }
-                TYPE_RESTAURANT -> {
-                    startActivity(RestaurantHomeActivity::class.java, Bundle().apply {
-                        putInt(Constant.PARAM_PID, childCategory.id)
-                        putString(Constant.PARAM_PID_NAME, childCategory.name)
-                    })
-                }
-                TYPE_YELLOW_PAGE -> {
-                    // 传递企业黄页一级分类id
-                    val jsonStr = CacheUtil.needUpdateBySpKeyByLanguage(SPKey.K_YELLOW_PAGE_FIRST_LEVEL_CATEGORY_ID)
-                    if (!jsonStr.isNullOrBlank()) {
-
-                        val categoryIds = JsonUtil.getInstance().fromJsonToList<Int>(jsonStr, object : TypeToken<List<Int>>() {}.type)
-                        val categories = categoryIds as ArrayList<Int>
-
-                        startActivity(YellowPageActivity::class.java, Bundle().apply {
-                            putIntegerArrayList(YellowPageActivity.K_CATEGORIES, categories)
-                            putString(YellowPageActivity.K_DEFAULT_CHILD_CATEGORY_ID, childCategory.id.toString())
-                        })
-                    }
-                }
+                TYPE_TRAVEL -> startActivity(TravelMapActivity::class.java,null)
+                TYPE_RESTAURANT -> startActivity(RestaurantHomeActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_PID, childCategory.id)
+                    putString(Constant.PARAM_PID_NAME, childCategory.name)
+                })
+                TYPE_YELLOW_PAGE -> EnterprisePageActivity.navigation(context, currentCategoryId= childCategory.id)
                 else -> ToastUtils.showLong(StringUtils.getString(R.string.coming_soon))
             }
         }

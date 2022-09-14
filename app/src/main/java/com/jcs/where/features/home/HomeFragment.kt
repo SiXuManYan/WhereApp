@@ -32,6 +32,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.bills.PayBillsActivity
 import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.features.complex.ConvenienceServiceActivity
+import com.jcs.where.features.enterprise.EnterprisePageActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.home.child.ComplexChildFragment
 import com.jcs.where.features.home.child.HomeMallFragment
@@ -51,7 +52,6 @@ import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
-import com.jcs.where.yellow_page.activity.YellowPageActivity
 import kotlinx.android.synthetic.main.fragment_home4.*
 import org.greenrobot.eventbus.EventBus
 import pl.droidsonroids.gif.GifImageView
@@ -157,14 +157,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             if (data.dev_status == 1) {
                 when (data.id) {
                     1 -> startActivity(GovernmentActivity::class.java)
-                    2 -> {
-                        startActivity(YellowPageActivity::class.java, Bundle().apply {
-                            putIntegerArrayList(YellowPageActivity.K_CATEGORIES, data.categories as (ArrayList<Int>))
-                        })
-                    }
+                    2 -> EnterprisePageActivity.navigation(requireContext(), data.categories)
                     3 -> {
                         startActivity(TravelHomeActivity::class.java, Bundle().apply {
-                            putIntegerArrayList(Constant.PARAM_CATEGORY_ID, data.categories as (ArrayList<Int>))
+                            putIntegerArrayList(Constant.PARAM_CATEGORY_ID, data.categories)
                         })
                     }
                     4, 5, 6, 7 -> {

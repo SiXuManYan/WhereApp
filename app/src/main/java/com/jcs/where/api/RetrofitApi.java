@@ -708,7 +708,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 获取分类列表
+     * 获取分类
      * !--level 3 pid 89 type =1 --
      *
      * @param level 分类级别（一级？二级？三级？）

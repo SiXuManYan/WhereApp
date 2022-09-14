@@ -1,5 +1,6 @@
 package com.jcs.where.api.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModulesResponse {
@@ -15,7 +16,7 @@ public class ModulesResponse {
     private String name;
     private String icon;
     private int dev_status;
-    private List<Integer> categories;
+    private ArrayList<Integer> categories = new ArrayList<>();
 
     /**
      * 1：政府机构->带地图的综合服务页面
@@ -63,11 +64,11 @@ public class ModulesResponse {
         this.dev_status = dev_status;
     }
 
-    public List<Integer> getCategories() {
+    public ArrayList<Integer> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Integer> categories) {
+    public void setCategories(ArrayList<Integer> categories) {
         this.categories = categories;
     }
 }

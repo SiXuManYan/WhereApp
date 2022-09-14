@@ -49,6 +49,12 @@ public class Category {
      */
     public boolean nativeIsWebType = false;
 
+
+    /**
+     * 父级标题
+     */
+    public String parentName = "";
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

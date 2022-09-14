@@ -24,6 +24,7 @@ import com.jcs.where.utils.GlideUtil
 class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.layout.item_mechanism), LoadMoreModule {
 
     var showClose = false
+    var ignoreTopMargin = false
 
     override fun convert(holder: BaseViewHolder, item: MechanismResponse) {
 
@@ -34,15 +35,18 @@ class MechanismAdapter : BaseQuickAdapter<MechanismResponse, BaseViewHolder>(R.l
             View.GONE
         }
 
-        val container_rl = holder.getView<RelativeLayout>(R.id.container_rl)
-        val param = container_rl.layoutParams as RecyclerView.LayoutParams
+        if (!ignoreTopMargin) {
+            val container_rl = holder.getView<RelativeLayout>(R.id.container_rl)
+            val param = container_rl.layoutParams as RecyclerView.LayoutParams
 
-        if (holder.adapterPosition == 0) {
-            param.topMargin = SizeUtils.dp2px(15f)
-        } else {
-            param.topMargin = SizeUtils.dp2px(0f)
+            if (holder.adapterPosition == 0) {
+                param.topMargin = SizeUtils.dp2px(15f)
+            } else {
+                param.topMargin = SizeUtils.dp2px(0f)
+            }
+            container_rl.layoutParams = param
         }
-        container_rl.layoutParams = param
+
 
 
         // 图片

@@ -1,19 +1,32 @@
 package com.jcs.where.features.enterprise
 
+import android.text.TextUtils
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.StringUtils
+import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.MechanismResponse
+import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.category.Category
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.SPKey
 
 /**
  * Created by Wangsw  2022/9/13 16:21.
  *
  */
-interface EnterprisePageView : BaseMvpView {
-    fun bindCategory(response: java.util.ArrayList<Category>)
+interface EnterprisePageView : BaseMvpView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
+
+    /** 填充分类 */
+    fun bindCategory(response:ArrayList<Category>)
+
+    /** 填充内容列表 */
+    fun bindList(data: MutableList<MechanismResponse>, lastPage: Boolean)
 
 }
 
@@ -57,6 +70,7 @@ class EnterprisePagePresenter(private var view: EnterprisePageView) : BaseMvpPre
                             name = StringUtils.getString(R.string.all)
                             id = first.id // 分类使用当前一级分类id
                             has_children = 1
+                            parentName =  first.name
                         }
                         first.child_categories.add(0, secondAll)
                     }
@@ -80,6 +94,7 @@ class EnterprisePagePresenter(private var view: EnterprisePageView) : BaseMvpPre
                                     id = second.id // 分类使用当前二级分类id
                                     has_children = 1
                                     nativeIsSelected = true
+                                    parentName = second.name
                                 }
                                 second.child_categories.add(0, thirdAll)
                             }
@@ -93,5 +108,33 @@ class EnterprisePagePresenter(private var view: EnterprisePageView) : BaseMvpPre
             }
         })
     }
+
+
+    /**
+     * 内容列表
+     */
+    fun getData(page: Int, categoryId: Int,recommend :Int?) {
+
+        val latLng = CacheUtil.getSafeSelectLatLng()
+        var areaId = SPUtils.getInstance().getString(SPKey.SELECT_AREA_ID, "")
+
+        val lat = latLng.latitude
+        val lng = latLng.longitude
+
+        if (TextUtils.isEmpty(areaId)) {
+            areaId = null
+        }
+
+
+        requestApi(mRetrofit.getMechanismListById3(page,categoryId.toString(),"",lat,lng,areaId ,recommend),object :BaseMvpObserver<PageResponse<MechanismResponse>>(view){
+            override fun onSuccess(response: PageResponse<MechanismResponse>) {
+                val data = response.data
+                val isLastPage = response.lastPage == page
+                view.bindList(data.toMutableList(),isLastPage)
+            }
+
+        })
+    }
+
 
 }

@@ -294,12 +294,12 @@ public class ConvenienceServiceActivity extends BaseActivity {
 
         sort_rg.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
-                case R.id.praise_rb:
+                case R.id.recommend_rb:
                     recommend = 1;
                     EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_CONVENIENCE_CHILD, recommend));
                     handleFilterVisibility();
                     break;
-                case R.id.sales_rb:
+                case R.id.distance_rb:
                     recommend = 0;
                     EventBus.getDefault().post(new BaseEvent<>(EventCode.EVENT_REFRESH_CONVENIENCE_CHILD, recommend));
                     handleFilterVisibility();

@@ -11,5 +11,5 @@
     android:paddingEnd="@dimen/dp_16"
     android:textColor="@color/selector_black_blue"
     android:textSize="@dimen/sp_12"
-    tools:text="@string/classification" />
+    tools:text="@tools:sample/cities" />
 

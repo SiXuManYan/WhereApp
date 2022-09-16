@@ -20,6 +20,7 @@ import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_bills_detail.*
+import java.math.BigDecimal
 
 
 /**
@@ -46,7 +47,7 @@ class BillsOrderDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsD
         content_rv.apply {
             adapter = mAdapter
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.colorPrimary),
-                SizeUtils.dp2px(1f),
+                1,
                 SizeUtils.dp2px(15f),
                 0))
 
@@ -77,7 +78,6 @@ class BillsOrderDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsD
         val orderStatus = data.order_status
         status_tv.text = BusinessUtils.getBillsStatusText(orderStatus)
         status_desc_tv.text = BusinessUtils.getBillsStatusDesc(orderStatus)
-        price_tv.text = getString(R.string.price_unit_format, data.total_price.toPlainString())
 
 
         // 退款失败
@@ -129,7 +129,7 @@ class BillsOrderDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsD
                     visibility = View.VISIBLE
                     text = StringUtils.getString(R.string.resubmit)
                     setOnClickListener {
-                        presenter.recommit(orderId,data.order_type)
+                        presenter.recommit(orderId, data.order_type)
                     }
                 }
             }
@@ -172,6 +172,44 @@ class BillsOrderDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsD
             }
         }
 
+
+        // 顶部价格
+        price_tv.text = getString(R.string.price_unit_format, data.total_price.toPlainString())
+        // 支付明细
+        payment_amount_bill_tv.text = getString(R.string.price_unit_format, data.bills_price.toPlainString())
+        service_charge_bill_tv.text = getString(R.string.price_unit_format, data.service_price)
+        // 满减价格
+        val discounts = data.discounts
+
+
+        when (data.type) {
+            1 -> {
+                discount_title_tv.text = getString(R.string.sale_price_bill)
+                setDiscount(discounts)
+            }
+            2 -> {
+                discount_title_tv.text = getString(R.string.rebate_price_bill)
+                setDiscount(discounts)
+            }
+            else -> {
+                discount_rl.visibility = View.GONE
+            }
+        }
+
+        actual_payment_bill_tv.text = getString(R.string.price_unit_format, data.total_price.toPlainString())
+
+
+    }
+
+    private fun setDiscount(discounts: String) {
+        if (BusinessUtils.getSafeBigDecimal(discounts).compareTo(BigDecimal.ZERO) == 1) {
+            discount_rl.visibility = View.VISIBLE
+            discount_v.visibility = View.VISIBLE
+            discount_value_tv.text = getString(R.string.price_unit_discount_format, discounts)
+        } else {
+            discount_rl.visibility = View.GONE
+            discount_v.visibility = View.GONE
+        }
     }
 
     override fun recommitSuccess(orderId: Int) {

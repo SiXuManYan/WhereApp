@@ -91,7 +91,7 @@
             android:layout_height="@dimen/dp_18"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_discount" />
 
 
         <TextView

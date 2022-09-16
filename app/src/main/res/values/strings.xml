@@ -1019,5 +1019,11 @@ Gentleman must let go</string>
     <string name="filter">筛选</string>
     <string name="nearest">距离最近</string>
     <string name="category">分类</string>
+    <string name="payment_details_bill">支付明细</string>
+    <string name="payment_amount_bill">缴费金额</string>
+    <string name="service_charge_bill">手续费</string>
+    <string name="rebate_price_bill">满减价格</string>
+    <string name="sale_price_bill">折扣价格</string>
+    <string name="actual_payment_bill">实付</string>
 
 </resources>

@@ -38,7 +38,7 @@ class BillOrderDetails {
     var refund_price = BigDecimal.ZERO
 
     /** 服务费 */
-    var service_price = BigDecimal.ZERO
+    var service_price  = ""
 
     /** 订单号 */
     var trade_no = ""
@@ -53,6 +53,12 @@ class BillOrderDetails {
     var refund_refuse_reason = ""
 
     var bills_params = ArrayList<BillsField>()
+
+    /** 0无1折扣2满减 */
+    var type = 0
+
+    /** 优惠金额 */
+    var discounts = ""
 
 }
 

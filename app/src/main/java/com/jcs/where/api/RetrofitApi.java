@@ -2124,17 +2124,26 @@ public interface RetrofitApi {
 
     /**
      * 账单缴费获取折扣价格 & 最终支付价格
-     * @param module        1-话费，2-水费，3-电费，4-网费
-     * @param price         缴费金额
-     * @param pay_account   缴费账号
+     *
+     * @param module      1-话费，2-水费，3-电费，4-网费
+     * @param price       缴费金额
+     * @param pay_account 缴费账号
      */
     @GET("billsapi/v2/order_discounts")
     Observable<JcsResponse<BillsOrderDiscount>> billsOrderDiscount(
             @Query("module") int module,
             @Query("price") String price,
             @Query("pay_account") String pay_account
+    );
 
-
+    /**
+     * 获取水电缴费所有折扣 列表
+     *
+     * @param module 订单类型（1-话费，2-水费，3-电费，4-网费）
+     */
+    @GET("billsapi/v2/bills_discounts")
+    Observable<JcsResponse<ArrayList<String>>> getBillsDiscountList(
+            @Query("module") int module
     );
 
 

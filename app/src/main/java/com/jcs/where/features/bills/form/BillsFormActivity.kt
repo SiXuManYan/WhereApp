@@ -34,7 +34,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     /** 渠道名称 */
     private var billerTag = ""
 
-    /** 账单类型 */
+    /** 账单类型（1-话费，2-水费，3-电费，4-网费） */
     private var billsType = 0
 
     /** 渠道描述 */
@@ -48,6 +48,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     private var fieldDetail = ArrayList<FieldDetail>()
 
     private lateinit var mAdapter: BillsFormAdapter
+    private lateinit var mDiscountAdapter: BillsDiscountAdapter
 
     override fun isStatusDark() = true
 
@@ -119,11 +120,26 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                 0))
         }
 
+        // 折扣
+        mDiscountAdapter = BillsDiscountAdapter()
+        discount_rv.apply {
+            adapter = mDiscountAdapter
+            layoutManager = LinearLayoutManager(this@BillsFormActivity, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.transparency),
+                SizeUtils.dp2px(12f),
+                0,
+                0))
+        }
+
     }
 
     override fun initData() {
         presenter = BillsFormPresenter(this)
+        presenter.getDiscountList(billsType)
+    }
 
+    override fun bindDiscountList(response: ArrayList<String>) {
+        mDiscountAdapter.setNewInstance(response)
     }
 
     override fun bindListener() {

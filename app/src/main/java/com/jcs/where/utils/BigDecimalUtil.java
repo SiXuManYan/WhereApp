@@ -41,6 +41,17 @@ public class BigDecimalUtil {
         return b1.add(b2).setScale(2, BigDecimal.ROUND_DOWN);
     }
 
+    /**
+     * 保留两位不四舍五入
+     * @param a
+     * @param b
+     * @return
+     */
+    public static BigDecimal addUnNecessary(BigDecimal a, BigDecimal b) {
+        return a.add(b).setScale(2, BigDecimal.ROUND_DOWN);
+    }
+
+
     public static BigDecimal add(BigDecimal a, BigDecimal b) {
         return add(a, b, 2);
     }

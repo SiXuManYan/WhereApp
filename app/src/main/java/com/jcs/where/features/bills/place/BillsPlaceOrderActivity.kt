@@ -5,13 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
+import com.jcs.where.api.response.bills.BillsOrderDiscount
 import com.jcs.where.api.response.bills.FieldDetail
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
 import com.jcs.where.base.BaseEvent
@@ -19,9 +22,11 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.BigDecimalUtil
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_bills_place_order.*
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2022/6/9 14:53.
@@ -35,8 +40,16 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     private var billerTag = ""
     private var firstField = ""
     private var secondField = ""
+
+    /** 用户输入的原始金额 */
     private var userInputMoney: Double = 0.0
+
+    /** 经过优惠计算后，的原始金额 */
+    private var userInputMoneyAfterDiscount = ""
+
+    /** 服务费 */
     private var serviceCharge: Double = 0.0
+
     private var fieldDetail = ArrayList<FieldDetail>()
 
     private lateinit var mAdapter: BillsPlaceOrderAdapter
@@ -94,8 +107,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     private fun initList() {
 
 
-        val totalMoney = BigDecimalUtil.addUnNecessary(userInputMoney, serviceCharge)
-        total_money_tv.text = totalMoney.toPlainString()
+//        val totalMoney = BigDecimalUtil.addUnNecessary(userInputMoney, serviceCharge)
+//        total_money_tv.text = totalMoney.toPlainString()
 
         mAdapter = BillsPlaceOrderAdapter().apply {
             setNewInstance(fieldDetail)
@@ -111,6 +124,25 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
 
     override fun initData() {
         presenter = BillsPlaceOrderPresenter(this)
+        presenter.billsOrderDiscount(billsType, userInputMoney.toString(), fieldDetail[0].nativeUserInput)
+    }
+
+    override fun bindOrderDiscount(response: BillsOrderDiscount) {
+        val price = response.price
+        userInputMoneyAfterDiscount = price
+
+        val totalMoney =
+            BigDecimalUtil.addUnNecessary(BusinessUtils.getSafeBigDecimal(userInputMoneyAfterDiscount), BigDecimal(serviceCharge))
+        total_money_tv.text = totalMoney.toPlainString()
+
+        if (BigDecimal(response.discounts_price).compareTo(BigDecimal.ZERO) == 1) {
+            discount_rl.visibility = View.VISIBLE
+            discount_tv.text = response.discount
+            discount_price_tv.text = StringUtils.getString(R.string.price_unit_discount_format, response.discounts_price)
+        } else {
+            discount_rl.visibility = View.GONE
+        }
+
     }
 
     override fun bindListener() {
@@ -126,7 +158,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
                     }
                 }
             }
-            presenter.placeOrder(billerTag, firstField, secondField, userInputMoney, billsType)
+            presenter.placeOrder(billerTag, firstField, secondField, userInputMoneyAfterDiscount, billsType)
 
         }
     }

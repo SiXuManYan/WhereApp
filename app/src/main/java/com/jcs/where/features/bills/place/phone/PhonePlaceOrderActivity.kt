@@ -5,13 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.bills.BillsOrderDiscount
 import com.jcs.where.api.response.bills.BillsPlaceOrder
 import com.jcs.where.api.response.bills.CallChargeChannelItem
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
@@ -21,6 +24,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_bills_place_order_charges.*
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw  2022/7/7 15:14.
@@ -32,6 +36,8 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
     var phone = ""
 
     private lateinit var selectItem: CallChargeChannelItem
+
+    private var finalPrice = ""
 
 
     companion object {
@@ -56,7 +62,7 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
     override fun getLayoutId() = R.layout.activity_bills_place_order_charges
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this,Color.WHITE)
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         initExtra()
     }
 
@@ -70,7 +76,7 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
 
             data?.let { item ->
                 selectItem = item
-                total_money_tv.text = item.Denomination
+                // total_money_tv.text = item.Denomination
                 channel_tv.text = item.TelcoName
             }
 
@@ -79,12 +85,13 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
 
     override fun initData() {
         presenter = PhonePlacePresenter(this)
+        presenter.billsOrderDiscount(selectItem.Denomination, phone)
     }
 
     override fun bindListener() {
         confirm_tv.setOnClickListener {
             showLoadingDialog(false)
-            presenter.placeOrder(phone, selectItem)
+            presenter.placeOrder(phone, selectItem, finalPrice)
         }
     }
 
@@ -124,24 +131,65 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
     }
 
 
+    override fun bindOrderDiscount(response: BillsOrderDiscount) {
+        val price = response.price
+        finalPrice = price
+        total_money_tv.text = price
+
+        if (BigDecimal(response.discounts_price).compareTo(BigDecimal.ZERO) == 1) {
+            discount_rl.visibility = View.VISIBLE
+            discount_tv.text = response.discount
+            discount_price_tv.text = StringUtils.getString(R.string.price_unit_discount_format, response.discounts_price)
+        } else {
+            discount_rl.visibility = View.GONE
+        }
+
+    }
+
 }
 
 
 interface PhonePlaceOrderView : BaseMvpView {
     fun commitSuccess(response: HotelOrderCommitResponse)
 
+    /** 设置折扣信息以及最终金额 */
+    fun bindOrderDiscount(response: BillsOrderDiscount)
+
 }
 
 class PhonePlacePresenter(private var view: PhonePlaceOrderView) : BaseMvpPresenter(view) {
 
 
-    fun placeOrder(phone: String, selectItem: CallChargeChannelItem) {
+    /**
+     * 获取折扣以及最终支付价格
+     * @param oldPrice   原价
+     * @param payAccount 充值手机号
+     */
+    fun billsOrderDiscount(oldPrice: String, payAccount: String) {
+
+        requestApi(mRetrofit.billsOrderDiscount(1, oldPrice, payAccount), object : BaseMvpObserver<BillsOrderDiscount>(view) {
+            override fun onSuccess(response: BillsOrderDiscount) {
+
+                view.bindOrderDiscount(response)
+            }
+
+        })
+
+    }
+
+
+    fun placeOrder(phone: String, selectItem: CallChargeChannelItem, finalPrice: String) {
+
+        if (finalPrice.isBlank()) {
+            return
+        }
 
         val apply = BillsPlaceOrder().apply {
             bill_type = 1
             cellphone_no = phone
 
-            amount = selectItem.Denomination
+//            amount = selectItem.Denomination
+            amount = finalPrice
             telco = selectItem.TelcoName
             ext_tag = selectItem.ExtTag
 

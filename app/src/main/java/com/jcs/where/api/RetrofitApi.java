@@ -20,7 +20,6 @@ import com.jcs.where.api.request.account.LoginRequest;
 import com.jcs.where.api.request.account.RegisterRequest;
 import com.jcs.where.api.request.account.ResetPasswordRequest;
 import com.jcs.where.api.request.account.ThreePartyLoginRequest;
-import com.jcs.where.api.request.bills.BillsOrderCommit;
 import com.jcs.where.api.request.bills.UpLoadBillsPayAccountInfo;
 import com.jcs.where.api.request.bills.UpLoadMallPayAccountInfo;
 import com.jcs.where.api.request.hotel.BatchComment;
@@ -78,7 +77,7 @@ import com.jcs.where.api.response.bills.BillCancelOrder;
 import com.jcs.where.api.response.bills.BillRecommit;
 import com.jcs.where.api.response.bills.BillStatus;
 import com.jcs.where.api.response.bills.BillsChannel;
-import com.jcs.where.api.response.bills.BillsOrderInfo;
+import com.jcs.where.api.response.bills.BillsOrderDiscount;
 import com.jcs.where.api.response.bills.BillsPlaceOrder;
 import com.jcs.where.api.response.bills.BillsRecord;
 import com.jcs.where.api.response.bills.CallChargeChannel;
@@ -105,7 +104,6 @@ import com.jcs.where.api.response.hotel.HotelHomeRecommend;
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
-import com.jcs.where.api.response.hydropower.PaymentRecord;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
@@ -277,7 +275,7 @@ public interface RetrofitApi {
      *
      * @param categoryId 机构分类
      * @param search     查询字段
-     * @param recommend 1推荐 0距离最近 不传为默认
+     * @param recommend  1推荐 0距离最近 不传为默认
      * @return
      */
     @GET("generalapi/v2/infos")
@@ -286,7 +284,7 @@ public interface RetrofitApi {
             @Query("cate_id") String categoryId,
             @Query("search_input") String search,
             @Query("lat") @Nullable Double lat,
-            @Query("lng")  @Nullable Double lng,
+            @Query("lng") @Nullable Double lng,
             @Query("area_id") String area_id,
             @Query("recommend") @Nullable Integer recommend
 
@@ -1452,7 +1450,7 @@ public interface RetrofitApi {
             @Query("page") int page,
             @Query("category_id") int categoryId,
             @Query("search_input") @Nullable String search,
-            @Query("lat")  @Nullable Double lat,
+            @Query("lat") @Nullable Double lat,
             @Query("lng") @Nullable Double lng,
             @Query("area_id") @Nullable String area_id
 
@@ -2122,6 +2120,22 @@ public interface RetrofitApi {
      */
     @GET("billsapi/v2/topups")
     Observable<JcsResponse<ArrayList<CallChargeChannel>>> callChargesPayBillsList();
+
+
+    /**
+     * 账单缴费获取折扣价格 & 最终支付价格
+     * @param module        1-话费，2-水费，3-电费，4-网费
+     * @param price         缴费金额
+     * @param pay_account   缴费账号
+     */
+    @GET("billsapi/v2/order_discounts")
+    Observable<JcsResponse<BillsOrderDiscount>> billsOrderDiscount(
+            @Query("module") int module,
+            @Query("price") String price,
+            @Query("pay_account") String pay_account
+
+
+    );
 
 
 }

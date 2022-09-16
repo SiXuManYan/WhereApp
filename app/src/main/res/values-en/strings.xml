@@ -20,6 +20,7 @@
     <string name="price_above_5">₱ 5k+</string>
     <string name="price_unit">₱</string>
     <string name="price_unit_format">₱%1$s</string>
+    <string name="price_unit_discount_format">-₱%1$s</string>
     <string name="prompt_star">Star Rating</string>
     <string name="prompt_price_star">Price/Star/Score</string>
     <string name="score_prompt">Score</string>

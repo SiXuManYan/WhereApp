@@ -51,10 +51,11 @@ class EnterprisePagePresenter(private var view: EnterprisePageView) : BaseMvpPre
 
                 // 一级分类增加全部
                 val firstAll = Category().apply {
-                    name = StringUtils.getString(R.string.all)
+//                    name = StringUtils.getString(R.string.all)
+                    name = StringUtils.getString(R.string.category)
                     id = 0
                     has_children = 1
-                    nativeIsSelected = true
+                    changeTextColor = true
                 }
                 response.add(0, firstAll)
 

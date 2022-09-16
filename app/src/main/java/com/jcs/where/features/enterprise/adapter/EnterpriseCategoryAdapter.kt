@@ -34,6 +34,9 @@ class EnterpriseCategoryAdapter : BaseQuickAdapter<Category, BaseViewHolder>(R.l
             } else {
                 categoryTv.setBackgroundColor(ColorUtils.getColor(R.color.white))
             }
+            if (item.changeTextColor) {
+                categoryTv.setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
+            }
         }
     }
 }

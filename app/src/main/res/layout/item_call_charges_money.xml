@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/dp_8"
+        android:gravity="center_vertical"
         android:layout_marginEnd="@dimen/dp_8"
         android:layout_toStartOf="@+id/check_iv"
         android:layout_toEndOf="@+id/money_ll"
@@ -57,6 +58,10 @@
         android:textSize="@dimen/sp_14"
         android:textStyle="bold"
         tools:text="asdjaiodj jaosijdoasdjoasiojdsadasdasddadadoasiod " />
+
+
+
+
 
 
     <ImageView

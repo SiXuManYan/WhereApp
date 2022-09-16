@@ -42,7 +42,7 @@
                 android:maxLines="1"
                 android:paddingStart="@dimen/dp_2"
                 android:paddingEnd="@dimen/dp_2"
-                android:text="@string/all"
+                android:text="@string/category"
                 android:textColor="@color/selector_black_blue"
                 android:textSize="@dimen/sp_13" />
 

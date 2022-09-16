@@ -54,6 +54,8 @@ class BillsChannel {
     /** 渠道服务费（加上充值费用为支付费用） */
     var ServiceCharge = BigDecimal.ZERO
 
+
+
 }
 
 class FieldDetail() :Parcelable {
@@ -135,7 +137,6 @@ class BillsRecord {
         val TYPE_WATER = 2
         val TYPE_ELECTRICITY = 3
         val TYPE_NET = 4
-
     }
 
     var id = 0

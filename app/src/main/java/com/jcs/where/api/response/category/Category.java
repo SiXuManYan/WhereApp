@@ -55,6 +55,8 @@ public class Category {
      */
     public String parentName = "";
 
+    public boolean changeTextColor = false;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

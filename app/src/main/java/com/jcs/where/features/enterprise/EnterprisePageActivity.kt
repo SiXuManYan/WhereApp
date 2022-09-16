@@ -171,7 +171,7 @@ class EnterprisePageActivity : BaseMvpActivity<EnterprisePagePresenter>(), Enter
             mThirdAdapter.setNewInstance(null)
 
             // 刷新列表
-            selectedCategory(category, position, is2ndOr3rdCategory = false, ignoreVisibility = true)
+            selectedCategory(category, position, is2ndOr3rdCategory = false, ignoreVisibility = false)
         }
 
         // 二级
@@ -310,13 +310,13 @@ class EnterprisePageActivity : BaseMvpActivity<EnterprisePagePresenter>(), Enter
                 R.id.recommend_rb -> {
                     recommend = TYPE_RECOMMEND
                     dismiss_view.performClick()
-                    category_tv.setText(R.string.recommend_home)
+                    other_filter_content_tv.setText(R.string.recommend_home)
                     onRefresh()
                 }
                 R.id.distance_rb -> {
                     recommend = TYPE_DISTANCE
                     dismiss_view.performClick()
-                    category_tv.setText(R.string.nearest)
+                    other_filter_content_tv.setText(R.string.nearest)
                     onRefresh()
                 }
                 else -> {}

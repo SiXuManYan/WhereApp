@@ -10,12 +10,17 @@ import android.os.Parcelable
 class CallChargeChannel() : Parcelable {
 
 
+
+
     var channelName = ""
+
+    var discount = ""
 
     var channelItem = ArrayList<CallChargeChannelItem>()
 
     constructor(parcel: Parcel) : this() {
         channelName = parcel.readString().toString()
+        discount = parcel.readString().toString()
         parcel.createTypedArrayList(CallChargeChannelItem.CREATOR)?.let {
             channelItem = it
         }
@@ -23,6 +28,7 @@ class CallChargeChannel() : Parcelable {
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(channelName)
+        parcel.writeString(discount)
         parcel.writeTypedList(channelItem)
     }
 

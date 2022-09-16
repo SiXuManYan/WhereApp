@@ -65,11 +65,13 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
     }
 
     private fun initExtra() {
-        intent.extras?.let {
-            val data = it.getParcelable<CallChargeChannel>(Constant.PARAM_DATA)
+        intent.extras?.let { bundle->
+            val data = bundle.getParcelable<CallChargeChannel>(Constant.PARAM_DATA)
 
             data?.let {
                 channel_tv.text = it.channelName
+
+                mAdapter.discount = it.discount
                 mAdapter.setNewInstance(it.channelItem)
             }
         }

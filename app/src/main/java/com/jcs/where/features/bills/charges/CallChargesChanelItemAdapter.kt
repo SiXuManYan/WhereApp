@@ -15,8 +15,6 @@ import com.jcs.where.api.response.bills.CallChargeChannelItem
  */
 class CallChargesChanelItemAdapter : BaseQuickAdapter<CallChargeChannelItem, BaseViewHolder>(R.layout.item_call_charges_money) {
 
-    /** 满减规则 */
-    var discount = ""
 
     override fun convert(holder: BaseViewHolder, item: CallChargeChannelItem) {
         holder.setText(R.id.money_tv, item.Denomination)
@@ -31,6 +29,7 @@ class CallChargesChanelItemAdapter : BaseQuickAdapter<CallChargeChannelItem, Bas
         val item_name_tv = holder.getView<TextView>(R.id.item_name_tv)
         val spanUtils = SpanUtils().append(item.TelcoTag)
 
+        val discount = item.discount
         if (discount.isNotBlank()) {
             spanUtils.append(" $discount").setForegroundColor(ColorUtils.getColor(R.color.red_FF4934)).setFontSize(12, true)
         }

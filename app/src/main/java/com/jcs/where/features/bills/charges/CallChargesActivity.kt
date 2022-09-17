@@ -70,8 +70,6 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
 
             data?.let {
                 channel_tv.text = it.channelName
-
-                mAdapter.discount = it.discount
                 mAdapter.setNewInstance(it.channelItem)
             }
         }

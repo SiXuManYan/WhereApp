@@ -158,7 +158,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
                     }
                 }
             }
-            presenter.placeOrder(billerTag, firstField, secondField, userInputMoneyAfterDiscount, billsType)
+            presenter.placeOrder(billerTag, firstField, secondField, userInputMoney.toString(), billsType)
 
         }
     }

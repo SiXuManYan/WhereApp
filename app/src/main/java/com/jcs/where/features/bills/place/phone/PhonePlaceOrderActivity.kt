@@ -188,8 +188,8 @@ class PhonePlacePresenter(private var view: PhonePlaceOrderView) : BaseMvpPresen
             bill_type = 1
             cellphone_no = phone
 
-//            amount = selectItem.Denomination
-            amount = finalPrice
+            amount = selectItem.Denomination
+//            amount = finalPrice
             telco = selectItem.TelcoName
             ext_tag = selectItem.ExtTag
 

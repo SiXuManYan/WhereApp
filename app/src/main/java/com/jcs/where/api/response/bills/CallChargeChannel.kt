@@ -14,13 +14,10 @@ class CallChargeChannel() : Parcelable {
 
     var channelName = ""
 
-    var discount = ""
-
     var channelItem = ArrayList<CallChargeChannelItem>()
 
     constructor(parcel: Parcel) : this() {
         channelName = parcel.readString().toString()
-        discount = parcel.readString().toString()
         parcel.createTypedArrayList(CallChargeChannelItem.CREATOR)?.let {
             channelItem = it
         }
@@ -28,7 +25,6 @@ class CallChargeChannel() : Parcelable {
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(channelName)
-        parcel.writeString(discount)
         parcel.writeTypedList(channelItem)
     }
 
@@ -67,11 +63,14 @@ class CallChargeChannelItem() : Parcelable {
     /** 扩展标签 */
     var ExtTag = ""
 
+    var discount = ""
+
     constructor(parcel: Parcel) : this() {
         Denomination = parcel.readString().toString()
         TelcoTag = parcel.readString().toString()
         TelcoName = parcel.readString().toString()
         ExtTag = parcel.readString().toString()
+        discount = parcel.readString().toString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -79,6 +78,7 @@ class CallChargeChannelItem() : Parcelable {
         parcel.writeString(TelcoTag)
         parcel.writeString(TelcoName)
         parcel.writeString(ExtTag)
+        parcel.writeString(discount)
     }
 
     override fun describeContents(): Int {

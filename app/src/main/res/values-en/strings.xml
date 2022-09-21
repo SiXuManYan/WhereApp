@@ -1013,6 +1013,14 @@ Gentleman must let go</string>
     <string name="rebate_price_bill">Rebate Price</string>
     <string name="sale_price_bill">Sale Price</string>
     <string name="actual_payment_bill">Actual Payment</string>
+    <string name="activity_center">Activity Center</string>
+    <string name="exchange_record">Record</string>
+    <string name="points_format">%1$s&#160;points</string>
+    <string name="telecoms_coupon">Telecoms Coupon</string>
+    <string name="water_utilities_coupon">Water Utilities Coupon</string>
+    <string name="estore_coupon">Estore Coupon</string>
+    <string name="electricity_utilities_coupon">Electricity Utilities Coupon</string>
+    <string name="internet_billing_coupon">Internet Billing Coupon</string>
 
 
 </resources>

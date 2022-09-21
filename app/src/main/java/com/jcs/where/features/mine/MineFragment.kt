@@ -10,14 +10,15 @@ import com.jcs.where.R
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.features.collection.CollectionActivity
+import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.coupon.user.MyCouponActivity
 import com.jcs.where.features.daily.scoe.ScoreActivity
 import com.jcs.where.features.daily.sign.SignInActivity
 import com.jcs.where.features.footprint.FootprintActivity
+import com.jcs.where.features.integral.activitys.ActivityCenterActivity
 import com.jcs.where.features.merchant.MerchantSettledActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
@@ -25,6 +26,7 @@ import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.mine.activity.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.storage.entity.User
+import com.jcs.where.utils.LocalLanguageUtil
 import com.jcs.where.utils.MobUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
@@ -113,6 +115,10 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             MobUtil.shareFacebookWebPage(inviteLink, activity)
         }
 
+        activity_center_iv.setOnClickListener {
+            startActivityAfterLogin(ActivityCenterActivity::class.java)
+        }
+
     }
 
     override fun bindUnreadMessageCount(totalCount: Int) {
@@ -164,6 +170,13 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             message_view.setMessageCount(0)
         }
         message_view.setMessageImageResource(R.mipmap.ic_mine_message)
+
+        val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(context)
+        if (languageLocale.language == "zh") {
+            activity_center_iv.setImageResource(R.mipmap.ic_mine_activity)
+        } else {
+            activity_center_iv.setImageResource(R.mipmap.ic_mine_activity_en)
+        }
 
     }
 

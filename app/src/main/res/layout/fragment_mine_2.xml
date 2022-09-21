@@ -316,8 +316,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginStart="@dimen/dp_15"
-                    android:background="@color/grey_F5F5F5"
-                />
+                    android:background="@color/grey_F5F5F5" />
 
                 <RelativeLayout
                     android:id="@+id/share_rl"
@@ -325,8 +324,7 @@
                     android:layout_height="@dimen/dp_48"
                     android:background="?android:attr/selectableItemBackground"
                     android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                >
+                    android:paddingEnd="@dimen/dp_15">
 
                     <ImageView
                         android:layout_width="@dimen/dp_20"
@@ -371,9 +369,20 @@
 
 
         <ImageView
+            android:id="@+id/activity_center_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_mine_activity_en" />
+
+
+        <ImageView
             android:id="@+id/setting_iv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"
             android:paddingStart="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_5"

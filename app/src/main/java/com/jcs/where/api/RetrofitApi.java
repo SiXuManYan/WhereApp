@@ -105,6 +105,7 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse;
 import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.integral.IntegralGood;
+import com.jcs.where.api.response.integral.IntegralGoodDetail;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
@@ -2158,6 +2159,19 @@ public interface RetrofitApi {
             @Query("page") int page ,
             @Query("type") int type
     );
+
+      /**
+     * 活动中心
+     *
+     * @param type 0全部 1商品 2水 3电 4网 5手机充值
+     */
+    @GET("integralapi/v2/goods/{id}")
+    Observable<JcsResponse<IntegralGoodDetail>> getIntegralGoodDetail(
+            @Path("id") int id
+    );
+
+
+
 
 
 }

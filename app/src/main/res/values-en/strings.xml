@@ -84,7 +84,7 @@
     <string name="title_convenience_service">Convenience services</string>
     <string name="default_city_name">Balanga</string>
     <string name="search_none">No search related content ~</string>
-    <string name="coming_soon">coming soon</string>
+    <string name="coming_soon">Coming Soon</string>
     <string name="login_success">login successful</string>
     <string name="commit_success">Commit Successful</string>
     <string name="hint_input_phone_number_2">Please fill in your mobile phone number</string>
@@ -1021,6 +1021,13 @@ Gentleman must let go</string>
     <string name="estore_coupon">Estore Coupon</string>
     <string name="electricity_utilities_coupon">Electricity Utilities Coupon</string>
     <string name="internet_billing_coupon">Internet Billing Coupon</string>
+    <string name="exchange_product_details">Exchange Product Details</string>
+    <string name="balance_of_points">Balance Of Points</string>
+    <string name="product_description">Product Description</string>
+    <string name="exchange">Exchange</string>
+    <string name="sold_out">Sold Out</string>
+    <string name="insufficient_points">Insufficient Points</string>
+    <string name="quantity_over">Quantity convertible beyond the quantity</string>
 
 
 </resources>

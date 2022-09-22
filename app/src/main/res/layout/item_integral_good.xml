@@ -9,12 +9,33 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/image_iv"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_153"
-        android:scaleType="centerCrop"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        android:layout_height="@dimen/dp_153">
+
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+
+        <TextView
+            android:id="@+id/tag_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_black_radius_2"
+            android:padding="@dimen/dp_4"
+            tools:text="@string/coming_soon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10" />
+
+    </FrameLayout>
+
 
     <TextView
         android:id="@+id/title_tv"

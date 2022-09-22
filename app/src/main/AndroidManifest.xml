@@ -621,6 +621,7 @@
             android:name=".features.enterprise.EnterprisePageActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".features.integral.activitys.ActivityCenterActivity" />
+        <activity android:name=".features.integral.detail.IntegralDetailActivity" />
 
 
     </application>

@@ -1028,10 +1028,17 @@ Gentleman must let go</string>
     <string name="activity_center">活动中心</string>
     <string name="exchange_record">兑换记录</string>
     <string name="points_format">%1$s&#160;积分</string>
-    <string name="telecoms_coupon">Telecoms Coupon</string>
-    <string name="water_utilities_coupon">Water Utilities Coupon</string>
-    <string name="estore_coupon">Estore Coupon</string>
-    <string name="electricity_utilities_coupon">Electricity Untilities Coupon</string>
-    <string name="internet_billing_coupon">Internet Billing Coupon</string>
+    <string name="telecoms_coupon">手机充值优惠券</string>
+    <string name="water_utilities_coupon">水费优惠券</string>
+    <string name="estore_coupon">Estore优惠券</string>
+    <string name="electricity_utilities_coupon">电费优惠券</string>
+    <string name="internet_billing_coupon">网费优惠券</string>
+    <string name="exchange_product_details">兑换商品详情</string>
+    <string name="balance_of_points">积分余额</string>
+    <string name="product_description">产品说明</string>
+    <string name="exchange">立即兑换</string>
+    <string name="sold_out">已售完</string>
+    <string name="insufficient_points">积分不足</string>
+    <string name="quantity_over">超过可兑换数量</string>
 
 </resources>

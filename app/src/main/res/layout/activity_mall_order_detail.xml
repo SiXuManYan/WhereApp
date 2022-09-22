@@ -724,7 +724,7 @@
 
     <RelativeLayout
         android:id="@+id/bottom_container_rl"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:layout_alignParentBottom="true"
         android:background="@color/white"

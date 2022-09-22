@@ -1,5 +1,6 @@
 package com.jcs.where.features.integral.activitys.child
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,13 +18,14 @@ import com.jcs.where.utils.GlideUtil
  * Created by Wangsw  2022/9/21 14:01.
  *
  */
-class IntegralGoodAdapter : BaseQuickAdapter<IntegralGood, BaseViewHolder>(R.layout.item_integral_good),LoadMoreModule {
+class IntegralGoodAdapter : BaseQuickAdapter<IntegralGood, BaseViewHolder>(R.layout.item_integral_good), LoadMoreModule {
 
     override fun convert(holder: BaseViewHolder, item: IntegralGood) {
         val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
         val image = holder.getView<ImageView>(R.id.image_iv)
         val title = holder.getView<TextView>(R.id.title_tv)
         val points_tv = holder.getView<TextView>(R.id.points_tv)
+        val tag_tv = holder.getView<TextView>(R.id.tag_tv)
 
         val adapterPosition = holder.adapterPosition
         val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
@@ -42,5 +44,20 @@ class IntegralGoodAdapter : BaseQuickAdapter<IntegralGood, BaseViewHolder>(R.lay
 
 
         points_tv.text = StringUtils.getString(R.string.points_format, item.price)
+
+        when (item.show_status) {
+            0 -> {
+                tag_tv.visibility = View.GONE
+            }
+            1 -> {
+                tag_tv.visibility = View.VISIBLE
+                tag_tv.text = StringUtils.getString(R.string.sold_out)
+            }
+            2 -> {
+                tag_tv.visibility = View.VISIBLE
+                tag_tv.text = StringUtils.getString(R.string.coming_soon)
+            }
+        }
+
     }
 }

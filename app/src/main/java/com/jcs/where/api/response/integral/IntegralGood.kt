@@ -27,11 +27,36 @@ class IntegralGood {
 }
 
 
-class IntegralTag{
+class IntegralTag {
     var name = ""
 
     /**
      * 本地字段，判断是否选中
      */
     var nativeIsSelected = false
+}
+
+
+class IntegralGoodDetail {
+
+    var id = 0
+    var title = ""
+    var image = ""
+    var price = ""
+    var stock = 0
+
+    /**  1：商品 其他：优惠券 */
+    var type = 0
+
+
+    var start_time = ""
+    var end_time = ""
+
+    /** 0积分不足 1可以兑换 2超出限制  3即将上线 */
+    var operation_status = 0
+
+    var user_integral = ""
+    var desc = ""
+
+
 }

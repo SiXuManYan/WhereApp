@@ -225,7 +225,7 @@
                     android:paddingEnd="@dimen/dp_15"
                     android:text="User："
                     android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_8" />
 
             </LinearLayout>
 

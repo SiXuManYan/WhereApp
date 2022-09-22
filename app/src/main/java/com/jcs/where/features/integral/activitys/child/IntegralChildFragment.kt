@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.integral.IntegralGood
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.integral.detail.IntegralDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -106,7 +107,11 @@ class IntegralChildFragment : BaseMvpFragment<IntegralChildPresenter>(), Integra
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
+        val integralGood = mAdapter.data[position]
+        if (integralGood.show_status == 1) {
+            return
+        }
+        IntegralDetailActivity.navigation(requireContext(), integralGood.id)
     }
 
 

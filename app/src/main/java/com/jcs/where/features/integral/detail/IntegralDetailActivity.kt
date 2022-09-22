@@ -66,6 +66,13 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
     override fun bindDetail(response: IntegralGoodDetail) {
         GlideUtil.load(this, response.image, good_iv)
 
+        if (response.type==1) {
+            mJcsTitle.setMiddleTitle(getString(R.string.exchange_product_details))
+            desc_title_tv.setText(R.string.product_description)
+        }else{
+            mJcsTitle.setMiddleTitle(getString(R.string.coupon_details))
+            desc_title_tv.setText(R.string.use_rule)
+        }
 
         val status = response.operation_status
 

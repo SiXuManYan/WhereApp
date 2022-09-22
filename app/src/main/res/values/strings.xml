@@ -1040,5 +1040,7 @@ Gentleman must let go</string>
     <string name="sold_out">已售完</string>
     <string name="insufficient_points">积分不足</string>
     <string name="quantity_over">超过可兑换数量</string>
+    <string name="coupon_details">兑换商品详情</string>
+    <string name="use_rule">使用规则</string>
 
 </resources>

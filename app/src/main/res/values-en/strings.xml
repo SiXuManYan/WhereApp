@@ -1028,6 +1028,8 @@ Gentleman must let go</string>
     <string name="sold_out">Sold Out</string>
     <string name="insufficient_points">Insufficient Points</string>
     <string name="quantity_over">Quantity convertible beyond the quantity</string>
+    <string name="coupon_details">Coupon Details</string>
+    <string name="use_rule">Use Rule</string>
 
 
 </resources>

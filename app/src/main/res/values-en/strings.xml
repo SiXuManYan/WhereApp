@@ -411,7 +411,6 @@
     <string name="use_agreement_content_13">https://www.umeng.com/page/policy \n\n</string>
 
 
-
     <string name="use_agreement_content_last">8. The above permissions and sensitive permissions such as cameras, GPS, cameras, albums, microphones, storage space, etc. will not be enabled by default or forcibly to collect information. Only express authorization will be used for the realization of functions or services. You can refuse and Does not affect your continued use of Where.</string>
 
     <string name="agree_and_continue">Agree and continue</string>
@@ -571,8 +570,6 @@
     <string name="store_status_13">Closed</string>
     <string name="status_to_use">To use</string>
     <string name="status_shops_confirming">Shops Confirming</string>
-
-
 
 
     <!-- 状态描述文字 -->
@@ -1030,6 +1027,10 @@ Gentleman must let go</string>
     <string name="quantity_over">Quantity convertible beyond the quantity</string>
     <string name="coupon_details">Coupon Details</string>
     <string name="use_rule">Use Rule</string>
+    <string name="payable">Payable</string>
+    <string name="confirm_payment">Confirm Payment?</string>
+    <string name="confirm_integral_hint">After the points have been redeemed they cannot be returned or exchanged.</string>
+    <string name="confirm_pay">Pay</string>
 
 
 </resources>

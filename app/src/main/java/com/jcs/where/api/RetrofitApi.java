@@ -9,6 +9,7 @@ import com.jcs.where.api.request.CollectionRestaurantRequest;
 import com.jcs.where.api.request.HotelCollectionRequest;
 import com.jcs.where.api.request.HotelOrderRequest;
 import com.jcs.where.api.request.IdRequest;
+import com.jcs.where.api.request.IntegralPlaceOrder;
 import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.MallShopUnCollection;
 import com.jcs.where.api.request.SendCodeRequest;
@@ -106,6 +107,7 @@ import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.integral.IntegralGood;
 import com.jcs.where.api.response.integral.IntegralGoodDetail;
+import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
@@ -2156,14 +2158,12 @@ public interface RetrofitApi {
      */
     @GET("integralapi/v2/goods")
     Observable<JcsResponse<PageResponse<IntegralGood>>> getIntegralGood(
-            @Query("page") int page ,
+            @Query("page") int page,
             @Query("type") int type
     );
 
-      /**
-     * 活动中心
-     *
-     * @param type 0全部 1商品 2水 3电 4网 5手机充值
+    /**
+     * 兑换券商品详情
      */
     @GET("integralapi/v2/goods/{id}")
     Observable<JcsResponse<IntegralGoodDetail>> getIntegralGoodDetail(
@@ -2171,7 +2171,14 @@ public interface RetrofitApi {
     );
 
 
-
+    /**
+     * 兑换券商品详情
+     *
+     */
+    @POST("integralapi/v2/goods/{id}")
+    Observable<JcsResponse<IntegralPlaceOrderResponse>> integralPlaceOrder(
+            @Body IntegralPlaceOrder request
+    );
 
 
 }

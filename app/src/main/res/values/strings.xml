@@ -1042,5 +1042,9 @@ Gentleman must let go</string>
     <string name="quantity_over">超过可兑换数量</string>
     <string name="coupon_details">兑换商品详情</string>
     <string name="use_rule">使用规则</string>
+    <string name="payable">需支付</string>
+    <string name="confirm_payment">确认支付?</string>
+    <string name="confirm_integral_hint">积分兑换后，不支持申请退换。</string>
+    <string name="confirm_pay">确认支付</string>
 
 </resources>

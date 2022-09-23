@@ -133,7 +133,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:text="@string/balance_of_points"
                         android:textColor="@color/black_333333"
                         android:textSize="@dimen/sp_14"
                         tools:text="200 积分" />

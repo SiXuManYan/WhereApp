@@ -58,5 +58,9 @@ class IntegralGoodDetail {
     var user_integral = ""
     var desc = ""
 
+}
 
+class IntegralPlaceOrderResponse {
+
+    var orders = ""
 }

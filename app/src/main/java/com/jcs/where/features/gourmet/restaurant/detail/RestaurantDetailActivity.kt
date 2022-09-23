@@ -390,6 +390,8 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     }
 
     override fun bindData(data: RestaurantDetailResponse) {
+        mMerUuid = data.mer_uuid
+        mMerName = data.mer_name
         val mediaList = ArrayList<MediaData>()
         if (!TextUtils.isEmpty(data.video)) {
             val media = MediaData()
@@ -426,7 +428,8 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         } else {
             support_takeaway_tv.visibility = View.GONE
         }
-        if (data.im_status == 1) {
+
+        if (data.im_status == 1 && mMerUuid.isNotBlank()) {
             contact_sw.displayedChild = 0
         } else {
             contact_sw.displayedChild = 1
@@ -446,8 +449,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
             }
         }
 
-        mMerUuid = data.mer_uuid
-        mMerName = data.mer_name
+
 
         data.introduction.apply {
             if (isNotBlank()) {
@@ -641,7 +643,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_POSITION  -> {
+            EventCode.EVENT_POSITION -> {
                 val position = baseEvent.data as Int
                 media_rv.scrollToPosition(position)
                 point_view.onPageSelected(position)

@@ -10,8 +10,9 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.integral.IntegralGoodDetail
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
 import com.jcs.where.features.integral.place.IntegralOrderActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -49,7 +50,7 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
     override fun getLayoutId() = R.layout.activity_integral_detail
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this,Color.WHITE)
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         goodId = intent.getIntExtra(Constant.PARAM_ID, 0)
 
     }
@@ -69,10 +70,10 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
         val image = response.image
         GlideUtil.load(this, image, good_iv)
 
-        if (response.type==1) {
+        if (response.type == 1) {
             mJcsTitle.setMiddleTitle(getString(R.string.exchange_product_details))
             desc_title_tv.setText(R.string.product_description)
-        }else{
+        } else {
             mJcsTitle.setMiddleTitle(getString(R.string.coupon_details))
             desc_title_tv.setText(R.string.use_rule)
         }
@@ -85,7 +86,7 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
             View.GONE
         }
 
-       val goodTitle = response.title
+        val goodTitle = response.title
         good_name_tv.text = goodTitle
         (response.start_time + "-" + response.end_time).also { time_tv.text = it }
         val price = response.price
@@ -106,7 +107,7 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
                 confirm_tv.isClickable = true
                 confirm_tv.text = getString(R.string.exchange)
                 confirm_tv.setOnClickListener {
-                    IntegralOrderActivity.navigation(this,goodId,goodTitle, image, price)
+                    IntegralOrderActivity.navigation(this, goodId, goodTitle, image, price)
                 }
             }
             2 -> {
@@ -127,7 +128,14 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
             else -> {}
         }
 
+    }
 
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent.code == EventCode.EVENT_REFRESH_INTEGRAL) {
+            finish()
+        }
     }
 
 }

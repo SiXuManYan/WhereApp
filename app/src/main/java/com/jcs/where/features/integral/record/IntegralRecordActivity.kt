@@ -1,5 +1,6 @@
 package com.jcs.where.features.integral.record
 
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,7 +12,10 @@ import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.response.PageResponse
 import com.jcs.where.api.response.integral.IntegralRecord
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.integral.order.IntegralOrderDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import kotlinx.android.synthetic.main.activity_refresh_list.*
@@ -77,6 +81,10 @@ class IntegralRecordActivity : BaseMvpActivity<IntegralRecordPresenter>(), Integ
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val integralRecord = mAdapter.data[position]
+        startActivity(IntegralOrderDetailActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, integralRecord.id)
+        })
 
     }
 
@@ -106,6 +114,14 @@ class IntegralRecordActivity : BaseMvpActivity<IntegralRecordPresenter>(), Integ
             } else {
                 loadMoreModule.loadMoreComplete()
             }
+        }
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent.code == EventCode.EVENT_REFRESH_INTEGRAL) {
+            onRefresh()
         }
     }
 

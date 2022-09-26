@@ -479,7 +479,7 @@
     <string name="no_contact_information">暂无联系方式</string>
     <string name="no_messages">暂无通知</string>
     <string name="no_attention">暂无关注</string>
-    <string name="star_text_format">%1$s%2$s</string>
+    <string name="star_text_format">%1$s&#160;%2$s</string>
     <string name="less_2_stat">&#8804;2星</string>
     <string name="star_3">3星</string>
     <string name="star_4">4星</string>
@@ -1047,5 +1047,7 @@ Gentleman must let go</string>
     <string name="confirm_integral_hint">积分兑换后，不支持申请退换。</string>
     <string name="confirm_pay">确认支付</string>
     <string name="total_count">总计</string>
+    <string name="spend_points">花费积分</string>
+    <string name="exchange_good">实体商品优惠券</string>
 
 </resources>

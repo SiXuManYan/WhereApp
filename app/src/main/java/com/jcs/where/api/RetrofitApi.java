@@ -2175,7 +2175,6 @@ public interface RetrofitApi {
 
     /**
      * 兑换券商品详情
-     *
      */
     @POST("integralapi/v2/orders")
     Observable<JcsResponse<IntegralPlaceOrderResponse>> integralPlaceOrder(
@@ -2194,15 +2193,14 @@ public interface RetrofitApi {
 
     /**
      * 兑换记录
+     *
      * @param page
-     * @param type
      * @return
      */
     @GET("integralapi/v2/order")
     Observable<JcsResponse<PageResponse<IntegralRecord>>> integralRecord(
             @Query("page") int page
     );
-
 
 
 }

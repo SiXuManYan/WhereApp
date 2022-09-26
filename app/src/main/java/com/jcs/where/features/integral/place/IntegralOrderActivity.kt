@@ -10,15 +10,19 @@ import android.view.*
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_integral_place_order.*
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -86,8 +90,8 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
 
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         initExtra()
-
     }
 
     private fun initExtra() {
@@ -123,12 +127,12 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
     }
 
     override fun submitSuccess(response: IntegralPlaceOrderResponse) {
-        ToastUtils.showShort("pay success ")
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_INTEGRAL))
         finish()
     }
 
 
-    private fun showDialog(){
+    private fun showDialog() {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflater = LayoutInflater.from(this)
@@ -155,9 +159,6 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
             presenter.makeOrder(goodId, mSelectAddressData!!.id)
             alertDialog.dismiss()
         }
-
-
-
 
 
     }

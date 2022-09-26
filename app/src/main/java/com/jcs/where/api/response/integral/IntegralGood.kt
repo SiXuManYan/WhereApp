@@ -1,5 +1,7 @@
 package com.jcs.where.api.response.integral
 
+import com.jcs.where.api.response.order.store.StoreOrderAddress
+
 /**
  * Created by Wangsw  2022/9/21 11:42.
  * 积分商品
@@ -69,6 +71,29 @@ class IntegralPlaceOrderResponse {
 class IntegralOrderDetail {
 
     var id = 0
+    var price = ""
+    var trade_no = ""
+    var created_at = ""
+    var title = ""
+
+
+    /** 地址信息（配送时） */
+    var address: StoreOrderAddress? = null
+
+
+    /**
+     * 订单状态（1-待发货，2-交易成功）
+     */
+    var order_status = 0
+
+    /**
+     * 1商品 2水 3电 4网 5手机充值
+     */
+    var type = ""
+
+    var image = ""
+
+
 
 }
 
@@ -82,8 +107,15 @@ class IntegralRecord {
     var price = ""
     var title = ""
     var image = ""
+
+    /**
+     * 订单状态（1-待发货，2-交易成功）
+     */
     var order_status = 0
 
-    var nativeType = 0
+    /**
+     * 1商品 2水 3电 4网 5手机充值
+     */
+    var type = 0
 
 }

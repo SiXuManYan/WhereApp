@@ -12,6 +12,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.integral.IntegralGoodDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.gourmet.refund.ComplexRefundActivity
+import com.jcs.where.features.integral.place.IntegralOrderActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_integral_detail.*
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_integral_detail.*
 class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), IntegralDetailView {
 
     var goodId = 0
+    var goodTitle = ""
 
 
     companion object {
@@ -64,7 +66,8 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
 
 
     override fun bindDetail(response: IntegralGoodDetail) {
-        GlideUtil.load(this, response.image, good_iv)
+        val image = response.image
+        GlideUtil.load(this, image, good_iv)
 
         if (response.type==1) {
             mJcsTitle.setMiddleTitle(getString(R.string.exchange_product_details))
@@ -82,9 +85,11 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
             View.GONE
         }
 
-        good_name_tv.text = response.title
+       val goodTitle = response.title
+        good_name_tv.text = goodTitle
         (response.start_time + "-" + response.end_time).also { time_tv.text = it }
-        point_tv.text = getString(R.string.points_format, response.price)
+        val price = response.price
+        point_tv.text = getString(R.string.points_format, price)
         balance_tv.text = getString(R.string.points_format, response.user_integral)
 
         desc_tv.text = response.desc
@@ -101,7 +106,7 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
                 confirm_tv.isClickable = true
                 confirm_tv.text = getString(R.string.exchange)
                 confirm_tv.setOnClickListener {
-                  // todo 下单
+                    IntegralOrderActivity.navigation(this,goodId,goodTitle, image, price)
                 }
             }
             2 -> {

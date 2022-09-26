@@ -10,11 +10,10 @@ import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
-import com.jcs.where.api.response.category.Category
 import com.jcs.where.api.response.integral.IntegralTag
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.enterprise.adapter.EnterpriseThirdCategoryAdapter
 import com.jcs.where.features.integral.activitys.child.IntegralChildFragment
+import com.jcs.where.features.integral.record.IntegralRecordActivity
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_activity_center.*
 
@@ -104,7 +103,7 @@ class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), Activ
         })
 
         record_tv.setOnClickListener {
-
+            startActivity(IntegralRecordActivity::class.java)
         }
 
 

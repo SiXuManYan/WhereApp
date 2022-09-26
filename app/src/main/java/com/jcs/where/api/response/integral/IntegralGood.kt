@@ -64,3 +64,26 @@ class IntegralPlaceOrderResponse {
 
     var orders = ""
 }
+
+
+class IntegralOrderDetail {
+
+    var id = 0
+
+}
+
+
+class IntegralRecord {
+
+
+
+
+    var id = 0
+    var price = ""
+    var title = ""
+    var image = ""
+    var order_status = 0
+
+    var nativeType = 0
+
+}

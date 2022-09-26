@@ -107,7 +107,9 @@ import com.jcs.where.api.response.hotel.HotelOrderDetail;
 import com.jcs.where.api.response.hotel.RoomDetail;
 import com.jcs.where.api.response.integral.IntegralGood;
 import com.jcs.where.api.response.integral.IntegralGoodDetail;
+import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
+import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
@@ -2175,10 +2177,32 @@ public interface RetrofitApi {
      * 兑换券商品详情
      *
      */
-    @POST("integralapi/v2/goods/{id}")
+    @POST("integralapi/v2/orders")
     Observable<JcsResponse<IntegralPlaceOrderResponse>> integralPlaceOrder(
             @Body IntegralPlaceOrder request
     );
+
+
+    /**
+     * 兑换券商品详情
+     */
+    @GET("integralapi/v2/order/{order_id}")
+    Observable<JcsResponse<IntegralOrderDetail>> integralOrderDetail(
+            @Path("order_id") int order_id
+    );
+
+
+    /**
+     * 兑换记录
+     * @param page
+     * @param type
+     * @return
+     */
+    @GET("integralapi/v2/order")
+    Observable<JcsResponse<PageResponse<IntegralRecord>>> integralRecord(
+            @Query("page") int page
+    );
+
 
 
 }

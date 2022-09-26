@@ -2,11 +2,14 @@ package com.jcs.where.features.integral.place
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.ViewGroup
+import android.view.*
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
@@ -16,6 +19,7 @@ import com.jcs.where.features.address.AddressActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_integral_place_order.*
+
 
 /**
  * Created by Wangsw  2022/9/23 14:21.
@@ -31,6 +35,8 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
 
     /** 收货地址 */
     var mSelectAddressData: AddressResponse? = null
+
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_integral_place_order
 
@@ -112,15 +118,7 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
                 ToastUtils.showShort(R.string.choose_shipping_address)
                 return@setOnClickListener
             }
-
-            androidx.appcompat.app.AlertDialog.Builder(this)
-                .setTitle(R.string.confirm_payment)
-                .setCancelable(false)
-                .setMessage(getString(R.string.confirm_integral_hint))
-                .setPositiveButton(R.string.confirm_pay) { _: DialogInterface?, _: Int ->   presenter.makeOrder(goodId, mSelectAddressData!!.id) }
-                .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface, i: Int -> dialogInterface.dismiss() }
-                .create().show()
-
+            showDialog()
         }
     }
 
@@ -128,4 +126,40 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
         ToastUtils.showShort("pay success ")
         finish()
     }
+
+
+    private fun showDialog(){
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = LayoutInflater.from(this)
+        val view: View = inflater.inflate(R.layout.dialog_integral_place_order, null)
+
+        val cancelTv = view.findViewById<TextView>(R.id.cancel_tv)
+        val confirmTv = view.findViewById<TextView>(R.id.confirm_tv)
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        val window: Window? = alertDialog.window
+        if (window != null) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            window.setContentView(view)
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        }
+        cancelTv.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        confirmTv.setOnClickListener {
+            presenter.makeOrder(goodId, mSelectAddressData!!.id)
+            alertDialog.dismiss()
+        }
+
+
+
+
+
+    }
+
 }

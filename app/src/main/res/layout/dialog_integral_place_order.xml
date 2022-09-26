@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dp_0"
+    android:paddingBottom="@dimen/dp_36"
+    android:background="@drawable/shape_gradient_integral_order">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@mipmap/ic_integral_bg"
+        android:scaleType="centerCrop"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_36"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_3d3d3d"
+        android:layout_marginStart="@dimen/dp_28"
+        android:text="@string/confirm_payment"
+        android:textSize="@dimen/sp_22"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/title_tv"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_333333"
+        android:layout_marginTop="@dimen/dp_36"
+        android:layout_marginStart="@dimen/dp_28"
+        android:text="@string/confirm_integral_hint"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_32"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        android:layout_below="@+id/content_tv"
+        android:layout_height="wrap_content">
+
+
+
+
+        <TextView
+            android:id="@+id/cancel_tv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:layout_height="@dimen/dp_44"
+            android:background="@drawable/shape_blue_stoke_radius_25"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/blue_377BFF"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/confirm_tv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dp_44"
+            android:background="@drawable/shape_blue_radius_25"
+            android:gravity="center"
+            android:text="@string/confirm_pay"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -623,6 +623,7 @@
         <activity android:name=".features.integral.activitys.ActivityCenterActivity" />
         <activity android:name=".features.integral.detail.IntegralDetailActivity" />
         <activity android:name=".features.integral.place.IntegralOrderActivity" />
+        <activity android:name=".features.integral.record.IntegralRecordActivity" />
 
 
     </application>

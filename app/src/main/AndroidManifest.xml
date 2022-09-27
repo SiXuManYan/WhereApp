@@ -625,6 +625,7 @@
         <activity android:name=".features.integral.place.IntegralOrderActivity" />
         <activity android:name=".features.integral.record.IntegralRecordActivity" />
         <activity android:name=".features.integral.order.IntegralOrderDetailActivity" />
+        <activity android:name=".features.job.home.JobHomeActivity" />
 
 
     </application>

@@ -110,6 +110,7 @@ import com.jcs.where.api.response.integral.IntegralGoodDetail;
 import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
+import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
@@ -2200,6 +2201,16 @@ public interface RetrofitApi {
     @GET("integralapi/v2/order")
     Observable<JcsResponse<PageResponse<IntegralRecord>>> integralRecord(
             @Query("page") int page
+    );
+
+
+    /**
+     * 职位列表
+     */
+    @GET("jobapi/v2/jobs")
+    Observable<JcsResponse<PageResponse<Job>>> jobList(
+            @Query("page") int page,
+            @Query("search_input") @Nullable String search_input
     );
 
 

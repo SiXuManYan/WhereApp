@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+    <TextView
+        android:id="@+id/company_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_12"
+        tools:text="金智科技" />
+
+
+    <TextView
+        android:id="@+id/job_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="2"
+        android:textColor="@color/color_1c1380"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold"
+        tools:text="UI DesignerUI DesignerUI DesignerUUI UI UI DesignerI DesignerDesignerDesignerDesign..." />
+
+
+    <TextView
+        android:id="@+id/salary_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold"
+        tools:text="14,000-150,000/Month " />
+
+
+    <TextView
+        android:id="@+id/city_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="1"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_12"
+        tools:text="DaLian" />
+
+
+    <TextView
+        android:id="@+id/create_time_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="1"
+        android:textColor="@color/grey_999999"
+        android:textSize="@dimen/sp_11"
+        tools:text="2018.04.11" />
+
+
+</LinearLayout>

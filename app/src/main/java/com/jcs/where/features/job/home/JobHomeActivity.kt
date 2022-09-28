@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_job_home.*
  * Created by Wangsw  2022/9/27 16:03.
  * 招聘首页
  */
-class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener {
 
 
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -53,7 +53,6 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItem
                 page++
                 presenter.getData(page, search)
             }
-            setOnItemClickListener(this@JobHomeActivity)
         }
 
 
@@ -84,9 +83,6 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItem
         }
     }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
-    }
 
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE

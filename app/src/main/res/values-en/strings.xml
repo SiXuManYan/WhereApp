@@ -1034,6 +1034,13 @@ Gentleman must let go</string>
     <string name="total_count">Total</string>
     <string name="spend_points">Spend Points</string>
     <string name="exchange_good">Exchange Goods</string>
+    <string name="job_detail">Job Details</string>
+    <string name="job_desc">Job Description</string>
+    <string name="company_name">Company Name</string>
+    <string name="apply_now">Apply Now</string>
+    <string name="applied">Applied</string>
+    <string name="completing_cv">Apply for jobs after completing your CV</string>
+    <string name="successful_delivery">Successful Delivery</string>
 
 
 </resources>

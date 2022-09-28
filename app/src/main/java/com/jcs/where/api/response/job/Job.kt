@@ -37,5 +37,8 @@ class JobDetail {
     /** 是否完善简历（true、false） */
     var is_complete = false
 
+}
 
+class JobSendCv{
+    var  job_id = 0
 }

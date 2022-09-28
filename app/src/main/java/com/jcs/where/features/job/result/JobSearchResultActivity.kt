@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_job_search_result.*
  * Created by Wangsw  2022/9/28 10:08.
  * 职位搜素结果
  */
-class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItemClickListener,
+class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView,
     SwipeRefreshLayout.OnRefreshListener {
 
     private var page = Constant.DEFAULT_FIRST_PAGE
@@ -58,7 +58,6 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
                 page++
                 presenter.getData(page, search)
             }
-            setOnItemClickListener(this@JobSearchResultActivity)
         }
 
 
@@ -83,9 +82,6 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
 
     }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
-    }
 
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE

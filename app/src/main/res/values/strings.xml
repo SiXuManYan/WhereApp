@@ -1049,5 +1049,12 @@ Gentleman must let go</string>
     <string name="total_count">总计</string>
     <string name="spend_points">花费积分</string>
     <string name="exchange_good">实体商品优惠券</string>
+    <string name="job_detail">职位详情</string>
+    <string name="job_desc">职位描述</string>
+    <string name="company_name">公司名称</string>
+    <string name="apply_now">申请职位</string>
+    <string name="applied">已申请</string>
+    <string name="completing_cv">完善简历后才能申请职位</string>
+    <string name="successful_delivery">投递成功</string>
 
 </resources>

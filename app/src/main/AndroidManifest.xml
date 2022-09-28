@@ -627,6 +627,10 @@
         <activity android:name=".features.integral.order.IntegralOrderDetailActivity" />
         <activity android:name=".features.job.home.JobHomeActivity" />
 
+        <activity
+            android:name=".features.job.result.JobSearchResultActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
 
     </application>
 

@@ -1,10 +1,8 @@
-package com.jcs.where.features.job.home
+package com.jcs.where.features.job.result
 
-import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -12,18 +10,20 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.job.Job
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.search.SearchAllActivity
+import com.jcs.where.features.job.home.JobHomeAdapter
+import com.jcs.where.features.job.home.JobHomePresenter
+import com.jcs.where.features.job.home.JobHomeView
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.activity_job_home.*
+import kotlinx.android.synthetic.main.activity_job_search_result.*
 
 /**
- * Created by Wangsw  2022/9/27 16:03.
- * 招聘首页
+ * Created by Wangsw  2022/9/28 10:08.
+ * 职位搜素结果
  */
-class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
-
+class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItemClickListener,
+    SwipeRefreshLayout.OnRefreshListener {
 
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: JobHomeAdapter
@@ -31,10 +31,15 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItem
 
     private var search: String? = null
 
-    override fun getLayoutId() = R.layout.activity_job_home
+    override fun isStatusDark() = true
+
+
+    override fun getLayoutId() = R.layout.activity_job_search_result
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.color_1c1380))
+        search = intent.getStringExtra(Constant.PARAM_NAME)
+        search_tv.text = search
+
         initContent()
     }
 
@@ -53,7 +58,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItem
                 page++
                 presenter.getData(page, search)
             }
-            setOnItemClickListener(this@JobHomeActivity)
+            setOnItemClickListener(this@JobSearchResultActivity)
         }
 
 
@@ -75,13 +80,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, OnItem
     }
 
     override fun bindListener() {
-        search_iv.setOnClickListener {
 
-            startActivity(SearchAllActivity::class.java , Bundle().apply {
-                putInt(Constant.PARAM_TYPE , 9)
-                putBoolean(Constant.PARAM_HIDE , true)
-            })
-        }
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {

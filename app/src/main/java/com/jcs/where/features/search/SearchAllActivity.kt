@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +14,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.job.result.JobSearchResultActivity
 import com.jcs.where.features.mall.result.MallSearchResultActivity
 import com.jcs.where.features.search.result.SearchAllResultActivity
 import com.jcs.where.features.search.yellow.YellowPageSearchResultActivity
@@ -39,6 +41,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 6.新版商城
      * 7.美食地图
      * 8.新版商城通过店铺搜索商品
+     * 9.招聘
      */
     private var type = 0
 
@@ -49,6 +52,9 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
 
     /** 商城店铺id */
     private var shopId = 0
+
+
+    private var hideHistory = false
 
     private lateinit var mAdapter: SearchHistoryAdapter
 
@@ -61,7 +67,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
         type = intent.getIntExtra(Constant.PARAM_TYPE, 0)
         categoryId = intent.getStringExtra(Constant.PARAM_CATEGORY_ID)
         shopId = intent.getIntExtra(Constant.PARAM_SHOP_ID, 0)
-
+        hideHistory = intent.getBooleanExtra(Constant.PARAM_HIDE, false)
 
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
         mAdapter = SearchHistoryAdapter().apply {
@@ -75,6 +81,10 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             layoutManager = MyLayoutManager()
         }
 
+        if (hideHistory) {
+            history_rl.visibility = View.GONE
+            history_rv.visibility = View.GONE
+        }
 
         KeyboardUtils.showSoftInput(search_aet)
 
@@ -163,6 +173,9 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             8 -> {
                 bundle.putInt(Constant.PARAM_SHOP_ID, shopId)
                 startActivity(MallSearchResultActivity::class.java, bundle)
+            }
+            9 -> {
+                startActivity(JobSearchResultActivity::class.java, bundle)
             }
             else -> {
             }

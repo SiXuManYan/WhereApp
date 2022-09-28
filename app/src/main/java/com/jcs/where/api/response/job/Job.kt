@@ -39,6 +39,51 @@ class JobDetail {
 
 }
 
-class JobSendCv{
-    var  job_id = 0
+class JobSendCv {
+    var job_id = 0
+}
+
+
+/**
+ * 简历个人信息
+ */
+class ProfileDetail {
+
+    var id = 0
+
+    /** 性别（0-未知，1-男，2-女） */
+    var gender = 0
+
+    /** 姓 */
+    var first_name = ""
+
+    /** 名 */
+    var last_name = ""
+    var city = ""
+    var email = ""
+    var contact_number = ""
+    var school = ""
+
+    /** 专业 */
+    var major = ""
+
+    /** 学历 */
+    var education = ""
+
+}
+
+/**
+ * 工作经历列表
+ */
+class JobExperience {
+
+    var id = 0
+    var company = ""
+    var job_title = ""
+    var start_date = ""
+    var end_date = ""
+    var job_desc = ""
+
+
+
 }

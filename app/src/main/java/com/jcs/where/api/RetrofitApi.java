@@ -113,6 +113,7 @@ import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobDetail;
 import com.jcs.where.api.response.job.JobSendCv;
+import com.jcs.where.api.response.job.ProfileDetail;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
@@ -2216,8 +2217,6 @@ public interface RetrofitApi {
     );
 
 
-
-
     /**
      * 职位详情
      */
@@ -2233,6 +2232,21 @@ public interface RetrofitApi {
     @POST("jobapi/v2/send/records")
     Observable<JcsResponse<JsonElement>> jobSendCv(
             @Body JobSendCv request
+    );
+
+
+    /**
+     * 职位详情
+     */
+    @GET("jobapi/v2/resumes/profile")
+    Observable<JcsResponse<ProfileDetail>> profileDetail();
+
+    /**
+     * 工作经历
+     */
+    @GET("jobapi/v2/resumes/experiences")
+    Observable<JcsResponse<PageResponse<Job>>> jobExperienceList(
+            @Query("page") int page
     );
 
 

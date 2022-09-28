@@ -1041,6 +1041,11 @@ Gentleman must let go</string>
     <string name="applied">Applied</string>
     <string name="completing_cv">Apply for jobs after completing your CV</string>
     <string name="successful_delivery">Successful Delivery</string>
+    <string name="my_cv">My Profile</string>
+    <string name="create_profile">Create Profile</string>
+    <string name="job_experience">Job Experience</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
 
 </resources>

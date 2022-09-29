@@ -145,7 +145,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
     }
 
     override fun handleSuccess() {
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_PROFILE))
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_EXPERIENCE))
         finish()
     }
 

@@ -1,14 +1,11 @@
 package com.jcs.where.features.job.home
 
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.job.Job
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -42,6 +39,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
     private fun initContent() {
 
         swipe_layout.setOnRefreshListener(this)
+        swipe_layout.setColorSchemeColors(ColorUtils.getColor(R.color.color_1c1380))
         emptyView = EmptyView(this)
         emptyView.showEmptyDefault()
         addEmptyList(emptyView)
@@ -76,9 +74,9 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
 
     override fun bindListener() {
         search_ll.setOnClickListener {
-            startActivity(SearchAllActivity::class.java , Bundle().apply {
-                putInt(Constant.PARAM_TYPE , 9)
-                putBoolean(Constant.PARAM_HIDE , true)
+            startActivity(SearchAllActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE, 9)
+                putBoolean(Constant.PARAM_HIDE, true)
             })
         }
         cv_iv.setOnClickListener {

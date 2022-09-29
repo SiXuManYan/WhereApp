@@ -11,6 +11,7 @@ import com.jcs.where.api.response.job.ProfileDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.job.form.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.CvFormProfileActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -46,7 +47,10 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
         mAdapter = JobExperienceAdapter().apply {
             setEmptyView(emptyView)
             setOnItemClickListener { _, _, position ->
-
+                val jobExperience = mAdapter.data[position]
+                startActivity(CvFormJobExperienceActivity::class.java, Bundle().apply {
+                    putParcelable(Constant.PARAM_DATA, jobExperience)
+                })
             }
         }
 
@@ -82,6 +86,7 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
 
         add_job_experience_rl.setOnClickListener {
             // 添加工作经历
+            startActivity(CvFormJobExperienceActivity::class.java)
         }
 
 
@@ -123,9 +128,8 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_REFRESH_CV_PROFILE -> {
-                presenter.getProfile()
-            }
+            EventCode.EVENT_REFRESH_CV_PROFILE -> presenter.getProfile()
+            EventCode.EVENT_REFRESH_CV_EXPERIENCE -> presenter.getJobExperience()
             else -> {}
         }
 

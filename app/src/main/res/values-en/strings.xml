@@ -1057,6 +1057,12 @@ Gentleman must let go</string>
     <string name="mail">Mail</string>
     <string name="phone_number_cv">Phone Number</string>
     <string name="school_name">School Name</string>
+    <string name="job_title">Job Title</string>
+    <string name="work_desc">Work Description</string>
+    <string name="word_count">Up to 1000 characters</string>
+    <string name="please_enter_job_desc">Please enter job description</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
 
 
 </resources>

@@ -110,6 +110,7 @@ import com.jcs.where.api.response.integral.IntegralGoodDetail;
 import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
+import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobDetail;
@@ -2264,10 +2265,37 @@ public interface RetrofitApi {
      *
      * @param profile_id 个人信息id
      */
-    @POST("jobapi/v2/resumes/profile/{profile_id}")
+    @PUT("jobapi/v2/resumes/profile/{profile_id}")
     Observable<JcsResponse<JsonElement>> modifyCvProfile(
             @Path("profile_id") int profile_id,
             @Body CreateProfileDetail request
     );
+
+
+
+
+
+    /**
+     * 创建简历 工作经历
+     */
+    @POST("jobapi/v2/resumes/experiences")
+    Observable<JcsResponse<JsonElement>> createCvExperiences(
+            @Body CreateJobExperience request
+    );
+
+
+    /**
+     * 修改简历个人信息
+     *
+     * @param profile_id 个人信息id
+     */
+    @PUT("jobapi/v2/resumes/experiences/{experience_id}")
+    Observable<JcsResponse<JsonElement>> modifyCvExperiences(
+            @Path("experience_id") int experience_id,
+            @Body CreateJobExperience request
+    );
+
+
+
 
 }

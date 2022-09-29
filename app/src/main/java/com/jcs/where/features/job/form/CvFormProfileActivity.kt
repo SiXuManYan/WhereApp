@@ -22,7 +22,11 @@ import org.greenrobot.eventbus.EventBus
 class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, OnSelectedCity {
 
     private var draftData: ProfileDetail? = null
-    private var lastProfileId = 0
+
+    /**
+     * 个人信息id， 不为0时为修改
+     */
+    private var draftProfileId = 0
     private var userGender = 0
     private var cityId = 0
 
@@ -50,7 +54,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
     private fun initDraft() {
 
         draftData?.let {
-            lastProfileId = it.id
+            draftProfileId = it.id
             cityId = it.city_id
             first_name_et.setText(it.first_name)
             last_name_et.setText(it.last_name)
@@ -133,7 +137,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                 }
                 education = education_et.text.toString().trim()
             }
-            presenter.handleProfile(lastProfileId, apply)
+            presenter.handleProfile(draftProfileId, apply)
 
         }
     }

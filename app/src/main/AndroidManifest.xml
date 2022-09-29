@@ -633,6 +633,7 @@
         <activity android:name=".features.job.detail.JobDetailActivity" />
         <activity android:name=".features.job.cv.CvHomeActivity" />
         <activity android:name=".features.job.form.CvFormProfileActivity" />
+        <activity android:name=".features.job.form.CvFormJobExperienceActivity" />
 
 
     </application>

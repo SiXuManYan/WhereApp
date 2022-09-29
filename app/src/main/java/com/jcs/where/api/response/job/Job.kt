@@ -122,7 +122,7 @@ class ProfileDetail() : Parcelable {
 /**
  * 工作经历列表
  */
-class JobExperience {
+class JobExperience() : Parcelable {
 
     var id = 0
     var company = ""
@@ -130,6 +130,44 @@ class JobExperience {
     var start_date = ""
     var end_date = ""
     var job_desc = ""
+    var city = ""
+    var city_id = 0
+
+    constructor(parcel: Parcel) : this() {
+        id = parcel.readInt()
+        company = parcel.readString().toString()
+        job_title = parcel.readString().toString()
+        start_date = parcel.readString().toString()
+        end_date = parcel.readString().toString()
+        job_desc = parcel.readString().toString()
+        city = parcel.readString().toString()
+        city_id = parcel.readInt()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(company)
+        parcel.writeString(job_title)
+        parcel.writeString(start_date)
+        parcel.writeString(end_date)
+        parcel.writeString(job_desc)
+        parcel.writeString(city)
+        parcel.writeInt(city_id)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<JobExperience> {
+        override fun createFromParcel(parcel: Parcel): JobExperience {
+            return JobExperience(parcel)
+        }
+
+        override fun newArray(size: Int): Array<JobExperience?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
 
 class CreateProfileDetail {
@@ -153,4 +191,14 @@ class CreateProfileDetail {
 
     /** 学历 */
     var education = ""
+}
+
+
+class CreateJobExperience {
+    var company = ""
+    var job_title = ""
+    var start_date = ""
+    var end_date = ""
+    var job_desc = ""
+    var city_id = 0
 }

@@ -1,5 +1,6 @@
 package com.jcs.where.features.job.cv
 
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
@@ -7,7 +8,10 @@ import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.job.JobExperience
 import com.jcs.where.api.response.job.ProfileDetail
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.job.form.CvFormProfileActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -22,6 +26,9 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: JobExperienceAdapter
     private lateinit var emptyView: EmptyView
+
+    /** 个人信息 */
+    private var profileDetail: ProfileDetail? = null
 
     override fun getLayoutId() = R.layout.activity_job_cv_home
 
@@ -64,10 +71,13 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
 
     override fun bindListener() {
         create_cv_iv.setOnClickListener {
-            // 创建编辑
+            // 处理个人信息
+            startActivity(CvFormProfileActivity::class.java, Bundle().apply {
+                putParcelable(Constant.PARAM_DATA, profileDetail)
+            })
         }
         name_tv.setOnClickListener {
-            // 简历编辑
+            create_cv_iv.performClick()
         }
 
         add_job_experience_rl.setOnClickListener {
@@ -79,11 +89,12 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
 
     override fun getProfile(response: ProfileDetail?) {
         if (response == null) {
-
             create_cv_rl.visibility = View.VISIBLE
             info_ll.visibility = View.GONE
             return
         }
+        profileDetail = response
+
         create_cv_rl.visibility = View.GONE
         info_ll.visibility = View.VISIBLE
 
@@ -108,5 +119,17 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
         }
     }
 
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_CV_PROFILE -> {
+                presenter.getProfile()
+            }
+            else -> {}
+        }
+
+
+    }
 
 }

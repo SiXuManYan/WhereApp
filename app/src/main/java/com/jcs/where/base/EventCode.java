@@ -168,5 +168,6 @@ public class EventCode {
 
     public static final int EVENT_REFRESH_CONVENIENCE_CHILD = 1040;
     public static final int EVENT_REFRESH_INTEGRAL = 1041;
+    public static final int EVENT_REFRESH_CV_PROFILE = 1042;
 
 }

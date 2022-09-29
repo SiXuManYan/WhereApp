@@ -632,6 +632,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".features.job.detail.JobDetailActivity" />
         <activity android:name=".features.job.cv.CvHomeActivity" />
+        <activity android:name=".features.job.form.CvFormProfileActivity" />
 
 
     </application>

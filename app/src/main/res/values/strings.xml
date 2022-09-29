@@ -1062,5 +1062,15 @@ Gentleman must let go</string>
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="empty_job_experience">您还没有添加工作经历</string>
+    <string name="school">学校</string>
+    <string name="file_of_studies">专业(选填)</string>
+    <string name="education">学历</string>
+    <string name="first_name">姓</string>
+    <string name="last_name">名</string>
+    <string name="gender">性别</string>
+    <string name="work_city">工作城市</string>
+    <string name="mail">邮箱</string>
+    <string name="phone_number_cv">联系电话</string>
+    <string name="school_name">学校</string>
 
 </resources>

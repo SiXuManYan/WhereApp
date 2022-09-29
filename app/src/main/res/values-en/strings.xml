@@ -1047,6 +1047,16 @@ Gentleman must let go</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="empty_job_experience">You have not added your job experience </string>
+    <string name="school">School Name</string>
+    <string name="file_of_studies">Field Of Studies(Optional)</string>
+    <string name="education">Education Level</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="gender">Gender</string>
+    <string name="work_city">Work City</string>
+    <string name="mail">Mail</string>
+    <string name="phone_number_cv">Phone Number</string>
+    <string name="school_name">School Name</string>
 
 
 </resources>

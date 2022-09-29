@@ -9,7 +9,7 @@ public class CityResponse {
     public boolean isHot;
     public double lat;
     public double lng;
-
+    public boolean nativeIsSelected = false ;
 
     public CityResponse() {
     }

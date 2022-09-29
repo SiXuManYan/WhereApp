@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.job.Job
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.job.cv.CvHomeActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -74,13 +75,16 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
     }
 
     override fun bindListener() {
-        search_iv.setOnClickListener {
-
+        search_ll.setOnClickListener {
             startActivity(SearchAllActivity::class.java , Bundle().apply {
                 putInt(Constant.PARAM_TYPE , 9)
                 putBoolean(Constant.PARAM_HIDE , true)
             })
         }
+        cv_iv.setOnClickListener {
+            startActivityAfterLogin(CvHomeActivity::class.java)
+        }
+
     }
 
 

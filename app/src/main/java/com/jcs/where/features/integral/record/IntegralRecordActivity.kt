@@ -25,8 +25,7 @@ import kotlinx.android.synthetic.main.activity_refresh_list.*
  * Created by Wangsw  2022/9/26 15:08.
  * 兑换记录
  */
-class IntegralRecordActivity : BaseMvpActivity<IntegralRecordPresenter>(), IntegralRecordView, SwipeRefreshLayout.OnRefreshListener,
-    OnItemClickListener {
+class IntegralRecordActivity : BaseMvpActivity<IntegralRecordPresenter>(), IntegralRecordView, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
 
     private var page = Constant.DEFAULT_FIRST_PAGE

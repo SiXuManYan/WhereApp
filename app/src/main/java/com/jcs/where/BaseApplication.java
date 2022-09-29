@@ -27,7 +27,6 @@ import com.jcs.where.storage.entity.User;
 import com.jcs.where.storage.entity.UserRongyunData;
 import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.CacheUtil;
-import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
@@ -37,7 +36,6 @@ import com.umeng.umcrash.UMCrash;
 
 import java.util.ArrayList;
 
-import cn.jiguang.api.JCoreManager;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -77,7 +75,7 @@ public class BaseApplication extends Application {
 
 //        CrashHandler crashHandler = CrashHandler.getInstance();
 //        crashHandler.init(this);
-        initComm100();
+        initJpush();
         handleRongCloud();
         handleUmeng();
     }
@@ -99,14 +97,14 @@ public class BaseApplication extends Application {
     /**
      * 初始化 comm 100 客服
      */
-    private void initComm100() {
+    private void initJpush() {
 
         VisitorClientInterface.setChatUrl(Html5Url.COMM100_CHAT_URL);
 
 
         // 极光推送
         if (BuildConfig.DEBUG) {
-            JPushInterface.setDebugMode(true);
+            JPushInterface.setDebugMode(false);
         }
 
 
@@ -321,7 +319,8 @@ public class BaseApplication extends Application {
     private void handleUmeng() {
         // 预注册
         // log
-        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
+//        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
+        UMConfigure.setLogEnabled(false);
         UMConfigure.preInit(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel());
 
         // 用户同意协议后的真正注册

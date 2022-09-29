@@ -631,6 +631,7 @@
             android:name=".features.job.result.JobSearchResultActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".features.job.detail.JobDetailActivity" />
+        <activity android:name=".features.job.cv.CvHomeActivity" />
 
 
     </application>

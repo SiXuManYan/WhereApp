@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_30"
             android:layout_centerInParent="true"
-            android:layout_toStartOf="@+id/search_iv"
+            android:layout_toStartOf="@+id/cv_iv"
             android:layout_toEndOf="@+id/back_iv"
             android:background="@drawable/bg_search_white"
             android:orientation="horizontal"
@@ -55,7 +55,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/search_iv"
+            android:id="@+id/cv_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

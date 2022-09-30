@@ -74,6 +74,22 @@
     </RelativeLayout>
 
 
+
+    <TextView
+        android:id="@+id/user_hint_tv"
+        android:layout_width="match_parent"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingStart="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/grey_666666"
+        tools:text="The account recharge does not meet the discount conditions or exceeds the discount limit, and cannot enjoy more discounts"
+        android:layout_height="wrap_content"/>
+
+
     <RelativeLayout
         android:id="@+id/discount_rl"
         android:layout_width="match_parent"

@@ -143,6 +143,16 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
             discount_rl.visibility = View.GONE
         }
 
+        // 用户提示
+        val hint = response.hint
+        if (hint.isNullOrBlank()) {
+            user_hint_tv.visibility = View.GONE
+        } else {
+
+            user_hint_tv.visibility = View.VISIBLE
+            user_hint_tv.text = hint
+        }
+
     }
 
     override fun bindListener() {

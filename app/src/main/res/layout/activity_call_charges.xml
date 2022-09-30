@@ -57,6 +57,7 @@
                     android:background="@null"
                     android:maxLength="11"
                     android:ellipsize="end"
+                    android:imeOptions="actionDone"
                     android:gravity="center_vertical"
                     android:hint="@string/enter_the_phone_number"
                     android:inputType="number"

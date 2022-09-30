@@ -22,7 +22,7 @@ import java.util.*
  * Created by Wangsw  2022/9/29 15:00.
  *  简历-工作经历表单
  */
-class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, OnSelectedCity {
+class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
 
     /**
@@ -30,11 +30,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
      */
     private var draftId = 0
     private var draftData: JobExperience? = null
-
-
-    private var cityId = 0
-    private lateinit var cityDialog: CvCityFragment
-    private var mCityData = ArrayList<CityPickerResponse.CityChild>()
     private var requiredEdit = ArrayList<AppCompatEditText>()
 
     override fun isStatusDark() = true
@@ -43,11 +38,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
     override fun initView() {
         draftData = intent.getParcelableExtra(Constant.PARAM_DATA)
-        cityDialog = CvCityFragment().apply {
-            onSelectedCity = this@CvFormJobExperienceActivity
-        }
-
-
         initDraft()
     }
 
@@ -57,8 +47,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             company_name_et.setText(it.company)
             job_title_et.setText(it.job_title)
             job_desc_et.setText(it.job_desc)
-            city_tv.text = it.city
-            cityId = it.city_id
             start_date_tv.text = it.start_date
             end_date_tv.text = it.end_date
         }
@@ -81,12 +69,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             selectBirthday(end_date_tv)
         }
 
-        city_tv.setOnClickListener {
-            cityDialog.lastCityData = mCityData
-            cityDialog.lastSelectedCityId = cityId
-            cityDialog.show(supportFragmentManager, cityDialog.tag)
-        }
-
         save_tv.setOnClickListener {
 
             requiredEdit.forEach {
@@ -94,11 +76,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
                     ToastUtils.showShort(R.string.please_enter)
                     return@setOnClickListener
                 }
-            }
-
-            if (city_tv.text.isNullOrBlank() || cityId == 0) {
-                ToastUtils.showShort("Please select Work City")
-                return@setOnClickListener
             }
 
             if (start_date_tv.text.isNullOrBlank() || end_date_tv.text.isNullOrBlank()) {
@@ -110,8 +87,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             val apply = CreateJobExperience().apply {
                 company = company_name_et.text.toString().trim()
                 job_title = job_title_et.text.toString().trim()
-
-                city_id = cityId
                 start_date = start_date_tv.text.toString().trim()
                 end_date = end_date_tv.text.toString().trim()
                 job_desc = job_desc_et.text.toString().trim()
@@ -124,12 +99,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
     }
 
-    override fun onSelectedCity(cityChild: CityPickerResponse.CityChild, allData: MutableList<CityPickerResponse.CityChild>) {
-        mCityData.clear()
-        mCityData.addAll(allData)
-        cityId = cityChild.id.toInt()
-        city_tv.text = cityChild.name
-    }
 
 
     private fun selectBirthday(textView: TextView) {
@@ -139,7 +108,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
         val mDay = ca[Calendar.DAY_OF_MONTH]
         val datePickerDialog =
             DatePickerDialog(this, R.style.DatePickerDialogTheme, { _, year, month, dayOfMonth ->
-                textView.text = getString(R.string.birthday_format, year, (month + 1), dayOfMonth)
+                textView.text = getString(R.string.date_format, year, (month + 1), dayOfMonth)
             }, mYear, mMonth, mDay)
         datePickerDialog.show()
     }

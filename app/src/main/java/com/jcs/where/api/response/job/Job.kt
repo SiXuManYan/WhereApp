@@ -131,7 +131,6 @@ class JobExperience() : Parcelable {
     var end_date = ""
     var job_desc = ""
     var city = ""
-    var city_id = 0
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
@@ -141,7 +140,6 @@ class JobExperience() : Parcelable {
         end_date = parcel.readString().toString()
         job_desc = parcel.readString().toString()
         city = parcel.readString().toString()
-        city_id = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -152,7 +150,6 @@ class JobExperience() : Parcelable {
         parcel.writeString(end_date)
         parcel.writeString(job_desc)
         parcel.writeString(city)
-        parcel.writeInt(city_id)
     }
 
     override fun describeContents(): Int {
@@ -200,5 +197,4 @@ class CreateJobExperience {
     var start_date = ""
     var end_date = ""
     var job_desc = ""
-    var city_id = 0
 }

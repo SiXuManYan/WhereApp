@@ -144,6 +144,15 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
             discount_rl.visibility = View.GONE
         }
 
+        val hint = response.hint
+        if (hint.isNullOrBlank()) {
+            user_hint_tv.visibility = View.GONE
+        } else {
+            user_hint_tv.visibility = View.VISIBLE
+            user_hint_tv.text = hint
+        }
+
+
     }
 
 }

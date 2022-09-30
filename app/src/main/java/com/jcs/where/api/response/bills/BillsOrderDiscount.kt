@@ -20,5 +20,8 @@ class BillsOrderDiscount {
     /** 折扣描述 */
     var discount = ""
 
+    /** 用户提示 */
+    var hint  :String ? = null
+
 
 }

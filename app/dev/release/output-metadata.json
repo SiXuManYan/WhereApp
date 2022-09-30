@@ -11,10 +11,10 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 50,
-      "versionName": "0.3.8",
+      "versionCode": 51,
+      "versionName": "0.3.9 beta",
       "enabled": true,
-      "outputFile": "Where_v50_(0.3.8)_20220927.apk"
+      "outputFile": "Where_v51_(0.3.9 beta)_20220930.apk"
     }
   ]
 }

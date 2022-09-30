@@ -629,6 +629,7 @@
     <string name="bills_select">请选择</string>
 
     <string name="birthday_format">%1$d-%2$d-%3$d</string>
+    <string name="date_format">%1$d.%2$d.%3$d</string>
     <string name="water_fee">水费</string>
     <string name="electricity_free">电费</string>
     <string name="copy_successfully">复制成功</string>

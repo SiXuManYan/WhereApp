@@ -148,7 +148,6 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
         if (hint.isNullOrBlank()) {
             user_hint_tv.visibility = View.GONE
         } else {
-
             user_hint_tv.visibility = View.VISIBLE
             user_hint_tv.text = hint
         }

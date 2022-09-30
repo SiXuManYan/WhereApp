@@ -170,5 +170,6 @@ public class EventCode {
     public static final int EVENT_REFRESH_INTEGRAL = 1041;
     public static final int EVENT_REFRESH_CV_PROFILE = 1042;
     public static final int EVENT_REFRESH_CV_EXPERIENCE = 1043;
+    public static final int EVENT_REFRESH_JOB_DETAIL= 1044;
 
 }

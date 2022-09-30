@@ -18,6 +18,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.job.cv.CvHomeActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_job_detail.*
@@ -98,8 +99,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
                         .setTitle(R.string.hint)
                         .setMessage(R.string.completing_cv)
                         .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
-
-                            // todo 跳转至简历页面
+                            startActivityAfterLogin(CvHomeActivity::class.java)
                             dialog.dismiss()
                         }
                         .setNegativeButton(R.string.cancel) { dialog: DialogInterface, which: Int ->
@@ -125,11 +125,31 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
         setSendSuccessUi()
     }
 
+    /** 添加简历后，刷新本页状态 */
+    private var needRefreshForCv= false
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_LOGIN_SUCCESS) {
+        when (baseEvent.code) {
+            EventCode.EVENT_LOGIN_SUCCESS,-> {
+                presenter.getData(jobId)
+            }
+            EventCode.EVENT_REFRESH_CV_PROFILE,
+            EventCode.EVENT_REFRESH_CV_EXPERIENCE->{
+                needRefreshForCv = true
+            }
+
+            else -> {}
+        }
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (needRefreshForCv) {
             presenter.getData(jobId)
+            needRefreshForCv = false
         }
 
     }

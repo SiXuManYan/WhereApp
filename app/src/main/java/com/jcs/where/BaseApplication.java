@@ -216,7 +216,7 @@ public class BaseApplication extends Application {
      */
     private void initRongCloud() {
 
-        RongIM.init(this, BuildConfig.RONG_CLOUD_APP_KEY, true);
+        RongIM.init(this, BuildConfig.RONG_CLOUD_APP_KEY);
 
         // 注册自定义的会话列表(此方法在应用生命周期内、主进程中注册一次即可。)
         RouteUtils.registerActivity(RouteUtils.RongActivityType.ConversationListActivity, MessageCenterActivity.class);

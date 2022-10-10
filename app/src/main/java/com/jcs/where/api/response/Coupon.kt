@@ -7,7 +7,7 @@ import java.math.BigDecimal
  * Created by Wangsw  2022/3/3 14:17.
  * 用户券包
  */
- class UserCoupon : MultiItemEntity{
+class UserCoupon : MultiItemEntity {
 
 
     companion object {
@@ -33,7 +33,7 @@ import java.math.BigDecimal
     /** 使用规则 */
     var rule: String = ""
 
-    /** 1平台券  2店铺券*/
+    /** 1 平台优惠券 2 店铺优惠券 3 支付账单 */
     var couponType: Int = 1
 
     /** 未使用已使用已过期 */
@@ -50,6 +50,10 @@ import java.math.BigDecimal
 
     /** 区分列表类型，标题或代金券 */
     var nativeListType = Coupon.TYPE_COMMON
+
+    /** 支付账单优惠券类型( 2水 3电 4网 5手机充值) */
+    var bill_type = 0
+
 
     override val itemType: Int
         get() = nativeListType
@@ -125,6 +129,7 @@ class GeCouponDefault {
 
 
 }
+
 class GeCouponDefaultChild {
     var shop_id = 0
     var price = BigDecimal.ZERO

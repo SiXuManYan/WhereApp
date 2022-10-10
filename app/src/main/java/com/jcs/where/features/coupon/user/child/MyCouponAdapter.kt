@@ -73,6 +73,17 @@ class MyCouponAdapter : BaseMultiItemQuickAdapter<UserCoupon, BaseViewHolder>(),
         when (item.couponType) {
             1 -> type_tv.setText(R.string.coupon_type_platform)
             2 -> type_tv.setText(R.string.coupon_type_business)
+            3 -> {
+                // 2水 3电 4网 5手机充值
+                when (item.bill_type) {
+                    2 -> type_tv.setText(R.string.water_utilities_coupon)
+                    3 -> type_tv.setText(R.string.electricity_utilities_coupon)
+                    4 -> type_tv.setText(R.string.internet_billing_coupon)
+                    5 -> type_tv.setText(R.string.telecoms_coupon)
+                }
+
+
+            }
         }
 
         when (item.nativeType) {

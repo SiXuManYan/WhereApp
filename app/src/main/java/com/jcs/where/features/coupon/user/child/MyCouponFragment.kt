@@ -10,6 +10,7 @@ import com.jcs.where.api.response.UserCoupon
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.bills.channel.BillsChannelActivity
 import com.jcs.where.features.coupon.good.CouponGoodActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
@@ -118,10 +119,31 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
                 BusinessUtils.showRule(requireContext(), userCoupon.rule)
             }
             R.id.use_tv -> {
-                startActivity(CouponGoodActivity::class.java, Bundle().apply {
-                    putInt(Constant.PARAM_ID, userCoupon.id)
-                    putInt(Constant.PARAM_SHOP_ID, userCoupon.shop_id)
-                })
+                val couponType = userCoupon.couponType
+                if (couponType == 1 || couponType == 2) {
+                    startActivity(CouponGoodActivity::class.java, Bundle().apply {
+                        putInt(Constant.PARAM_ID, userCoupon.id)
+                        putInt(Constant.PARAM_SHOP_ID, userCoupon.shop_id)
+                    })
+                }
+
+                if (couponType == 3) {
+
+                    // 2水 3电 4网 5手机充值
+                    val billType = userCoupon.bill_type
+                    when (billType) {
+                        2,3,4 -> startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_TYPE, billType)
+                        })
+                        5 -> startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_TYPE, 1)
+                        })
+                    }
+
+
+                }
+
+
             }
         }
     }

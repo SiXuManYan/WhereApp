@@ -37,7 +37,6 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
 
 
     private AlertDialog permissionDialog;
-    //    private AlertDialog upgradeDialog;
     private DownUtil downUtil;
 
     private ImageView ic_cancel;

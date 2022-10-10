@@ -137,7 +137,7 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
      * 检查版本更新
      */
     fun checkAppVersion() {
-        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_NAME, "Android"),
+        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_NAME, "2"),
             object : BaseMvpObserver<VersionResponse>(view, false) {
                 override fun onSuccess(response: VersionResponse) {
                     if (!response.status) {

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16"
+    tools:background="@color/grey_F5F5F5">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_105"
+        android:layout_weight="136"
+        android:background="@mipmap/ic_bills_coupon_left"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/blue_377BFF"
+            android:textSize="@dimen/sp_24"
+            android:textStyle="bold"
+            tools:text="$1000" />
+
+
+        <TextView
+            android:id="@+id/threshold_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_4"
+            android:ellipsize="end"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
+            android:maxLines="2"
+            android:minHeight="@dimen/dp_25"
+            android:textColor="@color/blue_377BFF"
+            android:textSize="@dimen/sp_11"
+            tools:text="Full 65 availablilabsse" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_105"
+        android:layout_weight="239"
+        android:background="@mipmap/ic_bills_coupon_right"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_8">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_toStartOf="@+id/checked_ck"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:minHeight="@dimen/dp_45"
+                android:textColor="@color/blue_377BFF"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                tools:text="优优券名称优惠券啊啊啊称…" />
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_tv"
+                android:layout_marginTop="@dimen/dp_4"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/blue_377BFF"
+                android:textSize="@dimen/sp_12"
+                tools:text="2018.04.11 至 2018.05.11" />
+
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:id="@+id/checked_ck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:button="@drawable/selector_store_cart_select_all"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_un_checked" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

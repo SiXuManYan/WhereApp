@@ -78,6 +78,7 @@ import com.jcs.where.api.response.bills.BillCancelOrder;
 import com.jcs.where.api.response.bills.BillRecommit;
 import com.jcs.where.api.response.bills.BillStatus;
 import com.jcs.where.api.response.bills.BillsChannel;
+import com.jcs.where.api.response.bills.BillsCoupon;
 import com.jcs.where.api.response.bills.BillsOrderDiscount;
 import com.jcs.where.api.response.bills.BillsPlaceOrder;
 import com.jcs.where.api.response.bills.BillsRecord;
@@ -1884,6 +1885,18 @@ public interface RetrofitApi {
 
 
     /**
+     * 缴费账单选择优惠券
+     */
+    @GET("billsapi/v2/order_discounts_coupon")
+    Observable<JcsResponse<ArrayList<BillsCoupon>>> getBillOrderCoupon(
+
+            @Query("type") int type,
+            @Query("module") int module,
+            @Query("price") String price,
+            @Query("pay_account") String pay_account);
+
+
+    /**
      * 获取当前店铺优惠券
      */
     @GET("estoreapi/v2/shop_coupon")
@@ -2146,7 +2159,8 @@ public interface RetrofitApi {
     Observable<JcsResponse<BillsOrderDiscount>> billsOrderDiscount(
             @Query("module") int module,
             @Query("price") String price,
-            @Query("pay_account") String pay_account
+            @Query("pay_account") String pay_account,
+            @Query("coupon_id") @Nullable Integer coupon_id
     );
 
     /**
@@ -2272,9 +2286,6 @@ public interface RetrofitApi {
     );
 
 
-
-
-
     /**
      * 创建简历 工作经历
      */
@@ -2294,8 +2305,6 @@ public interface RetrofitApi {
             @Path("experience_id") int experience_id,
             @Body CreateJobExperience request
     );
-
-
 
 
 }

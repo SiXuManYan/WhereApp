@@ -14,7 +14,6 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
 interface BillsPlaceOrderView : BaseMvpView {
     fun commitSuccess(response: HotelOrderCommitResponse)
     fun bindOrderDiscount(response: BillsOrderDiscount)
-
 }
 
 class BillsPlaceOrderPresenter(private var view: BillsPlaceOrderView) : BaseMvpPresenter(view) {
@@ -25,21 +24,23 @@ class BillsPlaceOrderPresenter(private var view: BillsPlaceOrderView) : BaseMvpP
      * @param module       1-话费，2-水费，3-电费，4-网费
      * @param oldPrice   原价
      * @param payAccount 充值手机号
+     * @param couponId 优惠券id
      */
-    fun billsOrderDiscount(module: Int, oldPrice: String, payAccount: String) {
+    fun billsOrderDiscount(module: Int, oldPrice: String, payAccount: String, couponId: Int?) {
 
-        requestApi(mRetrofit.billsOrderDiscount(module, oldPrice, payAccount), object : BaseMvpObserver<BillsOrderDiscount>(view) {
-            override fun onSuccess(response: BillsOrderDiscount) {
+        requestApi(mRetrofit.billsOrderDiscount(module, oldPrice, payAccount, couponId),
+            object : BaseMvpObserver<BillsOrderDiscount>(view) {
+                override fun onSuccess(response: BillsOrderDiscount) {
 
-                view.bindOrderDiscount(response)
-            }
+                    view.bindOrderDiscount(response)
+                }
 
-        })
+            })
 
     }
 
 
-    fun placeOrder(billerTag: String, firstField: String, secondField: String, money: String, billType: Int) {
+    fun placeOrder(billerTag: String, firstField: String, secondField: String, money: String, billType: Int,couponId:Int) {
 
         if (money.isBlank()) {
             return
@@ -51,6 +52,7 @@ class BillsPlaceOrderPresenter(private var view: BillsPlaceOrderView) : BaseMvpP
             second_field = secondField
             amount = money
             bill_type = billType
+            coupon_id = couponId
         }
 
         requestApi(mRetrofit.billsPlaceOrder(apply), object : BaseMvpObserver<HotelOrderCommitResponse>(view) {

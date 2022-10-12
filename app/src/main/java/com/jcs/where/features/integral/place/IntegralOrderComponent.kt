@@ -18,7 +18,7 @@ interface IntegralOrderView : BaseMvpView {
 
 class IntegralOrderPresenter(private var view: IntegralOrderView) : BaseMvpPresenter(view) {
 
-    fun makeOrder(goodsId: Int, addressId: String) {
+    fun makeOrder(goodsId: Int, addressId: String?) {
         val apply = IntegralPlaceOrder().apply {
             goods_id = goodsId.toString()
             address_id = addressId

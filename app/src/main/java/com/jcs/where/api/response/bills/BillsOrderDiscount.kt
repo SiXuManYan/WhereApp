@@ -24,4 +24,11 @@ class BillsOrderDiscount {
     var hint  :String ? = null
 
 
+    /** 优惠券id */
+    var coupon_id = 0
+
+    /** 优惠券金额 */
+    var coupon_price = ""
+
+
 }

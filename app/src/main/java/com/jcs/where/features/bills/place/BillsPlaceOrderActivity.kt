@@ -20,6 +20,7 @@ import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.place.coupon.BillCouponHome
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.BigDecimalUtil
 import com.jcs.where.utils.BusinessUtils
@@ -35,10 +36,14 @@ import java.math.BigDecimal
 class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), BillsPlaceOrderView {
 
 
-    /** 账单类型 */
+    /** 账单类型   1-话费，2-水费，3-电费，4-网费 */
     private var billsType = 0
     private var billerTag = ""
+
+    /** 账号 */
     private var firstField = ""
+
+    /** 用户名 */
     private var secondField = ""
 
     /** 用户输入的原始金额 */
@@ -53,6 +58,11 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
     private var fieldDetail = ArrayList<FieldDetail>()
 
     private lateinit var mAdapter: BillsPlaceOrderAdapter
+
+    /** 优惠券id */
+    private var currentCouponId = 0
+
+    private lateinit var mSelectedCouponDialog: BillCouponHome
 
     override fun isStatusDark() = true
 
@@ -100,13 +110,10 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
             serviceCharge = it.getDouble(Constant.PARAM_SERVICE_MONEY, 0.0)
             val parcelableArrayList = it.getParcelableArrayList<FieldDetail>(Constant.PARAM_DATA)
             fieldDetail.addAll(parcelableArrayList!!)
-
         }
     }
 
     private fun initList() {
-
-
 //        val totalMoney = BigDecimalUtil.addUnNecessary(userInputMoney, serviceCharge)
 //        total_money_tv.text = totalMoney.toPlainString()
 
@@ -124,7 +131,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
 
     override fun initData() {
         presenter = BillsPlaceOrderPresenter(this)
-        presenter.billsOrderDiscount(billsType, userInputMoney.toString(), fieldDetail[0].nativeUserInput)
+        mSelectedCouponDialog = BillCouponHome()
+        presenter.billsOrderDiscount(billsType, userInputMoney.toString(), fieldDetail[0].nativeUserInput, currentCouponId)
     }
 
     override fun bindOrderDiscount(response: BillsOrderDiscount) {
@@ -152,6 +160,16 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
             user_hint_tv.text = hint
         }
 
+        // 优惠券
+        val couponId = response.coupon_id
+        if (couponId != 0) {
+            currentCouponId = couponId
+            coupon_rl.visibility = View.VISIBLE
+            coupon_price_tv.text = getString(R.string.price_unit_discount_format, response.coupon_price)
+        } else {
+            coupon_rl.visibility = View.GONE
+        }
+
     }
 
     override fun bindListener() {
@@ -159,17 +177,24 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
             showLoadingDialog(false)
             mAdapter.data.forEachIndexed { index, fieldDetail ->
                 when (index) {
-                    0 -> {
-                        firstField = fieldDetail.nativeUserInput
-                    }
-                    1 -> {
-                        secondField = fieldDetail.nativeUserInput
-                    }
+                    0 -> firstField = fieldDetail.nativeUserInput
+                    1 -> secondField = fieldDetail.nativeUserInput
                 }
             }
-            presenter.placeOrder(billerTag, firstField, secondField, userInputMoney.toString(), billsType)
-
+            presenter.placeOrder(billerTag, firstField, secondField, userInputMoney.toString(), billsType, currentCouponId)
         }
+
+        coupon_rl.setOnClickListener {
+
+            mSelectedCouponDialog.apply {
+                alreadySelectedCouponId = currentCouponId
+                module = billsType
+                price = userInputMoney.toString()
+                account = firstField
+            }
+            mSelectedCouponDialog.show(supportFragmentManager, mSelectedCouponDialog.tag)
+        }
+
     }
 
     override fun commitSuccess(response: HotelOrderCommitResponse) {
@@ -186,11 +211,13 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
             return
         }
         when (baseEvent.code) {
-            EventCode.EVENT_REFRESH_ORDER_LIST -> {
-                finish()
+            EventCode.EVENT_REFRESH_ORDER_LIST -> finish()
+            EventCode.EVENT_SELECTED_PLATFORM_COUPON -> {
+                val selectedPlatformCouponId = baseEvent.data as Int
+                currentCouponId = selectedPlatformCouponId
+                presenter.billsOrderDiscount(billsType, userInputMoney.toString(), fieldDetail[0].nativeUserInput, currentCouponId)
             }
         }
-
     }
 
 

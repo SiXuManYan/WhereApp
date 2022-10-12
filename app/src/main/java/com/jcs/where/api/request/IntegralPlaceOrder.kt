@@ -6,7 +6,7 @@ package com.jcs.where.api.request
  */
 class IntegralPlaceOrder {
 
-    var address_id = ""
+    var address_id :String?= null
     var goods_id = ""
 
 }

@@ -18,9 +18,11 @@ import com.jcs.where.api.response.bills.BillsOrderDiscount
 import com.jcs.where.api.response.bills.BillsPlaceOrder
 import com.jcs.where.api.response.bills.CallChargeChannelItem
 import com.jcs.where.api.response.hotel.HotelOrderCommitResponse
+import com.jcs.where.api.response.mall.request.BillCouponRequest
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.place.coupon.BillCouponHome
 import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_bills_place_order_charges.*
@@ -38,6 +40,13 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
     private lateinit var selectItem: CallChargeChannelItem
 
     private var finalPrice = ""
+
+
+    /** 优惠券id */
+    private var currentCouponId = 0
+
+
+    private lateinit var mSelectedCouponDialog: BillCouponHome
 
 
     companion object {
@@ -85,14 +94,28 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
 
     override fun initData() {
         presenter = PhonePlacePresenter(this)
-        presenter.billsOrderDiscount(selectItem.Denomination, phone)
+        mSelectedCouponDialog = BillCouponHome()
+        presenter.getBillsOrderDiscount(selectItem.Denomination, phone, currentCouponId)
     }
 
     override fun bindListener() {
         confirm_tv.setOnClickListener {
             showLoadingDialog(false)
-            presenter.placeOrder(phone, selectItem, finalPrice)
+            presenter.placeOrder(phone, selectItem, finalPrice, currentCouponId)
         }
+
+        coupon_rl.setOnClickListener {
+
+            mSelectedCouponDialog.apply {
+                alreadySelectedCouponId = currentCouponId
+                module = BillCouponRequest.MODULE_PHONE
+                price = finalPrice
+                account = phone
+            }
+            mSelectedCouponDialog.show(supportFragmentManager, mSelectedCouponDialog.tag)
+        }
+
+
     }
 
     override fun commitSuccess(response: HotelOrderCommitResponse) {
@@ -112,6 +135,12 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_ORDER_LIST -> {
                 finish()
+            }
+
+            EventCode.EVENT_SELECTED_PLATFORM_COUPON -> {
+                val selectedPlatformCouponId = baseEvent.data as Int
+                currentCouponId = selectedPlatformCouponId
+                presenter.getBillsOrderDiscount(selectItem.Denomination, phone, currentCouponId)
             }
         }
 
@@ -152,6 +181,16 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
             user_hint_tv.text = hint
         }
 
+        // 优惠券
+        val couponId = response.coupon_id
+        if (couponId != 0) {
+            currentCouponId = couponId
+            coupon_rl.visibility = View.VISIBLE
+            coupon_price_tv.text = getString(R.string.price_unit_discount_format, response.coupon_price)
+        } else {
+            coupon_rl.visibility = View.GONE
+        }
+
 
     }
 
@@ -174,20 +213,21 @@ class PhonePlacePresenter(private var view: PhonePlaceOrderView) : BaseMvpPresen
      * @param oldPrice   原价
      * @param payAccount 充值手机号
      */
-    fun billsOrderDiscount(oldPrice: String, payAccount: String) {
+    fun getBillsOrderDiscount(oldPrice: String, payAccount: String, couponId: Int? = null) {
 
-        requestApi(mRetrofit.billsOrderDiscount(1, oldPrice, payAccount), object : BaseMvpObserver<BillsOrderDiscount>(view) {
-            override fun onSuccess(response: BillsOrderDiscount) {
+        requestApi(mRetrofit.billsOrderDiscount(1, oldPrice, payAccount, couponId),
+            object : BaseMvpObserver<BillsOrderDiscount>(view) {
+                override fun onSuccess(response: BillsOrderDiscount) {
 
-                view.bindOrderDiscount(response)
-            }
+                    view.bindOrderDiscount(response)
+                }
 
-        })
+            })
 
     }
 
 
-    fun placeOrder(phone: String, selectItem: CallChargeChannelItem, finalPrice: String) {
+    fun placeOrder(phone: String, selectItem: CallChargeChannelItem, finalPrice: String, couponId: Int) {
 
         if (finalPrice.isBlank()) {
             return
@@ -201,7 +241,7 @@ class PhonePlacePresenter(private var view: PhonePlaceOrderView) : BaseMvpPresen
 //            amount = finalPrice
             telco = selectItem.TelcoName
             ext_tag = selectItem.ExtTag
-
+            coupon_id = couponId
         }
 
         requestApi(mRetrofit.billsPlaceOrder(apply), object : BaseMvpObserver<HotelOrderCommitResponse>(view) {

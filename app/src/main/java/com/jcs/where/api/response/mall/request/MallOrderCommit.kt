@@ -92,6 +92,33 @@ class MallOrderCoupon {
 }
 
 
+class BillCouponRequest {
+
+    companion object {
+
+        var MODULE_PHONE = 1
+        var MODULE_WATER = 2
+        var MODULE_ELECTRICITY = 3
+        var MODULE_WEB = 4
+
+    }
+
+
+    /** 1可用优惠券  2 不可用优惠券 */
+    var type = 0
+
+    /** 1-话费，2-水费，3-电费，4-网费 */
+    var module = 0
+
+    /** 金额 */
+    var price = ""
+
+    /** 账号 */
+    var pay_account = ""
+
+
+}
+
 
 
 

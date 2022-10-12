@@ -70,7 +70,9 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
         val image = response.image
         GlideUtil.load(this, image, good_iv)
 
-        if (response.type == 1) {
+        /** 1：商品 其他：优惠券 */
+        val couponType = response.type
+        if (couponType == 1) {
             mJcsTitle.setMiddleTitle(getString(R.string.exchange_product_details))
             desc_title_tv.setText(R.string.product_description)
         } else {
@@ -107,7 +109,7 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
                 confirm_tv.isClickable = true
                 confirm_tv.text = getString(R.string.exchange)
                 confirm_tv.setOnClickListener {
-                    IntegralOrderActivity.navigation(this, goodId, goodTitle, image, price)
+                    IntegralOrderActivity.navigation(this, goodId, goodTitle, image, price,couponType)
                 }
             }
             2 -> {

@@ -124,6 +124,8 @@ class BillsPlaceOrder{
     var cellphone_no :String ?= null
     var ext_tag :String ?= null
 
+    /** 优惠券 */
+    var coupon_id = 0
 
 }
 

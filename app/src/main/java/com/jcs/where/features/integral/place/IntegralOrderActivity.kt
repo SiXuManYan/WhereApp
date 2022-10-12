@@ -37,6 +37,9 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
     var image = ""
     var price = ""
 
+    /**   1：商品 其他：优惠券  */
+    var couponType = 0
+
     /** 收货地址 */
     var mSelectAddressData: AddressResponse? = null
 
@@ -46,9 +49,13 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
 
 
     companion object {
+
+        /**
+         *       1：商品 其他：优惠券
+         */
         fun navigation(
             context: Context, goodId: Int, title: String,
-            image: String, price: String,
+            image: String, price: String, couponType: Int,
         ) {
 
             val bundle = Bundle().apply {
@@ -56,6 +63,7 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
                 putString(Constant.PARAM_TITLE, title)
                 putString(Constant.PARAM_IMAGE, image)
                 putString(Constant.PARAM_PRICE, price)
+                putInt(Constant.PARAM_TYPE, couponType)
             }
             val intent = Intent(context, IntegralOrderActivity::class.java)
                 .putExtras(bundle)
@@ -97,9 +105,16 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
     private fun initExtra() {
         intent.extras?.let {
             goodId = it.getInt(Constant.PARAM_ID)
+            couponType = it.getInt(Constant.PARAM_TYPE)
             title = it.getString(Constant.PARAM_TITLE, "")
             image = it.getString(Constant.PARAM_IMAGE, "")
             price = it.getString(Constant.PARAM_PRICE, "")
+        }
+
+        if (couponType == 1) {
+            address_ll.visibility = View.VISIBLE
+        } else {
+            address_ll.visibility = View.GONE
         }
     }
 
@@ -118,7 +133,8 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
         }
 
         confirm_tv.setOnClickListener {
-            if (mSelectAddressData == null) {
+
+            if (couponType == 1 && mSelectAddressData == null) {
                 ToastUtils.showShort(R.string.choose_shipping_address)
                 return@setOnClickListener
             }
@@ -156,7 +172,13 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
         }
 
         confirmTv.setOnClickListener {
-            presenter.makeOrder(goodId, mSelectAddressData!!.id)
+
+            var addressId: String? = null
+            mSelectAddressData?.let {
+                addressId = it.id
+            }
+
+            presenter.makeOrder(goodId, addressId)
             alertDialog.dismiss()
         }
 

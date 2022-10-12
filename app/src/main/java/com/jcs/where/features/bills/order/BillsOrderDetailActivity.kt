@@ -198,6 +198,7 @@ class BillsOrderDetailActivity : BaseMvpActivity<BillsDetailPresenter>(), BillsD
 
         actual_payment_bill_tv.text = getString(R.string.price_unit_format, data.total_price.toPlainString())
 
+        coupon_money_tv.text =getString(R.string.price_unit_format, data.coupon_price)
 
     }
 

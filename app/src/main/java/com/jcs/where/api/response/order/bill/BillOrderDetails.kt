@@ -60,6 +60,11 @@ class BillOrderDetails {
     /** 优惠金额 */
     var discounts = ""
 
+    /** 优惠券金额 */
+    var coupon_price = ""
+
+
+
 }
 
 

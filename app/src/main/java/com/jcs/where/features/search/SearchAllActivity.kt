@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.feedback.question.QuestionActivity
 import com.jcs.where.features.job.result.JobSearchResultActivity
 import com.jcs.where.features.mall.result.MallSearchResultActivity
 import com.jcs.where.features.search.result.SearchAllResultActivity
@@ -42,6 +43,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
      * 7.美食地图
      * 8.新版商城通过店铺搜索商品
      * 9.招聘
+     * 10.意见反馈
      */
     private var type = 0
 
@@ -176,6 +178,9 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
             }
             9 -> {
                 startActivity(JobSearchResultActivity::class.java, bundle)
+            }
+            10 -> {
+                QuestionActivity.navigation4Search(this, finalInput)
             }
             else -> {
             }

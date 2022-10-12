@@ -87,7 +87,7 @@ import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MallGoodCollection;
 import com.jcs.where.api.response.collection.MyCollection;
-import com.jcs.where.api.response.feedback.FeedbackCategory;
+import com.jcs.where.api.response.feedback.FeedbackCategoryAndQuestion;
 import com.jcs.where.api.response.footprint.Footprint;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
@@ -2308,11 +2308,19 @@ public interface RetrofitApi {
     );
 
 
-
     /**
-     * 意见反馈分类
+     * 意见反馈分类列表
      */
     @GET("helpapi/v2/help_category")
-    Observable<JcsResponse<ArrayList<FeedbackCategory>>> feedBackCatgegory();
+    Observable<JcsResponse<ArrayList<FeedbackCategoryAndQuestion>>> feedbackCategory();
+
+    /**
+     * 意见反馈问题列表
+     */
+    @GET("helpapi/v2/help_category_question")
+    Observable<JcsResponse<ArrayList<FeedbackCategoryAndQuestion>>> feedbackQuestion(
+            @Query("category_id") int category_id,
+            @Query("question") @Nullable String question
+    );
 
 }

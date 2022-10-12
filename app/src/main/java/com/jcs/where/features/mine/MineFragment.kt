@@ -17,6 +17,7 @@ import com.jcs.where.features.com100.ExtendChatActivity
 import com.jcs.where.features.coupon.user.MyCouponActivity
 import com.jcs.where.features.daily.scoe.ScoreActivity
 import com.jcs.where.features.daily.sign.SignInActivity
+import com.jcs.where.features.feedback.home.FeedbackHomeActivity
 import com.jcs.where.features.footprint.FootprintActivity
 import com.jcs.where.features.integral.activitys.ActivityCenterActivity
 import com.jcs.where.features.merchant.MerchantSettledActivity
@@ -117,6 +118,10 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
 
         activity_center_iv.setOnClickListener {
             startActivityAfterLogin(ActivityCenterActivity::class.java)
+        }
+
+        feedback_rl.setOnClickListener {
+            startActivityAfterLogin(FeedbackHomeActivity::class.java)
         }
 
     }

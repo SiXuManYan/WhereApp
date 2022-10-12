@@ -634,6 +634,7 @@
         <activity android:name=".features.job.cv.CvHomeActivity" />
         <activity android:name=".features.job.form.CvFormProfileActivity" />
         <activity android:name=".features.job.form.CvFormJobExperienceActivity" />
+        <activity android:name=".features.feedback.home.FeedbackHomeActivity" />
 
 
     </application>

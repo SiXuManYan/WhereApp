@@ -149,7 +149,7 @@
     <string name="request_error">Request error %1$d</string>
     <string name="news_followed">Followed</string>
     <string name="search_news_keyword">Search news by keyword</string>
-    <string name="search_keyword">Search by keyword</string>
+    <string name="search_keyword">Search Keyword</string>
 
     <string name="day_1">1st</string>
     <string name="day_2">2ed</string>
@@ -1065,5 +1065,8 @@ Gentleman must let go</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="bill_form_hint">The final discount amount is subject to the payment account number and payment number.</string>
+    <string name="feed_back">Help Feedback</string>
+    <string name="feedback_record">Record</string>
+    <string name="feed_back_bottom">Feedback</string>
 
 </resources>

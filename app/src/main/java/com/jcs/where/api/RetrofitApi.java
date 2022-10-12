@@ -87,6 +87,7 @@ import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MallGoodCollection;
 import com.jcs.where.api.response.collection.MyCollection;
+import com.jcs.where.api.response.feedback.FeedbackCategory;
 import com.jcs.where.api.response.footprint.Footprint;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
@@ -2306,5 +2307,12 @@ public interface RetrofitApi {
             @Body CreateJobExperience request
     );
 
+
+
+    /**
+     * 意见反馈分类
+     */
+    @GET("helpapi/v2/help_category")
+    Observable<JcsResponse<ArrayList<FeedbackCategory>>> feedBackCatgegory();
 
 }

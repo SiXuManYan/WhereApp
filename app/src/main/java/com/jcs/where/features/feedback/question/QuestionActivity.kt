@@ -16,6 +16,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.feedback.FeedbackCategoryAndQuestion
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.feedback.home.CategoryQuestionAdapter
+import com.jcs.where.features.feedback.question.det.QuestionDetActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -132,7 +133,10 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
+        val item = mAdapter.data[position]
+        startActivity(QuestionDetActivity::class.java , Bundle().apply {
+            putString(Constant.PARAM_URL , item.website)
+        })
     }
 
     override fun bindView(response: ArrayList<FeedbackCategoryAndQuestion>) {

@@ -1083,5 +1083,10 @@ Gentleman must let go</string>
     <string name="feed_back">帮助反馈</string>
     <string name="feedback_record">反馈记录</string>
     <string name="feed_back_bottom">意见反馈</string>
+    <string name="solved">已解决</string>
+    <string name="unsolved">未解决</string>
+    <string name="feed_back_question">没有解决您的问题？&#160;&#160;</string>
+    <string name="question_click_hint">提交成功，感谢评价</string>
+    <string name="question_detail">问题详情</string>
 
 </resources>

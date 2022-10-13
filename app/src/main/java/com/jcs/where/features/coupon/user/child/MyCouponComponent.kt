@@ -20,7 +20,7 @@ interface MyCouponView : BaseMvpView, OnItemChildClickListener {
 class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view) {
     fun getData(page: Int, type: Int) {
 
-        requestApi(mRetrofit.couponUser(page, type), object : BaseMvpObserver<PageResponse<UserCoupon>>(view,page) {
+        requestApi(mRetrofit.couponUser(page, type), object : BaseMvpObserver<PageResponse<UserCoupon>>(view, page) {
 
             override fun onSuccess(response: PageResponse<UserCoupon>) {
 
@@ -38,6 +38,7 @@ class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view)
 
     /** 商家券按照商家名称分组 */
     private fun addTitle(data: MutableList<UserCoupon>) {
+
         val groupBy = data.groupBy { it.shop_name }
 
         groupBy.forEach { group ->
@@ -47,15 +48,11 @@ class MyCouponPresenter(private var view: MyCouponView) : BaseMvpPresenter(view)
                     shop_name = group.key
                     this.nativeListType = UserCoupon.TYPE_TITLE
                 }
-
                 val indexOfFirst = data.indexOfFirst {
                     it.shop_name == group.key
                 }
-
                 data.add(indexOfFirst, titleEntity)
             }
-
-
         }
 
 

@@ -8,5 +8,15 @@ class FeedbackCategoryAndQuestion {
 
     var id = 0
     var name = ""
+    var website =  ""
 }
 
+
+class FeedbackQuestionTab {
+
+    /** 0已解决 1 未解决 */
+    var id = 0
+    var nativeCanClick = true
+    var nativeSelected = false
+
+}

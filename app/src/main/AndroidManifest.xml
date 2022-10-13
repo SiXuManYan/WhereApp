@@ -638,6 +638,7 @@
         <activity
             android:name=".features.feedback.question.QuestionActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".features.feedback.question.det.QuestionDetActivity" />
 
 
     </application>

@@ -1068,5 +1068,10 @@ Gentleman must let go</string>
     <string name="feed_back">Help Feedback</string>
     <string name="feedback_record">Record</string>
     <string name="feed_back_bottom">Feedback</string>
+    <string name="solved">Solved</string>
+    <string name="unsolved">Unsolved</string>
+    <string name="feed_back_question">Did not solve your problem ?&#160;&#160;</string>
+    <string name="question_click_hint">Successfully, Thanks</string>
+    <string name="question_detail">Question Details</string>
 
 </resources>

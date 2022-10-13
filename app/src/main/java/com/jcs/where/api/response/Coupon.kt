@@ -33,7 +33,7 @@ class UserCoupon : MultiItemEntity {
     /** 使用规则 */
     var rule: String = ""
 
-    /** 1 平台优惠券 2 店铺优惠券 3 支付账单 */
+    /** 1 平台优惠券 2 店铺优惠券 3 支付账单  */
     var couponType: Int = 1
 
     /** 未使用已使用已过期 */

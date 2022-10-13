@@ -112,6 +112,8 @@ import com.jcs.where.api.response.integral.IntegralGoodDetail;
 import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
+import com.jcs.where.api.response.integral.IntegralTab;
+import com.jcs.where.api.response.integral.IntegralTag;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.Job;
@@ -2299,7 +2301,7 @@ public interface RetrofitApi {
     /**
      * 修改简历个人信息
      *
-     * @param profile_id 个人信息id
+     * @param experience_id 个人信息id
      */
     @PUT("jobapi/v2/resumes/experiences/{experience_id}")
     Observable<JcsResponse<JsonElement>> modifyCvExperiences(
@@ -2322,5 +2324,12 @@ public interface RetrofitApi {
             @Query("category_id") int category_id,
             @Query("question") @Nullable String question
     );
+
+
+    /**
+     * 活动中心标题
+     */
+    @GET("integralapi/v2/filters")
+    Observable<JcsResponse<ArrayList<IntegralTag>>> activityCenterTab();
 
 }

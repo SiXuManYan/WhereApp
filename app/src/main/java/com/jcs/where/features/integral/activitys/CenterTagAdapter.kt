@@ -20,7 +20,7 @@ class CenterTagAdapter : BaseQuickAdapter<IntegralTag, BaseViewHolder>(R.layout.
 
         val third_category = holder.getView<CheckedTextView>(R.id.third_category)
         third_category.apply {
-            text = item.name
+            text = item.title
             isChecked = item.nativeIsSelected
         }
 

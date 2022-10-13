@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.integral.IntegralTag
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -24,19 +23,14 @@ import kotlinx.android.synthetic.main.activity_activity_center.*
 class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), ActivityCenterView {
 
 
-    val tab_titles =
-        arrayOf(
-            StringUtils.getString(R.string.all),
-            StringUtils.getString(R.string.telecoms_coupon),
-            StringUtils.getString(R.string.water_utilities_coupon),
-            StringUtils.getString(R.string.estore_coupon),
-            StringUtils.getString(R.string.electricity_utilities_coupon),
-            StringUtils.getString(R.string.internet_billing_coupon)
-        )
+    private var tabTitles = ArrayList<IntegralTag>()
+
 
     override fun isStatusDark() = true
 
     private lateinit var mThirdAdapter: CenterTagAdapter
+
+    private lateinit var pagerAdapter: InnerPagerAdapter
 
     override fun getLayoutId() = R.layout.activity_activity_center
 
@@ -44,16 +38,9 @@ class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), Activ
     override fun initView() {
 
         initFilter()
-        initPager()
+        pagerAdapter = InnerPagerAdapter(supportFragmentManager, 0)
     }
 
-    private fun initPager() {
-        pager.apply {
-            offscreenPageLimit = tab_titles.size
-            adapter = InnerPagerAdapter(supportFragmentManager, 0)
-        }
-
-    }
 
     private fun initFilter() {
 
@@ -63,18 +50,23 @@ class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), Activ
             layoutManager = LinearLayoutManager(this@ActivityCenterActivity, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(8f), 0, 0))
         }
-        val filterData = ArrayList<IntegralTag>()
-        tab_titles.forEachIndexed { index, s ->
-            filterData.add(IntegralTag().apply {
-                name = s
-                if (index == 0) nativeIsSelected = true
-            })
+    }
+
+
+    override fun bindTab(response: ArrayList<IntegralTag>) {
+        mThirdAdapter.setNewInstance(response)
+        tabTitles.clear()
+        tabTitles.addAll(response)
+        pager.apply {
+            offscreenPageLimit = response.size
+            pagerAdapter.notifyDataSetChanged()
+            adapter = pagerAdapter
         }
-        mThirdAdapter.setNewInstance(filterData)
     }
 
     override fun initData() {
         presenter = ActivityCenterPresenter(this)
+        presenter.getTab()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -112,11 +104,12 @@ class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), Activ
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
-        override fun getPageTitle(position: Int): CharSequence = tab_titles[position]
+
+        override fun getPageTitle(position: Int): CharSequence = tabTitles[position].title
 
         override fun getItem(position: Int): Fragment = IntegralChildFragment().apply { type = position }
 
-        override fun getCount(): Int = tab_titles.size
+        override fun getCount(): Int = tabTitles.size
     }
 
 }

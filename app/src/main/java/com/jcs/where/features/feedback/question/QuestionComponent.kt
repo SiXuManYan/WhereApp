@@ -10,7 +10,10 @@ import com.jcs.where.api.response.feedback.FeedbackCategoryAndQuestion
  *
  */
 interface QuestionView :BaseMvpView{
-    fun bindView(response: java.util.ArrayList<FeedbackCategoryAndQuestion>)
+
+    fun bindView(response: java.util.ArrayList<FeedbackCategoryAndQuestion>){
+
+    }
 }
 
 class QuestionPresenter(private var view: QuestionView):BaseMvpPresenter(view){

@@ -30,12 +30,15 @@ class IntegralGood {
 
 
 class IntegralTag {
-    var name = ""
 
     /**
      * 本地字段，判断是否选中
      */
     var nativeIsSelected = false
+
+
+    var  title = ""
+    var  type = 0
 }
 
 
@@ -118,4 +121,10 @@ class IntegralRecord {
      */
     var type = 0
 
+}
+
+
+class IntegralTab {
+    var  title = ""
+    var  type = 0
 }

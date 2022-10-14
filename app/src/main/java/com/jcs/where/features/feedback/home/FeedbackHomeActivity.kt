@@ -12,7 +12,9 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.feedback.FeedbackCategoryAndQuestion
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.feedback.form.FeedBackPostActivity
 import com.jcs.where.features.feedback.question.QuestionActivity
+import com.jcs.where.features.feedback.record.FeedbackRecordActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -66,7 +68,7 @@ class FeedbackHomeActivity : BaseMvpActivity<FeedbackHomePresenter>(), FeedbackH
 
     override fun bindListener() {
         record_tv.setOnClickListener {
-
+            startActivity(FeedbackRecordActivity::class.java)
         }
 
         search_ll.setOnClickListener {
@@ -75,7 +77,7 @@ class FeedbackHomeActivity : BaseMvpActivity<FeedbackHomePresenter>(), FeedbackH
             })
         }
         bottom_rl.setOnClickListener {
-
+            startActivity(FeedBackPostActivity::class.java)
         }
 
 

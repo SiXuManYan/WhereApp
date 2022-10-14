@@ -1073,5 +1073,16 @@ Gentleman must let go</string>
     <string name="feed_back_question">Did not solve your problem ?&#160;&#160;</string>
     <string name="question_click_hint">Successfully, Thanks</string>
     <string name="question_detail">Question Details</string>
+    <string name="edit_feedback">Edit Feedback</string>
+    <string name="feed_back_title"><font color='#333333'>Opinion Content&#160;</font> <font color='#FF4934'>*</font></string>
+    <string name="feed_back_title_2">Opinion Content</string>
+    <string name="char_length_500">500&#160;Characters</string>
+    <string name="up_to_4">up to 4</string>
+    <string name="image_description">Image Description</string>
+    <string name="phone_number_feedback">Phone Number</string>
+    <string name="phone_number_feedback_hint">Please enter your mobile number</string>
+    <string name="feedback_post_success">Submitted successfully, thanks for the evaluation</string>
+    <string name="feedback_form_detail">Feedback Details</string>
+    <string name="feedback_post_hint">Please enter your valuable suggestion.</string>
 
 </resources>

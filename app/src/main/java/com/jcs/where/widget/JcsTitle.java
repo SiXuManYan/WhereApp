@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.jcs.where.R;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class JcsTitle extends ConstraintLayout {
@@ -129,6 +131,14 @@ public class JcsTitle extends ConstraintLayout {
         this.mMiddleTitle = middleTitle;
         this.mMiddleTitleTv.setText(middleTitle);
     }
+
+
+    public void setMiddleTitle(@StringRes int strResId) {
+        String string = StringUtils.getString(strResId);
+        this.mMiddleTitle = string;
+        this.mMiddleTitleTv.setText(string);
+    }
+
 
     public void setMiddleTitleColor(int color) {
         this.mMiddleTitleColor = color;

@@ -191,7 +191,7 @@
                     android:textColor="@color/grey_999999"
                     android:textColorHint="@color/grey_999999"
                     android:textSize="@dimen/sp_14"
-                    tools:text="@string/test_hint" />
+                 />
 
 
             </LinearLayout>

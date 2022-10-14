@@ -88,6 +88,8 @@ import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MallGoodCollection;
 import com.jcs.where.api.response.collection.MyCollection;
 import com.jcs.where.api.response.feedback.FeedbackCategoryAndQuestion;
+import com.jcs.where.api.response.feedback.FeedbackPost;
+import com.jcs.where.api.response.feedback.FeedbackRecord;
 import com.jcs.where.api.response.footprint.Footprint;
 import com.jcs.where.api.response.gourmet.cart.ShoppingCartResponse;
 import com.jcs.where.api.response.gourmet.dish.DeliveryTime;
@@ -2331,5 +2333,29 @@ public interface RetrofitApi {
      */
     @GET("integralapi/v2/filters")
     Observable<JcsResponse<ArrayList<IntegralTag>>> activityCenterTab();
+
+
+
+
+    /**
+     * 发布意见反馈
+     */
+    @POST("commonapi/v2/feedbacks")
+    Observable<JcsResponse<JsonElement>> postFeedback(
+            @Body FeedbackPost request
+    );
+
+
+
+
+    /**
+     * 意见反馈记录
+     *
+     */
+    @GET("/commonapi/v2/feedbacks")
+    Observable<JcsResponse<PageResponse<FeedbackRecord>>> feedbackRecord(
+            @Query("page") int page
+    );
+
 
 }

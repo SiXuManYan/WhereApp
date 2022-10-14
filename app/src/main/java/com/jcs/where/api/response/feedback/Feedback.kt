@@ -8,7 +8,7 @@ class FeedbackCategoryAndQuestion {
 
     var id = 0
     var name = ""
-    var website =  ""
+    var website = ""
 }
 
 
@@ -18,5 +18,23 @@ class FeedbackQuestionTab {
     var id = 0
     var nativeCanClick = true
     var nativeSelected = false
+
+}
+
+
+class FeedbackPost {
+
+    var images: String? = null
+    var content: String? = null
+    var tel: String? = null
+}
+
+class FeedbackRecord {
+
+    var image: ArrayList<String>? = ArrayList()
+    var content: String? = ""
+    var tel: String? = ""
+    var time = ""
+
 
 }

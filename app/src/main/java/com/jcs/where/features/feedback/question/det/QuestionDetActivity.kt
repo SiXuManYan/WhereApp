@@ -5,17 +5,16 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.feedback.FeedbackQuestionTab
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.feedback.form.FeedBackPostActivity
 import com.jcs.where.features.feedback.question.QuestionPresenter
 import com.jcs.where.features.feedback.question.QuestionView
 import com.jcs.where.utils.Constant
@@ -100,7 +99,7 @@ class QuestionDetActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, 
                 }
 
                 override fun onClick(widget: View) {
-                    // 进入意见反馈表单页面
+                   startActivity(FeedBackPostActivity::class.java)
                 }
             }).create()
         feedback_tv.text = span

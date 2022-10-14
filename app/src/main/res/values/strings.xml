@@ -1100,6 +1100,7 @@ Gentleman must let go</string>
     <string name="feedback_post_success">提交成功，感谢评价</string>
     <string name="feedback_form_detail">意见详情</string>
     <string name="feedback_post_hint">请输入您的宝贵建议。</string>
+    <string name="feedback_picture">图片</string>
 
 
 </resources>

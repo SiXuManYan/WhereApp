@@ -27,7 +27,7 @@ class FeedbackRecordActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBac
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: FeedbackRecordAdapter
     private lateinit var emptyView: EmptyView
-
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_refresh_list
 
@@ -67,8 +67,9 @@ class FeedbackRecordActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBac
         }
         val layoutParams = recycler.layoutParams
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        recycler.layoutParams = layoutParams
         recycler.setBackgroundColor(Color.WHITE)
-
+        container_ll.setBackgroundColor(ColorUtils.getColor(R.color.colorPrimary))
 
 
     }

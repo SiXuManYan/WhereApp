@@ -24,6 +24,9 @@ class FeedbackDetActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBackPo
     var phone = ""
     private lateinit var mImageAdapter: StoreRefundAdapter
 
+    override fun isStatusDark() = true
+
+    override fun getLayoutId() = R.layout.activity_feedback_detail
 
     companion object {
         fun navigation(context: Context, image: ArrayList<String>? = ArrayList(), content: String? = "", phone: String? = "") {
@@ -45,14 +48,10 @@ class FeedbackDetActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBackPo
     }
 
 
-    override fun getLayoutId() = R.layout.activity_feedback_detail
-
-
     override fun initView() {
         initExtra()
         initImage()
     }
-
 
 
     private fun initExtra() {

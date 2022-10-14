@@ -24,7 +24,7 @@ import com.jcs.where.features.merchant.MerchantSettledActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.setting.SettingActivity
 import com.jcs.where.features.setting.information.ModifyInfoActivity
-import com.jcs.where.mine.activity.AboutActivity
+import com.jcs.where.mine.about.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.LocalLanguageUtil

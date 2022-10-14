@@ -431,7 +431,7 @@
         <!-- ######## comm 100 end ↑ #############-->
 
         <activity
-            android:name=".mine.activity.AboutActivity"
+            android:name=".mine.about.AboutActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".features.setting.information.ModifyInfoActivity"

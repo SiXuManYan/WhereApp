@@ -87,6 +87,7 @@ import com.jcs.where.api.response.category.Category;
 import com.jcs.where.api.response.category.UserCategory;
 import com.jcs.where.api.response.collection.MallGoodCollection;
 import com.jcs.where.api.response.collection.MyCollection;
+import com.jcs.where.api.response.feedback.About;
 import com.jcs.where.api.response.feedback.FeedbackCategoryAndQuestion;
 import com.jcs.where.api.response.feedback.FeedbackPost;
 import com.jcs.where.api.response.feedback.FeedbackRecord;
@@ -2352,10 +2353,17 @@ public interface RetrofitApi {
      * 意见反馈记录
      *
      */
-    @GET("/commonapi/v2/feedbacks")
+    @GET("commonapi/v2/feedbacks")
     Observable<JcsResponse<PageResponse<FeedbackRecord>>> feedbackRecord(
             @Query("page") int page
     );
+
+ /**
+     * 意见反馈记录
+     *
+     */
+    @GET("commonapi/v2/settings")
+    Observable<JcsResponse<About>> about();
 
 
 }

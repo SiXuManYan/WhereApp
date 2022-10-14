@@ -35,6 +35,10 @@ class FeedbackRecord {
     var content: String? = ""
     var tel: String? = ""
     var time = ""
+}
 
-
+class About {
+    var contact_tell = ""
+    var contact_facebook = ""
+    var contact_email = ""
 }

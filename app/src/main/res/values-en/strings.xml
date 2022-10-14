@@ -1054,8 +1054,8 @@ Gentleman must let go</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="gender">Gender</string>
-    <string name="work_city">Work City</string>
-    <string name="mail">Mail</string>
+    <string name="work_city">Address</string>
+    <string name="mail">E-mail</string>
     <string name="phone_number_cv">Phone Number</string>
     <string name="school_name">School Name</string>
     <string name="job_title">Job Title</string>
@@ -1086,5 +1086,9 @@ Gentleman must let go</string>
     <string name="feedback_post_hint">Please enter your valuable suggestion.</string>
     <string name="feedback_picture">Pictures</string>
     <string name="but_load_hint">Only works for prepaid number.</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="call_us">Call Us:</string>
+    <string name="message_us">Message Us:</string>
+    <string name="email_us">Email Us:</string>
 
 </resources>

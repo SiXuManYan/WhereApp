@@ -125,11 +125,11 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
 
     override fun initData() {
         presenter = QuestionPresenter (this)
-        presenter.feedbackQuestion(categoryId)
+        presenter.feedbackQuestion(categoryId,searchName)
     }
 
     override fun bindListener() {
-        back_iv2.setOnClickListener { finish() }
+        search_ll.setOnClickListener { finish() }
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {

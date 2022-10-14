@@ -170,7 +170,7 @@
     <string name="sign_in_type_2">消费</string>
     <string name="sign_in_type_3">评论</string>
     <string name="sign_in_type_4">签到</string>
-    <string name="empty_data_default">暂无相关数据</string>
+    <string name="empty_data_default">暂无相关内容</string>
     <string name="item_sign_in">签到</string>
     <string name="item_sign_in_content">成功签到可获得20积分</string>
     <string name="item_comment">评论商家</string>
@@ -1101,6 +1101,7 @@ Gentleman must let go</string>
     <string name="feedback_form_detail">意见详情</string>
     <string name="feedback_post_hint">请输入您的宝贵建议。</string>
     <string name="feedback_picture">图片</string>
+    <string name="but_load_hint">仅支持预支付号码</string>
 
 
 </resources>

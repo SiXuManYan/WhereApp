@@ -2,6 +2,7 @@ package com.jcs.where.features.feedback.form
 
 import android.content.Intent
 import android.graphics.Color
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -50,6 +51,18 @@ class FeedBackPostActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBackP
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
 
+        content_et.addTextChangedListener (afterTextChanged = {
+            val trim = it.toString().trim()
+            if (trim.isBlank()) {
+                commit_tv.isClickable = false
+                commit_tv.alpha = 0.5f
+            }else {
+                commit_tv.isClickable = true
+                commit_tv.alpha = 1.0f
+            }
+
+        })
+
     }
 
     override fun initData() {
@@ -68,15 +81,14 @@ class FeedBackPostActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBackP
         }
 
         commit_tv.setOnClickListener {
-            commit_tv.isClickable = false
+
             val content = content_et.text.toString().trim()
             val phone = phone_et.text.toString().trim()
 
             if (content.isBlank()) {
-                ToastUtils.showShort(R.string.feedback_post_hint)
                 return@setOnClickListener
             }
-
+            commit_tv.isClickable = false
             if (mImageAdapter.data.isNotEmpty()) {
                 presenter.upLoadImage(content, phone, ArrayList(mImageAdapter.data))
                 return@setOnClickListener
@@ -99,7 +111,7 @@ class FeedBackPostActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBackP
 
 
     override fun commitSuccess() {
-        ToastUtils.showShort(R.string.feedback_post_success)
+        ToastUtils.showShort(R.string.question_click_hint)
         finish()
     }
 

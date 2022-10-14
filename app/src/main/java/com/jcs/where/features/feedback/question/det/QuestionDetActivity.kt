@@ -2,7 +2,9 @@ package com.jcs.where.features.feedback.question.det
 
 import android.annotation.SuppressLint
 import android.text.TextPaint
+import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
@@ -97,11 +99,11 @@ class QuestionDetActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, 
                     ds.color = getColor(R.color.blue_4C9EF2)
                     ds.isUnderlineText = false
                 }
-
                 override fun onClick(widget: View) {
                    startActivity(FeedBackPostActivity::class.java)
                 }
             }).create()
+        feedback_tv.movementMethod = LinkMovementMethod.getInstance()
         feedback_tv.text = span
 
     }
@@ -129,6 +131,7 @@ class QuestionDetActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, 
             item.nativeCanClick = false
         }
         mAdapter.notifyDataSetChanged()
+        ToastUtils.getDefaultMaker().setGravity(Gravity.CENTER,0,0)
         ToastUtils.showShort(R.string.question_click_hint)
     }
 

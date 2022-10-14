@@ -1084,6 +1084,7 @@ Gentleman must let go</string>
     <string name="feedback_post_success">Submitted successfully, thanks for the evaluation</string>
     <string name="feedback_form_detail">Feedback Details</string>
     <string name="feedback_post_hint">Please enter your valuable suggestion.</string>
-    <string name="feedback_picture">Picturs</string>
+    <string name="feedback_picture">Pictures</string>
+    <string name="but_load_hint">Only works for prepaid number.</string>
 
 </resources>

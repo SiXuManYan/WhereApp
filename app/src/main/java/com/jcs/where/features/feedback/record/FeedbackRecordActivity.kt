@@ -95,7 +95,7 @@ class FeedbackRecordActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBac
             if (page == Constant.DEFAULT_FIRST_PAGE) {
                 mAdapter.setNewInstance(null)
                 loadMoreModule.loadMoreComplete()
-//                emptyView.showEmptyContainer()
+                emptyView.showEmptyContainer()
             } else {
                 loadMoreModule.loadMoreEnd()
             }

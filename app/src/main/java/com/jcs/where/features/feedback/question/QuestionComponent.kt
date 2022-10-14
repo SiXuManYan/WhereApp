@@ -20,8 +20,8 @@ class QuestionPresenter(private var view: QuestionView):BaseMvpPresenter(view){
 
 
 
-    fun feedbackQuestion(categoryId: Int) {
-        requestApi(mRetrofit.feedbackQuestion(categoryId,"") , object : BaseMvpObserver<ArrayList<FeedbackCategoryAndQuestion>>(view){
+    fun feedbackQuestion(categoryId: Int, searchName: String) {
+        requestApi(mRetrofit.feedbackQuestion(categoryId,searchName) , object : BaseMvpObserver<ArrayList<FeedbackCategoryAndQuestion>>(view){
             override fun onSuccess(response: ArrayList<FeedbackCategoryAndQuestion>) {
                 view.bindView(response)
             }

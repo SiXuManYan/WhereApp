@@ -30,13 +30,14 @@
             android:layout_marginStart="@dimen/dp_15"
             android:layout_marginEnd="@dimen/dp_15"
             android:background="@drawable/shape_grey_radius_4"
-            android:paddingStart="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_15">
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_4"
                 android:layout_toStartOf="@+id/connect_iv"
                 android:orientation="vertical">
 
@@ -45,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/recharge_phone_format"
                     android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_11" />
 
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -53,29 +54,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_4"
-                    android:layout_marginEnd="@dimen/dp_16"
                     android:background="@null"
-                    android:maxLength="11"
                     android:ellipsize="end"
-                    android:imeOptions="actionDone"
                     android:gravity="center_vertical"
-                    android:hint="@string/enter_the_phone_number"
+                    android:hint="@string/but_load_hint"
+                    android:imeOptions="actionDone"
                     android:inputType="number"
+                    android:maxLength="11"
                     android:maxLines="1"
                     android:textColor="@color/black_333333"
                     android:textColorHint="@color/grey_999999"
-                    android:textSize="@dimen/sp_20"
-                    android:textStyle="bold"
-                    tools:text="0000" />
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
             <ImageView
                 android:id="@+id/connect_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:scaleType="centerInside"
                 android:src="@mipmap/ic_connect_tag" />
 
 

@@ -21,7 +21,6 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_feedback_question_and_search_result.*
-import java.util.ArrayList
 
 /**
  * Created by Wangsw  2022/10/12 17:03.
@@ -62,7 +61,7 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
         }
 
 
-        fun navigation4Search(context: Context, searchName:String) {
+        fun navigation4Search(context: Context, searchName: String) {
 
             val bundle = Bundle().apply {
                 putString(Constant.PARAM_SEARCH, searchName)
@@ -78,19 +77,18 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
         }
 
 
-
     }
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this,Color.WHITE)
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         initContent()
     }
 
     private fun initContent() {
         intent.extras?.let {
-            categoryId = it.getInt(Constant.PARAM_ID , 0)
-            categoryName = it.getString(Constant.PARAM_NAME ,"")
-            searchName = it.getString(Constant.PARAM_SEARCH ,"")
+            categoryId = it.getInt(Constant.PARAM_ID, 0)
+            categoryName = it.getString(Constant.PARAM_NAME, "")
+            searchName = it.getString(Constant.PARAM_SEARCH, "")
         }
 
         emptyView = EmptyView(this)
@@ -102,7 +100,7 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
             title_rl.visibility = View.VISIBLE
             category_name_tv.text = categoryName
             emptyView.showEmptyDefault()
-        }else {
+        } else {
             search_ll.visibility = View.VISIBLE
             search_content_tv.text = searchName
             emptyView.setEmptyImage(R.mipmap.ic_empty_search)
@@ -118,7 +116,7 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
             setOnItemClickListener(this@QuestionActivity)
         }
 
-        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.colorPrimary), 1, SizeUtils.dp2px(15f), 0)
         recycler.apply {
             adapter = mAdapter
@@ -130,8 +128,8 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
     }
 
     override fun initData() {
-        presenter = QuestionPresenter (this)
-        presenter.feedbackQuestion(categoryId,searchName)
+        presenter = QuestionPresenter(this)
+        presenter.feedbackQuestion(categoryId, searchName)
     }
 
     override fun bindListener() {
@@ -140,8 +138,8 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val item = mAdapter.data[position]
-        startActivity(QuestionDetActivity::class.java , Bundle().apply {
-            putString(Constant.PARAM_URL , item.website)
+        startActivity(QuestionDetActivity::class.java, Bundle().apply {
+            putString(Constant.PARAM_URL, item.website)
         })
     }
 

@@ -93,19 +93,25 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
             searchName = it.getString(Constant.PARAM_SEARCH ,"")
         }
 
+        emptyView = EmptyView(this)
+        addEmptyList(emptyView)
+
         // 页面模式区分
         if (searchName.isBlank()) {
+            // 问题列表
             title_rl.visibility = View.VISIBLE
             category_name_tv.text = categoryName
+            emptyView.showEmptyDefault()
         }else {
             search_ll.visibility = View.VISIBLE
             search_content_tv.text = searchName
+            emptyView.setEmptyImage(R.mipmap.ic_empty_search)
+            emptyView.setEmptyMessage(R.string.empty_search_message)
+            emptyView.setEmptyMessage(R.string.empty_search_hint)
         }
 
 
-        emptyView = EmptyView(this)
-        emptyView.showEmptyDefault()
-        addEmptyList(emptyView)
+
 
         mAdapter = CategoryQuestionAdapter().apply {
             setEmptyView(emptyView)

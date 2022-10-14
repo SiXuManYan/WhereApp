@@ -639,7 +639,9 @@
             android:name=".features.feedback.question.QuestionActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".features.feedback.question.det.QuestionDetActivity" />
-        <activity android:name=".features.feedback.form.FeedBackPostActivity" />
+        <activity
+            android:name=".features.feedback.form.FeedBackPostActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".features.feedback.record.det.FeedbackDetActivity" />
         <activity android:name=".features.feedback.record.FeedbackRecordActivity" />
 

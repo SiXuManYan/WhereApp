@@ -3,6 +3,7 @@ package com.jcs.where.features.feedback.record
 import android.graphics.Color
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
@@ -36,7 +37,6 @@ class FeedbackRecordActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBac
 
         initList()
 
-
     }
 
     private fun initList() {
@@ -65,13 +65,6 @@ class FeedbackRecordActivity : BaseMvpActivity<FeedBackPostPresenter>(), FeedBac
             layoutManager = gridLayoutManager
             addItemDecoration(decoration)
         }
-        val layoutParams = recycler.layoutParams
-        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        recycler.layoutParams = layoutParams
-        recycler.setBackgroundColor(Color.WHITE)
-        container_ll.setBackgroundColor(ColorUtils.getColor(R.color.colorPrimary))
-
-
     }
 
     override fun initData() {

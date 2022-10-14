@@ -107,7 +107,7 @@ class QuestionActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, OnI
             search_content_tv.text = searchName
             emptyView.setEmptyImage(R.mipmap.ic_empty_search)
             emptyView.setEmptyMessage(R.string.empty_search_message)
-            emptyView.setEmptyMessage(R.string.empty_search_hint)
+            emptyView.setEmptyHint(R.string.empty_search_hint)
         }
 
 

@@ -5,6 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.job.JobExperience
 import com.jcs.where.api.response.job.ProfileDetail
@@ -14,44 +16,31 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.form.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.CvFormProfileActivity
 import com.jcs.where.utils.Constant
-import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.activity_job_cv_home.*
+import kotlinx.android.synthetic.main.activity_job_cv_home_2.*
 
 /**
  * Created by Wangsw  2022/9/28 15:25.
  * 简历首页
  */
-class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
+class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemClickListener {
 
-    private var page = Constant.DEFAULT_FIRST_PAGE
-    private lateinit var mAdapter: JobExperienceAdapter
-    private lateinit var emptyView: EmptyView
+    private lateinit var mAdapter: JobExperienceEduAdapter
 
     /** 个人信息 */
     private var profileDetail: ProfileDetail? = null
 
-    override fun getLayoutId() = R.layout.activity_job_cv_home
+    override fun getLayoutId() = R.layout.activity_job_cv_home_2
 
     override fun initView() {
         initContent()
     }
 
     private fun initContent() {
-        emptyView = EmptyView(this)
-        emptyView.showEmptyDefault()
-        emptyView.setEmptyHint(R.string.empty_job_experience)
-        addEmptyList(emptyView)
 
 
-        mAdapter = JobExperienceAdapter().apply {
-            setEmptyView(emptyView)
-            setOnItemClickListener { _, _, position ->
-                val jobExperience = mAdapter.data[position]
-                startActivity(CvFormJobExperienceActivity::class.java, Bundle().apply {
-                    putParcelable(Constant.PARAM_DATA, jobExperience)
-                })
-            }
+        mAdapter = JobExperienceEduAdapter().apply {
+            setOnItemClickListener(this@CvHomeActivity)
         }
 
 
@@ -84,12 +73,6 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
             create_cv_iv.performClick()
         }
 
-        add_job_experience_rl.setOnClickListener {
-            // 添加工作经历
-            startActivity(CvFormJobExperienceActivity::class.java)
-        }
-
-
     }
 
     override fun getProfile(response: ProfileDetail?) {
@@ -119,9 +102,7 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
 
     override fun bindJobExperience(toMutableList: MutableList<JobExperience>) {
         mAdapter.setNewInstance(toMutableList)
-        if (toMutableList.isEmpty()) {
-            emptyView.showEmptyContainer()
-        }
+
     }
 
 
@@ -130,6 +111,38 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView {
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_CV_PROFILE -> presenter.getProfile()
             EventCode.EVENT_REFRESH_CV_EXPERIENCE -> presenter.getJobExperience()
+            else -> {}
+        }
+
+
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val item = mAdapter.data[position]
+
+        when (adapter.getItemViewType(position)) {
+            JobExperience.TYPE_JOB_EXPERIENCE -> {
+                startActivity(CvFormJobExperienceActivity::class.java, Bundle().apply {
+                    putParcelable(Constant.PARAM_DATA, item)
+                })
+            }
+            JobExperience.TYPE_EDU_BACKGROUND -> {
+
+            }
+            JobExperience.TYPE_TITLE -> {
+                val titleType = item.nativeTitleType
+
+                if (titleType == JobExperience.TYPE_JOB_EXPERIENCE) {
+                    // 添加工作经历
+                    startActivity(CvFormJobExperienceActivity::class.java)
+                }
+                if (titleType == JobExperience.TYPE_EDU_BACKGROUND) {
+                    // 添加教育背景
+
+                }
+
+            }
+
             else -> {}
         }
 

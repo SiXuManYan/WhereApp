@@ -2,6 +2,7 @@ package com.jcs.where.api.response.job
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.chad.library.adapter.base.entity.MultiItemEntity
 
 /**
  * Created by Wangsw  2022/9/27 16:49.
@@ -122,15 +123,31 @@ class ProfileDetail() : Parcelable {
 /**
  * 工作经历列表
  */
-class JobExperience() : Parcelable {
+class JobExperience() : Parcelable, MultiItemEntity {
+
 
     var id = 0
+
+    var nativeTitleValue = ""
+
+    var nativeItemViewType = 0
+    var nativeTitleType= 0
+
+    // 工作经历
     var company = ""
     var job_title = ""
     var start_date = ""
     var end_date = ""
     var job_desc = ""
     var city = ""
+
+    // 教育背景
+    /** 学历 */
+    var educational_level = ""
+
+    /** 拓展字段 */
+    var extend_title = ""
+
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
@@ -157,6 +174,15 @@ class JobExperience() : Parcelable {
     }
 
     companion object CREATOR : Parcelable.Creator<JobExperience> {
+
+        /** 工作经历 */
+        var TYPE_JOB_EXPERIENCE = 0
+
+        /** 教育背景 */
+        var TYPE_EDU_BACKGROUND = 1
+        var TYPE_TITLE = 1000
+
+
         override fun createFromParcel(parcel: Parcel): JobExperience {
             return JobExperience(parcel)
         }
@@ -165,6 +191,9 @@ class JobExperience() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
+    override val itemType: Int
+        get() = nativeItemViewType
 }
 
 class CreateProfileDetail {

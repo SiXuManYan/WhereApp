@@ -115,7 +115,6 @@ import com.jcs.where.api.response.integral.IntegralGoodDetail;
 import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
-import com.jcs.where.api.response.integral.IntegralTab;
 import com.jcs.where.api.response.integral.IntegralTag;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
@@ -645,7 +644,7 @@ public interface RetrofitApi {
     /**
      * app 版本检测
      */
-    @GET("/commonapi/v2/version")
+    @GET("commonapi/v2/version")
     Observable<JcsResponse<VersionResponse>> checkAppVersion(
             @Query("current_version") String current_version,
             @Query("device") String device);
@@ -2270,6 +2269,12 @@ public interface RetrofitApi {
     @GET("jobapi/v2/resumes/experiences")
     Observable<JcsResponse<ArrayList<JobExperience>>> jobExperienceList();
 
+    /**
+     * 教育背景
+     */
+    @GET("jobapi/v2/resumes/educations/levels")
+    Observable<JcsResponse<ArrayList<JobExperience>>> eduBackgroundList();
+
 
     /**
      * 创建简历个人信息
@@ -2336,8 +2341,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<IntegralTag>>> activityCenterTab();
 
 
-
-
     /**
      * 发布意见反馈
      */
@@ -2347,20 +2350,16 @@ public interface RetrofitApi {
     );
 
 
-
-
     /**
      * 意见反馈记录
-     *
      */
     @GET("commonapi/v2/feedbacks")
     Observable<JcsResponse<PageResponse<FeedbackRecord>>> feedbackRecord(
             @Query("page") int page
     );
 
- /**
+    /**
      * 意见反馈记录
-     *
      */
     @GET("commonapi/v2/settings")
     Observable<JcsResponse<About>> about();

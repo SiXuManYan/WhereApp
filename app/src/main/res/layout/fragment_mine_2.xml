@@ -434,7 +434,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingStart="@dimen/dp_16"
             android:paddingEnd="@dimen/dp_16"
-            android:visibility="gone"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_mine_activity_en" />
 

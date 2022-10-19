@@ -12,6 +12,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.bills.channel.BillsChannelActivity
 import com.jcs.where.features.coupon.good.CouponGoodActivity
+import com.jcs.where.features.mall.home.MallHomeActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -138,6 +139,7 @@ class MyCouponFragment : BaseMvpFragment<MyCouponPresenter>(), MyCouponView {
                         5 -> startActivityAfterLogin(BillsChannelActivity::class.java, Bundle().apply {
                             putInt(Constant.PARAM_TYPE, 1)
                         })
+                        6-> startActivity(MallHomeActivity::class.java)
                     }
 
 

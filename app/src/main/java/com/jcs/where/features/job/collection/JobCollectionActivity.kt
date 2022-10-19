@@ -41,7 +41,6 @@ class JobCollectionActivity  : BaseMvpActivity<JobHomePresenter>(), JobHomeView,
         emptyView.showEmptyDefault()
         addEmptyList(emptyView)
 
-
         mAdapter = JobHomeAdapter().apply {
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true

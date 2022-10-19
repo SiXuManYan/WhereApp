@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 
 /**
  * Created by Wangsw  2022/9/27 16:49.
- *
+ * 职位列表
  */
 class Job {
 
@@ -18,7 +18,9 @@ class Job {
     var created_at = ""
 }
 
-
+/**
+ * 职位详情
+ */
 class JobDetail {
 
     var id = 0
@@ -40,6 +42,14 @@ class JobDetail {
 
     /** 是否完善简历（true、false） */
     var is_complete = false
+
+    /** 职责和责任 */
+    var duty = ""
+
+    /** 要求/资格 */
+    var requirement = ""
+
+    var is_collect = false
 
 }
 
@@ -131,7 +141,7 @@ class JobExperience() : Parcelable, MultiItemEntity {
     var nativeTitleValue = ""
 
     var nativeItemViewType = 0
-    var nativeTitleType= 0
+    var nativeTitleType = 0
 
     // 工作经历
     var company = ""
@@ -196,6 +206,9 @@ class JobExperience() : Parcelable, MultiItemEntity {
         get() = nativeItemViewType
 }
 
+/**
+ * 创建简历个人信息
+ */
 class CreateProfileDetail {
     var id = 0
 
@@ -220,10 +233,20 @@ class CreateProfileDetail {
 }
 
 
+/**
+ * 创建工作经历
+ */
 class CreateJobExperience {
     var company = ""
     var job_title = ""
     var start_date = ""
     var end_date = ""
     var job_desc = ""
+}
+
+/**
+ * 职位收藏、取消收藏
+ */
+class JobCollection {
+    var  job_id = 0
 }

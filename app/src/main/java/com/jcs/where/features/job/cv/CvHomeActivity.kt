@@ -39,11 +39,9 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
 
     private fun initContent() {
 
-
         mAdapter = JobExperienceEduAdapter().apply {
             setOnItemClickListener(this@CvHomeActivity)
         }
-
 
         val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         content_rv.apply {

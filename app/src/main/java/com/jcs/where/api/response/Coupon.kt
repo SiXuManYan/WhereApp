@@ -51,7 +51,7 @@ class UserCoupon : MultiItemEntity {
     /** 区分列表类型，标题或代金券 */
     var nativeListType = Coupon.TYPE_COMMON
 
-    /** 支付账单优惠券类型( 2水 3电 4网 5手机充值) */
+    /** 支付账单优惠券类型( 2水 3电 4网 5手机充值) 6estore 优惠券 */
     var bill_type = 0
 
 

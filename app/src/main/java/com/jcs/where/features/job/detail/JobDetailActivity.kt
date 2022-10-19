@@ -4,14 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonElement
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.job.JobCollection
 import com.jcs.where.api.response.job.JobDetail
 import com.jcs.where.api.response.job.JobSendCv
 import com.jcs.where.base.BaseEvent
@@ -31,6 +34,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
 
     var jobId = 0
+    var isCollect = false
 
     override fun isStatusDark() = true
 
@@ -56,6 +60,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
 
     override fun initView() {
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         jobId = intent.getIntExtra(Constant.PARAM_ID, 0)
     }
 
@@ -65,17 +70,26 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
     }
 
     override fun bindListener() {
-
+        collect_iv.setOnClickListener {
+            presenter.handleCollection(isCollect, jobId)
+        }
     }
 
     override fun bindDetail(response: JobDetail) {
         job_title_tv.text = response.job_title
-        job_desc_tv.text = response.job_desc
+        duty_tv.text = response.duty
+        job_rq_tv.text = response.requirement
+
+
         salary_tv.text = response.salary
         city_tv.text = response.city
         create_time_tv.text = response.created_at
         company_name_tv.text = response.company
         company_desc_tv.text = response.company_desc
+
+        isCollect = response.is_collect
+        setLikeImage()
+
 
         if (response.is_send) {
             setSendSuccessUi()
@@ -125,17 +139,29 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
         setSendSuccessUi()
     }
 
+    override fun collectionResult(result: Boolean) {
+        isCollect = result
+        setLikeImage()
+        if (result) {
+            ToastUtils.showShort(R.string.collection_success)
+        } else {
+            ToastUtils.showShort(R.string.cancel_collection_success)
+        }
+
+    }
+
     /** 添加简历后，刷新本页状态 */
-    private var needRefreshForCv= false
+    private var needRefreshForCv = false
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_LOGIN_SUCCESS,-> {
+            EventCode.EVENT_LOGIN_SUCCESS -> {
                 presenter.getData(jobId)
             }
             EventCode.EVENT_REFRESH_CV_PROFILE,
-            EventCode.EVENT_REFRESH_CV_EXPERIENCE->{
+            EventCode.EVENT_REFRESH_CV_EXPERIENCE,
+            -> {
                 needRefreshForCv = true
             }
 
@@ -155,12 +181,26 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
     }
 
 
+    private fun setLikeImage() {
+
+        collect_iv.setImageResource(
+            if (isCollect) {
+
+                R.mipmap.ic_like_red_night
+            } else {
+                R.mipmap.ic_like_normal_night
+            }
+        )
+    }
+
+
 }
 
 
 interface JobDetailView : BaseMvpView {
     fun bindDetail(response: JobDetail)
     fun sendSuccess(response: JsonElement)
+    fun collectionResult(result: Boolean)
 
 }
 
@@ -189,8 +229,29 @@ class JobDetailPresenter(var view: JobDetailView) : BaseMvpPresenter(view) {
             override fun onSuccess(response: JsonElement) {
                 view.sendSuccess(response)
             }
-
         })
+    }
+
+    fun handleCollection(collect: Boolean, jobId: Int) {
+        val apply = JobCollection().apply {
+            job_id = jobId
+        }
+
+        if (collect) {
+            requestApi(mRetrofit.jobDelCollection(apply), object : BaseMvpObserver<JsonElement>(view) {
+                override fun onSuccess(response: JsonElement) {
+                    view.collectionResult(false)
+                }
+            })
+        } else {
+            requestApi(mRetrofit.jobCollection(apply), object : BaseMvpObserver<JsonElement>(view) {
+                override fun onSuccess(response: JsonElement) {
+                    view.collectionResult(true)
+                }
+            })
+        }
+
+
     }
 
 }

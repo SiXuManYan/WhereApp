@@ -1108,6 +1108,8 @@ Gentleman must let go</string>
     <string name="email_us">Email Us:</string>
     <string name="edu_background">教育背景</string>
     <string name="saved_jobs">收藏</string>
+    <string name="job_duties">职责和责任</string>
+    <string name="job_rq">要求/资格</string>
 
 
 </resources>

@@ -1,12 +1,9 @@
 package com.jcs.where.features.job.result
 
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
 import com.jcs.where.api.response.job.Job
 import com.jcs.where.base.mvp.BaseMvpActivity
@@ -22,8 +19,7 @@ import kotlinx.android.synthetic.main.activity_job_search_result.*
  * Created by Wangsw  2022/9/28 10:08.
  * 职位搜素结果
  */
-class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView,
-    SwipeRefreshLayout.OnRefreshListener {
+class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener {
 
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: JobHomeAdapter
@@ -56,7 +52,7 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getData(page, search)
+                presenter.getJobList(page, search)
             }
         }
 
@@ -85,10 +81,10 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
 
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getData(page, search)
+        presenter.getJobList(page, search)
     }
 
-    override fun bindData(toMutableList: MutableList<Job>, lastPage: Boolean) {
+    override fun bindJobList(toMutableList: MutableList<Job>, lastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
             swipe_layout.isRefreshing = false
         }
@@ -114,6 +110,10 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
                 loadMoreModule.loadMoreComplete()
             }
         }
+    }
+
+    override fun bindJobCollectionList(toMutableList: MutableList<Job>, lastPage: Boolean) {
+
     }
 
 }

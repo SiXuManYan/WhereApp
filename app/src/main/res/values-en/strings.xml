@@ -1092,5 +1092,7 @@ Gentleman must let go</string>
     <string name="email_us">Email Us:</string>
     <string name="edu_background">Education Background</string>
     <string name="saved_jobs">Saved Jobs</string>
+    <string name="job_duties">Duties and Responsibilities</string>
+    <string name="job_rq">Requirements/Qualifications</string>
 
 </resources>

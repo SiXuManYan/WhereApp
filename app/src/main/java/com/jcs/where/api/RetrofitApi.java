@@ -119,6 +119,7 @@ import com.jcs.where.api.response.integral.IntegralTag;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.Job;
+import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
 import com.jcs.where.api.response.job.JobExperience;
 import com.jcs.where.api.response.job.JobSendCv;
@@ -2373,5 +2374,23 @@ public interface RetrofitApi {
     @GET("commonapi/v2/settings")
     Observable<JcsResponse<About>> about();
 
+
+
+
+    /**
+     * 收藏职位
+     */
+    @POST("jobapi/v2/resumes/collects")
+    Observable<JcsResponse<JsonElement>> jobCollection(
+            @Body JobCollection request
+    );
+
+    /**
+     * 取消收藏职位
+     */
+    @HTTP(method = "DELETE", path = "jobapi/v2/resumes/collects", hasBody = true)
+    Observable<JcsResponse<JsonElement>> jobDelCollection(
+            @Body JobCollection request
+    );
 
 }

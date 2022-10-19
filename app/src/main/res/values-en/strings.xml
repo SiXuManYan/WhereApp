@@ -1094,5 +1094,10 @@ Gentleman must let go</string>
     <string name="saved_jobs">Saved Jobs</string>
     <string name="job_duties">Duties and Responsibilities</string>
     <string name="job_rq">Requirements/Qualifications</string>
+    <string name="personal_information_cv">Personal Information</string>
+    <string name="birth">Date of Birth</string>
+    <string name="civil_status">Civil Status</string>
+    <string name="single">Single</string>
+    <string name="married">Married</string>
 
 </resources>

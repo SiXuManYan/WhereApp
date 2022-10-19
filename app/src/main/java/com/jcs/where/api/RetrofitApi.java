@@ -2268,7 +2268,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 职位详情
+     * 个人信息详情
      */
     @GET("jobapi/v2/resumes/profile")
     Observable<JcsResponse<ProfileDetail>> profileDetail();

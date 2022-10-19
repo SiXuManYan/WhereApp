@@ -96,9 +96,9 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
         }
         city_tv.text = response.city
         email_tv.text = response.email
-        school_tv.text = response.school
-        major_tv.text = response.major
-        education_tv.text = response.education
+//        school_tv.text = response.school
+//        major_tv.text = response.major
+//        education_tv.text = response.education
     }
 
     override fun bindJobExperience(toMutableList: MutableList<JobExperience>) {

@@ -10,12 +10,14 @@ import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckedTextView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.response.BannerResponse
@@ -697,4 +699,46 @@ object BusinessUtils {
     }
 
 
+    fun createBottomDialog(context: Context, oldIndex:Int , array:Array<String>, onCountryCodeSelectListener: OnBottomSelectedIndex) {
+
+        val dialog = BottomSheetDialog(context)
+        val view = LayoutInflater.from(context).inflate(R.layout.dialog_job_prefix, null)
+        dialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (ignored: java.lang.Exception) {
+
+        }
+
+        val first = view.findViewById<CheckedTextView>(R.id.first_tv)
+        first.text = array[0]
+        first.setOnClickListener { v: View? ->
+            onCountryCodeSelectListener.onIndexSelect(0)
+            dialog.dismiss()
+        }
+
+        val second = view.findViewById<CheckedTextView>(R.id.second_tv)
+        second.text = array[1]
+        second.setOnClickListener { v13: View? ->
+            onCountryCodeSelectListener.onIndexSelect(1)
+            dialog.dismiss()
+        }
+        when (oldIndex) {
+            0 -> {first.isChecked = true}
+            1 -> {second.isChecked = true}
+        }
+
+        view.findViewById<View>(R.id.cancel_tv).setOnClickListener { v1: View? ->
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+
+}
+
+
+interface OnBottomSelectedIndex {
+    fun onIndexSelect(selectedIndex: Int)
 }

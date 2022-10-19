@@ -170,39 +170,6 @@
                 android:textSize="@dimen/sp_12"
                 tools:text="13478559115@163.com" />
 
-            <TextView
-                android:id="@+id/school_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
-                tools:text="Dalian University of TechnologyDalian University of Technol Insji IJSIAJSAJDIDJ" />
-
-
-            <TextView
-                android:id="@+id/education_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
-                tools:text="University Degree" />
-
-            <TextView
-                android:id="@+id/major_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
-                tools:text="medicine" />
 
 
         </LinearLayout>

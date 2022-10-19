@@ -86,6 +86,12 @@ class ProfileDetail() : Parcelable {
 
     var city_id = 0
 
+    /** 出生日期 */
+    var birthday = ""
+
+    /** 婚姻状况（0-未婚，1-已婚） */
+    var civil_status = 0
+
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         gender = parcel.readInt()
@@ -98,6 +104,8 @@ class ProfileDetail() : Parcelable {
         major = parcel.readString().toString()
         education = parcel.readString().toString()
         city_id = parcel.readInt()
+        birthday = parcel.readString().toString()
+        civil_status =parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -112,6 +120,8 @@ class ProfileDetail() : Parcelable {
         parcel.writeString(major)
         parcel.writeString(education)
         parcel.writeInt(city_id)
+        parcel.writeString(birthday)
+        parcel.writeInt(civil_status)
     }
 
     override fun describeContents(): Int {
@@ -220,16 +230,29 @@ class CreateProfileDetail {
 
     /** 名 */
     var last_name = ""
+
+
     var city_id = 0
     var email = ""
+
     var contact_number = ""
-    var school = ""
 
-    /** 专业 */
-    var major: String? = null
 
-    /** 学历 */
-    var education = ""
+
+//    var school = ""
+//
+//    /** 专业 */
+//    var major: String? = null
+//
+//    /** 学历 */
+//    var education = ""
+
+
+    var birthday = ""
+
+    /** 0未婚 1已婚 */
+    var civil_status = 0
+
 }
 
 

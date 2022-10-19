@@ -10,7 +10,7 @@ import com.jcs.where.features.job.detail.JobDetailActivity
 
 /**
  * Created by Wangsw  2022/9/27 16:26.
- *
+ * 职位列表
  */
 class JobHomeAdapter : BaseQuickAdapter<Job, BaseViewHolder>(R.layout.item_job_home), LoadMoreModule {
 

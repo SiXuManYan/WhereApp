@@ -2240,6 +2240,15 @@ public interface RetrofitApi {
 
 
     /**
+     * 收藏列表
+     */
+    @GET("jobapi/v2/resumes/collects")
+    Observable<JcsResponse<PageResponse<Job>>> jobCollectionList(
+            @Query("page") int page
+    );
+
+
+    /**
      * 职位详情
      */
     @GET("jobapi/v2/jobs/{job_id}")

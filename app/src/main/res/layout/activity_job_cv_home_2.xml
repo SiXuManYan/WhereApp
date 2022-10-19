@@ -11,15 +11,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingEnd="@dimen/dp_15">
+        android:layout_height="@dimen/dp_44">
 
         <ImageView
             android:id="@+id/back_iv"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_10"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_back_white" />
 
@@ -31,6 +33,35 @@
             android:text="@string/my_cv"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_17" />
+
+
+        <LinearLayout
+            android:id="@+id/job_collection_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_32"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_white_left_radius_20"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_12"
+            android:paddingEnd="@dimen/dp_8">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_job_collection" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/color_1c1380"
+                android:layout_height="wrap_content"
+                android:text="@string/saved_jobs" />
+
+        </LinearLayout>
 
 
     </RelativeLayout>
@@ -88,9 +119,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="@dimen/dp_16"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:padding="@dimen/dp_16">
+            tools:visibility="visible">
 
 
             <TextView
@@ -151,7 +182,6 @@
                 tools:text="Dalian University of TechnologyDalian University of Technol Insji IJSIAJSAJDIDJ" />
 
 
-
             <TextView
                 android:id="@+id/education_tv"
                 android:layout_width="wrap_content"
@@ -179,8 +209,6 @@
 
 
     </RelativeLayout>
-
-
 
 
     <androidx.recyclerview.widget.RecyclerView

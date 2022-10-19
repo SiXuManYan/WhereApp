@@ -644,6 +644,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".features.feedback.record.det.FeedbackDetActivity" />
         <activity android:name=".features.feedback.record.FeedbackRecordActivity" />
+        <activity android:name=".features.job.collection.JobCollectionActivity" />
 
 
     </application>

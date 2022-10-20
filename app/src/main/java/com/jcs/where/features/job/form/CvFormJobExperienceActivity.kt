@@ -1,6 +1,7 @@
 package com.jcs.where.features.job.form
 
 import android.app.DatePickerDialog
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.ToastUtils
@@ -31,6 +32,8 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
     private var draftId = 0
     private var draftData: JobExperience? = null
     private var requiredEdit = ArrayList<AppCompatEditText>()
+    private var startDate = ""
+    private var endDate = ""
 
     override fun isStatusDark() = true
 
@@ -49,6 +52,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             job_desc_et.setText(it.job_desc)
             start_date_tv.text = it.start_date
             end_date_tv.text = it.end_date
+            new_experience_iv.visibility = View.VISIBLE
         }
 
     }
@@ -94,7 +98,11 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             }
 
             presenter.handleExperiences(draftId, apply)
+        }
 
+        new_experience_iv.setOnClickListener {
+            // 添加工作经历
+            startActivity(CvFormJobExperienceActivity::class.java)
         }
 
     }
@@ -110,6 +118,13 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             DatePickerDialog(this, R.style.DatePickerDialogTheme, { _, year, month, dayOfMonth ->
                 textView.text = getString(R.string.date_format, year, (month + 1), dayOfMonth)
             }, mYear, mMonth, mDay)
+
+        // 设置日期范围
+        val datePicker = datePickerDialog.datePicker
+        // 上限
+        datePicker.maxDate = ca.timeInMillis
+
+
         datePickerDialog.show()
     }
 
@@ -118,5 +133,15 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
         finish()
     }
 
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_CV_EXPERIENCE -> finish()
+            else -> {}
+        }
+
+
+    }
 
 }

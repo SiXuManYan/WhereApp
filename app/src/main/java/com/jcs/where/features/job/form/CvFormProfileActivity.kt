@@ -221,6 +221,10 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
             DatePickerDialog(this, R.style.DatePickerDialogTheme, { _, year, month, dayOfMonth ->
                 textView.text = getString(R.string.date_format, year, (month + 1), dayOfMonth)
             }, mYear, mMonth, mDay)
+        // 设置日期范围
+        val datePicker = datePickerDialog.datePicker
+        // 上限
+        datePicker.maxDate = ca.timeInMillis
         datePickerDialog.show()
     }
 

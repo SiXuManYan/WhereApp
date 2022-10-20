@@ -118,6 +118,8 @@ import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.integral.IntegralTag;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
+import com.jcs.where.api.response.job.EduDet;
+import com.jcs.where.api.response.job.Degree;
 import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
@@ -2375,8 +2377,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<About>> about();
 
 
-
-
     /**
      * 收藏职位
      */
@@ -2392,5 +2392,22 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> jobDelCollection(
             @Body JobCollection request
     );
+
+
+    /**
+     * 教育背景详情
+     */
+    @GET("jobapi/v2/resumes/educations/{education_id}")
+    Observable<JcsResponse<EduDet>> eduBackgroundDet(
+            @Path("education_id") int education_id
+    );
+
+
+    /**
+     * 简历列表
+     */
+    @GET("jobapi/v2/resumes/educations/levels")
+    Observable<JcsResponse<ArrayList<Degree>>> eduLevelList();
+
 
 }

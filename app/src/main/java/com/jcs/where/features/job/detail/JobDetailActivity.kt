@@ -71,6 +71,10 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
     override fun bindListener() {
         collect_iv.setOnClickListener {
+            if (!User.isLogon()) {
+                startActivity(LoginActivity::class.java)
+                return@setOnClickListener
+            }
             presenter.handleCollection(isCollect, jobId)
         }
     }

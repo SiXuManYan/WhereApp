@@ -1,4 +1,4 @@
-package com.jcs.where.features.job.form
+package com.jcs.where.features.job.form.job
 
 import android.app.DatePickerDialog
 import android.view.View
@@ -6,14 +6,13 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
-import com.jcs.where.api.response.CityPickerResponse
 import com.jcs.where.api.response.job.CreateJobExperience
 import com.jcs.where.api.response.job.JobExperience
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.job.form.city.CvCityFragment
-import com.jcs.where.features.job.form.city.OnSelectedCity
+import com.jcs.where.features.job.form.CvFormPresenter
+import com.jcs.where.features.job.form.CvFormView
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_job_cv_experience.*
 import org.greenrobot.eventbus.EventBus
@@ -32,8 +31,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
     private var draftId = 0
     private var draftData: JobExperience? = null
     private var requiredEdit = ArrayList<AppCompatEditText>()
-    private var startDate = ""
-    private var endDate = ""
 
     override fun isStatusDark() = true
 

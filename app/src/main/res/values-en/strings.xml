@@ -909,8 +909,8 @@ Gentleman must let go</string>
     <string name="total_count_format">%1$d&#160;Item(s)</string>
     <string name="application_time">Application Time</string>
     <string name="success">Success</string>
-    <string name="collection_success">collection success</string>
-    <string name="cancel_collection_success">cancel collection success</string>
+    <string name="collection_success">Successful</string>
+    <string name="cancel_collection_success">Cancel Success</string>
     <string name="order_time_out">Payment timed out.</string>
     <string name="payment_hint">If payment is interrupted, please continue to complete the payment</string>
     <string name="pay_error_title">Payment Error</string>
@@ -1099,5 +1099,8 @@ Gentleman must let go</string>
     <string name="civil_status">Civil Status</string>
     <string name="single">Single</string>
     <string name="married">Married</string>
+    <string name="edu_school">EDUCATIONAL ATTAINMENT</string>
+    <string name="edu_level">Education Level</string>
+    <string name="select_degree">Choose A Degree</string>
 
 </resources>

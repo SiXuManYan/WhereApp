@@ -1,4 +1,4 @@
-package com.jcs.where.features.job.form
+package com.jcs.where.features.job.form.profile
 
 import android.app.DatePickerDialog
 import android.widget.TextView
@@ -12,6 +12,8 @@ import com.jcs.where.api.response.job.ProfileDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.job.form.CvFormPresenter
+import com.jcs.where.features.job.form.CvFormView
 import com.jcs.where.features.job.form.city.CvCityFragment
 import com.jcs.where.features.job.form.city.OnSelectedCity
 import com.jcs.where.utils.BusinessUtils

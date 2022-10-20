@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_48"
+    android:background="?android:attr/selectableItemBackground"
+  >
+
+    <CheckedTextView
+        android:id="@+id/degree_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:checked="false"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:gravity="center_vertical"
+        android:textColor="@color/selector_purple_gray"
+        android:textSize="@dimen/sp_14"
+        tools:text="本科" />
+
+
+
+
+</RelativeLayout>

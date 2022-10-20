@@ -632,8 +632,8 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".features.job.detail.JobDetailActivity" />
         <activity android:name=".features.job.cv.CvHomeActivity" />
-        <activity android:name=".features.job.form.CvFormProfileActivity" />
-        <activity android:name=".features.job.form.CvFormJobExperienceActivity" />
+        <activity android:name=".features.job.form.profile.CvFormProfileActivity" />
+        <activity android:name=".features.job.form.job.CvFormJobExperienceActivity" />
         <activity android:name=".features.feedback.home.FeedbackHomeActivity" />
         <activity
             android:name=".features.feedback.question.QuestionActivity"

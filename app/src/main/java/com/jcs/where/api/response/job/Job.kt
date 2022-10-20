@@ -105,7 +105,7 @@ class ProfileDetail() : Parcelable {
         education = parcel.readString().toString()
         city_id = parcel.readInt()
         birthday = parcel.readString().toString()
-        civil_status =parcel.readInt()
+        civil_status = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -238,7 +238,6 @@ class CreateProfileDetail {
     var contact_number = ""
 
 
-
 //    var school = ""
 //
 //    /** 专业 */
@@ -271,5 +270,56 @@ class CreateJobExperience {
  * 职位收藏、取消收藏
  */
 class JobCollection {
-    var  job_id = 0
+    var job_id = 0
+}
+
+
+/**
+ * 教育背景详情
+ */
+class EduDet {
+
+
+    var id = 0
+
+    /** 学校 */
+    var educational_attainment = ""
+
+    /** 学历 */
+    var educational_level_item =  Degree()
+
+    /** 专业值 */
+    var vocational_course = ""
+
+}
+
+/**
+ * 学历item
+ */
+class Degree {
+
+    var id = 0
+
+    /** 学历 */
+    var educational_level = ""
+
+    /** 专业标题 */
+    var extend_title = ""
+
+    var nativeSelected = false
+}
+
+
+class EduRequest {
+
+    /** 学校 */
+    var educational_attainment = ""
+
+    /** 学历 id */
+    var educational_level_id = 0
+
+    /** 专业 */
+    var vocational_course = ""
+
+
 }

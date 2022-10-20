@@ -14,8 +14,8 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.collection.JobCollectionActivity
-import com.jcs.where.features.job.form.CvFormJobExperienceActivity
-import com.jcs.where.features.job.form.CvFormProfileActivity
+import com.jcs.where.features.job.form.job.CvFormJobExperienceActivity
+import com.jcs.where.features.job.form.profile.CvFormProfileActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_job_cv_home_2.*
@@ -71,7 +71,7 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
             create_cv_iv.performClick()
         }
         job_collection_ll.setOnClickListener {
-            startActivity(JobCollectionActivity::class.java)
+            startActivityAfterLogin(JobCollectionActivity::class.java)
         }
 
     }

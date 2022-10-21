@@ -4,10 +4,7 @@ import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
-import com.jcs.where.api.response.job.CreateJobExperience
-import com.jcs.where.api.response.job.CreateProfileDetail
-import com.jcs.where.api.response.job.EduDet
-import com.jcs.where.api.response.job.Degree
+import com.jcs.where.api.response.job.*
 import java.util.ArrayList
 
 /**
@@ -17,7 +14,8 @@ import java.util.ArrayList
 interface CvFormView : BaseMvpView {
 
     /**
-     * 简历个人信息修改、创建成功
+     * 简历个人信息、工作经历、教育背景
+     * 修改、创建成功。
      */
     fun handleSuccess() {}
 
@@ -29,7 +27,7 @@ interface CvFormView : BaseMvpView {
     /**
      * 设置学历列表
      */
-    fun bindEduLevelList(response: ArrayList<Degree>){}
+    fun bindDegreeList(response: ArrayList<Degree>){}
 
 }
 
@@ -109,13 +107,35 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
     /**
      * 获取学历列表
      */
-    fun getEduLevelList() {
-        requestApi(mRetrofit.eduLevelList(), object : BaseMvpObserver<ArrayList<Degree>>(view) {
+    fun getDegreeList() {
+        requestApi(mRetrofit.degreelList(), object : BaseMvpObserver<ArrayList<Degree>>(view) {
             override fun onSuccess(response: ArrayList<Degree>) {
-                view.bindEduLevelList(response)
-            }
 
+                view.bindDegreeList(response)
+            }
         })
+    }
+
+    fun handleSaveEdu(eduId: Int, eduRequest: EduRequest) {
+
+        if (eduId == 0) {
+            // 创建
+            requestApi(mRetrofit.addEduBackground(eduRequest), object : BaseMvpObserver<JsonElement>(view) {
+                override fun onSuccess(response: JsonElement) {
+                    view.handleSuccess()
+                }
+
+            })
+
+        } else {
+            // 修改
+            requestApi(mRetrofit.editEduBackground(eduId, eduRequest), object : BaseMvpObserver<JsonElement>(view) {
+                override fun onSuccess(response: JsonElement) {
+                    view.handleSuccess()
+                }
+
+            })
+        }
     }
 
 

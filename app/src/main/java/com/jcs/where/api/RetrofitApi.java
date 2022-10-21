@@ -120,6 +120,7 @@ import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.EduDet;
 import com.jcs.where.api.response.job.Degree;
+import com.jcs.where.api.response.job.EduRequest;
 import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
@@ -2284,7 +2285,7 @@ public interface RetrofitApi {
     /**
      * 教育背景
      */
-    @GET("jobapi/v2/resumes/educations/levels")
+    @GET("jobapi/v2/resumes/educations")
     Observable<JcsResponse<ArrayList<JobExperience>>> eduBackgroundList();
 
 
@@ -2404,10 +2405,28 @@ public interface RetrofitApi {
 
 
     /**
-     * 简历列表
+     * 学历列表
      */
     @GET("jobapi/v2/resumes/educations/levels")
-    Observable<JcsResponse<ArrayList<Degree>>> eduLevelList();
+    Observable<JcsResponse<ArrayList<Degree>>> degreelList();
 
+    /**
+     * 添加教育背景
+     */
+    @POST("jobapi/v2/resumes/educations")
+    Observable<JcsResponse<JsonElement>> addEduBackground(
+            @Body EduRequest request
+    );
+
+
+
+    /**
+     * 添加教育背景
+     */
+    @PUT("jobapi/v2/resumes/educations/{education_id}")
+    Observable<JcsResponse<JsonElement>> editEduBackground(
+            @Path("education_id") int education_id,
+            @Body EduRequest request
+    );
 
 }

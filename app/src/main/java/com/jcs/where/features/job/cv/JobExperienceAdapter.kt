@@ -55,8 +55,9 @@ class JobExperienceEduAdapter : BaseMultiItemQuickAdapter<JobExperience ,BaseVie
 
 
     private fun bindEduBackground(holder: BaseViewHolder, item: JobExperience) {
-        holder.setText(R.id.school_tv, item.educational_level)
-        holder.setText(R.id.span_tv, item.extend_title)
+        holder.setText(R.id.school_tv, item.educational_attainment)
+        holder.setText(R.id.degree_tv, item.educational_level)
+        holder.setText(R.id.course_tv, item.vocational_course)
 
     }
 

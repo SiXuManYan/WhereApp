@@ -14,6 +14,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.collection.JobCollectionActivity
+import com.jcs.where.features.job.form.edu.CvFormEduActivity
 import com.jcs.where.features.job.form.job.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
 import com.jcs.where.utils.Constant
@@ -96,22 +97,22 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
         }
         city_tv.text = response.city
         email_tv.text = response.email
-//        school_tv.text = response.school
-//        major_tv.text = response.major
-//        education_tv.text = response.education
+
     }
 
     override fun bindJobExperience(toMutableList: MutableList<JobExperience>) {
         mAdapter.setNewInstance(toMutableList)
-
     }
 
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_REFRESH_CV_PROFILE -> presenter.getProfile()
-            EventCode.EVENT_REFRESH_CV_EXPERIENCE -> presenter.getJobExperience()
+            EventCode.EVENT_REFRESH_CV_PROFILE ->
+                presenter.getProfile()
+            EventCode.EVENT_REFRESH_CV_EXPERIENCE,
+            EventCode.EVENT_REFRESH_CV_EDU,
+            -> presenter.getJobExperience()
             else -> {}
         }
 
@@ -128,7 +129,9 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
                 })
             }
             JobExperience.TYPE_EDU_BACKGROUND -> {
-
+                startActivity(CvFormEduActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, item.id)
+                })
             }
             JobExperience.TYPE_TITLE -> {
                 val titleType = item.nativeTitleType
@@ -139,7 +142,7 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
                 }
                 if (titleType == JobExperience.TYPE_EDU_BACKGROUND) {
                     // 添加教育背景
-
+                    startActivity(CvFormEduActivity::class.java)
                 }
 
             }

@@ -162,11 +162,18 @@ class JobExperience() : Parcelable, MultiItemEntity {
     var city = ""
 
     // 教育背景
+
+
+
+
+    /** 学校 */
+    var educational_attainment = ""
+
     /** 学历 */
     var educational_level = ""
 
-    /** 拓展字段 */
-    var extend_title = ""
+    /** 专业 */
+    var vocational_course = ""
 
 
     constructor(parcel: Parcel) : this() {
@@ -286,7 +293,7 @@ class EduDet {
     var educational_attainment = ""
 
     /** 学历 */
-    var educational_level_item =  Degree()
+    var educational_level =  Degree()
 
     /** 专业值 */
     var vocational_course = ""

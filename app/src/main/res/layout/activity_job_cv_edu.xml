@@ -96,7 +96,7 @@
 
 
             <TextView
-                android:id="@+id/edu_level_tv"
+                android:id="@+id/degree_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_41"
                 android:background="@null"
@@ -120,8 +120,11 @@
 
 
             <LinearLayout
+                android:id="@+id/extend_title_ll"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -177,12 +180,14 @@
         android:id="@+id/save_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:layout_marginBottom="@dimen/dp_20"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/dp_15"
         android:layout_marginTop="@dimen/dp_43"
         android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:alpha="0.5"
         android:background="@drawable/shape_purple_radius_22"
+        android:clickable="false"
         android:gravity="center"
         android:text="@string/save"
         android:textAllCaps="false"

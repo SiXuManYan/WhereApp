@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/job_root_ll"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical"
@@ -13,15 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:textStyle="bold"
         android:maxLines="1"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/sp_16"
+        android:textStyle="bold"
         tools:text="金智科技" />
 
 
     <TextView
-        android:id="@+id/span_tv"
+        android:id="@+id/degree_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_8"
@@ -32,10 +32,19 @@
         android:textSize="@dimen/sp_14"
         tools:text="@tools:sample/full_names" />
 
-
-
-
-
+    <TextView
+        android:id="@+id/course_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:ellipsize="end"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="1"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_14"
+        tools:text="@tools:sample/full_names" />
 
 
 </LinearLayout>

@@ -1,22 +1,29 @@
 package com.jcs.where.features.job.form.edu
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
+import com.jcs.where.api.response.job.Degree
 import com.jcs.where.api.response.job.EduDet
 import com.jcs.where.api.response.job.EduRequest
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.form.CvFormPresenter
 import com.jcs.where.features.job.form.CvFormView
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_job_cv_edu.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/10/20 14:48.
@@ -25,10 +32,14 @@ import kotlinx.android.synthetic.main.activity_job_cv_edu.*
 class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
 
-    private var eduId = 0
+    private var lastEeduId = 0
 
     private var eduRequest = EduRequest()
 
+    /** 专业标题 */
+    private var extendTitle = ""
+
+    var lastDegreeId = 0
 
     private var degreeDialog: BottomSheetDialog? = null
 
@@ -39,38 +50,144 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
     override fun getLayoutId() = R.layout.activity_job_cv_edu
 
     override fun initView() {
-        eduId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        lastEeduId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        initDegree()
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initDegree() {
+        mDegreeAdapter = DegreeAdapter().apply {
+
+            setOnItemClickListener { _, _, position ->
+
+                // 学历
+                val degree = mDegreeAdapter.data[position]
+                val id = degree.id
+                eduRequest.educational_level_id = id
+                degree_tv.text = degree.educational_level
+
+                mDegreeAdapter.data.forEach {
+                    it.nativeSelected = it.id == id
+                }
+                mDegreeAdapter.notifyDataSetChanged()
+
+                // 显示专业
+                extendTitle = degree.extend_title
+                if (extendTitle.isNotBlank()) {
+                    extend_title_ll.visibility = View.VISIBLE
+                    extend_title_tv.text = extendTitle
+                } else {
+                    extend_title_ll.visibility = View.GONE
+                }
+                extend_value_et.setText("")
+                eduRequest.vocational_course = ""
+
+                degreeDialog?.dismiss()
+
+            }
+        }
     }
 
     override fun initData() {
         presenter = CvFormPresenter(this)
-        presenter.getEduDet(eduId)
-        presenter.getEduLevelList()
+        presenter.getEduDet(lastEeduId)
+        presenter.getDegreeList()
     }
 
     override fun bindListener() {
+        school_name_et.addTextChangedListener(afterTextChanged = {
+            eduRequest.educational_attainment = it.toString().trim()
+            handleClickable()
+        })
+
+        extend_value_et.addTextChangedListener(afterTextChanged = {
+            eduRequest.vocational_course = it.toString().trim()
+            handleClickable()
+        })
+        degree_tv.setOnClickListener {
+
+
+            if (degreeDialog != null) {
+                degreeDialog?.show()
+            } else {
+                showDegree()
+            }
+        }
+
+        save_tv.setOnClickListener {
+            presenter.handleSaveEdu(lastEeduId, eduRequest)
+        }
+    }
+
+    private fun handleClickable() {
+        val school = eduRequest.educational_attainment
+        val levelId = eduRequest.educational_level_id
+        val course = eduRequest.vocational_course
+
+        if (school.isNotBlank() && levelId != 0) {
+            if (extendTitle.isNotBlank()) {
+                if (course.isNotBlank()) {
+                    save_tv.isClickable = true
+                    save_tv.alpha = 1.0f
+                } else {
+                    save_tv.isClickable = false
+                    save_tv.alpha = 0.5f
+                }
+            } else {
+                save_tv.isClickable = true
+                save_tv.alpha = 1.0f
+            }
+        } else {
+            save_tv.isClickable = false
+            save_tv.alpha = 0.5f
+        }
+
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun bindEduDet(response: EduDet) {
-        val educationalAttainment = response.educational_attainment
-        school_name_et.setText(educationalAttainment)
+
+        val schoolName = response.educational_attainment
+        school_name_et.setText(schoolName)
 
 
-        val eduLevelItem = response.educational_level_item
-        edu_level_tv.text = eduLevelItem.educational_level
-        extend_title_tv.text = eduLevelItem.extend_title
+        // 学历
+        val degree = response.educational_level
+        lastDegreeId = degree.id
+        degree_tv.text = degree.educational_level
+        extend_title_tv.text = degree.extend_title
+
+        mDegreeAdapter.data.forEach {
+            if (it.id == lastDegreeId) {
+                it.nativeSelected = true
+            }
+        }
+        mDegreeAdapter.notifyDataSetChanged()
+
 
         val vocationalCourse = response.vocational_course
-        extend_value_et.setText(vocationalCourse)
+        if (vocationalCourse.isNotBlank()) {
+            extend_value_et.setText(vocationalCourse)
+            extend_title_ll.visibility = View.VISIBLE
+        }else {
+            extend_title_ll.visibility = View.GONE
+        }
+
 
         // 修改备用
         eduRequest.apply {
-            this.educational_attainment = educationalAttainment
-            this.educational_level_id = eduLevelItem.id
+            this.educational_attainment = schoolName
+            this.educational_level_id = degree.id
             this.vocational_course = vocationalCourse
         }
+
+    }
+
+
+    override fun bindDegreeList(response: ArrayList<Degree>) {
+        mDegreeAdapter.setNewInstance(response)
 
     }
 
@@ -99,6 +216,12 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
             timeDialog.dismiss()
         }
         timeDialog.show()
+    }
+
+
+    override fun handleSuccess() {
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_EDU))
+        finish()
     }
 
 }

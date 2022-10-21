@@ -23,6 +23,9 @@ interface CvHomeView : BaseMvpView {
 class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
 
 
+    /**
+     * 个人信息
+     */
     fun getProfile() {
         requestApi(mRetrofit.profileDetail(), object : BaseMvpObserver<ProfileDetail>(view) {
             override fun onSuccess(response: ProfileDetail?) {
@@ -34,6 +37,9 @@ class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
     }
 
 
+    /**
+     * 工作经历、教育背景
+     */
     fun getJobExperience() {
         requestApi(mRetrofit.jobExperienceList(), object : BaseMvpObserver<ArrayList<JobExperience>>(view) {
             override fun onSuccess(response: ArrayList<JobExperience>) {

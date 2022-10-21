@@ -1,5 +1,7 @@
 package com.jcs.where.features.job.cv
 
+import android.view.View
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -57,8 +59,16 @@ class JobExperienceEduAdapter : BaseMultiItemQuickAdapter<JobExperience ,BaseVie
     private fun bindEduBackground(holder: BaseViewHolder, item: JobExperience) {
         holder.setText(R.id.school_tv, item.educational_attainment)
         holder.setText(R.id.degree_tv, item.educational_level)
-        holder.setText(R.id.course_tv, item.vocational_course)
 
+        val courseTv = holder.getView<TextView>(R.id.course_tv)
+
+        val course = item.vocational_course
+        if (course.isNotBlank()) {
+            courseTv.visibility = View.VISIBLE
+            courseTv.text = course
+        }else {
+            courseTv.visibility = View.GONE
+        }
     }
 
     private fun bindTitle(holder: BaseViewHolder, item: JobExperience) {

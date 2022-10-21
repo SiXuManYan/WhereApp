@@ -16,6 +16,7 @@ class Job {
     var salary = ""
     var city = ""
     var created_at = ""
+    var job_id = 0
 }
 
 /**

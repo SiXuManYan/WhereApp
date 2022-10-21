@@ -14,6 +14,11 @@ import com.jcs.where.features.job.detail.JobDetailActivity
  */
 class JobHomeAdapter : BaseQuickAdapter<Job, BaseViewHolder>(R.layout.item_job_home), LoadMoreModule {
 
+    /**
+     * 0 简历列表
+     * 1 收藏列表
+     */
+    var type = 0
 
     override fun convert(holder: BaseViewHolder, item: Job) {
 
@@ -24,7 +29,12 @@ class JobHomeAdapter : BaseQuickAdapter<Job, BaseViewHolder>(R.layout.item_job_h
         holder.setText(R.id.create_time_tv, item.created_at)
 
         holder.getView<LinearLayout>(R.id.job_root_ll).setOnClickListener {
-            JobDetailActivity.navigation(context, item.id)
+            val jobId = if (type == 0) {
+                item.id
+            } else {
+                item.job_id
+            }
+            JobDetailActivity.navigation(context, jobId)
         }
     }
 

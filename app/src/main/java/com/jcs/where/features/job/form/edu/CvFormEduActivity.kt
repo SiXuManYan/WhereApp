@@ -1,6 +1,7 @@
 package com.jcs.where.features.job.form.edu
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,7 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
     private var eduRequest = EduRequest()
 
     /** 专业标题 */
-    private var extendTitle = ""
+    private var extendTitle: String? = ""
 
     var lastDegreeId = 0
 
@@ -74,11 +75,11 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
                 // 显示专业
                 extendTitle = degree.extend_title
-                if (extendTitle.isNotBlank()) {
+                if (extendTitle.isNullOrBlank()) {
+                    extend_title_ll.visibility = View.GONE
+                } else {
                     extend_title_ll.visibility = View.VISIBLE
                     extend_title_tv.text = extendTitle
-                } else {
-                    extend_title_ll.visibility = View.GONE
                 }
                 extend_value_et.setText("")
                 eduRequest.vocational_course = ""
@@ -126,18 +127,21 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
         val course = eduRequest.vocational_course
 
         if (school.isNotBlank() && levelId != 0) {
-            if (extendTitle.isNotBlank()) {
-                if (course.isNotBlank()) {
-                    save_tv.isClickable = true
-                    save_tv.alpha = 1.0f
-                } else {
-                    save_tv.isClickable = false
-                    save_tv.alpha = 0.5f
-                }
-            } else {
+
+
+            if (TextUtils.isEmpty(extendTitle)) {
                 save_tv.isClickable = true
                 save_tv.alpha = 1.0f
+            } else {
+                if (course.isNullOrBlank()) {
+                    save_tv.isClickable = false
+                    save_tv.alpha = 0.5f
+                } else {
+                    save_tv.isClickable = true
+                    save_tv.alpha = 1.0f
+                }
             }
+
         } else {
             save_tv.isClickable = false
             save_tv.alpha = 0.5f
@@ -168,11 +172,11 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
 
         val vocationalCourse = response.vocational_course
-        if (vocationalCourse.isNotBlank()) {
+        if (vocationalCourse.isNullOrBlank()) {
+            extend_title_ll.visibility = View.GONE
+        } else {
             extend_value_et.setText(vocationalCourse)
             extend_title_ll.visibility = View.VISIBLE
-        }else {
-            extend_title_ll.visibility = View.GONE
         }
 
 

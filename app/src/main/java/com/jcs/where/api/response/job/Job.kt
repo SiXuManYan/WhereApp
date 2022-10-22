@@ -297,7 +297,7 @@ class EduDet {
     var educational_level =  Degree()
 
     /** 专业值 */
-    var vocational_course = ""
+    var vocational_course :String? = ""
 
 }
 
@@ -312,7 +312,7 @@ class Degree {
     var educational_level = ""
 
     /** 专业标题 */
-    var extend_title = ""
+    var extend_title  :String? = ""
 
     var nativeSelected = false
 }
@@ -327,7 +327,7 @@ class EduRequest {
     var educational_level_id = 0
 
     /** 专业 */
-    var vocational_course = ""
+    var vocational_course :String? = null
 
 
 }

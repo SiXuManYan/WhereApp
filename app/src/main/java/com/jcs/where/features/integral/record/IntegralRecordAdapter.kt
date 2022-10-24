@@ -46,6 +46,10 @@ class IntegralRecordAdapter : BaseQuickAdapter<IntegralRecord, BaseViewHolder>(R
                 type_iv.setImageResource(R.mipmap.ic_bills_record_net)
                 type_tv.text = context.getString(R.string.internet_billing_coupon)
             }
+            5->{
+                type_iv.setImageResource(R.mipmap.ic_bills_record_phone)
+                type_tv.text = context.getString(R.string.telecoms_coupon)
+            }
         }
 
         GlideUtil.load(context, item.image, image_iv)

@@ -11,7 +11,7 @@ import com.jcs.where.api.response.integral.IntegralTag
 
 /**
  * Created by Wangsw  2023/6/10 17:06.
- * 企业黄页三级分类
+ * 活动中心分类
  */
 class CenterTagAdapter : BaseQuickAdapter<IntegralTag, BaseViewHolder>(R.layout.item_enterprise_third_category) {
 

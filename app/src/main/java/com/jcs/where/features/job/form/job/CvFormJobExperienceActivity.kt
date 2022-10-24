@@ -1,19 +1,10 @@
 package com.jcs.where.features.job.form.job
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.job.CreateJobExperience
 import com.jcs.where.api.response.job.JobExperience
@@ -22,13 +13,11 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.form.CvFormPresenter
 import com.jcs.where.features.job.form.CvFormView
-import com.jcs.where.features.job.time.WorkTimeAdapter
-import com.jcs.where.features.job.time.WorkTimeUtil
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.OnWorkTimeSelected
-import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_job_cv_experience.*
+import me.shaohui.bottomdialog.BottomDialog
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
@@ -46,7 +35,8 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
     private var draftData: JobExperience? = null
     private var requiredEdit = ArrayList<AppCompatEditText>()
 
-    private var workTimeDialog: BottomSheetDialog? = null
+    private var startDialog: BottomDialog? = null
+    private var endDialog: BottomDialog? = null
 
 
     override fun isStatusDark() = true
@@ -79,24 +69,29 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
         requiredEdit.add(job_title_et)
         requiredEdit.add(job_desc_et)
 
+        startDialog = BusinessUtils.showWorkDialog2(this, object : OnWorkTimeSelected {
+            override fun onWorkTimeSelected(string: String) {
+                start_date_tv.text = string
+            }
+        })
+
+        endDialog = BusinessUtils.showWorkDialog2(this, object : OnWorkTimeSelected {
+            override fun onWorkTimeSelected(string: String) {
+                end_date_tv.text = string
+            }
+        })
+
+
     }
 
     override fun bindListener() {
         start_date_tv.setOnClickListener {
-            BusinessUtils.showWorkDialog2(this,object : OnWorkTimeSelected {
-                override fun onWorkTimeSelected(string: String) {
-                    start_date_tv.text = string
-                }
-            })
+            startDialog?.show()
         }
 
         end_date_tv.setOnClickListener {
+            endDialog?.show()
 
-            BusinessUtils.showWorkDialog2(this,object : OnWorkTimeSelected {
-                override fun onWorkTimeSelected(string: String) {
-                    end_date_tv.text = string
-                }
-            })
         }
 
         save_tv.setOnClickListener {
@@ -166,9 +161,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             else -> {}
         }
     }
-
-
-
 
 
 }

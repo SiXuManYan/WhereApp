@@ -45,7 +45,7 @@
             android:padding="@dimen/dp_10"
             android:text="@string/confirm"
             android:textColor="@color/black_333333"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14" />
 
     </RelativeLayout>
 
@@ -53,6 +53,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_222"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView

@@ -750,7 +750,7 @@ object BusinessUtils {
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun showWorkDialog2(context: FragmentActivity, listener: OnWorkTimeSelected?) {
+    fun showWorkDialog2(context: FragmentActivity, listener: OnWorkTimeSelected?): BottomDialog? {
 
         var month = ""
         var year = ""
@@ -767,7 +767,7 @@ object BusinessUtils {
             month = (monthAdapter.data[position].monthIndex + 1).toString()
         }
 
-        yearAdapter.setOnItemClickListener { adapter, view, position ->
+        yearAdapter.setOnItemClickListener { _, _, position ->
 
             yearAdapter.data.forEachIndexed { index, workTime ->
                 workTime.isSelected = index == position
@@ -821,8 +821,8 @@ object BusinessUtils {
                     dialog.dismiss()
                 }
             }
-            .show()
 
+        return dialog
 
     }
 

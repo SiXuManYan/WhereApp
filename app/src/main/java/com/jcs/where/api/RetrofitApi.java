@@ -119,8 +119,8 @@ import com.jcs.where.api.response.integral.IntegralTag;
 import com.jcs.where.api.response.job.ApiVersion;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
-import com.jcs.where.api.response.job.EduDet;
 import com.jcs.where.api.response.job.Degree;
+import com.jcs.where.api.response.job.EduDet;
 import com.jcs.where.api.response.job.EduRequest;
 import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
@@ -2258,9 +2258,9 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/jobs/{job_id}")
     Observable<JcsResponse<JobDetail>> jobDetail(
-            @Path("job_id") int job_id ,
-            @Body ApiVersion apiVersion
-            );
+            @Path("job_id") int job_id,
+            @Query("version") int version
+           );
 
 
     /**
@@ -2419,7 +2419,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> addEduBackground(
             @Body EduRequest request
     );
-
 
 
     /**

@@ -116,6 +116,7 @@ import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.integral.IntegralTag;
+import com.jcs.where.api.response.job.ApiVersion;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.EduDet;
@@ -2257,8 +2258,9 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/jobs/{job_id}")
     Observable<JcsResponse<JobDetail>> jobDetail(
-            @Path("job_id") int job_id
-    );
+            @Path("job_id") int job_id ,
+            @Body ApiVersion apiVersion
+            );
 
 
     /**

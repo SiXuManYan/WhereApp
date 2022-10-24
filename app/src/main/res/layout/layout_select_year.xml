@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_white_radius_8_top"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_0"
+    android:paddingBottom="@dimen/dp_10">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="@dimen/dp_44">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/choose_work_start_time"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_17" />
+
+        <ImageView
+            android:id="@+id/close_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
+            android:layout_marginStart="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_close_black" />
+
+
+        <TextView
+            android:id="@+id/confirm_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
+            android:text="@string/confirm"
+            android:textColor="@color/black_333333"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_222"
+        android:orientation="horizontal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/month_rv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:itemCount="1" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/year_rv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="false"
+            tools:itemCount="1" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

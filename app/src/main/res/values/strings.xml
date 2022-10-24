@@ -1118,6 +1118,22 @@ Gentleman must let go</string>
     <string name="edu_school">学校</string>
     <string name="edu_level">学历</string>
     <string name="select_degree">选择学历</string>
+    <string name="choose_work_start_time">选择工作开始时间</string>
+
+    <string name="january">一月</string>
+    <string name="february">二月</string>
+    <string name="march">三月</string>
+    <string name="april">四月</string>
+    <string name="may">五月</string>
+    <string name="june">六月</string>
+    <string name="july">七月</string>
+    <string name="august">八月</string>
+    <string name="september">九月</string>
+    <string name="october">十月</string>
+    <string name="november">十一月</string>
+    <string name="december">十二月</string>
+
+
 
 
 </resources>

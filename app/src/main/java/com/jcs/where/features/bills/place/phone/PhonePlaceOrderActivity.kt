@@ -109,7 +109,7 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
             mSelectedCouponDialog.apply {
                 alreadySelectedCouponId = currentCouponId
                 module = BillCouponRequest.MODULE_PHONE
-                price = finalPrice
+                price = selectItem.Denomination
                 account = phone
             }
             mSelectedCouponDialog.show(supportFragmentManager, mSelectedCouponDialog.tag)

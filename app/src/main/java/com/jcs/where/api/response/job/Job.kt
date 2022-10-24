@@ -58,6 +58,10 @@ class JobSendCv {
     var job_id = 0
 }
 
+class ApiVersion {
+    var version = 0
+}
+
 
 /**
  * 简历个人信息

@@ -14,6 +14,7 @@ import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.job.ApiVersion
 import com.jcs.where.api.response.job.JobCollection
 import com.jcs.where.api.response.job.JobDetail
 import com.jcs.where.api.response.job.JobSendCv
@@ -211,7 +212,11 @@ interface JobDetailView : BaseMvpView {
 
 class JobDetailPresenter(var view: JobDetailView) : BaseMvpPresenter(view) {
     fun getData(jobId: Int) {
-        requestApi(mRetrofit.jobDetail(jobId), object : BaseMvpObserver<JobDetail>(view) {
+        val apply = ApiVersion().apply {
+            version = 2
+        }
+
+        requestApi(mRetrofit.jobDetail(jobId,apply), object : BaseMvpObserver<JobDetail>(view) {
             override fun onSuccess(response: JobDetail) {
                 view.bindDetail(response)
             }

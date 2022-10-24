@@ -1,5 +1,6 @@
 package com.jcs.where.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -11,9 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckedTextView
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.*
@@ -28,6 +32,8 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.tag.HomeTagAdapter
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.detail.media.MediaData
+import com.jcs.where.features.job.time.WorkTimeAdapter
+import com.jcs.where.features.job.time.WorkTimeUtil
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
 import com.jcs.where.features.mechanism.MechanismActivity
@@ -40,13 +46,16 @@ import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.calendar.JcsCalendarDialog
+import com.jcs.where.widget.list.DividerDecoration
 import com.umeng.analytics.MobclickAgent
 import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
+import me.shaohui.bottomdialog.BottomDialog
 import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
 import java.text.DecimalFormat
+
 
 /**
  * Created by Wangsw  2021/7/21 17:10.
@@ -699,7 +708,7 @@ object BusinessUtils {
     }
 
 
-    fun createBottomDialog(context: Context, oldIndex:Int , array:Array<String>, onCountryCodeSelectListener: OnBottomSelectedIndex) {
+    fun createBottomDialog(context: Context, oldIndex: Int, array: Array<String>, onCountryCodeSelectListener: OnBottomSelectedIndex) {
 
         val dialog = BottomSheetDialog(context)
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_job_prefix, null)
@@ -725,8 +734,12 @@ object BusinessUtils {
             dialog.dismiss()
         }
         when (oldIndex) {
-            0 -> {first.isChecked = true}
-            1 -> {second.isChecked = true}
+            0 -> {
+                first.isChecked = true
+            }
+            1 -> {
+                second.isChecked = true
+            }
         }
 
         view.findViewById<View>(R.id.cancel_tv).setOnClickListener { v1: View? ->
@@ -736,6 +749,88 @@ object BusinessUtils {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun showWorkDialog2(context: FragmentActivity, listener: OnWorkTimeSelected?) {
+
+        var month = ""
+        var year = ""
+
+
+        val monthAdapter = WorkTimeAdapter()
+        val yearAdapter = WorkTimeAdapter()
+
+        monthAdapter.setOnItemClickListener { _, _, position ->
+            monthAdapter.data.forEachIndexed { index, workTime ->
+                workTime.isSelected = index == position
+            }
+            monthAdapter.notifyDataSetChanged()
+            month = (monthAdapter.data[position].monthIndex + 1).toString()
+        }
+
+        yearAdapter.setOnItemClickListener { adapter, view, position ->
+
+            yearAdapter.data.forEachIndexed { index, workTime ->
+                workTime.isSelected = index == position
+            }
+            yearAdapter.notifyDataSetChanged()
+            year = yearAdapter.data[position].name
+        }
+
+
+        val dialog = BottomDialog.create(context.supportFragmentManager)
+
+        dialog.setLayoutRes(R.layout.layout_select_year)
+            .setViewListener {
+
+                val monthRv = it.findViewById<RecyclerView>(R.id.month_rv)
+                monthRv.apply {
+                    adapter = monthAdapter
+                    addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), 1, SizeUtils.dp2px(40f), 0))
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                }
+
+
+                val yearRv = it.findViewById<RecyclerView>(R.id.year_rv)
+                yearRv.apply {
+                    adapter = yearAdapter
+                    addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), 1, 0, SizeUtils.dp2px(40f)))
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                }
+//
+//                val helper1 = PagerSnapHelper()
+//                helper1.attachToRecyclerView(monthRv)
+//
+//                val helper2 = PagerSnapHelper()
+//                helper2.attachToRecyclerView(yearRv)
+
+                yearAdapter.setNewInstance(WorkTimeUtil.getAllYear())
+                monthAdapter.setNewInstance(WorkTimeUtil.getAllMonth())
+                month = "1"
+                year = yearAdapter.data[0].name
+
+
+                it.findViewById<TextView>(R.id.confirm_tv).setOnClickListener {
+
+                    val result = "$year.$month"
+                    listener?.onWorkTimeSelected(result)
+                    dialog.dismiss()
+
+
+                }
+                it.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
+                    dialog.dismiss()
+                }
+            }
+            .show()
+
+
+    }
+
+
+}
+
+interface OnWorkTimeSelected {
+    fun onWorkTimeSelected(string: String)
 }
 
 

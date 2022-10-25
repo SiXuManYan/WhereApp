@@ -27,7 +27,7 @@ class IntegralRecordAdapter : BaseQuickAdapter<IntegralRecord, BaseViewHolder>(R
 
 
         /**
-         * 1商品 2水 3电 4网 5手机充值
+         * 1商品 2水 3电 4网 5手机充值 6estore
          */
         when (item.type) {
             1 -> {

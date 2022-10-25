@@ -122,6 +122,7 @@ import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.Degree;
 import com.jcs.where.api.response.job.EduDet;
 import com.jcs.where.api.response.job.EduRequest;
+import com.jcs.where.api.response.job.EmployerRequest;
 import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
@@ -2429,5 +2430,15 @@ public interface RetrofitApi {
             @Path("education_id") int education_id,
             @Body EduRequest request
     );
+
+
+    /**
+     * 雇主申请
+     */
+    @POST("jobapi/v2/employers")
+    Observable<JcsResponse<JsonElement>> employerApply(
+            @Body EmployerRequest request
+    );
+
 
 }

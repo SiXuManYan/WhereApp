@@ -11,11 +11,9 @@ import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckedTextView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -824,6 +822,44 @@ object BusinessUtils {
 
         return dialog
 
+    }
+
+
+    fun checkEditBlank(vararg editView :EditText): Boolean {
+        var isBlank = false
+
+        editView.forEach {
+            val trim = it.text.toString().trim()
+            if (trim.isBlank()) {
+                isBlank = true
+                return@forEach
+            }
+        }
+        return isBlank
+    }
+
+   fun checkEditBlank( editView : ArrayList<AppCompatEditText>): Boolean {
+        var isBlank = false
+
+        editView.forEach {
+            val trim = it.text.toString().trim()
+            if (trim.isBlank()) {
+                isBlank = true
+                return@forEach
+            }
+        }
+        return isBlank
+    }
+
+
+    fun setViewClickable(clickable : Boolean , view:TextView){
+
+        if (clickable) {
+            view.alpha = 1.0f
+        }else {
+            view.alpha = 0.5f
+        }
+        view.isClickable = clickable
     }
 
 

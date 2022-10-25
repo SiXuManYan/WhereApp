@@ -332,6 +332,13 @@ class EduRequest {
 
     /** 专业 */
     var vocational_course :String? = null
+}
 
-
+class EmployerRequest{
+    var first_name = ""
+    var middle_name = ""
+    var last_name = ""
+    var contact_number = ""
+    var email = ""
+    var init_pwd = ""
 }

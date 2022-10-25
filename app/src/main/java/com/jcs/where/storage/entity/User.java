@@ -18,32 +18,7 @@ import com.jcs.where.utils.SPKey;
  */
 @Entity(tableName = "table_user")
 public class User {
-/*
-    {
-            "id": "用户ID",
-            "nickname": "昵称",
-            "phone": "手机号",
-            "email": "邮箱",
-            "avatar": "头像",
-            "balance": "余额",
-            "created_at": "创建时间",
-            "name": "账户名称",
-            "type": "账户类型（1：账户体系，2：第三方体系）",
-            "country_code": "国家码",
-            "merchant_apply_status": "商户入驻状态（1：已提交，2：未提交）",
-            "facebook_bind_status": "Facebook绑定状态（1：已绑定，2：未绑定）",
-            "google_bind_status": "Google绑定状态（1：已绑定，2：未绑定）",
-            "twitter_bind_status": "twitter绑定状态（1：已绑定，2：未绑定）",
-            "sign_status": "签到状态（1：已签到，2：未签到）",
-            "integral": "积分",
-            "rong_data": {
-                "token": "token",
-                "name": "用户名",
-                "avatar": "头像",
-                "uuid": "Uuid"
-            }
-    }
-    */
+
 
     private static User instance;
 

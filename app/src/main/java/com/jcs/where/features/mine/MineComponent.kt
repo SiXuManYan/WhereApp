@@ -18,7 +18,7 @@ import io.rong.imlib.RongIMClient
  */
 interface MineView : BaseMvpView {
     fun bindUnreadMessageCount(totalCount: Int)
-    fun bindUserInfo(nickname: String, createdAt: String, avatar: String)
+    fun bindUserInfo( response: UserInfoResponse)
 }
 
 class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
@@ -78,7 +78,7 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
         }
         requestApi(mRetrofit.userInfo, object : BaseMvpObserver<UserInfoResponse>(view) {
             override fun onSuccess(response: UserInfoResponse) {
-                view.bindUserInfo(response.nickname, response.createdAt, response.avatar)
+                view.bindUserInfo(response)
                 saveData(response)
             }
         })

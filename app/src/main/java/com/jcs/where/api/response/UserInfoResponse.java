@@ -64,6 +64,17 @@ public class UserInfoResponse {
     public UserRongyunData rongData;
 
     /**
+     * 雇主申请状态 （true、false）
+     */
+    public boolean is_send_employer = false;
+
+    /**
+     * 商家入驻审核状态
+     * 审核状态（1：待审核，2：审核通过，3：审核未通过）
+     */
+    public int is_verify = 0 ;
+
+    /**
      * 邀请链接，H5剪切板中数据格式（json字符串）：{"whereCode": "code"}
      */
     public String invite_link ;

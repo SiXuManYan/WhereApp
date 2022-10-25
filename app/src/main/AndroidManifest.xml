@@ -646,6 +646,7 @@
         <activity android:name=".features.feedback.record.FeedbackRecordActivity" />
         <activity android:name=".features.job.collection.JobCollectionActivity" />
         <activity android:name=".features.job.form.edu.CvFormEduActivity" />
+        <activity android:name=".features.job.employer.EmployerActivity" />
 
 
     </application>

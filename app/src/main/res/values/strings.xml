@@ -1138,7 +1138,7 @@ Gentleman must let go</string>
     <string name="set_employer_password">设置招聘端登录密码</string>
     <string name="please_enter_employer_password">请设置您的登录密码</string>
     <string name="submit_success">提交成功</string>
-    <string name="platform_processing">平台正在处理，请您查看邮件</string>
+    <string name="platform_processing">请注意查收邮件信息。</string>
 
 
 </resources>

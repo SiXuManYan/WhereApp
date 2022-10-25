@@ -2,6 +2,7 @@ package com.jcs.where.features.job.form.city
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,9 +32,9 @@ class CvCityFragment : BaseBottomSheetDialogFragment<CvCityPresenter>(), CvCityV
     private lateinit var emptyView: EmptyView
     var onSelectedCity: OnSelectedCity? = null
 
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 80 / 100)
+//
+//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+//        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 80 / 100)
 
     override fun getLayoutId() = R.layout.dialog_cv_city
 
@@ -87,12 +88,22 @@ class CvCityFragment : BaseBottomSheetDialogFragment<CvCityPresenter>(), CvCityV
     }
 
     override fun bindListener() {
-
+        back_iv.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun bindData(toMutableList: MutableList<CityPickerResponse.CityChild>) {
         mAdapter.setNewInstance(toMutableList)
     }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+
+    }
+
+
 
 }
 

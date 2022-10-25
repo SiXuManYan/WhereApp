@@ -596,7 +596,9 @@
         <activity android:name=".features.refund.method.RefundMethodActivity" />
         <activity android:name=".features.refund.add.form.bank.child.BankListActivity" />
         <activity android:name=".features.refund.add.verify.RefundBindVerifyActivity" />
-        <activity android:name=".features.refund.add.form.third.ThirdChannelFormActivity" />
+        <activity
+            android:name=".features.refund.add.form.third.ThirdChannelFormActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".features.refund.add.channel.RefundChannelActivity" />
         <activity android:name=".features.gourmet.refund.ComplexRefundActivity" />
         <activity android:name=".features.gourmet.refund.detail.FoodRefundInfoActivity" />
@@ -605,7 +607,9 @@
         <activity android:name=".features.mall.shop.home.info.QualificationActivity" />
         <activity android:name=".features.bills.channel.BillsChannelActivity" />
         <activity android:name=".features.bills.place.BillsPlaceOrderActivity" />
-        <activity android:name=".features.bills.form.BillsFormActivity" />
+        <activity
+            android:name=".features.bills.form.BillsFormActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".features.bills.record.BillsRecordActivity"
             android:launchMode="singleTask"
@@ -632,8 +636,12 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".features.job.detail.JobDetailActivity" />
         <activity android:name=".features.job.cv.CvHomeActivity" />
-        <activity android:name=".features.job.form.profile.CvFormProfileActivity" />
-        <activity android:name=".features.job.form.job.CvFormJobExperienceActivity" />
+        <activity
+            android:name=".features.job.form.profile.CvFormProfileActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".features.job.form.job.CvFormJobExperienceActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".features.feedback.home.FeedbackHomeActivity" />
         <activity
             android:name=".features.feedback.question.QuestionActivity"
@@ -645,9 +653,12 @@
         <activity android:name=".features.feedback.record.det.FeedbackDetActivity" />
         <activity android:name=".features.feedback.record.FeedbackRecordActivity" />
         <activity android:name=".features.job.collection.JobCollectionActivity" />
-        <activity android:name=".features.job.form.edu.CvFormEduActivity" />
-        <activity android:name=".features.job.employer.EmployerActivity" />
-
+        <activity
+            android:name=".features.job.form.edu.CvFormEduActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".features.job.employer.EmployerActivity"
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 

@@ -1123,6 +1123,6 @@ Gentleman must let go</string>
     <string name="set_employer_password">Set an employer password</string>
     <string name="please_enter_employer_password">Please set your login password</string>
     <string name="submit_success">Submitted Successfully</string>
-    <string name="platform_processing">The platform is processing, please check your email</string>
+    <string name="platform_processing">Please pay attention to check the mail information</string>
 
 </resources>

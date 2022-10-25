@@ -3,6 +3,7 @@ package com.jcs.where.features.job.form.profile
 import android.app.DatePickerDialog
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.NestedScrollView
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -62,7 +63,9 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
     override fun initView() {
         draftData = intent.getParcelableExtra(Constant.PARAM_DATA)
         cityDialog = CvCityFragment().apply {
+            isCancelable = false
             onSelectedCity = this@CvFormProfileActivity
+
         }
 
 
@@ -99,7 +102,6 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
             }
 
 
-
         }
     }
 
@@ -117,9 +119,9 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
         sex_tv.setOnClickListener {
 
-            val index  = when(userGender){
-                2-> 1
-                else-> 0
+            val index = when (userGender) {
+                2 -> 1
+                else -> 0
             }
 
             BusinessUtils.createBottomDialog(this, index, genderData, object : OnBottomSelectedIndex {
@@ -160,7 +162,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                 }
             }
 
-            if (birth_tv.text.isNullOrBlank()){
+            if (birth_tv.text.isNullOrBlank()) {
                 ToastUtils.showShort("Please select Date of Birth")
                 return@setOnClickListener
             }
@@ -170,7 +172,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                 return@setOnClickListener
             }
 
-            if (civil_status_tv.text.isNullOrBlank()){
+            if (civil_status_tv.text.isNullOrBlank()) {
                 ToastUtils.showShort("Please select Civil Status")
                 return@setOnClickListener
             }
@@ -195,6 +197,17 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
             }
             presenter.handleProfile(draftProfileId, apply)
 
+        }
+
+        email_et.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                scroll_nsv.fullScroll(NestedScrollView.FOCUS_DOWN)
+            }
+        }
+        contact_number_et.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                scroll_nsv.fullScroll(NestedScrollView.FOCUS_DOWN)
+            }
         }
     }
 

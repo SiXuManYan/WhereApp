@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -16,15 +15,16 @@
         android:src="@mipmap/ic_back_black" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_nsv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingTop="@dimen/dp_0"
-            android:paddingBottom="@dimen/dp_300"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_0"
+            android:paddingBottom="@dimen/dp_300">
 
 
             <TextView
@@ -79,8 +79,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/dp_16"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="@string/last_name"
@@ -110,13 +110,6 @@
                 android:layout_height="1px"
                 android:layout_marginStart="@dimen/dp_15"
                 android:background="@color/grey_F5F5F5" />
-
-
-
-
-
-
-
 
 
             <TextView
@@ -151,35 +144,6 @@
                 android:layout_height="1px"
                 android:layout_marginStart="@dimen/dp_15"
                 android:background="@color/grey_F5F5F5" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             <TextView
@@ -217,16 +181,6 @@
                 android:background="@color/grey_F5F5F5" />
 
 
-
-
-
-
-
-
-
-
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -261,19 +215,6 @@
                 android:background="@color/grey_F5F5F5" />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -306,10 +247,6 @@
                 android:layout_height="1px"
                 android:layout_marginStart="@dimen/dp_15"
                 android:background="@color/grey_F5F5F5" />
-
-
-
-
 
 
             <TextView
@@ -384,17 +321,6 @@
                 android:background="@color/grey_F5F5F5" />
 
 
-
-
-
-
-
-
-
-
-
-
-
             <Button
                 android:id="@+id/save_tv"
                 android:layout_width="match_parent"
@@ -404,11 +330,11 @@
                 android:layout_marginEnd="@dimen/dp_15"
                 android:background="@drawable/shape_purple_radius_22"
                 android:gravity="center"
+                android:text="@string/save"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
-                android:textStyle="bold"
-                android:text="@string/save" />
+                android:textStyle="bold" />
 
 
         </LinearLayout>

@@ -1139,6 +1139,7 @@ Gentleman must let go</string>
     <string name="please_enter_employer_password">请设置您的登录密码</string>
     <string name="submit_success">提交成功</string>
     <string name="platform_processing">请注意查收邮件信息。</string>
+    <string name="company_name_hint">提交后将不可修改</string>
 
 
 </resources>

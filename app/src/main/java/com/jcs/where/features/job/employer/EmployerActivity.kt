@@ -29,12 +29,12 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
     override fun getLayoutId() = R.layout.activity_employer
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this,Color.WHITE)
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         val isSendEmployer = intent.getBooleanExtra(Constant.PARAM_STATUS, false)
         if (isSendEmployer) {
             form_nsv.visibility = View.GONE
             already_commit_ll.visibility = View.VISIBLE
-        }else {
+        } else {
             form_nsv.visibility = View.VISIBLE
             already_commit_ll.visibility = View.GONE
         }
@@ -48,7 +48,7 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
     override fun bindListener() {
         for (index in 0 until container_ll.childCount) {
             val child = container_ll.getChildAt(index)
-            if (child is AppCompatEditText) {
+            if (child is AppCompatEditText && child.id != R.id.middle_name_et) {
                 allEditView.add(child)
             }
         }
@@ -73,6 +73,7 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
             val number = contact_number_et.text.toString().trim()
             val email = email_et.text.toString().trim()
             val password = password_et.text.toString().trim()
+            val company = company_name_et.text.toString().trim()
 
             val apply = EmployerRequest().apply {
                 first_name = first
@@ -81,6 +82,7 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
                 contact_number = number
                 this.email = email
                 init_pwd = password
+                company_title = company
             }
             presenter.applyEmployer(apply)
         }

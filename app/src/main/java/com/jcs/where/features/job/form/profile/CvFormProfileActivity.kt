@@ -1,6 +1,7 @@
 package com.jcs.where.features.job.form.profile
 
 import android.app.DatePickerDialog
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.NestedScrollView
@@ -65,10 +66,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
         cityDialog = CvCityFragment().apply {
             isCancelable = false
             onSelectedCity = this@CvFormProfileActivity
-
         }
-
-
         initDraft()
     }
 
@@ -199,16 +197,6 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
         }
 
-        email_et.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                scroll_nsv.fullScroll(NestedScrollView.FOCUS_DOWN)
-            }
-        }
-        contact_number_et.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                scroll_nsv.fullScroll(NestedScrollView.FOCUS_DOWN)
-            }
-        }
     }
 
 
@@ -224,6 +212,10 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
         cityId = cityChild.id.toInt()
         city_tv.text = cityChild.name
 
+    }
+
+    override fun onDismiss() {
+        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
 

@@ -1124,5 +1124,6 @@ Gentleman must let go</string>
     <string name="please_enter_employer_password">Please set your login password</string>
     <string name="submit_success">Submitted Successfully</string>
     <string name="platform_processing">Please pay attention to check the mail information</string>
+    <string name="company_name_hint">Once submitted, it will not be modified</string>
 
 </resources>

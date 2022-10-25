@@ -32,9 +32,9 @@ class CvCityFragment : BaseBottomSheetDialogFragment<CvCityPresenter>(), CvCityV
     private lateinit var emptyView: EmptyView
     var onSelectedCity: OnSelectedCity? = null
 
-//
-//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-//        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 80 / 100)
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        FixedHeightBottomSheetDialog(requireContext(), theme, ScreenUtils.getScreenHeight() * 80 / 100)
 
     override fun getLayoutId() = R.layout.dialog_cv_city
 
@@ -100,7 +100,7 @@ class CvCityFragment : BaseBottomSheetDialogFragment<CvCityPresenter>(), CvCityV
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 
-
+        onSelectedCity?.onDismiss()
     }
 
 
@@ -109,6 +109,7 @@ class CvCityFragment : BaseBottomSheetDialogFragment<CvCityPresenter>(), CvCityV
 
 interface OnSelectedCity {
     fun onSelectedCity(cityChild: CityPickerResponse.CityChild, allData: MutableList<CityPickerResponse.CityChild>)
+    fun onDismiss()
 
 }
 

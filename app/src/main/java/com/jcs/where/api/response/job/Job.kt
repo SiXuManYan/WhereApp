@@ -341,4 +341,5 @@ class EmployerRequest{
     var contact_number = ""
     var email = ""
     var init_pwd = ""
+    var company_title = ""
 }

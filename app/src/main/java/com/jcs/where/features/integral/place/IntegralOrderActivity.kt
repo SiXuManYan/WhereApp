@@ -182,7 +182,6 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
             alertDialog.dismiss()
         }
 
-
     }
 
 }

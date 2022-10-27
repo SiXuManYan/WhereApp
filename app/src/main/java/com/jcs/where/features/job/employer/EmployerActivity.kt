@@ -1,7 +1,13 @@
 package com.jcs.where.features.job.employer
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.BarUtils
@@ -31,6 +37,10 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
         val isSendEmployer = intent.getBooleanExtra(Constant.PARAM_STATUS, false)
+        switchContent(isSendEmployer)
+    }
+
+    private fun switchContent(isSendEmployer: Boolean) {
         if (isSendEmployer) {
             form_nsv.visibility = View.GONE
             already_commit_ll.visibility = View.VISIBLE
@@ -84,15 +94,47 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
                 init_pwd = password
                 company_title = company
             }
+            showConfirmDialog(apply)
+        }
+
+    }
+
+
+
+    private fun showConfirmDialog(apply: EmployerRequest) {
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = LayoutInflater.from(this)
+        val view: View = inflater.inflate(R.layout.dialog_employer_confirm, null)
+
+        val cancelTv = view.findViewById<TextView>(R.id.cancel_tv)
+        val confirmTv = view.findViewById<TextView>(R.id.confirm_tv)
+        val contentTv = view.findViewById<TextView>(R.id.content_tv)
+        contentTv.text = apply.email
+
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        val window: Window? = alertDialog.window
+        window?.setContentView(view)
+        cancelTv.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        confirmTv.setOnClickListener {
             presenter.applyEmployer(apply)
+
+            alertDialog.dismiss()
         }
 
     }
 
     override fun applySuccess() {
-        ToastUtils.showShort(R.string.submit_success)
+        // ToastUtils.showShort(R.string.submit_success)
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_EMPLOYER_SUBMIT))
-        finish()
+        switchContent(true)
     }
+
 
 }

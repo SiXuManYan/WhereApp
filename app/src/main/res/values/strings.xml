@@ -1140,6 +1140,10 @@ Gentleman must let go</string>
     <string name="submit_success">提交成功</string>
     <string name="platform_processing">请注意查收邮件信息。</string>
     <string name="company_name_hint">提交后将不可修改</string>
+    <string name="employer_hint">请填写准确信息，提交后无法更改！</string>
+    <string name="revise">修改</string>
+    <string name="submit">提交</string>
+    <string name="confirm_email">请核对邮箱是否准确。</string>
 
 
 </resources>

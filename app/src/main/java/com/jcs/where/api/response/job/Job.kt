@@ -169,8 +169,6 @@ class JobExperience() : Parcelable, MultiItemEntity {
     // 教育背景
 
 
-
-
     /** 学校 */
     var educational_attainment = ""
 
@@ -298,10 +296,10 @@ class EduDet {
     var educational_attainment = ""
 
     /** 学历 */
-    var educational_level =  Degree()
+    var educational_level = Degree()
 
     /** 专业值 */
-    var vocational_course :String? = ""
+    var vocational_course: String? = ""
 
 }
 
@@ -316,7 +314,7 @@ class Degree {
     var educational_level = ""
 
     /** 专业标题 */
-    var extend_title  :String? = ""
+    var extend_title: String? = ""
 
     var nativeSelected = false
 }
@@ -331,10 +329,10 @@ class EduRequest {
     var educational_level_id = 0
 
     /** 专业 */
-    var vocational_course :String? = null
+    var vocational_course: String? = null
 }
 
-class EmployerRequest{
+class EmployerRequest {
     var first_name = ""
     var middle_name = ""
     var last_name = ""
@@ -342,4 +340,10 @@ class EmployerRequest{
     var email = ""
     var init_pwd = ""
     var company_title = ""
+}
+
+
+class JobReport {
+    var id = 0
+    var title = ""
 }

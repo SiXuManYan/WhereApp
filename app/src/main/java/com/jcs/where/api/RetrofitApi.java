@@ -127,6 +127,7 @@ import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
 import com.jcs.where.api.response.job.JobExperience;
+import com.jcs.where.api.response.job.JobReport;
 import com.jcs.where.api.response.job.JobSendCv;
 import com.jcs.where.api.response.job.ProfileDetail;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
@@ -2439,6 +2440,15 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> employerApply(
             @Body EmployerRequest request
     );
+
+
+
+
+    /**
+     * 举报原因
+     */
+    @GET("jobapi/v2/jobs/report_titles")
+    Observable<JcsResponse<ArrayList<JobReport>>> reportReason();
 
 
 }

@@ -660,6 +660,7 @@
             android:name=".features.job.employer.EmployerActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".features.job.employer.EmployerResultActivity" />
+        <activity android:name=".features.job.report.ReportActivity" />
 
     </application>
 

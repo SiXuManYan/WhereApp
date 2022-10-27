@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
@@ -30,6 +30,7 @@ import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
 import com.jcs.where.features.home.tag.HomeTagAdapter
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.detail.media.MediaData
+import com.jcs.where.features.job.detail.JobDetailActivity
 import com.jcs.where.features.job.time.WorkTimeAdapter
 import com.jcs.where.features.job.time.WorkTimeUtil
 import com.jcs.where.features.mall.detail.MallDetailActivity
@@ -568,12 +569,13 @@ object BusinessUtils {
         if (module.isNullOrBlank() || moduleId.isNullOrBlank()) {
             return facebookIntent
         }
+        val bundle = Bundle()
 
         when (module) {
             Html5Url.MODEL_HOTEL -> {
                 val dialog = JcsCalendarDialog()
                 dialog.initCalendar()
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putInt(Constant.PARAM_HOTEL_ID, moduleId.toInt())
                     putSerializable(Constant.PARAM_START_DATE, dialog.startBean)
                     putSerializable(Constant.PARAM_END_DATE, dialog.endBean)
@@ -581,21 +583,21 @@ object BusinessUtils {
                 facebookIntent = Intent(context, HotelDetailActivity2::class.java).putExtras(bundle)
             }
             Html5Url.MODEL_NEWS -> {
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putString(Constant.PARAM_NEWS_ID, moduleId)
                 }
                 facebookIntent = Intent(context, NewsDetailActivity::class.java).putExtras(bundle)
 
             }
             Html5Url.MODEL_TRAVEL -> {
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putInt(Constant.PARAM_ID, moduleId.toInt())
                 }
                 facebookIntent = Intent(context, TravelDetailActivity::class.java).putExtras(bundle)
             }
 
             Html5Url.MODEL_GENERAL -> {
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putInt(Constant.PARAM_ID, moduleId.toInt())
                 }
                 facebookIntent = Intent(context, MechanismActivity::class.java).putExtras(bundle)
@@ -603,7 +605,7 @@ object BusinessUtils {
 
             Html5Url.MODEL_RESTAURANT -> {
 
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putInt(Constant.PARAM_ID, moduleId.toInt())
                 }
                 facebookIntent = Intent(context, RestaurantDetailActivity::class.java).putExtras(bundle)
@@ -611,20 +613,27 @@ object BusinessUtils {
             }
 
             Html5Url.MODEL_MALL -> {
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putInt(Constant.PARAM_ID, moduleId.toInt())
                 }
                 facebookIntent = Intent(context, MallDetailActivity::class.java).putExtras(bundle)
             }
 
             Html5Url.MODEL_MALL_SHOP -> {
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putInt(Constant.PARAM_SHOP_ID, moduleId.toInt())
                 }
                 facebookIntent = Intent(context, MallShopHomeActivity::class.java)
                     .putExtras(bundle)
             }
 
+            Html5Url.MODEL_JOB -> {
+                bundle.apply {
+                    putInt(Constant.PARAM_ID, moduleId.toInt())
+                }
+                facebookIntent = Intent(context, JobDetailActivity::class.java)
+                    .putExtras(bundle)
+            }
 
             else -> {}
         }
@@ -825,7 +834,7 @@ object BusinessUtils {
     }
 
 
-    fun checkEditBlank(vararg editView :EditText): Boolean {
+    fun checkEditBlank(vararg editView: EditText): Boolean {
         var isBlank = false
 
         editView.forEach {
@@ -838,7 +847,7 @@ object BusinessUtils {
         return isBlank
     }
 
-   fun checkEditBlank( editView : ArrayList<AppCompatEditText>): Boolean {
+    fun checkEditBlank(editView: ArrayList<AppCompatEditText>): Boolean {
         var isBlank = false
 
         editView.forEach {
@@ -852,17 +861,15 @@ object BusinessUtils {
     }
 
 
-    fun setViewClickable(clickable : Boolean , view:TextView){
+    fun setViewClickable(clickable: Boolean, view: TextView) {
 
         if (clickable) {
             view.alpha = 1.0f
-        }else {
+        } else {
             view.alpha = 0.5f
         }
         view.isClickable = clickable
     }
-
-
 
 
 }

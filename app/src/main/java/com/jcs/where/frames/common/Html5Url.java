@@ -35,6 +35,7 @@ public class Html5Url {
     public static final String MODEL_E_STORE = "eStore";
     public static final String MODEL_MALL = "new_estore";
     public static final String MODEL_MALL_SHOP = "new_estore_shop";
+    public static final String MODEL_JOB = "job";
 
     /**
      * 分享facebook

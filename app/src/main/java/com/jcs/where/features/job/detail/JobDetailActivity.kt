@@ -22,8 +22,10 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.cv.CvHomeActivity
+import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.MobUtil
 import kotlinx.android.synthetic.main.activity_job_detail.*
 
 /**
@@ -35,6 +37,9 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
     var jobId = 0
     var isCollect = false
+
+    /** 添加简历后，刷新本页状态 */
+    private var needRefreshForCv = false
 
     override fun isStatusDark() = true
 
@@ -77,6 +82,12 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
             }
             presenter.handleCollection(isCollect, jobId)
         }
+
+        share_iv.setOnClickListener {
+            val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_JOB, jobId)
+            MobUtil.shareFacebookWebPage(url,this)
+        }
+
     }
 
     override fun bindDetail(response: JobDetail) {
@@ -154,8 +165,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
     }
 
-    /** 添加简历后，刷新本页状态 */
-    private var needRefreshForCv = false
+
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)

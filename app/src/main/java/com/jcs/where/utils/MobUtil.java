@@ -83,7 +83,7 @@ public class MobUtil {
     public static void shareFacebookWebPage(String webUrl, FragmentActivity activity) {
         Platform plat = ShareSDK.getPlatform(Facebook.NAME);
         if (!plat.isClientValid()) {
-            ToastUtils.showShort(R.string.is_client_valid_facebook);
+//            ToastUtils.showShort(R.string.is_client_valid_facebook);
             new AlertDialog.Builder(activity)
                     .setTitle(R.string.prompt)
                     .setMessage(R.string.is_client_valid_facebook)

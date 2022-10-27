@@ -133,7 +133,8 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
     override fun applySuccess() {
         // ToastUtils.showShort(R.string.submit_success)
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_EMPLOYER_SUBMIT))
-        switchContent(true)
+        startActivity(EmployerResultActivity::class.java)
+        finish()
     }
 
 

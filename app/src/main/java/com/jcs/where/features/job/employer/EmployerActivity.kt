@@ -11,7 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.job.EmployerRequest
 import com.jcs.where.base.BaseEvent
@@ -100,7 +101,6 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
     }
 
 
-
     private fun showConfirmDialog(apply: EmployerRequest) {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -116,8 +116,23 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+
+
         val window: Window? = alertDialog.window
-        window?.setContentView(view)
+        if (window != null) {
+
+            // 更改背景
+            window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            window.setContentView(view)
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            // 更改默认宽度
+            val lp = WindowManager.LayoutParams()
+            lp.copyFrom(window.attributes)
+            lp.width = ScreenUtils.getScreenWidth() - SizeUtils.dp2px(80f)
+            window.attributes = lp
+
+        }
         cancelTv.setOnClickListener {
             alertDialog.dismiss()
         }

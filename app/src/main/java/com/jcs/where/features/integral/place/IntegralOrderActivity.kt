@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.address.AddressResponse
@@ -166,6 +168,11 @@ class IntegralOrderActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integra
             window.setContentView(view)
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+            // 更改默认宽度
+            val lp = WindowManager.LayoutParams()
+            lp.copyFrom(window.attributes)
+            lp.width = ScreenUtils.getScreenWidth() - SizeUtils.dp2px(80f)
+            window.attributes = lp
         }
         cancelTv.setOnClickListener {
             alertDialog.dismiss()

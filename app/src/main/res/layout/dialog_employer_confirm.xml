@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dp_30"
-    android:layout_marginEnd="@dimen/dp_30"
-    android:background="@drawable/shape_gradient_integral_order_4"
+    android:background="@drawable/shape_gradient_integral_order"
     android:paddingTop="@dimen/dp_0"
     android:paddingBottom="@dimen/dp_32">
 
@@ -62,7 +60,7 @@
             android:text="@string/revise"
             android:textAllCaps="false"
             android:textColor="@color/blue_377BFF"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_17"
             android:textStyle="bold" />
 
 
@@ -76,7 +74,7 @@
             android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_17"
             android:textStyle="bold" />
 
     </LinearLayout>

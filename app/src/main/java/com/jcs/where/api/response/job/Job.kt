@@ -320,6 +320,9 @@ class Degree {
 }
 
 
+/**
+ * 更新教育经历
+ */
 class EduRequest {
 
     /** 学校 */
@@ -332,6 +335,9 @@ class EduRequest {
     var vocational_course: String? = null
 }
 
+/**
+ * 提交职位雇主申请
+ */
 class EmployerRequest {
     var first_name = ""
     var middle_name = ""
@@ -342,8 +348,23 @@ class EmployerRequest {
     var company_title = ""
 }
 
-
-class JobReport {
+/**
+ * 举报原因列表
+ */
+class Report {
     var id = 0
     var title = ""
+    var nativeIsSelected = false
+}
+
+/**
+ * 职位举报
+ */
+class ReportRequest {
+
+    /** 职位id */
+    var job_id = 0
+
+    /** 举报原因id */
+    var report_title_id = 0
 }

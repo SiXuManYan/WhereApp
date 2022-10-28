@@ -22,6 +22,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.cv.CvHomeActivity
+import com.jcs.where.features.job.report.ReportActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
@@ -83,9 +84,15 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
             presenter.handleCollection(isCollect, jobId)
         }
 
+        report_iv.setOnClickListener {
+            startActivityAfterLogin(ReportActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ID, jobId)
+            })
+        }
+
         share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_JOB, jobId)
-            MobUtil.shareFacebookWebPage(url,this)
+            MobUtil.shareFacebookWebPage(url, this)
         }
 
     }
@@ -166,7 +173,6 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
     }
 
 
-
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
@@ -221,7 +227,7 @@ interface JobDetailView : BaseMvpView {
 
 class JobDetailPresenter(var view: JobDetailView) : BaseMvpPresenter(view) {
     fun getData(jobId: Int) {
-         requestApi(mRetrofit.jobDetail(jobId, 2), object : BaseMvpObserver<JobDetail>(view) {
+        requestApi(mRetrofit.jobDetail(jobId, 2), object : BaseMvpObserver<JobDetail>(view) {
             override fun onSuccess(response: JobDetail) {
                 view.bindDetail(response)
             }

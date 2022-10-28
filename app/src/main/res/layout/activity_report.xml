@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:middleTitle="@string/report" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/content_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_v"
+        android:layout_below="@+id/jcsTitle"
+        tools:listitem="@layout/item_report" />
+
+
+    <View
+        android:id="@+id/bottom_v"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/bottom_container_rl"
+        android:background="@drawable/shape_navigation_bar_gray" />
+
+    <LinearLayout
+        android:id="@+id/bottom_container_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_6"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10">
+
+
+        <Button
+            android:id="@+id/submit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:alpha="0.5"
+            android:background="@drawable/stock_purple_radius_22"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textColor="@color/color_1c1380"
+            android:textSize="@dimen/sp_17"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

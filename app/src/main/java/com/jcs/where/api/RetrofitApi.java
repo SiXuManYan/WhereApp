@@ -116,7 +116,6 @@ import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.integral.IntegralTag;
-import com.jcs.where.api.response.job.ApiVersion;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.Degree;
@@ -127,9 +126,10 @@ import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
 import com.jcs.where.api.response.job.JobExperience;
-import com.jcs.where.api.response.job.JobReport;
 import com.jcs.where.api.response.job.JobSendCv;
 import com.jcs.where.api.response.job.ProfileDetail;
+import com.jcs.where.api.response.job.Report;
+import com.jcs.where.api.response.job.ReportRequest;
 import com.jcs.where.api.response.mall.FoodRefundInfo;
 import com.jcs.where.api.response.mall.MallCartGroup;
 import com.jcs.where.api.response.mall.MallCategory;
@@ -2262,7 +2262,7 @@ public interface RetrofitApi {
     Observable<JcsResponse<JobDetail>> jobDetail(
             @Path("job_id") int job_id,
             @Query("version") int version
-           );
+    );
 
 
     /**
@@ -2442,13 +2442,17 @@ public interface RetrofitApi {
     );
 
 
-
-
     /**
      * 举报原因
      */
     @GET("jobapi/v2/jobs/report_titles")
-    Observable<JcsResponse<ArrayList<JobReport>>> reportReason();
+    Observable<JcsResponse<ArrayList<Report>>> reportReason();
 
+
+    /**
+     * 举报职位
+     */
+    @POST("jobapi/v2/jobs/reports")
+    Observable<JcsResponse<JsonElement>> reportJob(@Body ReportRequest request);
 
 }

@@ -1,6 +1,7 @@
 package com.jcs.where.features.home
 
 import android.widget.LinearLayout
+import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -16,10 +17,15 @@ class ModulesAdapter : BaseQuickAdapter<ModulesResponse, BaseViewHolder>(R.layou
     override fun convert(holder: BaseViewHolder, item: ModulesResponse) {
         val context = holder.itemView.context
         val view = holder.getView<LinearLayout>(R.id.moduleLayout)
-        val params = view.layoutParams
-        params.width = (ScreenUtils.getScreenWidth() - SizeUtils.dp2px(30f)) / 5
-        params.height = SizeUtils.dp2px(70f)
-        view.layoutParams = params
+
+        if (!DeviceUtils.isTablet()) {
+            val params = view.layoutParams
+            params.width = (ScreenUtils.getScreenWidth() - SizeUtils.dp2px(30f)) / 5
+            params.height = SizeUtils.dp2px(70f)
+            view.layoutParams = params
+        }
+
+
         GlideUtil.load(context, item.icon, holder.getView(R.id.modules_icon))
         holder.setText(R.id.modules_name, item.name)
 

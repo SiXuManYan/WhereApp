@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.core.content.ContextCompat;
 
+import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.DeviceUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jcs.where.R;
 import com.jcs.where.base.dialog.LoadingView;
@@ -42,6 +48,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         overridePendingTransition(R.anim.left_fade_in, R.anim.left_fade_out);
 
         if (mIsHasStatusBarColor) {
@@ -68,8 +76,29 @@ public abstract class BaseActivity extends AppCompatActivity {
             view.setOnClickListener(v -> finish());
         }
         initView();
+        adaptLandscapeTablet();
         bindListener();
         initData();
+
+
+
+    }
+
+    private void adaptLandscapeTablet() {
+        // 菲律宾要求：平板、横屏状态下竖屏显示
+        // 修改根布局宽度
+        if (DeviceUtils.isTablet()) {
+            ContentFrameLayout rootView = findViewById(android.R.id.content);
+//
+            int screenHeights = ScreenUtils.getScreenHeight();
+//
+            ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
+            layoutParams.width = (int) (screenHeights / 2.16);
+            if (layoutParams instanceof LinearLayout.LayoutParams) {
+                ((LinearLayout.LayoutParams) layoutParams).gravity = Gravity.CENTER_HORIZONTAL;
+            }
+
+        }
     }
 
     @Override

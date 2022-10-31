@@ -20,6 +20,7 @@
         android:id="@+id/tabs_navigator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_55"
+        android:background="@color/white"
         android:layout_alignParentBottom="true"
         app:tl_indicator_width="@dimen/dp_0"
         app:tl_textSelectColor="@color/blue_377BFF"

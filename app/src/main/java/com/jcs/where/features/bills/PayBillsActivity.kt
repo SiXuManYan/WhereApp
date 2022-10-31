@@ -40,10 +40,6 @@ class PayBillsActivity : BaseMvpActivity<PayBillsPresenter>(), PayBillsView {
     }
 
     private fun initBanner() {
-        val bannerParams = ll_banner.layoutParams.apply {
-            height = ScreenUtils.getScreenWidth() * 177 / 345
-        }
-        ll_banner.layoutParams = bannerParams
 
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
             .setTitleHeight(50)

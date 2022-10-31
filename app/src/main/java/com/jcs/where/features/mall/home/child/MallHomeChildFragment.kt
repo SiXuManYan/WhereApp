@@ -55,10 +55,10 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
     }
 
     private fun initAd() {
-        val bannerParams = ll_banner.layoutParams.apply {
-            height = ScreenUtils.getScreenWidth() * 194 / 345
-        }
-        ll_banner.layoutParams = bannerParams
+//        val bannerParams = ll_banner.layoutParams.apply {
+//            height = ScreenUtils.getScreenWidth() * 194 / 345
+//        }
+//        ll_banner.layoutParams = bannerParams
 
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
             .setTitleHeight(50)

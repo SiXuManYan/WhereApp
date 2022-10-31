@@ -3,6 +3,7 @@ package com.jcs.where.features.mine
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.Glide

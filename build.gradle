@@ -2,8 +2,13 @@
 
 buildscript {
     repositories {
-        google()
-        jcenter()
+//        google()
+//        jcenter()
+
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google/'}
+        maven { url 'https://maven.aliyun.com/repository/jcenter/'}
+
         maven { url "https://jitpack.io" }
 
         // ShareSdk Mob
@@ -22,7 +27,7 @@ buildscript {
         // hms
         maven { url 'http://developer.huawei.com/repo/'}
         // fcm
-        maven { url "https://maven.google.com" }
+//        maven { url "https://maven.google.com" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
@@ -49,8 +54,14 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
+//        google()
+//        jcenter()
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google/'}
+        maven { url 'https://maven.aliyun.com/repository/jcenter/'}
+
+
+
         mavenCentral()
         maven { url "https://jitpack.io" }
         flatDir {

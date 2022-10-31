@@ -123,11 +123,6 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
 
     /** 轮播图 */
     private fun initBanner() {
-        val bannerParams = ll_banner.layoutParams.apply {
-            height = ScreenUtils.getScreenWidth() * 172 / 343
-        }
-        ll_banner.layoutParams = bannerParams
-
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
             .setTitleHeight(50)
             .isAutoPlay(true)

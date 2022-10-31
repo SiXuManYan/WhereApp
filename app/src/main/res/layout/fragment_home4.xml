@@ -129,7 +129,7 @@
                     <LinearLayout
                         android:id="@+id/ll_banner"
                         android:layout_width="match_parent"
-                        android:layout_height="194dp"
+                        android:layout_height="@dimen/dp_194"
                         android:background="@color/white"
                         android:padding="@dimen/dp_15">
 
@@ -147,7 +147,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:overScrollMode="never"
                         android:paddingStart="@dimen/dp_15"
                         android:paddingTop="@dimen/dp_15"
                         android:paddingEnd="@dimen/dp_15"

@@ -131,7 +131,6 @@
             android:name=".features.splash.SplashActivity"
             android:exported="true"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -167,87 +166,75 @@
         <activity
             android:name=".features.main.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".features.city.CityPickerActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".search.SearchActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".features.web.WebViewActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".features.complex.ConvenienceServiceActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".news.NewsActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".mine.activity.LanguageActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".news.SelectNewsChannelActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
 
         <activity
             android:name=".news.NewsDetailActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".news.NewsSearchResultActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".news.NewsVideoActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".features.setting.SettingActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".features.account.login.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+             />
         <activity
             android:name=".features.account.register.RegisterActivity"
-            android:screenOrientation="portrait" />
+           />
         <activity
             android:name=".features.account.password.PasswordResetActivity"
-            android:screenOrientation="portrait" />
+            />
 
 
         <activity android:name=".features.account.bind.BindPhoneActivity" />
@@ -256,13 +243,11 @@
         <activity
             android:name=".mine.activity.merchant_settled.SettledTypeActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".government.activity.ConvenienceServiceSearchActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <!-- ############# 极光推送 ↓ #############-->
@@ -432,47 +417,46 @@
 
         <activity
             android:name=".mine.about.AboutActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.setting.information.ModifyInfoActivity"
-            android:screenOrientation="portrait" />
+           />
         <activity
             android:name=".features.setting.password.ModifyPasswordActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.setting.phone.verify.password.PasswordVerifyActivity"
-            android:screenOrientation="portrait" />
+            />
         <activity
             android:name=".features.setting.phone.verify.code.CodeVerifyActivity"
-            android:screenOrientation="portrait" />
+           />
         <activity
             android:name=".features.setting.phone.confirm.NewPhoneActivity"
-            android:screenOrientation="portrait" />
+           />
         <activity
             android:name=".features.setting.phone.ModifyPhoneActivity"
-            android:screenOrientation="portrait" />
+           />
 
         <!-- 自定义融云会话列表 -->
         <activity
             android:name=".features.message.MessageCenterActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
 
         <!-- 自定义融云会话页面 -->
         <activity
             android:name=".features.message.cloud.ConversationActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
 
         <activity
             android:name=".features.message.notice.detail.SystemMessageDetailActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.search.SearchAllActivity"
-            android:screenOrientation="portrait" />
+         />
         <activity
             android:name=".features.upgrade.UpgradeActivity"
             android:theme="@style/upgrade"
@@ -480,47 +464,47 @@
 
         <activity
             android:name=".features.address.AddressActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.address.edit.AddressEditActivity"
-            android:screenOrientation="portrait" />
+      />
         <activity
             android:name=".features.gourmet.restaurant.list.RestaurantHomeActivity"
-            android:screenOrientation="portrait" />
+            />
         <activity
             android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity"
-            android:screenOrientation="portrait" />
+         />
         <activity
             android:name=".features.gourmet.restaurant.packages.SetMealActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.gourmet.cart.ShoppingCartActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.bills.PayBillsActivity"
-            android:screenOrientation="portrait" />
+            />
         <activity
             android:name=".features.category.edit.CategoryEditActivity"
-            android:screenOrientation="portrait" />
+           />
         <activity
             android:name=".features.gourmet.order.OrderSubmitActivity"
-            android:screenOrientation="portrait" />
+           />
 
         <activity
             android:name=".features.qr.QRActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.gourmet.takeaway.TakeawayActivity"
-            android:screenOrientation="portrait" />
+     />
         <activity
             android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
-            android:screenOrientation="portrait" />
+     />
         <activity
             android:name=".features.gourmet.comment.FoodCommentActivity"
-            android:screenOrientation="portrait" />
+         />
         <activity
             android:name=".features.store.recommend.StoreRecommendActivity"
-            android:screenOrientation="portrait" />
+        />
         <activity android:name=".features.store.search.StoreSearchActivity" />
         <activity android:name=".features.store.filter.StoreFilterActivity" />
         <activity android:name=".features.store.detail.StoreDetailActivity" />
@@ -555,7 +539,7 @@
         <activity android:name=".features.hotel.map.HotelMapActivity" />
         <activity
             android:name=".features.hotel.detail.HotelDetailActivity2"
-            android:screenOrientation="portrait" />
+         />
 
         <activity android:name=".features.hotel.book.HotelBookActivity" />
         <activity android:name=".features.travel.map.TravelMapActivity" />
@@ -613,17 +597,17 @@
         <activity
             android:name=".features.bills.record.BillsRecordActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+        />
         <activity android:name=".features.bills.record.result.BillsRecommitResultActivity" />
         <activity android:name=".features.bills.charges.CallChargesActivity" />
         <activity android:name=".features.bills.place.phone.PhonePlaceOrderActivity" />
 
         <activity
             android:name=".features.media.MediaDetailActivity"
-            android:screenOrientation="portrait" />
+          />
         <activity
             android:name=".features.enterprise.EnterprisePageActivity"
-            android:screenOrientation="portrait" />
+           />
         <activity android:name=".features.integral.activitys.ActivityCenterActivity" />
         <activity android:name=".features.integral.detail.IntegralDetailActivity" />
         <activity android:name=".features.integral.place.IntegralOrderActivity" />

@@ -63,10 +63,10 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
         this.categoryRv = categoryRv
 
 
-        val bannerParams = bannerContainer.layoutParams.apply {
-            height = ScreenUtils.getScreenWidth() * 108 / 375
-        }
-        bannerContainer.layoutParams = bannerParams
+//        val bannerParams = bannerContainer.layoutParams.apply {
+//            height = ScreenUtils.getScreenWidth() * 108 / 375
+//        }
+//        bannerContainer.layoutParams = bannerParams
 
 
 

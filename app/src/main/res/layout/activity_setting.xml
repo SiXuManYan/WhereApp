@@ -396,6 +396,7 @@
                 android:layout_marginStart="@dimen/dp_15"
                 android:background="@color/color_F0F0F0" />
 
+
             <TextView
                 android:id="@+id/sign_out_tv"
                 android:layout_width="match_parent"

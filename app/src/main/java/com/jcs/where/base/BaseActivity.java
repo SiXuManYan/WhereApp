@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.core.content.ContextCompat;
 
-import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.jaeger.library.StatusBarUtil;
@@ -81,24 +80,29 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
 
 
-
     }
 
+    /**
+     * 修改根布局宽度，适配平板设备
+     */
     private void adaptLandscapeTablet() {
-        // 菲律宾要求：平板、横屏状态下竖屏显示
-        // 修改根布局宽度
-        if (DeviceUtils.isTablet()) {
-            ContentFrameLayout rootView = findViewById(android.R.id.content);
-//
-            int screenHeights = ScreenUtils.getScreenHeight();
-//
-            ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
-            layoutParams.width = (int) (screenHeights / 2.16);
-            if (layoutParams instanceof LinearLayout.LayoutParams) {
-                ((LinearLayout.LayoutParams) layoutParams).gravity = Gravity.CENTER_HORIZONTAL;
-            }
 
+        try {
+            if (DeviceUtils.isTablet()) {
+                ContentFrameLayout rootView = findViewById(android.R.id.content);
+//
+                int screenHeights = ScreenUtils.getScreenHeight();
+//
+                ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
+                layoutParams.width = (int) (screenHeights / 2.16);
+                if (layoutParams instanceof LinearLayout.LayoutParams) {
+                    ((LinearLayout.LayoutParams) layoutParams).gravity = Gravity.CENTER_HORIZONTAL;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override

@@ -105,12 +105,12 @@ lint/tmp/
 # Android Profiling
 *.hprof
 
+.idea
 .idea/dev
 .idea/dev/release
 
 # Android Profiling
-*.hprof
-
-.idea/dev
-.idea/dev/release
 /tmpmob/
+
+formal/
+dev/

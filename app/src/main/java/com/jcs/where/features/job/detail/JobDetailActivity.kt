@@ -21,12 +21,15 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
+import com.jcs.where.features.job.company.CompanyActivity
 import com.jcs.where.features.job.cv.CvHomeActivity
 import com.jcs.where.features.job.report.ReportActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.MobUtil
+import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import kotlinx.android.synthetic.main.activity_job_detail.*
 
 /**
@@ -95,6 +98,10 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
             MobUtil.shareFacebookWebPage(url, this)
         }
 
+        company_rv.setOnClickListener {
+            CompanyActivity.navigation(this, jobId)
+        }
+
     }
 
     override fun bindDetail(response: JobDetail) {
@@ -106,8 +113,6 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
         salary_tv.text = response.salary
         city_tv.text = response.city
         create_time_tv.text = response.created_at
-        company_name_tv.text = response.company
-        company_desc_tv.text = response.company_desc
 
         isCollect = response.is_collect
         setLikeImage()
@@ -144,6 +149,12 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
                         .create().show()
                 }
             }
+        }
+
+        response.company_info?.let {
+            GlideUtil.load(this, it.logo, logo_iv, 24 ,GlideRoundedCornersTransform.CornerType.ALL , )
+            company_name_tv.text = it.company_title
+            company_desc_tv.text = it.profile
         }
 
 

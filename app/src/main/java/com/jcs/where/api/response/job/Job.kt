@@ -52,6 +52,8 @@ class JobDetail {
 
     var is_collect = false
 
+    var company_info: CompanyInfo? = null
+
 }
 
 class JobSendCv {
@@ -367,4 +369,24 @@ class ReportRequest {
 
     /** 举报原因id */
     var report_title_id = 0
+}
+
+
+/**
+ * 公司详情
+ */
+class CompanyInfo {
+
+    var id = 0
+    var company_title = ""
+    var logo = ""
+    var company_type = ""
+    var company_size = ""
+
+    /** 公司简介 */
+    var profile = ""
+    var address = ""
+    var images = ArrayList<String>()
+
+
 }

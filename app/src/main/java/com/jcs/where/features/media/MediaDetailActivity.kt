@@ -94,6 +94,10 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
                 position -= 1
             }
 
+            allImage.forEach {
+                it.type =  MediaData.IMAGE_FOR_MEDIA_DETAIL
+            }
+
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_POSITION, position)
                 putSerializable(Constant.PARAM_DATA, allImage)
@@ -166,7 +170,6 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
     private fun initMedia() {
         mMediaAdapter = DetailMediaAdapter()
         PagerSnapHelper().attachToRecyclerView(media_rv)
-        BarUtils.addMarginTopEqualStatusBarHeight(back_iv)
 
         media_rv.apply {
             layoutManager = LinearLayoutManager(this@MediaDetailActivity, LinearLayoutManager.HORIZONTAL, false)

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        app:middleTitle="@string/company_introduce"
+        android:layout_height="wrap_content"
+        android:background="@color/white_FEFEFE" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/company_introduce_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:lineSpacingMultiplier="1.2"
+            android:padding="@dimen/dp_15"
+            android:textColor="@color/grey_666666"
+            android:textSize="@dimen/sp_14"
+            tools:text="@tools:sample/lorem/random" />
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

@@ -32,19 +32,19 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
     override fun convert(holder: BaseViewHolder, item: MediaData) {
 
         when (holder.itemViewType) {
-            MediaData.VIDEO -> initVideo(holder, item)
-            MediaData.IMAGE -> initImage(holder, item)
-            MediaData.IMAGE_FOR_MEDIA_DETAIL -> initMediaImage(holder, item)
-            MediaData.VIDEO_FOR_MEDIA_DETAIL -> initMediaVideo(holder, item)
-
+            MediaData.VIDEO -> convertVideo(holder, item)
+            MediaData.IMAGE -> convertImage(holder, item)
+            MediaData.IMAGE_FOR_MEDIA_DETAIL -> convertMediaImage(holder, item)
+            MediaData.VIDEO_FOR_MEDIA_DETAIL -> convertMediaVideo(holder, item)
         }
 
     }
 
+
     /**
      * 详情页图片
      */
-    private fun initImage(holder: BaseViewHolder, item: MediaData) {
+    private fun convertImage(holder: BaseViewHolder, item: MediaData) {
         val imageIv = holder.getView<ImageView>(R.id.image_iv)
         GlideUtil.load(context, item.cover, imageIv)
         imageIv.setOnClickListener {
@@ -56,7 +56,7 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
     /**
      * 媒体页图片
      */
-    private fun initMediaImage(holder: BaseViewHolder, item: MediaData) {
+    private fun convertMediaImage(holder: BaseViewHolder, item: MediaData) {
         val imagePv = holder.getView<PhotoView>(R.id.image_pv)
         Glide.with(context).load(item.cover).into(imagePv)
     }
@@ -65,7 +65,7 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
     /**
      * 详情页视频
      */
-    private fun initVideo(holder: BaseViewHolder, item: MediaData) {
+    private fun convertVideo(holder: BaseViewHolder, item: MediaData) {
         val video_gsy = holder.getView<WhereVideo>(R.id.video_gsy)
 
         video_gsy.apply {
@@ -96,7 +96,7 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
     /**
      * 媒体页视频
      */
-    private fun initMediaVideo(holder: BaseViewHolder, item: MediaData) {
+    private fun convertMediaVideo(holder: BaseViewHolder, item: MediaData) {
         val video_gsy = holder.getView<WhereVideo>(R.id.video_gsy)
 
         video_gsy.apply {
@@ -113,6 +113,10 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
         }
 
     }
+
+
+
+
 
 
 }

@@ -145,6 +145,7 @@
     <dimen name="dp_210">210dp</dimen>
     <dimen name="dp_214">214dp</dimen>
     <dimen name="dp_222">222dp</dimen>
+    <dimen name="dp_230">230dp</dimen>
     <dimen name="dp_240">240dp</dimen>
     <dimen name="dp_245">245dp</dimen>
     <dimen name="dp_250">250dp</dimen>

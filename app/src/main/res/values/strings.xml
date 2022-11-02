@@ -1146,6 +1146,10 @@ Gentleman must let go</string>
     <string name="confirm_email">请核对邮箱是否准确。</string>
     <string name="report">举报</string>
     <string name="tablet_adapter">Force portrait display (on tablet devices)</string>
+    <string name="company_introduce">公司简介</string>
+    <string name="company_address">公司地址</string>
+    <string name="look_more_2">查看更多</string>
+    <string name="company_photo">公司图片</string>
 
 
 </resources>

@@ -650,7 +650,7 @@ object BusinessUtils {
     fun getAllImage(data: MutableList<MediaData>): ArrayList<MediaData> {
         val source = ArrayList<MediaData>()
         data.forEach {
-            if (it.type == MediaData.IMAGE) {
+            if (it.type == MediaData.IMAGE ) {
                 source.add(it)
             }
         }
@@ -667,6 +667,7 @@ object BusinessUtils {
         }
         return source
     }
+
 
 
     /**

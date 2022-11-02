@@ -152,7 +152,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
         }
 
         response.company_info?.let {
-            GlideUtil.load(this, it.logo, logo_iv, 24 ,GlideRoundedCornersTransform.CornerType.ALL , )
+            GlideUtil.load(this, it.logo, logo_iv, 24 ,GlideRoundedCornersTransform.CornerType.ALL ,R.mipmap.ic_company_default_logo )
             company_name_tv.text = it.company_title
             company_desc_tv.text = it.profile
         }

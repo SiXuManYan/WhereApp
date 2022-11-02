@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Looper;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jcs.where.R;
@@ -16,7 +18,7 @@ import java.text.DecimalFormat;
  * create by zyf on 2021/1/14 11:25 下午
  */
 public class GlideUtil {
-    private static RequestOptions options = new RequestOptions()
+    static RequestOptions options = new RequestOptions()
             .placeholder(R.mipmap.ic_empty_gray)//图片加载出来前，显示的图片
             .fallback(R.mipmap.ic_empty_gray) //url为空的时候,显示的图片
             .error(R.mipmap.ic_empty_gray);
@@ -42,6 +44,15 @@ public class GlideUtil {
                 .fallback(R.mipmap.ic_empty_gray)
                 .placeholder(R.mipmap.ic_empty_gray);
 
+        Glide.with(context).load(url).apply(options).into(imageView);
+    }
+
+
+    public static void load(Context context, String url, ImageView imageView, int radius, GlideRoundedCornersTransform.CornerType cornerType, @DrawableRes int errResId) {
+        RequestOptions options = RequestOptions.bitmapTransform(new GlideRoundedCornersTransform(radius, cornerType))
+                .error(errResId)
+                .fallback(errResId)
+                .placeholder(errResId);
         Glide.with(context).load(url).apply(options).into(imageView);
     }
 

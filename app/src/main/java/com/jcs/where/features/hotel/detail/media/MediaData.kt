@@ -44,6 +44,16 @@ class MediaData : MultiItemEntity, Serializable {
         @kotlin.jvm.JvmField
         val VIDEO_FOR_MEDIA_DETAIL = 3
 
+
+        /** 横向图片 */
+        var HORIZONTAL_IMAGE = 4
+
+        /** 瀑布流图片 */
+        var STAGGERED_IMAGE = 5
+
+        /** 查看更多 */
+        var HORIZONTAL_IMAGE_LOOK_MORE = 6
+
     }
 
 

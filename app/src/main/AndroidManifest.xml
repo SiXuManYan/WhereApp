@@ -227,14 +227,9 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".features.account.login.LoginActivity"
-            android:launchMode="singleTask"
-             />
-        <activity
-            android:name=".features.account.register.RegisterActivity"
-           />
-        <activity
-            android:name=".features.account.password.PasswordResetActivity"
-            />
+            android:launchMode="singleTask" />
+        <activity android:name=".features.account.register.RegisterActivity" />
+        <activity android:name=".features.account.password.PasswordResetActivity" />
 
 
         <activity android:name=".features.account.bind.BindPhoneActivity" />
@@ -415,27 +410,13 @@
 
         <!-- ######## comm 100 end ↑ #############-->
 
-        <activity
-            android:name=".mine.about.AboutActivity"
-          />
-        <activity
-            android:name=".features.setting.information.ModifyInfoActivity"
-           />
-        <activity
-            android:name=".features.setting.password.ModifyPasswordActivity"
-          />
-        <activity
-            android:name=".features.setting.phone.verify.password.PasswordVerifyActivity"
-            />
-        <activity
-            android:name=".features.setting.phone.verify.code.CodeVerifyActivity"
-           />
-        <activity
-            android:name=".features.setting.phone.confirm.NewPhoneActivity"
-           />
-        <activity
-            android:name=".features.setting.phone.ModifyPhoneActivity"
-           />
+        <activity android:name=".mine.about.AboutActivity" />
+        <activity android:name=".features.setting.information.ModifyInfoActivity" />
+        <activity android:name=".features.setting.password.ModifyPasswordActivity" />
+        <activity android:name=".features.setting.phone.verify.password.PasswordVerifyActivity" />
+        <activity android:name=".features.setting.phone.verify.code.CodeVerifyActivity" />
+        <activity android:name=".features.setting.phone.confirm.NewPhoneActivity" />
+        <activity android:name=".features.setting.phone.ModifyPhoneActivity" />
 
         <!-- 自定义融云会话列表 -->
         <activity
@@ -451,60 +432,28 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
 
-        <activity
-            android:name=".features.message.notice.detail.SystemMessageDetailActivity"
-          />
-        <activity
-            android:name=".features.search.SearchAllActivity"
-         />
+        <activity android:name=".features.message.notice.detail.SystemMessageDetailActivity" />
+        <activity android:name=".features.search.SearchAllActivity" />
         <activity
             android:name=".features.upgrade.UpgradeActivity"
             android:theme="@style/upgrade"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity
-            android:name=".features.address.AddressActivity"
-          />
-        <activity
-            android:name=".features.address.edit.AddressEditActivity"
-      />
-        <activity
-            android:name=".features.gourmet.restaurant.list.RestaurantHomeActivity"
-            />
-        <activity
-            android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity"
-         />
-        <activity
-            android:name=".features.gourmet.restaurant.packages.SetMealActivity"
-          />
-        <activity
-            android:name=".features.gourmet.cart.ShoppingCartActivity"
-          />
-        <activity
-            android:name=".features.bills.PayBillsActivity"
-            />
-        <activity
-            android:name=".features.category.edit.CategoryEditActivity"
-           />
-        <activity
-            android:name=".features.gourmet.order.OrderSubmitActivity"
-           />
+        <activity android:name=".features.address.AddressActivity" />
+        <activity android:name=".features.address.edit.AddressEditActivity" />
+        <activity android:name=".features.gourmet.restaurant.list.RestaurantHomeActivity" />
+        <activity android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity" />
+        <activity android:name=".features.gourmet.restaurant.packages.SetMealActivity" />
+        <activity android:name=".features.gourmet.cart.ShoppingCartActivity" />
+        <activity android:name=".features.bills.PayBillsActivity" />
+        <activity android:name=".features.category.edit.CategoryEditActivity" />
+        <activity android:name=".features.gourmet.order.OrderSubmitActivity" />
 
-        <activity
-            android:name=".features.qr.QRActivity"
-          />
-        <activity
-            android:name=".features.gourmet.takeaway.TakeawayActivity"
-     />
-        <activity
-            android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
-     />
-        <activity
-            android:name=".features.gourmet.comment.FoodCommentActivity"
-         />
-        <activity
-            android:name=".features.store.recommend.StoreRecommendActivity"
-        />
+        <activity android:name=".features.qr.QRActivity" />
+        <activity android:name=".features.gourmet.takeaway.TakeawayActivity" />
+        <activity android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity" />
+        <activity android:name=".features.gourmet.comment.FoodCommentActivity" />
+        <activity android:name=".features.store.recommend.StoreRecommendActivity" />
         <activity android:name=".features.store.search.StoreSearchActivity" />
         <activity android:name=".features.store.filter.StoreFilterActivity" />
         <activity android:name=".features.store.detail.StoreDetailActivity" />
@@ -537,9 +486,7 @@
         <activity android:name=".features.travel.home.TravelHomeActivity" />
         <activity android:name=".features.hotel.home.HotelHomeActivity" />
         <activity android:name=".features.hotel.map.HotelMapActivity" />
-        <activity
-            android:name=".features.hotel.detail.HotelDetailActivity2"
-         />
+        <activity android:name=".features.hotel.detail.HotelDetailActivity2" />
 
         <activity android:name=".features.hotel.book.HotelBookActivity" />
         <activity android:name=".features.travel.map.TravelMapActivity" />
@@ -596,18 +543,13 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".features.bills.record.BillsRecordActivity"
-            android:launchMode="singleTask"
-        />
+            android:launchMode="singleTask" />
         <activity android:name=".features.bills.record.result.BillsRecommitResultActivity" />
         <activity android:name=".features.bills.charges.CallChargesActivity" />
         <activity android:name=".features.bills.place.phone.PhonePlaceOrderActivity" />
 
-        <activity
-            android:name=".features.media.MediaDetailActivity"
-          />
-        <activity
-            android:name=".features.enterprise.EnterprisePageActivity"
-           />
+        <activity android:name=".features.media.MediaDetailActivity" />
+        <activity android:name=".features.enterprise.EnterprisePageActivity" />
         <activity android:name=".features.integral.activitys.ActivityCenterActivity" />
         <activity android:name=".features.integral.detail.IntegralDetailActivity" />
         <activity android:name=".features.integral.place.IntegralOrderActivity" />
@@ -645,6 +587,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".features.job.employer.EmployerResultActivity" />
         <activity android:name=".features.job.report.ReportActivity" />
+        <activity android:name=".features.job.company.CompanyActivity" />
+        <activity android:name=".features.job.company.info.CompanyInfoActivity" />
 
     </application>
 

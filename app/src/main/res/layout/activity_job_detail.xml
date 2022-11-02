@@ -198,10 +198,10 @@
 
             <RelativeLayout
                 android:id="@+id/company_rv"
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_16">
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/logo_iv"
@@ -219,7 +219,6 @@
                     android:layout_marginEnd="@dimen/dp_8"
                     android:layout_toStartOf="@+id/right_iv"
                     android:layout_toEndOf="@+id/logo_iv"
-                    android:background="@color/white"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"
@@ -244,9 +243,9 @@
                 android:id="@+id/company_desc_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginBottom="@dimen/dp_16"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/dp_12"
                 android:gravity="center_vertical"
                 android:lineSpacingMultiplier="1.2"
                 android:textColor="@color/grey_666666"

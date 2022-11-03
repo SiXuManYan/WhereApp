@@ -139,4 +139,12 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
     }
 
 
+    /**
+     * 删除工作经历
+     */
+    fun deleteJobExperience(draftExperienceId: Int) {
+
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.jcs.where.features.job.form.experience
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
@@ -29,9 +30,9 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
 
     /**
-     * 个人信息id， 不为0时为修改
+     * 工作经历id， 不为0时为修改
      */
-    private var draftId = 0
+    private var draftExperienceId = 0
     private var draftData: JobExperience? = null
     private var requiredEdit = ArrayList<AppCompatEditText>()
 
@@ -52,13 +53,16 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
     private fun initDraft() {
         draftData?.let {
-            draftId = it.id
+            draftExperienceId = it.id
             company_name_et.setText(it.company)
             job_title_et.setText(it.job_title)
             job_desc_et.setText(it.job_desc)
             start_date_tv.text = it.start_date
             end_date_tv.text = it.end_date
             new_experience_iv.visibility = View.VISIBLE
+            if (draftExperienceId!=0) {
+                delete_tv.visibility = View.VISIBLE
+            }
         }
 
     }
@@ -118,12 +122,27 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
             }
 
-            presenter.handleExperiences(draftId, apply)
+            presenter.handleExperiences(draftExperienceId, apply)
         }
 
         new_experience_iv.setOnClickListener {
-            // 添加工作经历
             startActivity(CvFormJobExperienceActivity::class.java)
+        }
+
+
+        delete_tv.setOnClickListener {
+            androidx.appcompat.app.AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
+                .setCancelable(false)
+                .setTitle(R.string.hint)
+                .setMessage(R.string.delete_hint)
+                .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
+                    presenter.deleteJobExperience(draftExperienceId)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.cancel) { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+                .create().show()
         }
 
     }

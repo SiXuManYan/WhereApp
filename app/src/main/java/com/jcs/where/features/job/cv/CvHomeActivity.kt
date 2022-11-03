@@ -15,7 +15,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.collection.JobCollectionActivity
 import com.jcs.where.features.job.form.edu.CvFormEduActivity
-import com.jcs.where.features.job.form.job.CvFormJobExperienceActivity
+import com.jcs.where.features.job.form.experience.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration

@@ -795,7 +795,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.job.form.job.CvFormJobExperienceActivity"
+            android:name=".features.job.form.experience.CvFormJobExperienceActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity

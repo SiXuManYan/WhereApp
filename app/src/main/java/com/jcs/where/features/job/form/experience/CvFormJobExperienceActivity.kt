@@ -1,4 +1,4 @@
-package com.jcs.where.features.job.form.job
+package com.jcs.where.features.job.form.experience
 
 import android.app.DatePickerDialog
 import android.view.View

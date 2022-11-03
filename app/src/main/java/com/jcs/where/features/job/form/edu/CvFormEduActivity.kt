@@ -33,7 +33,7 @@ import org.greenrobot.eventbus.EventBus
 class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
 
-    private var lastEeduId = 0
+    private var lastEduId = 0
 
     private var eduRequest = EduRequest()
 
@@ -51,7 +51,7 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
     override fun getLayoutId() = R.layout.activity_job_cv_edu
 
     override fun initView() {
-        lastEeduId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        lastEduId = intent.getIntExtra(Constant.PARAM_ID, 0)
         initDegree()
 
     }
@@ -92,7 +92,7 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
     override fun initData() {
         presenter = CvFormPresenter(this)
-        presenter.getEduDet(lastEeduId)
+        presenter.getEduDet(lastEduId)
         presenter.getDegreeList()
     }
 
@@ -117,38 +117,10 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
         }
 
         save_tv.setOnClickListener {
-            presenter.handleSaveEdu(lastEeduId, eduRequest)
+            presenter.handleSaveEdu(lastEduId, eduRequest)
         }
     }
 
-    private fun handleClickable() {
-        val school = eduRequest.educational_attainment
-        val levelId = eduRequest.educational_level_id
-        val course = eduRequest.vocational_course
-
-        if (school.isNotBlank() && levelId != 0) {
-
-
-            if (TextUtils.isEmpty(extendTitle)) {
-                save_tv.isClickable = true
-                save_tv.alpha = 1.0f
-            } else {
-                if (course.isNullOrBlank()) {
-                    save_tv.isClickable = false
-                    save_tv.alpha = 0.5f
-                } else {
-                    save_tv.isClickable = true
-                    save_tv.alpha = 1.0f
-                }
-            }
-
-        } else {
-            save_tv.isClickable = false
-            save_tv.alpha = 0.5f
-        }
-
-
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun bindEduDet(response: EduDet) {
@@ -187,11 +159,52 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
             this.vocational_course = vocationalCourse
         }
 
+        // 处理历史数据是否可提交
+        handleClickable()
+
     }
 
 
+    private fun handleClickable() {
+        val school = eduRequest.educational_attainment
+        val levelId = eduRequest.educational_level_id
+        val course = eduRequest.vocational_course
+
+        if (school.isNotBlank() && levelId != 0) {
+
+
+            if (TextUtils.isEmpty(extendTitle)) {
+                save_tv.isClickable = true
+                save_tv.alpha = 1.0f
+            } else {
+                if (course.isNullOrBlank()) {
+                    save_tv.isClickable = false
+                    save_tv.alpha = 0.5f
+                } else {
+                    save_tv.isClickable = true
+                    save_tv.alpha = 1.0f
+                }
+            }
+
+        } else {
+            save_tv.isClickable = false
+            save_tv.alpha = 0.5f
+        }
+
+
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun bindDegreeList(response: ArrayList<Degree>) {
         mDegreeAdapter.setNewInstance(response)
+
+        mDegreeAdapter.data.forEach {
+            if (it.id == lastDegreeId) {
+                it.nativeSelected = true
+            }
+        }
+        mDegreeAdapter.notifyDataSetChanged()
 
     }
 

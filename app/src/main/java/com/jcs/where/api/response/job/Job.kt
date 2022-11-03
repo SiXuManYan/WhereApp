@@ -17,6 +17,7 @@ class Job {
     var city = ""
     var created_at = ""
     var job_id = 0
+    var logo = ""
 }
 
 /**
@@ -399,6 +400,6 @@ class CompanyInfo {
 }
 
 
-class CompanyAlbum{
+class CompanyAlbum {
     var images = ArrayList<String>()
 }

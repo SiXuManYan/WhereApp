@@ -267,24 +267,23 @@
         android:paddingBottom="@dimen/dp_10">
 
 
-        <Button
+        <TextView
             android:id="@+id/delete_tv"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_44"
             android:layout_marginEnd="@dimen/dp_8"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_weight="4"
-            android:includeFontPadding="false"
-            android:background="@drawable/shape_gray_radius_22"
+            android:background="@drawable/shape_gray_b5_radius_22"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="@string/delete"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_17"
-           />
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-        <Button
+        <TextView
             android:id="@+id/save_tv"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_44"

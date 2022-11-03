@@ -155,8 +155,15 @@ class JobExperience() : Parcelable, MultiItemEntity {
 
     var id = 0
 
+
     var nativeTitleValue = ""
 
+    /**
+     * 工作经历 0 ， 教育背景 1 ,标题 1000
+     * @see JobExperience.TYPE_JOB_EXPERIENCE
+     * @see JobExperience.TYPE_EDU_BACKGROUND
+     * @see JobExperience.TYPE_TITLE
+     */
     var nativeItemViewType = 0
     var nativeTitleType = 0
 
@@ -212,6 +219,8 @@ class JobExperience() : Parcelable, MultiItemEntity {
 
         /** 教育背景 */
         var TYPE_EDU_BACKGROUND = 1
+
+        /** 标题 */
         var TYPE_TITLE = 1000
 
 

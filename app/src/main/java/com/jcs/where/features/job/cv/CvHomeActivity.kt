@@ -105,20 +105,6 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
     }
 
 
-    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        super.onEventReceived(baseEvent)
-        when (baseEvent.code) {
-            EventCode.EVENT_REFRESH_CV_PROFILE ->
-                presenter.getProfile()
-            EventCode.EVENT_REFRESH_CV_EXPERIENCE,
-            EventCode.EVENT_REFRESH_CV_EDU,
-            -> presenter.getJobExperience()
-            else -> {}
-        }
-
-
-    }
-
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val item = mAdapter.data[position]
 
@@ -151,6 +137,44 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
         }
 
 
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_CV_PROFILE ->
+                presenter.getProfile()
+            EventCode.EVENT_REFRESH_CV_EXPERIENCE,
+            EventCode.EVENT_REFRESH_CV_EDU,
+            -> presenter.getJobExperience()
+            EventCode.EVENT_DELETE_CV_EXPERIENCE -> {
+                // 删除工作经历
+                val draftExperienceId = baseEvent.data as Int
+                deleteTypeItem(draftExperienceId,JobExperience.TYPE_JOB_EXPERIENCE)
+            }
+            EventCode.EVENT_DELETE_CV_EDU -> {
+                // 删除教育背景
+                val draftEduId = baseEvent.data as Int
+                deleteTypeItem(draftEduId,JobExperience.TYPE_EDU_BACKGROUND)
+            }
+            else -> {}
+        }
+
+
+    }
+
+    private fun deleteTypeItem(deleteId: Int,itemViewType :Int) {
+        var position = -1
+        mAdapter.data.forEachIndexed { index, it ->
+            if (it.nativeItemViewType == itemViewType && it.id == deleteId) {
+                position = index
+                return@forEachIndexed
+            }
+        }
+        if (position > -1) {
+            mAdapter.removeAt(position)
+        }
     }
 
 }

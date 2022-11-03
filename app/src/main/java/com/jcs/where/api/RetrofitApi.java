@@ -2471,4 +2471,19 @@ public interface RetrofitApi {
     Observable<JcsResponse<CompanyAlbum>> companyAlbum(@Path("company_id") int company_id);
 
 
+    /**
+     * 删除工作经历
+     */
+    @DELETE("jobapi/v2/resumes/experiences/{experience_id}")
+    Observable<JcsResponse<JsonElement>> deleteExperiences(
+            @Path("experience_id") int experience_id
+    );
+
+    /**
+     * 删除教育背景
+     */
+    @DELETE("jobapi/v2/resumes/educations/{education_id}")
+    Observable<JcsResponse<JsonElement>> deleteEducation(
+            @Path("education_id") int education_id
+    );
 }

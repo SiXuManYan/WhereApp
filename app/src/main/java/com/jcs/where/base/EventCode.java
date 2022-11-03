@@ -176,4 +176,14 @@ public class EventCode {
      */
     public static final int EVENT_EMPLOYER_SUBMIT = 1045;
 
+    /**
+     * 删除工作经历
+     */
+    public static final int EVENT_DELETE_CV_EXPERIENCE = 1046;
+
+    /**
+     * 删除教育背景
+     */
+    public static final int EVENT_DELETE_CV_EDU = 1047;
+
 }

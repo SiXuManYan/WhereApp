@@ -29,6 +29,16 @@ interface CvFormView : BaseMvpView {
      */
     fun bindDegreeList(response: ArrayList<Degree>){}
 
+    /**
+     * 工作经历删除成功
+     */
+    fun deleteJobExperienceSuccess(){}
+
+    /**
+     * 教育背景删除成功
+     */
+    fun deleteEducationSuccess(){}
+
 }
 
 
@@ -143,7 +153,25 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
      * 删除工作经历
      */
     fun deleteJobExperience(draftExperienceId: Int) {
+        requestApi(mRetrofit.deleteExperiences(draftExperienceId), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.deleteJobExperienceSuccess()
+            }
 
+        })
+    }
+
+
+    /**
+     * 删除工作经历
+     */
+    fun deleteEducation(draftEduId: Int) {
+        requestApi(mRetrofit.deleteEducation(draftEduId), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+                view.deleteEducationSuccess()
+            }
+
+        })
     }
 
 

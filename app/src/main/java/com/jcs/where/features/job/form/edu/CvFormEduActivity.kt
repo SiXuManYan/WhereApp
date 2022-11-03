@@ -1,12 +1,14 @@
 package com.jcs.where.features.job.form.edu
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
@@ -32,8 +34,11 @@ import org.greenrobot.eventbus.EventBus
  */
 class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
-
-    private var lastEduId = 0
+    /**
+     * 教育经历id
+     * 不为0时为修改内容
+     */
+    private var draftEduId = 0
 
     private var eduRequest = EduRequest()
 
@@ -51,7 +56,10 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
     override fun getLayoutId() = R.layout.activity_job_cv_edu
 
     override fun initView() {
-        lastEduId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        draftEduId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        if (draftEduId > 0) {
+            delete_tv.visibility = View.VISIBLE
+        }
         initDegree()
 
     }
@@ -92,7 +100,7 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
     override fun initData() {
         presenter = CvFormPresenter(this)
-        presenter.getEduDet(lastEduId)
+        presenter.getEduDet(draftEduId)
         presenter.getDegreeList()
     }
 
@@ -117,7 +125,22 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
         }
 
         save_tv.setOnClickListener {
-            presenter.handleSaveEdu(lastEduId, eduRequest)
+            presenter.handleSaveEdu(draftEduId, eduRequest)
+        }
+
+        delete_tv.setOnClickListener {
+            AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
+                .setCancelable(false)
+                .setTitle(R.string.hint)
+                .setMessage(R.string.delete_hint)
+                .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
+                    presenter.deleteEducation(draftEduId)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.cancel) { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+                .create().show()
         }
     }
 
@@ -238,6 +261,11 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
 
     override fun handleSuccess() {
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_EDU))
+        finish()
+    }
+
+    override fun deleteEducationSuccess() {
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_DELETE_CV_EDU , draftEduId))
         finish()
     }
 

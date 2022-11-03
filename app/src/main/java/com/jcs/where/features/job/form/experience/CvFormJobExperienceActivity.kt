@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -60,7 +61,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             start_date_tv.text = it.start_date
             end_date_tv.text = it.end_date
             new_experience_iv.visibility = View.VISIBLE
-            if (draftExperienceId!=0) {
+            if (draftExperienceId>0) {
                 delete_tv.visibility = View.VISIBLE
             }
         }
@@ -131,7 +132,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
 
         delete_tv.setOnClickListener {
-            androidx.appcompat.app.AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
+          AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
                 .setCancelable(false)
                 .setTitle(R.string.hint)
                 .setMessage(R.string.delete_hint)
@@ -169,6 +170,11 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
     override fun handleSuccess() {
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_EXPERIENCE))
+        finish()
+    }
+
+    override fun deleteJobExperienceSuccess() {
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_DELETE_CV_EXPERIENCE ,draftExperienceId ))
         finish()
     }
 

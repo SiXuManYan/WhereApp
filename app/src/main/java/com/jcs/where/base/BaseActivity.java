@@ -2,6 +2,7 @@ package com.jcs.where.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -99,6 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     ((LinearLayout.LayoutParams) layoutParams).gravity = Gravity.CENTER_HORIZONTAL;
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

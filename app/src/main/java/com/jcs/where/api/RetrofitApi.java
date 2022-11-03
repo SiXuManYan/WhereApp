@@ -116,6 +116,7 @@ import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.integral.IntegralTag;
+import com.jcs.where.api.response.job.CompanyAlbum;
 import com.jcs.where.api.response.job.CompanyInfo;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
@@ -2462,6 +2463,12 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/jobs/companies/{job_id}")
     Observable<JcsResponse<CompanyInfo>> companyDetail(@Path("job_id") int job_id);
+
+    /**
+     * 公司相册
+     */
+    @GET("jobapi/v2/jobs/companies/images/{company_id}")
+    Observable<JcsResponse<CompanyAlbum>> companyAlbum(@Path("company_id") int company_id);
 
 
 }

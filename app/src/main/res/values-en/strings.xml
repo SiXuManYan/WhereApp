@@ -1135,5 +1135,6 @@ Gentleman must let go</string>
     <string name="company_address">Address</string>
     <string name="look_more_2">More</string>
     <string name="company_photo">Photos</string>
+    <string name="company_album">Company Album</string>
 
 </resources>

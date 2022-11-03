@@ -3,6 +3,7 @@ package com.jcs.where.features.job.company
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.job.CompanyAlbum
 import com.jcs.where.api.response.job.CompanyInfo
 import com.jcs.where.features.hotel.detail.media.MediaData
 
@@ -11,7 +12,8 @@ import com.jcs.where.features.hotel.detail.media.MediaData
  *
  */
 interface CompanyView : BaseMvpView {
-    fun bindCompanyDetail(response: CompanyInfo, media: ArrayList<CompanyPhoto>)
+    fun bindCompanyDetail(response: CompanyInfo, media: ArrayList<CompanyPhoto>){}
+    fun bindCompanyAlbum(images: java.util.ArrayList<String>){}
 }
 
 class CompanyPresenter(var view: CompanyView) : BaseMvpPresenter(view) {
@@ -33,6 +35,20 @@ class CompanyPresenter(var view: CompanyView) : BaseMvpPresenter(view) {
                 media.add(media.size, CompanyPhoto().apply { type = CompanyPhoto.HORIZONTAL_IMAGE_LOOK_MORE })
 
                 view.bindCompanyDetail(response,media)
+            }
+
+        })
+    }
+
+    fun getAlbum(companyId: Int) {
+
+        requestApi(mRetrofit.companyAlbum(companyId), object : BaseMvpObserver<CompanyAlbum>(view) {
+
+            override fun onSuccess(response: CompanyAlbum) {
+
+
+
+                view.bindCompanyAlbum(response.images)
             }
 
         })

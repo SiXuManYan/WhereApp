@@ -387,6 +387,9 @@ class CompanyInfo {
     var profile = ""
     var address = ""
     var images = ArrayList<String>()
+}
 
 
+class CompanyAlbum{
+    var images = ArrayList<String>()
 }

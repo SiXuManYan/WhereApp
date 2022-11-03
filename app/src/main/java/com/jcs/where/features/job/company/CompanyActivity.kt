@@ -11,8 +11,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.job.CompanyInfo
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.hotel.detail.media.DetailMediaAdapter
-import com.jcs.where.features.hotel.detail.media.MediaData
+import com.jcs.where.features.job.company.album.CompanyAlbumActivity
 import com.jcs.where.features.job.company.info.CompanyInfoActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -26,9 +25,9 @@ import kotlinx.android.synthetic.main.activity_company.*
  */
 class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
 
-
     private var jobId = 0
-    var introduce: String = ""
+    private var companyId = 0
+    private var introduce = ""
     private lateinit var mAdapter: CompanyPhotoAdapter
 
     override fun isStatusDark() = true
@@ -52,7 +51,7 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
     }
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this,Color.WHITE)
+        BarUtils.setStatusBarColor(this, Color.WHITE)
         jobId = intent.getIntExtra(Constant.PARAM_ID, 0)
         initPhoto()
     }
@@ -76,15 +75,21 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
 
     override fun bindListener() {
         more_introduce_tv.setOnClickListener {
-            startActivity(CompanyInfoActivity::class.java ,Bundle().apply {
-                putString(Constant.PARAM_DATA , introduce)
+            startActivity(CompanyInfoActivity::class.java, Bundle().apply {
+                putString(Constant.PARAM_DATA, introduce)
+            })
+        }
+
+        more_photo_tv.setOnClickListener {
+            startActivity(CompanyAlbumActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ID, companyId)
             })
         }
     }
 
     override fun bindCompanyDetail(response: CompanyInfo, media: ArrayList<CompanyPhoto>) {
-
-        GlideUtil.load(this, response.logo, logo_iv, 24 , GlideRoundedCornersTransform.CornerType.ALL ,R.mipmap.ic_company_default_logo )
+        companyId = response.id
+        GlideUtil.load(this, response.logo, logo_iv, 24, GlideRoundedCornersTransform.CornerType.ALL, R.mipmap.ic_company_default_logo)
         company_name_tv.text = response.company_title
         company_type_tv.text = response.company_type
         company_size_tv.text = response.company_size

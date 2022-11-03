@@ -2,8 +2,10 @@ package com.jcs.where.features.job.company
 
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
@@ -86,4 +88,26 @@ class CompanyPhoto : MultiItemEntity {
 
     override val itemType: Int
         get() = type
+}
+
+
+class CompanyAlbumAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_company_album) {
+
+
+    var screenWidth = ScreenUtils.getScreenWidth()
+    var itemWidth = (screenWidth - SizeUtils.dp2px(16f)) / 3
+
+    override fun convert(holder: BaseViewHolder, item: String) {
+
+        val imageIv = holder.getView<ImageView>(R.id.image_iv)
+
+        // 重置宽高
+        val layoutParams = imageIv.layoutParams as RecyclerView.LayoutParams
+        layoutParams.height = itemWidth
+        imageIv.layoutParams = layoutParams
+
+        GlideUtil.load(context, item, imageIv)
+
+    }
+
 }

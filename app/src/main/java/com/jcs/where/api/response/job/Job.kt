@@ -394,9 +394,9 @@ class CompanyInfo {
     var company_size = ""
 
     /** 公司简介 */
-    var profile = ""
+    var profile: String? = ""
     var address = ""
-    var images = ArrayList<String>()
+    var images: ArrayList<String>? = ArrayList()
 }
 
 

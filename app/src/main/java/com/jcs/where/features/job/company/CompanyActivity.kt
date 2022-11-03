@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -27,7 +28,7 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
 
     private var jobId = 0
     private var companyId = 0
-    private var introduce = ""
+    private var introduce: String? = ""
     private lateinit var mAdapter: CompanyPhotoAdapter
 
     override fun isStatusDark() = true
@@ -93,11 +94,34 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
         company_name_tv.text = response.company_title
         company_type_tv.text = response.company_type
         company_size_tv.text = response.company_size
-        introduce = response.profile
-        company_introduce_tv.text = introduce
         address_tv.text = response.address
 
-        mAdapter.setNewInstance(media)
+
+        // 公司简介
+        introduce = response.profile
+
+        if (introduce.isNullOrBlank()) {
+            introduce_rl.visibility = View.GONE
+            company_introduce_tv.visibility = View.GONE
+            introduce_line.visibility = View.GONE
+        } else {
+            company_introduce_tv.text = introduce
+            introduce_rl.visibility = View.VISIBLE
+            company_introduce_tv.visibility = View.VISIBLE
+            introduce_line.visibility = View.VISIBLE
+        }
+
+        // 公司图片
+        if (response.images.isNullOrEmpty()) {
+            photo_rl.visibility = View.GONE
+            photo_rv.visibility = View.GONE
+            photos_line.visibility = View.GONE
+        } else {
+            photo_rl.visibility = View.VISIBLE
+            photo_rv.visibility = View.VISIBLE
+            photos_line.visibility = View.VISIBLE
+            mAdapter.setNewInstance(media)
+        }
 
 
     }

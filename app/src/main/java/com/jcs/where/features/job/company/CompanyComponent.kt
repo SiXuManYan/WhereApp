@@ -25,7 +25,7 @@ class CompanyPresenter(var view: CompanyView) : BaseMvpPresenter(view) {
             override fun onSuccess(response: CompanyInfo) {
 
                 val media = ArrayList<CompanyPhoto>()
-                response.images.forEach {
+                response.images?.forEach {
                     val apply = CompanyPhoto().apply {
                         type = CompanyPhoto.HORIZONTAL_IMAGE
                         src = it

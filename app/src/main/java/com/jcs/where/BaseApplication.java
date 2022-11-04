@@ -27,6 +27,7 @@ import com.jcs.where.storage.entity.User;
 import com.jcs.where.storage.entity.UserRongyunData;
 import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.CacheUtil;
+import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
@@ -69,12 +70,12 @@ public class BaseApplication extends Application {
         database = WhereDataBase.get(this);
         RetrofitManager.getManager().initRetrofit(this);
         mModel = new BaseApplicationModel();
-        LocationUtil.initInstance(this);
+//        LocationUtil.initInstance(this);
         SPUtil.initInstance(this);
         changeLanguage();
 
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init(this);
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
         initJpush();
         handleRongCloud();
         handleUmeng();

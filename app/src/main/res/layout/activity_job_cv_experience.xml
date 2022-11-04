@@ -52,11 +52,11 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dp_5"
+                    android:background="?android:attr/selectableItemBackground"
                     android:padding="@dimen/dp_10"
                     android:src="@mipmap/ic_cv_add_tag_blue"
                     android:visibility="gone"
                     tools:visibility="visible" />
-
 
             </RelativeLayout>
 

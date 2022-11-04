@@ -1153,6 +1153,7 @@ Gentleman must let go</string>
     <string name="company_album">公司相册</string>
     <string name="delete_hint">确定删除当前内容？</string>
     <string name="image_index">%1$d&#160;/&#160;%2$d</string>
+    <string name="company_size_format">%1$s&#160;人</string>
 
 
 </resources>

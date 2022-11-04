@@ -14,6 +14,8 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 
+import com.blankj.utilcode.util.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +25,8 @@ import java.util.Locale;
  * create by zyf on 2020/12/21 8:41 PM
  */
 public class LocationUtil {
-    private volatile static LocationUtil uniqueInstance;
+
+    private static LocationUtil instance;
     private LocationManager locationManager;
     private Context mContext;
     private static ArrayList<AddressCallback> addressCallbacks;
@@ -47,19 +50,26 @@ public class LocationUtil {
 
     //采用Double CheckLock(DCL)实现单例
     public static LocationUtil initInstance(Context context) {
-        if (uniqueInstance == null) {
+        if (instance == null) {
             synchronized (LocationUtil.class) {
-                if (uniqueInstance == null) {
+                if (instance == null) {
                     addressCallbacks = new ArrayList<>();
-                    uniqueInstance = new LocationUtil(context);
+                    instance = new LocationUtil(context);
                 }
             }
         }
-        return uniqueInstance;
+        return instance;
     }
 
     public static LocationUtil getInstance() {
-        return uniqueInstance;
+        if (instance == null) {
+            instance = new LocationUtil(Utils.getApp());
+        }
+
+        if (addressCallbacks == null) {
+            addressCallbacks = new ArrayList<>();
+        }
+        return instance;
     }
 
     /**
@@ -195,7 +205,7 @@ public class LocationUtil {
 
     private void removeLocationUpdatesListener() {
         if (locationManager != null) {
-            uniqueInstance = null;
+            instance = null;
             locationManager.removeUpdates(locationListener);
         }
     }

@@ -114,7 +114,7 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
         GlideUtil.load(this, response.logo, logo_iv, 24, GlideRoundedCornersTransform.CornerType.ALL, R.mipmap.ic_company_default_logo)
         company_name_tv.text = response.company_title
         company_type_tv.text = response.company_type
-        company_size_tv.text = response.company_size
+        company_size_tv.text = getString(R.string.company_size_format , response.company_size)
         address_tv.text = response.address
 
 

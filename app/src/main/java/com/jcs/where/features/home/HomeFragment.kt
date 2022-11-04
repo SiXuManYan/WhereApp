@@ -110,10 +110,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     /** 轮播图 */
     private fun initBanner() {
         message_view.setMessageImageResource(R.mipmap.ic_home_message)
-//        val bannerParams = ll_banner.layoutParams.apply {
-//            height = ScreenUtils.getScreenWidth() * 194 / 345
-//        }
-//        ll_banner.layoutParams = bannerParams
 
         top_banner.setBannerTypes(XBanner.CIRCLE_INDICATOR)
             .setTitleHeight(50)

@@ -58,6 +58,7 @@ class DetailMediaAdapter : BaseMultiItemQuickAdapter<MediaData, BaseViewHolder>(
      */
     private fun convertMediaImage(holder: BaseViewHolder, item: MediaData) {
         val imagePv = holder.getView<PhotoView>(R.id.image_pv)
+        imagePv.maximumScale = 5.0f
         Glide.with(context).load(item.cover).into(imagePv)
     }
 

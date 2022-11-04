@@ -47,8 +47,6 @@ import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_government.*
 import org.greenrobot.eventbus.EventBus
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by Wangsw  2021/8/24 17:04.
@@ -158,7 +156,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
 
                 currentRequestCategoryId = child[position].id
-                presenter.getMakerData(currentRequestCategoryId,searchInput)
+                presenter.getMakerData(currentRequestCategoryId, searchInput)
 
             }
         }
@@ -288,7 +286,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
                 if (child.has_children == 2 && child.child_categories.isNotEmpty()) {
                     mChildTagAdapter.setNewInstance(child.child_categories)
                     child_tag_rv.visibility = View.VISIBLE
-                }else {
+                } else {
                     child_tag_rv.visibility = View.GONE
                 }
 
@@ -314,10 +312,10 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         top_drag_ll.setOnClickListener {
             when (pagerBehavior.state) {
 
-                ViewPagerBottomSheetBehavior.STATE_COLLAPSED  -> {
+                ViewPagerBottomSheetBehavior.STATE_COLLAPSED -> {
                     pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_EXPANDED
                 }
-                ViewPagerBottomSheetBehavior.STATE_EXPANDED->{
+                ViewPagerBottomSheetBehavior.STATE_EXPANDED -> {
                     pagerBehavior.state = ViewPagerBottomSheetBehavior.STATE_COLLAPSED
                 }
                 else -> {}
@@ -410,7 +408,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         enableMyLocation()
 
         // 获得展示在地图上的数据
-        presenter.getMakerData(ID_GOVERNMENT,searchInput)
+        presenter.getMakerData(ID_GOVERNMENT, searchInput)
 
     }
 
@@ -476,7 +474,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
 
     override fun bindMakerList(response: ArrayList<MechanismResponse>) {
-        if (!::map.isInitialized ) return
+        if (!::map.isInitialized) return
 
         if (response.isEmpty()) {
             ToastUtils.showShort(R.string.search_result_empty_hint)
@@ -492,9 +490,13 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         response.forEach {
             bounds.include(LatLng(it.lat, it.lng))
         }
-
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
-
+        if (DeviceUtils.isTablet()) {
+            if (response.isNotEmpty()) {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(response[0].lat, response[0].lng),15f))
+            }
+        }else {
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+        }
 
         // 在地图上添加大量Marker
         addMarkersToMap(response)

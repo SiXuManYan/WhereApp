@@ -75,8 +75,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (view != null) {
             view.setOnClickListener(v -> finish());
         }
-        initView();
         adaptLandscapeTablet();
+        initView();
         bindListener();
         initData();
 

@@ -12,7 +12,10 @@ import android.os.Handler
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.CheckedTextView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -40,16 +44,16 @@ import com.jcs.where.features.gourmet.restaurant.list.filter.more.MoreFilterFrag
 import com.jcs.where.features.gourmet.takeaway.TakeawayActivity
 import com.jcs.where.features.map.HotelCustomInfoWindowAdapter
 import com.jcs.where.features.search.SearchAllActivity
-import com.jcs.where.utils.*
+import com.jcs.where.utils.CacheUtil
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.LocationUtil
+import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_gourmet_list.*
-import kotlinx.android.synthetic.main.activity_gourmet_list.back_iv
-import kotlinx.android.synthetic.main.activity_restaurant_detail_2.*
 import kotlinx.android.synthetic.main.layout_filter.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 
 /**
  * Created by Wangsw  2021/3/24 13:56.
@@ -190,9 +194,9 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
                     recycler.visibility = View.GONE
                     swipe_layout.isEnabled = false
                 }
-                BottomSheetBehavior.STATE_HIDDEN ->{
+                BottomSheetBehavior.STATE_HIDDEN -> {
                     recycler.visibility = View.VISIBLE
-                    swipe_layout.isEnabled =!recycler.canScrollVertically(-1)
+                    swipe_layout.isEnabled = !recycler.canScrollVertically(-1)
                 }
                 else -> {
                 }
@@ -261,7 +265,7 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
         swipe_layout.setOnRefreshListener {
 
             when {
-                mMarkerContentAdapter.data.isEmpty() ->{
+                mMarkerContentAdapter.data.isEmpty() -> {
                     presenter.getMakerData(mRequest)
                 }
             }
@@ -493,7 +497,13 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
             bounds.include(LatLng(it.lat, it.lng))
         }
 
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+        if (DeviceUtils.isTablet()) {
+            if (response.isNotEmpty()) {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(response[0].lat, response[0].lng),15f))
+            }
+        } else {
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+        }
 
 
         // 在地图上添加大量Marker

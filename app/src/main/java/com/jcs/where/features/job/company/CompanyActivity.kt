@@ -14,6 +14,7 @@ import com.jcs.where.api.response.job.CompanyInfo
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.company.album.CompanyAlbumActivity
 import com.jcs.where.features.job.company.info.CompanyInfoActivity
+import com.jcs.where.features.media.MediaDetailActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
@@ -58,9 +59,25 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
     }
 
     private fun initPhoto() {
+        mAdapter = CompanyPhotoAdapter().apply {
+            setOnItemClickListener { _, _, position ->
+                when (mAdapter.getItemViewType(position)) {
+                    CompanyPhoto.HORIZONTAL_IMAGE -> {
+                        val photos = ArrayList<String>()
+                        mAdapter.data.forEach {
+                            if (it.itemType == CompanyPhoto.HORIZONTAL_IMAGE) {
+                                photos.add(it.src)
+                            }
+                        }
+                        MediaDetailActivity.navigationOnlyStringImage(this@CompanyActivity, position, photos, true)
+                    }
+                    CompanyPhoto.HORIZONTAL_IMAGE_LOOK_MORE -> {
+                        viewMore()
+                    }
+                }
 
-
-        mAdapter = CompanyPhotoAdapter()
+            }
+        }
         photo_rv.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(this@CompanyActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -82,10 +99,14 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
         }
 
         more_photo_tv.setOnClickListener {
-            startActivity(CompanyAlbumActivity::class.java, Bundle().apply {
-                putInt(Constant.PARAM_ID, companyId)
-            })
+            viewMore()
         }
+    }
+
+    private fun viewMore() {
+        startActivity(CompanyAlbumActivity::class.java, Bundle().apply {
+            putInt(Constant.PARAM_ID, companyId)
+        })
     }
 
     override fun bindCompanyDetail(response: CompanyInfo, media: ArrayList<CompanyPhoto>) {

@@ -1,8 +1,6 @@
 package com.jcs.where.features.job.company.album
 
-import android.content.res.Configuration
 import android.graphics.Color
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -32,19 +30,19 @@ class CompanyAlbumActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
     override fun initView() {
 
         intent.extras?.let {
-            companyId =   it.getInt(Constant.PARAM_ID, 0)
+            companyId = it.getInt(Constant.PARAM_ID, 0)
         }
 
         mJcsTitle.setMiddleTitle(R.string.company_album)
         container_ll.setBackgroundColor(Color.WHITE)
         recycler.setBackgroundColor(ColorUtils.getColor(R.color.colorPrimary))
 
-        recycler.setPadding( SizeUtils.dp2px(2f),0, SizeUtils.dp2px(2f),0)
+        recycler.setPadding(SizeUtils.dp2px(2f), 0, SizeUtils.dp2px(2f), 0)
 
 
         mAdapter = CompanyAlbumAdapter().apply {
             setOnItemClickListener { _, _, position ->
-                MediaDetailActivity.navigationOnlyStringImage(this@CompanyAlbumActivity, position, mAdapter.data)
+                MediaDetailActivity.navigationOnlyStringImage(this@CompanyAlbumActivity, position, mAdapter.data, true)
             }
         }
         recycler.apply {

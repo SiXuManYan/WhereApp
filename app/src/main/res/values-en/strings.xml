@@ -1137,5 +1137,6 @@ Gentleman must let go</string>
     <string name="company_photo">Photos</string>
     <string name="company_album">Company Album</string>
     <string name="delete_hint">Are you sure you want to delete the current content ?</string>
+    <string name="image_index">%1$d&#160;/&#160;%2$d</string>
 
 </resources>

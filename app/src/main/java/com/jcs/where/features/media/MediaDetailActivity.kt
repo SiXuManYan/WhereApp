@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -32,12 +33,18 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
     private var source = ArrayList<MediaData>()
 
     private lateinit var mMediaAdapter: DetailMediaAdapter
+    private var numberType = false
 
     override fun getLayoutId() = R.layout.activity_media_detail
 
     companion object {
 
-        fun navigationOnlyStringImage(context: Context, currentPosition: Int, data: MutableList<String>) {
+        fun navigationOnlyStringImage(
+            context: Context,
+            currentPosition: Int,
+            data: MutableList<String>,
+            numberType: Boolean? = false,
+        ) {
             if (data.isEmpty()) {
                 return
             }
@@ -52,6 +59,9 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
                     mediaList.add(media)
                 }
                 putSerializable(Constant.PARAM_DATA, ArrayList<MediaData>(mediaList))
+                numberType?.let {
+                    putBoolean(Constant.PARAM_TYPE, it)
+                }
             }
             val intent = Intent(context, MediaDetailActivity::class.java)
                 .putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -95,7 +105,7 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
             }
 
             allImage.forEach {
-                it.type =  MediaData.IMAGE_FOR_MEDIA_DETAIL
+                it.type = MediaData.IMAGE_FOR_MEDIA_DETAIL
             }
 
             val bundle = Bundle().apply {
@@ -152,11 +162,20 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
                 if (it.type == MediaData.VIDEO) {
                     it.type = MediaData.VIDEO_FOR_MEDIA_DETAIL
                 }
-
             }
+
             source.addAll(arrayList)
 
             selectedPosition = bundle.getInt(Constant.PARAM_POSITION, 0)
+
+            numberType = bundle.getBoolean(Constant.PARAM_TYPE, false)
+            if (numberType) {
+                number_position_tv.visibility = View.VISIBLE
+                point_view.visibility = View.GONE
+            } else {
+                number_position_tv.visibility = View.GONE
+                number_position_tv.visibility = View.VISIBLE
+            }
 
         }
     }
@@ -197,6 +216,8 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     point_view.onPageSelected(firstItemPosition)
+                    number_position_tv.text = getString(R.string.image_index, firstItemPosition+1, source.size)
+
                     selectedPosition = firstItemPosition
                 }
             }
@@ -211,6 +232,8 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
         }
         media_rv.scrollToPosition(selectedPosition)
         point_view.onPageSelected(selectedPosition)
+        number_position_tv.text = getString(R.string.image_index, selectedPosition + 1, source.size)
+
     }
 
 

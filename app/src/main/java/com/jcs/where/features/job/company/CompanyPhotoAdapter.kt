@@ -20,8 +20,7 @@ class CompanyPhotoAdapter : BaseMultiItemQuickAdapter<CompanyPhoto, BaseViewHold
 
     init {
         addItemType(CompanyPhoto.HORIZONTAL_IMAGE, R.layout.item_company_photo)
-        addItemType(CompanyPhoto.STAGGERED_IMAGE, R.layout.item_company_photo)
-        addItemType(CompanyPhoto.HORIZONTAL_IMAGE_LOOK_MORE, R.layout.item_company_photo)
+        addItemType(CompanyPhoto.HORIZONTAL_IMAGE_LOOK_MORE, R.layout.item_company_photo_more)
     }
 
     override fun convert(holder: BaseViewHolder, item: CompanyPhoto) {
@@ -29,9 +28,7 @@ class CompanyPhotoAdapter : BaseMultiItemQuickAdapter<CompanyPhoto, BaseViewHold
 
             CompanyPhoto.HORIZONTAL_IMAGE -> {
 
-
                 val image = holder.getView<ImageView>(R.id.company_image_iv)
-
 
                 val currentPosition = holder.adapterPosition
                 val layoutParams = image.layoutParams as RecyclerView.LayoutParams
@@ -46,20 +43,9 @@ class CompanyPhotoAdapter : BaseMultiItemQuickAdapter<CompanyPhoto, BaseViewHold
                 data.forEach {
                     photos.add(it.src)
                 }
-                image.setOnClickListener {
-
-                    MediaDetailActivity.navigationOnlyStringImage(context, currentPosition, photos)
-                }
             }
-            CompanyPhoto.STAGGERED_IMAGE -> {
 
-            }
             CompanyPhoto.HORIZONTAL_IMAGE_LOOK_MORE -> {
-                val image = holder.getView<ImageView>(R.id.company_image_iv)
-                image.setImageResource(R.mipmap.ic_company_photo_footer)
-                image.setOnClickListener {
-                    // 查看更多
-                }
             }
             else -> {}
         }
@@ -75,11 +61,8 @@ class CompanyPhoto : MultiItemEntity {
         /** 横向图片 */
         var HORIZONTAL_IMAGE = 0
 
-        /** 瀑布流图片 */
-        var STAGGERED_IMAGE = 1
-
         /** 查看更多 */
-        var HORIZONTAL_IMAGE_LOOK_MORE = 2
+        var HORIZONTAL_IMAGE_LOOK_MORE = 1
 
     }
 

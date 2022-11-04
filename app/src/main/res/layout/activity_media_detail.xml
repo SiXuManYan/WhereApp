@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_000000"
     android:orientation="vertical">
@@ -19,6 +19,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/dp_60" />
+
+    <TextView
+        android:id="@+id/number_position_tv"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dp_60"
+        android:gravity="center"
+        android:textColor="@color/white"
+        tools:text="0/0" />
+
 
     <ImageView
         android:id="@+id/back_iv"

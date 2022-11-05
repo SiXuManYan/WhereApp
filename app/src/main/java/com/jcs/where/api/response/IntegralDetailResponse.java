@@ -16,7 +16,7 @@ public class IntegralDetailResponse {
 
     public int id;
     /**
-     * 类型（1：注册，2：邀请，3：消费，4：评论，5：签到）
+     * 类型（1：注册，2：邀请，3：消费，4：评论，5：签到  6兑换优惠券 7 兑换商品）
      */
     public int type;
 

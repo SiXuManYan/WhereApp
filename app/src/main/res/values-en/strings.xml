@@ -167,11 +167,11 @@
 
     <string name="add_format">+%1$d</string>
 
-    <string name="sign_in_type_0">Register</string>
-    <string name="sign_in_type_1">Invite</string>
-    <string name="sign_in_type_2">Consumption</string>
-    <string name="sign_in_type_3">Comment</string>
-    <string name="sign_in_type_4">Sign in</string>
+    <string name="type_register">Register</string>
+    <string name="type_invite">Invite</string>
+    <string name="type_consumption">Consumption</string>
+    <string name="type_comment">Comment</string>
+    <string name="type_sign_in">Sign in</string>
 
     <string name="empty_data_default">No related content yet</string>
     <string name="item_sign_in">Checked in</string>
@@ -1139,6 +1139,8 @@ Gentleman must let go</string>
     <string name="delete_hint">Are you sure you want to delete the current content ?</string>
     <string name="image_index">%1$d&#160;/&#160;%2$d</string>
     <string name="company_size_format">%1$s&#160;people</string>
+    <string name="type_coupon">Exchange Coupon</string>
+    <string name="type_goods">Exchange Goods</string>
 
 
 </resources>

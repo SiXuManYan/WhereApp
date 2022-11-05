@@ -165,11 +165,11 @@
     <string name="to_finish">去完成</string>
     <string name="finished">已完成</string>
     <string name="add_format">+%1$d</string>
-    <string name="sign_in_type_0">注册</string>item_sign_in_content
-    <string name="sign_in_type_1">邀请</string>
-    <string name="sign_in_type_2">消费</string>
-    <string name="sign_in_type_3">评论</string>
-    <string name="sign_in_type_4">签到</string>
+    <string name="type_register">注册</string>item_sign_in_content
+    <string name="type_invite">邀请</string>
+    <string name="type_consumption">消费</string>
+    <string name="type_comment">评论</string>
+    <string name="type_sign_in">签到</string>
     <string name="empty_data_default">暂无相关内容</string>
     <string name="item_sign_in">签到</string>
     <string name="item_sign_in_content">成功签到可获得20积分</string>
@@ -1154,6 +1154,8 @@ Gentleman must let go</string>
     <string name="delete_hint">确定删除当前内容？</string>
     <string name="image_index">%1$d&#160;/&#160;%2$d</string>
     <string name="company_size_format">%1$s&#160;人</string>
+    <string name="type_coupon">兑换优惠券</string>
+    <string name="type_goods">兑换商品</string>
 
 
 </resources>

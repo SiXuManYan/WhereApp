@@ -99,11 +99,11 @@
 
 
     <string-array name="sign_in_type">
-        <item>@string/sign_in_type_0</item>
-        <item>@string/sign_in_type_1</item>
-        <item>@string/sign_in_type_2</item>
-        <item>@string/sign_in_type_3</item>
-        <item>@string/sign_in_type_4</item>
+        <item>@string/type_register</item>
+        <item>@string/type_invite</item>
+        <item>@string/type_consumption</item>
+        <item>@string/type_comment</item>
+        <item>@string/type_sign_in</item>
     </string-array>
 
     <string-array name="country_prefix">

@@ -50,14 +50,17 @@ class IntegralGoodDetail {
     var price = ""
     var stock = 0
 
-    /**  1：商品 其他：优惠券 */
+    /**  1：商品 其他：优惠券
+     * 1商品 2水 3电 4网 5手机充值
+     * */
     var type = 0
 
 
     var start_time = ""
     var end_time = ""
 
-    /** 0积分不足 1可以兑换 2超出限制  3即将上线 */
+    /** 0积分不足 1可以兑换 2超出限制  3即将上线
+     * */
     var operation_status = 0
 
     var user_integral = ""

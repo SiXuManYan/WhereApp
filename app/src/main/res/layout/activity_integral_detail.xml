@@ -52,17 +52,17 @@
                         android:id="@+id/tag_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/dp_3"
                         android:layout_marginEnd="@dimen/dp_3"
-                        tools:visibility="visible"
-                        android:layout_gravity="center"
                         android:background="@drawable/shape_black_radius_2"
+                        android:gravity="center"
                         android:padding="@dimen/dp_4"
                         android:text="@string/coming_soon"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_10" />
+                        android:textSize="@dimen/sp_10"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
 
                 </FrameLayout>

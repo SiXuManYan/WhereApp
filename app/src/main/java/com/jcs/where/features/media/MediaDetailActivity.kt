@@ -53,7 +53,7 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
                 val mediaList = ArrayList<MediaData>()
                 data.forEach {
                     val media = MediaData()
-                    media.type = MediaData.IMAGE_FOR_MEDIA_DETAIL
+                    media.type = MediaData.IMAGE
                     media.cover = it
                     media.src = it
                     mediaList.add(media)
@@ -102,10 +102,6 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
             if (allImage.size < data.size) {
                 // 去除了视频
                 position -= 1
-            }
-
-            allImage.forEach {
-                it.type = MediaData.IMAGE_FOR_MEDIA_DETAIL
             }
 
             val bundle = Bundle().apply {

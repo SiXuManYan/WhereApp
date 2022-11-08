@@ -32,9 +32,8 @@
                 android:id="@+id/logo_iv"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
-                android:scaleType="centerInside"
                 android:layout_marginStart="@dimen/dp_15"
-                tools:src="@tools:sample/avatars" />
+                android:src="@mipmap/ic_company_default_logo" />
 
 
             <TextView

@@ -32,7 +32,6 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
     override fun getLayoutId() = R.layout.activity_job_home
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.color_1c1380))
         initContent()
     }
 

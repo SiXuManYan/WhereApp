@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 import com.jcs.where.R;
-import com.jcs.where.base.BaseBottomDialog;
+import com.jcs.where.base.BaseDialog;
 import com.jcs.where.utils.BigDecimalUtil;
 import com.jcs.where.utils.Constant;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HotelStarDialog extends BaseBottomDialog implements View.OnClickListener {
+public class HotelStarDialog extends BaseDialog implements View.OnClickListener {
 
     private ImageView close;
     private TextView price_start_tv;
@@ -61,6 +61,10 @@ public class HotelStarDialog extends BaseBottomDialog implements View.OnClickLis
     private Integer cacheStarIndex = null;
     private Integer cacheScoreIndex = null;
 
+    @Override
+    protected boolean isBottom() {
+        return true ;
+    }
 
     @Override
     protected int getLayout() {

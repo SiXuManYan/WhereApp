@@ -32,6 +32,7 @@ class AboutActivity : BaseMvpActivity<AboutPresenter>(), AboutView {
         if (BuildConfig.FLAVOR == "dev") {
             buffer.append("_测试服务器")
         }
+        buffer.append("For Special Tablet")
         version_tv.text = getString(R.string.version_format, buffer.toString())
 
         val spanUtils = SpanUtils()

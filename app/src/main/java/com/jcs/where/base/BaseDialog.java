@@ -16,7 +16,9 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.jcs.where.R;
@@ -81,31 +83,37 @@ public abstract class BaseDialog extends DialogFragment {
         return dialog;
     }
 
-    protected boolean isWidthMatch() {
-        return true;
-    }
 
     protected boolean isTransparent() {
         return false;
     }
 
-    protected int getDp(int height) {
-        Context context = getContext();
-        if (context == null) {
-            return 0;
-        }
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.getResources().getDisplayMetrics());
-    }
+
 
     protected String getDialogTag() {
         return getClass().getSimpleName();
     }
 
-    public void show(FragmentManager fm) {
-        this.show(fm, getDialogTag());
-    }
+
 
     protected boolean isBottom() {
         return false;
     }
+
+    /**
+     *  fix 外部快速点击时 ：Android java.lang.IllegalStateException: Fragment already added
+     */
+    public void show(FragmentManager fm) {
+
+        String tag = getDialogTag()  ;
+        Fragment fragment = fm.findFragmentByTag(tag);
+        if (fragment!=null) {
+            return;
+        }
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.add(this,tag);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+
 }

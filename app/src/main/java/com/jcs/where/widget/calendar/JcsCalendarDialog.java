@@ -399,10 +399,5 @@ public class JcsCalendarDialog extends BaseDialog {
         void onDateSelected(CalendarBean startDate, CalendarBean endDate);
     }
 
-    @Override
-    public void show(FragmentManager fm) {
-        super.show(fm);
 
-
-    }
 }

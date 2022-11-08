@@ -248,8 +248,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     private fun initScroll() {
 
-        swipeLayout.setOnRefreshListener(this)
-        swipeLayout.setColorSchemeColors(ColorUtils.getColor(R.color.blue_377BFF))
+        swipeLayout?.setOnRefreshListener(this)
+        swipeLayout?.setColorSchemeColors(ColorUtils.getColor(R.color.blue_377BFF))
 
         moduleRecycler.isNestedScrollingEnabled = false
 
@@ -258,22 +258,22 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                 when (expanded) {
                     State.EXPANDED -> {
 
-                        swipeLayout.isEnabled = true
+                        swipeLayout?.isEnabled = true
                     }
 
                     State.COLLAPSED -> {
 
-                        swipeLayout.isEnabled = false
+                        swipeLayout?.isEnabled = false
                     }
 
                     State.IDLE -> {
-                        swipeLayout.isEnabled = false
+                        swipeLayout?.isEnabled = false
                     }
                 }
             }
         })
 
-        swipeLayout.postDelayed({ swipeLayout.isEnabled = false }, 200)
+        swipeLayout?.postDelayed({ swipeLayout?.isEnabled = false }, 200)
 
     }
 
@@ -339,7 +339,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     override fun onRefresh() {
         rxTimer.cancel()
         top_banner.pause()
-        swipeLayout.isRefreshing = true
+        swipeLayout?.isRefreshing = true
         presenter.getMessageCount()
         presenter.getTopBanner()
         presenter.getPlateData()
@@ -468,7 +468,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     var isInit = true
 
     override fun bindHomeChild(response: ArrayList<HomeChild>, titles: ArrayList<String>) {
-        swipeLayout.isRefreshing = false
+        swipeLayout?.isRefreshing = false
         home_empty.visibility = View.GONE
         isInit = when {
             mType.isEmpty() -> {
@@ -530,14 +530,14 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     override fun onError(errorResponse: ErrorResponse?) {
         super.onError(errorResponse)
-        swipeLayout.isRefreshing = false
+        swipeLayout?.isRefreshing = false
         if (presenter.isChildError && presenter.isPlateDataError && presenter.isTopBannerError) {
             if (home_empty.visibility != View.VISIBLE) {
                 home_empty.visibility = View.VISIBLE
                 home_empty.showNetworkError {
                     requestData()
                     home_empty.visibility = View.GONE
-                    swipeLayout.isRefreshing = true
+                    swipeLayout?.isRefreshing = true
                 }
             }
 

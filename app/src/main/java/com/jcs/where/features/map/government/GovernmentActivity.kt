@@ -114,7 +114,7 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
 
     @SuppressLint("NotifyDataSetChanged")
     override fun initView() {
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
+//        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
         initExtra()
         initCategoryChild()
         initBehavior()

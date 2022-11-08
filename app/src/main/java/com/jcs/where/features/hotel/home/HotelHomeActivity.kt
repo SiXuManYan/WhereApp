@@ -6,23 +6,25 @@ import android.graphics.Color
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.ClickUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.hotel.HotelHomeRecommend
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.city.CityPickerActivity
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.map.HotelMapActivity
 import com.jcs.where.home.dialog.HotelStarDialog
-import com.jcs.where.features.city.CityPickerActivity
-import com.jcs.where.utils.*
+import com.jcs.where.utils.Constant
+import com.jcs.where.utils.SPKey
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.NumberView2
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_hotel_home.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by Wangsw  2021/9/13 14:47.
@@ -203,16 +205,21 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
     }
 
 
-
-
     override fun bindListener() {
 
-        score_tv.setOnClickListener {
-            mHotelStarDialog.show(supportFragmentManager,"")
-        }
-        date_tv.setOnClickListener {
-            mJcsCalendarDialog.show(supportFragmentManager)
-        }
+
+        score_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
+            override fun onDebouncingClick(v: View?) {
+                mHotelStarDialog.show(supportFragmentManager)
+            }
+        })
+
+        date_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
+            override fun onDebouncingClick(v: View?) {
+                mJcsCalendarDialog.show(supportFragmentManager)
+            }
+        })
+
         inquire_tv.setOnClickListener {
             HotelMapActivity.navigation(
                 this,
@@ -251,19 +258,19 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
     override fun selectResult(
         priceBeans: HotelStarDialog.PriceIntervalBean,
-        selectStarBean: HotelStarDialog.StarBean, scoreBean: HotelStarDialog.ScoreBean
+        selectStarBean: HotelStarDialog.StarBean, scoreBean: HotelStarDialog.ScoreBean,
     ) {
 
         val priceShow = priceBeans.priceShow
 
-        val starShow = if (selectStarBean.starShow .isEmpty()) {
+        val starShow = if (selectStarBean.starShow.isEmpty()) {
             getString(R.string.star_default)
-        }else{
+        } else {
             selectStarBean.starShow
         }
         val scoreString = if (scoreBean.scoreString.isEmpty()) {
             getString(R.string.score_default)
-        }else{
+        } else {
             scoreBean.scoreString
         }
 
@@ -283,7 +290,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
 
         // 星级
         val star = selectStarBean.starValue
-        starLevel = if (star!=0) {
+        starLevel = if (star != 0) {
             val scoreList = ArrayList<Int>().apply {
                 clear()
                 if (star == 2) {
@@ -292,7 +299,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
                 add(star)
             }
             Gson().toJson(scoreList)
-        }else {
+        } else {
             null
         }
 
@@ -301,7 +308,7 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         val score = scoreBean.score
         grade = if (score == 0.0f) {
             null
-        }else{
+        } else {
             score.toString()
         }
 
@@ -323,7 +330,6 @@ class HotelHomeActivity : BaseMvpActivity<HotelDetailPresenter>(), HotelHomeView
         val span = (endBean.time - startBean.time) / (1000 * 60 * 60 * 24)
         total_time_tv.text = getString(R.string.total_date_format, span.toString())
     }
-
 
 
 }

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.jcs.where.R
@@ -153,25 +152,23 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     override fun bindListener() {
 
-        swipe_layout.setOnRefreshListener {
+        swipe_layout?.setOnRefreshListener {
             loadOnVisible()
         }
 
         top_abl.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            swipe_layout.isEnabled = verticalOffset >= 0
+            swipe_layout?.isEnabled = verticalOffset >= 0
         })
     }
 
     override fun bindBannerData(result: ArrayList<MallBannerCategory>) {
-        swipe_layout.isRefreshing = false
+        swipe_layout?.isRefreshing = false
         mBannerAdapter.setNewInstance(result)
         point_view.setPointCount(result.size)
     }
 
     override fun bindRecommend(data: MutableList<MallGood>, lastPage: Boolean) {
-        if (swipe_layout.isRefreshing) {
-            swipe_layout.isRefreshing = false
-        }
+        swipe_layout?.isRefreshing = false
         val loadMoreModule = mAdapter.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
@@ -198,7 +195,7 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
     }
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
-        swipe_layout.isRefreshing = false
+        swipe_layout?.isRefreshing = false
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
 

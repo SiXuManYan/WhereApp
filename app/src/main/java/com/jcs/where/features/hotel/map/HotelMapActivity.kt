@@ -1,5 +1,6 @@
 package com.jcs.where.features.hotel.map
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -40,13 +41,8 @@ import com.jcs.where.utils.LocationUtil
 import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.widget.calendar.JcsCalendarAdapter
 import com.jcs.where.widget.calendar.JcsCalendarDialog
-
 import kotlinx.android.synthetic.main.activity_map_hotel.*
-
-
 import org.greenrobot.eventbus.EventBus
-
-import java.util.*
 
 /**
  * Created by Wangsw  2021/9/27 14:06.
@@ -107,7 +103,7 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             grade: String? = null,
             roomNumber: Int = 1,
             startDate: JcsCalendarAdapter.CalendarBean,
-            endDate: JcsCalendarAdapter.CalendarBean
+            endDate: JcsCalendarAdapter.CalendarBean,
         ) {
 
             val bundle = Bundle().apply {
@@ -132,7 +128,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
 
 
     override fun initView() {
-        BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.white))
         initExtra()
         initMap()
         initCategory()
@@ -261,7 +256,6 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
         mJcsCalendarDialog = JcsCalendarDialog().apply {
             initCalendar()
             setOnDateSelectedListener(this@HotelMapActivity)
-
         }
 
         presenter = HotelMapPresenter(this)
@@ -317,10 +311,12 @@ class HotelMapActivity : BaseMvpActivity<HotelMapPresenter>(), HotelMapView, Jcs
             search()
         }
 
-        date_ll.setOnClickListener {
-            mJcsCalendarDialog.show(supportFragmentManager)
-        }
 
+        date_ll.setOnClickListener(object :ClickUtils.OnDebouncingClickListener(500){
+            override fun onDebouncingClick(v: View?) {
+                mJcsCalendarDialog.show(supportFragmentManager)
+            }
+        })
 
     }
 

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent"
+    android:background="@color/color_1c1380"
     android:orientation="vertical">
 
 
@@ -74,6 +75,7 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_layout"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

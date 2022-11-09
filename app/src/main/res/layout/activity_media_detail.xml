@@ -22,15 +22,15 @@
 
     <TextView
         android:id="@+id/number_position_tv"
-        android:visibility="gone"
-        tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/dp_60"
         android:gravity="center"
         android:textColor="@color/white"
-        tools:text="0/0" />
+        android:visibility="gone"
+        tools:text="0/0"
+        tools:visibility="visible" />
 
 
     <ImageView

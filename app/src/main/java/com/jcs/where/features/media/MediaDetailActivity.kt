@@ -170,7 +170,7 @@ class MediaDetailActivity : BaseMvpActivity<MediaDetailPresenter>(), MediaDetail
                 point_view.visibility = View.GONE
             } else {
                 number_position_tv.visibility = View.GONE
-                number_position_tv.visibility = View.VISIBLE
+                point_view.visibility = View.VISIBLE
             }
 
         }

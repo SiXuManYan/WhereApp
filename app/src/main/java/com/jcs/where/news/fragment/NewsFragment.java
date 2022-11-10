@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
@@ -19,13 +18,14 @@ import com.jcs.where.api.response.NewsResponse;
 import com.jcs.where.api.response.PageResponse;
 import com.jcs.where.base.BaseFragment;
 import com.jcs.where.base.IntentEntry;
+import com.jcs.where.features.news.NewsAdapter;
 import com.jcs.where.news.NewsDetailActivity;
 import com.jcs.where.news.NewsVideoActivity;
-import com.jcs.where.news.adapter.NewsFragmentAdapter;
 import com.jcs.where.news.item_decoration.NewsListItemDecoration;
 import com.jcs.where.news.model.NewsFragModel;
 import com.jcs.where.news.view_type.NewsType;
 import com.jcs.where.utils.Constant;
+import com.jcs.where.view.empty.EmptyView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +45,7 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeLayout;
-    private NewsFragmentAdapter mAdapter;
+    private NewsAdapter mAdapter;
     private NewsChannelResponse mTabResponse;
     private NewsFragModel mModel;
     private PageResponse<NewsResponse> mPageNews;
@@ -53,6 +53,8 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
     private boolean mIsLoaded = false;
     private String mInput;
     private int page = Constant.DEFAULT_FIRST_PAGE;
+
+    private EmptyView emptyView ;
 
     public static NewsFragment newInstance(NewsChannelResponse tabResponse, boolean isFirst) {
         Bundle args = new Bundle();
@@ -82,8 +84,13 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
             mInput = arguments.getString(K_NEW_INPUT);
             mIsFirst = arguments.getBoolean(K_IS_FIRST);
         }
-        mAdapter = new NewsFragmentAdapter();
-        mAdapter.setEmptyView(R.layout.view_empty_data_brvah2);
+
+
+        emptyView = new EmptyView(getContext());
+        emptyView.showEmptyDefault();
+
+        mAdapter = new NewsAdapter();
+        mAdapter.setEmptyView(emptyView);
         BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
         loadMoreModule.setAutoLoadMore(true);
         loadMoreModule.setEnableLoadMoreIfNotFullPage(false);
@@ -129,6 +136,7 @@ public class NewsFragment extends BaseFragment implements OnLoadMoreListener {
                     if (data.isEmpty()) {
                         if (page == Constant.DEFAULT_FIRST_PAGE) {
                             loadMoreModule.loadMoreComplete();
+                            emptyView.showEmptyContainer();
                         } else {
                             loadMoreModule.loadMoreEnd();
                         }

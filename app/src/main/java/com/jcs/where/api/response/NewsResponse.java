@@ -29,29 +29,29 @@ public class NewsResponse implements MultiItemEntity, ISearchResponse {
      */
 
     @SerializedName("id")
-    private Integer id;
+    public Integer id;
     @SerializedName("content_type")
-    private Integer contentType;
+    public Integer contentType;
     @SerializedName("title")
-    private String title;
+    public String title;
     @SerializedName("video_time")
-    private String videoTime;
+    public String videoTime;
     @SerializedName("video_link")
-    private String videoLink;
+    public String videoLink;
     @SerializedName("publisher")
-    private PublisherDTO publisher;
+    public PublisherDTO publisher;
     @SerializedName("comment_num")
-    private Integer commentNum;
+    public Integer commentNum;
     @SerializedName("read_num")
-    private Integer readNum;
+    public Integer readNum;
     @SerializedName("follow_status")
-    private Integer followStatus;
+    public Integer followStatus;
     @SerializedName("collect_status")
-    private Integer collectStatus;
+    public Integer collectStatus;
     @SerializedName("created_at")
-    private String createdAt;
+    public String createdAt;
     @SerializedName("cover_images")
-    private List<String> coverImages = new ArrayList<>();
+    public List<String> coverImages = new ArrayList<>();
 
     public Integer getId() {
         return id;

@@ -25,22 +25,7 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/container_second_ll"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_112"
-        android:layout_marginTop="@dimen/dp_4"
-        android:gravity="center"
-        android:orientation="horizontal">
 
-        <include layout="@layout/item_category_child_for_mall" />
-
-        <include layout="@layout/item_category_child_for_mall" />
-
-        <include layout="@layout/item_category_child_for_mall" />
-
-
-    </LinearLayout>
 
 
 </LinearLayout>

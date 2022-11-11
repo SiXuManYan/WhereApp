@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:gravity="center_horizontal"
+    android:visibility="invisible"
+    tools:visibility="visible"
     android:orientation="vertical"
     tools:layout_width="@dimen/dp_80">
 

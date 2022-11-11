@@ -196,6 +196,11 @@ class MallHomeChildFragment : BaseMvpFragment<MallHomeChildPresenter>(), MallHom
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
         swipe_layout?.isRefreshing = false
+        if (bannerUrls.size <= 1) {
+            top_banner.setUpIndicatorSize(0, 0)
+        } else {
+            top_banner.setUpIndicatorSize(6, 6)
+        }
         top_banner.setImageUrls(bannerUrls)
         top_banner.setBannerPageListener(object : XBanner.BannerPageListener {
 

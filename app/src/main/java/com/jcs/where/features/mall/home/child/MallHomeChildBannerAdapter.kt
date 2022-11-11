@@ -1,5 +1,6 @@
 package com.jcs.where.features.mall.home.child
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -20,13 +21,10 @@ class MallHomeChildBannerAdapter : BaseQuickAdapter<MallBannerCategory, BaseView
     override fun convert(holder: BaseViewHolder, item: MallBannerCategory) {
 
         val first_ll = holder.getView<LinearLayout>(R.id.container_first_ll)
-        val second_ll = holder.getView<LinearLayout>(R.id.container_second_ll)
 
         item.childItem.forEachIndexed { index, category ->
             if (index < 3) {
                 bindChild(first_ll, index, category)
-            } else {
-                bindChild(second_ll, index - 3, category)
             }
         }
 
@@ -36,13 +34,13 @@ class MallHomeChildBannerAdapter : BaseQuickAdapter<MallBannerCategory, BaseView
 
         val child = childContainer.getChildAt(index)
 
-        val child_parent_ll = child.findViewById<LinearLayout>(R.id.child_parent_ll)
         val image_iv = child.findViewById<ImageView>(R.id.image_iv)
         val content_tv = child.findViewById<TextView>(R.id.content_tv)
 
         GlideUtil.load(context, category.icon, image_iv,1)
         content_tv.text = category.name
 
+        child.visibility = View.VISIBLE
         child.setOnClickListener {
             MallSecondActivity.navigation(context, category.id)
         }

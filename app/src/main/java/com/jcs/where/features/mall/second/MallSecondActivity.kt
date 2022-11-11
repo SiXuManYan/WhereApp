@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallCategory
@@ -297,7 +298,7 @@ class MallSecondActivity : BaseMvpActivity<MallSecondPresenter>(), MallSecondVie
     private fun showOtherFilterDialog() {
 
         if (!::filterDialog.isInitialized) {
-            filterDialog = FixedHeightBottomSheetDialog(this, R.style.bottom_sheet_edit, SizeUtils.dp2px(500f))
+            filterDialog = FixedHeightBottomSheetDialog(this, R.style.bottom_sheet_edit, ScreenUtils.getScreenHeight() * 70 / 100)
             val view = LayoutInflater.from(this).inflate(R.layout.dialog_mall_other_filter, null)
             filterDialog.setContentView(view)
 

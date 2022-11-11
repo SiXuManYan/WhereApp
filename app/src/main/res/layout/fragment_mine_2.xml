@@ -453,7 +453,7 @@
             android:paddingEnd="@dimen/dp_16"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_mine_activity_en"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <ImageView

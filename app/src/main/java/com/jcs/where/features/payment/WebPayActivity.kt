@@ -173,8 +173,8 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
     override fun bindUrl(redirectUrl: String) {
         lastPayUrl = redirectUrl
         dismissLoadingDialog()
-//        web_view.loadUrl(redirectUrl)
-        web_view.loadUrl("redirectUrl")
+        web_view.loadUrl(redirectUrl)
+//        web_view.loadUrl("redirectUrl")
     }
 
     override fun onBackPressed() {

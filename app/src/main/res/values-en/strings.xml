@@ -1141,6 +1141,7 @@ Gentleman must let go</string>
     <string name="company_size_format">%1$s&#160;people</string>
     <string name="type_coupon">Exchange Coupon</string>
     <string name="type_goods">Exchange Goods</string>
+    <string name="pay_error_hint_system_update">System upgrade,\nplease try again later</string>
 
 
 </resources>

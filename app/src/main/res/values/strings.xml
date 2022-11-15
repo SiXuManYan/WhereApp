@@ -1156,6 +1156,7 @@ Gentleman must let go</string>
     <string name="company_size_format">%1$s&#160;人</string>
     <string name="type_coupon">兑换优惠券</string>
     <string name="type_goods">兑换商品</string>
+    <string name="pay_error_hint_system_update">系统升级中，请稍后重试</string>
 
 
 </resources>

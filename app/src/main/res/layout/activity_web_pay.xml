@@ -25,8 +25,9 @@
 
     <com.jcs.where.view.empty.EmptyView
         android:id="@+id/empty_view"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/jcsTitle"
         android:visibility="gone"
         tools:visibility="visible" />

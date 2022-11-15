@@ -20,8 +20,8 @@ android {
         applicationId "com.jcs.where"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 54
-        versionName "0.3.12"
+        versionCode 55
+        versionName "0.3.13"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"
@@ -29,7 +29,7 @@ android {
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。（极光推送使用）
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86','x86_64'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 

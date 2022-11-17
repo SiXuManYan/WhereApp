@@ -261,6 +261,11 @@ public class Constant {
     public static final String KEY_CATEGORY_RESPONSE = "categoryResponse";
     public static final String KEY_IS_FIRST_FRAGMENT = "isFirstFragment";
 
+    public static final String CHANNEL_DITO = "DITO";
+    public static final String CHANNEL_GLOBE = "GLOBE";
+    public static final String CHANNEL_SMART = "SMART";
+
+
 
 
 

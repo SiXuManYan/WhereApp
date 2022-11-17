@@ -166,7 +166,7 @@
     <string name="finished">Finished</string>
 
     <string name="add_format">+%1$d</string>
-
+    <string name="cut_format">-%1$d</string>
     <string name="type_register">Register</string>
     <string name="type_invite">Invite</string>
     <string name="type_consumption">Consumption</string>
@@ -1143,5 +1143,5 @@ Gentleman must let go</string>
     <string name="type_goods">Exchange Goods</string>
     <string name="pay_error_hint_system_update">System upgrade,\nplease try again later</string>
 
-
+    <string name="channel_hint_format">Please enter a %1$s number</string>
 </resources>

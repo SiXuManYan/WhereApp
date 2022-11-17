@@ -11,10 +11,7 @@ import android.provider.ContactsContract
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
@@ -35,10 +32,18 @@ import kotlinx.android.synthetic.main.activity_call_charges.*
 class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallChargesView, OnItemClickListener {
 
 
+    private var channelName = ""
+
     lateinit var mAdapter: CallChargesChanelItemAdapter
 
     private lateinit var selectItem: CallChargeChannelItem
 
+    private val dito = ArrayList<String>()
+    private val globe = ArrayList<String>()
+    private val globeBan = ArrayList<String>()
+    private val smart = ArrayList<String>()
+
+    var count = 0;
 
     companion object {
 
@@ -62,14 +67,21 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
     override fun initView() {
         initList()
         initExtra()
+        dito.addAll(StringUtils.getStringArray(R.array.DITO).toMutableList())
+
+        globe.addAll(StringUtils.getStringArray(R.array.GLOBE).toMutableList())
+        globeBan.addAll(StringUtils.getStringArray(R.array.GLOBE_BAN).toMutableList())
+        smart.addAll(StringUtils.getStringArray(R.array.SMART).toMutableList())
     }
 
     private fun initExtra() {
-        intent.extras?.let { bundle->
+        intent.extras?.let { bundle ->
             val data = bundle.getParcelable<CallChargeChannel>(Constant.PARAM_DATA)
 
             data?.let {
-                channel_tv.text = it.channelName
+                val channelName = it.channelName
+                this.channelName = channelName
+                channel_tv.text = channelName
                 mAdapter.setNewInstance(it.channelItem)
             }
         }
@@ -136,6 +148,30 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
                 return@setOnClickListener
             }
 
+            val index04 = phone.substring(0, 4)
+            val index05 = phone.substring(0, 5)
+
+            when (channelName) {
+                Constant.CHANNEL_DITO -> {
+                    if (!dito.contains(index04)) {
+                        ToastUtils.showShort(R.string.channel_hint_format , channelName)
+                        return@setOnClickListener
+                    }
+                }
+                Constant.CHANNEL_GLOBE -> {
+                    if (!globe.contains(index04) || globeBan.contains(index05)) {
+                        ToastUtils.showShort(R.string.channel_hint_format , channelName)
+                        return@setOnClickListener
+                    }
+                }
+                Constant.CHANNEL_SMART -> {
+                    if (!smart.contains(index04)) {
+                        ToastUtils.showShort(R.string.channel_hint_format , channelName)
+                        return@setOnClickListener
+                    }
+                }
+            }
+
             PhonePlaceOrderActivity.navigation(this, phone, selectItem)
         }
     }
@@ -162,7 +198,7 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
 
             contacts?.let {
 
-                val replace = contacts[1]?.replace(" ","")
+                val replace = contacts[1]?.replace(" ", "")
                 phone_et.setText(replace)
             }
 

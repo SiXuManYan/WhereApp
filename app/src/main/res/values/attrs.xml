@@ -224,5 +224,123 @@
         <item>@string/december</item>
     </string-array>
 
+    <string-array name="DITO">
+        <item>0895</item>
+        <item>0896</item>
+        <item>0897</item>
+        <item>0898</item>
+        <item>0991</item>
+        <item>0992</item>
+        <item>0993</item>
+        <item>0994</item>
 
+    </string-array>
+
+
+    <string-array name="SMART">
+        <item>0813</item>
+
+        <item>0907</item>
+        <item>0908</item>
+        <item>0909</item>
+        <item>0910</item>
+
+        <item>0911</item>
+        <item>0912</item>
+        <item>0913</item>
+        <item>0914</item>
+        <item>0918</item>
+        <item>0919</item>
+        <item>0920</item>
+
+        <item>0921</item>
+        <item>0922</item>
+        <item>0923</item>
+        <item>0924</item>
+        <item>0925</item>
+        <item>0928</item>
+        <item>0929</item>
+
+        <item>0930</item>
+        <item>0931</item>
+        <item>0932</item>
+        <item>0933</item>
+        <item>0934</item>
+        <item>0938</item>
+        <item>0939</item>
+
+        <item>0940</item>
+        <item>0941</item>
+        <item>0942</item>
+        <item>0943</item>
+        <item>0944</item>
+        <item>0946</item>
+        <item>0947</item>
+        <item>0948</item>
+        <item>0949</item>
+
+        <item>0950</item>
+
+        <item>0961</item>
+        <item>0963</item>
+        <item>0968</item>
+
+        <item>0970</item>
+        <item>0973</item>
+
+        <item>0981</item>
+        <item>0989</item>
+
+        <item>0992</item>
+        <item>0998</item>
+        <item>0999</item>
+    </string-array>
+
+
+    <string-array name="GLOBE">
+        <item>0817</item>
+        <item>0904</item>
+        <item>0905</item>
+        <item>0906</item>
+        <item>0915</item>
+        <item>0916</item>
+        <item>0917</item>
+        <item>0926</item>
+        <item>0927</item>
+        <item>0935</item>
+        <item>0936</item>
+        <item>0937</item>
+        <item>0945</item>
+        <item>0953</item>
+        <item>0954</item>
+        <item>0955</item>
+        <item>0956</item>
+        <item>0965</item>
+        <item>0966</item>
+        <item>0967</item>
+        <item>0975</item>
+        <item>0976</item>
+        <item>0977</item>
+        <item>0978</item>
+        <item>0979</item>
+        <item>0994</item>
+        <item>0995</item>
+        <item>0996</item>
+        <item>0997</item>
+
+    </string-array>
+    
+    <string-array name="GLOBE_BAN">
+        <item>09173</item>
+        <item>09175</item>
+        <item>09176</item>
+        <item>09178</item>
+        <item>09253</item>
+        <item>09255</item>
+        <item>09256</item>
+        <item>09257</item>
+        <item>09258</item>
+
+    </string-array>
+    
 </resources>

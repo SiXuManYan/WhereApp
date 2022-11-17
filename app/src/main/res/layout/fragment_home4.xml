@@ -21,34 +21,40 @@
             android:layout_height="@dimen/dp_44">
 
 
-            <ImageView
-                android:id="@+id/home_location_iv"
+            <LinearLayout
+                android:id="@+id/city_ll"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/dp_15"
-                android:src="@mipmap/ic_home_location" />
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/city_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/dp_8"
-                android:layout_toEndOf="@+id/home_location_iv"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                tools:text="Dalian" />
+                <ImageView
+                    android:id="@+id/home_location_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:src="@mipmap/ic_home_location" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/dp_6"
-                android:layout_marginEnd="@dimen/dp_6"
-                android:layout_toEndOf="@+id/city_tv"
-                android:src="@mipmap/ic_home_down" />
+                <TextView
+                    android:id="@+id/city_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:text="Dalian" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_6"
+                    android:layout_marginEnd="@dimen/dp_6"
+                    android:src="@mipmap/ic_home_down" />
+
+            </LinearLayout>
+
 
 
             <com.jcs.where.widget.MessageView

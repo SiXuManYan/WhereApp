@@ -21,10 +21,17 @@ class IntegralChildAdapter : BaseQuickAdapter<IntegralDetailResponse, BaseViewHo
         val score_tv = holder.getView<TextView>(R.id.score_tv)
 
         time_tv.text = item.created_at
-        score_tv.text = StringUtils.getString(R.string.add_format, item.integral)
+
+
+        val type = item.type
+        if (type==6 || type == 7) {
+            score_tv.text = StringUtils.getString(R.string.cut_format, item.integral)
+        }else {
+            score_tv.text = StringUtils.getString(R.string.add_format, item.integral)
+        }
 
         /** 类型（1：注册，2：邀请，3：消费，4：评论，5：签到 6兑换优惠券 7 兑换商品） */
-        val title :String = when (item.type) {
+        val title :String = when (type) {
             1 -> StringUtils.getString(R.string.type_register)
             2 -> StringUtils.getString(R.string.type_invite)
             3 -> StringUtils.getString(R.string.type_consumption)

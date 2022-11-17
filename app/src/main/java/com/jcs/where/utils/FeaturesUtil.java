@@ -102,7 +102,7 @@ public class FeaturesUtil {
      */
     public static boolean isWrongPasswordFormat(String password) {
 
-        if (TextUtils.isEmpty(password)||
+        if (TextUtils.isEmpty(password) ||
                 password.length() < 8 || password.length() > 16 ||
                 !RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", password)) {
 
@@ -365,7 +365,7 @@ public class FeaturesUtil {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

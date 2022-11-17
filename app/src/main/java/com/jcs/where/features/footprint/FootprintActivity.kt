@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.actitiy_collection.*
 
 /**
  * Created by Wangsw  2021/11/16 15:48.
- * 我的收藏
+ * 我的足迹
  */
 class FootprintActivity : BaseActivity() {
 

@@ -299,9 +299,12 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     }
 
     override fun bindListener() {
-        city_tv.setOnClickListener {
-            startActivityForResult(CityPickerActivity::class.java, REQ_SELECT_CITY, null)
-        }
+
+        city_ll.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
+            override fun onDebouncingClick(v: View?) {
+                startActivityForResult(CityPickerActivity::class.java, REQ_SELECT_CITY, null)
+            }
+        })
         search_ll.setOnClickListener {
             startActivity(SearchAllActivity::class.java)
         }
@@ -390,6 +393,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         }).start()
 
     }
+
     var needRequest4Tablet = true
 
     override fun bindPlateData(toMutableList: MutableList<ModulesResponse>) {

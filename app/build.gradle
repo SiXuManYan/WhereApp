@@ -20,9 +20,8 @@ android {
         applicationId "com.jcs.where"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 55
-//        versionName "0.3.13"
-        versionName "0.3.10"
+        versionCode 56
+        versionName "0.3.14.beta.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"

@@ -159,8 +159,12 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
                     }
                 }
                 Constant.CHANNEL_GLOBE -> {
-                    if (!globe.contains(index04) || globeBan.contains(index05)) {
+                    if (!globe.contains(index04) ) {
                         ToastUtils.showShort(R.string.channel_hint_format , channelName)
+                        return@setOnClickListener
+                    }
+                    if (globeBan.contains(index05)){
+                        ToastUtils.showShort(R.string.channel_hint_format , "Prepaid Globe")
                         return@setOnClickListener
                     }
                 }

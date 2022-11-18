@@ -2,6 +2,7 @@ package com.jcs.where.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -366,6 +367,10 @@ public class FeaturesUtil {
             context.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
+            if (e instanceof ActivityNotFoundException) {
+                ToastUtils.showShort(R.string.is_client_valid);
+            }
+
         }
     }
 

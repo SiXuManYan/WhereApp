@@ -463,6 +463,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             EventCode.EVENT_SIGN_OUT -> {
                 message_view.setMessageCount(0)
             }
+            EventCode.EVENT_SCROLL_TO_TOP -> {
+                child_abl.setExpanded(true, true)
+
+            }
             else -> {
             }
         }

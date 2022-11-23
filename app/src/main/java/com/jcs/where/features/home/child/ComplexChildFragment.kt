@@ -200,9 +200,19 @@ class ComplexChildFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildVie
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_REFRESH_HOME_NEARBY) {
-            getData()
+        val code = baseEvent.code
+        when (code) {
+            EventCode.EVENT_REFRESH_HOME_NEARBY -> {
+                getData()
+            }
+            EventCode.EVENT_SCROLL_TO_TOP -> {
+                home_child_rv.scrollToPosition(0)
+            }
+            else -> {}
         }
+
+
+
     }
 
 }

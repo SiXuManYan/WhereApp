@@ -2,6 +2,7 @@ package com.jcs.where.features.main
 
 
 import android.content.Intent
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -20,7 +21,6 @@ import com.jcs.where.utils.Constant
 import com.jcs.where.utils.SPKey
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
-import java.util.*
 
 
 /**
@@ -34,6 +34,9 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
     private val frList = ArrayList<Fragment>()
 
     /** Tab数据 */
+
+    private var tabIndex = 0
+
     private val tabs = ArrayList<CustomTabEntity>()
 
     override fun getLayoutId() = R.layout.activity_main
@@ -62,7 +65,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
             val tabIndex = bundle.getInt(Constant.PARAM_TAB, 0)
             tabs_navigator.currentTab = tabIndex
             if (tabIndex == 2) {
-                EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
+                EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SCROLL_TO_TOP))
             }
         }
     }
@@ -84,30 +87,10 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
     private fun initTabs() {
 
         tabs.apply {
-            add(
-                TabEntity(
-                    getString(R.string.main_tab_title_home),
-                    R.mipmap.ic_home_press, R.mipmap.ic_home_normal
-                )
-            )
-            add(
-                TabEntity(
-                    getString(R.string.main_tab_title_category),
-                    R.mipmap.ic_home_category_selected, R.mipmap.ic_home_category_normal
-                )
-            )
-            add(
-                TabEntity(
-                    getString(R.string.main_tab_title_order),
-                    R.mipmap.ic_home_order_selected, R.mipmap.ic_home_order_normal
-                )
-            )
-            add(
-                TabEntity(
-                    getString(R.string.main_tab_title_mine),
-                    R.mipmap.ic_mine_press, R.mipmap.ic_mine_normal
-                )
-            )
+            add(TabEntity(getString(R.string.main_tab_title_home), R.mipmap.ic_home_press, R.mipmap.ic_home_normal))
+            add(TabEntity(getString(R.string.main_tab_title_category), R.mipmap.ic_home_category_selected, R.mipmap.ic_home_category_normal))
+            add(TabEntity(getString(R.string.main_tab_title_order), R.mipmap.ic_home_order_selected, R.mipmap.ic_home_order_normal))
+            add(TabEntity(getString(R.string.main_tab_title_mine), R.mipmap.ic_mine_press, R.mipmap.ic_mine_normal))
         }
 
         frList.apply {
@@ -122,9 +105,15 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
         tabs_navigator.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
                 tabs_navigator.currentTab = position
+                Log.d("tab" ,"onTabSelect position ==" + position)
             }
 
-            override fun onTabReselect(position: Int) = Unit
+            override fun onTabReselect(position: Int) {
+                Log.d("tab" ,"onTabReselect  ==" + position)
+                if (position == 0) {
+                    EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SCROLL_TO_TOP))
+                }
+            }
         })
 
         val languageTabIndex = SPUtils.getInstance().getInt(SPKey.K_LANGUAGE_TAB, 0)

@@ -277,7 +277,7 @@
         android:layout_below="@+id/parent_abl"
         android:background="@color/white"
         android:visibility="gone"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
 
 </RelativeLayout>

@@ -10,6 +10,8 @@ import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.response.BannerResponse
 import com.jcs.where.api.response.mall.MallCategory
 import com.jcs.where.api.response.mall.MallGood
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.home.child.header.HomeChildHeader
 import com.jcs.where.features.home.child.header.OnChildCategoryClick
@@ -107,8 +109,6 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
     }
 
 
-
-
     override fun bindListener() = Unit
 
 
@@ -158,5 +158,16 @@ class HomeMallFragment : BaseMvpFragment<HomeChildPresenter>(), HomeChildView, O
                 loadData()
             }
         }
+    }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        when (baseEvent.code) {
+            EventCode.EVENT_SCROLL_TO_TOP -> {
+                home_child_rv.scrollToPosition(0)
+            }
+            else -> {}
+        }
+
     }
 }

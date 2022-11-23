@@ -186,4 +186,6 @@ public class EventCode {
      */
     public static final int EVENT_DELETE_CV_EDU = 1047;
 
+    public static final int EVENT_SCROLL_TO_TOP = 1048;
+
 }

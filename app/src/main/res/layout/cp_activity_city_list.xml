@@ -12,8 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:backIcon="@mipmap/ic_back_delete"
-        app:backIconHeight="@dimen/dp_20"
-        app:backIconWidth="@dimen/dp_20"
         app:middleTitle="@string/title_select_city" />
 
     <TextView

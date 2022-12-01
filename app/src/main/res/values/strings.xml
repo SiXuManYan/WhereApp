@@ -1165,8 +1165,11 @@ Gentleman must let go</string>
     Please enter a Smart number-->
 
     <string name="channel_hint_format">请输入 %1$s 的号码</string>
-
-
+    <string name="salary">Salary</string>
+    <string name="area">地区</string>
+    <string name="type_of_company">公司类型</string>
+    <string name="down">展开</string>
+    <string name="experience">经验</string>
 
 
 </resources>

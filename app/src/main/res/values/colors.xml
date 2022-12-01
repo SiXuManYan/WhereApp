@@ -72,6 +72,7 @@
     <color name="color_green_1edaab">#1EDAAB</color>
     <color name="color_1c1380">#1C1380</color>
     <color name="color_d2d0e6">#D2D0E6</color>
+    <color name="color_f3f2ff">#F3F2FF</color>
 
     <!-- 页面背景色 -->
     <color name="bg_color">#ffffff</color>

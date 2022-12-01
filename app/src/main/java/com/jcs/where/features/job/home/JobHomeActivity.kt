@@ -10,6 +10,7 @@ import com.jcs.where.R
 import com.jcs.where.api.response.job.Job
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.cv.CvHomeActivity
+import com.jcs.where.features.job.home.tag.JobTagAdapter
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -33,7 +34,10 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
 
     override fun initView() {
         initContent()
+        initTag()
     }
+
+
 
     private fun initContent() {
 
@@ -63,6 +67,12 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
                 0,
                 0))
         }
+
+    }
+
+
+    private fun initTag() {
+
 
     }
 

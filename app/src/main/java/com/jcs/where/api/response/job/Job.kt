@@ -18,6 +18,7 @@ class Job {
     var created_at = ""
     var job_id = 0
     var logo = ""
+    var nativeTag = ArrayList<String>()
 }
 
 /**
@@ -402,4 +403,9 @@ class CompanyInfo {
 
 class CompanyAlbum {
     var images = ArrayList<String>()
+}
+
+
+class JobTag {
+    var nativeIsSelected = false
 }

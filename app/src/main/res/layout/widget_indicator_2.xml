@@ -8,18 +8,21 @@
 
     <ImageView
         android:layout_width="@dimen/dp_8"
+        android:visibility="gone"
         android:layout_height="@dimen/dp_8"
         android:src="@drawable/shape_point_selected" />
 
     <ImageView
         android:layout_width="@dimen/dp_8"
         android:layout_height="@dimen/dp_8"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
         android:src="@drawable/shape_point_normal" />
 
     <ImageView
         android:layout_width="@dimen/dp_8"
+        android:visibility="gone"
         android:layout_height="@dimen/dp_8"
         android:src="@drawable/shape_point_normal" />
 

@@ -66,6 +66,17 @@
         tools:text="14,000-150,000/Month " />
 
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tag_rv"
+        tools:itemCount="1"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:id="@+id/city_tv"
         android:layout_width="match_parent"

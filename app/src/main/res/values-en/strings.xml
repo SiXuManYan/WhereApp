@@ -1149,4 +1149,9 @@ Gentleman must let go</string>
     <string name="type_of_company">Type of company</string>
     <string name="down">Down</string>
     <string name="experience">Experience</string>
+
+    <string name="unlimited">Unlimited</string>
+    <string name="monthly_salary">Monthly Salary</string>
+    <string name="daily_salary">Daily Salary</string>
+    <string name="hourly_salary">Hourly Wage</string>
 </resources>

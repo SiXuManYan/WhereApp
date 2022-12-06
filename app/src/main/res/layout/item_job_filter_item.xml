@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp_40"
+    android:layout_margin="@dimen/dp_8"
+    android:background="@drawable/selector_job_filter"
+    android:checked="false"
+    android:gravity="center"
+    android:id="@+id/filter_item_ctv"
+    android:minWidth="@dimen/dp_52"
+    android:paddingStart="@dimen/dp_12"
+    android:paddingEnd="@dimen/dp_12"
+    android:textAlignment="center"
+    android:textColor="@color/selector_grey_purple"
+    android:textSize="@dimen/sp_14"
+    tools:checked="true"
+    tools:text="@tools:sample/full_names" />
+

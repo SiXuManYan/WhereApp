@@ -128,6 +128,7 @@ import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
 import com.jcs.where.api.response.job.JobExperience;
+import com.jcs.where.api.response.job.JobFilter;
 import com.jcs.where.api.response.job.JobSendCv;
 import com.jcs.where.api.response.job.ProfileDetail;
 import com.jcs.where.api.response.job.Report;
@@ -2486,4 +2487,13 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> deleteEducation(
             @Path("education_id") int education_id
     );
+
+
+    /**
+     * 职位筛选项
+     */
+    @GET("jobapi/v2/jobs_filter")
+    Observable<JcsResponse<JobFilter>> getFilterItem();
+
+
 }

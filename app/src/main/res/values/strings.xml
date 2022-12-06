@@ -1170,6 +1170,10 @@ Gentleman must let go</string>
     <string name="type_of_company">公司类型</string>
     <string name="down">展开</string>
     <string name="experience">经验</string>
+    <string name="unlimited">不限</string>
+    <string name="monthly_salary">月薪</string>
+    <string name="daily_salary">日薪</string>
+    <string name="hourly_salary">时薪</string>
 
 
 </resources>

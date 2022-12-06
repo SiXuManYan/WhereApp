@@ -409,3 +409,18 @@ class CompanyAlbum {
 class JobTag {
     var nativeIsSelected = false
 }
+
+
+class JobFilter {
+
+    var area = ArrayList<FilterItem>()
+    var companyType = ArrayList<FilterItem>()
+    var jobResumeEducationLevel = ArrayList<FilterItem>()
+    var experience = ArrayList<FilterItem>()
+}
+
+class FilterItem {
+    var id = 0
+    var name  = ""
+    var nativeSelected = false
+}

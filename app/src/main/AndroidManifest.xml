@@ -845,6 +845,11 @@
             android:name=".features.job.company.album.CompanyAlbumActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
+
+        <activity
+            android:name=".features.job.filter.JobFilterActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+
     </application>
 
 </manifest>

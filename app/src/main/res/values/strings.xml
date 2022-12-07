@@ -1175,6 +1175,7 @@ Gentleman must let go</string>
     <string name="daily_salary">日薪</string>
     <string name="hourly_salary">时薪</string>
     <string name="up">收起</string>
+    <string name="channel_not_supported">暂不支持缴费，您可以选择其他方式</string>
 
 
 </resources>

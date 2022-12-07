@@ -1155,4 +1155,5 @@ Gentleman must let go</string>
     <string name="daily_salary">Daily Salary</string>
     <string name="hourly_salary">Hourly Wage</string>
     <string name="up">Up</string>
+    <string name="channel_not_supported">Payment is not currently supported, you can choose other methods</string>
 </resources>

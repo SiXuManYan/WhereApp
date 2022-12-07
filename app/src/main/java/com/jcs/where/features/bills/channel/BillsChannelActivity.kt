@@ -124,7 +124,7 @@ class BillsChannelActivity : BaseMvpActivity<BillsChannelPresenter>(), BillsChan
 
             val data = mCommonAdapter.data[position]
             if (!data.Status) {
-                ToastUtils.showShort("Channel not available")
+                ToastUtils.showShort(R.string.channel_not_supported)
                 return
             }
             BillsFormActivity.navigation(this,

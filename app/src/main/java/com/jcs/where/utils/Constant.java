@@ -1,5 +1,7 @@
 package com.jcs.where.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * 常量
  * create by zyf on 2021/1/8 10:59 上午
@@ -266,7 +268,20 @@ public class Constant {
     public static final String CHANNEL_SMART = "SMART";
 
 
+    public static final String salaryType = "salaryType";
+    public static final String minSalary = "minSalary";
+    public static final String maxSalary = "maxSalary";
+    public static final String areas = "areas";
+    public static final String companyTypes = "companyTypes";
+    public static final String eduLevel = "eduLevel";
+    public static final String experienceLevel = "experienceLevel";
 
+
+    public static final String salaryCache = "salaryCache";
+    public static final String areasCache = "areasCache";
+    public static final String companyTypeCache = "companyTypeCache";
+    public static final String eduCache = "eduCache";
+    public static final String experienceCache = "experienceCache";
 
 
 

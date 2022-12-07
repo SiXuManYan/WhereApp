@@ -67,14 +67,18 @@ class JobFilterPresenter(private var view: JobFilterView) : BaseMvpPresenter(vie
         val item = adapter.data[position]
 
         val itemId = item.id
-        if (itemId == 0 && !item.nativeSelected) {
-            // 处理点击全部
-            resultList.clear()
+        if (itemId == 0) {
 
-            adapter.data.forEach {
-                it.nativeSelected = it.id == 0
+            if (!item.nativeSelected) {
+                // 处理点击全部
+                resultList.clear()
+
+                adapter.data.forEach {
+                    it.nativeSelected = it.id == 0
+                }
+                adapter.notifyDataSetChanged()
             }
-            adapter.notifyDataSetChanged()
+
         } else {
             // 其他项
 
@@ -82,7 +86,7 @@ class JobFilterPresenter(private var view: JobFilterView) : BaseMvpPresenter(vie
                 // 取消选中
                 adapter.data[position].nativeSelected = false
                 adapter.notifyItemChanged(position)
-                resultList.remove(resultList.first { it == itemId })
+                resultList.remove(resultList.firstOrNull { it == itemId })
 
                 if (resultList.isEmpty()) {
                     adapter.data[0].nativeSelected = true

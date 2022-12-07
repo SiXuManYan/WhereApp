@@ -1,11 +1,20 @@
 package com.jcs.where.features.job.filter
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.LinearLayout
+import androidx.core.widget.addTextChangedListener
+import com.blankj.utilcode.util.SizeUtils
+import com.google.gson.Gson
 import com.jcs.where.R
+import com.jcs.where.api.response.job.FilterData
 import com.jcs.where.api.response.job.FilterItem
 import com.jcs.where.api.response.job.JobFilter
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.utils.Constant
 import com.jcs.where.view.MyLayoutManager
 import kotlinx.android.synthetic.main.activity_job_filter.*
 
@@ -20,10 +29,10 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
     private var salaryType = 0
 
     /** 最低薪水 */
-    private var minSalary = 0
+    private var minSalary = ""
 
     /** 最高薪水 */
-    private var maxSalary = 0
+    private var maxSalary = ""
 
     /** 地区 */
     private var areas = ArrayList<Int>()
@@ -43,6 +52,10 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
     private lateinit var companyTypeAdapter: JobFilterAdapter
     private lateinit var eduAdapter: JobFilterAdapter
     private lateinit var experienceAdapter: JobFilterAdapter
+    private var gson = Gson()
+
+    private var companyTypeHeight = 0
+    private var isUp = false
 
     override fun isStatusDark() = true
 
@@ -65,29 +78,13 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
     @SuppressLint("NotifyDataSetChanged")
     private fun initFilter() {
 
+
         // 薪资
         salaryAdapter = JobFilterAdapter().apply {
             setOnItemClickListener { _, _, position ->
-                val item = salaryAdapter.data[position]
-                val itemId = item.id
-                salaryType = itemId
-                salaryAdapter.data.forEach {
-                    it.nativeSelected = it == item
-                }
-                salaryAdapter.notifyDataSetChanged()
-
-                if (itemId == 0) {
-                    presenter.setEditAble(min_salary_et, false)
-                    presenter.setEditAble(max_salary_et, false)
-                    minSalary = 0
-                    maxSalary = 0
-                } else {
-                    presenter.setEditAble(min_salary_et, true)
-                    presenter.setEditAble(max_salary_et, true)
-                }
+                handleSalaryClick(position)
             }
         }
-
         salary_rv.apply {
             adapter = salaryAdapter
             layoutManager = MyLayoutManager()
@@ -136,7 +133,7 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
                 presenter.handleMultipleChoice(position, experienceAdapter, experienceLevel)
             }
         }
-        edu_level_rv.apply {
+        experience_rv.apply {
             adapter = experienceAdapter
             layoutManager = MyLayoutManager()
             isNestedScrollingEnabled = true
@@ -145,21 +142,153 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun handleSalaryClick(position: Int) {
+        val item = salaryAdapter.data[position]
+        val itemId = item.id
+        salaryType = itemId
+        salaryAdapter.data.forEach {
+            it.nativeSelected = it == item
+        }
+        salaryAdapter.notifyDataSetChanged()
+        handleSalaryValue(itemId)
+    }
+
+    private fun handleSalaryValue(itemId: Int) {
+        if (itemId == 0) {
+            presenter.setEditAble(min_salary_et, false)
+            presenter.setEditAble(max_salary_et, false)
+            minSalary = ""
+            maxSalary = ""
+        } else {
+            presenter.setEditAble(min_salary_et, true)
+            presenter.setEditAble(max_salary_et, true)
+        }
+    }
+
 
     override fun initData() {
+        presenter = JobFilterPresenter(this)
+        val cacheJson = intent.getStringExtra(Constant.PARAM_DATA)
+        if (cacheJson.isNullOrBlank()) {
+            presenter.getFilterItem()
+        } else {
+
+            // 记录上次选择
+            val cache = gson.fromJson(cacheJson, FilterData::class.java)
+            Log.d("aaaa", "返回 == $cacheJson")
+            salaryType = cache.salaryType
+            minSalary = cache.minSalary
+            maxSalary = cache.maxSalary
+            areas.addAll(cache.areas)
+            companyTypes.addAll(cache.companyTypes)
+            eduLevel.addAll(cache.eduLevel)
+            experienceLevel.addAll(cache.experienceLevel)
+
+            salaryAdapter.setNewInstance(cache.salaryData)
+            areaAdapter.setNewInstance(cache.areaData)
+            companyTypeAdapter.setNewInstance(cache.companyTypeData)
+            setSingle()
+            eduAdapter.setNewInstance(cache.eduData)
+            experienceAdapter.setNewInstance(cache.experienceData)
+
+            min_salary_et.setText(minSalary)
+            max_salary_et.setText(maxSalary)
+            handleSalaryValue(salaryType)
+
+
+            type_rv.post { companyTypeHeight = type_rv.measuredHeight }
+        }
 
     }
 
-    override fun bindListener() {
-
-    }
 
     override fun bindFilterItem(response: JobFilter, salaryType: ArrayList<FilterItem>) {
 
         salaryAdapter.setNewInstance(salaryType)
         areaAdapter.setNewInstance(response.area)
         companyTypeAdapter.setNewInstance(response.companyType)
+        setSingle()
         eduAdapter.setNewInstance(response.jobResumeEducationLevel)
         experienceAdapter.setNewInstance(response.experience)
+
+    }
+
+    override fun bindListener() {
+
+        min_salary_et.addTextChangedListener(afterTextChanged = {
+            minSalary = it.toString().trim()
+        })
+
+        max_salary_et.addTextChangedListener(afterTextChanged = {
+            maxSalary = it.toString().trim()
+        })
+
+        more_company_type.setOnClickListener {
+            val layoutParams = type_rv.layoutParams as LinearLayout.LayoutParams
+            if (isUp) {
+                // 收起
+                isUp = false
+
+                if (companyTypeHeight > SizeUtils.dp2px(112f)) {
+                    layoutParams.height = SizeUtils.dp2px(112f)
+                }
+                more_company_type.setText(R.string.down)
+            } else {
+                isUp = true
+                layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                more_company_type.setText(R.string.up)
+            }
+            type_rv.layoutParams = layoutParams
+
+        }
+
+        reset_tv.setOnClickListener {
+            handleSalaryClick(0)
+            presenter.handleMultipleChoice(0, areaAdapter, areas)
+            presenter.handleMultipleChoice(0, companyTypeAdapter, companyTypes)
+            presenter.handleMultipleChoice(0, eduAdapter, eduLevel)
+            presenter.handleMultipleChoice(0, experienceAdapter, experienceLevel)
+
+            confirm_tv.performClick()
+        }
+
+        confirm_tv.setOnClickListener {
+
+            val select = FilterData().apply {
+                salaryType = this@JobFilterActivity.salaryType
+                minSalary = this@JobFilterActivity.minSalary
+                maxSalary = this@JobFilterActivity.maxSalary
+                areas.addAll(this@JobFilterActivity.areas)
+                companyTypes.addAll(this@JobFilterActivity.companyTypes)
+                eduLevel.addAll(this@JobFilterActivity.eduLevel)
+                experienceLevel.addAll(this@JobFilterActivity.experienceLevel)
+
+                salaryData.addAll(salaryAdapter.data)
+                areaData.addAll(areaAdapter.data)
+                companyTypeData.addAll(companyTypeAdapter.data)
+                eduData.addAll(eduAdapter.data)
+                experienceData.addAll(experienceAdapter.data)
+
+            }
+            val toJson = gson.toJson(select)
+            Log.d("aaaa", "传递 == $toJson")
+            setResult(Activity.RESULT_OK, Intent().putExtra(Constant.PARAM_DATA, toJson))
+            finish()
+        }
+
+    }
+
+    private fun setSingle() {
+
+        type_rv.post {
+            companyTypeHeight = type_rv.measuredHeight
+            if (companyTypeHeight > SizeUtils.dp2px(112f)) {
+                val layoutParams = type_rv.layoutParams as LinearLayout.LayoutParams
+                layoutParams.height = SizeUtils.dp2px(112f)
+                type_rv.layoutParams = layoutParams
+            }
+        }
+
     }
 }

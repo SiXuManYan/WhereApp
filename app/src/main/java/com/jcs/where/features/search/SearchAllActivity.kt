@@ -132,10 +132,7 @@ class SearchAllActivity : BaseMvpActivity<SearchAllPresenter>(), SearchAllView {
                 .setNegativeButton(R.string.confirm) { dialog, _ ->
                     dialog.dismiss()
                 }
-
                 .create()
-            create
-
                 .show()
 
 

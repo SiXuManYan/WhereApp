@@ -29,7 +29,8 @@ android {
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。（极光推送使用）
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86','x86_64'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+//            ,'x86','x86_64' // x86 模拟器调试需要打开
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 

@@ -1,16 +1,21 @@
 package com.jcs.where.features.job.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.google.gson.Gson
 import com.jcs.where.R
+import com.jcs.where.api.response.job.FilterData
 import com.jcs.where.api.response.job.Job
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.cv.CvHomeActivity
-import com.jcs.where.features.job.home.tag.JobTagAdapter
+import com.jcs.where.features.job.filter.JobFilterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
@@ -30,13 +35,31 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
 
     private var search: String? = null
 
+    /** 筛选项 */
+    private var selectedFilterData: FilterData? = null
+    private var selectedFilterJson = ""
+
     override fun getLayoutId() = R.layout.activity_job_home
+
+
+    /** 处理选择地址 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras ?: return@registerForActivityResult
+            val selectedJson = bundle.getString(Constant.PARAM_DATA, "")
+            if (selectedJson.isNullOrBlank()) return@registerForActivityResult
+            selectedFilterJson = selectedJson
+            val gson = Gson()
+            selectedFilterData = gson.fromJson(selectedJson, FilterData::class.java)
+            onRefresh()
+            filter_iv.setImageResource(R.mipmap.ic_job_filter_blue)
+        }
+    }
 
     override fun initView() {
         initContent()
         initTag()
     }
-
 
 
     private fun initContent() {
@@ -53,7 +76,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getJobList(page, search)
+                presenter.getJobList(page, search, selectedFilterData)
             }
         }
 
@@ -92,12 +115,19 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
             startActivityAfterLogin(CvHomeActivity::class.java)
         }
 
+        filter_iv.setOnClickListener {
+            searchLauncher.launch(Intent(this, JobFilterActivity::class.java)
+                .putExtras(Bundle().apply {
+                    putString(Constant.PARAM_DATA, selectedFilterJson)
+                }))
+        }
+
     }
 
 
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getJobList(page, search)
+        presenter.getJobList(page, search, selectedFilterData)
     }
 
     override fun bindJobList(toMutableList: MutableList<Job>, lastPage: Boolean) {
@@ -126,6 +156,13 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
                 loadMoreModule.loadMoreComplete()
             }
         }
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
+        super.onEventReceived(baseEvent)
+
+
     }
 
 }

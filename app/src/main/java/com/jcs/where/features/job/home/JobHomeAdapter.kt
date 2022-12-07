@@ -40,12 +40,15 @@ class JobHomeAdapter : BaseQuickAdapter<Job, BaseViewHolder>(R.layout.item_job_h
         GlideUtil.load(context, item.logo, logoIv, 24, GlideRoundedCornersTransform.CornerType.ALL, R.mipmap.ic_company_default_logo)
 
         holder.getView<LinearLayout>(R.id.job_root_ll).setOnClickListener {
-            val jobId = if (type == 0) {
-                item.id
+
+            if (type == 0) {
+                JobDetailActivity.navigation(context, item.id)
             } else {
-                item.job_id
+                if (item.status == 1) {
+                    JobDetailActivity.navigation(context, item.job_id)
+                }
             }
-            JobDetailActivity.navigation(context, jobId)
+
         }
 
         val mTagAdapter = JobTagAdapter()
@@ -53,15 +56,14 @@ class JobHomeAdapter : BaseQuickAdapter<Job, BaseViewHolder>(R.layout.item_job_h
             adapter = mTagAdapter
             layoutManager = MyLayoutManager()
         }
-        val nativeTag = item.nativeTag
+        val nativeTag = item.tag
 
         if (nativeTag.isNullOrEmpty()) {
             tag_rv.visibility = View.GONE
-        }else{
+        } else {
             tag_rv.visibility = View.VISIBLE
-            mTagAdapter.setNewInstance(nativeTag)
         }
-
+        mTagAdapter.setNewInstance(nativeTag)
 
 
     }

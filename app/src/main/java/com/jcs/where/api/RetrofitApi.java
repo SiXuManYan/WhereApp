@@ -2245,7 +2245,15 @@ public interface RetrofitApi {
     @GET("jobapi/v2/jobs")
     Observable<JcsResponse<PageResponse<Job>>> jobList(
             @Query("page") int page,
-            @Query("search_input") @Nullable String search_input
+            @Query("search_input") @Nullable String search_input,
+
+            @Query("salary_type") @Nullable Integer salary_type,
+            @Query("min_salary") @Nullable String min_salary,
+            @Query("max_salary") @Nullable String max_salary,
+            @Query("area") @Nullable String area,
+            @Query("company_type") @Nullable String company_type,
+            @Query("education_id") @Nullable String education_id,
+            @Query("experience") @Nullable String experience
     );
 
 

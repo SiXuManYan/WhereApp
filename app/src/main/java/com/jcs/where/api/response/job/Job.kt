@@ -3,6 +3,7 @@ package com.jcs.where.api.response.job
 import android.os.Parcel
 import android.os.Parcelable
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.jcs.where.api.response.bills.CallChargeChannelItem
 
 /**
  * Created by Wangsw  2022/9/27 16:49.
@@ -18,7 +19,10 @@ class Job {
     var created_at = ""
     var job_id = 0
     var logo = ""
-    var nativeTag = ArrayList<String>()
+    var tag = ArrayList<String>()
+
+    /** 1正常 0 关闭 */
+    var status = 0
 }
 
 /**
@@ -411,6 +415,8 @@ class JobTag {
 }
 
 
+
+
 class JobFilter {
 
     var area = ArrayList<FilterItem>()
@@ -423,4 +429,38 @@ class FilterItem {
     var id = 0
     var name  = ""
     var nativeSelected = false
+}
+
+
+class FilterData {
+
+    /** 薪资类型 0不限 1月薪 2年薪 3时薪*/
+     var salaryType = 0
+
+    /** 最低薪水 */
+     var minSalary = ""
+
+    /** 最高薪水 */
+     var maxSalary = ""
+
+    /** 地区 */
+     var areas = ArrayList<Int>()
+
+    /** 公司类型 */
+     var companyTypes = ArrayList<Int>()
+
+    /** 学历 */
+     var eduLevel = ArrayList<Int>()
+
+    /** 工作经验 */
+     var experienceLevel = ArrayList<Int>()
+
+
+    var salaryData = ArrayList<FilterItem>()
+    var areaData = ArrayList<FilterItem>()
+    var companyTypeData = ArrayList<FilterItem>()
+    var eduData = ArrayList<FilterItem>()
+    var experienceData = ArrayList<FilterItem>()
+
+
 }

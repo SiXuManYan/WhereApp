@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.bills.BillAccount
 import com.jcs.where.api.response.bills.FieldDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -159,10 +160,27 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     override fun initData() {
         presenter = BillsFormPresenter(this)
         presenter.getDiscountList(billsType)
+        presenter.getDefaultAccount(billsType)
     }
 
     override fun bindDiscountList(response: ArrayList<String>) {
         mDiscountAdapter.setNewInstance(response)
+    }
+
+    override fun bindDefaultAccount(response: BillAccount) {
+
+
+        mAdapter.data.forEachIndexed { index, fieldDetail ->
+            if (index == 0) {
+                fieldDetail.nativeUserInput = response.first_field
+            }
+            if (index == 1) {
+                fieldDetail.nativeUserInput = response.second_field
+                return@forEachIndexed
+            }
+        }
+        mAdapter.notifyItemChanged(0)
+        mAdapter.notifyItemChanged(1)
     }
 
     override fun bindListener() {

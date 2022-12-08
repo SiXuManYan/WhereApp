@@ -74,6 +74,7 @@ import com.jcs.where.api.response.UserInfoResponse;
 import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
+import com.jcs.where.api.response.bills.BillAccount;
 import com.jcs.where.api.response.bills.BillCancelOrder;
 import com.jcs.where.api.response.bills.BillRecommit;
 import com.jcs.where.api.response.bills.BillStatus;
@@ -2502,6 +2503,13 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/jobs_filter")
     Observable<JcsResponse<JobFilter>> getFilterItem();
+
+   /**
+     * 获取水电网缴费默认账号
+    * @param module 1 自来水 2电力公司 3互联网
+     */
+    @GET("billsapi/v2/bills/default_account")
+    Observable<JcsResponse<BillAccount>> getBillsDefaultAccount(   @Query("module") int module);
 
 
 }

@@ -29,5 +29,12 @@ class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.
                 item.nativeUserInput = it.toString().trim()
             }
         )
+
+        val nativeUserInput = item.nativeUserInput
+        if (nativeUserInput.isNotBlank()) {
+            form.setText(nativeUserInput)
+        }
+
+
     }
 }

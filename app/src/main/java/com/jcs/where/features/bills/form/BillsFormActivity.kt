@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
+import android.view.animation.Animation
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +21,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.place.BillsPlaceOrderActivity
+import com.jcs.where.utils.AnimationUtils
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -85,6 +89,25 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
         BarUtils.setStatusBarColor(this, Color.WHITE)
         initExtra()
         initList()
+
+        val alphaAnimation = AnimationUtils.getAlphaAnimation(0.5f, 0.9f, 1000)
+        hint_ll.startAnimation(alphaAnimation)
+
+
+        Handler(mainLooper).postDelayed({
+            val animation = AnimationUtils.getAlphaAnimation(0.9f, 0f, 1000, object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation?) = Unit
+
+                override fun onAnimationRepeat(animation: Animation?) = Unit
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    hint_ll.visibility = View.GONE
+                }
+
+            })
+            hint_ll.startAnimation(animation)
+        }, 4500)
+
     }
 
 
@@ -157,11 +180,6 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
         )
 
 //        amount_et.setText(BusinessUtils.formatPrice(userInputMoney))
-
-
-        mJcsTitle.setBackIvClickListener {
-            onBackClick()
-        }
 
         next_tv.setOnClickListener {
 

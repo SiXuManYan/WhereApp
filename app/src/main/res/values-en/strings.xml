@@ -1157,4 +1157,6 @@ Gentleman must let go</string>
     <string name="up">Up</string>
     <string name="channel_not_supported">Payment is not currently supported, you can choose other methods</string>
     <string name="company_media">Company Media</string>
+    <string name="account_history_hint">You can preset payment account</string>
+    <string name="account_history">Accounts</string>
 </resources>

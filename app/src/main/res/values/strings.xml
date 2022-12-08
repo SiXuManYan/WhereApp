@@ -1177,6 +1177,8 @@ Gentleman must let go</string>
     <string name="up">收起</string>
     <string name="channel_not_supported">暂不支持缴费，您可以选择其他方式`</string>
     <string name="company_media">公司媒介</string>
+    <string name="account_history_hint">可预设缴费账号</string>
+    <string name="account_history">缴费账号</string>
 
 
 </resources>

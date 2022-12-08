@@ -19,6 +19,7 @@ import com.jcs.where.api.response.bills.CallChargeChannel
 import com.jcs.where.api.response.bills.CallChargeChannelItem
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.place.phone.PhonePlaceOrderActivity
+import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.PermissionUtils
 import com.jcs.where.widget.list.DividerDecoration
@@ -72,6 +73,10 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
         globe.addAll(StringUtils.getStringArray(R.array.GLOBE).toMutableList())
         globeBan.addAll(StringUtils.getStringArray(R.array.GLOBE_BAN).toMutableList())
         smart.addAll(StringUtils.getStringArray(R.array.SMART).toMutableList())
+
+        val phone = CacheUtil.getShareDefault().getString(Constant.SP_CHARGES_PHONE, "")
+        phone_et.setText(phone)
+
     }
 
     private fun initExtra() {
@@ -177,6 +182,7 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
             }
 
             PhonePlaceOrderActivity.navigation(this, phone, selectItem)
+
         }
     }
 

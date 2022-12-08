@@ -24,6 +24,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.place.coupon.BillCouponHome
 import com.jcs.where.features.payment.WebPayActivity
+import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_bills_place_order_charges.*
 import java.math.BigDecimal
@@ -80,6 +81,7 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
         intent.extras?.let {
             phone = it.getString(Constant.PARAM_PHONE, "")
             phone_tv.text = phone
+            CacheUtil.getShareDefault().put(Constant.SP_CHARGES_PHONE ,phone )
 
             val data = it.getParcelable<CallChargeChannelItem>(Constant.PARAM_DATA)
 

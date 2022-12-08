@@ -402,6 +402,8 @@ class CompanyInfo {
     var profile: String? = ""
     var address = ""
     var images: ArrayList<String>? = ArrayList()
+
+    var website :String? = ""
 }
 
 

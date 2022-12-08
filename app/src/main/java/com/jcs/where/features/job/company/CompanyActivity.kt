@@ -5,17 +5,22 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextPaint
+import android.text.style.ClickableSpan
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.job.CompanyInfo
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.company.album.CompanyAlbumActivity
 import com.jcs.where.features.job.company.info.CompanyInfoActivity
 import com.jcs.where.features.media.MediaDetailActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.list.DividerDecoration
@@ -144,6 +149,21 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
             mAdapter.setNewInstance(media)
         }
 
+        // 媒介
+        val website = response.website
+        if (!website.isNullOrBlank()) {
+            media_ll.visibility = View.VISIBLE
+
+            SpanUtils.with(media_tv).append(website).setClickSpan(object :ClickableSpan(){
+                override fun onClick(widget: View) = WebViewActivity.goTo(this@CompanyActivity, website)
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            }).create()
+        }else {
+            media_ll.visibility = View.GONE
+        }
 
     }
 

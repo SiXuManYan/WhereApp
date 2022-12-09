@@ -1159,4 +1159,10 @@ Gentleman must let go</string>
     <string name="company_media">Company Media</string>
     <string name="account_history_hint">You can preset payment account</string>
     <string name="account_history">Accounts</string>
+    <string name="add_bill_account">Add Account</string>
+    <string name="default_account">Default</string>
+    <string name="bill_account">Account No.</string>
+    <string name="bill_account_name">Account Name</string>
+    <string name="set_as_default">Set as default account</string>
+    <string name="confirm_delete_account">Are you sure to delete this payment account?</string>
 </resources>

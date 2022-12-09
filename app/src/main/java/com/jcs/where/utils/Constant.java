@@ -114,6 +114,8 @@ public class Constant {
     public static final String PARAM_HANDLE_SELECT = "param_handle_select";
     public static final String PARAM_REFUND_METHOD = "param_refund_method";
     public static final String PARAM_PLATFORM_NAME = "param_platform_name";
+    public static final String PARAM_FIRST = "param_first";
+    public static final String PARAM_SECOND = "param_second";
 
     /**
      * 打款id

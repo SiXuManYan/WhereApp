@@ -188,4 +188,9 @@ public class EventCode {
 
     public static final int EVENT_SCROLL_TO_TOP = 1048;
 
+    /**
+     * 刷新账单缴费账号记录
+     */
+    public static final int EVENT_REFRESH_BILL_HISTORY_ACCOUNT = 1049;
+
 }

@@ -849,6 +849,8 @@
         <activity
             android:name=".features.job.filter.JobFilterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity android:name=".features.bills.account.BillAccountActivity" />
+        <activity android:name=".features.bills.account.edit.BillAccountEditActivity" />
 
     </application>
 

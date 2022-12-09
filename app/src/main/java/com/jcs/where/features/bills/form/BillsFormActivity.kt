@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.animation.Animation
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ import com.jcs.where.api.response.bills.FieldDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.bills.account.BillAccountActivity
 import com.jcs.where.features.bills.place.BillsPlaceOrderActivity
 import com.jcs.where.utils.AnimationUtils
 import com.jcs.where.utils.BusinessUtils
@@ -83,6 +85,16 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
         }
     }
 
+
+    /** 处理选择地址 */
+    private val searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras ?: return@registerForActivityResult
+            val first = bundle.getString(Constant.PARAM_FIRST, "")
+            val second = bundle.getString(Constant.PARAM_SECOND, "")
+            setCacheData(first, second)
+        }
+    }
 
     override fun getLayoutId() = R.layout.activity_bills_form
 
@@ -160,7 +172,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     override fun initData() {
         presenter = BillsFormPresenter(this)
         presenter.getDiscountList(billsType)
-        presenter.getDefaultAccount(billsType)
+//        presenter.getDefaultAccount(billsType)
     }
 
     override fun bindDiscountList(response: ArrayList<String>) {
@@ -169,13 +181,16 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
     override fun bindDefaultAccount(response: BillAccount) {
 
+        setCacheData(response.first_field, response.second_field)
+    }
 
+    private fun setCacheData(first: String, second: String) {
         mAdapter.data.forEachIndexed { index, fieldDetail ->
             if (index == 0) {
-                fieldDetail.nativeUserInput = response.first_field
+                fieldDetail.nativeUserInput = first
             }
             if (index == 1) {
-                fieldDetail.nativeUserInput = response.second_field
+                fieldDetail.nativeUserInput = second
                 return@forEachIndexed
             }
         }
@@ -247,6 +262,12 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                 serviceCharge.toDouble(),
                 fieldDetail,
                 billsType)
+        }
+
+        account_tv.setOnClickListener {
+            searchLauncher.launch(Intent(this, BillAccountActivity::class.java).putExtras(Bundle().apply {
+                putInt(Constant.PARAM_TYPE, billsType)
+            }))
         }
 
     }

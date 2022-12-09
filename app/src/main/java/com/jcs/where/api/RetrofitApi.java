@@ -75,6 +75,7 @@ import com.jcs.where.api.response.address.AddressRequest;
 import com.jcs.where.api.response.address.AddressResponse;
 import com.jcs.where.api.response.area.AreaResponse;
 import com.jcs.where.api.response.bills.BillAccount;
+import com.jcs.where.api.response.bills.BillAccountEdit;
 import com.jcs.where.api.response.bills.BillCancelOrder;
 import com.jcs.where.api.response.bills.BillRecommit;
 import com.jcs.where.api.response.bills.BillStatus;
@@ -2504,12 +2505,43 @@ public interface RetrofitApi {
     @GET("jobapi/v2/jobs_filter")
     Observable<JcsResponse<JobFilter>> getFilterItem();
 
-   /**
+    /**
      * 获取水电网缴费默认账号
-    * @param module 1 自来水 2电力公司 3互联网
+     *
+     * @param module 1 自来水 2电力公司 3互联网
      */
     @GET("billsapi/v2/bills/default_account")
-    Observable<JcsResponse<BillAccount>> getBillsDefaultAccount(   @Query("module") int module);
+    Observable<JcsResponse<BillAccount>> getBillsDefaultAccount(@Query("module") int module);
+
+    /**
+     * 获取水电网历史缴费账号列表
+     *
+     * @param module 1 自来水 2电力公司 3互联网
+     */
+    @GET("billsapi/v2/bills/default_account")
+    Observable<JcsResponse<ArrayList<BillAccount>>> getBillsAccountHistory(@Query("module") int module);
+
+    /**
+     * 添加水电网历史缴费账号列表
+     */
+    @POST("billsapi/v2/bills/account")
+    Observable<JcsResponse<JsonElement>> addBillsAccount(@Body BillAccountEdit request);
+
+    /**
+     * 添加水电网历史缴费账号列表
+     */
+    @PATCH("billsapi/v2/bills/account/{id}")
+    Observable<JcsResponse<JsonElement>> editBillsAccount(
+            @Path("id") int id,
+            @Body BillAccountEdit request);
+
+
+    /**
+     * 删除水电网历史缴费账号列表
+     */
+    @DELETE("billsapi/v2/bills/account")
+    Observable<JcsResponse<JsonElement>> deleteBillsAccount(@Query("id") int id);
+
 
 
 }

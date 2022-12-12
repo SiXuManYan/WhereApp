@@ -45,8 +45,10 @@ class BillAccountActivity : BaseMvpActivity<BillAccountPresenter>(), BillAccount
 
     private fun initContent() {
 
-        emptyView = EmptyView(this)
-        emptyView.showEmptyDefault()
+        emptyView = EmptyView(this).apply {
+            showEmptyDefault()
+            addEmptyList(this)
+        }
         mAdapter = BillAccountAdapter().apply {
             setOnItemClickListener(this@BillAccountActivity)
             addChildClickViewIds(R.id.edit_tv)

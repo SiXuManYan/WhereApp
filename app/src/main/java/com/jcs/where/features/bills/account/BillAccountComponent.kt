@@ -22,13 +22,10 @@ interface BillAccountView : BaseMvpView {
 class BillAccountPresenter(private var view: BillAccountView) : BaseMvpPresenter(view) {
 
     fun getBillAccount(module: Int) {
-        requestApi(mRetrofit.getBillsAccountHistory(module), object : BaseMvpObserver<ArrayList<BillAccount>?>(view) {
-            override fun onSuccess(response: ArrayList<BillAccount>?) {
-                if (!response.isNullOrEmpty()) {
-                    view.bindAccount(response)
-                }
+        requestApi(mRetrofit.getBillsAccountHistory(module), object : BaseMvpObserver<ArrayList<BillAccount>>(view) {
+            override fun onSuccess(response: ArrayList<BillAccount>) {
+                view.bindAccount(response)
             }
-
         })
     }
 

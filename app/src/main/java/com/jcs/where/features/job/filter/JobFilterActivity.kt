@@ -1,10 +1,8 @@
 package com.jcs.where.features.job.filter
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.SizeUtils
@@ -176,7 +174,7 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
 
             // 记录上次选择
             val cache = gson.fromJson(cacheJson, FilterData::class.java)
-            Log.d("aaaa", "返回 == $cacheJson")
+//            Log.d("aaaa", "返回 == $cacheJson")
             salaryType = cache.salaryType
             minSalary = cache.minSalary
             maxSalary = cache.maxSalary
@@ -249,34 +247,36 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
             presenter.handleMultipleChoice(0, companyTypeAdapter, companyTypes)
             presenter.handleMultipleChoice(0, eduAdapter, eduLevel)
             presenter.handleMultipleChoice(0, experienceAdapter, experienceLevel)
-
-            confirm_tv.performClick()
+            setFilterData()
         }
 
         confirm_tv.setOnClickListener {
-
-            val select = FilterData().apply {
-                salaryType = this@JobFilterActivity.salaryType
-                minSalary = this@JobFilterActivity.minSalary
-                maxSalary = this@JobFilterActivity.maxSalary
-                areas.addAll(this@JobFilterActivity.areas)
-                companyTypes.addAll(this@JobFilterActivity.companyTypes)
-                eduLevel.addAll(this@JobFilterActivity.eduLevel)
-                experienceLevel.addAll(this@JobFilterActivity.experienceLevel)
-
-                salaryData.addAll(salaryAdapter.data)
-                areaData.addAll(areaAdapter.data)
-                companyTypeData.addAll(companyTypeAdapter.data)
-                eduData.addAll(eduAdapter.data)
-                experienceData.addAll(experienceAdapter.data)
-
-            }
-            val toJson = gson.toJson(select)
-            Log.d("aaaa", "传递 == $toJson")
-            setResult(Activity.RESULT_OK, Intent().putExtra(Constant.PARAM_DATA, toJson))
+            setFilterData()
             finish()
         }
 
+    }
+
+    private fun setFilterData() {
+        val select = FilterData().apply {
+            salaryType = this@JobFilterActivity.salaryType
+            minSalary = this@JobFilterActivity.minSalary
+            maxSalary = this@JobFilterActivity.maxSalary
+            areas.addAll(this@JobFilterActivity.areas)
+            companyTypes.addAll(this@JobFilterActivity.companyTypes)
+            eduLevel.addAll(this@JobFilterActivity.eduLevel)
+            experienceLevel.addAll(this@JobFilterActivity.experienceLevel)
+
+            salaryData.addAll(salaryAdapter.data)
+            areaData.addAll(areaAdapter.data)
+            companyTypeData.addAll(companyTypeAdapter.data)
+            eduData.addAll(eduAdapter.data)
+            experienceData.addAll(experienceAdapter.data)
+
+        }
+        val toJson = gson.toJson(select)
+//        Log.d("aaaa", "传递 == $toJson")
+        setResult(RESULT_OK, Intent().putExtra(Constant.PARAM_DATA, toJson))
     }
 
     private fun setSingle() {

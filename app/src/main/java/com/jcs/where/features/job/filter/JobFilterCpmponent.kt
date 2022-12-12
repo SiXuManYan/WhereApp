@@ -115,7 +115,7 @@ class JobFilterPresenter(private var view: JobFilterView) : BaseMvpPresenter(vie
             minSalaryEt.isFocusable = false
             minSalaryEt.isFocusableInTouchMode = false
             minSalaryEt.isCursorVisible = false
-            minSalaryEt.setBackgroundResource(R.drawable.shape_grey_radius_22)
+            minSalaryEt.setBackgroundResource(R.drawable.stock_gray_radius_22_dark)
             minSalaryEt.setText("")
         }
 

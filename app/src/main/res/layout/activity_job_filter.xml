@@ -78,7 +78,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="@dimen/dp_28"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_grey_radius_22"
+                    android:background="@drawable/stock_gray_radius_22_dark"
                     android:cursorVisible="false"
                     android:digits="0123456789"
                     android:focusable="false"
@@ -89,7 +89,7 @@
                     android:maxLength="7"
                     android:maxLines="1"
                     android:minWidth="@dimen/dp_129"
-                    android:textColor="@color/grey_666666"
+                    android:textColor="@color/black_333333"
                     android:textColorHint="@color/grey_B5B5B5"
                     android:textSize="@dimen/sp_13" />
 
@@ -108,7 +108,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="@dimen/dp_28"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_grey_radius_22"
+                    android:background="@drawable/stock_gray_radius_22_dark"
                     android:cursorVisible="false"
                     android:digits="0123456789"
                     android:focusable="false"
@@ -118,7 +118,7 @@
                     android:inputType="phone|number"
                     android:maxLength="7"
                     android:minWidth="@dimen/dp_129"
-                    android:textColor="@color/grey_666666"
+                    android:textColor="@color/black_333333"
                     android:textColorHint="@color/grey_B5B5B5"
                     android:textSize="@dimen/sp_13" />
 
@@ -284,7 +284,7 @@
             android:background="@drawable/shape_purple_radius_22"
             android:clickable="false"
             android:gravity="center"
-            android:text="@string/sure"
+            android:text="@string/confirm_job_filter"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_17"

@@ -50,14 +50,13 @@ class BillAccountEditActivity : BaseMvpActivity<BillAccountPresenter>(), BillAcc
 
     override fun initData() {
         presenter = BillAccountPresenter(this)
-
-        if (cacheData!=null) {
+        if (cacheData != null) {
             delete_tv.visibility = View.VISIBLE
             account_et.setText(cacheData!!.first_field)
             account_name_et.setText(cacheData!!.second_field)
             select_tv.isChecked = cacheData!!.status == 1
             title_tv.setText(R.string.edit_account)
-        }else {
+        } else {
             title_tv.setText(R.string.add_account)
         }
 
@@ -85,15 +84,23 @@ class BillAccountEditActivity : BaseMvpActivity<BillAccountPresenter>(), BillAcc
         }
 
         save_tv.setOnClickListener {
+
+
+            val first = account_et.text.toString().trim()
+            val second = account_name_et.text.toString().trim()
+            if (first.isBlank() || second.isBlank()) {
+                return@setOnClickListener
+            }
+
             if (cacheData != null) {
                 presenter.editAccount(billsType,
-                    account_et.text.toString().trim(),
-                    account_name_et.text.toString().trim(),
+                    first,
+                    second,
                     select_tv.isChecked, cacheData!!.id)
             } else {
                 presenter.addAccount(billsType,
-                    account_et.text.toString().trim(),
-                    account_name_et.text.toString().trim(),
+                    first,
+                    second,
                     select_tv.isChecked)
             }
         }

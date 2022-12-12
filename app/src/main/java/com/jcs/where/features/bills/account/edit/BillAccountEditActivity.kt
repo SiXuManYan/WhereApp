@@ -85,7 +85,6 @@ class BillAccountEditActivity : BaseMvpActivity<BillAccountPresenter>(), BillAcc
 
         save_tv.setOnClickListener {
 
-
             val first = account_et.text.toString().trim()
             val second = account_name_et.text.toString().trim()
             if (first.isBlank() || second.isBlank()) {

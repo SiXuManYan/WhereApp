@@ -17,6 +17,8 @@ import com.jcs.where.api.response.bills.FieldDetail
  */
 class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.item_form_bills) {
 
+    private var fieldDetail = ArrayList<FieldDetail>()
+
     override fun convert(holder: BaseViewHolder, item: FieldDetail) {
         val title = holder.getView<TextView>(R.id.title_tv)
         val form = holder.getView<AppCompatEditText>(R.id.content_et)

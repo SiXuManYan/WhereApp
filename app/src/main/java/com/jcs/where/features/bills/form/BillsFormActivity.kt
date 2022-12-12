@@ -11,6 +11,7 @@ import android.view.View
 import android.view.animation.Animation
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
@@ -57,6 +58,11 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
     private lateinit var mAdapter: BillsFormAdapter
     private lateinit var mDiscountAdapter: BillsDiscountAdapter
+
+    private var allListEditView: ArrayList<AppCompatEditText> = ArrayList()
+
+    private var firstMax = 100
+    private var secondMax = 100
 
     override fun isStatusDark() = true
 
@@ -147,7 +153,17 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
         mAdapter = BillsFormAdapter().apply {
             setNewInstance(fieldDetail)
+            fieldDetail.forEachIndexed { index, it ->
+                if (index == 0) {
+                    firstMax = it.Width
+                }
+                if (index == 1) {
+                    secondMax = it.Width
+                }
+            }
+
         }
+
         channel_rv.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(this@BillsFormActivity, LinearLayoutManager.VERTICAL, false)
@@ -156,6 +172,17 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                 SizeUtils.dp2px(15f),
                 0))
         }
+
+        // 获取输入框
+        val manager = channel_rv.layoutManager as LinearLayoutManager
+        mAdapter.data.forEachIndexed { index, _ ->
+            val itemView = manager.findViewByPosition(index)
+            itemView?.let {
+                val edit = it.findViewById<AppCompatEditText>(R.id.content_et)
+                allListEditView.add(edit)
+            }
+        }
+        allListEditView.add(findViewById<AppCompatEditText>(R.id.amount_et))
 
         // 折扣
         mDiscountAdapter = BillsDiscountAdapter()
@@ -181,13 +208,16 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     }
 
     override fun bindDefaultAccount(response: BillAccount) {
-
         setCacheData(response.first_field, response.second_field)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setCacheData(first: String, second: String) {
+
         mAdapter.data.forEachIndexed { index, fieldDetail ->
+            if (first.length > fieldDetail.Width || second.length > fieldDetail.Width) {
+                next_tv.alpha = 0.6f
+            }
             if (index == 0) {
                 fieldDetail.nativeCache = first
             }
@@ -200,16 +230,37 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     }
 
     override fun bindListener() {
+
+
+        allListEditView.forEachIndexed { index, it ->
+
+            it.addTextChangedListener(
+                afterTextChanged = { edit ->
+                    val input = edit.toString().trim()
+
+                    var result = false
+
+                    val isNotBlank = !BusinessUtils.checkEditBlank(allListEditView)
+
+                    result = when (index) {
+                        0 -> (isNotBlank && input.length <= firstMax)
+                        1 -> (isNotBlank && input.length <= secondMax)
+                        else -> isNotBlank
+                    }
+
+                    BusinessUtils.setViewClickable(result , next_tv)
+
+                }
+            )
+
+        }
+
+
+
         amount_et.addTextChangedListener(
             afterTextChanged = {
                 val input = it.toString()
                 userInputMoney = BusinessUtils.getSafeBigDecimal(input)
-                if (input.isBlank()) {
-                    next_tv.alpha = 0.6f
-                } else {
-                    next_tv.alpha = 1.0f
-                }
-
             }
         )
 
@@ -255,7 +306,8 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                     ToastUtils.showShort("Please enter " + it.Tag)
                     return@setOnClickListener
                 }
-                if (it.nativeUserInput.length > it.Width){
+                if (it.nativeUserInput.length > it.Width) {
+
                     return@setOnClickListener
                 }
 

@@ -243,10 +243,16 @@ class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
 
         reset_tv.setOnClickListener {
             handleSalaryClick(0)
-            presenter.handleMultipleChoice(0, areaAdapter, areas)
-            presenter.handleMultipleChoice(0, companyTypeAdapter, companyTypes)
-            presenter.handleMultipleChoice(0, eduAdapter, eduLevel)
-            presenter.handleMultipleChoice(0, experienceAdapter, experienceLevel)
+            areas.clear()
+            companyTypes.clear()
+            eduLevel.clear()
+            experienceLevel.clear()
+
+            presenter.clearSelected(areaAdapter)
+            presenter.clearSelected(companyTypeAdapter)
+            presenter.clearSelected(eduAdapter)
+            presenter.clearSelected(experienceAdapter)
+
             setFilterData()
         }
 

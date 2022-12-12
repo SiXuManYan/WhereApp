@@ -94,10 +94,10 @@ class JobFilterPresenter(private var view: JobFilterView) : BaseMvpPresenter(vie
                 }
             } else {
                 // 选中
-                adapter.data[position].nativeSelected = true
-                adapter.notifyItemChanged(position)
                 adapter.data[0].nativeSelected = false
-                adapter.notifyItemChanged(0)
+                adapter.data[position].nativeSelected = true
+
+                adapter.notifyDataSetChanged()
 
                 resultList.add(itemId)
 
@@ -120,6 +120,15 @@ class JobFilterPresenter(private var view: JobFilterView) : BaseMvpPresenter(vie
         }
 
 
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearSelected(adapter: JobFilterAdapter){
+        adapter.data.forEach {
+            it.nativeSelected = it.id == 0
+        }
+        adapter.notifyDataSetChanged()
     }
 
 }

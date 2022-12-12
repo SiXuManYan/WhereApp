@@ -872,6 +872,16 @@ object BusinessUtils {
         view.isClickable = clickable
     }
 
+    fun setViewAlpha(clickable: Boolean, view: TextView) {
+
+        if (clickable) {
+            view.alpha = 1.0f
+        } else {
+            view.alpha = 0.5f
+        }
+
+    }
+
 
 }
 

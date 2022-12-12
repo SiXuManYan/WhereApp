@@ -36,7 +36,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
     private var search: String? = null
 
     /** 筛选项 */
-    private var selectedFilterData: FilterData? = null
+    private var selectedData: FilterData? = null
     private var selectedFilterJson = ""
 
     override fun getLayoutId() = R.layout.activity_job_home
@@ -50,9 +50,19 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
             if (selectedJson.isNullOrBlank()) return@registerForActivityResult
             selectedFilterJson = selectedJson
             val gson = Gson()
-            selectedFilterData = gson.fromJson(selectedJson, FilterData::class.java)
+            selectedData = gson.fromJson(selectedJson, FilterData::class.java)
             onRefresh()
-            filter_iv.setImageResource(R.mipmap.ic_job_filter_blue)
+
+            selectedData?.let { select ->
+                if (select.salaryType == 0 && select.areas.isEmpty() && select.companyTypes.isEmpty() &&
+                    select.eduLevel.isEmpty() && select.experienceLevel.isEmpty()) {
+                    filter_iv.setImageResource(R.mipmap.ic_job_filter_normal)
+                } else {
+                    filter_iv.setImageResource(R.mipmap.ic_job_filter_blue)
+                }
+            }
+
+
         }
     }
 
@@ -76,7 +86,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getJobList(page, search, selectedFilterData)
+                presenter.getJobList(page, search, selectedData)
             }
         }
 
@@ -127,7 +137,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
 
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getJobList(page, search, selectedFilterData)
+        presenter.getJobList(page, search, selectedData)
     }
 
     override fun bindJobList(toMutableList: MutableList<Job>, lastPage: Boolean) {

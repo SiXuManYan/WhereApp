@@ -30,9 +30,11 @@ class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.
             }
         )
 
-        val nativeUserInput = item.nativeUserInput
-        if (nativeUserInput.isNotBlank()) {
-            form.setText(nativeUserInput)
+        val nativeCache = item.nativeCache
+        if (nativeCache.isNotBlank()) {
+            form.filters = arrayOfNulls(0)
+            form.setText(nativeCache)
+            form.filters = arrayOf<InputFilter>(LengthFilter(item.Width))
         }
 
 

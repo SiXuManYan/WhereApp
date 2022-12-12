@@ -17,6 +17,7 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.bills.account.edit.BillAccountEditActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_bills_account.*
 import java.util.ArrayList
@@ -31,6 +32,7 @@ class BillAccountActivity : BaseMvpActivity<BillAccountPresenter>(), BillAccount
     private var billsType = 0
 
     private lateinit var mAdapter: BillAccountAdapter
+    private lateinit var emptyView: EmptyView
 
     override fun isStatusDark() = true
 
@@ -43,10 +45,13 @@ class BillAccountActivity : BaseMvpActivity<BillAccountPresenter>(), BillAccount
 
     private fun initContent() {
 
+        emptyView = EmptyView(this)
+        emptyView.showEmptyDefault()
         mAdapter = BillAccountAdapter().apply {
             setOnItemClickListener(this@BillAccountActivity)
             addChildClickViewIds(R.id.edit_tv)
             setOnItemChildClickListener(this@BillAccountActivity)
+            setEmptyView(emptyView)
         }
         content_rv.apply {
             adapter = mAdapter
@@ -74,6 +79,9 @@ class BillAccountActivity : BaseMvpActivity<BillAccountPresenter>(), BillAccount
     }
 
     override fun bindAccount(response: ArrayList<BillAccount>) {
+        if (response.isNullOrEmpty()) {
+            emptyView.showEmptyContainer()
+        }
         mAdapter.setNewInstance(response)
     }
 

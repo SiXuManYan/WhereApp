@@ -75,6 +75,8 @@ class FieldDetail() :Parcelable {
     /** 记录用户输入 */
     var nativeUserInput = ""
 
+    var nativeCache = ""
+
     constructor(parcel: Parcel) : this() {
         Tag = parcel.readString().toString()
         Caption = parcel.readString().toString()

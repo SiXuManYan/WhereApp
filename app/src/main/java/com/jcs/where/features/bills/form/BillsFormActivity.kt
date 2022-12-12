@@ -1,5 +1,6 @@
 package com.jcs.where.features.bills.form
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -184,18 +185,18 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
         setCacheData(response.first_field, response.second_field)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setCacheData(first: String, second: String) {
         mAdapter.data.forEachIndexed { index, fieldDetail ->
             if (index == 0) {
-                fieldDetail.nativeUserInput = first
+                fieldDetail.nativeCache = first
             }
             if (index == 1) {
-                fieldDetail.nativeUserInput = second
+                fieldDetail.nativeCache = second
                 return@forEachIndexed
             }
         }
-        mAdapter.notifyItemChanged(0)
-        mAdapter.notifyItemChanged(1)
+        mAdapter.notifyDataSetChanged()
     }
 
     override fun bindListener() {
@@ -254,6 +255,10 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                     ToastUtils.showShort("Please enter " + it.Tag)
                     return@setOnClickListener
                 }
+                if (it.nativeUserInput.length > it.Width){
+                    return@setOnClickListener
+                }
+
             }
 
             BillsPlaceOrderActivity.navigation(this,
